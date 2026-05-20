@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4368A3ED3A9;
-	Wed, 20 May 2026 16:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06D03F1653;
+	Wed, 20 May 2026 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296264; cv=none; b=s5IBKsvWZD/y/i5UvTn2j7x2U+u01bUDfDeXczAi+2AbnFJ/Xp3NDN+tmNZLSKBe4QkEdnM4rzU8MpWaGANXka4y7CdabXL7jt9BvGRJ8RuUQkP6tkBgVGT60+fj5+djjiCTrCDVKTZYEndefCYMQqYjfCuwlLVZnsdb6MfQn18=
+	t=1779296267; cv=none; b=cauaP+i/QGAqZLweR/uTSf4XMoVAGahC8c9TljwTslyON64Ujuc1VAP9KAyXkiNV6OZ68i8dP3aD+A9E23ggj7Vmd3PhjXdzPCQb6SL61NRxGAfcYhfx2xv+GYnDFleUaxo3p3/iGR8QnfDxigAxzzHLH1qfTPdxGsUB9aRBHDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296264; c=relaxed/simple;
-	bh=ix9ig+XPAw1pgUP6JfrcVqEnjEX6PJJHmWoSUndM6lo=;
+	s=arc-20240116; t=1779296267; c=relaxed/simple;
+	bh=y8FztJa3fSOKsW2VD784zbXQZsC9p0zHXbBuvH0mgd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4/tbMx0N2tCk4Go7JQDEciEK7YGUcctCeWJV92fVy66zA1lYVtIGbpTVmPWPk1/diHg5DbjAnO8bSYetX/Ncz/hknVLCSTkJzw2qAoW93NwNZjFlcuxuSpzP9wgrM8jNeVsUs39Pg3JnmEMCFIRA7AmgW+Lx057h4heSy7gpWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ksu/hS5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2irN1mmsBicJqxk5UzCF/RtKD7nEM4At2SyeAyCOjMvIXPf+xRI1rEkdtPAqYTQMFfg/1aSVDUyJjCpCkKHuRi1y9aiexzRo07KcZP4kfoPxTRll3PIfNgzhaMk7ZbiAaULZXoD/aN3bgFbU/57BWn7xb3c5R6cFrkZYu7R55U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSpsqjuo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ksu/hS5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ABC1F000E9;
-	Wed, 20 May 2026 16:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSpsqjuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A981F000E9;
+	Wed, 20 May 2026 16:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296263;
-	bh=/4UayRqN+N5WufoDfMVF3vWsLrCSXiqXrytoyy8s/A4=;
+	s=korg; t=1779296265;
+	bh=Yuwd/apIjHFVdvJRf3F2phYuQOjWZGdMloy8KZPPLOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ksu/hS5RhUQljLuz5QDUrb9badYP3wkKxSawhJ2LyrIvYX0seAd/geTaw53drdRsm
-	 KRuqtkYIVaICk5W87d5fafdIYQ//lic/MiKIyBHAVpzyxw6I3OCePSYmFGwzuSs4D3
-	 Ql6RKxKq3UwFgA0zYNGqRi1SLFg/+AHlvyWtHL7c=
+	b=bSpsqjuosPRwJ/NW4UYx3rZMNuGuxcfmqQmUNDe3du15YfaPzwWRXybxLNH0ZMvzX
+	 Fzs/hi2j+qSkiDzKkeI9dKi+wpaDtxLgxWc6Jv1059klQSZ0P2AVUKH0s+bFz9nRPF
+	 PhCvzaNGJrK/lqpr0amQVKraKijhlKRkZ/Gmti8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Petr Mladek <pmladek@suse.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0731/1146] lib/hexdump: print_hex_dump_bytes() calls print_hex_dump_debug()
-Date: Wed, 20 May 2026 18:16:21 +0200
-Message-ID: <20260520162204.748118815@linuxfoundation.org>
+Subject: [PATCH 7.0 0732/1146] f2fs: fix data loss caused by incorrect use of nat_entry flag
+Date: Wed, 20 May 2026 18:16:22 +0200
+Message-ID: <20260520162204.771729754@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,49 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 36776b7f8a8955b4e75b5d490a75fee0c7a2a7ef ]
+[ Upstream commit 238e14eb7226f883b72caccd2d37bf5707df066b ]
 
-print_hex_dump_bytes() claims to be a simple wrapper around
-print_hex_dump(), but it actally calls print_hex_dump_debug(), which
-means no output is printed if (dynamic) DEBUG is disabled.
+Data loss can occur when fsync is performed on a newly created file
+(before any checkpoint has been written) concurrently with a checkpoint
+operation. The scenario is as follows:
 
-Update the documentation to match the implementation.
+create & write & fsync 'file A'                 write checkpoint
+- f2fs_do_sync_file // inline inode
+ - f2fs_write_inode // inode folio is dirty
+                                                - f2fs_write_checkpoint
+                                                 - f2fs_flush_merged_writes
+                                                 - f2fs_sync_node_pages
+                                                 - f2fs_flush_nat_entries
+ - f2fs_fsync_node_pages // no dirty node
+ - f2fs_need_inode_block_update // return false
+ SPO and lost 'file A'
 
-Fixes: 091cb0994edd20d6 ("lib/hexdump: make print_hex_dump_bytes() a nop on !DEBUG builds")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/3d5c3069fd9102ecaf81d044b750cd613eb72a08.1774970392.git.geert+renesas@glider.be
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+f2fs_flush_nat_entries() sets the IS_CHECKPOINTED and HAS_LAST_FSYNC
+flags for the nat_entry, but this does not mean that the checkpoint has
+actually completed successfully. However, f2fs_need_inode_block_update()
+checks these flags and incorrectly assumes that the checkpoint has
+finished.
+
+The root cause is that the semantics of IS_CHECKPOINTED and
+HAS_LAST_FSYNC are only guaranteed after the checkpoint write fully
+completes.
+
+This patch modifies f2fs_need_inode_block_update() to acquire the
+sbi->node_write lock before reading the nat_entry flags, ensuring that
+once IS_CHECKPOINTED and HAS_LAST_FSYNC are observed to be set, the
+checkpoint operation has already completed.
+
+Fixes: e05df3b115e7 ("f2fs: add node operations")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/printk.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/f2fs/node.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/printk.h b/include/linux/printk.h
-index 54e3c621fec37..f594c1266bfd4 100644
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -815,7 +815,8 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
- #endif
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 9ff954952a151..a2ead811c3161 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -427,7 +427,9 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
+ 	struct f2fs_nm_info *nm_i = NM_I(sbi);
+ 	struct nat_entry *e;
+ 	bool need_update = true;
++	struct f2fs_lock_context lc;
  
- /**
-- * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
-+ * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
-+ *                        params
-  * @prefix_str: string to prefix each line with;
-  *  caller supplies trailing spaces for alignment if desired
-  * @prefix_type: controls whether prefix of an offset, address, or none
-@@ -823,7 +824,7 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
-  * @buf: data blob to dump
-  * @len: number of bytes in the @buf
-  *
-- * Calls print_hex_dump(), with log level of KERN_DEBUG,
-+ * Calls print_hex_dump_debug(), with log level of KERN_DEBUG,
-  * rowsize of 16, groupsize of 1, and ASCII output included.
-  */
- #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
++	f2fs_down_read_trace(&sbi->node_write, &lc);
+ 	f2fs_down_read(&nm_i->nat_tree_lock);
+ 	e = __lookup_nat_cache(nm_i, ino, false);
+ 	if (e && get_nat_flag(e, HAS_LAST_FSYNC) &&
+@@ -435,6 +437,7 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
+ 			 get_nat_flag(e, HAS_FSYNCED_INODE)))
+ 		need_update = false;
+ 	f2fs_up_read(&nm_i->nat_tree_lock);
++	f2fs_up_read_trace(&sbi->node_write, &lc);
+ 	return need_update;
+ }
+ 
 -- 
 2.53.0
 
