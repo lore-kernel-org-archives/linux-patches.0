@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691A63F1AC7;
-	Wed, 20 May 2026 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128473C6A5C;
+	Wed, 20 May 2026 17:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297242; cv=none; b=hlma4410Oh3mnHOTz+cBjW7wz/CF8pAd4gzXvbgziB5enhd1/ZgrhzHGxW8rPGZ62pxwEM+h1obA5SXdd4e2x/vIckgXzWRq4X15CVP+CJ2VF2BWyT0WrbC8DTWeEUbWU9ywuFeK2M81mATJmh1fcOGO+GggAsbo6f41NotC9ZA=
+	t=1779297245; cv=none; b=BUanjPQ0zRFtw63d+AVYlcbMt6THr7HOiwkczcaE0bj86u6x2Ty+VtK4AOgRz0nHLUfyDzn47IUuiIOETZgh8XbjjUcJkkAUjpOp9QM5nfbZpvU6uJ/kllei3FS9pQOCX/fPypvRHJujzOSDX8peTo7a5zIFq/C7czqFhdQ+a7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297242; c=relaxed/simple;
-	bh=Oi5buXI8eX+fVTl3A3kuSkyKMrVyTB/hEH19G5ZQlZo=;
+	s=arc-20240116; t=1779297245; c=relaxed/simple;
+	bh=OO5r/dUF++oaWjEym0HjQNWJoAXHKAhu5MaVpSQ38aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEP7Amu+i3HelQTQFxP0AmQcQ0/xeL1fOUtbfDk1mbFq1gWMwMsJ49G8A8SpQJREe1+NJvPOKVExJqm/WHeNK0b9fBOuGIJ8WbL0RgjW2SCsXUAPWIU6GtcAEWWN6KG3Om0yctWcWIfirqpsNnhXW2PMw2SCzRh0hDMpoDFp4aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPAZdvx6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HCYJeDKbdkMpAGnpqbuxCeUHA07KFLCE2GGCC1zSxO9/QGZXQ1kj7sDUm9/3F3AzooVWwS1Iy1INEfsV3geFtFtFbvz+6wLMxBnMj1GmcWIfDUiYQOF1imhz0cBjignrMybbUY0MU5cNipmYhzw6iK6R1aZad8vwsaMRCVXYbjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQxopLj+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPAZdvx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF5F1F000E9;
-	Wed, 20 May 2026 17:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQxopLj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782BB1F000E9;
+	Wed, 20 May 2026 17:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297241;
-	bh=rcrGGFrUWnGw1u+LoNBXHoavp3KUbrJxHrQhB0yv5uk=;
+	s=korg; t=1779297244;
+	bh=YWtGSxs4nlLtoR8iMM1mPvlholdixoDe5g/5kBH8qH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPAZdvx6D9deo0vsOgwVnAy2KE8efokofbqqYOeycUHcIdClMv47YB7c416m8CIIx
-	 aO9C0mZSgnfVAuv0QL42LW94r+FvXMQP3cVSonFxLY1cA8sFXYeknul6SO9VCDm6yj
-	 2BcI3FqHc4zEB4aeZSjYiH30anmpb6MX1sGnAl/E=
+	b=yQxopLj+03DRdRlvZBgmpYtoe9266Xi1ALdvrWEEzujDfs+T6icMpGpbUC+VyX6J5
+	 evcX2ABU2nqWwzWyJnPoegtcZMqOgH1RFUYWySCSoSrrGUvKG1/u4SMnttwiU8JbcL
+	 nvencTwDI8MKci4u6UM7Ey5ouGg4sUX1msPS8bbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
+	Scott Mayhew <smayhew@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.0 1105/1146] nfsd: fix GET_DIR_DELEGATION when VFS leases are disabled
-Date: Wed, 20 May 2026 18:22:35 +0200
-Message-ID: <20260520162213.252357435@linuxfoundation.org>
+Subject: [PATCH 7.0 1106/1146] nfsd: fix file change detection in CB_GETATTR
+Date: Wed, 20 May 2026 18:22:36 +0200
+Message-ID: <20260520162213.275112920@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,46 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-commit b0bf14546bcefa4ea49f5efcd7db2a99f0cabde9 upstream.
+commit 304d81a2fbf2b454def4debcb38ea173911b72cd upstream.
 
-When leases are disabled on the server, running xfstest generic/309 leads
-to an error because GET_DIR_DELEGATION returns EINVAL.
+RFC 8881, section 10.4.3 doesn't say anything about caching the file
+size in the delegation record, nor does it say anything about comparing
+a cached file size with the size reported by the client in the
+CB_GETATTR reply for the purpose of determining if the client holds
+modified data for the file.
 
-nfsd_get_dir_deleg() can fail in several ways: like memory allocation and
-unable to get a lease because either leases are disable or it's already
-held. Currently only the condition "already held" is translated to
-returning directory-delegation-is-unavailable error. However, other failure
-conditions are likely temporary and thus should result in the same kind
-of error.
+What section 10.4.3 of RFC 8881 does say is that the server should
+compare the *current* file size with the size reported by the client
+holding the delegation in the CB_GETATTR reply, and if they differ to
+treat it as a modification regardless of the change attribute retrieved
+via the CB_GETATTR.
 
-Fixes: 8b99f6a8c116 ("nfsd: wire up GET_DIR_DELEGATION handling")
+Doing otherwise would cause the server to believe the client holding the
+delegation has a modified version of the file, even if the client
+flushed the modifications to the server prior to the CB_GETATTR.  This
+would have the added side effect of subsequent CB_GETATTRs causing
+updates to the mtime, ctime, and change attribute even if the client
+holding the delegation makes no further updates to the file.
+
+Modify nfsd4_deleg_getattr_conflict() to obtain the current file size
+via i_size_read().  Retain the ncf_cur_fsize field, since it's a
+convenient way to return the file size back to nfsd4_encode_fattr4(),
+but don't use it for the purpose of detecting file changes.  Remove the
+unnecessary initialization of ncf_cur_fsize in nfs4_open_delegation().
+
+Also, if we recall the delegation (because the client didn't respond to
+the CB_GETATTR), then skip the logic that checks the nfs4_cb_fattr
+fields.
+
+Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/nfsd/nfs4state.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 85e94c30285a..2797da8cc950 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2535,10 +2535,6 @@ nfsd4_get_dir_delegation(struct svc_rqst *rqstp,
- 	dd = nfsd_get_dir_deleg(cstate, gdd, nf);
- 	nfsd_file_put(nf);
- 	if (IS_ERR(dd)) {
--		int err = PTR_ERR(dd);
--
--		if (err != -EAGAIN)
--			return nfserrno(err);
- 		gdd->gddrnf_status = GDD4_UNAVAIL;
- 		return nfs_ok;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6368,7 +6368,6 @@ nfs4_open_delegation(struct svc_rqst *rq
+ 		}
+ 		open->op_delegate_type = deleg_ts ? OPEN_DELEGATE_WRITE_ATTRS_DELEG :
+ 						    OPEN_DELEGATE_WRITE;
+-		dp->dl_cb_fattr.ncf_cur_fsize = stat.size;
+ 		dp->dl_cb_fattr.ncf_initial_cinfo = nfsd4_change_attribute(&stat);
+ 		dp->dl_atime = stat.atime;
+ 		dp->dl_ctime = stat.ctime;
+@@ -9417,11 +9416,15 @@ nfsd4_deleg_getattr_conflict(struct svc_
+ 		if (status != nfserr_jukebox ||
+ 		    !nfsd_wait_for_delegreturn(rqstp, inode))
+ 			goto out_status;
++		status = nfs_ok;
++		goto out_status;
++	}
++	if (!ncf->ncf_file_modified) {
++		if (ncf->ncf_initial_cinfo != ncf->ncf_cb_change)
++			ncf->ncf_file_modified = true;
++		else if (i_size_read(inode) != ncf->ncf_cb_fsize)
++			ncf->ncf_file_modified = true;
  	}
--- 
-2.54.0
-
+-	if (!ncf->ncf_file_modified &&
+-	    (ncf->ncf_initial_cinfo != ncf->ncf_cb_change ||
+-	     ncf->ncf_cur_fsize != ncf->ncf_cb_fsize))
+-		ncf->ncf_file_modified = true;
+ 	if (ncf->ncf_file_modified) {
+ 		int err;
+ 
 
 
