@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9895A375ACB;
-	Wed, 20 May 2026 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E70372B31;
+	Wed, 20 May 2026 16:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295969; cv=none; b=DxcvP5tQl3IJRQMhWL5Om97qZZi6S2TgXeMSzifflQgqbHQNWCRZWy4o7c/WjMdqM6N0cjn7hHo/Y0InemiIWznhqbCBF9lRUonz4moCqsThmNuCAvynCGtJqRxxTSJjGSAqi9POUp4w+QZH7V7Gv4aAj5ln8tMB/2Hk1ikaX4g=
+	t=1779295971; cv=none; b=N/gTzzk/mFiGF34JOZM6T3PzxmHJnZ4P+WH0qOkatoluVtMA8lCpwmqRWAmmastuon6cEiIRz8BITjSO8J5w+KrHY634pciMy+6ekOXu2W/y+OeaEqWyzT3QzoUFkdtso44b66MRs5IBfE3Kj21ICS6zBz4kKi/2qo7HMaQkAis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295969; c=relaxed/simple;
-	bh=OxMaLyYF9XlM0xbgJl3CPGMvTWd84Fz09a0bTbc+RJE=;
+	s=arc-20240116; t=1779295971; c=relaxed/simple;
+	bh=n0H50bmamBUehvnTNWJXsVmniQmf8s0mHxejOWrZigw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FG956FVMTmRHKtZBeyqKDiKqXsGgMBkdHhMQ4ZV1dhzBfec8lLGjODxOjTW5gin8OoH4iRFhDgOj9j978zfpPMks8axQC8LCWBjyhgMe0pkQ3bY9u/jPEKiP8PMj+2WWjN2TcBu7XabUItd2hVnseOFMoBwt9zfRhEyO/KCw4UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ej35Iua; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PBEWbRAVmIwLNboEijZnLtcoMkMpPjkJzoUU7bfTO3mFoCCV5+wp/Ob/G1YJjD6eI04CnyNumLvFz9/LUsZ+0J5E/oIuWktotfAaC9xM5kfTmG35M9Jgdx+HtnrqRTKeeMaX6dlmyrYYJUf5MObeCx8K7O1IA9DxkES98bkNXds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEUVBJOj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ej35Iua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E831F00893;
-	Wed, 20 May 2026 16:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEUVBJOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472D71F000E9;
+	Wed, 20 May 2026 16:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295968;
-	bh=B4WTfLDTBEA9MPDiMFG/ololhJymYIkxM6ro5UbMFv8=;
+	s=korg; t=1779295970;
+	bh=Wn95Ba/PWkRDBaiXM0PdaY7b3fTJuLj6i6XhKJoYSY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Ej35IuavPra00iKMHZG2SORh7mfSgPkvQK6gyqjVsuuLn7c7jrU/cGHV5MYCsBdD
-	 xo+53GpBH4/DfepStzVYeq4RZ1bUoyn8rNbaYayrIMKNQ53CtMrl5GHxETp8UC8SES
-	 s/mGRtMx0VMqlzwEReQVgqHcMWK8XEGQoYpVO+KE=
+	b=KEUVBJOjHCqbs8NZYvg9ywcD9UOvZxnQ6dSZ4VSKxnxQNfIMgJPFKpiDvuwq2nzt8
+	 /it2I8+nwt/id4JxI5jVqJnLqOqavyYGf30RX+xSZQHHWFLFvj6mrypyCMTBIf2q49
+	 LBkZsxnDi8OJPZn4nh8tAj2r2O97XEjFAGP5RM84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	wangguangju <wangguangju@hygon.cn>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0604/1146] ext4: fix miss unlock sb->s_umount in extents_kunit_init()
-Date: Wed, 20 May 2026 18:14:14 +0200
-Message-ID: <20260520162201.848335554@linuxfoundation.org>
+Subject: [PATCH 7.0 0622/1146] perf trace: Fix IS_ERR() vs NULL check bug
+Date: Wed, 20 May 2026 18:14:32 +0200
+Message-ID: <20260520162202.259760360@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,52 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: wangguangju <wangguangju@hygon.cn>
 
-[ Upstream commit 5941a072d48841255005e3a5b5a620692d81d1a7 ]
+[ Upstream commit 96f202eab8133f94479b14a32902c636e9bdf6af ]
 
-There's warning as follows when do ext4 kunit test:
-WARNING: kunit_try_catch/15923 still has locks held!
-7.0.0-rc3-next-20260309-00028-g73f965a1bbb1-dirty #281 Tainted: G            E    N
-1 lock held by kunit_try_catch/15923:
- #0: ffff888139f860e0 (&type->s_umount_key#70/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x172/0xa90
-Call Trace:
- <TASK>
- dump_stack_lvl+0x180/0x1b0
- debug_check_no_locks_held+0xc8/0xd0
- do_exit+0x1502/0x2b20
- kthread+0x3a9/0x540
- ret_from_fork+0xa76/0xdf0
- ret_from_fork_asm+0x1a/0x30
+The alloc_syscall_stats() function always returns an error pointer
+(ERR_PTR) on failure.
 
-As sget() will return 'sb' which holds 's->s_umount' lock. However,
-"extents-test" miss unlock this lock.
-So unlock 's->s_umount' in the end of extents_kunit_init().
+So replace NULL check with IS_ERR() check after calling
+delete_syscall_stats() function.
 
-Fixes: cb1e0c1d1fad ("ext4: kunit tests for extent splitting and conversion")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20260330133035.287842-2-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: ef2da619b132c6f74 ("perf trace: Convert syscall_stats to hashmap")
+Signed-off-by: wangguangju <wangguangju@hygon.cn>
+Reviewed-by: Howard Chu <howardchu95@gmail.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents-test.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/builtin-trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents-test.c b/fs/ext4/extents-test.c
-index 5496b2c8e2cd3..82c59291e0458 100644
---- a/fs/ext4/extents-test.c
-+++ b/fs/ext4/extents-test.c
-@@ -309,6 +309,8 @@ static int extents_kunit_init(struct kunit *test)
- 	kunit_activate_static_stub(test, ext4_ext_zeroout, ext4_ext_zeroout_stub);
- 	kunit_activate_static_stub(test, ext4_issue_zeroout,
- 				   ext4_issue_zeroout_stub);
-+	up_write(&sb->s_umount);
-+
- 	return 0;
- }
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 311d9da9896a4..295b272c6c299 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1573,7 +1573,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
+ 	struct hashmap_entry *pos;
+ 	size_t bkt;
  
+-	if (syscall_stats == NULL)
++	if (IS_ERR(syscall_stats))
+ 		return;
+ 
+ 	hashmap__for_each_entry(syscall_stats, pos, bkt)
 -- 
 2.53.0
 
