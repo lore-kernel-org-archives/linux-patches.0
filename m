@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E53318EC7;
-	Wed, 20 May 2026 16:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0E4351C2F;
+	Wed, 20 May 2026 16:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295906; cv=none; b=re0JmqlmU6fgE4uE+aFXwHLQv79HkH9TenwCwrEHd1nH+mx4FDTBLbe6KSW0rLcsScz4+uS4hiFSH0PAiG1yzeECVk5W76gFezzVqjQtV94eps0LhSrDvQFcYQU/mngxV6Fx/vp8vpFIPV9HgOFnDaoFU11EepthCaD+XststZo=
+	t=1779295908; cv=none; b=osoco2EBmlyM/Xbip4ssxnq0pCMuskQgEp3vkym/OAq71aSnkvfKDJARcV7okuqNeB/1belc0fYdRXD48LtokhbKRehYCA9qPMqKcXSbNspcztJOPWeYCBivxKnHGCM0a4WXO5SphDmawzcmQT7lWyVl+DrkWYBiFz6+j/f8r6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295906; c=relaxed/simple;
-	bh=KGoXQ5AeUOV5exb0cr+tMuLTb1cTWbjzPOMQoy4KJqA=;
+	s=arc-20240116; t=1779295908; c=relaxed/simple;
+	bh=LtQiVsdjqpoSxOts/QWSR0j8lS+ZXxw9zrGQmXvPw2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/LogoKKiefJw97MWIw87/mBoBdffQu/upgQ09APzuLkx8Nd7LKzcd3rcDBTBMQepy3F6bodfGTppuu40u0NQYhAWxJ88wplT/NO5uIiceIXkiyPNFqfQisz5iyW2r6yecTPKsG5qgpkb8HBVjTz0ivx0nh9lmSuZ7n++LKXNIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4C+N1K3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s8QtPbsB2q/jVGPOkCrflYIIJBC2EnVVLQMMNGnnLMQhdZN6u1MjQfF8GZe45a6L6GQeQUO0o6FRRZtw2hCkjkjMFpYgKW1Qcv7iBIy+s3QjqJ92BDE9c7+eu09adwxPV/DPVZ/eLZrTJ3JHdXDxvq1Rl7jmEirXo2XjiE5Lf6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJ7WSeGe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4C+N1K3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93ACE1F000E9;
-	Wed, 20 May 2026 16:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJ7WSeGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA491F000E9;
+	Wed, 20 May 2026 16:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295905;
-	bh=mIrtKPOB8lHnmfZEeAHSo3FdzR/8lx3dmV5cUZPtgk4=;
+	s=korg; t=1779295907;
+	bh=vsEzOc2vyGXG8M8quEH7GJ54PTzJ/GgSUIjNKLh4V6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F4C+N1K3dA7rHQWBXZ2BC6D4L1dQj2qEHSYtEPK6HyYzBUR7Dr2L2tlsp+mHmXRHp
-	 YlHlkU92PkJP2Ofm/3Lj4IPG1vNyazjWPzrAEguA9SPljEfFGPJyfoTOB8l47/oEGx
-	 WyDd8xAFHwk1KTmcM4PLDWZF3raT4fE4R0nQq+fQ=
+	b=UJ7WSeGez5KogibqyLeVgSkMvBWaM9p0KJN3ONtNuSuM+gvQ1s1aB68tsDkRT9Bv7
+	 FGJgWeBJl90zew/6CXUHfYWb1++XY8DPJ9vvyV6oYPdXOkaSdPwKZlLAGIXrc3eNCZ
+	 glDbcLPuQSBfh8MRGih7rN85c+9a+NWR2t6lXjK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
 	Michael Walle <mwalle@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0596/1146] mtd: spi-nor: micron-st: add SNOR_CMD_PP_8_8_8_DTR sfdp fixup for mt35xu512aba
-Date: Wed, 20 May 2026 18:14:06 +0200
-Message-ID: <20260520162201.666084030@linuxfoundation.org>
+Subject: [PATCH 7.0 0597/1146] mtd: spi-nor: swp: check SR_TB flag when getting tb_mask
+Date: Wed, 20 May 2026 18:14:07 +0200
+Message-ID: <20260520162201.688299275@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,54 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 6d660fba6a32a34ad7d746d7f65317831daaf033 ]
+[ Upstream commit 94645aa41bf9ecb87c2ce78b1c3405bfb6074a37 ]
 
-Find two batches mt35xu512aba has different SFDP but with same
-jedec ID. The batch which use the new version of SFDP contain
-all the necessary information to support OCT DTR mode. The batch
-with old version do not contain the OCT DTR command information,
-but in fact it did support OCT DTR mode.
+When the chip does not support top/bottom block protect, the tb_mask
+must be set to 0, otherwise SR1 bit5 will be unexpectedly modified.
 
-Current mt35xu512aba_post_sfdp_fixup() add some setting including
-SNOR_CMD_READ_8_8_8_DTR, but still lack SNOR_CMD_PP_8_8_8_DTR. Meet
-issue on the batch mt35xu512aba with old SFDP version. Because no
-SNOR_CMD_PP_8_8_8_DTR, micron_st_nor_octal_dtr_en() will not be
-called, then use SNOR_CMD_READ_8_8_8_DTR will meet issue.
-
-Fixes: 44dd635cd632 ("mtd: spi-nor: micron-st: use SFDP of mt35xu512aba")
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
 Reviewed-by: Michael Walle <mwalle@kernel.org>
-[pratyush@kernel.org: touch up the comment a bit]
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/micron-st.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mtd/spi-nor/swp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/micron-st.c b/drivers/mtd/spi-nor/micron-st.c
-index 88033384a71e5..b2b473501d023 100644
---- a/drivers/mtd/spi-nor/micron-st.c
-+++ b/drivers/mtd/spi-nor/micron-st.c
-@@ -167,6 +167,16 @@ static int mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
- 				  0, 20, SPINOR_OP_MT_DTR_RD,
- 				  SNOR_PROTO_8_8_8_DTR);
+diff --git a/drivers/mtd/spi-nor/swp.c b/drivers/mtd/spi-nor/swp.c
+index 9b07f83aeac76..e67a81dbb6bf6 100644
+--- a/drivers/mtd/spi-nor/swp.c
++++ b/drivers/mtd/spi-nor/swp.c
+@@ -28,8 +28,10 @@ static u8 spi_nor_get_sr_tb_mask(struct spi_nor *nor)
+ {
+ 	if (nor->flags & SNOR_F_HAS_SR_TB_BIT6)
+ 		return SR_TB_BIT6;
+-	else
++	else if (nor->flags & SNOR_F_HAS_SR_TB)
+ 		return SR_TB_BIT5;
++	else
++		return 0;
+ }
  
-+	/*
-+	 * Some batches of mt35xu512aba do not contain the OCT DTR command
-+	 * information, but do support OCT DTR mode. Add the settings for
-+	 * SNOR_CMD_PP_8_8_8_DTR here. This also makes sure the flash can switch
-+	 * to OCT DTR mode.
-+	 */
-+	nor->params->hwcaps.mask |= SNOR_HWCAPS_PP_8_8_8_DTR;
-+	spi_nor_set_pp_settings(&nor->params->page_programs[SNOR_CMD_PP_8_8_8_DTR],
-+				SPINOR_OP_PP_4B, SNOR_PROTO_8_8_8_DTR);
-+
- 	nor->cmd_ext_type = SPI_NOR_EXT_REPEAT;
- 	nor->params->rdsr_dummy = 8;
- 	nor->params->rdsr_addr_nbytes = 0;
+ static u64 spi_nor_get_min_prot_length_sr(struct spi_nor *nor)
 -- 
 2.53.0
 
