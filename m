@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D7933CEA2;
-	Wed, 20 May 2026 18:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84912272E56;
+	Wed, 20 May 2026 18:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301992; cv=none; b=ThhLDs9B53iZV7835T4uI8Q9AIXYFRbdGcRWdaMNSV+Xj7e/zj0SJl01BFAtMji0OuFwQ5A+2J4mzR6SWa4IDIbLVEZoO0gGfT1jSr9aPGj+cQoYBSzoLeTgKhhTJ+AiQTy5PhNdhkKaAZJ0TK4taF3m1cjnhcxSaI5/s2gUFo4=
+	t=1779301994; cv=none; b=K4fNgqXaSyhTVbeIzwZY5tyh30QXV4D42xwQ5rwnJyhB7sEiWjTlaBXFFdvB415r8vJqxEiyovKrQ/bbPvboAdDfZ24+MLcE985D3IDDx+w2xPUk51cV+xIfUC9Jtscqfknh48WEXXmKfV9GBrZNLojawCZLUMql64UJ3WcPdaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301992; c=relaxed/simple;
-	bh=fFvqWqiFWihi0YTThMMbjOq8kytY7sQE5hpS0iUQhhw=;
+	s=arc-20240116; t=1779301994; c=relaxed/simple;
+	bh=AXMv0Ga7JblV/VX2/2qhjxQFnCVs2BJT9/GDyY0UgRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUVXXm6oIfqp0CS4rP+rJ5bgnaHKh4GrRSVFaAZ1fV8i1Sc0BgUcGudD/xuCGH+ofBvUxcD47xI/xwvfxmSyasKWlVcyRkCg5B0EDh2KKtANbJVfSWiT15lN7urugNPSVQ5Yon2Bv9p+NM0PhMSJoIaXHCiiDYNc/asTLb/RPdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0e3hJ9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3hmW6efxZdjR9Ye411Nz/6TAQ3cS5obiyPnjXLJpRT/NsPzfrdg/us1MTPvfrjXmjDqo/H3uKzYvTlGWwt4LwrP75R9T7O1WvX8GaPYcnFULcZXyL+bn2Wc38DpxrdLSRINDRrHqasg/dyDpMgT4gjBHoxpATq3WIuCT+ourE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mooOdtt4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0e3hJ9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AB21F00893;
-	Wed, 20 May 2026 18:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mooOdtt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE68A1F000E9;
+	Wed, 20 May 2026 18:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301990;
-	bh=NoCk5rxpSldERgVJMPZjMKCqDDFw69en8J6EF9Trbk4=;
+	s=korg; t=1779301993;
+	bh=vlIq1GQKY/bmS5dktZv6h4UDDDbO2+1kDmxggduW9fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w0e3hJ9qZGVgXaC0/o9o0kkm0DXsIRyr9BcvJOu9jTy+i2O5U8NNv+E0O7h98v4BS
-	 M1GV/rrUQWQtV45XfZrLuJep6z6x9cMl/HGV7j/mkzWGopQxz57a5rzQW8IAOw9Oei
-	 Qf60exD4Ypqv70MAmmgSarBEVL9eVgICZuiOGCkE=
+	b=mooOdtt4U+wWd+iDS77B3d6SFKNVBaroovN/8al9Z4T32auwuGKeeKMkqbPoNcMmg
+	 OaZjAICyu8ZbfliOHV31QPoD/zp6QAiONqICUvc2A8pMQX1OzD9RPqB4Y/u7kCj0vV
+	 teaKHL49I2C2BEvg9QiOn0b+aBTxaDVyyFAE5T5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/508] dm cache: fix dirty mapping checking in passthrough mode switching
-Date: Wed, 20 May 2026 18:18:40 +0200
-Message-ID: <20260520162100.716906923@linuxfoundation.org>
+Subject: [PATCH 6.6 098/508] platform/chrome: chromeos_tbmc: Drop wakeup source on remove
+Date: Wed, 20 May 2026 18:18:41 +0200
+Message-ID: <20260520162100.738374665@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,149 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 322586745bd1a0e5f3559fd1635fdeb4dbd1d6b8 ]
+[ Upstream commit 5d441a4bc93642ed6f41da87327a39946b4e1455 ]
 
-As mentioned in commit 9b1cc9f251af ("dm cache: share cache-metadata
-object across inactive and active DM tables"), dm-cache assumed table
-reload occurs after suspension, while LVM's table preload breaks this
-assumption. The dirty mapping check for passthrough mode was designed
-around this assumption and is performed during table creation, causing
-the check to fail with preload while metadata updates are ongoing. This
-risks loading dirty mappings into passthrough mode, resulting in data
-loss.
+The wakeup source added by device_init_wakeup() in chromeos_tbmc_add()
+needs to be dropped during driver removal, so add a .remove() callback
+to the driver for this purpose.
 
-Reproduce steps:
-
-1. Create a writeback cache with zero migration_threshold to produce
-   dirty mappings
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
-2 migration_threshold 0"
-
-2. Preload a table in passthrough mode
-
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-
-3. Write to the first cache block to make it dirty
-
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-4. Resume the inactive table. Now it's possible to load the dirty block
-   into passthrough mode.
-
-dmsetup resume cache
-
-Fix by moving the checks to the preresume phase to support table
-preloading. Also remove the unused function dm_cache_metadata_all_clean.
-
-Fixes: 2ee57d587357 ("dm cache: add passthrough mode")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 0144c00ed86b ("platform/chrome: chromeos_tbmc: Report wake events")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/6151957.MhkbZ0Pkbq@rafael.j.wysocki
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-metadata.c | 11 -----------
- drivers/md/dm-cache-metadata.h |  5 -----
- drivers/md/dm-cache-target.c   | 25 ++++++++-----------------
- 3 files changed, 8 insertions(+), 33 deletions(-)
+ drivers/platform/chrome/chromeos_tbmc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index acffed750e3ed..c9d13a30ce86d 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1756,17 +1756,6 @@ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *
- 	return r;
+diff --git a/drivers/platform/chrome/chromeos_tbmc.c b/drivers/platform/chrome/chromeos_tbmc.c
+index d1cf8f3463ce3..e248567c0a182 100644
+--- a/drivers/platform/chrome/chromeos_tbmc.c
++++ b/drivers/platform/chrome/chromeos_tbmc.c
+@@ -95,6 +95,11 @@ static int chromeos_tbmc_add(struct acpi_device *adev)
+ 	return 0;
  }
  
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result)
--{
--	int r;
--
--	READ_LOCK(cmd);
--	r = blocks_are_unmapped_or_clean(cmd, 0, cmd->cache_blocks, result);
--	READ_UNLOCK(cmd);
--
--	return r;
--}
--
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd)
- {
- 	WRITE_LOCK_VOID(cmd);
-diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
-index 57afc70479472..24e4af14fcca4 100644
---- a/drivers/md/dm-cache-metadata.h
-+++ b/drivers/md/dm-cache-metadata.h
-@@ -138,11 +138,6 @@ void dm_cache_dump(struct dm_cache_metadata *cmd);
-  */
- int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *p);
- 
--/*
-- * Query method.  Are all the blocks in the cache clean?
-- */
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result);
--
- int dm_cache_metadata_needs_check(struct dm_cache_metadata *cmd, bool *result);
- int dm_cache_metadata_set_needs_check(struct dm_cache_metadata *cmd);
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 77953a171860e..8db906ea3bef0 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2510,23 +2510,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 		goto bad;
- 	}
- 
--	if (passthrough_mode(cache)) {
--		bool all_clean;
--
--		r = dm_cache_metadata_all_clean(cache->cmd, &all_clean);
--		if (r) {
--			*error = "dm_cache_metadata_all_clean() failed";
--			goto bad;
--		}
--
--		if (!all_clean) {
--			*error = "Cannot enter passthrough mode unless all blocks are clean";
--			r = -EINVAL;
--			goto bad;
--		}
--
-+	if (passthrough_mode(cache))
- 		policy_allow_migrations(cache->policy, false);
--	}
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
-@@ -2852,6 +2837,12 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	struct cache *cache = context;
- 
- 	if (dirty) {
-+		if (passthrough_mode(cache)) {
-+			DMERR("%s: cannot enter passthrough mode unless all blocks are clean",
-+			      cache_device_name(cache));
-+			return -EBUSY;
-+		}
++static void chromeos_tbmc_remove(struct acpi_device *adev)
++{
++	device_init_wakeup(&adev->dev, false);
++}
 +
- 		set_bit(from_cblock(cblock), cache->dirty_bitset);
- 		atomic_inc(&cache->nr_dirty);
- 	} else
-@@ -3085,7 +3076,7 @@ static int cache_preresume(struct dm_target *ti)
- 					   load_filtered_mapping, cache);
- 		if (r) {
- 			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			if (r != -EFBIG)
-+			if (r != -EFBIG && r != -EBUSY)
- 				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
- 			return r;
- 		}
+ static const struct acpi_device_id chromeos_tbmc_acpi_device_ids[] = {
+ 	{ ACPI_DRV_NAME, 0 },
+ 	{ }
+@@ -110,6 +115,7 @@ static struct acpi_driver chromeos_tbmc_driver = {
+ 	.ids = chromeos_tbmc_acpi_device_ids,
+ 	.ops = {
+ 		.add = chromeos_tbmc_add,
++		.remove = chromeos_tbmc_remove,
+ 		.notify = chromeos_tbmc_notify,
+ 	},
+ 	.drv.pm = &chromeos_tbmc_pm_ops,
 -- 
 2.53.0
 
