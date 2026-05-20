@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2122936A376;
-	Wed, 20 May 2026 17:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C930BF68;
+	Wed, 20 May 2026 17:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298000; cv=none; b=MZhDO7YF05edDWLsJsVbglQZfFiMaHqX1KgjWJfrJ5GkYnw4TWd0ftLjTIla/BTj00F/vUYgv2lZgGmUMzd2tII3/DEG6v8h5U+55hYsCUJRKcD3RZ0oLmw5SHk7IBsz19nhE1GdAGKbSaO7USgX9TNTJ+wsRTYbHAkvh1ZZlms=
+	t=1779298002; cv=none; b=ue2JNICAM04z60nn1CBczMjJ6QsL2Q+y+yx327i7O8KlvKL5WE32ednBmRYq/bxAccPlA7M2A1sg5EyqcCVcQ2l3fJL+e3tz+DFeVHALoOlPflIyEWeUi+0r2xt7eEkXBBiTmlLmZlxpBEJrSjz0LkZFfypqgG5wo+e1tgXFRTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298000; c=relaxed/simple;
-	bh=356qkZ5ww+gdSCfqh7/PHauFGoyl88sky/qYSvq5xRM=;
+	s=arc-20240116; t=1779298002; c=relaxed/simple;
+	bh=YSWTIf81w4phPR1TMLq5G3sZ0FLBQzBaXiQm70Eay3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUPQYwaUU7FvuWh6a9H7ZQgU8L1bmynIKV6arrYDGDWyLcKxipHrL9jUB3E8uTk7YtUnhGBTb4REKNG/BkouYLuaHhpcEH2SWIB9cbFKRtKP4Uamj1o/+8UvP3/9+1WsyngMVZHAgNcMCR4J2iinfcRsIDdJxPHWHCuFvw5QISw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC1AWD0C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=miTKEl/vIlzbeF3pw6bpcWDaiP1ncD+NJ94yzwgLI9pt5wwuRwoeP1fSLh4LLSAOs5TDM8CLAIjW1hgeqA2d1RON+lRqpJxHIEhCnkRtsQSP9XlScXs7T0Wg73oPuGdmlWy3um8c+EO3pUIqEHwMnlJ2FSCsN4JFU2GpsE6F5a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+6ylQhj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC1AWD0C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8637A1F000E9;
-	Wed, 20 May 2026 17:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+6ylQhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298371F000E9;
+	Wed, 20 May 2026 17:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297999;
-	bh=swv0K8T4OveL+N5ANKX0y7e/s+3hqFGz4TyCssPkh9k=;
+	s=korg; t=1779298001;
+	bh=Ei8oXE0+mbWkhiroJU5mjay1fFcSbWiByk6DEFsarvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KC1AWD0Cb5rNnupfrbY22Sj10yYJwlP9ssh67diDSVrud4uCyj4ilsw5CvrPALeTm
-	 VvYAkeu+fsca0VS+37nix9xwoXE4aOWd9qbolFPynZ7xdva7Ei2KnU5c6DWnbIExow
-	 Wu/kophmZ0/DvKCokHrRyZJtWGtREOjs2rsZAXmQ=
+	b=N+6ylQhjiScyXiHY0sraHEkyZiFSU7Sc0JgWp+TJbmU8/pXUmrQhsMYX7t0EWSiKW
+	 8eUBQyd9RpTBE5punZxFxNzfE34KsYV9Pg2mS/g9RIUCuzGvKygj/64N946jfbilas
+	 a9u7glwXKQ/zinaPREIJiSX/18i0QUzDfp1tE6ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 244/957] drm/msm/dpu: dont try using 2 LMs if only one DSC is available
-Date: Wed, 20 May 2026 18:12:07 +0200
-Message-ID: <20260520162139.834557728@linuxfoundation.org>
+Subject: [PATCH 6.18 218/957] drm/amd/pm: Fix xgmi max speed reporting
+Date: Wed, 20 May 2026 18:11:41 +0200
+Message-ID: <20260520162139.268479625@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit b9699dd862760e642807a2bc226e4d127e35dcb7 ]
+[ Upstream commit da16822ce5c32b5aca848eaea521936d4410d48c ]
 
-Current topology code will try using 2 LMs with just one DSC, which
-breaks cases like SC7280 / Fairphone5. Forbid using 2 LMs split in such
-a case.
+Fix XGMI max bitrate/width reporting on SMUv13.0.12 SOCs. The data
+format got changed when moved to static table from dynamic metrics
+table.
 
-Fixes: 1ce69c265a53 ("drm/msm/dpu: move resource allocation to CRTC")
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Closes: https://lore.kernel.org/r/DH1IKLU0YZYU.2SW4WYO7H3H4R@fairphone.com/
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
-Patchwork: https://patchwork.freedesktop.org/patch/712386/
-Link: https://lore.kernel.org/r/20260317-fix-3d-dsc-v1-1-88b54f62f659@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 1bec2f270766 ("drm/amd/pm: Fetch SMUv13.0.12 xgmi max speed/width")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 2f8156051d9b0..6f5d90b7ba7d4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1354,7 +1354,8 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 		topology.num_lm = 2;
- 	else if (topology.num_dsc == 2)
- 		topology.num_lm = 2;
--	else if (dpu_kms->catalog->caps->has_3d_merge)
-+	else if (dpu_kms->catalog->caps->has_3d_merge &&
-+		 topology.num_dsc == 0)
- 		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
- 	else
- 		topology.num_lm = 1;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c
+index cb3fea9e8cf31..72d56cfd9d287 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c
+@@ -248,8 +248,9 @@ static void smu_v13_0_12_init_xgmi_data(struct smu_context *smu,
+ 	int ret;
+ 
+ 	if (smu_table->tables[SMU_TABLE_SMU_METRICS].version >= 0x13) {
+-		max_width = (uint8_t)static_metrics->MaxXgmiWidth;
+-		max_speed = (uint16_t)static_metrics->MaxXgmiBitrate;
++		max_width = (uint8_t)SMUQ10_ROUND(static_metrics->MaxXgmiWidth);
++		max_speed =
++			(uint16_t)SMUQ10_ROUND(static_metrics->MaxXgmiBitrate);
+ 		ret = 0;
+ 	} else {
+ 		MetricsTable_t *metrics = (MetricsTable_t *)smu_table->metrics_table;
 -- 
 2.53.0
 
