@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995E03859FA;
-	Wed, 20 May 2026 17:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F534233933;
+	Wed, 20 May 2026 17:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299304; cv=none; b=q6fj6x6z0xCX7Qes4dVr+8nR+vIX1YzlliQ4lBMpkkgmCFdG1oGrOimC+ARZnYb0Q6IvSZPfg8DuRfkGf80zjc312D+SsMT5tcRnQvbimXKwhMzcFeH/Mv9MacicRjdiWLFme/jDJT/GsbP+QTUXxm+mJrYDL7klYVOas/szV2s=
+	t=1779299307; cv=none; b=IN1ZSZ1foi3NVq7lY8ECyLcnCwdMy14HQE1b7WwfXAIXb0W9hdoEqs6bGNIFkGabatlW8jbISBvVIlcWVcUCYGPDwzeG8t+2x8y9ASi/8VhvwIhh6B3hwsgLB94sm8rk5WzNEilV5bHGaZtEHa3Op4qBfbrml3SaXXfIeSM/Jw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299304; c=relaxed/simple;
-	bh=K2MwOvqock+M/iGY2s7QabffbkvGAzVOf2zMN3SZ1MQ=;
+	s=arc-20240116; t=1779299307; c=relaxed/simple;
+	bh=9/n36nBzxjdu6UWZyuR0w5px93nasx1sSXaI4/FUmAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYMi4HuffH9X0PjD3FNDhhsPPgeHVTFr7VmofqK8cxPgSC2h8zWyCho8NoXOxLzewTvviX+7q340T7VEOixY8QIy8AOk9HajcufM+ESBTrak/dpQjvgpvfYRhs7OVWoIrzIt3uqJKVoV+GRJF8LJnSh0A5KpHjZ5Wd/zscIbWyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obt3au2V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pRpS5YuBpHRuRzudr9tZJSOQqHaG3cdynnNtaxv+fa9wV983Oj29LXSI9c4b+FhwsLdhpDfIV3VcXO8uvpeEfjFzkdNfE5mCN+Nz+a4VmvbbTDAgpua90ZJtfwLPKB1t8LsKJjU3DopoqxDZLFvjrvs3/8xr1y1rCYOaJiSEgTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNTMTdYb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obt3au2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B747A1F000E9;
-	Wed, 20 May 2026 17:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNTMTdYb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5CC1F000E9;
+	Wed, 20 May 2026 17:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299303;
-	bh=j69j3J3kZ4qfdLaXFouiBMBxRmB2imSHhVP+uVHef2Q=;
+	s=korg; t=1779299305;
+	bh=4YckN3UlHOLT4YqMNgnixF/unYWcwmzRHLD3xMWttzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obt3au2Vthlum47us3kMX0JJosy3IkSCD06PFpjHYO+zeyhKlW0K/pOdnHO+9RilR
-	 nRL+we+AXQj0VXZtfm4gE6hhOovLj0msoetAd7u5jEmBb03C9arg2agUrbY46p8cL9
-	 ET/xP5+8dpKzVil2sqNM+atn8TpYKhOmFQhBTOys=
+	b=hNTMTdYbMuoWvXIrK2JyV7rv8y9JdQa1wc2eiRCqAEZX8FZDEfMOlzyGWosX6Nm2T
+	 0gjez+eAlV6Th9kH46XlYMU5thcMKn5JYXIBNWsVL3TFjFKvQEvFDU15vIGiaOh3+Q
+	 yHnPjYfQxdSkiO45qolD1sQzF2+CvyjnJapDWumU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Bae Yeonju <iwasbaeyz@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 722/957] eventpoll: fix ep_remove struct eventpoll / struct file UAF
-Date: Wed, 20 May 2026 18:20:05 +0200
-Message-ID: <20260520162150.207912740@linuxfoundation.org>
+Subject: [PATCH 6.18 723/957] fs/adfs: validate nzones in adfs_validate_bblk()
+Date: Wed, 20 May 2026 18:20:06 +0200
+Message-ID: <20260520162150.230711350@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,97 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Bae Yeonju <iwasbaeyz@gmail.com>
 
-[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
+[ Upstream commit dd9d3e16c2d5fa166e13dce07413be51f42c8f5d ]
 
-ep_remove() (via ep_remove_file()) cleared file->f_ep under
-file->f_lock but then kept using @file inside the critical section
-(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
-A concurrent __fput() taking the eventpoll_release() fastpath in
-that window observed the transient NULL, skipped
-eventpoll_release_file() and ran to f_op->release / file_free().
+Reject ADFS disc records with a zero zone count during boot block
+validation, before the disc record is used.
 
-For the epoll-watches-epoll case, f_op->release is
-ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
-kfree()s the watched struct eventpoll. Its embedded ->refs
-hlist_head is exactly where epi->fllink.pprev points, so the
-subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
-kmalloc-192 memory.
+When nzones is 0, adfs_read_map() passes it to kmalloc_array(0, ...)
+which returns ZERO_SIZE_PTR, and adfs_map_layout() then writes to
+dm[-1], causing an out-of-bounds write before the allocated buffer.
 
-In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
-backing @file could be recycled by alloc_empty_file() --
-reinitializing f_lock and f_ep -- while ep_remove() is still
-nominally inside that lock. The upshot is an attacker-controllable
-kmem_cache_free() against the wrong slab cache.
+adfs_validate_dr0() already rejects nzones != 1 for old-format
+images.  Add the equivalent check to adfs_validate_bblk() for
+new-format images so that a crafted image with nzones == 0 is
+rejected at probe time.
 
-Pin @file via epi_fget() at the top of ep_remove() and gate the
-critical section on the pin succeeding. With the pin held @file
-cannot reach refcount zero, which holds __fput() off and
-transitively keeps the watched struct eventpoll alive across the
-hlist_del_rcu() and the f_lock use, closing both UAFs.
+Found by syzkaller.
 
-If the pin fails @file has already reached refcount zero and its
-__fput() is in flight. Because we bailed before clearing f_ep,
-that path takes the eventpoll_release() slow path into
-eventpoll_release_file() and blocks on ep->mtx until the waiter
-side's ep_clear_and_put() drops it. The bailed epi's share of
-ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
-in ep_clear_and_put() cannot free the eventpoll out from under
-eventpoll_release_file(); the orphaned epi is then cleaned up
-there.
-
-A successful pin also proves we are not racing
-eventpoll_release_file() on this epi, so drop the now-redundant
-re-check of epi->dying under f_lock. The cheap lockless
-READ_ONCE(epi->dying) fast-path bailout stays.
-
-Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: f6f14a0d71b0 ("fs/adfs: map: move map-specific sb initialisation to map.c")
+Signed-off-by: Bae Yeonju <iwasbaeyz@gmail.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/adfs/super.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index df6994943e59f..e9e6938f7184a 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -912,22 +912,26 @@ static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
- {
--	struct file *file = epi->ffd.file;
-+	struct file *file __free(fput) = NULL;
+diff --git a/fs/adfs/super.c b/fs/adfs/super.c
+index fdccdbbfc2130..4f5279cd456fe 100644
+--- a/fs/adfs/super.c
++++ b/fs/adfs/super.c
+@@ -317,6 +317,9 @@ static int adfs_validate_bblk(struct super_block *sb, struct buffer_head *bh,
+ 	if (adfs_checkdiscrecord(dr))
+ 		return -EILSEQ;
  
- 	lockdep_assert_irqs_enabled();
- 	lockdep_assert_held(&ep->mtx);
- 
- 	ep_unregister_pollwait(ep, epi);
- 
--	/* sync with eventpoll_release_file() */
-+	/* cheap sync with eventpoll_release_file() */
- 	if (unlikely(READ_ONCE(epi->dying)))
- 		return;
- 
--	spin_lock(&file->f_lock);
--	if (epi->dying) {
--		spin_unlock(&file->f_lock);
-+	/*
-+	 * If we manage to grab a reference it means we're not in
-+	 * eventpoll_release_file() and aren't going to be.
-+	 */
-+	file = epi_fget(epi);
-+	if (!file)
- 		return;
--	}
++	if ((dr->nzones | dr->nzones_high << 8) == 0)
++		return -EILSEQ;
 +
-+	spin_lock(&file->f_lock);
- 	ep_remove_file(ep, epi, file);
- 
- 	if (ep_remove_epi(ep, epi))
+ 	*drp = dr;
+ 	return 0;
+ }
 -- 
 2.53.0
 
