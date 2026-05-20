@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8CE438FF3;
-	Wed, 20 May 2026 18:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EE642EEDE;
+	Wed, 20 May 2026 18:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302866; cv=none; b=fbxCLTQjiFhQN2QE8vkGQ9Gw8gOow484T3Y1V55tYZGWIBOLtjrmcGCobUvdVHy7os+MUNDb2sN/miEql+pl32fuGRhQdFvvObwXyGQeC/XyoNg92VAmab167SBBdRMHZmnkpZRkowf0Umy4qwU4X2FZla2JdqGsHf8vSpmcRc8=
+	t=1779302869; cv=none; b=DX/SJfHHgxQDQRSxKgroGgyTPBgFMxGzUuuahoDrJEjusYDvJ5ZR5S7YqmrtcnLZjAOfU7Pwd7lRtpmOj1X2nXidXrR7x85fJrQg7XdgwF+H2y+svnITuu6toPh0eEeeWr1wnBT3rtvBaLeikf9U2ImaOWllu6JUT7lLBSRuf/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302866; c=relaxed/simple;
-	bh=S+9h0lDkndDGLHxCTnJIXRipCT04tuMJywVblzJ3w90=;
+	s=arc-20240116; t=1779302869; c=relaxed/simple;
+	bh=Y9C7kTOzNwL8+8xGt/NJCsOxD1BRe6+dEEiJ51s+Mco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9JrM52XMJ6nLggFyDqAArKRZ5NDXyI4C/rvjFihAZKpwhxqoG3Rhkx96EnkBP3Tt6Emg9p5vR0LMg5uE5r9x8GLQzStWVl4h0X79YXsPHTJoAzZFBNwGxXASqq5k61/hAcDQL7Dor2O8FVczQE/BOr//HpxaNlSwVH6trmhaZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RB5I9hF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kN4Zb/Z7X03i+c2aQmqWARkv64fi27+Yxh/YFQVFWTx7V+wCpDgaxZcZWTxEOypFPZc4wcTcNavHR7CWbivVQJnz7TgtQenTAwN7UqhWq8i/8bPqthGqnrw7V4g2np2jOMysZ3clfaV/sfUpH3z6wj3juo+CSsY27sMZZKEMIww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdrK4bUY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RB5I9hF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFF81F00893;
-	Wed, 20 May 2026 18:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdrK4bUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AE91F00894;
+	Wed, 20 May 2026 18:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302859;
-	bh=0fvQ5j4K030rMU8FedbhVmTJtyMZ0wYLQCN8kxi5kKg=;
+	s=korg; t=1779302864;
+	bh=qvR56VKrqrwazY0pf1cPw+GmgVJFlKclPYNE1SSLcgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1RB5I9hFEXq0apQcOftryYgNGJjInisWOozCWHEvzRWZ9j1URraDGICbEpCcVfa4q
-	 xuefOkN857tShJhhqyI1AhAAlSOgnud1j1OBsqbq33NcKbwJ0cmNwDFAakoSw1bKTV
-	 X6VSn2D7TZZ4X7MIt2zUUnZ9Eus3Z/B7e2CI/t6w=
+	b=VdrK4bUYLX9HWNFG7JXla3A8Das8kxM4LtNaqU2GAZ3VB5eBX00gZMtXLXqlJGoa0
+	 FQvnQFyku3O4ecVOjA3toK8vPN4bHTE/rrMF+mg4ZVwqy7TV/k7cArlqE/PuCEDZlV
+	 VBwalWo9FU3U08ck/r3tL9/qKkOY4DNFDf0QeLu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Tonghao Zhang <tonghao@bamaicloud.com>,
-	Zengbing Tu <tuzengbing@didiglobal.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 426/508] net: bonding: add broadcast_neighbor option for 802.3ad
-Date: Wed, 20 May 2026 18:24:09 +0200
-Message-ID: <20260520162107.832892102@linuxfoundation.org>
+Subject: [PATCH 6.6 427/508] bonding: add support for per-port LACP actor priority
+Date: Wed, 20 May 2026 18:24:10 +0200
+Message-ID: <20260520162107.854549409@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -63,340 +51,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit ce7a381697cb3958ffe0b45e5028ac69444e9288 ]
+[ Upstream commit 6b6dc81ee7e8ca87c71a533e1d69cf96a4f1e986 ]
 
-Stacking technology is a type of technology used to expand ports on
-Ethernet switches. It is widely used as a common access method in
-large-scale Internet data center architectures. Years of practice
-have proved that stacking technology has advantages and disadvantages
-in high-reliability network architecture scenarios. For instance,
-in stacking networking arch, conventional switch system upgrades
-require multiple stacked devices to restart at the same time.
-Therefore, it is inevitable that the business will be interrupted
-for a while. It is for this reason that "no-stacking" in data centers
-has become a trend. Additionally, when the stacking link connecting
-the switches fails or is abnormal, the stack will split. Although it is
-not common, it still happens in actual operation. The problem is that
-after the split, it is equivalent to two switches with the same
-configuration appearing in the network, causing network configuration
-conflicts and ultimately interrupting the services carried by the
-stacking system.
+Introduce a new netlink attribute 'actor_port_prio' to allow setting
+the LACP actor port priority on a per-slave basis. This extends the
+existing bonding infrastructure to support more granular control over
+LACP negotiations.
 
-To improve network stability, "non-stacking" solutions have been
-increasingly adopted, particularly by public cloud providers and
-tech companies like Alibaba, Tencent, and Didi. "non-stacking" is
-a method of mimicing switch stacking that convinces a LACP peer,
-bonding in this case, connected to a set of "non-stacked" switches
-that all of its ports are connected to a single switch
-(i.e., LACP aggregator), as if those switches were stacked. This
-enables the LACP peer's ports to aggregate together, and requires
-(a) special switch configuration, described in the linked article,
-and (b) modifications to the bonding 802.3ad (LACP) mode to send
-all ARP/ND packets across all ports of the active aggregator.
+The priority value is embedded in LACPDU packets and will be used by
+subsequent patches to influence aggregator selection policies.
 
-Note that, with multiple aggregators, the current broadcast mode
-logic will send only packets to the selected aggregator(s).
-
- +-----------+   +-----------+
- |  switch1  |   |  switch2  |
- +-----------+   +-----------+
-         ^           ^
-         |           |
-      +-----------------+
-      |   bond4 lacp    |
-      +-----------------+
-         |           |
-         | NIC1      | NIC2
-      +-----------------+
-      |     server      |
-      +-----------------+
-
-- https://www.ruijie.com/fr-fr/support/tech-gallery/de-stack-data-center-network-architecture/
-
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Signed-off-by: Zengbing Tu <tuzengbing@didiglobal.com>
-Link: https://patch.msgid.link/84d0a044514157bb856a10b6d03a1028c4883561.1751031306.git.tonghao@bamaicloud.com
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20250902064501.360822-2-liuhangbin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: c4f050ce06c5 ("bonding: 3ad: implement proper RCU rules for port->aggregator")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/bonding.rst |  6 +++
- drivers/net/bonding/bond_main.c      | 66 +++++++++++++++++++++++++---
- drivers/net/bonding/bond_options.c   | 42 ++++++++++++++++++
+ Documentation/networking/bonding.rst |  9 +++++++
+ drivers/net/bonding/bond_3ad.c       |  4 ++++
+ drivers/net/bonding/bond_netlink.c   | 16 +++++++++++++
+ drivers/net/bonding/bond_options.c   | 36 ++++++++++++++++++++++++++++
+ include/net/bond_3ad.h               |  1 +
  include/net/bond_options.h           |  1 +
- include/net/bonding.h                |  3 ++
- 5 files changed, 112 insertions(+), 6 deletions(-)
+ include/uapi/linux/if_link.h         |  1 +
+ 7 files changed, 68 insertions(+)
 
 diff --git a/Documentation/networking/bonding.rst b/Documentation/networking/bonding.rst
-index e774b48de9f51..1a9439488c531 100644
+index 1a9439488c531..94ef39457a622 100644
 --- a/Documentation/networking/bonding.rst
 +++ b/Documentation/networking/bonding.rst
-@@ -562,6 +562,12 @@ lacp_rate
+@@ -193,6 +193,15 @@ ad_actor_sys_prio
+ 	This parameter has effect only in 802.3ad mode and is available through
+ 	SysFs interface.
  
- 	The default is slow.
- 
-+broadcast_neighbor
++actor_port_prio
 +
-+	Option specifying whether to broadcast ARP/ND packets to all
-+	active slaves.  This option has no effect in modes other than
-+	802.3ad mode.  The default is off (0).
++	In an AD system, this specifies the port priority. The allowed range
++	is 1 - 65535. If the value is not specified, it takes 255 as the
++	default value.
 +
- max_bonds
- 
- 	Specifies the number of bonding devices to create for this
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8d481a6495e89..70718bf6e716c 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -211,6 +211,8 @@ atomic_t netpoll_block_tx = ATOMIC_INIT(0);
- 
- unsigned int bond_net_id __read_mostly;
- 
-+DEFINE_STATIC_KEY_FALSE(bond_bcast_neigh_enabled);
++	This parameter has effect only in 802.3ad mode and is available through
++	netlink interface.
 +
- static const struct flow_dissector_key flow_keys_bonding_keys[] = {
- 	{
- 		.key_id = FLOW_DISSECTOR_KEY_CONTROL,
-@@ -4397,6 +4399,9 @@ static int bond_open(struct net_device *bond_dev)
+ ad_actor_system
  
- 		bond_for_each_slave(bond, slave, iter)
- 			dev_mc_add(slave->dev, lacpdu_mcast_addr);
-+
-+		if (bond->params.broadcast_neighbor)
-+			static_branch_inc(&bond_bcast_neigh_enabled);
- 	}
+ 	In an AD system, this specifies the mac-address for the actor in
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index 4c2560ae8866a..a897836ad21a3 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -436,6 +436,7 @@ static void __ad_actor_update_port(struct port *port)
  
- 	if (bond_mode_can_use_xmit_hash(bond))
-@@ -4420,6 +4425,10 @@ static int bond_close(struct net_device *bond_dev)
- 	if (bond_is_lb(bond))
- 		bond_alb_deinitialize(bond);
- 
-+	if (BOND_MODE(bond) == BOND_MODE_8023AD &&
-+	    bond->params.broadcast_neighbor)
-+		static_branch_dec(&bond_bcast_neigh_enabled);
-+
- 	if (bond_uses_primary(bond)) {
- 		rcu_read_lock();
- 		slave = rcu_dereference(bond->curr_active_slave);
-@@ -5256,6 +5265,37 @@ static struct slave *bond_xdp_xmit_3ad_xor_slave_get(struct bonding *bond,
- 	return slaves->arr[hash % count];
+ 	port->actor_system = BOND_AD_INFO(bond).system.sys_mac_addr;
+ 	port->actor_system_priority = BOND_AD_INFO(bond).system.sys_priority;
++	port->actor_port_priority = SLAVE_AD_INFO(port->slave)->port_priority;
  }
  
-+static bool bond_should_broadcast_neighbor(struct sk_buff *skb,
-+					   struct net_device *dev)
-+{
-+	struct bonding *bond = netdev_priv(dev);
-+	struct {
-+		struct ipv6hdr ip6;
-+		struct icmp6hdr icmp6;
-+	} *combined, _combined;
+ /* Conversions */
+@@ -2195,6 +2196,9 @@ void bond_3ad_bind_slave(struct slave *slave)
+ 
+ 		ad_initialize_port(port, &bond->params);
+ 
++		/* Port priority is initialized. Update it to slave's ad info */
++		SLAVE_AD_INFO(slave)->port_priority = port->actor_port_priority;
 +
-+	if (!static_branch_unlikely(&bond_bcast_neigh_enabled))
-+		return false;
+ 		port->slave = slave;
+ 		port->actor_port_number = SLAVE_AD_INFO(slave)->id;
+ 		/* key is determined according to the link speed, duplex and
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index aebc814ad495d..7e47d405d74aa 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -28,6 +28,7 @@ static size_t bond_get_slave_size(const struct net_device *bond_dev,
+ 		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_SLAVE_AD_ACTOR_OPER_PORT_STATE */
+ 		nla_total_size(sizeof(u16)) +	/* IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE */
+ 		nla_total_size(sizeof(s32)) +	/* IFLA_BOND_SLAVE_PRIO */
++		nla_total_size(sizeof(u16)) +	/* IFLA_BOND_SLAVE_ACTOR_PORT_PRIO */
+ 		0;
+ }
+ 
+@@ -76,6 +77,10 @@ static int bond_fill_slave_info(struct sk_buff *skb,
+ 					ad_port->partner_oper.port_state))
+ 				goto nla_put_failure;
+ 		}
 +
-+	if (!bond->params.broadcast_neighbor)
-+		return false;
++		if (nla_put_u16(skb, IFLA_BOND_SLAVE_ACTOR_PORT_PRIO,
++				SLAVE_AD_INFO(slave)->port_priority))
++			goto nla_put_failure;
+ 	}
+ 
+ 	return 0;
+@@ -128,6 +133,7 @@ static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
+ static const struct nla_policy bond_slave_policy[IFLA_BOND_SLAVE_MAX + 1] = {
+ 	[IFLA_BOND_SLAVE_QUEUE_ID]	= { .type = NLA_U16 },
+ 	[IFLA_BOND_SLAVE_PRIO]		= { .type = NLA_S32 },
++	[IFLA_BOND_SLAVE_ACTOR_PORT_PRIO]	= { .type = NLA_U16 },
+ };
+ 
+ static int bond_validate(struct nlattr *tb[], struct nlattr *data[],
+@@ -178,6 +184,16 @@ static int bond_slave_changelink(struct net_device *bond_dev,
+ 			return err;
+ 	}
+ 
++	if (data[IFLA_BOND_SLAVE_ACTOR_PORT_PRIO]) {
++		u16 ad_prio = nla_get_u16(data[IFLA_BOND_SLAVE_ACTOR_PORT_PRIO]);
 +
-+	if (skb->protocol == htons(ETH_P_ARP))
-+		return true;
-+
-+	if (skb->protocol == htons(ETH_P_IPV6)) {
-+		combined = skb_header_pointer(skb, skb_mac_header_len(skb),
-+					      sizeof(_combined),
-+					      &_combined);
-+		if (combined && combined->ip6.nexthdr == NEXTHDR_ICMP &&
-+		    (combined->icmp6.icmp6_type == NDISC_NEIGHBOUR_SOLICITATION ||
-+		     combined->icmp6.icmp6_type == NDISC_NEIGHBOUR_ADVERTISEMENT))
-+			return true;
++		bond_opt_slave_initval(&newval, &slave_dev, ad_prio);
++		err = __bond_opt_set(bond, BOND_OPT_ACTOR_PORT_PRIO, &newval,
++				     data[IFLA_BOND_SLAVE_ACTOR_PORT_PRIO], extack);
++		if (err)
++			return err;
 +	}
 +
-+	return false;
-+}
-+
- /* Use this Xmit function for 3AD as well as XOR modes. The current
-  * usable slave array is formed in the control path. The xmit function
-  * just calculates hash and sends the packet out.
-@@ -5275,17 +5315,27 @@ static netdev_tx_t bond_3ad_xor_xmit(struct sk_buff *skb,
- 	return bond_tx_drop(dev, skb);
- }
- 
--/* in broadcast mode, we send everything to all usable interfaces. */
-+/* in broadcast mode, we send everything to all or usable slave interfaces.
-+ * under rcu_read_lock when this function is called.
-+ */
- static netdev_tx_t bond_xmit_broadcast(struct sk_buff *skb,
--				       struct net_device *bond_dev)
-+				       struct net_device *bond_dev,
-+				       bool all_slaves)
- {
- 	struct bonding *bond = netdev_priv(bond_dev);
--	struct slave *slave = NULL;
--	struct list_head *iter;
-+	struct bond_up_slave *slaves;
- 	bool xmit_suc = false;
- 	bool skb_used = false;
-+	int slaves_count, i;
- 
--	bond_for_each_slave_rcu(bond, slave, iter) {
-+	if (all_slaves)
-+		slaves = rcu_dereference(bond->all_slaves);
-+	else
-+		slaves = rcu_dereference(bond->usable_slaves);
-+
-+	slaves_count = slaves ? READ_ONCE(slaves->count) : 0;
-+	for (i = 0; i < slaves_count; i++) {
-+		struct slave *slave = slaves->arr[i];
- 		struct sk_buff *skb2;
- 
- 		if (!(bond_slave_is_up(slave) && slave->link == BOND_LINK_UP))
-@@ -5523,10 +5573,13 @@ static netdev_tx_t __bond_start_xmit(struct sk_buff *skb, struct net_device *dev
- 	case BOND_MODE_ACTIVEBACKUP:
- 		return bond_xmit_activebackup(skb, dev);
- 	case BOND_MODE_8023AD:
-+		if (bond_should_broadcast_neighbor(skb, dev))
-+			return bond_xmit_broadcast(skb, dev, false);
-+		fallthrough;
- 	case BOND_MODE_XOR:
- 		return bond_3ad_xor_xmit(skb, dev);
- 	case BOND_MODE_BROADCAST:
--		return bond_xmit_broadcast(skb, dev);
-+		return bond_xmit_broadcast(skb, dev, true);
- 	case BOND_MODE_ALB:
- 		return bond_alb_xmit(skb, dev);
- 	case BOND_MODE_TLB:
-@@ -6426,6 +6479,7 @@ static int __init bond_check_params(struct bond_params *params)
- 	eth_zero_addr(params->ad_actor_system);
- 	params->ad_user_port_key = ad_user_port_key;
- 	params->coupled_control = 1;
-+	params->broadcast_neighbor = 0;
- 	if (packets_per_slave > 0) {
- 		params->reciprocal_packets_per_slave =
- 			reciprocal_value(packets_per_slave);
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index b823425ad7f69..fe955ba5c9685 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -87,6 +87,8 @@ static int bond_option_missed_max_set(struct bonding *bond,
- 				      const struct bond_opt_value *newval);
- static int bond_option_coupled_control_set(struct bonding *bond,
- 					   const struct bond_opt_value *newval);
-+static int bond_option_broadcast_neigh_set(struct bonding *bond,
-+					   const struct bond_opt_value *newval);
- 
- static const struct bond_opt_value bond_mode_tbl[] = {
- 	{ "balance-rr",    BOND_MODE_ROUNDROBIN,   BOND_VALFLAG_DEFAULT},
-@@ -240,6 +242,12 @@ static const struct bond_opt_value bond_coupled_control_tbl[] = {
- 	{ NULL,  -1, 0},
- };
- 
-+static const struct bond_opt_value bond_broadcast_neigh_tbl[] = {
-+	{ "off", 0, BOND_VALFLAG_DEFAULT},
-+	{ "on",	 1, 0},
-+	{ NULL,  -1, 0}
-+};
-+
- static const struct bond_option bond_opts[BOND_OPT_LAST] = {
- 	[BOND_OPT_MODE] = {
- 		.id = BOND_OPT_MODE,
-@@ -513,6 +521,14 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
- 		.flags = BOND_OPTFLAG_IFDOWN,
- 		.values = bond_coupled_control_tbl,
- 		.set = bond_option_coupled_control_set,
-+	},
-+	[BOND_OPT_BROADCAST_NEIGH] = {
-+		.id = BOND_OPT_BROADCAST_NEIGH,
-+		.name = "broadcast_neighbor",
-+		.desc = "Broadcast neighbor packets to all active slaves",
-+		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
-+		.values = bond_broadcast_neigh_tbl,
-+		.set = bond_option_broadcast_neigh_set,
- 	}
- };
- 
-@@ -894,6 +910,13 @@ static int bond_option_mode_set(struct bonding *bond,
- 	bond->params.arp_validate = BOND_ARP_VALIDATE_NONE;
- 	bond->params.mode = newval->value;
- 
-+	/* When changing mode, the bond device is down, we may reduce
-+	 * the bond_bcast_neigh_enabled in bond_close() if broadcast_neighbor
-+	 * enabled in 8023ad mode. Therefore, only clear broadcast_neighbor
-+	 * to 0.
-+	 */
-+	bond->params.broadcast_neighbor = 0;
-+
- 	if (bond->dev->reg_state == NETREG_REGISTERED) {
- 		bool update = false;
- 
-@@ -1843,3 +1866,22 @@ static int bond_option_coupled_control_set(struct bonding *bond,
- 	bond->params.coupled_control = newval->value;
  	return 0;
  }
+ 
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index fe955ba5c9685..f4ad0fc624c98 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -79,6 +79,8 @@ static int bond_option_tlb_dynamic_lb_set(struct bonding *bond,
+ 				  const struct bond_opt_value *newval);
+ static int bond_option_ad_actor_sys_prio_set(struct bonding *bond,
+ 					     const struct bond_opt_value *newval);
++static int bond_option_actor_port_prio_set(struct bonding *bond,
++					   const struct bond_opt_value *newval);
+ static int bond_option_ad_actor_system_set(struct bonding *bond,
+ 					   const struct bond_opt_value *newval);
+ static int bond_option_ad_user_port_key_set(struct bonding *bond,
+@@ -223,6 +225,13 @@ static const struct bond_opt_value bond_ad_actor_sys_prio_tbl[] = {
+ 	{ NULL,      -1,    0},
+ };
+ 
++static const struct bond_opt_value bond_actor_port_prio_tbl[] = {
++	{ "minval",  0,     BOND_VALFLAG_MIN},
++	{ "maxval",  65535, BOND_VALFLAG_MAX},
++	{ "default", 255,   BOND_VALFLAG_DEFAULT},
++	{ NULL,      -1,    0},
++};
 +
-+static int bond_option_broadcast_neigh_set(struct bonding *bond,
+ static const struct bond_opt_value bond_ad_user_port_key_tbl[] = {
+ 	{ "minval",  0,     BOND_VALFLAG_MIN | BOND_VALFLAG_DEFAULT},
+ 	{ "maxval",  1023,  BOND_VALFLAG_MAX},
+@@ -484,6 +493,13 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
+ 		.values = bond_ad_actor_sys_prio_tbl,
+ 		.set = bond_option_ad_actor_sys_prio_set,
+ 	},
++	[BOND_OPT_ACTOR_PORT_PRIO] = {
++		.id = BOND_OPT_ACTOR_PORT_PRIO,
++		.name = "actor_port_prio",
++		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
++		.values = bond_actor_port_prio_tbl,
++		.set = bond_option_actor_port_prio_set,
++	},
+ 	[BOND_OPT_AD_ACTOR_SYSTEM] = {
+ 		.id = BOND_OPT_AD_ACTOR_SYSTEM,
+ 		.name = "ad_actor_system",
+@@ -1819,6 +1835,26 @@ static int bond_option_ad_actor_sys_prio_set(struct bonding *bond,
+ 	return 0;
+ }
+ 
++static int bond_option_actor_port_prio_set(struct bonding *bond,
 +					   const struct bond_opt_value *newval)
 +{
-+	if (bond->params.broadcast_neighbor == newval->value)
-+		return 0;
++	struct slave *slave;
 +
-+	bond->params.broadcast_neighbor = newval->value;
-+	if (bond->dev->flags & IFF_UP) {
-+		if (bond->params.broadcast_neighbor)
-+			static_branch_inc(&bond_bcast_neigh_enabled);
-+		else
-+			static_branch_dec(&bond_bcast_neigh_enabled);
++	slave = bond_slave_get_rtnl(newval->slave_dev);
++	if (!slave) {
++		netdev_dbg(bond->dev, "%s called on NULL slave\n", __func__);
++		return -ENODEV;
 +	}
 +
-+	netdev_dbg(bond->dev, "Setting broadcast_neighbor to %s (%llu)\n",
-+		   newval->string, newval->value);
++	netdev_dbg(newval->slave_dev, "Setting actor_port_prio to %llu\n",
++		   newval->value);
++
++	SLAVE_AD_INFO(slave)->port_priority = newval->value;
++	bond_3ad_update_ad_actor_settings(bond);
++
 +	return 0;
 +}
++
+ static int bond_option_ad_actor_system_set(struct bonding *bond,
+ 					   const struct bond_opt_value *newval)
+ {
+diff --git a/include/net/bond_3ad.h b/include/net/bond_3ad.h
+index 078e16d2512a5..84fe87314bd9c 100644
+--- a/include/net/bond_3ad.h
++++ b/include/net/bond_3ad.h
+@@ -271,6 +271,7 @@ struct ad_slave_info {
+ 	struct port port;		/* 802.3ad port structure */
+ 	struct bond_3ad_stats stats;
+ 	u16 id;
++	u16 port_priority;
+ };
+ 
+ static inline const char *bond_3ad_churn_desc(churn_state_t state)
 diff --git a/include/net/bond_options.h b/include/net/bond_options.h
-index 18687ccf06383..022b122a9fb61 100644
+index 022b122a9fb61..e6eedf23aea1a 100644
 --- a/include/net/bond_options.h
 +++ b/include/net/bond_options.h
-@@ -77,6 +77,7 @@ enum {
- 	BOND_OPT_NS_TARGETS,
+@@ -78,6 +78,7 @@ enum {
  	BOND_OPT_PRIO,
  	BOND_OPT_COUPLED_CONTROL,
-+	BOND_OPT_BROADCAST_NEIGH,
+ 	BOND_OPT_BROADCAST_NEIGH,
++	BOND_OPT_ACTOR_PORT_PRIO,
  	BOND_OPT_LAST
  };
  
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index 66940d41d4854..0d9c1eb40d12b 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -115,6 +115,8 @@ static inline int is_netpoll_tx_blocked(struct net_device *dev)
- #define is_netpoll_tx_blocked(dev) (0)
- #endif
+diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
+index 6750911da4f06..3533368f16472 100644
+--- a/include/uapi/linux/if_link.h
++++ b/include/uapi/linux/if_link.h
+@@ -979,6 +979,7 @@ enum {
+ 	IFLA_BOND_SLAVE_AD_ACTOR_OPER_PORT_STATE,
+ 	IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE,
+ 	IFLA_BOND_SLAVE_PRIO,
++	IFLA_BOND_SLAVE_ACTOR_PORT_PRIO,
+ 	__IFLA_BOND_SLAVE_MAX,
+ };
  
-+DECLARE_STATIC_KEY_FALSE(bond_bcast_neigh_enabled);
-+
- struct bond_params {
- 	int mode;
- 	int xmit_policy;
-@@ -149,6 +151,7 @@ struct bond_params {
- 	struct in6_addr ns_targets[BOND_MAX_NS_TARGETS];
- #endif
- 	int coupled_control;
-+	int broadcast_neighbor;
- 
- 	/* 2 bytes of padding : see ether_addr_equal_64bits() */
- 	u8 ad_actor_system[ETH_ALEN + 2];
 -- 
 2.53.0
 
