@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5779D363C4C;
-	Wed, 20 May 2026 17:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D0033BBCF;
+	Wed, 20 May 2026 17:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298960; cv=none; b=hTd6BZ32NYa8mJaNXduTiGRpLN3eYwhfIhMVtdaF3KgldxRLk20+8W0pG4DAeVRM+KgvNoxolldIzJReQKVsHGUxBfyfKKgJl6lWqFZv18G0hf+HrgkczDwnZ3DujULd2Y0dEn8m2X3ys9d7EvrePO/aL7Tuk6JO1bnDu1PQSUQ=
+	t=1779298963; cv=none; b=jcEhtZmCCVvyYfAw5oaYR+3XJw+H5pC9Gg2Uv7AR9jH0uL+BZL2n9QYOGPrSyT2lUBMRPMkhnvo4FKkLsZzlrWLF0cIdrwZRupBU76SfL0nhwzdo9ir5kNDfLm6VMf4DAg5REc4hA90o2T46YBLgCVBSQuWtmKMuNZgy6hzi1c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298960; c=relaxed/simple;
-	bh=v4mQmTa5+I4kOGxy0Elw0uEO9QysLXfdNvwUqp9kbhU=;
+	s=arc-20240116; t=1779298963; c=relaxed/simple;
+	bh=v0fydRtPRrVQIAzKHqocwd1XUDfc1jPO6MLpAYvtYAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KYodklkUOeLMvH9lFBZOcE216zskJqND6L9J5sK3JoaxlW8H0k+pmFN3r3EBVT+BnNafesHG963S9V2GFgfyVxotc9fxY2AH1/0hGZZJKdUoaQpmQjwqsK6liT+tV/f+mZmN5gniE0rBx0wNOQIELohn4ZOflIUxqzbABV5fyjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKGbTaIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUufSbJMfC/URBBArzuElYabLYPCtovrxFV28L+DrSjs02EbOZX+ir+5MZiI03rl8sHf46E7YHJbEhcM+ggopYlazEz3HjIeIMu/8aFyViK8b7u5ggdMyKgTNWCfChBkCzayGP6nCGoyoCsa2GMoPT9uP6mxeuVkcMLuwAhSO9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+pqpHS2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKGbTaIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4DA1F000E9;
-	Wed, 20 May 2026 17:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+pqpHS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628941F000E9;
+	Wed, 20 May 2026 17:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298959;
-	bh=kgBpexKwJ6/gjf6GK58CTzfmZTmw2N77usx3OlwW8ro=;
+	s=korg; t=1779298961;
+	bh=FXKeEhpXrZ9zCcRA2hAT0+Sb2ohiqiGduMvm1yHmbIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKGbTaIjfnBUetXtezpk4uGPD+Eiz2fOS6cS5+VNAtQiQQA9lbfKZvlRj/lWHpq4V
-	 m+s+c3acaHWeyu3GIxqxdOatw+qg0JXzR+VxJEIW7FVk1sFHtYDYlm+PMxRA/bKQ8R
-	 BtbN2aoiHgnWFOWZKJExaf/nbNJ+76zZS+0dLq8c=
+	b=W+pqpHS2ZAXMrkFoclZzLlX3KWMpno4mVRGCOgAavVgLbeFTAu5ferj8F3qNnvbpM
+	 PIdWDR2ULzvVYUHJWnwUBPMhu9cCmwYGfE9kn7AMj7JY/JiLFJx67z3uQQslfnga5s
+	 q40AU7BF5cfUutV5RTlR2ckJa/TCsbh4lYwMlOIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Ronald Claveau <linux-kernel-dev@aliel.fr>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 608/957] PCMCIA: Fix garbled log messages for KERN_CONT
-Date: Wed, 20 May 2026 18:18:11 +0200
-Message-ID: <20260520162147.720413625@linuxfoundation.org>
+Subject: [PATCH 6.18 609/957] reset: amlogic: t7: Fix null reset ops
+Date: Wed, 20 May 2026 18:18:12 +0200
+Message-ID: <20260520162147.742375248@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,57 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 
-[ Upstream commit bfeaa6814bd3f9a1f6d525b3b35a03b9a0368961 ]
+[ Upstream commit 9797524ef2b69c6b187b55bd844eb72a8c1cbd99 ]
 
-For years the PCMCIA info messages are messed up by superfluous
-newlines. While f2e6cf76751d ("pcmcia: Convert dev_printk to
-dev_<level>") converted the code to pr_cont(), dev_info enforces a \n
-via vprintk_store setting LOG_NEWLINE, breaking subsequent pr_cont.
+Fix missing reset ops causing kernel null pointer dereference.
+This SOC's reset is currently not used yet.
 
-Fix by logging the device name manually to allow pr_cont to work for
-more readable and not \n distorted logs.
-
-Fixes: f2e6cf76751d ("pcmcia: Convert dev_printk to dev_<level>")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
+Fixes: fb4c31587adf ("reset: amlogic: add auxiliary reset driver support")
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/reset/amlogic/reset-meson.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index da494fe451baf..efc439c748862 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -188,7 +188,7 @@ static void do_io_probe(struct pcmcia_socket *s, unsigned int base,
- 	int any;
- 	u_char *b, hole, most;
+diff --git a/drivers/reset/amlogic/reset-meson.c b/drivers/reset/amlogic/reset-meson.c
+index 84610365a823c..c303e8590dd68 100644
+--- a/drivers/reset/amlogic/reset-meson.c
++++ b/drivers/reset/amlogic/reset-meson.c
+@@ -42,6 +42,7 @@ static const struct meson_reset_param meson_s4_param = {
+ };
  
--	dev_info(&s->dev, "cs: IO port probe %#x-%#x:", base, base+num-1);
-+	pr_info("%s: cs: IO port probe %#x-%#x:", dev_name(&s->dev), base, base+num-1);
- 
- 	/* First, what does a floating port look like? */
- 	b = kzalloc(256, GFP_KERNEL);
-@@ -410,8 +410,8 @@ static int do_mem_probe(struct pcmcia_socket *s, u_long base, u_long num,
- 	struct socket_data *s_data = s->resource_data;
- 	u_long i, j, bad, fail, step;
- 
--	dev_info(&s->dev, "cs: memory probe 0x%06lx-0x%06lx:",
--		 base, base+num-1);
-+	pr_info("%s: cs: memory probe 0x%06lx-0x%06lx:",
-+	       dev_name(&s->dev), base, base+num-1);
- 	bad = fail = 0;
- 	step = (num < 0x20000) ? 0x2000 : ((num>>4) & ~0x1fff);
- 	/* don't allow too large steps */
+ static const struct meson_reset_param t7_param = {
++	.reset_ops	= &meson_reset_ops,
+ 	.reset_num      = 224,
+ 	.reset_offset	= 0x0,
+ 	.level_offset   = 0x40,
 -- 
 2.53.0
 
