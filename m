@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488AC317160;
-	Wed, 20 May 2026 16:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6456317160;
+	Wed, 20 May 2026 16:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296027; cv=none; b=OFPb7oRma4q3kD6ksmQCtNcyFwKVDk9AZZlIoxyzRIWR9l+CuzKzGuTUV8vHeCoYmoSh1u8bH/5nb4UZjCoZo5funYD/IfwGU/XcecmvwcFWCiFFwWrxoFl+MdsQNZg9HXoSTJF5WGaOQ6E+827Z1hunf/Uw118/Tckjxiq9aXk=
+	t=1779296030; cv=none; b=JRmi/nGhxJXbB4dtszNfEIqFOdj9Ot/AnUuaAgiEO91GV4PEY1AaLnd+NyAo2iagenRe/Tz3MyGZtoPyvxcBkwvH4wHQhYX44qUun9kocKbkGLbZFhgp7HVTmpVph4ybQZGUCW72bBOuF5MzkU4xO1w1nR++Hir65GWPiFQUiR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296027; c=relaxed/simple;
-	bh=WgCgJrnqWquAnd7EjvFd//MGWa+7Q+B6te5Y3wiOGAY=;
+	s=arc-20240116; t=1779296030; c=relaxed/simple;
+	bh=wbcloYHsxYrskBXKxBB8DcXUmD86J3oYsZ3hMSJrW4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntpi5orBRyDiFJkor+UA9HU3Ilgpcq9cNiw0Fgkya2lDALj0p3U4925VFiIF2bttTikfkKZ2QxbsGz/94BEbcyNpfLcs2wU2f3fEBFECzUhAOaPvydtiqcZrZTNmDASLkkgPWNx2/FOC4Bsxv2hjQutZRpl5A1M7deZbPDaliwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcUobdJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=md1w229TVDyoaVM5tUtvJ/gqNMWTly8IrtMkMi8JNqrAeFDDixhvCXjkxL09+V6mxRENTsDFPe8Uh0IXo4GCU3qc5M3EDZqR7rUfEgqC32fo4GY6K1fZ6DXjQipWn5nZn6AAJ6Hx9+3dY1bo47JLXsnNCxQQY5heD5/FEar5wGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0WNpxqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcUobdJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF9D1F000E9;
-	Wed, 20 May 2026 16:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0WNpxqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B801F000E9;
+	Wed, 20 May 2026 16:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296026;
-	bh=1Zr+jpgjXMxN5lMPi4F20vea2+LeC6kXqtSU28FGW9c=;
+	s=korg; t=1779296028;
+	bh=gsCRdPgDZJzc3wnsNjKB9CHTRGLrea5odkOxRIeSiyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcUobdJSfha/AIDJki4+zJWhVamimQCDg/1C13vGZjJNWy9GYB20ewicNw0qg40xP
-	 iEKON9xa3n8buq2KZldkTJAsYtUteIQJqp0BPEGRMWAttmSmYubOb2HQ85pFffav/P
-	 U0y+/W5czzIT7byAKEKJbE+FLcSSmQ9lDlkqQVDs=
+	b=W0WNpxqdCNesgvX3Yc6olEQmrgomfelMt5BnCRjklFq4/DPZzu5ABWDmzkcAx8o87
+	 8ZOg9e8CeYcQ/0oKof5p8pNk5j6yEFN6fowXqoLb0kCU+mHgWIPqAgLtgdw5jqIWxC
+	 72PQaFNwv2jQY0XY3clwQxdnE44T3+Dq89zLDZzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Ian Rogers <irogers@google.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0606/1146] ext4: fix the error handling process in extents_kunit_init).
-Date: Wed, 20 May 2026 18:14:16 +0200
-Message-ID: <20260520162201.894102779@linuxfoundation.org>
+Subject: [PATCH 7.0 0642/1146] perf tools: Fix module symbol resolution for non-zero .text sh_addr
+Date: Wed, 20 May 2026 18:14:52 +0200
+Message-ID: <20260520162202.707416944@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,116 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 17f73c95d47325000ee68492be3ad76ae09f6f19 ]
+[ Upstream commit 9a82bfde4775b7a87cd1a7e791f46f83ae442848 ]
 
-The error processing in extents_kunit_init() is improper, causing
-resource leakage.
-Reconstruct the error handling process to prevent potential resource
-leaks
+When perf resolves symbols from kernel module ELF files (ET_REL),
+it converts symbol addresses to file offsets so that sample IPs
+can be matched to the correct symbol. The conversion adjusts each
+symbol's st_value:
 
-Fixes: cb1e0c1d1fad ("ext4: kunit tests for extent splitting and conversion")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20260330133035.287842-4-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+  sym->st_value -= shdr->sh_addr - shdr->sh_offset;
+
+For vmlinux (ET_EXEC), st_value is a virtual address and sh_addr
+is the section's virtual base, so subtracting sh_addr and adding
+sh_offset correctly yields a file offset.
+
+For kernel modules (ET_REL), st_value is a section-relative
+offset. The module loader ignores sh_addr entirely and places
+symbols at module_base + st_value. Converting to file offset
+requires only adding sh_offset; subtracting sh_addr introduces an
+error equal to sh_addr bytes.
+
+When .text has sh_addr == 0 -- the historical norm for simple
+modules -- both formulas produce the same result and the bug is
+latent. As modules gain more metadata sections before .text (.note,
+.static_call.text, etc.), the linker assigns .text a non-zero
+sh_addr, exposing the defect. For example, nfsd.ko on this kernel
+has sh_addr=0xa80, kvm-intel.ko has sh_addr=0x1e90.
+
+The effect is that all .text symbols in affected modules
+shift by sh_addr bytes relative to sample IPs, causing perf
+report to attribute samples to incorrect, nearby symbols. This
+was observed as 13% of LLC-load-miss samples misattributed
+to nfsd_file_get_dio_attrs when the actual hot function was
+nfsd_cache_lookup, approximately 0xa80 bytes away in the symbol
+table.
+
+Use the existing dso__rel() flag (already set for ET_REL modules)
+to select the correct adjustment: add sh_offset for ET_REL,
+subtract (sh_addr - sh_offset) for ET_EXEC/ET_DYN.
+
+Fixes: 0131c4ec794a ("perf tools: Make it possible to read object code from kernel modules")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents-test.c | 50 +++++++++++++++++++++++++++++-------------
- 1 file changed, 35 insertions(+), 15 deletions(-)
+ tools/perf/util/symbol-elf.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/extents-test.c b/fs/ext4/extents-test.c
-index 3d4663d99eb13..4042bc8a95e2f 100644
---- a/fs/ext4/extents-test.c
-+++ b/fs/ext4/extents-test.c
-@@ -225,34 +225,38 @@ static int extents_kunit_init(struct kunit *test)
- 		(struct kunit_ext_test_param *)(test->param_value);
- 	int err;
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 76912c62b6a07..968e269d9be1f 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1356,8 +1356,12 @@ static int dso__process_kernel_symbol(struct dso *dso, struct map *map,
+ 	char dso_name[PATH_MAX];
  
--	sb = sget(&ext_fs_type, NULL, ext_set, 0, NULL);
--	if (IS_ERR(sb))
--		return PTR_ERR(sb);
--
--	sb->s_blocksize = 4096;
--	sb->s_blocksize_bits = 12;
--
- 	sbi = kzalloc_obj(struct ext4_sb_info);
- 	if (sbi == NULL)
- 		return -ENOMEM;
- 
-+	sb = sget(&ext_fs_type, NULL, ext_set, 0, NULL);
-+	if (IS_ERR(sb)) {
-+		kfree(sbi);
-+		return PTR_ERR(sb);
-+	}
-+
- 	sbi->s_sb = sb;
- 	sb->s_fs_info = sbi;
- 
-+	sb->s_blocksize = 4096;
-+	sb->s_blocksize_bits = 12;
-+
- 	if (!param || !param->disable_zeroout)
- 		sbi->s_extent_max_zeroout_kb = 32;
- 
-+	err = ext4_es_register_shrinker(sbi);
-+	if (err)
-+		goto out_deactivate;
-+
- 	/* setup the mock inode */
- 	k_ctx.k_ei = kzalloc_obj(struct ext4_inode_info);
--	if (k_ctx.k_ei == NULL)
--		return -ENOMEM;
-+	if (k_ctx.k_ei == NULL) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
- 	ei = k_ctx.k_ei;
- 	inode = &ei->vfs_inode;
- 
--	err = ext4_es_register_shrinker(sbi);
--	if (err)
--		return err;
--
- 	ext4_es_init_tree(&ei->i_es_tree);
- 	rwlock_init(&ei->i_es_lock);
- 	INIT_LIST_HEAD(&ei->i_es_list);
-@@ -267,8 +271,10 @@ static int extents_kunit_init(struct kunit *test)
- 	inode->i_sb = sb;
- 
- 	k_ctx.k_data = kzalloc(EXT_DATA_LEN * 4096, GFP_KERNEL);
--	if (k_ctx.k_data == NULL)
--		return -ENOMEM;
-+	if (k_ctx.k_data == NULL) {
-+		err = -ENOMEM;
-+		goto out;
+ 	/* Adjust symbol to map to file offset */
+-	if (adjust_kernel_syms)
+-		sym->st_value -= shdr->sh_addr - shdr->sh_offset;
++	if (adjust_kernel_syms) {
++		if (dso__rel(dso))
++			sym->st_value += shdr->sh_offset;
++		else
++			sym->st_value -= shdr->sh_addr - shdr->sh_offset;
 +	}
  
- 	/*
- 	 * set the data area to a junk value
-@@ -313,6 +319,20 @@ static int extents_kunit_init(struct kunit *test)
- 	up_write(&sb->s_umount);
- 
- 	return 0;
-+
-+out:
-+	kfree(k_ctx.k_ei);
-+	k_ctx.k_ei = NULL;
-+
-+	kfree(k_ctx.k_data);
-+	k_ctx.k_data = NULL;
-+
-+	ext4_es_unregister_shrinker(sbi);
-+out_deactivate:
-+	deactivate_locked_super(sb);
-+	kfree(sbi);
-+
-+	return err;
- }
- 
- /*
+ 	if (strcmp(section_name, (dso__short_name(curr_dso) + dso__short_name_len(dso))) == 0)
+ 		return 0;
 -- 
 2.53.0
 
