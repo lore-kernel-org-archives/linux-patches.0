@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D6369D67;
-	Wed, 20 May 2026 17:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037A33546C8;
+	Wed, 20 May 2026 17:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299123; cv=none; b=j80VRqDhouI/jfzs7dogk4K3QN/QVdVLlB+yXFg3xnMeFHlwXzdEZrickEx5KY4GpDe4gBWDZotd+SqiyhbpteUsUHK0hhvyZeH9Fd2RcJKmeSyZKi0bf0JXgbWnWi3JE090tlBIqeKdCyw4P/MC7KsGUGjUgEb4N6lZfPe2lcQ=
+	t=1779299126; cv=none; b=hFJC63MQdfOHr8zBfUyDrqIBHHVlUGt+fMOYTaNj7d/svEpnS1LIuHQaPSDrrKtTQj8wuwdis0BogRthgFhFr+sNiItVARvC0nLxt2BDNzfDvW24iFqZ7mkP/gXDegmhgre64hMDkj9FqvM0MyqIfqz9GrQ2TFeYCGh/qLW5WBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299123; c=relaxed/simple;
-	bh=fEGd3uZO0gHIoM5femBZXSJTleMvTAV0UMsLsMCGS4Q=;
+	s=arc-20240116; t=1779299126; c=relaxed/simple;
+	bh=213OWZrwTYKuUpR/aH2nG90Kp/4OV3Dmzt5zfg+FLfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyfWW7uShxYhEVRgF7cSpN7vXjJZO9dhRJAoIwA4/6DPUZ0Z8JSGYnkYNVlTc/GTpctJnxcabsBChjAzKUh97xmT0LrCPgcTRmqZBpGDq16o4+l1IZB0wGNtoHDV3V6usfyzroSdNQp8CQq6umWpYScWwRDGs6ET2FibSMhB1j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlpNdSlq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O6gw+WPyTy1X3ZSHFZD/EDNj8uUmLgCclS8XuLWCV79rcyds+GS9y4Lrx7uZ1gcChxasjYnBKjEkG8DAXwUfGcZO/3aGs+bbBnG9TqKbExTCBZUXQx/C07CQZyPttAHiB2I7B1cCvAyd0Dya4HbtWfzHC0vysxrCfVBn9bK+WyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsMcxGIT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlpNdSlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC62E1F000E9;
-	Wed, 20 May 2026 17:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsMcxGIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A651F000E9;
+	Wed, 20 May 2026 17:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299122;
-	bh=WxSM6sUgvGyuETTiXnh1YtycyYGm/9PFcynTNEZuxMs=;
+	s=korg; t=1779299124;
+	bh=myE3IhbyglyX+kdOOJsf1wWrWx3QSv0ZGjmlhlg9ImA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlpNdSlqC6qA/QIp8skmRHxUsvap8shLLGth+msXga8PAejde0gIzCOVincGDMntz
-	 y7kjXloqV1JbuIzW59Nagf6w+gGoesIFcnuft0NVyNoPwS3psyr6KmPZxqGD+89Eay
-	 oJolteaIGJfJ1lxo1iXSk/d30NPFteex94I8/U+8=
+	b=IsMcxGITx4tnGkLysBP2YSFyh+hmUafpu0X4jLqVHvh4zxz63/NJJ3U1otz9JbyJX
+	 hZ4/H/NkqjpSMzgYPWsI/6C/sbxBEPrLRbJdtPqq1F6LA7jezRSCeGQMSKjtMNMTfG
+	 i41gsccbwYJK2Xgpu8+rqiofp8O/rpwY5skgnCF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yan <jerrysteve1101@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 672/957] arm64: dts: meson-gxl-p230: fix ethernet PHY interrupt number
-Date: Wed, 20 May 2026 18:19:15 +0200
-Message-ID: <20260520162149.110819968@linuxfoundation.org>
+Subject: [PATCH 6.18 673/957] pwm: atmel-tcb: Cache clock rates and mark chip as atomic
+Date: Wed, 20 May 2026 18:19:16 +0200
+Message-ID: <20260520162149.133268252@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,48 +45,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jun Yan <jerrysteve1101@gmail.com>
+From: Sangyun Kim <sangyun.kim@snu.ac.kr>
 
-[ Upstream commit 174a0ef3b33434f475c87e66f37980e39b73805a ]
+[ Upstream commit 68637b68afcc3cb4d56aca14a3a1d1b47b879369 ]
 
-Correct the interrupt number assigned to the Realtek PHY in the p230
+atmel_tcb_pwm_apply() holds tcbpwmc->lock as a spinlock via
+guard(spinlock)() and then calls atmel_tcb_pwm_config(), which calls
+clk_get_rate() twice. clk_get_rate() acquires clk_prepare_lock (a
+mutex), so this is a sleep-in-atomic-context violation.
 
-following the same logic as commit 3106507e1004 ("ARM64: dts: meson-gxm:
-fix q200 interrupt number"),as reported in [PATCH 0/2] Ethernet PHY
-interrupt improvements [1].
+On CONFIG_DEBUG_ATOMIC_SLEEP kernels every pwm_apply_state() that
+enables or reconfigures the PWM triggers a "BUG: sleeping function
+called from invalid context" warning.
 
-[1] https://lore.kernel.org/all/20171202214037.17017-1-martin.blumenstingl@googlemail.com/
+Acquire exclusive control over the clock rates with
+clk_rate_exclusive_get() at probe time and cache the rates in struct
+atmel_tcb_pwm_chip, then read the cached rates from
+atmel_tcb_pwm_config(). This keeps the spinlock-based mutual exclusion
+introduced in commit 37f7707077f5 ("pwm: atmel-tcb: Fix race condition
+and convert to guards") and removes the sleeping calls from the atomic
+section.
 
-Fixes: b94d22d94ad2 ("ARM64: dts: meson-gx: add external PHY interrupt on some platforms")
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260330145111.115318-1-jerrysteve1101@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+With no sleeping calls left in .apply() and the regmap-mmio bus already
+running with fast_io=true, also mark the chip as atomic so consumers
+can use pwm_apply_atomic() from atomic context.
+
+Fixes: 37f7707077f5 ("pwm: atmel-tcb: Fix race condition and convert to guards")
+Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Link: https://patch.msgid.link/20260419080838.3192357-1-sangyun.kim@snu.ac.kr
+[ukleinek: Ensure .clk is enabled before calling clk_get_rate on it.]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-atmel-tcb.c | 38 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
-index 7dffeb5931c9b..701de57ff0f37 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
-@@ -84,7 +84,8 @@ external_phy: ethernet-phy@0 {
- 		reset-gpios = <&gpio GPIOZ_14 GPIO_ACTIVE_LOW>;
+diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
+index f9ff78ba122d4..3d30aeab507e0 100644
+--- a/drivers/pwm/pwm-atmel-tcb.c
++++ b/drivers/pwm/pwm-atmel-tcb.c
+@@ -50,6 +50,8 @@ struct atmel_tcb_pwm_chip {
+ 	spinlock_t lock;
+ 	u8 channel;
+ 	u8 width;
++	unsigned long rate;
++	unsigned long slow_rate;
+ 	struct regmap *regmap;
+ 	struct clk *clk;
+ 	struct clk *gclk;
+@@ -266,7 +268,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	int slowclk = 0;
+ 	unsigned period;
+ 	unsigned duty;
+-	unsigned rate = clk_get_rate(tcbpwmc->clk);
++	unsigned long rate = tcbpwmc->rate;
+ 	unsigned long long min;
+ 	unsigned long long max;
  
- 		interrupt-parent = <&gpio_intc>;
--		interrupts = <29 IRQ_TYPE_LEVEL_LOW>;
-+		/* MAC_INTR on GPIOZ_15 */
-+		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
- 		eee-broken-1000t;
- 	};
- };
+@@ -294,7 +296,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	 */
+ 	if (i == ARRAY_SIZE(atmel_tcb_divisors)) {
+ 		i = slowclk;
+-		rate = clk_get_rate(tcbpwmc->slow_clk);
++		rate = tcbpwmc->slow_rate;
+ 		min = div_u64(NSEC_PER_SEC, rate);
+ 		max = min << tcbpwmc->width;
+ 
+@@ -431,24 +433,49 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	chip->ops = &atmel_tcb_pwm_ops;
++	chip->atomic = true;
+ 	tcbpwmc->channel = channel;
+ 	tcbpwmc->width = config->counter_width;
+ 
+-	err = clk_prepare_enable(tcbpwmc->slow_clk);
++	err = clk_prepare_enable(tcbpwmc->clk);
+ 	if (err)
+ 		goto err_gclk;
+ 
++	err = clk_prepare_enable(tcbpwmc->slow_clk);
++	if (err)
++		goto err_disable_clk;;
++
++	err = clk_rate_exclusive_get(tcbpwmc->clk);
++	if (err)
++		goto err_disable_slow_clk;
++
++	err = clk_rate_exclusive_get(tcbpwmc->slow_clk);
++	if (err)
++		goto err_clk_unlock;
++
++	tcbpwmc->rate = clk_get_rate(tcbpwmc->clk);
++	tcbpwmc->slow_rate = clk_get_rate(tcbpwmc->slow_clk);
++
+ 	spin_lock_init(&tcbpwmc->lock);
+ 
+ 	err = pwmchip_add(chip);
+ 	if (err < 0)
+-		goto err_disable_clk;
++		goto err_slow_clk_unlock;
+ 
+ 	platform_set_drvdata(pdev, chip);
+ 
+ 	return 0;
+ 
++err_slow_clk_unlock:
++	clk_rate_exclusive_put(tcbpwmc->slow_clk);
++
++err_clk_unlock:
++	clk_rate_exclusive_put(tcbpwmc->clk);
++
+ err_disable_clk:
++	clk_disable_unprepare(tcbpwmc->clk);
++
++err_disable_slow_clk:
+ 	clk_disable_unprepare(tcbpwmc->slow_clk);
+ 
+ err_gclk:
+@@ -470,6 +497,9 @@ static void atmel_tcb_pwm_remove(struct platform_device *pdev)
+ 
+ 	pwmchip_remove(chip);
+ 
++	clk_rate_exclusive_put(tcbpwmc->slow_clk);
++	clk_rate_exclusive_put(tcbpwmc->clk);
++	clk_disable_unprepare(tcbpwmc->clk);
+ 	clk_disable_unprepare(tcbpwmc->slow_clk);
+ 	clk_put(tcbpwmc->gclk);
+ 	clk_put(tcbpwmc->clk);
 -- 
 2.53.0
 
