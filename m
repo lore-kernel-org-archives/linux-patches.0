@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D673FBECB;
-	Wed, 20 May 2026 17:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04693FC5B0;
+	Wed, 20 May 2026 17:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299900; cv=none; b=cxkmDjBrFmBPoJppP8Ft8IVJyeMi0RtMba9zms7Kto5YfeMc1GUaajz8feepUEt6N0HFGXj1ro5cT2GDUoQxvQVJ8eCwBuTx9lacCsPYAJg2SkECHQJeDjgn5FDgpMv3aXgNN0yiclxzckX/XuMhoMNVMrwjBFrL6DMr75f9hMU=
+	t=1779299902; cv=none; b=ng+q4w7w0RtGKuFf2zcRmgs7vSXRsVy4EuiAmrCQJUJTj5IuMET6AyqZ9W4Zlv9JwvqcDOsRHNioDd9A4YdC49hBHgWWuf/snXOh3RaVRBdtJ+vSI+iLq7/uI58Nsjxedjsvu+XMOscQz461tXJU+w4Lxb9X+OFXJx10U37aqR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299900; c=relaxed/simple;
-	bh=/PpcnxqnRJTwqRDcCPli33+YHqBiiDqWw3NxDmO+Pgg=;
+	s=arc-20240116; t=1779299902; c=relaxed/simple;
+	bh=IFtHrhnCvC79CLalt2KI0EsD745hdapG8/ZNTMFUy8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KY4KcK1oF1zOz1cdrTTxfebfDUEZh5Cpo+bt+mIUTTuuS7HbUL7rc5cR5uGRbw8pom4KiEZGFxw5neY7KL4jQc09Zv7Hb1My5BAkoTxk3j9NJuhkFnQjWYGQ4zhZ8rotOtn8TnFgZHO7jzjBgy7YpfAXZvGXehmzmeOzQC4AZqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQJ80xmY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FPMHYoea+5fEFWGB3GOlKzJQB9lPHaW/7h6PNIogL1Gmz7y9HdpO3GLkwT7zAcY6w+TeLsB0Za+JYfU8ktFM4UC2lPnwzY0l5372kVSYv78NS7Dw8o2BnDM7CczeT/GQ4wks7HuUncFZdBluUDpWazYcU9ZK+cVv4olqz+Z+sFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjROmw87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQJ80xmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBDA1F000E9;
-	Wed, 20 May 2026 17:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjROmw87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE481F00893;
+	Wed, 20 May 2026 17:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299897;
-	bh=N0WNUy3qZbiVfbgcjTVMz2d51Jy/SEC/me0nD/4gHIc=;
+	s=korg; t=1779299899;
+	bh=7hH5K8HniR7i4OotLo2HQ8vPsSDKSvshnYVupYQf+ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQJ80xmYuwRk5lOz7BM1Ql5D5K0qwsSI4qNW4ieaqfdUDG2GyIWIuKwrpDvBaV4kG
-	 xo1ZKoKwTQgRsjhA7/1E2WWRm27e9d542Yz2+uXFoK7B45ngJWY7SDChGdIXsC8j5M
-	 LOH/sE+oarPWBFLiuUFui40BhhFrbnfVtEoLcUQU=
+	b=hjROmw8784CYQcCjSfgVwOaBbapOBcaFltCRcrHfzBNyeNkz+yA7Pddo1qa9wVmDs
+	 BYtdhknYxsiRK7VLIcf7KxhrTfj12ZY8sZabl27tctAzp9NwG2+UiAuCjqW1IOGvGR
+	 nEzVE6cHahSCcZFBpjt79/n72A46jN+ouTduD29E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoli Feng <xifeng@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.18 926/957] netfs: fix error handling in netfs_extract_user_iter()
-Date: Wed, 20 May 2026 18:23:29 +0200
-Message-ID: <20260520162154.666621720@linuxfoundation.org>
+	Scott Mayhew <smayhew@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 927/957] nfsd: fix file change detection in CB_GETATTR
+Date: Wed, 20 May 2026 18:23:30 +0200
+Message-ID: <20260520162154.689865718@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,67 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Scott Mayhew <smayhew@redhat.com>
 
-commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
+commit 304d81a2fbf2b454def4debcb38ea173911b72cd upstream.
 
-In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
-extract user pages, bail out on -ENOMEM, otherwise return the error
-code only if @npages == 0, allowing short DIO reads and writes to be
-issued.
+RFC 8881, section 10.4.3 doesn't say anything about caching the file
+size in the delegation record, nor does it say anything about comparing
+a cached file size with the size reported by the client in the
+CB_GETATTR reply for the purpose of determining if the client holds
+modified data for the file.
 
-This fixes mmapstress02 from LTP tests against CIFS.
+What section 10.4.3 of RFC 8881 does say is that the server should
+compare the *current* file size with the size reported by the client
+holding the delegation in the CB_GETATTR reply, and if they differ to
+treat it as a modification regardless of the change attribute retrieved
+via the CB_GETATTR.
 
-Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-Reported-by: Xiaoli Feng <xifeng@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
-Cc: netfs@lists.linux.dev
+Doing otherwise would cause the server to believe the client holding the
+delegation has a modified version of the file, even if the client
+flushed the modifications to the server prior to the CB_GETATTR.  This
+would have the added side effect of subsequent CB_GETATTRs causing
+updates to the mtime, ctime, and change attribute even if the client
+holding the delegation makes no further updates to the file.
+
+Modify nfsd4_deleg_getattr_conflict() to obtain the current file size
+via i_size_read().  Retain the ncf_cur_fsize field, since it's a
+convenient way to return the file size back to nfsd4_encode_fattr4(),
+but don't use it for the purpose of detecting file changes.  Remove the
+unnecessary initialization of ncf_cur_fsize in nfs4_open_delegation().
+
+Also, if we recall the delegation (because the client didn't respond to
+the CB_GETATTR), then skip the logic that checks the nfs4_cb_fattr
+fields.
+
+Fixes: c5967721e106 ("NFSD: handle GETATTR conflict with write delegation")
 Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/iterator.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/netfs/iterator.c
-+++ b/fs/netfs/iterator.c
-@@ -22,7 +22,7 @@
-  *
-  * Extract the page fragments from the given amount of the source iterator and
-  * build up a second iterator that refers to all of those bits.  This allows
-- * the original iterator to disposed of.
-+ * the original iterator to be disposed of.
-  *
-  * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
-  * allowed on the pages extracted.
-@@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
- 		ret = iov_iter_extract_pages(orig, &pages, count,
- 					     max_pages - npages, extraction_flags,
- 					     &offset);
--		if (ret < 0) {
--			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
-+		if (unlikely(ret <= 0)) {
-+			ret = ret ?: -EIO;
- 			break;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6350,7 +6350,6 @@ nfs4_open_delegation(struct svc_rqst *rq
  		}
- 
-@@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
- 		npages += cur_npages;
- 	}
- 
-+	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
-+		for (i = 0; i < npages; i++)
-+			unpin_user_page(bv[i].bv_page);
-+		kvfree(bv);
-+		return ret;
+ 		open->op_delegate_type = deleg_ts ? OPEN_DELEGATE_WRITE_ATTRS_DELEG :
+ 						    OPEN_DELEGATE_WRITE;
+-		dp->dl_cb_fattr.ncf_cur_fsize = stat.size;
+ 		dp->dl_cb_fattr.ncf_initial_cinfo = nfsd4_change_attribute(&stat);
+ 		dp->dl_atime = stat.atime;
+ 		dp->dl_ctime = stat.ctime;
+@@ -9396,11 +9395,15 @@ nfsd4_deleg_getattr_conflict(struct svc_
+ 		if (status != nfserr_jukebox ||
+ 		    !nfsd_wait_for_delegreturn(rqstp, inode))
+ 			goto out_status;
++		status = nfs_ok;
++		goto out_status;
 +	}
-+
- 	iov_iter_bvec(new, orig->data_source, bv, npages, orig_len - count);
- 	return npages;
- }
++	if (!ncf->ncf_file_modified) {
++		if (ncf->ncf_initial_cinfo != ncf->ncf_cb_change)
++			ncf->ncf_file_modified = true;
++		else if (i_size_read(inode) != ncf->ncf_cb_fsize)
++			ncf->ncf_file_modified = true;
+ 	}
+-	if (!ncf->ncf_file_modified &&
+-	    (ncf->ncf_initial_cinfo != ncf->ncf_cb_change ||
+-	     ncf->ncf_cur_fsize != ncf->ncf_cb_fsize))
+-		ncf->ncf_file_modified = true;
+ 	if (ncf->ncf_file_modified) {
+ 		int err;
+ 
 
 
