@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB8B29D26E;
-	Wed, 20 May 2026 17:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DAC28DC4;
+	Wed, 20 May 2026 17:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298503; cv=none; b=k993vAueK2FzhypCgm9B9VcJKp+okGDJK4w1f80PTgz1UNLi2wajnr9oUQGqZqDU0pGxz+alCNj1c9dW/jb22hcymGbl2poIPV74iIls7aoxaDtC5Bp4F8K3XckGnlf690akTPogvnfpqJHnnWfLWb6DZFJdmSs7uoXvCmEIiOs=
+	t=1779298506; cv=none; b=FNj85rZEN3pS1HFxgbBedz3xoRvdDJ8ZdNpNh7r8i5ESvusK42vF68f/kIm/WqvGLyBlxZXmaXFW1zVTyDTR0hjO5Mp0HJ7nizvphLOqCISSNFvoQxF+KBAFKKNF2FuxnyjFQIQ9/yfoXgDE24p4zhrZNQ9cyIOEAOFJOpzXB6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298503; c=relaxed/simple;
-	bh=mGbgH/uK1oBjen2G/5Shy8RPtlBwKD46hXRSIqmNtXA=;
+	s=arc-20240116; t=1779298506; c=relaxed/simple;
+	bh=W3AuZketVAtq0s0X/d7r3jgp1+cO8m57Eudi6x72f94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFX7vg3XoWYChnwFKdvjjz22dzFDg5kC3GtzHA9pUB/ubTmMHgyd/yAR6xJejOl7bHGuI0mLcdE3KSpt2FUmaFUhnFG442hvNmb50z4ENEc8FM25yXE3c52JBBISgfsvncNBNflsRAZzc4UaAU5PfrkRdEnL/eyMuq2eF2pYwyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/0pm0qh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K7Yj6uBjx0ea/6iw1jAGm4ANPh8JmDQstYbSgwoCPZyCpQ+cMq9mOB6m+Jc6Os9l5Z6Qj7D2TXvJ6a7WdRfC44LSIz6JtnjFwMu32HRIczmJQzc+kwdDlXciapd4cjKtTp2rCd/Mg/7/5fQC8ilriMnxZmnVL1drTvPBdp+8TME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7H7Kx1F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/0pm0qh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C311A1F000E9;
-	Wed, 20 May 2026 17:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7H7Kx1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1FD1F000E9;
+	Wed, 20 May 2026 17:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298502;
-	bh=iUC1CZUJQRc+0ia8DSnKZ2FakVSr7ZeFtFtREGAEZTg=;
+	s=korg; t=1779298504;
+	bh=WumE+9f+JJG4TDA892vK7HGpuz2yHKBw70LRm1pk1jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/0pm0qhcYufT0wmMvIvrwAf8QsxDA2kJgoOlMGWFhrSuyxctASDAMovMocEDgMQL
-	 7m2xmcD9G8QpyGFLjsYDANcwFuYgHzBw4vItbF1QYqOHYHbOhg4tq1xWbouI1mIQy7
-	 lJvaYxzXKZ5l3zEFEOHXVW2+ob1HHqxO3ovfvKTA=
+	b=E7H7Kx1FwZ7O9koJdU9ftv/r+np4YIz6jji55bWjspPZJ2mTY+s+wRgXsTzWce+3V
+	 g3+6etSwTjvXxwOxIDIqKdbGSnemvURkT1nNK5W+W7IFp91z6GVavV+dN/BPN2JiVa
+	 vr2t9JasWByil/L8Gos65QbGl/F2Q1LUrFp/spl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 398/957] arm64: dts: qcom: sm8550: correct Iris corners for the MXC rail
-Date: Wed, 20 May 2026 18:14:41 +0200
-Message-ID: <20260520162143.157587413@linuxfoundation.org>
+Subject: [PATCH 6.18 434/957] soc: qcom: aoss: compare against normalized cooling state
+Date: Wed, 20 May 2026 18:15:17 +0200
+Message-ID: <20260520162143.933524830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit ff8edb5bc8bdf8bdf4573d8dc062b09cc1e6bc76 ]
+[ Upstream commit cd3c4670db3ffe997be9548c7a9db3952563cf14 ]
 
-The corners of the MVS0 / MVS0C clocks on the MMCX rail don't always
-match the PLL corners on the MXC rail. Correct the performance corners
-for the MXC rail following the PLL documentation.
+qmp_cdev_set_cur_state() normalizes the requested state to a boolean
+(cdev_state = !!state). The existing early-return check compares
+qmp_cdev->state == state, which can be wrong if state is non-boolean
+(any non-zero value). Compare qmp_cdev->state against cdev_state instead,
+so the check matches the effective state and avoids redundant updates.
 
-Fixes: 41661853ae8e ("arm64: dts: qcom: sm8550: add iris DT node")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260313-iris-fix-corners-v1-4-32a393c25dda@oss.qualcomm.com
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Fixes: 05589b30b21a ("soc: qcom: Extend AOSS QMP driver to support resources that are used to wake up the SoC.")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260329195333.1478090-1-alok.a.tiwari@oracle.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/qcom_aoss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e294dc9c68c9a..63e17c3014061 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3284,19 +3284,19 @@ opp-338000000 {
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index a543ab9bee6c4..c255662b8fc3d 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -355,7 +355,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
+ 	/* Normalize state */
+ 	cdev_state = !!state;
  
- 				opp-366000000 {
- 					opp-hz = /bits/ 64 <366000000>;
--					required-opps = <&rpmhpd_opp_svs_l1>,
-+					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_svs_l1>;
- 				};
+-	if (qmp_cdev->state == state)
++	if (qmp_cdev->state == cdev_state)
+ 		return 0;
  
- 				opp-444000000 {
- 					opp-hz = /bits/ 64 <444000000>;
--					required-opps = <&rpmhpd_opp_nom>,
-+					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_nom>;
- 				};
- 
- 				opp-533333334 {
- 					opp-hz = /bits/ 64 <533333334>;
--					required-opps = <&rpmhpd_opp_turbo>,
-+					required-opps = <&rpmhpd_opp_nom>,
- 							<&rpmhpd_opp_turbo>;
- 				};
- 			};
+ 	ret = qmp_send(qmp_cdev->qmp, "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
 -- 
 2.53.0
 
