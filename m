@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5D536D4E1;
-	Wed, 20 May 2026 17:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87DD331220;
+	Wed, 20 May 2026 17:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296544; cv=none; b=G9DVbgnSKridkpqzkXC3fyl5eiu3yVy/VnljFaUbS1G1ekuRnuqFqyuoNinV9QLZo47V0Qy1ickRNVlTSpvDypCouQ1PrRKEzJ5k/j4jlogaU6wqC9kVcUeKBYV0wKiKADNFhrEtj2ejMENn66IEX33pqicmDPxjs552bwdpB14=
+	t=1779296546; cv=none; b=HLKW4pksdqt9bU7vNTIky6vv9QAIf+U9e2DN5l6p5Op8mYjyfalR5ufVLTCHxQz1lnHJpbZF/JpzvPVFs0wQPo/Qc67HoHvDVVJeEpMyLosK6/IuY4C9p0MZDaJApvv7d7J+PvCLrWu8eZRNtA++Nuso2fovahUle9DejfF3mNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296544; c=relaxed/simple;
-	bh=FeaFjpZNrSlDztHQSI8wrcYXQwyON/ExWhqT0Cyk/8Q=;
+	s=arc-20240116; t=1779296546; c=relaxed/simple;
+	bh=vTBLswtlxnbRvwsCzJwxRKOEKeQuQuTx86xUJOcTRPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tr6fy0OSC+PxowjxepxMJAxPGS4RUpN9pqbVcUG92CR9UlSzxOSw9TruZC/2DZkncDcH0OLHDcBIRpYkLv3Eat3G11EoWJm/g4df3ehai3epz0pXJrsaaEp30PsWREXRkMIPfE/keRCVwxDT33AG7mTIeqfx632eEJmfwBzwE14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdLlqGvP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZClE1HBPjABSfK3eBZaL4N6F5Chld/dvRiVJ9zp/tTbGLLq3eZZEUJj7BSW6AlKrbojl1t5Kjv/Kn4FopyKt+o3cx7DBfpPgLui+VhjOEY77TKxanVUpeBZQSWWL7hWAZeU1CAp1XCrt4vc8/oMfjGF/oDUffcbv/KHIcSav7Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lq+4kFUb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdLlqGvP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CB11F00893;
-	Wed, 20 May 2026 17:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lq+4kFUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2EB1F000E9;
+	Wed, 20 May 2026 17:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296542;
-	bh=dJHlXjSXq8SsQ+BUFu+uU1v2bfkOWNmC7riu+r6rvn4=;
+	s=korg; t=1779296545;
+	bh=CfLeZuIuTf96TSpp1+2gzzEHwZONHlF/f7wl6rI5C14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdLlqGvPjPFQuUmAVHNdUKmBEk9rMS23ZfBUX1C0Eo/hypmsWcZf6K6V8zU64Q4E5
-	 PXx25/zSNGNtiLlDBn4Z5fb07+73GAn9qpSwTdP2uoLInIbLhAf8tOIGHFAhqSJdJk
-	 i152XRSQ6Sf7Pxuc3UjKaDSf+7YCDzR+dXi+Ivqo=
+	b=lq+4kFUbOXKanafzuKSKpNd1A5ti7abSW/noXnBJhKhX9wUtGJT3kOLRKJhpe2qne
+	 y/p4qAn70QdV9KVN3yG1POR2Wx+7b02jtNmlSrYCx0kfHQL7dYdJGIrlrwlF56r6kZ
+	 bJtZ/BJu2DMRE4IXS0FgjJ2+3B8tgsYTHKORshkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0840/1146] net/sched: sch_pie: annotate data-races in pie_dump_stats()
-Date: Wed, 20 May 2026 18:18:10 +0200
-Message-ID: <20260520162207.243904821@linuxfoundation.org>
+Subject: [PATCH 7.0 0823/1146] arm64: dts: meson-gxl-p230: fix ethernet PHY interrupt number
+Date: Wed, 20 May 2026 18:17:53 +0200
+Message-ID: <20260520162206.857657998@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,158 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 5154561d9b119f781249f8e845fecf059b38b483 ]
+[ Upstream commit 174a0ef3b33434f475c87e66f37980e39b73805a ]
 
-pie_dump_stats() only runs with RTNL held,
-reading fields that can be changed in qdisc fast path.
+Correct the interrupt number assigned to the Realtek PHY in the p230
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
+following the same logic as commit 3106507e1004 ("ARM64: dts: meson-gxm:
+fix q200 interrupt number"),as reported in [PATCH 0/2] Ethernet PHY
+interrupt improvements [1].
 
-Alternative would be to acquire the qdisc spinlock, but our long-term
-goal is to make qdisc dump operations lockless as much as we can.
+[1] https://lore.kernel.org/all/20171202214037.17017-1-martin.blumenstingl@googlemail.com/
 
-tc_pie_xstats fields don't need to be latched atomically,
-otherwise this bug would have been caught earlier.
-
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421142944.4009941-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b94d22d94ad2 ("ARM64: dts: meson-gx: add external PHY interrupt on some platforms")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260330145111.115318-1-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pie.h   |  2 +-
- net/sched/sch_pie.c | 38 +++++++++++++++++++-------------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/pie.h b/include/net/pie.h
-index 01cbc66825a40..1f3db0c355149 100644
---- a/include/net/pie.h
-+++ b/include/net/pie.h
-@@ -104,7 +104,7 @@ static inline void pie_vars_init(struct pie_vars *vars)
- 	vars->dq_tstamp = DTIME_INVALID;
- 	vars->accu_prob = 0;
- 	vars->dq_count = DQCOUNT_INVALID;
--	vars->avg_dq_rate = 0;
-+	WRITE_ONCE(vars->avg_dq_rate, 0);
- }
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+index 7dffeb5931c9b..701de57ff0f37 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+@@ -84,7 +84,8 @@ external_phy: ethernet-phy@0 {
+ 		reset-gpios = <&gpio GPIOZ_14 GPIO_ACTIVE_LOW>;
  
- static inline struct pie_skb_cb *get_pie_cb(const struct sk_buff *skb)
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 0a377313b6a9d..73650200482f4 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -90,7 +90,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	bool enqueue = false;
- 
- 	if (unlikely(qdisc_qlen(sch) >= sch->limit)) {
--		q->stats.overlimit++;
-+		WRITE_ONCE(q->stats.overlimit, q->stats.overlimit + 1);
- 		goto out;
- 	}
- 
-@@ -104,7 +104,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* If packet is ecn capable, mark it if drop probability
- 		 * is lower than 10%, else drop it.
- 		 */
--		q->stats.ecn_mark++;
-+		WRITE_ONCE(q->stats.ecn_mark, q->stats.ecn_mark + 1);
- 		enqueue = true;
- 	}
- 
-@@ -114,15 +114,15 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!q->params.dq_rate_estimator)
- 			pie_set_enqueue_time(skb);
- 
--		q->stats.packets_in++;
-+		WRITE_ONCE(q->stats.packets_in, q->stats.packets_in + 1);
- 		if (qdisc_qlen(sch) > q->stats.maxq)
--			q->stats.maxq = qdisc_qlen(sch);
-+			WRITE_ONCE(q->stats.maxq, qdisc_qlen(sch));
- 
- 		return qdisc_enqueue_tail(skb, sch);
- 	}
- 
- out:
--	q->stats.dropped++;
-+	WRITE_ONCE(q->stats.dropped, q->stats.dropped + 1);
- 	q->vars.accu_prob = 0;
- 	return qdisc_drop_reason(skb, sch, to_free, reason);
- }
-@@ -267,11 +267,11 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
- 			count = count / dtime;
- 
- 			if (vars->avg_dq_rate == 0)
--				vars->avg_dq_rate = count;
-+				WRITE_ONCE(vars->avg_dq_rate, count);
- 			else
--				vars->avg_dq_rate =
-+				WRITE_ONCE(vars->avg_dq_rate,
- 				    (vars->avg_dq_rate -
--				     (vars->avg_dq_rate >> 3)) + (count >> 3);
-+				     (vars->avg_dq_rate >> 3)) + (count >> 3));
- 
- 			/* If the queue has receded below the threshold, we hold
- 			 * on to the last drain rate calculated, else we reset
-@@ -381,7 +381,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	if (delta > 0) {
- 		/* prevent overflow */
- 		if (vars->prob < oldprob) {
--			vars->prob = MAX_PROB;
-+			WRITE_ONCE(vars->prob, MAX_PROB);
- 			/* Prevent normalization error. If probability is at
- 			 * maximum value already, we normalize it here, and
- 			 * skip the check to do a non-linear drop in the next
-@@ -392,7 +392,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	} else {
- 		/* prevent underflow */
- 		if (vars->prob > oldprob)
--			vars->prob = 0;
-+			WRITE_ONCE(vars->prob, 0);
- 	}
- 
- 	/* Non-linear drop in probability: Reduce drop probability quickly if
-@@ -403,7 +403,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 		/* Reduce drop probability to 98.4% */
- 		vars->prob -= vars->prob / 64;
- 
--	vars->qdelay = qdelay;
-+	WRITE_ONCE(vars->qdelay, qdelay);
- 	vars->backlog_old = backlog;
- 
- 	/* We restart the measurement cycle if the following conditions are met
-@@ -502,21 +502,21 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct tc_pie_xstats st = {
- 		.prob		= q->vars.prob << BITS_PER_BYTE,
--		.delay		= ((u32)PSCHED_TICKS2NS(q->vars.qdelay)) /
-+		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
- 				   NSEC_PER_USEC,
--		.packets_in	= q->stats.packets_in,
--		.overlimit	= q->stats.overlimit,
--		.maxq		= q->stats.maxq,
--		.dropped	= q->stats.dropped,
--		.ecn_mark	= q->stats.ecn_mark,
-+		.packets_in	= READ_ONCE(q->stats.packets_in),
-+		.overlimit	= READ_ONCE(q->stats.overlimit),
-+		.maxq		= READ_ONCE(q->stats.maxq),
-+		.dropped	= READ_ONCE(q->stats.dropped),
-+		.ecn_mark	= READ_ONCE(q->stats.ecn_mark),
+ 		interrupt-parent = <&gpio_intc>;
+-		interrupts = <29 IRQ_TYPE_LEVEL_LOW>;
++		/* MAC_INTR on GPIOZ_15 */
++		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+ 		eee-broken-1000t;
  	};
- 
- 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
- 	st.dq_rate_estimating = q->params.dq_rate_estimator;
- 
- 	/* unscale and return dq_rate in bytes per sec */
--	if (q->params.dq_rate_estimator)
--		st.avg_dq_rate = q->vars.avg_dq_rate *
-+	if (st.dq_rate_estimating)
-+		st.avg_dq_rate = READ_ONCE(q->vars.avg_dq_rate) *
- 				 (PSCHED_TICKS_PER_SEC) >> PIE_SCALE;
- 
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
+ };
 -- 
 2.53.0
 
