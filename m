@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EE33C198D;
-	Wed, 20 May 2026 11:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F1E3A9633;
+	Wed, 20 May 2026 11:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779275998; cv=none; b=lJVno780vGzb8DdcMVrYn1mZXe1et7oOwM9fHLrfx/KOupP/UpXTr5aYGiXT5Hg1Bkv+EK5iOrAmiW+unvN4OMU1DFGSxst7f8YqYZVyr5AmGGgkC9LB5pz+EHJ9TZCwt9+i88L6RnfLL9NnmqsoZK/t/fDUit1kibrSJPH7ak8=
+	t=1779276000; cv=none; b=DlfO+SBBpACbct2sUj9ePrmh0a9X0fBmCMxzLyPuKJmVHr4wD2VGRNIwjRjb61TZmPSJawaY42iKHaZO5X4rGg3VtzSviDzAF8Z1VJ1VutLWzHMl3Ft7SKxTZYKj7QY9qnIzOyHDWT3gBeBTfnZTd6iZcuJzOn3hVRCsWQMFF+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779275998; c=relaxed/simple;
-	bh=IX/Repa1aySqfY4fx8TzeX6rhq3yO0kNzFJX8DguvF8=;
+	s=arc-20240116; t=1779276000; c=relaxed/simple;
+	bh=MNnI0yfp4HL9JvMQJhtnBDP+XiDP1g05bZVIKRJla8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cOo4cl0daVx+gOYFLaNMByJ0ubUHu8h7JHTamef/06vKOKd73YR+1u64QM6JeL0y+LctrdmubJUdlBfywxHN/bup912y9ICd4P2embgK5PPzIr0da0woC0X8+DmA/NGWYxJLKjZlUqRYaniVSlbLffmqimrDECBRxr67XlGpVn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T1CKjdrB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ony6Ank+7u6ItFSt8G59oDMtR9NGcYl/aEYLdqP+1CsReBsnPnbId4QoaPB1NkLR9FWg2IqwY8bA6dXU3qj8G4s8F89ftw1iEr9Q91TJR7402O4m5Z1gZwXuh3pxn20+q8kw1Q7JRlN+qP/tAAksEOH18C+IYcp32ppyc9eugnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oppyVCP4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T1CKjdrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF3F1F00893;
-	Wed, 20 May 2026 11:19:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oppyVCP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E364D1F00894;
+	Wed, 20 May 2026 11:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779275992;
-	bh=nPgcOEOH3FWn/QWW6rJHvWeVUMHCsPNHcUfOAvcXkmc=;
+	s=k20260515; t=1779275995;
+	bh=1ygI4seEk1TqIOMzl4yzboMtxPWNVHrpIpoLyuWmM1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1CKjdrBfEctzDWIN2DCA1s5d78Nh3QouL68n7qOw8aZUPgHbikOF9elmBcnSB/vF
-	 viJL6P2Pup4Jymbh39qaQtaNjHYk5UMUA6QqiKGn4HWSyrtvWpRbGHjZM8cCzlyCnq
-	 dpyL3/ehJc8dGkErkZu+3k+cU1UhvVALnf2J5NXjMlEHOHv+OYJdFjfiuMDr3xXhI1
-	 1HE9gZdxrRW2FVN9YLk9R/j0bIBdtA74cqx5PR0lW2evN3fXoPVRHKmnoeIuXte+ZN
-	 TlGYS8WAigzDP5q9v5HQOWvk2ty7oY7fxaGKYaN3abGH761JqHGoARBmMmLkGhRIrF
-	 fzG86/xAsXCBQ==
+	b=oppyVCP4qo06thYJE6TqXTVERDc+n3k+oPT2wj2FvBRP0wDZqAcaC1jqPp/bQAThz
+	 mID478TC2q+QYxFW9LFl+r+sgA1EJOHC3xXgqe4qKen0fNrLPWg4+nzrYgbUF1Tg1S
+	 0ANzmZaP6rvj04V4WtDwg+TLKM5HHtfklODJ2FABhFkrMg4n/P7foe1d59sbQBMCxO
+	 t7lPqTHjOYY9SGMLrpojUA6N9iE5L/g9F2vmbu1FQoGN50CsXFz6mK+0M8Zf6gbeSY
+	 k/Bya0uLjD/eA2R2Yg9QndG5E5wZI7RqDH+8ILKf2zIkmPXmgnHGzJQZbdSTeaGTnc
+	 WF6zs77RtnBmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christian Van <cvan20191@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Hongfu Li <lihongfu@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jagan@amarulasolutions.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	hannes@cmpxchg.org,
+	mkoutny@suse.com,
+	shuah@kernel.org,
+	cgroups@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] drm/panel: feiyang-fy07024di26a30d: return display-on error
-Date: Wed, 20 May 2026 07:18:37 -0400
-Message-ID: <20260520111944.3424570-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] selftests/cgroup: Fix cg_read_strcmp() empty string comparison
+Date: Wed, 20 May 2026 07:18:39 -0400
+Message-ID: <20260520111944.3424570-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -58,280 +56,253 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Van <cvan20191@gmail.com>
+From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit c67e8787f6743101c90c7a9c4bb7cf6f1f739f83 ]
+[ Upstream commit e32e6f02168f2ad7991eb5d160d312d2001520c8 ]
 
-mipi_dsi_dcs_set_display_on() returns an error code, but feiyang_enable()
-currently ignores it and always reports success.
+cg_read_strcmp() allocated a buffer sized to strlen(expected) + 1,
+then passed it to read_text() which calls read(fd, buf, size-1).
 
-Return the DCS command result so callers can observe enable failures.
+When comparing against an empty string (""), strlen("") = 0 gives a
+1-byte buffer, and read() is asked to read 0 bytes.  The file content
+is never actually read, so strcmp("", buf) always returns 0 regardless
+of the real content.  This caused cg_test_proc_killed() to always
+report the cgroup as empty immediately, making OOM tests pass without
+verifying that processes were killed.
 
-Signed-off-by: Christian Van <cvan20191@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com
+Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `drm/panel`, action verb `return`, summary:
-`feiyang-fy07024di26a30d` should propagate the MIPI DSI display-on
-command error instead of reporting success.
 
-Step 1.2 Record: tags verified:
-- `Signed-off-by: Christian Van <cvan20191@gmail.com>`
-- `Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>`
-- `Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>`
-- `Link:
-  https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, syzbot, or
-sanitizer tags were present.
+Step 1.1 Record: Subsystem `selftests/cgroup`; action verb `Fix`; intent
+is to correct empty-string comparison in `cg_read_strcmp()`.
 
-Step 1.3 Record: the body says `mipi_dsi_dcs_set_display_on()` returns
-an error but `feiyang_enable()` ignores it and always returns success.
-Verified in `drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c`.
-Symptom: DRM panel core cannot observe a failed display-on command and
-may continue the enable sequence as if the panel enabled successfully.
-No user report, stack trace, or affected-version statement was found.
+Step 1.2 Record: Tags present are:
+- `Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>`
+- `Signed-off-by: Tejun Heo <tj@kernel.org>`
 
-Step 1.4 Record: yes, this is a hidden bug fix: it fixes ignored error
-handling in a panel enable path. It is not cleanup or refactoring.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+`Link:`, or `Cc: stable@vger.kernel.org` tags are present.
+
+Step 1.3 Record: The commit describes a concrete selftest bug: for
+expected `""`, `strlen(expected) + 1` allocates one byte, and
+`read_text()` calls `read(fd, buf, size - 1)`, so zero bytes are read.
+The symptom is false success: `cg_test_proc_killed()` can report a
+cgroup as empty immediately, so OOM tests can pass without verifying
+process death.
+
+Step 1.4 Record: This is a direct bug fix, not hidden cleanup. It fixes
+incorrect test validation logic.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed, `drivers/gpu/drm/panel/panel-feiyang-
-fy07024di26a30d.c`; 1 insertion, 3 deletions. Modified function:
-`feiyang_enable()`. Scope: single-file surgical driver fix.
 
-Step 2.2 Record: before, `feiyang_enable()` called
-`mipi_dsi_dcs_set_display_on(ctx->dsi)` and always returned `0`. After,
-it returns the DCS command result directly. Affected path: normal panel
-enable path, after the 200 ms enable delay.
+Step 2.1 Record: One file changed:
+`tools/testing/selftests/cgroup/lib/cgroup_util.c`, with 3 insertions
+and 2 deletions. Modified function: `cg_read_strcmp()`. Scope: single-
+file surgical selftest helper fix.
 
-Step 2.3 Record: bug category is logic/error-propagation correctness.
-The broken mechanism was an ignored negative return from
-`mipi_dsi_dcs_set_display_on()`. Verified that
-`mipi_dsi_dcs_set_display_on()` returns `0` on success or a negative
-error code on failure.
+Step 2.2 Record: Before, non-NULL `expected` always used
+`strlen(expected) + 1`; for `""`, that meant `size == 1` and `cg_read()`
+read zero bytes. After, empty expected strings use `size == 2`, allowing
+one byte to be read so non-empty file contents are detected.
 
-Step 2.4 Record: fix quality is high: minimal, obviously correct, no new
-API, no locking, no data structure change. Regression risk is very low;
-the only behavior change is that a real display-on failure prevents
-`drm_panel_enable()` from marking the panel enabled and enabling
-backlight/followers.
+Step 2.3 Record: Bug category is logic/correctness in a userspace
+selftest helper. No kernel runtime locking, refcounting, memory safety,
+or API behavior changes.
+
+Step 2.4 Record: The fix is obviously correct for the described case:
+empty file still compares equal, non-empty file no longer compares equal
+after reading at least one byte. Regression risk is very low and limited
+to cgroup selftests.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the ignored return was introduced
-with the original driver commit
-`69dc678abc2b9d36ff005413ca6e9edabe4c369a` (`drm/panel: Add Feiyang
-FY07024DI26A30-D MIPI-DSI LCD panel`), first contained in `v5.2-rc1`.
 
-Step 3.2 Record: no `Fixes:` tag was present, so there was no tag to
-follow. I inspected the original driver commit anyway; it added the
-driver and already ignored this display-on return.
+Step 3.1 Record: Blame shows `cg_read_strcmp()` came from `84092dbcf901`
+in v4.18-rc1, and the `size = strlen(expected) + 1` logic was last
+touched by `48c2bb0b9cf86` in v4.19-rc5. The bug has therefore existed
+across many stable releases.
 
-Step 3.3 Record: recent file history shows mostly unrelated panel API
-conversions and cleanup. The candidate patch is standalone and only
-needs the existing `feiyang_enable()` and
-`mipi_dsi_dcs_set_display_on()` code.
+Step 3.2 Record: No `Fixes:` tag is present. I inspected related commits
+anyway: `84092dbcf901` introduced the selftest utility, `48c2bb0b9cf86`
+tried to fix `cg_read_strcmp()` but still checked `!expected` rather
+than empty `expected`, and `d830020656c5b` changed the NULL case to
+return `-1`.
 
-Step 3.4 Record: no other `Christian Van` commits under
-`drivers/gpu/drm/panel` were found in checked `master` or `graphics-
-next`. Neil Armstrong is listed as DRM panel maintainer in `MAINTAINERS`
-and reviewed/applied the patch.
+Step 3.3 Record: Recent related history includes `6680c162b4850` adding
+`cg_read_strcmp_wait()` and `2c754a84ff16a` moving the utility into
+`lib/`. No functional prerequisite for this fix was identified.
 
-Step 3.5 Record: no dependencies found. The patch applies directly to
-`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; `v5.4`
-contains the buggy code but needs a trivial context backport.
+Step 3.4 Record: No prior Hongfu Li commits under
+`tools/testing/selftests/cgroup` were found. The commit was applied by
+Tejun Heo, who is listed as a cgroup maintainer in `MAINTAINERS`.
+
+Step 3.5 Record: No dependent code changes are required for the logic
+itself. Older stable trees before the selftest library move need a path-
+only backport adjustment.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c c67e8787f6743101c90c7a9c4bb7cf6f1f739f83`
-found the original submission at
-`https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`.
-`b4 dig -a` found only v1, so the committed version is the only revision
-found.
 
-Step 4.2 Record: `b4 dig -w` showed the original recipients included
-Christian Van, Jagan Teki, Neil Armstrong, Jessica Zhang, Maarten
-Lankhorst, Maxime Ripard, Thomas Zimmermann, David Airlie, Simona
-Vetter, `dri-devel`, and `linux-kernel`. Neil Armstrong reviewed it and
-later applied it to `drm-misc-fixes`.
+Step 4.1 Record: `b4 dig -c e32e6f02168f2...` found the original
+submission at
+`https://patch.msgid.link/20260509080328.632007-1-lihongfu@kylinos.cn`.
+`b4 dig -a` found only v1. The saved mbox shows Tejun replied: “Applied
+to cgroup/for-7.1-fixes.” No NAKs or concerns were present in the
+fetched thread.
 
-Step 4.3 Record: no `Reported-by` or bug-report link exists. WebFetch
-for lore URLs was blocked by Anubis, but `b4 mbox` fetched the thread
-successfully. The thread contained Neil’s `Reviewed-by` reply and an
-applied notice.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to Tejun Heo,
+Johannes Weiner, Michal Koutný, Shuah Khan, cgroups, linux-kselftest,
+and linux-kernel, so the right maintainers/lists were included.
 
-Step 4.4 Record: no multi-patch series found; this is a standalone
-1-patch series.
+Step 4.3 Record: No separate bug report, syzbot report, or bugzilla link
+was present.
 
-Step 4.5 Record: WebFetch searches of `lore.kernel.org/stable` were
-blocked by Anubis. Local pending/stable candidate branches searched did
-not show this patch already present.
+Step 4.4 Record: No multi-patch series or related required patches were
+found; this is standalone.
+
+Step 4.5 Record: Lore WebFetch was blocked by Anubis for stable search.
+WebSearch did not find stable-specific discussion for this exact 2026
+commit.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified function: `feiyang_enable()`.
 
-Step 5.2 Record: `feiyang_enable()` is installed as `.enable` in
-`feiyang_funcs`. `drm_panel_enable()` calls
-`panel->funcs->enable(panel)` and checks negative returns. Multiple DRM
-bridge/host drivers call `drm_panel_enable()`.
+Step 5.1 Record: Modified function: `cg_read_strcmp()`.
 
-Step 5.3 Record: key callees are `msleep(200)` and
-`mipi_dsi_dcs_set_display_on(ctx->dsi)`. The latter calls
-`mipi_dsi_dcs_write()` and returns a negative error on write failure.
+Step 5.2 Record: Callers found include `cg_read_strcmp_wait()`,
+`test_memcontrol.c`, `test_core.c`, `test_kill.c`, `test_pids.c`, and
+`test_zswap.c`. Empty-string `cgroup.procs` checks are in
+`test_memcontrol.c`.
 
-Step 5.4 Record: reachable through DRM panel enable paths during display
-modeset/enable for systems using this panel. This is driver/hardware-
-specific, not universal. No in-tree DTS user of
-`feiyang,fy07024di26a30d` was found beyond the binding example and
-driver match table.
+Step 5.3 Record: The relevant callees are `malloc()`, `cg_read()`,
+`read_text()`, `read()`, `strcmp()`, and `free()`.
 
-Step 5.5 Record: many other panel drivers already check and return or
-handle `mipi_dsi_dcs_set_display_on()` errors, confirming this driver
-was an outlier.
+Step 5.4 Record: Verified call chain: `test_memcontrol` main test loop
+-> OOM tests such as `test_memcg_oom_events()` / `cg_test_proc_killed()`
+-> `cg_read_strcmp()` -> `cg_read()` -> `read_text()`. This is reachable
+by running cgroup kselftests, not by normal kernel runtime use.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: buggy code exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`,
-`v6.6`, `v6.12`, `v6.19`, and `v7.0`. The driver was introduced for
-`v5.2-rc1`, so all active stable trees at or after that point likely
-contain it.
+Step 5.5 Record: Similar affected pattern exists in stable branches
+where `cg_read_strcmp(..., "cgroup.procs", "")` is used and the helper
+still has `size = strlen(expected) + 1`.
 
-Step 6.2 Record: expected backport difficulty is clean for `v5.10+`
-based on apply checks. `v5.4` failed direct apply due to context drift
-but contains the same ignored call and should need only a trivial one-
-function backport.
+## Phase 6: Stable Tree Analysis
 
-Step 6.3 Record: no related stable-side fix for this same issue was
-found in the checked stable/pending branches.
+Step 6.1 Record: I verified the buggy helper and affected empty
+`cgroup.procs` checks exist in `stable/linux-5.4.y`, `5.10.y`, `5.15.y`,
+`6.1.y`, `6.6.y`, `6.12.y`, `6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y`.
 
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is DRM panel driver, criticality
-`PERIPHERAL`/driver-specific. It affects users of Feiyang
-FY07024DI26A30-D MIPI-DSI panels.
+Step 6.2 Record: The patch applies cleanly to current
+`stable/linux-7.0.y` with `git apply --check`. Branches using
+`tools/testing/selftests/cgroup/cgroup_util.c` instead of
+`lib/cgroup_util.c` need a trivial path adjustment.
 
-Step 7.2 Record: DRM panel is maintained and active. The file has had
-several API-conversion commits since introduction, but this fix is not
-dependent on those conversions for `v5.10+`.
+Step 6.3 Record: Related older fixes are present, but no checked stable
+branch contained the candidate’s `expected[0] == '\0'` fix.
 
-## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: affected population is driver-specific/config-specific:
-kernels with `CONFIG_DRM_PANEL_FEIYANG_FY07024DI26A30D` and hardware
-described with `feiyang,fy07024di26a30d`.
+## Phase 7: Subsystem Context
 
-Step 8.2 Record: trigger is a failure of the DSI `SET_DISPLAY_ON`
-command during panel enable. I did not verify a specific real-world
-reporter, so frequency is unverified. It is not shown to be
-unprivileged-user-triggerable.
+Step 7.1 Record: Subsystem is cgroup selftests. Runtime criticality is
+peripheral, but test criticality is meaningful for memcg/cgroup
+validation.
 
-Step 8.3 Record: failure mode is user-visible display enable
-misreporting: before the patch, the panel core could treat the panel as
-enabled despite the failed display-on command. Severity: `MEDIUM` for
-affected hardware, because it can leave display/backlight state wrong,
-but no crash, memory corruption, deadlock, or security issue was
-verified.
+Step 7.2 Record: The subsystem is active; recent stable history includes
+multiple cgroup selftest fixes, and `MAINTAINERS` lists
+`tools/testing/selftests/cgroup/` under maintained cgroup ownership.
 
-Step 8.4 Record: benefit is moderate for affected hardware; risk is very
-low because the patch only returns an existing error code from a
-function that already has an `int` return type.
+## Phase 8: Impact And Risk
+
+Step 8.1 Record: Affected users are kernel developers, distributions, CI
+systems, and stable maintainers running cgroup kselftests.
+
+Step 8.2 Record: Trigger is running affected cgroup OOM selftests that
+compare `cgroup.procs` with `""`. This is not an unprivileged runtime
+kernel trigger.
+
+Step 8.3 Record: Failure mode is false PASS / missed test validation,
+not a kernel crash or data corruption. Severity: MEDIUM for stable
+validation quality.
+
+Step 8.4 Record: Benefit is medium because it prevents false success in
+OOM-related stable testing. Risk is very low because the change is tiny,
+userspace-only, and does not affect kernel runtime behavior.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record:
-Evidence for backporting: real ignored-error bug; affects display enable
-correctness; original buggy code dates to `v5.2-rc1`; one-line surgical
-fix; maintainer reviewed/applied to `drm-misc-fixes`; clean apply to
-`v5.10+`; no new API or feature.
-Evidence against backporting: no user report, crash, security issue,
-data corruption, syzbot report, or `Fixes:` tag; affected population is
-limited to one panel driver; `v5.4` needs a trivial manual backport.
-Unresolved: actual field frequency of DSI display-on failures was not
-verified.
 
-Step 9.2 Record:
-1. Obviously correct and tested? Correct by inspection; reviewed by DRM
-   panel maintainer. No explicit `Tested-by`.
-2. Fixes a real bug? Yes, ignored negative return from a hardware
-   command.
-3. Important issue? Moderate: display enable state correctness for
-   affected hardware, not a critical kernel-wide failure.
-4. Small and contained? Yes, one function, one file, 1 insertion/3
-   deletions.
+Evidence for backporting: fixes a real, verified selftest correctness
+bug; bug exists in many stable trees; affects OOM/memcg validation;
+patch is tiny and obvious; reviewed/applied by the cgroup maintainer; no
+runtime regression risk.
+
+Evidence against backporting: it does not fix a production kernel
+crash/security/data-corruption bug directly, only test correctness.
+
+Stable rules checklist:
+1. Obviously correct and tested by review? Yes, obviously correct by
+   code inspection; no explicit `Tested-by`.
+2. Fixes a real bug? Yes, false empty-string comparison in selftests.
+3. Important issue? Medium: prevents false PASS in OOM selftests, not
+   runtime-critical.
+4. Small and contained? Yes, 5-line single-function change.
 5. No new features/APIs? Yes.
-6. Can apply to stable? Yes for `v5.10+`; trivial backport needed for
-   `v5.4`.
+6. Can apply to stable? Yes for 7.0 cleanly; older branches need trivial
+   path adjustment.
 
-Step 9.3 Record: no automatic exception category applies; this is not a
-device ID, quirk, DT, build, or documentation patch.
-
-Step 9.4 Record: I recommend backporting. Although the impact is driver-
-specific and not a crash-class bug, the fix is a genuine hardware enable
-error propagation fix, very small, maintainer-reviewed, and low risk.
-Stable users with this panel should not have the panel core mark the
-panel enabled after the display-on command failed.
+Exception category: Not a device ID, quirk, DT, build, or documentation
+fix. It is a selftest correctness fix.
 
 ## Verification
-- Phase 1: Parsed commit `c67e8787f6743101c90c7a9c4bb7cf6f1f739f83` with
-  `git show`; confirmed subject, body, trailers, and diff.
-- Phase 2: Read `panel-feiyang-fy07024di26a30d.c`; confirmed old
-  `feiyang_enable()` ignored `mipi_dsi_dcs_set_display_on()` and
-  returned `0`.
-- Phase 2: Read `drm_mipi_dsi.c`; confirmed
-  `mipi_dsi_dcs_set_display_on()` returns a negative error on failure.
-- Phase 3: Ran `git blame -L 94,104`; confirmed buggy lines came from
-  `69dc678abc2b9d`.
-- Phase 3: Ran `git describe --contains 69dc678abc2b9d`; confirmed first
-  containing version `v5.2-rc1`.
-- Phase 3: Inspected original commit `69dc678abc2b9d`; confirmed the
-  ignored return existed from driver introduction.
-- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed one
-  v1 patch, original lore URL, and recipient list.
-- Phase 4: Ran `b4 mbox`; confirmed Neil Armstrong reviewed and applied
-  it to `drm-misc-fixes`.
-- Phase 4: WebFetch lore and stable searches were blocked by Anubis;
-  this limitation did not drive the final decision.
-- Phase 5: Read `drm_panel.c`; confirmed `drm_panel_enable()` checks
-  negative `.enable` return and skips enabled/backlight/follower path on
-  failure.
-- Phase 5: Searched for `feiyang_enable`; confirmed it is used via
-  `.enable = feiyang_enable`.
-- Phase 5: Searched panel drivers for `mipi_dsi_dcs_set_display_on()`;
-  confirmed many peers handle its return.
-- Phase 6: Used `git grep` against stable tags; confirmed the ignored
-  call exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.19`, and
-  `v7.0`.
-- Phase 6: Apply-checked the patch in detached worktrees; clean for
-  `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; failed
-  direct apply on `v5.4` due to context only.
-- Phase 7: Checked `MAINTAINERS`; confirmed Neil Armstrong maintains DRM
-  panel drivers.
-- Phase 8: Checked Kconfig and compatible strings; confirmed impact is
-  limited to the Feiyang panel driver/config and no in-tree board DTS
-  use was found.
-- UNVERIFIED: no actual user report or frequency of display-on command
-  failures was found.
+
+- Phase 1: `git show e32e6f02168f2...` verified subject, body, tags,
+  author, committer, and no `Fixes:`/stable tags.
+- Phase 2: `git show --patch` verified the 3 insertion / 2 deletion
+  change in `cg_read_strcmp()`.
+- Phase 3: `git blame -L 99,123 e32e6f^ --
+  tools/testing/selftests/cgroup/lib/cgroup_util.c` verified line
+  history.
+- Phase 3: `git show 84092dbcf901`, `git show 48c2bb0b9cf86`, and `git
+  show d830020656c5b` verified related history.
+- Phase 4: `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and saved mbox
+  verified lore URL, v1-only series, recipients, and Tejun’s applied
+  reply.
+- Phase 5: `rg "cg_read_strcmp\\(" tools/testing/selftests/cgroup` and
+  file reads verified callers and empty-string uses.
+- Phase 6: Python checks against stable branches verified buggy code and
+  affected tests in listed stable trees.
+- Phase 6: `git diff e32e6f^ e32e6f | git apply --check` verified clean
+  application to `stable/linux-7.0.y`.
+- Phase 7: `rg` in `MAINTAINERS` verified cgroup maintainers and
+  selftest path ownership.
+- Phase 8: Impact classification is based on verified file path under
+  `tools/testing/selftests`, verified test call chain, and no kernel
+  runtime files changed.
+- UNVERIFIED: I did not run the cgroup selftests, and Lore WebFetch was
+  blocked by Anubis for direct stable archive browsing.
 
 **YES**
 
- drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/testing/selftests/cgroup/lib/cgroup_util.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
-index 4f8d6d8c07e4d..dbdb7e3cb7b62 100644
---- a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
-+++ b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
-@@ -98,9 +98,7 @@ static int feiyang_enable(struct drm_panel *panel)
- 	/* T12 (video & logic signal rise + backlight rise) T12 >= 200ms */
- 	msleep(200);
+diff --git a/tools/testing/selftests/cgroup/lib/cgroup_util.c b/tools/testing/selftests/cgroup/lib/cgroup_util.c
+index 6a7295347e90b..42f54936f4bbd 100644
+--- a/tools/testing/selftests/cgroup/lib/cgroup_util.c
++++ b/tools/testing/selftests/cgroup/lib/cgroup_util.c
+@@ -106,8 +106,9 @@ int cg_read_strcmp(const char *cgroup, const char *control,
+ 	/* Handle the case of comparing against empty string */
+ 	if (!expected)
+ 		return -1;
+-	else
+-		size = strlen(expected) + 1;
++
++	/* needs size > 1, otherwise cg_read() reads 0 bytes */
++	size = (expected[0] == '\0') ? 2 : strlen(expected) + 1;
  
--	mipi_dsi_dcs_set_display_on(ctx->dsi);
--
--	return 0;
-+	return mipi_dsi_dcs_set_display_on(ctx->dsi);
- }
- 
- static int feiyang_disable(struct drm_panel *panel)
+ 	buf = malloc(size);
+ 	if (!buf)
 -- 
 2.53.0
 
