@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCA63F1AB9;
-	Wed, 20 May 2026 17:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF5D364EB0;
+	Wed, 20 May 2026 17:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296945; cv=none; b=qmsTwygUjHuqyRlUvjolIv1kPkLs2mn0hHTKzVAlbb9sWdA+6T/1Z/kPPPB/4veP1EO4MhccP1uS6EXl7SKbqRedraPjp4zQ0REZlcSVdIAq+OiTpgqVLj0WDyqrlS47i/BlZ5QLdFTmkYM6APPFc5gfvhw/fPeA0QgBYSP4XUM=
+	t=1779296947; cv=none; b=dj+VtHgnG30ze/ahi4atKtl8nBdxPRU2VA2YQ7fHn7Lqm1n/rQ1pFZA3UiYAHC0sni1NQwXVWfG3p6LgXZ3CcyAbuLD0uwv65L78iVD4HVPbQFQ17ywDIbNNhLpn1uCRuiDmb/1pZzEVAm8e8rdc0Uzs2GOJKnp23PC7qdA4/Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296945; c=relaxed/simple;
-	bh=srTXkIcB76AHnl9BdoN35MZgSOYe1UCOGwIKhbyHrng=;
+	s=arc-20240116; t=1779296947; c=relaxed/simple;
+	bh=3dk/ywVwtE9Srq0IIhoipHQ40czT/ZM9gkUKWrZYLbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VMR0Uyw8oW/7IPmzu+sg7ihC/ieYbP7hP+B3XKYyqRR3HRkv1D9Gqze3LQGWXXDmp0rDnfyFDdjeqIM+ZsUaG63Jt46Aq8ouK/NKDmtFF4py6c2IZYmrTHtnDyF2dtsK/LCI45XbcU0rt2WUUgwoKb8JOMEJK8hJBNCFLXQ8w6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBMgmQox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QpW2hKWl9LRoOBaz8tnfSrrtgUIKRFsTXliKAf8ii0RJbZ78vqfdQvvRjexx9/mLm8HbbrH61YfwfbV52eYppQE55MF3S4KkAtRcEpR6zcc2BbRNk3YAjaLhbCcpgxUTOTT8TmoUi/w34PruwuoRzr6t95jT+GxERaFGlLv37zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDRFj/4P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBMgmQox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304551F000E9;
-	Wed, 20 May 2026 17:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDRFj/4P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDABB1F000E9;
+	Wed, 20 May 2026 17:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296943;
-	bh=zU9PzC43CSf+XGJGZctXc+HLrsVMNl0ZY7fy6GrpwI4=;
+	s=korg; t=1779296946;
+	bh=wNP7DBcvxvqMm101F/dYd1yOZmGa49/aEy34GypMM7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBMgmQox55Nuq+5ZX6oQZwPf0SLZuov2pJjEWUocb+mNi1g+3nLRjLd4u8TzgyJGr
-	 S+fJbtskT1uw75qNlyuzt6yTSq5Ebssa3+rpoFh+iLnJSj6ncJ5cUAHnum79RcbVBk
-	 R9TzFPWYmsUwsn42X9koY0N2JnoQzCEatBWKIHbA=
+	b=mDRFj/4PuP6TAzKT1r+xI/XyjLB7okpa/Ht5KXudtVPAj2ZpGHL02sBLWEZoDodPI
+	 rgaGTQuSBUWK2tHIsK19/gOmGEwEq3A6uNetjn87dZcvzsICksfzwC3FST8PDG/b2W
+	 5/mcACxsZiVh53LQm4ZHIysAuaVPHEfpbmCTyMbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0990/1146] net/sched: sch_cake: annotate data-races in cake_dump_stats() (II)
-Date: Wed, 20 May 2026 18:20:40 +0200
-Message-ID: <20260520162210.637699443@linuxfoundation.org>
+Subject: [PATCH 7.0 0991/1146] net/sched: sch_cake: annotate data-races in cake_dump_stats() (III)
+Date: Wed, 20 May 2026 18:20:41 +0200
+Message-ID: <20260520162210.659281507@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,140 +55,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 91a96427b93b9ba27413077b7e825d2fefbfa134 ]
+[ Upstream commit 276a98a434964088fccd4745db5b34d6e831e358 ]
 
 cake_dump_stats() runs without qdisc spinlock being held.
 
-In this second patch, I add READ_ONCE()/WRITE_ONCE() annotations
+In this third patch, I add READ_ONCE()/WRITE_ONCE() annotations
 for the following fields:
 
-- bulk_flow_count
-- unresponsive_flow_count
-- max_skblen
-- flow_quantum
+- packets
+- tin_dropped
+- tin_ecn_mark
+- ack_drops
+- peak_delay
+- avge_delay
+- base_delay
 
 Other annotations are added in following patches, to ease code review.
 
 Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Acked-by: "Toke Høiland-Jørgensen" <toke@toke.dk>
-Link: https://patch.msgid.link/20260427083606.459355-3-edumazet@google.com
+Link: https://patch.msgid.link/20260427083606.459355-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ net/sched/sch_cake.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
 diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index ac82fe7aafcb3..a164464f63d18 100644
+index a164464f63d18..3605f32ebf813 100644
 --- a/net/sched/sch_cake.c
 +++ b/net/sched/sch_cake.c
-@@ -1590,7 +1590,8 @@ static unsigned int cake_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 	}
+@@ -1600,7 +1600,7 @@ static unsigned int cake_drop(struct Qdisc *sch, struct sk_buff **to_free)
+ 	sch->qstats.backlog -= len;
  
- 	if (cobalt_queue_full(&flow->cvars, &b->cparams, now))
--		b->unresponsive_flow_count++;
-+		WRITE_ONCE(b->unresponsive_flow_count,
-+			   b->unresponsive_flow_count + 1);
+ 	flow->dropped++;
+-	b->tin_dropped++;
++	WRITE_ONCE(b->tin_dropped, b->tin_dropped + 1);
  
- 	len = qdisc_pkt_len(skb);
- 	q->buffer_used      -= skb->truesize;
-@@ -1795,7 +1796,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	}
- 
- 	if (unlikely(len > b->max_skblen))
--		b->max_skblen = len;
-+		WRITE_ONCE(b->max_skblen, len);
- 
- 	if (qdisc_pkt_segs(skb) > 1 && q->config->rate_flags & CAKE_FLAG_SPLIT_GSO) {
- 		struct sk_buff *segs, *nskb;
-@@ -1930,7 +1931,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		 */
- 		flow->set = CAKE_SET_BULK;
- 		WRITE_ONCE(b->sparse_flow_count, b->sparse_flow_count - 1);
--		b->bulk_flow_count++;
-+		WRITE_ONCE(b->bulk_flow_count, b->bulk_flow_count + 1);
- 
- 		cake_inc_srchost_bulk_flow_count(b, flow, q->config->flow_mode);
- 		cake_inc_dsthost_bulk_flow_count(b, flow, q->config->flow_mode);
-@@ -2150,7 +2151,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 		if (flow->set == CAKE_SET_SPARSE) {
- 			if (flow->head) {
- 				WRITE_ONCE(b->sparse_flow_count, b->sparse_flow_count - 1);
--				b->bulk_flow_count++;
-+				WRITE_ONCE(b->bulk_flow_count, b->bulk_flow_count + 1);
- 
- 				cake_inc_srchost_bulk_flow_count(b, flow, q->config->flow_mode);
- 				cake_inc_dsthost_bulk_flow_count(b, flow, q->config->flow_mode);
-@@ -2177,7 +2178,8 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 		if (!skb) {
- 			/* this queue was actually empty */
- 			if (cobalt_queue_empty(&flow->cvars, &b->cparams, now))
--				b->unresponsive_flow_count--;
-+				WRITE_ONCE(b->unresponsive_flow_count,
-+					   b->unresponsive_flow_count - 1);
- 
- 			if (flow->cvars.p_drop || flow->cvars.count ||
- 			    ktime_before(now, flow->cvars.drop_next)) {
-@@ -2187,7 +2189,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 				list_move_tail(&flow->flowchain,
- 					       &b->decaying_flows);
- 				if (flow->set == CAKE_SET_BULK) {
--					b->bulk_flow_count--;
-+					WRITE_ONCE(b->bulk_flow_count, b->bulk_flow_count - 1);
- 
- 					cake_dec_srchost_bulk_flow_count(b, flow, q->config->flow_mode);
- 					cake_dec_dsthost_bulk_flow_count(b, flow, q->config->flow_mode);
-@@ -2206,7 +2208,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 				    flow->set == CAKE_SET_SPARSE_WAIT) {
- 					WRITE_ONCE(b->sparse_flow_count, b->sparse_flow_count - 1);
- 				} else if (flow->set == CAKE_SET_BULK) {
--					b->bulk_flow_count--;
-+					WRITE_ONCE(b->bulk_flow_count, b->bulk_flow_count - 1);
- 
- 					cake_dec_srchost_bulk_flow_count(b, flow, q->config->flow_mode);
- 					cake_dec_dsthost_bulk_flow_count(b, flow, q->config->flow_mode);
-@@ -2329,9 +2331,9 @@ static void cake_set_rate(struct cake_tin_data *b, u64 rate, u32 mtu,
- 	u8  rate_shft = 0;
- 	u64 rate_ns = 0;
- 
--	b->flow_quantum = 1514;
- 	if (rate) {
--		b->flow_quantum = max(min(rate >> 12, 1514ULL), 300ULL);
-+		WRITE_ONCE(b->flow_quantum,
-+			   max(min(rate >> 12, 1514ULL), 300ULL));
- 		rate_shft = 34;
- 		rate_ns = ((u64)NSEC_PER_SEC) << rate_shft;
- 		rate_ns = div64_u64(rate_ns, max(MIN_RATE, rate));
-@@ -2339,8 +2341,10 @@ static void cake_set_rate(struct cake_tin_data *b, u64 rate, u32 mtu,
- 			rate_ns >>= 1;
- 			rate_shft--;
+ 	if (q->config->rate_flags & CAKE_FLAG_INGRESS)
+ 		cake_advance_shaper(q, b, skb, now, true);
+@@ -1820,7 +1820,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			numsegs++;
+ 			slen += segs->len;
+ 			q->buffer_used += segs->truesize;
+-			b->packets++;
++			WRITE_ONCE(b->packets, b->packets + 1);
  		}
--	} /* else unlimited, ie. zero delay */
--
-+	} else {
-+		/* else unlimited, ie. zero delay */
-+		WRITE_ONCE(b->flow_quantum, 1514);
-+	}
- 	b->tin_rate_bps  = rate;
- 	b->tin_rate_ns   = rate_ns;
- 	b->tin_rate_shft = rate_shft;
-@@ -3056,11 +3060,11 @@ static int cake_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
  
- 		PUT_TSTAT_U32(SPARSE_FLOWS, READ_ONCE(b->sparse_flow_count) +
- 					    READ_ONCE(b->decaying_flow_count));
--		PUT_TSTAT_U32(BULK_FLOWS, b->bulk_flow_count);
--		PUT_TSTAT_U32(UNRESPONSIVE_FLOWS, b->unresponsive_flow_count);
--		PUT_TSTAT_U32(MAX_SKBLEN, b->max_skblen);
-+		PUT_TSTAT_U32(BULK_FLOWS, READ_ONCE(b->bulk_flow_count));
-+		PUT_TSTAT_U32(UNRESPONSIVE_FLOWS, READ_ONCE(b->unresponsive_flow_count));
-+		PUT_TSTAT_U32(MAX_SKBLEN, READ_ONCE(b->max_skblen));
+ 		/* stats */
+@@ -1844,7 +1844,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			ack = cake_ack_filter(q, flow);
  
--		PUT_TSTAT_U32(FLOW_QUANTUM, b->flow_quantum);
-+		PUT_TSTAT_U32(FLOW_QUANTUM, READ_ONCE(b->flow_quantum));
- 		nla_nest_end(d->skb, ts);
+ 		if (ack) {
+-			b->ack_drops++;
++			WRITE_ONCE(b->ack_drops, b->ack_drops + 1);
+ 			sch->qstats.drops++;
+ 			ack_pkt_len = qdisc_pkt_len(ack);
+ 			b->bytes += ack_pkt_len;
+@@ -1860,7 +1860,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		}
+ 
+ 		/* stats */
+-		b->packets++;
++		WRITE_ONCE(b->packets, b->packets + 1);
+ 		b->bytes	    += len - ack_pkt_len;
+ 		b->backlogs[idx]    += len - ack_pkt_len;
+ 		b->tin_backlog      += len - ack_pkt_len;
+@@ -2236,7 +2236,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 			b->tin_deficit -= len;
+ 		}
+ 		flow->dropped++;
+-		b->tin_dropped++;
++		WRITE_ONCE(b->tin_dropped, b->tin_dropped + 1);
+ 		qdisc_tree_reduce_backlog(sch, 1, qdisc_pkt_len(skb));
+ 		qdisc_qstats_drop(sch);
+ 		qdisc_dequeue_drop(sch, skb, reason);
+@@ -2244,17 +2244,19 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 			goto retry;
  	}
  
+-	b->tin_ecn_mark += !!flow->cvars.ecn_marked;
++	WRITE_ONCE(b->tin_ecn_mark, b->tin_ecn_mark + !!flow->cvars.ecn_marked);
+ 	qdisc_bstats_update(sch, skb);
+ 	WRITE_ONCE(q->last_active, now);
+ 
+ 	/* collect delay stats */
+ 	delay = ktime_to_ns(ktime_sub(now, cobalt_get_enqueue_time(skb)));
+-	b->avge_delay = cake_ewma(b->avge_delay, delay, 8);
+-	b->peak_delay = cake_ewma(b->peak_delay, delay,
+-				  delay > b->peak_delay ? 2 : 8);
+-	b->base_delay = cake_ewma(b->base_delay, delay,
+-				  delay < b->base_delay ? 2 : 8);
++	WRITE_ONCE(b->avge_delay, cake_ewma(b->avge_delay, delay, 8));
++	WRITE_ONCE(b->peak_delay,
++		   cake_ewma(b->peak_delay, delay,
++			     delay > b->peak_delay ? 2 : 8));
++	WRITE_ONCE(b->base_delay,
++		   cake_ewma(b->base_delay, delay,
++			     delay < b->base_delay ? 2 : 8));
+ 
+ 	len = cake_advance_shaper(q, b, skb, now, false);
+ 	flow->deficit -= len;
+@@ -3042,17 +3044,17 @@ static int cake_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ 		PUT_TSTAT_U32(INTERVAL_US,
+ 			      ktime_to_us(ns_to_ktime(b->cparams.interval)));
+ 
+-		PUT_TSTAT_U32(SENT_PACKETS, b->packets);
+-		PUT_TSTAT_U32(DROPPED_PACKETS, b->tin_dropped);
+-		PUT_TSTAT_U32(ECN_MARKED_PACKETS, b->tin_ecn_mark);
+-		PUT_TSTAT_U32(ACKS_DROPPED_PACKETS, b->ack_drops);
++		PUT_TSTAT_U32(SENT_PACKETS, READ_ONCE(b->packets));
++		PUT_TSTAT_U32(DROPPED_PACKETS, READ_ONCE(b->tin_dropped));
++		PUT_TSTAT_U32(ECN_MARKED_PACKETS, READ_ONCE(b->tin_ecn_mark));
++		PUT_TSTAT_U32(ACKS_DROPPED_PACKETS, READ_ONCE(b->ack_drops));
+ 
+ 		PUT_TSTAT_U32(PEAK_DELAY_US,
+-			      ktime_to_us(ns_to_ktime(b->peak_delay)));
++			      ktime_to_us(ns_to_ktime(READ_ONCE(b->peak_delay))));
+ 		PUT_TSTAT_U32(AVG_DELAY_US,
+-			      ktime_to_us(ns_to_ktime(b->avge_delay)));
++			      ktime_to_us(ns_to_ktime(READ_ONCE(b->avge_delay))));
+ 		PUT_TSTAT_U32(BASE_DELAY_US,
+-			      ktime_to_us(ns_to_ktime(b->base_delay)));
++			      ktime_to_us(ns_to_ktime(READ_ONCE(b->base_delay))));
+ 
+ 		PUT_TSTAT_U32(WAY_INDIRECT_HITS, READ_ONCE(b->way_hits));
+ 		PUT_TSTAT_U32(WAY_MISSES, READ_ONCE(b->way_misses));
 -- 
 2.53.0
 
