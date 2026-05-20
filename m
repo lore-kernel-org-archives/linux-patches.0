@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD4C3EAC82;
-	Wed, 20 May 2026 18:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A8A3E95A4;
+	Wed, 20 May 2026 18:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300807; cv=none; b=ctUxdj7JBvuvDD8FgzrNy7xxfWdlXk2rsjfOS+bNXPq3ruSTGGAg74H6DkKoYzhiK8xOmQuZffG1zT7BomyXQR4xNvJILPiAZTxw0r3+I9FHkY2qX2L05Kw4yrBY5a31kP3iMUtQA+DCxoy6OqHZidrIMWiTCKXMprtx51lnNS0=
+	t=1779300810; cv=none; b=VX69nB9gsIiWqVTTyhXe6W+z642l40zCSOGYIw7j3sDgC/k+kdE1yziw52nnIgBG9C3nUDvGy+ttbpxzA8LiUg+GqhlC7OmRoL/Xa/xoPDdWp5wan18vEp5zGgCCEt3lP6Kr6Gb6D/2Qmd5geFrXAxOpJqb61mQaquF9PhWeSo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300807; c=relaxed/simple;
-	bh=tcnx0idoP7S+/5gLcXS4usxLH68nuMy5i00++oCcQ9Q=;
+	s=arc-20240116; t=1779300810; c=relaxed/simple;
+	bh=66tWRRz54H2OZM7d5JZivUb27kQmQhJNeljYYIy0yWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1dce3gouZVk4ExmUNkd3WAEklOd45XXWwyILcZ1hrujyBzJys9vPxRQEMSkv1TeNabasyYu+mpB/KIkEkF/kSoBZPxmrCdeae8nJx/jXtALeH8D9cYWjvdVpK5YKADdOfK0BELrtf8/g36EwxI0jau71XbT4Zh8BVd0Vq4uSvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdG6Sbyb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qmbB/rd74W34wJWlwNBRcpT1JzLxRC9YesNAIlUDPu0TYyn/+t/Dy4hYdSDQ1CWBaoJQRH8MHi7aJCOhtF7Phafk/FdV6N53+kcB1DwRKfzxBwykm+ky6CqMmuNOqaIJGfS66lfQ2wdZYG53fKM1UPjaeJrtcBtrvDLcwPGYSmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCjSWCuH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdG6Sbyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35E01F000E9;
-	Wed, 20 May 2026 18:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCjSWCuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795901F000E9;
+	Wed, 20 May 2026 18:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300806;
-	bh=thWg2k/Id/oqOHjtTEeYnhnPSjR1C/6h7aS4Ou0Sfsc=;
+	s=korg; t=1779300809;
+	bh=RvIsUCXPQsHed9US/o4YJwoqnqUYuu86agaz2BUxwFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdG6Sbybv2uZtc6R5eABdfIHASVupfBcigXK3ok8jd+eZKmg4ePozkE83amAMk5Y5
-	 0RTc3ryJLCkX3PTlGBWp3YZbbcHkdJ4K2MiRtJYUSAMoDix3cyoBsQTSrJwABNwC7Y
-	 ZMiKQ4E+JmNTwIc6vSxC3ffs8p4vbna3NFl+bWY0=
+	b=LCjSWCuH3e5nsT2AKj6nZKG870bV+xEdTvGT1KzRBV21dFHDukfCJY6kqP9p1dsZx
+	 CAc1Bfw1DOMhZYzhLn0iVIEOQSZBnjb2RrkeV1mA89CzNxoWwzgmHnbB9bz5/xCatR
+	 yhqkGXodG2HyFLbcWCNLkJjSbaV4SgwkSzaPO1II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 316/666] ocfs2: fix listxattr handling when the buffer is full
-Date: Wed, 20 May 2026 18:18:47 +0200
-Message-ID: <20260520162118.071444310@linuxfoundation.org>
+Subject: [PATCH 6.12 299/666] arm64: dts: lx2160a: rename pinmux nodes for readability
+Date: Wed, 20 May 2026 18:18:30 +0200
+Message-ID: <20260520162117.696458114@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -58,87 +51,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit d12f558e6200b3f47dbef9331ed6d115d2410e59 ]
+[ Upstream commit 456eb494746afd56d3a9dc30271300136e55b96e ]
 
-[BUG]
-If an OCFS2 inode has both inline and block-based xattrs, listxattr()
-can return a size larger than the caller's buffer when the inline names
-consume that buffer exactly.
+LX2160A pinmux is done in groups by various length bitfields within
+configuration registers.
 
-kernel BUG at mm/usercopy.c:102!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:usercopy_abort+0xb7/0xd0 mm/usercopy.c:102
-Call Trace:
- __check_heap_object+0xe3/0x120 mm/slub.c:8243
- check_heap_object mm/usercopy.c:196 [inline]
- __check_object_size mm/usercopy.c:250 [inline]
- __check_object_size+0x5c5/0x780 mm/usercopy.c:215
- check_object_size include/linux/ucopysize.h:22 [inline]
- check_copy_size include/linux/ucopysize.h:59 [inline]
- copy_to_user include/linux/uaccess.h:219 [inline]
- listxattr+0xb0/0x170 fs/xattr.c:926
- filename_listxattr fs/xattr.c:958 [inline]
- path_listxattrat+0x137/0x320 fs/xattr.c:988
- __do_sys_listxattr fs/xattr.c:1001 [inline]
- __se_sys_listxattr fs/xattr.c:998 [inline]
- __x64_sys_listxattr+0x7f/0xd0 fs/xattr.c:998
- ...
+Each group of pins is named in the reference manual after a primary
+function using soc-specific naming, e.g. IIC1 (for i2c0).
 
-[CAUSE]
-Commit 936b8834366e ("ocfs2: Refactor xattr list and remove
-ocfs2_xattr_handler().") replaced the old per-handler list accounting
-with ocfs2_xattr_list_entry(), but it kept using size == 0 to detect
-probe mode.
+Hardware block numbering starts from zero in device-tree but one in the
+reference manual.
 
-That assumption stops being true once ocfs2_listxattr() finishes the
-inline-xattr pass. If the inline names fill the caller buffer exactly,
-the block-xattr pass runs with a non-NULL buffer and a remaining size of
-zero. ocfs2_xattr_list_entry() then skips the bounds check, keeps
-counting block names, and returns a positive size larger than the
-supplied buffer.
+Rename the already defined pinmux nodes originally added for changing
+i2c pins between i2c and gpio functions reflecting the reference manual
+name (IIC) in the node name, and the device-tree name (i2c, gpio) in the
+label.
 
-[FIX]
-Detect probe mode by testing whether the destination buffer pointer is
-NULL instead of whether the remaining size is zero.
+Specifically, drop the "_scl" suffix from the I2C labels because the
+nodes actually configure both SDA and SCL pins together. Instead add
+"_pins" suffix to avoid conflicts with I2C controller labels.
 
-That restores the pre-refactor behavior and matches the OCFS2 getxattr
-helpers. Once the remaining buffer reaches zero while more names are
-left, the block-xattr pass now returns -ERANGE instead of reporting a
-size larger than the allocated list buffer.
+For GPIO functions, include the specific controller and pin numbers in
+the label to clarify they are generic GPIOs and help spot mistakes.
 
-Link: https://lkml.kernel.org/r/20260410040339.3837162-1-gality369@gmail.com
-Fixes: 936b8834366e ("ocfs2: Refactor xattr list and remove ocfs2_xattr_handler().")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+No functional change intended.
+
+Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 64 +++++++++----------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index b1a18a944c850..069732e657d78 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -907,8 +907,8 @@ static int ocfs2_xattr_list_entry(struct super_block *sb,
- 	total_len = prefix_len + name_len + 1;
- 	*result += total_len;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+index 599d7d4a4c573..2b322cdab9479 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+@@ -750,8 +750,8 @@ i2c0: i2c@2000000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c0_scl>;
+-			pinctrl-1 = <&i2c0_scl_gpio>;
++			pinctrl-0 = <&i2c0_pins>;
++			pinctrl-1 = <&gpio0_3_2_pins>;
+ 			scl-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -766,8 +766,8 @@ i2c1: i2c@2010000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c1_scl>;
+-			pinctrl-1 = <&i2c1_scl_gpio>;
++			pinctrl-0 = <&i2c1_pins>;
++			pinctrl-1 = <&gpio0_31_30_pins>;
+ 			scl-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -782,8 +782,8 @@ i2c2: i2c@2020000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c2_scl>;
+-			pinctrl-1 = <&i2c2_scl_gpio>;
++			pinctrl-0 = <&i2c2_pins>;
++			pinctrl-1 = <&gpio0_29_28_pins>;
+ 			scl-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -798,8 +798,8 @@ i2c3: i2c@2030000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c3_scl>;
+-			pinctrl-1 = <&i2c3_scl_gpio>;
++			pinctrl-0 = <&i2c3_pins>;
++			pinctrl-1 = <&gpio0_27_26_pins>;
+ 			scl-gpios = <&gpio0 27 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -814,8 +814,8 @@ i2c4: i2c@2040000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c4_scl>;
+-			pinctrl-1 = <&i2c4_scl_gpio>;
++			pinctrl-0 = <&i2c4_pins>;
++			pinctrl-1 = <&gpio0_25_24_pins>;
+ 			scl-gpios = <&gpio0 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -830,8 +830,8 @@ i2c5: i2c@2050000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c5_scl>;
+-			pinctrl-1 = <&i2c5_scl_gpio>;
++			pinctrl-0 = <&i2c5_pins>;
++			pinctrl-1 = <&gpio0_23_22_pins>;
+ 			scl-gpios = <&gpio0 23 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -846,8 +846,8 @@ i2c6: i2c@2060000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c6_scl>;
+-			pinctrl-1 = <&i2c6_scl_gpio>;
++			pinctrl-0 = <&i2c6_i2c7_pins>;
++			pinctrl-1 = <&gpio1_18_15_pins>;
+ 			scl-gpios = <&gpio1 16 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -862,8 +862,8 @@ i2c7: i2c@2070000 {
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(16)>;
+ 			pinctrl-names = "default", "gpio";
+-			pinctrl-0 = <&i2c6_scl>;
+-			pinctrl-1 = <&i2c6_scl_gpio>;
++			pinctrl-0 = <&i2c6_i2c7_pins>;
++			pinctrl-1 = <&gpio1_18_15_pins>;
+ 			scl-gpios = <&gpio1 18 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 			status = "disabled";
+ 		};
+@@ -1709,11 +1709,11 @@ pinmux_i2crv: pinmux@70010012c {
+ 			pinctrl-single,register-width = <32>;
+ 			pinctrl-single,function-mask = <0x7>;
  
--	/* we are just looking for how big our buffer needs to be */
--	if (!size)
-+	/* No buffer means we are only looking for the required size. */
-+	if (!buffer)
- 		return 0;
+-			i2c1_scl: i2c1-scl-pins {
++			i2c1_pins: iic2-i2c-pins {
+ 				pinctrl-single,bits = <0x0 0 0x7>;
+ 			};
  
- 	if (*result > size)
+-			i2c1_scl_gpio: i2c1-scl-gpio-pins {
++			gpio0_31_30_pins: iic2-gpio-pins {
+ 				pinctrl-single,bits = <0x0 0x1 0x7>;
+ 			};
+ 
+@@ -1721,35 +1721,35 @@ esdhc0_cd_wp_pins: iic2-sdhc-pins {
+ 				pinctrl-single,bits = <0x0 0x6 0x7>;
+ 			};
+ 
+-			i2c2_scl: i2c2-scl-pins {
++			i2c2_pins: iic3-i2c-pins {
+ 				pinctrl-single,bits = <0x0 0 (0x7 << 3)>;
+ 			};
+ 
+-			i2c2_scl_gpio: i2c2-scl-gpio-pins {
++			gpio0_29_28_pins: iic3-gpio-pins {
+ 				pinctrl-single,bits = <0x0 (0x1 << 3) (0x7 << 3)>;
+ 			};
+ 
+-			i2c3_scl: i2c3-scl-pins {
++			i2c3_pins: iic4-i2c-pins {
+ 				pinctrl-single,bits = <0x0 0 (0x7 << 6)>;
+ 			};
+ 
+-			i2c3_scl_gpio: i2c3-scl-gpio-pins {
++			gpio0_27_26_pins: iic4-gpio-pins {
+ 				pinctrl-single,bits = <0x0 (0x1 << 6) (0x7 << 6)>;
+ 			};
+ 
+-			i2c4_scl: i2c4-scl-pins {
++			i2c4_pins: iic5-i2c-pins {
+ 				pinctrl-single,bits = <0x0 0 (0x7 << 9)>;
+ 			};
+ 
+-			i2c4_scl_gpio: i2c4-scl-gpio-pins {
++			gpio0_25_24_pins: iic5-gpio-pins {
+ 				pinctrl-single,bits = <0x0 (0x1 << 9) (0x7 << 9)>;
+ 			};
+ 
+-			i2c5_scl: i2c5-scl-pins {
++			i2c5_pins: iic6-i2c-pins {
+ 				pinctrl-single,bits = <0x0 0 (0x7 << 12)>;
+ 			};
+ 
+-			i2c5_scl_gpio: i2c5-scl-gpio-pins {
++			gpio0_23_22_pins: iic6-gpio-pins {
+ 				pinctrl-single,bits = <0x0 (0x1 << 12) (0x7 << 12)>;
+ 			};
+ 
+@@ -1773,19 +1773,19 @@ gpio0_14_12_pins: sdhc1-dir-gpio-pins {
+ 				pinctrl-single,bits = <0x0 (0x1 << 27) (0x7 << 27)>;
+ 			};
+ 
+-			i2c6_scl: i2c6-scl-pins {
+-				pinctrl-single,bits = <0x4 0x2 0x7>;
++			gpio1_18_15_pins: iic8-iic7-gpio-pins {
++				pinctrl-single,bits = <0x4 0x1 0x7>;
+ 			};
+ 
+-			i2c6_scl_gpio: i2c6-scl-gpio-pins {
+-				pinctrl-single,bits = <0x4 0x1 0x7>;
++			i2c6_i2c7_pins: iic8-iic7-i2c-pins {
++				pinctrl-single,bits = <0x4 0x2 0x7>;
+ 			};
+ 
+-			i2c0_scl: i2c0-scl-pins {
++			i2c0_pins: iic1-i2c-pins {
+ 				pinctrl-single,bits = <0x8 0x0 (0x1 << 10)>;
+ 			};
+ 
+-			i2c0_scl_gpio: i2c0-scl-gpio-pins {
++			gpio0_3_2_pins: iic1-gpio-pins {
+ 				pinctrl-single,bits = <0x8 (0x1 << 10) (0x1 << 10)>;
+ 			};
+ 		};
 -- 
 2.53.0
 
