@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED27E340A57;
-	Wed, 20 May 2026 18:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5E3FA5D5;
+	Wed, 20 May 2026 18:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301553; cv=none; b=K0UXbQoPIKZ9Y8n84MUlOe8PfdkgPDMya1sktYR0IGkLAFGJjsh+oWZcZ3lSNAqlw/NEiVognKfbcfrM+jji7uJubn+Jzt2drJFIU2Oq5o7AejzaN1iCMTSy75t5qYiCl/7OHp3CQpDfCmwxS4a++YN1yYudJLFqaeg7jSWL1cU=
+	t=1779301555; cv=none; b=UWT14+qRNDl0i4JQTPbPz9YmqQK4YcheSqU3wrnQGNYrEwxnMWClXZDK7F+93rQSk5OMRy/DLOhhbK5VRlUXEynhLjrO0vf9dd0YUvvWI/IZlktYq2VKG4Y38pux+ww4AqKJv0cVMb8XZ3CPi1ripZcbaV5oFBFn6G8VVZAlg1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301553; c=relaxed/simple;
-	bh=m/Fr0nKeDJAHXiYGBKB5nFGApm5fzW86YAP1/lv7c6M=;
+	s=arc-20240116; t=1779301555; c=relaxed/simple;
+	bh=xd8euNb/V6ba7MqdZ9/GwzOR2nhNd8zDcLW98ncGK3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ppj8qYo/A40mjIIzMtQQ5xFKf/1iJ83wr8s7G32+rJ7NaMoy1aRYKvwQrvg+RQM/cTMq8V6zgjkBXAXy67MN79JOzH81zVfpYs8HxsSm7BSwlX1fN4ZmNy7JJ7IvxNeEWaKSlhFzO83jqZCi3hPolNn0FvJjuFinJP7zd4/Q/no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOwEcCCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVD36PQZPvHJ9aYEu26IXQu96ygoXi4RbucVG078oqjynBa9seH8/pvgALr9nLchh7BE6+/yhO5yIxVO4S8y+3xDqxdq6OFWQX5Af4JJyG7a54/00n5e4UxnwikmA/JwrgOSshGkK58xouyVDNNJBe7D/ZByw574r3FvR/blnJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLbipEmJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOwEcCCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D15F1F000E9;
-	Wed, 20 May 2026 18:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLbipEmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073561F000E9;
+	Wed, 20 May 2026 18:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301551;
-	bh=cy+c1YccUMTWYamSxVlUrBI4jTrbTi79EjeLA1bJE1s=;
+	s=korg; t=1779301554;
+	bh=Fiz9+7Z59Igv3fbsrZ/438rpccF6zUd8mlrVjJJ1Zgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOwEcCCLLY9/RUxQ/rVq/UQf/tV2MQj2hz7WhT8kOafLfm0hJAehm8UjJrU9tBE1Z
-	 QJqRfgXUleXYbmiKcBSnjQ+s9ktgrrUNIbS/0KuUT1AgtGTP6awjHTTELckM1sjNgi
-	 l2A3nHe+5xcAJbFGBy5TRGbgR8uPmxTPtZRWA1/I=
+	b=WLbipEmJfaf6yALANTE6B3I78QzYwQg3R1GAqOkv02E1riLRgTiAKk+UrZI5BL1zE
+	 za24yY8OX6XQ9SNKpZ7GMHPxEQM/lFyGhR5BBN9SX/JBKJOIdZHjFoeH6GaOsL17Nq
+	 U6cJBzr5SBBaEc8+MEGuc6beLRTwn3rckGjYQNPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 597/666] LoongArch: KVM: Compile switch.S directly into the kernel
-Date: Wed, 20 May 2026 18:23:28 +0200
-Message-ID: <20260520162124.206233346@linuxfoundation.org>
+Subject: [PATCH 6.12 598/666] ntfs: ->d_compare() must not block
+Date: Wed, 20 May 2026 18:23:29 +0200
+Message-ID: <20260520162124.228427208@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,272 +51,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianglai Li <lixianglai@loongson.cn>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
+[ Upstream commit ca2a04e84af79596e5cd9cfe697d5122ec39c8ce ]
 
-If we directly compile the switch.S file into the kernel, the address of
-the kvm_exc_entry function will definitely be within the DMW memory area.
-Therefore, we will no longer need to perform a copy relocation of the
-kvm_exc_entry.
+... so don't use __getname() there.  Switch it (and ntfs_d_hash(), while
+we are at it) to kmalloc(PATH_MAX, GFP_NOWAIT).  Yes, ntfs_d_hash()
+almost certainly can do with smaller allocations, but let ntfs folks
+deal with that - keep the allocation size as-is for now.
 
-So this patch compiles switch.S directly into the kernel, and then remove
-the copy relocation execution logic for the kvm_exc_entry function.
+Stop abusing names_cachep in ntfs, period - various uses of that thing
+in there have nothing to do with pathnames; just use k[mz]alloc() and
+be done with that.  For now let's keep sizes as-in, but AFAICS none of
+the users actually want PATH_MAX.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Kbuild                       |  2 +-
- arch/loongarch/include/asm/asm-prototypes.h | 20 ++++++++++++
- arch/loongarch/include/asm/kvm_host.h       |  3 --
- arch/loongarch/kvm/Makefile                 |  3 +-
- arch/loongarch/kvm/main.c                   | 35 ++-------------------
- arch/loongarch/kvm/switch.S                 | 19 ++++++++---
- 6 files changed, 40 insertions(+), 42 deletions(-)
+ fs/ntfs3/dir.c    |  5 ++---
+ fs/ntfs3/fsntfs.c |  4 ++--
+ fs/ntfs3/inode.c  | 13 ++++++-------
+ fs/ntfs3/namei.c  | 17 ++++++++---------
+ fs/ntfs3/xattr.c  |  5 ++---
+ 5 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/arch/loongarch/Kbuild b/arch/loongarch/Kbuild
-index bfa21465d83af..604adaff2623a 100644
---- a/arch/loongarch/Kbuild
-+++ b/arch/loongarch/Kbuild
-@@ -3,7 +3,7 @@ obj-y += mm/
- obj-y += net/
- obj-y += vdso/
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 600e66035c1b7..522ebc14b1fbd 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -425,8 +425,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 	if (!dir_emit_dots(file, ctx))
+ 		return 0;
  
--obj-$(CONFIG_KVM) += kvm/
-+obj-$(subst m,y,$(CONFIG_KVM)) += kvm/
- obj-$(CONFIG_BUILTIN_DTB) += boot/dts/
- 
- # for cleaning
-diff --git a/arch/loongarch/include/asm/asm-prototypes.h b/arch/loongarch/include/asm/asm-prototypes.h
-index 51f224bcfc654..50c66b2a817aa 100644
---- a/arch/loongarch/include/asm/asm-prototypes.h
-+++ b/arch/loongarch/include/asm/asm-prototypes.h
-@@ -12,3 +12,23 @@ __int128_t __ashlti3(__int128_t a, int b);
- __int128_t __ashrti3(__int128_t a, int b);
- __int128_t __lshrti3(__int128_t a, int b);
- #endif
-+
-+struct kvm_run;
-+struct kvm_vcpu;
-+struct loongarch_fpu;
-+
-+void kvm_exc_entry(void);
-+int  kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu);
-+
-+void kvm_save_fpu(struct loongarch_fpu *fpu);
-+void kvm_restore_fpu(struct loongarch_fpu *fpu);
-+
-+#ifdef CONFIG_CPU_HAS_LSX
-+void kvm_save_lsx(struct loongarch_fpu *fpu);
-+void kvm_restore_lsx(struct loongarch_fpu *fpu);
-+#endif
-+
-+#ifdef CONFIG_CPU_HAS_LASX
-+void kvm_save_lasx(struct loongarch_fpu *fpu);
-+void kvm_restore_lasx(struct loongarch_fpu *fpu);
-+#endif
-diff --git a/arch/loongarch/include/asm/kvm_host.h b/arch/loongarch/include/asm/kvm_host.h
-index d6bb72424027a..4f813fd89ac54 100644
---- a/arch/loongarch/include/asm/kvm_host.h
-+++ b/arch/loongarch/include/asm/kvm_host.h
-@@ -73,7 +73,6 @@ struct kvm_context {
- struct kvm_world_switch {
- 	int (*exc_entry)(void);
- 	int (*enter_guest)(struct kvm_run *run, struct kvm_vcpu *vcpu);
--	unsigned long page_order;
- };
- 
- #define MAX_PGTABLE_LEVELS	4
-@@ -317,8 +316,6 @@ void kvm_exc_entry(void);
- int  kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu);
- 
- extern unsigned long vpid_mask;
--extern const unsigned long kvm_exception_size;
--extern const unsigned long kvm_enter_guest_size;
- extern struct kvm_world_switch *kvm_loongarch_ops;
- 
- #define SW_GCSR		(1 << 0)
-diff --git a/arch/loongarch/kvm/Makefile b/arch/loongarch/kvm/Makefile
-index 2e188e8f14687..cbc27edfd1a27 100644
---- a/arch/loongarch/kvm/Makefile
-+++ b/arch/loongarch/kvm/Makefile
-@@ -9,11 +9,12 @@ include $(srctree)/virt/kvm/Makefile.kvm
- 
- obj-$(CONFIG_KVM) += kvm.o
- 
-+obj-y += switch.o
-+
- kvm-y += exit.o
- kvm-y += interrupt.o
- kvm-y += main.o
- kvm-y += mmu.o
--kvm-y += switch.o
- kvm-y += timer.o
- kvm-y += tlb.o
- kvm-y += vcpu.o
-diff --git a/arch/loongarch/kvm/main.c b/arch/loongarch/kvm/main.c
-index 34fad2c29ee69..550ce2b4df70b 100644
---- a/arch/loongarch/kvm/main.c
-+++ b/arch/loongarch/kvm/main.c
-@@ -320,8 +320,7 @@ void kvm_arch_disable_virtualization_cpu(void)
- 
- static int kvm_loongarch_env_init(void)
- {
--	int cpu, order;
--	void *addr;
-+	int cpu;
- 	struct kvm_context *context;
- 
- 	vmcs = alloc_percpu(struct kvm_context);
-@@ -337,30 +336,8 @@ static int kvm_loongarch_env_init(void)
+-	/* Allocate PATH_MAX bytes. */
+-	name = __getname();
++	name = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!name)
  		return -ENOMEM;
- 	}
  
--	/*
--	 * PGD register is shared between root kernel and kvm hypervisor.
--	 * So world switch entry should be in DMW area rather than TLB area
--	 * to avoid page fault reenter.
--	 *
--	 * In future if hardware pagetable walking is supported, we won't
--	 * need to copy world switch code to DMW area.
--	 */
--	order = get_order(kvm_exception_size + kvm_enter_guest_size);
--	addr = (void *)__get_free_pages(GFP_KERNEL, order);
--	if (!addr) {
--		free_percpu(vmcs);
--		vmcs = NULL;
--		kfree(kvm_loongarch_ops);
--		kvm_loongarch_ops = NULL;
--		return -ENOMEM;
--	}
--
--	memcpy(addr, kvm_exc_entry, kvm_exception_size);
--	memcpy(addr + kvm_exception_size, kvm_enter_guest, kvm_enter_guest_size);
--	flush_icache_range((unsigned long)addr, (unsigned long)addr + kvm_exception_size + kvm_enter_guest_size);
--	kvm_loongarch_ops->exc_entry = addr;
--	kvm_loongarch_ops->enter_guest = addr + kvm_exception_size;
--	kvm_loongarch_ops->page_order = order;
-+	kvm_loongarch_ops->exc_entry = (void *)kvm_exc_entry;
-+	kvm_loongarch_ops->enter_guest = (void *)kvm_enter_guest;
+@@ -504,7 +503,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
  
- 	vpid_mask = read_csr_gstat();
- 	vpid_mask = (vpid_mask & CSR_GSTAT_GIDBIT) >> CSR_GSTAT_GIDBIT_SHIFT;
-@@ -380,16 +357,10 @@ static int kvm_loongarch_env_init(void)
+ out:
  
- static void kvm_loongarch_env_exit(void)
- {
--	unsigned long addr;
--
- 	if (vmcs)
- 		free_percpu(vmcs);
+-	__putname(name);
++	kfree(name);
+ 	put_indx_node(node);
  
- 	if (kvm_loongarch_ops) {
--		if (kvm_loongarch_ops->exc_entry) {
--			addr = (unsigned long)kvm_loongarch_ops->exc_entry;
--			free_pages(addr, kvm_loongarch_ops->page_order);
--		}
- 		kfree(kvm_loongarch_ops);
- 	}
+ 	if (err == 1) {
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 37c5d9a1f77b7..5972f160e566e 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2670,7 +2670,7 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 	u32 uni_bytes;
+ 	struct ntfs_inode *ni = sbi->volume.ni;
+ 	/* Allocate PATH_MAX bytes. */
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 
+ 	if (!uni)
+ 		return -ENOMEM;
+@@ -2714,6 +2714,6 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 		err = _ni_write_inode(&ni->vfs_inode, 0);
+ 
+ out:
+-	__putname(uni);
++	kfree(uni);
+ 	return err;
  }
-diff --git a/arch/loongarch/kvm/switch.S b/arch/loongarch/kvm/switch.S
-index 42c9fc99dc7e9..df8e5a705b714 100644
---- a/arch/loongarch/kvm/switch.S
-+++ b/arch/loongarch/kvm/switch.S
-@@ -7,6 +7,7 @@
- #include <asm/asm.h>
- #include <asm/asmmacro.h>
- #include <asm/loongarch.h>
-+#include <asm/page.h>
- #include <asm/regdef.h>
- #include <asm/unwind_hints.h>
+\ No newline at end of file
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 8113d47b0ceb9..b50c9dff327d2 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1301,7 +1301,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 		fa |= FILE_ATTRIBUTE_READONLY;
  
-@@ -108,8 +109,13 @@
- 	 *  -        is still in guest mode, such as pgd table/vmid registers etc,
- 	 *  -        will fix with hw page walk enabled in future
- 	 * load kvm_vcpu from reserved CSR KVM_VCPU_KS, and save a2 to KVM_TEMP_KS
-+	 *
-+	 * PGD register is shared between root kernel and kvm hypervisor.
-+	 * So world switch entry should be in DMW area rather than TLB area
-+	 * to avoid page fault re-enter.
+ 	/* Allocate PATH_MAX bytes. */
+-	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	new_de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!new_de) {
+ 		err = -ENOMEM;
+ 		goto out1;
+@@ -1713,7 +1713,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 	ntfs_mark_rec_free(sbi, ino, false);
+ 
+ out2:
+-	__putname(new_de);
++	kfree(new_de);
+ 	kfree(rp);
+ 
+ out1:
+@@ -1734,7 +1734,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 	struct NTFS_DE *de;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1748,7 +1748,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 
+ 	err = ni_add_name(ntfs_i(d_inode(dentry->d_parent)), ni, de);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -1771,8 +1771,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 	if (ntfs_is_meta_file(sbi, ni->mi.rno))
+ 		return -EINVAL;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1808,7 +1807,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 
+ out:
+ 	ni_unlock(ni);
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 71a5a959a48cb..fa4f7d9f38454 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -68,7 +68,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 				  u32 flags)
+ {
+ 	struct ntfs_inode *ni = ntfs_i(dir);
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	struct inode *inode;
+ 	int err;
+ 
+@@ -85,7 +85,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 			inode = dir_search_u(dir, uni, NULL);
+ 			ni_unlock(ni);
+ 		}
+-		__putname(uni);
++		kfree(uni);
+ 	}
+ 
+ 	/*
+@@ -287,8 +287,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 			return err;
+ 	}
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = __getname();
++	de = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -333,7 +332,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 	ni_unlock(ni);
+ 	ni_unlock(dir_ni);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -391,7 +390,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	/*
+ 	 * Try slow way with current upcase table
  	 */
- 	.text
-+	.p2align PAGE_SHIFT
- 	.cfi_sections	.debug_frame
- SYM_CODE_START(kvm_exc_entry)
- 	UNWIND_HINT_END_OF_STACK
-@@ -198,8 +204,8 @@ ret_to_host:
- 	kvm_restore_host_gpr    a2
- 	jr      ra
+-	uni = kmem_cache_alloc(names_cachep, GFP_NOWAIT);
++	uni = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni)
+ 		return -ENOMEM;
  
--SYM_INNER_LABEL(kvm_exc_entry_end, SYM_L_LOCAL)
- SYM_CODE_END(kvm_exc_entry)
-+EXPORT_SYMBOL_GPL(kvm_exc_entry)
+@@ -413,7 +412,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	err = 0;
  
- /*
-  * int kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu)
-@@ -223,8 +229,8 @@ SYM_FUNC_START(kvm_enter_guest)
- 	/* Save kvm_vcpu to kscratch */
- 	csrwr	a1, KVM_VCPU_KS
- 	kvm_switch_to_guest
--SYM_INNER_LABEL(kvm_enter_guest_end, SYM_L_LOCAL)
- SYM_FUNC_END(kvm_enter_guest)
-+EXPORT_SYMBOL_GPL(kvm_enter_guest)
+ out:
+-	kmem_cache_free(names_cachep, uni);
++	kfree(uni);
+ 	return err;
+ }
  
- SYM_FUNC_START(kvm_save_fpu)
- 	fpu_save_csr	a0 t1
-@@ -232,6 +238,7 @@ SYM_FUNC_START(kvm_save_fpu)
- 	fpu_save_cc	a0 t1 t2
- 	jr              ra
- SYM_FUNC_END(kvm_save_fpu)
-+EXPORT_SYMBOL_GPL(kvm_save_fpu)
+@@ -452,7 +451,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	 * Try slow way with current upcase table
+ 	 */
+ 	sbi = dentry->d_sb->s_fs_info;
+-	uni1 = __getname();
++	uni1 = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni1)
+ 		return -ENOMEM;
  
- SYM_FUNC_START(kvm_restore_fpu)
- 	fpu_restore_double a0 t1
-@@ -239,6 +246,7 @@ SYM_FUNC_START(kvm_restore_fpu)
- 	fpu_restore_cc	   a0 t1 t2
- 	jr                 ra
- SYM_FUNC_END(kvm_restore_fpu)
-+EXPORT_SYMBOL_GPL(kvm_restore_fpu)
+@@ -482,7 +481,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	ret = !ntfs_cmp_names_cpu(uni1, uni2, sbi->upcase, false) ? 0 : 1;
  
- #ifdef CONFIG_CPU_HAS_LSX
- SYM_FUNC_START(kvm_save_lsx)
-@@ -247,6 +255,7 @@ SYM_FUNC_START(kvm_save_lsx)
- 	lsx_save_data   a0 t1
- 	jr              ra
- SYM_FUNC_END(kvm_save_lsx)
-+EXPORT_SYMBOL_GPL(kvm_save_lsx)
+ out:
+-	__putname(uni1);
++	kfree(uni1);
+ 	return ret;
+ }
  
- SYM_FUNC_START(kvm_restore_lsx)
- 	lsx_restore_data a0 t1
-@@ -254,6 +263,7 @@ SYM_FUNC_START(kvm_restore_lsx)
- 	fpu_restore_csr  a0 t1 t2
- 	jr               ra
- SYM_FUNC_END(kvm_restore_lsx)
-+EXPORT_SYMBOL_GPL(kvm_restore_lsx)
- #endif
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index e0055dcf8fe38..6861c09d66d77 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -552,8 +552,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	int err;
+ 	void *buf;
  
- #ifdef CONFIG_CPU_HAS_LASX
-@@ -263,6 +273,7 @@ SYM_FUNC_START(kvm_save_lasx)
- 	lasx_save_data  a0 t1
- 	jr              ra
- SYM_FUNC_END(kvm_save_lasx)
-+EXPORT_SYMBOL_GPL(kvm_save_lasx)
+-	/* Allocate PATH_MAX bytes. */
+-	buf = __getname();
++	buf = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!buf)
+ 		return ERR_PTR(-ENOMEM);
  
- SYM_FUNC_START(kvm_restore_lasx)
- 	lasx_restore_data a0 t1
-@@ -270,10 +281,8 @@ SYM_FUNC_START(kvm_restore_lasx)
- 	fpu_restore_csr   a0 t1 t2
- 	jr                ra
- SYM_FUNC_END(kvm_restore_lasx)
-+EXPORT_SYMBOL_GPL(kvm_restore_lasx)
- #endif
--	.section ".rodata"
--SYM_DATA(kvm_exception_size, .quad kvm_exc_entry_end - kvm_exc_entry)
--SYM_DATA(kvm_enter_guest_size, .quad kvm_enter_guest_end - kvm_enter_guest)
+@@ -584,7 +583,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	if (!IS_ERR(acl))
+ 		set_cached_acl(inode, type, acl);
  
- #ifdef CONFIG_CPU_HAS_LBT
- STACK_FRAME_NON_STANDARD kvm_restore_fpu
+-	__putname(buf);
++	kfree(buf);
+ 
+ 	return acl;
+ }
 -- 
 2.53.0
 
