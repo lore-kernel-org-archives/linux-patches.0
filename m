@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17E53F39D1;
-	Wed, 20 May 2026 17:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E083D75DA;
+	Wed, 20 May 2026 17:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297873; cv=none; b=KzVbUaswVVp75svouD5aB9bMy3onDLbVy/iC10sxOOFTWfDli+7vRB2/ukT8wn9SU1aouSI2EJiuB3k9Ner0bdAUYUCsj/5V5/tz3BX64JfcQYOerX4Jiv22uvTwv1J3EZ2gYiRCVVBKGXwDHZ2Xo5sNibxRDeAjBanVxdPqbcg=
+	t=1779297876; cv=none; b=t/dBM0F70MZNq7WmCLenRvCQ5XHoxZz3rXzRb/vE2qU0URCnKujIqGjUSJm33uJtf0n9t6Agk56W1rp1uHFSc+buXigCg2KG4iHxCtWoyw5dTq+LSFCzqukoR1Ny7I+6kcMcrBwcpul5bVY44VaHWbW0LtSfLVRi1L+JkPrvdK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297873; c=relaxed/simple;
-	bh=c0f2kAH5M/WBn7T5Ns4Nht7SIiO7E6TJEdWLWbtdFIQ=;
+	s=arc-20240116; t=1779297876; c=relaxed/simple;
+	bh=XsEf9dA7jvocWOn/E2lIp/3sXVp3YG0amxiyqqs/QSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kniqOCYfOuM4zUgwWjRrBp9HSLO3g+CxMfSJRDGw4B0bITVFWplbMDn/TVyrHf/FlFUOvt8zUg/twqUiozyuRaXFB1IEAuDCrTl3fZWTp2kN7MPkZ20ccdX3caAPc7pm1NeQFF24Hh4hpeEGAHwbOHSKjMgOrcf92BS3qSW2FIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmffejLA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6DlOwFKPGsYw2muyPnAH6bhy8VNvu90MIro5nCPqR5zV1OuVKjaUgxzBn+UXUNMY7eXycGi1ENP10NT+3ZL/RlC3sRflBtawO6gLR6RT46qL8z8p6U7VruvAjbUq9CTOUZ0n5LdBnrdViY8buwqZLA2it4vpNneDp0iQU98oeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVxE2ev2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmffejLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340D91F000E9;
-	Wed, 20 May 2026 17:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVxE2ev2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD321F000E9;
+	Wed, 20 May 2026 17:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297872;
-	bh=0b7W+KSzb7WzkTqq2zJV6yvoBPzvvHb29DagiT6iDuI=;
+	s=korg; t=1779297875;
+	bh=CUvLExw7Y56i6JLXy9cUm8d52idTkT1TJbkh/R9lP4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmffejLAOPdQQjoDub8ES+z1CAIOjr/8AsS3GOonKYmveVpQu/cKenistDgJDEBJl
-	 kIfwVQy/WByTeyuWPbVaMEYgDvwzN2s2tKrNorXKkaoN1//PaSEzQhGIzI19co4uv8
-	 8e/kA4TFS4CLLhxMBR59awZo+PMowy3wTwOsTmL4=
+	b=GVxE2ev2KtUlnpOTXSXAukZ4zyO82PkUAOqQqRLgApJDpxb1SW6P4Y/lILjkBsrXZ
+	 GbhhH2rOEupfZZFHFOqR18skaCpH1Xc6oIhWyigSYNNsOc0j9UFghtCe7ejOiLygIM
+	 BFtAmFvCQ/Lp/S6ra7lke4mG6JeyxTupClQtpJi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sander Vanheule <sander@svanheule.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/957] ASoC: sti: Return errors from regmap_field_alloc()
-Date: Wed, 20 May 2026 18:11:19 +0200
-Message-ID: <20260520162138.801018536@linuxfoundation.org>
+Subject: [PATCH 6.18 197/957] ASoC: sti: use managed regmap_field allocations
+Date: Wed, 20 May 2026 18:11:20 +0200
+Message-ID: <20260520162138.822143584@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,46 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Sander Vanheule <sander@svanheule.net>
 
-[ Upstream commit 272aabef50bc3fe58edd26de000f4cdd41bdbe60 ]
+[ Upstream commit 1696fad8b259a2d46e51cd6e17e4bcdbe02279fa ]
 
-When regmap_field_alloc() fails, it can return an error. Specifically,
-it will return PTR_ERR(-ENOMEM) when the allocation returns a NULL
-pointer. The code then uses these allocations with a simple NULL check:
+The regmap_field objects allocated at player init are never freed and
+may leak resources if the driver is removed.
 
-    if (player->clk_sel) {
-        // May dereference invalid pointer (-ENOMEM)
-        err = regmap_field_write(player->clk_sel, ...);
-    }
-
-Ensure initialization fails by forwarding the errors from
-regmap_field_alloc(), thus avoiding the use of the invalid pointers.
+Switch to devm_regmap_field_alloc() to automatically limit the lifetime
+of the allocations the lifetime of the device.
 
 Fixes: 76c2145ded6b ("ASoC: sti: Add CPU DAI driver for playback")
 Signed-off-by: Sander Vanheule <sander@svanheule.net>
-Link: https://patch.msgid.link/20260220152634.480766-2-sander@svanheule.net
+Link: https://patch.msgid.link/20260220152634.480766-3-sander@svanheule.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sti/uniperif_player.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/sti/uniperif_player.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/sti/uniperif_player.c b/sound/soc/sti/uniperif_player.c
-index 6d1ce030963c6..f1b7e76f97b58 100644
+index f1b7e76f97b58..45d35b887e4eb 100644
 --- a/sound/soc/sti/uniperif_player.c
 +++ b/sound/soc/sti/uniperif_player.c
-@@ -1029,7 +1029,12 @@ static int uni_player_parse_dt_audio_glue(struct platform_device *pdev,
+@@ -1028,11 +1028,11 @@ static int uni_player_parse_dt_audio_glue(struct platform_device *pdev,
+ 		return PTR_ERR(regmap);
  	}
  
- 	player->clk_sel = regmap_field_alloc(regmap, regfield[0]);
-+	if (IS_ERR(player->clk_sel))
-+		return PTR_ERR(player->clk_sel);
-+
- 	player->valid_sel = regmap_field_alloc(regmap, regfield[1]);
-+	if (IS_ERR(player->valid_sel))
-+		return PTR_ERR(player->valid_sel);
+-	player->clk_sel = regmap_field_alloc(regmap, regfield[0]);
++	player->clk_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[0]);
+ 	if (IS_ERR(player->clk_sel))
+ 		return PTR_ERR(player->clk_sel);
  
- 	return 0;
- }
+-	player->valid_sel = regmap_field_alloc(regmap, regfield[1]);
++	player->valid_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[1]);
+ 	if (IS_ERR(player->valid_sel))
+ 		return PTR_ERR(player->valid_sel);
+ 
 -- 
 2.53.0
 
