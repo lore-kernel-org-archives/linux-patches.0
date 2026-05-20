@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534F83DC85B;
-	Wed, 20 May 2026 11:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EE53FF891;
+	Wed, 20 May 2026 11:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276072; cv=none; b=othaLFvrFDMqeZ5A+GUk3lRoQXIXHCJWJYMZGgUrsp/GeI8jiR3vR5zkMG5dxfUHXrKdxL8kMEknDXNGEAPfMu41MF2V2JxM3CZfOSPyV4q5rhO8rPzKIp/pSdIE9v6vLLKIlVt8Yt6URPAd5ww9FTeklOEcaX3D+YvjVxQwLDk=
+	t=1779276073; cv=none; b=QKMhWkrb4JYu8cL8jFa+JClH0nJsNICbIgm2v3pm1h5huOKJ3xwLaCDrz6p41BWmXLXBA4bj8evDb0CjVm+lvEHgKlfXNalKwC31vMI43yOTxUpIjhaghk8Hy3/eWXD4eGed+OixheE2fGcX+GXGEVZi/qrqn2UX4c1L/MnYlFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276072; c=relaxed/simple;
-	bh=NGPS82dFju4rpw26IMrBXC1852ms9DsElWuvBCBev1Q=;
+	s=arc-20240116; t=1779276073; c=relaxed/simple;
+	bh=Cp+lBv8tQQFrjmMonLILwdwCH0R1yb5N2UCeb3mM/Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AIFPE2aB9RT51e5+IR46zj3vjmYOUYphXRGa+eLFSiVyT7HdSAPMjLRXbjWFlrnysLTQLhiv7NxAvguOFw/FvfU4dsiGUCrCbe3/MM7+WxJF6VMj+JOpScl+foapZk1ulofRN9/DapHjByd6zIcU+zTTCZDJboCi8nQjeMeynM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ookCRnhx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Z/xXLjVNJO3ST6xnyg3Pln0p+73QMUSSyrQt0eDY+2nqnlbfWyAe3bnrMlR2oGCxQpQH2JmGLDQZhM83QwlkVI91N2UOsHJtK1WFaCiU7Sdt8MTcLG/f3YdmO+2ppn8SYMW1wQSCDH2Ld3PhFbpFRXEs4hm/FzJ2KnWTWxDBDAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ep7KMfsH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ookCRnhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5462E1F00893;
-	Wed, 20 May 2026 11:21:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ep7KMfsH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999B01F00894;
+	Wed, 20 May 2026 11:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276070;
-	bh=fhj6RDUQptPN2BSA6o1Q7exbdqnirrlDSGfUrC7qlDQ=;
+	s=k20260515; t=1779276071;
+	bh=mPBqWvhV0w+LojEY1Nxwbe6bI+MnpUqUyjd4Zb9cQtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ookCRnhxJQAnVLqbrSMOJweZcFoMTZBwp00rDO9Dxqqb2/FzDWfUBgIic2nHT+88l
-	 cVn4Q8H2pTli91LdeFm9MuSF5aP7Eq8N6szRS8lai1wHEvdlfye/VUpmxoPwpgJCUP
-	 6/23vsdkzGz2Z0UXdc+dxvV04TUd99pS0+QacSg3AE8mmiqVJUSviYIdcvvdPnp9FF
-	 SHRYb2dnQpw8zgz69t7rqvx0i94Rrm11o+brbARL/jUgxNY3pMQgGM40wcj6+b2qb9
-	 Jw7sbmiG5s2IKKLm1z69XVv4XFtOU39PJHS4mJp0QcMsg3ulGQjTcDymV2Oe8JqMcq
-	 4OnQlbS0UGTnQ==
+	b=Ep7KMfsHYYn3FupZG2S6VBwh0vN4FtzAe2uea4LVwCdXDQRs/KYTt1cQi2LIwZxOm
+	 VknaJx1nmDAxmdPKjHrzXg3EVmfnM3VV+AuAG6QBns9tOHai6iSdDoh3uT0fwD8G8V
+	 1oQUuIa/5MgBO5LKQXCuu2i6Ky1E+7ver8FGGIYE7zJ8AafZ2YHwX7yJtHj8zwgrLA
+	 ULsWkxqBH8vt1N4QWaUXsY1lTt3ID0biQC6v4JTNIQV1FSamh7ZLmiL6uel+Lf9d3U
+	 2oJqdEKjNFddFV/35ifnOA8cT5AVf13TVFSD4iEQxHw0OHgrAxRjww85G8bFbQnIrT
+	 uTKL6v2CghBXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nicola Lunghi <nick83ola@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: usb-audio: add clock quirk for Motu 1248
-Date: Wed, 20 May 2026 07:19:32 -0400
-Message-ID: <20260520111944.3424570-60-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] workqueue: Release PENDING in __queue_work() drain/destroy reject path
+Date: Wed, 20 May 2026 07:19:33 -0400
+Message-ID: <20260520111944.3424570-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,202 +51,262 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicola Lunghi <nick83ola@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 320e55722ca466a7d40dd69e1aea982cb6189006 ]
+[ Upstream commit a7488f089bdfa87c4fef1744d4dca9f4f8b46f8b ]
 
-The Motu 1248 (and probably other older Motu AVB interfaces) take more
-than 2 seconds to switch clock. During the clock switching process the
-device return that the clock is not valid. This is similar to what
-already implemented for the Microbook II interface. Add the Motu
-1248 usb id to the existing Motu quirk.
+The caller of __queue_work() owns WORK_STRUCT_PENDING, won via
+test_and_set_bit() in queue_work_on()/__queue_delayed_work(). The
+state machine documented above __queue_work() requires that owner
+to either hand the token to a pwq (insert_work() -> set_work_pwq()),
+hand it to a timer, or release it via set_work_pool_and_clear_pending().
+try_to_grab_pending() relies on this: when it observes
+"PENDING && off-queue" it busy-loops, trusting the current owner to
+make progress.
 
-Signed-off-by: Nicola Lunghi <nick83ola@gmail.com>
-Link: https://patch.msgid.link/20260504144520.699522-2-nick83ola@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The (__WQ_DESTROYING | __WQ_DRAINING) early-return path violates that
+contract. It WARN_ONCE()s and bare-returns, leaving work->data with
+PENDING set, WORK_STRUCT_PWQ clear, and work->entry empty.
+
+The path is reachable without explicit API abuse: queue_delayed_work()
+arms a timer with PENDING set; if drain_workqueue() runs while the
+timer is still pending, delayed_work_timer_fn() -> __queue_work() in
+softirq context hits the WARN, current is not a wq worker so
+is_chained_work() is false, and the work is silently dropped with
+PENDING leaked.
+
+Mirror what clear_pending_if_disabled() already does on its analogous
+reject path: unpack the off-queue data and call
+set_work_pool_and_clear_pending() to release the token before
+returning.
+
+I was able to reproduce this by queueing several slow works on
+a max_active=1 wq, arm a delayed_work whose timer fires while
+drain_workqueue() is blocked, then call cancel_delayed_work_sync().
+Without this patch the cancel livelocks at 100% CPU; with it the cancel
+returns immediately.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Record 1.1: Subsystem `workqueue`; action verb `Release`; intent: clear
+`WORK_STRUCT_PENDING` when `__queue_work()` rejects work during
+drain/destroy.
 
-Phase 1:
-- Record 1.1: Subsystem `ALSA: usb-audio`; action verb `add`; intent is
-  to add Motu 1248 USB ID `07fd:0005` to an existing clock-validity
-  delay quirk.
-- Record 1.2: Tags: `Signed-off-by: Nicola Lunghi`, `Link:
-  https://patch.msgid.link/20260504144520.699522-2-nick83ola@gmail.com`,
-  `Signed-off-by: Takashi Iwai`. No `Fixes:`, `Reported-by:`, `Tested-
-  by:`, `Reviewed-by:`, or `Cc: stable`.
-- Record 1.3: Commit body describes Motu 1248 returning clock-invalid
-  for more than 2 seconds while switching clock, causing the existing
-  ALSA clock validation to fail too early. No kernel-version range
-  given.
-- Record 1.4: This is a hardware quirk fix, not a hidden
-  memory/synchronization bug.
+Record 1.2: Commit tags: `Signed-off-by: Breno Leitao
+<leitao@debian.org>` and `Signed-off-by: Tejun Heo <tj@kernel.org>`. No
+committed `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`,
+`Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`.
 
-Phase 2:
-- Record 2.1: One file changed: `sound/usb/clock.c`, `+11/-4`. Modified
-  function: `uac_clock_source_is_valid_quirk()`. Single-file surgical
-  hardware quirk.
-- Record 2.2: Before: the 5-second retry loop applied only to
-  `USB_ID(0x07fd, 0x0004)`. After: the same loop also applies to
-  `USB_ID(0x07fd, 0x0005)`, with comments expanded.
-- Record 2.3: Bug category is hardware workaround/device quirk.
-  Mechanism: ALSA rechecks clock validity up to 50 times with
-  `msleep(100)` instead of failing on the initial transient invalid
-  response.
-- Record 2.4: Fix quality is high: it reuses existing code and only
-  widens the device match. Regression risk is very low and limited to
-  MOTU product ID `0x0005`.
+Record 1.3: The body describes a real state-machine bug:
+`__queue_work()` may return from the `__WQ_DESTROYING | __WQ_DRAINING`
+reject path with `PENDING` still set while the work is off-queue.
+`try_to_grab_pending()` then sees `PENDING && off-queue` and busy-
+retries. The verified failure mode is `cancel_delayed_work_sync()`
+livelocking at 100% CPU after a delayed timer fires during
+`drain_workqueue()`.
 
-Phase 3:
-- Record 3.1: `git blame` shows the existing MOTU retry quirk was
-  introduced by `2edb84e3047b9` in 2020. Later nearby changes came from
-  clock refactoring and multi-control-interface support, but the retry
-  logic remains the same.
-- Record 3.2: No `Fixes:` tag, so no introducing commit to follow.
-- Record 3.3: Recent `sound/usb/clock.c` history shows related clock
-  fixes/refactors, but this patch is standalone and only changes the
-  device match.
-- Record 3.4: Author has prior usb-audio quirk commits in local history;
-  Takashi Iwai applied the patch and is the ALSA maintainer/committer
-  for this area.
-- Record 3.5: No functional dependencies found. The patch applies
-  cleanly to checked pending stable branches.
+Record 1.4: This is not a hidden cleanup; it is an explicit correctness
+fix for a leaked pending token causing livelock.
 
-Phase 4:
-- Record 4.1: `b4 dig -c 320e55722ca46` found the original submission at
-  the patch.msgid.link URL. `b4 dig -a` showed only `v1`; no newer
-  revision found.
-- Record 4.2: `b4 dig -w` showed Nicola Lunghi, Jaroslav Kysela, Takashi
-  Iwai, `linux-sound`, `linux-kernel`, and `linux-usb` were included.
-- Record 4.3: `b4 mbox` showed Takashi replied “Applied now. Thanks.” No
-  objections or review concerns appeared in the two-message thread.
-  WebFetch of lore was blocked by Anubis.
-- Record 4.4: No multi-patch series or related required patches found.
-- Record 4.5: Stable-list web search was blocked by Anubis; no stable-
-  specific discussion was found through the available local/b4 data.
+### Phase 2: Diff Analysis
+Record 2.1: One file changed: `kernel/workqueue.c`, 12 insertions. One
+function changed: `__queue_work()`. Scope: single-file surgical core
+workqueue fix.
 
-Phase 5:
-- Record 5.1: Key function: `uac_clock_source_is_valid_quirk()`.
-- Record 5.2: Call path verified: `uac_clock_source_is_valid()` calls
-  the quirk when the device reports invalid clock;
-  `__uac_clock_find_source()` and `set_sample_rate_v2v3()` call clock
-  validation; setup is reached from format parsing, stream setup,
-  endpoint preparation, and sample-rate initialization.
-- Record 5.3: Key callees are `snd_usb_ctl_msg()`,
-  `snd_usb_find_ctrl_interface()`, `snd_usb_find_clock_source()`, and
-  `msleep(100)`.
-- Record 5.4: Reachability is real for users of affected USB audio
-  devices during sample-rate/clock setup and PCM endpoint preparation.
-- Record 5.5: Similar existing pattern is the MicroBook IIc quirk for
-  the same vendor and same delayed clock-validity behavior.
+Record 2.2: Before: reject path warned and returned directly. After:
+reject path unpacks off-queue work data and calls
+`set_work_pool_and_clear_pending()` before returning.
 
-Phase 6:
-- Record 6.1: The existing quirk code exists in checked pending stable
-  branches `pending-5.4`, `pending-5.10`, `pending-5.15`, `pending-6.1`,
-  `pending-6.6`, `pending-6.12`, and `pending-7.0`.
-- Record 6.2: Backport difficulty is clean: `git apply --check`
-  succeeded on all those pending branches.
-- Record 6.3: No alternative Motu 1248 fix was found in local
-  stable/current history.
+Record 2.3: Bug category: workqueue state-machine/token leak with a race
+between delayed-work timer execution and draining/destroying a
+workqueue. Mechanism: queued delayed work owns `PENDING`; timer callback
+enters `__queue_work()`; reject path drops the work but did not release
+`PENDING`.
 
-Phase 7:
-- Record 7.1: Subsystem is ALSA USB audio driver. Criticality: IMPORTANT
-  for users of affected MOTU hardware, not core-wide.
-- Record 7.2: Subsystem is active; recent history contains multiple usb-
-  audio fixes and quirks.
+Record 2.4: Fix quality is high. It mirrors the existing
+`clear_pending_if_disabled()` pattern in the same file and does not add
+an API or change normal queueing behavior. Regression risk is low; the
+change is limited to an already-rejecting path.
 
-Phase 8:
-- Record 8.1: Affected users are driver/hardware-specific: Motu 1248 and
-  likely related older MOTU AVB/hybrid devices with product ID `0x0005`.
-- Record 8.2: Trigger is changing sample rate or clock source, or
-  validation during device/audio setup. Unprivileged trigger depends on
-  local audio-device permissions; I did not verify distro policy.
-- Record 8.3: Failure mode is ALSA failing clock validation early,
-  returning errors such as `-ENXIO` from the code path and preventing
-  successful audio setup. Severity: MEDIUM for the kernel generally,
-  HIGH for affected hardware usability.
-- Record 8.4: Benefit is high for affected hardware; risk is very low
-  because this only enables an existing quirk for one USB product ID.
+### Phase 3: Git History
+Record 3.1: `git blame` shows the PENDING/off-queue busy-loop contract
+comment came from `8930caba3dbd`; the drain reject mechanism is rooted
+in `9c5a2ba70251` (`v3.1`), and the destroy-side diagnostic flag came
+from `33e3f0a3358b` (`v6.3`). The bare reject `return` traces back to
+`e41e704bc4f4` (`v2.6.36-rc4` era).
 
-Phase 9:
-- Record 9.1: Evidence for backporting: real hardware quirk, existing
-  stable-accepted mechanism, small single-file change, maintainer-
-  applied, cleanly applies to stable branches, external CCRMA
-  documentation corroborates MOTU 1248 Linux sample-rate failures that
-  succeed after waiting. Evidence against: no crash/security/data-
-  corruption, no explicit stable tag, and no direct reporter/tested-by
-  tag.
-- Record 9.2: Stable rules: obviously correct yes; fixes real user-
-  visible hardware failure yes; important enough under hardware-quirk
-  exception yes; small/contained yes; no new API/features yes; applies
-  cleanly yes.
-- Record 9.3: Exception category: hardware quirk/workaround for broken
-  device timing behavior.
-- Record 9.4: Decision: backport. This is exactly the kind of low-risk
-  device-specific quirk stable trees routinely take.
+Record 3.2: No committed `Fixes:` tag. I inspected the patch-thread note
+suggesting `e41e704bc4f4`; that commit added the “warn and ignore”
+dying-workqueue behavior.
+
+Record 3.3: Recent `kernel/workqueue.c` history shows nearby independent
+workqueue fixes and diagnostics; this patch is standalone, not a multi-
+patch series dependency.
+
+Record 3.4: Breno Leitao has multiple recent workqueue commits in
+`origin/master`; Tejun Heo, the workqueue maintainer, committed this
+patch.
+
+Record 3.5: Dependencies: conceptually standalone. Exact patch applies
+cleanly to `v6.18.32`, `v6.19.14`, `v7.0`, and `v7.0.9`; older trees
+need small backport adjustment because helper APIs and warning text
+differ.
+
+### Phase 4: Mailing List / External Research
+Record 4.1: `b4 dig -c a7488f089bdfa` found the original thread: `https:
+//patch.msgid.link/20260507-workqueue_pending-v1-1-
+3a53e2facf4e@debian.org`. Series revisions: v1 only.
+
+Record 4.2: Original recipients included Breno Leitao, Tejun Heo, Lai
+Jiangshan, `linux-kernel@vger.kernel.org`, `clm@meta.com`, and `kernel-
+team@meta.com`. Tejun replied that it was applied to `wq/for-7.1-fixes`.
+
+Record 4.3: No external bug report or syzbot link in this commit. The
+bug report evidence is the author’s concrete reproducer in the
+commit/thread.
+
+Record 4.4: No related patch series found; b4 reports a single-patch v1.
+
+Record 4.5: Web search found no stable-specific discussion for this
+exact patch. Lore WebFetch was blocked by Anubis, but b4 successfully
+fetched the mbox.
+
+### Phase 5: Code Semantic Analysis
+Record 5.1: Modified function: `__queue_work()`.
+
+Record 5.2: Callers verified in `kernel/workqueue.c`: `queue_work_on()`,
+`queue_work_node()`, `delayed_work_timer_fn()`, zero-delay
+`__queue_delayed_work()`, `rcu_work_rcufn()`, and requeue paths. The
+relevant caller is `delayed_work_timer_fn()`.
+
+Record 5.3: Key callees: `is_chained_work()`, `work_offqd_unpack()`,
+`set_work_pool_and_clear_pending()`, and, on non-reject paths, pool
+selection plus `insert_work()`.
+
+Record 5.4: Verified call chain: `queue_delayed_work_on()` sets
+`PENDING`; `__queue_delayed_work()` arms the timer;
+`delayed_work_timer_fn()` calls `__queue_work()`; `drain_workqueue()`
+sets `__WQ_DRAINING`; `cancel_delayed_work_sync()` reaches
+`try_to_grab_pending()` through `work_grab_pending()` and can spin on
+`-EAGAIN`. Direct unprivileged trigger was not verified.
+
+Record 5.5: Similar in-tree pattern verified:
+`clear_pending_if_disabled()` already unpacks off-queue data and clears
+pending in an analogous reject path.
+
+### Phase 6: Stable Tree Analysis
+Record 6.1: The buggy drain reject path exists in checked tags from
+`v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`, `v6.19`, and
+`v7.0`. Drain behavior dates back to `v3.1`.
+
+Record 6.2: Backport difficulty: clean for `v6.18+` and `v7.0`; minor
+manual backport for `v6.12`; more adjustment for `v6.6` and older
+because `work_offqd_unpack()`/flags helpers differ or are absent.
+
+Record 6.3: I found no exact related fix already present by subject in
+checked stable branches.
+
+### Phase 7: Subsystem Context
+Record 7.1: Subsystem is core workqueue infrastructure. Criticality:
+CORE, because workqueues are used throughout drivers, filesystems,
+networking, storage, GPU, and core kernel code.
+
+Record 7.2: Workqueue is actively maintained, with recent commits by
+Breno Leitao and Tejun Heo, but the affected state machine is mature and
+present across long-lived stable lines.
+
+### Phase 8: Impact / Risk
+Record 8.1: Affected population: broad kernel users, but trigger-
+specific to users of delayed work on workqueues being drained or
+destroyed.
+
+Record 8.2: Trigger: delayed-work timer fires while `drain_workqueue()`
+or destroy-time draining is active, followed by cancellation/grab of
+that delayed work. Commonness is workload dependent; direct unprivileged
+reachability was not verified.
+
+Record 8.3: Failure mode: livelock at 100% CPU in
+`cancel_delayed_work_sync()`. Severity: HIGH, potentially CRITICAL for
+teardown/suspend/remove paths that must complete.
+
+Record 8.4: Benefit high: prevents a real hang/livelock in core
+infrastructure. Risk low: 12-line change, reject path only, mirrors
+existing cleanup logic.
+
+### Phase 9: Final Synthesis
+Record 9.1: Evidence for backporting: real reproduced livelock, core
+subsystem, broad stable-tree presence, small fix, maintainer-applied, no
+new API. Evidence against: exact patch does not cleanly apply to older
+stable trees and lacks independent `Tested-by`; older trees need careful
+helper-specific backports. Unresolved: no independent bug report found,
+no direct unprivileged trigger verified.
+
+Record 9.2: Stable rules: obviously correct and self-tested: yes; fixes
+real bug: yes; important issue: yes, livelock/hang; small and contained:
+yes, one function and 12 lines; no new features/APIs: yes; applies to
+stable: clean for newer stable, minor/manual for older.
+
+Record 9.3: No exception category applies; this is a core bug fix, not a
+device ID, quirk, DT, build, or documentation change.
+
+Record 9.4: Decision: backport. The technical merit is strong: this
+fixes a verified workqueue livelock with a small, localized, maintainer-
+accepted change.
 
 ## Verification
-
-- Phase 1: Parsed commit `320e55722ca46` with `git show
-  --format=fuller`; verified tags and message.
-- Phase 2: Verified diff with `git show --find-renames` and `--numstat`:
-  `sound/usb/clock.c`, `+11/-4`.
-- Phase 3: Ran `git blame -L 179,240 -- sound/usb/clock.c`; identified
-  existing quirk origin `2edb84e3047b9`.
-- Phase 3: Checked recent file history with `git log --oneline -20 --
-  sound/usb/clock.c`.
-- Phase 4: Ran `b4 dig -c 320e55722ca46`, `-a`, and `-w`; confirmed v1
-  patch, recipients, and lore URL.
-- Phase 4: Ran `b4 mbox`; confirmed Takashi’s “Applied now” reply and no
-  objections in the fetched thread.
-- Phase 5: Used `rg` and file reads to trace callers through `clock.c`,
-  `format.c`, `endpoint.c`, `stream.c`, and `quirks.c`.
-- Phase 6: Checked quirk presence in pending stable branches and
-  verified `git apply --check` cleanly on `pending-5.4`, `pending-5.10`,
-  `pending-5.15`, `pending-6.1`, `pending-6.6`, `pending-6.12`, and
-  `pending-7.0`.
-- Phase 8: Used WebFetch of CCRMA MOTU 1248 documentation; it reports
-  Linux output/sample-rate attempts may fail initially and succeed after
-  5-10 seconds.
-- UNVERIFIED: Exact USB ID mapping for every model listed in the new
-  comment beyond the commit’s own statement.
+- Phase 1: Parsed `git show --format=fuller` for `a7488f089bdfa`;
+  confirmed tags and commit body.
+- Phase 2: Inspected the diff; confirmed only `kernel/workqueue.c`
+  changed with 12 insertions in `__queue_work()`.
+- Phase 3: Used `git blame`, `git show`, `git describe --contains`, and
+  path-limited `git log`; confirmed historical origins and stable
+  version presence.
+- Phase 4: Used `b4 dig -c`, `-a`, `-w`, and mbox fetch; confirmed v1
+  patch and Tejun’s apply reply. WebFetch to lore was blocked.
+- Phase 5: Used `rg` and `ReadFile` to trace callers/callees and the
+  delayed-work/cancel path.
+- Phase 6: Checked specific stable tags and ran patch apply checks in
+  temporary worktrees; confirmed clean apply for `v6.18+` and backport
+  needs for older trees.
+- Phase 7: Verified subsystem path and recent workqueue history.
+- Phase 8: Verified failure mode from commit body and matching code
+  path; unprivileged trigger remains unverified.
 
 **YES**
 
- sound/usb/clock.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ kernel/workqueue.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/usb/clock.c b/sound/usb/clock.c
-index 842ba5b801eae..2e0c18e352812 100644
---- a/sound/usb/clock.c
-+++ b/sound/usb/clock.c
-@@ -208,11 +208,18 @@ static bool uac_clock_source_is_valid_quirk(struct snd_usb_audio *chip,
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index c6ea96d5b7167..2c512b4a74482 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -2281,6 +2281,18 @@ static void __queue_work(int cpu, struct workqueue_struct *wq,
+ 	if (unlikely(wq->flags & (__WQ_DESTROYING | __WQ_DRAINING) &&
+ 		     WARN_ONCE(!is_chained_work(wq), "workqueue: cannot queue %ps on wq %s\n",
+ 			       work->func, wq->name))) {
++		struct work_offq_data offqd;
++
++		/*
++		 * State on entry: PENDING is set, work is off-queue (no
++		 * insert_work() has run).
++		 *
++		 * Returning without clearing PENDING would leave the work
++		 * in a weird state (PENDING=1, PWQ=0, entry empty)
++		 */
++		work_offqd_unpack(&offqd, *work_data_bits(work));
++		set_work_pool_and_clear_pending(work, offqd.pool_id,
++						work_offqd_pack_flags(&offqd));
+ 		return;
  	}
- 
- 	/*
--	 * MOTU MicroBook IIc
--	 * Sample rate changes takes more than 2 seconds for this device. Clock
--	 * validity request returns false during that period.
-+	 * Quirk for older MOTU AVB / hybrid interfaces
-+	 *
-+	 * These devices take more than 2 seconds to switch sample rate or
-+	 * clock source. During this period the clock validity request
-+	 * returns false, causing ALSA to fail prematurely.
-+	 *
-+	 * Affected models (all use vendor 0x07fd):
-+	 *   - MicroBook IIc          → 0x0004
-+	 *   - 1248, 624, 8A, UltraLite AVB, 8M, 16A, ... → 0x0005
- 	 */
--	if (chip->usb_id == USB_ID(0x07fd, 0x0004)) {
-+	if (chip->usb_id == USB_ID(0x07fd, 0x0004) ||  /* MicroBook IIc */
-+	    chip->usb_id == USB_ID(0x07fd, 0x0005)) {  /* 1248 / 624 / 8A / UltraLite AVB / ... */
- 		count = 0;
- 
- 		while ((!ret) && (count < 50)) {
+ 	rcu_read_lock();
 -- 
 2.53.0
 
