@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC3030BF68;
-	Wed, 20 May 2026 17:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C50529D26E;
+	Wed, 20 May 2026 17:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298537; cv=none; b=HDALg1IRPzwUwJfsenGUZxlvfWND81MD6zZZbeMEw1Ld8YIUJd1NdTXVwt9eVb4Z7rLOhp9KP2yzFW1TWKv50x7F3+XEFkJM7Y4OxHbM9P/qOHKckR1g84Zti3ZFF/utAf5xzft3rSs4y5fcGODyCh0MQD0AiQKYIHEyZKRIINU=
+	t=1779298540; cv=none; b=jV0+zkHJHvDKAC6/akI3twkNFxQ6QSPK6lVtidWLgpseWQmda1Xbps9zO19SKNrLop5VdaWezACW07Ra2e+vCeyaWvIQpzxi87gaKUEkGHkvARqoyrJkbqsXXzp9c50UW62D4yNnbEIqmd188UcMVBogwJBaV+45ZSZ7/mTYH7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298537; c=relaxed/simple;
-	bh=dvvrr9TcetFsvlOFFiDeFGmp7NYsQouJ803XW3m0DrA=;
+	s=arc-20240116; t=1779298540; c=relaxed/simple;
+	bh=4tYSR2eoC38ihJa83eTT/3mhs3AF3rA58vxUbW4ypzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sygYK3ZXHAZSr6GBLGR+hWGGEm/3ksqlugHXGyTlEUAgNIiOzM/N3L55233697yr/xNpWuPpiCNwpg8ZSvdjzWpwOZZ7mYLX4npqLNtu5LH51tdtyT3/+erAHfHeO9teyykFXMmzLzyZGcpbx6UjLzZbomROoO1RDOhV9kc8Wv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvhMQzLJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E6qV7Vf8gpmm9NSvoFyVFOUp8xUiAJwiaN2eLYReQwgcm8DAg/bj1YKgrgmNDSChorl3M0CfWDwSw0rfAxXeH/PDvTBroDOvqCurQE+ArFzuC7FNKp5HlLFvf1ruKhPJLsFWitZ7FB+qq2dtJtXAZWtuI3TU+UcAp6zTtP1JUeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziHmbtjJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvhMQzLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40781F000E9;
-	Wed, 20 May 2026 17:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziHmbtjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE261F000E9;
+	Wed, 20 May 2026 17:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298536;
-	bh=YAcK0+CY/gASevpDJXT9Jc1Ocb1d5hLsxL5DNDD+Qhs=;
+	s=korg; t=1779298539;
+	bh=bptGYsGDsSZ51k8SnnOVcFjFv2GEkrdv2aDiZ2OQcxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvhMQzLJcVedgIjiDErQs/0p9y+u6U1agsBurXXR+oXFDDE0jXY3MCKT7iPBcWA5P
-	 7XGxW6S5fA2xrPZKRWM6IbdMO6P1osw87wkoTSFsIqVzTLyHZ6rTCRBkAD82SWkIa8
-	 +KgiFmweQj2ilyfJpaYLbZO9QkQwVn8YH6XkN0dM=
+	b=ziHmbtjJqbSsLl/NFsY4RCpNTi1UswoODOShPR+vQpuwuMoPWYpf8ueI1OgIb3GGQ
+	 INx3yLEqu8GJnYSbDZaxHlmoD0u8+KzNFNpMAEm5l5HHB9nLOSItzMIeFkX6kPyXgQ
+	 8HYpAHH9vRHwNoHTt2lPfxq8Oe/fZ/wvuWs6qrlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Norman Bintang <normanbt@google.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 449/957] dmaengine: mxs-dma: Fix missing return value from of_dma_controller_register()
-Date: Wed, 20 May 2026 18:15:32 +0200
-Message-ID: <20260520162144.257208991@linuxfoundation.org>
+Subject: [PATCH 6.18 450/957] soundwire: cadence: Clear message complete before signaling waiting thread
+Date: Wed, 20 May 2026 18:15:33 +0200
+Message-ID: <20260520162144.278945606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,34 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit ab2bf6d4c0a0152907b18d25c1b118ea5ea779df ]
+[ Upstream commit cbfea84f820962c3c5394ff06e7e9344c96bf761 ]
 
-Propagate the return value of of_dma_controller_register() in probe()
-instead of ignoring it.
+Clear the CDNS_MCP_INT_RX_WL interrupt before signaling completion.
 
-Fixes: a580b8c5429a6 ("dmaengine: mxs-dma: add dma support for i.MX23/28")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260225-mxsdma-module-v3-2-8f798b13baa6@nxp.com
+This is to prevent the potential race where:
+- The main thread is scheduled immediately the completion is signaled,
+   and starts a new message
+- The RX_WL IRQ for this new message happens before sdw_cdns_irq() has
+  been re-scheduled.
+- When sdw_cdns_irq() is re-scheduled it clears the new RX_WL interrupt.
+
+MAIN THREAD                        |  IRQ THREAD
+                                   |
+  _cdns_xfer_msg()                 |
+  {                                |
+     write data to FIFO            |
+     wait_for_completion_timeout() |
+     <BLOCKED>                     |                       <---- RX_WL IRQ
+                                   | sdw_cdns_irq()
+                                   | {
+                                   |    signal completion
+                          <== RESCHEDULE <==
+  Handle message completion        |
+  }                                |
+                                   |
+Start new message                  |
+  _cdns_xfer_msg()                 |
+  {                                |
+     write data to FIFO            |
+     wait_for_completion_timeout() |
+     <BLOCKED>                     |                       <---- RX_WL IRQ
+                          ==> RESCHEDULE ==>
+                                   |    // New RX_WL IRQ is cleared before
+                                   |    // it has been handled.
+                                   |    clear CDNS_MCP_INTSTAT
+
+                                   |    return IRQ_HANDLED;
+                                   | }
+
+Before this change, this error message was sometimes seen on kernels
+that have large amounts of debugging enabled:
+
+   SCP Msg trf timed out
+
+This error indicates that the completion has not been signalled after
+500ms.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 956baa1992f9 ("soundwire: cdns: Add sdw_master_ops and IO transfer support")
+Reported-by: Norman Bintang <normanbt@google.com>
+Closes: https://issuetracker.google.com/issues/477099834
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260310113133.1707288-1-rf@opensource.cirrus.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mxs-dma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soundwire/cadence_master.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-index cfb9962417ef6..53f572b6b6fc6 100644
---- a/drivers/dma/mxs-dma.c
-+++ b/drivers/dma/mxs-dma.c
-@@ -824,6 +824,7 @@ static int mxs_dma_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(mxs_dma->dma_device.dev,
- 			"failed to register controller\n");
-+		return ret;
- 	}
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index 21bb491d026b4..d7a0a14ad9626 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -933,6 +933,14 @@ irqreturn_t sdw_cdns_irq(int irq, void *dev_id)
  
- 	dev_info(mxs_dma->dma_device.dev, "initialized\n");
+ 		cdns_read_response(cdns);
+ 
++		/*
++		 * Clear interrupt before signalling the completion to avoid
++		 * a race between this thread and the main thread starting
++		 * another TX.
++		 */
++		cdns_writel(cdns, CDNS_MCP_INTSTAT, CDNS_MCP_INT_RX_WL);
++		int_status &= ~CDNS_MCP_INT_RX_WL;
++
+ 		if (defer && defer->msg) {
+ 			cdns_fill_msg_resp(cdns, defer->msg,
+ 					   defer->length, 0);
 -- 
 2.53.0
 
