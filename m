@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569503AE6E6;
-	Wed, 20 May 2026 16:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97B63AE6E6;
+	Wed, 20 May 2026 16:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296379; cv=none; b=cFHRsyHDd2FJmmW/NTh7q6Ukx5SnpqL+SFw/4Rfmz2Q0cpuonFZTEhTAA1Aq8shH/6bbVBwy/lo0n0BCYWKxdeLGo6zL2zUM1nJGyZaPUmExz4kNmiGwNA/WHCWDpNNAyPQLUm+d+cl5Pj57vBFqpgoZ23JcwP+jGt4I9sRKM7M=
+	t=1779296381; cv=none; b=UZlVL0Xv8GoVO+iWSDk2vt+gJLXPZUQ9+n9jQsFta1kza/J+wUZzY2elpxvK02Mw85qY6BIkqtRZ5E3wh8vPrIDZf0Ow7ma9Sf7Esx4GOK7t/KLuLpSKSMu5EWlFZUyXgDy8dxK9RNqwy7TyYZq2FWh5KLCSJaFLZAe45OgGYc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296379; c=relaxed/simple;
-	bh=Lt4wVlloakOAjWAuzM4Yw+9d/f29QngZ+nzQ+w+ulzs=;
+	s=arc-20240116; t=1779296381; c=relaxed/simple;
+	bh=Lm3HIleCLI08b4JH5bdEIOdCUiPvrmlgz6gxgIvHYeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1+5w+RvKNteaVXw0MP0Ly3ctMfOtvW595y08GY/7lzL0jKnQWSFauISviuXMJ+PXnkQBtt2nRLMO2PLszfzLKd1BoIaKUE7259YWs08FNMBFuFz1WDRgsxpWyFjzfXoDcuoJbt9bXy6FnTAG/NK4/hjfpovWuMlvHpcWb+kHOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulCbSytt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JK8bEx4AL9niqhqa1Sh1C32RYNomizsNVKoHZQQ+iAPS4pJStve7UjB2StjHxPO75gQ6Fk6vTpvlMDMjJfo8iqeWbixGKQ2U/z1Oafh0ocfbiFMCXrUcA0EnWxO7U/5VS0rx9UdTLVtHtHlSEvm8KbiYrFmUUyjZ312PpWv9Gv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ax/72dJi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulCbSytt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6681F000E9;
-	Wed, 20 May 2026 16:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ax/72dJi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F011F00893;
+	Wed, 20 May 2026 16:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296376;
-	bh=schnMygN1FyymYTy2KbcIG0dUJTiN3HhiyXbpF6yw8k=;
+	s=korg; t=1779296379;
+	bh=AHTA9DX+mkqgBzb1pKbEpoguMLjuHXkDWCTcAFsAavM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulCbSyttmIth1uH1dX1Lqw04woQgkdt7qiToW/rpBUmKQ2U6h8CzDSDNP+8zT8ApB
-	 6erTNfBNluSukRINpGjkFXG4igqGQ7rWo2sBcmbENnauKsPDORLaYjqhDQllBqVr6Q
-	 K2DyvPt1eP3KcOdHhbSD/ekvTKJndE1B7eR1qymI=
+	b=Ax/72dJiq1/9EYyu1Y3rWMT8iDrWJjQKIS1yKBMysgIjRZL92FDlR7clPk2WTc2uX
+	 k1B6yn2cV60/XBVAb8DFkQ9rHqcRjdvhvn6S+r/bjtmOlmxKKHdxURepn2YYg70VZD
+	 tmfeF/N7NUew6vG/VYOugrp+UjKD6ahQf5WnXMtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0774/1146] net: dsa: remove redundant netdev_lock_ops() from conduit ethtool ops
-Date: Wed, 20 May 2026 18:17:04 +0200
-Message-ID: <20260520162205.733770778@linuxfoundation.org>
+Subject: [PATCH 7.0 0775/1146] net: enetc: correct the command BD ring consumer index
+Date: Wed, 20 May 2026 18:17:05 +0200
+Message-ID: <20260520162205.754910257@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,115 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf.kernel@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 0f99e0c3e19badaf3fdced0d3feba623e59eed41 ]
+[ Upstream commit 759a32900b6f3db3d0f34a3b61123742723b50b4 ]
 
-DSA replaces the conduit (master) device's ethtool_ops with its own
-wrappers that aggregate stats from both the conduit and DSA switch
-ports. Taking the lock again inside the DSA wrappers causes a deadlock.
+The command BD ring cousumer index register has the consumer index as
+the lower 10 bits, and the bit 31 is SBE, which indicates whether a
+system bus error occurred during execution of the CBD command. So if a
+system bus error occurs, reading the register will get the SBE bit set.
 
-Stumbled upon this when booting qemu with fbnic and CONFIG_NET_DSA_LOOP=y
-(which looks like some kind of testing device that auto-populates the ports
-of eth0). `ethtool -i` is enough to deadlock. This means we have basically zero
-coverage for DSA stuff with real ops locked devs.
+However, the current implementation directly uses the register value as
+the consumer index without masking it. Therefore, if a system bus error
+occurs, an incorrect consumer index will be obtained, causing errors in
+the processing of the command BD ring. Thus, we need to mask out the
+other bits to obtain the correct consumer index.
 
-Remove the redundant netdev_lock_ops()/netdev_unlock_ops() calls from
-the DSA conduit ethtool wrappers.
+In addition, this patch adds a check for the SBE bit after the polling
+loop and returns an error if the bit is set.
 
-Fixes: 2bcf4772e45a ("net: ethtool: try to protect all callback with netdev instance lock")
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260414231035.1917035-1-sdf@fomichev.me
+Fixes: 4701073c3deb ("net: enetc: add initial netc-lib driver to support NTMP")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260415060833.2303846-2-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/conduit.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/net/ethernet/freescale/enetc/ntmp.c         | 13 ++++++++++---
+ drivers/net/ethernet/freescale/enetc/ntmp_private.h |  2 ++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/net/dsa/conduit.c b/net/dsa/conduit.c
-index a1b044467bd6f..8398d72d7e4d3 100644
---- a/net/dsa/conduit.c
-+++ b/net/dsa/conduit.c
-@@ -27,9 +27,7 @@ static int dsa_conduit_get_regs_len(struct net_device *dev)
- 	int len;
+diff --git a/drivers/net/ethernet/freescale/enetc/ntmp.c b/drivers/net/ethernet/freescale/enetc/ntmp.c
+index 0c1d343253bfb..b188eb2d40c0d 100644
+--- a/drivers/net/ethernet/freescale/enetc/ntmp.c
++++ b/drivers/net/ethernet/freescale/enetc/ntmp.c
+@@ -55,7 +55,7 @@ int ntmp_init_cbdr(struct netc_cbdr *cbdr, struct device *dev,
+ 	spin_lock_init(&cbdr->ring_lock);
  
- 	if (ops && ops->get_regs_len) {
--		netdev_lock_ops(dev);
- 		len = ops->get_regs_len(dev);
--		netdev_unlock_ops(dev);
- 		if (len < 0)
- 			return len;
- 		ret += len;
-@@ -60,15 +58,11 @@ static void dsa_conduit_get_regs(struct net_device *dev,
- 	int len;
+ 	cbdr->next_to_use = netc_read(cbdr->regs.pir);
+-	cbdr->next_to_clean = netc_read(cbdr->regs.cir);
++	cbdr->next_to_clean = netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX;
  
- 	if (ops && ops->get_regs_len && ops->get_regs) {
--		netdev_lock_ops(dev);
- 		len = ops->get_regs_len(dev);
--		if (len < 0) {
--			netdev_unlock_ops(dev);
-+		if (len < 0)
- 			return;
--		}
- 		regs->len = len;
- 		ops->get_regs(dev, regs, data);
--		netdev_unlock_ops(dev);
- 		data += regs->len;
- 	}
+ 	/* Step 1: Configure the base address of the Control BD Ring */
+ 	netc_write(cbdr->regs.bar0, lower_32_bits(cbdr->dma_base_align));
+@@ -98,7 +98,7 @@ static void ntmp_clean_cbdr(struct netc_cbdr *cbdr)
+ 	int i;
  
-@@ -115,10 +109,8 @@ static void dsa_conduit_get_ethtool_stats(struct net_device *dev,
- 	int count, mcount = 0;
+ 	i = cbdr->next_to_clean;
+-	while (netc_read(cbdr->regs.cir) != i) {
++	while ((netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX) != i) {
+ 		cbd = ntmp_get_cbd(cbdr, i);
+ 		memset(cbd, 0, sizeof(*cbd));
+ 		i = (i + 1) % cbdr->bd_num;
+@@ -135,12 +135,19 @@ static int netc_xmit_ntmp_cmd(struct ntmp_user *user, union netc_cbd *cbd)
+ 	cbdr->next_to_use = i;
+ 	netc_write(cbdr->regs.pir, i);
  
- 	if (ops && ops->get_sset_count && ops->get_ethtool_stats) {
--		netdev_lock_ops(dev);
- 		mcount = ops->get_sset_count(dev, ETH_SS_STATS);
- 		ops->get_ethtool_stats(dev, stats, data);
--		netdev_unlock_ops(dev);
- 	}
+-	err = read_poll_timeout_atomic(netc_read, val, val == i,
++	err = read_poll_timeout_atomic(netc_read, val,
++				       (val & NETC_CBDRCIR_INDEX) == i,
+ 				       NETC_CBDR_DELAY_US, NETC_CBDR_TIMEOUT,
+ 				       true, cbdr->regs.cir);
+ 	if (unlikely(err))
+ 		goto cbdr_unlock;
  
- 	list_for_each_entry(dp, &dst->ports, list) {
-@@ -149,10 +141,8 @@ static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
- 		if (count >= 0)
- 			phy_ethtool_get_stats(dev->phydev, stats, data);
- 	} else if (ops && ops->get_sset_count && ops->get_ethtool_phy_stats) {
--		netdev_lock_ops(dev);
- 		count = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
- 		ops->get_ethtool_phy_stats(dev, stats, data);
--		netdev_unlock_ops(dev);
- 	}
++	if (unlikely(val & NETC_CBDRCIR_SBE)) {
++		dev_err(user->dev, "Command BD system bus error\n");
++		err = -EIO;
++		goto cbdr_unlock;
++	}
++
+ 	dma_rmb();
+ 	/* Get the writeback command BD, because the caller may need
+ 	 * to check some other fields of the response header.
+diff --git a/drivers/net/ethernet/freescale/enetc/ntmp_private.h b/drivers/net/ethernet/freescale/enetc/ntmp_private.h
+index 34394e40fddd4..3459cc45b6103 100644
+--- a/drivers/net/ethernet/freescale/enetc/ntmp_private.h
++++ b/drivers/net/ethernet/freescale/enetc/ntmp_private.h
+@@ -12,6 +12,8 @@
  
- 	if (count < 0)
-@@ -176,13 +166,11 @@ static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
- 	struct dsa_switch_tree *dst = cpu_dp->dst;
- 	int count = 0;
+ #define NTMP_EID_REQ_LEN	8
+ #define NETC_CBDR_BD_NUM	256
++#define NETC_CBDRCIR_INDEX	GENMASK(9, 0)
++#define NETC_CBDRCIR_SBE	BIT(31)
  
--	netdev_lock_ops(dev);
- 	if (sset == ETH_SS_PHY_STATS && dev->phydev &&
- 	    (!ops || !ops->get_ethtool_phy_stats))
- 		count = phy_ethtool_get_sset_count(dev->phydev);
- 	else if (ops && ops->get_sset_count)
- 		count = ops->get_sset_count(dev, sset);
--	netdev_unlock_ops(dev);
- 
- 	if (count < 0)
- 		count = 0;
-@@ -239,7 +227,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
- 	struct dsa_switch_tree *dst = cpu_dp->dst;
- 	int count, mcount = 0;
- 
--	netdev_lock_ops(dev);
- 	if (stringset == ETH_SS_PHY_STATS && dev->phydev &&
- 	    !ops->get_ethtool_phy_stats) {
- 		mcount = phy_ethtool_get_sset_count(dev->phydev);
-@@ -253,7 +240,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
- 			mcount = 0;
- 		ops->get_strings(dev, stringset, data);
- 	}
--	netdev_unlock_ops(dev);
- 
- 	list_for_each_entry(dp, &dst->ports, list) {
- 		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
+ union netc_cbd {
+ 	struct {
 -- 
 2.53.0
 
