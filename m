@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417B03F660B;
-	Wed, 20 May 2026 18:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DE93F8EA7;
+	Wed, 20 May 2026 18:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300410; cv=none; b=XApbpIxI7g6PY93v5+j8D/wNKV7n47sp0BS7yn1rUiQCgSPPQBruPewKndJivObwjOFKGeLfSSYvlo6uxZsaziDnTaofUvu9CIV2XwRhqgzBK0pZJKtxbJ2v/SviZvSKneCZnBM2h5ddA0WYnz9SXQFCNDend1QayBSHvg4wasM=
+	t=1779300413; cv=none; b=jMc6t6vuiwBKxL8AGi87AQ7TMgJduuL9BpRGPLVUwJSSi0Y8SfVKq+wwZ6wv5FRsrsXDA/aNE4M31QxXqVpmal3e0ns6WJk0gD1zXYpufy0CnlZ9ZNpX5fBsJjqOdjNrTpYcI7blgV3T8rD+Ou1DyIliQJLAiynO9790RXiaJXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300410; c=relaxed/simple;
-	bh=AgQByXSC8o57M+SQFY1iPZuoFY7i3mgqwdpMNOQvK9I=;
+	s=arc-20240116; t=1779300413; c=relaxed/simple;
+	bh=fKtPJz07KtzelOIUqr5xcNFK1aDAcHCM2p4ao0985gA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OVVw4c6Rwbb4oRKjammGdfVNwT+P3dLj0U5IChSDxzTfUgQqApjasKM+UpErZa2oEcBpi4K9fKwokkuDtrZtfb8B+Ap5/DMo8HjIYtXaFlNiX645SByuUY1RqhDZy98pVIAO7JMwFpCkgyWeC7lx/rKDd/gAgIEE3PcGfOZR4R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNA3LUIw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJsIGHoUnHON8rHyPHgBIsHJs9EtnQ9rlzISVdD9qOcor6dG9FPEUj1vbzaDCYIc2Wov8EYmaI86FHaJg8LCYSNPQHT825veK3LU0KhJ565JBPtKBqZfpykOg570ie5bonxYuzoefrXp92ScvMvI+khvMFXrhoQlklb6c61ywHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwMLxHmd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNA3LUIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CCA1F000E9;
-	Wed, 20 May 2026 18:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwMLxHmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518891F000E9;
+	Wed, 20 May 2026 18:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300409;
-	bh=j+SchdRXBJ5Xf7hynU0As2D9a6AX0G4p+GYV3bEoxZE=;
+	s=korg; t=1779300411;
+	bh=XbQ8LaB+dN779BQnE5ZNr0iQTls3BgRrQlg13jCz4D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNA3LUIwfEvMdCFt4QpJEYmZbK/U+QShERHl8HKmkCVwyS/2Z4iV3M08B67pCdhUd
-	 sKIOkfMYShGYn5gtnbtW6S9ChiSQ0+hIHv0AzN7h/eo+aVJ1tbAyxnwusMluo3so2P
-	 kH194HiSfQi0sX1yS1RjWeKHhZnJfw/aGHncBJ1s=
+	b=BwMLxHmdLpUDWOdSaxOjaS6MWg9SRy+vRhj79C+1GW4JFdVw73cvI2u/8XyDGrQwe
+	 Px423R/xf5qwX+HKASX4NCv6VQILzfXI3U0TBG6/dKBYpL4RKziq0dBcaDByfhwad1
+	 51xvxnsU4341+9TXqHy39TTWaC4Ol6qebAOYFzco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sander Vanheule <sander@svanheule.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/666] drm/amdgpu/gfx10: look at the right prop for gfx queue priority
-Date: Wed, 20 May 2026 18:16:13 +0200
-Message-ID: <20260520162114.718873673@linuxfoundation.org>
+Subject: [PATCH 6.12 124/666] ASoC: sti: use managed regmap_field allocations
+Date: Wed, 20 May 2026 18:15:35 +0200
+Message-ID: <20260520162113.904455250@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -44,42 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Sander Vanheule <sander@svanheule.net>
 
-[ Upstream commit 355d96cdec5c61fd83f7eb54f1a28e38809645d6 ]
+[ Upstream commit 1696fad8b259a2d46e51cd6e17e4bcdbe02279fa ]
 
-Look at hqd_queue_priority rather than hqd_pipe_priority.
-In practice, it didn't matter as both were always set for
-kernel queues, but that will change in the future.
+The regmap_field objects allocated at player init are never freed and
+may leak resources if the driver is removed.
 
-Fixes: b07d1d73b09e ("drm/amd/amdgpu: Enable high priority gfx queue")
-Reviewed-by：Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Switch to devm_regmap_field_alloc() to automatically limit the lifetime
+of the allocations the lifetime of the device.
+
+Fixes: 76c2145ded6b ("ASoC: sti: Add CPU DAI driver for playback")
+Signed-off-by: Sander Vanheule <sander@svanheule.net>
+Link: https://patch.msgid.link/20260220152634.480766-3-sander@svanheule.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sti/uniperif_player.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 7babb74caf6fc..7d5609e3dd412 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -6601,7 +6601,7 @@ static void gfx_v10_0_gfx_mqd_set_priority(struct amdgpu_device *adev,
- 	/* set up default queue priority level
- 	 * 0x0 = low priority, 0x1 = high priority
- 	 */
--	if (prop->hqd_pipe_priority == AMDGPU_GFX_PIPE_PRIO_HIGH)
-+	if (prop->hqd_queue_priority == AMDGPU_GFX_QUEUE_PRIORITY_MAXIMUM)
- 		priority = 1;
+diff --git a/sound/soc/sti/uniperif_player.c b/sound/soc/sti/uniperif_player.c
+index f1b7e76f97b58..45d35b887e4eb 100644
+--- a/sound/soc/sti/uniperif_player.c
++++ b/sound/soc/sti/uniperif_player.c
+@@ -1028,11 +1028,11 @@ static int uni_player_parse_dt_audio_glue(struct platform_device *pdev,
+ 		return PTR_ERR(regmap);
+ 	}
  
- 	tmp = RREG32_SOC15(GC, 0, mmCP_GFX_HQD_QUEUE_PRIORITY);
+-	player->clk_sel = regmap_field_alloc(regmap, regfield[0]);
++	player->clk_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[0]);
+ 	if (IS_ERR(player->clk_sel))
+ 		return PTR_ERR(player->clk_sel);
+ 
+-	player->valid_sel = regmap_field_alloc(regmap, regfield[1]);
++	player->valid_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[1]);
+ 	if (IS_ERR(player->valid_sel))
+ 		return PTR_ERR(player->valid_sel);
+ 
 -- 
 2.53.0
 
