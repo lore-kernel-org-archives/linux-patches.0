@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85CD409116;
-	Wed, 20 May 2026 18:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E85E3FD133;
+	Wed, 20 May 2026 18:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302660; cv=none; b=KnFLwEvdMcC+eLyJumbZ1Va4zWXWRSCtI/+TZAWG1HZ1N12T7lSI/rUeAK8Vr7xtrOHxJotRYbx/Cr7Qnnl9DHFGcLxWwDCyLETlngAT4dQsxi18uIGBKWl1DANhMWkzeY4KodfWS/qb4XBa/gYtx5c0FFvdvNXvHGWUxPwhN5w=
+	t=1779302663; cv=none; b=pLfGRX2jt3rZbjdjl8iugA8/hggCj/6Ynad64HQ/2hV3mqMWteETG2bRF8/Zpy3TjqV/WNPrt2vbV/I/FeyOawV8F/7hDUN1CWAfNnQqF3Xv4CHLSDXDuyKqGbO9w5zz58KdkbKIouVENW+7Nm+kuXqZ1UJ70VF+4fC3n0u3VEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302660; c=relaxed/simple;
-	bh=WlRT7YoI8bfdOkPL+L3LGtr2cJ3a7059tN7TpKGFiks=;
+	s=arc-20240116; t=1779302663; c=relaxed/simple;
+	bh=JhEJd7EkPEMdY8slBurffaT74xvBh9tqMMb3kyC+8PI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2NYal1fQtYKliVDgnEL0cNATMXxv+rknEKDum23yGofobR+XpEvufyBsM79YMkMje9ioTi5XMWvjWkB34wJBGnzMvUBVHDqpO+2DcW9xdyce9NcUL9FKT6QawV5EdJq2v4E61gLBlmm7Iz4EJO26/9UlhmoE4I20OH3nQiSpqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADpxIiK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rrPSiFt8ijYz9eFtpkaXhT7rVJmQDKT0qDQ4fugoVTq19Whv2vf5b35KY5xjt1EM/9XIo1710Ncg5jkCN3uEXSSV83bd4W4npwa0XE3qo+nK9gTPEdWUcpgfMv8Z6qALqd9a5NMF0xLcvqM3wTxJxW6ltFL6phQBmi8FxKdcZhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6ULKfmC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADpxIiK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61E41F000E9;
-	Wed, 20 May 2026 18:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6ULKfmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFD61F000E9;
+	Wed, 20 May 2026 18:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302659;
-	bh=t03AgFH47eWJ6Fc026Ey3mNR5DGzNrLd2xQrjeP2aEM=;
+	s=korg; t=1779302661;
+	bh=aat2M74zt6fE+7I4lfBiSgv5qpBxTfmCdRCtuztoaW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADpxIiK0vC3pAv0kOuTl95yoSGOSv+UDj8Hj4V4K2iFeGYbDyFt1gNZ56LXW38ped
-	 Gk4tB2eYccoqoAjLcoruUHsLh2N1sUEPH+iMtFKmgXz6uu22dbzoIxyRH0y0gTzNZ3
-	 9mxwxyufcTIgOjyHScS2GRjlFFDvG+BEJwbZ3vD4=
+	b=O6ULKfmCZkQcssLZSK/S8naNDcS1MFgsdM3ZgsLpDC1Nu1FNoKfnItS9eVovw6eSU
+	 r0v6V2EDj+MU2/lPyruKSsB5vJbb5SB9ltv5fTCQJOb4zObt4HrpguKm/B0Bs3ZROj
+	 IaS51vltL0WIyvbqeYczBFmvSMFgdv87l/FRQd2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Lee Jones <lee@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 344/508] ksmbd: scope conn->binding slowpath to bound sessions only
-Date: Wed, 20 May 2026 18:22:47 +0200
-Message-ID: <20260520162106.087136445@linuxfoundation.org>
+Subject: [PATCH 6.6 353/508] tipc: fix double-free in tipc_buf_append()
+Date: Wed, 20 May 2026 18:22:56 +0200
+Message-ID: <20260520162106.283901990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,57 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit b0da97c034b6107d14e537e212d4ce8b22109a58 ]
+[ Upstream commit d293ca716e7d5dffdaecaf6b9b2f857a33dc3d3a ]
 
-When the binding SESSION_SETUP sets conn->binding = true, the flag stays
-set after the call so that the global session lookup in
-ksmbd_session_lookup_all() can find the session, which was not added to
-conn->sessions. Because the flag is connection-wide, the global lookup
-path will also resolve any other session by id if asked.
+tipc_msg_validate() can potentially reallocate the skb it is validating,
+freeing the old one.  In tipc_buf_append(), it was being called with a
+pointer to a local variable which was a copy of the caller's skb
+pointer.
 
-Tighten the global lookup so that the returned session must have this
-connection registered in its channel xarray (sess->ksmbd_chann_list).
-The channel entry is installed by the existing binding_session path in
-ntlm_authenticate()/krb5_authenticate() when a SESSION_SETUP completes
-successfully, so this condition is a strict equivalent of "this
-connection has been accepted as a channel of this session". Connections
-that have not bound to a given session cannot reach it via the global
-table.
+If the skb was reallocated and validation subsequently failed, the error
+handling path would free the original skb pointer, which had already
+been freed, leading to double-free.
 
-The existing conn->binding gate for entering the slowpath is preserved
-so that non-binding connections keep the fast-path-only behavior, and
-the session->state check is unchanged.
+Fix this by checking if head now points to a newly allocated reassembled
+skb.  If it does, reassign *headbuf for later freeing operations.
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: d618d09a68e4 ("tipc: enforce valid ratio between skb truesize and contents")
+Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/tipc/msg.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index d0a13a5cccece..6c7fbd589087e 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -323,8 +323,13 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
- 	struct ksmbd_session *sess;
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 76284fc538ebd..b0bba0feef564 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -177,8 +177,20 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
  
- 	sess = ksmbd_session_lookup(conn, id);
--	if (!sess && conn->binding)
-+	if (!sess && conn->binding) {
- 		sess = ksmbd_session_lookup_slowpath(id);
-+		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
-+			ksmbd_user_session_put(sess);
-+			sess = NULL;
+ 	if (fragid == LAST_FRAGMENT) {
+ 		TIPC_SKB_CB(head)->validated = 0;
+-		if (unlikely(!tipc_msg_validate(&head)))
++
++		/* If the reassembled skb has been freed in
++		 * tipc_msg_validate() because of an invalid truesize,
++		 * then head will point to a newly allocated reassembled
++		 * skb, while *headbuf points to freed reassembled skb.
++		 * In such cases, correct *headbuf for freeing the newly
++		 * allocated reassembled skb later.
++		 */
++		if (unlikely(!tipc_msg_validate(&head))) {
++			if (head != *headbuf)
++				*headbuf = head;
+ 			goto err;
 +		}
-+	}
- 	if (sess && sess->state != SMB2_SESSION_VALID) {
- 		ksmbd_user_session_put(sess);
- 		sess = NULL;
++
+ 		*buf = head;
+ 		TIPC_SKB_CB(head)->tail = NULL;
+ 		*headbuf = NULL;
 -- 
 2.53.0
 
