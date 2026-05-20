@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16EE366075;
-	Wed, 20 May 2026 16:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F243ED5C5;
+	Wed, 20 May 2026 16:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296058; cv=none; b=eXgYNCzdYJdlCEYWnm/3jh8SIQrSm/Jsf1rhzXFQVS6YIroL2fuoNtmqAKdLcwEobEJfNfniHMAtqe02whvh37i3W7gcZZlJWqpLkctcNoWx8i/WQrewbpySGYFZYZ3PnBY4shHrl3mmPqDqsLkfx+uta3qlxDlQz7XJLE7KFuI=
+	t=1779296061; cv=none; b=LhMiPsxwziz3DHn6U1Yt+wfJUXkpqW7DyhC2ihyBLgfdWmxlR92Qx8FtBU0e+XN5AxWtTXxiOwJKLGI3XdyFzIwmJJnHZOwbIg2cl7FoCHHQmnDoSEFdIyeEqxD8kckR3qS79EKAc1nYNH9i7QIbRZVtfj/pHXLdBaMmHLeCu3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296058; c=relaxed/simple;
-	bh=xqH8izd76JXPjjhxJccKoBWrjna2FG4E5WFpU/nB/AU=;
+	s=arc-20240116; t=1779296061; c=relaxed/simple;
+	bh=6oF9BCNS6lW0ceBGANrnwOSMxSLczm+PVWlCK01SztA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p12G9IsKWb2nRoUXYWOZ2YbFvGYRuim5ZuUINVDUSQGPddpSqTF9SgNclKVJU+6OzWjghP+sznhezswzufodSUVbCdxWznleQhI22ZTmKqZT0MMxC1lCUQWMZ0LaVnmhW3DBkGgMcpw8NjmTLwezlgwfN1JHEnMi6hmCnBEbooA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggiQu2kj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZR+9/x5o4yIelrhlTvRP2IwHUHj7auJJN76HbxhPwAz+KndKKnwZgh7CFR4cEXqZI0Ck7wtNAlkll20hoJewNYRtDNHTmQWj8y9CIDjUVxDmfJcuzSQwKWFk6/UZib3r/TGqBoNYOtQdMIqaES/ayEUYYxXogv9K+n+gieJhRck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vyr2FSFE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggiQu2kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E541F000E9;
-	Wed, 20 May 2026 16:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vyr2FSFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B401F000E9;
+	Wed, 20 May 2026 16:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296057;
-	bh=8zg/He0MWDmtcWjhG7go8idu+1Bzp9pP3Mx2pHBTQzI=;
+	s=korg; t=1779296060;
+	bh=HGZF6AR+yP/5txBVNRk1CGpY8lVH34eFB5iKFCDcILo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ggiQu2kjOzC2/6XXe22kwdNgDgCo7oyNJ7Dbu/xMSeQeNsLTHgh9hMwXs+aG1E2B9
-	 k3mKkGb+tVLAQsdPd4bZS9ZdZ8F0tETse9KaAqrrKuvXU/IQ+FDsfGvS8zOHpfbZCB
-	 V9oohO6dMQDzvDdreWuKyUjN/u5bAjC/sFeAlE/w=
+	b=Vyr2FSFEvI5klK5Ii9bYo77yar6oXVSeiv9Zun4cinnUndMYTRwxaeh0Gb6t4My2A
+	 5Jv56RqBrgwdX8Xd6ptpkrb+kWP8MEPRUAK0uoieeOsfp7K6ZyUFO/pSt97p2bYblz
+	 EjZqCxqAd4nHaJhHTrme7TO6Z2IR20q1fuoOGK3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
 	Felix Gu <ustc.gu@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0656/1146] i3c: master: dw-i3c: Fix missing reset assertion in remove() callback
-Date: Wed, 20 May 2026 18:15:06 +0200
-Message-ID: <20260520162203.028033149@linuxfoundation.org>
+Subject: [PATCH 7.0 0657/1146] i3c: master: dw-i3c: Balance PM runtime usage count on probe failure
+Date: Wed, 20 May 2026 18:15:07 +0200
+Message-ID: <20260520162203.050929275@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,65 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit bef1eef667186cedb0bc6d152464acb3c97d5f72 ]
+[ Upstream commit 19d6dd322c3f05550606dbfcbafb5f6989975c02 ]
 
-The reset line acquired during probe is currently left deasserted when
-the driver is unbound.
+When DW_I3C_DISABLE_RUNTIME_PM_QUIRK is set, the probe function calls
+pm_runtime_get_noresume() to prevent runtime suspend. However, if
+i3c_master_register() fails, the error path does not balance this
+call, leaving the usage count incremented.
 
-Switch to devm_reset_control_get_optional_exclusive_deasserted() to
-ensure the reset is automatically re-asserted by the devres core when
-the driver is removed.
+Add pm_runtime_put_noidle() in the error cleanup path to properly
+balance the usage count.
 
-Fixes: 62fe9d06f570 ("i3c: dw: Add power management support")
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Fixes: fba0e56ee752 ("i3c: dw: Disable runtime PM on Agilex5 to avoid bus hang on IBI")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260320-dw-i3c-v3-1-477040c2e3f5@gmail.com
+Link: https://patch.msgid.link/20260321-dw-i3c-1-v1-1-821623aac7bb@gmail.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/i3c/master/dw-i3c-master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index d6bdb32397fb9..3379cb16eeca5 100644
+index 3379cb16eeca5..b87073d2f8afa 100644
 --- a/drivers/i3c/master/dw-i3c-master.c
 +++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1606,13 +1606,11 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
- 	if (IS_ERR(master->pclk))
- 		return PTR_ERR(master->pclk);
+@@ -1667,6 +1667,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	return 0;
  
--	master->core_rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
--								    "core_rst");
-+	master->core_rst = devm_reset_control_get_optional_exclusive_deasserted(&pdev->dev,
-+										"core_rst");
- 	if (IS_ERR(master->core_rst))
- 		return PTR_ERR(master->core_rst);
- 
--	reset_control_deassert(master->core_rst);
--
- 	spin_lock_init(&master->xferqueue.lock);
- 	INIT_LIST_HEAD(&master->xferqueue.list);
- 
-@@ -1624,7 +1622,7 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
- 			       dw_i3c_master_irq_handler, 0,
- 			       dev_name(&pdev->dev), master);
- 	if (ret)
--		goto err_assert_rst;
-+		return ret;
- 
- 	platform_set_drvdata(pdev, master);
- 
-@@ -1673,9 +1671,6 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ err_disable_pm:
++	if (master->quirks & DW_I3C_DISABLE_RUNTIME_PM_QUIRK)
++		pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
  	pm_runtime_set_suspended(&pdev->dev);
  	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 
--err_assert_rst:
--	reset_control_assert(master->core_rst);
--
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
 -- 
 2.53.0
 
