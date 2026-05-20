@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAA02BE02A;
-	Wed, 20 May 2026 16:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C5136C9D2;
+	Wed, 20 May 2026 16:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295004; cv=none; b=kPBcUT7qU69/TUMRH46vlqHUppKR3gQMBhj9fWgc8OtOE5xBgRFVbpuEm8udoeonmo+aWxIHC2dzNkeK176ln59h+C6ALPVhligr1ugsGBPw1LZoCE4jtC3WCnEZEglFewgZzU9rU1TmDgEWdVkdfwZodUVdMesZp2EdO/V1Y0s=
+	t=1779295008; cv=none; b=LOR1Y7CmezXIKEp7l1yCmleqtCIRD/ur0dPj2fS+rMBMMDIWpwjKzXr8gRg+yBQKgth+vu0Yn71D+Uk//i0e5uKdTEXvWTQQ7bo9OAOICVwWf7LcwfKzTCI06HkA2XaA0Q103zUoRGQg7MQg/VC+zYNESFqu8DcU5NF0/0V3VDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295004; c=relaxed/simple;
-	bh=33Ue2V5mzN1HE11nIZ98i1Ax9aEfJDB2970OHyZ38Qs=;
+	s=arc-20240116; t=1779295008; c=relaxed/simple;
+	bh=7dUSnBPKrFIFv0Zb631XinKuyfahkCAM0d0hBwDhF4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZx5ZIYgumYjs7Dwt/36K2u6/rOI1G3Hi6b+Gks1QqVQEohKoWBcKXQCdM3lid0CU2RmTVufdrrzzzWbLTAvi4rU0/d4lphbLYDpZ9OJUJK8vgkl74z49ZqhLutXDB2brBhj3++cpQ8jFvi30liU99CEaKXlfN+QTO56EduofJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6bWeJe8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pTV66cQjlJDEQYAGtZ6IF/sKEYkINIA2dQ1u4btMKsr3SItDhpA4idi+ic72X30N7zXjoOu1Q3cTBY7gV39rpyz+7nIBbrpP/9SPgw2eyFpUlMGiLJbiZZg+27ysly4Rtt0uUHrXkWvI1ZNwGlBH88gk+VV4abbqnE7vTI3j8Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/hHreGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6bWeJe8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBBD1F000E9;
-	Wed, 20 May 2026 16:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/hHreGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A691F000E9;
+	Wed, 20 May 2026 16:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295003;
-	bh=n+NRfc11Esc1bXe4htvh1rQuTpf/FRlcD5p1HbdzX3k=;
+	s=korg; t=1779295005;
+	bh=DTqWZDRQ9WxC1R0WfRLOEJH9NE53Aj//ts3AmlzeYBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6bWeJe8Ej7w+xFZgBCeROzQcD0pt705EGTajlFS3q31KIS/Yz/KugDzE5j/U5s7D
-	 kYIMvAMh39EHgBMLjr4CEwu+jhh0V+Zre5qSPnYgDiaz8FA/L8JmCOQ/IZd6MXCVR6
-	 tzYw3Q6poE7hxvif6sAIe2tcCkY7OeqSAnkJWoCw=
+	b=m/hHreGi/8pyrijM8TWLM1epKEZ9e5iQ8SQeDGv1Vccg6D7fESGCiX/87zOSsBJ9b
+	 wPWzartajbUcfZtvYz00VD5iH/vkFjpC/jEPRIiz1GBh8nqPNX1VdVN+z2O/Xx1J4g
+	 h+2J3CSGt+Pt/+Fi9/FUgK4h74T07FeGsriFsigA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0252/1146] dm cache: fix write hang in passthrough mode
-Date: Wed, 20 May 2026 18:08:22 +0200
-Message-ID: <20260520162153.937683558@linuxfoundation.org>
+Subject: [PATCH 7.0 0214/1146] Bluetooth: l2cap: Add missing chan lock in l2cap_ecred_reconf_rsp
+Date: Wed, 20 May 2026 18:07:44 +0200
+Message-ID: <20260520162153.104755726@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,86 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 4ca8b8bd952df7c3ccdc68af9bd3419d0839a04b ]
+[ Upstream commit 42776497cdbc9a665b384a6dcb85f0d4bd927eab ]
 
-The invalidate_remove() function has incomplete logic for handling write
-hit bios after cache invalidation. It sets up the remapping for the
-overwrite_bio but then drops it immediately without submission, causing
-write operations to hang.
+l2cap_ecred_reconf_rsp() calls l2cap_chan_del() without holding
+l2cap_chan_lock(). Every other l2cap_chan_del() caller in the file
+acquires the lock first. A remote BLE device can send a crafted
+L2CAP ECRED reconfiguration response to corrupt the channel list
+while another thread is iterating it.
 
-Fix by adding a new invalidate_committed() continuation that submits
-the remapped writes to the cache origin after metadata commit completes,
-while using the overwrite_endio hook to ensure proper completion
-sequencing. This maintains existing coherency. Also improve error
-handling in invalidate_complete() to preserve the original error status
-instead of using bio_io_error() unconditionally.
+Add l2cap_chan_hold() and l2cap_chan_lock() before l2cap_chan_del(),
+and l2cap_chan_unlock() and l2cap_chan_put() after, matching the
+pattern used in l2cap_ecred_conn_rsp() and l2cap_conn_del().
 
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index b608e88acd511..d3ef88b859ab3 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1467,8 +1467,14 @@ static void invalidate_complete(struct dm_cache_migration *mg, bool success)
- 			free_prison_cell(cache, mg->cell);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 1c82612679e60..0d8053a3fc0a6 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5473,7 +5473,13 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+ 		if (chan->ident != cmd->ident)
+ 			continue;
+ 
++		l2cap_chan_hold(chan);
++		l2cap_chan_lock(chan);
++
+ 		l2cap_chan_del(chan, ECONNRESET);
++
++		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
  	}
  
--	if (!success && mg->overwrite_bio)
--		bio_io_error(mg->overwrite_bio);
-+	if (mg->overwrite_bio) {
-+		// Set generic error if the bio hasn't been issued yet,
-+		// e.g., invalidation or metadata commit failed before bio
-+		// submission. Otherwise preserve the bio's own error status.
-+		if (!success && !mg->overwrite_bio->bi_status)
-+			mg->overwrite_bio->bi_status = BLK_STS_IOERR;
-+		bio_endio(mg->overwrite_bio);
-+	}
- 
- 	free_migration(mg);
- 	defer_bios(cache, &bios);
-@@ -1508,6 +1514,22 @@ static int invalidate_cblock(struct cache *cache, dm_cblock_t cblock)
- 	return r;
- }
- 
-+static void invalidate_committed(struct work_struct *ws)
-+{
-+	struct dm_cache_migration *mg = ws_to_mg(ws);
-+	struct cache *cache = mg->cache;
-+	struct bio *bio = mg->overwrite_bio;
-+	struct per_bio_data *pb = get_per_bio_data(bio);
-+
-+	if (mg->k.input)
-+		invalidate_complete(mg, false);
-+
-+	init_continuation(&mg->k, invalidate_completed);
-+	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
-+	dm_hook_bio(&pb->hook_info, bio, overwrite_endio, mg);
-+	dm_submit_bio_remap(bio, NULL);
-+}
-+
- static void invalidate_remove(struct work_struct *ws)
- {
- 	int r;
-@@ -1520,10 +1542,8 @@ static void invalidate_remove(struct work_struct *ws)
- 		return;
- 	}
- 
--	init_continuation(&mg->k, invalidate_completed);
-+	init_continuation(&mg->k, invalidate_committed);
- 	continue_after_commit(&cache->committer, &mg->k);
--	remap_to_origin_clear_discard(cache, mg->overwrite_bio, mg->invalidate_oblock);
--	mg->overwrite_bio = NULL;
- 	schedule_commit(&cache->committer);
- }
- 
+ 	return 0;
 -- 
 2.53.0
 
