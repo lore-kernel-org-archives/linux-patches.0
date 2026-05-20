@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B7A3DB30C;
-	Wed, 20 May 2026 11:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB0C3DB63D;
+	Wed, 20 May 2026 11:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276003; cv=none; b=WH+OL1TeQStfBHxhkbEgswXXPnPnj1Za2OnFAdhnRRjw7NmXyvbcPG5EtSLkKIfZ6m5XIYdjuFMs8yuOOUwIlsg9zNLkqxH6BYTttRqqAE1hiwd0wHQwmM3VRE6Wh6FBbGbqwFU0AwmMXcgPn4AUHjjCxhIod1MsdsoQp7rPnd0=
+	t=1779276005; cv=none; b=oSjyJSXYoDj5PpdS7J2kM5D12PNNM5DHjmNSHIa3sdYeq6nVRlVSFQU17UlYSORMLwRt0o6IX5SGjFHp3EElkQdaEINQ4bRLH3Wk0yLWNI720uYJ3xxzVJ4S3CtVXowgbSs7kUrtKRhhb64RQFBT0xxMayB50VzS1GTwtdv1nnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276003; c=relaxed/simple;
-	bh=FGukKdgFPhHzSAS8RwJibFc+fvdUkJPLV+tnRWEFNCA=;
+	s=arc-20240116; t=1779276005; c=relaxed/simple;
+	bh=shPqrFD2Rl2M8pTyuPm+Sbf6QmwCQHDLfL0hKgrOAmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ga7i3st0j97WPCHvcKSzdUKSIRZcLEHDfZ/AJOs0FJH0WtVGKRraeg5/nEMPnNPkjB8ruJlsPwmckzzsrvG3+Z1IkteeT1v2Wo77oNrKaH8Od+PdaGEhsgxFDa3FRrSMgXo4Trlytkd+/IPjd296BcQja7/msXsTypJ+8KjB9RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ctVQp/BI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qYvMZe4nP8wdKG8sDwxtTCMivNWigdvI4UNpb1QBbeJtBZBw9cDnr/hlZ6RzWa69LZ4ST2rVxsIu4Nf2bwplxmSsy03eQK6ymNlcuboTRDMWSoMB/7RgGK665ZISPbJNjIlQ1qxqR9rxG3FsCAXGHrn61odd2IfejA8jHajApkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=STbGcf+8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ctVQp/BI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C931F00893;
-	Wed, 20 May 2026 11:19:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="STbGcf+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B89E1F00894;
+	Wed, 20 May 2026 11:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276000;
-	bh=XdeT9YGV4NlOVm6Fnc29e0/uchwsmKB8HLwH6visN2s=;
+	s=k20260515; t=1779276002;
+	bh=COtCp1RJxojVDhpO6z2k+0d61AGdyhLRc3KUZcoQBA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctVQp/BIyIWup29+OInxO+nTzrin8GXNFAg6PONhuLHJnIPWfL3/JFzPDb647jNmt
-	 ifDE+h7tAEibIcZ7ihhHvVLdrm5uHcuLJTOSwcj5d95ZxEaMl0om9x2JYgEoptSKFO
-	 ye8qiWtnTJ+KTFdm/JpillBiif/5IQK9Cm/4A0Fsn4a2nMlnVePZ8rgNvVSb4cX+y4
-	 yCittWGez49ujR+xyhUrLMzHFrUqI+4dAy7ywKXXlS3O8XZWAJp97RkAPzHbeYyRrD
-	 5Peh2cD3uDEd23HeQHMZoU9bZMIX6bydZCfSFp9XKvJhMdVuKy0/ftmZrlaP3LaxKv
-	 M5bisLPzXswpg==
+	b=STbGcf+85YfPN8y5yggFHl4Qc4IaHZaq6RgpbwCfHQFI0SbX8mG8mT2SdMhJGu2YV
+	 woyywu63Nj4+Z54dV6laIChTOOu86tPC6OL9suovJawz4VKxhO/5HZADBlX+3A3f7R
+	 t98a69bXtwNacZFL67g0fUILslJBMrx68cyyXRDuMDneViWRh+kFdKvqGu7kycgj7A
+	 NcC5H31tP9sZu+/jR1nOa2fKaqyXpLYyJABKTdkjgQgT0AFKlZVWBbMz0od8fctP59
+	 UxbdH9gDMd/ryJRsfUveZdoyGctTQ72Chd2yyai5ONA2JcnkWOhVhZk8TdkCHNB164
+	 GXuYX9vZbK3qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
+Cc: Daniel Schaefer <dhs@frame.work>,
+	"Dustin L. Howett" <dustin@howett.net>,
+	linux@frame.work,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	amarkuze@redhat.com,
-	slava@dubeyko.com,
-	ceph-devel@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] libceph: Fix unnecessarily high ceph_decode_need() for uniform bucket
-Date: Wed, 20 May 2026 07:18:43 -0400
-Message-ID: <20260520111944.3424570-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ALSA: hda/realtek: fix mic boost on Framework PTL
+Date: Wed, 20 May 2026 07:18:44 -0400
+Message-ID: <20260520111944.3424570-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,231 +56,306 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 596f91294b351866956808b1ecb8dfae15382a6d ]
+[ Upstream commit 67c73815220784074ff13ec07df955911caf1b73 ]
 
-In crush_decode_uniform_bucket(), the item_weight field of the bucket
-is set. This is a single field of type u32 since the uniform bucket uses
-the same weight for all items. The value in ceph_decode_need() is set to
-(1+b->h.size) * sizeof(u32), which is higher than actually needed.
+In addition to the mic jack fix, also need to avoid boosting the
+internal mic too much, otherwise >50% input volume clips a lot.
 
-This patch removes the call to ceph_decode_need() with the unnecessarily
-high value and switches the subsequent operation from ceph_decode_32()
-to ceph_decode_32_safe(), which already includes the correct bounds
-check.
+Also add a second SSID. We have one for the classic chassis/speaker and
+one for the new Pro chassis/speaker.
 
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+To: Jaroslav Kysela <perex@perex.cz>
+To: Takashi Iwai <tiwai@suse.com>
+To: linux-sound@vger.kernel.org
+Cc: Dustin L. Howett <dustin@howett.net>
+Cc: linux@frame.work
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Link: https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `libceph`/`net/ceph`; action verb `Fix`; intent:
-correct an overlarge bounds check in `crush_decode_uniform_bucket()`.
+Step 1.1 Record: Subsystem is `ALSA: hda/realtek`. Action verb is `fix`.
+Claimed intent is to fix excessive internal microphone boost on
+Framework PTL systems and add a second Framework PTL SSID.
 
-Record 1.2: Tags: `Signed-off-by: Raphael Zimmer`, `Reviewed-by: Ilya
-Dryomov`, `Signed-off-by: Ilya Dryomov`. No `Fixes:`, `Reported-by:`,
-`Tested-by:`, `Link:`, or `Cc: stable` tag in this commit.
+Step 1.2 Record: Tags present:
+- `To`: Jaroslav Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`
+- `Cc`: Dustin L. Howett, `linux@frame.work`
+- `Signed-off-by`: Daniel Schaefer
+- `Link`:
+  `https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work`
+- `Signed-off-by`: Takashi Iwai
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by`,
+  or `Cc: stable@vger.kernel.org` tag was present.
 
-Record 1.3: The body says uniform buckets have one `u32 item_weight`,
-but the old check required `(1 + b->h.size) * sizeof(u32)`. Symptom
-implied by code is false `-EINVAL` during CRUSH map decode when only the
-real uniform payload is present. No version info or reporter in the
-message.
+Step 1.3 Record: The commit describes a real user-visible audio defect:
+the internal microphone clips heavily when input volume is above 50%. It
+also states there are two SSIDs for the Framework PTL generation, one
+classic chassis/speaker and one Pro chassis/speaker. No crash, stack
+trace, or kernel-version range is described.
 
-Record 1.4: Hidden bug fix: yes. It is not cleanup only; it changes a
-bounds check from a size-dependent false requirement to the actual
-single-field requirement.
+Step 1.4 Record: This is not a hidden memory-safety bug. It is an
+explicit hardware quirk/audio correctness fix: it corrects the quirk
+selected for one Framework PTL SSID and adds another SSID.
 
 ## Phase 2: Diff Analysis
-Record 2.1: One file, `net/ceph/osdmap.c`, 1 insertion and 2 deletions.
-Modified function: `crush_decode_uniform_bucket()`. Scope: single-
-function surgical fix.
+Step 2.1 Record: One file changed: `sound/hda/codecs/realtek/alc269.c`,
+9 insertions and 1 deletion. Modified areas are the Realtek fixup enum,
+`alc269_fixups[]`, and `alc269_fixup_tbl[]`. Scope is a single-file,
+surgical driver quirk change.
 
-Record 2.2: Before: checked for `1 + b->h.size` `u32`s, then consumed
-one `u32`. After: `ceph_decode_32_safe()` checks and consumes exactly
-one `u32`. This affects CRUSH uniform-bucket decode.
+Step 2.2 Record:
+- Enum hunk: before, only
+  `ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE` existed; after, a
+  Framework-specific chained mic-boost limiter fixup ID is added.
+- Fixup table hunk: before, Framework systems only got the mic-
+  presence/headset-mode chain; after, the new Framework PTL fixup first
+  invokes `alc269_fixup_limit_int_mic_boost` and then chains to the
+  existing Framework mic-presence fixup.
+- Quirk table hunk: before, `0xf111:0x000f` used only the Framework mic-
+  presence fixup; after, `0xf111:0x000f` uses the mic-boost-limiting
+  chain, and `0xf111:0x010f` is added with the same chain.
 
-Record 2.3: Bug category: logic/correctness and bounds-check bug.
-Mechanism: an over-strict buffer check can reject a CRUSH map even
-though the following decode only needs `sizeof(u32)`.
+Step 2.3 Record: Bug category is hardware quirk/workaround plus device
+ID addition. The fix reuses existing `alc269_fixup_limit_int_mic_boost`,
+which, on `HDA_FIXUP_ACT_PROBE`, finds internal analog mic pins and
+overrides input amp caps to limit boost levels. No race, memory-safety,
+refcount, or error-path bug is involved.
 
-Record 2.4: Fix quality: obviously correct from `struct
-crush_bucket_uniform`, which contains only `item_weight` after the
-common bucket header. Regression risk is very low because the
-replacement macro performs the same safe bounds check for the one value
-actually read.
+Step 2.4 Record: Fix quality is high: minimal, contained, uses existing
+Realtek HDA fixup infrastructure, and only affects two explicit
+Framework subsystem IDs. Regression risk is very low and limited to
+those two machines; the only plausible risk is reducing available mic
+gain too much on those exact SSIDs.
 
-## Phase 3: Git History
-Record 3.1: `git blame` shows the overlarge check dates to
-`f24e9980eb860d` (`ceph: OSD client`), first contained in `v2.6.34`. The
-assignment line was later touched by `c89136ea4253c7`, but the wrong
-size expression was already present.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` on the parent of commit
+`67c73815220784074ff13ec07df955911caf1b73` shows the existing Framework
+fixup/table structure came through the Realtek driver split/import
+commit `c08e42c9a40ab`, while the `0xf111:0x000f` quirk line itself was
+introduced by `bac1e57adf08c9` in the v7.0 cycle. Historical `git show`
+verified the original Framework fixup was introduced by `309d7363ca3d9`,
+first described by `git describe` as `v5.18~27^2~3`. The boost-limiting
+helper pattern was present since `8903376dc6994`, described as
+`v5.14-rc7~16^2~1`.
 
-Record 3.2: No `Fixes:` tag, so there was no tagged introducing commit
-to follow.
+Step 3.2 Record: No `Fixes:` tag is present, so there was no Fixes
+target to follow.
 
-Record 3.3: Recent related file history shows adjacent CRUSH decode
-hardening, especially `6a782b546337a` (`libceph: Fix potential out-of-
-bounds access in crush_decode()`), followed by this patch. This patch’s
-hunk is standalone.
+Step 3.3 Record: Recent file history shows many Realtek laptop quirk
+commits, including `bac1e57adf08c` for Framework `0xf111:000f`. No
+required multi-patch series was found for this candidate.
 
-Record 3.4: Author Raphael Zimmer has several recent libceph hardening
-fixes. Ilya Dryomov is listed in `MAINTAINERS` as a libceph maintainer
-and reviewed/committed this patch.
+Step 3.4 Record: Author Daniel Schaefer previously authored Framework
+`0xf111:000c` Realtek quirk work. Dustin Howett, CC’d here, authored
+several Framework Realtek quirk commits. Takashi Iwai applied this patch
+and is the ALSA HDA maintainer path for these commits.
 
-Record 3.5: No functional dependency found for this exact hunk. `git
-apply --check` succeeds on the current checkout.
+Step 3.5 Record: Dependencies are the existing Framework mic-presence
+fixup and existing mic-boost limiter helper. They exist in the local
+current tree; older stable trees before the
+`sound/hda/codecs/realtek/alc269.c` split would need a path/context
+backport to `sound/pci/hda/patch_realtek.c`.
 
 ## Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig -c 29e2da9499784` found the original submission:
-`https://patch.msgid.link/20260424133737.921463-1-raphael.zimmer@tu-
-ilmenau.de`. `b4 dig -a` found only v1. The saved mbox shows Ilya
-replied “Applied.” No objections or NAKs found.
+Step 4.1 Record: `b4 dig -c 67c73815220784074ff13ec07df955911caf1b73`
+matched the patch by patch-id and found
+`https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work`. `b4
+dig -a` found only v1. The saved thread contains Takashi Iwai’s reply:
+“Applied now. Thanks.” No NAKs or requested revisions were found.
 
-Record 4.2: `b4 dig -w` shows Raphael Zimmer, Ilya Dryomov, Alex
-Markuze, Viacheslav Dubeyko, and `ceph-devel@vger.kernel.org` were
-included. `MAINTAINERS` confirms these are the libceph maintainers/list.
+Step 4.2 Record: `b4 dig -w` lists Daniel Schaefer, Jaroslav Kysela,
+Takashi Iwai, `linux-sound@vger.kernel.org`, Dustin L. Howett, and
+`linux@frame.work` as original participants. Appropriate ALSA
+maintainers/list were included.
 
-Record 4.3: No `Reported-by` or `Link` in this commit. I found Ceph
-tracker bug #75829 for adjacent CRUSH decode out-of-bounds work, but it
-directly matches `6a782b...`, not this exact overlarge-check patch, so I
-did not use it as primary evidence.
+Step 4.3 Record: No separate `Reported-by` bug report was linked.
+Phoronix independently reports the same applied commit and repeats the
+stated impact: Framework PTL internal mic clips above 50% input volume;
+it identifies the hardware as Framework Laptop 13 Pro / Panther Lake.
 
-Record 4.4: Related patch context is the adjacent `6a782b...` CRUSH
-decode safety fix. This patch is not part of a multi-patch series
-according to `b4 dig -a`.
+Step 4.4 Record: Related patches include earlier Framework Realtek quirk
+additions for `0xf111:0001`, `0009`, `000c`, and `000f`, plus several
+prior “Limit mic boost” Realtek quirks. This candidate is standalone.
 
-Record 4.5: Web lore fetching was blocked by Anubis, but `b4` retrieved
-the thread. Web search did not find stable-specific discussion for this
-exact subject/hash.
+Step 4.5 Record: Web search did not find stable-list discussion for this
+exact candidate. No stable-specific objection was found.
 
 ## Phase 5: Code Semantic Analysis
-Record 5.1: Modified function: `crush_decode_uniform_bucket()`.
+Step 5.1 Record: No ordinary function body is newly changed. The
+affected code is the Realtek HDA fixup selection tables plus the
+existing helper `alc269_fixup_limit_int_mic_boost`.
 
-Record 5.2: Caller path verified: `mon_dispatch()` handles
-`CEPH_MSG_OSD_MAP` -> `ceph_osdc_handle_map()` -> `handle_one_map()` ->
-`ceph_osdmap_decode()` or incremental decode -> `crush_decode()` ->
-`crush_decode_uniform_bucket()`.
+Step 5.2 Record: Caller path is `alc269_probe`, which calls
+`snd_hda_pick_fixup` using `alc269_fixup_tbl`, then applies fixups at
+`HDA_FIXUP_ACT_PRE_PROBE` and `HDA_FIXUP_ACT_PROBE`. The impact surface
+is limited to probe/init of matching Realtek HDA codecs with Framework
+SSIDs `0xf111:000f` or `0xf111:010f`.
 
-Record 5.3: Key callees: `ceph_decode_32_safe()` expands to
-`ceph_decode_need(..., sizeof(u32), ...)` plus `ceph_decode_32()`.
-Failure returns `-EINVAL`, then `crush_decode()` destroys the partial
-map and returns `ERR_PTR(err)`.
+Step 5.3 Record: The key helper calls `snd_hda_codec_get_pincfg`,
+`snd_hda_get_input_pin_attr`, and `snd_hda_override_amp_caps`.
+`snd_hda_override_amp_caps` is documented in code as overriding cached
+amp caps, useful to adjust amp ranges such as limiting to 0 dB.
 
-Record 5.4: Reachability: this is reached from received Ceph monitor OSD
-map messages, not a local syscall path. Affected users are Ceph clients
-receiving CRUSH maps with uniform buckets.
+Step 5.4 Record: The buggy path is reachable automatically during codec
+probe on the affected hardware. The user-visible failure is then
+triggered by normal microphone capture with input volume above 50%. This
+is not an unprivileged security trigger; it is normal hardware use.
 
-Record 5.5: Similar patterns: list/straw/straw2 bucket decoders
-correctly check size-dependent arrays because they actually decode
-arrays. Uniform bucket is the outlier because its bucket-specific data
-is one scalar.
+Step 5.5 Record: Similar Realtek mic-boost limiter quirks exist,
+including `8903376dc6994`, `86a433862912f`, `6db03b1929e20`, and
+`76b0a22d4cf7d`. Some prior similar mic-boost quirk commits carried `Cc:
+stable@vger.kernel.org`.
 
-## Phase 6: Stable Tree Analysis
-Record 6.1: Checked `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`,
-`v6.19`, and `v7.0`; all contain the old overlarge check.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: `v7.0` contains the `0xf111:000f` Framework line, so
+the wrong/insufficient fixup exists in v7.0.y candidates. `v6.18` and
+`v6.17` tags checked locally did not contain `0xf111:000f`. `v6.12` and
+`v6.6` contain the base Framework fixup and boost helper, but not the
+newer `000f`/`010f` IDs.
 
-Record 6.2: Backport difficulty: expected clean or trivial. The exact
-target lines are present across checked stable tags/pending branches,
-and `git apply --check` succeeds on the current checkout.
+Step 6.2 Record: The patch applies cleanly to the current local tree
+with `git apply --check`. It should be straightforward for v7.0.y. Older
+stable trees may need mechanical backporting because the Realtek code
+lived in `sound/pci/hda/patch_realtek.c` before the driver split.
 
-Record 6.3: No different fix for this exact uniform-bucket overcheck
-found in the checked history before `29e2da9499784`.
+Step 6.3 Record: No alternate fix for this exact Framework PTL mic boost
+issue was found in local history or stable-search results.
 
-## Phase 7: Subsystem Context
-Record 7.1: Subsystem: libceph common code, CRUSH/OSD map decoding.
-Criticality: important for Ceph users, not universal to all Linux users.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is ALSA HDA Realtek codec driver. Criticality
+is driver-specific/important for affected laptop users, not core-kernel
+universal.
 
-Record 7.2: Subsystem activity: active, with recent libceph decode and
-message-processing hardening commits from Raphael Zimmer and Ilya
-Dryomov.
+Step 7.2 Record: The Realtek HDA quirk area is very active; recent
+history shows many laptop quirk additions/fixes in the same file.
 
-## Phase 8: Impact And Risk
-Record 8.1: Affected population: Ceph kernel clients using CRUSH maps
-with uniform buckets.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected population is Framework Laptop 13 Pro PTL and
+Framework Laptop 13 PTL users with Realtek HDA audio matching
+`0xf111:000f` or `0xf111:010f`.
 
-Record 8.2: Trigger: receiving a CRUSH map where a uniform bucket’s
-`b->h.size` makes the old false requirement exceed the remaining buffer
-even though the one actual `item_weight` field is available. Not
-verified as unprivileged-user-triggerable.
+Step 8.2 Record: Trigger is common on affected hardware: normal internal
+microphone use with input volume above 50%. It is not security-sensitive
+and does not require unusual kernel configuration beyond the Realtek HDA
+driver.
 
-Record 8.3: Failure mode: false `-EINVAL` in CRUSH/OSD map decode,
-leading `ceph_osdc_handle_map()` to report a corrupt map message and
-skip the update. Severity: high for affected Ceph clients because OSD
-map decode failure can disrupt storage access.
+Step 8.3 Record: Failure mode is bad/clipped microphone capture,
+severity MEDIUM. It is not a crash, data corruption, deadlock, or
+memory-safety issue, but it materially breaks expected laptop audio
+behavior.
 
-Record 8.4: Benefit: medium-high for Ceph client reliability. Risk: very
-low, because the patch narrows a bounds check to the exact field
-consumed and introduces no API or behavioral feature.
+Step 8.4 Record: Benefit is high for the affected hardware because it
+makes microphone capture usable and adds the second SSID. Risk is very
+low: 10-line single-driver quirk, no API changes, no broad behavior
+change.
 
 ## Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: real decode correctness bug;
-ancient code present in all checked stable trees; affects storage client
-map updates; one-line surgical fix; maintainer reviewed; clean apply.
-Evidence against: no reporter, no test tag, no direct crash/data-
-corruption proof for this exact patch. Unresolved: no external stable-
-list discussion found due lore web blocking; no live Ceph reproducer
-run.
+Step 9.1 Record:
+- Evidence for backporting: real hardware-specific bug, explicit user-
+  visible clipping, new SSID addition, standard stable-acceptable quirk
+  pattern, tiny patch, existing helper reused, maintainer applied, clean
+  current-tree apply.
+- Evidence against backporting: not a crash/security/data-corruption
+  fix; affected population is specific new hardware; older trees may
+  need path/context adjustments.
+- Unresolved: no local runtime test on Framework PTL hardware; exact
+  older stable applicability depends on whether those trees have or
+  should receive the newer Framework PTL SSIDs.
 
-Record 9.2: Stable rules: obviously correct: yes; fixes a real bug: yes,
-over-strict valid-buffer rejection; important: yes for affected Ceph
-clients because OSD map updates are core storage functionality;
-small/contained: yes, 1-line functional change; no new APIs/features:
-yes; applies to stable: yes/trivial based on checked code.
+Step 9.2 Record:
+1. Obviously correct and tested? Mostly yes by inspection and maintainer
+   acceptance; no `Tested-by` and no local hardware test.
+2. Fixes a real bug affecting users? Yes, verified from commit body and
+   external report: internal mic clips above 50% volume.
+3. Important issue? Medium severity, but stable rules commonly accept
+   hardware quirks/device IDs.
+4. Small and contained? Yes, one file, 9 insertions/1 deletion.
+5. No new features/APIs? Yes, no API or userspace ABI change.
+6. Can apply to stable trees? Clean on current/v7.0-style tree; older
+   trees need mechanical backport.
 
-Record 9.3: Exception category: none. This is a normal bug fix, not a
-device ID, quirk, DT, build, or documentation exception.
+Step 9.3 Record: This falls squarely into stable exception categories:
+hardware quirk/workaround and device ID/SSID addition for an existing
+driver.
 
-Record 9.4: Decision: backport. The benefit outweighs the tiny risk.
+Step 9.4 Decision: Backport. Although not a severe kernel stability bug,
+stable policy routinely accepts small hardware quirks like this, and the
+risk is confined to two Framework SSIDs while the benefit is fixing
+broken microphone behavior on affected systems.
 
 ## Verification
-- Phase 1: Parsed `git show --format=fuller 29e2da9499784`; confirmed
-  subject, tags, author, reviewer, committer, and absence of
-  reporter/link/fixes tags.
-- Phase 2: Inspected the full diff; confirmed only
-  `crush_decode_uniform_bucket()` changes from overlarge
-  `ceph_decode_need()` plus raw decode to `ceph_decode_32_safe()`.
-- Phase 3: Ran `git blame` on the affected lines; found
-  `f24e9980eb860d`, first in `v2.6.34`. Checked related history and
-  author history.
-- Phase 4: Ran `b4 dig -c`, `-a`, `-w`, and saved/read the mbox; found
-  v1 submission and maintainer “Applied” reply.
-- Phase 5: Traced callers with source searches and file reads through
-  monitor OSD map handling to CRUSH decode.
-- Phase 6: Checked stable tags/pending branches for the exact old code
-  and ran `git apply --check`.
-- Phase 7: Checked `MAINTAINERS`; confirmed libceph maintainers and
-  supported status.
-- Phase 8: Verified failure path returns `-EINVAL`, destroys partial
-  CRUSH map, and causes `ceph_osdc_handle_map()` to log corrupt message
-  handling.
-- UNVERIFIED: No runtime reproducer was executed; no direct user report
-  was found for this exact patch.
+- Phase 1: Parsed commit `67c73815220784074ff13ec07df955911caf1b73` with
+  `git show`; verified tags and absence of `Fixes`, `Reported-by`,
+  `Tested-by`, `Reviewed-by`, and stable CC.
+- Phase 2: Verified diffstat: `sound/hda/codecs/realtek/alc269.c`, 10
+  changed lines, 9 insertions/1 deletion.
+- Phase 3: Ran `git blame` on parent commit around enum, fixup table,
+  and quirk table; verified `0xf111:000f` came from `bac1e57adf08c9`.
+- Phase 3: Ran `git show` on `309d7363ca3d9`, `8903376dc6994`,
+  `bac1e57adf08c9`, `7b509910b3ad6`, and related boost quirk commits.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 dig -m`;
+  verified v1-only patch, original recipients, lore URL, and maintainer
+  “Applied now” reply.
+- Phase 4: WebFetch of lore/git.kernel direct pages was blocked by
+  Anubis, but `b4` successfully fetched the lore thread and Phoronix
+  verified the applied commit ID and issue summary.
+- Phase 5: Used `rg`/code reads to verify `alc269_probe` selects and
+  applies fixups, and that `snd_hda_override_amp_caps` adjusts cached
+  amp capabilities.
+- Phase 6: Ran `git grep` against `v7.0`, `v6.18`, `v6.17`, `v6.12`, and
+  `v6.6` for Framework IDs/helper presence.
+- Phase 6: Ran `git apply --check` on the mbox; it applies cleanly to
+  the current tree.
+- Unverified: no physical Framework PTL hardware test was performed
+  locally.
 
 **YES**
 
- net/ceph/osdmap.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
-index c89e66d4fcb7f..753a2ed31e5bf 100644
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -72,8 +72,7 @@ static int crush_decode_uniform_bucket(void **p, void *end,
- 				       struct crush_bucket_uniform *b)
- {
- 	dout("crush_decode_uniform_bucket %p to %p\n", *p, end);
--	ceph_decode_need(p, end, (1+b->h.size) * sizeof(u32), bad);
--	b->item_weight = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, b->item_weight, bad);
- 	return 0;
- bad:
- 	return -EINVAL;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index b1fb5e1cf0078..3a36ae494c39b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4097,6 +4097,7 @@ enum {
+ 	ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED,
+ 	ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED,
+ 	ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE,
++	ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST,
+ 	ALC287_FIXUP_LEGION_16ITHG6,
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
+@@ -6346,6 +6347,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC
+ 	},
++	[ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc269_fixup_limit_int_mic_boost,
++		.chained = true,
++		.chain_id = ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE,
++	},
+ 	[ALC287_FIXUP_LEGION_16ITHG6] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc287_fixup_legion_16ithg6_speakers,
+@@ -7824,7 +7831,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x000b, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+-	SND_PCI_QUIRK(0xf111, 0x000f, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0xf111, 0x000f, "Framework Laptop 13 Pro PTL", ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0xf111, 0x010f, "Framework Laptop 13 PTL", ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST),
+ 
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 -- 
 2.53.0
 
