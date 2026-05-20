@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620563F9F2A;
-	Wed, 20 May 2026 18:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D633FC5AE;
+	Wed, 20 May 2026 18:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300278; cv=none; b=sw+LSZjL61NLwDLwN6hMhMC7F0v4z3khRaS7oks2ffvTzDRaiACQ6FvOckCY1B5LNfmpApZWVY+nylrBK04dcT7mu+bJqY0bZrZusGTHQRUV4gyc1nf8vu++HJNopmexBLr1zqXVtQmPXsl/Z2GdYG42BHqBxW9GWiCr9uJmJ7s=
+	t=1779300281; cv=none; b=iZWkXYrZrF+UrFYgMhykQzGU/h87QlE3WpmK6TGX6QqtqMg7VjJOrMUE4AfqNnABc18mq246gVVAALaMmAQBp0w3H+o8s3rspw3f0aScYJphJTnZd1UhAs4NN27yuLMcN9yUSfcp/X84cAMMq3CQIe1tMbLMyplVJs5jt4RxiWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300278; c=relaxed/simple;
-	bh=qYLMSYmaGwogOjzt7NjZAFUHUZutLZpMmWFMbCdNYLA=;
+	s=arc-20240116; t=1779300281; c=relaxed/simple;
+	bh=ApqAVu/U00jbFj5VcPhovy28b8O/EukODF2sxs3zKPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VizbyTF5lY5k7Of758FjfSgq1Xo8O1fl8PiHaoFHz1hOqYfkio78vt0+u4Y7wcqumIQPXE1Qe8f2+6HfrhgRiUAAOox0rYAaDcRWFw9dXyivSMyEimqMoG62RCSZVYznK3RthVQ8jLWe+IZp0M9Yo039pzPau7N2TLbU64vMfUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJf46wA9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=toaOXZI1lU7uNPVTwLb0KOeCdFZKqHU9n8/Om8OgEVGMWHSWYbOETjiJuAtBnPqoR30mFNRyOcJnUmL3naNMKWrEm3mlISpCK7cRnutu22Zd4rHxiASwSrOl5SySHKLeqVqzign0BM6EiB7v0/T4B2upBKBPLyUojCRkkalyF1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJQDSjQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJf46wA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D1F1F00893;
-	Wed, 20 May 2026 18:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJQDSjQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7022C1F000E9;
+	Wed, 20 May 2026 18:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300277;
-	bh=qz2KiXm6QaxVrE/g4lBw/e765ohW8Moq1VLC6WiZtTc=;
+	s=korg; t=1779300279;
+	bh=VqHOL5Rdxffd1886kZ8/JDQ3GPKQq3KanZRxhgRd2tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJf46wA9eUgt+B0A/cZnrjaVHSZmCq3sqCuHdd4IfRXC3I1xZY1jKpjcLB/TTAR3v
-	 20MMkniFWdKwe0u3I8GG0ptsr5ZyhRm13cHNP6Am4XH4V9QPlfamBlhZA6mxs7jIWn
-	 phhh+d78Qocu1qpgJFfYd9099Qi+2KeXKMMorZt8=
+	b=mJQDSjQ2TabjdLK3NxFSwmLuk4UNGB8F3FMSFvFmcYokskzQEpqAk94SRBQB6bjLf
+	 4AVOz+89pBo5voIwfkgsDzB6at3VVzpGjyYsafg+wZXiGeQPki0USsdo7jm6bc84qV
+	 2r/3mVzzD/OPD6WUIcDeqj3NphOURUacqtkwVayI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/666] ipv6: udp: fix typos in comments
-Date: Wed, 20 May 2026 18:15:24 +0200
-Message-ID: <20260520162113.670322432@linuxfoundation.org>
+Subject: [PATCH 6.12 078/666] net: bcmgenet: fix racing timeout handler
+Date: Wed, 20 May 2026 18:14:49 +0200
+Message-ID: <20260520162112.921980618@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,58 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit ac36dea3bc85c2cde87e490736708032328dfbdc ]
+[ Upstream commit 5393b2b5bee2ac51a0043dc7f4ac3475f053d08d ]
 
-Correct typos in ipv6/udp.c comments:
-"execeeds" -> "exceeds"
-"tacking care" -> "taking care"
-"measureable" -> "measurable"
+The bcmgenet_timeout handler tries to take down all tx queues when
+a single queue times out. This is over zealous and causes many race
+conditions with queues that are still chugging along. Instead lets
+only restart the timed out queue.
 
-No functional changes.
-
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250909122611.3711859-1-alok.a.tiwari@oracle.com
+Fixes: 13ea657806cf ("net: bcmgenet: improve TX timeout")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260406175756.134567-4-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b80a95ccf160 ("udp: Force compute_score to always inline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/udp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 22 ++++++++-----------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 9b93df668025d..bfda1f318b779 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -248,7 +248,7 @@ static struct sock *udp6_lib_lookup2(const struct net *net,
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 0fe11e98f738d..f012025a517dd 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3465,27 +3465,23 @@ static void bcmgenet_dump_tx_queue(struct bcmgenet_tx_ring *ring)
+ static void bcmgenet_timeout(struct net_device *dev, unsigned int txqueue)
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+-	u32 int1_enable = 0;
+-	unsigned int q;
++	struct bcmgenet_tx_ring *ring = &priv->tx_rings[txqueue];
++	struct netdev_queue *txq = netdev_get_tx_queue(dev, txqueue);
  
- 			/* compute_score is too long of a function to be
- 			 * inlined, and calling it again here yields
--			 * measureable overhead for some
-+			 * measurable overhead for some
- 			 * workloads. Work around it by jumping
- 			 * backwards to rescore 'result'.
- 			 */
-@@ -364,7 +364,7 @@ struct sock *udp6_lib_lookup(const struct net *net, const struct in6_addr *saddr
- EXPORT_SYMBOL_GPL(udp6_lib_lookup);
- #endif
+ 	netif_dbg(priv, tx_err, dev, "bcmgenet_timeout\n");
  
--/* do not use the scratch area len for jumbogram: their length execeeds the
-+/* do not use the scratch area len for jumbogram: their length exceeds the
-  * scratch area space; note that the IP6CB flags is still in the first
-  * cacheline, so checking for jumbograms is cheap
-  */
-@@ -964,7 +964,7 @@ static void udp6_sk_rx_dst_set(struct sock *sk, struct dst_entry *dst)
- 		sk->sk_rx_dst_cookie = rt6_get_cookie(dst_rt6_info(dst));
+-	for (q = 0; q <= priv->hw_params->tx_queues; q++)
+-		bcmgenet_dump_tx_queue(&priv->tx_rings[q]);
+-
+-	bcmgenet_tx_reclaim_all(dev);
++	bcmgenet_dump_tx_queue(ring);
+ 
+-	for (q = 0; q <= priv->hw_params->tx_queues; q++)
+-		int1_enable |= (1 << q);
++	bcmgenet_tx_reclaim(dev, ring, true);
+ 
+-	/* Re-enable TX interrupts if disabled */
+-	bcmgenet_intrl2_1_writel(priv, int1_enable, INTRL2_CPU_MASK_CLEAR);
++	/* Re-enable the TX interrupt for this ring */
++	bcmgenet_intrl2_1_writel(priv, 1 << txqueue, INTRL2_CPU_MASK_CLEAR);
+ 
+-	netif_trans_update(dev);
++	txq_trans_cond_update(txq);
+ 
+-	BCMGENET_STATS64_INC((&priv->tx_rings[txqueue].stats64), errors);
++	BCMGENET_STATS64_INC((&ring->stats64), errors);
+ 
+-	netif_tx_wake_all_queues(dev);
++	netif_tx_wake_queue(txq);
  }
  
--/* wrapper for udp_queue_rcv_skb tacking care of csum conversion and
-+/* wrapper for udp_queue_rcv_skb taking care of csum conversion and
-  * return code conversion for ip layer consumption
-  */
- static int udp6_unicast_rcv_skb(struct sock *sk, struct sk_buff *skb,
+ #define MAX_MDF_FILTER	17
 -- 
 2.53.0
 
