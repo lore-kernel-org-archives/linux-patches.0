@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77A9369D64;
-	Wed, 20 May 2026 16:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B5836A033;
+	Wed, 20 May 2026 16:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294828; cv=none; b=HyC+TaX4y8HWL52oa8xd81bwVqMLUxI6z0VKydQeY1tRTKyGLjXZO1zQiiExq2sVZGZYnzy6C2x669xuoHC/eojZSook7/Myop1cjXi5A0bUJkVDbI7ndX5YwnxRd9JhEcJBmOz8BHNY8vZjDnF2Z1mvvYqrrRAlhiWt3iaFH08=
+	t=1779294830; cv=none; b=gUa5VeonqoJlEChU3Nh4J6wPpIa3iqfitaLgg+qX7qk0P5aXoGe1i3vbMkfx0EERI2CYWywyjfaJ9YlrKtPw+GpPk88XLoaMIxeToVhJu7pCVGR91nF6+avrYjSfL+1V4Vgo6DdzD5iBSb6ZMvMIq3JT37P2EtwB7X9dpHrU4mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294828; c=relaxed/simple;
-	bh=LBnOwHsDPHBFexkxCiATzBVvc/OB3TIGhINyl0vn4H4=;
+	s=arc-20240116; t=1779294830; c=relaxed/simple;
+	bh=DrFWNwnHVORktO7pAxH0+cpJWiArZHXU+ah8IZfPTco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvNMi9X5uuYkAGXnHNEE2trSbMMIpZiojL3m52EG4rt8NUmWcv7xhf4JKmVG4wp1BqgS4QgvoLggr6rncp4Bly0DGKncQcnrVV3X0tqWvie0Gju4cYWjsJlQpFCy9xrJmA2dNtb5/tCz9/vkhrLvv+kH/+TdHkNMAvYw7/l4Mxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPt/4VVH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QU1aRmV/hrlKQ4Is2jjB6Xc6J6+M2nXjSB0KEjScggdJSU7+CkM1XcN88xrSG+4PK6h3PsGr/fvIpKGEIOgaLvI0sNrQFObR6j9WnjU8YypoyTMWLarfYQb5vlXRuWfEdpzVhW/zE5dbK+g9dy8fM23hMliFsoOZ0FiR/WVckk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF1lwiRZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPt/4VVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415531F000E9;
-	Wed, 20 May 2026 16:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF1lwiRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF53B1F000E9;
+	Wed, 20 May 2026 16:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294826;
-	bh=i7naAkZuYMo65msR3sCNMHrLY49XkiCHCKQ8287dfr8=;
+	s=korg; t=1779294829;
+	bh=uVFiXwSLmrSNEVEAJev8ITiClyp63MqzhffHh7IWO0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wPt/4VVHrE9HhqcOqwDMiJ5aw61QcM1PH1J/HcpQZ66YK1kg7/u9i9d5/OnOqHM//
-	 YhESvgpuSJrzAfneimNfHg1o5vivgY2O1BFjoSbgp8n7i87nlv1j1QSJ+FO7hrALj8
-	 xulNx/TUzqZ2O20CZD3cYvdahUenNY2JcxR2nPnU=
+	b=GF1lwiRZQqYZzAbo/D17nim2r/JA1oeFB4f8b/wnYQCh1kRyohxPIx8KqFSiEZGGm
+	 d9yAUVl3eAKvsTQvo/6vI5ZVjMObjqgheH9Wb7kSLhN0cHUHjyUJXVv/lpq1g6JLSp
+	 1feSDpq6BViR1Go7Xtl1Ipn+pNYPhRZejVFd4O/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0187/1146] selftests/bpf: fix __jited_unpriv tag name
-Date: Wed, 20 May 2026 18:07:17 +0200
-Message-ID: <20260520162152.508032733@linuxfoundation.org>
+Subject: [PATCH 7.0 0188/1146] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
+Date: Wed, 20 May 2026 18:07:18 +0200
+Message-ID: <20260520162152.529340724@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,37 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit cdd54fe98c00549264a92613af6bb0e9a5fd0d1c ]
+[ Upstream commit 65782b2db7321d5f97c16718c4c7f6c7205a56be ]
 
-__jited_unpriv was using "test_jited=" as its tag name, same as the
-priv variant __jited. Fix by using "test_jited_unpriv=".
+Like pointed out by Sashiko [1], since commit ed76f5edccc9 ("net: sched:
+protect filter_chain list with filter_chain_lock mutex") TC filters are
+added to a shared block and published to datapath before their ->change()
+function is called. This is a problem for cls_fw: an invalid filter
+created with the "old" method can still classify some packets before it
+is destroyed by the validation logic added by Xiang.
+Therefore, insisting with repeated runs of the following script:
 
-Fixes: 7d743e4c759c ("selftests/bpf: __jited test tag to check disassembly after jit")
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260410-selftests-global-tags-ordering-v2-1-c566ec9781bf@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+ # ip link add dev crash0 type dummy
+ # ip link set dev crash0 up
+ # mausezahn  crash0 -c 100000 -P 10 \
+ > -A 4.3.2.1 -B 1.2.3.4 -t udp "dp=1234" -q &
+ # sleep 1
+ # tc qdisc add dev crash0 egress_block 1 clsact
+ # tc filter add block 1 protocol ip prio 1 matchall \
+ > action skbedit mark 65536 continue
+ # tc filter add block 1 protocol ip prio 2 fw
+ # ip link del dev crash0
+
+can still make fw_classify() hit the WARN_ON() in [2]:
+
+ WARNING: ./include/net/pkt_cls.h:88 at fw_classify+0x244/0x250 [cls_fw], CPU#18: mausezahn/1399
+ Modules linked in: cls_fw(E) act_skbedit(E)
+ CPU: 18 UID: 0 PID: 1399 Comm: mausezahn Tainted: G            E       7.0.0-rc6-virtme #17 PREEMPT(full)
+ Tainted: [E]=UNSIGNED_MODULE
+ Hardware name: Red Hat KVM, BIOS 1.16.3-2.el9 04/01/2014
+ RIP: 0010:fw_classify+0x244/0x250 [cls_fw]
+ Code: 5c 49 c7 45 00 00 00 00 00 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 5b b8 ff ff ff ff 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 eb a0 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90
+ RSP: 0018:ffffd1b7026bf8a8 EFLAGS: 00010202
+ RAX: ffff8c5ac9c60800 RBX: ffff8c5ac99322c0 RCX: 0000000000000004
+ RDX: 0000000000000001 RSI: ffff8c5b74d7a000 RDI: ffff8c5ac8284f40
+ RBP: ffffd1b7026bf8d0 R08: 0000000000000000 R09: ffffd1b7026bf9b0
+ R10: 00000000ffffffff R11: 0000000000000000 R12: 0000000000010000
+ R13: ffffd1b7026bf930 R14: ffff8c5ac8284f40 R15: 0000000000000000
+ FS:  00007fca40c37740(0000) GS:ffff8c5b74d7a000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fca40e822a0 CR3: 0000000005ca0001 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  tcf_classify+0x17d/0x5c0
+  tc_run+0x9d/0x150
+  __dev_queue_xmit+0x2ab/0x14d0
+  ip_finish_output2+0x340/0x8f0
+  ip_output+0xa4/0x250
+  raw_sendmsg+0x147d/0x14b0
+  __sys_sendto+0x1cc/0x1f0
+  __x64_sys_sendto+0x24/0x30
+  do_syscall_64+0x126/0xf80
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7fca40e822ba
+ Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+ RSP: 002b:00007ffc248a42c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+ RAX: ffffffffffffffda RBX: 000055ef233289d0 RCX: 00007fca40e822ba
+ RDX: 000000000000001e RSI: 000055ef23328c30 RDI: 0000000000000003
+ RBP: 000055ef233289d0 R08: 00007ffc248a42d0 R09: 0000000000000010
+ R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000001e
+ R13: 00000000000186a0 R14: 0000000000000000 R15: 00007fca41043000
+  </TASK>
+ irq event stamp: 1045778
+ hardirqs last  enabled at (1045784): [<ffffffff864ec042>] __up_console_sem+0x52/0x60
+ hardirqs last disabled at (1045789): [<ffffffff864ec027>] __up_console_sem+0x37/0x60
+ softirqs last  enabled at (1045426): [<ffffffff874d48c7>] __alloc_skb+0x207/0x260
+ softirqs last disabled at (1045434): [<ffffffff874fe8f8>] __dev_queue_xmit+0x78/0x14d0
+
+Then, because of the value in the packet's mark, dereference on 'q->handle'
+with NULL 'q' occurs:
+
+ BUG: kernel NULL  pointer dereference, address: 0000000000000038
+ [...]
+ RIP: 0010:fw_classify+0x1fe/0x250 [cls_fw]
+ [...]
+
+Skip "old-style" classification on shared blocks, so that the NULL
+dereference is fixed and WARN_ON() is not hit anymore in the short
+lifetime of invalid cls_fw "old-style" filters.
+
+[1] https://sashiko.dev/#/patchset/20260331050217.504278-1-xmei5%40asu.edu
+[2] https://elixir.bootlin.com/linux/v7.0-rc6/source/include/net/pkt_cls.h#L86
+
+Fixes: faeea8bbf6e9 ("net/sched: cls_fw: fix NULL pointer dereference on shared blocks")
+Fixes: ed76f5edccc9 ("net: sched: protect filter_chain list with filter_chain_lock mutex")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/e39cbd3103a337f1e515d186fe697b4459d24757.1775661704.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_fw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index c9bfbe1bafc12..1cd783aec11ad 100644
---- a/tools/testing/selftests/bpf/progs/bpf_misc.h
-+++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -140,7 +140,7 @@
- #define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __not_msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_not_msg_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" XSTR(__COUNTER__) "=" msg)))
--#define __jited_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_jited=" XSTR(__COUNTER__) "=" msg)))
-+#define __jited_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_jited_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
- #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
- #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index 23884ef8b80ce..646a730dca93c 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -74,9 +74,13 @@ TC_INDIRECT_SCOPE int fw_classify(struct sk_buff *skb,
+ 			}
+ 		}
+ 	} else {
+-		struct Qdisc *q = tcf_block_q(tp->chain->block);
++		struct Qdisc *q;
+ 
+ 		/* Old method: classify the packet using its skb mark. */
++		if (tcf_block_shared(tp->chain->block))
++			return -1;
++
++		q = tcf_block_q(tp->chain->block);
+ 		if (id && (TC_H_MAJ(id) == 0 ||
+ 			   !(TC_H_MAJ(id ^ q->handle)))) {
+ 			res->classid = id;
 -- 
 2.53.0
 
