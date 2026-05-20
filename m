@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5230929D26E;
-	Wed, 20 May 2026 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F326928DC4;
+	Wed, 20 May 2026 17:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298477; cv=none; b=EX4hJeqVh393Skes6oVVmQYPCn+KVFpsukdpiyMer4ESNu4Prm1A+IyeAg+zSP7pDRfNvJRhWy9vOf4AM7te9/a1W/7nBb62bgoMtpUy98NaNTOowRXeQRGZYpI6VSPrAX/I6ut0eJO8Ma+D+AvAmCJPtjk6fAaEKjYHDxvM4eQ=
+	t=1779298480; cv=none; b=iM3nydI8JWWIBjf+76IaCvq9kOZq0mENWf3bu6821ttJdApeWX+sEZvXbCPdvtn2hEBU73d+ex55Q65mn3g69OxRJiGCLvSjKp1UA6/hOjOSBps01T3kCPSdN2HAsoKyZjgxYXA8e2CHNsmMf2sExsJaNYcHy5g7+rXCf+zZW1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298477; c=relaxed/simple;
-	bh=PEFCdxi3H7Qz6pTABVFCFAcEdH8stmOqKtTpoI8dlNs=;
+	s=arc-20240116; t=1779298480; c=relaxed/simple;
+	bh=mQUToaTCFFLuIXXT4rW7LyZRyqgGZ2AA/MX334rPmuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OX4kE+0IWB093TO0xZttGgGSVqEpvVdJMAL6vx8xZSM2Aj1Lrt9VroRi50OBEwlK2yzzRZ/dwrLsQMX25fjkrybEncunVFb/zQ2hcnsYYaQ/bOaz4jB6Q12jH88s0sRdVSNeM+N6VwkYXswIcXAECgit7xcbW5sI6E5eMOOggak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCFfw/Uj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u672Lr9GY+ziweuE+u8vlnA5FMaCzxSoGeO2ugWFylmkTS/i20/amA/LBm4PsOH7fHyU80hW16BwAVetRX0lW7XHuxRjS/4ruQ2CpDC8CSK25xD2pGBjUwBEWqL1r3/oTv73CnjXA+6eTk1l+XmDfDjUR5l28fbFlYtxn7pBhLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHJdKpzZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCFfw/Uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75251F000E9;
-	Wed, 20 May 2026 17:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHJdKpzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631081F000E9;
+	Wed, 20 May 2026 17:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298476;
-	bh=ercbqDX2enQq8yV7qWyvUf/IfInbZFjlzFnuFqPvqTs=;
+	s=korg; t=1779298478;
+	bh=wqP+LBsx+7rnVXrn+rsdirlRf1LasMYFnQM0jVAPOgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCFfw/UjdGD3uKbuc9rgW+wio0nbiRNNvJ4gxJTLFWmSPgIx1P9e0MI1wH/tP3yZD
-	 rSKgeu/cQiHbZydtU1YuXX+n6RDZQqfJz6sZ02GUM3Vw/YVYt+CnbyYbXLfecDaUX+
-	 UG9tlyp9f3LUj5aJ6lfMZRSy0rKUw8qCb/Kyc6vE=
+	b=ZHJdKpzZGHxCrEhgpMuH4uaWykk4grhCNe8De+ba+tyvMLwVrFxkdyVZe96UhnE+b
+	 +MnduoJBii5Ti4h7p8mo/fdrBMMX8ChgVm3cUzeuM70Nv5a4YKqtwZj1/n6bB3kXzQ
+	 kU/VrXlDN6DTcimyagqYUPY/dozUZMT9FVfWyE6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 424/957] arm64: dts: lx2160a: complete pinmux for rcwsr12 configuration word
-Date: Wed, 20 May 2026 18:15:07 +0200
-Message-ID: <20260520162143.716913588@linuxfoundation.org>
+Subject: [PATCH 6.18 425/957] arm64: dts: imx8qm-mek: switch Type-C connector power-role to dual
+Date: Wed, 20 May 2026 18:15:08 +0200
+Message-ID: <20260520162143.739074822@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,188 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 284ad7064aaa1badde022785cd925af29c696b21 ]
+[ Upstream commit e3d3d19d1c0050789a4813ce836a641a3387d916 ]
 
-Commit 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to
-support bus recovery") introduced pinmux nodes for lx2160 i2c
-interfaces, allowing runtime change between i2c and gpio functions
-implementing bus recovery.
+When attach to PC Type-A port, the USB device controller does not function
+at all. Because it is configured as source-only and a Type-A port doesn't
+support PD capability, a data role swap is impossible.
 
-However, the dynamic configuration area (overwrite MUX) used by the
-pinctrl-single driver initially reads as zero and does not reflect the
-actual hardware state set by the Reset Configuration Word (RCW) at
-power-on.
+Actually, PTN5110THQ is configured for Source role only at POR, but after
+POR it can operate as a DRP (Dual-Role Power). By switching the power-role
+to dual, the port can operate as a sink and enter device mode when attach
+to Type-A port.
 
-Because multiple groups of pins are configured from a single 32-bit
-register, the first write from the pinctrl driver unintentionally clears
-all other bits to zero.
+Since the board design uses EN_SRC to control the 5V VBUS path and EN_SNK
+to control the 12V VBUS output, to avoid outputting a higher VBUS when in
+sink role, we set the operation current limit to 0mA so that SW will not
+control EN_SNK at all.
 
-Add description for all bits of RCWSR12 register, allowing boards to
-explicitly define and restore their intended hardware state.
-
-This includes i2c, gpio, flextimer, spi, can and sdhc functions.
-
-Other configuration words, i.e. RCWSR13 & RCWSR14 may be added in the
-future for boards setting non-zero values there.
-
-Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
+Fixes: b237975b2cd58 ("arm64: dts: imx8qm-mek: add usb 3.0 and related type C nodes")
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 75 +++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8qm-mek.dts | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index 536f4bfad9a67..f7fb0a0562ec7 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1717,6 +1717,7 @@ pinmux_i2crv: pinmux@70010012c {
- 			pinctrl-single,register-width = <32>;
- 			pinctrl-single,function-mask = <0x7>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+index df99fe88cf4ac..a97883873b564 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+@@ -593,9 +593,17 @@ ptn5110: tcpc@51 {
+ 		usb_con1: connector {
+ 			compatible = "usb-c-connector";
+ 			label = "USB-C";
+-			power-role = "source";
++			power-role = "dual";
+ 			data-role = "dual";
++			try-power-role = "sink";
+ 			source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
++			/*
++			 * Set operational current to 0mA as we don't want EN_SNK
++			 * enable 12V VBUS switch when it work as a sink.
++			 */
++			sink-pdos = <PDO_FIXED(5000, 0, PDO_FIXED_USB_COMM)>;
++			op-sink-microwatt = <0>;
++			self-powered;
  
-+			/* RCWSR12 */
- 			i2c1_pins: iic2-i2c-pins {
- 				pinctrl-single,bits = <0x0 0x0 0x7>;
- 			};
-@@ -1725,6 +1726,10 @@ gpio0_31_30_pins: iic2-gpio-pins {
- 				pinctrl-single,bits = <0x0 0x1 0x7>;
- 			};
- 
-+			ftm0_ch10_pins: iic2-ftm-pins {
-+				pinctrl-single,bits = <0x0 0x2 0x7>;
-+			};
-+
- 			esdhc0_cd_wp_pins: iic2-sdhc-pins {
- 				pinctrl-single,bits = <0x0 0x6 0x7>;
- 			};
-@@ -1737,6 +1742,14 @@ gpio0_29_28_pins: iic3-gpio-pins {
- 				pinctrl-single,bits = <0x0 (0x1 << 3) (0x7 << 3)>;
- 			};
- 
-+			can0_pins: iic3-can-pins {
-+				pinctrl-single,bits = <0x0 (0x2 << 3) (0x7 << 3)>;
-+			};
-+
-+			event65_pins: iic3-event-pins {
-+				pinctrl-single,bits = <0x0 (0x6 << 3) (0x7 << 3)>;
-+			};
-+
- 			i2c3_pins: iic4-i2c-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 6)>;
- 			};
-@@ -1745,6 +1758,14 @@ gpio0_27_26_pins: iic4-gpio-pins {
- 				pinctrl-single,bits = <0x0 (0x1 << 6) (0x7 << 6)>;
- 			};
- 
-+			can1_pins: iic4-can-pins {
-+				pinctrl-single,bits = <0x0 (0x2 << 6) (0x7 << 6)>;
-+			};
-+
-+			event87_pins: iic4-event-pins {
-+				pinctrl-single,bits = <0x0 (0x6 << 6) (0x7 << 6)>;
-+			};
-+
- 			i2c4_pins: iic5-i2c-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 9)>;
- 			};
-@@ -1753,6 +1774,14 @@ gpio0_25_24_pins: iic5-gpio-pins {
- 				pinctrl-single,bits = <0x0 (0x1 << 9) (0x7 << 9)>;
- 			};
- 
-+			esdhc0_clksync_pins: iic5-sdhc-clk-pins {
-+				pinctrl-single,bits = <0x0 (0x2 << 9) (0x7 << 9)>;
-+			};
-+
-+			dspi2_miso_mosi_pins: iic5-spi3-pins {
-+				pinctrl-single,bits = <0x3 (0x2 << 9) (0x7 << 9)>;
-+			};
-+
- 			i2c5_pins: iic6-i2c-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 12)>;
- 			};
-@@ -1761,26 +1790,71 @@ gpio0_23_22_pins: iic6-gpio-pins {
- 				pinctrl-single,bits = <0x0 (0x1 << 12) (0x7 << 12)>;
- 			};
- 
-+			esdhc1_clksync_pins: iic6-sdhc-clk-pins {
-+				pinctrl-single,bits = <0x0 (0x2 << 12) (0x7 << 12)>;
-+			};
-+
- 			fspi_data74_pins: xspi1-data74-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 15)>;
- 			};
- 
-+			gpio1_31_28_pins: xspi1-data74-gpio-pins {
-+				pinctrl-single,bits = <0x0 0x1 (0x7 << 15)>;
-+			};
-+
- 			fspi_data30_pins: xspi1-data30-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 18)>;
- 			};
- 
-+			gpio1_27_24_pins: xspi1-data30-gpio-pins {
-+				pinctrl-single,bits = <0x0 0x1 (0x7 << 18)>;
-+			};
-+
- 			fspi_dqs_sck_cs10_pins: xspi1-base-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 21)>;
- 			};
- 
-+			gpio1_23_20_pins: xspi1-base-gpio-pins {
-+				pinctrl-single,bits = <0x0 0x1 (0x7 << 21)>;
-+			};
-+
- 			esdhc0_cmd_data30_clk_vsel_pins: sdhc1-base-sdhc-vsel-pins {
- 				pinctrl-single,bits = <0x0 0x0 (0x7 << 24)>;
- 			};
- 
-+			gpio0_21_15_pins: sdhc1-base-gpio-pins {
-+				pinctrl-single,bits = <0x0 (0x1 << 24) (0x7 << 24)>;
-+			};
-+
-+			dspi0_pins: sdhc1-base-spi1-pins {
-+				pinctrl-single,bits = <0x0 (0x2 << 24) (0x7 << 24)>;
-+			};
-+
-+			esdhc0_cmd_data30_clk_dspi2_cs0_pins: sdhc1-base-sdhc-spi3-pins {
-+				pinctrl-single,bits = <0x0 (0x3 << 24) (0x7 << 24)>;
-+			};
-+
-+			esdhc0_cmd_data30_clk_data4_pins: sdhc1-base-sdhc-data4-pins {
-+				pinctrl-single,bits = <0x0 (0x4 << 24) (0x7 << 24)>;
-+			};
-+
-+			esdhc0_dir_pins: sdhc1-dir-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 27)>;
-+			};
-+
- 			gpio0_14_12_pins: sdhc1-dir-gpio-pins {
- 				pinctrl-single,bits = <0x0 (0x1 << 27) (0x7 << 27)>;
- 			};
- 
-+			dspi2_cs31_pins: sdhc1-dir-spi3-pins {
-+				pinctrl-single,bits = <0x0 (0x3 << 27) (0x7 << 27)>;
-+			};
-+
-+			esdhc0_data75_pins: sdhc1-dir-sdhc-pins {
-+				pinctrl-single,bits = <0x0 (0x4 << 27) (0x7 << 27)>;
-+			};
-+
-+			/* RCWSR13 */
- 			gpio1_18_15_pins: iic8-iic7-gpio-pins {
- 				pinctrl-single,bits = <0x4 0x1 0x7>;
- 			};
-@@ -1789,6 +1863,7 @@ i2c6_i2c7_pins: iic8-iic7-i2c-pins {
- 				pinctrl-single,bits = <0x4 0x2 0x7>;
- 			};
- 
-+			/* RCWSR14 */
- 			i2c0_pins: iic1-i2c-pins {
- 				pinctrl-single,bits = <0x8 0x0 (0x1 << 10)>;
- 			};
+ 			ports {
+ 				#address-cells = <1>;
 -- 
 2.53.0
 
