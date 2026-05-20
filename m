@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC7C3F1AC7;
-	Wed, 20 May 2026 17:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F33D3F54DA;
+	Wed, 20 May 2026 17:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296821; cv=none; b=sNEDlzKjxFM3s7mt8PBeNfCL4KgLy7kIcOkgysFa5LRf64qTDLZK02qSO76iR6gBBLTae8/9C1CoXJFxTnrIBqsok6OwlR5/z3cW4hZRhJagQCgWR4iIhIBbagOC6YfyIPVlSThqvkGV5OKmREZ/+T7ggOP93Y27jWVzQ2jYcB0=
+	t=1779296825; cv=none; b=ohv7DfgXVAHBh33CsfPszyeU+P6aaC4yFkNXCcpXbkNXdlsmlFjhRvv47UQ7q2PLkEUJMWdAczB33D1+0OrYak1MuEoXFWvVnhh5+zpCK6irDZSFHOb8mx0szn0BlLMiEocO6YtXCi/AuH90paza3T45xOdJQFeKtLIgFwRaZ1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296821; c=relaxed/simple;
-	bh=/xiNtXD3cCXD1xvIpBLQztu3GB0xXPvBftWgqIF8zTU=;
+	s=arc-20240116; t=1779296825; c=relaxed/simple;
+	bh=Avfau9X31vKvl99SV6FBXTtR8ecWdyTtPbKbL6+max0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qq4oGDUxx0AsFKCV6XKVAiAaORQZKC0/Y/4XJWhnQQgdTJ7XX74yVxhjvGJVeedMwRywYYqGauOQyP8EoStsO2QM7x198R1zbXEC8v3mlJzR+ky7EXknpN/w7Gi8ODffLQWYyGPhWj0h3J1rzHSwIyQ4gzID1eEINRELit5oz3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkRTJvtf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qe4DcNIEwHkksOWLq4w3BWmGb4Z1KfkZEkr5usIe+qo0WFli3/oPg7vTt4Z2YB6DsxeQl0XOymWmC1ppXlE4sDJslTHikyOs8z2dJRKAqaYl1rRuUa81v6I3oYL/g97/tLdJsOjUyy8c+YQKvr60HlSyQ1TaSaXPW65xGRRxQ3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcqwhWvs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkRTJvtf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E3E1F000E9;
-	Wed, 20 May 2026 17:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcqwhWvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9921F000E9;
+	Wed, 20 May 2026 17:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296819;
-	bh=DiReyHYyoJX75Ec++qgzg7Y1xdIzb7HtirjTaKUrdT0=;
+	s=korg; t=1779296822;
+	bh=T4s1S0jiy/bX07vFfu5kvxJkpajs0WgcZ/NOr253BfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vkRTJvtfyTHsL/uB+keCoW5XJj4qN9ubpxP+VYPogSCXufdkal1O3iG8d2hc7U4mY
-	 LNxyi39zibQCSCUBjZxlIP5nILzVub+tpwqgVcL8wtfqhju/MJuaekzMkRzU5K2KIi
-	 p1LbofSm85Rvt3MKiWhJn1uwQpviA910EZdTFh/E=
+	b=BcqwhWvs++psD8/4MPlSr5bGHlzvJoHO/ThXuuHsjX8kvuKD+gNXgCRBRryOFk82t
+	 gN9bh2M7seL7350vs4OCffx2UXnms4J99qG/PYD5YLzdtfp6JS4cFujCrPiw/QKwHj
+	 prQOBWFZ+/PGb6lonvY6IAX3VN1v7aSWNETcAAFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Morduan Zang <zhangdandan@uniontech.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0943/1146] net: usb: rtl8150: free skb on usb_submit_urb() failure in xmit
-Date: Wed, 20 May 2026 18:19:53 +0200
-Message-ID: <20260520162209.574987622@linuxfoundation.org>
+Subject: [PATCH 7.0 0944/1146] spi: amlogic-spisg: initialize completion before requesting IRQ
+Date: Wed, 20 May 2026 18:19:54 +0200
+Message-ID: <20260520162209.596814062@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,59 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Morduan Zang <zhangdandan@uniontech.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit adbe2cdf75461891e50dbe11896ac78e9af1f874 ]
+[ Upstream commit 8d0189c1ea98b56481eb809e3d1bdbf85557e819 ]
 
-When rtl8150_start_xmit() fails to submit the tx URB, the URB is never
-handed to the USB core and write_bulk_callback() will not run.  The
-driver returns NETDEV_TX_OK, which tells the networking stack that the
-skb has been consumed, but nothing actually frees the skb on this
-error path:
+Move init_completion(&spisg->completion) to before devm_request_irq()
+to avoid a potential race condition where an interrupt could fire
+before the completion structure is initialized.
 
-  dev->tx_skb = skb;
-  ...
-  if ((res = usb_submit_urb(dev->tx_urb, GFP_ATOMIC))) {
-          ...
-          /* no kfree_skb here */
-  }
-  return NETDEV_TX_OK;
-
-This leaks the skb on every submit failure and also leaves dev->tx_skb
-pointing at memory that the driver itself may later free, which is
-fragile.
-
-Free the skb with dev_kfree_skb_any() in the error path and clear
-dev->tx_skb so no stale pointer is left behind.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
-Link: https://patch.msgid.link/E7D3E1C013C5A859+20260424015517.9574-1-zhangdandan@uniontech.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260428-amlogic-spisg-v1-1-8eecc3b446d6@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/spi/spi-amlogic-spisg.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 1bbfdeab4d624..c880c95c41a5e 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -710,6 +710,13 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 			netdev->stats.tx_errors++;
- 			netif_start_queue(netdev);
- 		}
-+		/*
-+		 * The URB was not submitted, so write_bulk_callback() will
-+		 * never run to free dev->tx_skb.  Drop the skb here and
-+		 * clear tx_skb to avoid leaving a stale pointer.
-+		 */
-+		dev->tx_skb = NULL;
-+		dev_kfree_skb_any(skb);
- 	} else {
- 		netdev->stats.tx_packets++;
- 		netdev->stats.tx_bytes += skb_len;
+diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
+index e15d7112bb55c..0280868f7edf5 100644
+--- a/drivers/spi/spi-amlogic-spisg.c
++++ b/drivers/spi/spi-amlogic-spisg.c
+@@ -794,6 +794,7 @@ static int aml_spisg_probe(struct platform_device *pdev)
+ 
+ 	dma_set_max_seg_size(&pdev->dev, SPISG_BLOCK_MAX);
+ 
++	init_completion(&spisg->completion);
+ 	ret = devm_request_irq(&pdev->dev, irq, aml_spisg_irq, 0, NULL, spisg);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "irq request failed\n");
+@@ -806,8 +807,6 @@ static int aml_spisg_probe(struct platform_device *pdev)
+ 		goto out_clk;
+ 	}
+ 
+-	init_completion(&spisg->completion);
+-
+ 	pm_runtime_put(&spisg->pdev->dev);
+ 
+ 	return 0;
 -- 
 2.53.0
 
