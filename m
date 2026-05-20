@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E093E33A6F2;
-	Wed, 20 May 2026 17:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BC034B40F;
+	Wed, 20 May 2026 17:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296634; cv=none; b=NEifaog9GvscEhBMXp+XBXjB9gxGEdl6VESagC1mo87mzEamTJdqnhEhW5R/rHwBDy4JQdA6ohoDLOvCRwbUyry+KiQCJM9ZG1I8NN+riY2HX5IuN+yxBzd/mm1TjmuJX96kMccHkMwylscDmACMz0ZYQ8lNBHm1m0550OAXXno=
+	t=1779296636; cv=none; b=VewKEAPx6dLEIfL52HJ0f7kHYZ5KMVBzk3G6gwG2u9XrGdrEYAOBUUvg7Hhq0LD9ZnW9RDI6T2uImQS4QLs35UKZPdc71HvSsrTDcUIDEpmjMFBA7YY6ziU9QNXvqNn4pvlGPf7X7oRg9eWDEyAKcVOhQTo+8/KfqjZ+H8Eazvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296634; c=relaxed/simple;
-	bh=r+DBm+J5sqAOhe/weI30WRQY26hmZndLbtcuLjOKN7I=;
+	s=arc-20240116; t=1779296636; c=relaxed/simple;
+	bh=ZXpfTtNtsh/PX4jDDMUQP/535Uh+97LQsJKx51JwhDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHMIY/e/rW4KTU6htTbAQGGNlCdFPnI1fs+31ZPa2FeGBL20iRgnEyRFHlW40YfQqw+xQKrvgKoYHQZ4ZrqS36Ka++XGxEWgqnoK4k0N7tGKKB5H7pxoEXG+IKNHZJNUeUH1UCdokA49PvohOoJjE8Tk8hUbRlYQtVLHTMD1OiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdPckLsF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XbiNWpy/XxCs2+DZUmyxKc1HG904X3CmgMhsrzmO9AGPB36XqkEkvvqvf6C5gpiXSR7NIw89G2Yx0YFQCKaF0qz6iJCHSpZzoc5ZpCRVqBpT6YLxIXw+ZRefdu7KclSNJfCOoRBwP5WliipbuYTMldSusC6GGuGl0OG/13Sh9kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzR+AvCS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdPckLsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D0B1F000E9;
-	Wed, 20 May 2026 17:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzR+AvCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7811F000E9;
+	Wed, 20 May 2026 17:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296632;
-	bh=TkBwuxZcpveCGjf47fj7pJ6B+JzqFklTv0DDe6sk67s=;
+	s=korg; t=1779296635;
+	bh=4/Gyxp9fGQ+pkWYEpPqMFVhdwzqpDf8tjjt3iLUclns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NdPckLsFgT+wvfInxTnGZU3SNF3Z5V0lbN+Ucsq2NKH6FnEvts1ntVYPg2A8iqWPX
-	 ugfpoeF05nWpXq+2Ug5b1V2xzFYPloTWP0jrsTCykEk8zawYA5db6r4wQRyn7mFpjL
-	 04p+/PsMjDH6I4WnEq+u1ZPDj/kBZ/5Nh5IOGWus=
+	b=SzR+AvCSgmBkqhQXIwWXUDIJNjez/9hkBp4xG6Ow5TBE4po5UBOsdcRWdllPjt+5t
+	 a8ipPKfelED4kjP6+I0jG/8GPJGL7MPR9yrJELLZNs/DCCE8gnLlBqsyLnYfa/2tCo
+	 TAQPW4xQbGLbNuOM0AbgVLGBLs+JTlioJY1OZg0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kito Xu (veritas501)" <hxzene@gmail.com>,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0821/1146] net/sched: sch_dualpi2: drain both C-queue and L-queue in dualpi2_change()
-Date: Wed, 20 May 2026 18:17:51 +0200
-Message-ID: <20260520162206.811573957@linuxfoundation.org>
+Subject: [PATCH 7.0 0867/1146] eventpoll: fix ep_remove struct eventpoll / struct file UAF
+Date: Wed, 20 May 2026 18:18:37 +0200
+Message-ID: <20260520162207.859517355@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,82 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 478ed6b7d2577439c610f91fa8759a4c878a4264 ]
+[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
 
-Fix dualpi2_change() to correctly enforce updated limit and memlimit
-values after a configuration change of the dualpi2 qdisc.
+ep_remove() (via ep_remove_file()) cleared file->f_ep under
+file->f_lock but then kept using @file inside the critical section
+(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
+A concurrent __fput() taking the eventpoll_release() fastpath in
+that window observed the transient NULL, skipped
+eventpoll_release_file() and ran to f_op->release / file_free().
 
-Before this patch, dualpi2_change() always attempted to dequeue packets
-via the root qdisc (C-queue) when reducing backlog or memory usage, and
-unconditionally assumed that a valid skb will be returned. When traffic
-classification results in packets being queued in the L-queue while the
-C-queue is empty, this leads to a NULL skb dereference during limit or
-memlimit enforcement.
+For the epoll-watches-epoll case, f_op->release is
+ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
+kfree()s the watched struct eventpoll. Its embedded ->refs
+hlist_head is exactly where epi->fllink.pprev points, so the
+subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
+kmalloc-192 memory.
 
-This is fixed by first dequeuing from the C-queue path if it is
-non-empty. Once the C-queue is empty, packets are dequeued directly from
-the L-queue. Return values from qdisc_dequeue_internal() are checked for
-both queues. When dequeuing from the L-queue, the parent qdisc qlen and
-backlog counters are updated explicitly to keep overall qdisc statistics
-consistent.
+In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
+backing @file could be recycled by alloc_empty_file() --
+reinitializing f_lock and f_ep -- while ep_remove() is still
+nominally inside that lock. The upshot is an attacker-controllable
+kmem_cache_free() against the wrong slab cache.
 
-Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
-Reported-by: "Kito Xu (veritas501)" <hxzene@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260413075740.2234828-1-hxzene@gmail.com/
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
-Link: https://patch.msgid.link/20260417152551.71648-1-chia-yu.chang@nokia-bell-labs.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Pin @file via epi_fget() at the top of ep_remove() and gate the
+critical section on the pin succeeding. With the pin held @file
+cannot reach refcount zero, which holds __fput() off and
+transitively keeps the watched struct eventpoll alive across the
+hlist_del_rcu() and the f_lock use, closing both UAFs.
+
+If the pin fails @file has already reached refcount zero and its
+__fput() is in flight. Because we bailed before clearing f_ep,
+that path takes the eventpoll_release() slow path into
+eventpoll_release_file() and blocks on ep->mtx until the waiter
+side's ep_clear_and_put() drops it. The bailed epi's share of
+ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
+in ep_clear_and_put() cannot free the eventpoll out from under
+eventpoll_release_file(); the orphaned epi is then cleaned up
+there.
+
+A successful pin also proves we are not racing
+eventpoll_release_file() on this epi, so drop the now-redundant
+re-check of epi->dying under f_lock. The cheap lockless
+READ_ONCE(epi->dying) fast-path bailout stays.
+
+Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_dualpi2.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ fs/eventpoll.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
-index 6d7e6389758dc..d200c08ce50a1 100644
---- a/net/sched/sch_dualpi2.c
-+++ b/net/sched/sch_dualpi2.c
-@@ -872,11 +872,35 @@ static int dualpi2_change(struct Qdisc *sch, struct nlattr *opt,
- 	old_backlog = sch->qstats.backlog;
- 	while (qdisc_qlen(sch) > sch->limit ||
- 	       q->memory_used > q->memory_limit) {
--		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
-+		struct sk_buff *skb = NULL;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 4971074ab476a..8c03de028c482 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -912,22 +912,26 @@ static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
+  */
+ static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+ {
+-	struct file *file = epi->ffd.file;
++	struct file *file __free(fput) = NULL;
  
--		q->memory_used -= skb->truesize;
--		qdisc_qstats_backlog_dec(sch, skb);
--		rtnl_qdisc_drop(skb, sch);
-+		if (qdisc_qlen(sch) > qdisc_qlen(q->l_queue)) {
-+			skb = qdisc_dequeue_internal(sch, true);
-+			if (unlikely(!skb)) {
-+				WARN_ON_ONCE(1);
-+				break;
-+			}
-+			q->memory_used -= skb->truesize;
-+			rtnl_qdisc_drop(skb, sch);
-+		} else if (qdisc_qlen(q->l_queue)) {
-+			skb = qdisc_dequeue_internal(q->l_queue, true);
-+			if (unlikely(!skb)) {
-+				WARN_ON_ONCE(1);
-+				break;
-+			}
-+			/* L-queue packets are counted in both sch and
-+			 * l_queue on enqueue; qdisc_dequeue_internal()
-+			 * handled l_queue, so we further account for sch.
-+			 */
-+			--sch->q.qlen;
-+			qdisc_qstats_backlog_dec(sch, skb);
-+			q->memory_used -= skb->truesize;
-+			rtnl_qdisc_drop(skb, q->l_queue);
-+			qdisc_qstats_drop(sch);
-+		} else {
-+			WARN_ON_ONCE(1);
-+			break;
-+		}
- 	}
- 	qdisc_tree_reduce_backlog(sch, old_qlen - qdisc_qlen(sch),
- 				  old_backlog - sch->qstats.backlog);
+ 	lockdep_assert_irqs_enabled();
+ 	lockdep_assert_held(&ep->mtx);
+ 
+ 	ep_unregister_pollwait(ep, epi);
+ 
+-	/* sync with eventpoll_release_file() */
++	/* cheap sync with eventpoll_release_file() */
+ 	if (unlikely(READ_ONCE(epi->dying)))
+ 		return;
+ 
+-	spin_lock(&file->f_lock);
+-	if (epi->dying) {
+-		spin_unlock(&file->f_lock);
++	/*
++	 * If we manage to grab a reference it means we're not in
++	 * eventpoll_release_file() and aren't going to be.
++	 */
++	file = epi_fget(epi);
++	if (!file)
+ 		return;
+-	}
++
++	spin_lock(&file->f_lock);
+ 	ep_remove_file(ep, epi, file);
+ 
+ 	if (ep_remove_epi(ep, epi))
 -- 
 2.53.0
 
