@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5A43DC4DA;
-	Wed, 20 May 2026 18:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435F93F54D1;
+	Wed, 20 May 2026 18:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300649; cv=none; b=gZ85NmH9qDpU+W7jR1QRcO49bTS67VUkIji5jFmmW9t4b4L+sBuaIHnf/NDROhifx/G+BIkN9je41ePpdT/1A+q7KEI0y2ax6RlO7qq4oBedtEBgnzMl161kSyR6BAxplutCMH/Zdesjn7EY4GeevtNtMZBY9RbTAqsRFrYPgSE=
+	t=1779300652; cv=none; b=MfHQhRuvT0NWpK6xWkmY492Vt1Dtz/jbYSCYA2Y0eMGl9A7b4zDlOHM4LAFyp8iDe05xyFwkUjIqXcWjyG7XAcYJEq2f2FfcWvPE0C8YmRVffp8Rf0RRVciXz6HE/NSy9QKtKboSNGuvyLENEdCsebOeYe2MDog9Kz2unuWIAwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300649; c=relaxed/simple;
-	bh=ZQIQY6z54/hH+RqEac5bVkV+nqXnjUYvRpX5w75/jdg=;
+	s=arc-20240116; t=1779300652; c=relaxed/simple;
+	bh=/G6B9+9cpwbYrTWBj6L2lpfWGcVaIz0OV3Ffz0jjdyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ToX49LLdsg0+LuK2biuCL+hyAS09aF9iwWZhlAaHe5RzwBvtSZoGnxGYuWuk8e6uNmJeXihjFD/K4cf4uS3i1ZpzSCNHD/JGPmECN8Hr8YFoQAhBIQQeImaezjmhOXwYlXAdhyjFQISYQ6zzSTuWAqNSkQMQbvsinI8IXAKNNtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMfHM5Js; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyphkq34bVx5W8wEZlPSYnJO9iCNAuv1IKjigH6I5oiUsYhJAnvsKt6uoMCfcWOrMz7JmNEQZGxrYmp1ACTrIC28ctNBDQfPJLU8k4qy091dAomlkOoz6m8KnRGzn1oCL39Qxuf4r0CXsuR+6GxBAdQDhz5rQWvRxXVrbWy4k9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJIyOeHt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMfHM5Js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D91F000E9;
-	Wed, 20 May 2026 18:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJIyOeHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84741F000E9;
+	Wed, 20 May 2026 18:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300648;
-	bh=1YR9uz0Y29F2+JlT8IY/IUq7SX4Gu59jcvfbHb4e26Y=;
+	s=korg; t=1779300651;
+	bh=DdI76JqD67D2metYncayb+tSFjMCa+CZ1/CZ8MsMTQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMfHM5JswjGZFw2dFATgcalGFeOXJAanj6hQcSiaoUK5MtIxPyACzqcgkLjYVAsSJ
-	 PjDYBC1O+79a1FE5NDgppU6G/FLba8vcMMOZmCZ8L63pJlrbtxaUSrEDZTNiyNP7F+
-	 wUfJGiNIt1WxiKR/EYYkTGbHnD86KZTpHbGXn4mQ=
+	b=SJIyOeHtkOzfq5T9HSd6ohPVsuZlSYe1DiWqrc1uDeSJ1EjFsCPr3epK/lPgNWANe
+	 2uF1RTiJpfQzTmgsB1Ik+p5PbHjgWamqRyeJaoAEZSqqIwMuFljwHuO7yz8MGM9Wcb
+	 2d/ZToyuz/ykGlBnue05LmJTmVZToaiHc5oa6k8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
 	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/666] iommu/amd: Introduce helper function to update 256-bit DTE
-Date: Wed, 20 May 2026 18:17:05 +0200
-Message-ID: <20260520162115.845659816@linuxfoundation.org>
+Subject: [PATCH 6.12 215/666] iommu/amd: Introduce helper function get_dte256()
+Date: Wed, 20 May 2026 18:17:06 +0200
+Message-ID: <20260520162115.868583764@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,228 +54,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit 8b3f78733814b180089a400743b6f19d118aec62 ]
+[ Upstream commit a2ce608a1eb65c2af99c58b63eae557165a0da87 ]
 
-The current implementation does not follow 128-bit write requirement
-to update DTE as specified in the AMD I/O Virtualization Techonology
-(IOMMU) Specification.
+And use it in clone_alias() along with update_dte256().
+Also use get_dte256() in dump_dte_entry().
 
-Therefore, modify the struct dev_table_entry to contain union of u128 data
-array, and introduce a helper functions update_dte256() to update DTE using
-two 128-bit cmpxchg operations to update 256-bit DTE with the modified
-structure, and take into account the DTE[V, GV] bits when programming
-the DTE to ensure proper order of DTE programming and flushing.
-
-In addition, introduce a per-DTE spin_lock struct dev_data.dte_lock to
-provide synchronization when updating the DTE to prevent cmpxchg128
-failure.
-
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Suggested-by: Uros Bizjak <ubizjak@gmail.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Uros Bizjak <ubizjak@gmail.com>
 Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/20241118054937.5203-5-suravee.suthikulpanit@amd.com
+Link: https://lore.kernel.org/r/20241118054937.5203-7-suravee.suthikulpanit@amd.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Stable-dep-of: faad224fe0f0 ("iommu/amd: Fix clone_alias() to use the original device's devid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |  10 ++-
- drivers/iommu/amd/iommu.c           | 123 ++++++++++++++++++++++++++++
- 2 files changed, 132 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/iommu.c | 62 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 51 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index eadb4379cb4a1..7f13b314abbce 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -426,9 +426,13 @@
- #define DTE_GCR3_SHIFT_C	43
- 
- #define DTE_GPT_LEVEL_SHIFT	54
-+#define DTE_GPT_LEVEL_MASK	GENMASK_ULL(55, 54)
- 
- #define GCR3_VALID		0x01ULL
- 
-+/* DTE[128:179] | DTE[184:191] */
-+#define DTE_DATA2_INTR_MASK	~GENMASK_ULL(55, 52)
-+
- #define IOMMU_PAGE_MASK (((1ULL << 52) - 1) & ~0xfffULL)
- #define IOMMU_PTE_PRESENT(pte) ((pte) & IOMMU_PTE_PR)
- #define IOMMU_PTE_DIRTY(pte) ((pte) & IOMMU_PTE_HD)
-@@ -839,6 +843,7 @@ struct devid_map {
- struct iommu_dev_data {
- 	/*Protect against attach/detach races */
- 	struct mutex mutex;
-+	spinlock_t dte_lock;              /* DTE lock for 256-bit access */
- 
- 	struct list_head list;		  /* For domain->dev_list */
- 	struct llist_node dev_data_list;  /* For global dev_data_list */
-@@ -889,7 +894,10 @@ extern struct amd_iommu *amd_iommus[MAX_IOMMUS];
-  * Structure defining one entry in the device table
-  */
- struct dev_table_entry {
--	u64 data[4];
-+	union {
-+		u64 data[4];
-+		u128 data128[2];
-+	};
- };
- 
- /*
 diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 2a2b9e3e3be7e..e5c6cf57439c9 100644
+index e5c6cf57439c9..3e28aefdc6a02 100644
 --- a/drivers/iommu/amd/iommu.c
 +++ b/drivers/iommu/amd/iommu.c
-@@ -77,12 +77,125 @@ static void detach_device(struct device *dev);
- static void set_dte_entry(struct amd_iommu *iommu,
- 			  struct iommu_dev_data *dev_data);
+@@ -79,6 +79,8 @@ static void set_dte_entry(struct amd_iommu *iommu,
  
-+static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid);
+ static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid);
+ 
++static struct iommu_dev_data *find_dev_data(struct amd_iommu *iommu, u16 devid);
 +
  /****************************************************************************
   *
   * Helper functions
-  *
-  ****************************************************************************/
+@@ -196,6 +198,21 @@ static void update_dte256(struct amd_iommu *iommu, struct iommu_dev_data *dev_da
+ 	spin_unlock_irqrestore(&dev_data->dte_lock, flags);
+ }
  
-+static __always_inline void amd_iommu_atomic128_set(__int128 *ptr, __int128 val)
-+{
-+	/*
-+	 * Note:
-+	 * We use arch_cmpxchg128_local() because:
-+	 * - Need cmpxchg16b instruction mainly for 128-bit store to DTE
-+	 *   (not necessary for cmpxchg since this function is already
-+	 *   protected by a spin_lock for this DTE).
-+	 * - Neither need LOCK_PREFIX nor try loop because of the spin_lock.
-+	 */
-+	arch_cmpxchg128_local(ptr, *ptr, val);
-+}
-+
-+static void write_dte_upper128(struct dev_table_entry *ptr, struct dev_table_entry *new)
-+{
-+	struct dev_table_entry old;
-+
-+	old.data128[1] = ptr->data128[1];
-+	/*
-+	 * Preserve DTE_DATA2_INTR_MASK. This needs to be
-+	 * done here since it requires to be inside
-+	 * spin_lock(&dev_data->dte_lock) context.
-+	 */
-+	new->data[2] &= ~DTE_DATA2_INTR_MASK;
-+	new->data[2] |= old.data[2] & DTE_DATA2_INTR_MASK;
-+
-+	amd_iommu_atomic128_set(&ptr->data128[1], new->data128[1]);
-+}
-+
-+static void write_dte_lower128(struct dev_table_entry *ptr, struct dev_table_entry *new)
-+{
-+	amd_iommu_atomic128_set(&ptr->data128[0], new->data128[0]);
-+}
-+
-+/*
-+ * Note:
-+ * IOMMU reads the entire Device Table entry in a single 256-bit transaction
-+ * but the driver is programming DTE using 2 128-bit cmpxchg. So, the driver
-+ * need to ensure the following:
-+ *   - DTE[V|GV] bit is being written last when setting.
-+ *   - DTE[V|GV] bit is being written first when clearing.
-+ *
-+ * This function is used only by code, which updates DMA translation part of the DTE.
-+ * So, only consider control bits related to DMA when updating the entry.
-+ */
-+static void update_dte256(struct amd_iommu *iommu, struct iommu_dev_data *dev_data,
-+			  struct dev_table_entry *new)
++static void get_dte256(struct amd_iommu *iommu, struct iommu_dev_data *dev_data,
++		      struct dev_table_entry *dte)
 +{
 +	unsigned long flags;
++	struct dev_table_entry *ptr;
 +	struct dev_table_entry *dev_table = get_dev_table(iommu);
-+	struct dev_table_entry *ptr = &dev_table[dev_data->devid];
++
++	ptr = &dev_table[dev_data->devid];
 +
 +	spin_lock_irqsave(&dev_data->dte_lock, flags);
-+
-+	if (!(ptr->data[0] & DTE_FLAG_V)) {
-+		/* Existing DTE is not valid. */
-+		write_dte_upper128(ptr, new);
-+		write_dte_lower128(ptr, new);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+	} else if (!(new->data[0] & DTE_FLAG_V)) {
-+		/* Existing DTE is valid. New DTE is not valid.  */
-+		write_dte_lower128(ptr, new);
-+		write_dte_upper128(ptr, new);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+	} else if (!FIELD_GET(DTE_FLAG_GV, ptr->data[0])) {
-+		/*
-+		 * Both DTEs are valid.
-+		 * Existing DTE has no guest page table.
-+		 */
-+		write_dte_upper128(ptr, new);
-+		write_dte_lower128(ptr, new);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+	} else if (!FIELD_GET(DTE_FLAG_GV, new->data[0])) {
-+		/*
-+		 * Both DTEs are valid.
-+		 * Existing DTE has guest page table,
-+		 * new DTE has no guest page table,
-+		 */
-+		write_dte_lower128(ptr, new);
-+		write_dte_upper128(ptr, new);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+	} else if (FIELD_GET(DTE_GPT_LEVEL_MASK, ptr->data[2]) !=
-+		   FIELD_GET(DTE_GPT_LEVEL_MASK, new->data[2])) {
-+		/*
-+		 * Both DTEs are valid and have guest page table,
-+		 * but have different number of levels. So, we need
-+		 * to upadte both upper and lower 128-bit value, which
-+		 * require disabling and flushing.
-+		 */
-+		struct dev_table_entry clear = {};
-+
-+		/* First disable DTE */
-+		write_dte_lower128(ptr, &clear);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+
-+		/* Then update DTE */
-+		write_dte_upper128(ptr, new);
-+		write_dte_lower128(ptr, new);
-+		iommu_flush_dte_sync(iommu, dev_data->devid);
-+	} else {
-+		/*
-+		 * Both DTEs are valid and have guest page table,
-+		 * and same number of levels. We just need to only
-+		 * update the lower 128-bit. So no need to disable DTE.
-+		 */
-+		write_dte_lower128(ptr, new);
-+	}
-+
++	dte->data128[0] = ptr->data128[0];
++	dte->data128[1] = ptr->data128[1];
 +	spin_unlock_irqrestore(&dev_data->dte_lock, flags);
 +}
 +
  static inline bool pdom_is_v2_pgtbl_mode(struct protection_domain *pdom)
  {
  	return (pdom && (pdom->pd_mode == PD_MODE_V2));
-@@ -226,6 +339,7 @@ static struct iommu_dev_data *alloc_dev_data(struct amd_iommu *iommu, u16 devid)
- 		return NULL;
+@@ -367,9 +384,11 @@ static struct iommu_dev_data *search_dev_data(struct amd_iommu *iommu, u16 devid
  
- 	mutex_init(&dev_data->mutex);
-+	spin_lock_init(&dev_data->dte_lock);
- 	dev_data->devid = devid;
- 	ratelimit_default_init(&dev_data->rs);
+ static int clone_alias(struct pci_dev *pdev, u16 alias, void *data)
+ {
++	struct dev_table_entry new;
+ 	struct amd_iommu *iommu;
+-	struct dev_table_entry *dev_table;
++	struct iommu_dev_data *dev_data, *alias_data;
+ 	u16 devid = pci_dev_id(pdev);
++	int ret = 0;
  
-@@ -1312,6 +1426,15 @@ static int iommu_flush_dte(struct amd_iommu *iommu, u16 devid)
- 	return iommu_queue_command(iommu, &cmd);
+ 	if (devid == alias)
+ 		return 0;
+@@ -378,13 +397,27 @@ static int clone_alias(struct pci_dev *pdev, u16 alias, void *data)
+ 	if (!iommu)
+ 		return 0;
+ 
+-	amd_iommu_set_rlookup_table(iommu, alias);
+-	dev_table = get_dev_table(iommu);
+-	memcpy(dev_table[alias].data,
+-	       dev_table[devid].data,
+-	       sizeof(dev_table[alias].data));
++	/* Copy the data from pdev */
++	dev_data = dev_iommu_priv_get(&pdev->dev);
++	if (!dev_data) {
++		pr_err("%s : Failed to get dev_data for 0x%x\n", __func__, devid);
++		ret = -EINVAL;
++		goto out;
++	}
++	get_dte256(iommu, dev_data, &new);
+ 
+-	return 0;
++	/* Setup alias */
++	alias_data = find_dev_data(iommu, alias);
++	if (!alias_data) {
++		pr_err("%s : Failed to get alias dev_data for 0x%x\n", __func__, alias);
++		ret = -EINVAL;
++		goto out;
++	}
++	update_dte256(iommu, alias_data, &new);
++
++	amd_iommu_set_rlookup_table(iommu, alias);
++out:
++	return ret;
  }
  
-+static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid)
-+{
-+	int ret;
+ static void clone_aliases(struct amd_iommu *iommu, struct device *dev)
+@@ -657,6 +690,12 @@ static int iommu_init_device(struct amd_iommu *iommu, struct device *dev)
+ 		return -ENOMEM;
+ 
+ 	dev_data->dev = dev;
 +
-+	ret = iommu_flush_dte(iommu, devid);
-+	if (!ret)
-+		iommu_completion_wait(iommu);
-+}
-+
- static void amd_iommu_flush_dte_all(struct amd_iommu *iommu)
++	/*
++	 * The dev_iommu_priv_set() needes to be called before setup_aliases.
++	 * Otherwise, subsequent call to dev_iommu_priv_get() will fail.
++	 */
++	dev_iommu_priv_set(dev, dev_data);
+ 	setup_aliases(iommu, dev);
+ 
+ 	/*
+@@ -670,8 +709,6 @@ static int iommu_init_device(struct amd_iommu *iommu, struct device *dev)
+ 		dev_data->flags = pdev_get_caps(to_pci_dev(dev));
+ 	}
+ 
+-	dev_iommu_priv_set(dev, dev_data);
+-
+ 	return 0;
+ }
+ 
+@@ -718,10 +755,13 @@ static void amd_iommu_uninit_device(struct device *dev)
+ static void dump_dte_entry(struct amd_iommu *iommu, u16 devid)
  {
- 	u32 devid;
+ 	int i;
+-	struct dev_table_entry *dev_table = get_dev_table(iommu);
++	struct dev_table_entry dte;
++	struct iommu_dev_data *dev_data = find_dev_data(iommu, devid);
++
++	get_dte256(iommu, dev_data, &dte);
+ 
+ 	for (i = 0; i < 4; ++i)
+-		pr_err("DTE[%d]: %016llx\n", i, dev_table[devid].data[i]);
++		pr_err("DTE[%d]: %016llx\n", i, dte.data[i]);
+ }
+ 
+ static void dump_command(unsigned long phys_addr)
 -- 
 2.53.0
 
