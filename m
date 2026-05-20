@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3671CDFCA;
-	Wed, 20 May 2026 16:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C755731A575;
+	Wed, 20 May 2026 16:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295675; cv=none; b=f+cXer8OZQk2RH1Op/LOZzHLGIkFqNoBhK+/HEq2R8sBjYrMDtkZDJSjtxBnjZxAuWdHKcLXwHd1vaHDhtnEN9+XJMTcwkQlVYhrf4nF4iwIjAReOz1XNtMrdoUD/H8umKPvkRDaXJg1FlI7r6mc4qZq/wBvl3xkvzuONrdCo7E=
+	t=1779295677; cv=none; b=VuuCPFxpfhDmsvh5cKSZSP9Hp6s7KSUapunkxAEIEBzvSaH229LKJKMYi9q4zQFdjqM8nHsHr6G7NVkoRHxM/AG8Az47es943fasXqSMN+wzNaM9IqD+1DLeCxq3KSBhEwHxf7vAsyPnBAXDQxS5BhsKXEA8UWyUo0ujPbz6H4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295675; c=relaxed/simple;
-	bh=7MVTeSLb6uZWSGXUd5g0jgmMfWVVaMhaVr9BHsiue9w=;
+	s=arc-20240116; t=1779295677; c=relaxed/simple;
+	bh=mV7ayiho8Y7/OB4wLdJffBU/z075lrOSkuEZwEjFvew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvcbRpaRx7sndWy6/3EW+5gh9oo/z/1K+Jyrede9m4B/NDlMK2/Tq4Tuc9w8xhNls6pG5gpcYtMpSc4EuXCD6Fj0XtQtYFcq2e8rSRWWTg/x6gFRR/YjWmdyBHY4o7csM9o2V+XAnRm3PDQ0PD19TvmnF9XRVNs8lV1kGFqSAr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP2wCwae; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gxXDvetShbQhL+dqZsvQ1b/jGTptTCoN4Mf8ac6RrWTlJdnwmNq5DRa288TnB9A1pixn/7XQsUhqpb/Mtkv35gLmmnYi8eElA5iPDPg9+xWnweeeEyjO3LHHbaBe6XUobBZG9Pm+G5c8UGwXDrqw672s2Siu3U42c2ke0J1qov8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgJV1vMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP2wCwae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904DF1F000E9;
-	Wed, 20 May 2026 16:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgJV1vMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389A71F000E9;
+	Wed, 20 May 2026 16:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295674;
-	bh=gPYr8ygwSSoS4Rp3SPUQt3Wiodni0T2Zrcb8WMKV6ME=;
+	s=korg; t=1779295676;
+	bh=32cXe74AaLJvxm8sBzk/+C6V+Ylh9ztq2Y4kIcYzFH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dP2wCwaecX4fP1TtVdd+gW5zEU4cvcwHiwLgmUnpibLRSsVykD+l+umGZ9w8IZREI
-	 e/FSTeGiGjA5Sd98kSPg0/YXNmRNG8w+QaMXn2ApKrdYLjotHr7YSDUzCNtlhpAMtQ
-	 oJbfQWme3YgUGILJKE/5kTQiMez5vsUgl4aokppU=
+	b=tgJV1vMvTFESljMT89ugCcjc9wrpum6xGangX7+RG330BTiNDlYvavH6pNz8sdknZ
+	 xJePKPFxk8SlCm6aRw8UmEP28PK1jvbrPLJvXFAqf4lm5X9d7NPy5clPdWfychJ9BA
+	 WkN24zpzq+W2yAbHzgsZUNE8es6wN6mr/oXxfVXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gatien Chevallier <gatien.chevallier@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Riccardo Mereu <r.mereu@arduino.cc>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0508/1146] bus: rifsc: fix RIF configuration check for peripherals
-Date: Wed, 20 May 2026 18:12:38 +0200
-Message-ID: <20260520162159.684661843@linuxfoundation.org>
+Subject: [PATCH 7.0 0509/1146] arm64: dts: qcom: arduino-imola: fix faulty spidev node
+Date: Wed, 20 May 2026 18:12:39 +0200
+Message-ID: <20260520162159.705382783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,100 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gatien Chevallier <gatien.chevallier@foss.st.com>
+From: Riccardo Mereu <r.mereu@arduino.cc>
 
-[ Upstream commit d5ce3b4e951bc41a6ce877c8500bb4fe42146669 ]
+[ Upstream commit 1a040df09fab28b31399fce14a76455b536a2b08 ]
 
-Peripheral holding CID0 cannot be accessed, remove this completely
-incorrect check. While there, fix  and simplify the semaphore checking
-that should be performed when the CID filtering is enabled.
+CS pin added on pinctrl0 property is causing spidev to return -ENODEV
+since that GPIO is already part of spi5 pinmuxing.
 
-Fixes: a18208457253 ("bus: rifsc: introduce RIFSC firewall controller driver")
-Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
-Link: https://lore.kernel.org/r/20260129-fix_cid_check_rifsc-v1-1-ef280ccf764d@foss.st.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 3f745bc0f11f ("arm64: dts: qcom: qrb2210: add dts for Arduino unoq")
+Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260213101002.105238-1-r.mereu.kernel@arduino.cc
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/stm32_rifsc.c | 52 ++++++++++++++-------------------------
- 1 file changed, 18 insertions(+), 34 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/bus/stm32_rifsc.c b/drivers/bus/stm32_rifsc.c
-index debeaf8ea1bd2..5682c086ba1e8 100644
---- a/drivers/bus/stm32_rifsc.c
-+++ b/drivers/bus/stm32_rifsc.c
-@@ -688,34 +688,6 @@ static int stm32_rifsc_grant_access(struct stm32_firewall_controller *ctrl, u32
- 	sec_reg_value = readl(rifsc_controller->mmio + RIFSC_RISC_SECCFGR0 + 0x4 * reg_id);
- 	cid_reg_value = readl(rifsc_controller->mmio + RIFSC_RISC_PER0_CIDCFGR + 0x8 * firewall_id);
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+index 197ab6eb1666f..5ab605cc56c80 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+@@ -325,21 +325,13 @@ &sdhc_1 {
+ &spi5 {
+ 	status = "okay";
  
--	/* First check conditions for semaphore mode, which doesn't take into account static CID. */
--	if ((cid_reg_value & CIDCFGR_SEMEN) && (cid_reg_value & CIDCFGR_CFEN)) {
--		if (cid_reg_value & BIT(RIF_CID1 + SEMWL_SHIFT)) {
--			/* Static CID is irrelevant if semaphore mode */
--			goto skip_cid_check;
--		} else {
--			dev_dbg(rifsc_controller->dev,
--				"Invalid bus semaphore configuration: index %d\n", firewall_id);
--			return -EACCES;
--		}
--	}
+-	spidev@0 {
+-		reg = <0>;
++	mcu@0 {
+ 		compatible = "arduino,unoq-mcu";
+-		pinctrl-0 = <&spidev_cs>;
+-		pinctrl-names = "default";
++		reg = <0>;
+ 	};
+ };
+ 
+ &tlmm {
+-	spidev_cs: spidev-cs-state {
+-		pins = "gpio17";
+-		function = "gpio";
+-		drive-strength = <16>;
+-	};
 -
--	/*
--	 * Skip CID check if CID filtering isn't enabled or filtering is enabled on CID0, which
--	 * corresponds to whatever CID.
--	 */
--	if (!(cid_reg_value & CIDCFGR_CFEN) ||
--	    FIELD_GET(RIFSC_RISC_SCID_MASK, cid_reg_value) == RIF_CID0)
--		goto skip_cid_check;
--
--	/* Coherency check with the CID configuration */
--	if (FIELD_GET(RIFSC_RISC_SCID_MASK, cid_reg_value) != RIF_CID1) {
--		dev_dbg(rifsc_controller->dev, "Invalid CID configuration for peripheral: %d\n",
--			firewall_id);
--		return -EACCES;
--	}
--
--skip_cid_check:
- 	/* Check security configuration */
- 	if (sec_reg_value & BIT(reg_offset)) {
- 		dev_dbg(rifsc_controller->dev,
-@@ -723,19 +695,31 @@ static int stm32_rifsc_grant_access(struct stm32_firewall_controller *ctrl, u32
- 		return -EACCES;
- 	}
- 
--	/*
--	 * If the peripheral is in semaphore mode, take the semaphore so that
--	 * the CID1 has the ownership.
--	 */
--	if ((cid_reg_value & CIDCFGR_SEMEN) && (cid_reg_value & CIDCFGR_CFEN)) {
-+	/* Skip CID check if CID filtering isn't enabled */
-+	if (!(cid_reg_value & CIDCFGR_CFEN))
-+		goto skip_cid_check;
-+
-+	/* First check conditions for semaphore mode, which doesn't take into account static CID. */
-+	if (cid_reg_value & CIDCFGR_SEMEN) {
-+		if (!(cid_reg_value & BIT(RIF_CID1 + SEMWL_SHIFT))) {
-+			dev_dbg(rifsc_controller->dev,
-+				"Invalid bus semaphore configuration: index %d\n", firewall_id);
-+			return -EACCES;
-+		}
-+
- 		rc = stm32_rif_acquire_semaphore(rifsc_controller, firewall_id);
- 		if (rc) {
--			dev_err(rifsc_controller->dev,
-+			dev_dbg(rifsc_controller->dev,
- 				"Couldn't acquire semaphore for peripheral: %d\n", firewall_id);
- 			return rc;
- 		}
-+	} else if (FIELD_GET(RIFSC_RISC_SCID_MASK, cid_reg_value) != RIF_CID1) {
-+		dev_dbg(rifsc_controller->dev, "Invalid CID configuration for peripheral: %d\n",
-+			firewall_id);
-+		return -EACCES;
- 	}
- 
-+skip_cid_check:
- 	return 0;
- }
- 
+ 	jmisc_gpio18: jmisc-gpio18-state {
+ 		pins = "gpio18";
+ 		function = "gpio";
 -- 
 2.53.0
 
