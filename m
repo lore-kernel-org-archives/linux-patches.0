@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397753ED101;
-	Wed, 20 May 2026 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20273ED3C1;
+	Wed, 20 May 2026 11:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276031; cv=none; b=Jz/B8JDWif+LoUgld1JnUoFNqSm/To8IgztJ4Mf11KHvloDfN76nlnV66yLiwHvyMYKS+F5EeFghj21P+m//okCdGKoFkzw5/hAkK+CZuNiYaGymrmbwhH7xtN6qzDjD2Hx/GyLAG4hOYzyk4oNFvVH3pO02RoshmGeoJdM4Fsk=
+	t=1779276032; cv=none; b=rYKXclA7cuSxCEheSMIZR7TVGRMJaGf3xFXK7PcwlzMwTkUAUUwm1/lGjnz7LSojvRFHhcMPlh8hHM/exY9VkptdPQbxww7CN/4LaexdvWnjI12xUUvl8BoQWIfdJ95HBRBWRASDsoCcbJKyUJ/YMaucNZxnZCanYX4YfLJS0FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276031; c=relaxed/simple;
-	bh=/f1dkoMOYh2RR1CObnbD2BmpdshIha+UVPZO2IBiPlY=;
+	s=arc-20240116; t=1779276032; c=relaxed/simple;
+	bh=6G8mJUruCA7qk3la4XjD6mES1+LbZxcjEMGxXtoDUQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gDQfI22nloFEscwASYkcwje/5zbf7MurQPKhT0+wOkyt7hkUNXDCLxDjVPWMXgoknxVEKMb68FUmMbeLonPOHLQmtR2TCff9SiDCMc0Gqos+kfjkhRw2sQobTFd0z3Mfww7dCKr7KJWtaUY/pFXju9QEbgfLhwjBLSnN4TfL/88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BjJnj0Iu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=euQYRDxhylRV+I46NiAsYSgyR80FzF7QMRAikTBySv+rg2m3xqHAscV48aatN2mg60pk+MOgXCKZAJGUDY4SOVp5RQbDy4bGePLHB71dUuW2XHizXoWs+slFWJsZgGX9L9jjUZyQdPoqAZOdl544dxxoQMVlswOGXYePAlCktXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ur9V40zZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BjJnj0Iu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2151F00893;
-	Wed, 20 May 2026 11:20:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ur9V40zZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA101F00897;
+	Wed, 20 May 2026 11:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276029;
-	bh=Uh5pQeh7zolaDZ4VFIzk+6i9+Br/yH8uwlk6r6E+oBE=;
+	s=k20260515; t=1779276030;
+	bh=ytUTrqgPtCXZ91Xi5mCBiWhz2KSy2GNakoWUqvng6so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BjJnj0IuCsjdRVU+nzbLTEyfrYZzN0Co3TNTEtmyOEcjtxjk0gVV4GCnE6HsIRAOd
-	 qB3DYUV/LfjbOdQpNByhegAmxtwmeB2NWRX0C5/G47oGFit7U2HNSjrGcwMDyYWE/K
-	 PO/z8H6b+ZKZlvREyaSnL82fw0THPCuJMrreqj3qAIwKCNMoKlTSNe4qb6tmXOEBhk
-	 VZ8dPT0d2uY6nLCjZZC0utaoaBDwD14wfRCaP8NMM3k3wyaHDey5j+Qr9teNZePRm7
-	 ARhaCswPnfB22qugJJWEKj/bLqE7n5rAZkYzuIpaYl70OKFBLH68VOItu5ipH+SA3H
-	 hR8lmWMyWNsIQ==
+	b=Ur9V40zZMiYAKdlT/lKKN5blp+ZTHZyIm/Q0hFYKWfvacgXggxMpCxyZifgt3Sv5q
+	 W/rIIk/D0VNUtf3VmTUtn+SqQCgMNVHzIjzoB11EV1VEb+FIn9e2WJZJPsN3uNRXit
+	 XHsv8u1Iu4v1ZXOI5RQSlpCwqft9GXsbQmZeVPbRXKEGHBBSI2CXoZL2sKWv9CxtCf
+	 vaed2olmyL8cEXAABShURhBW/PeEgxPmR5pSMPc1BYLftSUK+hCIQ+35l0WCXDWS6f
+	 1qt6Vd/EoPOjmj3TWf8IzIddChoIC8wj6T8a1NE5vnkinR6jGa0PE0Fosh/m1UzuEg
+	 VDahAGp16fbMA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Ninad Naik <ninadnaik07@gmail.com>,
+	Liam Merwick <liam.merwick@oracle.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	corbet@lwn.net,
+	kvm@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] ALSA: hda/realtek: Limit mic boost on Positivo DN50E
-Date: Wed, 20 May 2026 07:19:03 -0400
-Message-ID: <20260520111944.3424570-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] Documentation: kvm: update links in the references section of AMD Memory Encryption
+Date: Wed, 20 May 2026 07:19:04 -0400
+Message-ID: <20260520111944.3424570-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,217 +55,277 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Ninad Naik <ninadnaik07@gmail.com>
 
-[ Upstream commit d02d2d51a50d1bbf44a50eda094aa2b10fecf023 ]
+[ Upstream commit 80f4a7b8ce7513c203562191426e4d4cc635b095 ]
 
-The internal mic boost on the Positivo DN50E is too high.
-Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
-to limit the gain.
+Replace non-working links in the reference section with the working ones.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://patch.msgid.link/20260511181558.670563-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ninad Naik <ninadnaik07@gmail.com>
+Link: https://patch.msgid.link/20260511174302.811918-1-ninadnaik07@gmail.com/
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Stable Backport Analysis
+## Phase 1: Commit Message Forensics
 
-### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem is `ALSA: hda/realtek`; action is “Limit” / “Fix”;
-claimed intent is to cap excessive internal microphone boost on Positivo
-DN50E.
+Step 1.1 Record: Subsystem `Documentation: kvm`; action verb `update` /
+body verb `Replace`; intent is to replace non-working AMD Memory
+Encryption reference links with working links.
 
-Record 1.2: Tags present are `Signed-off-by: Edson Juliano Drosdeck`,
-`Link: https://patch.msgid.link/20260511181558.670563-1-
-edson.drosdeck@gmail.com`, and `Signed-off-by: Takashi Iwai`. No
-`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or
-`Cc: stable` tag was present.
+Step 1.2 Record: Tags found: `Signed-off-by: Ninad Naik
+<ninadnaik07@gmail.com>`, `Link: https://patch.msgid.link/20260511174302
+.811918-1-ninadnaik07@gmail.com/`, `Reviewed-by: Liam Merwick
+<liam.merwick@oracle.com>`, `Signed-off-by: Paolo Bonzini
+<pbonzini@redhat.com>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Acked-by:`, or `Cc: stable@vger.kernel.org`.
 
-Record 1.3: The described bug is excessive internal mic boost on this
-machine. The existing fixup comment verifies the mechanism: boost levels
-2 and 3 are “too noisy” on internal mic input, so the fixup limits boost
-to levels 0 or 1.
+Step 1.3 Record: The commit body describes a documentation issue only:
+reference links in `Documentation/virt/kvm/x86/amd-memory-
+encryption.rst` no longer work as intended. The user-visible symptom is
+stale/broken documentation references for AMD SEV/SEV-SNP material. No
+runtime failure, crash, data corruption, or kernel version note is
+described.
 
-Record 1.4: This is not a hidden bug fix; it is an explicit hardware
-quirk for a user-visible audio problem.
+Step 1.4 Record: This is not a hidden runtime bug fix. It is a direct
+documentation fix, which is an allowed stable exception category due to
+zero runtime risk.
 
-### Phase 2: Diff Analysis
-Record 2.1: One file changes: `sound/hda/codecs/realtek/alc269.c`, 1
-insertion, no deletions. The modified object is the `alc269_fixup_tbl`
-quirk table. Scope is a single-line, single-driver hardware quirk.
+## Phase 2: Diff Analysis
 
-Record 2.2: Before the change, PCI SSID `0x1e50:0x7007` had no matching
-quirk. After the change, `snd_hda_pick_fixup()` can select
-`ALC269_FIXUP_LIMIT_INT_MIC_BOOST` for Positivo DN50E.
+Step 2.1 Record: One file changed: `Documentation/virt/kvm/x86/amd-
+memory-encryption.rst`, 4 insertions and 4 deletions. No functions are
+modified. Scope classification: single-file surgical documentation
+update.
 
-Record 2.3: Bug category is hardware quirk/workaround. The existing
-fixup runs at `HDA_FIXUP_ACT_PROBE`, finds internal mic pins, and calls
-`snd_hda_override_amp_caps()` to limit mic boost steps.
+Step 2.2 Record: Before, four reference labels pointed to older AMD
+URLs. After, those labels point to current AMD Technical Information
+Portal URLs, and the SNP firmware ABI reference points to a current AMD
+PDF path. Only the `References` section is affected.
 
-Record 2.4: Fix quality is high: one table entry, no new logic, no API
-change. Regression risk is very low and limited to machines with that
-exact PCI SSID.
+Step 2.3 Record: Bug category is documentation correctness, specifically
+stale external references. No synchronization, memory safety, reference
+counting, initialization, type, logic, or hardware workaround code is
+involved.
 
-### Phase 3: Git History Investigation
-Record 3.1: There is no buggy code line to blame; the bug is a missing
-quirk entry. I verified the existing `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`
-machinery is present in checked stable tags including `v4.19`, `v5.4`,
-`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`.
+Step 2.4 Record: Fix quality is high: the diff only swaps URL strings,
+preserves labels, and does not touch kernel code or public APIs.
+Regression risk is effectively limited to the possibility of choosing a
+less useful URL, not runtime behavior.
 
-Record 3.2: No `Fixes:` tag is present, so there was no introducing
-commit to follow.
+## Phase 3: Git History Investigation
 
-Record 3.3: Recent history of this file shows frequent Realtek HDA quirk
-additions and fixes. No prerequisite commit was identified for this
-patch beyond the already-existing fixup.
+Step 3.1 Record: `git blame` on the reference section showed the white-
+paper line came from `fbabc2eaef9fd7` in v6.3-rc1, the SNP firmware ABI
+line came from `136d8bc931c84f` in v6.11-rc1, and older reference lines
+are present in stable branches back to at least `v5.15` by direct branch
+grep. Some blame output for pre-rename lines hit a boundary attribution,
+so I did not rely on that boundary commit as the true source.
 
-Record 3.4: The author has multiple prior accepted Realtek HDA quirks
-for Positivo and VAIO systems, including Positivo ARN50, P15X, K116J,
-C6400, and SU C1400.
+Step 3.2 Record: No `Fixes:` tag is present, so there is no specific
+introducing commit to follow.
 
-Record 3.5: The patch is functionally standalone. Older stable trees
-before the 2025 file move use `sound/pci/hda/patch_realtek.c`, so those
-need a path/context backport. A direct `git apply --check` against the
-current checked-out 7.0 stable tree failed due context drift, not
-missing functionality.
+Step 3.3 Record: Recent file history on `origin/master` includes KVM
+SEV/SNP documentation and API additions, including `20c3c4108d58f`,
+`dcbcc2323c806`, `ad27ce155566f`, `dee5a47cc7a45`, and `136d8bc931c84f`.
+The candidate is standalone because it only changes URL strings and does
+not depend on those code/API changes to be meaningful where the same
+reference lines exist.
 
-### Phase 4: Mailing List And External Research
-Record 4.1: The exact standalone commit hash was not present in local
-history, so `b4 dig -c <commit>` could not be used as specified. `b4 am`
-by message-id found one patch and a two-message thread. The maintainer
-reply from Takashi Iwai says “Applied now. Thanks.” No NAKs or concerns
-were present.
+Step 3.4 Record: `git log --author='Ninad Naik'` showed this author has
+other documentation link/spelling style commits, including
+`a362ae6e7e85b` for `amd-pstate` dead links and `5ed26ffe57ffc` for a
+`hwmon` link. I did not verify the author as a KVM maintainer; Paolo
+Bonzini committed/applied it and Liam Merwick reviewed it.
 
-Record 4.2: The original recipients included Takashi Iwai, Jaroslav
-Kysela, Zhang Heng, Stefan Binding, Kailang Yang, `linux-
-sound@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
+Step 3.5 Record: No code symbols or function dependencies exist. The
+patch can apply standalone where the same documentation reference block
+exists; older stable branches may need context/path adjustments.
 
-Record 4.3: No separate bug report was found. Web search confirmed
-public hardware data for Positivo DN50E and related Positivo mic-boost
-patches.
+## Phase 4: Mailing List And External Research
 
-Record 4.4: Related patches exist for the same fixup pattern, including
-Positivo ARN50 and N14AP7 in git history, plus a public Positivo DN50F
-patch using the same fixup.
+Step 4.1 Record: `b4 dig -c 80f4a7b8ce751` found the original patch
+thread at `https://patch.msgid.link/20260511174302.811918-1-
+ninadnaik07@gmail.com`. `b4 dig -a` found only v1; `b4 am -c` found no
+newer revision.
 
-Record 4.5: I found no stable-specific discussion or explicit stable
-nomination.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to KVM and docs
+maintainers/lists, including Paolo Bonzini, Jonathan Corbet, Sean
+Christopherson, Michael Roth, Liam Merwick, `kvm@vger.kernel.org`, and
+`linux-doc@vger.kernel.org`.
 
-### Phase 5: Code Semantic Analysis
-Record 5.1: No function body is modified. Affected code paths are
-`alc269_fixup_tbl`, `snd_hda_pick_fixup()`, `snd_hda_apply_fixup()`, and
-`alc269_fixup_limit_int_mic_boost()`.
+Step 4.3 Record: There is no separate bug report or reporter tag. The
+thread contains Liam Merwick’s `Reviewed-by` and Paolo Bonzini’s
+“Applied, thanks.” I found no NAKs or concerns in the fetched thread.
 
-Record 5.2: `alc269_probe()` calls `snd_hda_pick_fixup()` with
-`alc269_fixup_tbl`, then later calls `snd_hda_apply_fixup(codec,
-HDA_FIXUP_ACT_PROBE)`.
+Step 4.4 Record: The patch is a one-patch series. No related required
+patches were identified.
 
-Record 5.3: Key callees are `snd_hda_codec_get_pincfg()`,
-`snd_hda_get_input_pin_attr()`, and `snd_hda_override_amp_caps()`.
+Step 4.5 Record: Web search did not find stable-specific discussion for
+this exact subject/hash. Direct WebFetch of lore stable search was
+blocked by Anubis, so stable-list search is partially unverified.
 
-Record 5.4: The path is reached automatically during HDA codec probe on
-matching hardware. The bad behavior affects internal mic capture; it is
-not a syscall-triggered crash/security issue.
+## Phase 5: Code Semantic Analysis
 
-Record 5.5: Similar uses of `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` are
-already present for many laptops, including other Positivo systems.
+Step 5.1 Record: No functions are modified.
 
-### Phase 6: Stable Tree Analysis
-Record 6.1: The reusable fixup exists in all checked stable tags from
-`v4.19` through `v7.0`; the DN50E entry itself was absent in checked
-tags.
+Step 5.2 Record: No callers exist because this is documentation.
+Documentation references to this file exist from
+`Documentation/virt/kvm/api.rst`, `Documentation/admin-guide/kernel-
+parameters.txt`, `Documentation/virt/kvm/x86/index.rst`, and related
+documentation pages.
 
-Record 6.2: Backport difficulty is low but not always clean apply:
-`v6.19+` uses `sound/hda/codecs/realtek/alc269.c`, while older trees use
-`sound/pci/hda/patch_realtek.c`.
+Step 5.3 Record: No callees exist. The changed labels are consumed by
+Sphinx/ReST documentation rendering.
 
-Record 6.3: I found no existing DN50E fix in checked stable tags or
-current local history.
+Step 5.4 Record: No runtime call chain exists. User impact is
+documentation usability for KVM SEV/SEV-SNP developers/users.
 
-### Phase 7: Subsystem Context
-Record 7.1: Subsystem is ALSA HDA Realtek codec support. Criticality is
-driver-specific, but important for affected laptop audio users.
+Step 5.5 Record: Similar pattern exists in prior documentation link
+fixes, including `fbabc2eaef9fd7` for an AMD memory encryption white-
+paper URL and `bad0524e24201` for an x86 SEV documentation URL.
 
-Record 7.2: The subsystem is active, with many recent quirk additions in
-the same file. The pattern is mature and widely used.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
 
-### Phase 8: Impact And Risk
-Record 8.1: Affected population is users of Positivo DN50E systems with
-Realtek HDA audio.
+Step 6.1 Record: Stable branches contain affected references.
+`stable/linux-5.15.y` and `stable/linux-6.1.y` contain the old KVM AMD
+memory encryption doc with three AMD references. `stable/linux-6.6.y`
+contains the three current old references. `stable/linux-6.12.y` through
+`stable/linux-7.0.y` contain all four references, including the SNP
+firmware ABI link.
 
-Record 8.2: Trigger is normal codec probe plus internal microphone use.
-It is not an unprivileged security trigger.
+Step 6.2 Record: Backport difficulty is clean for the current
+`linux-7.0.y`-based tree: `git apply --check` succeeded. Older trees
+likely need small manual adjustment: `5.15.y` uses the pre-`x86/` path,
+`5.15.y`/`6.1.y` have an older white-paper URL, and `6.6.y` lacks the
+SNP firmware ABI line.
 
-Record 8.3: Failure mode is user-visible broken audio quality from
-excessive internal mic gain/noise. Severity is medium for affected
-hardware, not crash-level.
+Step 6.3 Record: `stable/linux-7.0.y` does not contain this candidate
+commit by subject. I found prior related doc-link fixes, but not this
+exact KVM reference update in stable branches checked.
 
-Record 8.4: Benefit is high for affected hardware users. Risk is very
-low because this adds one exact-match PCI SSID quirk using existing
-code.
+## Phase 7: Subsystem And Maintainer Context
 
-### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: hardware quirk exception, one-line
-targeted change, existing tested fixup machinery, maintainer applied it,
-related Positivo fixes use the same pattern. Evidence against: no
-separate bug report/test tag and direct apply may need context/path
-adjustment. Unresolved: exact upstream commit hash was not available
-locally, and no independent DN50E test report beyond the submitter’s
-patch text was found.
+Step 7.1 Record: Subsystem is KVM x86 documentation for AMD SEV/SEV-SNP.
+Criticality is peripheral for runtime kernel stability, but relevant to
+KVM confidential-computing documentation users.
 
-Record 9.2: Stable rules: obviously correct: yes; fixes a real user-
-visible hardware bug: yes; important enough under hardware-quirk
-exception: yes; small and contained: yes; no new APIs/features: yes;
-stable apply: yes with likely minor path/context adjustment on older
-trees.
+Step 7.2 Record: File history shows active KVM SEV/SNP documentation
+churn due to recent SEV-SNP commands and API documentation. The touched
+change itself is isolated documentation.
 
-Record 9.3: Exception category applies: hardware-specific
-quirk/workaround in an existing driver.
+## Phase 8: Impact And Risk Assessment
 
-Record 9.4: This should be backported. The patch is exactly the type of
-low-risk Realtek HDA laptop quirk that stable trees routinely carry.
+Step 8.1 Record: Affected population is documentation users, especially
+KVM/SEV/SEV-SNP developers and operators consulting AMD specs from
+stable kernel docs.
+
+Step 8.2 Record: Trigger condition is reading the documentation
+references. It is not syscall- or runtime-triggered, and unprivileged
+runtime triggering is not applicable.
+
+Step 8.3 Record: Failure mode is stale/non-direct documentation links.
+Severity is LOW for runtime stability, but valid under the
+documentation-fix exception.
+
+Step 8.4 Record: Benefit is modest but real: stable documentation points
+users at current AMD references. Risk is very low: 4 URL replacements in
+one `.rst` file, no code, no ABI, no behavior change. Risk-benefit ratio
+is favorable because runtime regression risk is effectively zero.
+
+## Phase 9: Final Synthesis
+
+Step 9.1 Record: Evidence for backporting: documentation fix exception
+applies; patch is tiny; reviewed; applied by KVM maintainer Paolo
+Bonzini; no NAKs found; affected references exist in stable trees;
+current `7.0.y` patch application check succeeds. Evidence against: no
+runtime bug, no crash/security/data-loss impact, and older stable
+branches need minor backport adjustment. Unresolved: lore stable search
+was blocked by Anubis, so I could not fully verify stable-list
+discussion.
+
+Step 9.2 Record: Stable rules checklist: obviously correct and reviewed:
+yes; fixes a real issue: yes, stale documentation references; important
+runtime issue: no, but documentation fixes are an allowed exception;
+small and contained: yes, 4 lines changed in one file; no new
+features/APIs: yes; can apply to stable: yes for current `7.0.y`, likely
+clean for `6.12.y+`, minor adjustment for older branches.
+
+Step 9.3 Record: Exception category: documentation fix. This is
+explicitly the kind of zero-runtime-risk update that can be accepted
+even though it is not a runtime correctness fix.
+
+Step 9.4 Record: Decision is YES. Backporting is appropriate for stable
+trees that carry the affected documentation, with minor manual
+adjustment where older branch context differs.
 
 ## Verification
-- Phase 1: Parsed the supplied commit message and b4 mbox; confirmed
-  tags and absence of `Fixes:` / stable / reporter tags.
-- Phase 2: Read the patch mbox; confirmed 1 insertion in
-  `alc269_fixup_tbl`.
-- Phase 3: Used `git grep` across stable tags to confirm
-  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` exists and DN50E is absent.
-- Phase 3: Checked author history; found multiple accepted Positivo/VAIO
-  Realtek HDA quirk commits.
-- Phase 4: `b4 am` found the patch and thread; full mbox showed Takashi
-  Iwai replied “Applied now.”
-- Phase 4: Web searches found related Positivo DN50F/ARN50 mic-boost
-  patches and a DN50E hardware listing.
-- Phase 5: Read `snd_hda_pick_fixup()`, `snd_hda_apply_fixup()`,
-  `alc269_probe()`, and `alc269_fixup_limit_int_mic_boost()` to verify
-  call flow and behavior.
-- Phase 6: Checked `v4.19`, `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`,
-  `v6.12`, `v6.19`, and `v7.0` for fixup availability and file paths.
-- Unverified: exact final upstream commit hash was not available in
-  local history, and no separate user bug report was found.
+
+- [Phase 1] `git show --format=fuller --stat --patch 80f4a7b8ce751`:
+  confirmed subject, tags, one-file documentation diff, and no runtime-
+  code changes.
+- [Phase 2] Diff inspection: confirmed 4 URL replacements only in
+  `Documentation/virt/kvm/x86/amd-memory-encryption.rst`.
+- [Phase 3] `git blame -L 652,664`: confirmed local history for the
+  reference block, including `fbabc2eaef9fd7` and `136d8bc931c84f`.
+- [Phase 3] `git describe --contains`: confirmed `fbabc2eaef9fd7` first
+  appears by v6.3-rc1 and `136d8bc931c84f` by v6.11-rc1.
+- [Phase 3] `git log origin/master --oneline -20 --
+  Documentation/virt/kvm/x86/amd-memory-encryption.rst`: confirmed
+  recent KVM SEV/SNP doc history and candidate placement.
+- [Phase 4] `b4 dig -c 80f4a7b8ce751`: found original patch thread by
+  patch-id.
+- [Phase 4] `b4 dig -c 80f4a7b8ce751 -a`: confirmed only v1 series.
+- [Phase 4] `b4 dig -c 80f4a7b8ce751 -w`: confirmed KVM/docs maintainers
+  and lists were included.
+- [Phase 4] `b4 mbox`/saved thread plus `rg`: confirmed `Reviewed-by:
+  Liam Merwick` and Paolo’s “Applied, thanks”; found no NAK/stable
+  request text.
+- [Phase 4] WebFetch of lore/patch URLs was blocked by Anubis; b4
+  successfully fetched the thread.
+- [Phase 5] `rg` in the doc file: confirmed changed labels are
+  referenced by SEV/SNP documentation text.
+- [Phase 5] `rg` under `Documentation`: confirmed documentation pages
+  link to `amd-memory-encryption.rst`.
+- [Phase 6] `git grep` across `stable/linux-5.15.y`, `6.1.y`, `6.6.y`,
+  `6.12.y`, `6.15.y`, `6.16.y`, `6.17.y`, `6.18.y`, `6.19.y`, and
+  `7.0.y`: confirmed affected old references exist and identified branch
+  differences.
+- [Phase 6] `git diff 80f4a7b8ce751^ 80f4a7b8ce751 | git apply --check`:
+  confirmed clean application to the current `7.0.y`-based working tree.
+- [Phase 8] URL checks with Python HEAD/WebFetch: confirmed old direct
+  AMD URLs no longer behave as direct PDF references in several cases,
+  while the new SNP ABI URL returns an AMD PDF; other new AMD TIP URLs
+  resolve to AMD documentation portal pages.
+- UNVERIFIED: full stable mailing-list history, because direct lore
+  stable WebFetch was blocked by Anubis and web search found no exact
+  stable discussion.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/virt/kvm/x86/amd-memory-encryption.rst | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 4e0885c1fc496..b1fb5e1cf0078 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7799,6 +7799,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1e39, 0xca14, "MEDION NM14LNL", ALC233_FIXUP_MEDION_MTL_SPK),
-+	SND_PCI_QUIRK(0x1e50, 0x7007, "Positivo DN50E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)", ALC245_FIXUP_BASS_HP_DAC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/Documentation/virt/kvm/x86/amd-memory-encryption.rst b/Documentation/virt/kvm/x86/amd-memory-encryption.rst
+index b2395dd4769de..bd04a908a8dbd 100644
+--- a/Documentation/virt/kvm/x86/amd-memory-encryption.rst
++++ b/Documentation/virt/kvm/x86/amd-memory-encryption.rst
+@@ -656,8 +656,8 @@ References
+ See [white-paper]_, [api-spec]_, [amd-apm]_, [kvm-forum]_, and [snp-fw-abi]_
+ for more info.
+ 
+-.. [white-paper] https://developer.amd.com/wordpress/media/2013/12/AMD_Memory_Encryption_Whitepaper_v7-Public.pdf
+-.. [api-spec] https://support.amd.com/TechDocs/55766_SEV-KM_API_Specification.pdf
+-.. [amd-apm] https://support.amd.com/TechDocs/24593.pdf (section 15.34)
++.. [white-paper] https://docs.amd.com/v/u/en-US/memory-encryption-white-paper
++.. [api-spec] https://docs.amd.com/v/u/en-US/55766_PUB_3.24_SEV_API
++.. [amd-apm] https://docs.amd.com/v/u/en-US/24593_3.44_APM_Vol2 (section 15.34)
+ .. [kvm-forum]  https://www.linux-kvm.org/images/7/74/02x08A-Thomas_Lendacky-AMDs_Virtualizatoin_Memory_Encryption_Technology.pdf
+-.. [snp-fw-abi] https://www.amd.com/system/files/TechDocs/56860.pdf
++.. [snp-fw-abi] https://www.amd.com/content/dam/amd/en/documents/developer/56860.pdf
 -- 
 2.53.0
 
