@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A693A3E90;
-	Wed, 20 May 2026 16:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25FB3A3E60;
+	Wed, 20 May 2026 16:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295286; cv=none; b=bSRWkpxwa3WSKJcXbGfPdZz7aJMQE/1skfwf7KXTy7AZAUejFhaDA/sxNXU6TKON/m+Qe3L2TK9m3ZbT+l6dee6x+x0RvQJLGqEuQnVYv3HQ3mWKlzjNHbsHK63yazyJhI74cTpRp/0alSI9E70G0DY539wJaG9SAkSWwFYJkec=
+	t=1779295289; cv=none; b=eVKpHMNZtM5bM2mBgSW2dNmPot0ATUCZri0mBPICWzF1UPGSD7DzT0qteo3eON+MbIGfV+NwWJTNtI6MpHxitYUtINm2TOrVlkpd7ed9q8cwEHABoLyfd/K+VjQ3De2OI4QPxzO+jhM2Mr059tRLHxqzW2tYja8tnQ6y7BQxD5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295286; c=relaxed/simple;
-	bh=JHjo2OvuxdcO4gpQSWgri+e4Bt15IDecadMizOLqQ3g=;
+	s=arc-20240116; t=1779295289; c=relaxed/simple;
+	bh=Nz0dWmBTHgqQvwZZNloLaUvpJE1yeN34JdDKpWnv+U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfHxPG8j8NW2V4x8GKK6vo2UPWW79KhSqeFdaFex6qLcXrmOuPnXGc/1kaimBmOTtU2N1Rnkozo6uVYlZ7QUTx/XMTaV35YctX5lWz97UTz9CTRQS7z/OMpn/vVI002sz/SwNY+llR3lJ0FULegRTr/dXQWV7XlyM0c/l0ys79E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzkZUJHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rBwJg9txJ40ksmfWoRa2+G9s4pdT/8TOi4tdLM9EO5uw9i+8pH3m0fwqE39nWzJ52NkVVFFtIPQKJuy7BZsuwTxEJ543QTx6KHvTtJdeAc2YdL08DtKOC650cJpf6NUcvMQ+ilMMD+MR7EzezdNxDUOtRHct2ihdmt8a8Aog6rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDo67t9J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzkZUJHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7DD1F000E9;
-	Wed, 20 May 2026 16:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDo67t9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542951F000E9;
+	Wed, 20 May 2026 16:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295285;
-	bh=W969MT7GZyWVsa8JocxVcxrS/HLxMFq/DekBNroSCYQ=;
+	s=korg; t=1779295287;
+	bh=A881U0GJvmLom40owVgxyB4la3qQoWbw1dqo/urxLpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzkZUJHh4eDyzWw81O5YeFE5xU1MgaAUNZ8Ytks4Q33J1bngdbi1gRejOzxglMcmW
-	 Fx8iJg97G+KNUf76QHH/RuNhUU0h2zti4KdqGVaKcGUfdKUDii9vWbnQFNKVUJZYF3
-	 pxTv54EHU4BekKt42+moIRF76b1EIjQf+icuAi+U=
+	b=dDo67t9JAtLV4ITJSSdh1Bayj59dwfgyP3JDNMAhekYHL9INQyETLsqmZ0XeekG4N
+	 0cNgRm7bbC7gQASiw8KM/1Y+9FhpCIBj16td8GAvgLTvWVydZJXUVZntex4Ewe8VR3
+	 vMhw01I+z80xY7wAfYi//Nw3pcGcEf9JwGl3a6IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0361/1146] drm/msm/a6xx: Correct OOB usage
-Date: Wed, 20 May 2026 18:10:11 +0200
-Message-ID: <20260520162156.371029477@linuxfoundation.org>
+Subject: [PATCH 7.0 0362/1146] drm/msm/adreno: Implement gx_is_on() for A8x
+Date: Wed, 20 May 2026 18:10:12 +0200
+Message-ID: <20260520162156.393934306@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,75 +54,194 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit d34b6919798c1a8c93e1d7cca297d0e068146bd5 ]
+[ Upstream commit ae25e6e9cdcac4cfef102b9d6de8bff13ca4d13b ]
 
-During the GMU resume sequence, using another OOB other than OOB_GPU may
-confuse the internal state of GMU firmware. To align more strictly with
-the downstream sequence, move the sysprof related OOB setup after the
-OOB_GPU is cleared.
+A8x has a diverged enough for a separate implementation of gx_is_on()
+check. Add that and move them to the adreno func table.
 
-Fixes: 62cd0fa6990b ("drm/msm/adreno: Disable IFPC when sysprof is active")
+Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714659/
-Message-ID: <20260327-a8xx-gpu-batch2-v2-4-2b53c38d2101@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714661/
+Message-ID: <20260327-a8xx-gpu-batch2-v2-5-2b53c38d2101@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 -----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 ++++++
- drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 6 ++++++
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       | 42 +++++++++++++++++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h       |  5 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  6 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  4 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  1 +
+ 5 files changed, 50 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 9662201cd2e9d..690d3e53e2738 100644
+index 690d3e53e2738..b41dbca1ebc63 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1236,11 +1236,6 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	/* Set the GPU to the current freq */
- 	a6xx_gmu_set_initial_freq(gpu, gmu);
+@@ -91,10 +91,10 @@ bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu)
+ }
  
--	if (refcount_read(&gpu->sysprof_active) > 1) {
--		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
--		if (!ret)
--			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
--	}
- out:
- 	/* On failure, shut down the GMU to leave it in a good state */
- 	if (ret) {
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index eeecde88e549f..4e0d67e3acb7e 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1605,6 +1605,12 @@ static int hw_init(struct msm_gpu *gpu)
- 		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_BOOT_SLUMBER);
+ /* Check to see if the GX rail is still powered */
+-bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
++bool a6xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu)
+ {
+-	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+-	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
++	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
++	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+ 	u32 val;
+ 
+ 	/* This can be called from gpu state code so make sure GMU is valid */
+@@ -117,6 +117,40 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
+ 		A6XX_GMU_SPTPRAC_PWR_CLK_STATUS_GX_HM_CLK_OFF));
+ }
+ 
++bool a7xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu)
++{
++	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
++	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
++	u32 val;
++
++	/* This can be called from gpu state code so make sure GMU is valid */
++	if (!gmu->initialized)
++		return false;
++
++	val = gmu_read(gmu, REG_A6XX_GMU_SPTPRAC_PWR_CLK_STATUS);
++
++	return !(val &
++		(A7XX_GMU_SPTPRAC_PWR_CLK_STATUS_GX_HM_GDSC_POWER_OFF |
++		A7XX_GMU_SPTPRAC_PWR_CLK_STATUS_GX_HM_CLK_OFF));
++}
++
++bool a8xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu)
++{
++	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
++	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
++	u32 val;
++
++	/* This can be called from gpu state code so make sure GMU is valid */
++	if (!gmu->initialized)
++		return false;
++
++	val = gmu_read(gmu, REG_A8XX_GMU_PWR_CLK_STATUS);
++
++	return !(val &
++		(A8XX_GMU_PWR_CLK_STATUS_GX_HM_GDSC_POWER_OFF |
++		 A8XX_GMU_PWR_CLK_STATUS_GX_HM_CLK_OFF));
++}
++
+ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
+ 		       bool suspended)
+ {
+@@ -240,7 +274,7 @@ static bool a6xx_gmu_check_idle_level(struct a6xx_gmu *gmu)
+ 
+ 	if (val == local) {
+ 		if (gmu->idle_level != GMU_IDLE_STATE_IFPC ||
+-			!a6xx_gmu_gx_is_on(gmu))
++			!adreno_gpu->funcs->gx_is_on(adreno_gpu))
+ 			return true;
  	}
  
-+	if (!ret && (refcount_read(&gpu->sysprof_active) > 1)) {
-+		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
-+		if (!ret)
-+			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
-+	}
-+
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+index 2af074c8e8cfa..9f09daf45ab2b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+@@ -10,6 +10,7 @@
+ #include <linux/notifier.h>
+ #include <linux/soc/qcom/qcom_aoss.h>
+ #include "msm_drv.h"
++#include "adreno_gpu.h"
+ #include "a6xx_hfi.h"
  
-diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-index 840af9c4d718c..fafeac62aebf5 100644
---- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-@@ -711,6 +711,12 @@ static int hw_init(struct msm_gpu *gpu)
- 	 */
- 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+ struct a6xx_gmu_bo {
+@@ -231,7 +232,9 @@ void a6xx_hfi_stop(struct a6xx_gmu *gmu);
+ int a6xx_hfi_send_prep_slumber(struct a6xx_gmu *gmu);
+ int a6xx_hfi_set_freq(struct a6xx_gmu *gmu, u32 perf_index, u32 bw_index);
  
-+	if (!ret && (refcount_read(&gpu->sysprof_active) > 1)) {
-+		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
-+		if (!ret)
-+			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
-+	}
-+
- 	return ret;
- }
+-bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu);
++bool a6xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu);
++bool a7xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu);
++bool a8xx_gmu_gx_is_on(struct adreno_gpu *adreno_gpu);
+ bool a6xx_gmu_sptprac_is_on(struct a6xx_gmu *gmu);
+ void a6xx_sptprac_disable(struct a6xx_gmu *gmu);
+ int a6xx_sptprac_enable(struct a6xx_gmu *gmu);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 4e0d67e3acb7e..9327ecf94386e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1643,7 +1643,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
  
+ 	adreno_dump_info(gpu);
+ 
+-	if (a6xx_gmu_gx_is_on(&a6xx_gpu->gmu)) {
++	if (adreno_gpu->funcs->gx_is_on(adreno_gpu)) {
+ 		/* Sometimes crashstate capture is skipped, so SQE should be halted here again */
+ 		gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 3);
+ 
+@@ -2763,6 +2763,7 @@ const struct adreno_gpu_funcs a6xx_gpu_funcs = {
+ 	.get_timestamp = a6xx_gmu_get_timestamp,
+ 	.bus_halt = a6xx_bus_clear_pending_transactions,
+ 	.mmu_fault_handler = a6xx_fault_handler,
++	.gx_is_on = a6xx_gmu_gx_is_on,
+ };
+ 
+ const struct adreno_gpu_funcs a6xx_gmuwrapper_funcs = {
+@@ -2795,6 +2796,7 @@ const struct adreno_gpu_funcs a6xx_gmuwrapper_funcs = {
+ 	.get_timestamp = a6xx_get_timestamp,
+ 	.bus_halt = a6xx_bus_clear_pending_transactions,
+ 	.mmu_fault_handler = a6xx_fault_handler,
++	.gx_is_on = a6xx_gmu_gx_is_on,
+ };
+ 
+ const struct adreno_gpu_funcs a7xx_gpu_funcs = {
+@@ -2829,6 +2831,7 @@ const struct adreno_gpu_funcs a7xx_gpu_funcs = {
+ 	.get_timestamp = a6xx_gmu_get_timestamp,
+ 	.bus_halt = a6xx_bus_clear_pending_transactions,
+ 	.mmu_fault_handler = a6xx_fault_handler,
++	.gx_is_on = a7xx_gmu_gx_is_on,
+ };
+ 
+ const struct adreno_gpu_funcs a8xx_gpu_funcs = {
+@@ -2856,4 +2859,5 @@ const struct adreno_gpu_funcs a8xx_gpu_funcs = {
+ 	.get_timestamp = a8xx_gmu_get_timestamp,
+ 	.bus_halt = a8xx_bus_clear_pending_transactions,
+ 	.mmu_fault_handler = a8xx_fault_handler,
++	.gx_is_on = a8xx_gmu_gx_is_on,
+ };
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index e9a23d471f374..791623ddb67c9 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -1251,7 +1251,7 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+ 		_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gpucc_reg,
+ 			&a6xx_state->gmu_registers[2], false);
+ 
+-	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
++	if (!adreno_gpu->funcs->gx_is_on(adreno_gpu))
+ 		return;
+ 
+ 	/* Set the fence to ALLOW mode so we can access the registers */
+@@ -1607,7 +1607,7 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+ 	}
+ 
+ 	/* If GX isn't on the rest of the data isn't going to be accessible */
+-	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
++	if (!adreno_gpu->funcs->gx_is_on(adreno_gpu))
+ 		return &a6xx_state->base;
+ 
+ 	/* Halt SQE first */
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index c08725ed54c4f..29097e6b42535 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -82,6 +82,7 @@ struct adreno_gpu_funcs {
+ 	u64 (*get_timestamp)(struct msm_gpu *gpu);
+ 	void (*bus_halt)(struct adreno_gpu *adreno_gpu, bool gx_off);
+ 	int (*mmu_fault_handler)(void *arg, unsigned long iova, int flags, void *data);
++	bool (*gx_is_on)(struct adreno_gpu *adreno_gpu);
+ };
+ 
+ struct adreno_reglist {
 -- 
 2.53.0
 
