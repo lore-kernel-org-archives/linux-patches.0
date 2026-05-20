@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2555B3F58D6;
-	Wed, 20 May 2026 18:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C404A3F787E;
+	Wed, 20 May 2026 18:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300331; cv=none; b=Gts1FSX+8bVOqlHbJ6aj9IDCsJY7R6dKCM8WfgNyO/vQYjteiU96IfZHzLxYlq7m7pAvqz7wyRZ7J/bsqk1vIJNX6OgSxCqEevdgO/lbpaI512qYgYcypPLeETzyaRPPyN6vtvsIg2ETgEsjSSvlx9KCwtA57mT/rSpKUKa3usM=
+	t=1779300333; cv=none; b=ARawW5Y/oCehsHG+b/qXlq4uo3aUyz8U9aqvqTT7/m3mRv22CujlxwCcCt8Krtu78YGle1GfBjWraiJNWCmZ0TzxxY3GORknQOiVeFTWlfygSImDTsTp2pevjzNelvtP3v3pOO04FFbpwe6y5r17L1g3mGVE+FZODonFmGZL4Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300331; c=relaxed/simple;
-	bh=KhLZgjWqj8V6jzKuDr9s/6hiiMlHys2JPm/FBm45UtE=;
+	s=arc-20240116; t=1779300333; c=relaxed/simple;
+	bh=TZ1iOJylTw8zv+8PWUzMW8aEsutTfwL5A2sZ+vBmzYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrR4szfPoYedYI3hkPdS5sMcHoIMhsDUf6M0Z81fnQVB0MTlNa7mw+TDf+/NzS6c/XooCyZOn9+kO2EBIN74xs47PA+/MgDfAoVniFkAR+T8kFowFUjEu4C1yyjQJu/1Y1VxOuSL18GXn71S9mbHhkNChF3t/lJFfHfVMdekI/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QF7Op7O9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPxb8llJOYfNP2KtZUm+yjYSmG5q2e0AUhgIK265zo2wxESBRHMkQiOZHONINikzdJW/tFxO/nbqa3CRXkN42SM2V1twq5GS7fzDPNQ8KJ0MfflY2MsgzbAdRIhVn3jLq7khYq7Lohjw/lqr6BAZDEBJDvWsSizBnmT5uuFriE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izqeNkAu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QF7Op7O9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8901E1F000E9;
-	Wed, 20 May 2026 18:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izqeNkAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CDA1F000E9;
+	Wed, 20 May 2026 18:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300330;
-	bh=/ERzw6/wR4vChasmLHaGZkpk5pnSXVAnjSS6JvvnFQU=;
+	s=korg; t=1779300332;
+	bh=kgRat6izESs+6rNqUV7TUz8ItXctLU10CfhaQnChsrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QF7Op7O99BtkuNSHJ/N70TbqqQsX5IJy9TmjQCs1WvJt+ghzkG0cP573rhaxU3inZ
-	 qO/w1aSaN7s83nK6RKj1bc3GfFy9PN0Sy+N5zdds/M4Zx0/I4pnHqRdAbF0G4MfG0q
-	 qj+d3LYHJIQEWAHH6XAlCjR7pSN6oEemnomMilrg=
+	b=izqeNkAuF3ytGTfSzQ4LtstHexz/hNQByToWEw0X/9RczdRRYbSLO8BrjwOyt7hHT
+	 HxdQ+HRSVuX0NURBmQYNflkPCpEc9wivr++zdYOJFEN3H28q7IEEdVaQRaZSdLP8qu
+	 62W3HaVu9u/HhUE4Z/rJ8b+dD0HOTATGBe1dPeuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/666] PCI: dwc: Invoke post_init in dw_pcie_resume_noirq()
-Date: Wed, 20 May 2026 18:15:46 +0200
-Message-ID: <20260520162114.137588418@linuxfoundation.org>
+Subject: [PATCH 6.12 136/666] PCI: dwc: Perform cleanup in the error path of dw_pcie_resume_noirq()
+Date: Wed, 20 May 2026 18:15:47 +0200
+Message-ID: <20260520162114.158563981@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,40 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit c577ce2881f9c76892de5ffc1a122e3ef427ecee ]
+[ Upstream commit edb5ca3262e2255cf938a5948709d3472d4871ad ]
 
-In some SoCs like i.MX95, CLKREQ# is pulled low by the controller driver
-before link up. After link up, if the 'supports-clkreq' property is
-specified in DT, the driver will release CLKREQ# so that it can go high and
-the endpoint can pull it low whenever required i.e., during exit from L1
-Substates.
+If the dw_pcie_resume_noirq() API fails, it just returns the errno without
+doing cleanup in the error path, leading to resource leak.
 
-Hence, at the end of dw_pcie_resume_noirq(), invoke the '.post_init()'
-callback if exists to perform the above mentioned action.
+So perform cleanup in the error path.
 
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: reworded description]
+Fixes: 4774faf854f5 ("PCI: dwc: Implement generic suspend/resume functionality")
+Reported-by: Senchuan Zhang <zhangsenchuan@eswincomputing.com>
+Closes: https://lore.kernel.org/linux-pci/78296255.3869.19c8eb694d6.Coremail.zhangsenchuan@eswincomputing.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20251015030428.2980427-9-hongxing.zhu@nxp.com
-Stable-dep-of: edb5ca3262e2 ("PCI: dwc: Perform cleanup in the error path of dw_pcie_resume_noirq()")
+Link: https://patch.msgid.link/20260226133951.296743-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 3e3168204e303..92fd4810f2e21 100644
+index 92fd4810f2e21..deda5b040d7a0 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-host.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -990,6 +990,9 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
- 	if (ret)
- 		return ret;
+@@ -984,15 +984,24 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
  
-+	if (pci->pp.ops->post_init)
-+		pci->pp.ops->post_init(&pci->pp);
+ 	ret = dw_pcie_start_link(pci);
+ 	if (ret)
+-		return ret;
++		goto err_deinit;
+ 
+ 	ret = dw_pcie_wait_for_link(pci);
+-	if (ret)
+-		return ret;
++	if (ret == -ETIMEDOUT)
++		goto err_stop_link;
+ 
+ 	if (pci->pp.ops->post_init)
+ 		pci->pp.ops->post_init(&pci->pp);
+ 
++	return 0;
++
++err_stop_link:
++	dw_pcie_stop_link(pci);
++
++err_deinit:
++	if (pci->pp.ops->deinit)
++		pci->pp.ops->deinit(&pci->pp);
 +
  	return ret;
  }
