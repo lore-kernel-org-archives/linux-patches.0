@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6783D1CC6;
-	Wed, 20 May 2026 18:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282E23D1CC6;
+	Wed, 20 May 2026 18:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301732; cv=none; b=htQ17KrGBNigCEMaOAfR5oHFJqdR4aiuUhpPlNrUOHSge8H3RnBOsEZCYTI8CqSwJyIiMDHSJ9XoTm+qkW8fiZH8af1hTKefF3vmuOiSCTBeZXi9AXnmNMu7wyheLKeUhqZ2Bo38FmSJKkxa4ZJDiBY/yQgvXbzJgx/sPurBuxY=
+	t=1779301735; cv=none; b=BKTB3FAmOE/jY1ruhAw4XqdCcMTYwxZV8dMdgGQGgpgfImpYuEWQCPQw1UBmE7qslB43BOMtOhTKObskUMqWhc5h1G3gcpM9LD5H0Ur2Nl0PdXKxLdeANwLtRPWZ168INJLunFHsZgbHS0S4WMVejspvJiWciYKj28Q6vzuc7P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301732; c=relaxed/simple;
-	bh=3kcxQMbrqcvMU5/ckb1x4fgzeap3wevfbL8biv5052k=;
+	s=arc-20240116; t=1779301735; c=relaxed/simple;
+	bh=d8UZa0kKG+VsqoujEGTrh4op+mgODuzirfZGBbgUnps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEWDgF4PxXp1yZ5jsXRy84dq7h3bdEH+OHyt1tCpmNKGfsiZNtqTt7gdJUehybZvi0YPQhiMDSbVGBUwqtnxbMrXR8+zYc76OckGVofBJV9JzFRJKGAT6P6QP4RcQV/z0h2jfBq3+hFBbuBUpFKlgt9x3eu9nGOcapYO3NsDijY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPZdTa3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lA42ar0n5pJ8ah+uMbARdRoLF9srZT1lIV1OKB2iTlY1I3wF9pd1ciNB/8D4vsVvVg9tPnBdJRN0yTO86C6HKHnrm+O0mCog8JNcled2cp4h1r/t/NjCqh8CdTJwb64u2II8r8pgUbk1uukLRT/Yhft4V055FmaaFOsXLp8QT6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulY1UbPD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPZdTa3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC15A1F00899;
-	Wed, 20 May 2026 18:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulY1UbPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE7E1F000E9;
+	Wed, 20 May 2026 18:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301731;
-	bh=y3wzFYlaPTgctW2fgqXg3QrGR0/yLJDEQBMSO+G6rG8=;
+	s=korg; t=1779301734;
+	bh=yFBv5OL5+3GB+Wn3a2OBpb8ALiJq9nLQmBNOahhesvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPZdTa3G5AmxWygCIRwSC3CiRR0DEH92XwERNwcegFiLQdmjED+tVdLcKSn96QMpY
-	 MOeOxN7RIqlpMmiEOaqLVbPDgQSPsLHLtKypj9qCndXsLgBp0cGF5oT34AgCi5OwXQ
-	 B8eYOl1oqBJv1DhzqtxT/AgliAixpjbm3OtR6Yig=
+	b=ulY1UbPDlnweFqNew8zQydf9S12FJg9fzvNMmLjf2QsIwUCRuUxRtwaDgoZjdPSbL
+	 MG1Wz3oVfhQLTYeqi4DzIteblepl0ixeYnvHMVfK7aR2ONIjOaWAYAi+Vom1QBi7fF
+	 2I0SAAP4BRAf2EzAEQkf9sPeTKAcvzOe9YN/a7ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chris Mason <clm@meta.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 655/666] RDMA/mana: Remove user triggerable WARN_ON() in mana_ib_create_qp_rss()
-Date: Wed, 20 May 2026 18:24:26 +0200
-Message-ID: <20260520162125.481757585@linuxfoundation.org>
+Subject: [PATCH 6.12 656/666] sched_ext: Guard scx_dsq_move() against NULL kit->dsq after failed iter_new
+Date: Wed, 20 May 2026 18:24:27 +0200
+Message-ID: <20260520162125.504155804@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,42 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 159f2efabc89d3f931d38f2d35876535d4abf0a3 ]
+[ Upstream commit 4fda9f0e7c950da4fe03cedeb2ac818edf5d03e9 ]
 
-Sashiko points out that the user can specify WQs sharing the same CQ as a
-part of the uAPI and this will trigger the WARN_ON() then go on to corrupt
-the kernel.
+bpf_iter_scx_dsq_new() clears kit->dsq on failure and
+bpf_iter_scx_dsq_{next,destroy}() guard against that. scx_dsq_move() doesn't -
+it dereferences kit->dsq immediately, so a BPF program that calls
+scx_bpf_dsq_move[_vtime]() after a failed iter_new oopses the kernel.
 
-Just reject it outright and fail the QP creation.
+Return false if kit->dsq is NULL.
 
-Cc: stable@vger.kernel.org
-Fixes: c15d7802a424 ("RDMA/mana_ib: Add CQ interrupt support for RAW QP")
-Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
-Link: https://patch.msgid.link/r/5-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-[ adjusted context ]
+Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ dropped the `struct scx_sched *sch` declaration and `sch = src_dsq->sched` line ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/cq.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/sched/ext.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/infiniband/hw/mana/cq.c
-+++ b/drivers/infiniband/hw/mana/cq.c
-@@ -120,8 +120,9 @@ int mana_ib_install_cq_cb(struct mana_ib
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6346,6 +6346,14 @@ static bool scx_dispatch_from_dsq(struct
+ 	bool in_balance;
+ 	unsigned long flags;
  
- 	if (cq->queue.id >= gc->max_num_cqs)
- 		return -EINVAL;
--	/* Create CQ table entry */
--	WARN_ON(gc->cq_table[cq->queue.id]);
-+	/* Create CQ table entry, sharing a CQ between WQs is not supported */
-+	if (gc->cq_table[cq->queue.id])
-+		return -EINVAL;
- 	gdma_cq = kzalloc(sizeof(*gdma_cq), GFP_KERNEL);
- 	if (!gdma_cq)
- 		return -ENOMEM;
++	/*
++	 * The verifier considers an iterator slot initialized on any
++	 * KF_ITER_NEW return, so a BPF program may legally reach here after
++	 * bpf_iter_scx_dsq_new() failed and left @kit->dsq NULL.
++	 */
++	if (unlikely(!src_dsq))
++		return false;
++
+ 	if (!scx_kf_allowed_if_unlocked() && !scx_kf_allowed(SCX_KF_DISPATCH))
+ 		return false;
+ 
 
 
