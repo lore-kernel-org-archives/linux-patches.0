@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE793D6CB7;
-	Wed, 20 May 2026 17:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F6034041C;
+	Wed, 20 May 2026 17:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297026; cv=none; b=IaDhjHJWHQbnzWnKbroCK+GeUg0d8ihqC8zI+dY/h5UjL/QdewjDIWMcpyH524+lj0w9o4/96Xu2KaiOnDGpZKS23guYrvueV/Qh013FGW+CRGi5WP+CdoWXjGUSAvs/cSdTcFogFkeVhzzEYs4/lOl3YWSf89+0T2H9AKvNY1Q=
+	t=1779297029; cv=none; b=aln9lW4ElS4hejg2c60YIaHluBEzSP5KArqcGYHI0yk9AbkGC0iSAeNJXCFYsiw9LnqsMYTBgKahwzIp3C5sPU4uRCqvKU/CNCJCMCKvFzDbNZKoswzC1u/ukLh552tmDr4oW4hYtHJ6xVnEYaUrgtKKZs8sXqFiBBtHH1VDA3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297026; c=relaxed/simple;
-	bh=50kqr9tF2mTDQsrC+NWFEvd8t3rThjYDCrEMVYRQpro=;
+	s=arc-20240116; t=1779297029; c=relaxed/simple;
+	bh=GpPpeNOx7su2zk0LxF55F1Weg3myNcbrYFwPbfwIB20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyB8Wl7GniwYr4WSdXpOiRqpDjbcOinub50E5IJpyVKWujoxjD8OASuhtjEGiXIm0Ni2D96R1NCv/6DlKgO6JtbpKGu3FBTbufLkOhfBqB8lDoJM/1s8GfWT+b7fP/ZGIqmta5sjBSqSRbA+U1YDwg8Yx+jS2gb5WhbVffNVBPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivjzcJOi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1lqfrN//YcvV+96HZ6UrCA3Tp5pclOzGNsXvXB3VOtVw+c+zgyyRccX4pm8TsbYhqc4WqwV/QPgLhRZ4PqWQRg0VC1vwL1lDpKZSZqfgliWIsv5X6Xd/ulkObMdA1lvO3zF9+vnxNaW0oJCVKkx9aqYdgGJvfwzkHVPsclfSIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYTYoe9K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivjzcJOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D949F1F000E9;
-	Wed, 20 May 2026 17:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYTYoe9K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F84B1F000E9;
+	Wed, 20 May 2026 17:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297025;
-	bh=yjkhSe6mgMTyO1D6WckjYhV5PCqXQSyzMpFv2rWuxvg=;
+	s=korg; t=1779297028;
+	bh=oTO5dzUFtwGadASLqE/bPDjePcZsKZqb4s34dMxNhm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ivjzcJOigWkimQADwfYDyvU9VvUG7IvPD1A6XpfhpbNmb4aAndnisINDlUYFcpNSq
-	 PmH0+XMQu64Io3isln2We9z0A+z3Bd8lvztOyQEbr0o7bCELh7VNnZbDMpGKgUF8CQ
-	 8BNhz+wFWyTjsKG+rEuhAv+KN62B67xeg0BpS2Ho=
+	b=VYTYoe9KBAaCk5AkrezkKN6QGQaMEPkdjhb5kZBXHnh2vsK29QbEZtCXBA6bQW6Nn
+	 FF4C/r7EJ4L77ACeQmKmN8SwHOK9d6sOS8nqvpqwrMjqGf0GnTrajMPiBS3KgBSY35
+	 +6OQ5K4+IeGG56E7YQZtdCmVV5BBMOOTpcfRHFkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1022/1146] iavf: wait for PF confirmation before removing VLAN filters
-Date: Wed, 20 May 2026 18:21:12 +0200
-Message-ID: <20260520162211.359176803@linuxfoundation.org>
+Subject: [PATCH 7.0 1023/1146] iavf: add VIRTCHNL_OP_ADD_VLAN to success completion handler
+Date: Wed, 20 May 2026 18:21:13 +0200
+Message-ID: <20260520162211.380935893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -57,44 +57,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit bbcbe4ed70dea948849549af7edf44bd42bbd695 ]
+[ Upstream commit 34d33313b52eeac3a97ad2e3176d523ec70d9283 ]
 
-The VLAN filter DELETE path was asymmetric with the ADD path: ADD
-waits for PF confirmation (ADD -> ADDING -> ACTIVE), but DELETE
-immediately frees the filter struct after sending the DEL message
-without waiting for the PF response.
+The V1 ADD_VLAN opcode had no success handler; filters sent via V1
+stayed in ADDING state permanently.  Add a fallthrough case so V1
+filters also transition ADDING -> ACTIVE on PF confirmation.
 
-This is problematic because:
- - If the PF rejects the DEL, the filter remains in HW but the driver
-   has already freed the tracking structure, losing sync.
- - Race conditions between DEL pending and other operations
-   (add, reset) cannot be properly resolved if the filter struct
-   is already gone.
+Critically, add an `if (v_retval) break` guard: the error switch in
+iavf_virtchnl_completion() does NOT return after handling errors,
+it falls through to the success switch.  Without this guard, a
+PF-rejected ADD would incorrectly mark ADDING filters as ACTIVE,
+creating a driver/HW mismatch where the driver believes the filter
+is installed but the PF never accepted it.
 
-Add IAVF_VLAN_REMOVING state to make the DELETE path symmetric:
-
-  REMOVE -> REMOVING (send DEL) -> PF confirms -> kfree
-                                -> PF rejects  -> ACTIVE
-
-In iavf_del_vlans(), transition filters from REMOVE to REMOVING
-instead of immediately freeing them. The new DEL completion handler
-in iavf_virtchnl_completion() frees filters on success or reverts
-them to ACTIVE on error.
-
-Update iavf_add_vlan() to handle the REMOVING state: if a DEL is
-pending and the user re-adds the same VLAN, queue it for ADD so
-it gets re-programmed after the PF processes the DEL.
-
-The !VLAN_FILTERING_ALLOWED early-exit path still frees filters
-directly since no PF message is sent in that case.
-
-Also update iavf_del_vlan() to skip filters already in REMOVING
-state: DEL has been sent to PF and the completion handler will
-free the filter when PF confirms. Without this guard, the sequence
-DEL(pending) -> user-del -> second DEL could cause the PF to return
-an error for the second DEL (filter already gone), causing the
-completion handler to incorrectly revert a deleted filter back to
-ACTIVE.
+For V2, this is harmless: iavf_vlan_add_reject() in the error
+block already kfree'd all ADDING filters, so the success handler
+finds nothing to transition.
 
 Fixes: 968996c070ef ("iavf: Fix VLAN_V2 addition/rejection")
 Signed-off-by: Petr Oros <poros@redhat.com>
@@ -102,140 +80,31 @@ Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-3-cdcb48303fd8@intel.com
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-4-cdcb48303fd8@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |  1 +
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 13 ++++---
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 37 +++++++++++++------
- 3 files changed, 34 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index 5765715914d6b..050f8241ef5e6 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -161,6 +161,7 @@ enum iavf_vlan_state_t {
- 	IAVF_VLAN_ADDING,	/* ADD sent to PF, waiting for response */
- 	IAVF_VLAN_ACTIVE,	/* PF confirmed, filter is in HW */
- 	IAVF_VLAN_REMOVE,	/* filter queued for DEL from PF */
-+	IAVF_VLAN_REMOVING,	/* DEL sent to PF, waiting for response */
- };
- 
- struct iavf_vlan_filter {
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 12e102506011a..d373feee4c7e9 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -757,10 +757,10 @@ iavf_vlan_filter *iavf_add_vlan(struct iavf_adapter *adapter,
- 		adapter->num_vlan_filters++;
- 		iavf_schedule_aq_request(adapter, IAVF_FLAG_AQ_ADD_VLAN_FILTER);
- 	} else if (f->state == IAVF_VLAN_REMOVE) {
--		/* Re-add the filter since we cannot tell whether the
--		 * pending delete has already been processed by the PF.
--		 * A duplicate add is harmless.
--		 */
-+		/* DEL not yet sent to PF, cancel it */
-+		f->state = IAVF_VLAN_ACTIVE;
-+	} else if (f->state == IAVF_VLAN_REMOVING) {
-+		/* DEL already sent to PF, re-add after completion */
- 		f->state = IAVF_VLAN_ADD;
- 		iavf_schedule_aq_request(adapter,
- 					 IAVF_FLAG_AQ_ADD_VLAN_FILTER);
-@@ -791,11 +791,14 @@ static void iavf_del_vlan(struct iavf_adapter *adapter, struct iavf_vlan vlan)
- 			list_del(&f->list);
- 			kfree(f);
- 			adapter->num_vlan_filters--;
--		} else {
-+		} else if (f->state != IAVF_VLAN_REMOVING) {
- 			f->state = IAVF_VLAN_REMOVE;
- 			iavf_schedule_aq_request(adapter,
- 						 IAVF_FLAG_AQ_DEL_VLAN_FILTER);
- 		}
-+		/* If REMOVING, DEL is already sent to PF; completion
-+		 * handler will free the filter when PF confirms.
-+		 */
- 	}
- 
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 4f197d908124e..93ca79c3e3b53 100644
+index 93ca79c3e3b53..4f2defd2331b1 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -948,12 +948,10 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 
- 		vvfl->vsi_id = adapter->vsi_res->vsi_id;
- 		vvfl->num_elements = count;
--		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
-+		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
- 			if (f->state == IAVF_VLAN_REMOVE) {
- 				vvfl->vlan_id[i] = f->vlan.vid;
--				list_del(&f->list);
--				kfree(f);
--				adapter->num_vlan_filters--;
-+				f->state = IAVF_VLAN_REMOVING;
- 				i++;
- 				if (i == count)
- 					break;
-@@ -990,7 +988,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 
- 		vvfl_v2->vport_id = adapter->vsi_res->vsi_id;
- 		vvfl_v2->num_elements = count;
--		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
-+		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
- 			if (f->state == IAVF_VLAN_REMOVE) {
- 				struct virtchnl_vlan_supported_caps *filtering_support =
- 					&adapter->vlan_v2_caps.filtering.filtering_support;
-@@ -1005,9 +1003,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 				vlan->tci = f->vlan.vid;
- 				vlan->tpid = f->vlan.tpid;
- 
--				list_del(&f->list);
--				kfree(f);
--				adapter->num_vlan_filters--;
-+				f->state = IAVF_VLAN_REMOVING;
- 				i++;
- 				if (i == count)
- 					break;
-@@ -2370,10 +2366,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
- 			wake_up(&adapter->vc_waitqueue);
- 			break;
--		case VIRTCHNL_OP_DEL_VLAN:
--			dev_err(&adapter->pdev->dev, "Failed to delete VLAN filter, error %s\n",
--				iavf_stat_str(&adapter->hw, v_retval));
--			break;
- 		case VIRTCHNL_OP_DEL_ETH_ADDR:
- 			dev_err(&adapter->pdev->dev, "Failed to delete MAC filter, error %s\n",
- 				iavf_stat_str(&adapter->hw, v_retval));
-@@ -2895,6 +2887,27 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
+@@ -2876,9 +2876,13 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 		spin_unlock_bh(&adapter->adv_rss_lock);
  		}
  		break;
-+	case VIRTCHNL_OP_DEL_VLAN:
-+	case VIRTCHNL_OP_DEL_VLAN_V2: {
-+		struct iavf_vlan_filter *f, *ftmp;
++	case VIRTCHNL_OP_ADD_VLAN:
+ 	case VIRTCHNL_OP_ADD_VLAN_V2: {
+ 		struct iavf_vlan_filter *f;
+ 
++		if (v_retval)
++			break;
 +
-+		spin_lock_bh(&adapter->mac_vlan_list_lock);
-+		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list,
-+					 list) {
-+			if (f->state == IAVF_VLAN_REMOVING) {
-+				if (v_retval) {
-+					/* PF rejected DEL, keep filter */
-+					f->state = IAVF_VLAN_ACTIVE;
-+				} else {
-+					list_del(&f->list);
-+					kfree(f);
-+					adapter->num_vlan_filters--;
-+				}
-+			}
-+		}
-+		spin_unlock_bh(&adapter->mac_vlan_list_lock);
-+		}
-+		break;
- 	case VIRTCHNL_OP_ENABLE_VLAN_STRIPPING:
- 		/* PF enabled vlan strip on this VF.
- 		 * Update netdev->features if needed to be in sync with ethtool.
+ 		spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
+ 			if (f->state == IAVF_VLAN_ADDING)
 -- 
 2.53.0
 
