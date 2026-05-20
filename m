@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2695C3769E0;
-	Wed, 20 May 2026 18:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BCE4F5E0;
+	Wed, 20 May 2026 18:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300038; cv=none; b=uz87znhzGvWOvq3I5C821VPBHXQ2cNoy82DPuBbH8Ejdf9scyQXf+0Wgn6YT+JalPyCpGLjrc9rfmiYcXsYzrxUWNsB4ivoYw9D+6CSqbMf97uJ0KJQLy4hWe22lSGvqgaaykILrt4W4tRlmo88KEw+HmvvTjTuZY+NUyTV+jKY=
+	t=1779300040; cv=none; b=nEy3mPaRHbub8tRjB8yFnuCSlkpBBf6OiY31VvMWyeyKWdtsRSEObPlqSE/vx6a8EHlJFfaCIkWk67IN4i1o5HjIqBRSFX7haz7+Qb7o3Gd+5lhgpc6YugealCBd/LkkXu68SPMKFl0l8TsKJBnZRRXs3VxjNuG4pzpqCRCv9qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300038; c=relaxed/simple;
-	bh=huAfnK56Y2m9fumLScb/QblbkoWsqtPpGL+mGNtSES8=;
+	s=arc-20240116; t=1779300040; c=relaxed/simple;
+	bh=p74XBqEvUsSo+S/2/1mo23Ntjx53CvEd/wNlHE5yLUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EA1OV274ENSxeI9K09icUbH0TLT2ggin+fgRXHYD8Hw62rKRnvDU8DM/ef0Q9X7N7IAdFPdNNDb4p2/LvYFxfMG7M4Vt55BOYvPj4Atq3u20QfyW0pYxk1PN6s82iJqhaxDPhvRyvbAScuc1mE+wqiXp2PGuR/FG+K3yUk/FZno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM0XhLjf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bI6HjXBsqAaMW1TVpaFfO+ys0KiZIk5z5YCGef1xJM+ugw6VfsiWAGRyWS/GUTWv0ZSqy+F+2de7W7e62VXo4cRGvRpghh4m33BKvbLUanI29Ua1eRR2TxdcSKlmM8T8iTxO9l6XrCbvl8O5SAWT24bSXk1eyQOzeZFsBv/lp7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAGOS7Am; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM0XhLjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8231F000E9;
-	Wed, 20 May 2026 18:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAGOS7Am"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3455D1F000E9;
+	Wed, 20 May 2026 18:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300037;
-	bh=ubaDCDzBt24Ntrbkr0Go4S8FWvOvXeKdwKChJQ1VB0c=;
+	s=korg; t=1779300039;
+	bh=VNsLr4bdL7kmYc84GrfmfYxkWqA1liGAjYs6GcUR4JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zM0XhLjf0+BWenQDrOJddzoyj2ooxb1YjQQ64TGJuX5M0NRTg9a+evPpqzfZ2G+Pz
-	 kKTUlW/R0enquP2Hhkii9qPuJ4uBsQudLkOOGlK6pc+B8yE0XmaWmauxroQfzAvgbF
-	 26inEteaFk+oschHG3500d5d5MX/E+xtydhCGppg=
+	b=LAGOS7AmXlKCN9XTIWmGecWzIW1+h1HfuLVUadcbbEJ8bkiDXujQd0FlMOVedzr5d
+	 jAjksyHOcFZ/eRxSI04Nmpgy43WaBCqS/t40MwDFwVwgM9qU2B6pl2bRrUBYgrfiwe
+	 4n+zzZYPBePcv6boypA6/o1j4W/OYMpcY4aCCqL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gui-Dong Han <hanguidong02@gmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/666] platform/wmi: use generic driver_override infrastructure
-Date: Wed, 20 May 2026 18:13:54 +0200
-Message-ID: <20260520162111.734939858@linuxfoundation.org>
+Subject: [PATCH 6.12 024/666] s390/cio: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:13:55 +0200
+Message-ID: <20260520162111.758178348@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -47,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -56,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 8a700b1fc94df4d847a04f14ebc7f8532592b367 ]
+[ Upstream commit ac4d8bb6e2e13e8684a76ea48d13ebaaaf5c24c4 ]
 
 When a driver is probed through __driver_attach(), the bus' match()
 callback is called without the device lock held, thus accessing the
@@ -71,113 +69,103 @@ held is intentional. [1]
 Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
 Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
 Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 12046f8c77e0 ("platform/x86: wmi: Add driver_override support")
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260324005919.2408620-7-dakr@kernel.org
+Fixes: ebc3d1791503 ("s390/cio: introduce driver_override on the css bus")
+Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Link: https://patch.msgid.link/20260324005919.2408620-10-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 36 +++++-------------------------------
- include/linux/wmi.h        |  4 ----
- 2 files changed, 5 insertions(+), 35 deletions(-)
+ drivers/s390/cio/cio.h |  5 -----
+ drivers/s390/cio/css.c | 34 ++++------------------------------
+ 2 files changed, 4 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 3cbe180c3fc0a..f13173eb070e6 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -696,39 +696,11 @@ static ssize_t expensive_show(struct device *dev,
- }
- static DEVICE_ATTR_RO(expensive);
+diff --git a/drivers/s390/cio/cio.h b/drivers/s390/cio/cio.h
+index a9057a5b670a6..23374604c6b01 100644
+--- a/drivers/s390/cio/cio.h
++++ b/drivers/s390/cio/cio.h
+@@ -103,11 +103,6 @@ struct subchannel {
+ 	struct work_struct todo_work;
+ 	struct schib_config config;
+ 	u64 dma_mask;
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char *driver_override;
+ } __attribute__ ((aligned(8)));
  
--static ssize_t driver_override_show(struct device *dev, struct device_attribute *attr,
--				    char *buf)
--{
--	struct wmi_device *wdev = to_wmi_device(dev);
--	ssize_t ret;
--
--	device_lock(dev);
--	ret = sysfs_emit(buf, "%s\n", wdev->driver_override);
--	device_unlock(dev);
--
--	return ret;
--}
--
--static ssize_t driver_override_store(struct device *dev, struct device_attribute *attr,
+ DECLARE_PER_CPU_ALIGNED(struct irb, cio_irb);
+diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
+index 61be7c0550bc4..b0ddbad1ebf37 100644
+--- a/drivers/s390/cio/css.c
++++ b/drivers/s390/cio/css.c
+@@ -160,7 +160,6 @@ static void css_subchannel_release(struct device *dev)
+ 
+ 	sch->config.intparm = 0;
+ 	cio_commit_config(sch);
+-	kfree(sch->driver_override);
+ 	kfree(sch);
+ }
+ 
+@@ -324,37 +323,9 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
+ 
+ static DEVICE_ATTR_RO(modalias);
+ 
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
 -				     const char *buf, size_t count)
 -{
--	struct wmi_device *wdev = to_wmi_device(dev);
+-	struct subchannel *sch = to_subchannel(dev);
 -	int ret;
 -
--	ret = driver_set_override(dev, &wdev->driver_override, buf, count);
--	if (ret < 0)
+-	ret = driver_set_override(dev, &sch->driver_override, buf, count);
+-	if (ret)
 -		return ret;
 -
 -	return count;
 -}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct subchannel *sch = to_subchannel(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", sch->driver_override);
+-	device_unlock(dev);
+-	return len;
+-}
 -static DEVICE_ATTR_RW(driver_override);
 -
- static struct attribute *wmi_attrs[] = {
+ static struct attribute *subch_attrs[] = {
+ 	&dev_attr_type.attr,
  	&dev_attr_modalias.attr,
- 	&dev_attr_guid.attr,
- 	&dev_attr_instance_count.attr,
- 	&dev_attr_expensive.attr,
 -	&dev_attr_driver_override.attr,
- 	NULL
+ 	NULL,
  };
- ATTRIBUTE_GROUPS(wmi);
-@@ -797,7 +769,6 @@ static void wmi_dev_release(struct device *dev)
- {
- 	struct wmi_block *wblock = dev_to_wblock(dev);
  
--	kfree(wblock->dev.driver_override);
- 	kfree(wblock);
- }
- 
-@@ -806,10 +777,12 @@ static int wmi_dev_match(struct device *dev, const struct device_driver *driver)
- 	const struct wmi_driver *wmi_driver = drv_to_wdrv(driver);
- 	struct wmi_block *wblock = dev_to_wblock(dev);
- 	const struct wmi_device_id *id = wmi_driver->id_table;
+@@ -1358,9 +1329,11 @@ static int css_bus_match(struct device *dev, const struct device_driver *drv)
+ 	struct subchannel *sch = to_subchannel(dev);
+ 	const struct css_driver *driver = to_cssdriver(drv);
+ 	struct css_device_id *id;
 +	int ret;
  
  	/* When driver_override is set, only bind to the matching driver */
--	if (wblock->dev.driver_override)
--		return !strcmp(wblock->dev.driver_override, driver->name);
-+	ret = device_match_driver_override(dev, driver);
-+	if (ret >= 0)
-+		return ret;
- 
- 	if (id == NULL)
+-	if (sch->driver_override && strcmp(sch->driver_override, drv->name))
++	ret = device_match_driver_override(dev, drv);
++	if (ret == 0)
  		return 0;
-@@ -891,6 +864,7 @@ static struct class wmi_bus_class = {
- static const struct bus_type wmi_bus_type = {
- 	.name = "wmi",
- 	.dev_groups = wmi_groups,
-+	.driver_override = true,
- 	.match = wmi_dev_match,
- 	.uevent = wmi_dev_uevent,
- 	.probe = wmi_dev_probe,
-diff --git a/include/linux/wmi.h b/include/linux/wmi.h
-index 3275470b5531e..63cca3b58d6df 100644
---- a/include/linux/wmi.h
-+++ b/include/linux/wmi.h
-@@ -16,16 +16,12 @@
-  * struct wmi_device - WMI device structure
-  * @dev: Device associated with this WMI device
-  * @setable: True for devices implementing the Set Control Method
-- * @driver_override: Driver name to force a match; do not set directly,
-- *		     because core frees it; use driver_set_override() to
-- *		     set or clear it.
-  *
-  * This represents WMI devices discovered by the WMI driver core.
-  */
- struct wmi_device {
- 	struct device dev;
- 	bool setable;
--	const char *driver_override;
- };
  
- /**
+ 	for (id = driver->subchannel_type; id->match_flags; id++) {
+@@ -1417,6 +1390,7 @@ static int css_uevent(const struct device *dev, struct kobj_uevent_env *env)
+ 
+ static const struct bus_type css_bus_type = {
+ 	.name     = "css",
++	.driver_override = true,
+ 	.match    = css_bus_match,
+ 	.probe    = css_probe,
+ 	.remove   = css_remove,
 -- 
 2.53.0
 
