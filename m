@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B783546C8;
-	Wed, 20 May 2026 17:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987A43546C8;
+	Wed, 20 May 2026 17:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299134; cv=none; b=rJMr8RzTS+RxL1KQJwebGeftkW0hU7P+sdDCcNoxL8OdUDyedAF69fmcaEeaeX6t/SG8MbkDznSBS6pevITb9mJ9DzXUHeBFvoyvcszWvC6zIdrfyTdJCQL5mk+Rs2BK51bV+uq64yoLjJwlIiKr4DYKngRDRfR9kX2X5HpeZwQ=
+	t=1779299136; cv=none; b=Ny0/7dxPOXZ/vigL9Cm3VxDEa6je5twN2W7dwQpTY2UG7huWYjryY4GU7+llastpbf/kNbkMSafizLOL3Vjsrc0qIqO3ukmLva+4YxGdzOHn5ghs5IhluJABwUM8oGZKn7Vqsx3uFhmPzES4k9IoxIBnA5WjbLtwPdkgiO8sQTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299134; c=relaxed/simple;
-	bh=yGAWFZNA0nn/KN2cQsGn6h3yrCOwOF4s9bVB0/N1PFw=;
+	s=arc-20240116; t=1779299136; c=relaxed/simple;
+	bh=HIoGCQlvS//7PO06AyEVE2704aYoBEzceZwsj+kOvKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZzd/H7NzQf9OpdHwFIItZDlM+zBGiZmufbb78hWRyjFJyrznlnDxutpE+69IyPcjGANkbF5ufPEVBwguIqkKt1jgSbUTiiORpeaa68D2A7OaCPKmv1a2GSO2W3q/DfZPRcftw+i1L6iUldLyrtIzzJGDDLhWk1DAm2EACt0sSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwHLs4De; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHkdsjGPvMRelBtqYZdoWDRiFfPgP+NinQzMVZRy6WdZVscYSs3nXccQLADeJihDdE3uUvUrHiEEDqRorolju53AvyuVn6fG6/h6HmeNQJBABgOV6/UVvXBrxkbSCHDHN1mCGH4qMcNjIOAwFusr0ULojSY3KRYDjYlyCMR+D5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wediqTDI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwHLs4De"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FE01F000E9;
-	Wed, 20 May 2026 17:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wediqTDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0124F1F000E9;
+	Wed, 20 May 2026 17:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299132;
-	bh=y6jcDqYUzotVLml1CEm8iT6M3cvS6ErnoBJC9bbe9OI=;
+	s=korg; t=1779299135;
+	bh=nXdsbzjajRq4yaxo/Ug9MVo1KpFncGL+DzxmG+sQn5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rwHLs4DeWkJ6PZc+fSLFvwAMaS4gzy+kCb2S1NgyKCr6M8AWhcABWYRjRKipsQl3h
-	 V3nGtepqSX+ZfaAyMip3z39k5Jyw/C6UkOXHQRcCCIF2jT33ndC07CYSR/8i96QPP+
-	 GB0VdNLdFB5Yj+ovPMAgk77TMeqRIkwO70Zte3gU=
+	b=wediqTDIXkM6Jq1+CGeVIXknXFnL1gpJ+kwu3+/UxG2PNitr4I+etFzocwh+gGb/E
+	 uY9PJowlTWw+Oa1L+r7BtxTn3P7jvEMFJ6CL5BvdNRpbFfnVVeUplbhBxxF7I19L90
+	 UnQ8aNqxJZtQakYvJBRvvS6FM8iueHp35cdNZhG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 676/957] ksmbd: fix durable fd leak on ClientGUID mismatch in durable v2 open
-Date: Wed, 20 May 2026 18:19:19 +0200
-Message-ID: <20260520162149.199172492@linuxfoundation.org>
+Subject: [PATCH 6.18 677/957] ksmbd: scope conn->binding slowpath to bound sessions only
+Date: Wed, 20 May 2026 18:19:20 +0200
+Message-ID: <20260520162149.220298721@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,62 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 804054d19886ac6628883d82410f6ee42a818664 ]
+[ Upstream commit b0da97c034b6107d14e537e212d4ce8b22109a58 ]
 
-ksmbd_lookup_fd_cguid() returns a ksmbd_file with its refcount
-incremented via ksmbd_fp_get(). parse_durable_handle_context() in
-the DURABLE_REQ_V2 case properly releases this reference on every
-path inside the ClientGUID-match branch, either by calling
-ksmbd_put_durable_fd() or by transferring ownership to dh_info->fp
-for a successful reconnect. However, when an entry exists in the
-global file table with the same CreateGuid but a different
-ClientGUID, the code simply falls through to the new-open path
-without dropping the reference obtained from ksmbd_lookup_fd_cguid().
+When the binding SESSION_SETUP sets conn->binding = true, the flag stays
+set after the call so that the global session lookup in
+ksmbd_session_lookup_all() can find the session, which was not added to
+conn->sessions. Because the flag is connection-wide, the global lookup
+path will also resolve any other session by id if asked.
 
-Per MS-SMB2 section 3.3.5.9.10 ("Handling the
-SMB2_CREATE_DURABLE_HANDLE_REQUEST_V2 Create Context"), the server
-MUST locate an Open whose Open.CreateGuid matches the request's
-CreateGuid AND whose Open.ClientGuid matches the ClientGuid of the
-connection that received the request. If no such Open is found, the
-server MUST continue with the normal open execution phase. A
-CreateGuid hit with a ClientGUID mismatch is therefore the
-"Open not found" case: proceeding with a new open is correct, but
-the reference obtained purely as a side effect of the lookup must
-not be leaked.
+Tighten the global lookup so that the returned session must have this
+connection registered in its channel xarray (sess->ksmbd_chann_list).
+The channel entry is installed by the existing binding_session path in
+ntlm_authenticate()/krb5_authenticate() when a SESSION_SETUP completes
+successfully, so this condition is a strict equivalent of "this
+connection has been accepted as a channel of this session". Connections
+that have not bound to a given session cannot reach it via the global
+table.
 
-Repeated requests that hit this mismatch pin global_ft entries,
-prevent __ksmbd_close_fd() from ever running for the corresponding
-files, and defeat the durable scavenger, leading to long-lived
-resource leaks.
+The existing conn->binding gate for entering the slowpath is preserved
+so that non-binding connections keep the fast-path-only behavior, and
+the session->state check is unchanged.
 
-Release the reference in the mismatch path and clear dh_info->fp so
-subsequent logic does not mistake a non-matching lookup result for
-a reconnect target.
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/mgmt/user_session.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 4bfbfe53aa4eb..756624b4e90e0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2854,6 +2854,8 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 					dh_info->reconnected = true;
- 					goto out;
- 				}
-+				ksmbd_put_durable_fd(dh_info->fp);
-+				dh_info->fp = NULL;
- 			}
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index afa0daa3f5d88..5bc2f18d68bbc 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -327,8 +327,13 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
+ 	struct ksmbd_session *sess;
  
- 			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
+ 	sess = ksmbd_session_lookup(conn, id);
+-	if (!sess && conn->binding)
++	if (!sess && conn->binding) {
+ 		sess = ksmbd_session_lookup_slowpath(id);
++		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
++			ksmbd_user_session_put(sess);
++			sess = NULL;
++		}
++	}
+ 	if (sess && sess->state != SMB2_SESSION_VALID) {
+ 		ksmbd_user_session_put(sess);
+ 		sess = NULL;
 -- 
 2.53.0
 
