@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2FE3F1AD9;
-	Wed, 20 May 2026 17:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466893F20F9;
+	Wed, 20 May 2026 17:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299517; cv=none; b=T1CmR8G4wd4JSpFvO+pOkym44SQ/fWqNMt55sQnCpHWiMW5it192IVXePhQFfAH1a/EBRwo9rXf7YGuOTgolyxN2m52md3euB0dFXnyGOfGVq1hCaaa39OmC5HXBZ77Ehps6ZKFkjk6kzHbI1Fu8RV8xpnw6cifDkMkHLUbhKJU=
+	t=1779299520; cv=none; b=EpVFSp28b5SNmpAXpkUcOcR05pbS7IkBDfngSSFTVbsBzTIg8S421NMzCn9TYKl4Q0dWQkaPiT9ifsLJk7tdHSKBIk2c4d80rxwm0FnSF+2N/Tiy/MBmvZX/fO2ixoVGfKXLUME2wfFKdw6PqAH2xc/9mr/NdbCuiAVFUD700xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299517; c=relaxed/simple;
-	bh=GQX61aJOol9L0BtSHLeLxKAg0Qk6bCCXUr7NehcaBCM=;
+	s=arc-20240116; t=1779299520; c=relaxed/simple;
+	bh=LcLIJ66I2ORGiE5+xL/Ci8EGerrn1ANbUTdig14MbyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e100YZHisCcQQR6hJqsClQ2OkQ6GlakQLqDwUcIc8xL69GF/vEXu4lJHeqklTRM9iIj7lGM8LaxWqM/MBPULijzP/tXLY6dTQMFI8DiprGpykM0JmnsATdZ154UItHTBXeXrx+pR7vD5Edj9UMCqgP1ewXStPdtbqM9W7XPg5EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q636/qDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQPZ3VQtLs8Wow87CVthpbFSy/auts4Fyn6XHNzPhEfW8EpJKUodBN13vAbtTCesFThvYIc02gSOgRIzl7nPmZ96yFrpTosuc4hA/6r9423/Yjs05nfk09tw4aYu4mpRMRMazpFdLHFdI/rvqGgJPz29So5S6LI8IUQwnVypNKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMnpeIXZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q636/qDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C043F1F000E9;
-	Wed, 20 May 2026 17:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMnpeIXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647241F000E9;
+	Wed, 20 May 2026 17:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299516;
-	bh=sLfi/wxuzAHTGHRQqAeA4iadAFqBVlffesXpLaqiu8o=;
+	s=korg; t=1779299518;
+	bh=97Cg3YdxLbzj2dJfBXuMkACRO/kWmDuiHUovQaLz+BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q636/qDTmj5haxQfNkMfbat/+GwJX78YeGkY0ASU52Kd4huocFDXwGDjfmF7POMt9
-	 wRvb/6eGU/jvnunoBbWz0ItDXD1Vv8HLfcBWJKtsWmzCih/D4gdsyY+8Z45jTjMAy9
-	 zvMkH7OyEC+i1fTm0+fEIZpLKeut9kptkFTCwU2E=
+	b=QMnpeIXZJbAkvM31cSD2D5tJEoCMbAqh0aSNvHkcQapExlBzjb2elEZhUtiY5MXqL
+	 5fHh/ld+b42QUcSSZLBS7b5OQzJGk6PTKb55MqDV8pA46Eveui115EHSQNxe92K4lF
+	 2Z/UAsyV+yxKArbJuHDlTzWaecBcAUXXc/OZhTRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 750/957] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
-Date: Wed, 20 May 2026 18:20:33 +0200
-Message-ID: <20260520162150.827846532@linuxfoundation.org>
+Subject: [PATCH 6.18 796/957] s390/mm: Fix phys_to_folio() usage in do_secure_storage_access()
+Date: Wed, 20 May 2026 18:21:19 +0200
+Message-ID: <20260520162151.825492172@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,67 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
+[ Upstream commit b95e0e792822bad8fc9eb33ea3a90005e29e75e9 ]
 
-UVD 3.1 firmware validation seems to always fail after
-attempting it when it had already been validated.
-(This works similarly with the VCE 1.0 as well.)
+In case of a Secure-Storage-Access exception the effective aka virtual
+address which caused the exception is contained within the TEID.
 
-Don't attempt repeating the validation when it's already done.
+do_secure_storage_access() incorrectly uses phys_to_folio() instead of
+virt_to_folio() to translate the virtual address to the corresponding
+folio.
 
-This caused issues in situations when the system isn't able
-to suspend the GPU properly and so the GPU isn't actually
-powered down. Then amdgpu would fail when calling the IP
-block resume function.
+Fix this by using virt_to_folio() instead of phys_to_folio().
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
-Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
+Fixes: 084ea4d611a3 ("s390/mm: add (non)secure page access exceptions handlers")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/s390/mm/fault.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 2e79a3afc7748..1df45633e8120 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
- 	uint64_t addr;
- 	uint32_t size;
- 
-+	/* When the keyselect is already set, don't perturb it. */
-+	if (RREG32(mmUVD_FW_START))
-+		return;
-+
- 	/* program the VCPU memory controller bits 0-27 */
- 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
- 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
-@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
- 
-+	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
-+			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
-+		return 0;
-+	}
-+
- 	WREG32(mmUVD_FW_START, keysel);
- 
- 	for (i = 0; i < 10; ++i) {
+diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
+index d1f165048055b..069f72703a915 100644
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -433,7 +433,7 @@ void do_secure_storage_access(struct pt_regs *regs)
+ 		panic("Unexpected PGM 0x3d with TEID bit 61=0");
+ 	}
+ 	if (is_kernel_fault(regs)) {
+-		folio = phys_to_folio(addr);
++		folio = virt_to_folio((void *)addr);
+ 		if (unlikely(!folio_try_get(folio)))
+ 			return;
+ 		rc = uv_convert_from_secure(folio_to_phys(folio));
 -- 
 2.53.0
 
