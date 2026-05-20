@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6673D75AB;
-	Wed, 20 May 2026 18:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CEF3DC4DA;
+	Wed, 20 May 2026 18:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300521; cv=none; b=LzpknBzG6OzL9C94ROKcjyTf55CHgMCkwZSCFfnwwkBiZCMeDpQ67OgY8awF7nTwbObBWgK5X1mUkL6En2k09f4iTZNcyypYyST80EgVB31HOXQOXFz9XAyOL2MvYxIdTi+SDK6uaSw+wvStM8a53WlVrokNy7PaOqSQOVBunBA=
+	t=1779300523; cv=none; b=Ty9qvPS+DBviPiYRE7124ERMCbVJJLVpI9NyCINj5OWeVZbfJw3Y+ltpatrdQhIXJIdRvfghi0K5C3qbOVldHAYgf84kRoZaAV3v1fUZtftmfO5oWzHj7Kw6xd+8pOzh1HA3/Vn1/7yy8oj2BTEfKFEGm8Oexy5xxp7tLvC3jcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300521; c=relaxed/simple;
-	bh=3/SisJg8WoSMiEOVAIa+e5+iaRXnt7UjgIUCFgVpqLM=;
+	s=arc-20240116; t=1779300523; c=relaxed/simple;
+	bh=OwH2UU1dHDXMVTAHJAjRgHytPjY+IMgkdBX9DcrQvaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJoNzPz2nUqVdBcCcXxg/uGzn9AQO/erolJx1c8LcV8EZEWaCVcOJ6moudbB8ZNye3XaM9DFeoTu0SCJE3DZ187iaOMBEzEF9+UoiaLTRgZLKgskkCyhk6YmsusIXdidQ1K9T6CwkbqoflpSkDnd0ctETkj1h4kEq7/xuxq9pMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KUJCkF3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UUerYHcfb8K/Gh2Ab+VAFXuxxqvh0TFgtc4PgTFaLAMPB5dmzkKVdRYjnEppPqpp5xtG1pp3adpkaX3KrSAYiaJgVRUaBz41hwJ9MgmMhx1ao88pb8KmOTHiWu3kGB0fk35/VOWRzLWB0s5krdXU8Ptj3YqpoqCK8yGP9CidF4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwHK9uvz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KUJCkF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15191F000E9;
-	Wed, 20 May 2026 18:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwHK9uvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0191F000E9;
+	Wed, 20 May 2026 18:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300520;
-	bh=RtjSPu1FSamrGTirMFaEru21qg/Arsbnylb63uCgClE=;
+	s=korg; t=1779300522;
+	bh=7nIApO0SBkvQ/D9H2iX1qwcsKxs1bFO5BtzoytZ9zsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1KUJCkF3Ifm2JbiCVamXSiX2NrNriV+oVbQwMZOcdUhqd8C9GKm0bk5Hxvb9fLjXq
-	 1bQhMrWe8ZJrgU/KPofT/BmxEnShq2LGqF2IytBSvo9FXtC/bKAp48mIgAddQJblpk
-	 CW0ETzntORBlmzlVnEcwHdmGKkPux9R24AihJnUg=
+	b=MwHK9uvz+BiA+E7tl/Km732uhrjWJdBfq983c1LT/Gf6ZcCewAN3jDgB9xvBOGjvB
+	 0KX/1vpxVMfGEgIzWrmogC67d7CVAqmss2LJObmtOhwDyUuWx+D6ymbJstKm67mL+s
+	 DcCtiU5N+CwZoGvBW0gC17coFg2Ls02mZy9P42/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/666] ASoC: fsl_xcvr: Fix event generation in fsl_xcvr_mode_put()
-Date: Wed, 20 May 2026 18:16:55 +0200
-Message-ID: <20260520162115.627017395@linuxfoundation.org>
+Subject: [PATCH 6.12 205/666] ASoC: fsl_easrc: Check the variable range in fsl_easrc_iec958_put_bits()
+Date: Wed, 20 May 2026 18:16:56 +0200
+Message-ID: <20260520162115.650302265@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,55 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 64a496ba976324615b845d60739dfcdae3d57434 ]
+[ Upstream commit 00541b86fb578d4949cfdd6aff1f82d43fcf07af ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_xcvr_mode_put() only returns 0 or a negative
-error code, causing ALSA to not generate any change events.
+Add check of input value's range in fsl_easrc_iec958_put_bits(),
+otherwise the wrong value may be written from user space.
 
-Add a suitable check in the function before updating the mode variable.
-
-Fixes: 28564486866f ("ASoC: fsl_xcvr: Add XCVR ASoC CPU DAI driver")
+Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
 Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-9-shengjiu.wang@nxp.com
+Link: https://patch.msgid.link/20260401094226.2900532-10-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_easrc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index cae42d919f930..a042bae63ab34 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -218,10 +218,17 @@ static int fsl_xcvr_mode_put(struct snd_kcontrol *kcontrol,
- 	struct fsl_xcvr *xcvr = snd_soc_dai_get_drvdata(dai);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int *item = ucontrol->value.enumerated.item;
-+	int val = snd_soc_enum_item_to_val(e, item[0]);
- 	struct snd_soc_card *card = dai->component->card;
- 	struct snd_soc_pcm_runtime *rtd;
-+	int ret;
-+
-+	if (val < FSL_XCVR_MODE_SPDIF || val > FSL_XCVR_MODE_EARC)
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index 5461a8b44a097..0f8c5210e358e 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -54,6 +54,9 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
+ 	unsigned int regval = ucontrol->value.integer.value[0];
+ 	int ret;
+ 
++	if (regval < EASRC_WIDTH_16_BIT || regval > EASRC_WIDTH_24_BIT)
 +		return -EINVAL;
- 
--	xcvr->mode = snd_soc_enum_item_to_val(e, item[0]);
-+	ret = (xcvr->mode != val);
 +
-+	xcvr->mode = val;
+ 	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
  
- 	fsl_xcvr_activate_ctl(dai, fsl_xcvr_arc_mode_kctl.name,
- 			      (xcvr->mode == FSL_XCVR_MODE_ARC));
-@@ -231,7 +238,7 @@ static int fsl_xcvr_mode_put(struct snd_kcontrol *kcontrol,
- 	rtd = snd_soc_get_pcm_runtime(card, card->dai_link);
- 	rtd->pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream_count =
- 		(xcvr->mode == FSL_XCVR_MODE_SPDIF ? 1 : 0);
--	return 0;
-+	return ret;
- }
- 
- static int fsl_xcvr_mode_get(struct snd_kcontrol *kcontrol,
+ 	easrc_priv->bps_iec958[mc->regbase] = regval;
 -- 
 2.53.0
 
