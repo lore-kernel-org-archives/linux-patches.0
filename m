@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCF33C4576;
-	Wed, 20 May 2026 17:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5F2369D7E;
+	Wed, 20 May 2026 17:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299443; cv=none; b=W5lGECjOKs0MiGcexTaE1PugejcJKP8aGe9p3DEjPKj04jxxPFAqz82RTLyijXF+IGZOB/eD5I8kx5ztegbCnlPU9bQYLVL9q9x2sXPByxony6hLeO9BhUi9YU+EKlm7XCCc28ghyS7foyxwT9Z3/Qo6Y+5ycBW+3KbCtPElE58=
+	t=1779299446; cv=none; b=i8dlVsFCEPxDn4EPpj0o535bQa3EdBgAwf+fvCpM+VeyX43tyzt9G9GEIOTlHCr8RtTnRSZJ+sabCvzN8/JspyMjqfyOqw+Gu1aLy0toHojTtohgVuoaVsJRLps3UTp9433wej+gS8qYz7AnnupIXEkYsS/QReY51K+SewdVxkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299443; c=relaxed/simple;
-	bh=ZQHl6X7XPLUKHTLMuhnxGpxB29H5KuzjQpCHzJvsS68=;
+	s=arc-20240116; t=1779299446; c=relaxed/simple;
+	bh=s7hABmmdP+kf45AgYT99Vg/QI9XvwsA9UpzC4aY9fps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVPdTyKyhRwMdmMfBbTauu7pYtLeFzh44Qux4bELYZMbgwZl6CGSF/UZTJ1+R0bK5AqhsLsnWU/97uXGvNJ7KbJL+VtYtVdWyzn4wqDxIMXp2hisqQu4OegVf1JHg40l0KFU/YRTJeM1kvFXvn2DnA+yWeycpymZLkLuooBaC20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYTWzdpQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiMl3xYY4SpZ1ovtiFyYBXdgfQ8ZSREUuW9kOP9oQigR/O4LLoDC/3jWNJG6VtOGSYWFgy0Q+dEd5QxRBuUwso/7h72V1F2646Y/C/x4iqwfh69c3sQklL7NKqCT6J1vl2CAdX3QAlZz63qAy24yueznECLRIhK3rj3LSbSgCoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDIEUI4p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYTWzdpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AA21F00893;
-	Wed, 20 May 2026 17:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDIEUI4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A7B1F000E9;
+	Wed, 20 May 2026 17:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299442;
-	bh=sRkuEiSEHPpezoOW3kpyaAmGudGx4W6OpIouRcw1Qq8=;
+	s=korg; t=1779299445;
+	bh=yYlwUf8tpPbTohp3ktu6ziRUyjjil1t7D4YIxq5FncI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yYTWzdpQOxhDzg2Klqr4vrgMOGotPElUprvhOqT3SqFwpN7/1UJ/Q2jbduXMnAkb4
-	 3gr51zJpO3KRfXj8Y7aomPh1YAazmdl7KdoNG7IwrpETQXX6eKl3c0JiMwvoNQ26NB
-	 JU2xGl0hbJkZcF2LaPtVbkWlI/3kTI0I4K9iHFYk=
+	b=MDIEUI4pnhKW+h/QpBNR+/I1EmT6ItrI+wWxUi5fOWPojo7mmc8nEjC1CcdYCI7NJ
+	 Mk+ANOk2jG8New0SUqR5hFPnS9aGr/PGgQP8qMuCiPfFKFotwfAiVrcr05RcWYAYad
+	 dPd4BILEnNoCYUB2vbps5JDn7dzyaJPzcC7RMPdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 774/957] net: airoha: Do not read uninitialized fragment address in airoha_dev_xmit()
-Date: Wed, 20 May 2026 18:20:57 +0200
-Message-ID: <20260520162151.346819070@linuxfoundation.org>
+Subject: [PATCH 6.18 775/957] net/sched: sch_choke: annotate data-races in choke_dump_stats()
+Date: Wed, 20 May 2026 18:20:58 +0200
+Message-ID: <20260520162151.368653802@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,71 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bde34e84edc8b5571fbde7e941e175a4293ee1eb ]
+[ Upstream commit d3aeb889dcbd78e95f500d383799a23d949796e0 ]
 
-The transmit loop in airoha_dev_xmit() reads fragment address and length
-during its final iteration, when the loop index equals
-skb_shinfo(skb)->nr_frags, at which point the fragment data is
-uninitialized. While these values are never consumed, the read itself is
-unsafe and may trigger a page fault. Fix this by avoiding the fragment
-read on the last iteration.
-Additionally, move the skb pointer from the first to the last used packet
-descriptor, so that airoha_qdma_tx_napi_poll() defers freeing the skb
-until the final descriptor is processed.
+choke_dump_stats() only runs with RTNL held.
+It reads fields that can be changed in qdisc fast path.
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Fixes: 23020f0493270 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260424-airoha-xmit-fix-read-frag-v1-1-fdc0a83c79e8@kernel.org
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260423062839.2524324-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sched/sch_choke.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 7d7f2bf6172a3..a69544e785a2a 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2024,8 +2024,8 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 	struct netdev_queue *txq;
- 	struct airoha_queue *q;
- 	LIST_HEAD(tx_list);
-+	int i = 0, qid;
- 	void *data;
--	int i, qid;
- 	u16 index;
- 	u8 fport;
+diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
+index 59e7bdf5063e8..ea6ef76c29658 100644
+--- a/net/sched/sch_choke.c
++++ b/net/sched/sch_choke.c
+@@ -229,7 +229,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  
-@@ -2084,7 +2084,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 			     list);
- 	index = e - q->entry;
+ 		/* Draw a packet at random from queue and compare flow */
+ 		if (choke_match_random(q, skb, &idx)) {
+-			q->stats.matched++;
++			WRITE_ONCE(q->stats.matched, q->stats.matched + 1);
+ 			choke_drop_by_idx(sch, idx, to_free);
+ 			goto congestion_drop;
+ 		}
+@@ -241,11 +241,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			qdisc_qstats_overlimit(sch);
+ 			if (use_harddrop(q) || !use_ecn(q) ||
+ 			    !INET_ECN_set_ce(skb)) {
+-				q->stats.forced_drop++;
++				WRITE_ONCE(q->stats.forced_drop,
++					   q->stats.forced_drop + 1);
+ 				goto congestion_drop;
+ 			}
  
--	for (i = 0; i < nr_frags; i++) {
-+	while (true) {
- 		struct airoha_qdma_desc *desc = &q->desc[index];
- 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
- 		dma_addr_t addr;
-@@ -2096,7 +2096,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 			goto error_unmap;
+-			q->stats.forced_mark++;
++			WRITE_ONCE(q->stats.forced_mark,
++				   q->stats.forced_mark + 1);
+ 		} else if (++q->vars.qcount) {
+ 			if (red_mark_probability(p, &q->vars, q->vars.qavg)) {
+ 				q->vars.qcount = 0;
+@@ -253,11 +255,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  
- 		list_move_tail(&e->list, &tx_list);
--		e->skb = i ? NULL : skb;
-+		e->skb = i == nr_frags - 1 ? skb : NULL;
- 		e->dma_addr = addr;
- 		e->dma_len = len;
+ 				qdisc_qstats_overlimit(sch);
+ 				if (!use_ecn(q) || !INET_ECN_set_ce(skb)) {
+-					q->stats.prob_drop++;
++					WRITE_ONCE(q->stats.prob_drop,
++					           q->stats.prob_drop + 1);
+ 					goto congestion_drop;
+ 				}
  
-@@ -2115,6 +2115,9 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 		WRITE_ONCE(desc->msg1, cpu_to_le32(msg1));
- 		WRITE_ONCE(desc->msg2, cpu_to_le32(0xffff));
- 
-+		if (++i == nr_frags)
-+			break;
-+
- 		data = skb_frag_address(frag);
- 		len = skb_frag_size(frag);
+-				q->stats.prob_mark++;
++				WRITE_ONCE(q->stats.prob_mark,
++					   q->stats.prob_mark + 1);
+ 			}
+ 		} else
+ 			q->vars.qR = red_random(p);
+@@ -272,7 +276,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return NET_XMIT_SUCCESS;
  	}
+ 
+-	q->stats.pdrop++;
++	WRITE_ONCE(q->stats.pdrop, q->stats.pdrop + 1);
+ 	return qdisc_drop(skb, sch, to_free);
+ 
+ congestion_drop:
+@@ -461,10 +465,12 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct choke_sched_data *q = qdisc_priv(sch);
+ 	struct tc_choke_xstats st = {
+-		.early	= q->stats.prob_drop + q->stats.forced_drop,
+-		.marked	= q->stats.prob_mark + q->stats.forced_mark,
+-		.pdrop	= q->stats.pdrop,
+-		.matched = q->stats.matched,
++		.early	= READ_ONCE(q->stats.prob_drop) +
++			  READ_ONCE(q->stats.forced_drop),
++		.marked	= READ_ONCE(q->stats.prob_mark) +
++			  READ_ONCE(q->stats.forced_mark),
++		.pdrop	= READ_ONCE(q->stats.pdrop),
++		.matched = READ_ONCE(q->stats.matched),
+ 	};
+ 
+ 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
