@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265953DD504;
-	Wed, 20 May 2026 17:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9423DD504;
+	Wed, 20 May 2026 17:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298660; cv=none; b=rL2gvhITZ/CfzbKCNhmvhKkzLWnTWa4/DIW5na84NOAkR8FHAEJiYf3xwx6/Gi8AI3a+wmfGTuWJvNykdN9VyyVgnHowiH0k3YAqupaqQ1oRehyvRDWKIB0360Lcs4zywEfCGaIaepgSbwrYBZmiv+EGONFNIoNrfdltChBG+0Y=
+	t=1779298662; cv=none; b=W8SHXLKGu9a/BQsd4U4/15+0uO+Y//meSgm6Fb95+zien5k8b92NdXiKbYeGacHEV1IwZTbDjetlScU0L/DjhNVEBBNDHw+lRhNs9V6ZYwHz9gzEOBtV4EjgyKIpIiOrsKkSsHmgSoQG1gDBX39gZlU2PgOE6xdaKbSf/36E2Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298660; c=relaxed/simple;
-	bh=a4O5CQk9c1ne6PUY+ICB7CfwwWBOmCiIIkWa0LZmHTc=;
+	s=arc-20240116; t=1779298662; c=relaxed/simple;
+	bh=onGJtGgq0GZpxbE0eSTDgv3ehYs4PEiWrA27isNNRMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAIOMc63hAEtteL8hHfXRITGXh6ll7+1zAZxRNyQehOVqYOgBN8ejf8MduH7Z9dbeLNKMHgDGApu05kBlawesbdcEWYN6nXirrdrMQqN4S3ygV/ePDnHA4K8WMNtzTVMTAX/zHlrcYw3Afou87xL9u5hV/LF/BRthTYSb/mI534=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1nG/Dy4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tkVydww8KJuhqF49De+Kh+ail3OYCppQKGkPFhcZytBPgMJwiUR+kGyZ6l2WWAsu9FcJu8BEUWGKL6YYQOLACpIaK04YODAUpsc6W4Z1W+bfawUFUh70B8PGSDeXX3fjBNDVI+Ck7cwYEmmA4TrkryjpDkiF0RXuGttg41forpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKlA2mkl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1nG/Dy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A20E1F000E9;
-	Wed, 20 May 2026 17:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKlA2mkl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D91C1F000E9;
+	Wed, 20 May 2026 17:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298659;
-	bh=eDqwYYPRoW+TM723Qtm2+4PZZayrTDCO0hQYY6d7aRw=;
+	s=korg; t=1779298661;
+	bh=yzGZCfiTu7IGFz0FjadZjH6bxx9GlvXkx4c17ndZP4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1nG/Dy4x4iXLV1umi3+mFlDfZYN0Rk9uNucqxLkvYaLDsyVibywIek545bDaOxrp
-	 hzZUIoJmRPdjBcPVtwSIY0tJXXT/y1z/VqZfswQDeWd+eRDcOlv4K92OBIy0XNDgTP
-	 /Cpyn2SCKtLlV9e3d+u9Exo8DJGi85rDr/nlPmb8=
+	b=zKlA2mklldQHcmCxp5MWgJEZlo10uwJ8XDQga+8xohGUaa+1NEGvGr0GJGCTgTD53
+	 pqrBJCHhKzTirC/Zt1hczok/BqojuN4xExt2cafuVL2NRFfMVIDm9qacJsN6wv/Pfy
+	 7hw2+72uRxIQDWQ3O+VLy6odpXwGqgvHZs5CyLNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	wangguangju <wangguangju@hygon.cn>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 496/957] bpf, arm32: Reject BPF-to-BPF calls and callbacks in the JIT
-Date: Wed, 20 May 2026 18:16:19 +0200
-Message-ID: <20260520162145.282170534@linuxfoundation.org>
+Subject: [PATCH 6.18 497/957] perf trace: Fix IS_ERR() vs NULL check bug
+Date: Wed, 20 May 2026 18:16:20 +0200
+Message-ID: <20260520162145.303790945@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,94 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: wangguangju <wangguangju@hygon.cn>
 
-[ Upstream commit e1d486445af3c392628532229f7ce5f5cf7891b6 ]
+[ Upstream commit 96f202eab8133f94479b14a32902c636e9bdf6af ]
 
-The ARM32 BPF JIT does not support BPF-to-BPF function calls
-(BPF_PSEUDO_CALL) or callbacks (BPF_PSEUDO_FUNC), but it does
-not reject them either.
+The alloc_syscall_stats() function always returns an error pointer
+(ERR_PTR) on failure.
 
-When a program with subprograms is loaded (e.g. libxdp's XDP
-dispatcher uses __noinline__ subprograms, or any program using
-callbacks like bpf_loop or bpf_for_each_map_elem), the verifier
-invokes bpf_jit_subprogs() which calls bpf_int_jit_compile()
-for each subprogram.
+So replace NULL check with IS_ERR() check after calling
+delete_syscall_stats() function.
 
-For BPF_PSEUDO_CALL, since ARM32 does not reject it, the JIT
-silently emits code using the wrong address computation:
-
-    func = __bpf_call_base + imm
-
-where imm is a pc-relative subprogram offset, producing a bogus
-function pointer.
-
-For BPF_PSEUDO_FUNC, the ldimm64 handler ignores src_reg and
-loads the immediate as a normal 64-bit value without error.
-
-In both cases, build_body() reports success and a JIT image is
-allocated. ARM32 lacks the jit_data/extra_pass mechanism needed
-for the second JIT pass in bpf_jit_subprogs(). On the second
-pass, bpf_int_jit_compile() performs a full fresh compilation,
-allocating a new JIT binary and overwriting prog->bpf_func. The
-first allocation is never freed. bpf_jit_subprogs() then detects
-the function pointer changed and aborts with -ENOTSUPP, but the
-original JIT binary has already been leaked. Each program
-load/unload cycle leaks one JIT binary allocation, as reported
-by kmemleak:
-
-    unreferenced object 0xbf0a1000 (size 4096):
-      backtrace:
-        bpf_jit_binary_alloc+0x64/0xfc
-        bpf_int_jit_compile+0x14c/0x348
-        bpf_jit_subprogs+0x4fc/0xa60
-
-Fix this by rejecting both BPF_PSEUDO_CALL in the BPF_CALL
-handler and BPF_PSEUDO_FUNC in the BPF_LD_IMM64 handler, falling
-through to the existing 'notyet' path. This causes build_body()
-to fail before any JIT binary is allocated, so
-bpf_int_jit_compile() returns the original program unjitted.
-bpf_jit_subprogs() then sees !prog->jited and cleanly falls
-back to the interpreter with no leak.
-
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Fixes: 1c2a088a6626 ("bpf: x64: add JIT support for multi-function programs")
-Reported-by: Jonas Rebmann <jre@pengutronix.de>
-Closes: https://lore.kernel.org/bpf/b63e9174-7a3d-4e22-8294-16df07a4af89@pengutronix.de
-Tested-by: Jonas Rebmann <jre@pengutronix.de>
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260417143353.838911-1-puranjay@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: ef2da619b132c6f74 ("perf trace: Convert syscall_stats to hashmap")
+Signed-off-by: wangguangju <wangguangju@hygon.cn>
+Reviewed-by: Howard Chu <howardchu95@gmail.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/net/bpf_jit_32.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/builtin-trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/net/bpf_jit_32.c b/arch/arm/net/bpf_jit_32.c
-index deeb8f292454b..a900aa9738855 100644
---- a/arch/arm/net/bpf_jit_32.c
-+++ b/arch/arm/net/bpf_jit_32.c
-@@ -1852,6 +1852,9 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx)
- 	{
- 		u64 val = (u32)imm | (u64)insn[1].imm << 32;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index c607f39b8c8bb..1f0b9ba3cdc15 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1573,7 +1573,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
+ 	struct hashmap_entry *pos;
+ 	size_t bkt;
  
-+		if (insn->src_reg == BPF_PSEUDO_FUNC)
-+			goto notyet;
-+
- 		emit_a32_mov_i64(dst, val, ctx);
+-	if (syscall_stats == NULL)
++	if (IS_ERR(syscall_stats))
+ 		return;
  
- 		return 1;
-@@ -2055,6 +2058,9 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx)
- 		const s8 *r5 = bpf2a32[BPF_REG_5];
- 		const u32 func = (u32)__bpf_call_base + (u32)imm;
- 
-+		if (insn->src_reg == BPF_PSEUDO_CALL)
-+			goto notyet;
-+
- 		emit_a32_mov_r64(true, r0, r1, ctx);
- 		emit_a32_mov_r64(true, r1, r2, ctx);
- 		emit_push_r64(r5, ctx);
+ 	hashmap__for_each_entry(syscall_stats, pos, bkt)
 -- 
 2.53.0
 
