@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07D53EAC83;
-	Wed, 20 May 2026 17:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70FC3EAC83;
+	Wed, 20 May 2026 17:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298647; cv=none; b=OJU6fucDKm5GEEtFLnELh/udzSmmDcsRk6+w21erN2x//e/G2NNK2G44TbeLjr7Xt1nqvel2KDwIuw50jxQPYdFbRv4VZce+ZWjaGk1qaVDxpf5drd5lREUbzr0MgLHGmHiqW5cPZdDXitFAJzLzcKJM+fVigPBpLK6bQC+VIDM=
+	t=1779298649; cv=none; b=lUS841gBQIaLHtNdD6N4C0uvVMsrqXNZiNwwDuhANhzu/AuUITlFHxZFXMEubP2oiRS76U+2fL3lRPE4TMLRwJSLEuPGx7tBbRX5yxM1KaV0QDVVbta9824KyKl/TciJEcFQyfZzAhBFHsChI75ZU0/1A+zA1iQj4QxX6rXk+YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298647; c=relaxed/simple;
-	bh=GeRADYgwcRLcP1hRrtqTYP/V6kbf/nUbi6ngrvqmt/Q=;
+	s=arc-20240116; t=1779298649; c=relaxed/simple;
+	bh=K48PblYCcTGBLCfHI+4nPU8RUQZrCkds3hIFZ+0gthI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwUwwaYrRJBdCelnP1Sioof4phT+RRsTAThDnVtO6Dko0/JqFRk16LgzaNarOZg1NTZem36MN7hT5JlWYQxpIUG12IKx8LahIOOpsZI0q0skYRItEW3fq7j+S4A6qshWY6aJ5no5bEm5gvSoVw2rTSpfWCRnbuhd35y4H7d6pic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bvn/oNUC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGO/EY73FvJQTirFGjzTqkoS9pqGFAmrDXSSaqWV3tAyaHLda3evQ8Dygnja4dMsMUMnk6jKdY5zbAjdNcA7W5pkolUhlUu+4VvudDNrCOf9cnYPVZigGNEVrc43QbkMjA7cjF2/4qcjPIBVhrueE87IrBFh/JGdTMqwK8zTE6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EQrxm28; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bvn/oNUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625271F000E9;
-	Wed, 20 May 2026 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EQrxm28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0567C1F000E9;
+	Wed, 20 May 2026 17:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298645;
-	bh=O2awhu1UU/vDXHxAka9zUEELrlBpSp9a6w2wNbqDHQI=;
+	s=korg; t=1779298648;
+	bh=zAillebsjEP3JpQgVMMwKsiQoLDk5C11StH/z7pOC/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bvn/oNUCk/GnNnXMoW9/GVfnYfZb/plgHYRqVdrIsk0Mf4UkGACtsSrere44S+8hg
-	 PLg/2Q0ueSZn7xD4Fn9d/Rgl4v8aKJlRlFuj6yB1vXwYSfFwxmS2wO310+vnDwRYTB
-	 hjwZvbIyppFLLDlv2ww5MOuegxjUqvBfXK7oFUUY=
+	b=1EQrxm28VFv9CzgZ+K76iAgXj/kIPBGWVVQINyAee6zoLVEVmzKWsv1ZLermOSwU1
+	 3KFmfta11hiG2WgPRc7+DupWxB07lMk+rvMlHx+9fDIiLCsUmxbIww+7DONo58ess6
+	 clquj4Z2Ur3TZRkfmBhEfNHUl9PtRhBYaNaglJ/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Hiker Cl <clhiker365@gmail.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 483/957] HID: usbhid: fix deadlock in hid_post_reset()
-Date: Wed, 20 May 2026 18:16:06 +0200
-Message-ID: <20260520162144.999273350@linuxfoundation.org>
+Subject: [PATCH 6.18 492/957] bpf: Fix NULL deref in map_kptr_match_type for scalar regs
+Date: Wed, 20 May 2026 18:16:15 +0200
+Message-ID: <20260520162145.196888561@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,40 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit 8df2c1b47ee3cd50fd454f75c7a7e2ae8a6adf72 ]
+[ Upstream commit 4d0a375887ab4d49e4da1ff10f9606cab8f7c3ad ]
 
-You can build a USB device that includes a HID component
-and a storage or UAS component. The components can be reset
-only together. That means that hid_pre_reset() and hid_post_reset()
-are in the block IO error handling. Hence no memory allocation
-used in them may do block IO because the IO can deadlock
-on the mutex held while resetting a device and calling the
-interface drivers.
-Use GFP_NOIO for all allocations in them.
+Commit ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local
+kptr") refactored map_kptr_match_type() to branch on btf_is_kernel()
+before checking base_type(). A scalar register stored into a kptr
+slot has no btf, so the btf_is_kernel(reg->btf) call dereferences
+NULL.
 
-Fixes: dc3c78e434690 ("HID: usbhid: Check HID report descriptor contents after device reset")
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Move the base_type() != PTR_TO_BTF_ID guard before any reg->btf
+access.
+
+Fixes: ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local kptr")
+Reported-by: Hiker Cl <clhiker365@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221372
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260416-kptr_crash-v1-1-5589356584b4@meta.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
-index 758eb21430cda..df3cc89dfb37f 100644
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -1552,7 +1552,7 @@ static int hid_post_reset(struct usb_interface *intf)
- 	 * configuration descriptors passed, we already know that
- 	 * the size of the HID report descriptor has not changed.
- 	 */
--	rdesc = kmalloc(hid->dev_rsize, GFP_KERNEL);
-+	rdesc = kmalloc(hid->dev_rsize, GFP_NOIO);
- 	if (!rdesc)
- 		return -ENOMEM;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 153a7c1d32069..ebfa27d4002c5 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5843,6 +5843,9 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	int perm_flags;
+ 	const char *reg_name = "";
  
++	if (base_type(reg->type) != PTR_TO_BTF_ID)
++		goto bad_type;
++
+ 	if (btf_is_kernel(reg->btf)) {
+ 		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
+ 
+@@ -5855,7 +5858,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 			perm_flags |= MEM_PERCPU;
+ 	}
+ 
+-	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
++	if (type_flag(reg->type) & ~perm_flags)
+ 		goto bad_type;
+ 
+ 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
 -- 
 2.53.0
 
