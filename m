@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6E5335BBB;
-	Wed, 20 May 2026 16:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD52363C74;
+	Wed, 20 May 2026 16:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294891; cv=none; b=YY9XBnuecUiMNqJWXGHm20XQAgiAbicHxt1Ov3ig+eOwUScdA9LuREfivRdL1gQQtKRrZrGwFav5gC7SMEfuJanh6KWpTtZ16h4tuBaatWOCYOSxBZmxPixmBy9gqrR9Z2KFO5DsQTMQJW5cF4JHZk35PR5TrGk+qR7QqQOIq/s=
+	t=1779294893; cv=none; b=GKTD/0xu4ce1UKlhmBo4aopcIB2KoH9bh3rg1hJ5ojQEeoRMNb0456SodPbmZTl6RZuIkwwzHbkYh6DzbfkJa0+Iih9nyw0H5DvedKKCxSSF4/mqEff8WQUq6cR1npziwW2204tdVW1cgSOLBXeQzjELzCvViI6tE6T84vrJ12w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294891; c=relaxed/simple;
-	bh=6kxe5JcAPeRX8cfEX+SwGzloNLWS1ie+q2oE++cFJFk=;
+	s=arc-20240116; t=1779294893; c=relaxed/simple;
+	bh=PSEznv80X6JICgSD8qQat7slX8BJIV6z+zWHr/zOjNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcszMY6T1SXTimCui05nlomcYSwcbPBxtg13Ys6/4fXCILivt6kllghZDHMrCOAZ8mVr4Vi2H/XS4dD/zv5DsFeou13L76MgEbloH7TuO+czqEAFrk3I6OxXC3Fa8K7D6p+njKTVJMQ6kWbY2/TWziy19zMrjElreryKaszTMDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXc/TjM5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iKcC2TuRiqqifZJIb65KKcsvftOmsRwvljxNqDoi6PS+YskXGHt5VPTRHKgQQRggJQiMtf3jwNOSrSuacE0YzN9DFrnRqDwb0eNC3M2ggFnvWcHoiTz1i+lUlHFj5yiV9hpOXQPLs2fMUqPfyYh/oKnOEi8404uUDkH5quDMzc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcolNjJz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXc/TjM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702FF1F000E9;
-	Wed, 20 May 2026 16:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcolNjJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B1B1F000E9;
+	Wed, 20 May 2026 16:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294889;
-	bh=3fk6HIo8yT2clCTDFMsgjf0wTnsAGEutiQCwAIDewnc=;
+	s=korg; t=1779294892;
+	bh=k/QQlbFGaX9bLICSOQmEbOcWLflUO2ZsKY34GuwdJVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXc/TjM5iSCAXuJGU3Bk6PBRVPLbEfZzTypVrBsm6jTiHvclJtBkxFrhOrlzPVi+d
-	 uJa/L2P+Apl70AVek58kLIRdXrUCN/F1L4IhfT4rwyLcUzF9+E7ykq0qd38tij4juk
-	 SIHoGhmmR7gJkcXGztzJcCxkRr6sokPqpVffOV+A=
+	b=xcolNjJz4sJIN8Pp5HjmJhLiD4KNScR5jWa+va11pepG/peyNL6EIC/UcEgtTMztE
+	 fNnu1FccSCYxWLMaH8cDl3ftv1DkkLsKfpFPvpFV+CdhkZHRQygWFIgAld0cjV7RlR
+	 10R230SvGC0U3SbIlwJyRhC/WAz4Psdhpclo3guo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0170/1146] mptcp: better mptcp-level RTT estimator
-Date: Wed, 20 May 2026 18:07:00 +0200
-Message-ID: <20260520162152.136492440@linuxfoundation.org>
+Subject: [PATCH 7.0 0171/1146] bpf: Fix use-after-free in offloaded map/prog info fill
+Date: Wed, 20 May 2026 18:07:01 +0200
+Message-ID: <20260520162152.157752399@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,266 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit d2000361e4ddf5047d660a902a3b0ed7520be1e5 ]
+[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
 
-The current MPTCP-level RTT estimator has several issues. On high speed
-links, the MPTCP-level receive buffer auto-tuning happens with a
-frequency well above the TCP-level's one. That in turn can cause
-excessive/unneeded receive buffer increase.
+When querying info for an offloaded BPF map or program,
+bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
+obtain the network namespace with get_net(dev_net(offmap->netdev)).
+However, the associated netdev's netns may be racing with teardown
+during netns destruction. If the netns refcount has already reached 0,
+get_net() performs a refcount_t increment on 0, triggering:
 
-On such links, the initial rtt_us value is considerably higher than the
-actual delay, and the current mptcp_rcv_space_adjust() updates
-msk->rcvq_space.rtt_us with a period equal to the such field previous
-value. If the initial rtt_us is 40ms, its first update will happen after
-40ms, even if the subflows see actual RTT orders of magnitude lower.
+  refcount_t: addition on 0; use-after-free.
 
-Additionally:
-- setting the msk RTT to the maximum among all the subflows RTTs makes
-  DRS constantly overshooting the rcvbuf size when a subflow has
-  considerable higher latency than the other(s).
+Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
+valid, they cannot prevent the netns refcount from reaching zero.
 
-- during unidirectional bulk transfers with multiple active subflows,
-  the TCP-level RTT estimator occasionally sees considerably higher
-  value than the real link delay, i.e. when the packet scheduler reacts
-  to an incoming ACK on given subflow pushing data on a different
-  subflow.
+Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
+uses refcount_inc_not_zero() and returns NULL if the refcount is already
+zero, which causes ns_get_path_cb() to fail and the caller to return
+-ENOENT -- the correct behavior when the netns is being destroyed.
 
-- currently inactive but still open subflows (i.e. switched to backup
-  mode) are always considered when computing the msk-level RTT.
-
-Address the all the issues above with a more accurate RTT estimation
-strategy: the MPTCP-level RTT is set to the minimum of all the subflows
-actually feeding data into the MPTCP receive buffer, using a small
-sliding window.
-
-While at it, also use EWMA to compute the msk-level scaling_ratio, to
-that MPTCP can avoid traversing the subflow list is
-mptcp_rcv_space_adjust().
-
-Use some care to avoid updating msk and ssk level fields too often.
-
-Fixes: a6b118febbab ("mptcp: add receive buffer auto-tuning")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260407-net-next-mptcp-reduce-rbuf-v2-1-0d1d135bf6f6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
+Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/mptcp.h |  2 +-
- net/mptcp/protocol.c         | 63 ++++++++++++++++++++----------------
- net/mptcp/protocol.h         | 37 ++++++++++++++++++++-
- 3 files changed, 72 insertions(+), 30 deletions(-)
+ kernel/bpf/offload.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/include/trace/events/mptcp.h b/include/trace/events/mptcp.h
-index 269d949b20254..04521acba4832 100644
---- a/include/trace/events/mptcp.h
-+++ b/include/trace/events/mptcp.h
-@@ -219,7 +219,7 @@ TRACE_EVENT(mptcp_rcvbuf_grow,
- 		__be32 *p32;
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index 0ad97d643bf49..0d6f5569588c3 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -435,9 +435,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
  
- 		__entry->time = time;
--		__entry->rtt_us = msk->rcvq_space.rtt_us >> 3;
-+		__entry->rtt_us = mptcp_rtt_us_est(msk) >> 3;
- 		__entry->copied = msk->rcvq_space.copied;
- 		__entry->inq = mptcp_inq_hint(sk);
- 		__entry->space = msk->rcvq_space.space;
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 1a73d2461c7b9..8ef967aa80a0b 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -879,6 +879,32 @@ static bool move_skbs_to_msk(struct mptcp_sock *msk, struct sock *ssk)
- 	return moved;
- }
+ 	if (aux->offload) {
+ 		args->info->ifindex = aux->offload->netdev->ifindex;
+-		net = dev_net(aux->offload->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(aux->offload->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+@@ -647,9 +646,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
  
-+static void mptcp_rcv_rtt_update(struct mptcp_sock *msk,
-+				 struct mptcp_subflow_context *subflow)
-+{
-+	const struct tcp_sock *tp = tcp_sk(subflow->tcp_sock);
-+	u32 rtt_us = tp->rcv_rtt_est.rtt_us;
-+	int id;
-+
-+	/* Update once per subflow per rcvwnd to avoid touching the msk
-+	 * too often.
-+	 */
-+	if (!rtt_us || tp->rcv_rtt_est.seq == subflow->prev_rtt_seq)
-+		return;
-+
-+	subflow->prev_rtt_seq = tp->rcv_rtt_est.seq;
-+
-+	/* Pairs with READ_ONCE() in mptcp_rtt_us_est(). */
-+	id = msk->rcv_rtt_est.next_sample;
-+	WRITE_ONCE(msk->rcv_rtt_est.samples[id], rtt_us);
-+	if (++msk->rcv_rtt_est.next_sample == MPTCP_RTT_SAMPLES)
-+		msk->rcv_rtt_est.next_sample = 0;
-+
-+	/* EWMA among the incoming subflows */
-+	msk->scaling_ratio = ((msk->scaling_ratio << 3) - msk->scaling_ratio +
-+			     tp->scaling_ratio) >> 3;
-+}
-+
- void mptcp_data_ready(struct sock *sk, struct sock *ssk)
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
-@@ -892,6 +918,7 @@ void mptcp_data_ready(struct sock *sk, struct sock *ssk)
- 		return;
- 
- 	mptcp_data_lock(sk);
-+	mptcp_rcv_rtt_update(msk, subflow);
- 	if (!sock_owned_by_user(sk)) {
- 		/* Wake-up the reader only for in-sequence data */
- 		if (move_skbs_to_msk(msk, ssk) && mptcp_epollin_ready(sk))
-@@ -2077,7 +2104,6 @@ static void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk)
- 
- 	msk->rcvspace_init = 1;
- 	msk->rcvq_space.copied = 0;
--	msk->rcvq_space.rtt_us = 0;
- 
- 	/* initial rcv_space offering made to peer */
- 	msk->rcvq_space.space = min_t(u32, tp->rcv_wnd,
-@@ -2088,15 +2114,15 @@ static void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk)
- 
- /* receive buffer autotuning.  See tcp_rcv_space_adjust for more information.
-  *
-- * Only difference: Use highest rtt estimate of the subflows in use.
-+ * Only difference: Use lowest rtt estimate of the subflows in use, see
-+ * mptcp_rcv_rtt_update() and mptcp_rtt_us_est().
-  */
- static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct sock *sk = (struct sock *)msk;
--	u8 scaling_ratio = U8_MAX;
--	u32 time, advmss = 1;
--	u64 rtt_us, mstamp;
-+	u32 time, rtt_us;
-+	u64 mstamp;
- 
- 	msk_owned_by_me(msk);
- 
-@@ -2111,29 +2137,8 @@ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
- 	mstamp = mptcp_stamp();
- 	time = tcp_stamp_us_delta(mstamp, READ_ONCE(msk->rcvq_space.time));
- 
--	rtt_us = msk->rcvq_space.rtt_us;
--	if (rtt_us && time < (rtt_us >> 3))
--		return;
--
--	rtt_us = 0;
--	mptcp_for_each_subflow(msk, subflow) {
--		const struct tcp_sock *tp;
--		u64 sf_rtt_us;
--		u32 sf_advmss;
--
--		tp = tcp_sk(mptcp_subflow_tcp_sock(subflow));
--
--		sf_rtt_us = READ_ONCE(tp->rcv_rtt_est.rtt_us);
--		sf_advmss = READ_ONCE(tp->advmss);
--
--		rtt_us = max(sf_rtt_us, rtt_us);
--		advmss = max(sf_advmss, advmss);
--		scaling_ratio = min(tp->scaling_ratio, scaling_ratio);
--	}
--
--	msk->rcvq_space.rtt_us = rtt_us;
--	msk->scaling_ratio = scaling_ratio;
--	if (time < (rtt_us >> 3) || rtt_us == 0)
-+	rtt_us = mptcp_rtt_us_est(msk);
-+	if (rtt_us == U32_MAX || time < (rtt_us >> 3))
- 		return;
- 
- 	if (msk->rcvq_space.copied <= msk->rcvq_space.space)
-@@ -3000,6 +3005,7 @@ static void __mptcp_init_sock(struct sock *sk)
- 	msk->timer_ival = TCP_RTO_MIN;
- 	msk->scaling_ratio = TCP_DEFAULT_SCALING_RATIO;
- 	msk->backlog_len = 0;
-+	mptcp_init_rtt_est(msk);
- 
- 	WRITE_ONCE(msk->first, NULL);
- 	inet_csk(sk)->icsk_sync_mss = mptcp_sync_mss;
-@@ -3446,6 +3452,7 @@ static int mptcp_disconnect(struct sock *sk, int flags)
- 	msk->bytes_retrans = 0;
- 	msk->rcvspace_init = 0;
- 	msk->fastclosing = 0;
-+	mptcp_init_rtt_est(msk);
- 
- 	/* for fallback's sake */
- 	WRITE_ONCE(msk->ack_seq, 0);
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index ec15e503da8b7..d19c54761c27a 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -268,6 +268,13 @@ struct mptcp_data_frag {
- 	struct page *page;
- };
- 
-+/* Arbitrary compromise between as low as possible to react timely to subflow
-+ * close event and as big as possible to avoid being fouled by biased large
-+ * samples due to peer sending data on a different subflow WRT to the incoming
-+ * ack.
-+ */
-+#define MPTCP_RTT_SAMPLES	5
-+
- /* MPTCP connection sock */
- struct mptcp_sock {
- 	/* inet_connection_sock must be the first member */
-@@ -340,11 +347,17 @@ struct mptcp_sock {
- 				 */
- 	struct mptcp_pm_data	pm;
- 	struct mptcp_sched_ops	*sched;
-+
-+	/* Most recent rtt_us observed by in use incoming subflows. */
-+	struct {
-+		u32	samples[MPTCP_RTT_SAMPLES];
-+		u32	next_sample;
-+	} rcv_rtt_est;
-+
- 	struct {
- 		int	space;	/* bytes copied in last measurement window */
- 		int	copied; /* bytes copied in this measurement window */
- 		u64	time;	/* start time of measurement window */
--		u64	rtt_us; /* last maximum rtt of subflows */
- 	} rcvq_space;
- 	u8		scaling_ratio;
- 	bool		allow_subflows;
-@@ -422,6 +435,27 @@ static inline struct mptcp_data_frag *mptcp_send_head(const struct sock *sk)
- 	return msk->first_pending;
- }
- 
-+static inline void mptcp_init_rtt_est(struct mptcp_sock *msk)
-+{
-+	int i;
-+
-+	for (i = 0; i < MPTCP_RTT_SAMPLES; ++i)
-+		msk->rcv_rtt_est.samples[i] = U32_MAX;
-+	msk->rcv_rtt_est.next_sample = 0;
-+	msk->scaling_ratio = TCP_DEFAULT_SCALING_RATIO;
-+}
-+
-+static inline u32 mptcp_rtt_us_est(const struct mptcp_sock *msk)
-+{
-+	u32 rtt_us = READ_ONCE(msk->rcv_rtt_est.samples[0]);
-+	int i;
-+
-+	/* Lockless access of collected samples. */
-+	for (i = 1; i < MPTCP_RTT_SAMPLES; ++i)
-+		rtt_us = min(rtt_us, READ_ONCE(msk->rcv_rtt_est.samples[i]));
-+	return rtt_us;
-+}
-+
- static inline struct mptcp_data_frag *mptcp_send_next(struct sock *sk)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
-@@ -523,6 +557,7 @@ struct mptcp_subflow_context {
- 	u32	map_data_len;
- 	__wsum	map_data_csum;
- 	u32	map_csum_len;
-+	u32	prev_rtt_seq;
- 	u32	request_mptcp : 1,  /* send MP_CAPABLE */
- 		request_join : 1,   /* send MP_JOIN */
- 		request_bkup : 1,
+ 	if (args->offmap->netdev) {
+ 		args->info->ifindex = args->offmap->netdev->ifindex;
+-		net = dev_net(args->offmap->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(args->offmap->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
 -- 
 2.53.0
 
