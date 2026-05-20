@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20853E6385;
-	Wed, 20 May 2026 17:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680DB3E123F;
+	Wed, 20 May 2026 17:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298721; cv=none; b=RokK7gMEKZyah7bwshSmei10sm4VmQyafBVAk96vyqHa6AWR4nkbx282s0EgEE7X3H+603cwxiZ2URAmrRJFjZPdX2gjY3OY4wrX4Bl1aBXiDxEOiREuVVs6ZrkjcntOwb17qqoA/se1CGQjwqzC9+ZtAfI7Uda7dfz3TjKjde0=
+	t=1779298723; cv=none; b=Rl8wI0WWDmif+caSla4mGa9tH2gwYncUEcB68xI/KIjE+0/ud069NsTxr0pz46OFNw5Oaoznkb/jHRF0e5X+ugS44ktveq2lymQ9ZzbJ/Av8CCATgUcNsozooNi1OzZtlMHiRZhifTCGNU3+hs3LlRdtKDtKBXBEKzxQF7VzweM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298721; c=relaxed/simple;
-	bh=enNNM2/WnxkIbQ4lbg/vxBEnY6wdM2XblBgt+qy9hEE=;
+	s=arc-20240116; t=1779298723; c=relaxed/simple;
+	bh=eoYs07JkXSwwm+qStZ+rLD9rImxpKEqLOOYPSeBkZ2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh/xaDKWbxRjqIsi9nqXo4inw+1kdDmTJWlBIx99WozJUhGaQJMmUMQB8e3RyReGIGVaeXl7l/opvt1npEqNH8wr6yw5TObFgo4Vi/r8HTQHSjK7CAXG/Ra7pYnEQngF7KJsso7IY1HGDjnzRCnMi+jUJSjBlysS0R3KBzSXjeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpxFynvR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rn141mLE6lx1wPhQ8ztfoy7N4JMf6Bf8YhSNFI1RNW4gb1wZXudhht5vdYAB1xHKX/VFe4Her7IWC2OubWQWEH+mRAFc8Q55O926am9uqq2231WPo4N+T91X/g2ZkGtlmxsjm3+6hLIeUggFTlnsbZeQThgyki1RO6SdBHjCzms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfMbzSL3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpxFynvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224911F000E9;
-	Wed, 20 May 2026 17:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfMbzSL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0021F000E9;
+	Wed, 20 May 2026 17:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298719;
-	bh=zaYJs6iB7YCTQdP0Gxv4IKRwA7w8nyRUeHAYn9Ee8kc=;
+	s=korg; t=1779298722;
+	bh=OG6ZNtWVk/3Ze1g5/6nRT3tTGNRRuJvwaDv77zzemzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpxFynvRALBSSNg6oo85h5Sp3w4XFO8IY7eUmAew8tsZwBCamZqqa5+ts+NvVtDJa
-	 yRaVxvNgf/CyOgYnWHjMDBgLXo0ZQDbLnRYG7hANUM4qGsX82Ezp34XQgAROVNcD96
-	 Mnkdm9andIYiMXcj7kp6V6I752rAKfjockGrMQX8=
+	b=GfMbzSL3DLTlkph6hHHV7oSEEu3Nsl2KLOP2zrJyPYYNVsvUbpJnGkjt5iIKkq9Pz
+	 aj+gvOP+H2bRE5VGH+K5lU2+v4YbV1OKG2n0TPfGxNrNYRQPtnpv48FHKj/0oOf3YM
+	 7kJ/vufYXY7GuJFnTqEp7n5m1AXkIGjo1HIItQxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 517/957] perf cgroup: Update metric leader in evlist__expand_cgroup
-Date: Wed, 20 May 2026 18:16:40 +0200
-Message-ID: <20260520162145.745754181@linuxfoundation.org>
+Subject: [PATCH 6.18 518/957] pinctrl: sophgo: pinctrl-sg2042: Fix wrong module description
+Date: Wed, 20 May 2026 18:16:41 +0200
+Message-ID: <20260520162145.767304617@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,92 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit c9ef786c0970991578397043f1c819229e2b7197 ]
+[ Upstream commit ca1c2ddff00480c213903a1479b56203536e92de ]
 
-When the evlist is expanded the metric leader wasn't being updated. As
-the original evsel is deleted this creates a use-after-free in
-stat-shadow's prepare_metric. This was detected running the "perf stat
---bpf-counters --for-each-cgroup test" with sanitizers.
+Fix the SoC model in module description string, it should be
+sg2042 instead of sg2002.
 
-The change itself puts the copied evsel into the priv field (known
-unused because of evsel__clone use) and then in a second pass over the
-list updates the copied values using the priv pointer.
-
-Fixes: d1c5a0e86a4e ("perf stat: Add --for-each-cgroup option")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Sun Jian <sun.jian.kdev@gmail.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 1e67465d3b74 ("pinctrl: sophgo: add support for SG2042 SoC")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cgroup.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/pinctrl/sophgo/pinctrl-sg2042.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
-index 25e2769b5e74f..0038d2ac647c4 100644
---- a/tools/perf/util/cgroup.c
-+++ b/tools/perf/util/cgroup.c
-@@ -416,7 +416,6 @@ static bool has_pattern_string(const char *str)
- int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgroup)
- {
- 	struct evlist *orig_list, *tmp_list;
--	struct evsel *pos, *evsel, *leader;
- 	struct rblist orig_metric_events;
- 	struct cgroup *cgrp = NULL;
- 	struct cgroup_name *cn;
-@@ -451,6 +450,7 @@ int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgro
- 		goto out_err;
+diff --git a/drivers/pinctrl/sophgo/pinctrl-sg2042.c b/drivers/pinctrl/sophgo/pinctrl-sg2042.c
+index 185305ac897d9..8dba12e122a45 100644
+--- a/drivers/pinctrl/sophgo/pinctrl-sg2042.c
++++ b/drivers/pinctrl/sophgo/pinctrl-sg2042.c
+@@ -651,5 +651,5 @@ static struct platform_driver sg2042_pinctrl_driver = {
+ };
+ module_platform_driver(sg2042_pinctrl_driver);
  
- 	list_for_each_entry(cn, &cgroup_list, list) {
-+		struct evsel *pos;
- 		char *name;
- 
- 		if (!cn->used)
-@@ -466,21 +466,37 @@ int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgro
- 		if (cgrp == NULL)
- 			continue;
- 
--		leader = NULL;
-+		/* copy the list and set to the new cgroup. */
- 		evlist__for_each_entry(orig_list, pos) {
--			evsel = evsel__clone(/*dest=*/NULL, pos);
-+			struct evsel *evsel = evsel__clone(/*dest=*/NULL, pos);
-+
- 			if (evsel == NULL)
- 				goto out_err;
- 
-+			/* stash the copy during the copying. */
-+			pos->priv = evsel;
- 			cgroup__put(evsel->cgrp);
- 			evsel->cgrp = cgroup__get(cgrp);
- 
--			if (evsel__is_group_leader(pos))
--				leader = evsel;
--			evsel__set_leader(evsel, leader);
--
- 			evlist__add(tmp_list, evsel);
- 		}
-+		/* update leader information using stashed pointer to copy. */
-+		evlist__for_each_entry(orig_list, pos) {
-+			struct evsel *evsel = pos->priv;
-+
-+			if (evsel__leader(pos))
-+				evsel__set_leader(evsel, evsel__leader(pos)->priv);
-+
-+			if (pos->metric_leader)
-+				evsel->metric_leader = pos->metric_leader->priv;
-+
-+			if (pos->first_wildcard_match)
-+				evsel->first_wildcard_match = pos->first_wildcard_match->priv;
-+		}
-+		/* the stashed copy is no longer used. */
-+		evlist__for_each_entry(orig_list, pos)
-+			pos->priv = NULL;
-+
- 		/* cgroup__new() has a refcount, release it here */
- 		cgroup__put(cgrp);
- 		nr_cgroups++;
+-MODULE_DESCRIPTION("Pinctrl driver for the SG2002 series SoC");
++MODULE_DESCRIPTION("Pinctrl driver for the SG2042 series SoC");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
