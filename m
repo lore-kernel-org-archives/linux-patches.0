@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A9927E045;
-	Wed, 20 May 2026 16:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CE63DC857;
+	Wed, 20 May 2026 16:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296356; cv=none; b=OwKshVx0ZF2X2i97bw9angGrK3r5OMmFILUynXrDy6EkxRHIo1mwBgFlTwRYRaNXAYs3hJwUvt6RHhNoBSnWzYYjFt2rFrNxvLsjIcfeHD9/4b3Rd1tOd/OPWs3+OKWKDmvRGImoOqvRDv8gUDx9HalqvflBinDfC/8lBoUhbxg=
+	t=1779296360; cv=none; b=oD80/BVrgmTVEEt0GEGn+PvupJSqiAOpt+kcI2RJx2oTCzZns/RhUSpyydOZcUjHWXRUVa78XmLE+ZXiK32Ke497sXfpkqaSjv7qmzdoVrPqItzjW8zmAPiUnAttdD/fXQZuKc1iz11irGT677oWvxff0saLUdjeRWxOtIzxT4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296356; c=relaxed/simple;
-	bh=e8s+jkPG9Tn7a+Cx4R/kxO1qwZj9eSlMeXmcTpEz0zA=;
+	s=arc-20240116; t=1779296360; c=relaxed/simple;
+	bh=04xnfeiJfNVUgLrwIGqosqP6P/nw2Ol+eWuw+/AWozo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uEFpkGyhJX94jAnhkMhpIeNQQpcMfQyWUvYUpOQHiKGtqHui1WpN8jVwkQZMXunYK+nHxm7NcUxXIMosK87dzMUTpJ1fjy4CFWaqoV9xxh7hzpMqt0v2aorXcUQnHJM7E/n2mJ1lAD5nmKrjq7u7N7R3ZlwWlvX4ZkFbSBx1s/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJHIsUBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fcY+xpdIdgJEY2MYChm7wWommBw3uFRTDCt+VgrqHXdUpLRvR3KT/3wd83+Mj/8utDwg4s30pftS2HdoYDZu7hMYum6iUwf3ufwT6pkqnAGOSmBKJR9HL28GnMl9URxoxarCUTfydv8RYzmw+StWQWylpdW8+mZc3zxX7b91+gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UbRyFlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJHIsUBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA391F000E9;
-	Wed, 20 May 2026 16:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UbRyFlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3E41F000E9;
+	Wed, 20 May 2026 16:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296355;
-	bh=iiyPWk02KnNYFnVPAiLlwq3c+hEBSn0lWcdIi111vgE=;
+	s=korg; t=1779296358;
+	bh=UEO8azDpClbOJp0pL9jVHpmJDCZ4oAWC8a2eLLlboVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJHIsUBb+KU4SHTGt+q3exvmgmBMu9IV1G5lxidvdmKz6oyBR8vaxqQHqxu4L4WJF
-	 KcAueNJS+B07+lDfrt02rjyhB4mqHRnXaHF+zhMGvBQWuTGqEQSsJ5MRQxP+oI2XQ9
-	 0ncYP+ZsUdg6x9vlX+YVTiThKwTPc576dhHpztdk=
+	b=0UbRyFltlW4jl4SJZXrZFiV1Kwdkm/hQ/29cAQA2q9W14PXzlzlUcBWYTtKIuXkwL
+	 O4mdaLk1Z87JbHL10Jk2IzmDYRkiazkBPAdjPgZ8J1Twga/iPG5uHQ9hfYBdVtwHKs
+	 4naCxK7uMaIS9KMUAoURyZWG3fPm3hk+oTlEwrc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0767/1146] pwm: stm32: Fix rounding issue for requests with inverted polarity
-Date: Wed, 20 May 2026 18:16:57 +0200
-Message-ID: <20260520162205.572415178@linuxfoundation.org>
+Subject: [PATCH 7.0 0768/1146] net/sched: act_mirred: fix wrong device for mac_header_xmit check in tcf_blockcast_redir
+Date: Wed, 20 May 2026 18:16:58 +0200
+Message-ID: <20260520162205.595354278@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,98 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 5d087c485b6ecf200a9ebb2a032bf8571d330250 ]
+[ Upstream commit 4510d140524ca7d6e772db962e013f26f09a63b1 ]
 
-The calculation of the number of pwm clk ticks from a time length in
-nanoseconds involves a division and thus some rounding. That might
-result in
+In tcf_blockcast_redir(), when iterating block ports to redirect
+packets to multiple devices, the mac_header_xmit flag is queried
+from the wrong device. The loop sends to dev_prev but queries
+dev_is_mac_header_xmit(dev) — which is the NEXT device in the
+iteration, not the one being sent to.
 
-	duty_ticks + offset_ticks < period_ticks
+This causes tcf_mirred_to_dev() to make incorrect decisions about
+whether to push or pull the MAC header. When the block contains
+mixed device types (e.g., an ethernet veth and a tunnel device),
+intermediate devices get the wrong mac_header_xmit flag, leading to
+skb header corruption. In the worst case, skb_push_rcsum with an
+incorrect mac_len can exhaust headroom and panic.
 
-despite
+The last device in the loop is handled correctly (line 365-366 uses
+dev_is_mac_header_xmit(dev_prev)), confirming this is a copy-paste
+oversight for the intermediate devices.
 
-	duty_length_ns + duty_offset_ns >= period_length_ns
+Fix by using dev_prev instead of dev for the mac_header_xmit query,
+consistent with the device actually being sent to.
 
-. The stm32 PWM cannot configure offset_ticks freely, it can only select
-0 or period_length_ns - duty_length_ns---that is the classic normal and
-inverted polarity. The decision to select the hardware polarity must be
-done using the ticks values and not the nanoseconds times to adhere to
-the rounding rules by the pwm core.
-
-With the pwm clk running at 208900 kHz on my test machine
-(stm32mp135f-dk), a test case that was handled wrong is:
-
-	# pwmround -P 9999962 -O 24970 -D 9974992
-	period_length = 9999962
-	duty_length = 9974840
-	duty_offset = 25123
-
-With this change applied the rounding is done correctly:
-
-	# pwmround -P 9999962 -O 24970 -D 9974992
-	period_length = 9999962
-	duty_length = 9974840
-	duty_offset = 0
-
-Fixes: deaba9cff809 ("pwm: stm32: Implementation of the waveform callbacks")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/c5e7767cee821b5f6e00f95bd14a5e13015646fb.1776264104.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 42f39036cda8 ("net/sched: act_mirred: Allow mirred to block")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260413084927.71353-1-phx0fer@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ net/sched/act_mirred.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 2594fb771b04a..935257a890b06 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -68,7 +68,7 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
- 	struct stm32_pwm *priv = to_stm32_pwm_dev(chip);
- 	unsigned int ch = pwm->hwpwm;
- 	unsigned long rate;
--	u64 ccr, duty;
-+	u64 duty_ticks, offset_ticks;
- 	int ret;
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index 05e0b14b57731..2c5a7a321a943 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -354,7 +354,7 @@ static int tcf_blockcast_redir(struct sk_buff *skb, struct tcf_mirred *m,
+ 			goto assign_prev;
  
- 	if (wf->period_length_ns == 0) {
-@@ -164,23 +164,25 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
- 		wfhw->arr = min_t(u64, arr, priv->max_arr) - 1;
- 	}
- 
--	duty = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
--				   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
--	duty = min_t(u64, duty, wfhw->arr + 1);
-+	duty_ticks = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
-+					 (u64)NSEC_PER_SEC * (wfhw->psc + 1));
-+	duty_ticks = min_t(u64, duty_ticks, wfhw->arr + 1);
- 
--	if (wf->duty_length_ns && wf->duty_offset_ns &&
--	    wf->duty_length_ns + wf->duty_offset_ns >= wf->period_length_ns) {
-+	offset_ticks = mul_u64_u64_div_u64(wf->duty_offset_ns, rate,
-+					   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
-+	offset_ticks = min_t(u64, offset_ticks, wfhw->arr + 1);
-+
-+	if (duty_ticks && offset_ticks &&
-+	    duty_ticks + offset_ticks >= wfhw->arr + 1) {
- 		wfhw->ccer |= TIM_CCER_CCxP(ch + 1);
- 		if (priv->have_complementary_output)
- 			wfhw->ccer |= TIM_CCER_CCxNP(ch + 1);
- 
--		ccr = wfhw->arr + 1 - duty;
-+		wfhw->ccr = wfhw->arr + 1 - duty_ticks;
- 	} else {
--		ccr = duty;
-+		wfhw->ccr = duty_ticks;
- 	}
- 
--	wfhw->ccr = min_t(u64, ccr, wfhw->arr + 1);
--
- out:
- 	dev_dbg(&chip->dev, "pwm#%u: %lld/%lld [+%lld] @%lu -> CCER: %08x, PSC: %08x, ARR: %08x, CCR: %08x\n",
- 		pwm->hwpwm, wf->duty_length_ns, wf->period_length_ns, wf->duty_offset_ns,
+ 		tcf_mirred_to_dev(skb, m, dev_prev,
+-				  dev_is_mac_header_xmit(dev),
++				  dev_is_mac_header_xmit(dev_prev),
+ 				  mirred_eaction, retval);
+ assign_prev:
+ 		dev_prev = dev;
 -- 
 2.53.0
 
