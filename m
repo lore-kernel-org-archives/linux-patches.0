@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFBD1BD9D0;
-	Wed, 20 May 2026 16:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A96285061;
+	Wed, 20 May 2026 16:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295591; cv=none; b=NltGoHqq1E+wfuKTiv/p59NRtY4CmySRe17LdxFA0VizgFSKC5RFiqj9BC+7R+JhMYE+rqX7g0F/+Fc+gLo+qGpPAWax1hyrKrsWQWpglYBK281qCsxinZCNyjtbonarkk7tLDQnfNjM71JCrtIYZ8GGs4XHu5qtUZSP+Jl446I=
+	t=1779295593; cv=none; b=af3XrU00f8OEehXAh/+kTC5WaXvlkbx6RmK9o367CqsfF6P9xv+X/i2o7ujLWJJ08otewKqFIh8zRst6+ZQBS06R8e6EGh02YrRI7tRV9NtQoVY9WCrdLV1zkMDV+RUv4urgvVyLdEHCdHyM7/6KReQ+T7oWGqkhwoW6vm1EmNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295591; c=relaxed/simple;
-	bh=AqidraC83xNTXbib9cWyCfGTkge4lCs+Rwux8m06rPc=;
+	s=arc-20240116; t=1779295593; c=relaxed/simple;
+	bh=tgCc89o38wU+TjtD3YTpcuWzNzuBSBPFh4l53ER22XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mya1ioQEC1cCi/hduK9G8ap4OWCiOYfmBDChk7U4TaGVp1wqe2NXueI9FbeLjm08gkmjDKMyNuIfWKMYDR+E9tXHE6khcFMH7KIzuSqXm7+G9Kl5VXI3c+QC49/GALX1420jDD5La8/m061CbPmxW2r7PxxEJ1bOgAjcolW0f1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cm0GCQ+N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oX5d293yVxAcATvq71memr5apdyGEi2NbieullApMXZdtAbsvMkQQJ0ovpU29Cq3RqweL7cxIfIJ8pQAEuaPURMquxMS6qZBR37A6yfruSMSfyIG4zvohAiDdGIQBoSabK7OOd+rtGVka7x4YCTvBB2xGfLoK9wiux6n16U8l0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWH+sQyr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cm0GCQ+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FB71F000E9;
-	Wed, 20 May 2026 16:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWH+sQyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F159E1F000E9;
+	Wed, 20 May 2026 16:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295589;
-	bh=xZZkADcHy9Q0CeEkda4T+NYB53tB2rDOaPej7Qq/1dA=;
+	s=korg; t=1779295592;
+	bh=k8HMxdruXge/4DzXqR+O4Leb/T6dRGXvfjzYIX3hNbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cm0GCQ+N+tXlQ6iGEvc47Wkta+T125Hjc8uSuPh7ug6lY9pTR3lZbovDPu5zHxWN3
-	 riUeKoC8tg5Jg6UauOq2ASdkQz4O4tMhxB8p9C/77enuv9pT7eodo1fAsCYlyp99MW
-	 TKgysEo+xmGTx52PrQ5+R41cdJIJzPzcf6MZvsDM=
+	b=xWH+sQyr+f0EGG/XFBe6+pvc4ZSEZYrWRqnuGi0yk+wwcdx49ZXtFda5Y0oHu5rcu
+	 crAx10jiL9Lgn/prpd0S+FdUPelzDqoWqzQ2ZJvEpMKDCfJ0e2MZEURozgCERBoxNa
+	 FHRoRMY56UBOvLkLjBCRXNo2EQgHJL1S66szfd0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0436/1146] dm cache: fix missing return in invalidate_committeds error path
-Date: Wed, 20 May 2026 18:11:26 +0200
-Message-ID: <20260520162158.066273816@linuxfoundation.org>
+Subject: [PATCH 7.0 0427/1146] PCI: tegra194: Disable L1.2 capability of Tegra234 EP
+Date: Wed, 20 May 2026 18:11:17 +0200
+Message-ID: <20260520162157.853228889@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,49 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 8c0ee19db81f0fa1ff25fd75b22b17c0cc2acde3 ]
+[ Upstream commit f59df1d9e6bdb6bd7ef65fb5d200900ac40c20ba ]
 
-In passthrough mode, dm-cache defers write submission until after
-metadata commit completes via the invalidate_committed() continuation.
-On commit error, invalidate_committed() calls invalidate_complete() to
-end the bio and free the migration struct, after which it should return
-immediately.
+When Tegra234 is operating in the Endpoint mode with L1.2 enabled, PCIe
+link goes down during L1.2 exit. This is because Tegra234 powers up UPHY
+PLL immediately without making sure that the REFCLK is stable.
 
-The patch 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-omitted this early return, causing execution to fall through into the
-success path on error. This results in use-after-free on the migration
-struct in the subsequent calls.
+This causes UPHY PLL to fail to lock to the correct frequency and leads to
+link going down. There is no hardware fix for this, hence do not advertise
+the L1.2 capability in the Endpoint mode.
 
-Fix by adding the missing return after the invalidate_complete() call.
-
-Fixes: 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/dm-devel/adjMq6T5RRjv_uxM@stanley.mountain/
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-14-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index e479ac22b97cc..af7a2571988b4 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1521,8 +1521,10 @@ static void invalidate_committed(struct work_struct *ws)
- 	struct bio *bio = mg->overwrite_bio;
- 	struct per_bio_data *pb = get_per_bio_data(bio);
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 688da5a73d02e..eb24f88e0175b 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -234,6 +234,7 @@ struct tegra_pcie_dw_of_data {
+ 	bool has_sbr_reset_fix;
+ 	bool has_l1ss_exit_fix;
+ 	bool has_ltr_req_fix;
++	bool disable_l1_2;
+ 	u32 cdm_chk_int_en_bit;
+ 	u32 gen4_preset_vec;
+ 	u8 n_fts[2];
+@@ -679,6 +680,23 @@ static void init_host_aspm(struct tegra_pcie_dw *pcie)
+ 	if (pcie->supports_clkreq)
+ 		pci->l1ss_support = true;
  
--	if (mg->k.input)
-+	if (mg->k.input) {
- 		invalidate_complete(mg, false);
-+		return;
++	/*
++	 * Disable L1.2 capability advertisement for Tegra234 Endpoint mode.
++	 * Tegra234 has a hardware bug where during L1.2 exit, the UPHY PLL is
++	 * powered up immediately without waiting for REFCLK to stabilize. This
++	 * causes the PLL to fail to lock to the correct frequency, resulting in
++	 * PCIe link loss. Since there is no hardware fix available, we prevent
++	 * the Endpoint from advertising L1.2 support by clearing the L1.2 bits
++	 * in the L1 PM Substates Capabilities register. This ensures the host
++	 * will not attempt to enter L1.2 state with this Endpoint.
++	 */
++	if (pcie->of_data->disable_l1_2 &&
++	    pcie->of_data->mode == DW_PCIE_EP_TYPE) {
++		val = dw_pcie_readl_dbi(pci, l1ss + PCI_L1SS_CAP);
++		val &= ~(PCI_L1SS_CAP_PCIPM_L1_2 | PCI_L1SS_CAP_ASPM_L1_2);
++		dw_pcie_writel_dbi(pci, l1ss + PCI_L1SS_CAP, val);
 +	}
- 
- 	init_continuation(&mg->k, invalidate_completed);
- 	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
++
+ 	/* Program L0s and L1 entrance latencies */
+ 	val = dw_pcie_readl_dbi(pci, PCIE_PORT_AFR);
+ 	val &= ~PORT_AFR_L0S_ENTRANCE_LAT_MASK;
+@@ -2444,6 +2462,7 @@ static const struct tegra_pcie_dw_of_data tegra234_pcie_dw_ep_of_data = {
+ 	.mode = DW_PCIE_EP_TYPE,
+ 	.has_l1ss_exit_fix = true,
+ 	.has_ltr_req_fix = true,
++	.disable_l1_2 = true,
+ 	.cdm_chk_int_en_bit = BIT(18),
+ 	/* Gen4 - 6, 8 and 9 presets enabled */
+ 	.gen4_preset_vec = 0x340,
 -- 
 2.53.0
 
