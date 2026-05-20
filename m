@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A33F339844;
-	Wed, 20 May 2026 16:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059E22F0C62;
+	Wed, 20 May 2026 16:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296019; cv=none; b=ZcL+sWrPMOn6uXG8Yf+JMcrTCJTyFLCIx4MO0hbr8MIBfBiJRgE40iDljRfiVsdLgQbathK4T70XH4arAcC3TQJXQnZh/9PdDpSLy33AA1GaFr0cFrAZ+mJhQ6JBFKNTP3AafxAuKXPHLgjsG/eJufuPqkTHib5vfUGdlA0m9Oc=
+	t=1779296022; cv=none; b=bgdcRIPIcdc7gsvdrnwRtPDix8NCmndBX5tAX5A2Vv4OzwBCRburquZAAaNkd9QoBcO4OsTQlywyq20FoFp3wDt8Alq9l+Ja2liP2t+vpcAmJ2RkSdGWkriS7zP55OXWSPRWW2i3F37rIIfj29f83nS6h4x/Q7QqZ+OQ6wRFDUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296019; c=relaxed/simple;
-	bh=L1t3MeQPwPvj8BzA6AtPiwlMrM15PAOv/EsAAlbZwk8=;
+	s=arc-20240116; t=1779296022; c=relaxed/simple;
+	bh=wvmQN88uUlW0rDGpKP/iG05QXMQDt7gxsQhUduc7n4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iV8SDg8rGELvRHTyhVtsGdd8Qf1IjoGjHhnnlO0io0RMYEzQWaqZnfq8gruBs0C3+n93BNibMv/FMMOJ5dbB+vYHbzl6MSyWQgj3ePgI9yx5RlxIF+vUQbr5KkSbst46NIaPOG0a66/Jx4gkuc+T7WGroi57RLAg/bCPovM9mQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLEkwVca; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pnObe295OoO9/dRc9WNhTK8IYAwiDigaa5cOzwNKVDUQvZ1QK0J0uyUM0Z3VYz8nOI0Z3LGtOvAt9fuFbC1wp/faSkEmAvN0ji1TEOnO4VLZVKfCNxAQ3nxQKqv5g+Z61KZkPCKhH3Bha1sQUJjFHLfwsZRrBaDKdbdYKKeE1sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ccdO5sM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLEkwVca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04DF1F000E9;
-	Wed, 20 May 2026 16:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ccdO5sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BB41F000E9;
+	Wed, 20 May 2026 16:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296018;
-	bh=fImWV3Gq3vUOv/oIMMSMJh7n8kCH+mYvpWdHN9bzUBs=;
+	s=korg; t=1779296020;
+	bh=Q/vUjfT5GU8Sdc7PJa3erTv9HHIqZC1X0iqRqTBFjBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLEkwVcaR9MjKlmM9gx2IivDDlzylpH84T2a4TjSuUozAqR6XmJFRmwYPoqqA2clp
-	 xIFH/HigSZTkglBdUqxFpJhLRlXp/Kooa5aSnsUxTzGTyuEETeFxu4S6hwlb4AxJOM
-	 jSY8p8ceS5L+/rJ/LhurqDdez0IOXa07eEEol88E=
+	b=0ccdO5sM8+IHB0InmhFbbHwrZ8m0Lh7fYM0QFvIOMZVgPHXmv12+loZ7+GVpVgnMZ
+	 VVDzVb66s+v4PKn+aqKCPFEhk62+nWQDYhI9ZOThndcTF4Dtx5Ctl7/l8gXN/Csbi5
+	 vqDJHBUa+1CWDuuFNM3Di7mQ8uzY3nFPWB2cM10E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0639/1146] perf stat: Fix opt->value type for parse_cache_level
-Date: Wed, 20 May 2026 18:14:49 +0200
-Message-ID: <20260520162202.642271544@linuxfoundation.org>
+Subject: [PATCH 7.0 0640/1146] memblock: reserve_mem: fix end caclulation in reserve_mem_release_by_name()
+Date: Wed, 20 May 2026 18:14:50 +0200
+Message-ID: <20260520162202.664655882@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,118 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 44311ae84ad9177fb311aee856027861c22f17b2 ]
+[ Upstream commit c12c3e1507809ad1fc0448f51c933f52e17d13cd ]
 
-Commit f5803651b4a4 ("perf stat: Choose the most disaggregate command
-line option") changed aggregation option handling for `perf stat` but
-not `perf stat report` leading to parse_cache_level being passed a
-struct in the `perf stat` case but erroneously an aggr_mode enum value
-for `perf stat report`. Change the `perf stat report` aggregation
-handling to use the same opt_aggr_mode as `perf stat`. Also, just pass
-the boolean for consistency with other boolean argument handling.
+free_reserved_area() expects end parameter to point to the first address
+after the area, but reserve_mem_release_by_name() passes it the last
+address inside the area.
 
-Fixes: f5803651b4a4 ("perf stat: Choose the most disaggregate command line option")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Remove subtraction of one in calculation of the area end.
+
+Fixes: 74e2498ccf7b ("mm/memblock: Add reserved memory release function")
+Link: https://patch.msgid.link/20260323074836.3653702-2-rppt@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 43 +++++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
+ mm/memblock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 73c2ba7e30760..2eb76d7476b7f 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -164,7 +164,7 @@ struct opt_aggr_mode {
- };
+diff --git a/mm/memblock.c b/mm/memblock.c
+index b3ddfdec7a809..d4a02f1750e91 100644
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -2434,7 +2434,7 @@ int reserve_mem_release_by_name(const char *name)
+ 		return 0;
  
- /* Turn command line option into most generic aggregation mode setting. */
--static enum aggr_mode opt_aggr_mode_to_aggr_mode(struct opt_aggr_mode *opt_mode)
-+static enum aggr_mode opt_aggr_mode_to_aggr_mode(const struct opt_aggr_mode *opt_mode)
- {
- 	enum aggr_mode mode = AGGR_GLOBAL;
- 
-@@ -1219,8 +1219,8 @@ static int parse_cache_level(const struct option *opt,
- 			     int unset __maybe_unused)
- {
- 	int level;
--	struct opt_aggr_mode *opt_aggr_mode = (struct opt_aggr_mode *)opt->value;
--	u32 *aggr_level = (u32 *)opt->data;
-+	bool *per_cache = opt->value;
-+	u32 *aggr_level = opt->data;
- 
- 	/*
- 	 * If no string is specified, aggregate based on the topology of
-@@ -1258,7 +1258,7 @@ static int parse_cache_level(const struct option *opt,
- 		return -EINVAL;
- 	}
- out:
--	opt_aggr_mode->cache = true;
-+	*per_cache = true;
- 	*aggr_level = level;
- 	return 0;
- }
-@@ -2305,24 +2305,23 @@ static struct perf_stat perf_stat = {
- static int __cmd_report(int argc, const char **argv)
- {
- 	struct perf_session *session;
-+	struct opt_aggr_mode opt_mode = {};
- 	const struct option options[] = {
- 	OPT_STRING('i', "input", &input_name, "file", "input file name"),
--	OPT_SET_UINT(0, "per-socket", &perf_stat.aggr_mode,
--		     "aggregate counts per processor socket", AGGR_SOCKET),
--	OPT_SET_UINT(0, "per-die", &perf_stat.aggr_mode,
--		     "aggregate counts per processor die", AGGR_DIE),
--	OPT_SET_UINT(0, "per-cluster", &perf_stat.aggr_mode,
--		     "aggregate counts perf processor cluster", AGGR_CLUSTER),
--	OPT_CALLBACK_OPTARG(0, "per-cache", &perf_stat.aggr_mode, &perf_stat.aggr_level,
--			    "cache level",
--			    "aggregate count at this cache level (Default: LLC)",
-+	OPT_BOOLEAN(0, "per-thread", &opt_mode.thread, "aggregate counts per thread"),
-+	OPT_BOOLEAN(0, "per-socket", &opt_mode.socket,
-+		    "aggregate counts per processor socket"),
-+	OPT_BOOLEAN(0, "per-die", &opt_mode.die, "aggregate counts per processor die"),
-+	OPT_BOOLEAN(0, "per-cluster", &opt_mode.cluster,
-+		    "aggregate counts per processor cluster"),
-+	OPT_CALLBACK_OPTARG(0, "per-cache", &opt_mode.cache, &perf_stat.aggr_level,
-+			    "cache level", "aggregate count at this cache level (Default: LLC)",
- 			    parse_cache_level),
--	OPT_SET_UINT(0, "per-core", &perf_stat.aggr_mode,
--		     "aggregate counts per physical processor core", AGGR_CORE),
--	OPT_SET_UINT(0, "per-node", &perf_stat.aggr_mode,
--		     "aggregate counts per numa node", AGGR_NODE),
--	OPT_SET_UINT('A', "no-aggr", &perf_stat.aggr_mode,
--		     "disable CPU count aggregation", AGGR_NONE),
-+	OPT_BOOLEAN(0, "per-core", &opt_mode.core,
-+		    "aggregate counts per physical processor core"),
-+	OPT_BOOLEAN(0, "per-node", &opt_mode.node, "aggregate counts per numa node"),
-+	OPT_BOOLEAN('A', "no-aggr", &opt_mode.no_aggr,
-+		    "disable aggregation across CPUs or PMUs"),
- 	OPT_END()
- 	};
- 	struct stat st;
-@@ -2330,6 +2329,10 @@ static int __cmd_report(int argc, const char **argv)
- 
- 	argc = parse_options(argc, argv, options, stat_report_usage, 0);
- 
-+	perf_stat.aggr_mode = opt_aggr_mode_to_aggr_mode(&opt_mode);
-+	if (perf_stat.aggr_mode == AGGR_GLOBAL)
-+		perf_stat.aggr_mode = AGGR_UNSET; /* No option found so leave unset. */
-+
- 	if (!input_name || !strlen(input_name)) {
- 		if (!fstat(STDIN_FILENO, &st) && S_ISFIFO(st.st_mode))
- 			input_name = "-";
-@@ -2506,7 +2509,7 @@ int cmd_stat(int argc, const char **argv)
- 		OPT_BOOLEAN(0, "per-die", &opt_mode.die, "aggregate counts per processor die"),
- 		OPT_BOOLEAN(0, "per-cluster", &opt_mode.cluster,
- 			"aggregate counts per processor cluster"),
--		OPT_CALLBACK_OPTARG(0, "per-cache", &opt_mode, &stat_config.aggr_level,
-+		OPT_CALLBACK_OPTARG(0, "per-cache", &opt_mode.cache, &stat_config.aggr_level,
- 				"cache level", "aggregate count at this cache level (Default: LLC)",
- 				parse_cache_level),
- 		OPT_BOOLEAN(0, "per-core", &opt_mode.core,
+ 	start = phys_to_virt(map->start);
+-	end = start + map->size - 1;
++	end = start + map->size;
+ 	snprintf(buf, sizeof(buf), "reserve_mem:%s", name);
+ 	free_reserved_area(start, end, 0, buf);
+ 	map->size = 0;
 -- 
 2.53.0
 
