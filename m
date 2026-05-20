@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57F33EBF35;
-	Wed, 20 May 2026 17:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC6F2609FD;
+	Wed, 20 May 2026 17:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298560; cv=none; b=dyCsU16BAieokwWm1otQNIil2GWp/+zateSHMuVVk65hb4FmNbaOZreTPH33XREITlTJlIXMOMwfB8ZfOtqyWlC7CBCMJGJlaN55oCkvVtiZR6U6esmZ/QqtARofz4C/FKJiDVaWgkTKD96z4lcCZ/ZUa+nFRsKkPEKX4NSTKUs=
+	t=1779298561; cv=none; b=IU2QdRHx0X7cGzEc8oBzbG72vNu9PxKI9hgT4x5qfNs6rG4hBTST/UOw9Fgx95tZqJx+uB3Qk1sNeuekZgD3w21j9OXpB0ixjF5NPIhMr+5FcwVYLh25T+2AGEQiaX43cKvBNpVad51cZOp8zW1tjhn0S4AaPR0CiBscF9hqwSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298560; c=relaxed/simple;
-	bh=Xc4x2KaitfWWEqt6ZceJCtzXCQeIoLu5FsgH2du64cg=;
+	s=arc-20240116; t=1779298561; c=relaxed/simple;
+	bh=A1Bzyb0dXuZicNXCZsWVfNh1a5IpEt9DlavcIeybYRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yj3YDKgGleEDEk5hODX79wZbOnE1mxwPyRy8epMvDHgEEBRzzfboj4QEuLCgCFsv5/EH5Iz0nmg7IMdTCTO6boV2JIozKy5Z1bgpuv347TRx95XC5mkyoSEeaUEVTV/ezkMXaj5t0B1k6twk1jp2BBQHacrzu4eUn5pbKsP78Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltj/YfSO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AfM9yQQByp/P3pKOZ4nUT5fZKT3Bsyiehb6mNfyjBBCQwQ1KOEB9OGZd71SHfmR2qwSFWCbBT1GnL6DrqdwWc0rYZ+BW/vxBYDUSZ1uXM/oIcFOmxpIND7JEtnXwKrHbfpYoBO0QiI28J4rLb209Jtauld63yegFTin4Lx70g+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEqkYRdt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltj/YfSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC7B1F00894;
-	Wed, 20 May 2026 17:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEqkYRdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E131F000E9;
+	Wed, 20 May 2026 17:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298556;
-	bh=YPHqGuw5SdGCfzAIimFViIPhg3H1BsfFvG2CVKFwAlQ=;
+	s=korg; t=1779298559;
+	bh=kxqYtC1EgImmB+di19PRfzrZuTToAt0Lt+xS2byMYhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltj/YfSOrRNwKF85Wl74OukWFqaJwiOmVhaegk2u+2Rs8gEDBEzAUxodNPfDA54UJ
-	 YbB1zPdmhIxaFIgGKpMHRzc1xj7PhDN9/sErHzTZfVrUI63q0EE8Wu8y0Nj/r7uGQq
-	 FuF2PYhz1rFbTbvH5WChfRvK+ce9G3lenGb/aIMM=
+	b=cEqkYRdtvWPL3wVJyg1QICCD9/u+cVcDb0CXddRotEe5uD7mvVjasRt5l0+U6W3ox
+	 atcByOVgGMJSkjQly/zk+RiFwuuosoOZHFxhTQHgiqFmq84exoXNM8hf0VA2SLH5VI
+	 +qNQQ6veeGMzwWlE15rUqWk36zV5NgFZgZPa8xUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 457/957] stop_machine: Fix the documentation for a NULL cpus argument
-Date: Wed, 20 May 2026 18:15:40 +0200
-Message-ID: <20260520162144.433558162@linuxfoundation.org>
+Subject: [PATCH 6.18 440/957] ARM: dts: imx27-eukrea: replace interrupts with interrupts-extended
+Date: Wed, 20 May 2026 18:15:23 +0200
+Message-ID: <20260520162144.063775579@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,57 +44,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 48f7a50c027dd2abb9e7b8a6ecc8e531d87f2c21 ]
+[ Upstream commit 0477a6b31e2874e554e3bcfac9883684b8f8ca2d ]
 
-A recent refactoring of the kernel-docs for stop machine changed the
-description of the cpus parameter from "NULL = any online cpu"
-to "NULL = run on each online CPU".
+The property interrupts use default interrupt controllers. But pass down
+gpio<n> as phandle. Correct it by use interrupts-extended.
 
-However the callback is only executed on a single CPU, not all of them.
-The old wording was a bit ambiguous and could have been read both ways.
-
-Reword the documentation to be correct again and hopefully also clearer.
-
-Fixes: fc6f89dc7078 ("stop_machine: Improve kernel-doc function-header comments")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: d8cae888aa2bc ("ARM: dts: Add support for the cpuimx27 board from Eukrea and its baseboard")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/stop_machine.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi      | 8 ++++----
+ .../boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/stop_machine.h b/include/linux/stop_machine.h
-index 72820503514cc..01011113d2263 100644
---- a/include/linux/stop_machine.h
-+++ b/include/linux/stop_machine.h
-@@ -99,7 +99,7 @@ static inline void print_stop_info(const char *log_lvl, struct task_struct *task
-  * stop_machine: freeze the machine on all CPUs and run this function
-  * @fn: the function to run
-  * @data: the data ptr to pass to @fn()
-- * @cpus: the cpus to run @fn() on (NULL = run on each online CPU)
-+ * @cpus: the cpus to run @fn() on (NULL = one unspecified online CPU)
-  *
-  * Description: This causes a thread to be scheduled on every CPU, which
-  * will run with interrupts disabled.  Each CPU specified by @cpus will
-@@ -133,7 +133,7 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus);
-  * stop_machine_cpuslocked: freeze the machine on all CPUs and run this function
-  * @fn: the function to run
-  * @data: the data ptr to pass to @fn()
-- * @cpus: the cpus to run @fn() on (NULL = run on each online CPU)
-+ * @cpus: the cpus to run @fn() on (NULL = one unspecified online CPU)
-  *
-  * Same as above.  Avoids nested calls to cpus_read_lock().
-  *
+diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
+index c7e9235848782..9f0e65526d5f9 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
+@@ -106,7 +106,7 @@ uart8250@3,200000 {
+ 		compatible = "ns8250";
+ 		clocks = <&clk14745600>;
+ 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
+-		interrupts = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <3 0x200000 0x1000>;
+ 		reg-shift = <1>;
+ 		reg-io-width = <1>;
+@@ -119,7 +119,7 @@ uart8250@3,400000 {
+ 		compatible = "ns8250";
+ 		clocks = <&clk14745600>;
+ 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
+-		interrupts = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <3 0x400000 0x1000>;
+ 		reg-shift = <1>;
+ 		reg-io-width = <1>;
+@@ -132,7 +132,7 @@ uart8250@3,800000 {
+ 		compatible = "ns8250";
+ 		clocks = <&clk14745600>;
+ 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
+-		interrupts = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <3 0x800000 0x1000>;
+ 		reg-shift = <1>;
+ 		reg-io-width = <1>;
+@@ -145,7 +145,7 @@ uart8250@3,1000000 {
+ 		compatible = "ns8250";
+ 		clocks = <&clk14745600>;
+ 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
+-		interrupts = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <3 0x1000000 0x1000>;
+ 		reg-shift = <1>;
+ 		reg-io-width = <1>;
+diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
+index d78793601306c..c71f802983304 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
+@@ -76,7 +76,7 @@ ads7846@0 {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_touch>;
+ 		reg = <0>;
+-		interrupts = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
+ 		spi-cpol;
+ 		spi-max-frequency = <1500000>;
+ 		ti,keep-vref-on;
 -- 
 2.53.0
 
