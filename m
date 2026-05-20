@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F852C15AB;
-	Wed, 20 May 2026 16:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30F135201E;
+	Wed, 20 May 2026 16:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295215; cv=none; b=kkqeqAXsyJYM2jgYupwHLHcdhttkUChJwTS56DIYvgJMTFi915D+EqKf6tjb+CUdcH+vNHs7eWk6Zp2a/CVaBlnVZhDvuVEG41fW80JXLfhMjyJ+R5FOeQYe2EZuANuiTLaVal6GSZP5qqOlPURONsc+Eh/500jvqT59ENciD60=
+	t=1779295217; cv=none; b=jVwE5edlRt9M1XT3lkVjGYZwlLFow1lFCD7f7xrfSa29TDs6xIg7bnl8998gT4xq5JmdNNAlThcgSEHcVQnwiudmGVx1tq+EHOrcn1HMWCksLEqRIu+ZLRx8dU/UvuENXspGVOpMxNC3MwPOajyymVkKueKtK8NOmFFMiVx592o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295215; c=relaxed/simple;
-	bh=aFSgwPogAO1LIBDjFyKs4h5G+6M5c6vsivEiKtVnV64=;
+	s=arc-20240116; t=1779295217; c=relaxed/simple;
+	bh=5PTPNe0bxGWYB3w3+6dXr+BXtbTuCS3WvRyKP94w0U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EknkArH7PcdeDR/Z49zt/hdd4f3PuNSZvj9/qpomnDCpxu8qM8vhQZZ6MMPqqiTbzu5zqfGPsdaEhCqsRq5/PbqQ2lrZRhXENyVwp324fMMBcAYerer4tuoRAr7alcQ0O4+Eh76D5HUS+LCd6uG8leOZE+cj4gtM31luY7jZbDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXSmfPGx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KJg7FiCcMNjSjG5igdin1WeSlqTKzcB8ytG3NfZLhmHqnpUjwRtqwjTysT82B9LSc4I1YPoHECbCJeGTV2XDBYutgHD591gAxCmJwnPAC/f/I1bLrmdTimMWAUxyFi2/HzVIwpd48sMZRkG5Fy7UIy8sL6ah5OJa5cYfykzFw7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRp3en9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXSmfPGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9741F000E9;
-	Wed, 20 May 2026 16:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRp3en9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D6E1F000E9;
+	Wed, 20 May 2026 16:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295213;
-	bh=tTSU4S5vV/DRsEYYwGR48CMd5r/7JCXTc2FJG4HRUOA=;
+	s=korg; t=1779295216;
+	bh=wRWMYekSp29z/0uHotLxgbPBtYv4wsF4OdvJSdsnrNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXSmfPGxbIC3NzTxYV9ZDo5vo6ifxWhNlG/v660hdVgTSZ/xJKWoYo56Gd8A2emCb
-	 pNx+AWPQKz8BlH+XFHd74j4QIAJase8JKgB1FOPru173DO1Rhor3/Q7jPnagRZhU8E
-	 iCZvuJsezgtjLs+NiiLN7L+aKGNZROp26+V4LM58=
+	b=SRp3en9n61lW79fO9SggvQPHWlqoTHPZBW6fvqOgU4NEVvaRQK01l0jAdqMN8ENoI
+	 E1/ASZGkOHvMtwwIxNfMt61svXf6emr3kYdUE9EqEfIgnImoDa29DjWz9m5SgnlgsP
+	 ghooMMLtjYYjNfKDlv0g6j5txTzkdUQsvJiMiSTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Xifer <xiferdev@gmail.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Andrew Jones <andrew.jones@oss.qualcomm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0333/1146] PCI: Fix alignment calculation for resource size larger than align
-Date: Wed, 20 May 2026 18:09:43 +0200
-Message-ID: <20260520162155.735740400@linuxfoundation.org>
+Subject: [PATCH 7.0 0334/1146] iommu/riscv: Fix signedness bug
+Date: Wed, 20 May 2026 18:09:44 +0200
+Message-ID: <20260520162155.759506873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,61 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 8cb081667377709f4924ab6b3a88a0d7a761fe91 ]
+[ Upstream commit 553a127cb66523089bc10eb54640205495f4bb5b ]
 
-The commit bc75c8e50711 ("PCI: Rewrite bridge window head alignment
-function") did not use if (r_size <= align) check from pbus_size_mem() for
-the new head alignment bookkeeping structure (aligns2[]). In some
-configurations, this can result in producing a gap into the bridge window
-which the resource larger than its alignment cannot fill.
+The function platform_irq_count() returns negative error codes and
+iommu->irqs_count is an unsigned integer, so the check
+(iommu->irqs_count <= 0) is always impossible.
 
-The old alignment calculation algorithm was removed by the subsequent
-commit 3958bf16e2fe ("PCI: Stop over-estimating bridge window size") which
-renamed the aligns2[] array leaving only aligns[] array.
+Make the return value of platform_irq_count() be assigned to ret, check
+for error, and then assign iommu->irqs_count to ret.
 
-Add the if (r_size <= align) check back to avoid this problem.
+Detected by Smatch:
+drivers/iommu/riscv/iommu-platform.c:119 riscv_iommu_platform_probe() warn:
+'iommu->irqs_count' unsigned <= 0
 
-Fixes: bc75c8e50711 ("PCI: Rewrite bridge window head alignment function")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/b05a6f14-979d-42c9-924c-d8408cb12ae7@roeck-us.net/
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Xifer <xiferdev@gmail.com>
-Link: https://patch.msgid.link/20260324165633.4583-11-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Fixes: 5c0ebbd3c6c6 ("iommu/riscv: Add RISC-V IOMMU platform device driver")
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iommu/riscv/iommu-platform.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 9506845c112c4..8f2830c6d34f7 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -1333,7 +1333,14 @@ static void pbus_size_mem(struct pci_bus *bus, struct resource *b_res,
- 			r_size = resource_size(r);
- 			size += max(r_size, align);
+diff --git a/drivers/iommu/riscv/iommu-platform.c b/drivers/iommu/riscv/iommu-platform.c
+index 8f15b06e84997..399ba8fe1b3e5 100644
+--- a/drivers/iommu/riscv/iommu-platform.c
++++ b/drivers/iommu/riscv/iommu-platform.c
+@@ -115,10 +115,13 @@ static int riscv_iommu_platform_probe(struct platform_device *pdev)
+ 		fallthrough;
  
--			aligns[order] += align;
-+			/*
-+			 * If resource's size is larger than its alignment,
-+			 * some configurations result in an unwanted gap in
-+			 * the head space that the larger resource cannot
-+			 * fill.
-+			 */
-+			if (r_size <= align)
-+				aligns[order] += align;
- 			if (order > max_order)
- 				max_order = order;
- 		}
+ 	case RISCV_IOMMU_CAPABILITIES_IGS_WSI:
+-		iommu->irqs_count = platform_irq_count(pdev);
+-		if (iommu->irqs_count <= 0)
++		ret = platform_irq_count(pdev);
++		if (ret <= 0)
+ 			return dev_err_probe(dev, -ENODEV,
+ 					     "no IRQ resources provided\n");
++
++		iommu->irqs_count = ret;
++
+ 		if (iommu->irqs_count > RISCV_IOMMU_INTR_COUNT)
+ 			iommu->irqs_count = RISCV_IOMMU_INTR_COUNT;
+ 
 -- 
 2.53.0
 
