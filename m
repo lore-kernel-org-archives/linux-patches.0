@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EE33EFD3D;
-	Wed, 20 May 2026 17:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555E43ED5C8;
+	Wed, 20 May 2026 17:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298749; cv=none; b=il4zO9VBv1o0Cs2PUbEg/SeuwuNrZkWLv4fQN+pusV1ZEDgUJOt4sMZJNvTSPpnv7PUbhN2UZFI1+px0Pt+xrPp/fEkUiHCR0ys2fSae6BcHRBqfTZIEWctwFapxLsHybApj/tih3X7q1T8Sq5q4kUAMnzPmJ4blf2fuAYJR2z4=
+	t=1779298752; cv=none; b=o5z3E4w3DW3KqrrhWvZ/IHO4wFd0XobLH9+fypNcSWaloGlAeZyykfklktnxUEYJRA4YUPR/jdKKsrFSkL3BM5wfyngGkqI+vKrSo6DWOSIEa0DAo9v4+n42j39HDAlnK0nAoGGqEWYCIT8to2DwYPz0TVKnFxWAx1bmrjl6/FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298749; c=relaxed/simple;
-	bh=i9zJJO2QEfcjWPp3pQDTSSN3XevfkfQHhJ9MKcj0csU=;
+	s=arc-20240116; t=1779298752; c=relaxed/simple;
+	bh=o4uA3jZfPdcrlAtzokxcMI241NYSuH8+yENBsdeOs3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n693tomHML0iUv6oMgOX++0PqeVibLCy51Gb+H3A7t43qVQ7/4ZrGRTmY/Wv+SI84/Hu+DLjkygV7xWt+cPVVSrKHlQOi3mMjbXGc/4aRr3/4GPyQ97fx7SkRoBAUYwMDghwm3QOLpgPpi2EJMawp1k1zE13Us6rXwT/1fXwK4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqdnLvr/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGzMrWlr+RHbzjvGhLF1OB9ov/81jpnjiejDqmhPJVP17bFByMSmsyZUJ0HaYpwTT27gb8WsGJkGgFMzfCitSYluX7FiSQgRoapZHk9r5tyyx2Fd6snx2MEXeqGGn1+4/wGENNr+IZ4gKUKjK/M13UydV0ZYHktQMscxR6Dom7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl+Q8WaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqdnLvr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CB21F000E9;
-	Wed, 20 May 2026 17:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl+Q8WaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39A21F000E9;
+	Wed, 20 May 2026 17:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298748;
-	bh=DtruqdUzD1suM7NPLxU5ZeKZhFpkrkP/nAgekRby2LE=;
+	s=korg; t=1779298751;
+	bh=6WWP/Drqa+B5qzuniIHI7x+vXQCEQbIBXKfQ0M7Cicg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqdnLvr/5FqieoyE5caHbM1mmKIXla54NSkoJd1SAg2jRkqXLbMuDDpUx3HIOLqwg
-	 CQBjXDv7WCUzK85Z+TVyyAMRiAQwiKlgel6jNAKNGn7gWSbDBNbVH3AU9BuS5Ay2r6
-	 CCOp9H6B5o+NqG9Upx8uYVYqpt/6iuvK8zyOEMnU=
+	b=Jl+Q8WaSq/b7Ruq3Xz6GxBbsHLdCJp981D5CZUrprlGH1UzsklzdFQyb4uDPp+u0e
+	 0adC0kFe7btO6PsFYh0Lqs7nQVVrdkMN3WHVbgXVMsPokUT85zq/myUpdIbTEyq3v7
+	 Xd3iOh0+vLmUVV66kUByAc0/g53A8GKPg+ovMwTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Michal Luczaj <mhal@rbox.co>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 487/957] bpf, riscv: Remove redundant bpf_flush_icache() after pack allocator finalize
-Date: Wed, 20 May 2026 18:16:10 +0200
-Message-ID: <20260520162145.086323147@linuxfoundation.org>
+Subject: [PATCH 6.18 488/957] bpf, sockmap: Fix af_unix iter deadlock
+Date: Wed, 20 May 2026 18:16:11 +0200
+Message-ID: <20260520162145.108053093@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,79 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 46ee1342b887c9387a933397d846ff6c9584322c ]
+[ Upstream commit 4d328dd695383224aa750ddee6b4ad40c0f8d205 ]
 
-bpf_flush_icache() calls flush_icache_range() to clean the data cache
-and invalidate the instruction cache for the JITed code region. However,
-since commit 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the
-BPF JIT"), this flush is redundant.
+bpf_iter_unix_seq_show() may deadlock when lock_sock_fast() takes the fast
+path and the iter prog attempts to update a sockmap. Which ends up spinning
+at sock_map_update_elem()'s bh_lock_sock():
 
-bpf_jit_binary_pack_finalize() copies the JITed instructions to the ROX
-region via bpf_arch_text_copy() -> patch_text_nosync(), and
-patch_text_nosync() already calls flush_icache_range() on the written
-range. The subsequent bpf_flush_icache() repeats the same cache
-maintenance on an overlapping range.
+WARNING: possible recursive locking detected
+test_progs/1393 is trying to acquire lock:
+ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: sock_map_update_elem+0xdb/0x1f0
 
-Remove the redundant bpf_flush_icache() call and its now-unused
-definition.
+but task is already holding lock:
+ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
 
-Fixes: 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the BPF JIT")
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Tested-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260413191111.3426023-3-puranjay@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(slock-AF_UNIX);
+  lock(slock-AF_UNIX);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+4 locks held by test_progs/1393:
+ #0: ffff88814b59c790 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x59/0x10d0
+ #1: ffff88811ec25fd8 (sk_lock-AF_UNIX){+.+.}-{0:0}, at: bpf_seq_read+0x42c/0x10d0
+ #2: ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
+ #3: ffffffff85a6a7c0 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x51d/0xb00
+
+Call Trace:
+ dump_stack_lvl+0x5d/0x80
+ print_deadlock_bug.cold+0xc0/0xce
+ __lock_acquire+0x130f/0x2590
+ lock_acquire+0x14e/0x2b0
+ _raw_spin_lock+0x30/0x40
+ sock_map_update_elem+0xdb/0x1f0
+ bpf_prog_2d0075e5d9b721cd_dump_unix+0x55/0x4f4
+ bpf_iter_run_prog+0x5b9/0xb00
+ bpf_iter_unix_seq_show+0x1f7/0x2e0
+ bpf_seq_read+0x42c/0x10d0
+ vfs_read+0x171/0xb20
+ ksys_read+0xff/0x200
+ do_syscall_64+0x6b/0x3a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 2c860a43dd77 ("bpf: af_unix: Implement BPF iterator for UNIX domain socket.")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-2-2af6fe97918e@rbox.co
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit.h      | 6 ------
- arch/riscv/net/bpf_jit_core.c | 7 -------
- 2 files changed, 13 deletions(-)
+ net/unix/af_unix.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit.h b/arch/riscv/net/bpf_jit.h
-index 632ced07bca44..da02717902442 100644
---- a/arch/riscv/net/bpf_jit.h
-+++ b/arch/riscv/net/bpf_jit.h
-@@ -11,7 +11,6 @@
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index a09c732748945..cf022252d521c 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3773,15 +3773,14 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
+ 	struct bpf_prog *prog;
+ 	struct sock *sk = v;
+ 	uid_t uid;
+-	bool slow;
+ 	int ret;
  
- #include <linux/bpf.h>
- #include <linux/filter.h>
--#include <asm/cacheflush.h>
+ 	if (v == SEQ_START_TOKEN)
+ 		return 0;
  
- /* verify runtime detection extension status */
- #define rv_ext_enabled(ext) \
-@@ -105,11 +104,6 @@ static inline void bpf_fill_ill_insns(void *area, unsigned int size)
- 	memset(area, 0, size);
+-	slow = lock_sock_fast(sk);
++	lock_sock(sk);
+ 
+-	if (unlikely(sk_unhashed(sk))) {
++	if (unlikely(sock_flag(sk, SOCK_DEAD))) {
+ 		ret = SEQ_SKIP;
+ 		goto unlock;
+ 	}
+@@ -3791,7 +3790,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
+ 	prog = bpf_iter_get_info(&meta, false);
+ 	ret = unix_prog_seq_show(prog, &meta, v, uid);
+ unlock:
+-	unlock_sock_fast(sk, slow);
++	release_sock(sk);
+ 	return ret;
  }
  
--static inline void bpf_flush_icache(void *start, void *end)
--{
--	flush_icache_range((unsigned long)start, (unsigned long)end);
--}
--
- /* Emit a 4-byte riscv instruction. */
- static inline void emit(const u32 insn, struct rv_jit_context *ctx)
- {
-diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
-index f6ca5cfa6b2fd..191bf0e66c824 100644
---- a/arch/riscv/net/bpf_jit_core.c
-+++ b/arch/riscv/net/bpf_jit_core.c
-@@ -183,13 +183,6 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 			prog = orig_prog;
- 			goto out_offset;
- 		}
--		/*
--		 * The instructions have now been copied to the ROX region from
--		 * where they will execute.
--		 * Write any modified data cache blocks out to memory and
--		 * invalidate the corresponding blocks in the instruction cache.
--		 */
--		bpf_flush_icache(jit_data->ro_header, ctx->ro_insns + ctx->ninsns);
- 		for (i = 0; i < prog->len; i++)
- 			ctx->offset[i] = ninsns_rvoff(ctx->offset[i]);
- 		bpf_prog_fill_jited_linfo(prog, ctx->offset);
 -- 
 2.53.0
 
