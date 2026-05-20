@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7883534DCE4;
-	Wed, 20 May 2026 18:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A434DCE4;
+	Wed, 20 May 2026 18:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300125; cv=none; b=cNu0o4OnqVvc7TJR7FLZt6YOAGmvE8t95wunTWPO+RTMZldF9/R+xWMgDUrMcXMpuQFNpzBTXymJyzgAdFxmNqnqNi5gvXYuMHPTfFmLy8C6mqG15k0NxPzWQuYvovxYA/q/bEMpVF5xH8wLuNlk/4SrWWCtGjRWB8QsegNvsWY=
+	t=1779300128; cv=none; b=BHkIm/UtbUqURMtRYCZhJirHDbgHN+7Iid0826OR3tS0Lf+4bRR03VsXID5eL1bQ752B9b1A1elL08dku+Xd2mxA3LhGNx/hj+7i/j7hvf5FMG4fZbaZkB25FjHDI4o7NdtOgxWqMA5Mr/HhufZ/iHBG2q7moRm3k7ebZTwJcM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300125; c=relaxed/simple;
-	bh=beC2TrO4qJVFKC4QYHSCU4m30l4t6Fvj2XL1ZG7Ufpg=;
+	s=arc-20240116; t=1779300128; c=relaxed/simple;
+	bh=cfvKK2nZz0L1pNta94cOU+nPQiis6kEvMYyoV7sqobM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiX3vU85rJiL8irLGrqSDgG9cnJrKYEQEfPrKdpWA5te4DPcm6aiA695rImF0Nn7DT8Xtr0LbkJ9o0wGUh/MDEXFaRsFYY6SlmpTfeSU/INUyWtXz6YhNVOVfRsuNItNNh0xtyEBtBPYYGSIEICbxAZgZk0ufrbnfT07F+xa5gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZMpo5ZB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y9Oky8MsoSU2p/nWXcqsKOsZKM4rUOrU4zUGS4AgNmSR0W8Mwp8J6Q+kdbXyl84ApfjDKv4fZxQdEyRoaHpbM2brI9QMalh1T3qro3QGvzb8KcsIuxZFNIMgobBxsjWrdRz7mYU1NmErypFZ1Es+MCMF59c4oxZwiM1vhYr2pxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSv0INQ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZMpo5ZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52281F000E9;
-	Wed, 20 May 2026 18:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSv0INQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782891F000E9;
+	Wed, 20 May 2026 18:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300124;
-	bh=RALhIwvSyHx/GZeATZ2KLpC8F0M/JeRRcujHACqgXb8=;
+	s=korg; t=1779300127;
+	bh=k4K2NIPvosKXDpmMZuu7bk7nVl+GwXlGQ4gft2kAJ+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZMpo5ZBQ43BkD4nQuRyjdJHR/DCB25tDhygreohI1vxtYr9sx8NEbDi60uaPMy11
-	 8QQpVMshwtdJzDEhvL7MK6Rd66KezvNMGY8HUMEChiSJQu0YQ5tIaU+cuqgr7HJj7I
-	 +Qggecbcn5pIptshUkOW+t0Q8WVE1GV8cmrSbKmA=
+	b=NSv0INQ5GlO6wvJspsrRndB13MGoq+b0PJyc4cZDV4MlIyjW7Zed8ukAJYbY9tOZn
+	 ox8khDeXa5lHHQLYlMKm1+pVe1MA1htumWAomYsgqen5vSFuomtdYYl2eL3AdNml8A
+	 aiEQpcOCw8jFtJoz9GiJtTgozI4P9FbT78qwa7yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	"haoyu.lu" <hechushiguitu666@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/666] bpf: Fix variable length stack write over spilled pointers
-Date: Wed, 20 May 2026 18:14:27 +0200
-Message-ID: <20260520162112.449798421@linuxfoundation.org>
+Subject: [PATCH 6.12 057/666] bpf,arc_jit: Fix missing newline in pr_err messages
+Date: Wed, 20 May 2026 18:14:28 +0200
+Message-ID: <20260520162112.471411821@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,78 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: haoyu.lu <hechushiguitu666@gmail.com>
 
-[ Upstream commit 4639eb9e30ab10c7935c7c19e872facf9a94713f ]
+[ Upstream commit b6b5e0ebd429d66ce37ae5af649a74ea1f041d92 ]
 
-Scrub slots if variable-offset stack write goes over spilled pointers.
-Otherwise is_spilled_reg() may == true && spilled_ptr.type == NOT_INIT
-and valid program is rejected by check_stack_read_fixed_off()
-with obscure "invalid size of register fill" message.
+Add missing newline to pr_err messages in ARC JIT.
 
-Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260324215938.81733-1-alexei.starovoitov@gmail.com
+Fixes: f122668ddcce ("ARC: Add eBPF JIT support")
+Signed-off-by: haoyu.lu <hechushiguitu666@gmail.com>
+Link: https://lore.kernel.org/r/20260324122703.641-1-hechushiguitu666@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ arch/arc/net/bpf_jit_arcv2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 96a04cd904a11..feb90c6e94620 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4724,6 +4724,18 @@ static void check_fastcall_stack_contract(struct bpf_verifier_env *env,
+diff --git a/arch/arc/net/bpf_jit_arcv2.c b/arch/arc/net/bpf_jit_arcv2.c
+index 6d989b6d88c69..7ee50aeae5a45 100644
+--- a/arch/arc/net/bpf_jit_arcv2.c
++++ b/arch/arc/net/bpf_jit_arcv2.c
+@@ -2427,7 +2427,7 @@ u8 arc_prologue(u8 *buf, u32 usage, u16 frame_size)
+ 
+ #ifdef ARC_BPF_JIT_DEBUG
+ 	if ((usage & BIT(ARC_R_FP)) && frame_size == 0) {
+-		pr_err("FP is being saved while there is no frame.");
++		pr_err("FP is being saved while there is no frame.\n");
+ 		BUG();
  	}
- }
+ #endif
+@@ -2454,7 +2454,7 @@ u8 arc_epilogue(u8 *buf, u32 usage, u16 frame_size)
  
-+static void scrub_special_slot(struct bpf_func_state *state, int spi)
-+{
-+	int i;
-+
-+	/* regular write of data into stack destroys any spilled ptr */
-+	state->stack[spi].spilled_ptr.type = NOT_INIT;
-+	/* Mark slots as STACK_MISC if they belonged to spilled ptr/dynptr/iter. */
-+	if (is_stack_slot_special(&state->stack[spi]))
-+		for (i = 0; i < BPF_REG_SIZE; i++)
-+			scrub_spilled_slot(&state->stack[spi].slot_type[i]);
-+}
-+
- /* check_stack_{read,write}_fixed_off functions track spill/fill of registers,
-  * stack boundary and alignment are checked in check_mem_access()
-  */
-@@ -4809,12 +4821,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	} else {
- 		u8 type = STACK_MISC;
- 
--		/* regular write of data into stack destroys any spilled ptr */
--		state->stack[spi].spilled_ptr.type = NOT_INIT;
--		/* Mark slots as STACK_MISC if they belonged to spilled ptr/dynptr/iter. */
--		if (is_stack_slot_special(&state->stack[spi]))
--			for (i = 0; i < BPF_REG_SIZE; i++)
--				scrub_spilled_slot(&state->stack[spi].slot_type[i]);
-+		scrub_special_slot(state, spi);
- 
- 		/* only mark the slot as written if all 8 bytes were written
- 		 * otherwise read propagation may incorrectly stop too soon
-@@ -4949,8 +4956,13 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
- 			}
- 		}
- 
--		/* Erase all other spilled pointers. */
--		state->stack[spi].spilled_ptr.type = NOT_INIT;
-+		/*
-+		 * Scrub slots if variable-offset stack write goes over spilled pointers.
-+		 * Otherwise is_spilled_reg() may == true && spilled_ptr.type == NOT_INIT
-+		 * and valid program is rejected by check_stack_read_fixed_off()
-+		 * with obscure "invalid size of register fill" message.
-+		 */
-+		scrub_special_slot(state, spi);
- 
- 		/* Update the slot type. */
- 		new_type = STACK_MISC;
+ #ifdef ARC_BPF_JIT_DEBUG
+ 	if ((usage & BIT(ARC_R_FP)) && frame_size == 0) {
+-		pr_err("FP is being saved while there is no frame.");
++		pr_err("FP is being saved while there is no frame.\n");
+ 		BUG();
+ 	}
+ #endif
+@@ -2868,7 +2868,7 @@ u8 gen_jmp_64(u8 *buf, u8 rd, u8 rs, u8 cond, u32 curr_off, u32 targ_off)
+ 		break;
+ 	default:
+ #ifdef ARC_BPF_JIT_DEBUG
+-		pr_err("64-bit jump condition is not known.");
++		pr_err("64-bit jump condition is not known.\n");
+ 		BUG();
+ #endif
+ 	}
+@@ -2948,7 +2948,7 @@ u8 gen_jmp_32(u8 *buf, u8 rd, u8 rs, u8 cond, u32 curr_off, u32 targ_off)
+ 	 */
+ 	if (cond >= ARC_CC_LAST) {
+ #ifdef ARC_BPF_JIT_DEBUG
+-		pr_err("32-bit jump condition is not known.");
++		pr_err("32-bit jump condition is not known.\n");
+ 		BUG();
+ #endif
+ 		return 0;
 -- 
 2.53.0
 
