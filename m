@@ -1,76 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A017E423A6C;
-	Wed, 20 May 2026 18:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367083FC5D4;
+	Wed, 20 May 2026 18:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302337; cv=none; b=ZpIZ/brM+mVvAatsFhFACKaWxUoZU+LC/zB7PtQMn+bn+NRDB/j1RgS8VpGh1HaAFWaFTYtDV2gBJCCyBd3a4kKb/dKkDdEM/1TQ+po90vV4CuNv0zJ82vabjy2ufgFFNLOCVFnx9VY0O0McMBmJzCrL34XdeIbU/52mISBN954=
+	t=1779302339; cv=none; b=U5UAJR60P9g0mJ4vnz87L4Fu5Wam42Mqf+L2Zgl2AunjpZXL0dnQ/Ptqc+p2LY/bMZCz6IjRNAFsSem5I9FBMqtczQlGjX/yVzVEW/+aH841aNLkhri0e5qRpGjLCLJhs2jzQ+sSkftoJsYYpNcLPP0+xex93taqjTOiymRUJrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302337; c=relaxed/simple;
-	bh=Jxqy8L9ANGFp0eSnKEybTa4RzR9pY8WsuXYiV199yUk=;
+	s=arc-20240116; t=1779302339; c=relaxed/simple;
+	bh=uDc9AueAL4+plFpLKWO1EdDOX0YbV0L7DR1C8sQKQ5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmgjgfS1dMg4Tv+616p1vdbjYnOWl4CBvR8NKvPJIajuaGukidmLqypQnP5nEkA+cc5VeT0hiWxPs9As3aCcSSHhWZK7CHkASuhoBlosVeEvxi2wXUgqEXhdZjBs6pwZe1W0gjkfH6NNTFSCOWi2Myufs2h4hT7vUxqTnjlMPgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMJcveyZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hx/GQfh1VP9ab0PwVKsJgEBmIzg9wOAYfbFeuoFIUvm83jLfHzFLqqoT3swquwEmPHuPha4zWBO17Ks+eps80x84LzdOTJj7Ht2QyOxh1LNQUS2uPeTKxgBtddZ6zH/VChnHOk1KEW9nC2+6gX18M+XOcFO5RT3xzXbQ4e+XJGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wviswlJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMJcveyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A6F1F0089B;
-	Wed, 20 May 2026 18:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wviswlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA1F1F008A3;
+	Wed, 20 May 2026 18:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302335;
-	bh=nEFNmEaDSksLN0yzhIX/dZ0OL7J/hq2EQiy3Wql5sJs=;
+	s=korg; t=1779302337;
+	bh=2bTdPhUsmVAEbk3e40XlH5q5c2/1x0lcmT9KXw4XQ3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMJcveyZVkdYyAtCz9if9jqeEaz6ZhJq4LctkVGAji3KN34dVeCRGqP0VlP2izr5l
-	 plMxlKmdz4uqX3XFx837K/NTccwOSD3ll4d8XgT1Qa54lG8stYgMXaQ7+tRUg/iVfs
-	 /qnPBlgbKLGhzz6cu+LuSzfOjXcFW9G7hUKC0kEs=
+	b=0wviswlJ76YWMsEfPY1WXjGu2GgqXbvaxNOWCw/kOgvPvK/252O0aSg37daJWKybr
+	 hjZouzzr3iLsVUreumTmJMvabdGjWe7l/xRd4SjLgWCmIR+djJMpgiYrISQsoq4gDd
+	 kd0i2UYGRvtNVTIr4eHMuIrbwDQi4rK8N4F7VUVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chris Mason <clm@fb.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	David Sterba <dsterba@suse.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Jason A. Donenfeld" <jason@zx2c4.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Li Nan <linan122@huawei.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	Richard Weinberger <richard@nod.at>,
-	Russell King <linux@armlinux.org.uk>,
-	Song Liu <song@kernel.org>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Ted Tso <tytso@mit.edu>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	WANG Xuerui <kernel@xen0n.name>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/508] arm64/xor: fix conflicting attributes for xor_block_template
-Date: Wed, 20 May 2026 18:20:34 +0200
-Message-ID: <20260520162103.210969783@linuxfoundation.org>
+Subject: [PATCH 6.6 229/508] mtd: spi-nor: update spi_nor_fixups::post_sfdp() documentation
+Date: Wed, 20 May 2026 18:20:52 +0200
+Message-ID: <20260520162103.612077078@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -89,77 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 675a0dd596e712404557286d0a883b54ee28e4f4 ]
+[ Upstream commit 3620d67b48493c6252bbc873dc88dde81641d56b ]
 
-Commit 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
-changes the definition to __ro_after_init instead of const, but failed to
-update the external declaration in xor.h.  This was not found because
-xor-neon.c doesn't include <asm/xor.h>, and can't easily do that due to
-current architecture of the XOR code.
+After commit 5273cc6df984 ("mtd: spi-nor: core: Call
+spi_nor_post_sfdp_fixups() only when SFDP is defined")
+spi_nor_post_sfdp_fixups() isn't called anymore if no SFDP is detected.
 
-Link: https://lkml.kernel.org/r/20260327061704.3707577-4-hch@lst.de
-Fixes: 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chris Mason <clm@fb.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: David Sterba <dsterba@suse.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jason A. Donenfeld <jason@zx2c4.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Li Nan <linan122@huawei.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Magnus Lindholm <linmag7@gmail.com>
-Cc: Matt Turner <mattst88@gmail.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Song Liu <song@kernel.org>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Ted Ts'o <tytso@mit.edu>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Update the documentation accordingly.
+
+Fixes: 5273cc6df984 ("mtd: spi-nor: core: Call spi_nor_post_sfdp_fixups() only when SFDP is defined")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/xor.h | 2 +-
+ drivers/mtd/spi-nor/core.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/xor.h b/arch/arm64/include/asm/xor.h
-index befcd8a7abc98..7c03207157196 100644
---- a/arch/arm64/include/asm/xor.h
-+++ b/arch/arm64/include/asm/xor.h
-@@ -13,7 +13,7 @@
- 
- #ifdef CONFIG_KERNEL_MODE_NEON
- 
--extern struct xor_block_template const xor_block_inner_neon;
-+extern struct xor_block_template xor_block_inner_neon __ro_after_init;
- 
- static void
- xor_neon_2(unsigned long bytes, unsigned long * __restrict p1,
+diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
+index 6c478331e494e..398383ba0d8d6 100644
+--- a/drivers/mtd/spi-nor/core.h
++++ b/drivers/mtd/spi-nor/core.h
+@@ -420,7 +420,7 @@ struct spi_nor_flash_parameter {
+  *                   number of dummy cycles in read register ops.
+  * @smpt_map_id: called after map ID in SMPT table has been determined for the
+  *               case the map ID is wrong and needs to be fixed.
+- * @post_sfdp: called after SFDP has been parsed (is also called for SPI NORs
++ * @post_sfdp: called after SFDP has been parsed (is not called for SPI NORs
+  *             that do not support RDSFDP). Typically used to tweak various
+  *             parameters that could not be extracted by other means (i.e.
+  *             when information provided by the SFDP/flash_info tables are
 -- 
 2.53.0
 
