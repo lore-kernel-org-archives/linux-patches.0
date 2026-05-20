@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC06536C5BF;
-	Wed, 20 May 2026 16:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3671A36C5BF;
+	Wed, 20 May 2026 16:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295723; cv=none; b=IT1tQC3jH/J0gaTjg8i9MXqOQtjr/+HA781yklXODQ22ee8K/jgWoCnL8wCIAWKR2imQwdZveKr8QLgbMWVjssOmFhYI2Ngh+B1idIs3CeONB0VhwBIK1tNRtS6D3NZPb5E3iHD3gcYgOtf8o+iHTNVydlyCUdRa6/LrTL1ASWg=
+	t=1779295725; cv=none; b=Gi2sdZEwyQRrItd8+xTPGuGSEiUI3bpsbwYd2vq1W+25VJaAF/XfRqWykml8ZPLDKY/Tkur4FNQDv4r27WsJsL5U0lgc8IrELDGK7DHggjifm1xb0cb5k9cftuz4DdLwGtQwwWTqCnahEgc192KbbNFum5S9T1MF4Rm9KrmJkJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295723; c=relaxed/simple;
-	bh=7HbNSHUK3FoL8++yeWhFkFpVR9wK8D1ODoA0s1313Gc=;
+	s=arc-20240116; t=1779295725; c=relaxed/simple;
+	bh=YqCDV8QVBQo3IRyadBYqo9lGh2ShNa0kG8Igh3r0dA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d63nr3TJdCh+80niOEL+IglBGu6HePAWt8IVamQQ4NcZ1mEdB8+3b9Fh/EJ+s5n94QMEc8o1BeFeo1nJQ2O8psCZhjNij5SAZynYH32HqpyBSBgoaUa71G2wYzsMk20NpHaVzz2YJht4izOmm99xS4gMnaJHx7/fPwm8AcNMusU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZdXHDPZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HI6MSICutONBb1rxkt1jTiQpdWAv6B6+0xqz6ijb5tLNYxgOK5qzEtPlFvP8zlQoyQOG01nuxaTfoa80JJMybBqnnsN1M5UbFDtJkb7i/7tibCE1lkiUw//eqb1KC7J45D6tjcZ7WaBG4w53oyi72qmuw2V12X0CR6Xh4XW5MIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgEtIr23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZdXHDPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC231F00893;
-	Wed, 20 May 2026 16:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgEtIr23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961CB1F000E9;
+	Wed, 20 May 2026 16:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295721;
-	bh=ZbQqxaryPu1jNuSHIs2hyYPalN/RQ9/BrFCcvW97y0E=;
+	s=korg; t=1779295724;
+	bh=t368K4RjiBJTgeFwz4ySpCAas9nrkf1RlTGhIJJtXKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZdXHDPZCfUk7FNIH1RP2NqC2KsZ+1t3OILGQPQnWbnbEjA1u03xgrLTLIsESk1kN
-	 eucO7fSt3GmpaoXVqG5SSbHlIT/AXr+QrRK81JXeHyIyMfWt/vDEVgcva/8oPqy6Ks
-	 fA3HfZOlzPasT13/7KdM+tuWPtON5woLSbTcMSeI=
+	b=sgEtIr23IEvauddE5qxwEGPERdRwTgBTHOSd5hUbBWqcTknNf2dHusX5OY0HLrpOR
+	 uPNcdTPDbYDq2SVW2lPiouTDlTlQ5WWx7KZ1Q9cRGKzB+JonnraTV/Xst2lc9afllt
+	 rzmOFVWoVCHe0HVRBf2doBF8H7Rhwr7kHmh8HtsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Conor Dooley <conor@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0528/1146] arm64: dts: qcom: sm8650: Enable UHS-I SDR50 and SDR104 SD card modes
-Date: Wed, 20 May 2026 18:12:58 +0200
-Message-ID: <20260520162200.130459495@linuxfoundation.org>
+Subject: [PATCH 7.0 0529/1146] arm64: dts: qcom: sm7225-fairphone-fp4: Fix conflicting bias pinctrl
+Date: Wed, 20 May 2026 18:12:59 +0200
+Message-ID: <20260520162200.153257645@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,65 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 93f823e7d48232e62fb8fb74481696609c90244a ]
+[ Upstream commit be7c1badb0b934cfe88427b1d4ec3eb9f52ba587 ]
 
-The restriction on UHS-I speed modes was added to all SM8650 platforms
-by copying it from SM8450 and SM8550 dtsi files, and it was an actually
-reproducible problem due to the overclocking of SD cards. Since the latter
-issue has been fixed in the SM8650 GCC driver, UHS-I speed modes are
-working fine on SM8650 boards, below is the test performed on SM8650-HDK:
+The pinctrl nodes from sm6350.dtsi already contain a bias-* property, so
+that needs to be deleted, otherwise the dtb will contain two conflicting
+bias-* properties.
 
-SDR50 speed mode:
-
-    mmc0: new UHS-I speed SDR50 SDHC card at address 0001
-    mmcblk0: mmc0:0001 00000 14.6 GiB
-     mmcblk0: p1
-
-    % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
-    1024+0 records in
-    1024+0 records out
-    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 24.8086 s, 43.3 MB/s
-
-SDR104 speed mode:
-
-    mmc0: new UHS-I speed SDR104 SDHC card at address 59b4
-    mmcblk0: mmc0:59b4 USDU1 28.3 GiB
-     mmcblk0: p1
-
-    % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
-    1024+0 records in
-    1024+0 records out
-    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 12.9448 s, 82.9 MB/s
-
-Unset the UHS-I speed mode restrictions from the SM8550 platform dtsi
-file, there is no indication that the SDHC controller is broken.
-
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reported-by: Conor Dooley <conor@kernel.org>
+Closes: https://lore.kernel.org/r/20260310-maritime-silly-05e7b7e03aa6@spud/
+Fixes: c4ef464b24c5 ("arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20260314023715.357512-7-vladimir.zapolskiy@linaro.org
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20260319-fp4-uart1-fix-v1-1-f6b3fedef583@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 75de839f7a2df..64a7480291d84 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -4976,9 +4976,6 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+index a3c2b26736f47..3964aae47fd4e 100644
+--- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
++++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+@@ -1019,12 +1019,14 @@ &qup_uart1_cts {
+ 	 * the Bluetooth module drives the pin in either
+ 	 * direction or leaves the pin fully unpowered.
+ 	 */
++	/delete-property/ bias-disable;
+ 	bias-bus-hold;
+ };
  
- 			bus-width = <4>;
+ &qup_uart1_rts {
+ 	/* We'll drive RTS, so no pull */
+ 	drive-strength = <2>;
++	/delete-property/ bias-pull-down;
+ 	bias-disable;
+ };
  
--			/* Forbid SDR104/SDR50 - broken hw! */
--			sdhci-caps-mask = <0x3 0>;
--
- 			qcom,dll-config = <0x0007642c>;
- 			qcom,ddr-config = <0x80040868>;
+@@ -1035,12 +1037,14 @@ &qup_uart1_rx {
+ 	 * in tri-state (module powered off or not driving the
+ 	 * signal yet).
+ 	 */
++	/delete-property/ bias-disable;
+ 	bias-pull-up;
+ };
+ 
+ &qup_uart1_tx {
+ 	/* We'll drive TX, so no pull */
+ 	drive-strength = <2>;
++	/delete-property/ bias-pull-up;
+ 	bias-disable;
+ };
  
 -- 
 2.53.0
