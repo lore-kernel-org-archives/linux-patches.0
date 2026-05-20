@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED153F9280;
-	Wed, 20 May 2026 18:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8633FBEAA;
+	Wed, 20 May 2026 18:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301648; cv=none; b=mxDDIrIwh8I0+DxdDSH0nvuD3pjaFmygH+KLzEOW4TYEagI4K1EDySRROnk0exrKcXT1bdqbhOL0kAqrSyb6+FvbrWkyxHvpHySass7RUQz85IWN/2qY7IQmuH/SA7kDEdouSx9QzY3lAIDY0kCj8at3SrfyEeCST3cOBxjlqCs=
+	t=1779301650; cv=none; b=OWlU9WvY7Ni1Rg6GOl7uMfh76G//khkgkSfIeVIPCaNIuT7atCxZ0N3TatZX6uZdGVCIryFMgyfYjhPIun2tO2FLf0Sg+dKyAaN8ZD+HdET82mU0qsQiiuKtKEOKxBxXfboZuJpDHhBKsh32kYZotBgwG8TVtGUBCO+xtjodGZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301648; c=relaxed/simple;
-	bh=8MbPBBLivY23wx+OasVGQNKSwjDQHZYNWTPW1OwnY2g=;
+	s=arc-20240116; t=1779301650; c=relaxed/simple;
+	bh=tHAdUK2UxvQ2Kc3uWVYMCGos1bftNf4FfWY8xDHn1mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWwUNbK1Q6HO40jIKVJvIf1XNMhg7tEn16OTxx0x41V+O8ZQVSmqGhe+L8TGRF62luQa+OGxLx8Zf5Pt034SBhFCWTUdsIKygO6ZG8E3avZwp+cpNnM2++iBKNzMImCa06p0LJfbKeyZFCGVdmYAklo7KVKXHgQQ2ZO3De38IDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCAAynHS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QqELPvO3fjErrwfaQMU9fwntA1UF53lQBFT+hW6ZOwmb/+MAmMCKWptjr3TD4rzp1ni26H9wjzeet0svc4lkVsHYNekuHpSkIs7Spw5fwHm7OIPp9/UKu5FRNJKgc5rvLMDDuwMNlCv9adONPGqyCnol0HxLgh8VVsKDnHOe+Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVL4HJCa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCAAynHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D371F000E9;
-	Wed, 20 May 2026 18:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVL4HJCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C5A1F000E9;
+	Wed, 20 May 2026 18:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301646;
-	bh=fxFY5QLBk4HRYnR5/q3+XGvM87dj6kFbp4Mq5UXxWTE=;
+	s=korg; t=1779301649;
+	bh=L79EUcUgtYn8NmDj1xQxiOcPJrgpxbOHQNAS2k3SJhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qCAAynHSm+ys+5NrM9ilMObuxWiR+skNUiEzV2Ofn0MLrSq++MZo7N2miV1EXas0f
-	 RncGuZjn1otq6RvVwpLUNIAbIISSyODYGCma4wLUmk+CRW/TmFB50KBR7pAr93eofY
-	 PH//JxXrbwA2DMrJQjgzZmmDoqFYVM6yA8+8TP4I=
+	b=uVL4HJCaiyzfiAIaBW2VQy3XP8HiAPA4zs+utwoM64049J/9VdORukfR5jIrGKwhq
+	 o+rUf1Dj6TAKo2mW7GHUlqwuh9FMvjVYihJNdC8kMTByU1khphH7OSEocx5GFOOKrP
+	 ILxJ7+slLOtb9MLsDLsX+iDNczlV8hhMkBMpqBY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoli Feng <xifeng@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 634/666] netfs: fix error handling in netfs_extract_user_iter()
-Date: Wed, 20 May 2026 18:24:05 +0200
-Message-ID: <20260520162125.016902019@linuxfoundation.org>
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 635/666] irqchip/riscv-imsic: Clear interrupt move state during CPU offlining
+Date: Wed, 20 May 2026 18:24:06 +0200
+Message-ID: <20260520162125.038322269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,67 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
+commit cefafbd561402b0fe6447449364a30315b9b1570 upstream.
 
-In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
-extract user pages, bail out on -ENOMEM, otherwise return the error
-code only if @npages == 0, allowing short DIO reads and writes to be
-issued.
+Affinity changes of IMSIC interrupts have to be careful to not lose an
+interrupt in the process. Each vector keeps track of an affinity change in
+progress with two pointers in struct imsic_vector.
 
-This fixes mmapstress02 from LTP tests against CIFS.
+imsic_vector::move_prev points to the previous CPU target data and
+imsic_vector::move_next to the designated new CPU target data.
 
-Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-Reported-by: Xiaoli Feng <xifeng@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
-Cc: netfs@lists.linux.dev
+imsic_vector::move_prev on the new CPU can only be cleared after the
+previous CPU has cleared imsic_vector::move_next, which ususally happens in
+__imsic_remote_sync().
+
+In case of CPU hot-unplug __imsic_remote_sync() is not invoked because the
+CPU is already marked offline. That means imsic_vector::move_prev becomes
+stale until the CPU is onlined again.
+
+The stale pointer prevents further affinity changes for the affected
+interrupts.
+
+Solve this by clearing the imsic_vector::move_prev pointers in the CPU
+hotplug offline path.
+
+[ tglx: Replace word salad in change log ]
+
+Fixes: 0f67911e821c ("irqchip/riscv-imsic: Separate next and previous pointers in IMSIC vector")
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://patch.msgid.link/20260508-imsic-v2-1-e9f08dd46cf5@sifive.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/iterator.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-riscv-imsic-early.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/netfs/iterator.c
-+++ b/fs/netfs/iterator.c
-@@ -22,7 +22,7 @@
-  *
-  * Extract the page fragments from the given amount of the source iterator and
-  * build up a second iterator that refers to all of those bits.  This allows
-- * the original iterator to disposed of.
-+ * the original iterator to be disposed of.
-  *
-  * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
-  * allowed on the pages extracted.
-@@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
- 		ret = iov_iter_extract_pages(orig, &pages, count,
- 					     max_pages - npages, extraction_flags,
- 					     &offset);
--		if (ret < 0) {
--			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
-+		if (unlikely(ret <= 0)) {
-+			ret = ret ?: -EIO;
- 			break;
- 		}
+--- a/drivers/irqchip/irq-riscv-imsic-early.c
++++ b/drivers/irqchip/irq-riscv-imsic-early.c
+@@ -139,6 +139,8 @@ static int imsic_dying_cpu(unsigned int
+ 	/* Cleanup IPIs */
+ 	imsic_ipi_dying_cpu();
  
-@@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
- 		npages += cur_npages;
- 	}
- 
-+	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
-+		for (i = 0; i < npages; i++)
-+			unpin_user_page(bv[i].bv_page);
-+		kvfree(bv);
-+		return ret;
-+	}
++	imsic_local_sync_all(false);
 +
- 	iov_iter_bvec(new, orig->data_source, bv, npages, orig_len - count);
- 	return npages;
- }
+ 	/* Mark per-CPU IMSIC state as offline */
+ 	imsic_state_offline();
+ 
 
 
