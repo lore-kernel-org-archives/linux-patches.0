@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E5D3BE165;
-	Wed, 20 May 2026 17:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D148D3D6CB5;
+	Wed, 20 May 2026 17:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297063; cv=none; b=u2tW5SyVmNGMFnQPWCqFq30nTPwOguqlRwiXRfWPd/8aUw+RGJpra6i9qh26TcyZSE8nRAOOa73KcoIRLDwZemyVDY7aY0uxMHuRA+zj2PNl73D7/AzlkqmjPZu9MhiWCbX43zG9cO5HC/pOVhdPT3y7nt44wqDINTXWyFgPAaw=
+	t=1779297067; cv=none; b=teM7CDONUzW2CVVnyOa08+KLUDua82xGfvfT/nu+ItPSYGQewlNDQRNTgrPQNnX6YBQuLanxRv28eAv/QyUVnbM8V1eqPbKOh2tiGERSaFBSimoRGagkSblPixSJfhNkTAvPrGIshAvP963WCrqFgRJpT/LMkkpdMzhAYW8wVtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297063; c=relaxed/simple;
-	bh=WIZf8zyzorpMDfIvg4mrLueJWUG1b8qd9U+IzjR+oCE=;
+	s=arc-20240116; t=1779297067; c=relaxed/simple;
+	bh=zHe2oxBI2k+1UdUHIeVJzTgZBuyOHzinTXEn4MA5oVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unE9T6gDBkCKZnZ9QcIygur8/dCdDDx9SQof/Fu78pxdmLAEnbbjhNPcSVtOjzou4UPZQ+d5ai/mcqFdcLiBQs171vgk2s/DEXovbhVSLknJH2yqyD7kvkTZP+emkxshr49YYD285v1VnAhdesITaIZy4ZbUEADYpha66jY3gFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROk0vvcy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NpVESPPsSmt9BoGnZPIExn5+p/5sikr87WfkylDKVyqZIqL7D5n2ZpCLc3CJRHnl98ICPNbzTXu3kQ7Dtsfk0g+29Tf9tgVawX1acCzZHpk7UANY7lnbo5ipDw015uxgCS6I1Fg3Mm30Np7ILk0MBFZ5+YCg+b1FOitO5UCQtVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAjZhp8y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROk0vvcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6F11F000E9;
-	Wed, 20 May 2026 17:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAjZhp8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428A31F000E9;
+	Wed, 20 May 2026 17:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297062;
-	bh=FE+gkwVhFCTOskp/We6UFa+9LGWR7dUzqxUL8NMIM/0=;
+	s=korg; t=1779297064;
+	bh=M+uOpzUoJb5dMgQ1CfALtbxdp9jq9hh3qko5ubuBRkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROk0vvcyto57UY0/2U2bBNWKLgqlQzOHauZeypHVx1ZtMQLDtNb1AvJWCJ9J3JQ4/
-	 MGri29F6tBxAnaG8Xkr0wwBIeSuwHKgkvrsZY+fAaVA1XEXNgDmlxh6MadCWCaJRO0
-	 Xn3XeyEWmSoLTNlFECqKy+IKmBS24/amtnPn76lo=
+	b=oAjZhp8yyZs/cwZCnuSOvNwlksHyxV+/NYeaKQu+1kPBmv8HwMvYx+RvhETLVJMLl
+	 yigVL2pzlPjSClNtBLCzuIxiZSM/BmzOE3UThZWR7y5QmCKItzMl/xPuUBnr9aNYQx
+	 7NyQchUD/fXzdBcglCGcec3OSmgRbqYktFggbLWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1035/1146] arm64: Reserve an extra page for early kernel mapping
-Date: Wed, 20 May 2026 18:21:25 +0200
-Message-ID: <20260520162211.654409848@linuxfoundation.org>
+Subject: [PATCH 7.0 1036/1146] futex: Drop CLONE_THREAD requirement for private default hash alloc
+Date: Wed, 20 May 2026 18:21:26 +0200
+Message-ID: <20260520162211.677005303@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,84 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 4d8e74ad4585672489da6145b3328d415f50db82 ]
+[ Upstream commit ee9dce44362b2d8132c32964656ab6dff7dfbc6a ]
 
-The final part of [data, end) segment may overflow into the next page of
-init_pg_end[1] which is the gap page before early_init_stack[2]:
+Currently need_futex_hash_allocate_default() depends on strict pthread
+semantics, abusing CLONE_THREAD.  This breaks the non-concurrency
+assumptions when doing the mm->futex_ref pcpu allocations, leading to
+bugs[0] when sharing the mm in other ways; ie:
 
-[1]
-crash_arm64_v9.0.1> vtop ffffffed00601000
-VIRTUAL           PHYSICAL
-ffffffed00601000  83401000
+    BUG: KASAN: slab-use-after-free in futex_hash_put
 
-PAGE DIRECTORY: ffffffecffd62000
-   PGD: ffffffecffd62da0 => 10000000833fb003
-   PMD: ffffff80033fb018 => 10000000833fe003
-   PTE: ffffff80033fe008 => 68000083401f03
-  PAGE: 83401000
+... where the +1 bias can end up on a percpu counter that mm->futex_ref
+no longer points at.
 
-     PTE        PHYSICAL  FLAGS
-68000083401f03  83401000  (VALID|SHARED|AF|NG|PXN|UXN)
+Loosen the check to cover any CLONE_VM clone, except vfork().  Excluding
+vfork keeps the existing paths untouched (no overhead), and we can't
+race in the first place: either the parent is suspended and the child
+runs alone, or mm->futex_ref is already allocated from an earlier
+CLONE_VM.
 
-      PAGE       PHYSICAL      MAPPING       INDEX CNT FLAGS
-fffffffec00d0040 83401000                0        0  1 4000 reserved
-
-[2]
-ffffffed002c8000 (r) __pi__data
-ffffffed0054e000 (d) __pi___bss_start
-ffffffed005f5000 (b) __pi_init_pg_dir
-ffffffed005fe000 (b) __pi_init_pg_end
-ffffffed005ff000 (B) early_init_stack
-ffffffed00608000 (b) __pi__end
-
-For 4K pages, the early kernel mapping may use 2MB block entries but the
-kernel segments are only 64KB aligned. Segment boundaries that fall
-within a 2MB block therefore require a PTE table so that different
-attributes can be applied on either side of the boundary.
-
-KERNEL_SEGMENT_COUNT still correctly counts the five permanent kernel
-VMAs registered by declare_kernel_vmas(). However, since commit
-5973a62efa34 ("arm64: map [_text, _stext) virtual address range
-non-executable+read-only"), the early mapper also maps [_text, _stext)
-separately from [_stext, _etext). This adds one more early-only split
-and can require one more page-table page than the existing
-EARLY_SEGMENT_EXTRA_PAGES allowance reserves.
-
-Increase the 4K-page early mapping allowance by one page to cover that
-additional split.
-
-Fixes: 5973a62efa34 ("arm64: map [_text, _stext) virtual address range non-executable+read-only")
-Assisted-by: TRAE:GLM-5.1
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-[catalin.marinas@arm.com: rewrote part of the commit log]
-[catalin.marinas@arm.com: expanded the code comment]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/all/CAL_bE8LsmCQ-FAtYDuwbJhOkt9p2wwYQwAbMh=PifC=VsiBM6A@mail.gmail.com/ [0]
+Fixes: d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kernel-pgtable.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/fork.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kernel-pgtable.h b/arch/arm64/include/asm/kernel-pgtable.h
-index 74a4f738c5f52..229ee7976f693 100644
---- a/arch/arm64/include/asm/kernel-pgtable.h
-+++ b/arch/arm64/include/asm/kernel-pgtable.h
-@@ -68,7 +68,12 @@
- #define KERNEL_SEGMENT_COUNT	5
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 87f3b8d48c0db..73622ad0665a0 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1949,9 +1949,11 @@ static void rv_task_fork(struct task_struct *p)
  
- #if SWAPPER_BLOCK_SIZE > SEGMENT_ALIGN
--#define EARLY_SEGMENT_EXTRA_PAGES (KERNEL_SEGMENT_COUNT + 1)
-+/*
-+ * KERNEL_SEGMENT_COUNT counts the permanent kernel VMAs. The early mapping
-+ * has one additional split, [_text, _stext). Reserve one more page for the
-+ * SWAPPER_BLOCK_SIZE-unaligned boundaries.
-+ */
-+#define EARLY_SEGMENT_EXTRA_PAGES (KERNEL_SEGMENT_COUNT + 2)
+ static bool need_futex_hash_allocate_default(u64 clone_flags)
+ {
+-	if ((clone_flags & (CLONE_THREAD | CLONE_VM)) != (CLONE_THREAD | CLONE_VM))
+-		return false;
+-	return true;
++	/*
++	 * Allocate a default futex hash for any sibling that will
++	 * share the parent's mm, except vfork.
++	 */
++	return (clone_flags & (CLONE_VM | CLONE_VFORK)) == CLONE_VM;
+ }
+ 
  /*
-  * The initial ID map consists of the kernel image, mapped as two separate
-  * segments, and may appear misaligned wrt the swapper block size. This means
+@@ -2338,10 +2340,6 @@ __latent_entropy struct task_struct *copy_process(
+ 	if (retval)
+ 		goto bad_fork_cancel_cgroup;
+ 
+-	/*
+-	 * Allocate a default futex hash for the user process once the first
+-	 * thread spawns.
+-	 */
+ 	if (need_futex_hash_allocate_default(clone_flags)) {
+ 		retval = futex_hash_allocate_default();
+ 		if (retval)
 -- 
 2.53.0
 
