@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179323ECBF3;
-	Wed, 20 May 2026 16:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14503F39FD;
+	Wed, 20 May 2026 16:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294478; cv=none; b=piHNnpITZlSK4T8Ky8yOKL95gf9PUr1hhnLroOK9VT5U3VaRUEmmAS9tn7r8uHOQimVfs0vzxJqz2mTysN5OyDJ9ew3WySy78XxFMg7r9j3hr011P/bDKy+teETiw4wvKKTQ7a/BjptLeGV5QUSKaLc2G0/652+vRaEsdw8ZIoM=
+	t=1779294481; cv=none; b=EKHOBbfXRT0nGZPCBuKQE14zMt6x8L/ixLIJuG38DIf+m2CO7mfzPzETAg2PGFP8Atbx2Y5tMvm12oK0XsWbZRQOod4aINGzzP3+GqNggCqPVtYGFqV1inGA2vFpiZTb50ZKBlg+H2n8Z+y46Ewryfpc061X4TQsci6WpHigh6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294478; c=relaxed/simple;
-	bh=mspfhGSo0AKZVONAt+JSpWcxt0ixALw7GAxPw6U8RyI=;
+	s=arc-20240116; t=1779294481; c=relaxed/simple;
+	bh=9nMTLHidfKI7t/XbUeS3oDUKlEzu6xQJPiivE8vud/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fxnx3BtSLfxB2jckizbd1PpDms7oWgDWHQElPEJdKY6H6cAO81ArBda1fj6qiWtjHRbQ6elchk4eNpfA9o8M/09KdygqjtxcE8TL//KN1JCvjieAooFlqPyWgEC4Wn8OZGrAvJtH0FaqsH18SqIvz5fUXeQlo37eQ0aVoaYcX4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Go5J0tM9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnZqJexNlegHq1KnHCUpCJd4jr3rGMy+FGfPt9hVMTAcXfGlp6ELqfnoChmw+oQxW6g3fdB9ZBh7nacVCRYxMt2cLH/RhuUP1wc6DnA5gXp+DRTMheyIeIT9j8r/EURRA2W4vpw+3xWGLRZr1OumwbfRkO7DHpdPYpJFdzDfcmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBLYc33O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Go5J0tM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78ADE1F00893;
-	Wed, 20 May 2026 16:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBLYc33O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B981F000E9;
+	Wed, 20 May 2026 16:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294477;
-	bh=ReD1opUjQdltx7qbef0Ozkx4yQPICfXBhm7tpsBr4SA=;
+	s=korg; t=1779294479;
+	bh=5bYRtLvvKcEOr85NXg+MGFPA3qcURwFpVKGSGOTjI3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Go5J0tM9OCVuMiLD34hnzGC6xqm3N5nHBdlpmGAhB2KAvoldVMYMzZkZDr+XynHW7
-	 87uZb8mEVB4mstc3r2pNqurafDcamKfgDXWJIHKO95+4hLrPdfYZjypI6g299Wd3jW
-	 snQoLphinSCEOHXnFJkBSAKHE6G+0QXN/sm68Ljk=
+	b=bBLYc33OGGqEbLa5c2G9Y7Z1hUG4llY5z6rHHT9cBMNGEmu1J9pf4yUEALkotsJyI
+	 zysyLcs0/HPkTyWhElxBy2ccfeCBSVHTQBNypBUxHnkjUNe5E9XL+tr/VvpF8SA9GG
+	 gVzpep2QY8D2nveiIS0AbhGGuI/+VIAl1HRz2OnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0037/1146] PCI: use generic driver_override infrastructure
-Date: Wed, 20 May 2026 18:04:47 +0200
-Message-ID: <20260520162149.222950952@linuxfoundation.org>
+Subject: [PATCH 7.0 0055/1146] rust: sync: atomic: Remove bound `T: Sync` for `Atomic::from_ptr()`
+Date: Wed, 20 May 2026 18:05:05 +0200
+Message-ID: <20260520162149.616906700@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,207 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Boqun Feng <boqun.feng@gmail.com>
 
-[ Upstream commit 10a4206a24013be4d558d476010cbf2eb4c9fa64 ]
+[ Upstream commit 4a5dc632e0b603ec1cbbf87b78de86b4b6359cff ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+Originally, `Atomic::from_ptr()` requires `T` being a `Sync` because I
+thought having the ability to do `from_ptr()` meant multiplle
+`&Atomic<T>`s shared by different threads, which was identical (or
+similar) to multiple `&T`s shared by different threads. Hence `T` was
+required to be `Sync`. However this is not true, since `&Atomic<T>` is
+not the same at `&T`. Moreover, having this bound makes `Atomic::<*mut
+T>::from_ptr()` impossible, which is definitely not intended. Therefore
+remove the `T: Sync` bound.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+[boqun: Fix title typo spotted by Alice & Gary]
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
-
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 782a985d7af2 ("PCI: Introduce new device binding path using pci_dev.driver_override")
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Alex Williamson <alex@shazbot.org>
-Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260324005919.2408620-6-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 29c32c405e53 ("rust: sync: atomic: Add generic atomics")
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260120115207.55318-2-boqun.feng@gmail.com
+Link: https://patch.msgid.link/20260303201701.12204-2-boqun@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c           | 11 +++++++----
- drivers/pci/pci-sysfs.c            | 28 ----------------------------
- drivers/pci/probe.c                |  1 -
- drivers/vfio/pci/vfio_pci_core.c   |  5 ++---
- drivers/xen/xen-pciback/pci_stub.c |  6 ++++--
- include/linux/pci.h                |  6 ------
- 6 files changed, 13 insertions(+), 44 deletions(-)
+ rust/kernel/sync/atomic.rs | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index dd9075403987d..d10ece0889f0f 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -138,9 +138,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- {
- 	struct pci_dynid *dynid;
- 	const struct pci_device_id *found_id = NULL, *ids;
-+	int ret;
- 
- 	/* When driver_override is set, only bind to the matching driver */
--	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
-+	ret = device_match_driver_override(&dev->dev, &drv->driver);
-+	if (ret == 0)
- 		return NULL;
- 
- 	/* Look at the dynamic ids first, before the static ones */
-@@ -164,7 +166,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 		 * matching.
- 		 */
- 		if (found_id->override_only) {
--			if (dev->driver_override)
-+			if (ret > 0)
- 				return found_id;
- 		} else {
- 			return found_id;
-@@ -172,7 +174,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 	}
- 
- 	/* driver_override will always match, send a dummy id */
--	if (dev->driver_override)
-+	if (ret > 0)
- 		return &pci_device_id_any;
- 	return NULL;
- }
-@@ -452,7 +454,7 @@ static int __pci_device_probe(struct pci_driver *drv, struct pci_dev *pci_dev)
- static inline bool pci_device_can_probe(struct pci_dev *pdev)
- {
- 	return (!pdev->is_virtfn || pdev->physfn->sriov->drivers_autoprobe ||
--		pdev->driver_override);
-+		device_has_driver_override(&pdev->dev));
- }
- #else
- static inline bool pci_device_can_probe(struct pci_dev *pdev)
-@@ -1722,6 +1724,7 @@ static const struct cpumask *pci_device_irq_get_affinity(struct device *dev,
- 
- const struct bus_type pci_bus_type = {
- 	.name		= "pci",
-+	.driver_override = true,
- 	.match		= pci_bus_match,
- 	.uevent		= pci_uevent,
- 	.probe		= pci_device_probe,
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index 16eaaf749ba97..a9006cf4e9c85 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -615,33 +615,6 @@ static ssize_t devspec_show(struct device *dev,
- static DEVICE_ATTR_RO(devspec);
- #endif
- 
--static ssize_t driver_override_store(struct device *dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct pci_dev *pdev = to_pci_dev(dev);
--	int ret;
--
--	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--
--static ssize_t driver_override_show(struct device *dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct pci_dev *pdev = to_pci_dev(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", pdev->driver_override);
--	device_unlock(dev);
--	return len;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- static struct attribute *pci_dev_attrs[] = {
- 	&dev_attr_power_state.attr,
- 	&dev_attr_resource.attr,
-@@ -669,7 +642,6 @@ static struct attribute *pci_dev_attrs[] = {
- #ifdef CONFIG_OF
- 	&dev_attr_devspec.attr,
- #endif
--	&dev_attr_driver_override.attr,
- 	&dev_attr_ari_enabled.attr,
- 	NULL,
- };
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index bccc7a4bdd794..b4707640e1021 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -2488,7 +2488,6 @@ static void pci_release_dev(struct device *dev)
- 	pci_release_of_node(pci_dev);
- 	pcibios_release_device(pci_dev);
- 	pci_bus_put(pci_dev->bus);
--	kfree(pci_dev->driver_override);
- 	bitmap_free(pci_dev->dma_alias_mask);
- 	dev_dbg(dev, "device released\n");
- 	kfree(pci_dev);
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index d43745fe4c843..460852f79f29b 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -1987,9 +1987,8 @@ static int vfio_pci_bus_notifier(struct notifier_block *nb,
- 	    pdev->is_virtfn && physfn == vdev->pdev) {
- 		pci_info(vdev->pdev, "Captured SR-IOV VF %s driver_override\n",
- 			 pci_name(pdev));
--		pdev->driver_override = kasprintf(GFP_KERNEL, "%s",
--						  vdev->vdev.ops->name);
--		WARN_ON(!pdev->driver_override);
-+		WARN_ON(device_set_driver_override(&pdev->dev,
-+						   vdev->vdev.ops->name));
- 	} else if (action == BUS_NOTIFY_BOUND_DRIVER &&
- 		   pdev->is_virtfn && physfn == vdev->pdev) {
- 		struct pci_driver *drv = pci_dev_driver(pdev);
-diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback/pci_stub.c
-index e4b27aecbf059..79a2b5dfd6941 100644
---- a/drivers/xen/xen-pciback/pci_stub.c
-+++ b/drivers/xen/xen-pciback/pci_stub.c
-@@ -598,6 +598,8 @@ static int pcistub_seize(struct pci_dev *dev,
- 	return err;
- }
- 
-+static struct pci_driver xen_pcibk_pci_driver;
-+
- /* Called when 'bind'. This means we must _NOT_ call pci_reset_function or
-  * other functions that take the sysfs lock. */
- static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
-@@ -609,8 +611,8 @@ static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 
- 	match = pcistub_match(dev);
- 
--	if ((dev->driver_override &&
--	     !strcmp(dev->driver_override, PCISTUB_DRIVER_NAME)) ||
-+	if (device_match_driver_override(&dev->dev,
-+					 &xen_pcibk_pci_driver.driver) > 0 ||
- 	    match) {
- 
- 		if (dev->hdr_type != PCI_HEADER_TYPE_NORMAL
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 1c270f1d51230..57e9463e4347b 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -575,12 +575,6 @@ struct pci_dev {
- 	u8		supported_speeds; /* Supported Link Speeds Vector */
- 	phys_addr_t	rom;		/* Physical address if not from BAR */
- 	size_t		romlen;		/* Length if not from BAR */
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char	*driver_override;
--
- 	unsigned long	priv_flags;	/* Private flags for the PCI driver */
- 
- 	/* These methods index pci_reset_fn_methods[] */
+diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
+index 4aebeacb961a2..296b25e83bbb9 100644
+--- a/rust/kernel/sync/atomic.rs
++++ b/rust/kernel/sync/atomic.rs
+@@ -204,10 +204,7 @@ impl<T: AtomicType> Atomic<T> {
+     /// // no data race.
+     /// unsafe { Atomic::from_ptr(foo_a_ptr) }.store(2, Release);
+     /// ```
+-    pub unsafe fn from_ptr<'a>(ptr: *mut T) -> &'a Self
+-    where
+-        T: Sync,
+-    {
++    pub unsafe fn from_ptr<'a>(ptr: *mut T) -> &'a Self {
+         // CAST: `T` and `Atomic<T>` have the same size, alignment and bit validity.
+         // SAFETY: Per function safety requirement, `ptr` is a valid pointer and the object will
+         // live long enough. It's safe to return a `&Atomic<T>` because function safety requirement
 -- 
 2.53.0
 
