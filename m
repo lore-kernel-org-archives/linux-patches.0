@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6593164C3;
-	Wed, 20 May 2026 16:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1674731F9BE;
+	Wed, 20 May 2026 16:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295953; cv=none; b=JUGat/YQfA/Nx62oNjuEHOtgF9VRUedO7TRHJSphvYVL0pLgEDMv31r2FmIpUlPjp5if6uishov1Dena6wPW+Kq4iyyLKA3R4J/07y71axAohQ/fIHQQRMYvDBhucjP2yaYBxe9cxDjtH3UnLB22HyjMbOL9AwTNfNFFbyfxUx8=
+	t=1779295956; cv=none; b=B6TKjk2uG+6BXaEG0roCWe4f7s4MIiKiXgekbjiylelJeEayg7Ar3USKRl68XqqEida/jLjhiD0OckICizMsW1UOMipqC4h49Go1QCPfykt8aKcLmLowBgJkfUU6446HtmQHEy+kwPqtV/FesXQ9HfyKlNi5q6+7LOkkv8mld3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295953; c=relaxed/simple;
-	bh=gBed/N+d4kujpxU32M9fgmoMWGoaP6BV0YJp3yLzBtw=;
+	s=arc-20240116; t=1779295956; c=relaxed/simple;
+	bh=feboqpoIQtROagPAhshHGBn4sQN5SPoiK3Xk5BnwSQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVJJXAu3hJmHScP50gVD5jDTya5DEjInbKgUNPCGoLV5gUl1SQmSsOFiR62b4SPPPGP/qDg4Ean/gnk8xr4LGIZH2YaGtX9KTPLxYUeDQMFW8F9TdVHjFyaEho3uZMkZLGvHEVwVgvxtrvLeSmmtyhytF8ZyLfFb3SaUkxvsndM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5aky5f5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IXjpby6a0IeYwPQJVK9zKUTSAIPpus7fX9OQzEJMLb+6b7/YUQ9o4v8tt9PGoQ4aD4v+1Zd4XVw8Bayhm7h2UeJVN4vtf5ADKsGyL3EkP5jyY6dSUXoy3TT+apo5/GXQBkLTHlCOVWwsa7rSoqyQHrQ6mnR+zh5Xc04NPOH4+9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xycj0RvH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5aky5f5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35F41F000E9;
-	Wed, 20 May 2026 16:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xycj0RvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4DB1F000E9;
+	Wed, 20 May 2026 16:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295952;
-	bh=SEpqY6+gs7JQreNFh2eta5dUSynZ353X86Jk96NLluw=;
+	s=korg; t=1779295955;
+	bh=GrgBk0VyTfN9LyVmYoKSo4aeqn+coXBbNMjRht5koug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N5aky5f5J21VV8siYHlFSSpcNvOWMpUvlKZIIWyliQ7My5yzhjLvR7iAMqV178eRI
-	 Zfa+YS1N8f1gBhBIHylbzWEfswYdglxH8DeTg5REE51554K/3U2W6BIrnUzPsl5NVN
-	 nxbl7njR1lC5ASnAPbEF1hLHGMym8RgASniX8CLU=
+	b=Xycj0RvHQGrj0GrDjhePr2HjiETSsgcKdF1Iqmfq7p3Vt0QCKZ6ZfrBFezoRb9L21
+	 jFHaMWC1LjwokI/cjbMH2gEWNMMaabHoIuLzF+YO8JVILewQknBrrTVQpuSxkwN7Um
+	 r5/RGmHUd2ktx8kZHAjO0qWlMXNscs7u6Ql+y/AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Hiker Cl <clhiker365@gmail.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0616/1146] bpf: Fix precedence bug in convert_bpf_ld_abs alignment check
-Date: Wed, 20 May 2026 18:14:26 +0200
-Message-ID: <20260520162202.124475252@linuxfoundation.org>
+Subject: [PATCH 7.0 0617/1146] bpf: Fix NULL deref in map_kptr_match_type for scalar regs
+Date: Wed, 20 May 2026 18:14:27 +0200
+Message-ID: <20260520162202.146228672@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,44 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit e5f635edd393aeaa7cad9e42831d397e6e2e1eed ]
+[ Upstream commit 4d0a375887ab4d49e4da1ff10f9606cab8f7c3ad ]
 
-Fix an operator precedence issue in convert_bpf_ld_abs() where the
-expression offset + ip_align % size evaluates as offset + (ip_align % size)
-due to % having higher precedence than +. That latter evaluation does
-not make any sense. The intended check is (offset + ip_align) % size == 0
-to verify that the packet load offset is properly aligned for direct
+Commit ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local
+kptr") refactored map_kptr_match_type() to branch on btf_is_kernel()
+before checking base_type(). A scalar register stored into a kptr
+slot has no btf, so the btf_is_kernel(reg->btf) call dereferences
+NULL.
+
+Move the base_type() != PTR_TO_BTF_ID guard before any reg->btf
 access.
 
-With NET_IP_ALIGN == 2, the bug causes the inline fast-path for direct
-packet loads to almost never be taken on !CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-platforms. This forces nearly all cBPF BPF_LD_ABS packet loads through
-the bpf_skb_load_helper slow path on the affected archs.
-
-Fixes: e0cea7ce988c ("bpf: implement ld_abs/ld_ind in native bpf")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260416122719.661033-1-daniel@iogearbox.net
+Fixes: ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local kptr")
+Reported-by: Hiker Cl <clhiker365@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221372
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260416-kptr_crash-v1-1-5589356584b4@meta.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 90ae4f314b6c3..d4fe9e4a45d11 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -508,7 +508,7 @@ static bool convert_bpf_ld_abs(struct sock_filter *fp, struct bpf_insn **insnp)
- 	    ((unaligned_ok && offset >= 0) ||
- 	     (!unaligned_ok && offset >= 0 &&
- 	      offset + ip_align >= 0 &&
--	      offset + ip_align % size == 0))) {
-+	      (offset + ip_align) % size == 0))) {
- 		bool ldx_off_ok = offset <= S16_MAX;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b26a599be947f..77ddd452b8035 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6000,6 +6000,9 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	int perm_flags;
+ 	const char *reg_name = "";
  
- 		*insn++ = BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_H);
++	if (base_type(reg->type) != PTR_TO_BTF_ID)
++		goto bad_type;
++
+ 	if (btf_is_kernel(reg->btf)) {
+ 		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
+ 
+@@ -6012,7 +6015,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 			perm_flags |= MEM_PERCPU;
+ 	}
+ 
+-	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
++	if (type_flag(reg->type) & ~perm_flags)
+ 		goto bad_type;
+ 
+ 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
 -- 
 2.53.0
 
