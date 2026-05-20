@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA436DA03;
-	Wed, 20 May 2026 16:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D66A36F42D;
+	Wed, 20 May 2026 16:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294425; cv=none; b=dupHfQTcVZVJORWMWqCHwm+JUs1KirjDKLIrpVMUzizB0EYO/ocxzUOHHUF7FqfBRacjAxyQS0MwmDAt25eR49QrVu5DlHu0+fIIjjIn6eMuqDah6bTiZwG7BtYb+a299FWVgH912EF0G02tg8Waaw+3ZnjJTDMmqKEefEWarYE=
+	t=1779294427; cv=none; b=Ic1TZwn44IkPofNGSFxIIEr7YLvTlgKj2XL0r4eorREQn+wA7fq988o5RbRoNnMmgiiB8uYTQgcouhqJpP2E1K9JtVwkx0qIuhNfwjylJRThKxTSnY+WtqOVOFof0A3ChHOnvLb/t6J0JdqTolg22KDkouVqX0hdPWddzLJ5hAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294425; c=relaxed/simple;
-	bh=c/SAr9x/kmgHY//MzoEgUboyNeOZ5DfJ4tBG1cSH2G0=;
+	s=arc-20240116; t=1779294427; c=relaxed/simple;
+	bh=epyVxgOGikGZCjpojHBgwUIymgTzsbqQYmrqOOjaqiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdcyvO5IJuzWCqjir0caqb9Ko55Tl2GPT+x9wG48mqIXGwupfFTkQoJHAmfBYFYauqLEzf9jR25YU19xolKg5FFOm+yAJMOqLsM89xiRHcGFlu23aphrJpsOoMjaVv5tRraX9TRAxGv93QipPg/FMZ8eav1UYBiG3kFfnsJFwwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coIE4xhO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bEQSo4WO5Z6RzDnOsb1tKLDccSPX388GlhOkUSjwEpjMC6T6/zLexKk3dIlOtIsiIMU4EEGGTYufd9T6uDh/lmT9e9GwNFmBiwwIYxBYedEXK6h2lL4cuZKGGMnZYr3FU9WmoiVBeh/pvybG2jTxfnMTAgieWa/LoduLvY01lcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3LCJGQ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coIE4xhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7991F00894;
-	Wed, 20 May 2026 16:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3LCJGQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42031F000E9;
+	Wed, 20 May 2026 16:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294423;
-	bh=6M27JhB+sdFzlv86XenIrYaStKrMa9ynuhP0vO0uePc=;
+	s=korg; t=1779294426;
+	bh=VDd2tnemK66DT6qIBFxXnQ4nfIkWZz96yWaDrAvSR+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=coIE4xhO9RhJlnr2y+PvPT85Tbz9YKmOjO7BJMzeTELYnmHjoVEFL7TcGvsdRTWZz
-	 jGaTkfv3nJ77DyRYyEW4INkNCRwksya8mbVw08ZdKHvrQCXy8VyOAWdJIo/WMrBAsd
-	 IXvsJpBm5nFJZlOi7Hsq0GF2jTgiXHE7jpdy58fo=
+	b=J3LCJGQ1/m5qPeFSUHVhF0ceDrlwHA0uz80e7FM5I9Cw8tgd3ftieTb0l18omX26N
+	 cAoV/qz7Ez/r6cqCANYDrpBXXBFPYqEKHg3KxnXoj/2NinruEB8awwhL4mVhos3p4+
+	 1EGr4LkVHBrRUniCr6goSE+hB6OTDkjmAAFs8BS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangshiguang <yangshiguang@xiaomi.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0033/1146] soundwire: debugfs: initialize firmware_file to empty string
-Date: Wed, 20 May 2026 18:04:43 +0200
-Message-ID: <20260520162149.132499308@linuxfoundation.org>
+Subject: [PATCH 7.0 0034/1146] amd-pstate: Fix memory leak in amd_pstate_epp_cpu_init()
+Date: Wed, 20 May 2026 18:04:44 +0200
+Message-ID: <20260520162149.154221151@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,64 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 7215e4552f31e53595eae56a834f7e286beecccc ]
+[ Upstream commit beda3b363546a423e4e29a7395e04c0ac4ff677e ]
 
-Passing NULL to debugfs_create_str() causes a NULL pointer dereference,
-and creating debugfs nodes with NULL string pointers is no longer
-permitted.
+On failure to set the epp, the function amd_pstate_epp_cpu_init()
+returns with an error code without freeing the cpudata object that was
+allocated at the beginning of the function.
 
-Additionally, firmware_file is a global pointer. Previously, adding every
-new slave blindly overwrote it with NULL.
+Ensure that the cpudata object is freed before returning from the
+function.
 
-Fix these issues by initializing firmware_file to an allocated empty
-string once in the subsystem init path (sdw_debugfs_init), and freeing
-it in the exit path. Existing driver code handles empty strings
-correctly.
+This memory leak was discovered by Claude Opus 4.6 with the aid of
+Chris Mason's AI review-prompts
+(https://github.com/masoncl/review-prompts/tree/main/kernel).
 
-Fixes: fe46d2a4301d ("soundwire: debugfs: add interface to read/write commands")
-Reported-by: yangshiguang <yangshiguang@xiaomi.com>
-Closes: https://lore.kernel.org/lkml/17647e4c.d461.19b46144a4e.Coremail.yangshiguang1011@163.com/
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260323085930.88894-4-hanguidong02@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: Claude:claude-opus-4.6 review-prompts/linux
+Fixes: f9a378ff6443 ("cpufreq/amd-pstate: Set different default EPP policy for Epyc and Ryzen")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/debugfs.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/debugfs.c b/drivers/soundwire/debugfs.c
-index ccc9670ef77ce..2905ec19b8384 100644
---- a/drivers/soundwire/debugfs.c
-+++ b/drivers/soundwire/debugfs.c
-@@ -358,8 +358,8 @@ void sdw_slave_debugfs_init(struct sdw_slave *slave)
- 	debugfs_create_file("go", 0200, d, slave, &cmd_go_fops);
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 5aa9fcd80cf51..d57969c72c9dc 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1533,7 +1533,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
  
- 	debugfs_create_file("read_buffer", 0400, d, slave, &read_buffer_fops);
--	firmware_file = NULL;
--	debugfs_create_str("firmware_file", 0200, d, &firmware_file);
-+	if (firmware_file)
-+		debugfs_create_str("firmware_file", 0200, d, &firmware_file);
+ 	ret = amd_pstate_set_epp(policy, cpudata->epp_default);
+ 	if (ret)
+-		return ret;
++		goto free_cpudata1;
  
- 	slave->debugfs = d;
- }
-@@ -371,10 +371,15 @@ void sdw_slave_debugfs_exit(struct sdw_slave *slave)
+ 	current_pstate_driver->adjust_perf = NULL;
  
- void sdw_debugfs_init(void)
- {
-+	if (!firmware_file)
-+		firmware_file = kstrdup("", GFP_KERNEL);
-+
- 	sdw_debugfs_root = debugfs_create_dir("soundwire", NULL);
- }
- 
- void sdw_debugfs_exit(void)
- {
- 	debugfs_remove_recursive(sdw_debugfs_root);
-+	kfree(firmware_file);
-+	firmware_file = NULL;
- }
 -- 
 2.53.0
 
