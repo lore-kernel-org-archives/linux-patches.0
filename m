@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6730C2D7386;
-	Wed, 20 May 2026 18:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788212D7386;
+	Wed, 20 May 2026 18:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301353; cv=none; b=fkUXc3t0NC1bELp7JZgBHhKiNk8BvH3wMMG3VV5L22XTuuU57UVfVrPNDWHjz5BrRJ3UUPZZA1dy7xOS3AZ48+LvK0eCF46dVznPprxuyX3SPMaVmxQdf5HHhSnGPBu23wOXDSafghOXEfZffWB2/dlQiB6GsBEfplLgRed/hig=
+	t=1779301355; cv=none; b=liyJQpL0nirJ5KI/Gq09AN+QAvgzX9vXoAFhiVTcDrq0lTafcKFKwSr7ko8mIHcas5mW5lxKTCdtVaechUh6CO63RXHiPCPGDL5p/zw5yihE0uGeSCDWe9cbm454ujRiSOeHjnrS12fbFNmZjbwCXDw91Tz8bYHxqH6pSUtm6rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301353; c=relaxed/simple;
-	bh=8G8d7O6eVS2YPjHP8k6V9mKBoKFtxk+fAkqk3gJ8oCo=;
+	s=arc-20240116; t=1779301355; c=relaxed/simple;
+	bh=c0LLlvJrD05ZVUGE5A8K1gqXjdVXr3AurO8gjSW6ezI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/X6ja6oPrPbWZWE/1kKfa0R9i+vwdKJD7uQMNwTDxiR4D8tQEjXcB4UE48Rg1KNhQyTdrbv2A72ZJbQ6GdE4L0Mdg6QoPVr+W/5OVQ9+/50tMZrcmXrwuGp6KOOyoRdCUGQBVhr/aJdgzX61HPPkQjBH1LX/K3Wm5kn1MxnVF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiSGae2y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X0BqC7QLrcf586SDUwySpGMbwOu1H4s6evMx0fAOpQ6ekXeVWL9INM6/nV+9vovihdZ78ecvGW0+FymfzSlJaauxoYoHh8/hLUHUG3+9Wh3NsuGnSfawPrjp+50nV1HOhThhkANnORaA5LizopNIBVMcZu66ZddLpQG9YxdzegI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7l5lZ95; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiSGae2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C881F00899;
-	Wed, 20 May 2026 18:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7l5lZ95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9DC1F000E9;
+	Wed, 20 May 2026 18:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301351;
-	bh=WCpBfdsa0xjIDpoScettrcLwyYiqfS2BXQxKdOji1rs=;
+	s=korg; t=1779301354;
+	bh=/xsiD3ia+LZlx4XgkrUY755nJRQnfUd10Psyd/lu2b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AiSGae2ydnFMdiSNUg7h5ugpaq+cxmMt3K66bCf8aHsw7vOmnK5j39d+XPVN0hpee
-	 oKY3+0OK2rsYiAPyry9KcTMuw2FHESl56NMptwgUdSGs6I6jN0hgyvd2ZotnaLfzQV
-	 iFvlsgjQ/4086ROeftBZFob1LxQj7eMjY5QrGh+I=
+	b=T7l5lZ9564b5I6EWGwhLCfTAa6lwF7IE1ecCLW5go/XgJeYhDQOYYZisFyOpIMCcb
+	 o+lk8LlefQQlGtIlrW5rZGXIngnMxfib1x3vZTaCeST/6acIklhgsFJOIhTENwkrup
+	 J5ri0YUQVD3VUormRJk09N6RCs8WDFQA/t8ZTQVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 481/666] ksmbd: scope conn->binding slowpath to bound sessions only
-Date: Wed, 20 May 2026 18:21:32 +0200
-Message-ID: <20260520162121.690897918@linuxfoundation.org>
+Subject: [PATCH 6.12 482/666] net/rds: zero per-item info buffer before handing it to visitors
+Date: Wed, 20 May 2026 18:21:33 +0200
+Message-ID: <20260520162121.712473942@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,57 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit b0da97c034b6107d14e537e212d4ce8b22109a58 ]
+[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
 
-When the binding SESSION_SETUP sets conn->binding = true, the flag stays
-set after the call so that the global session lookup in
-ksmbd_session_lookup_all() can find the session, which was not added to
-conn->sessions. Because the flag is connection-wide, the global lookup
-path will also resolve any other session by id if asked.
+rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
+caller-allocated on-stack u64 buffer to a per-connection visitor and
+then copy the full item_len bytes back to user space via
+rds_info_copy() regardless of how much of the buffer the visitor
+actually wrote.
 
-Tighten the global lookup so that the returned session must have this
-connection registered in its channel xarray (sess->ksmbd_chann_list).
-The channel entry is installed by the existing binding_session path in
-ntlm_authenticate()/krb5_authenticate() when a SESSION_SETUP completes
-successfully, so this condition is a strict equivalent of "this
-connection has been accepted as a channel of this session". Connections
-that have not bound to a given session cannot reach it via the global
-table.
+rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
+write a subset of their output struct when the underlying
+rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
+and the two GIDs via explicit memsets). Several u32 fields
+(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
+cache_allocs) and the 2-byte alignment hole between sl and
+cache_allocs remain as whatever stack contents preceded the visitor
+call and are then memcpy_to_user()'d out to user space.
 
-The existing conn->binding gate for entering the slowpath is preserved
-so that non-binding connections keep the fast-path-only behavior, and
-the session->state check is unchanged.
+struct rds_info_rdma_connection and struct rds6_info_rdma_connection
+are the only rds_info_* structs in include/uapi/linux/rds.h that are
+not marked __attribute__((packed)), so they have a real alignment
+hole. The other info visitors (rds_conn_info_visitor,
+rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
+their packed output struct today and are not known to be vulnerable,
+but a future visitor that adds a conditional write-path would have
+the same bug.
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
+a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
+binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
+any netdev is sufficient), sendto()'s any peer on the same subnet
+(fails cleanly but installs an rds_connection in the global hash in
+RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
+RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
+bytes of stack garbage including kernel text/data pointers:
+
+    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
+    8..39  00 ...                      gids (memset-zeroed)
+    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
+    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
+    56..59 01 00 08 00                 rdma_mr_size (garbage)
+    60..61 00 00                       tos, sl
+    62..63 00 00                       alignment padding
+    64..67 18 00 00 00                 cache_allocs (garbage)
+
+Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
+and rds_walk_conn_path_info() before invoking the visitor. This
+covers the IPv4/IPv6 IB visitors and hardens all current and future
+visitors against the same class of bug.
+
+No functional change for visitors that fully populate their output.
+
+Changes in v2:
+- retarget at the net tree (subject prefix "[PATCH net v2]",
+  net/rds: prefix in the title)
+- pick up Reviewed-by tags from Sharath Srinivasan and
+  Allison Henderson
+
+Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/rds/connection.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index faba7a502c0b7..151248e02e9eb 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -328,8 +328,13 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
- 	struct ksmbd_session *sess;
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 3a1b548dcdcb2..d6ee386fd820e 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
  
- 	sess = ksmbd_session_lookup(conn, id);
--	if (!sess && conn->binding)
-+	if (!sess && conn->binding) {
- 		sess = ksmbd_session_lookup_slowpath(id);
-+		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
-+			ksmbd_user_session_put(sess);
-+			sess = NULL;
-+		}
-+	}
- 	if (sess && sess->state != SMB2_SESSION_VALID) {
- 		ksmbd_user_session_put(sess);
- 		sess = NULL;
++			/* Zero the per-item buffer before handing it to the
++			 * visitor so any field the visitor does not write -
++			 * including implicit alignment padding - cannot leak
++			 * stack contents to user space via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no c_lock usage.. */
+ 			if (!visitor(conn, buffer))
+ 				continue;
+@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 			 */
+ 			cp = conn->c_path;
+ 
++			/* Zero the per-item buffer for the same reason as
++			 * rds_for_each_conn_info(): any byte the visitor
++			 * does not write (including alignment padding) must
++			 * not leak stack contents via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no cp_lock usage.. */
+ 			if (!visitor(cp, buffer))
+ 				continue;
 -- 
 2.53.0
 
