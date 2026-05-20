@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7ECC3F9F2D;
-	Wed, 20 May 2026 18:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566163F9F2D;
+	Wed, 20 May 2026 18:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301643; cv=none; b=qNwneVI9MXDpUBEotO4CRQ8U5EJB7fdxRBg3bqj2PKj7IhZuka5ZRwLfYbitHRlLU47gRLZaENIgn0ds8Gq6mvR9gBAfOFWS9zlU4Zi2VZsGzQhTtMHARXN/Dgiy9ke7WWwsBvSkKQhlEHgnyXJb0pK9Ox400EdOTGON3QXvrkM=
+	t=1779301645; cv=none; b=pYyjQwQDFTjhPJ1pt2Am6yqOLhzYFrM0Ub3pHXjq0NHAm7Db0bkjFWGw1XW3A+jqrIz9x8Gpmw65+XfWlvlmikUitscxeIDSwMGru8zfi69LfKki4c0b62BHWB+QtNczKWN8DjRzIR06IPNYZCAZTNjA4bhbrnPSwNEkgV5le5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301643; c=relaxed/simple;
-	bh=nJgbPTjXYaMbRuVsr4s57DEh9FAZLoEzaT+q73AQeoc=;
+	s=arc-20240116; t=1779301645; c=relaxed/simple;
+	bh=Jd6cXod9yosCx+na25BEJCY2zde++TL/+AGZk/13Hv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sws5RLmE1s8c6SCKKdMgLjfVO6il0Ln36kM7lGOmHPdnkMi7ljjbYCanRB6dZLqmxXkJqOlPVjDtS9tb2u11kY0OlwUO+L1Zve773YvzowZlQgfXFrn8QlBXdyeYB5/f4GEhY4t4UxNjwV1drJ5ew7dLTPCB2Xhjnimv5EbuKfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nY9j42kQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XMXnj5rEyhvYX4O2/JC5uvXM1ZoI4VSmAZWrcNv4d1mrLpUeNTZGtwJWVGWIESIaoZt4aVxBhE+0OXViWFoFFc2Rfp8L2fFaNk+TtgUmDbkE4Tju7RLoRDUZ3MxE6GTwWmplVdiWMB3pU4KxrJgutyOFniQMeDeYhpk3GyOypdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcnK7x7Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY9j42kQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA481F000E9;
-	Wed, 20 May 2026 18:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcnK7x7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8C31F000E9;
+	Wed, 20 May 2026 18:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301641;
-	bh=p/bxONIKdS1kTtIywLgE8cpboIDxRiWnmUZHvZVxcHk=;
+	s=korg; t=1779301644;
+	bh=H1SYpVohqvVdrAZprpfhQ2lo5joFyJa8Posd9+nkoNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nY9j42kQe3zv9cKbQtR36eJp7gqRdYAsJfLgl4xxrRGUHNKcGfQqE0K/ZuJBlzt70
-	 FU7F4RFo/vg5olIihHGTSfrTnddWGUHufVfb2dWZnQvzFO+wSm93U5wJUvCKCIex6t
-	 j1lpdZwLxngWPS4yanvPBIgp/W71ayuEbvjQ1kkc=
+	b=tcnK7x7QBK2rHqWbecKEjZudcLxvEGVpMDymQcFlzXI+8/BctDi/hPZsnCTRKZDeC
+	 lzfgRQh1bDDI+JXngCrciZ6tLU/cXlommT0mQqXyBWMvTWZAPltd/D7QMgCIj3Hy7N
+	 ts7J4BfTcMPa2FjN2E9sZ7BWh5QS7QWZ5TuFFHr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 632/666] io-wq: check that the predecessor is hashed in io_wq_remove_pending()
-Date: Wed, 20 May 2026 18:24:03 +0200
-Message-ID: <20260520162124.975151174@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.12 633/666] powerpc/warp: Fix error handling in pika_dtm_thread
+Date: Wed, 20 May 2026 18:24:04 +0200
+Message-ID: <20260520162124.996829211@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit d6a2d7b04b5a093021a7a0e2e69e9d5237dfa8cc upstream.
+commit 108d7f951271cbd36ca36efc5e5d106966f5180c upstream.
 
-io_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled
-work was the tail of its hash bucket. When doing this, it checks whether
-the preceding entry in acct->work_list has the same hash value, but
-never checks that the predecessor is hashed at all. io_get_work_hash()
-is simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash
-bits are never set for non-hashed work, so it returns 0. Thus, when a
-hashed bucket-0 work is cancelled while a non-hashed work is its list
-predecessor, the check spuriously passes and a pointer to the non-hashed
-io_kiocb is stored in wq->hash_tail[0].
+pika_dtm_thread() acquires client through of_find_i2c_device_by_node()
+but fails to release it in error handling path. This could result in a
+reference count leak, preventing proper cleanup and potentially
+leading to resource exhaustion. Add put_device() to release the
+reference in the error handling path.
 
-Because non-hashed work is dequeued via the fast path in
-io_get_next_work(), which never touches hash_tail[], the stale pointer
-is never cleared. Therefore, after the non-hashed io_kiocb completes and
-is freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The
-io_wq is per-task (tctx->io_wq) and survives ring open/close, so the
-dangling pointer persists for the lifetime of the task; the next hashed
-bucket-0 enqueue dereferences it in io_wq_insert_work() and
-wq_list_add_after() writes through freed memory.
-
-Add the missing io_wq_is_hashed() check so a non-hashed predecessor
-never inherits a hash_tail[] slot.
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Fixes: 204361a77f40 ("io-wq: fix hang after cancelling pending hashed work")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 3984114f0562 ("powerpc/warp: Platform fix for i2c change")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116024411.21968-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/44x/warp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1044,7 +1044,8 @@ static inline void io_wq_remove_pending(
- 	if (io_wq_is_hashed(work) && work == wq->hash_tail[hash]) {
- 		if (prev)
- 			prev_work = container_of(prev, struct io_wq_work, list);
--		if (prev_work && io_get_work_hash(prev_work) == hash)
-+		if (prev_work && io_wq_is_hashed(prev_work) &&
-+		    io_get_work_hash(prev_work) == hash)
- 			wq->hash_tail[hash] = prev_work;
- 		else
- 			wq->hash_tail[hash] = NULL;
+--- a/arch/powerpc/platforms/44x/warp.c
++++ b/arch/powerpc/platforms/44x/warp.c
+@@ -293,6 +293,8 @@ static int pika_dtm_thread(void __iomem
+ 		schedule_timeout(HZ);
+ 	}
+ 
++	put_device(&client->dev);
++
+ 	return 0;
+ }
+ 
 
 
