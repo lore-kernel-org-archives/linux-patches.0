@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEED3F789B;
-	Wed, 20 May 2026 18:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E8E348C55;
+	Wed, 20 May 2026 18:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301029; cv=none; b=Q90EWRwwcyvXeVed0L4K7pk9IcqYmSLVP/jj732rG6SdUx7rkVSSVDqb/QEjuzi6dO0+Isj0eEYtV6HeyTFXc9uRUryyAaFN9AB6z9KEyykSixLkAQ95I6/MAc5yiKdNNHijZiD5v3Ci/yCLfRP0zC1oLNunQxacIdBsxHWOvjo=
+	t=1779301031; cv=none; b=htp2UCxz7oi6Jc5gCMg9tCW9Lb7UkpdOmy/gSJhKVLYOyKc+sRHSSci0iJkOicud7pjpjO3+rU1UwQ3GRLvVbQz41u7c6Fx/mbI0NRDevQbOH9kL1Adxy6v4fDzO7/yAAK+IrROVfru1LYrcaeO8z3ApmpVKz8e/kD/2oTjenM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301029; c=relaxed/simple;
-	bh=z8URh5Sej+s48KVCztYX755UQRSfosloQQQLJay6UPg=;
+	s=arc-20240116; t=1779301031; c=relaxed/simple;
+	bh=bMZctTxSXWkksc3UdeImwcQn451OGlaYok3mN1QF1lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hbx5swdP0Iu9Q9RgD2WctyF56tTM9oKOq8Vj+Oi/nV9GwZ2bw8ohkjguFB4AuT+GmIkRe5/FFKzoyBUpdw6Qlb++MCZtztaZ0Hjckdqq+ha88DwgJiImpO8S5za6OeDh5aHPcJU7wYPr8gtBQZJgwB5lUIxwufCLGySDfnn8mLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEYVJB76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P64UVvEqW2p+eag1oPApGQXkTqWV6E1kLzAp7Ab/p9UCYq5WNKYhe4b2a/XURIdipnCImlz3AYhahBWg5Nq9+bwVdZn/IxrIVQaN3ZdhB5c9O11UMCZ+n7VGTRzC/ovmq46n2KN6xR4Dt/YFejxqYEeE8H3UNLCxB0X5T1BVPh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5vAZSnO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEYVJB76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758001F000E9;
-	Wed, 20 May 2026 18:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5vAZSnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743B1F000E9;
+	Wed, 20 May 2026 18:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301027;
-	bh=tK48LIN4bPpJyyPsNjXUOs5CxYovXadVowdoOwRBcmg=;
+	s=korg; t=1779301030;
+	bh=i/yTv+J5EWAflKYZSuXOuylWqbFiZ5hNBYesDLq173U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SEYVJB76d91+wax58ETMhP5ViG1DjqzqP7Vwf2Wp/q0WiDM8o1WrdceHX9FxIqT3H
-	 D032jQeZqSg/q67ke7dAwhRb2H0558dJvAMJ70BnsKYCHDBaoQ4zfrRENGobro4QZV
-	 LWwXk96HfjBlayzlo8rtRSpa+CKKPk4XJrtaKUzc=
+	b=L5vAZSnOviMHaEtqLh9MNGT3aOigKWtS7dcePWqUevmi9pqc41ZpYlKcP97kGSCiY
+	 g08bWe71me0Ljf7mGIAPpKYCULDYx1EZLgxhNAJnxqApnfy6fDK32jvYLWuiNaDTKQ
+	 li6NpcF/I+3qJWhLA6fKY6LDV6AOKlfF1SI1GU9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 400/666] clk: qcom: dispcc-sm8450: use RCG2 ops for DPTX1 AUX clock source
-Date: Wed, 20 May 2026 18:20:11 +0200
-Message-ID: <20260520162119.927941325@linuxfoundation.org>
+Subject: [PATCH 6.12 401/666] scsi: sg: Fix sysctl sg-big-buff register during sg_init()
+Date: Wed, 20 May 2026 18:20:12 +0200
+Message-ID: <20260520162119.949588246@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,39 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 141af1be817c42c7f1e1605348d4b1983d319bea ]
+[ Upstream commit 3033c471aaf675254efaa0da431e95d91a104b41 ]
 
-The clk_dp_ops are supposed to be used for DP-related clocks with a
-proper MND divier. Use standard RCG2 ops for dptx1_aux_clk_src, the same
-as all other DPTX AUX clocks in this driver.
+Commit 26d1c80fd61e ("scsi/sg: move sg-big-buff sysctl to scsi/sg.c") made
+a mistake. sysctl sg-big-buff was not created because the call to
+register_sg_sysctls() was placed on the wrong code path.
 
-Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260112-dp-aux-clks-v1-2-456b0c11b069@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 26d1c80fd61e ("scsi/sg: move sg-big-buff sysctl to scsi/sg.c")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260127062044.3034148-2-yangerkun@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8450.c | 2 +-
+ drivers/scsi/sg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
-index d1d3f60789ee0..8baaf94a119e3 100644
---- a/drivers/clk/qcom/dispcc-sm8450.c
-+++ b/drivers/clk/qcom/dispcc-sm8450.c
-@@ -364,7 +364,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_dp_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index 53dd461508494..0100a2828f803 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -1691,13 +1691,13 @@ init_sg(void)
+ 	sg_sysfs_valid = 1;
+ 	rc = scsi_register_interface(&sg_interface);
+ 	if (0 == rc) {
++		register_sg_sysctls();
+ #ifdef CONFIG_SCSI_PROC_FS
+ 		sg_proc_init();
+ #endif				/* CONFIG_SCSI_PROC_FS */
+ 		return 0;
+ 	}
+ 	class_unregister(&sg_sysfs_class);
+-	register_sg_sysctls();
+ err_out:
+ 	unregister_chrdev_region(MKDEV(SCSI_GENERIC_MAJOR, 0), SG_MAX_DEVS);
+ 	return rc;
 -- 
 2.53.0
 
