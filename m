@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2752D7386;
-	Wed, 20 May 2026 18:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1B7372B31;
+	Wed, 20 May 2026 18:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301321; cv=none; b=haU+MNd/X3xwooER7/TuImp/LldqTtcsCcxEobVveNSmXGQnTp0MC4cIqCJSTLaiMv3KM92VbHrwn7GpM7qLL3bFKP6NB+vrbsON9/Ie3qlFRVTqdBWPjpqOIq6fjVCmctN2F5esFHxXwDHPE/qsTQ6F3alsdlFu/Dd/BBNSZ8o=
+	t=1779301324; cv=none; b=FJtVKvCC48bCqKz/u6OwBAQpA1i/7i3XHApvrJrocdM0exOtA1zPnwmoLYYJXSyi7nsBNNV3v0N5Gg9eqkeotYp6uP9SkvJ7siHNx3C2vLOMHjKUdBLEfgcAf87A3d9v0JpJhHGjrLXtMoz+gibPmHgK63vn2Yc1VzQb5TaP698=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301321; c=relaxed/simple;
-	bh=/CpPy4ZbHC7DcYTGSFR7SGjQYraldxL3/KnfrF4bB3M=;
+	s=arc-20240116; t=1779301324; c=relaxed/simple;
+	bh=A9Kopseykg7YLj8SGZHWN2Gtdoak8mWRt7cHd9d8wVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ornr5ZrSiK+oKc76foH/cSo4lB9Sj3nJsA31jGTjsvL2nDczI9SlUm3JnoCl0wavw/k33IAvnJdDjOXOYvrupOdtPnWh1YW477IwcaRJa5ipI6lmxUFKIBEStk++LsC7zxx78XyKOxvwLHNwYQdQ2xDLV8W7lnAiiFoCYv3DhC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAdquROP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QjR1dctscNQwr3l/PMLEuSDHSeC28Qse+c4H20vp7RM9IA87Odd1MqzXGYPB8bMnMgxuilg2XaFQC9ON8YIboaONG5Ro56s/CJslAqwGXfXaQDU7kWkKQmd9XGbiBPISJqEFQZTs9gdel+52smEgtv8xLsBO8mZBgaM6CsxC2Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1c0wM2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAdquROP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F0A1F00894;
-	Wed, 20 May 2026 18:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1c0wM2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5861F00897;
+	Wed, 20 May 2026 18:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301320;
-	bh=KicpsnlTDs17Yik18vJqJGOkGwN7Ht3n9oEaz+Mfdds=;
+	s=korg; t=1779301322;
+	bh=jax0x/BqadyF//WCxrAY8R9RPWh2Jmkju2DL2b+HYnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hAdquROPSidPBeJfck0Wl3E3Hn9gOxj/7i9TS4rBlNjxgiIKitl49LGrW4gC6tN5Z
-	 TG+QXzh8OZw+jXk1J8+Pd9hk78VvZOnZfw5IGUlPTJhcOiMvfc+2HrATso3WEXhs4N
-	 b1zqXvzDBES+JK/1WENhWtZlym9AZTIEnHODrgW0=
+	b=B1c0wM2Dm4Qr46sat0jvbo96Bm4Kb3R+3aZV3MaH6sIm97nQBbJJHXc2rRQOGOcqO
+	 ObSXT6PCjV799TpQCROzPAKpTlKIuMKkNHAvotQPz+l76+XU7wvliIfWHpwwjY2RSC
+	 GnIN4GQC9SjZ35bOpBB4w4oFfTtWvZZEZ0LQoJME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 509/666] mailbox: mailbox-test: initialize struct earlier
-Date: Wed, 20 May 2026 18:22:00 +0200
-Message-ID: <20260520162122.295700191@linuxfoundation.org>
+Subject: [PATCH 6.12 510/666] mailbox: mailbox-test: make data_ready a per-instance variable
+Date: Wed, 20 May 2026 18:22:01 +0200
+Message-ID: <20260520162122.316767382@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,60 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit bbcf9af68bfedb3d9cc3c7eae62f5c844d8b78b9 ]
+[ Upstream commit 6e937f4e769e60947909e3525965f0137b9039e8 ]
 
-The waitqueue must be initialized before the debugfs files are created
-because from that time, requests from userspace can already be made.
-Similarily, drvdata and spinlock needs to be initialized before we
-request the channel, otherwise dangling irqs might run into problems
-like a NULL pointer exception.
+While not the default case, multiple tests can be run simultaneously.
+Then, data_ready being a global variable will be overwritten and the
+per-instance lock will not help. Turn the global variable into a
+per-instance one to avoid this problem.
 
-Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
+Fixes: e339c80af95e ("mailbox: mailbox-test: don't rely on rx_buffer content to signal data ready")
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/mailbox/mailbox-test.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 30b0a230a3e28..9eeb0b61b887c 100644
+index 9eeb0b61b887c..b4ed96be815db 100644
 --- a/drivers/mailbox/mailbox-test.c
 +++ b/drivers/mailbox/mailbox-test.c
-@@ -366,6 +366,12 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	if (!tdev)
- 		return -ENOMEM;
+@@ -28,8 +28,6 @@
+ #define MBOX_HEXDUMP_MAX_LEN	(MBOX_HEXDUMP_LINE_LEN *		\
+ 				 (MBOX_MAX_MSG_LEN / MBOX_BYTES_PER_LINE))
  
-+	tdev->dev = &pdev->dev;
-+	spin_lock_init(&tdev->lock);
-+	mutex_init(&tdev->mutex);
-+	init_waitqueue_head(&tdev->waitq);
-+	platform_set_drvdata(pdev, tdev);
-+
- 	/* It's okay for MMIO to be NULL */
- 	tdev->tx_mmio = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (PTR_ERR(tdev->tx_mmio) == -EBUSY) {
-@@ -395,12 +401,6 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	if (!tdev->rx_channel && (tdev->rx_mmio != tdev->tx_mmio))
- 		tdev->rx_channel = tdev->tx_channel;
- 
--	tdev->dev = &pdev->dev;
--	platform_set_drvdata(pdev, tdev);
+-static bool mbox_data_ready;
 -
--	spin_lock_init(&tdev->lock);
--	mutex_init(&tdev->mutex);
--
- 	if (tdev->rx_channel) {
- 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
- 					       MBOX_MAX_MSG_LEN, GFP_KERNEL);
-@@ -414,7 +414,6 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_free_chans;
+ struct mbox_test_device {
+ 	struct device		*dev;
+ 	void __iomem		*tx_mmio;
+@@ -42,6 +40,7 @@ struct mbox_test_device {
+ 	spinlock_t		lock;
+ 	struct mutex		mutex;
+ 	wait_queue_head_t	waitq;
++	bool			data_ready;
+ 	struct fasync_struct	*async_queue;
+ 	struct dentry		*root_debugfs_dir;
+ };
+@@ -162,7 +161,7 @@ static bool mbox_test_message_data_ready(struct mbox_test_device *tdev)
+ 	unsigned long flags;
  
--	init_waitqueue_head(&tdev->waitq);
- 	dev_info(&pdev->dev, "Successfully registered\n");
+ 	spin_lock_irqsave(&tdev->lock, flags);
+-	data_ready = mbox_data_ready;
++	data_ready = tdev->data_ready;
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
  
- 	return 0;
+ 	return data_ready;
+@@ -227,7 +226,7 @@ static ssize_t mbox_test_message_read(struct file *filp, char __user *userbuf,
+ 	*(touser + l) = '\0';
+ 
+ 	memset(tdev->rx_buffer, 0, MBOX_MAX_MSG_LEN);
+-	mbox_data_ready = false;
++	tdev->data_ready = false;
+ 
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
+ 
+@@ -297,7 +296,7 @@ static void mbox_test_receive_message(struct mbox_client *client, void *message)
+ 				     message, MBOX_MAX_MSG_LEN);
+ 		memcpy(tdev->rx_buffer, message, MBOX_MAX_MSG_LEN);
+ 	}
+-	mbox_data_ready = true;
++	tdev->data_ready = true;
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
+ 
+ 	wake_up_interruptible(&tdev->waitq);
 -- 
 2.53.0
 
