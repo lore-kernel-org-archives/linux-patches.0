@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CD934216C;
-	Wed, 20 May 2026 16:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D25634216C;
+	Wed, 20 May 2026 16:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295883; cv=none; b=LEDNn+Vm/DZXZaIWqEGwlzaf/jdivFSlHLabU8ImynVwnh41gMPyNvPQeJ1mldns/6fGavktRK0Q3dboV6ZxaPwJKgl9LEZ8q8ZOn3KxMqF7mvj9UOaGmM3ZQ3c6Io3+Xbu2K2YHeJNxRb+yjACZWHz2gNm6Ym57mGaQegY48us=
+	t=1779295885; cv=none; b=R/zkt4SxTjc26VKOLLZtj0CZR8qZ89UcvkXcoOBFvDbvVLJiKxqvLXmQFVEUQAOG8PPwT1tZLFqou58QI1cdSDjzy12Z1To9Txz1o9GRPIY+PkuhlrabozpxKtmnO9qwYKKEsgu0BB2KKrKpJIYHD+YawRvSYXweZ30Y+mzkgZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295883; c=relaxed/simple;
-	bh=HZ/j/l9/ETF+2tZP03+pnb6bTqATSm29wUC8IsQ06hE=;
+	s=arc-20240116; t=1779295885; c=relaxed/simple;
+	bh=BTWFesk1beKv3F36natY6Ytx6VFxeLscbvFQElAEJr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4k4qdBDIE2M/7AeeWytSvr66Hqna+QwAKdT4gYTtdN/P6wKQVnnZbt3c3iGPIfKdJeaUdn3ARXTfYgSiNlcmv+ops9RFlbxwq/u92pXDNf7zaMOxkDkSnpH9fmTP28UmUSTs+MtaG4NwUV03Sd6OdcpHq1I0eYW/GOseOlfTkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfxvEvC0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nGIR5icojIHd+y2L5i7WpqQleqGAGSDXp6IJARLV/GLrVwSv3MPJ8OKkRw1WJBkrhMt6ouK9mYnkaXesMvDpSDicKUgOomVIC0pi6AERMNWNO1UEUFBIEUID8Ix8Yv+YldQmyJFJ5Ld1D4HcDm+HHm5ytt5ukx9cxSt91iPYEEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dk3MguT0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfxvEvC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02A81F000E9;
-	Wed, 20 May 2026 16:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dk3MguT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E461F000E9;
+	Wed, 20 May 2026 16:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295881;
-	bh=sTO/5NOgC8Rm081w8dD7n5M6VRlPV+5SDVYBL94o4Oo=;
+	s=korg; t=1779295884;
+	bh=ri1pJujgAl8nFzRSHVdgc1cmMIslzWK6EWl+wnZSVZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfxvEvC0rmGViL49MXBNNwq+QVuueobO3DTslmd+A2HD/nzRpaTN5gatYH7/qe4/4
-	 SVHqbfsuBTmMFBlcVogUdkpuJQ5LtJhLS1f/P/POxi9qnEmMIRNmYdPJFK9avFT4yb
-	 GWio0bJqmj5hztO6TJUo1nwRxokTix1zDvBbejZo=
+	b=Dk3MguT0mstbUYN/1FufFN0zKmPTrM0ZV1scgHAD9oGKDh4eS7uBUhEHTdNKYhvJm
+	 4c5J4krA1KcYcEWlMrascTcqaGl1lG1tuYBmngiok+eVHiGHCcGTC4tkNA935MLzH6
+	 JUSVmAq4KCxDwPzNc8E98p5HiEstViISd+LEdUD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0588/1146] workqueue: devres: Add device-managed allocate workqueue
-Date: Wed, 20 May 2026 18:13:58 +0200
-Message-ID: <20260520162201.484541412@linuxfoundation.org>
+Subject: [PATCH 7.0 0562/1146] arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP
+Date: Wed, 20 May 2026 18:13:32 +0200
+Message-ID: <20260520162200.901154131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,144 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Alexander Koskovich <AKoskovich@pm.me>
 
-[ Upstream commit 1dfc9d60a69ec148e1cb709256617d86e5f0e8f8 ]
+[ Upstream commit b683730e27ba4f91986c4c92f5cb7297f1e01a6d ]
 
-Add a Resource-managed version of alloc_workqueue() to fix common
-problem of drivers mixing devm() calls with destroy_workqueue.  Such
-naive and discouraged driver approach leads to difficult to debug bugs
-when the driver:
+This resolves the following error seen on the ASUS ROG Phone 3:
 
-1. Allocates workqueue in standard way and destroys it in driver
-   remove() callback,
-2. Sets work struct with devm_work_autocancel(),
-3. Registers interrupt handler with devm_request_threaded_irq().
+cpu cpu7: Voltage update failed freq=3091200
+cpu cpu7: failed to update OPP for freq=3091200
 
-Which leads to following unbind/removal path:
-
-1. destroy_workqueue() via driver remove(),
-   Any interrupt coming now would still execute the interrupt handler,
-   which queues work on destroyed workqueue.
-2. devm_irq_release(),
-3. devm_work_drop() -> cancel_work_sync() on destroyed workqueue.
-
-devm_alloc_workqueue() has two benefits:
-1. Solves above problem of mix-and-match devres and non-devres code in
-   driver,
-2. Simplify any sane drivers which were correctly using
-   alloc_workqueue() + devm_add_action_or_reset().
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 1e668baadefb ("power: supply: max77705: Free allocated workqueue and fix removal order")
+Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../driver-api/driver-model/devres.rst        |  4 +++
- include/linux/workqueue.h                     | 22 +++++++++++++++
- kernel/workqueue.c                            | 28 +++++++++++++++++++
- 3 files changed, 54 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
-index 7d2b897d66fa9..017fb155a5bc2 100644
---- a/Documentation/driver-api/driver-model/devres.rst
-+++ b/Documentation/driver-api/driver-model/devres.rst
-@@ -464,3 +464,7 @@ SPI
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index c7dffa4400740..37c41cc1abdd0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -665,6 +665,11 @@ cpu7_opp20: opp-2841600000 {
+ 			opp-hz = /bits/ 64 <2841600000>;
+ 			opp-peak-kBps = <8368000 51609600>;
+ 		};
++
++		cpu7_opp21: opp-3091200000 {
++			opp-hz = /bits/ 64 <3091200000>;
++			opp-peak-kBps = <8368000 51609600>;
++		};
+ 	};
  
- WATCHDOG
-   devm_watchdog_register_device()
-+
-+WORKQUEUE
-+  devm_alloc_workqueue()
-+  devm_alloc_ordered_workqueue()
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index a4749f56398fd..f8d235aef10dd 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -512,6 +512,26 @@ __printf(1, 4) struct workqueue_struct *
- alloc_workqueue_noprof(const char *fmt, unsigned int flags, int max_active, ...);
- #define alloc_workqueue(...)	alloc_hooks(alloc_workqueue_noprof(__VA_ARGS__))
- 
-+/**
-+ * devm_alloc_workqueue - Resource-managed allocate a workqueue
-+ * @dev: Device to allocate workqueue for
-+ * @fmt: printf format for the name of the workqueue
-+ * @flags: WQ_* flags
-+ * @max_active: max in-flight work items, 0 for default
-+ * @...: args for @fmt
-+ *
-+ * Resource managed workqueue, see alloc_workqueue() for details.
-+ *
-+ * The workqueue will be automatically destroyed on driver detach.  Typically
-+ * this should be used in drivers already relying on devm interafaces.
-+ *
-+ * RETURNS:
-+ * Pointer to the allocated workqueue on success, %NULL on failure.
-+ */
-+__printf(2, 5) struct workqueue_struct *
-+devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
-+		     int max_active, ...);
-+
- #ifdef CONFIG_LOCKDEP
- /**
-  * alloc_workqueue_lockdep_map - allocate a workqueue with user-defined lockdep_map
-@@ -568,6 +588,8 @@ alloc_workqueue_lockdep_map(const char *fmt, unsigned int flags, int max_active,
-  */
- #define alloc_ordered_workqueue(fmt, flags, args...)			\
- 	alloc_workqueue(fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
-+#define devm_alloc_ordered_workqueue(dev, fmt, flags, args...)		\
-+	devm_alloc_workqueue(dev, fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
- 
- #define create_workqueue(name)						\
- 	alloc_workqueue("%s", __WQ_LEGACY | WQ_MEM_RECLAIM | WQ_PERCPU, 1, (name))
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index c6ea96d5b7167..e57040931d8b7 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -41,6 +41,7 @@
- #include <linux/mempolicy.h>
- #include <linux/freezer.h>
- #include <linux/debug_locks.h>
-+#include <linux/device/devres.h>
- #include <linux/lockdep.h>
- #include <linux/idr.h>
- #include <linux/jhash.h>
-@@ -5904,6 +5905,33 @@ struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
- }
- EXPORT_SYMBOL_GPL(alloc_workqueue_noprof);
- 
-+static void devm_workqueue_release(void *res)
-+{
-+	destroy_workqueue(res);
-+}
-+
-+__printf(2, 5) struct workqueue_struct *
-+devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
-+		     int max_active, ...)
-+{
-+	struct workqueue_struct *wq;
-+	va_list args;
-+	int ret;
-+
-+	va_start(args, max_active);
-+	wq = alloc_workqueue(fmt, flags, max_active, args);
-+	va_end(args);
-+	if (!wq)
-+		return NULL;
-+
-+	ret = devm_add_action_or_reset(dev, devm_workqueue_release, wq);
-+	if (ret)
-+		return NULL;
-+
-+	return wq;
-+}
-+EXPORT_SYMBOL_GPL(devm_alloc_workqueue);
-+
- #ifdef CONFIG_LOCKDEP
- __printf(1, 5)
- struct workqueue_struct *
+ 	firmware {
 -- 
 2.53.0
 
