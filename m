@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099EC369D7A;
-	Wed, 20 May 2026 18:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3513F4DD7;
+	Wed, 20 May 2026 18:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302022; cv=none; b=L1RRpgLQdpSByCO8v00PrOSh2lcUIs+F62/syQty8REJlleSbCu5qoSa7isCpM3xdNuw1VKtn6MYdFa/cAZQwjnHRo6/16EBtNA8XNvYHdD+LKFeEpGhAqEb2JpAjh9FVyjUoPGC0E9tB7AczFNtE7ogtv2gPWgBfBijaIDGAHU=
+	t=1779302024; cv=none; b=RY1KghckrDV1HG/lsinQwx0UqiBZM6wiitYRU8d+o36+qv7nfnJg09Gad7WHmlaP+KO8UYfNIWThOcLOPD8Weqa5bV8EI7wIQ7ZQ5qj7JSHqvkelU34qmg3VjJrAjQbxkuYfns9Bi6rsWPIncryJozwOAyE2UrgffOoPGlF+zeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302022; c=relaxed/simple;
-	bh=eLwCcuhVx/K3C5hUFjRYDDYP1GI8B6qaxEaE3BFRa7c=;
+	s=arc-20240116; t=1779302024; c=relaxed/simple;
+	bh=1PZsXcyet17unVWk3Rj5/3Usq8uZ/j2RPHl9XK1wIWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfEuOPRiLatT/edZh6LfOB/wUBeQcaZ5s/WQNHI8QTdV0S54OjLJw7+ajNr9IfB5o4ev6VHrupe0au7rGPEJOaXMwpuL/buZ1ikx2kvr4iJvccw/z2moFcyq7ccRAJKX7agfMqq1p96jMOGyTqtTVG2r9l9elaovyUA7qj+q3OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysgQuzAe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmnL6mvaM3yq1y5vZI7VXvwy4/S97igrT+lFbRYt730jYVGSqHD807S1na9jpz1BD/iMZOEPiOhMwttBlJ2Cgv0rhPjgMkmJ6HeQCLTemGBj5aLwkGHN+cdIKCwgi9Qq+3Yw97bkhlJO3xFi2a+0ej0DRsGcloEOo3SMSjnusNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8j8ms+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysgQuzAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FF31F000E9;
-	Wed, 20 May 2026 18:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8j8ms+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F471F00897;
+	Wed, 20 May 2026 18:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302019;
-	bh=qMVAmlOibqfRsvM51s13j5XvEred1xHLM+s1ixZfgVU=;
+	s=korg; t=1779302022;
+	bh=F7klQ7sYY7n0dYQp4mEzqMq1otfWc+hqdZQmFCyztrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysgQuzAeSXHNGOWyUV+Zz20c3E1s9kCdVai/DAEwd5q6kd1YfZqcIgR8FimkjE6ZR
-	 m+p1ROB716U7XO7Lom+ZwR+JBYIvO6m4cj7MrJJG7289+lYnqL27XSdJIzh4/2ra0Y
-	 hYIuClKjMFfs8ziN4gSDJKypYuiZ0s6WkH+9R+T8=
+	b=n8j8ms+WaRpg9XbEUzZ1xjffjboMw19JZ9WosT+f/t+mqdMy818CvNiemrqr81cqy
+	 2YkxgMNlSPweTlVLcxp6xReZVwN6nBG+T4kL02iQ07pRiZDIQ1Xk1w3Bj6MEFSaN8f
+	 UVohwbq5lOuDsUYFkSL+WoyTh3yj960ADwPky/yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Gonnet <ggonnet.linux@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/508] dm init: ensure device probing has finished in dm-mod.waitfor=
-Date: Wed, 20 May 2026 18:18:50 +0200
-Message-ID: <20260520162100.940667378@linuxfoundation.org>
+Subject: [PATCH 6.6 108/508] fbdev: matroxfb: Mark variable with __maybe_unused to avoid W=1 build break
+Date: Wed, 20 May 2026 18:18:51 +0200
+Message-ID: <20260520162100.963131566@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,56 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Gonnet <ggonnet.linux@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 99a2312f69805f4ba92d98a757625e0300a747ab ]
+[ Upstream commit caf6144053b4e1c815aa56afb54745a176f999df ]
 
-The early_lookup_bdev() function returns successfully when the disk
-device is present but not necessarily its partitions. In this situation,
-dm_early_create() fails as the partition block device does not exist
-yet.
+Clang is not happy about set but unused variable:
 
-In my case, this phenomenon occurs quite often because the device is
-an SD card with slow reading times, on which kernel takes time to
-enumerate available partitions.
+drivers/video/fbdev/matrox/g450_pll.c:412:18: error: variable 'mnp' set but not used
+   412 |         unsigned int mnp;
+       |                      ^
+1 error generated.
 
-Fortunately, the underlying device is back to "probing" state while
-enumerating partitions. Waiting for all probing to end is enough to fix
-this issue.
+Since the commit 7b987887f97b ("video: fbdev: matroxfb: remove dead code
+and set but not used variable") the 'mnp' became unused, but eliminating
+that code might have side-effects. The question here is what should we do
+with 'mnp'? The easiest way out is just mark it with __maybe_unused which
+will shut the compiler up and won't change any possible IO flow. So does
+this change.
 
-That's also the reason why this problem never occurs with rootwait=
-parameter: the while loop inside wait_for_root() explicitly waits for
-probing to be done and then the function calls async_synchronize_full().
-These lines were omitted in 035641b, even though the commit says it's
-based on the rootwait logic...
+A dive into the history of the driver:
 
-Anyway, calling wait_for_device_probe() after our while loop does the
-job (it both waits for probing and calls async_synchronize_full).
+The problem was revealed when the #if 0 guarded code along with unused
+pixel_vco variable was removed. That code was introduced in the original
+commit 213d22146d1f ("[PATCH] (1/3) matroxfb for 2.5.3"). And then guarded
+in the commit 705e41f82988 ("matroxfb DVI updates: Handle DVI output on
+G450/G550. Powerdown unused portions of G450/G550 DAC. Split G450/G550 DAC
+from older DAC1064 handling. Modify PLL setting when both CRTCs use same
+pixel clocks.").
 
-Fixes: 035641b01e72 ("dm init: add dm-mod.waitfor to wait for asynchronously probed block devices")
-Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+NOTE: The two commits mentioned above pre-date Git era and available in
+history.git repository for archaeological purposes.
+
+Even without that guard the modern compilers may see that the pixel_vco
+wasn't ever used and seems a leftover after some debug or review made
+25 years ago.
+
+The g450_mnp2vco() doesn't have any IO and as Jason said doesn't seem
+to have any side effects either than some unneeded CPU processing during
+runtime. I agree that's unlikely that timeout (or heating up the CPU) has
+any effect on the HW (GPU/display) functionality.
+
+Fixes: 7b987887f97b ("video: fbdev: matroxfb: remove dead code and set but not used variable")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/matrox/g450_pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-init.c b/drivers/md/dm-init.c
-index b37bbe7625003..423269cbdd2bb 100644
---- a/drivers/md/dm-init.c
-+++ b/drivers/md/dm-init.c
-@@ -303,8 +303,10 @@ static int __init dm_init_init(void)
- 		}
- 	}
- 
--	if (waitfor[0])
-+	if (waitfor[0]) {
-+		wait_for_device_probe();
- 		DMINFO("all devices available");
-+	}
- 
- 	list_for_each_entry(dev, &devices, list) {
- 		if (dm_early_create(&dev->dmi, dev->table,
+diff --git a/drivers/video/fbdev/matrox/g450_pll.c b/drivers/video/fbdev/matrox/g450_pll.c
+index ff8e321a22cef..b2d3f7328ea83 100644
+--- a/drivers/video/fbdev/matrox/g450_pll.c
++++ b/drivers/video/fbdev/matrox/g450_pll.c
+@@ -407,7 +407,7 @@ static int __g450_setclk(struct matrox_fb_info *minfo, unsigned int fout,
+ 		case M_VIDEO_PLL:
+ 			{
+ 				u_int8_t tmp;
+-				unsigned int mnp;
++				unsigned int mnp __maybe_unused;
+ 				unsigned long flags;
+ 				
+ 				matroxfb_DAC_lock_irqsave(flags);
 -- 
 2.53.0
 
