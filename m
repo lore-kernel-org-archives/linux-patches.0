@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D0033BBCF;
-	Wed, 20 May 2026 17:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9375333BBCF;
+	Wed, 20 May 2026 17:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298963; cv=none; b=jcEhtZmCCVvyYfAw5oaYR+3XJw+H5pC9Gg2Uv7AR9jH0uL+BZL2n9QYOGPrSyT2lUBMRPMkhnvo4FKkLsZzlrWLF0cIdrwZRupBU76SfL0nhwzdo9ir5kNDfLm6VMf4DAg5REc4hA90o2T46YBLgCVBSQuWtmKMuNZgy6hzi1c4=
+	t=1779298965; cv=none; b=H3HJZliNSVyjMAHr3rduQzeixoYxXMQcssKoEXHN9tTE0ruzS/DHCLSXr2dCB4RcReFTIzd0lZ3PGbHvmr7VWQ3njVO/wzKZvVyXH06UWYeklvz8NHzbrxvbX8q6XqAYddmWgYyNErm0hkpT2OTFrb/hxRJ0F6VW/zcAGYPZ6xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298963; c=relaxed/simple;
-	bh=v0fydRtPRrVQIAzKHqocwd1XUDfc1jPO6MLpAYvtYAc=;
+	s=arc-20240116; t=1779298965; c=relaxed/simple;
+	bh=L4q8WyOSKTWYqdd60CS8UcDZWvavL/jQu/L85fXrxn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUufSbJMfC/URBBArzuElYabLYPCtovrxFV28L+DrSjs02EbOZX+ir+5MZiI03rl8sHf46E7YHJbEhcM+ggopYlazEz3HjIeIMu/8aFyViK8b7u5ggdMyKgTNWCfChBkCzayGP6nCGoyoCsa2GMoPT9uP6mxeuVkcMLuwAhSO9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+pqpHS2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1cR0wNy4jRBRyv6Xn1lejfU10Uqe7B+t7uTJoMZe6ZZvIkxpUh8ITJoZtGaHOAUJobw0paYf7W56Q/dEALCuUnkrqrXknxQPpy2dsbb/unjGqQ5fvk1IdXUO9MQblbQ9eLasPElaO7svpFc9YXp6TV/nOkA70YTK8XemtDirnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECcGRA1I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+pqpHS2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628941F000E9;
-	Wed, 20 May 2026 17:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECcGRA1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A871F000E9;
+	Wed, 20 May 2026 17:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298961;
-	bh=FXKeEhpXrZ9zCcRA2hAT0+Sb2ohiqiGduMvm1yHmbIg=;
+	s=korg; t=1779298964;
+	bh=I2rDmqOllo8Kxkf5+Vq4TxR9zy09iwWWu6g8Bx388m0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+pqpHS2ZAXMrkFoclZzLlX3KWMpno4mVRGCOgAavVgLbeFTAu5ferj8F3qNnvbpM
-	 PIdWDR2ULzvVYUHJWnwUBPMhu9cCmwYGfE9kn7AMj7JY/JiLFJx67z3uQQslfnga5s
-	 q40AU7BF5cfUutV5RTlR2ckJa/TCsbh4lYwMlOIs=
+	b=ECcGRA1IyGjivSdOiETWtrLEp7bRL0HmUqGzBEjg/YoOrFBXw9DynEAc7iBZhcltL
+	 aZnjwvJCbS9jAuWFgxR7tsBzSUj0wFQzmWPWbo4bJ5kpUoE32v6y5F02n1yJLo3u2+
+	 KxwjGsGdi2BrwzM1DQFGIPz7G06dYVT3vmhciabw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Claveau <linux-kernel-dev@aliel.fr>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 609/957] reset: amlogic: t7: Fix null reset ops
-Date: Wed, 20 May 2026 18:18:12 +0200
-Message-ID: <20260520162147.742375248@linuxfoundation.org>
+Subject: [PATCH 6.18 610/957] arm64: dts: imx8mm-emtop-som: Correct PAD settings for PMIC_nINT
+Date: Wed, 20 May 2026 18:18:13 +0200
+Message-ID: <20260520162147.763709920@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,34 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 9797524ef2b69c6b187b55bd844eb72a8c1cbd99 ]
+[ Upstream commit 721dec3ee9ff5231d13a412ff87df63b966d137b ]
 
-Fix missing reset ops causing kernel null pointer dereference.
-This SOC's reset is currently not used yet.
+With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
+there might be interrupt storm for this board. Need to set PAD PUE and PU
+together to make pull up work properly.
 
-Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Fixes: fb4c31587adf ("reset: amlogic: add auxiliary reset driver support")
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+While at here, also correct interrupt type as IRQ_TYPE_LEVEL_LOW.
+
+Fixes: cbd3ef64eb9d1 ("arm64: dts: Add support for Emtop SoM & Baseboard")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/amlogic/reset-meson.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8mm-emtop-som.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/reset/amlogic/reset-meson.c b/drivers/reset/amlogic/reset-meson.c
-index 84610365a823c..c303e8590dd68 100644
---- a/drivers/reset/amlogic/reset-meson.c
-+++ b/drivers/reset/amlogic/reset-meson.c
-@@ -42,6 +42,7 @@ static const struct meson_reset_param meson_s4_param = {
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-emtop-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-emtop-som.dtsi
+index 67d22d3768aa8..507d1824d99d9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-emtop-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-emtop-som.dtsi
+@@ -60,7 +60,7 @@ pmic@25 {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_pmic>;
+ 		interrupt-parent = <&gpio1>;
+-		interrupts = <3 IRQ_TYPE_EDGE_RISING>;
++		interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
  
- static const struct meson_reset_param t7_param = {
-+	.reset_ops	= &meson_reset_ops,
- 	.reset_num      = 224,
- 	.reset_offset	= 0x0,
- 	.level_offset   = 0x40,
+ 		regulators {
+ 			buck1: BUCK1 {
+@@ -194,7 +194,7 @@ MX8MM_IOMUXC_I2C1_SDA_I2C1_SDA				0x400001c3
+ 
+ 	pinctrl_pmic: emtop-pmic-grp {
+ 		fsl,pins = <
+-			MX8MM_IOMUXC_GPIO1_IO03_GPIO1_IO3			0x41
++			MX8MM_IOMUXC_GPIO1_IO03_GPIO1_IO3			0x141
+ 		>;
+ 	};
+ 
 -- 
 2.53.0
 
