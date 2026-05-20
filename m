@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEEC340A57;
-	Wed, 20 May 2026 18:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E1E3F789B;
+	Wed, 20 May 2026 18:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300133; cv=none; b=T/wR66/fGmB1bTKPMsZRYKYQfU3NJoif3vMVya1/nT2H/tFyEXAEk0E10PTSEvnEv1I9+tIgHPJOIO0n+k4e/blfnTo5FzOumwe3iEviPKcp+TVfdY1WwmwcxtVqicn/Wceidf6rRV7BVFLNiM5ngDCMca1Lg5Vx0NKCYK9vo8w=
+	t=1779300136; cv=none; b=oVnvZJaWzQLvvlYpN6dHdSY0+g5rxR5vI/mDy/KyUdtVUX55deyMF4wIWORvut9rhqJt8eV/KraMwCweRaQ51SxqDPsdYer78wKyao5B6jiETLNIpXQ1Jkl3j8S/rGCnrtA1sZbC49apKETh2fsvyRo+VARNnAWc/RGgoVwZWro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300133; c=relaxed/simple;
-	bh=iu3jBR5gpuarm5VDPybVfUsehpc7wgWcpVj2cHnPqiE=;
+	s=arc-20240116; t=1779300136; c=relaxed/simple;
+	bh=LhesVR2EKtNly4oFEEZNNi9GANZDMUCTABdMx+HYcrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQoOBhcIX31K00QH69ZKC9i/Aex/q2/mbpoZaTe3evu9c8XxL9PhZVrrB8y8IHhqWHCKW2jKZFlQ4oYISW9uwQFzS8QpMtHrdEFbIXpvskiMnHJmII2cYULh0Lf7f6OlVxna+c4/HASpI92AJ4BtnpEBch85o4s9VnDa69pgp1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLesDluB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b43WpjD6XIrH9WWcG8E3uPq8GX+PBp4Jum8HBwnKQQ1lK3H+KnJkvxDdj5qDo2bsgdB5t8QBGAZauQgywCTkNkBYxSUMxcBJ4qr/8iTWFzYq5D6KxT3bV2ht9ZWBzIaHB6x9RfC20BwTLbgb5feA8u1cVMwHHRP/llT43BDKwV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLt+ep/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLesDluB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01BB1F000E9;
-	Wed, 20 May 2026 18:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLt+ep/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AA21F000E9;
+	Wed, 20 May 2026 18:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300132;
-	bh=3MRalDC0MgJ7pXsdrBwaQZ9M6anFYxFLhj2blt5P2kM=;
+	s=korg; t=1779300134;
+	bh=BvUgZkG6TwCYQ97n+mWTHkuqUtAjAreJzeTuHwjoAyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLesDluBxU+t+IEo+WuHMhoMWwCNT5WNXjP3b4I5YlKVhgDGgagm227NNMZA8VL1f
-	 riYbpOono3gN0rApydA+D2MnKosGIBAP8BrEtkP7aIsW61yWXmslYYiRBZXfekhSqL
-	 R7y0q6r81FZrDhDNLxdYroB+3tozRUbxbmx/kkvw=
+	b=VLt+ep/m4d9X1NC9Nd7F9q2fF+F52yfcOkz3ROZluWRuw4lbhNNKntlQqph5mNhlv
+	 TPa+m3c3jjiGsj0nrwpe9Go6xTFh86N9xWO81yp/Vwef2E+Zu6rIke4vyGIrjsb70K
+	 hearSKDVY3yBbAptRAv5RaThC9H9I9p6b2jmWAv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/666] locking: Fix rwlock support in <linux/spinlock_up.h>
-Date: Wed, 20 May 2026 18:14:03 +0200
-Message-ID: <20260520162111.930433043@linuxfoundation.org>
+Subject: [PATCH 6.12 059/666] r8152: fix incorrect register write to USB_UPHY_XTAL
+Date: Wed, 20 May 2026 18:14:30 +0200
+Message-ID: <20260520162112.514178391@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,73 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
 
-[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
+[ Upstream commit 48afd5124fd6129c46fd12cb06155384b1c4a0c4 ]
 
-Architecture support for rwlocks must be available whether or not
-CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
-arch_{read,write}_{lock,trylock,unlock}() macros such that these become
-visbile if CONFIG_DEBUG_SPINLOCK=n.
+The old code used ocp_write_byte() to clear the OOBS_POLLING bit
+(BIT(8)) in the USB_UPHY_XTAL register, but this doesn't correctly
+clear a bit in the upper byte of the 16-bit register.
 
-This patch prepares for converting do_raw_{read,write}_trylock() into
-inline functions. Without this patch that conversion triggers a build
-failure for UP architectures, e.g. arm-ep93xx. I used the following
-kernel configuration to build the kernel for that architecture:
+Fix this by using ocp_write_word() instead.
 
-	CONFIG_ARCH_MULTIPLATFORM=y
-	CONFIG_ARCH_MULTI_V7=n
-	CONFIG_ATAGS=y
-	CONFIG_MMU=y
-	CONFIG_ARCH_MULTI_V4T=y
-	CONFIG_CPU_LITTLE_ENDIAN=y
-	CONFIG_ARCH_EP93XX=y
-
-Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
+Fixes: 195aae321c82 ("r8152: support new chips")
+Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260326073925.32976-454-nic_swsd@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spinlock_up.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/net/usb/r8152.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
-index c87204247592f..a132fc562297a 100644
---- a/include/linux/spinlock_up.h
-+++ b/include/linux/spinlock_up.h
-@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
- 	lock->slock = 1;
- }
- 
--/*
-- * Read-write spinlocks. No debug version.
-- */
--#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
--
- #else /* DEBUG_SPINLOCK */
- #define arch_spin_is_locked(lock)	((void)(lock), 0)
- /* for sched/core.c and kernel_lock.c: */
-@@ -68,4 +58,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
- 
- #define arch_spin_is_contended(lock)	(((void)(lock), 0))
- 
-+/*
-+ * Read-write spinlocks. No debug version.
-+ */
-+#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
-+
- #endif /* __LINUX_SPINLOCK_UP_H */
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 6ce25673e4cc8..1c36816405f13 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -3894,7 +3894,7 @@ static void r8156_ups_en(struct r8152 *tp, bool enable)
+ 		case RTL_VER_15:
+ 			ocp_data = ocp_read_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL);
+ 			ocp_data &= ~OOBS_POLLING;
+-			ocp_write_byte(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
++			ocp_write_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
+ 			break;
+ 		default:
+ 			break;
 -- 
 2.53.0
 
