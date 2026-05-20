@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C6B29B8D0;
-	Wed, 20 May 2026 17:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC5D33ADB9;
+	Wed, 20 May 2026 17:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299733; cv=none; b=fGf3ugTOFHsHHCI5RzjknLLVjW+t2DtC8i9wBTmHpY88Aaokh+GHX49+fT+BPjTKRaHp2Dw6E5mUkx4ft8wAxsdXc6MeCtO8Ie2paJhzLRNNqGPj8cdMU0k3iRR1QM5cLmDOxnGm0JQDmj3edaRc9Hl3fNpCtB9NvmHGPVfMXCM=
+	t=1779299735; cv=none; b=BDuilkV1TaP4rlSjmuWi5f5Avah1skb6h3mevjo8x3uLzy196uJbAOSUgl2ciRSZVDjBjuYR/9gP0gfNWGrAm8ZMfyZGKhc2WI3hM47eoYc07MVSQtm9ohyvWdtIOnNfjO2Xl310WbYrq8WWHknB+NmcTIDiMCRz3lMKoSEo13I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299733; c=relaxed/simple;
-	bh=K4YOa8/L2idYSGT1sgNVCj/4+2iA4y4+FPL7L5kIxm0=;
+	s=arc-20240116; t=1779299735; c=relaxed/simple;
+	bh=a8cZYxMb9BknCETHP7P3FOC8OKcp+fGejXhC6GyfaiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KE1PFmSR15EjJEv4uBW4dAQSN0NN1lOUOF46eTjxg+XJIY4FW69aMtFYq2nWiaLi5TyvDjvzuw/CzV/Mddm72wAC4jnb8kcvAYhzfAEeL+jAnOUKdT28mMHERJ0EYNXElzk7AOdRaHZ/6qWCjIXAi725pVIy2pnlv2naP6jIGgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuebp+I7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lPaScdSd99JZdTgWSHX5LDnbDMLBiEUznPEJMl/f0fosY9xqNzObDfHfhc6Yt6vPh7pGr3iPQFsiPP6OvAb5wfvAduL9RyFT6W4+7u7UO0i7TZsIKhf2ZAc+nodYid1aSWOUR3C3iqAAIh0/EGpLMcZhtSuYRV4006p5U/AadsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm5acXIL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuebp+I7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4691F000E9;
-	Wed, 20 May 2026 17:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm5acXIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECAF1F000E9;
+	Wed, 20 May 2026 17:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299732;
-	bh=fxGF9kwf93kF6M2HesQWoiCI5httgOixvgjMT0p5I8c=;
+	s=korg; t=1779299734;
+	bh=IlWVdU1kFpBl0vpuepgufRIFnyQcJK6y/ZZ3HT/RWLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuebp+I77ZQ47jtZoN/eyXtAwUz0GAbJbIS/fr4muhepzqV6DcXMdV5cN6EBBLG+6
-	 o9WPuCYtN10cTIQ70yq2gNrraZbPMrnxyPxl4oGH8Zbh6F3JYSWaei+Mo4XvPRhMkI
-	 Ii01jZpLZBcXyV5qGoMYfJg1OFFLFYK7BjrhNjdY=
+	b=Fm5acXILM97F8Rnd3sJ3iVWgXqPWKO9zmJ9D6AjGLXrYSrlwPB+R9iIjTE+/q7mA8
+	 h83nwngElDHCaIsTpObNv5WOCz4L+ANoHmTWSuiz4kBw7Gh/Q9j0ubqbYbGgQXkQDH
+	 5Hk3kyNRh9b1qdPBBW/teTnmG0M84ga8WtMSrY+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 882/957] net: ena: PHC: Fix potential use-after-free in get_timestamp
-Date: Wed, 20 May 2026 18:22:45 +0200
-Message-ID: <20260520162153.694525459@linuxfoundation.org>
+	Petr Oros <poros@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 844/957] iavf: add VIRTCHNL_OP_ADD_VLAN to success completion handler
+Date: Wed, 20 May 2026 18:22:07 +0200
+Message-ID: <20260520162152.867146167@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,66 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arthur Kiyanovski <akiyano@amazon.com>
+From: Petr Oros <poros@redhat.com>
 
-commit e42c755582f0960e684298762f0ab927b3778376 upstream.
+[ Upstream commit 34d33313b52eeac3a97ad2e3176d523ec70d9283 ]
 
-Move the phc->active check and resp pointer assignment to after
-acquiring the spinlock. Previously, phc->active was checked without
-holding the lock, and resp was cached from ena_dev->phc.virt_addr
-before the lock was acquired.
+The V1 ADD_VLAN opcode had no success handler; filters sent via V1
+stayed in ADDING state permanently.  Add a fallthrough case so V1
+filters also transition ADDING -> ACTIVE on PF confirmation.
 
-If ena_com_phc_destroy() runs between the lockless active check and
-the lock acquisition, it sets active=false, releases the lock, frees
-the DMA memory, and sets virt_addr=NULL. The get_timestamp path would
-then read a NULL virt_addr and dereference it.
+Critically, add an `if (v_retval) break` guard: the error switch in
+iavf_virtchnl_completion() does NOT return after handling errors,
+it falls through to the success switch.  Without this guard, a
+PF-rejected ADD would incorrectly mark ADDING filters as ACTIVE,
+creating a driver/HW mismatch where the driver believes the filter
+is installed but the PF never accepted it.
 
-With both the active check and the pointer read under the lock,
-destroy cannot free the memory while get_timestamp is using it.
+For V2, this is harmless: iavf_vlan_add_reject() in the error
+block already kfree'd all ADDING filters, so the success handler
+finds nothing to transition.
 
-Fixes: e0ea34158ee8 ("net: ena: Add PHC support in the ENA driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260508062126.7273-1-akiyano@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 968996c070ef ("iavf: Fix VLAN_V2 addition/rejection")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-4-cdcb48303fd8@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_com.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
-index e67b592e5697..8c86789d867a 100644
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -1782,20 +1782,23 @@ void ena_com_phc_destroy(struct ena_com_dev *ena_dev)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index 9132f16d853e5..f1a01b8e2235c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -2872,9 +2872,13 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 		spin_unlock_bh(&adapter->adv_rss_lock);
+ 		}
+ 		break;
++	case VIRTCHNL_OP_ADD_VLAN:
+ 	case VIRTCHNL_OP_ADD_VLAN_V2: {
+ 		struct iavf_vlan_filter *f;
  
- int ena_com_phc_get_timestamp(struct ena_com_dev *ena_dev, u64 *timestamp)
- {
--	volatile struct ena_admin_phc_resp *resp = ena_dev->phc.virt_addr;
- 	const ktime_t zero_system_time = ktime_set(0, 0);
- 	struct ena_com_phc_info *phc = &ena_dev->phc;
-+	volatile struct ena_admin_phc_resp *resp;
- 	ktime_t expire_time;
- 	ktime_t block_time;
- 	unsigned long flags = 0;
- 	int ret = 0;
- 
-+	spin_lock_irqsave(&phc->lock, flags);
++		if (v_retval)
++			break;
 +
- 	if (!phc->active) {
-+		spin_unlock_irqrestore(&phc->lock, flags);
- 		netdev_err(ena_dev->net_device, "PHC feature is not active in the device\n");
- 		return -EOPNOTSUPP;
- 	}
- 
--	spin_lock_irqsave(&phc->lock, flags);
-+	resp = ena_dev->phc.virt_addr;
- 
- 	/* Check if PHC is in blocked state */
- 	if (unlikely(ktime_compare(phc->system_time, zero_system_time))) {
+ 		spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
+ 			if (f->state == IAVF_VLAN_ADDING)
 -- 
-2.54.0
+2.53.0
 
 
 
