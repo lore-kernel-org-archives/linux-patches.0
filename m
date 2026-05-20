@@ -1,110 +1,151 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26CC3A3E9C
-	for <patches@lists.linux.dev>; Wed, 20 May 2026 17:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4B93B0AD6;
+	Wed, 20 May 2026 17:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298978; cv=none; b=hSwxMyTqt8yw1oW53n8NztcZZL1TqIE+MFfEJ8GnLka2nx6QW9padI+1qVn0aRoahqroTM+vft1kvmHVmTmmTlFcp1UWISj15xK3mDvIrOhcnosbobB7VcI+xWej5w/UrGNAuGa5c/F3ZpCYMtkGcK5t6R1n0K1FXK4Qvgq8IIk=
+	t=1779298978; cv=none; b=rLRMEz1pEstBGqmbz0BfrRcHh7/LtbuocmzTXeTiSW0RZW+fAvvMJSc79rIOnG7hY7xmwMM/E2314BHV4LI30SvDVG2/9RYIUxRcsLsO2asnmTCo6s5EhzSgE5V1OF4GwVPvLRE1HIHLloESBUtFrjKMErjmRfF7UrsVtc/FrAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779298978; c=relaxed/simple;
-	bh=5LhrUVjkTVqEBIpSGIvDaNsaVk5wW6tsrMk1Hi9fI2Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lYnxpgrjXdJjzrD6QuKtx2ev6DJZ4PxIhl9/SQo9Rg72DXXEQhIz9e4iLVlEZSo8uM9S0pphyO/sXln4AKpptJRNkMyp4ufYRtrh/Tj+9VTIsMcsRyxGPdHp632lvoL42x+G2D5SGXYfpnVbrfsqfUGY8CDDiKCDIGcBI7he9B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbGkQ9m9; arc=none smtp.client-ip=74.125.82.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=iGk7PxUAcIk5FSW7VIdqYBamBoPt1q5vnJySFeDvSKg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=i0FtSjZIB6n4Jtgx9IfNvCdiM2EiP10U9aM8GTDu6ltTBepuNrKXBR4FSR4wGl56jLaiocCnsvsun08MzLzYPSzn7skbSTWqOpTbrT5AMfg0xqEBm4cNCpm0bZVtLe56UqL2dMdGzh+JPlp28vBopl/Ga+VFYgfbEUrcXtfKwsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz9s+Z5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbGkQ9m9"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-135e88b8e55so4115689c88.0
-        for <patches@lists.linux.dev>; Wed, 20 May 2026 10:42:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779298976; x=1779903776; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OW/DtWdlDcypcrOJke35ovA01mlOr73W7ESIIJo93wk=;
-        b=HbGkQ9m99+qNqKhtSXavLgyKVmNe50AdqCNKl1hJfjXVWIAbz5HIz74t7P3ymFcPIe
-         pLJfqNLeBQ93eYlL4oog+hrWSeEjmkZ4OklfSFKfKOC2PGg7Nu1stuJEHNkPbKTdviof
-         JROnyQkXC+DcH7JzlFx3bAjA7J75ZxLv1P6SIUVHd0fHq4K1hTcvhQ1SAgDDxLeNGlBr
-         n66hJNJ5SSmddqUXtAoF9WmLW2BWY65v8HWSSvh2gXR1hiGchVx/+6ckCZOvtLk0LSLr
-         DzL48+WHf/a43hfnYfuxho7TV78mkBTD+sPY0nGhSZfWalUkW5UMfPcYGYho1vY14ZcK
-         PWVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779298976; x=1779903776;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OW/DtWdlDcypcrOJke35ovA01mlOr73W7ESIIJo93wk=;
-        b=b7UELFFFq6ATMeKZWQhtAfzbr4lytE5vDpLo3ZEFZPKNVxu6lTjGtnskJzh/Ke+KT2
-         06JRwm3MAftmwRrr3hHp3XT9h6KuPvKLJOkgCYDcXYIPlgTutXztzOmPzrmAzE3yG6FH
-         0YkgjF4SrwOIkphHxH1zZqkF54Po9fw4c2FXe3A6W5DB3imOJrKE7PZSRt8QS7Pf8JTx
-         QG5BOvmIoEXwqcZR8SIuxPnID13niZcEtxCqznHLBwmuEvV4CSUQpAGWcsozqiYfcFuG
-         vK0myM6wQU0CzAP5rFF+8Pafj/3Ekbpvf7BvwNFgQQMN7rEl85Z1h5sMSKzqEHL455dy
-         Wavg==
-X-Gm-Message-State: AOJu0YykCK9S2zy9eJV+gweZYboitZFAdehfti4xtcQaXqswJiem9rJg
-	qUx8N4ezoFctMPLUOefG/OiKDukBLQa8rhbzJpo8RaUA2Ua93OEpLTC4
-X-Gm-Gg: Acq92OFaYzYSN5oGJtowXQkjcLzeJIWmj5owjqc2PTHxXSZt47kO/xe3GhKBtjYOSMv
-	QgCWfDkTNF23PoUgd/RE+sHSFed+r8VXPsAVfavoMNwczm2hlyeE6XPH6Ot9NVO1sf1LHMDifMV
-	tie7mozI7JSwbjcb8IH8yAwyy+538qEuH08U7+Ei9s3hRbU7ArNKjKsXXcbtVnvVd77VsnxMTQR
-	b9TqwQNvGRXKgoDsk6X2uszEmgr1sPiwQAALTnV7D2tRUzi5nL17BKR0Bn7pKJEpfz6wryCL2/I
-	XtOMs60yR15dO416vbdNxa51gdd/x3Y4iztnrOt+qW2BedzIV/lVj8qsTfeXoPzYGz4OvzT4fM9
-	0df8beKbSCNPOLSN9LHgfhPWkHJYY2g3BtGaagH5KJo66/Y4BcnBXZMGpmipCHAWekH4qIPvtR0
-	69U+DJ+vio0EFLShrxSQMpeIMHYlQFcLjKKiBOCR+XxNNQQwjO9g==
-X-Received: by 2002:a05:7022:6b9a:b0:12d:de3e:86aa with SMTP id a92af1059eb24-13505642857mr11363047c88.40.1779298975818;
-        Wed, 20 May 2026 10:42:55 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb9ed3sm27488430c88.1.2026.05.20.10.42.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 10:42:55 -0700 (PDT)
-Message-ID: <cc909bc6-42a3-4d35-8c97-fb31ff3840f1@gmail.com>
-Date: Wed, 20 May 2026 10:42:53 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz9s+Z5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B96C1F000E9;
+	Wed, 20 May 2026 17:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1779298977;
+	bh=ibMwqYaXJcR95Zt1bTRPW46VPqnNjuM7NKqUtlrgoeM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Pz9s+Z5wMEjp29eRru/UT3uM2YM/ZWaM6Zw6d330Qz73HlpbSUscpUL4O/MgR4cp5
+	 WZQib4thwQWSa87dqfRh4ziabAq98Wz+agJ8BzgTycFiMBv9YBNU5p3OZIsUmD3d3u
+	 6KByWwS2eik7fFcqOR1alSPZd/U9GeJdG8yiWCNA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 614/957] pwm: stm32: Fix rounding issue for requests with inverted polarity
+Date: Wed, 20 May 2026 18:18:17 +0200
+Message-ID: <20260520162147.850292356@linuxfoundation.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
+References: <20260520162134.554764788@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/957] 6.18.32-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260520162134.554764788@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 5/20/26 09:08, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.32 release.
-> There are 957 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 22 May 2026 16:20:16 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.32-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+------------------
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+
+[ Upstream commit 5d087c485b6ecf200a9ebb2a032bf8571d330250 ]
+
+The calculation of the number of pwm clk ticks from a time length in
+nanoseconds involves a division and thus some rounding. That might
+result in
+
+	duty_ticks + offset_ticks < period_ticks
+
+despite
+
+	duty_length_ns + duty_offset_ns >= period_length_ns
+
+. The stm32 PWM cannot configure offset_ticks freely, it can only select
+0 or period_length_ns - duty_length_ns---that is the classic normal and
+inverted polarity. The decision to select the hardware polarity must be
+done using the ticks values and not the nanoseconds times to adhere to
+the rounding rules by the pwm core.
+
+With the pwm clk running at 208900 kHz on my test machine
+(stm32mp135f-dk), a test case that was handled wrong is:
+
+	# pwmround -P 9999962 -O 24970 -D 9974992
+	period_length = 9999962
+	duty_length = 9974840
+	duty_offset = 25123
+
+With this change applied the rounding is done correctly:
+
+	# pwmround -P 9999962 -O 24970 -D 9974992
+	period_length = 9999962
+	duty_length = 9974840
+	duty_offset = 0
+
+Fixes: deaba9cff809 ("pwm: stm32: Implementation of the waveform callbacks")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/c5e7767cee821b5f6e00f95bd14a5e13015646fb.1776264104.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pwm/pwm-stm32.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 2594fb771b04a..935257a890b06 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -68,7 +68,7 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
+ 	struct stm32_pwm *priv = to_stm32_pwm_dev(chip);
+ 	unsigned int ch = pwm->hwpwm;
+ 	unsigned long rate;
+-	u64 ccr, duty;
++	u64 duty_ticks, offset_ticks;
+ 	int ret;
+ 
+ 	if (wf->period_length_ns == 0) {
+@@ -164,23 +164,25 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
+ 		wfhw->arr = min_t(u64, arr, priv->max_arr) - 1;
+ 	}
+ 
+-	duty = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
+-				   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
+-	duty = min_t(u64, duty, wfhw->arr + 1);
++	duty_ticks = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
++					 (u64)NSEC_PER_SEC * (wfhw->psc + 1));
++	duty_ticks = min_t(u64, duty_ticks, wfhw->arr + 1);
+ 
+-	if (wf->duty_length_ns && wf->duty_offset_ns &&
+-	    wf->duty_length_ns + wf->duty_offset_ns >= wf->period_length_ns) {
++	offset_ticks = mul_u64_u64_div_u64(wf->duty_offset_ns, rate,
++					   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
++	offset_ticks = min_t(u64, offset_ticks, wfhw->arr + 1);
++
++	if (duty_ticks && offset_ticks &&
++	    duty_ticks + offset_ticks >= wfhw->arr + 1) {
+ 		wfhw->ccer |= TIM_CCER_CCxP(ch + 1);
+ 		if (priv->have_complementary_output)
+ 			wfhw->ccer |= TIM_CCER_CCxNP(ch + 1);
+ 
+-		ccr = wfhw->arr + 1 - duty;
++		wfhw->ccr = wfhw->arr + 1 - duty_ticks;
+ 	} else {
+-		ccr = duty;
++		wfhw->ccr = duty_ticks;
+ 	}
+ 
+-	wfhw->ccr = min_t(u64, ccr, wfhw->arr + 1);
+-
+ out:
+ 	dev_dbg(&chip->dev, "pwm#%u: %lld/%lld [+%lld] @%lu -> CCER: %08x, PSC: %08x, ARR: %08x, CCR: %08x\n",
+ 		pwm->hwpwm, wf->duty_length_ns, wf->period_length_ns, wf->duty_offset_ns,
 -- 
-Florian
+2.53.0
+
+
+
