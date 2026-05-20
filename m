@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E6D372B31;
-	Wed, 20 May 2026 18:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AC3371048;
+	Wed, 20 May 2026 18:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301366; cv=none; b=Gb6s/eXgzijqQ3p0XYyq2eYJB660Y4utXbTjj3lQ95Gn6JOPZP8ToJsgzIa9rr7McOHr1b6h/2uipAbL7ma/HC2sefjWsbw3lUCWJbJi4GcPJI05cKdDFmNcdxAUyK2kwriFn1/yk80E77Ei/JShXWzeLNfatNlAJjuMPVZ4v/c=
+	t=1779301369; cv=none; b=p3uf/JE41pbwi8WJPB9Xol2SCoPXmU0GClYs1VWUKCZpLZ0FQRhlktL4GWRv82zESAXAVlc8nwrf9Y8Wzxb/M8UBWdfujwdpKIXSjJ4aG1ea/+oPzJhQ7+ckMNyKS5m6FgYLvzGtokkqt/xvUu4ifkAeJoEmcBlNbUozt6nSFC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301366; c=relaxed/simple;
-	bh=gVffotVeCVJpTFyUDTfjHJ2budGGHdcUD0P+cuvK7No=;
+	s=arc-20240116; t=1779301369; c=relaxed/simple;
+	bh=Ykc3Tr2PlWfVBY6vEoGrJHd6a8HvbTLzeik+q7yk6Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RS2qtpOR9j00PF06nWaAEf7+wT45zAgc6CK8vCFdtgwZb/Z5PSmgxTNfUs6T5DlyKVJACUvz/MsyBwiZZhkDYznvsHgCxyM+i8kzIU5cetQCvamFCJs9qi3VfHNUrb24gRnFFb+aSKCDkcEkxmO5XxJh3Ec4I63TewZwAcQ5vBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuHUHNWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jn4hN2TsGH4VzKfM8XqtaWtu17Yv1Qr0ZztWPlmsPD+WAMmjABqlzHU9wRudKi+WjFZav8/h5tvQO8Vaiy99IvOMHsthWcNiwNU9o11uK+JO4X5id39SXkZQLEv91Apm05rHjC7+PewrusHnMPNTyUEP1FoR9oo03uhUgRXi5s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWND+Kqu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuHUHNWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0E31F000E9;
-	Wed, 20 May 2026 18:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWND+Kqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034911F000E9;
+	Wed, 20 May 2026 18:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301364;
-	bh=+66sRqAigEpI3auvGqT23RXfOGcpapRKDmzAp0AEiOs=;
+	s=korg; t=1779301367;
+	bh=smlqz0nScZAEdFbEiHvkA8skYfFaDoR2YhiaPoMkVSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IuHUHNWjyBAvDfXnnM1mtWaITHCLZs9bh6hyqkBlsJNubd0KVVdQFn03wTMdP7m67
-	 o3D8BJFQL22YhNl1oLguaI39omUpg/4oGGCO7KJuGezC0mkh9cpE+oBU0CL4fbq7vH
-	 GSgsIDIc1KIHePBOvlgeSjD19T8h1j39CfCuYeww=
+	b=MWND+Kqu4JTzO//A2a+rSx/6bxohoP3If/TZH1PCnkb6RCPtRWqa7gJtOUfRrxXte
+	 4P6ZXiVdpfaNZyQkG3/VzfRy3iMwvDf2cSGkGq7FGBpIUDTDGv6Tm9muEc/8es2djY
+	 S//zc5riLwcFizMk+sGjLhxpVXMbgWQxiHVfkSoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Demers <alexandre.f.demers@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daan De Meyer <daan@amutable.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 520/666] drm/amdgpu: fix spelling typos
-Date: Wed, 20 May 2026 18:22:11 +0200
-Message-ID: <20260520162122.534381078@linuxfoundation.org>
+Subject: [PATCH 6.12 529/666] cdrom, scsi: sr: propagate read-only status to block layer via set_disk_ro()
+Date: Wed, 20 May 2026 18:22:20 +0200
+Message-ID: <20260520162122.737136406@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,100 +53,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Demers <alexandre.f.demers@gmail.com>
+From: Daan De Meyer <daan@amutable.com>
 
-[ Upstream commit ce43abd7ec9464cf954f90e1c69e11768b02fa0a ]
+[ Upstream commit 0898a817621a2f0cddca8122d9b974003fe5036d ]
 
-Found some typos while exploring amdgpu code.
+The cdrom core never calls set_disk_ro() for a registered device, so
+BLKROGET on a CD-ROM device always returns 0 (writable), even when the
+drive has no write capabilities and writes will inevitably fail. This
+causes problems for userspace that relies on BLKROGET to determine
+whether a block device is read-only. For example, systemd's loop device
+setup uses BLKROGET to decide whether to create a loop device with
+LO_FLAGS_READ_ONLY. Without the read-only flag, writes pass through the
+loop device to the CD-ROM and fail with I/O errors. systemd-fsck
+similarly checks BLKROGET to decide whether to run fsck in no-repair
+mode (-n).
 
-Signed-off-by: Alexandre Demers <alexandre.f.demers@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 13e4cf116dbf ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
+The write-capability bits in cdi->mask come from two different sources:
+CDC_DVD_RAM and CDC_CD_RW are populated by the driver from the MODE
+SENSE capabilities page (page 0x2A) before register_cdrom() is called,
+while CDC_MRW_W and CDC_RAM require the MMC GET CONFIGURATION command
+and were only probed by cdrom_open_write() at device open time. This
+meant that any attempt to compute the writable state from the full
+mask at probe time was incorrect, because the GET CONFIGURATION bits
+were still unset (and cdi->mask is initialized such that capabilities
+are assumed present).
+
+Fix this by factoring the GET CONFIGURATION probing out of
+cdrom_open_write() into a new exported helper,
+cdrom_probe_write_features(), and having sr call it from sr_probe()
+right after get_capabilities() has populated the MODE SENSE bits.
+register_cdrom() then calls set_disk_ro() based on the full
+write-capability mask (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)
+so the block layer reflects the drive's actual write support. The
+feature queries used (CDF_MRW and CDF_RWRT via GET CONFIGURATION with
+RT=00) report drive-level capabilities that are persistent across
+media, so a single probe before register_cdrom() is sufficient and the
+redundant probe at open time is dropped.
+
+With set_disk_ro() now accurate, the long-vestigial cd->writeable flag
+in sr can go: get_capabilities() used to set cd->writeable based on
+the same four mask bits, but because CDC_MRW_W and CDC_RAM default to
+"capability present" in cdi->mask and aren't touched by MODE SENSE,
+the condition that gated cd->writeable was always true, making it
+unconditionally 1. Replace the corresponding gate in sr_init_command()
+with get_disk_ro(cd->disk), which turns a previously no-op check into
+a real one and also catches kernel-internal bio writers that bypass
+blkdev_write_iter()'s bdev_read_only() check.
+
+The sd driver (SCSI disks) does not have this problem because it
+checks the MODE SENSE Write Protect bit and calls set_disk_ro()
+accordingly. The sr driver cannot use the same approach because the
+MMC specification does not define the WP bit in the MODE SENSE
+device-specific parameter byte for CD-ROM devices.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Daan De Meyer <daan@amutable.com>
+Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
+Link: https://patch.msgid.link/20260427210139.1400-2-phil@philpotter.co.uk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c   | 6 +++---
- drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c   | 3 ++-
- drivers/gpu/drm/amd/amdgpu/vce_v2_0.c   | 2 +-
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/cdrom/cdrom.c | 73 ++++++++++++++++++++++++++++---------------
+ drivers/scsi/sr.c     | 11 ++-----
+ drivers/scsi/sr.h     |  1 -
+ include/linux/cdrom.h |  1 +
+ 4 files changed, 51 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index cf41ef9e3ad83..f63b5a429b107 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -269,7 +269,7 @@ void amdgpu_gmc_sysvm_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc
-  * @mc: memory controller structure holding memory information
-  * @gart_placement: GART placement policy with respect to VRAM
-  *
-- * Function will place try to place GART before or after VRAM.
-+ * Function will try to place GART before or after VRAM.
-  * If GART size is bigger than space left then we ajust GART size.
-  * Thus function will never fails.
-  */
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 2dd89f490dc37..4dd1595dc3d88 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -98,7 +98,7 @@ static void uvd_v3_1_ring_emit_ib(struct amdgpu_ring *ring,
+diff --git a/drivers/cdrom/cdrom.c b/drivers/cdrom/cdrom.c
+index 6a99a459b80b2..19d6f9a069bdf 100644
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -634,6 +634,16 @@ int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi)
+ 
+ 	WARN_ON(!cdo->generic_packet);
+ 
++	/*
++	 * Propagate the drive's write support to the block layer so BLKROGET
++	 * reflects actual write capability. Drivers that use GET CONFIGURATION
++	 * features (CDC_MRW_W, CDC_RAM) must have called
++	 * cdrom_probe_write_features() before register_cdrom() so the mask is
++	 * complete here.
++	 */
++	set_disk_ro(disk, !CDROM_CAN(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM |
++				     CDC_CD_RW));
++
+ 	cd_dbg(CD_REG_UNREG, "drive \"/dev/%s\" registered\n", cdi->name);
+ 	mutex_lock(&cdrom_mutex);
+ 	list_add(&cdi->list, &cdrom_list);
+@@ -748,6 +758,44 @@ static int cdrom_is_random_writable(struct cdrom_device_info *cdi, int *write)
+ 	return 0;
  }
  
- /**
-- * uvd_v3_1_ring_emit_fence - emit an fence & trap command
-+ * uvd_v3_1_ring_emit_fence - emit a fence & trap command
-  *
-  * @ring: amdgpu_ring pointer
-  * @addr: address
-@@ -242,7 +242,7 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
- 	uint64_t addr;
- 	uint32_t size;
- 
--	/* programm the VCPU memory controller bits 0-27 */
-+	/* program the VCPU memory controller bits 0-27 */
- 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
- 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
- 	WREG32(mmUVD_VCPU_CACHE_OFFSET0, addr);
-@@ -416,7 +416,7 @@ static int uvd_v3_1_start(struct amdgpu_device *adev)
- 	/* Set the write pointer delay */
- 	WREG32(mmUVD_RBC_RB_WPTR_CNTL, 0);
- 
--	/* programm the 4GB memory segment for rptr and ring buffer */
-+	/* Program the 4GB memory segment for rptr and ring buffer */
- 	WREG32(mmUVD_LMI_EXT40_ADDR, upper_32_bits(ring->gpu_addr) |
- 		   (0x7 << 16) | (0x1 << 31));
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-index 0d291c497eed7..a1227867dc887 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-@@ -308,7 +308,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
- 	/* enable VCPU clock */
- 	WREG32(mmUVD_VCPU_CNTL,  1 << 9);
- 
--	/* disable interupt */
-+	/* disable interrupt */
- 	WREG32_P(mmUVD_MASTINT_EN, 0, ~(1 << 1));
- 
- #ifdef __BIG_ENDIAN
-@@ -318,6 +318,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
- #endif
- 	WREG32(mmUVD_LMI_SWAP_CNTL, lmi_swap_cntl);
- 	WREG32(mmUVD_MP_SWAP_CNTL, mp_swap_cntl);
++/*
++ * Probe write-related MMC features via GET CONFIGURATION and update
++ * cdi->mask accordingly. Drivers that populate cdi->mask from the MODE SENSE
++ * capabilities page (e.g. sr) should call this after those MODE SENSE bits
++ * have been set but before register_cdrom(), so that the full set of
++ * write-capability bits is known by the time register_cdrom() decides on the
++ * initial read-only state of the disk.
++ */
++void cdrom_probe_write_features(struct cdrom_device_info *cdi)
++{
++	int mrw, mrw_write, ram_write;
 +
- 	/* initialize UVD memory controller */
- 	WREG32(mmUVD_LMI_CTRL, 0x203108);
++	mrw = 0;
++	if (!cdrom_is_mrw(cdi, &mrw_write))
++		mrw = 1;
++
++	if (CDROM_CAN(CDC_MO_DRIVE))
++		ram_write = 1;
++	else
++		(void) cdrom_is_random_writable(cdi, &ram_write);
++
++	if (mrw)
++		cdi->mask &= ~CDC_MRW;
++	else
++		cdi->mask |= CDC_MRW;
++
++	if (mrw_write)
++		cdi->mask &= ~CDC_MRW_W;
++	else
++		cdi->mask |= CDC_MRW_W;
++
++	if (ram_write)
++		cdi->mask &= ~CDC_RAM;
++	else
++		cdi->mask |= CDC_RAM;
++}
++EXPORT_SYMBOL(cdrom_probe_write_features);
++
+ static int cdrom_media_erasable(struct cdrom_device_info *cdi)
+ {
+ 	disc_information di;
+@@ -900,33 +948,8 @@ static int cdrom_is_dvd_rw(struct cdrom_device_info *cdi)
+  */
+ static int cdrom_open_write(struct cdrom_device_info *cdi)
+ {
+-	int mrw, mrw_write, ram_write;
+ 	int ret = 1;
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-index 97ce06228a910..8a6c24b98f1fa 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-@@ -278,7 +278,7 @@ static int vce_v2_0_stop(struct amdgpu_device *adev)
- 	int status;
+-	mrw = 0;
+-	if (!cdrom_is_mrw(cdi, &mrw_write))
+-		mrw = 1;
+-
+-	if (CDROM_CAN(CDC_MO_DRIVE))
+-		ram_write = 1;
+-	else
+-		(void) cdrom_is_random_writable(cdi, &ram_write);
+-	
+-	if (mrw)
+-		cdi->mask &= ~CDC_MRW;
+-	else
+-		cdi->mask |= CDC_MRW;
+-
+-	if (mrw_write)
+-		cdi->mask &= ~CDC_MRW_W;
+-	else
+-		cdi->mask |= CDC_MRW_W;
+-
+-	if (ram_write)
+-		cdi->mask &= ~CDC_RAM;
+-	else
+-		cdi->mask |= CDC_RAM;
+-
+ 	if (CDROM_CAN(CDC_MRW_W))
+ 		ret = cdrom_mrw_open_write(cdi);
+ 	else if (CDROM_CAN(CDC_DVD_RAM))
+diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
+index add13e3068983..803fc9c132298 100644
+--- a/drivers/scsi/sr.c
++++ b/drivers/scsi/sr.c
+@@ -395,7 +395,7 @@ static blk_status_t sr_init_command(struct scsi_cmnd *SCpnt)
  
- 	if (vce_v2_0_lmi_clean(adev)) {
--		DRM_INFO("vce is not idle \n");
-+		DRM_INFO("VCE is not idle \n");
- 		return 0;
- 	}
+ 	switch (req_op(rq)) {
+ 	case REQ_OP_WRITE:
+-		if (!cd->writeable)
++		if (get_disk_ro(cd->disk))
+ 			goto out;
+ 		SCpnt->cmnd[0] = WRITE_10;
+ 		cd->cdi.media_written = 1;
+@@ -681,6 +681,7 @@ static int sr_probe(struct device *dev)
+ 	error = -ENOMEM;
+ 	if (get_capabilities(cd))
+ 		goto fail_minor;
++	cdrom_probe_write_features(&cd->cdi);
+ 	sr_vendor_init(cd);
+ 
+ 	set_capacity(disk, cd->capacity);
+@@ -899,14 +900,6 @@ static int get_capabilities(struct scsi_cd *cd)
+ 	/*else    I don't think it can close its tray
+ 		cd->cdi.mask |= CDC_CLOSE_TRAY; */
+ 
+-	/*
+-	 * if DVD-RAM, MRW-W or CD-RW, we are randomly writable
+-	 */
+-	if ((cd->cdi.mask & (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) !=
+-			(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) {
+-		cd->writeable = 1;
+-	}
+-
+ 	kfree(buffer);
+ 	return 0;
+ }
+diff --git a/drivers/scsi/sr.h b/drivers/scsi/sr.h
+index dc899277b3a44..2d92f9cb6fec7 100644
+--- a/drivers/scsi/sr.h
++++ b/drivers/scsi/sr.h
+@@ -35,7 +35,6 @@ typedef struct scsi_cd {
+ 	struct scsi_device *device;
+ 	unsigned int vendor;	/* vendor code, see sr_vendor.c         */
+ 	unsigned long ms_offset;	/* for reading multisession-CD's        */
+-	unsigned writeable : 1;
+ 	unsigned use:1;		/* is this device still supportable     */
+ 	unsigned xa_flag:1;	/* CD has XA sectors ? */
+ 	unsigned readcd_known:1;	/* drive supports READ_CD (0xbe) */
+diff --git a/include/linux/cdrom.h b/include/linux/cdrom.h
+index fdfb61ccf55ae..b4f2b23744413 100644
+--- a/include/linux/cdrom.h
++++ b/include/linux/cdrom.h
+@@ -109,6 +109,7 @@ int cdrom_ioctl(struct cdrom_device_info *cdi, struct block_device *bdev,
+ extern unsigned int cdrom_check_events(struct cdrom_device_info *cdi,
+ 				       unsigned int clearing);
+ 
++extern void cdrom_probe_write_features(struct cdrom_device_info *cdi);
+ extern int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi);
+ extern void unregister_cdrom(struct cdrom_device_info *cdi);
  
 -- 
 2.53.0
