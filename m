@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B533F59D;
-	Wed, 20 May 2026 17:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8113933F59D;
+	Wed, 20 May 2026 17:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297580; cv=none; b=VQglFBGNMmzhsTi8nLg/4i5RuCrCKzrCFlFpf6kH5t2np+4zM2lF9Zk1nTPr/nHc9CFuZ8dVwz6eNuiumstyxvmpsls0FF+lztyvIxkSdySgU08+N1zjpeM4ALZghik8tVCADpZfVdWvcvVlHFPDrk1tGTm+C40E24/PpHC+mB8=
+	t=1779297583; cv=none; b=ZrEGJDK5kY44np40bj3tc9wXMDJh9LGQiVnh6pytj/PXuykpiLpeB7kZj7jqEcnnuh4mu7xE0O7UmUmXUqHDckCLc2tgM4KmjD7a/1GQIFZQGKBYueldwBou9g/ny/AowCZPINp33/tcpG6t8tF8EImC6EqXFbY9NnzsPN+tGwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297580; c=relaxed/simple;
-	bh=7/Bv/Zqx+kloyBZx8kbzGSMNhxRdjJtj3KS4hrZ/cms=;
+	s=arc-20240116; t=1779297583; c=relaxed/simple;
+	bh=7Jc1aPw9uwxSC0JXBisaeAudo+094XJ1mYFTT7wt7N0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OcN0VABvO0foS2S7p+/iCG1gHkI7XRQqRrmrM0Un15NeJ0RYULlogrEcLOPnvPNuf/HKZcfvE45woQ7ItEqsS5lz9Prf0bOBHlx6zPG+i6REGvC7PAwrbRvaPoaTKalItkzrz2ZijaiteCNoWs+CdG8Oto1vnqoT9CEoE5baMao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvXPSx+Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byJvsu8M5AV9aArO5wq7quMYJQ8QxhudTegNop4Gg5/TJ6dh910teomsOBC+OQCamWsFQsszmItVoG1lpYogUd1Lrz6lsiUPbjy0oxGsswNoG3LYR+pkLfm42SKLW/9vGT11UKvzlZSYQ/F7Mq8tv20GiP+M5ezi9AM612OBprc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTGeFAnf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvXPSx+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E941F000E9;
-	Wed, 20 May 2026 17:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTGeFAnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F131F000E9;
+	Wed, 20 May 2026 17:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297579;
-	bh=uGQ70LmcxSkX8bOnSM4QiLIWrU/pd99vZ+Cl+EPmwIc=;
+	s=korg; t=1779297582;
+	bh=3QKHgdfMflFmFQ+6ZUuJTHs8QyU7QgO5h94+3kIx/7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvXPSx+QbIeVSP2O/ghbX7m6Lwqf/wNeY4rik74Vy1HZKR4lctMnWe8n9Q2Pzkemc
-	 lCnOn6iiom0b4YMVBzLX1/g+6Da77wBLFQ00Sgs6gxGOE0oQMxddWcChQiOPB+mxbm
-	 I0nw4rT6pFZCR5IjsVEb1C7DGdHZXUW6PW6Em3n4=
+	b=DTGeFAnfGE4xm6Cn2PwZDG3vh/G8pb2Z9W10bmmNdu5boZYWMTZ9tha0pnm7YFHV9
+	 bBq0N+hcYL0GeIN0un1MeV5bomYUbJNVEyv4tvhZb69V2arRrDLfEqj0nnfceFsdRA
+	 I/nSgQaT3QEzlN/o+67T7U0gsYhdNeYkvv0UcAYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh=20 ?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/957] scripts/gdb: timerlist: Adapt to move of tk_core
-Date: Wed, 20 May 2026 18:08:46 +0200
-Message-ID: <20260520162135.492813189@linuxfoundation.org>
+Subject: [PATCH 6.18 044/957] locking: Fix rwlock support in <linux/spinlock_up.h>
+Date: Wed, 20 May 2026 18:08:47 +0200
+Message-ID: <20260520162135.514178938@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,43 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5aa9383813aca45b914d4a7481ca417ef13114df ]
+[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
 
-tk_core is a macro today which cannot be resolved by gdb.
+Architecture support for rwlocks must be available whether or not
+CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
+arch_{read,write}_{lock,trylock,unlock}() macros such that these become
+visbile if CONFIG_DEBUG_SPINLOCK=n.
 
-Use the correct symbol expression to reference tk_core.
+This patch prepares for converting do_raw_{read,write}_trylock() into
+inline functions. Without this patch that conversion triggers a build
+failure for UP architectures, e.g. arm-ep93xx. I used the following
+kernel configuration to build the kernel for that architecture:
 
-Fixes: 22c62b9a84b8 ("timekeeping: Introduce auxiliary timekeepers")
-Signed-off-by: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260311-hrtimer-cleanups-v1-1-095357392669@linutronix.de
+	CONFIG_ARCH_MULTIPLATFORM=y
+	CONFIG_ARCH_MULTI_V7=n
+	CONFIG_ATAGS=y
+	CONFIG_MMU=y
+	CONFIG_ARCH_MULTI_V4T=y
+	CONFIG_CPU_LITTLE_ENDIAN=y
+	CONFIG_ARCH_EP93XX=y
+
+Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/timerlist.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/spinlock_up.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/gdb/linux/timerlist.py b/scripts/gdb/linux/timerlist.py
-index ccc24d30de806..9fb3436a217cc 100644
---- a/scripts/gdb/linux/timerlist.py
-+++ b/scripts/gdb/linux/timerlist.py
-@@ -20,7 +20,7 @@ def ktime_get():
-     We can't read the hardware timer itself to add any nanoseconds
-     that need to be added since we last stored the time in the
-     timekeeper. But this is probably good enough for debug purposes."""
--    tk_core = gdb.parse_and_eval("&tk_core")
-+    tk_core = gdb.parse_and_eval("&timekeeper_data[TIMEKEEPER_CORE]")
+diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
+index 1e84e71ca495e..3a50976471d71 100644
+--- a/include/linux/spinlock_up.h
++++ b/include/linux/spinlock_up.h
+@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 	lock->slock = 1;
+ }
  
-     return tk_core['timekeeper']['tkr_mono']['base']
+-/*
+- * Read-write spinlocks. No debug version.
+- */
+-#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
+-
+ #else /* DEBUG_SPINLOCK */
+ #define arch_spin_is_locked(lock)	((void)(lock), 0)
+ /* for sched/core.c and kernel_lock.c: */
+@@ -68,4 +58,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
  
+ #define arch_spin_is_contended(lock)	(((void)(lock), 0))
+ 
++/*
++ * Read-write spinlocks. No debug version.
++ */
++#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
++
+ #endif /* __LINUX_SPINLOCK_UP_H */
 -- 
 2.53.0
 
