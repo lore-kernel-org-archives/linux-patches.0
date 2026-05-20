@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A25B3FA5EB;
-	Wed, 20 May 2026 17:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BEC3FADE9;
+	Wed, 20 May 2026 17:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296590; cv=none; b=p+qkFrouG7Gw0O7DG6/7hs7zzexAVxHDBvrGo3o1gWcoECobQu2dxkPRgUqWK4S6aZzb4k+NvmAoR5MRLpojlSraIewMg0sDsQzLEdySPIyh0zef8q5zm3BAprWzqn0GgMcR9Acw8cjM84sJZEaiDA2Q7HUv7npCIELDpZX2bFE=
+	t=1779296594; cv=none; b=dZWxiUppSGsJcLnPouLQe15he2C+lwi5mwM/5zBKRlZLxqLgKAn+CoWwqo6eaHFW6FFwK63sAxNmQd17qDVR2iV4AhCf2DWdbFf7xC8KiDtPShVZiyHNwOTaI8QBe2Rtixo2bJRFTQ90F096+bsAu1dTU6gwKOD27+tR9O0zsyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296590; c=relaxed/simple;
-	bh=Sq6W8QWipW24n7UGr9c1zmuw9A4lOIaHzDf0f+yGcyA=;
+	s=arc-20240116; t=1779296594; c=relaxed/simple;
+	bh=0koqKgVaxpLav5Ec3AQWPYPFRUq8k6xRNjr4a55A+Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7u4VSi718fzFgUORhmZS7ZX+dIoc9y2zmdbBySaBfI++MD/j6U0vimtjspFpTWlZXfe+QudlDRCYWWFHvTIGVeeZ1w8Virja5Rce8jExW9QgPm4zFl0gETii7YRbXXdCDyv/HKfvPKgMjgzB/mffdXti3FWHJNwAleHM+d5H3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IDJdjLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qIX87eXJlxyt60x8isDwPtnPUPmGU8i/TYodSUM9sUcKjWsVqxkicXUcJdgGFgajRGzVvlQsPuDB4SNJkeBHz3hqTAIvWABpgeKyU7JDGAy/nF+Tr8sax6iL7n3iZl7IgPOjp5+/GRv1crxStB6q+8B4vcK93Yi7TfQOq35svPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLy/Dewt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IDJdjLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813761F00893;
-	Wed, 20 May 2026 17:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLy/Dewt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4631F000E9;
+	Wed, 20 May 2026 17:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296588;
-	bh=342yWYi5vqXvyjuO/MU/Y1xVJ3x/lCF2P4B54vaAWcI=;
+	s=korg; t=1779296590;
+	bh=ns6yamsiad+C8bOQoassTm6Or9PeR4W+OIctapQuAwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0IDJdjLS5Yav6gdqi0K9QCbBbPKvEOL8SCBlr/c1rJTFi1kqANRwc3r05hmwgm5SN
-	 0FrkVzgyRvRtwhwafMNSYuL1VqiC6ihvrqcnXJwttLU3/jCMgnzak+q5bf9Y8bEo7I
-	 NYMiAAypF2xEWtmZob+cyj9OW32rqEriQA/sGhvM=
+	b=KLy/Dewt8fgYuquoNuPtCDaOM8EYUcq9o7EAPF7sKK1574m1qTBnM5JH3JN/aUXg8
+	 cAC3gYrLjk7MYmbRqW5/iFSRDpDn4SYervMDvWOZ+iXLy8WzLGTWon1zFE3MgqD9I+
+	 wu0KDFoA/0Bog/vq8Cco6/efVkXozArkkK3uascA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0855/1146] vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting
-Date: Wed, 20 May 2026 18:18:25 +0200
-Message-ID: <20260520162207.588804505@linuxfoundation.org>
+Subject: [PATCH 7.0 0856/1146] virtio_net: sync rss_trailer.max_tx_vq on queue_pairs change via VQ_PAIRS_SET
+Date: Wed, 20 May 2026 18:18:26 +0200
+Message-ID: <20260520162207.611118969@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,79 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 1cb36e252211506f51095fe7ced8286cc77b4c80 ]
+[ Upstream commit 3bc06da858ef17cfe94b49efc0d9713727012835 ]
 
-virtio_transport_init_zcopy_skb() uses iter->count as the size argument
-for msg_zerocopy_realloc(), which in turn passes it to
-mm_account_pinned_pages() for RLIMIT_MEMLOCK accounting. However, this
-function is called after virtio_transport_fill_skb() has already consumed
-the iterator via __zerocopy_sg_from_iter(), so on the last skb, iter->count
-will be 0, skipping the RLIMIT_MEMLOCK enforcement.
+When netif_is_rxfh_configured() is true (i.e., the user has explicitly
+configured the RSS indirection table), virtnet_set_queues() skips the
+RSS update path and falls through to the VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET
+command to change the number of queue pairs. However, it does not update
+vi->rss_trailer.max_tx_vq to reflect the new queue_pairs value.
 
-Pass pkt_len (the total bytes being sent) as an explicit parameter to
-virtio_transport_init_zcopy_skb() instead of reading the already-consumed
-iter->count.
+This causes a mismatch between vi->curr_queue_pairs and
+vi->rss_trailer.max_tx_vq. Any subsequent RSS reconfiguration (e.g.,
+via ethtool -X) calls virtnet_commit_rss_command(), which sends the
+stale max_tx_vq to the device, silently reverting the queue count.
 
-This matches TCP and UDP, which both call msg_zerocopy_realloc() with
-the original message size.
+Reproduction:
+1. User configured RSS
+  ethtool -X eth0 equal 8
+2. VQ_PAIRS_SET path; max_tx_vq stays 16
+  ethtool -L eth0 combined 12
+3. RSS commit uses max_tx_vq=16 instead of 12
+  ethtool -X eth0 equal 4
 
-Fixes: 581512a6dc93 ("vsock/virtio: MSG_ZEROCOPY flag support")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/20260420132051.217589-1-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by updating vi->rss_trailer.max_tx_vq after a successful
+VQ_PAIRS_SET command when RSS is enabled, keeping it in sync with
+curr_queue_pairs.
+
+Fixes: 50bfcaedd78e ("virtio_net: Update rss when set queue")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260416212121.29073-1-brett.creeley@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/virtio_net.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 6547e199ea5b1..0d0265f770ada 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -75,6 +75,7 @@ static bool virtio_transport_can_zcopy(const struct virtio_transport *t_ops,
- static int virtio_transport_init_zcopy_skb(struct vsock_sock *vsk,
- 					   struct sk_buff *skb,
- 					   struct msghdr *msg,
-+					   size_t pkt_len,
- 					   bool zerocopy)
- {
- 	struct ubuf_info *uarg;
-@@ -83,12 +84,10 @@ static int virtio_transport_init_zcopy_skb(struct vsock_sock *vsk,
- 		uarg = msg->msg_ubuf;
- 		net_zcopy_get(uarg);
- 	} else {
--		struct iov_iter *iter = &msg->msg_iter;
- 		struct ubuf_info_msgzc *uarg_zc;
- 
- 		uarg = msg_zerocopy_realloc(sk_vsock(vsk),
--					    iter->count,
--					    NULL, false);
-+					    pkt_len, NULL, false);
- 		if (!uarg)
- 			return -1;
- 
-@@ -385,11 +384,17 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 		 * each iteration. If this is last skb for this buffer
- 		 * and MSG_ZEROCOPY mode is in use - we must allocate
- 		 * completion for the current syscall.
-+		 *
-+		 * Pass pkt_len because msg iter is already consumed
-+		 * by virtio_transport_fill_skb(), so iter->count
-+		 * can not be used for RLIMIT_MEMLOCK pinned-pages
-+		 * accounting done by msg_zerocopy_realloc().
- 		 */
- 		if (info->msg && info->msg->msg_flags & MSG_ZEROCOPY &&
- 		    skb_len == rest_len && info->op == VIRTIO_VSOCK_OP_RW) {
- 			if (virtio_transport_init_zcopy_skb(vsk, skb,
- 							    info->msg,
-+							    pkt_len,
- 							    can_zcopy)) {
- 				kfree_skb(skb);
- 				ret = -ENOMEM;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index c0b9bc5574e23..67b913218144b 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3748,6 +3748,12 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
+ 			 queue_pairs);
+ 		return -EINVAL;
+ 	}
++
++	/* Keep max_tx_vq in sync so that a later RSS command does not
++	 * revert queue_pairs to a stale value.
++	 */
++	if (vi->has_rss)
++		vi->rss_trailer.max_tx_vq = cpu_to_le16(queue_pairs);
+ succ:
+ 	vi->curr_queue_pairs = queue_pairs;
+ 	if (dev->flags & IFF_UP) {
 -- 
 2.53.0
 
