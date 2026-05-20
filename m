@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824B93FF8BB;
-	Wed, 20 May 2026 18:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F392400E02;
+	Wed, 20 May 2026 18:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301408; cv=none; b=VPc1aMTq7/hChnLslwxtOPn/h7+DsvGFclVwp6xDLT4lWwOHOUkC25QFNT9m2gzW+BGsWtzRgoRLZ6a+dwjn1httMKtLjh8LBl11DbQCVRdZBtZVcgbfz7PNxVb143ZPWSZDEJHufz+az8aEWu1POW3d30QLwiDtxEeyb0uufzg=
+	t=1779301411; cv=none; b=uQdbV2uEbhDyBIfBSLKhbun1UbCtActfnAadekM51rKRhch6Ttsr9myLNma9cGhLWLAGwVFGAsvigk+8Fx4LMLFpKedAMvkGFQhmIhqZa24vcZaIrEpKWGWj8yw/4xq0IrQeVFqlOpGNNhxpJ0fujgIdUsBUPG/rfEqMES+npFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301408; c=relaxed/simple;
-	bh=mii/o3RmwMxO6xjSTEnCcn1L7fH3An6TR6pvhQmFwrQ=;
+	s=arc-20240116; t=1779301411; c=relaxed/simple;
+	bh=ILPQK2T8roAdwGZcHh3GvPgbmD4zpi7RisekRsbTbpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZayXA3glAPU8F0LFFFwx7ju8oY62xa4bbAkh22WaZVwVXwVsytkVHgKvAD2zJSBOAU4o2++fmnwjq6nVUwv6MEtUJNxzwqlXq+d1GPkqNQB/aQzJmptAghTwBkdZZQ4oZaRpQ5Le07MVy+6b10vxbO63D5XagrIOro8B6L7nUus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzugNeao; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EI+99KWOXQzOCDotlaDzOuRSyrEiiPQ71ga4vpQpvAoW6ySgC0pN5Z157ZaQqa2xXZU8XEcUCk3yFacYLCNuLrN508BGQReo9JU3gXwnWh0DuLsBi3GjtvVn0D+zfHkaG9rmvtED5w8M/WBt+sHEVAHsYj6mIdnyNBZdxt9zVL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwKAbTo9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzugNeao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9837A1F000E9;
-	Wed, 20 May 2026 18:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwKAbTo9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D071F000E9;
+	Wed, 20 May 2026 18:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301407;
-	bh=jSf7PyYuLbAGlbezesIoimEXX/9A+jkj4IZ5amQiGks=;
+	s=korg; t=1779301409;
+	bh=oHWUTkVGmdVjsKk8OdNzi8wVuuTi/Xl+Ytb8B2Ng0fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzugNeaods/dUEd4bHIso1NnOCJl6zOPSZoR0XQE+IejcoEcLX4aM9UblGSPHvZRm
-	 o+GhSgUV6+M4iUC7p27b0RATfgw6IeEWFQI20xExHOfve8Uvu+ppReqNsVqktmUHjQ
-	 kYgKDY3Hy/hHYc/zGIYDBOOaRDfEoW3cqKCpaKWY=
+	b=GwKAbTo90C3ZOTNWFWEMpkeX9jPGUUu+GOfyH11takaB8zE5pZ95/Vdp++G+74FO0
+	 5p2YdKJJCGcaB5dUxV8qNIcfXcKzjF8hXnqGTiUQwJcD/y6jsVUkuOTB2hK28H+hpG
+	 7GrYOQhuijHUFpyzkrs1O6F9JovGKdAVFtP6gya0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Florian Westphal <fw@strlen.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 543/666] net/sched: taprio: fix NULL pointer dereference in class dump
-Date: Wed, 20 May 2026 18:22:34 +0200
-Message-ID: <20260520162123.039900608@linuxfoundation.org>
+Subject: [PATCH 6.12 544/666] neigh: let neigh_xmit take skb ownership
+Date: Wed, 20 May 2026 18:22:35 +0200
+Message-ID: <20260520162123.061211995@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,121 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3d07ca5c0fae311226f737963984bd94bb159a87 ]
+[ Upstream commit 4438113be604ee67a7bf4f81da6e1cca41332ce4 ]
 
-When a TAPRIO child qdisc is deleted via RTM_DELQDISC, taprio_graft()
-is called with new == NULL and stores NULL into q->qdiscs[cl - 1].
-Subsequent RTM_GETTCLASS dump operations walk all classes via
-taprio_walk() and call taprio_dump_class(), which calls taprio_leaf()
-returning the NULL pointer, then dereferences it to read child->handle,
-causing a kernel NULL pointer dereference.
+neigh_xmit always releases the skb, except when no neighbour table is
+found. But even the first added user of neigh_xmit (mpls) relied on
+neigh_xmit to release the skb (or queue it for tx).
 
-The bug is reachable with namespace-scoped CAP_NET_ADMIN on any kernel
-with CONFIG_NET_SCH_TAPRIO enabled. On systems with unprivileged user
-namespaces enabled, an unprivileged local user can trigger a kernel
-panic by creating a taprio qdisc inside a new network namespace,
-grafting an explicit child qdisc, deleting it, and requesting a class
-dump. The RTM_GETTCLASS dump itself requires no capability.
+sashiko reported:
+ If neigh_xmit() is called with an uninitialized neighbor table (for
+ example, NEIGH_ND_TABLE when IPv6 is disabled), it returns -EAFNOSUPPORT
+ and bypasses its internal out_kfree_skb error path.  Because the return
+ value of neigh_xmit() is ignored here, does this leak the SKB?
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000007: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
- RIP: 0010:taprio_dump_class (net/sched/sch_taprio.c:2478)
- Call Trace:
-  <TASK>
-  tc_fill_tclass (net/sched/sch_api.c:1966)
-  qdisc_class_dump (net/sched/sch_api.c:2326)
-  taprio_walk (net/sched/sch_taprio.c:2514)
-  tc_dump_tclass_qdisc (net/sched/sch_api.c:2352)
-  tc_dump_tclass_root (net/sched/sch_api.c:2370)
-  tc_dump_tclass (net/sched/sch_api.c:2431)
-  rtnl_dumpit (net/core/rtnetlink.c:6864)
-  netlink_dump (net/netlink/af_netlink.c:2325)
-  rtnetlink_rcv_msg (net/core/rtnetlink.c:6959)
-  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-  </TASK>
+Assume full ownership and remove the last code path that doesn't
+xmit or free skb.
 
-Fix this by substituting &noop_qdisc when new is NULL in
-taprio_graft(), a common pattern used by other qdiscs (e.g.,
-multiq_graft()) to ensure the q->qdiscs[] slots are never NULL.
-This makes control-plane dump paths safe without requiring individual
-NULL checks.
-
-Since the data-plane paths (taprio_enqueue and taprio_dequeue_from_txq)
-previously had explicit NULL guards that would drop/skip the packet
-cleanly, update those checks to test for &noop_qdisc instead. Without
-this, packets would reach taprio_enqueue_one() which increments the root
-qdisc's qlen and backlog before calling the child's enqueue; noop_qdisc
-drops the packet but those counters are never rolled back, permanently
-inflating the root qdisc's statistics.
-
-After this change *old can be a valid qdisc, NULL, or &noop_qdisc.
-Only call qdisc_put(*old) in the first case to avoid decreasing
-noop_qdisc's refcount, which was never increased.
-
-Fixes: 665338b2a7a0 ("net/sched: taprio: dump class stats for the actual q->qdiscs[]")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260422161958.2517539-3-bestswngs@gmail.com
+Fixes: 4fd3d7d9e868 ("neigh: Add helper function neigh_xmit")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260424145843.74055-1-fw@strlen.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/core/neighbour.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 366eb7627b30d..f1709efb5f04e 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -633,7 +633,7 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	queue = skb_get_queue_mapping(skb);
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 96786016dbb4e..bf07438d6dfa5 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -3161,8 +3161,10 @@ int neigh_xmit(int index, struct net_device *dev,
  
- 	child = q->qdiscs[queue];
--	if (unlikely(!child))
-+	if (unlikely(child == &noop_qdisc))
- 		return qdisc_drop(skb, sch, to_free);
+ 		rcu_read_lock();
+ 		tbl = rcu_dereference(neigh_tables[index]);
+-		if (!tbl)
+-			goto out_unlock;
++		if (!tbl) {
++			rcu_read_unlock();
++			goto out_kfree_skb;
++		}
+ 		if (index == NEIGH_ARP_TABLE) {
+ 			u32 key = *((u32 *)addr);
  
- 	if (taprio_skb_exceeds_queue_max_sdu(sch, skb)) {
-@@ -716,7 +716,7 @@ static struct sk_buff *taprio_dequeue_from_txq(struct Qdisc *sch, int txq,
- 	int len;
- 	u8 tc;
- 
--	if (unlikely(!child))
-+	if (unlikely(child == &noop_qdisc))
- 		return NULL;
- 
- 	if (TXTIME_ASSIST_IS_ENABLED(q->flags))
-@@ -2191,6 +2191,9 @@ static int taprio_graft(struct Qdisc *sch, unsigned long cl,
- 	if (!dev_queue)
- 		return -EINVAL;
- 
-+	if (!new)
-+		new = &noop_qdisc;
-+
- 	if (dev->flags & IFF_UP)
- 		dev_deactivate(dev);
- 
-@@ -2204,14 +2207,14 @@ static int taprio_graft(struct Qdisc *sch, unsigned long cl,
- 	*old = q->qdiscs[cl - 1];
- 	if (FULL_OFFLOAD_IS_ENABLED(q->flags)) {
- 		WARN_ON_ONCE(dev_graft_qdisc(dev_queue, new) != *old);
--		if (new)
-+		if (new != &noop_qdisc)
- 			qdisc_refcount_inc(new);
--		if (*old)
-+		if (*old && *old != &noop_qdisc)
- 			qdisc_put(*old);
+@@ -3178,7 +3180,6 @@ int neigh_xmit(int index, struct net_device *dev,
+ 			goto out_kfree_skb;
+ 		}
+ 		err = READ_ONCE(neigh->output)(neigh, skb);
+-out_unlock:
+ 		rcu_read_unlock();
  	}
+ 	else if (index == NEIGH_LINK_TABLE) {
+@@ -3188,11 +3189,10 @@ int neigh_xmit(int index, struct net_device *dev,
+ 			goto out_kfree_skb;
+ 		err = dev_queue_xmit(skb);
+ 	}
+-out:
+ 	return err;
+ out_kfree_skb:
+ 	kfree_skb(skb);
+-	goto out;
++	return err;
+ }
+ EXPORT_SYMBOL(neigh_xmit);
  
- 	q->qdiscs[cl - 1] = new;
--	if (new)
-+	if (new != &noop_qdisc)
- 		new->flags |= TCQ_F_ONETXQUEUE | TCQ_F_NOPARENT;
- 
- 	if (dev->flags & IFF_UP)
 -- 
 2.53.0
 
