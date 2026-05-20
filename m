@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6471130DEAC;
-	Wed, 20 May 2026 18:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0933530DEAC;
+	Wed, 20 May 2026 18:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302073; cv=none; b=bvoMivNDhMqZ1D2s/hWL0lq80dRN05mLJzl8T/84FELaQV4KnV2ysNMrxhGkEWXbX8knpgM65jtStMBiPjFsolqmZqqA1LDVddy6Ec+SS13ObYoK+v/Uo4kNW/sizK0kvKv9ZNoO6k/8ZYCalPS2PVhySreMJ+hOWDx3O9/b1OA=
+	t=1779302076; cv=none; b=EvmCY9VVwDf0/UaDdgheBHM8LDPpLgucSacrhUBMwZTmRi35b8NweDVSYpHXhOGufx0eiBazL2o4L5KyLpbvG8hKaMnctUm2BUaikslWH3PgGs7ITen0HsTC9uyMP63cFLP2cEVylYb8Z25Z5cSqPPlB+qNvqwG0/TZLwDiSJwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302073; c=relaxed/simple;
-	bh=P6KHpKWfxr0jdV4wzJ8dnwvOldgFGk2K4vkBDH5CwdA=;
+	s=arc-20240116; t=1779302076; c=relaxed/simple;
+	bh=zSD6nD9YbuMdO4pG/T9dRmVUiG7TrNzYBi3vLgqWV54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nYha7P9cjqX2oviv4v4RsI/eBTb9GwQAUDJVA/CXDLNcsitjvi4B2M5hL/xk5MTLCC9y/1/a8NijuC64PmY+0uLnEJQkRD0VJZA0GKzACxfvvP4gByBznp4DdIEmVEWNtrepxnanDWiuJx8dSIh6e6RjGxLfxcZbmecb7h+5ycw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/J7VA83; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1M3eT8ljxFOuEmWHdjutkXCDb3s0cUsv5KtEpcRMyeg447B5uS09anWxdzjcVvR/7C5Ytz2Y1Y6qjinIJAJgn/x64r5t6ih9UmXH/Cmo3N+IQyYOEMaXsdvg2q5/kIe6Nd3wtM0q2G1d6KgeHjgEzgMYyffTeNHc8/IMSHsq74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGRQy/7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/J7VA83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A01F000E9;
-	Wed, 20 May 2026 18:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGRQy/7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFC71F000E9;
+	Wed, 20 May 2026 18:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302072;
-	bh=TR3Q5dS/IHqh0nu7re2WNZBHhd5y9yQthYZ3LL19aMw=;
+	s=korg; t=1779302074;
+	bh=Hg4Y0ID4/oLC/+Hu7StvV5SPMBaEK3mqj4LkAmMbp0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/J7VA83GXjOHxpU1OcXsbNNMpT1GvCk7NnyO8rsey5K/zYlp5iMBhMvhU4hirIy0
-	 LLRWfDwOYZW4BZy4J8xmY2h9C0tu3OtHH5oL1XAbUq0//hcqT/1Jw22rS19T/mQ+dX
-	 OlBAg6MCZ1UpZkAd4202hfWkD4GBqm1niYwUqwyI=
+	b=KGRQy/7XBXEI5vwkKuFNUyGsoMX051ImlyHzpVCwT742VOHOtu/i+2DJEqHpz+dSX
+	 WlSWxkzi62O5txQ3YBIfYVQbf3AV9Dx2xjRew8cV/lKZHkZqbrl41kez2hpFoidP5X
+	 wAx5CKqkSgFL9iDp0S6h6cmKKUeKMxH6s01Kk+wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/508] ALSA: core: Validate compress device numbers without dynamic minors
-Date: Wed, 20 May 2026 18:19:04 +0200
-Message-ID: <20260520162101.251343649@linuxfoundation.org>
+Subject: [PATCH 6.6 130/508] ASoC: SOF: Intel: hda: Place check before dereference
+Date: Wed, 20 May 2026 18:19:13 +0200
+Message-ID: <20260520162101.445152855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,83 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 796e119e9b14763be905ad0d023c71a14bc2e931 ]
+[ Upstream commit 6cbc8360f51a3df2ea16a786b262b9fe44d4c68c ]
 
-Without CONFIG_SND_DYNAMIC_MINORS, ALSA reserves only two fixed minors
-for compress devices on each card: comprD0 and comprD1.
+The struct hext_stream is dereferenced before it is checked for NULL.
+Although it can never be NULL due to a check prior to
+hda_dsp_iccmax_stream_hw_params() being called, this change clears any
+confusion regarding hext_stream possibly being NULL.
 
-snd_find_free_minor() currently computes the compress minor as
-type + dev without validating dev first, so device numbers greater than
-1 spill into the HWDEP minor range instead of failing registration.
+Check hext_stream for NULL and then assign its members.
 
-ASoC passes rtd->id to snd_compress_new(), so this can happen on real
-non-dynamic-minor builds.
+Detected by Smatch:
+sound/soc/sof/intel/hda-stream.c:488 hda_dsp_iccmax_stream_hw_params() warn:
+variable dereferenced before check 'hext_stream' (see line 486)
 
-Add a dedicated fixed-minor check for SNDRV_DEVICE_TYPE_COMPRESS in
-snd_find_free_minor() and reject out-of-range device numbers with
--EINVAL before constructing the minor.
-
-Also remove the stale TODO in compress_offload.c that still claims
-multiple compress nodes are missing.
-
-Fixes: 3eafc959b32f ("ALSA: core: add support for compressed devices")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260325-alsa-compress-static-minors-v1-1-0628573bee1c@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: aca961f196e5d ("ASoC: SOF: Intel: hda: Add helper function to program ICCMAX stream")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260324173830.17563-1-ethantidmore06@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 7 -------
- sound/core/sound.c            | 7 +++++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ sound/soc/sof/intel/hda-stream.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index 619371aa9964d..8545c7bbc58e3 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -40,13 +40,6 @@
- #define COMPR_CODEC_CAPS_OVERFLOW
- #endif
+diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
+index 3bb743cb167a5..924cef8d96c60 100644
+--- a/sound/soc/sof/intel/hda-stream.c
++++ b/sound/soc/sof/intel/hda-stream.c
+@@ -415,16 +415,20 @@ int hda_dsp_iccmax_stream_hw_params(struct snd_sof_dev *sdev, struct hdac_ext_st
+ 				    struct snd_dma_buffer *dmab,
+ 				    struct snd_pcm_hw_params *params)
+ {
+-	struct hdac_stream *hstream = &hext_stream->hstream;
+-	int sd_offset = SOF_STREAM_SD_OFFSET(hstream);
++	struct hdac_stream *hstream;
++	int sd_offset;
+ 	int ret;
+-	u32 mask = 0x1 << hstream->index;
++	u32 mask;
  
--/* TODO:
-- * - add substream support for multiple devices in case of
-- *	SND_DYNAMIC_MINORS is not used
-- * - Multiple node representation
-- *	driver should be able to register multiple nodes
-- */
--
- struct snd_compr_file {
- 	unsigned long caps;
- 	struct snd_compr_stream stream;
-diff --git a/sound/core/sound.c b/sound/core/sound.c
-index df5571d986295..f3bb0adf37cce 100644
---- a/sound/core/sound.c
-+++ b/sound/core/sound.c
-@@ -219,9 +219,16 @@ static int snd_find_free_minor(int type, struct snd_card *card, int dev)
- 	case SNDRV_DEVICE_TYPE_RAWMIDI:
- 	case SNDRV_DEVICE_TYPE_PCM_PLAYBACK:
- 	case SNDRV_DEVICE_TYPE_PCM_CAPTURE:
-+		if (snd_BUG_ON(!card))
-+			return -EINVAL;
-+		minor = SNDRV_MINOR(card->number, type + dev);
-+		break;
- 	case SNDRV_DEVICE_TYPE_COMPRESS:
- 		if (snd_BUG_ON(!card))
- 			return -EINVAL;
-+		if (dev < 0 ||
-+		    dev >= SNDRV_MINOR_HWDEP - SNDRV_MINOR_COMPRESS)
-+			return -EINVAL;
- 		minor = SNDRV_MINOR(card->number, type + dev);
- 		break;
- 	default:
+ 	if (!hext_stream) {
+ 		dev_err(sdev->dev, "error: no stream available\n");
+ 		return -ENODEV;
+ 	}
+ 
++	hstream = &hext_stream->hstream;
++	sd_offset = SOF_STREAM_SD_OFFSET(hstream);
++	mask = 0x1 << hstream->index;
++
+ 	if (!dmab) {
+ 		dev_err(sdev->dev, "error: no dma buffer allocated!\n");
+ 		return -ENODEV;
 -- 
 2.53.0
 
