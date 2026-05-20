@@ -1,38 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3327A3A6B6D;
-	Wed, 20 May 2026 18:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A794F3769E0;
+	Wed, 20 May 2026 18:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300797; cv=none; b=UHxxENvho6+FZZSGYZPT6NeBKvlef/SBUm1grs7Tqu+qcQVJsdMnaZ5+RyUz/ovjMs9RSDike2+DmtW2I13ZmG9hMPuq2DXTmtlrUVqMABI8b3vh2DGVHxHiujmjO06gru3hOWVeyN3HOTplo5FUFi2HfstFtGLjUILUnfYzFVM=
+	t=1779300800; cv=none; b=hUwOsPOXnLTWNcYgs9OM3sQS/cfTBkg7Dn7fBgucrRlJEkUz6Y1nIdPxSPjiE/SDxNqd7oW+VE7KoW6WoxqYxdEw7v8Nvcoc1dNRqc7k9IWo+5o2gn4tiLwPFbXA2wlFyVNFgmMDLgtvYEoaLeHgebZWhjh3jdQlCNEcxPbfg/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300797; c=relaxed/simple;
-	bh=OLtvAQfTJdoJ5iqvUhXyo2OvkHn8OIAJbGeI9jKyR8M=;
+	s=arc-20240116; t=1779300800; c=relaxed/simple;
+	bh=com2pU8YGZl5aMex8VL2ilqhmpEBVj8glsXSlrlH920=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVVjZ6FAvnJhhW9fjiXm/KdrTdR0hbhtfED9bJJRCLtec3vlLJryZtgfeL170HNKbtdPEdpb4+drg0NvR/xWzS2/zyOYZa0UI5IIgw34l9jxWOaq14pQOe60z1bM3bY5fgHQZxX0vzT3NrsK2lQCxMxrxe5PvfF/ULKI5++1Jgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWva3Tam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Knfd5BVZt3+LRCfElL6J6levUow5y0XquuHpbq/+93XxeCCN++PgNJdHBHuAKeMJAPB+hUVH4iC7jKL7ja+c/jPrhKZ+NVFKo4pNxpfw2RlgGTRKrs5GI/drV5rRMLTWuFLtCeWwXEi8mOdgRVOljkJjPvBOmWvngTwPdArWo48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSxnKlYe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWva3Tam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800051F000E9;
-	Wed, 20 May 2026 18:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSxnKlYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFEBF1F000E9;
+	Wed, 20 May 2026 18:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300796;
-	bh=8Ux8ATyhoElJps1H07spRUPeupRr0bcv6IK/htbXdmo=;
+	s=korg; t=1779300798;
+	bh=Ra5XibesOBGAwaDua53noMWS/86GNlw4F50PpAgK2BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AWva3TamMQz3oL+TtI4dHoGXqFtzEb5MVpX0onotpKMxjrGJ5YJt/Hlkg1r3cP8K3
-	 e3XDJ3adqFsSttMIXSwYOlpJolg6igJte/GD1F4p5+2zFRaTr9Z4RyECGTho/k5OyU
-	 huVd7ltHbN4UB+Unb8DFcYAhQc+70VxXHPvC7CBQ=
+	b=HSxnKlYe6NacnQJYyAE18MZN3v8wM3lUHbD3QiIqQ5N2rZczG8Zs3tLgSdA8x6B2S
+	 FSc+dgSh8Pefhr0Imrwiuf1QQvC9j8tqzTt+os2hTW2AKQV6EfvHclxcF6kYPe4Pve
+	 n0S85hpkHsvHyHE1Cw7Qzy2k6pXa2fsiZDeIX7Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Chris Mason <clm@fb.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Sterba <dsterba@suse.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Jason A. Donenfeld" <jason@zx2c4.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Li Nan <linan122@huawei.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Richard Henderson <richard.henderson@linaro.org>,
+	Richard Weinberger <richard@nod.at>,
+	Russell King <linux@armlinux.org.uk>,
+	Song Liu <song@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ted Tso <tytso@mit.edu>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/666] ARM: OMAP1: Fix DEBUG_LL and earlyprintk on OMAP16XX
-Date: Wed, 20 May 2026 18:18:43 +0200
-Message-ID: <20260520162117.984433071@linuxfoundation.org>
+Subject: [PATCH 6.12 313/666] arm64/xor: fix conflicting attributes for xor_block_template
+Date: Wed, 20 May 2026 18:18:44 +0200
+Message-ID: <20260520162118.004677767@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,38 +89,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaro Koskinen <aaro.koskinen@iki.fi>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 7e74b606dd39c46d4378d6f6563f560a00ab8694 ]
+[ Upstream commit 675a0dd596e712404557286d0a883b54ee28e4f4 ]
 
-On OMAP16XX, the UART enable bit shifts are written instead of the actual
-bits. This breaks the boot when DEBUG_LL and earlyprintk is enabled;
-the UART gets disabled and some random bits get enabled. Fix that.
+Commit 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
+changes the definition to __ro_after_init instead of const, but failed to
+update the external declaration in xor.h.  This was not found because
+xor-neon.c doesn't include <asm/xor.h>, and can't easily do that due to
+current architecture of the XOR code.
 
-Fixes: 34c86239b184 ("ARM: OMAP1: clock: Fix early UART rate issues")
-Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Link: https://patch.msgid.link/aca7HnXZ-aCSJPW7@darkstar.musicnaut.iki.fi
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Link: https://lkml.kernel.org/r/20260327061704.3707577-4-hch@lst.de
+Fixes: 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Chris Mason <clm@fb.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: David Sterba <dsterba@suse.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason A. Donenfeld <jason@zx2c4.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Li Nan <linan122@huawei.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Magnus Lindholm <linmag7@gmail.com>
+Cc: Matt Turner <mattst88@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Song Liu <song@kernel.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/clock_data.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/xor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap1/clock_data.c b/arch/arm/mach-omap1/clock_data.c
-index c58d200e4816b..5203b047deac8 100644
---- a/arch/arm/mach-omap1/clock_data.c
-+++ b/arch/arm/mach-omap1/clock_data.c
-@@ -700,8 +700,8 @@ int __init omap1_clk_init(void)
- 	/* Make sure UART clocks are enabled early */
- 	if (cpu_is_omap16xx())
- 		omap_writel(omap_readl(MOD_CONF_CTRL_0) |
--			    CONF_MOD_UART1_CLK_MODE_R |
--			    CONF_MOD_UART3_CLK_MODE_R, MOD_CONF_CTRL_0);
-+			    (1 << CONF_MOD_UART1_CLK_MODE_R) |
-+			    (1 << CONF_MOD_UART3_CLK_MODE_R), MOD_CONF_CTRL_0);
- #endif
+diff --git a/arch/arm64/include/asm/xor.h b/arch/arm64/include/asm/xor.h
+index befcd8a7abc98..7c03207157196 100644
+--- a/arch/arm64/include/asm/xor.h
++++ b/arch/arm64/include/asm/xor.h
+@@ -13,7 +13,7 @@
  
- 	/* USB_REQ_EN will be disabled later if necessary (usb_dc_ck) */
+ #ifdef CONFIG_KERNEL_MODE_NEON
+ 
+-extern struct xor_block_template const xor_block_inner_neon;
++extern struct xor_block_template xor_block_inner_neon __ro_after_init;
+ 
+ static void
+ xor_neon_2(unsigned long bytes, unsigned long * __restrict p1,
 -- 
 2.53.0
 
