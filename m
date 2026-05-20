@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06602373BEB;
-	Wed, 20 May 2026 16:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A9927E045;
+	Wed, 20 May 2026 16:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296354; cv=none; b=lVM0idlK7vHBA/aPzlgv/1UEJs28A1ciauFBeqnhow/WcMUnoIKPmHix1uwnoDEZVLwEM0Ga6cdxSwnqXVjwIRdLs2oCfFt6+AOVP9IflEEsWZfMYCJ4r+k2DFehb6JCGUZ9IFLNE7H69GRJVYGZRpzNetavSa6qYSDXUP2e+YY=
+	t=1779296356; cv=none; b=OwKshVx0ZF2X2i97bw9angGrK3r5OMmFILUynXrDy6EkxRHIo1mwBgFlTwRYRaNXAYs3hJwUvt6RHhNoBSnWzYYjFt2rFrNxvLsjIcfeHD9/4b3Rd1tOd/OPWs3+OKWKDmvRGImoOqvRDv8gUDx9HalqvflBinDfC/8lBoUhbxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296354; c=relaxed/simple;
-	bh=df0PUKAQTNyNdK3fXBi7or5x0noBLB2Hz34nlUq0zyk=;
+	s=arc-20240116; t=1779296356; c=relaxed/simple;
+	bh=e8s+jkPG9Tn7a+Cx4R/kxO1qwZj9eSlMeXmcTpEz0zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5n0UKLGBZRbQq0+k5ehfpFuu9PFdYLYz8cicpSkA9pQtHW94WoggskhkspMWAQJvFk+JkpW89AwoFgF60jaTo0LogQLDYH4a+RlzQS+wBZXFp5tMIKyGyJW8CVcXZMMH9pPBSjdSVffXxNkYep1n7DnUQVRLCiHPtzJcdZ1dc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InHwljWz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uEFpkGyhJX94jAnhkMhpIeNQQpcMfQyWUvYUpOQHiKGtqHui1WpN8jVwkQZMXunYK+nHxm7NcUxXIMosK87dzMUTpJ1fjy4CFWaqoV9xxh7hzpMqt0v2aorXcUQnHJM7E/n2mJ1lAD5nmKrjq7u7N7R3ZlwWlvX4ZkFbSBx1s/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJHIsUBb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InHwljWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB931F000E9;
-	Wed, 20 May 2026 16:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJHIsUBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA391F000E9;
+	Wed, 20 May 2026 16:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296352;
-	bh=8sB5WLlv9r6p70AIRrUr6Y76pK0FI4eeQRAmqsIOibk=;
+	s=korg; t=1779296355;
+	bh=iiyPWk02KnNYFnVPAiLlwq3c+hEBSn0lWcdIi111vgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=InHwljWz+DxbujocYH+o4b68R+cCu/3cfCM4rzRlt+wLq4nvlHKJ5GGps1if2JehT
-	 lDIpARjuvMkD9heoI9ZXRBXKJ+LrmU9DcpgzfRJ3YulmeJ714JKX7UwMFfb007Oeod
-	 XvK8H+12bwg+d9s4qzXaYVXEKM18xfFDwiXkZVGg=
+	b=iJHIsUBb+KU4SHTGt+q3exvmgmBMu9IV1G5lxidvdmKz6oyBR8vaxqQHqxu4L4WJF
+	 KcAueNJS+B07+lDfrt02rjyhB4mqHRnXaHF+zhMGvBQWuTGqEQSsJ5MRQxP+oI2XQ9
+	 0ncYP+ZsUdg6x9vlX+YVTiThKwTPc576dhHpztdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0766/1146] arm64: dts: marvell: armada-37xx: use usb2-phy in USB3 controllers phy-names
-Date: Wed, 20 May 2026 18:16:56 +0200
-Message-ID: <20260520162205.548727242@linuxfoundation.org>
+Subject: [PATCH 7.0 0767/1146] pwm: stm32: Fix rounding issue for requests with inverted polarity
+Date: Wed, 20 May 2026 18:16:57 +0200
+Message-ID: <20260520162205.572415178@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,62 +45,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 0fef19844624f8bc07651b4d26088d8940affba3 ]
+[ Upstream commit 5d087c485b6ecf200a9ebb2a032bf8571d330250 ]
 
-Instead of the generic 'usb2-phy' name, the Armada 37xx device trees
-are using a custom 'usb2-utmi-otg-phy' name for the USB2 PHY in the USB3
-controller node. Since commit 53a2d95df836 ("usb: core: add phy notify
-connect and disconnect"), this triggers a bug [1] in the USB core which
-causes double use of the USB3 PHY.
+The calculation of the number of pwm clk ticks from a time length in
+nanoseconds involves a division and thus some rounding. That might
+result in
 
-Change the PHY name to 'usb2-phy' in the SoC and in the uDPU specific
-dtsi files in order to avoid triggering the bug and also to keep the
-names in line with the ones used by other platforms.
+	duty_ticks + offset_ticks < period_ticks
 
-Link: https://lore.kernel.org/r/20260330-usb-avoid-usb3-phy-double-use-v1-1-d2113aecb535@gmail.com # [1]
-Fixes: 53a2d95df836 ("usb: core: add phy notify connect and disconnect")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+despite
+
+	duty_length_ns + duty_offset_ns >= period_length_ns
+
+. The stm32 PWM cannot configure offset_ticks freely, it can only select
+0 or period_length_ns - duty_length_ns---that is the classic normal and
+inverted polarity. The decision to select the hardware polarity must be
+done using the ticks values and not the nanoseconds times to adhere to
+the rounding rules by the pwm core.
+
+With the pwm clk running at 208900 kHz on my test machine
+(stm32mp135f-dk), a test case that was handled wrong is:
+
+	# pwmround -P 9999962 -O 24970 -D 9974992
+	period_length = 9999962
+	duty_length = 9974840
+	duty_offset = 25123
+
+With this change applied the rounding is done correctly:
+
+	# pwmround -P 9999962 -O 24970 -D 9974992
+	period_length = 9999962
+	duty_length = 9974840
+	duty_offset = 0
+
+Fixes: deaba9cff809 ("pwm: stm32: Implementation of the waveform callbacks")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/c5e7767cee821b5f6e00f95bd14a5e13015646fb.1776264104.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi | 2 +-
- arch/arm64/boot/dts/marvell/armada-37xx.dtsi      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-stm32.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-index cd856c0aba71e..12deacb741ccb 100644
---- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-@@ -161,7 +161,7 @@ &eth1 {
- &usb3 {
- 	status = "okay";
- 	phys = <&usb2_utmi_otg_phy>;
--	phy-names = "usb2-utmi-otg-phy";
-+	phy-names = "usb2-phy";
- };
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 2594fb771b04a..935257a890b06 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -68,7 +68,7 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
+ 	struct stm32_pwm *priv = to_stm32_pwm_dev(chip);
+ 	unsigned int ch = pwm->hwpwm;
+ 	unsigned long rate;
+-	u64 ccr, duty;
++	u64 duty_ticks, offset_ticks;
+ 	int ret;
  
- &uart0 {
-diff --git a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-index 87f9367aec122..cbc411bfa3810 100644
---- a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-+++ b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-@@ -373,7 +373,7 @@ usb3: usb@58000 {
- 				interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&sb_periph_clk 12>;
- 				phys = <&comphy0 0>, <&usb2_utmi_otg_phy>;
--				phy-names = "usb3-phy", "usb2-utmi-otg-phy";
-+				phy-names = "usb3-phy", "usb2-phy";
- 				status = "disabled";
- 			};
+ 	if (wf->period_length_ns == 0) {
+@@ -164,23 +164,25 @@ static int stm32_pwm_round_waveform_tohw(struct pwm_chip *chip,
+ 		wfhw->arr = min_t(u64, arr, priv->max_arr) - 1;
+ 	}
  
+-	duty = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
+-				   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
+-	duty = min_t(u64, duty, wfhw->arr + 1);
++	duty_ticks = mul_u64_u64_div_u64(wf->duty_length_ns, rate,
++					 (u64)NSEC_PER_SEC * (wfhw->psc + 1));
++	duty_ticks = min_t(u64, duty_ticks, wfhw->arr + 1);
+ 
+-	if (wf->duty_length_ns && wf->duty_offset_ns &&
+-	    wf->duty_length_ns + wf->duty_offset_ns >= wf->period_length_ns) {
++	offset_ticks = mul_u64_u64_div_u64(wf->duty_offset_ns, rate,
++					   (u64)NSEC_PER_SEC * (wfhw->psc + 1));
++	offset_ticks = min_t(u64, offset_ticks, wfhw->arr + 1);
++
++	if (duty_ticks && offset_ticks &&
++	    duty_ticks + offset_ticks >= wfhw->arr + 1) {
+ 		wfhw->ccer |= TIM_CCER_CCxP(ch + 1);
+ 		if (priv->have_complementary_output)
+ 			wfhw->ccer |= TIM_CCER_CCxNP(ch + 1);
+ 
+-		ccr = wfhw->arr + 1 - duty;
++		wfhw->ccr = wfhw->arr + 1 - duty_ticks;
+ 	} else {
+-		ccr = duty;
++		wfhw->ccr = duty_ticks;
+ 	}
+ 
+-	wfhw->ccr = min_t(u64, ccr, wfhw->arr + 1);
+-
+ out:
+ 	dev_dbg(&chip->dev, "pwm#%u: %lld/%lld [+%lld] @%lu -> CCER: %08x, PSC: %08x, ARR: %08x, CCR: %08x\n",
+ 		pwm->hwpwm, wf->duty_length_ns, wf->period_length_ns, wf->duty_offset_ns,
 -- 
 2.53.0
 
