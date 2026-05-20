@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44732333441;
-	Wed, 20 May 2026 18:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1721285CBA;
+	Wed, 20 May 2026 18:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301939; cv=none; b=QWUElxGOBhqrC8DpQGp+I/k8xYikdqXnJ1o7ZqFG/wDdlxpjX8HY70Tjubn46Jp27VkIxkibn9qiqKMIrLA/8Iz+RjdAdlXT/gmVms8ZlIYPDU0egJFS/Oj1K75BuE3pvy/QdIIDuGiktLB37cFgf4xDIE5Nw+gu8dNhXADTjLY=
+	t=1779301941; cv=none; b=fQbyQN1lQOH/WI1YoQfsKJiqIIyn08jkeY04z8n3F5uImfrIdqwwyNqksmwYyHvIT2z9ikF8DxLdB+2dqgL+lqTbUGjblut+QGbeMFE+4QPW1wLgN38Y7y2Xym22QhLVt1QGuhQzDeeMuIUK34KmPP6adJ45LOu3kyjvN4PeKO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301939; c=relaxed/simple;
-	bh=2SkxW0X0Xm+p9hJk88Z0kWQg7S0pKyzOMOgDgMuZcqU=;
+	s=arc-20240116; t=1779301941; c=relaxed/simple;
+	bh=041WuzKkpjDX1/GzvkxY40L2W7ChFCmLWsqkDew948g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFWTEbdWQSmbgmPeqdlLYzZdz+0PIQV8Wfgjj7ntAkJiIYdyn11B0ESPNcT7lUQykWnP/KomzueIzkwT2p0l181pU275lCAudVfW623+iI6hTtBCF+Tr2QyD9OV/lUcheqOnmOZ4TMwyM3MB7Dc25F9yKMVjP/GtTgtxher7tv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM22Q8Tc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sPJKJBe3mZ0jZlceo2QDX+e03hHl3QkzbJXU02PVzErBtPjT/lXL5HFvDJ9mTGHpOCFR+0fBFTFvgsJVmgqfCbN4mDzmHmUEMzR4QB1bb0z02axboC1BzSIpmYYh9Bunqs1oaMkWJBalZEMKCBgMEhW96TwJV/5ZKV1Pg/b10eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p2qu1x0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM22Q8Tc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BAD1F000E9;
-	Wed, 20 May 2026 18:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p2qu1x0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F8C1F000E9;
+	Wed, 20 May 2026 18:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301937;
-	bh=z+/ZB1eFABty94ATjNNfoaww+I5HnEYVAUMBn2e0ziw=;
+	s=korg; t=1779301940;
+	bh=pO/8EoF7Q+5XlVbvDIlP3reU0EZb8VJ9eC1CugRpWto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UM22Q8TcXFMHLmVezLG5A+82sF7nqAsz4tbbKk6spcFTYwi34sJPQp9gEROIBv0r3
-	 lTZOx/Jv3Xygof8gyqzsooqB+3b+CHLt9QrRX8riFyoUnzm4GcxXyq3ky4tsbHQHzI
-	 Zc36YOwHa9AnU25Vhex35+FxD2HKLjDVAEXavKQo=
+	b=1p2qu1x0xesExmQty/lsAROOlizZvf89rZslJ0StFRquauF1UHd0esKH//DZ3HSy3
+	 a1aUxzFdoVWulJr3BBdsQcatLp6HnkhmL0mbxPBpUUezNHghLlV+rF5FADERxa2C/Z
+	 5IoemIA9/0JEnEHl/ofFjN0JRF7nroImOf9OixRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Colton Lewis <coltonlewis@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/508] net/mlx5e: IPsec, fix ASO poll timeout with read_poll_timeout_atomic()
-Date: Wed, 20 May 2026 18:18:18 +0200
-Message-ID: <20260520162100.233057849@linuxfoundation.org>
+Subject: [PATCH 6.6 036/508] arm64: cpufeature: Make PMUVer and PerfMon unsigned
+Date: Wed, 20 May 2026 18:17:39 +0200
+Message-ID: <20260520162059.374633597@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,78 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit edccdd1eb94712da97a6ce71123ec27890add754 ]
+[ Upstream commit d1dcc20bcc40efe1f1c71639376c91dafa489222 ]
 
-The do-while poll loop uses jiffies for its timeout:
-  expires = jiffies + msecs_to_jiffies(10);
+On the host, this change doesn't make a difference because the fields
+are defined as FTR_EXACT. However, KVM allows userspace to set these
+fields for a guest and overrides the type to be FTR_LOWER_SAFE. And
+while KVM used to do an unsigned comparison to validate that the new
+value is lower than what the hardware provides, since the linked commit
+it uses the generic sanitization framework which does a signed
+comparison.
 
-jiffies is sampled at an arbitrary point within the current tick, so the
-first partial tick contributes anywhere from a full tick down to nearly
-zero real time. For small msecs_to_jiffies() results this is
-significant, the effective poll window can be much shorter than the
-requested 10ms, and in the worst case the loop exits after a single
-iteration (e.g., when HZ=100), well before the device has delivered the
-CQE.
+Fix it by defining these fields as unsigned. In theory, without this
+fix, userspace could set a higher PMU version than the hardware supports
+by providing any value with the top bit set.
 
-Replace the loop with read_poll_timeout_atomic(), which counts elapsed
-time via udelay() accounting rather than jiffies, guaranteeing the full
-poll window regardless of HZ.
-
-Additionally, read_poll_timeout_atomic() executes the poll operation one
-more time after the timeout has expired, giving the CQE a final chance
-to be detected. The old do-while loop could exit without a final poll if
-the timeout expired during the udelay() between iterations.
-
-Fixes: 76e463f6508b ("net/mlx5e: Overcome slow response for first IPsec ASO WQE")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260409202852.158059-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c118cead07a7 ("KVM: arm64: Use generic sanitisation for ID_(AA64)DFR0_EL1")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Colton Lewis <coltonlewis@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec_offload.c      | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/arm64/kernel/cpufeature.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-index fd03aa4f47b5a..004cf295eb249 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-@@ -1,6 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
- /* Copyright (c) 2017, Mellanox Technologies inc. All rights reserved. */
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 4561c4a670afb..5db25bfb854ff 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -453,7 +453,7 @@ static const struct arm64_ftr_bits ftr_id_aa64dfr0[] = {
+ 	 * We can instantiate multiple PMU instances with different levels
+ 	 * of support.
+ 	 */
+-	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_EXACT, ID_AA64DFR0_EL1_DebugVer_SHIFT, 4, 0x6),
+ 	ARM64_FTR_END,
+ };
+@@ -597,7 +597,7 @@ static const struct arm64_ftr_bits ftr_id_pfr2[] = {
  
-+#include <linux/iopoll.h>
-+
- #include "mlx5_core.h"
- #include "en.h"
- #include "ipsec.h"
-@@ -591,7 +593,6 @@ int mlx5e_ipsec_aso_query(struct mlx5e_ipsec_sa_entry *sa_entry,
- 	struct mlx5_wqe_aso_ctrl_seg *ctrl;
- 	struct mlx5e_hw_objs *res;
- 	struct mlx5_aso_wqe *wqe;
--	unsigned long expires;
- 	u8 ds_cnt;
- 	int ret;
- 
-@@ -613,13 +614,8 @@ int mlx5e_ipsec_aso_query(struct mlx5e_ipsec_sa_entry *sa_entry,
- 	mlx5e_ipsec_aso_copy(ctrl, data);
- 
- 	mlx5_aso_post_wqe(aso->aso, false, &wqe->ctrl);
--	expires = jiffies + msecs_to_jiffies(10);
--	do {
--		ret = mlx5_aso_poll_cq(aso->aso, false);
--		if (ret)
--			/* We are in atomic context */
--			udelay(10);
--	} while (ret && time_is_after_jiffies(expires));
-+	read_poll_timeout_atomic(mlx5_aso_poll_cq, ret, !ret, 10,
-+				 10 * USEC_PER_MSEC, false, aso->aso, false);
- 	if (!ret)
- 		memcpy(sa_entry->ctx, aso->ctx, MLX5_ST_SZ_BYTES(ipsec_aso));
- 	spin_unlock_bh(&aso->lock);
+ static const struct arm64_ftr_bits ftr_id_dfr0[] = {
+ 	/* [31:28] TraceFilt */
+-	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MProfDbg_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MMapTrc_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_CopTrc_SHIFT, 4, 0),
 -- 
 2.53.0
 
