@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DB33EDACC;
-	Wed, 20 May 2026 16:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F23EAC8F;
+	Wed, 20 May 2026 16:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295386; cv=none; b=RGFGTbzv6PZD7ablEORsDhSU4qBkPSAiLbt1S36LM6Io2kAkmfmdDvYCiRPJG/E2End/tIw385iWHoxMYwvGHtUToqAurRIoDpFpPuDX0KhHyMgbJEyQ9JdrzeInxVc0eLo69DXb0RQVLkxD3okmY+7c2PjMm4oSol6/D+Gz04U=
+	t=1779295389; cv=none; b=ID3SFLL6LZ12V1YmoyQBEg0RQ7lRq6RdoEqpVoDyH4V/d7Y2rvaMlkk28e2M+7ST8rGvtWtm2y1EYE0Buk3NG5OPPrb9Vhnxue0rQ2cgqxjqnPTM9wjlyv3xkCCYkJI4pW26IQ695hjsD1ViI8Fjba+Qcd0NYmItwY0MKGh9hkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295386; c=relaxed/simple;
-	bh=XzAGIkn1SvUIFHBU1zGqxnzjpY66Ao9O9bCviukkfJo=;
+	s=arc-20240116; t=1779295389; c=relaxed/simple;
+	bh=kXsg/TxVIxsAY8OysjPnBq054QTeU6jKoEB93GVLnTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ks4dJKkg1ZsB7zm3oZTZQ46nZUbssmA2JmTlk8ft/j26P4oMrDg84ENLa4zvn75LVW2yRnT5Iy7cetVc/diDFIPNoEq42PnDqJXTqcvodguKy9TiAkPgWpoIKAQQI6Oc5atr8WkRgQtq6UVPfJteKc/twKPof6y8x8mL1zW0F1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKJzTfiK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UzdMg2eitgF5eOiEG+8gN1UC3Z9bz97gbAlESoopGjKq3ZpG1ERedudvSvdBOvEJCeQMNa4Z2Ay/nkDGd6kmoyYPmS/h6AS+DFdEz9wVxj6eyMqSMYfkPU6Cu5q8yUAWtNgaCS5US4x6AD7oJuw8+SUFOdFf2wAhXHqzfQ8TBCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvKrm1Os; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKJzTfiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766A51F000E9;
-	Wed, 20 May 2026 16:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvKrm1Os"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1740F1F00893;
+	Wed, 20 May 2026 16:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295385;
-	bh=CzA0wYNShvyOsHIs64oITrH4tvl/+T8cKfjT8b6R7iI=;
+	s=korg; t=1779295387;
+	bh=cgk5rWaI3a40sDr45r9iuwxvhKTPp1UpjddN3bMSIyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gKJzTfiKZkkWthR3m2q20fBd6c9r4/axVMEIaJDWtLWgzu2sFH+N+EECsrAx98L40
-	 CuHnO84k3/y+7p60BeAfN6ruah7bBGDOg3+H7j1TtnMK9wIa1eU032pPQ34jG78pBB
-	 gdWrRwuSZLyB7Q66QGZN8ZCaEfuhzmBkPltQkV7Y=
+	b=hvKrm1OsyVdzKpQlV1uMZajscY9C/eO2VMSvt4UWo27R2PEbHCpKqeHflc0rs5ApC
+	 oDzBA2NXGzB+YgCHeIfgLT92Cn5p5W1c0YcxjQbh8Oh2gmqqpWkvJ5DvU4k38Ylm/7
+	 LxBBmc9c0CtXrPYgO748AiOqfxzP/Q4LuO5Rprpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -42,9 +42,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0400/1146] Docs/admin-guide/mm/damn/lru_sort: fix intervals autotune parameter name
-Date: Wed, 20 May 2026 18:10:50 +0200
-Message-ID: <20260520162157.253874966@linuxfoundation.org>
+Subject: [PATCH 7.0 0401/1146] Docs/mm/damon/index: fix typo: autoamted -> automated
+Date: Wed, 20 May 2026 18:10:51 +0200
+Message-ID: <20260520162157.277004172@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -65,12 +65,12 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit d7f00084f6863a243b396200c81e83ae302c5a76 ]
+[ Upstream commit a4e82de81fe59d5bfcc9450145e8e108561f2e07 ]
 
-The section name should be the same as the parameter name.  Fix it.
+There is an obvious typo.  Fix it (s/autoamted/automated/).
 
-Link: https://lkml.kernel.org/r/20260307195356.203753-6-sj@kernel.org
-Fixes: ed581147a417 ("Docs/admin-guide/mm/damon/lru_sort: document intervals autotuning")
+Link: https://lkml.kernel.org/r/20260307195356.203753-8-sj@kernel.org
+Fixes: 32d11b320897 ("Docs/mm/damon/index: simplify the intro")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Acked-by: wang lian <lianux.mm@gmail.com>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>
@@ -87,24 +87,22 @@ Cc: Vlastimil Babka <vbabka@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/lru_sort.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/mm/damon/index.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 63977a89025e5..5f38910c0ba7e 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -95,8 +95,8 @@ increases and decreases the effective level of the quota aiming the LRU
+diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
+index 82f6c5eea49a7..318f6a7bfea47 100644
+--- a/Documentation/mm/damon/index.rst
++++ b/Documentation/mm/damon/index.rst
+@@ -12,7 +12,7 @@ DAMON is a Linux kernel subsystem for efficient :ref:`data access monitoring
+  - *light-weight* (for production online usages),
+  - *scalable* (in terms of memory size),
+  - *tunable* (for flexible usages), and
+- - *autoamted* (for production operation without manual tunings).
++ - *automated* (for production operation without manual tunings).
  
- Disabled by default.
- 
--Auto-tune monitoring intervals
--------------------------------
-+autotune_monitoring_intervals
-+-----------------------------
- 
- If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
- sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
+ .. toctree::
+    :maxdepth: 2
 -- 
 2.53.0
 
