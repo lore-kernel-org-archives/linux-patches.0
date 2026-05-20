@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D13D1CC6;
-	Wed, 20 May 2026 18:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10E92D7386;
+	Wed, 20 May 2026 18:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301313; cv=none; b=k7UwRltHfIqbCQDVWKjmvpARUMe+dk1P3v5s53jMYe7j92ZV54cjY2/P2Opd0eSuSeJ1o5mwguMeNTEJrhBNrZiwRrELPBlBiuFYIbyn31rqNx8mL0YOjt6VQRZKrpzzT41MGuRzg6O0dP82jJ1tgOn/y68ILrbON/7TQxTynFw=
+	t=1779301316; cv=none; b=tF2umhUwuCwXcYFHRLczOT1jpVv90cUYhk3/wobhcyDUrY8PUqD32MDOwEzZUzVHrFd+RKxgn+oTv8/Z7Egwy12WBaJApoO8o9LalQZTNYfff1foAaCpbyDqyFGIg8pkzSl0i+7nc0EA090CeZnmlo8GjKT8IE8Mm68onti7mWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301313; c=relaxed/simple;
-	bh=klJQDkh4QaQ3UEwCCL1mO1mLQtDWgvaI1AHHoAzWCCE=;
+	s=arc-20240116; t=1779301316; c=relaxed/simple;
+	bh=TDo+bd0QADoRQ984tNFjtE/J6Qfgne6JECkNYgRPlqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DnA68TKN3pTjazgD+PC348ZbWcVplomCf1vJi0C4NEYJBNS76xEl4C2wrgChI31z6HwaDbLNeMSA6wy4LfD4Lf2iSGRE/W57lXBa/N6Irml1bnOeOK5UUBeN0joRdFwJOxqZVZxrRsNXkLos4Vz+b7ey1R4B5DtdXKJUMm1g+Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoBLteRj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5/TUk+GppyURaXmFZvZIkQANjFvPmz8ojOR+COxZR+mvNY5a6GpmFSnGdkjiLq7XRPQYDhe0yQA4HEYa2lJ1/5Db6oq9t66Qf87CuahKHWyST3QnCA7kzARAaK6TEG4u9Y+VupKN8u4Roy3ZcCTbmqZYXXIUbD/XO3i9xRB6kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUODhMGf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoBLteRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9471F00893;
-	Wed, 20 May 2026 18:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUODhMGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620D81F00896;
+	Wed, 20 May 2026 18:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301312;
-	bh=B1rAajSTlimMwgMnmEXybhTNXE64nNERqkslCMR2Ii4=;
+	s=korg; t=1779301314;
+	bh=rVVJIZOnws6mdVmRVMaa2Fcoy+FgdLwsYKdTHAO86/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MoBLteRjOI3vDW3CdM59U5mCx0ABwfW4bnUtSMz9TcSV9ztYVNgHgv1Vm5XGc0dz9
-	 ROJVRdezQi4R1MDkTHrPg35q5ZTrKgwzcyIEB2CYtWXOTyPuhIHKrXnKCxt6luRgkC
-	 fY2snHNoAUsCb/89v/H/FcDQawEJApNlWGGflhG0=
+	b=rUODhMGfMJLKKxHaUPP6HLWT8zRl4lOR/I89+N0EoEN6cCvdC7PKQLTMH8OEXxWGF
+	 42Dd2wq5msy2eK/s6UcJWa6D36F1Z1s2+gy3zqvQGJYfnzBYpB3ZIAiDHesQJiuy3t
+	 /np8Caz903vflT0bGVlAASaR99Fu2g1Q7jyNuc48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cuitao <cuitao@kylinos.cn>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 506/666] cgroup/rdma: fix integer overflow in rdmacg_try_charge()
-Date: Wed, 20 May 2026 18:21:57 +0200
-Message-ID: <20260520162122.228199025@linuxfoundation.org>
+Subject: [PATCH 6.12 507/666] mailbox: add sanity check for channel array
+Date: Wed, 20 May 2026 18:21:58 +0200
+Message-ID: <20260520162122.253555435@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,49 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: cuitao <cuitao@kylinos.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit c802f460dd485c1332b5a35e7adcfb2bc22536a2 ]
+[ Upstream commit c1aad75595fb67edc7fda8af249d3b886efa1be9 ]
 
-The expression `rpool->resources[index].usage + 1` is computed in int
-arithmetic before being assigned to s64 variable `new`. When usage equals
-INT_MAX (the default "max" value), the addition overflows to INT_MIN.
-This negative value then passes the `new > max` check incorrectly,
-allowing a charge that should be rejected and corrupting usage to
-negative.
+Fail gracefully if there is no channel array attached to the mailbox
+controller. Otherwise the later dereference will cause an OOPS which
+might not be seen because mailbox controllers might instantiate very
+early. Remove the comment explaining the obvious while here.
 
-Fix by casting usage to s64 before the addition so the arithmetic is
-done in 64-bit.
-
-Fixes: 39d3e7584a68 ("rdmacg: Added rdma cgroup controller")
-Signed-off-by: cuitao <cuitao@kylinos.cn>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 2b6d83e2b8b7 ("mailbox: Introduce framework for mailbox")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/rdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/mailbox.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/rdma.c b/kernel/cgroup/rdma.c
-index ef5878fb20057..d544a747f3954 100644
---- a/kernel/cgroup/rdma.c
-+++ b/kernel/cgroup/rdma.c
-@@ -283,7 +283,7 @@ int rdmacg_try_charge(struct rdma_cgroup **rdmacg,
- 			ret = PTR_ERR(rpool);
- 			goto err;
- 		} else {
--			new = rpool->resources[index].usage + 1;
-+			new = (s64)rpool->resources[index].usage + 1;
- 			if (new > rpool->resources[index].max) {
- 				ret = -EAGAIN;
- 				goto err;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index b4d52b814055b..39269359e3a64 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -520,8 +520,7 @@ int mbox_controller_register(struct mbox_controller *mbox)
+ {
+ 	int i, txdone;
+ 
+-	/* Sanity check */
+-	if (!mbox || !mbox->dev || !mbox->ops || !mbox->num_chans)
++	if (!mbox || !mbox->dev || !mbox->ops || !mbox->chans || !mbox->num_chans)
+ 		return -EINVAL;
+ 
+ 	if (mbox->txdone_irq)
 -- 
 2.53.0
 
