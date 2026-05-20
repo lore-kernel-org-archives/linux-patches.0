@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980BD3F7884;
-	Wed, 20 May 2026 18:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417B03F660B;
+	Wed, 20 May 2026 18:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300407; cv=none; b=OiQXONZTClr6aPNwlmH+bqSpAxseVW/YQt0CrhtuHNpsEupdrNxSHk9XdZtwczQsyYkzkkw6JVfrauJbggUK+BrSS9BLyni5G6cHE6xpboTvUS95X3eJIGo7xh+MPxMGr5liQEwsRtU61orch9Xam6jGCYTQAwQKQfh4fX/+w+w=
+	t=1779300410; cv=none; b=XApbpIxI7g6PY93v5+j8D/wNKV7n47sp0BS7yn1rUiQCgSPPQBruPewKndJivObwjOFKGeLfSSYvlo6uxZsaziDnTaofUvu9CIV2XwRhqgzBK0pZJKtxbJ2v/SviZvSKneCZnBM2h5ddA0WYnz9SXQFCNDend1QayBSHvg4wasM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300407; c=relaxed/simple;
-	bh=Sn6g7U8J6JCnYulKAQQmhdZAbD0AWnQ2473wIxhVrm4=;
+	s=arc-20240116; t=1779300410; c=relaxed/simple;
+	bh=AgQByXSC8o57M+SQFY1iPZuoFY7i3mgqwdpMNOQvK9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmtaD9Zjk5TSV/xhheAqhIHdoHRTW9uYz+cuc8a2T2wMH/DK4Niysc+JRfL/TXC6xX4ChNvyqd0i9I2Fuqc8xoxfVD06MD7NNIdnwHRATaBvQuiqxJYshNqydWZS5acS+50xZZNFLg4tyUiToFxTAyhvIHefnxPM522ziJnZlsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA+vPmEI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OVVw4c6Rwbb4oRKjammGdfVNwT+P3dLj0U5IChSDxzTfUgQqApjasKM+UpErZa2oEcBpi4K9fKwokkuDtrZtfb8B+Ap5/DMo8HjIYtXaFlNiX645SByuUY1RqhDZy98pVIAO7JMwFpCkgyWeC7lx/rKDd/gAgIEE3PcGfOZR4R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNA3LUIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA+vPmEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099921F000E9;
-	Wed, 20 May 2026 18:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNA3LUIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CCA1F000E9;
+	Wed, 20 May 2026 18:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300406;
-	bh=AVornoZmqmeWenNkmumCaIT3V0xXX3LYC9LnruM8aCM=;
+	s=korg; t=1779300409;
+	bh=j+SchdRXBJ5Xf7hynU0As2D9a6AX0G4p+GYV3bEoxZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sA+vPmEISjqYTDvr1jknUfYCJ/T8q7DWTroY/a0mN/cm4bnEojCXo4Nz2kB6lE1nn
-	 8ElQF4gWaINv1tEElA4rKjc5jQ1VCK/2zKDuMWgkYaetQghKcGE6gt2fg1dYNcj5NA
-	 QwMGJzNRIGj+XJiDT6VyfibASabxpLNu1Z6eOt1Y=
+	b=dNA3LUIwfEvMdCFt4QpJEYmZbK/U+QShERHl8HKmkCVwyS/2Z4iV3M08B67pCdhUd
+	 sKIOkfMYShGYn5gtnbtW6S9ChiSQ0+hIHv0AzN7h/eo+aVJ1tbAyxnwusMluo3so2P
+	 kH194HiSfQi0sX1yS1RjWeKHhZnJfw/aGHncBJ1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 161/666] PCI: dwc: rcar-gen4: Change EPC BAR alignment to 4K as per the documentation
-Date: Wed, 20 May 2026 18:16:12 +0200
-Message-ID: <20260520162114.697735546@linuxfoundation.org>
+Subject: [PATCH 6.12 162/666] drm/amdgpu/gfx10: look at the right prop for gfx queue priority
+Date: Wed, 20 May 2026 18:16:13 +0200
+Message-ID: <20260520162114.718873673@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -47,51 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 13f55a7ca773c731a1e645934c1ae48577f48785 ]
+[ Upstream commit 355d96cdec5c61fd83f7eb54f1a28e38809645d6 ]
 
-R-Car S4 Series (R8A779F[4-7]*) EP controller uses a 4K minimum iATU region
-size (CX_ATU_MIN_REGION_SIZE = 4K) as per R19UH0161EJ0130 Rev.1.30. Also,
-the controller itself can only be configured in the range 4 KB to 64 KB, so
-the current 1 MB alignment requirement is incorrect.
+Look at hqd_queue_priority rather than hqd_pipe_priority.
+In practice, it didn't matter as both were always set for
+kernel queues, but that will change in the future.
 
-Hence, change the alignment to the min size 4K as per the documentation.
-
-This also fixes needless unusability of BAR4 on this platform when the
-target address is fixed, such as for doorbell targets.
-
-Fixes: e311b3834dfa ("PCI: rcar-gen4: Add endpoint mode support")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260305151050.1834007-1-den@valinux.co.jp
+Fixes: b07d1d73b09e ("drm/amd/amdgpu: Enable high priority gfx queue")
+Reviewed-by：Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-rcar-gen4.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index 397c2f9477a15..8dcb63f813beb 100644
---- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-+++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-@@ -427,7 +427,7 @@ static const struct pci_epc_features rcar_gen4_pcie_epc_features = {
- 	.bar[BAR_3] = { .type = BAR_RESERVED, },
- 	.bar[BAR_4] = { .type = BAR_FIXED, .fixed_size = 256 },
- 	.bar[BAR_5] = { .type = BAR_RESERVED, },
--	.align = SZ_1M,
-+	.align = SZ_4K,
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+index 7babb74caf6fc..7d5609e3dd412 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -6601,7 +6601,7 @@ static void gfx_v10_0_gfx_mqd_set_priority(struct amdgpu_device *adev,
+ 	/* set up default queue priority level
+ 	 * 0x0 = low priority, 0x1 = high priority
+ 	 */
+-	if (prop->hqd_pipe_priority == AMDGPU_GFX_PIPE_PRIO_HIGH)
++	if (prop->hqd_queue_priority == AMDGPU_GFX_QUEUE_PRIORITY_MAXIMUM)
+ 		priority = 1;
  
- static const struct pci_epc_features*
+ 	tmp = RREG32_SOC15(GC, 0, mmCP_GFX_HQD_QUEUE_PRIORITY);
 -- 
 2.53.0
 
