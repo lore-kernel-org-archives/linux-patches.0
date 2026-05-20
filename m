@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE873F20FA;
-	Wed, 20 May 2026 17:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B283C39B483;
+	Wed, 20 May 2026 17:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299562; cv=none; b=IATUeoJeNed8BWZrm5eQfmuN2BhAOvCaSQMNWn7AcbVnTXbIM0c50Q8q7uWH8lRmvhJTkuwnh1mCFcOqaqGRcwo7llatBTQJMRygoY1fDCbqvowokqIRX+XXcdJOG37VK/EQoxsZCCqBeje0CtNaddTZ6rKFr3LMn4fFD/b/klE=
+	t=1779299564; cv=none; b=SO4h1EwatlBfozAK7VGf5PdEdjE/Q4LUwJ4ntUl3FYi7FW7KjhvoMJsP/1GQex40kHfRbBnwBif9UsTzKIN+/HRTSD+l/3EXJV0xSXDL8pjJAj7kKuH8w2RZmaSgk6HE+lf9Q++x7PDRhxHVpqPdGuLbi4nuzfEmrXzTQS9I6wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299562; c=relaxed/simple;
-	bh=/NWStgR0mRce+JrtD7kDnry89NhrNXEbNRXc8tBuE/Y=;
+	s=arc-20240116; t=1779299564; c=relaxed/simple;
+	bh=BMRgcE4nKSReXGy/pQlvx6pTHbNnc8eDCWFl1ICCBFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oA/lvQU0P20AI2Mw9Oe+ajzyoa+CdYS2lo1EZHVgdvvYct9i2XLq4cdsYh0XqCQa7bCNr5V6t6AVLD0B7G9v38BZHoxnSgFro0UZy9PrGPb683cj8WiDoYJzfklXOofrINjEMB3THbukRIjeX/tY4XrPAkV/fEjXRZxuLSp5yps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voWEzj8I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sny6G72vIWEnaYpcKp5Tj1yoGth9YT5AsBzNGNAclybiKdDC3s+y5SQ9ypl5DrUg8AS3m7QSljtcUoIgJXfTwV1eHo0J+E3ppU/+LIBRCdWo8/LXGoY9CSBCOKjJP7OgAtulgt1yJmX/d0IktIcgiAZ8lLnawq3V+F8YN+6h6ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJDZnS4T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voWEzj8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A0F1F000E9;
-	Wed, 20 May 2026 17:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJDZnS4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D971F000E9;
+	Wed, 20 May 2026 17:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299561;
-	bh=zm3g2lrO7xn9cATOxLQ+q5/oh+ipVxSQ2Jb39j+qJ5Y=;
+	s=korg; t=1779299563;
+	bh=ZnD9xXasB2OrUpk6px7N9/1Wz8qDpPa9/15VP00aEzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=voWEzj8ImuEFxLLOjNAJPBaOwPJnAagdEEIswh/l9VUTYqHps5WiOPoPIjTua5Whi
-	 Lr8afrI0kQI8+hlUhdxncAVVk4yLWDKyZ3PTQ725Tr6JPw1uB8gS3LtYi9EDvzSvyy
-	 xRwbP248Wus4tFO1PKBnU9zgZSRGmjFAboEg5TIk=
+	b=gJDZnS4TNEOGnaYqJLamjrtPfqtdgeN0QnfGnPd5l4+/fITmDBtmrCZDZxS7kfMOJ
+	 FyHb0kNbxvAxwO+FgXxt7TWJ3yhKccA6UOsU7Lu+xLrEJbexyolp5mkpnx00ZtBN/w
+	 Oqydr1O5nSmGP39UkDpqvsXzoL43ZbNLtBJUbDy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 819/957] sctp: discard stale INIT after handshake completion
-Date: Wed, 20 May 2026 18:21:42 +0200
-Message-ID: <20260520162152.328107752@linuxfoundation.org>
+Subject: [PATCH 6.18 820/957] bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()
+Date: Wed, 20 May 2026 18:21:43 +0200
+Message-ID: <20260520162152.350719501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,51 +48,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 8a92cb475ca90d84db769e4d4383e631ace0d6e5 ]
+[ Upstream commit aa6c6d9ee064aabfede4402fd1283424e649ca19 ]
 
-After an association reaches ESTABLISHED, the peer’s init_tag is already
-known from the handshake. Any subsequent INIT with the same init_tag is
-not a valid restart, but a delayed or duplicate INIT.
+bareudp_fill_metadata_dst() passes bareudp->sock to
+udp_tunnel6_dst_lookup() in the IPv6 path without a NULL check.
+The socket is only created in bareudp_open() and NULLed in
+bareudp_stop(), so calling this function while the device is down
+triggers a NULL dereference via sock->sk.
 
-Drop such INIT chunks in sctp_sf_do_unexpected_init() instead of
-processing them as new association attempts.
+ BUG: kernel NULL pointer dereference, address: 0000000000000018
+ RIP: 0010:udp_tunnel6_dst_lookup (net/ipv6/ip6_udp_tunnel.c:160)
+ Call Trace:
+  <TASK>
+  bareudp_fill_metadata_dst (drivers/net/bareudp.c:532)
+  do_execute_actions (net/openvswitch/actions.c:901)
+  ovs_execute_actions (net/openvswitch/actions.c:1589)
+  ovs_packet_cmd_execute (net/openvswitch/datapath.c:700)
+  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1114)
+  genl_rcv_msg (net/netlink/genetlink.c:1209)
+  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+  </TASK>
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/5788c76c1ee122a3ed00189e88dcf9df1fba226c.1777214801.git.lucien.xin@gmail.com
+Add a NULL check returning -ESHUTDOWN, consistent with the xmit paths
+in the same driver.
+
+Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260426165350.1663137-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/bareudp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 7b823d7591419..8e89a870780c4 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -1556,6 +1556,12 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 	/* Tag the variable length parameters.  */
- 	chunk->param_hdr.v = skb_pull(chunk->skb, sizeof(struct sctp_inithdr));
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 0df3208783ad9..da5866ba06999 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -529,6 +529,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
+ 		struct in6_addr saddr;
+ 		struct socket *sock = rcu_dereference(bareudp->sock);
  
-+	if (asoc->state >= SCTP_STATE_ESTABLISHED) {
-+		/* Discard INIT matching peer vtag after handshake completion (stale INIT). */
-+		if (ntohl(chunk->subh.init_hdr->init_tag) == asoc->peer.i.init_tag)
-+			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-+	}
++		if (!sock)
++			return -ESHUTDOWN;
 +
- 	/* Verify the INIT chunk before processing it. */
- 	err_chunk = NULL;
- 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
+ 		dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock,
+ 					     0, &saddr, &info->key,
+ 					     sport, bareudp->port, info->key.tos,
 -- 
 2.53.0
 
