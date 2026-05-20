@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051A23CB2F8;
-	Wed, 20 May 2026 16:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC0D364E89;
+	Wed, 20 May 2026 16:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295436; cv=none; b=fZNKRbNpdeu1v8eiExHRHur7AsX0GSxu/54n2/uLZOa76cT9yBdtpMQLoowjbsEwsbowxZ/OBoeYAn9JGcciORolNFRbPTvnBbOHcIHS2u7nV8NTJACl8u+I0pRAY9K0Zxu95pJ+qzrFPTWgGi27Mh6YXJNearJe6wopLy+ELhg=
+	t=1779295438; cv=none; b=M9vuYwZM6ml6+c+iF+8++luPxU3OPo83OYfpFIphwBJ0DmOE5VV4bHbjLzAdhbBM+SXy6zN7NyjhjCZcqqGHszLQXuwOXW4Pd0irGde7bT5LcDW/MBdpVT/EW4/TUCt1jujdIa96DL2Mn1Yk6gbik1C1zwDwrVMun5UzD5gRkqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295436; c=relaxed/simple;
-	bh=JePStAMh0eseW3qNRdftE5x987lULBnuj4psNPn6Dpg=;
+	s=arc-20240116; t=1779295438; c=relaxed/simple;
+	bh=h5xl3PoEIyrTblEDZUQp8Nmc4JS680XpUTdV0s0Qysc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0t2S5R3j1chAKPSLWl9cq8MZeE/mmP52/VRqMR5gGzpXNvbohf82/c2t5MQOz5ZEAUth0LnjZwdpnnqZnUx6jvUlCyNK+KFuXvxVlYZwdEGONGbyQmBWpNh3MNrT2AkVQP1U32fDOYYQfwVOfNNxqjUvUiGJbgnj4qieXEcFJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0OIMSBI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h46yXF5Iv241KyPGQ2/mgz5cQJIGpSZPj+22LmN14MszVcSylIEbtueQ2zXFxKzcqe3Qc1thvEk/MPbcyj5RC8S/U1dkmYa52wbS4WevbUCW8x0ghHFP1zf4a8k/bRyUGGfVb29DL5ybviqe0OuUz6gxfvxebbbjrdBTV5q89Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKwrIb5l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0OIMSBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722601F000E9;
-	Wed, 20 May 2026 16:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKwrIb5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1451D1F00893;
+	Wed, 20 May 2026 16:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295434;
-	bh=c9/u4HHMjRAjxwR2nfNg4qLtSS9y6PchlwMPOZsi1GY=;
+	s=korg; t=1779295437;
+	bh=TGy/+MWvpoOAKZEedBp0uFMALsEOSiyIS/8+Gp06qdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r0OIMSBIkLFdWGNAEF2gOoiQp/h+sS0L53W+QnHIqpnDkaOAXLzW8J4T8ssMplVha
-	 lyngNqqkcg2/fk+oEqxv4LwvUMhku+zTBwqUFnR99NEo+rFH5tWUYgxZOn4iuspNqS
-	 Tlj4gN3ZXPYs1veKroNYqyTcw1FFcWB3Cfb57ALg=
+	b=QKwrIb5lOPc/ukGh1NA6SSdFBTSGeQzZRGp3lIlNSRLB7dxZGPt2x525e2gu6xslQ
+	 kgJcf8t6lvlTWBMHGT4+0xVuhxf38huf1obMwe5B/5Di6s49+JPdd2MT64iLp1Pkxk
+	 PgbSMJJgJTQYK/w2qlouUDDgxwdQLtkVZXmAhY4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0417/1146] PCI: tegra194: Disable LTSSM after transition to Detect on surprise link down
-Date: Wed, 20 May 2026 18:11:07 +0200
-Message-ID: <20260520162157.633780248@linuxfoundation.org>
+Subject: [PATCH 7.0 0418/1146] PCI: tegra194: Dont force the device into the D0 state before L2
+Date: Wed, 20 May 2026 18:11:08 +0200
+Message-ID: <20260520162157.655425146@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,14 +54,21 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 9fa0c242f8d7acf1b124d4462d18f4023573ac1c ]
+[ Upstream commit 71d9f67701e1affc82d18ca88ae798c5361beddf ]
 
-After the link reaches a Detect-related LTSSM state, disable LTSSM so it
-does not keep toggling between Polling and Detect. Do this by polling for
-the Detect state first, then clearing APPL_CTRL_LTSSM_EN in both
-tegra_pcie_dw_pme_turnoff() and pex_ep_event_pex_rst_assert().
+As per PCIe CEM r6.0, sec 2.3, the PCIe Endpoint device should be in D3cold
+to assert WAKE# pin. The previous workaround that forced downstream devices
+to D0 before taking the link to L2 cited PCIe r4.0, sec 5.2, "Link State
+Power Management"; however, that spec does not explicitly require putting
+the device into D0 and only indicates that power removal may be initiated
+without transitioning to D3hot.
+
+Remove the D0 workaround so that Endpoint devices can use wake
+functionality (WAKE# from D3). With some Endpoints the link may not enter
+L2 when they remain in D3, but the Root Port continues with the usual flow
+after PME timeout, so there is no functional issue.
 
 Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
 Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
@@ -69,74 +76,87 @@ Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-4-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-5-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 29 ++++++++++++----------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 41 ----------------------
+ 1 file changed, 41 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 94113b2e33080..b38dbd02214b9 100644
+index b38dbd02214b9..c84eb1ba3a11c 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1594,14 +1594,6 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
- 		data &= ~APPL_PINMUX_PEX_RST;
- 		appl_writel(pcie, data, APPL_PINMUX);
+@@ -1258,44 +1258,6 @@ static int tegra_pcie_bpmp_set_pll_state(struct tegra_pcie_dw *pcie,
+ 	return 0;
+ }
  
--		/*
--		 * Some cards do not go to detect state even after de-asserting
--		 * PERST#. So, de-assert LTSSM to bring link to detect state.
--		 */
--		data = readl(pcie->appl_base + APPL_CTRL);
--		data &= ~APPL_CTRL_LTSSM_EN;
--		writel(data, pcie->appl_base + APPL_CTRL);
+-static void tegra_pcie_downstream_dev_to_D0(struct tegra_pcie_dw *pcie)
+-{
+-	struct dw_pcie_rp *pp = &pcie->pci.pp;
+-	struct pci_bus *child, *root_port_bus = NULL;
+-	struct pci_dev *pdev;
 -
- 		err = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, data,
- 			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
- 			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
-@@ -1610,6 +1602,14 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
- 			LTSSM_DELAY_US, LTSSM_TIMEOUT_US);
- 		if (err)
- 			dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", data, err);
-+
-+		/*
-+		 * Deassert LTSSM state to stop the state toggling between
-+		 * Polling and Detect.
-+		 */
-+		data = readl(pcie->appl_base + APPL_CTRL);
-+		data &= ~APPL_CTRL_LTSSM_EN;
-+		writel(data, pcie->appl_base + APPL_CTRL);
- 	}
- 	/*
- 	 * DBI registers may not be accessible after this as PLL-E would be
-@@ -1683,11 +1683,6 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 	if (pcie->ep_state == EP_STATE_DISABLED)
- 		return;
- 
--	/* Disable LTSSM */
--	val = appl_readl(pcie, APPL_CTRL);
--	val &= ~APPL_CTRL_LTSSM_EN;
--	appl_writel(pcie, val, APPL_CTRL);
+-	/*
+-	 * link doesn't go into L2 state with some of the endpoints with Tegra
+-	 * if they are not in D0 state. So, need to make sure that immediate
+-	 * downstream devices are in D0 state before sending PME_TurnOff to put
+-	 * link into L2 state.
+-	 * This is as per PCI Express Base r4.0 v1.0 September 27-2017,
+-	 * 5.2 Link State Power Management (Page #428).
+-	 */
 -
- 	ret = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
- 		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
- 		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
-@@ -1698,6 +1693,14 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 	if (ret)
- 		dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", val, ret);
+-	list_for_each_entry(child, &pp->bridge->bus->children, node) {
+-		if (child->parent == pp->bridge->bus) {
+-			root_port_bus = child;
+-			break;
+-		}
+-	}
+-
+-	if (!root_port_bus) {
+-		dev_err(pcie->dev, "Failed to find downstream bus of Root Port\n");
+-		return;
+-	}
+-
+-	/* Bring downstream devices to D0 if they are not already in */
+-	list_for_each_entry(pdev, &root_port_bus->devices, bus_list) {
+-		if (PCI_SLOT(pdev->devfn) == 0) {
+-			if (pci_set_power_state(pdev, PCI_D0))
+-				dev_err(pcie->dev,
+-					"Failed to transition %s to D0 state\n",
+-					dev_name(&pdev->dev));
+-		}
+-	}
+-}
+-
+ static int tegra_pcie_get_slot_regulators(struct tegra_pcie_dw *pcie)
+ {
+ 	pcie->slot_ctl_3v3 = devm_regulator_get_optional(pcie->dev, "vpcie3v3");
+@@ -1625,7 +1587,6 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
  
-+	/*
-+	 * Deassert LTSSM state to stop the state toggling between
-+	 * Polling and Detect.
-+	 */
-+	val = appl_readl(pcie, APPL_CTRL);
-+	val &= ~APPL_CTRL_LTSSM_EN;
-+	appl_writel(pcie, val, APPL_CTRL);
-+
- 	reset_control_assert(pcie->core_rst);
+ static void tegra_pcie_deinit_controller(struct tegra_pcie_dw *pcie)
+ {
+-	tegra_pcie_downstream_dev_to_D0(pcie);
+ 	dw_pcie_host_deinit(&pcie->pci.pp);
+ 	tegra_pcie_dw_pme_turnoff(pcie);
+ 	tegra_pcie_unconfig_controller(pcie);
+@@ -2336,7 +2297,6 @@ static int tegra_pcie_dw_suspend_noirq(struct device *dev)
+ 	if (!pcie->link_state)
+ 		return 0;
  
- 	tegra_pcie_disable_phy(pcie);
+-	tegra_pcie_downstream_dev_to_D0(pcie);
+ 	tegra_pcie_dw_pme_turnoff(pcie);
+ 	tegra_pcie_unconfig_controller(pcie);
+ 
+@@ -2410,7 +2370,6 @@ static void tegra_pcie_dw_shutdown(struct platform_device *pdev)
+ 			return;
+ 
+ 		debugfs_remove_recursive(pcie->debugfs);
+-		tegra_pcie_downstream_dev_to_D0(pcie);
+ 
+ 		disable_irq(pcie->pci.pp.irq);
+ 		if (IS_ENABLED(CONFIG_PCI_MSI))
 -- 
 2.53.0
 
