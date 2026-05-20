@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70B129B8D0;
-	Wed, 20 May 2026 17:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DB93A3E60;
+	Wed, 20 May 2026 17:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299672; cv=none; b=LilWa0c3oh6v68sSP39oRSWPu2Zt4ndftnvU5+Lko7j2ZPn8Hl2M6b0MRqvqlTZB7bQqF6QW65RZZgctdAZPwEJuxWgotomKyKo5mSjM7NMbSP7GWScEsHB+lpGgKE3eHiyrvXw9aRksjhUHhb03GJ4SHn7n/nXDsAYch1sOCSM=
+	t=1779299675; cv=none; b=HcRcxckQtXCf4smbsaBHQ9La3+BYa3jgk0aaZoxsS8OfusvXX8ifURS0xLtp+H/holLtTSWDlcl9UhV63X5cuS9stI6Cdn/+kzkj6ZROyUqy2L8e1RwHRFGBspzsG4teYIRd5zkn/gWFvRtTOsSHe9ngpnYrxnSs9D8SME9j3f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299672; c=relaxed/simple;
-	bh=uekfo9rqdrr752cZCkEzOKzN6vGcq5lJNshTKYfksDo=;
+	s=arc-20240116; t=1779299675; c=relaxed/simple;
+	bh=TIAoJvG7P4ZRHDgPL4nBBXHPXnG68zzzEvsq2QyDjEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WysSmvJQwYjEweDy2SjzdX4mL3JnjJkgcSEFdQPxuAlwp1/z6KDVIt9Nrz4qvcWDKYxCN3DUeXAkeXDJC5Lnhz/Yjokf3BxUYL00wUxZD2FmfsxIIcEzEGLWN3qelTB4Z/JbSdTtpBaejPbIAgstefoce9T8O3ahiXZHZAv9qNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCooq1ha; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUCyIshicM11uPvc+fJ347D4aer6ftFUlpkKl2528YMq4I1BLQOoqI91M2DCUN9ryK0ik+JHdTPRURDuEnEfLwVbf80wv6zvbd/9DSF9sBfAQ6OAfOOC9Gs8RosnXgB7yo5EJWK5Rb0eSW60dP79sbuvEx4Kk/mukwGbi4kusiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzU5frs9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCooq1ha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4E51F000E9;
-	Wed, 20 May 2026 17:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzU5frs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D251F000E9;
+	Wed, 20 May 2026 17:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299671;
-	bh=zgDRGJd+Y6SnLt8wM1T7QO8jD51TA92KUgcsgVH8Dgc=;
+	s=korg; t=1779299674;
+	bh=HL18afsGFGCZhDgo48LOCjoCiO3CaTTOnrIuzs3mxTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OCooq1haG/4wA2a6QxVHf+pi0PWfoLmuSAEkSeLppZdszXxpYhE/4/96JFVAMT5be
-	 aqzyn3ydheWHuQ3ktr2YzVZJ7f1X4u2ItBlQHa5dVuL5I+jS/UQDxJfpKNthM74xmj
-	 CLPjzZgV7Ed59XEc7h529H9ExzbmdNiq9EvsvSkM=
+	b=mzU5frs93Xsk1Aw4JryQXAv1pogDy2ZxNHw/ZK8IszCROehruesdmSJ+dbaoWauV1
+	 mkBO0p+ZoMyRkV047Cd6X2tM422esKufOYVYqgxt8IcrDBW395b9+la8oaTE2vNeJu
+	 wVAQHfT3/DXaoMZytqc8XXmZt0gJHphQyeSKJUsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 861/957] Revert "papr-hvpipe: convert papr_hvpipe_dev_create_handle() to FD_PREPARE()"
-Date: Wed, 20 May 2026 18:22:24 +0200
-Message-ID: <20260520162153.237639959@linuxfoundation.org>
+Subject: [PATCH 6.18 862/957] PCI: Initialize temporary device in new_id_store()
+Date: Wed, 20 May 2026 18:22:25 +0200
+Message-ID: <20260520162153.259576594@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -49,81 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 09c15bbbed533903e600660ea09098b3b0524f48.
+From: Samiullah Khawaja <skhawaja@google.com>
 
+[ Upstream commit f45a49a2380a47332817b7248c61a0ebbc6f0d00 ]
+
+When setting new_id of a PCI device driver using sysfs a lockdep splat
+occurs. This is because new_id_store() builds a temporary pci_dev for
+pci_match_device(), which calls device_match_driver_override().  That
+depends on the driver_override.lock added by cb3d1049f4ea ("driver core:
+generalize driver_override in struct device").
+
+The new driver_override.lock was not initialized in the temporary pci_dev,
+resulting in this lockdep splat.
+
+Initialize the temporary pci_dev to fix this.
+
+Repro:
+
+  Build with CONFIG_LOCKDEP=y, boot with QEMU, and add a new ID:
+
+  # echo "8086 10f5" > /sys/bus/pci/drivers/e1000e/new_id
+
+  INFO: trying to register non-static key.
+  The code is fine but needs lockdep annotation, or maybe
+  you didn't initialize this object before use?
+  turning off the locking correctness validator.
+  CPU: 2 UID: 0 PID: 177 Comm: liveupdate-iomm Not tainted 7.0.0+ #9 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   register_lock_class+0x77e/0x790
+   lock_acquire+0xbf/0x2e0
+   pci_match_device+0x24/0x180
+   new_id_store+0x189/0x1d0
+   kernfs_fop_write_iter+0x14f/0x210
+   vfs_write+0x263/0x5e0
+   ksys_write+0x79/0xf0
+   do_syscall_64+0x117/0xf80
+
+Fixes: 10a4206a2401 ("PCI: use generic driver_override infrastructure")
+Fixes: 8895d3bcb8ba ("PCI: Fail new_id for vendor/device values already built into driver")
+Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
+[bhelgaas: add commit log details and repro, trim backtrace]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260505234327.716630-1-skhawaja@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c | 39 +++++++++++++++-----
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ drivers/pci/pci-driver.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/papr-hvpipe.c b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-index 3d8672642c251..431f6a3da4c5a 100644
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -484,7 +484,10 @@ static const struct file_operations papr_hvpipe_handle_ops = {
- 
- static int papr_hvpipe_dev_create_handle(u32 srcID)
- {
--	struct hvpipe_source_info *src_info __free(kfree) = NULL;
-+	struct hvpipe_source_info *src_info;
-+	struct file *file;
-+	long err;
-+	int fd;
- 
- 	spin_lock(&hvpipe_src_list_lock);
- 	/*
-@@ -508,13 +511,20 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 	src_info->tsk = current;
- 	init_waitqueue_head(&src_info->recv_wqh);
- 
--	FD_PREPARE(fdf, O_RDONLY | O_CLOEXEC,
--		   anon_inode_getfile("[papr-hvpipe]", &papr_hvpipe_handle_ops,
--				      (void *)src_info, O_RDWR));
--	if (fdf.err)
--		return fdf.err;
-+	fd = get_unused_fd_flags(O_RDONLY | O_CLOEXEC);
-+	if (fd < 0) {
-+		err = fd;
-+		goto free_buf;
-+	}
-+
-+	file = anon_inode_getfile("[papr-hvpipe]",
-+			&papr_hvpipe_handle_ops, (void *)src_info,
-+			O_RDWR);
-+	if (IS_ERR(file)) {
-+		err = PTR_ERR(file);
-+		goto free_fd;
-+	}
- 
--	retain_and_null_ptr(src_info);
- 	spin_lock(&hvpipe_src_list_lock);
- 	/*
- 	 * If two processes are executing ioctl() for the same
-@@ -523,11 +533,22 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 	 */
- 	if (hvpipe_find_source(srcID)) {
- 		spin_unlock(&hvpipe_src_list_lock);
--		return -EALREADY;
-+		err = -EALREADY;
-+		goto free_file;
- 	}
- 	list_add(&src_info->list, &hvpipe_src_list);
- 	spin_unlock(&hvpipe_src_list_lock);
--	return fd_publish(fdf);
-+
-+	fd_install(fd, file);
-+	return fd;
-+
-+free_file:
-+	fput(file);
-+free_fd:
-+	put_unused_fd(fd);
-+free_buf:
-+	kfree(src_info);
-+	return err;
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index fba07a700508f..f9ead94d5ebb6 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -179,6 +179,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 	return NULL;
  }
  
- /*
++static void _pci_free_device(struct device *dev)
++{
++	kfree(to_pci_dev(dev));
++}
++
+ /**
+  * new_id_store - sysfs frontend to pci_add_dynid()
+  * @driver: target device driver
+@@ -214,11 +219,13 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
+ 		pdev->subsystem_vendor = subvendor;
+ 		pdev->subsystem_device = subdevice;
+ 		pdev->class = class;
++		pdev->dev.release = _pci_free_device;
+ 
++		device_initialize(&pdev->dev);
+ 		if (pci_match_device(pdrv, pdev))
+ 			retval = -EEXIST;
+ 
+-		kfree(pdev);
++		put_device(&pdev->dev);
+ 
+ 		if (retval)
+ 			return retval;
 -- 
 2.53.0
 
