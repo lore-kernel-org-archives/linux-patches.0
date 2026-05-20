@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7C1331220;
-	Wed, 20 May 2026 17:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660C6331220;
+	Wed, 20 May 2026 17:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297787; cv=none; b=BHJMtxG9lLRakUjfcJ5uFMCu8Bc6K7V+97Yiek51D069BwnBaX9crlASap+j974AzpXb2aBEpnfT0E6G7PVtqB1UyIfz7Qz4U9fL7Asj6CliRyaQgf0a85gKjbzIHhKiD+YasPCW92L+y8WhyJPLm3lxu5lZzAcVyQaycdypufk=
+	t=1779297789; cv=none; b=ZLKkgy8N9hp3X+aCLPHmfaAkiawDt5kGEXM5ji0mwZsWghV6ab4atAcGQQO0vaaYDYWMPo0W+fmCEcsQIQcnsebxr3l9GJ7QbqNKmbMW5ntEkLxIKJ9Q7OJXU03yI/TV0J9NCYaEyeA5JQOk7fIrqWiQIW7XY4q8HO37qXTIUh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297787; c=relaxed/simple;
-	bh=wXLhrMfOsRKPW+CpQ9UcdptGztlRGAwJLC4+5hcqKVc=;
+	s=arc-20240116; t=1779297789; c=relaxed/simple;
+	bh=rZ3iMLM/qQcjmiY4AiZCcyonmE27hCYtrh8awHAr/j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVYRDSwDtIP0O8RzypIwvzqhkk4QPabvchcQ/lmtFOnr5atHpnZIT7u1YOs6Ip1UW51oif6xv8t7/ImH6lTDOtgIi/+MZjPqvwgPvGQabc7M3qHCwUBUFyF391guni+2KmHVpvlcXq7Qjtx3bMu0HPgRPYIr1FPkEGPS4d6+pQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViNgDK9D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dfh1k9jC4D4CrKz41/7wO1mrfSE6J5SFV596DkBmXOuR7AZci+6zyPX+cluA88YApno2nmNxFgrFlIZbOz1xfozZqWnkBqPPV+bLYTFsdBLGijmXrrZIQKMpQFEomHVXXYuNPxAtF+u4rOb83HLwVYUw1KnKT4EPILmO7EcclDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hm4139zl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViNgDK9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311A11F000E9;
-	Wed, 20 May 2026 17:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm4139zl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8E01F000E9;
+	Wed, 20 May 2026 17:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297785;
-	bh=cn6jrxJh90gAdR8T9tTRuDE0GsXqWN43QeNIKp40BtU=;
+	s=korg; t=1779297788;
+	bh=48OoCq7UuOFj2xfm3yCYWA/8aFrLSwrSXu+jhiifSzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ViNgDK9DhcS+BJOM+oSCq9umGQ33uON1GuyC17WVL3h6hkIminektMV9GWeLq7vHU
-	 4LLyAIN1Kxxlyir+Aty8gFNTPmUbltFK5EXQphoPfxYvWLSpesX3Pju4QZOTlUwMtF
-	 79NSOU+zlDXtz9kKaV49fUs5gWUe/u6c9ORHa0eU=
+	b=hm4139zl88WMWlu93NM4h0JZQ3RZCqrhKfpkqdgtOXo0s4DSRFnI9Tc3pQyIHUsKd
+	 CLo8/DSN8H0oRLazgP1ZGvpW6AtH77a6F+xtV6Ek9xCj2Z8HXYwlUDuwrMUMmb9mTU
+	 lVLUwuxaNmEMXgkjRPNkxMCW28RH5DXCbecA1ATc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>,
+	Gerd Rausch <gerd.rausch@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/957] selftests/bpf: Fix reg_bounds to match new tnum-based refinement
-Date: Wed, 20 May 2026 18:10:45 +0200
-Message-ID: <20260520162138.061905999@linuxfoundation.org>
+Subject: [PATCH 6.18 163/957] net/rds: Optimize rds_ib_laddr_check
+Date: Wed, 20 May 2026 18:10:46 +0200
+Message-ID: <20260520162138.087040005@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,157 +48,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit 2fefa9c81a25534464911447d51ddb44b04a8e5b ]
+[ Upstream commit 236f718ac885965fa886440b9898dfae185c9733 ]
 
-Commit efc11a667878 ("bpf: Improve bounds when tnum has a single
-possible value") improved the bounds refinement to detect when the tnum
-and u64 range overlap in a single value (and the bounds can thus be set
-to that value).
+rds_ib_laddr_check() creates a CM_ID and attempts to bind the address
+in question to it. This in order to qualify the allegedly local
+address as a usable IB/RoCE address.
 
-Eduard then noticed that it broke the slow-mode reg_bounds selftests
-because they don't have an equivalent logic and are therefore unable to
-refine the bounds as much as the verifier. The following test case
-illustrates this.
+In the field, ExaWatcher runs rds-ping to all ports in the fabric from
+all local ports. This using all active ToS'es. In a full rack system,
+we have 14 cell servers and eight db servers. Typically, 6 ToS'es are
+used. This implies 528 rds-ping invocations per ExaWatcher's "RDSinfo"
+interval.
 
-  ACTUAL   TRUE1:  scalar(u64=0xffffffff00000000,u32=0,s64=0xffffffff00000000,s32=0)
-  EXPECTED TRUE1:  scalar(u64=[0xfffffffe00000001; 0xffffffff00000000],u32=0,s64=[0xfffffffe00000001; 0xffffffff00000000],s32=0)
-  [...]
-  #323/1007 reg_bounds_gen_consts_s64_s32/(s64)[0xfffffffe00000001; 0xffffffff00000000] (s32)<op> S64_MIN:FAIL
+Adding to this, each rds-ping invocation creates eight sockets and
+binds the local address to them:
 
-with the verifier logs:
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 3
+bind(3, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 4
+bind(4, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 5
+bind(5, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 6
+bind(6, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 7
+bind(7, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 8
+bind(8, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 9
+bind(9, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 10
+bind(10, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
 
-  [...]
-  19: w0 = w6                 ; R0=scalar(smin=0,smax=umax=0xffffffff,
-                                          var_off=(0x0; 0xffffffff))
-                                R6=scalar(smin=0xfffffffe00000001,smax=0xffffffff00000000,
-                                          umin=0xfffffffe00000001,umax=0xffffffff00000000,
-                                          var_off=(0xfffffffe00000000; 0x1ffffffff))
-  20: w0 = w7                 ; R0=0 R7=0x8000000000000000
-  21: if w6 == w7 goto pc+3
-  [...]
-  from 21 to 25: [...]
-  25: w0 = w6                 ; R0=0 R6=0xffffffff00000000
-                              ;         ^
-                              ;         unexpected refined value
-  26: w0 = w7                 ; R0=0 R7=0x8000000000000000
-  27: exit
+So, at every interval ExaWatcher executes rds-ping's, 4224 CM_IDs are
+allocated, considering this full-rack system. After the a CM_ID has
+been allocated, rdma_bind_addr() is called, with the port number being
+zero. This implies that the CMA will attempt to search for an un-used
+ephemeral port. Simplified, the algorithm is to start at a random
+position in the available port space, and then if needed, iterate
+until an un-used port is found.
 
-When w6 == w7 is true, the verifier can deduce that the R6's tnum is
-equal to (0xfffffffe00000000; 0x100000000) and then use that information
-to refine the bounds: the tnum only overlap with the u64 range in
-0xffffffff00000000. The reg_bounds selftest doesn't know about tnums
-and therefore fails to perform the same refinement.
+The book-keeping of used ports uses the idr system, which again uses
+slab to allocate new struct idr_layer's. The size is 2092 bytes and
+slab tries to reduce the wasted space. Hence, it chooses an order:3
+allocation, for which 15 idr_layer structs will fit and only 1388
+bytes are wasted per the 32KiB order:3 chunk.
 
-This issue happens when the tnum carries information that cannot be
-represented in the ranges, as otherwise the selftest could reach the
-same refined value using just the ranges. The tnum thus needs to
-represent non-contiguous values (ex., R6's tnum above, after the
-condition). The only way this can happen in the reg_bounds selftest is
-at the boundary between the 32 and 64bit ranges. We therefore only need
-to handle that case.
+Although this order:3 allocation seems like a good space/speed
+trade-off, it does not resonate well with how it used by the CMA. The
+combination of the randomized starting point in the port space (which
+has close to zero spatial locality) and the close proximity in time of
+the 4224 invocations of the rds-ping's, creates a memory hog for
+order:3 allocations.
 
-This patch fixes the selftest refinement logic by checking if the u32
-and u64 ranges overlap in a single value. If so, the ranges can be set
-to that value. We need to handle two cases: either they overlap in
-umin64...
+These costly allocations may need reclaims and/or compaction. At
+worst, they may fail and produce a stack trace such as (from uek4):
 
-  u64 values
-  matching u32 range:     xxx        xxx        xxx        xxx
-                      |--------------------------------------|
-  u64 range:          0                xxxxx                 UMAX64
+[<ffffffff811a72d5>] __inc_zone_page_state+0x35/0x40
+[<ffffffff811c2e97>] page_add_file_rmap+0x57/0x60
+[<ffffffffa37ca1df>] remove_migration_pte+0x3f/0x3c0 [ksplice_6cn872bt_vmlinux_new]
+[<ffffffff811c3de8>] rmap_walk+0xd8/0x340
+[<ffffffff811e8860>] remove_migration_ptes+0x40/0x50
+[<ffffffff811ea83c>] migrate_pages+0x3ec/0x890
+[<ffffffff811afa0d>] compact_zone+0x32d/0x9a0
+[<ffffffff811b00ed>] compact_zone_order+0x6d/0x90
+[<ffffffff811b03b2>] try_to_compact_pages+0x102/0x270
+[<ffffffff81190e56>] __alloc_pages_direct_compact+0x46/0x100
+[<ffffffff8119165b>] __alloc_pages_nodemask+0x74b/0xaa0
+[<ffffffff811d8411>] alloc_pages_current+0x91/0x110
+[<ffffffff811e3b0b>] new_slab+0x38b/0x480
+[<ffffffffa41323c7>] __slab_alloc+0x3b7/0x4a0 [ksplice_s0dk66a8_vmlinux_new]
+[<ffffffff811e42ab>] kmem_cache_alloc+0x1fb/0x250
+[<ffffffff8131fdd6>] idr_layer_alloc+0x36/0x90
+[<ffffffff8132029c>] idr_get_empty_slot+0x28c/0x3d0
+[<ffffffff813204ad>] idr_alloc+0x4d/0xf0
+[<ffffffffa051727d>] cma_alloc_port+0x4d/0xa0 [rdma_cm]
+[<ffffffffa0517cbe>] rdma_bind_addr+0x2ae/0x5b0 [rdma_cm]
+[<ffffffffa09d8083>] rds_ib_laddr_check+0x83/0x2c0 [ksplice_6l2xst5i_rds_rdma_new]
+[<ffffffffa05f892b>] rds_trans_get_preferred+0x5b/0xa0 [rds]
+[<ffffffffa05f09f2>] rds_bind+0x212/0x280 [rds]
+[<ffffffff815b4016>] SYSC_bind+0xe6/0x120
+[<ffffffff815b4d3e>] SyS_bind+0xe/0x10
+[<ffffffff816b031a>] system_call_fastpath+0x18/0xd4
 
-or in umax64:
+To avoid these excessive calls to rdma_bind_addr(), we optimize
+rds_ib_laddr_check() by simply checking if the address in question has
+been used before. The rds_rdma module keeps track of addresses
+associated with IB devices, and the function rds_ib_get_device() is
+used to determine if the address already has been qualified as a valid
+local address. If not found, we call the legacy rds_ib_laddr_check(),
+now renamed to rds_ib_laddr_check_cm().
 
-  u64 values
-  matching u32 range:     xxx        xxx        xxx        xxx
-                      |--------------------------------------|
-  u64 range:          0          xxxxx                       UMAX64
-
-To detect the first case, we decrease umax64 to the maximum value that
-matches the u32 range. If that happens to be umin64, then umin64 is the
-only overlap. We proceed similarly for the second case, increasing
-umin64 to the minimum value that matches the u32 range.
-
-Note this is similar to how the verifier handles the general case using
-tnum, but we don't need to care about a single-value overlap in the
-middle of the range. That case is not possible when comparing two
-ranges.
-
-This patch also adds two test cases reproducing this bug as part of the
-normal test runs (without SLOW_TESTS=1).
-
-Fixes: efc11a667878 ("bpf: Improve bounds when tnum has a single possible value")
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Closes: https://lore.kernel.org/bpf/4e6dd64a162b3cab3635706ae6abfdd0be4db5db.camel@gmail.com/
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/ada9UuSQi2SE2IfB@mail.gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260408080420.540032-2-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ebf71dd4aff4 ("net/rds: Restrict use of RDS/IB to the initial network namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/reg_bounds.c     | 35 +++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ net/rds/ib.c      | 20 ++++++++++++++++++--
+ net/rds/ib.h      |  1 +
+ net/rds/ib_rdma.c |  2 +-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-index 04938d0d431b3..5f57d3c923801 100644
---- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-+++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-@@ -500,6 +500,39 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
- 	    (s64)x.a >= S32_MIN && (s64)x.b <= S32_MAX)
- 		return range_intersection(x_t, x, y_cast);
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index 9826fe7f9d008..996f007cd516b 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -403,8 +403,8 @@ static void rds6_ib_ic_info(struct socket *sock, unsigned int len,
+  * allowed to influence which paths have priority.  We could call userspace
+  * asserting this policy "routing".
+  */
+-static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+-			      __u32 scope_id)
++static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
++				 __u32 scope_id)
+ {
+ 	int ret;
+ 	struct rdma_cm_id *cm_id;
+@@ -489,6 +489,22 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+ 	return ret;
+ }
  
-+	if (y_t == U32 && x_t == U64) {
-+		u64 xmin_swap, xmax_swap, xmin_lower32, xmax_lower32;
++static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
++			      __u32 scope_id)
++{
++	struct rds_ib_device *rds_ibdev = NULL;
 +
-+		xmin_lower32 = x.a & 0xffffffff;
-+		xmax_lower32 = x.b & 0xffffffff;
-+		if (xmin_lower32 < y.a || xmin_lower32 > y.b) {
-+			/* The 32 lower bits of the umin64 are outside the u32
-+			 * range. Let's update umin64 to match the u32 range.
-+			 * We want to *increase* the umin64 to the *minimum*
-+			 * value that matches the u32 range.
-+			 */
-+			xmin_swap = swap_low32(x.a, y.a);
-+			/* We should always only increase the minimum, so if
-+			 * the new value is lower than before, we need to
-+			 * increase the 32 upper bits by 1.
-+			 */
-+			if (xmin_swap < x.a)
-+				xmin_swap += 0x100000000;
-+			if (xmin_swap == x.b)
-+				return range(x_t, x.b, x.b);
-+		} else if (xmax_lower32 < y.a || xmax_lower32 > y.b) {
-+			/* Same for the umax64, but we want to *decrease*
-+			 * umax64 to the *maximum* value that matches the u32
-+			 * range.
-+			 */
-+			xmax_swap = swap_low32(x.b, y.b);
-+			if (xmax_swap > x.b)
-+				xmax_swap -= 0x100000000;
-+			if (xmax_swap == x.a)
-+				return range(x_t, x.a, x.a);
++	if (ipv6_addr_v4mapped(addr)) {
++		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
++		if (rds_ibdev) {
++			rds_ib_dev_put(rds_ibdev);
++			return 0;
 +		}
 +	}
 +
- 	/* the case when new range knowledge, *y*, is a 32-bit subregister
- 	 * range, while previous range knowledge, *x*, is a full register
- 	 * 64-bit range, needs special treatment to take into account upper 32
-@@ -2143,6 +2176,8 @@ static struct subtest_case crafted_cases[] = {
- 	{U64, S64, {0x7fffffff00000001ULL, 0xffffffff00000000ULL}, {0, 0}},
- 	{U64, S64, {0, 0xffffffffULL}, {1, 1}},
- 	{U64, S64, {0, 0xffffffffULL}, {0x7fffffff, 0x7fffffff}},
-+	{U64, S32, {0xfffffffe00000001, 0xffffffff00000000}, {S64_MIN, S64_MIN}},
-+	{U64, U32, {0xfffffffe00000000, U64_MAX - 1}, {U64_MAX, U64_MAX}},
++	return rds_ib_laddr_check_cm(net, addr, scope_id);
++}
++
+ static void rds_ib_unregister_client(void)
+ {
+ 	ib_unregister_client(&rds_ib_client);
+diff --git a/net/rds/ib.h b/net/rds/ib.h
+index 8ef3178ed4d61..5ff346a1e8baa 100644
+--- a/net/rds/ib.h
++++ b/net/rds/ib.h
+@@ -381,6 +381,7 @@ void rds_ib_cm_connect_complete(struct rds_connection *conn,
+ 	__rds_ib_conn_error(conn, KERN_WARNING "RDS/IB: " fmt)
  
- 	{U64, U32, {0, 0x100000000}, {0, 0}},
- 	{U64, U32, {0xfffffffe, 0x300000000}, {0x80000000, 0x80000000}},
+ /* ib_rdma.c */
++struct rds_ib_device *rds_ib_get_device(__be32 ipaddr);
+ int rds_ib_update_ipaddr(struct rds_ib_device *rds_ibdev,
+ 			 struct in6_addr *ipaddr);
+ void rds_ib_add_conn(struct rds_ib_device *rds_ibdev, struct rds_connection *conn);
+diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
+index dd08ccc4246da..751755cd069e0 100644
+--- a/net/rds/ib_rdma.c
++++ b/net/rds/ib_rdma.c
+@@ -43,7 +43,7 @@ struct workqueue_struct *rds_ib_mr_wq;
+ 
+ static void rds_ib_odp_mr_worker(struct work_struct *work);
+ 
+-static struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
++struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
+ {
+ 	struct rds_ib_device *rds_ibdev;
+ 	struct rds_ib_ipaddr *i_ipaddr;
 -- 
 2.53.0
 
