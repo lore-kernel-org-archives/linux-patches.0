@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C418E37DE8A;
-	Wed, 20 May 2026 18:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2126D348C55;
+	Wed, 20 May 2026 18:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301126; cv=none; b=GTrxcaDhB3c/j9AS4/NDhMOhbENxGRnkky4cmTr1UtkjLLHdGLLZXHFZsiJh3wBUIjF2gvU+zwOBE/IWnudzL6+lfJLSY/XfpUuXkr7rPhTi+HPBbJi9vWX7br0BklifM3Et152ePw/rXpEn0Aj5h2dpjxbW5ChAus8CpPQGKQM=
+	t=1779301129; cv=none; b=C2f6zQr9h2TEbHccdBCGkRr2XrouswqRhP7MO9k6rWiziQpJ8dHZMTxGdUtjcposFaDpKaneA6rmcHyK+UKZLlkQ2+EpJkpnsvfYuFen0M6IOhozbFL6cnWZqDD5ohYxojR4ElTXEOGYAd/sVc9og8O5Eg+RGgazP21uZDDCV7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301126; c=relaxed/simple;
-	bh=LcDG44bAUxuebou/6j9io13mZeUAO6jjRwWw3Ieli1w=;
+	s=arc-20240116; t=1779301129; c=relaxed/simple;
+	bh=ch0yNvjSC2dUVw9jHwilYZp+leBFTVuzBfoLcXIAmDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iib3tGP8stfXSNiDcGYaSY5VrMrfgvgFbqub7VtP9Gd+UZYrJIvg0T6esQM8mmlR76qpXebkOJK+SqdNLSwrP0uSL3Ogs6o1LeKtcsGIP8XjKxFinBR1THSA2LXq42bSigmMuexIRO36uLBTNKakzF7kdu7CHpNbFxXuPLPmYew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IYu3QQm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=af2Z9o4n97VOwSr3aFKAPjKppNlirvPuZECmfzla1E9ks7el0kOcTq4VGsrzjQkT6+V6TwNNTS1+J+Y/NCYzLtgnGbsmsctUgYqelh0wrPOmy2AfE/SHfdaJKm5XIWBYnPsP/AZG5ZMsgtbHZaRUTFGnetWSiq9V6TdmGnaCauY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSbF6vgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IYu3QQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E167A1F000E9;
-	Wed, 20 May 2026 18:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSbF6vgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8815D1F000E9;
+	Wed, 20 May 2026 18:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301125;
-	bh=zjpyKTXruo+EswzA48w51tPxUE8s/Gzfs6vZu1znYck=;
+	s=korg; t=1779301128;
+	bh=gYg8swX4Rf8PyXjpL+N7v2gQRPboPUWTAlwEBH2dSe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0IYu3QQmarrCjEzUoqb1eG0njZ+oI7gRejd6MMwW9ITU7Ibg9O8uyuieddmgWCrsO
-	 O3wAnXhpoN+NrWWp0fS/ffpTnaq3h55dUC7bMTeu/TTKCIPc23B6XXvFh+1y1anfFP
-	 ufuuzPHKjtVM1Q58UT/NxyPa/JJntpa8QBuSlUAo=
+	b=RSbF6vgWTAho8bT3faoW3UxodzGIpAvOowBVQTA7fTl2scS7L49JcIwF2k+lCULV4
+	 +lbCSbVk+onfQqM8h6anmBn4z7ROv7aaWctG14ZuUoPf0thR0fjn72llpW/3rDv31b
+	 758WGTfMskk0zL/5RzHKZQZ0LMngHjfiYYNxm/4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <denis.benato@linux.dev>,
-	Luke Jones <luke@ljones.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 394/666] platform/x86: asus-wmi: fix screenpad brightness range
-Date: Wed, 20 May 2026 18:20:05 +0200
-Message-ID: <20260520162119.796662583@linuxfoundation.org>
+Subject: [PATCH 6.12 385/666] i3c: mipi-i3c-hci: fix IBI payload length calculation for final status
+Date: Wed, 20 May 2026 18:19:56 +0200
+Message-ID: <20260520162119.597839679@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,96 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 8d95d1f4aa5c76202b0833a70998769384612488 ]
+[ Upstream commit d35a6db887eeae7c57b719521e39d64f929c6dc3 ]
 
-Fix screenpad brightness range being too limited without reason:
-testing this patch on a Zenbook Duo showed the hardware minimum not being
-too low, therefore allow the user to configure the entire range, and
-expose to userspace the hardware brightness range and value.
+In DMA mode, the IBI status descriptor encodes the payload using
+CHUNKS (number of chunks) and DATA_LENGTH (valid bytes in the last
+chunk). All preceding chunks are implicitly full-sized.
 
-Fixes: 2c97d3e55b70 ("platform/x86: asus-wmi: add support for ASUS screenpad")
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Luke Jones <luke@ljones.dev>
-Link: https://patch.msgid.link/20260302174431.349816-3-denis.benato@linux.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The current code accumulates full chunk sizes for non-final status
+descriptors, but for the final status descriptor it only adds
+DATA_LENGTH. This ignores the contribution of the preceding full
+chunks described by the same final status entry.
+
+As a result, the computed IBI payload length is truncated whenever
+the final status spans multiple chunks. For example, with a chunk
+size of 4 bytes, CHUNKS=2 and DATA_LENGTH=1 should result in a total
+payload size of 5 bytes, but the current code reports only 1 byte.
+
+Fix the calculation by adding the size of (CHUNKS - 1) full chunks
+plus DATA_LENGTH for the last chunk.
+
+Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260407-i3c-hci-dma-v2-1-a583187b9d22@aspeedtech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 2e03d63708a7c..5d701fde07df4 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -127,7 +127,6 @@ module_param(fnlock_default, bool, 0444);
- #define NVIDIA_TEMP_MIN		75
- #define NVIDIA_TEMP_MAX		87
- 
--#define ASUS_SCREENPAD_BRIGHT_MIN 20
- #define ASUS_SCREENPAD_BRIGHT_MAX 255
- #define ASUS_SCREENPAD_BRIGHT_DEFAULT 60
- 
-@@ -4119,13 +4118,13 @@ static int read_screenpad_brightness(struct backlight_device *bd)
- 		return err;
- 	/* The device brightness can only be read if powered, so return stored */
- 	if (err == BACKLIGHT_POWER_OFF)
--		return asus->driver->screenpad_brightness - ASUS_SCREENPAD_BRIGHT_MIN;
-+		return bd->props.brightness;
- 
- 	err = asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_SCREENPAD_LIGHT, &retval);
- 	if (err < 0)
- 		return err;
- 
--	return (retval & ASUS_WMI_DSTS_BRIGHTNESS_MASK) - ASUS_SCREENPAD_BRIGHT_MIN;
-+	return retval & ASUS_WMI_DSTS_BRIGHTNESS_MASK;
- }
- 
- static int update_screenpad_bl_status(struct backlight_device *bd)
-@@ -4165,22 +4164,19 @@ static int asus_screenpad_init(struct asus_wmi *asus)
- 	int err, power;
- 	int brightness = 0;
- 
--	power = read_screenpad_backlight_power(asus);
-+	power = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_SCREENPAD_POWER);
- 	if (power < 0)
- 		return power;
- 
--	if (power != BACKLIGHT_POWER_OFF) {
-+	if (power) {
- 		err = asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_SCREENPAD_LIGHT, &brightness);
- 		if (err < 0)
- 			return err;
- 	}
--	/* default to an acceptable min brightness on boot if too low */
--	if (brightness < ASUS_SCREENPAD_BRIGHT_MIN)
--		brightness = ASUS_SCREENPAD_BRIGHT_DEFAULT;
- 
- 	memset(&props, 0, sizeof(struct backlight_properties));
- 	props.type = BACKLIGHT_RAW; /* ensure this bd is last to be picked */
--	props.max_brightness = ASUS_SCREENPAD_BRIGHT_MAX - ASUS_SCREENPAD_BRIGHT_MIN;
-+	props.max_brightness = ASUS_SCREENPAD_BRIGHT_MAX;
- 	bd = backlight_device_register("asus_screenpad",
- 				       &asus->platform_device->dev, asus,
- 				       &asus_screenpad_bl_ops, &props);
-@@ -4191,7 +4187,7 @@ static int asus_screenpad_init(struct asus_wmi *asus)
- 
- 	asus->screenpad_backlight_device = bd;
- 	asus->driver->screenpad_brightness = brightness;
--	bd->props.brightness = brightness - ASUS_SCREENPAD_BRIGHT_MIN;
-+	bd->props.brightness = brightness;
- 	bd->props.power = power;
- 	backlight_update_status(bd);
- 
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 36a4c13ab7578..b9496e8c4784d 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -645,7 +645,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 		if (!(ibi_status & IBI_LAST_STATUS)) {
+ 			ibi_size += chunks * rh->ibi_chunk_sz;
+ 		} else {
+-			ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
++			if (chunks) {
++				ibi_size += (chunks - 1) * rh->ibi_chunk_sz;
++				ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
++			}
+ 			last_ptr = ptr;
+ 			break;
+ 		}
 -- 
 2.53.0
 
