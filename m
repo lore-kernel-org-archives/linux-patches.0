@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E2D363C6F;
-	Wed, 20 May 2026 17:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0FF36405A;
+	Wed, 20 May 2026 17:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298844; cv=none; b=WSjtyb3R7Hi3WRndKEamvK2WroBw9DG3NLObCsjLH0O87DCUmlYBLz9JQQy2Mvo4vC/ZB4a7VJ9kNCj3oTemXAa9Ic2QfBRXRPYI4JkfKXxNRN3SLZEYz9mpXsAdkxWar4es3o9+zFYWj475bW1AUZwAWPLDXqcLoXbEBl4AG8w=
+	t=1779298847; cv=none; b=THBLz1Q3HoNcrgH98d3TQhT8KXhpMP7AbbW9bw3aY3L/MLFUXlatnGWwRCuFlHRTOYvpxUzVGJkBS2RuaEMSPtlFI/8ORsv7lQ5uMOTVAMze9xb8V8ixci/al9TjUny8v+j1nCdGrCfMBxmhtACklYXQ/NV2BqvYaWBOyRSzNKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298844; c=relaxed/simple;
-	bh=YZZ69FvgRuRajR03/+Hrztod1Ej/NdAXP0Vply7sis8=;
+	s=arc-20240116; t=1779298847; c=relaxed/simple;
+	bh=slvV0bt/5np5UZ0+H6P1J0u9p/a4a1QoMnFFPAjA9WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aghjnhBun1KLbBRYYcrEY0C73yD17crJji+r4l8Rc58T/he3JtPTeN3QeD7HP3sndDc8knyxBcVmxxvCnZaNBjyDZQE8I+oTjReKtKLaZILFFOowXWKYfuXunMdAH/2Qc+QLl2APwtZqyciVeeHA9AO0rgOPx4SeKE0xVBnFrmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4JT5Cwz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ev1tS940hYl7f36rxqc5+RDGhJLNtqAZJC9g2TJbEJtQc4bElUSmnKq5tQVhMYDSqmFvVq0z/BrtVCuHyJEcYNSrhuR99W8f2pehGzUm+a+MuCpDvNyWr9hyTYr4A8fLXgJngMLpfS06f+kZ62K+Glpj1XbqxuKzPxMC+H4Mah4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up1bCEcT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4JT5Cwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6271F000E9;
-	Wed, 20 May 2026 17:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up1bCEcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730611F000E9;
+	Wed, 20 May 2026 17:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298843;
-	bh=vdFJZTYJx5PC28Eu5IvjwAFeFC0w16fVLkKR/n2wYx4=;
+	s=korg; t=1779298845;
+	bh=g4RCnInt5g7ZK0Iaj7IA3orr1p4QtOM5riUM1rugHmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G4JT5CwzQEMDGbOPsUftgZ8wZ4PKM3ebnlpE8sxWTsMIXf2hwn/BYiP5w5Fa+ivQ0
-	 LknK0SdhTt5WjeiUKeE/7S0xifN86Erp1boitK+WLXulatyoSkK2JR02uErjQLrEab
-	 aEJ5s7p/3MNylbH36jIgZQVxyMPCQPnx7rATuIOY=
+	b=Up1bCEcTjxoqQokqAIQNU9mSSOJ22RKa/xXQiWuqpJkpWNKn7iXL9jSKojNIvplK9
+	 QAoGXPxCcMZI83jbAcwh94sgkO3VrcKIrL17e/Ct0SJlFYmS6cFDzNVkJ9LGSy+1LF
+	 ZJG73hYYoAaqUczGPNmq3WtRVKSCfl6RcI2GhcHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	Val Packett <val@packett.cool>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 564/957] scsi: ufs: rockchip,rk3576-ufshc: dt-bindings: Add new mphy reset item
-Date: Wed, 20 May 2026 18:17:27 +0200
-Message-ID: <20260520162146.761315360@linuxfoundation.org>
+Subject: [PATCH 6.18 565/957] dt-bindings: clock: qcom,gcc-sc8180x: Add missing GDSCs
+Date: Wed, 20 May 2026 18:17:28 +0200
+Message-ID: <20260520162146.783255982@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,71 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit bdce3a69c578090dd5e3c77bcdaaca10c3a41e34 ]
+[ Upstream commit 76404ffbf07f28a5ec04748e18fce3dac2e78ef6 ]
 
-Add the mphy reset property to the devicetree bindings for the Rockchip
-RK3576 UFS host controller. The mphy reset signal is used to reset the
-physical adapter. Resetting other components while leaving the mphy unreset
-may occasionally prevent the UFS controller from successfully linking up
-with the device.
+There are 5 more GDSCs that we were ignoring and not putting to sleep,
+which are listed in downstream DTS. Add them.
 
-This addresses an intermittent hardware bug where the UFS link fails to
-establish under specific timing conditions with certain chips. While
-difficult to reproduce initially, this issue was consistently observed in
-downstream testing and requires explicit mphy reset control for full
-stability.
-
-Although this change increases the maxItems for resets and adds a new entry
-(which technically alters the binding ABI), it does not break compatibility
-for existing Linux systems. The driver uses
-devm_reset_control_array_get_exclusive() to manage resets, allowing it to
-function correctly with both older Device Trees (without the mphy entry)
-and newer ones.
-
-Fixes: d90e92023771 ("scsi: ufs: dt-bindings: Document Rockchip UFS host controller")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/1773368467-109650-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260312112321.370983-2-val@packett.cool
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 3565741eb985 ("clk: qcom: gcc-sc8180x: Add missing GDSCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/ufs/rockchip,rk3576-ufshc.yaml     | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/dt-bindings/clock/qcom,gcc-sc8180x.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/ufs/rockchip,rk3576-ufshc.yaml b/Documentation/devicetree/bindings/ufs/rockchip,rk3576-ufshc.yaml
-index c7d17cf4dc42b..e738153a309c8 100644
---- a/Documentation/devicetree/bindings/ufs/rockchip,rk3576-ufshc.yaml
-+++ b/Documentation/devicetree/bindings/ufs/rockchip,rk3576-ufshc.yaml
-@@ -41,7 +41,7 @@ properties:
-     maxItems: 1
+diff --git a/include/dt-bindings/clock/qcom,gcc-sc8180x.h b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
+index b9d8438a15ffb..9ed7b794aacc4 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sc8180x.h
++++ b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
+@@ -322,5 +322,10 @@
+ #define USB30_MP_GDSC						8
+ #define USB30_PRIM_GDSC						9
+ #define USB30_SEC_GDSC						10
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC		11
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC		12
++#define HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC		13
++#define HLOS1_VOTE_TURING_MMU_TBU0_GDSC			14
++#define HLOS1_VOTE_TURING_MMU_TBU1_GDSC			15
  
-   resets:
--    maxItems: 4
-+    maxItems: 5
- 
-   reset-names:
-     items:
-@@ -49,6 +49,7 @@ properties:
-       - const: sys
-       - const: ufs
-       - const: grf
-+      - const: mphy
- 
-   reset-gpios:
-     maxItems: 1
-@@ -98,8 +99,8 @@ examples:
-             interrupts = <GIC_SPI 361 IRQ_TYPE_LEVEL_HIGH>;
-             power-domains = <&power RK3576_PD_USB>;
-             resets = <&cru SRST_A_UFS_BIU>, <&cru SRST_A_UFS_SYS>, <&cru SRST_A_UFS>,
--                     <&cru SRST_P_UFS_GRF>;
--            reset-names = "biu", "sys", "ufs", "grf";
-+                     <&cru SRST_P_UFS_GRF>, <&cru SRST_MPHY_INIT>;
-+            reset-names = "biu", "sys", "ufs", "grf", "mphy";
-             reset-gpios = <&gpio4 RK_PD0 GPIO_ACTIVE_LOW>;
-         };
-     };
+ #endif
 -- 
 2.53.0
 
