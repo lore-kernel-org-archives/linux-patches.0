@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A51C3EDAC6;
-	Wed, 20 May 2026 18:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4003563E1;
+	Wed, 20 May 2026 18:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301772; cv=none; b=mZoc2LvF4eJvLq9jIl450F7r2Bs5TbSD+yHiaJ3yG0Xc5ZQqsIedkrDW1eeXXQVaURMy8q1TZMBRME32SWuvxFHQXR9aGELWLFCQIXhbfdM5qUblnq7jaA4EupGJePcicG5i3MwgSf6GkBm0m+7+B1BX+NdSLiEMpEOt60X8HCA=
+	t=1779301775; cv=none; b=jD+kdZKzjRIFDyM3zPx5LtxUflQdld7foGNF3svWduNBj7KgbZH2p3MQ8Wq0jFv8YPwryNtZmnMzAaM4MX2+Oxe5S3qq/N8Dr8GlG52RTVorzfC2hnYtKKnWclrzRQQjER0R3xCOzYDf4RkhHXHzdr5RoDveGp2vuimellcZ3GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301772; c=relaxed/simple;
-	bh=IBcd3MJsb4mytmbM3kb8dmNVwyIM3JpWBXj78TBIvb8=;
+	s=arc-20240116; t=1779301775; c=relaxed/simple;
+	bh=8gY1jaHf1YLU6q1hnOah+OtOdPbtmP2iQQBPOxXVR2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouJksht3+kNmGgN+dXdWWWpUfjtegQBaVAEcS4T8QjVkYjpidH+QPkH7GlI+dl84byv4wyFIBhzasbMn3vebU28r9+l7uG9V+9b28TotHgtD6efSH/qJSt2zgd8rLAIRkcs3SoTZFxADICdkzpOikykqDhNyWbVHvw6TS1aDkyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHH0z0+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=by2oGGDpvMUViYVd36RuCyLzVquTfrzyxonwG9JPDqBxdVYzFT1P6X8I5NXT4we8Pi8xhO3podDifpN+uw1XuvMzfWJ8K+pMn7PhQrC4G5TIt8oAXgFUh95VG3C1Xzjw3w0mefLblIQMzQzETtQBWHrhXJTsLKrFwwLxIL0551Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNDESKm0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHH0z0+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79C11F000E9;
-	Wed, 20 May 2026 18:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNDESKm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9AF1F00893;
+	Wed, 20 May 2026 18:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301771;
-	bh=61rB2SJTh0SmJLwM1tA45fSAsHYzFEatJ06WG0TYV0g=;
+	s=korg; t=1779301773;
+	bh=TvmBKMtGldcr3p/bEMvVAmfh5EeBSSH5JekKH1Jepu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHH0z0+R8VIVxoyUIxa3VldMaMKE3L6Cf1DnCTLMRpWk7pOsmkfZd7NtPQZVWt5ik
-	 zOPN6XmtO2f5vAzxncdFrh1VuC5PY1nXHWPJKdtCn8YlLuYQOPhCBjAQ93FfSjkZYV
-	 gvHobpeyLnn2z4qfSw4Ox1BSdhN20kQYdNSPqZEQ=
+	b=mNDESKm0vrPnMvG11hybK5eVbt+/7UULAjPg03xR31t0a4RaJycigB4GbmeBL4diw
+	 y0QQwPEfnKY0EJVFsGR4QGM9GDgkKEludS5H9daRMukH77ckUusoX6BAlGd5gqLRLn
+	 jdZXZMe8TB5qNYdgiOsdqoI1rjMNBIXPqiLJW/Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/508] s390/cio: convert sprintf()/snprintf() to sysfs_emit()
-Date: Wed, 20 May 2026 18:17:18 +0200
-Message-ID: <20260520162058.916180473@linuxfoundation.org>
+Subject: [PATCH 6.6 016/508] s390/cio: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:17:19 +0200
+Message-ID: <20260520162058.939084331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,94 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit aaebea959efb2cccd870990f1b6016ff324b0fb6 ]
+[ Upstream commit ac4d8bb6e2e13e8684a76ea48d13ebaaaf5c24c4 ]
 
-Per filesystems/sysfs.rst, show() should only use sysfs_emit()
-or sysfs_emit_at() when formatting the value to be returned to user space.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-coccinelle complains that there are still a couple of functions that use
-snprintf(). Convert them to sysfs_emit().
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Generally, this patch is generated by
-make coccicheck M=<path/to/file> MODE=patch \
-COCCI=scripts/coccinelle/api/device_attr_show.cocci
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-No functional change intended.
-
-Cc: Vineeth Vijayan <vneethv@linux.ibm.com>
-Cc: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://lore.kernel.org/r/20240314095209.1325229-1-lizhijian@fujitsu.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: ac4d8bb6e2e1 ("s390/cio: use generic driver_override infrastructure")
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: ebc3d1791503 ("s390/cio: introduce driver_override on the css bus")
+Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Link: https://patch.msgid.link/20260324005919.2408620-10-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/css.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/s390/cio/cio.h |  5 -----
+ drivers/s390/cio/css.c | 34 ++++------------------------------
+ 2 files changed, 4 insertions(+), 35 deletions(-)
 
+diff --git a/drivers/s390/cio/cio.h b/drivers/s390/cio/cio.h
+index a9057a5b670a6..23374604c6b01 100644
+--- a/drivers/s390/cio/cio.h
++++ b/drivers/s390/cio/cio.h
+@@ -103,11 +103,6 @@ struct subchannel {
+ 	struct work_struct todo_work;
+ 	struct schib_config config;
+ 	u64 dma_mask;
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char *driver_override;
+ } __attribute__ ((aligned(8)));
+ 
+ DECLARE_PER_CPU_ALIGNED(struct irb, cio_irb);
 diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
-index 4e63e6d45e6e1..36c46c7f2fb80 100644
+index 36c46c7f2fb80..97a2c23f4ce0f 100644
 --- a/drivers/s390/cio/css.c
 +++ b/drivers/s390/cio/css.c
-@@ -309,7 +309,7 @@ static ssize_t type_show(struct device *dev, struct device_attribute *attr,
- {
- 	struct subchannel *sch = to_subchannel(dev);
+@@ -160,7 +160,6 @@ static void css_subchannel_release(struct device *dev)
  
--	return sprintf(buf, "%01x\n", sch->st);
-+	return sysfs_emit(buf, "%01x\n", sch->st);
+ 	sch->config.intparm = 0;
+ 	cio_commit_config(sch);
+-	kfree(sch->driver_override);
+ 	kfree(sch);
  }
  
- static DEVICE_ATTR_RO(type);
-@@ -319,7 +319,7 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
- {
- 	struct subchannel *sch = to_subchannel(dev);
- 
--	return sprintf(buf, "css:t%01X\n", sch->st);
-+	return sysfs_emit(buf, "css:t%01X\n", sch->st);
- }
+@@ -324,37 +323,9 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
  
  static DEVICE_ATTR_RO(modalias);
-@@ -345,7 +345,7 @@ static ssize_t driver_override_show(struct device *dev,
- 	ssize_t len;
  
- 	device_lock(dev);
--	len = snprintf(buf, PAGE_SIZE, "%s\n", sch->driver_override);
-+	len = sysfs_emit(buf, "%s\n", sch->driver_override);
- 	device_unlock(dev);
- 	return len;
- }
-@@ -396,8 +396,8 @@ static ssize_t pimpampom_show(struct device *dev,
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct subchannel *sch = to_subchannel(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &sch->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct subchannel *sch = to_subchannel(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", sch->driver_override);
+-	device_unlock(dev);
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ static struct attribute *subch_attrs[] = {
+ 	&dev_attr_type.attr,
+ 	&dev_attr_modalias.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
+ };
+ 
+@@ -1352,9 +1323,11 @@ static int css_bus_match(struct device *dev, struct device_driver *drv)
  	struct subchannel *sch = to_subchannel(dev);
- 	struct pmcw *pmcw = &sch->schib.pmcw;
+ 	struct css_driver *driver = to_cssdriver(drv);
+ 	struct css_device_id *id;
++	int ret;
  
--	return sprintf(buf, "%02x %02x %02x\n",
--		       pmcw->pim, pmcw->pam, pmcw->pom);
-+	return sysfs_emit(buf, "%02x %02x %02x\n",
-+			  pmcw->pim, pmcw->pam, pmcw->pom);
- }
- static DEVICE_ATTR_RO(pimpampom);
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (sch->driver_override && strcmp(sch->driver_override, drv->name))
++	ret = device_match_driver_override(dev, drv);
++	if (ret == 0)
+ 		return 0;
  
-@@ -881,7 +881,7 @@ static ssize_t real_cssid_show(struct device *dev, struct device_attribute *a,
- 	if (!css->id_valid)
- 		return -EINVAL;
+ 	for (id = driver->subchannel_type; id->match_flags; id++) {
+@@ -1411,6 +1384,7 @@ static int css_uevent(const struct device *dev, struct kobj_uevent_env *env)
  
--	return sprintf(buf, "%x\n", css->cssid);
-+	return sysfs_emit(buf, "%x\n", css->cssid);
- }
- static DEVICE_ATTR_RO(real_cssid);
- 
-@@ -904,7 +904,7 @@ static ssize_t cm_enable_show(struct device *dev, struct device_attribute *a,
- 	int ret;
- 
- 	mutex_lock(&css->mutex);
--	ret = sprintf(buf, "%x\n", css->cm_enabled);
-+	ret = sysfs_emit(buf, "%x\n", css->cm_enabled);
- 	mutex_unlock(&css->mutex);
- 	return ret;
- }
+ static struct bus_type css_bus_type = {
+ 	.name     = "css",
++	.driver_override = true,
+ 	.match    = css_bus_match,
+ 	.probe    = css_probe,
+ 	.remove   = css_remove,
 -- 
 2.53.0
 
