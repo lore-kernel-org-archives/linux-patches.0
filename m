@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9293E95A4;
-	Wed, 20 May 2026 18:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8847A3ED3B8;
+	Wed, 20 May 2026 18:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300165; cv=none; b=LRkS7juU7Etb04C2UmmH0C/2s/Ae6QnNvQ+FiIv5afmeRi9Dlcnx8LBdB31cIjbOzNctUf8wwXJqoD2R1DP5BflGg91p9SU2bKg/vSOey0t8PoKd+nwyFDoAEGm6unPp86uey7WO1XXv+KrWpCIFZ/pb8hB7WFlh91djeGVmc90=
+	t=1779300167; cv=none; b=XA847rkWofTiB+TSyyX8P4uc4vQG83hVRyS/jsibW4T7iqzMCZfcrwSbnEONDIPywgwZ5wMZ3zKlwExN+mlxzXL0Uj2IJ4+kW0sGZ5AiAfsw5Bg+nO8G/BuQSmUp/A9O67X5JyBllZIOhIhASEJZwYsSSzC9CuoN5CM7fr7FXtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300165; c=relaxed/simple;
-	bh=+1JcpVOCHXMQMtPSjAaZF1JopU+KR/vU9iWfKtBWuuQ=;
+	s=arc-20240116; t=1779300167; c=relaxed/simple;
+	bh=8JAfGZMQh8AedLeokDQlS5VB+CV/FwyfameFQMfaEkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gySG7URItGE52eObdWt/W6YRU5vTmYV1pqAPOe5pYGYKsYeCvuQC0OM6IXabyOqk2M/nc2WALf4vuBPGDtYuaHQXjnP37YmqWl4hEQsSqUzzKVYPECEwwK4Q3GscSKvsO13yHtYcaIY+bkbrWRhRh+PsrcSPpVW7frID7P3kgs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZMigbus; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bjY6wTERiqQiz/LCfA+qU1NjWkyoeHHI381whwliLVnM1zG2fBDfhiyPTsbzX4qIBpcEt2zQOouBxPqbzpq8MJztYokzfAwoJVhRrbctldO5drshnHAzAhFYYJo1RiyEZakL/1t/ZFpeGzoW2VSiyvBxaUiLie7zG1TGaTCo19Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW/0jxbl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZMigbus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A121F00898;
-	Wed, 20 May 2026 18:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW/0jxbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58B91F00893;
+	Wed, 20 May 2026 18:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300163;
-	bh=BeWGe/6HJJwi9Yq2KJX+9Y+vWZu7i/DcUV74G4Typag=;
+	s=korg; t=1779300166;
+	bh=HuM+25yFlfArInVTh3atwxp+QVCBOL2MVaWWXqo2Efo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZMigbusIxpFD6BlnWHHdHP2KPoRzzSFPJ+aGVj/zb5giTp7e1hYxFwm8uMQ+r2/b
-	 CefiIAoqyZEv6Ug6lDuizKT+1gVlXQps5R76l05aGPKmtUgo5QhHOk2NNXyX43EhAH
-	 H6FXNrAzxHrtneBBjc3yCbANTTsNOTygU92N90IY=
+	b=PW/0jxblmYM68Qrntx6wittBUFeOHCg4sj7ARYDBx4IrpHYtn/lYLszaGAAlzQ18U
+	 57jAyWkDILm64bEBXSOP+ohHCbhYbMTR96gautc5z2hvqBDqF9laNNyciYtDLz9+kv
+	 /Sh1UpdVzursEfuDekc92XC/3BjvB8JpJjYidxKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/666] bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()
-Date: Wed, 20 May 2026 18:14:40 +0200
-Message-ID: <20260520162112.726835876@linuxfoundation.org>
+Subject: [PATCH 6.12 070/666] wifi: ath10k: fix station lookup failure during disconnect
+Date: Wed, 20 May 2026 18:14:41 +0200
+Message-ID: <20260520162112.748703118@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,72 +53,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 1c22483a2c4bbf747787f328392ca3e68619c4dc ]
+[ Upstream commit 9a34a59c6086ae731a06b3e61b0951feef758648 ]
 
-CO-RE accessor strings are colon-separated indices that describe a path
-from a root BTF type to a target field, e.g. "0:1:2" walks through
-nested struct members. bpf_core_parse_spec() parses each component with
-sscanf("%d"), so negative values like -1 are silently accepted.  The
-subsequent bounds checks (access_idx >= btf_vlen(t)) only guard the
-upper bound and always pass for negative values because C integer
-promotion converts the __u16 btf_vlen result to int, making the
-comparison (int)(-1) >= (int)(N) false for any positive N.
+Recent commit [1] moved station statistics collection to an earlier stage
+of the disconnect flow. With this change in place, ath10k fails to resolve
+the station entry when handling a peer stats event triggered during
+disconnect, resulting in log messages such as:
 
-When -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,
-producing an out-of-bounds read far past the members array.  A crafted
-BPF program with a negative CO-RE accessor on any struct that exists in
-vmlinux BTF (e.g. task_struct) crashes the kernel deterministically
-during BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y
-(default on major distributions).  The bug is reachable with CAP_BPF:
+wlp58s0: deauthenticating from 74:1a:e0:e7:b4:c8 by local choice (Reason: 3=DEAUTH_LEAVING)
+ath10k_pci 0000:3a:00.0: not found station for peer stats
+ath10k_pci 0000:3a:00.0: failed to parse stats info tlv: -22
 
- BUG: unable to handle page fault for address: ffffed11818b6626
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)
- RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)
- RAX: 00000000ffffffff
- Call Trace:
-  <TASK>
-  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)
-  bpf_core_apply (kernel/bpf/btf.c:9507)
-  check_core_relo (kernel/bpf/verifier.c:19475)
-  bpf_check (kernel/bpf/verifier.c:26031)
-  bpf_prog_load (kernel/bpf/syscall.c:3089)
-  __sys_bpf (kernel/bpf/syscall.c:6228)
-  </TASK>
+The failure occurs because ath10k relies on ieee80211_find_sta_by_ifaddr()
+for station lookup. That function uses local->sta_hash, but by the time
+the peer stats request is triggered during disconnect, mac80211 has
+already removed the station from that hash table, leading to lookup
+failure.
 
-CO-RE accessor indices are inherently non-negative (struct member index,
-array element index, or enumerator index), so reject them immediately
-after parsing.
+Before commit [1], this issue was not visible because the transition from
+IEEE80211_STA_NONE to IEEE80211_STA_NOTEXIST prevented ath10k from sending
+a peer stats request at all: ath10k_mac_sta_get_peer_stats_info() would
+fail early to find the peer and skip requesting statistics.
 
-Fixes: ddc7c3042614 ("libbpf: implement BPF CO-RE offset relocation algorithm")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260404161221.961828-2-bestswngs@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this by switching the lookup path to ath10k_peer_find(), which queries
+ath10k's internal peer table. At the point where the firmware emits the
+peer stats event, the peer entry is still present in the driver's list,
+ensuring lookup succeeds.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
+
+Fixes: a203dbeeca15 ("wifi: mac80211: collect station statistics earlier when disconnect") # [1]
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/ath10k/57671b89-ec9f-4e6c-992c-45eb8e75929c@molgen.mpg.de
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://patch.msgid.link/20260325-ath10k-station-lookup-failure-v1-1-2e0c970f25d5@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/relo_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath10k/wmi-tlv.c | 26 +++++++++++++----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
-index 63a4d5ad12d1a..04c8febfc0aa7 100644
---- a/tools/lib/bpf/relo_core.c
-+++ b/tools/lib/bpf/relo_core.c
-@@ -293,6 +293,8 @@ int bpf_core_parse_spec(const char *prog_name, const struct btf *btf,
- 			++spec_str;
- 		if (sscanf(spec_str, "%d%n", &access_idx, &parsed_len) != 1)
- 			return -EINVAL;
-+		if (access_idx < 0)
-+			return -EINVAL;
- 		if (spec->raw_len == BPF_CORE_SPEC_MAX_LEN)
- 			return -E2BIG;
- 		spec_str += parsed_len;
+diff --git a/drivers/net/wireless/ath/ath10k/wmi-tlv.c b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+index 16d07d619b4df..ba1294c8ee39f 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
++++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+@@ -3,7 +3,7 @@
+  * Copyright (c) 2005-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include "core.h"
+ #include "debug.h"
+@@ -14,6 +14,7 @@
+ #include "wmi-tlv.h"
+ #include "p2p.h"
+ #include "testmode.h"
++#include "txrx.h"
+ #include <linux/bitfield.h>
+ 
+ /***************/
+@@ -224,8 +225,9 @@ static int ath10k_wmi_tlv_parse_peer_stats_info(struct ath10k *ar, u16 tag, u16
+ 						const void *ptr, void *data)
+ {
+ 	const struct wmi_tlv_peer_stats_info *stat = ptr;
+-	struct ieee80211_sta *sta;
++	u32 vdev_id = *(u32 *)data;
+ 	struct ath10k_sta *arsta;
++	struct ath10k_peer *peer;
+ 
+ 	if (tag != WMI_TLV_TAG_STRUCT_PEER_STATS_INFO)
+ 		return -EPROTO;
+@@ -241,20 +243,20 @@ static int ath10k_wmi_tlv_parse_peer_stats_info(struct ath10k *ar, u16 tag, u16
+ 		   __le32_to_cpu(stat->last_tx_rate_code),
+ 		   __le32_to_cpu(stat->last_tx_bitrate_kbps));
+ 
+-	rcu_read_lock();
+-	sta = ieee80211_find_sta_by_ifaddr(ar->hw, stat->peer_macaddr.addr, NULL);
+-	if (!sta) {
+-		rcu_read_unlock();
+-		ath10k_warn(ar, "not found station for peer stats\n");
++	guard(spinlock_bh)(&ar->data_lock);
++
++	peer = ath10k_peer_find(ar, vdev_id, stat->peer_macaddr.addr);
++	if (!peer || !peer->sta) {
++		ath10k_warn(ar, "not found %s with vdev id %u mac addr %pM for peer stats\n",
++			    peer ? "sta" : "peer", vdev_id, stat->peer_macaddr.addr);
+ 		return -EINVAL;
+ 	}
+ 
+-	arsta = (struct ath10k_sta *)sta->drv_priv;
++	arsta = (struct ath10k_sta *)peer->sta->drv_priv;
+ 	arsta->rx_rate_code = __le32_to_cpu(stat->last_rx_rate_code);
+ 	arsta->rx_bitrate_kbps = __le32_to_cpu(stat->last_rx_bitrate_kbps);
+ 	arsta->tx_rate_code = __le32_to_cpu(stat->last_tx_rate_code);
+ 	arsta->tx_bitrate_kbps = __le32_to_cpu(stat->last_tx_bitrate_kbps);
+-	rcu_read_unlock();
+ 
+ 	return 0;
+ }
+@@ -266,6 +268,7 @@ static int ath10k_wmi_tlv_op_pull_peer_stats_info(struct ath10k *ar,
+ 	const struct wmi_tlv_peer_stats_info_ev *ev;
+ 	const void *data;
+ 	u32 num_peer_stats;
++	u32 vdev_id;
+ 	int ret;
+ 
+ 	tb = ath10k_wmi_tlv_parse_alloc(ar, skb->data, skb->len, GFP_ATOMIC);
+@@ -284,15 +287,16 @@ static int ath10k_wmi_tlv_op_pull_peer_stats_info(struct ath10k *ar,
+ 	}
+ 
+ 	num_peer_stats = __le32_to_cpu(ev->num_peers);
++	vdev_id = __le32_to_cpu(ev->vdev_id);
+ 
+ 	ath10k_dbg(ar, ATH10K_DBG_WMI,
+ 		   "wmi tlv peer stats info update peer vdev id %d peers %i more data %d\n",
+-		   __le32_to_cpu(ev->vdev_id),
++		   vdev_id,
+ 		   num_peer_stats,
+ 		   __le32_to_cpu(ev->more_data));
+ 
+ 	ret = ath10k_wmi_tlv_iter(ar, data, ath10k_wmi_tlv_len(data),
+-				  ath10k_wmi_tlv_parse_peer_stats_info, NULL);
++				  ath10k_wmi_tlv_parse_peer_stats_info, &vdev_id);
+ 	if (ret)
+ 		ath10k_warn(ar, "failed to parse stats info tlv: %d\n", ret);
+ 
 -- 
 2.53.0
 
