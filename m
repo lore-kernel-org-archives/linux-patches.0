@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3803BCD2A;
-	Wed, 20 May 2026 16:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB90362143;
+	Wed, 20 May 2026 16:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295493; cv=none; b=PFDnrHSMOrwt8P4EJ6ns5vqRivdsiX2GFCw4WrtTLCo62qpCXKDIH/oIfZVIYs5Yt95besRppCqVSowKJZ9qHoZmRKmK1cgRmZWf8Sc1czpbMjO3uG9IX2PmGFZj8TX01VwiCGQtMyKs/7JbazF7tL6OmwGo59JCah4HOFnYBM4=
+	t=1779295496; cv=none; b=QAqd6JBdZXnYfKxy1WAg/yOlr1T4hWinfX4yTEVGpLTEkBqtmwx2J3TQaPZybc4Eo56hL6BSBZSGGUZzGp+AXELCQL69b1T+r7ApVoQWAARKNkxzzNLg99KVy/f/BD4AFb9ebJtU6D/8GzsBOz3ubmZMe2IrIuya6Zwt0PIlbDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295493; c=relaxed/simple;
-	bh=lVhXZK72qh+Be/D7KF8De3Fr1EnjQWYDwZN0hezIzkE=;
+	s=arc-20240116; t=1779295496; c=relaxed/simple;
+	bh=yMm0f0CcqQ7zdzxDUfUoVLW/5gVlZbWa0LaFRG4fHP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1KZbOQHnAT4D8IpAuupDamkeCNy8cYAgPRMEiekDE4v0E8j7MYk8sueolJ5ez2hNNAnhOB9fhUjLA12eegs29SzgREbr5EdNWBQZiZ4UQROI2FpqAWb97WHPSRcrLng3hqbgzxnjeQsKVKPlxpm7SIsFsRZlHy39dojWlYOjyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRZYBK5w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfh16FUPIDYn144QFBfLrD0WwrPJ+G9mYLQUHCO6Hjbl6FjKUyVRRMKP8Qaq3O9vAMOaMeST1qUUPr9ikd9hg9XGkMtwpX7LAbD1dTHKP2iv0QYp0RJ6mD8FOPcaGVTCkAZbC5pr3YMccL76shPENs9Jvv4vFLZFq6LwnJz2sfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qavqq+Oq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRZYBK5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7D31F000E9;
-	Wed, 20 May 2026 16:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qavqq+Oq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C469D1F000E9;
+	Wed, 20 May 2026 16:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295492;
-	bh=FD9t3FS2c8R3AsQ2vck8AxOu/WPDY9N2uflGkhuXUJo=;
+	s=korg; t=1779295495;
+	bh=nzTnR8EYHZi5GRcG27SVx3/rcvAxIvhJmfAuFU4Te6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRZYBK5wHvYI2Tsye2+GfyHW+AGr2NLT4mX4wU15kI/f+SPLhZl2+YO9SHUjpFgY0
-	 svq+FGZIz/OZ0MZHUyH5Z2kV00bTe6YEnuBoREpVFMDgTAOT4x4spHtFhXxMJgDGoi
-	 FGlAsOtxr4Ra4+vaRjZXbI6Pr6BS1vU0honVkSiE=
+	b=Qavqq+Oq0syD1LsWJiB0NtKGRmvmnzTZ+FrKoNtpOH6AhqYAkBzw4I6je4csPKagW
+	 nrnwgIPhEn+ctO6sUCirC2S/ahJE1wNyplHkk5TpCgQsOcr3rQlZz/T3VOe2Mkif56
+	 rBSnH823hasUzvagWNatMeBbaL7DhmlrL58vrx2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0441/1146] ALSA: usb-audio: Exclude Scarlett 18i20 1st Gen from SKIP_IFACE_SETUP
-Date: Wed, 20 May 2026 18:11:31 +0200
-Message-ID: <20260520162158.179208266@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Jeremy Bethmont <jeremy.bethmont@gmail.com>
+Subject: [PATCH 7.0 0442/1146] ALSA: hda/realtek - fixed speaker no sound update
+Date: Wed, 20 May 2026 18:11:32 +0200
+Message-ID: <20260520162158.201449940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,35 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit a47306a74c31557b1e5cab54642950bbb20294cb ]
+[ Upstream commit 46c862f5419e0a86b60b9f9558d247f6084c99f9 ]
 
-Same issue as the other 1st Gen Scarletts: QUIRK_FLAG_SKIP_IFACE_SETUP
-causes distorted audio on the Scarlett 18i20 1st Gen (1235:800c).
+Fixed speaker has pop noise on Lenovo Thinkpad X11 Carbon Gen 12.
 
-Fixes: 38c322068a26 ("ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP")
-Reported-by: tucktuckg00se [https://github.com/geoffreybennett/linux-fcp/issues/54]
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/ad0ozNnkcFrcjVQz@m.b4.vu
+Fixes: 630fbc6e870e ("ALSA: hda/realtek - fixed speaker no sound")
+Reported-and-tested-by: Jeremy Bethmont <jeremy.bethmont@gmail.com>
+Closes: https://lore.kernel.org/CAC88DfsHrhyhy0Pn1O-z9egBvMYu=6NYgcvcC6KCgwh_-Ldkxg@mail.gmail.com
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/realtek/alc269.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 4cfa24c06fcdf..6f2a053d971c9 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2435,6 +2435,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_VALIDATE_RATES),
- 	DEVICE_FLG(0x1235, 0x8006, 0), /* Focusrite Scarlett 2i2 1st Gen */
- 	DEVICE_FLG(0x1235, 0x800a, 0), /* Focusrite Scarlett 2i4 1st Gen */
-+	DEVICE_FLG(0x1235, 0x800c, 0), /* Focusrite Scarlett 18i20 1st Gen */
- 	DEVICE_FLG(0x1235, 0x8016, 0), /* Focusrite Scarlett 2i2 1st Gen */
- 	DEVICE_FLG(0x1235, 0x801c, 0), /* Focusrite Scarlett Solo 1st Gen */
- 	VENDOR_FLG(0x1235, /* Focusrite Novation */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index cbc24d71a1115..d8698c20a3cae 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3674,22 +3674,11 @@ static void alc287_alc1318_playback_pcm_hook(struct hda_pcm_stream *hinfo,
+ 				   struct snd_pcm_substream *substream,
+ 				   int action)
+ {
+-	static const struct coef_fw dis_coefs[] = {
+-		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC203),
+-		WRITE_COEF(0x28, 0x0004), WRITE_COEF(0x29, 0xb023),
+-	}; /* Disable AMP silence detection */
+-	static const struct coef_fw en_coefs[] = {
+-		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC203),
+-		WRITE_COEF(0x28, 0x0084), WRITE_COEF(0x29, 0xb023),
+-	}; /* Enable AMP silence detection */
+-
+ 	switch (action) {
+ 	case HDA_GEN_PCM_ACT_OPEN:
+-		alc_process_coef_fw(codec, dis_coefs);
+ 		alc_write_coefex_idx(codec, 0x5a, 0x00, 0x954f); /* write gpio3 to high */
+ 		break;
+ 	case HDA_GEN_PCM_ACT_CLOSE:
+-		alc_process_coef_fw(codec, en_coefs);
+ 		alc_write_coefex_idx(codec, 0x5a, 0x00, 0x554f); /* write gpio3 as default value */
+ 		break;
+ 	}
+@@ -3712,10 +3701,15 @@ static void alc287_fixup_lenovo_thinkpad_with_alc1318(struct hda_codec *codec,
+ 		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC301),
+ 		WRITE_COEF(0x28, 0x0001), WRITE_COEF(0x29, 0xb023),
+ 	};
++	static const struct coef_fw dis_coefs[] = {
++		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC203),
++		WRITE_COEF(0x28, 0x0004), WRITE_COEF(0x29, 0xb023),
++	}; /* Disable AMP silence detection */
+ 
+ 	if (action != HDA_FIXUP_ACT_PRE_PROBE)
+ 		return;
+ 	alc_update_coef_idx(codec, 0x10, 1<<11, 1<<11);
++	alc_process_coef_fw(codec, dis_coefs);
+ 	alc_process_coef_fw(codec, coefs);
+ 	spec->power_hook = alc287_s4_power_gpio3_default;
+ 	spec->gen.pcm_playback_hook = alc287_alc1318_playback_pcm_hook;
 -- 
 2.53.0
 
