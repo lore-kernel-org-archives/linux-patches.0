@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77583F20F0;
-	Wed, 20 May 2026 17:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBC33D75C7;
+	Wed, 20 May 2026 17:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296707; cv=none; b=k+NxigVXgmBJpo3E6ioR339UTHZ0liNJMrrmhAFa4b9wVyluA0nDKxHpTSyU0oGffpcDJUferUGO1u/xfxFNiuwBo4i6qE7w8+2nOG3uMpXAwcDbVUP6SyT3vqQRV6E3adrOQIiDSuR4vWncQQoIR1LCQH6PfkmLOpGwZL8AAOo=
+	t=1779296710; cv=none; b=W+s8/knZjQ4a/+uq7AUzLGKnOZod7ELrjYUOOIu0xnlZPfjlQD/7ZwhOh41JSbPl/q9QPyhSX6AEfy5ZLEl76A4m9FR2Qa2hkOGX3tc/dc3rUMn+0cQupvxN8naHUlE12jeX0uYZZL30dGHJftr524aRd4uNG3FNMW1749Jin/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296707; c=relaxed/simple;
-	bh=xBRu8gQqbs28eze0o8goWQPyASksOTKAlFNi3AuVBqI=;
+	s=arc-20240116; t=1779296710; c=relaxed/simple;
+	bh=JveKBoI5TKLq6Bp73h6TJT9uRMv+3zZiSUAUO25ModU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVYvxzWr1f2ft4UHq9v2mYy3UCHFg5G6OYO8jPktZ8tMTok0hrQGhjCHuiwPu1ZmSfPivANJFlpeLTnRIXfoRPNnlYqt903rE18hJe2eC1yqWzCN/Y/f/8IGj4B9mVFXRkHUcIQPu/bp/3DXWRAEY/axdCUwk04kN16l9Oq7hRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdpKQP6/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VsyNLAm9C1ehsvMqoVdc2s0HX4o0q9KB9eR1ckMxS1zGc8cTgz+bcPRXQnZKZH+JgJXf+UOUIf4AXsq9MysNsKLH+GpqZ027IuiXsgk/atC6uuOXPEneK8Dyuu9mie1iUVXhQGIHkEtzJEZQajfbPfEYqMbHbS9guY3OwhVQc4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+mIfYw/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdpKQP6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174331F000E9;
-	Wed, 20 May 2026 17:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+mIfYw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AA41F000E9;
+	Wed, 20 May 2026 17:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296706;
-	bh=I4D4TJZ0gEUCkL69ouBM94wrPlwPkbwOdt7iBd4Zdmg=;
+	s=korg; t=1779296709;
+	bh=NeqXPKD/0UUEcBADTI1EgSI6P3ZlCQji436YhQyZHPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdpKQP6/CHQI/ZfvuF/4z+/6+hqQT0Ps4NxpkhkYB29urUp+R4QN5JjMjfOjY11IQ
-	 FCkRNHlf2h0rZ/W+bcKXJ8J7K/aPWMljFQFnrsyjO3Hko3KCwHag6VV0F6vivARVif
-	 MDTqhfvqsI4ma7gepHpJhSjI4+2JFiIsi8/hrZ10=
+	b=Q+mIfYw/XeLV+o7IUjZ+iwpZymtHvYUO2ZtuHuUEFvz63AiofbN/r1v7C0QXqevFm
+	 acvtYYuIZJEZx0jBNc3Xh/R/K3DgGYwQIgLFCmUXxh5+zoTR97NYrkQys4sTAMxYpE
+	 9Spy3u2kUpFuXfaTzgOpGuKEUzWTb+Fj5ECYGs+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0900/1146] nvme-pci: fix missed admin queue sq doorbell write
-Date: Wed, 20 May 2026 18:19:10 +0200
-Message-ID: <20260520162208.603221747@linuxfoundation.org>
+Subject: [PATCH 7.0 0901/1146] drm/amdgpu: avoid double drm_exec_fini() in userq validate
+Date: Wed, 20 May 2026 18:19:11 +0200
+Message-ID: <20260520162208.625953587@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,43 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 1cc4cdae2a3b7730d462d69e30f213fd2efe7807 ]
+[ Upstream commit 508babf310365f1107a2e8831c267c292a286818 ]
 
-We can batch admin commands submitted through io_uring_cmd passthrough,
-which means bd->last may be false and skips the doorbell write to
-aggregate multiple commands per write. If a subsequent command can't be
-dispatched for whatever reason, we have to provide the blk-mq ops'
-commit_rqs callback in order to ensure we properly update the doorbell.
+When new_addition is true, amdgpu_userq_vm_validate() calls
+drm_exec_fini(&exec) before iterating over the collected HMM ranges and
+calling amdgpu_ttm_tt_get_user_pages().
 
-Fixes: 58e5bdeb9c2b ("nvme: enable uring-passthrough for admin commands")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+If amdgpu_ttm_tt_get_user_pages() fails in that path, the code jumps to
+unlock_all and calls drm_exec_fini(&exec) a second time on the same
+exec object. drm_exec_fini() is not idempotent: it frees exec->objects
+and may also drop exec->contended and finalize the ww acquire context.
+
+Route that error path directly to the range cleanup once exec has
+already been finalized.
+
+Fixes: 42f148788469 ("drm/amdgpu/userqueue: validate userptrs for userqueues")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2802952e4a07306da6ebe813ff1acacc5691851a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index db5fc9bf66272..4c052ed18cb8d 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2241,6 +2241,7 @@ static int nvme_create_queue(struct nvme_queue *nvmeq, int qid, bool polled)
- static const struct blk_mq_ops nvme_mq_admin_ops = {
- 	.queue_rq	= nvme_queue_rq,
- 	.complete	= nvme_pci_complete_rq,
-+	.commit_rqs	= nvme_commit_rqs,
- 	.init_hctx	= nvme_admin_init_hctx,
- 	.init_request	= nvme_pci_init_request,
- 	.timeout	= nvme_timeout,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index caca0c4aeefe7..0e015741ab24e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -1231,7 +1231,7 @@ amdgpu_userq_vm_validate(struct amdgpu_userq_mgr *uq_mgr)
+ 			bo = range->bo;
+ 			ret = amdgpu_ttm_tt_get_user_pages(bo, range);
+ 			if (ret)
+-				goto unlock_all;
++				goto free_ranges;
+ 		}
+ 
+ 		invalidated = true;
+@@ -1258,6 +1258,7 @@ amdgpu_userq_vm_validate(struct amdgpu_userq_mgr *uq_mgr)
+ 
+ unlock_all:
+ 	drm_exec_fini(&exec);
++free_ranges:
+ 	xa_for_each(&xa, tmp_key, range) {
+ 		if (!range)
+ 			continue;
 -- 
 2.53.0
 
