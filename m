@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F6940960B;
-	Wed, 20 May 2026 18:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFE532F770;
+	Wed, 20 May 2026 18:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779303075; cv=none; b=OJwCUb3Xyjo5n3RsgqQVlnfpGjD3MuWUyqi3IrS5zsWr4cC3geoHDsqttkt84v1jrIsyjpKBn1Zfk2gNeDX1BohQDEikNVqiaBzxdngngPyCAgVHgR78pNMrpLfdSy1zaoufGhIx/mVJ2n/1mLy4YgSHyhwAbM9Oxyyja3SE3og=
+	t=1779303077; cv=none; b=j0F0Ldqv6q2QQZ9BvOe0yr2XgTGZHprT8eaOq9uS679bOc/cDvdVOVEKGARN3Zmmj+651jYeQM28Uj31IM6XM6qXmx0JfKQrxNUISLsaZnnH7GVvZ2qoyx2cdzuesKazpNryj09RA+K5QpPBvqhPIh2NwHU3OoYBhKFK3Dn1Q5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779303075; c=relaxed/simple;
-	bh=2ZlBnsQepmB45ZUbUTPXlRZ2vV9F0p3GsLcXGZhtOY0=;
+	s=arc-20240116; t=1779303077; c=relaxed/simple;
+	bh=+7k9JTNey7K29r3fdVaJp6GSBKL8zSt5MXK1HQF6wE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEvBG/kz0gAPaOL+3wUnMB4V6m6XqTicDLy/QxGOckeIc0bP5oA2VHt3KH1qmHrq029FxuJLxX4UoYXTw4fKX0YcEdvidJBZQzvFs5iBJddVrokkKzL3plE3zsp3mkXDMtTqJ8yZnI65yrOWeWqNs+w0laWoWWRtAM93NZtUR2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alaBDAR7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VoepErYGWFQL0eWz8pmq7tKRD93wzpGpK/OYTJqQJ7IHFtaavoTCHzl3wDzjgqqVzQS7SYMzTyHwtjKOn+19gjHr54Zwh/6zTnvVweHI+GbzWouvuPQk8oov5gxkSMRYyhoMKObb4tkkZT+DrJEIUl0knOUCYIcjaTNKRXlqyFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8JSm7hQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alaBDAR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C741F000E9;
-	Wed, 20 May 2026 18:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8JSm7hQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765791F00893;
+	Wed, 20 May 2026 18:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779303072;
-	bh=ReyenHGs8ZrP2tco1ka2IefToRolXATQjT0jDfLdIXM=;
+	s=korg; t=1779303075;
+	bh=mg0Q4RHX+DwOaGrXQ/klJosn9wtiS++HSeeMGccv9jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=alaBDAR7Ots4QHweVJ3u9al0dRYVdBiEn6HoalE4xA/QcmBUsctAZGmfKs1PicRWi
-	 H1kqPfda6giJJTeetTqgI+/fruSORll2N9kYNckgfG1CvRHb+XKFaVmvrB9MhukDq7
-	 MMyIpaTFJFX4yS5LSSKhnZ7VeK5zaQlv9m3e2TH8=
+	b=t8JSm7hQCbKaG0WnRK7fguOcvVLmsjknPLJArPgdqEZc+o9WgIFs4x9//scl5c5YH
+	 HspY0lD6WeSgJRTOpktMr4ZALczvCiLrwu59osPjr4DgO1re1cnWQRblbeo2yuwbaI
+	 Dusw/Iph7zcPuzOPuz1dPLhze5PxxjY8VHCRWdZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 482/508] drm/gma500/oaktrail_lvds: fix hang on init failure
-Date: Wed, 20 May 2026 18:25:05 +0200
-Message-ID: <20260520162109.036903251@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Subject: [PATCH 6.6 483/508] drm/gma500/oaktrail_lvds: fix i2c adapter leaks on init
+Date: Wed, 20 May 2026 18:25:06 +0200
+Message-ID: <20260520162109.059436723@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,50 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 657a091ab6d01d0091b77660c75cfed573c9a53e upstream.
+commit 84d1c9b416d54afe760ca4c378bd95c89261254c upstream.
 
 The LVDS init code looks up an I2C adapter using i2c_get_adapter() and
 tries to read the EDID before falling back to allocating and registering
 its own adapter.
 
-The error handling does not separate these cases so on a late init
-failure it will try to deregister and free also an adapter that had
-previously been registered. Since i2c_get_adapter() takes another
-reference to the adapter, deregistration hangs indefinitely while
-waiting for the reference to be released.
+Make sure to drop the references taken by i2c_get_adapter() when falling
+back to allocating an adapter as well as on late errors to allow the
+looked up adapter to be deregistered.
 
-Fix this by only destroying adapters allocated during LVDS init on
-errors.
-
-Fixes: a57ebfc0b4da ("drm/gma500: Make oaktrail lvds use ddc adapter from drm_connector")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
+Cc: stable@vger.kernel.org	# 3.3
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260508144446.59722-3-johan@kernel.org
+Link: https://patch.msgid.link/20260508144446.59722-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_lvds.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/gma500/oaktrail_lvds.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/gpu/drm/gma500/oaktrail_lvds.c
 +++ b/drivers/gpu/drm/gma500/oaktrail_lvds.c
-@@ -294,7 +294,7 @@ void oaktrail_lvds_init(struct drm_devic
- {
- 	struct gma_encoder *gma_encoder;
- 	struct gma_connector *gma_connector;
--	struct gma_i2c_chan *ddc_bus;
-+	struct gma_i2c_chan *ddc_bus = NULL;
- 	struct drm_connector *connector;
- 	struct drm_encoder *encoder;
- 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
-@@ -422,7 +422,8 @@ out:
- 
- err_unlock:
+@@ -368,6 +368,8 @@ void oaktrail_lvds_init(struct drm_devic
+ 	if (edid == NULL && dev_priv->lpc_gpio_base) {
+ 		ddc_bus = oaktrail_lvds_i2c_init(dev);
+ 		if (!IS_ERR(ddc_bus)) {
++			if (i2c_adap)
++				i2c_put_adapter(i2c_adap);
+ 			i2c_adap = &ddc_bus->base;
+ 			edid = drm_get_edid(connector, i2c_adap);
+ 		}
+@@ -424,6 +426,8 @@ err_unlock:
  	mutex_unlock(&dev->mode_config.mutex);
--	gma_i2c_destroy(to_gma_i2c_chan(connector->ddc));
-+	if (!IS_ERR_OR_NULL(ddc_bus))
-+		gma_i2c_destroy(ddc_bus);
+ 	if (!IS_ERR_OR_NULL(ddc_bus))
+ 		gma_i2c_destroy(ddc_bus);
++	else if (i2c_adap)
++		i2c_put_adapter(i2c_adap);
  	drm_encoder_cleanup(encoder);
  err_connector_cleanup:
  	drm_connector_cleanup(connector);
