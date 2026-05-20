@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D27356748;
-	Wed, 20 May 2026 17:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9E23403F4;
+	Wed, 20 May 2026 17:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297427; cv=none; b=tJaPg0eJcKrnz0/wjSGo2UPnMx/xvs371ytGCmUqN8NYK2qmxebj1g9H2FwOkD43WopRgFqbRWZGuysmRdkghHZDqmb/49hpvh7cfn8IjI0QlrTv1sA7eZYHEfTDTuuHrJNGwn+5MhzYMGZYwuHw0v7Dnloscu8fHrxnGItnwn0=
+	t=1779297429; cv=none; b=aviEkeRMXTM8H2YWYNZfAtZ4z0th2tf/LqN/6sqkolrfCJQijvDf1Zu6Xpn+rYOpBH0n+ZyZmHUs1qnAJMe+J+AcosyXRrzWJ/ha+b6oDebTAHhumHw5YzZ8uf+zjasJ1tRpxeB3HxCDabhWC305v8gwLjpdlhz//xXNkFFIakg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297427; c=relaxed/simple;
-	bh=x/K9Asltdy5OXWdjK0siHLjSTWwVCtSam6eWJ2DyiLA=;
+	s=arc-20240116; t=1779297429; c=relaxed/simple;
+	bh=sDBmfbiN6VTR1fhiFbosQzaToVTTiJp3rUyhELPXlhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDQ/5UaEZWzEZ5vtqm4ok5qPq/b336V2EZ85eKiBfP1qXzIU+cm2adLHg4O3sYI7jgWN5IF/giMhxEg1lfQoxmP9PD4vQGiHsS1JqW5v4VNohpC1tK/jo0OnbVDGV+1LHytbYSQ9c/EUt7qdLfhnogzYsAk5/QVdJioegP8vCvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2oYEaKi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m7btEbdKl9OJvJmSt48IJY9rSBOk2tx5yDCYVOocI/qeOaEmWi5rAH0GWyq9A/67bIRwNIbe+Ve/xvYgpAUAHBOG/r3jcwDhr1AbXICKbFhtvXmHQtlI9R7+f78SXIehdo2rLLEFlDUjcjOJ9D39wmY5RAs/YYJFEPjO6UbI004=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBJ9X02K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2oYEaKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D631F000E9;
-	Wed, 20 May 2026 17:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBJ9X02K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06A41F00893;
+	Wed, 20 May 2026 17:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297425;
-	bh=2JWVqlacu+tiMAyZlPmlpvgb25V1i6WNWgMRbjxM0jk=;
+	s=korg; t=1779297428;
+	bh=bkyF2W2SYVOUeFD7+UbpLNKqOxvbZJHW/N4KFZ5we3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2oYEaKiqkS45n5Dc3cpunwIw0TtxC7LW5mGTfHHvVNS08lgS5zHMnMQ05pf53SdI
-	 /H/PtdtgBol0nBX3tm+t5urzg6+5+V2mjY6zWQUwe0xWlbBrts2Dk0AmS7Wv075AL1
-	 pDxRDMV/mEG8D3+F8rXcyOOEcM302qRCvEIK7z8I=
+	b=sBJ9X02K9ydJQWOG+A60SGpgoBIAMaX+wccg1GlLm0rx7Sqx3Y8+EIMW/WrYd0mEi
+	 I0CKO6XK9EHTkNPVpmhvWzBKfSnMmWS8ZBX3eJEuW0orz1wm2Qmqmzp/a77d+mcj+C
+	 PqQSKtZcYUtT0tsPynUcST2M00AP//BTBSdCYXLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/957] amd-pstate: Fix memory leak in amd_pstate_epp_cpu_init()
-Date: Wed, 20 May 2026 18:08:30 +0200
-Message-ID: <20260520162135.148766796@linuxfoundation.org>
+Subject: [PATCH 6.18 028/957] amd-pstate: Update cppc_req_cached in fast_switch case
+Date: Wed, 20 May 2026 18:08:31 +0200
+Message-ID: <20260520162135.170648099@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,41 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit beda3b363546a423e4e29a7395e04c0ac4ff677e ]
+[ Upstream commit fcc25a291fbdca2c06c2c6602532050873f0c9de ]
 
-On failure to set the epp, the function amd_pstate_epp_cpu_init()
-returns with an error code without freeing the cpudata object that was
-allocated at the beginning of the function.
+The function msr_update_perf() does not cache the new value that is
+written to MSR_AMD_CPPC_REQ into the variable cpudata->cppc_req_cached
+when the update is happening from the fast path.
 
-Ensure that the cpudata object is freed before returning from the
-function.
+Fix that by caching the value everytime the MSR_AMD_CPPC_REQ gets
+updated.
 
-This memory leak was discovered by Claude Opus 4.6 with the aid of
-Chris Mason's AI review-prompts
+This issue was discovered by Claude Opus 4.6 with the aid of Chris
+Mason's AI review-prompts
 (https://github.com/masoncl/review-prompts/tree/main/kernel).
 
 Assisted-by: Claude:claude-opus-4.6 review-prompts/linux
-Fixes: f9a378ff6443 ("cpufreq/amd-pstate: Set different default EPP policy for Epyc and Ryzen")
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Fixes: fff395796917 ("cpufreq/amd-pstate: Always write EPP value when updating perf")
 Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
 Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 602e4fa81d6c5..86d8762ac82c5 100644
+index 86d8762ac82c5..39681ad1606f6 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -1525,7 +1525,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+@@ -259,7 +259,6 @@ static int msr_update_perf(struct cpufreq_policy *policy, u8 min_perf,
  
- 	ret = amd_pstate_set_epp(policy, cpudata->epp_default);
- 	if (ret)
--		return ret;
-+		goto free_cpudata1;
- 
- 	current_pstate_driver->adjust_perf = NULL;
+ 	if (fast_switch) {
+ 		wrmsrq(MSR_AMD_CPPC_REQ, value);
+-		return 0;
+ 	} else {
+ 		int ret = wrmsrq_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ, value);
  
 -- 
 2.53.0
