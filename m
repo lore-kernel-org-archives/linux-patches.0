@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E7736CE19;
-	Wed, 20 May 2026 18:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6D136CE19;
+	Wed, 20 May 2026 18:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300109; cv=none; b=ekFJzo0BVCSDLHscak8R+pZQ3pcaMdPDERSeYjKv+o6ybie9+qemasAgXzEAEmn6vK/L92ySiyrp4NjU9ti5bVO8dLl7IFV9HN6oU/SRY6CGT3F8zDmrzJK5GfrljUgwATekr2KSyNM1iKdd2K5wQi6/WhZeN1WtcWpJhIrPsO0=
+	t=1779300112; cv=none; b=tdXg3UHTAAm4JRTdSmOCJqD4SPC6LzVRBg8kgrvh4FHwgW8N/m8tE0xgHklQadwNHz9sp6npMIBKOdDFQ60ShPHZrIL3OfDKW6SykkSwWL6ymteefqWjTOd7UufLE2Dno8+LIQ2cTDa5VG+XDAJn0YuS734MqZHwGWc4DeQvnEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300109; c=relaxed/simple;
-	bh=32AhLjJSvPb+agBSk1S12PpvL7piEbHtBU5nJWo4Pm8=;
+	s=arc-20240116; t=1779300112; c=relaxed/simple;
+	bh=y9lMSGLalAt7Y0wv7edSBnc1NtyCtg8ShmANne8FTsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPEn+3xGphIVwde7ayYd3Yi5Zy7Lwbi6pE0K5TM2D48tkAqXZl5ZnxA8T+Dpd/Ulu3RTv7nmpAxmKWidLJDfTLJ6T7cj8JPz7boWJbyG1A+TNDOGHnbSWHlntX4DQwBjLOGjSSstZsQe6uvdH2cuQTdShhB6+oy8i1KOVBO4BOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHWnC9ZD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFROqPG53HWFpAmGFtICRL+rGv9zkX4VRxaajZxA6TG3nOnOquzcsefGU6KpiVWY0Ztb6PZH4ydXowT2+7MFuGuUZyd9gtAaiv1qm66Nz2/Bk8tp7inp+/KV8EO9BZqi4Ay/jMujo3oBZh3Dv+hVq+EZehNwwFKHrmSgazWQd10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FQvuEfa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHWnC9ZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398211F000E9;
-	Wed, 20 May 2026 18:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FQvuEfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DB91F000E9;
+	Wed, 20 May 2026 18:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300108;
-	bh=ebmtBwCrPRvJZsLPfUn/Jw2E7KWlGcMxef/f3c3rGsQ=;
+	s=korg; t=1779300111;
+	bh=DKzgTIvEQO3hJVp6Na3mEbXKevJTtpxXe2HaiwdMygo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHWnC9ZD9fhSJBvMayvKncAigKOPBRXm7WykstBN75EzKcduWW4F1tc+K7wk2nGoX
-	 Q6swi6soND7gS2FN8x7riXETTVIdQfm4cHAUnR35Akq0tQz2mwKs/U2IPDhdghIWqr
-	 M7F5fqssDA88ykHVX0rjaKdXgq28ABuNNvZZSS1g=
+	b=0FQvuEfaeN1NyzdBwIi3TylIXizgdIIZipvyuZzN1MCDSplEcYeFOUQfdvDsBuD+n
+	 mwfHF9LloMZnwfVJdeRpSHWuN9S72W44oYVZ9tKPk1kaNqLpIKY2GhuZXBG1z8Fe7V
+	 exOdB7HZ7EnRv0TTCC019tzf7C0qzSky5HqSkOb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Colton Lewis <coltonlewis@google.com>,
-	Will Deacon <will@kernel.org>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/666] arm64: cpufeature: Make PMUVer and PerfMon unsigned
-Date: Wed, 20 May 2026 18:14:21 +0200
-Message-ID: <20260520162112.324603653@linuxfoundation.org>
+Subject: [PATCH 6.12 051/666] wifi: mt76: mt7996: fix struct mt7996_mcu_uni_event
+Date: Wed, 20 May 2026 18:14:22 +0200
+Message-ID: <20260520162112.345780047@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,54 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit d1dcc20bcc40efe1f1c71639376c91dafa489222 ]
+[ Upstream commit efbd5bf395f4e6b45a87f3835d4c2e28170c77c5 ]
 
-On the host, this change doesn't make a difference because the fields
-are defined as FTR_EXACT. However, KVM allows userspace to set these
-fields for a guest and overrides the type to be FTR_LOWER_SAFE. And
-while KVM used to do an unsigned comparison to validate that the new
-value is lower than what the hardware provides, since the linked commit
-it uses the generic sanitization framework which does a signed
-comparison.
+The cid field is defined as a two-byte value in the firmware.
 
-Fix it by defining these fields as unsigned. In theory, without this
-fix, userspace could set a higher PMU version than the hardware supports
-by providing any value with the top bit set.
-
-Fixes: c118cead07a7 ("KVM: arm64: Use generic sanitisation for ID_(AA64)DFR0_EL1")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Colton Lewis <coltonlewis@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20260203155532.1098290-2-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cpufeature.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 5e68d65e675e5..8246015fd2d73 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -533,7 +533,7 @@ static const struct arm64_ftr_bits ftr_id_aa64dfr0[] = {
- 	 * We can instantiate multiple PMU instances with different levels
- 	 * of support.
- 	 */
--	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_EXACT, ID_AA64DFR0_EL1_DebugVer_SHIFT, 4, 0x6),
- 	ARM64_FTR_END,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 8738e4b645420..54567a5893449 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -218,7 +218,7 @@ mt7996_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 		event = (struct mt7996_mcu_uni_event *)skb->data;
+ 		ret = le32_to_cpu(event->status);
+ 		/* skip invalid event */
+-		if (mcu_cmd != event->cid)
++		if (mcu_cmd != le16_to_cpu(event->cid))
+ 			ret = -EAGAIN;
+ 	} else {
+ 		skb_pull(skb, sizeof(struct mt7996_mcu_rxd));
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index a75e1c9435bb0..ded2fe7210680 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -25,8 +25,8 @@ struct mt7996_mcu_rxd {
  };
-@@ -677,7 +677,7 @@ static const struct arm64_ftr_bits ftr_id_pfr2[] = {
  
- static const struct arm64_ftr_bits ftr_id_dfr0[] = {
- 	/* [31:28] TraceFilt */
--	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MProfDbg_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MMapTrc_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_CopTrc_SHIFT, 4, 0),
+ struct mt7996_mcu_uni_event {
+-	u8 cid;
+-	u8 __rsv[3];
++	__le16 cid;
++	u8 __rsv[2];
+ 	__le32 status; /* 0: success, others: fail */
+ } __packed;
+ 
 -- 
 2.53.0
 
