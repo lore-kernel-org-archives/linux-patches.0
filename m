@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A27E36D9EA;
-	Wed, 20 May 2026 17:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E1B36D9EA;
+	Wed, 20 May 2026 17:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298910; cv=none; b=UrPpGQ56UK36FPsBLEA1betzkK36M1ZhH9wJjLQ2IIPXKtLJyzQt71Umlcd1tWYxAMopKIwFEPal2rR7oEHDKKTpEdee8JfWW1G7sIL8OSRrvF4YQJFzoK9dVVr5tL/3PlHVU6kSjDFEVylDOcsWWM2E7SbfUnMl9tst8O9kDgA=
+	t=1779298913; cv=none; b=VeSdP+rwD+tBn080SF+9tHNPagvUUUDlvzqDAZaNEp4q2Qy+eZXcBPp+yHoS2AAqgl96lXZpRWixOlZbB2BK6DaFL3hjqEK/OTu8UnSJz8zOZDIC2XNCreJB/gddkQdkdhkA5p2k90tXHQlLx/Ka2FbrQwK2Xt5zpJxg6KhJxas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298910; c=relaxed/simple;
-	bh=qiFzu6eRzwSsOh4cQc9AJsS0XkOErEA0+Mbh0+F+3ZY=;
+	s=arc-20240116; t=1779298913; c=relaxed/simple;
+	bh=nGBGS6DnxB8JlRvpRBow1oo9G+Jr+crP6azvUfMvK/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gg4AeA8l7LKo4iV3isHNZULPQkbL9IP+gF4v4efWAFjLN1ry5KCzuxdEGCyAa23ZTVKRY4/EHIR3BPpYk8zFJtGngPyUzCLJZ4HL96/aEt+KO1yz7YGX9PkSMhaTXE/LK7HF23NGfulsh8eMTXsOzuxtV415fL2QaypKbe1RNGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DS42pHQu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cWeEeQoij2UaVIRuspnvAqgSgU5UxpZNqfTsY5sVd0tv+50IEPSmCom0ylHxNmuzX5gQz/bP+C1YJgMhg94REHy/ASFIx3h4uAgxH3HeD/5HFOD+Fms32qFizaWXAbYA9SRaAGoLQ2ZK7Od8gX7ziu4ax0jpSlRLT+/ofC2rcBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caIb+DjM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DS42pHQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2C21F000E9;
-	Wed, 20 May 2026 17:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caIb+DjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5636E1F000E9;
+	Wed, 20 May 2026 17:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298909;
-	bh=VrR41/bRoWqE5KQi54+JJgxjBgRGrSe8MCeXFrIIkg8=;
+	s=korg; t=1779298911;
+	bh=EqqNYKy4xJWIXMVrktIkhT45oR9cNDVIl2RFBBB8qrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DS42pHQu7C4XdJMXWXP4DBIFe/8bHWzbxNlc+xmJRWD4zaUhIjUCoMfyE3uDoyDPj
-	 GHvZYrVx00QJ6M2lH7Uzw8CuUws5gzHI99FACf+HrjAG1FdJ1TtbiJ51Ry+TTIB4UE
-	 VF2g9VygO1JwcB0cNSw8lHrqkkXTEwe6cW9fT1rI=
+	b=caIb+DjM5byWDcAUz39/5sUGc9ycBRsgUcGeQbcJTMpzn4xyw5r1xRM4JsuMnN6v2
+	 77G3lEM7kpfAnl98lN5tGRS9jt5wmImEsCWho+deHiG4lH20Mxe5BTJXKx/SaAbCTu
+	 g6ua1jGBjkm8c/WYZ/y5Nv2bYFAA9pMLZZhdchXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 591/957] drm/i915/wm: Verify the correct plane DDB entry
-Date: Wed, 20 May 2026 18:17:54 +0200
-Message-ID: <20260520162147.347473311@linuxfoundation.org>
+Subject: [PATCH 6.18 574/957] x86/um/vdso: Drop VDSO64-y from Makefile
+Date: Wed, 20 May 2026 18:17:37 +0200
+Message-ID: <20260520162146.979143889@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit a97c88a176b6b8d116f4d3f508f3bd02bc77b462 ]
+[ Upstream commit 3c9b904f9033fb250db72d258bbdec791dc89405 ]
 
-Actually verify the DDB entry for the plane we're looking
-at instead of always verifying the cursor DDB.
+This symbol is unnecessary, remove it.
 
-Fixes: 7d4561722c3b ("drm/i915: Tweak plane ddb allocation tracking")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260324134843.2364-5-ville.syrjala@linux.intel.com
-Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
-(cherry picked from commit f002f7c7439de18117a31ca84dc87a59719c3dd6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20251013-uml-vdso-cleanup-v1-4-a079c7adcc69@weissschuh.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: d1895c15fc7d ("x86/um: fix vDSO installation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_watermark.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/um/vdso/Makefile | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
-index d74cbb43ae6fb..a5862998bf144 100644
---- a/drivers/gpu/drm/i915/display/skl_watermark.c
-+++ b/drivers/gpu/drm/i915/display/skl_watermark.c
-@@ -3935,8 +3935,8 @@ void intel_wm_state_verify(struct intel_atomic_state *state,
- 		}
+diff --git a/arch/x86/um/vdso/Makefile b/arch/x86/um/vdso/Makefile
+index 7478d11dacb71..8a7c8b37cb6eb 100644
+--- a/arch/x86/um/vdso/Makefile
++++ b/arch/x86/um/vdso/Makefile
+@@ -3,16 +3,13 @@
+ # Building vDSO images for x86.
+ #
  
- 		/* DDB */
--		hw_ddb_entry = &hw->ddb[PLANE_CURSOR];
--		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[PLANE_CURSOR];
-+		hw_ddb_entry = &hw->ddb[plane->id];
-+		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[plane->id];
+-VDSO64-y		:= y
+-
+-vdso-install-$(VDSO64-y)	+= vdso.so
+-
++vdso-install-y += vdso.so
  
- 		if (!skl_ddb_entry_equal(hw_ddb_entry, sw_ddb_entry)) {
- 			drm_err(display->drm,
+ # files to link into the vdso
+ vobjs-y := vdso-note.o um_vdso.o
+ 
+ # files to link into kernel
+-obj-$(VDSO64-y)			+= vdso.o vma.o
++obj-y += vdso.o vma.o
+ 
+ vobjs := $(foreach F,$(vobjs-y),$(obj)/$F)
+ 
 -- 
 2.53.0
 
