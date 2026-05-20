@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3784B3F1AB8;
-	Wed, 20 May 2026 17:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A76D36405A;
+	Wed, 20 May 2026 17:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299362; cv=none; b=tvu7s0R8/oJ89/+AKMOTOuq0MY1iMuiQB8W20Lwn765Ja1Gwlk7xDz2TqRu95jfK9lgJdRqQk4yFdROFmpXFAR2yYCNSKnyMxLKrCeGjE8RZWIcnrLs3ygv6krihy/SgxnWr0mNjITDijhubVv7GhCViFbJ0yYOrzWf7bNhEC/k=
+	t=1779299365; cv=none; b=dnCwLry+9COOlBnlVPEP4e6sHIJ+GqDoO60FXQC4Q0tmKoSRUgx412dr2Qty9rczHYsMhG911nZ0O8FbfC7mZEZ47GtD5IFj3LLE1k4gHiHeooYPeHP5/rSwBEzRj/nyTQGNupxFBA+gBEszS1HZxz1/nhB9W1P2eAiO6Jskj7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299362; c=relaxed/simple;
-	bh=QFQibX+VW2DskrmCHnIILuT8eOuEQ81rifW+k4dZV/4=;
+	s=arc-20240116; t=1779299365; c=relaxed/simple;
+	bh=IgdYDr9tdSzjVIgIBe2xPPi4zNSdWqPo4wFbFHpwbeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Afr81jIEUSwpatLb2Acz0j56ABkPyikBmgZLAyVcP5Df0F2SVJtXNdGn32BaOVzOrXvRiPn+V4bFymq7E7LiMIteGl3a8ab6MDUOdnU2KZ8uUy7gVyUrSDVGfstBLPHd+9AEyY1XfV0s8O2qFf5vYm+Y0wTK55QnNSwoLz1PVWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vg2WH32Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xgou6BdWsc0e3QaiyMsGycqZhnmb9yeUlXq+YQGuf7LlkYsmB1K1zS8Kln05YOD5jOwTEENpIn/YgaTk20sZg+C8ytmlb0y53kVelCwPU2pVLt4k4My0Gcv8pXYGBTqMUcWSq/i0fTD+jIc1DaE+WyGx3YAG9LQZNH+/F4h9tnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ac/SShwr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vg2WH32Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA1B1F000E9;
-	Wed, 20 May 2026 17:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ac/SShwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443171F000E9;
+	Wed, 20 May 2026 17:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299361;
-	bh=OFUXq6YMdiQWR1QDwUyMiXRAe/9RvuSSnS8UZUNHr8g=;
+	s=korg; t=1779299363;
+	bh=UJNdaZMb7X75IQaGNEWZ1RIbEUB+AZ0DfS15C6ZemCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vg2WH32QUF18uR/7zlRNnv0h9MaEUXu7voyO72JsosTukIziTfjbhHn0kWXiV720I
-	 5OzqudxAFSsq8tZo3sc8I+aTR4kn7coF15d21k3N9GIaH9jT9ndo+DltMhNbzbRXZU
-	 1dEPgbgITck15NRBCQa72jT9PMVw+Whg4QbbMjBA=
+	b=Ac/SShwrF0O1Sgg4wIPE5JlTQ8tnIDLzDG6fCAOZD7p7CNvO9nuV3L+VbEYcQgDOq
+	 DJB+SI+Y1XnPeldM2soTvhcSFtD0u33hOfzxUB4EuMCpJMhmKut1reV0KyrN5ekOVm
+	 H7hkMDuIPDwhVowuW2tEBy6hKbU5B0fCfHOKcppQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Tejun Heo <tj@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 742/957] cgroup: Increment nr_dying_subsys_* from rmdir context
-Date: Wed, 20 May 2026 18:20:25 +0200
-Message-ID: <20260520162150.651796650@linuxfoundation.org>
+Subject: [PATCH 6.18 743/957] tracing: branch: Fix inverted check on stat tracer registration
+Date: Wed, 20 May 2026 18:20:26 +0200
+Message-ID: <20260520162150.673922299@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,74 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 13e786b64bd3fd81c7eb22aa32bf8305c32f2ccf ]
+[ Upstream commit 3b75dd76e64a04771861bb5647951c264919e563 ]
 
-Incrementing nr_dying_subsys_* in offline_css(), which is executed by
-cgroup_offline_wq worker, leads to a race where user can see the value
-to be 0 if he reads cgroup.stat after calling rmdir and before the worker
-executes. This makes the user wrongly expect resources released by the
-removed cgroup to be available for a new assignment.
+init_annotated_branch_stats() and all_annotated_branch_stats() check the
+return value of register_stat_tracer() with "if (!ret)", but
+register_stat_tracer() returns 0 on success and a negative errno on
+failure. The inverted check causes the warning to be printed on every
+successful registration, e.g.:
 
-Increment nr_dying_subsys_* from kill_css(), which is called from the
-cgroup_rmdir() context.
+  Warning: could not register annotated branches stats
 
-Fixes: ab0312526867 ("cgroup: Show # of subsystem CSSes in cgroup.stat")
-Signed-off-by: Petr Malat <oss@malat.biz>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+while leaving real failures silent. The initcall also returned a
+hard-coded 1 instead of the actual error.
+
+Invert the check and propagate ret so that the warning fires on real
+errors and the initcall reports the correct status.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Link: https://patch.msgid.link/20260420-tracing-v1-1-d8f4cd0d6af1@debian.org
+Fixes: 002bb86d8d42 ("tracing/ftrace: separate events tracing and stats tracing engine")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ kernel/trace/trace_branch.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index b60fc0b2c6036..1239bff9a994c 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -5773,16 +5773,6 @@ static void offline_css(struct cgroup_subsys_state *css)
- 	RCU_INIT_POINTER(css->cgroup->subsys[ss->id], NULL);
+diff --git a/kernel/trace/trace_branch.c b/kernel/trace/trace_branch.c
+index 6809b370e991d..d1564db95a8f5 100644
+--- a/kernel/trace/trace_branch.c
++++ b/kernel/trace/trace_branch.c
+@@ -373,10 +373,10 @@ __init static int init_annotated_branch_stats(void)
+ 	int ret;
  
- 	wake_up_all(&css->cgroup->offline_waitq);
--
--	css->cgroup->nr_dying_subsys[ss->id]++;
--	/*
--	 * Parent css and cgroup cannot be freed until after the freeing
--	 * of child css, see css_free_rwork_fn().
--	 */
--	while ((css = css->parent)) {
--		css->nr_descendants--;
--		css->cgroup->nr_dying_subsys[ss->id]++;
--	}
+ 	ret = register_stat_tracer(&annotated_branch_stats);
+-	if (!ret) {
++	if (ret) {
+ 		printk(KERN_WARNING "Warning: could not register "
+ 				    "annotated branches stats\n");
+-		return 1;
++		return ret;
+ 	}
+ 	return 0;
  }
+@@ -438,10 +438,10 @@ __init static int all_annotated_branch_stats(void)
+ 	int ret;
  
- /**
-@@ -6094,6 +6084,8 @@ static void css_killed_ref_fn(struct percpu_ref *ref)
-  */
- static void kill_css(struct cgroup_subsys_state *css)
- {
-+	struct cgroup_subsys *ss = css->ss;
-+
- 	lockdep_assert_held(&cgroup_mutex);
- 
- 	if (css->flags & CSS_DYING)
-@@ -6130,6 +6122,16 @@ static void kill_css(struct cgroup_subsys_state *css)
- 	 * css is confirmed to be seen as killed on all CPUs.
- 	 */
- 	percpu_ref_kill_and_confirm(&css->refcnt, css_killed_ref_fn);
-+
-+	css->cgroup->nr_dying_subsys[ss->id]++;
-+	/*
-+	 * Parent css and cgroup cannot be freed until after the freeing
-+	 * of child css, see css_free_rwork_fn().
-+	 */
-+	while ((css = css->parent)) {
-+		css->nr_descendants--;
-+		css->cgroup->nr_dying_subsys[ss->id]++;
-+	}
+ 	ret = register_stat_tracer(&all_branch_stats);
+-	if (!ret) {
++	if (ret) {
+ 		printk(KERN_WARNING "Warning: could not register "
+ 				    "all branches stats\n");
+-		return 1;
++		return ret;
+ 	}
+ 	return 0;
  }
- 
- /**
 -- 
 2.53.0
 
