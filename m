@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB4634EF05;
-	Wed, 20 May 2026 16:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9150A3ED3CF;
+	Wed, 20 May 2026 16:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296238; cv=none; b=EYg1x/bh28L+4tMj0LmGsQmOjEN9SUeqyh4oMpGqLw5VVduxmpFUGhQi2kvPM9Cb41TxGlIRlvGII1pZ4Mh2n9gSy79Sow0d1PQGvRTeZDKZM8BDN3K248ADKHb7C+Z+kafRLkZvDQvA/GNw77KiFXl7p+jIU1IY+MvarYNObSA=
+	t=1779296240; cv=none; b=d5DpqYjD67KUOzj6U9RlQwrEjFqcHOlXTy08M4PIE9yrrECOACJp8Mc/cxRT2G7nlwpqESF/xcS5LTixdkO/djRBKZO18BXuY4tICyhoXfCFtxoPh7GGF9ezF6pVXqyj6suYEpplpcxkjO2Z3hym4bZPwt6HkjHuwRhNk+8sRSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296238; c=relaxed/simple;
-	bh=U+zRW6qQuntHLqka3aGtjqbPC42t9RnnFnsKLgcxMRI=;
+	s=arc-20240116; t=1779296240; c=relaxed/simple;
+	bh=lUZX27PyRHPnqrNpZd+ZggGnVbbpmVMidmfC35uCfM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3adlsdvmVYj4bWBbeQ+YaxUywwSmsEILtPdSmXPya2/XVzLNdvdJ5iqTHSG6G23edOAHZUUeIdb2X1WeOD69OlV+WSCGc0pBOF7Ytm9JeIjutEz3+9o8YDokyXOcFhcbKrLo21qlpznVqpPCYcMF4g3xkIc6Ik8JbvXzkSnxj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgoD9se1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dR3XqJwm9n3Tt50SnX3Av+4HF6aFVyX8s9gtMarprPFhm1sBb+Flb0RQBMuuuug4XNACBNlBf+KQAvT41aif8+zcQqYjZD1lw77IrAfpc3qiORtM9nXUIMlAFaf9z/INvUddutFRPI2IO0P6yfoaATJ1rJl2pNxdh+xxn+zMN6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfgSbBXT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgoD9se1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9D61F00893;
-	Wed, 20 May 2026 16:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfgSbBXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BD51F000E9;
+	Wed, 20 May 2026 16:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296236;
-	bh=jLxQ9Pao5qIfqPKixwI6jvEuiyTffzqAD8LA9CNkSOE=;
+	s=korg; t=1779296239;
+	bh=mqHiO65SpHjucodakRQvHU0V350l7rbjwEQpWkl1m84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JgoD9se1hYNjCWokcPixuD9oK/VBW/G+EZCQ0grdXZKuF03mDnVZ9RFwGz1OZDWtI
-	 dbQiKGX8k/uhrL0u3QnHa91L3Cl7yqaQA74uvzxbYSbOfhTYYAGAPAozcbImD5ppQL
-	 Fx0DO5YMi7T3J1IqdI77JPVaWIV+Fk02bxrxBbb4=
+	b=gfgSbBXTBmmhUXRmk1L4cE9x9NoGCuA8rbjs7MkXizGPVOF6OfYrHjlhtF2JHQmjv
+	 ZqUWaoKHRo3PBL21l+zivcwby8dmpaiLnp2oP6VC2tsDl0H9VD4Ctmr/3uXdRHwY8k
+	 CITlDmED1Iji+V4YijFvRssxF7fO1JuHu2Y6ygCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0722/1146] clk: imx8mq: Correct the CSI PHY sels
-Date: Wed, 20 May 2026 18:16:12 +0200
-Message-ID: <20260520162204.544004647@linuxfoundation.org>
+Subject: [PATCH 7.0 0723/1146] um: Fix potential race condition in TLB sync
+Date: Wed, 20 May 2026 18:16:13 +0200
+Message-ID: <20260520162204.567122676@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit d16f57caa78776e6e8a88b96cb2597797b376138 ]
+[ Upstream commit 102331b66bcaf1f41f50b9c4cd5c36e46bafa9f3 ]
 
-According to i.MX 8M Quad Reference Manual (Section 5.1.2 Table 5-1)
-MIPI_CSI1_PHY_REF_CLK_ROOT and MIPI_CSI2_PHY_REF_CLK_ROOT have
-SYSTEM_PLL2_DIV3 available as their second source, which corresponds
-to sys2_pll_333m rather than sys2_pll_125m.
+During the TLB sync, we need to traverse and modify the page table,
+so we should hold the page table lock. Since full SMP support for
+threads within the same process is still missing, let's disable the
+split page table lock for simplicity.
 
-Fixes: b80522040cd3 ("clk: imx: Add clock driver for i.MX8MQ CCM")
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260128-imx8mq-csi-clk-v1-1-ac028ed26e8c@puri.sm
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Fixes: 1e4ee5135d81 ("um: Add initial SMP support")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20260302235224.1915380-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/um/kernel/tlb.c | 1 +
+ mm/Kconfig           | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mq.c b/drivers/clk/imx/clk-imx8mq.c
-index f70ed231b92d6..cedc8a02aa1f0 100644
---- a/drivers/clk/imx/clk-imx8mq.c
-+++ b/drivers/clk/imx/clk-imx8mq.c
-@@ -237,7 +237,7 @@ static const char * const imx8mq_dsi_esc_sels[] = {"osc_25m", "sys2_pll_100m", "
- static const char * const imx8mq_csi1_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
- 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
+diff --git a/arch/um/kernel/tlb.c b/arch/um/kernel/tlb.c
+index 39608cccf2c69..5386ab2d0da50 100644
+--- a/arch/um/kernel/tlb.c
++++ b/arch/um/kernel/tlb.c
+@@ -165,6 +165,7 @@ int um_tlb_sync(struct mm_struct *mm)
+ 	unsigned long addr, next;
+ 	int ret = 0;
  
--static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
-+static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
- 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
++	guard(spinlock_irqsave)(&mm->page_table_lock);
+ 	guard(spinlock_irqsave)(&mm->context.sync_tlb_lock);
  
- static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
-@@ -246,7 +246,7 @@ static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m",
- static const char * const imx8mq_csi2_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
- 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
+ 	if (mm->context.sync_tlb_range_to == 0)
+diff --git a/mm/Kconfig b/mm/Kconfig
+index ebd8ea353687e..befa8909ae29d 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -572,6 +572,7 @@ config SPLIT_PTE_PTLOCKS
+ 	depends on !ARM || CPU_CACHE_VIPT
+ 	depends on !PARISC || PA20
+ 	depends on !SPARC32
++	depends on !UML
  
--static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
-+static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
- 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
- 
- static const char * const imx8mq_csi2_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
+ config ARCH_ENABLE_SPLIT_PMD_PTLOCK
+ 	bool
 -- 
 2.53.0
 
