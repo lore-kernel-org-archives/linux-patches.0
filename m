@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CAE34B40F;
-	Wed, 20 May 2026 16:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2861E3A7582;
+	Wed, 20 May 2026 16:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295010; cv=none; b=ANkMx2p078ucdPCl5lgDwR1pZy0IqIyUzzy87Z5i65ramLwieHbfPnYG3S02PZlZAnqfBocQW1YpuQn/TX91g++bYjniW2rLRb+XxKBnZ32v8hFyMVr9NkfJjGJ2gcD9lLG8K1jbF6Y0yOGuVTFY3ErsBXmMe/N9bdL/lsLfbkI=
+	t=1779295012; cv=none; b=V+GTWfVdxvA5EHYLtejM3wgwBcizIpG+HnjcmvWKIWHfMH2Ciio54w5kXWMBcW9Lj4m2DjE0BNvSaB83vdnqbxyu8TMCY8fnW+kexQRbQ4a0mZ8U6jkFUdnnZo6W96APfab2UoaJ0JFjipzy2eeHvtnt4LudI8N9bkweO0RaGj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295010; c=relaxed/simple;
-	bh=kU3Z+Ms0AdoYLVaiksXX0uvAM+Es8fDhjM0ntMgYaLM=;
+	s=arc-20240116; t=1779295012; c=relaxed/simple;
+	bh=xECFKTtiM0smnOVSfMG+wulRDr8Y0RBJrZ9CGy0TU4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ki3fVfG0U/+x4D0zsJS2e05m0PCrLyj5pWO5h97YtKQ5bQHatijl1xyOgoIaXe9Vn3F9CLVhy35z+J7mIKSUsAOzKWtTGJDvy7VOky+jMHFMvqZIaqbXXR7u7iWPT0TYmj8z5IV+fbu+uTZajRV/MqHG3meUXzOidjkAVrYbCAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzisrtqY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q7lxxgfTAajzrKji7//WKTSWyOtk2yy1dGFnM2ERBJiEIBrt0vgI5fdD+39YDllkJAGxaJR43ZAe74GyoDI5GZ3FWnZ0Xax4BgZTiClaDVFcZdTZforzilY+tHSYROh45eQ8klfn/ehyp5QMbeV7DCr63tMSeHrM1AeA0BJpE5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNCNDvo7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzisrtqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AA21F00893;
-	Wed, 20 May 2026 16:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNCNDvo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C1B1F000E9;
+	Wed, 20 May 2026 16:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295008;
-	bh=gAbgbl4C3y//kcYRqyhxCn8H1yjr71nDuSd/voozFkQ=;
+	s=korg; t=1779295011;
+	bh=FnuN92HzXPOKM6bfnSMXN1M3dWKLvkle5iwgxrC5ERw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzisrtqYSpaxZvL2jI8D2nQG3Qixvjx4t+h6qY5Qa2aIHx31GWagRWJHJIYv7mddQ
-	 T74EuNPDzgXl46P4qjXXQh9/V9gzMqXQDcf2tLVSP+75TEkPaCaKmheIfylrF1ddjk
-	 F2wI5irlVGwxEFuScoT1y7gYx1K05q2eXpTjwIVI=
+	b=VNCNDvo75BiMCcRcm/boPZNvmaoZ5hDYpVdwwMnLaWEPun6aJlrWhWA/PAhYF1zWL
+	 0YkflRzSAGb18YWQvmeyQd8fG6ZzdSFQyaqcg83KoyBmYRY0yo+433MGckxsGv3N7X
+	 RyObHCYFlb83SpYwicKxYs06OSLvUupoMFCCJoPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	David Wei <dw@davidwei.uk>,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Stefan Metzmacher <metze@samba.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0215/1146] Bluetooth: SCO: check for codecs->num_codecs == 1 before assigning to sco_pi(sk)->codec
-Date: Wed, 20 May 2026 18:07:45 +0200
-Message-ID: <20260520162153.125623386@linuxfoundation.org>
+Subject: [PATCH 7.0 0216/1146] net: phy: qcom: at803x: Use the correct bit to disable extended next page
+Date: Wed, 20 May 2026 18:07:46 +0200
+Message-ID: <20260520162153.147004388@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -57,67 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 4e10a9ebbf081c16517cdd9366ac618bf38d7d0c ]
+[ Upstream commit e7a62edd34b1b4bc5f979988efc2f81c075733fd ]
 
-copy_struct_from_sockptr() fill 'buffer' in
-sco_sock_setsockopt() with zeros, so there's no
-real problem.
+As noted in the blamed commit, the AR8035 and other PHYs from this
+family advertise the Extended Next Page support by default, which may be
+understood by some partners as this PHY being multi-gig capable.
 
-But it actually looks strange to do this,
-without checking all of codecs->codecs[0]
-really comes from userspace:
+The fix is to disable XNP advertising, which is done by setting bit 12
+of the Auto-Negotiation Advertisement Register (MII_ADVERTISE).
 
-  sco_pi(sk)->codec = codecs->codecs[0];
+The blamed commit incorrectly uses MDIO_AN_CTRL1_XNP, which is bit 13 as per
+802.3 : 45.2.7.1 AN control register (Register 7.0)
 
-As only optlen < sizeof(struct bt_codecs) is checked
-and codecs->num_codecs is not checked against != 1,
-but only <= 1, and the space for the additional struct bt_codec
-is not checked.
+BIT 12 in MII_ADVERTISE is wrapped by ADVERTISE_RESV, used by some
+drivers such as the aquantia one. 802.3 Clause 28 defines bit 12 as
+Extended Next Page ability, at least in recent versions of the standard.
 
-Note I don't understand bluetooth and I didn't do any runtime
-tests with this! I just found it when debugging a problem
-in copy_struct_from_sockptr().
+Let's add a define for it and use it in the at803x driver.
 
-I just added this to check the size is as expected:
-
-  BUILD_BUG_ON(struct_size(codecs, codecs, 0) != 1);
-  BUILD_BUG_ON(struct_size(codecs, codecs, 1) != 8);
-
-And made sure it still compiles using this:
-
-  make CF=-D__CHECK_ENDIAN__ W=1ce C=1 net/bluetooth/sco.o
-
-Fixes: 3e643e4efa1e ("Bluetooth: Improve setsockopt() handling of malformed user input")
-Cc: Michal Luczaj <mhal@rbox.co>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: David Wei <dw@davidwei.uk>
-Cc: linux-bluetooth@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3c51fa5d2afe ("net: phy: ar803x: disable extended next page bit")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260410171021.1277138-1-maxime.chevallier@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/qcom/at803x.c | 2 +-
+ include/uapi/linux/mii.h      | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index b84587811ef4f..18826d4b9c0bf 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -1045,7 +1045,8 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
+index 2995b08bac963..63726cf98cd42 100644
+--- a/drivers/net/phy/qcom/at803x.c
++++ b/drivers/net/phy/qcom/at803x.c
+@@ -524,7 +524,7 @@ static int at803x_config_init(struct phy_device *phydev)
+ 	 * behaviour but we still need to accommodate it. XNP is only needed
+ 	 * for 10Gbps support, so disable XNP.
+ 	 */
+-	return phy_modify(phydev, MII_ADVERTISE, MDIO_AN_CTRL1_XNP, 0);
++	return phy_modify(phydev, MII_ADVERTISE, ADVERTISE_XNP, 0);
+ }
  
- 		codecs = (void *)buffer;
- 
--		if (codecs->num_codecs > 1) {
-+		if (codecs->num_codecs != 1 ||
-+		    optlen < struct_size(codecs, codecs, codecs->num_codecs)) {
- 			hci_dev_put(hdev);
- 			err = -EINVAL;
- 			break;
+ static void at803x_link_change_notify(struct phy_device *phydev)
+diff --git a/include/uapi/linux/mii.h b/include/uapi/linux/mii.h
+index 39f7c44baf535..61d6edad4b94a 100644
+--- a/include/uapi/linux/mii.h
++++ b/include/uapi/linux/mii.h
+@@ -82,7 +82,8 @@
+ #define ADVERTISE_100BASE4	0x0200	/* Try for 100mbps 4k packets  */
+ #define ADVERTISE_PAUSE_CAP	0x0400	/* Try for pause               */
+ #define ADVERTISE_PAUSE_ASYM	0x0800	/* Try for asymetric pause     */
+-#define ADVERTISE_RESV		0x1000	/* Unused...                   */
++#define ADVERTISE_XNP		0x1000  /* Extended Next Page */
++#define ADVERTISE_RESV		ADVERTISE_XNP /* Used to be reserved */
+ #define ADVERTISE_RFAULT	0x2000	/* Say we can detect faults    */
+ #define ADVERTISE_LPACK		0x4000	/* Ack link partners response  */
+ #define ADVERTISE_NPAGE		0x8000	/* Next page bit               */
 -- 
 2.53.0
 
