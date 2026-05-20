@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874D23E832A;
-	Wed, 20 May 2026 18:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304383A3E79;
+	Wed, 20 May 2026 18:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300188; cv=none; b=OYWmLVUwp2UbOqd7QnGU+vRNPYRWp7JRLdd14LE3X9yNyPAZLLqdl7KCQoy936FDXHpbADR9hPp1O0VpXVKxOM2eNVSr3yKs3O0Lk5XWw8MdRFhawC/iffVCsLXViGZ/U5qGgNTpQDfEXulfRahXKBItXKuwCpnIWlHCpOP6uR4=
+	t=1779300191; cv=none; b=INBONM181v2Snmu3mCo2w6oc864bel2mIF586KDWnwQkVhyWjHE3aJfEWi7OF7GEXl57xDJkkdoQJgbZBTkIHVWXiqCzwjBATYkWX9yqxTq7pvg0OprGYpcp0O81fRiJlOgsRKnvUZpsWf24cX8Ius5Lr/k8fo6toqt56G24848=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300188; c=relaxed/simple;
-	bh=ZabyJAIM17S7zvcf/BImerIe2RqQPGL0e0bk1/3FmMk=;
+	s=arc-20240116; t=1779300191; c=relaxed/simple;
+	bh=x+ilijrX0RmOWOIGKjePYMrNYYOGcoWsvMEHJpas/C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfRQA1ac7IrxlqEykypGL7dBvW/1sF6RXu2Hf4WInd96/rMWos7v/X4NfFKLcSFz8FyHbhKSFpAW4vjIXHqGm14tI9uAQNuNkdVcE38TZJZoI3IyNtZSCmC91lYLU88xRqXUhEYE1pCG9oGjPGOG6E6YZOhDQHKTk6bw7s68jts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FkDomZn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J4GH4nEjVX3aTO7i6k7JTApGqabJPdJb59gUcqPhqLI6xh08RU/dsW5X6vGa0z+LGe80KrSPIFD3xEJou6DjqccSbCzuRFdcbWUn4xazIw7LfW3lcc4CEh2GBYyNr0tYyTDi+m87tQBZIZxgoqCgIthGioiUu4ZWRzy5wgoY5f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kf2Dpu7c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FkDomZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2E41F00894;
-	Wed, 20 May 2026 18:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kf2Dpu7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9593D1F00893;
+	Wed, 20 May 2026 18:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300187;
-	bh=aaiWixhW9CUqMrwdDCSLHsA4KMwcCCoPyPYVpxtpxpI=;
+	s=korg; t=1779300190;
+	bh=UCfz2CH7fxcQf1jZakE6qlCeffZku/oGY3jP95E04Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FkDomZneMLOpB1lhsgVp3KFcZlK4PSXdNIlzyxWCZ6UwxOzbzh2RiqzF70+Blh4+
-	 P+9S9SlXscXLKVRiyhdBtNwNEtDRdYojE6p7Ic8Ck0xshYIsvfd3kNXmtt79kGa6Zv
-	 gDu6hQYol2Y8m6PYbi3ZlRom2UoSaUbtQwyS42sQ=
+	b=Kf2Dpu7cunZ5Gcf4FcTGjNkG3AfOToztsQcrRefUniEPWmSCkiIAjD5Y/IXng/DB1
+	 LowzgHwM0malIWL9gRTP32xPVqC486uHpRSxCYUQnKu/0I+0/1pjDBFuobupDk5ncV
+	 3iTc+rf7UTFF/t67XzioBcfFSNWX0h+Gei3XIbJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/666] dpaa2: compile dpaa2 even CONFIG_FSL_DPAA2_ETH=n
-Date: Wed, 20 May 2026 18:14:09 +0200
-Message-ID: <20260520162112.064253131@linuxfoundation.org>
+Subject: [PATCH 6.12 029/666] hrtimer: Reduce trace noise in hrtimer_start()
+Date: Wed, 20 May 2026 18:14:00 +0200
+Message-ID: <20260520162111.867078021@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,40 +51,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cai Xinchen <caixinchen1@huawei.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-[ Upstream commit 97daf00745f7f9f261b0e91418de6e79d7826c36 ]
+[ Upstream commit f2e388a019e4cf83a15883a3d1f1384298e9a6aa ]
 
-CONFIG_FSL_DPAA2_ETH and CONFIG_FSL_DPAA2_SWITCH are not
-associated, but the compilation of FSL_DPAA2_SWITCH depends on
-the compilation of the dpaa2 folder. The files controlled by
-CONFIG_FSL_DPAA2_SWITCH in the dpaa2 folder are not controlled
-by CONFIG_FSL_DPAA2_ETH, except for the files controlled by
-CONFIG_FSL_DPAA2_SWITCH. Therefore, removing the restriction will
-not affect the compilation of the files in the directory.
+hrtimer_start() when invoked with an already armed timer traces like:
 
-Fixes: f48298d3fbfaa ("staging: dpaa2-switch: move the driver out of staging")
-Suggested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Link: https://patch.msgid.link/20260312065907.476663-3-caixinchen1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ <comm>-..   [032] d.h2. 5.002263: hrtimer_cancel: hrtimer= ....
+ <comm>-..   [032] d.h1. 5.002263: hrtimer_start: hrtimer= ....
+
+Which is incorrect as the timer doesn't get canceled. Just the expiry time
+changes. The internal dequeue operation which is required for that is not
+really interesting for trace analysis. But it makes it tedious to keep real
+cancellations and the above case apart.
+
+Remove the cancel tracing in hrtimer_start() and add a 'was_armed'
+indicator to the hrtimer start tracepoint, which clearly indicates what the
+state of the hrtimer is when hrtimer_start() is invoked:
+
+<comm>-..   [032] d.h1. 6.200103: hrtimer_start: hrtimer= .... was_armed=0
+ <comm>-..   [032] d.h1. 6.200558: hrtimer_start: hrtimer= .... was_armed=1
+
+Fixes: c6a2a1770245 ("hrtimer: Add tracepoint for hrtimers")
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260224163430.208491877@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/Makefile | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/trace/events/timer.h | 11 +++++----
+ kernel/time/hrtimer.c        | 43 +++++++++++++++++-------------------
+ 2 files changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/Makefile b/drivers/net/ethernet/freescale/Makefile
-index de7b318422330..d0a259e47960f 100644
---- a/drivers/net/ethernet/freescale/Makefile
-+++ b/drivers/net/ethernet/freescale/Makefile
-@@ -22,6 +22,5 @@ ucc_geth_driver-objs := ucc_geth.o ucc_geth_ethtool.o
- obj-$(CONFIG_FSL_FMAN) += fman/
- obj-$(CONFIG_FSL_DPAA_ETH) += dpaa/
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index 1ef58a04fc579..19c975ffea176 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -218,12 +218,13 @@ TRACE_EVENT(hrtimer_init,
+  * hrtimer_start - called when the hrtimer is started
+  * @hrtimer:	pointer to struct hrtimer
+  * @mode:	the hrtimers mode
++ * @was_armed:	Was armed when hrtimer_start*() was invoked
+  */
+ TRACE_EVENT(hrtimer_start,
  
--obj-$(CONFIG_FSL_DPAA2_ETH) += dpaa2/
+-	TP_PROTO(struct hrtimer *hrtimer, enum hrtimer_mode mode),
++	TP_PROTO(struct hrtimer *hrtimer, enum hrtimer_mode mode, bool was_armed),
+ 
+-	TP_ARGS(hrtimer, mode),
++	TP_ARGS(hrtimer, mode, was_armed),
+ 
+ 	TP_STRUCT__entry(
+ 		__field( void *,	hrtimer		)
+@@ -231,6 +232,7 @@ TRACE_EVENT(hrtimer_start,
+ 		__field( s64,		expires		)
+ 		__field( s64,		softexpires	)
+ 		__field( enum hrtimer_mode,	mode	)
++		__field( bool,		was_armed	)
+ 	),
+ 
+ 	TP_fast_assign(
+@@ -239,13 +241,14 @@ TRACE_EVENT(hrtimer_start,
+ 		__entry->expires	= hrtimer_get_expires(hrtimer);
+ 		__entry->softexpires	= hrtimer_get_softexpires(hrtimer);
+ 		__entry->mode		= mode;
++		__entry->was_armed	= was_armed;
+ 	),
+ 
+ 	TP_printk("hrtimer=%p function=%ps expires=%llu softexpires=%llu "
+-		  "mode=%s", __entry->hrtimer, __entry->function,
++		  "mode=%s was_armed=%d", __entry->hrtimer, __entry->function,
+ 		  (unsigned long long) __entry->expires,
+ 		  (unsigned long long) __entry->softexpires,
+-		  decode_hrtimer_mode(__entry->mode))
++		  decode_hrtimer_mode(__entry->mode), __entry->was_armed)
+ );
+ 
+ /**
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 343c7e4008aba..5d1b880de171d 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -489,17 +489,10 @@ debug_init(struct hrtimer *timer, clockid_t clockid,
+ 	trace_hrtimer_init(timer, clockid, mode);
+ }
+ 
+-static inline void debug_activate(struct hrtimer *timer,
+-				  enum hrtimer_mode mode)
++static inline void debug_activate(struct hrtimer *timer, enum hrtimer_mode mode, bool was_armed)
+ {
+ 	debug_hrtimer_activate(timer, mode);
+-	trace_hrtimer_start(timer, mode);
+-}
 -
-+obj-y += dpaa2/
- obj-y += enetc/
+-static inline void debug_deactivate(struct hrtimer *timer)
+-{
+-	debug_hrtimer_deactivate(timer);
+-	trace_hrtimer_cancel(timer);
++	trace_hrtimer_start(timer, mode, was_armed);
+ }
+ 
+ static struct hrtimer_clock_base *
+@@ -1094,9 +1087,9 @@ EXPORT_SYMBOL_GPL(hrtimer_forward);
+  * Returns true when the new timer is the leftmost timer in the tree.
+  */
+ static bool enqueue_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
+-			    enum hrtimer_mode mode)
++			    enum hrtimer_mode mode, bool was_armed)
+ {
+-	debug_activate(timer, mode);
++	debug_activate(timer, mode, was_armed);
+ 	WARN_ON_ONCE(!base->cpu_base->online);
+ 
+ 	base->cpu_base->active_bases |= 1 << base->index;
+@@ -1156,6 +1149,8 @@ remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
+ 	if (state & HRTIMER_STATE_ENQUEUED) {
+ 		bool reprogram;
+ 
++		debug_hrtimer_deactivate(timer);
++
+ 		/*
+ 		 * Remove the timer and force reprogramming when high
+ 		 * resolution mode is active and the timer is on the current
+@@ -1164,7 +1159,6 @@ remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
+ 		 * reprogramming happens in the interrupt handler. This is a
+ 		 * rare case and less expensive than a smp call.
+ 		 */
+-		debug_deactivate(timer);
+ 		reprogram = base->cpu_base == this_cpu_ptr(&hrtimer_bases);
+ 
+ 		/*
+@@ -1231,15 +1225,15 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ {
+ 	struct hrtimer_cpu_base *this_cpu_base = this_cpu_ptr(&hrtimer_bases);
+ 	struct hrtimer_clock_base *new_base;
+-	bool force_local, first;
++	bool force_local, first, was_armed;
+ 
+ 	/*
+ 	 * If the timer is on the local cpu base and is the first expiring
+ 	 * timer then this might end up reprogramming the hardware twice
+-	 * (on removal and on enqueue). To avoid that by prevent the
+-	 * reprogram on removal, keep the timer local to the current CPU
+-	 * and enforce reprogramming after it is queued no matter whether
+-	 * it is the new first expiring timer again or not.
++	 * (on removal and on enqueue). To avoid that prevent the reprogram
++	 * on removal, keep the timer local to the current CPU and enforce
++	 * reprogramming after it is queued no matter whether it is the new
++	 * first expiring timer again or not.
+ 	 */
+ 	force_local = base->cpu_base == this_cpu_base;
+ 	force_local &= base->cpu_base->next_timer == timer;
+@@ -1261,7 +1255,7 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ 	 * avoids programming the underlying clock event twice (once at
+ 	 * removal and once after enqueue).
+ 	 */
+-	remove_hrtimer(timer, base, true, force_local);
++	was_armed = remove_hrtimer(timer, base, true, force_local);
+ 
+ 	if (mode & HRTIMER_MODE_REL)
+ 		tim = ktime_add_safe(tim, base->get_time());
+@@ -1278,7 +1272,7 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ 		new_base = base;
+ 	}
+ 
+-	first = enqueue_hrtimer(timer, new_base, mode);
++	first = enqueue_hrtimer(timer, new_base, mode, was_armed);
+ 
+ 	/*
+ 	 * If the hrtimer interrupt is running, then it will reevaluate the
+@@ -1382,8 +1376,11 @@ int hrtimer_try_to_cancel(struct hrtimer *timer)
+ 
+ 	base = lock_hrtimer_base(timer, &flags);
+ 
+-	if (!hrtimer_callback_running(timer))
++	if (!hrtimer_callback_running(timer)) {
+ 		ret = remove_hrtimer(timer, base, false, false);
++		if (ret)
++			trace_hrtimer_cancel(timer);
++	}
+ 
+ 	unlock_hrtimer_base(timer, &flags);
+ 
+@@ -1770,7 +1767,7 @@ static void __run_hrtimer(struct hrtimer_cpu_base *cpu_base,
+ 	 */
+ 	if (restart != HRTIMER_NORESTART &&
+ 	    !(timer->state & HRTIMER_STATE_ENQUEUED))
+-		enqueue_hrtimer(timer, base, HRTIMER_MODE_ABS);
++		enqueue_hrtimer(timer, base, HRTIMER_MODE_ABS, false);
+ 
+ 	/*
+ 	 * Separate the ->running assignment from the ->state assignment.
+@@ -2252,7 +2249,7 @@ static void migrate_hrtimer_list(struct hrtimer_clock_base *old_base,
+ 	while ((node = timerqueue_getnext(&old_base->active))) {
+ 		timer = container_of(node, struct hrtimer, node);
+ 		BUG_ON(hrtimer_callback_running(timer));
+-		debug_deactivate(timer);
++		debug_hrtimer_deactivate(timer);
+ 
+ 		/*
+ 		 * Mark it as ENQUEUED not INACTIVE otherwise the
+@@ -2269,7 +2266,7 @@ static void migrate_hrtimer_list(struct hrtimer_clock_base *old_base,
+ 		 * sort out already expired timers and reprogram the
+ 		 * event device.
+ 		 */
+-		enqueue_hrtimer(timer, new_base, HRTIMER_MODE_ABS);
++		enqueue_hrtimer(timer, new_base, HRTIMER_MODE_ABS, true);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
