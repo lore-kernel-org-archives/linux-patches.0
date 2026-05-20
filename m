@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C483E5ECF;
-	Wed, 20 May 2026 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B346236D4E1;
+	Wed, 20 May 2026 18:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300574; cv=none; b=iDHNiOeidkHZe/FzvKtAiBTEihD9oOJ7kCOogRqQwfTNCDg87JeyGg6nvtRdaMeT3/dESyfmcoy3rq/0k0KtuCZUmTXqFyzRECSzPpKnvrh8cChFnY+X0PVhs0px1+hdstgXFM6VVyaIHy3BYa5eS/LIKYAfotXXCPwERQjAkxg=
+	t=1779300576; cv=none; b=kMWjI3X3rSQ5NtdgiTIGJyZ3uFccnDiGnULl8TCB+rrtiJYbD5M97GbEnky2r03XgvmmSIP5se5NO0lBJ2pQTYhuwgwpXIhgg7vSQYp5/tAz8RD/6sfWpz7YEu4lphy/3PSp9vxRjx/myZbylro44UU9UbIDjw296/YeWqZ5CYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300574; c=relaxed/simple;
-	bh=/ig2/o8vT14V2F4Hd0maL7mFCzaGRdC2Odv7ilYRjWI=;
+	s=arc-20240116; t=1779300576; c=relaxed/simple;
+	bh=/Ec0KN85S43NJ/TPXwP5Lb4unDVxkE4/HwoGumWqRhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuW9Ulm/9r54Ik6anqRPt7P82+UxZcNcGooNdD3x2me/tXm8WA++hUVRAdjHUHknTwmqdyct2zp1KtsPvL3aMN2aw5/eV5Cc586r0yCz1U73dmirSUMwxL8luGdA6hVsudkCvnup+4pKSo0kgZtzmQu60c/ZFXavr2nWatO0+LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4ghXHnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AQSyH1dcbiXrAcfNpoiicjG9YG5vIoBTb/MAaN0ttoSpDsycRCGfJmBh85Of1aCbnlujTE8YzUr50WRbkBke0OnswI3T4yYRhpgv1og5V+WbcinIxKMEpWadibIWY2/mvelCTJSDArugzCphRHWrY2qtwHBTMuddJeDaFOQiE5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlDgruBN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4ghXHnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E1F1F000E9;
-	Wed, 20 May 2026 18:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlDgruBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7541F000E9;
+	Wed, 20 May 2026 18:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300572;
-	bh=mvX0938GO02oDPHXQFl/N8sJq+KnV0YU/Gxv3joojog=;
+	s=korg; t=1779300575;
+	bh=pKmQwl/9z9GFDXmCGQkatvMNdQ6w24+l9VUB5ZMCF/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4ghXHnjjPdzD+PoFEr5OKTVmKEqmNRLNyiCN2zHcHKaJZAAar1oBMui34x5WK2vs
-	 L0HilGmrxZiV+QJofjWcQ9wwr1UeZhg8FhSpRQBJ0s2nFiGmfhE0dv2b9mQd8QooCT
-	 vwb99pyekevU6fqmjUSUGujdeUjupgFyt4bjM09s=
+	b=OlDgruBNQcW3XHmxNB305iS51kDWM4Z5zDUzcANGDgYRgEadT+KPpYSHhKw9xZ+KC
+	 TyPzvzACrnqaG5l4xd+w0no6vUx4Va1n2Rwyt5h1hSVpSAIZJgXAYiMnY9vBlwXTt5
+	 +18p8w3t1nhRbAEnMTt2UjuDtiWFSUBRPpy1SR+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Chu <jane.chu@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Hillf Danton <hillf.zj@alibaba-inc.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 227/666] Documentation: fix a hugetlbfs reservation statement
-Date: Wed, 20 May 2026 18:17:18 +0200
-Message-ID: <20260520162116.133501282@linuxfoundation.org>
+Subject: [PATCH 6.12 210/666] iommu/amd: Do not detach devices in domain free path
+Date: Wed, 20 May 2026 18:17:01 +0200
+Message-ID: <20260520162115.756002484@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -63,61 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jane Chu <jane.chu@oracle.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 7a197d346a44384a1a858a98ef03766840e561d4 ]
+[ Upstream commit 07bbd660dbd6ff03907d9ddbdfe9deabbd18ac4d ]
 
-Documentation/mm/hugetlbfs_reserv.rst has
-	if (resv_needed <= (resv_huge_pages - free_huge_pages))
-		resv_huge_pages += resv_needed;
-which describes this code in gather_surplus_pages()
-	needed = (h->resv_huge_pages + delta) - h->free_huge_pages;
-	if (needed <= 0) {
-		h->resv_huge_pages += delta;
-		return 0;
-	}
-which means if there are enough free hugepages to account for the new
-reservation, simply update the global reservation count without
-further action.
+All devices attached to a protection domain must be freed before
+calling domain free. Hence do not try to free devices in domain
+free path. Continue to throw warning if pdom->dev_list is not empty
+so that any potential issues can be fixed.
 
-But the description is backwards, it should be
-	if (resv_needed <= (free_huge_pages - resv_huge_pages))
-instead.
-
-Link: https://lkml.kernel.org/r/20260302201015.1824798-1-jane.chu@oracle.com
-Fixes: 70bc0dc578b3 ("Documentation: vm, add hugetlbfs reservation overview")
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Hillf Danton <hillf.zj@alibaba-inc.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Joerg Roedel <jroedel@suse.de>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20241030063556.6104-7-vasant.hegde@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: faad224fe0f0 ("iommu/amd: Fix clone_alias() to use the original device's devid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/mm/hugetlbfs_reserv.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/iommu.c | 26 +-------------------------
+ 1 file changed, 1 insertion(+), 25 deletions(-)
 
-diff --git a/Documentation/mm/hugetlbfs_reserv.rst b/Documentation/mm/hugetlbfs_reserv.rst
-index 4914fbf07966c..a49115db18c76 100644
---- a/Documentation/mm/hugetlbfs_reserv.rst
-+++ b/Documentation/mm/hugetlbfs_reserv.rst
-@@ -155,7 +155,7 @@ are enough free huge pages to accommodate the reservation.  If there are,
- the global reservation count resv_huge_pages is adjusted something like the
- following::
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index d9b296e007cc7..799e1a1adfc32 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2316,21 +2316,6 @@ static struct iommu_group *amd_iommu_device_group(struct device *dev)
+  *
+  *****************************************************************************/
  
--	if (resv_needed <= (resv_huge_pages - free_huge_pages))
-+	if (resv_needed <= (free_huge_pages - resv_huge_pages)
- 		resv_huge_pages += resv_needed;
+-static void cleanup_domain(struct protection_domain *domain)
+-{
+-	struct iommu_dev_data *entry;
+-
+-	lockdep_assert_held(&domain->lock);
+-
+-	while (!list_empty(&domain->dev_list)) {
+-		entry = list_first_entry(&domain->dev_list,
+-					 struct iommu_dev_data, list);
+-		BUG_ON(!entry->domain);
+-		do_detach(entry);
+-	}
+-	WARN_ON(!list_empty(&domain->dev_list));
+-}
+-
+ void protection_domain_free(struct protection_domain *domain)
+ {
+ 	WARN_ON(!list_empty(&domain->dev_list));
+@@ -2498,16 +2483,7 @@ amd_iommu_domain_alloc_user(struct device *dev, u32 flags,
  
- Note that the global lock hugetlb_lock is held when checking and adjusting
+ void amd_iommu_domain_free(struct iommu_domain *dom)
+ {
+-	struct protection_domain *domain;
+-	unsigned long flags;
+-
+-	domain = to_pdomain(dom);
+-
+-	spin_lock_irqsave(&domain->lock, flags);
+-
+-	cleanup_domain(domain);
+-
+-	spin_unlock_irqrestore(&domain->lock, flags);
++	struct protection_domain *domain = to_pdomain(dom);
+ 
+ 	protection_domain_free(domain);
+ }
 -- 
 2.53.0
 
