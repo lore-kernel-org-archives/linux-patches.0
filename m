@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BFC3F4DE7;
-	Wed, 20 May 2026 16:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CD73D88F5;
+	Wed, 20 May 2026 16:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296072; cv=none; b=Sz7MJ4mB6CQEwRHT3k805Ef0Xzma0DHWrOyyFPcVZw+Q9AV8x9qzF4zFUC5C/sSt1aGCNKGFdHiUAM5hyOlqm8nCES5+ihSCddfBJzk3fUOqkdJfaU2HcgloNQxfIjYgYfjRWjQgfjHKPYbF3oxaXvSzJ6J/Vxq76U//DGpRPmQ=
+	t=1779296075; cv=none; b=YzE/8suGzGa5VJ72Jk7WcY+M8vG6o1hl18i2AaLSsd1gqf/KHNKve3Q7OqbEvp8YXmq5srOyoTPL0oAHA5covLYR8vHw0roUOa2I5PSm2f1TCgjhNYMdLwXDrpYEp7jZuU/fgXSU75c3frmLyMIbBqX03uayvftK/Xb5ttnoSUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296072; c=relaxed/simple;
-	bh=Zfl/dpqpP28dgEiIVhnylYzaMa5k6iFeJ1223SQ45p4=;
+	s=arc-20240116; t=1779296075; c=relaxed/simple;
+	bh=SLt33t9HI7wzarENjy1Pi6IGyEDEBz26eJXcZojBdp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ti3hRneWZkU62iQWP0ZPHEJcBFm5LXWeWXPcDLbbMrkx1AzMDQA2jahw1Jqd9T51RUcRECl7iAFtNWcM6DPhFQ3O7CmZsV225fmzrgz82ndDv3uii/wOTwkBARoFFV1R7eWYbC2uPKSAu28zvsuMlnf0Kx7CdGsCrZPek6DD8bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+8S5Rja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DaixBqlrb2/DysC4mzcBY+27rhMbtYhWbDpq7Qvxytbt3hTVUKG/+2EJqYERCycnx1Wx7nFFzeU19B1z7YcuHpIz6CwHStltCIjn0OmvzzXfB+25YP1XGJLAR5ugGcIgdOEKzOyuOJ6+FDhjQowvo4nal1F4WtEp5aoxetUHDR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alF/eyfx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+8S5Rja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717351F000E9;
-	Wed, 20 May 2026 16:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alF/eyfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B11A1F000E9;
+	Wed, 20 May 2026 16:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296070;
-	bh=zMcplKZhU0g6oxkGfNZPKeIqrOilLuQ6cmgWL+J2B7k=;
+	s=korg; t=1779296073;
+	bh=BGrcC/E2TNaD+b056BkBq3TR5kBNl5XfXyhQx2sFmOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+8S5Rjajkwo/L0W9qfFzpaAIDkzBD8nudnWyQA4pHXcpH18O4FVk2MoRUUK/4pE0
-	 3nr99Pl7Q6pc9wRWoTymyKO0toEQ6fWV4fX+htGcVQ4Rc0cAsUF61ZsgH5HcaaGwis
-	 JWvAszCpf4V6XAMtIRU0sitCkWtBmv7JSTRXvMj0=
+	b=alF/eyfxocEZ9ZG1ukE0JJadqdLlZSNjB/7w6pKlHptw1q5M94CEuk6eftCFXiijU
+	 uZZAkXesXONKkj/axQEjazejsHrfhl4SZ0rCR2dCxfNJ7njxG/k0nvaAhEeUXwVoRo
+	 6YQG3eKv+uDXnAAQKrXKYHaiRes3+4wsHa+DE4Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Jorge Marques <jorge.marques@analog.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0661/1146] i3c: master: adi: Fix error propagation for CCCs
-Date: Wed, 20 May 2026 18:15:11 +0200
-Message-ID: <20260520162203.144201424@linuxfoundation.org>
+Subject: [PATCH 7.0 0662/1146] i3c: mipi-i3c-hci: fix IBI payload length calculation for final status
+Date: Wed, 20 May 2026 18:15:12 +0200
+Message-ID: <20260520162203.166159833@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,42 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Marques <jorge.marques@analog.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 0b73da96b6eb6b9354654f96a9d423ab22cb222d ]
+[ Upstream commit d35a6db887eeae7c57b719521e39d64f929c6dc3 ]
 
-adi_i3c_master_send_ccc_cmd() always returned 0, ignoring the transfer
-result populated in the completion path. As a consequence, CCC command
-errors were silently dropped, including the default -ETIMEDOUT and
-later overwritten by adi_i3c_master_end_xfer_locked().
+In DMA mode, the IBI status descriptor encodes the payload using
+CHUNKS (number of chunks) and DATA_LENGTH (valid bytes in the last
+chunk). All preceding chunks are implicitly full-sized.
 
-Fix this by returning xfer->ret so that callers correctly receive any
-transfer error codes.
+The current code accumulates full chunk sizes for non-final status
+descriptors, but for the final status descriptor it only adds
+DATA_LENGTH. This ignores the contribution of the preceding full
+chunks described by the same final status entry.
 
-Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+As a result, the computed IBI payload length is truncated whenever
+the final status spans multiple chunks. For example, with a chunk
+size of 4 bytes, CHUNKS=2 and DATA_LENGTH=1 should result in a total
+payload size of 5 bytes, but the current code reports only 1 byte.
+
+Fix the calculation by adding the size of (CHUNKS - 1) full chunks
+plus DATA_LENGTH for the last chunk.
+
+Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Jorge Marques <jorge.marques@analog.com>
-Link: https://patch.msgid.link/20260323-ad4062-positive-error-fix-v3-5-30bdc68004be@analog.com
+Link: https://patch.msgid.link/20260407-i3c-hci-dma-v2-1-a583187b9d22@aspeedtech.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/adi-i3c-master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/adi-i3c-master.c b/drivers/i3c/master/adi-i3c-master.c
-index 6616f751075ae..545ddd79a45db 100644
---- a/drivers/i3c/master/adi-i3c-master.c
-+++ b/drivers/i3c/master/adi-i3c-master.c
-@@ -361,7 +361,7 @@ static int adi_i3c_master_send_ccc_cmd(struct i3c_master_controller *m,
- 
- 	cmd->err = adi_i3c_cmd_get_err(&xfer->cmds[0]);
- 
--	return 0;
-+	return xfer->ret;
- }
- 
- static int adi_i3c_master_i3c_xfers(struct i3c_dev_desc *dev,
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index e487ef52f6b4e..e4daaa6120550 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -754,7 +754,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 		if (!(ibi_status & IBI_LAST_STATUS)) {
+ 			ibi_size += chunks * rh->ibi_chunk_sz;
+ 		} else {
+-			ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
++			if (chunks) {
++				ibi_size += (chunks - 1) * rh->ibi_chunk_sz;
++				ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
++			}
+ 			last_ptr = ptr;
+ 			break;
+ 		}
 -- 
 2.53.0
 
