@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132C63F9267;
-	Wed, 20 May 2026 18:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7514E3FCB1C;
+	Wed, 20 May 2026 18:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300297; cv=none; b=cZbQULMNIPl2azfv/yzB47vriQrpGas3PLvyka0lAHAHoh0ysjcvYlZPtkJN0xgAvdESfgc52AqB/WbDaMqCuNsTBIH3909NCUFbYLjb/uEMZc9YTN/iBOs3RC4uA70sqVjUH6d2yHE7RmHPovTzfpfSa93loYkTCGM48TGqoAM=
+	t=1779300299; cv=none; b=spBYqrAYfTfpnM1VJ4zkLY20md3Qi4F/Y4ht1dR8WDrvQSg6ld3/huV1GiJBH60nY3smZoc9lOAqIj3J4YyrsT8pSUqK56osllWBDHVoEIcXHJxePlTX7EMGX/rCp1hDsoq1QtL2umYcsqidFHpRABIHdWbqz4fyZ8nJQkL/50Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300297; c=relaxed/simple;
-	bh=5bBb5gzAni5mw3KY3e9lUfXbZWagC6Pl3ItyygPu/w0=;
+	s=arc-20240116; t=1779300299; c=relaxed/simple;
+	bh=sBPHzGvBo80poKLYPp3V/v/skL3n7E4LKyzlG9O7pz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkIkdIy6y0LLL7OvMs8bHGFo+ENixEZQ38O2WSXpKhv5ngsHcUxuqCLHUrbYx6MaXkPEP/ZGjRFBVjmmV7VHzLcTYWg2d3wiZxuR0+EDfVCS+c092WO1Qrx6Z1WSpWFSsLBwNdIe8FMTHuZPfUPHCIiL3wm7jJ8/uouc9GZBowo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQ3S5q7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p7r/4LgZ5DSX5HKI3s8rW15bzb5I4C7zAkAWKwBOHdTavlr1DV+tqBipumiBvHCIfjJR6bQ5xt7z4CgtDne8FHjeNyXtLYwlCVJVyyxXwSYQzdGhg7n/vQAiV66SOxGIq/uS+WAei64Zo/KjAg4VbxAy3JX5scYBw5rVN6+XvG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cmcstwg5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQ3S5q7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443EF1F000E9;
-	Wed, 20 May 2026 18:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cmcstwg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC46A1F000E9;
+	Wed, 20 May 2026 18:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300295;
-	bh=GncQEhOPI7jE3cPY0nj+DOqKWiDYbxMzmvyttg0MZuE=;
+	s=korg; t=1779300298;
+	bh=JoKkCx7tDOoi8P/ByI9kS1bIMtgvlaNWNuenzqigFrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQ3S5q7kdzAZC4XwrXsYubfZTzlXdFEG/Zk03xNKzkfDyJe7v7CMvkUQKQfNpvk+w
-	 IG/cp8gzJcHm8Z8eCdhX5zHbt4KSVDZrnI9BqH3+yZElljW3dyRGCnIJRp1PWlqTUF
-	 rJJsmqFJpKxT9X4O8IPNXgXmHH2GZmqECpXMOnD0=
+	b=Cmcstwg5Y9YFG4W/PzxLfIsTZDie0lYdRXZydGXyJrT4WgbqKEHl6Bi3nWtsi/0KD
+	 fBQaLZ2eJjsgqTTaajmcC2DocaEaKhCCspJtn7JFm5IEYtykiC8SEk2cssovZFZ89K
+	 Jxmhv0PuzKQ+mhaLhi3wCIgBJ2Gi1AvU+Nk5Dv3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <hmohsin@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/666] eth: fbnic: Use wake instead of start
-Date: Wed, 20 May 2026 18:14:50 +0200
-Message-ID: <20260520162112.944473939@linuxfoundation.org>
+Subject: [PATCH 6.12 080/666] netfilter: xt_socket: enable defrag after all other checks
+Date: Wed, 20 May 2026 18:14:51 +0200
+Message-ID: <20260520162112.966549784@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,42 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohsin Bashir <hmohsin@meta.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 12ff2a4aee6c86746623d5aed24389dbf6dffded ]
+[ Upstream commit 542be3fa5aff54210a02954c38f07e53ea9bdafd ]
 
-fbnic_up() calls netif_tx_start_all_queues(), which only clears
-__QUEUE_STATE_DRV_XOFF.  If qdisc backlog has accumulated on any TX
-queue before the reconfiguration (e.g. ring resize via ethtool -G),
-start does not call __netif_schedule() to kick the qdisc, so the
-pending backlog is never drained and the queue stalls.
+Originally this did not matter because defrag was enabled once per netns
+and only disabled again on netns dismantle.  When this got changed I should
+have adjusted checkentry to not leave defrag enabled on error.
 
-Switch to netif_tx_wake_all_queues(), which clears DRV_XOFF and also
-calls __netif_schedule() on every queue, ensuring any backlog that
-built up before the down/up cycle is promptly dequeued.
-
-Fixes: bc6107771bb4 ("eth: fbnic: Allocate a netdevice and napi vectors with queues")
-Signed-off-by: Mohsin Bashir <hmohsin@meta.com>
-Link: https://patch.msgid.link/20260408002415.2963915-1-mohsin.bashr@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: de8c12110a13 ("netfilter: disable defrag once its no longer needed")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_socket.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 72bdc6c76c0c5..53bb1d691cc0c 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -137,7 +137,7 @@ void fbnic_up(struct fbnic_net *fbn)
+diff --git a/net/netfilter/xt_socket.c b/net/netfilter/xt_socket.c
+index 76e01f292aaff..811e53bee4085 100644
+--- a/net/netfilter/xt_socket.c
++++ b/net/netfilter/xt_socket.c
+@@ -168,52 +168,41 @@ static int socket_mt_enable_defrag(struct net *net, int family)
+ static int socket_mt_v1_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo1 *info = (struct xt_socket_mtinfo1 *) par->matchinfo;
+-	int err;
+-
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
  
- 	/* Enable Tx/Rx processing */
- 	fbnic_napi_enable(fbn);
--	netif_tx_start_all_queues(fbn->netdev);
-+	netif_tx_wake_all_queues(fbn->netdev);
- 
- 	fbnic_service_task_start(fbn);
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V1) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V1);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
  }
+ 
+ static int socket_mt_v2_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo2 *info = (struct xt_socket_mtinfo2 *) par->matchinfo;
+-	int err;
+-
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
+ 
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V2) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V2);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
+ }
+ 
+ static int socket_mt_v3_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo3 *info =
+ 				    (struct xt_socket_mtinfo3 *)par->matchinfo;
+-	int err;
+ 
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V3) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V3);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
+ }
+ 
+ static void socket_mt_destroy(const struct xt_mtdtor_param *par)
 -- 
 2.53.0
 
