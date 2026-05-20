@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA939B483;
-	Wed, 20 May 2026 17:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3710A233933;
+	Wed, 20 May 2026 17:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299472; cv=none; b=XAM9rJTPcHY6T1JbV2dConrSGSVayKkQoid90v4z/piziAMskbcH6s8RIIy4BSrULzhXfZLSHCrOa5prnMBcxT94XNDCYrREOfdsx87icXi87p67iWl2iqrz9v0Etrt3MmtXXgcy7YRdgg9ViEWTr5selAbmsG5OwgBvP4JqpKU=
+	t=1779299475; cv=none; b=NfMMW2z8hevrUBC/CCPkoGJP7G1CCDZ+uVNJvIUi6V/vMVE19SEovoXjZBdy/Ika58wlyYR/vDjtvnTR5kQikfv+7Xh3MEYDnEwqNsj092TR1fsNLym68atyYFweyWVs2RCJMyhe2wzHfqI7PIRHZtLes7UIIGqH3eBvD73zKo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299472; c=relaxed/simple;
-	bh=ArerDv50s1M/cxsPbFrG5erB1HO4KDkM+J1voFI7oXM=;
+	s=arc-20240116; t=1779299475; c=relaxed/simple;
+	bh=qcO4gRc9ne+5EJBy4A1MbayQBHLTmlbk4HfMGr0QRUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rg/kJ3QmvV/Orlc96a4UJEJelqP77S8d9F+aoAQGG1bLUYXwKua31o4za1cfGJiS3mmzVZuXJrvsYB9EYwPYv2fO6k0kYXA9fCiqfF8fZA5JOkYZB+syY60UzSmpVr5sC3J4H2ohF1bOPQw2qCUSyECh+NRajwngSSGlEOGQF/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mNHlZNl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EfhVE8gaSomoai0zLb79U0HC9LRlhntSMruZpAjWiVjZjep9LEI5hSEfWdB0cLRBkC/1WVJl4rz4/fh+NbWMKPgZIqryUYNcsIocH+OLIUuIzKizkelxb8LerinoI+Mrn/wzjqvlPZKEawrda5LfMfByhQ5k0GB5qLod5Tw3KqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXuFLBog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mNHlZNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07841F000E9;
-	Wed, 20 May 2026 17:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXuFLBog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B18B1F000E9;
+	Wed, 20 May 2026 17:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299471;
-	bh=+sMW4AmYGyrdzF7FS88hIinsKbfz1bU1ITXOeEgBcYo=;
+	s=korg; t=1779299474;
+	bh=VbIkundHLaAqFqqSNZ9xORWg1aX0wGKUN0/i5yYIYwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1mNHlZNl5hFntCTzuSereAKkDDFP8ROFbZ9nzS7jVytx9bYEmFySrnDj6vvk43gid
-	 s+98HI1+HIhzDTHpHiT0t/zeVZpnUwtKISHLTJwYMbdbgnhTnco6GWVsi+XFzQFkgY
-	 PNuez8OgIIHiBOdSBy36FJ4JjZpt+HEmLY2Eattk=
+	b=TXuFLBogqj81UiCjAcTTV0ulyDHWtXta+jduQrKiDSFuu0Jbw1E/D2FUP6yEjfbci
+	 bvd9mvrilUTqnH9Zgw4XJcNvuwM+15W9S8fKFsgcWEyD1EyGsY4AJ1uRXVvi7xDrMG
+	 uu1XwnMT/Ml88pnLn1Uiaq3hVlPEdkpd9mHmaohE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Altan Hacigumus <ahacigu.linux@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 784/957] tcp: make probe0 timer handle expired user timeout
-Date: Wed, 20 May 2026 18:21:07 +0200
-Message-ID: <20260520162151.563213576@linuxfoundation.org>
+Subject: [PATCH 6.18 785/957] netpoll: fix IPv6 local-address corruption
+Date: Wed, 20 May 2026 18:21:08 +0200
+Message-ID: <20260520162151.584472855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,62 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Altan Hacigumus <ahacigu.linux@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 2b9f6f7065d4cfb65ba19126e0b35ac4544c3f3a ]
+[ Upstream commit 3bc179bc7146c26c9dff75d2943d10528274e301 ]
 
-tcp_clamp_probe0_to_user_timeout() computes remaining time in jiffies
-using subtraction with an unsigned lvalue.  If elapsed probing time
-exceeds the configured TCP_USER_TIMEOUT, the underflow yields a large
-value.
+netpoll_setup() decides whether to auto-populate the local source
+address by testing np->local_ip.ip, which only inspects the first 4
+bytes of the union inet_addr storage.
 
-This ends up re-arming the probe timer for a full backoff interval
-instead of expiring immediately, delaying connection teardown beyond
-the configured timeout.
+For an IPv6 netpoll whose caller-supplied local address has a zero
+high-32 bits (::1, ::<suffix>, IPv4-mapped ::ffff:a.b.c.d, etc.), this
+misdetects the address as unset (which they are not, but the first
+4 bytes are empty), calls netpoll_take_ipv6() and overwrites it with
+whatever matching link-local/global address the device happens to expose
+first.
 
-Fix this by preventing underflow so user-set timeout expiration is
-handled correctly without extending the probe timer.
+Introduce a helper netpoll_local_ip_unset() that picks the correct
+family-aware test (ipv6_addr_any() for IPv6, !.ip for IPv4) and use it
+from netpoll_setup().
 
-Fixes: 344db93ae3ee ("tcp: make TCP_USER_TIMEOUT accurate for zero window probes")
-Link: https://lore.kernel.org/r/20260414013634.43997-1-ahacigu.linux@gmail.com
-Signed-off-by: Altan Hacigumus <ahacigu.linux@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260424014639.54110-1-ahacigu.linux@gmail.com
+Reproducer is something like:
+
+  echo "::2" > local_ip
+  echo 1     > enabled
+  cat local_ip
+  # before this fix: 2001:db8::1   (caller-supplied ::2 was clobbered)
+  # after  this fix: ::2
+
+Fixes: b7394d2429c1 ("netpoll: prepare for ipv6")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260424-netpoll_fix-v1-1-3a55348c625f@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/core/netpoll.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index b2e5848b6980a..1e6d7d90371a9 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -49,7 +49,8 @@ static u32 tcp_clamp_rto_to_user_timeout(const struct sock *sk)
- u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
--	u32 remaining, user_timeout;
-+	u32 user_timeout;
-+	s32 remaining;
- 	s32 elapsed;
- 
- 	user_timeout = READ_ONCE(icsk->icsk_user_timeout);
-@@ -60,7 +61,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
- 	if (unlikely(elapsed < 0))
- 		elapsed = 0;
- 	remaining = msecs_to_jiffies(user_timeout) - elapsed;
--	remaining = max_t(u32, remaining, TCP_TIMEOUT_MIN);
-+	remaining = max_t(int, remaining, TCP_TIMEOUT_MIN);
- 
- 	return min_t(u32, remaining, when);
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 6b1f470264c12..854e37c41653b 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -706,6 +706,23 @@ static int netpoll_take_ipv4(struct netpoll *np, struct net_device *ndev)
+ 	return 0;
  }
+ 
++/*
++ * Test whether the caller left np->local_ip unset, so that
++ * netpoll_setup() should auto-populate it from the egress device.
++ *
++ * np->local_ip is a union of __be32 (IPv4) and struct in6_addr (IPv6),
++ * so an IPv6 address whose first 4 bytes are zero (e.g. ::1, ::2,
++ * IPv4-mapped ::ffff:a.b.c.d) must not be tested via the IPv4 arm —
++ * doing so would misclassify a caller-supplied address as unset and
++ * silently overwrite it with whatever address the device exposes.
++ */
++static bool netpoll_local_ip_unset(const struct netpoll *np)
++{
++	if (np->ipv6)
++		return ipv6_addr_any(&np->local_ip.in6);
++	return !np->local_ip.ip;
++}
++
+ int netpoll_setup(struct netpoll *np)
+ {
+ 	struct net *net = current->nsproxy->net_ns;
+@@ -750,7 +767,7 @@ int netpoll_setup(struct netpoll *np)
+ 		rtnl_lock();
+ 	}
+ 
+-	if (!np->local_ip.ip) {
++	if (netpoll_local_ip_unset(np)) {
+ 		if (!np->ipv6) {
+ 			err = netpoll_take_ipv4(np, ndev);
+ 			if (err)
 -- 
 2.53.0
 
