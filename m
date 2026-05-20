@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3273E832A;
-	Wed, 20 May 2026 18:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C17A3E95A4;
+	Wed, 20 May 2026 18:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300104; cv=none; b=lP/aOsIHm+7ulOiG9eaffwh2CqkOblm08wSIuHRB9pHm1ov+lHfoQVgMus9QYHfpO1gbeB9JpCqvbdPWVB974aABogMvFD99/1yPrF+I2/lGgpcFWVopYKF2oeTDaLdmCYq+rTgZ0fyJsOVy16ZglghEi+joQzK2PzoRVCWcXds=
+	t=1779300107; cv=none; b=l0jt+Vpq/gh2bnkbBbnEYqxTrkwCUYi31njeYlc0O/5PMcOGnHwTW5NeeHPcdSTm1Yp0lmOhuhJIu+exz/F92wdiFRpRKojxcJfQV/ZADGtmdbqSrbaYqIwnlmK9SjTWsTyWctMIVb155buMeqXdatnl0Aaqnos/1i0GNTHmISU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300104; c=relaxed/simple;
-	bh=WN7AILZe9iX22WCHJJtTFFruiImDVcJYZzj+HTPOwNU=;
+	s=arc-20240116; t=1779300107; c=relaxed/simple;
+	bh=Vr+8N4A7ibyX7gJMIKbL0CuLLBi17+3GhzmptIymxVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EXocW8ZC727Bbu5ncp/JidTNZwujG6jfeGPLtJqlhS7o0gF0G4ncO5Mve/nspeW1nhdmQ/43nkPjR9ItaUd7WSslCyYZuDH5Ah4OnQFwJzV3X8vZOO3PBBT8rDLFqvw8KuOA3JJeGYRzfxD+9etlpfJiD2/ebg5Dzqvy1Uj/CTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3WMkJHZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JcPULwub6Ne/BoI2kyzmSJIVk1NOU8/JbZiGpscrzhEKm+xowqdKVoYbEeVRKSSgxqzc1Ma+c6RWtYKsOoHVKHtCXKKvkH9sZzY36+aOLhR/W6ONVYfxJK4Mad08kK9MEpUVWHmJFAVXbIhCVvdE73eg9UpbZ91gPsAm652QKnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tnGwEa1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3WMkJHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44611F000E9;
-	Wed, 20 May 2026 18:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tnGwEa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9085C1F000E9;
+	Wed, 20 May 2026 18:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300103;
-	bh=+/hYWDvTlmJZlU7Y+N9xD9a8TB1hULVTIMEFU74omSE=;
+	s=korg; t=1779300106;
+	bh=I6UTchS8uGSbqN7s/6wgi+BUgXgxzZRQvLnQzQY5GGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3WMkJHZ7OUZIxUYivN+SjIyK/Nf0R95vz5PLFJbjwTADBUfc5o7t8UQs92N4IUkZ
-	 OHsU1AJts9IgD6GnulZdMT/pFZvnoa4kYGsb6ka5VHeya4U86SexDxDTjMY94daMmU
-	 cUwjX3xJgpoxnOrvSTtvu26Er9jhfSy8NYdYbhzI=
+	b=2tnGwEa1vHEE+bJqeD8x47PcVjLUbdizlydji4xvg5G5/uRlFOQ7M4vK7LrZx8JsO
+	 tLhq310VKGE5cjzCTQoIpTgYYk0vHOiig6FEJaBR50DUsNSYXbQFrLNruC1kdlJm/n
+	 26y01rFK7/oPviy9Yee+ylPkLeliPPVfpOYDtFAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Rory Little <rory@candelatech.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/666] sparc64: vdso: Link with -z noexecstack
-Date: Wed, 20 May 2026 18:14:02 +0200
-Message-ID: <20260520162111.909414566@linuxfoundation.org>
+Subject: [PATCH 6.12 049/666] wifi: mt76: mt7921: Place upper limit on station AID
+Date: Wed, 20 May 2026 18:14:20 +0200
+Message-ID: <20260520162112.304427470@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -47,49 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Rory Little <rory@candelatech.com>
 
-[ Upstream commit acc4f131d5d57c2aa89db914aeb6f7bb0ab4eb4a ]
+[ Upstream commit 4d0bf21e3e20619d51d06c0c36207aabab8b712c ]
 
-The vDSO stack does not need to be executable. Prevent the linker from
-creating executable. For more background see commit ffcf9c5700e4 ("x86:
-link vdso and boot with -z noexecstack --no-warn-rwx-segments").
+Any station configured with an AID over 20 causes a firmware crash.
+This situation occurred in our testing using an AP interface on 7922
+hardware, with a modified hostapd, sourced from Mediatek's OpenWRT
+feeds.
 
-Also prevent the following warning from the linker:
-sparc64-linux-ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
-sparc64-linux-ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+In stock hostapd, station AIDs begin counting at 1, and this
+configuration is prevented with an upper limit on associated stations.
+However, the modified hostapd began allocation at 65, which caused the
+firmware to crash. This fix does not allow these AIDs to work, but will
+prevent the firmware crash.
 
-Fixes: 9a08862a5d2e ("vDSO for sparc")
-Suggested-by: Arnd Bergmann <arnd@kernel.org>
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Andreas Larsson <andreas@gaisler.com>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Acked-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/lkml/20250707144726.4008707-1-arnd@kernel.org/
-Link: https://patch.msgid.link/20260304-vdso-sparc64-generic-2-v6-4-d8eb3b0e1410@linutronix.de
+This crash was only seen on IFTYPE_AP interfaces, and the fix does not
+appear to have an effect on IFTYPE_STATION behavior.
+
+Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
+Signed-off-by: Rory Little <rory@candelatech.com>
+Link: https://patch.msgid.link/20250904000711.3033860-1-rory@candelatech.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/vdso/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 6 ++++++
+ drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/sparc/vdso/Makefile b/arch/sparc/vdso/Makefile
-index c7697884975ea..fc3ada4269f1a 100644
---- a/arch/sparc/vdso/Makefile
-+++ b/arch/sparc/vdso/Makefile
-@@ -103,4 +103,4 @@ quiet_cmd_vdso = VDSO    $@
- 		       $(VDSO_LDFLAGS) $(VDSO_LDFLAGS_$(filter %.lds,$(^F))) \
- 		       -T $(filter %.lds,$^) $(filter %.o,$^)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index bc823a7c09bba..6ed2edd054b55 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -802,6 +802,9 @@ int mt7921_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	int ret, idx;
  
--VDSO_LDFLAGS = -shared --hash-style=both --build-id=sha1 -Bsymbolic --no-undefined
-+VDSO_LDFLAGS = -shared --hash-style=both --build-id=sha1 -Bsymbolic --no-undefined -z noexecstack
++	if (sta->aid > MT7921_MAX_AID)
++		return -ENOENT;
++
+ 	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, MT792x_WTBL_STA - 1);
+ 	if (idx < 0)
+ 		return -ENOSPC;
+@@ -845,6 +848,9 @@ int mt7921_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 
++	if (sta->aid > MT7921_MAX_AID)
++		return -ENOENT;
++
+ 	if (ev != MT76_STA_EVENT_ASSOC)
+ 	    return 0;
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+index 16c89815c0b8a..7a7e09fcf4b5e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+@@ -7,6 +7,8 @@
+ #include "../mt792x.h"
+ #include "regs.h"
+ 
++#define MT7921_MAX_AID                  20
++
+ #define MT7921_TX_RING_SIZE		2048
+ #define MT7921_TX_MCU_RING_SIZE		256
+ #define MT7921_TX_FWDL_RING_SIZE	128
 -- 
 2.53.0
 
