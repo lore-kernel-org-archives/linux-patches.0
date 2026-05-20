@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F773F1AB8;
-	Wed, 20 May 2026 17:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97563F54C9;
+	Wed, 20 May 2026 17:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296713; cv=none; b=unKofudepxPPG88UFz4Dix27om5jNG7655uBKAtcVmUCD1XL5uLpZG+HrUmgoBsl13OZzgogRrMKuSs/YIkWj8bL634u7buEruRcZVXX90YYp/fIj/tCmD2cx+4vPVZzP8fohD57/XPD+57+49ywbvBSXYT4rKQd4TWmRHa01Ps=
+	t=1779296715; cv=none; b=kFJWc28RHC1JS1pDgT8NdRkeNj8Melqf5uQdZplDPBJVn8BdNhu3OSdvgwjzWjBYEL6umqmtaGc282xyRc6RY53JVuxHVhazxAg9BK/qRrOuIhFEatw2S9hykxpY7zoWMlg35ms5Oj1wfHEupuejYcm4F/54pQdzho5NWP+JTew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296713; c=relaxed/simple;
-	bh=KnkdIfLq969hMacmJOsMJMuabImPbXnS00wC9Zn4zkY=;
+	s=arc-20240116; t=1779296715; c=relaxed/simple;
+	bh=n9rUwghuiVQbL7/BInnZ3lRqrmyOshzdF/YWf3ddepA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GYO+hvYx/9nrFq0cnZNWYUgCw6rT4UXT1dTZcLOsfeoxIC4k8Ke2/ISXzoPdonszlE5zZvS1KOlbJsoj4n1dOUjK40ovaoN5sel+cR4meAScnKWR3v603221hl9mo16MhXEnmXsw9LQ3+cLQx6eaSUM2qNSreLLzQrfuhInYzIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWTaOxDj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HkMiNA/szfcQqh88rOsHXokCHiqPH7DKLqn8WGHUVvvrwXMAsFGR+3hxEKSP9b4Tbm6AyYAOVi//4XoJ7uhGuleXPy5dSTN5KH9iPZmTYYM0DCqCcATQ8pStup3YIQI/6PBH/mikxrrjOqkWLYOq7RleAg5k/G/RyNQ7IIVorHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iduPcOA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWTaOxDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597291F00893;
-	Wed, 20 May 2026 17:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iduPcOA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054AE1F000E9;
+	Wed, 20 May 2026 17:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296711;
-	bh=ik/9sbTYTwwrmXjrnhe+jeUss2v14B+K63xWTiSKHfY=;
+	s=korg; t=1779296714;
+	bh=Sbc1H3MQJVO0HWRah+wkI6Yq6J5SrKBdH3ruvYUZd7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZWTaOxDjzQppA29YiFN2bRBtvFR/5t2CIRn1Ex/ewCxlcb6+krpCgSO/VuD1sNYGr
-	 SNVZIWIrMIaOFm6ukveUTE/Btf4Ba9T3HyjPM1YuuaEExx3gj6qug+EAuZGET7Kufv
-	 Mj7SogDiUgnrKsfP1zKodWW7UGrkYs9unCV8kF5I=
+	b=iduPcOA1sbCwOB2jq/nUjT2eHHJQHp78ul+UoOj0GopMDuTuE1INjWdSQ30yekxVB
+	 VsGLKDl1CWi5pcqm9N+Se9IlAuNHYKhn485O9BW+86OTfIwoIGvHEA5E+Rq+q2Ez49
+	 rEjkSzeeg8bCSmpH5oYGAA/enePFxbdg1CKBWKfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0902/1146] drm/amdgpu/gmc: Fix AMDGPU_GART_PLACEMENT_LOW to not overlap with VRAM
-Date: Wed, 20 May 2026 18:19:12 +0200
-Message-ID: <20260520162208.650194873@linuxfoundation.org>
+Subject: [PATCH 7.0 0903/1146] drm/amd/pm: fix missing fine-grained dpm table flag on aldebaran
+Date: Wed, 20 May 2026 18:19:13 +0200
+Message-ID: <20260520162208.672373011@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,55 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 36d65da7570bf72ce28504fa9a81abfc728e6d96 ]
+[ Upstream commit ccf8932ed8cf4fbfdcd4df2c6b524913691ee700 ]
 
-When the GART placement is set to AMDGPU_GART_PLACEMENT_LOW:
-Make sure that GART does not overlap with VRAM when
-VRAM is configured to be in the low address space.
+Add the missing SMU_DPM_TABLE_FINE_GRAINED flag to aldebaran DPM table.
+This fixes the pp_dpm_sclk node issue caused by missing flag configuration.
 
-Solve this according to the following logic:
-- When GART fits before VRAM, use zero address for GART
-- Otherwise, put GART after the end of VRAM, aligned to 4 GiB
-
-Previously, I had assumed this was not possible
-so it was OK to not handle it, but now we got a report
-from a user who has a board that is configured this way.
-
-Fixes: 917f91d8d8e8 ("drm/amdgpu/gmc: add a way to force a particular placement for GART")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Fixes: 7ea1c722fe1d ("drm/amd/pm: Use common helper for aldebaran dpm table")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3d9de5d86a1658cadb311461b001eb1df67263ad)
+(cherry picked from commit 3427dea3a48ebddb491a26093f3627384b3cb2c2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index 5179fa008626e..19abb09f0e197 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -313,7 +313,10 @@ void amdgpu_gmc_gart_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc,
- 		mc->gart_start = max_mc_address - mc->gart_size + 1;
- 		break;
- 	case AMDGPU_GART_PLACEMENT_LOW:
--		mc->gart_start = 0;
-+		if (size_bf >= mc->gart_size)
-+			mc->gart_start = 0;
-+		else
-+			mc->gart_start = ALIGN(mc->fb_end, four_gb);
- 		break;
- 	case AMDGPU_GART_PLACEMENT_BEST_FIT:
- 	default:
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+index 2b4faab376930..23c9f14bb2086 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -425,6 +425,7 @@ static int aldebaran_set_default_dpm_table(struct smu_context *smu)
+ 		dpm_table->dpm_levels[0].enabled = true;
+ 		dpm_table->dpm_levels[1].value = pptable->GfxclkFmax;
+ 		dpm_table->dpm_levels[1].enabled = true;
++		dpm_table->flags |= SMU_DPM_TABLE_FINE_GRAINED;
+ 	} else {
+ 		dpm_table->count = 1;
+ 		dpm_table->dpm_levels[0].value = smu->smu_table.boot_values.gfxclk / 100;
 -- 
 2.53.0
 
