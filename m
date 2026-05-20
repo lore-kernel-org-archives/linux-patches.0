@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1188E371CEA;
-	Wed, 20 May 2026 18:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2953F4DD6;
+	Wed, 20 May 2026 18:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300339; cv=none; b=nEulnRRVfhScLoipuaivid2ttpQ0LGuuwIeLReJQxUydf0caMReVXDmUwi5jckOH2TMXdOISXDbdLlIINYSVTpT9JPiBhO3LmeVVlg/wzR32kylEdYaNvBKTX/jt4NtMH/ZMtxO4NUzgHoXMc7ADeToqaNbInP95Orv5NtUu8IU=
+	t=1779300341; cv=none; b=InMMWzQJ/SmbRoHbVkinJnYsngBbgpjP+gzVFbhvRzUvrrCVFnHEplkyHiDLMLS8LJ9zHmo9KgzwD6RbIkpAiAZHigoUDB9Sp156P90Rimg1jeBlzrcwxG+4m9TmU3Fes72qmpIaWlKXuimQcIYrzGhN3OUSbOc1dttNxXw5tAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300339; c=relaxed/simple;
-	bh=V08hdCZeUIyNWXH1XIBBeMSuVvQylSz0XSXAZ3PyH0E=;
+	s=arc-20240116; t=1779300341; c=relaxed/simple;
+	bh=/aOTtiMKYGhIfPRqvziVdNGhDeB+AfOEIay+nkgvC7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0S7SCohDS9d2W/bLMvQwiH8soZlX6CLzjJrqrk4Aaq/xK2h/SDQ3PRPZc3z31MqkMEb0AN76artK3QbCiUMOqyWdi9YYRi1wP/8EADGR3QcAuYmxVtk5pGuP1URPqX91Tdok5forgqSmjLR4jY8kSMmUWi9Ku2Wqjb4WG9nKeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s51FWl+b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j1ON3sqY657VL6vJcLLXdZU1EV/wVUvKR1pbOTsO7YRJuIA5oiY4EisrOJTbn0s/3tSzdGK2GgpiKoSoPUyi4C3pIXkZb2tNodoUUyycIbMq+kTQR5Alr/+FuoKSALoMopeT91HvJOOlX8SHfKG9N+hLGWN2rx14lQ/NaMDRg6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMT/MfV9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s51FWl+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751981F000E9;
-	Wed, 20 May 2026 18:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMT/MfV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD411F000E9;
+	Wed, 20 May 2026 18:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300338;
-	bh=tTMfZlfY/liwoWe7Vh3Y8SX7i00xi8/pnfoJxMzOsGA=;
+	s=korg; t=1779300340;
+	bh=dqiiHuA2MGYNGQn5Qi7SPIcHu5hYiQkNJO9ITpV+G0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s51FWl+bGAd5SWirpInXHmDlV4zWwZaLB8cGtx30K0fcJXB00uO+8mL5P0mreiBa8
-	 mx7eIvXvFlE87eSVSA/YUYX/Gi4plzM+XYtTYF824u04LfoSuobg+i5bYVYHl8Q4BN
-	 CksFWi91Q6acG0v/W8cxWO6qiKpaCs7WdRpsglwU=
+	b=lMT/MfV930dLkFb9FDp/786OV8cC2DkArBYtS3ET6AINVM2O2OGCTOnws91a2dzop
+	 nZFiWsOe+aztSDBbMbTijbqEzaI16W42Z9/cBi/CHRhpipPGnBB4IZXhz8a9YP57mI
+	 JDGFVga0YDT7aCtzIjbVXNu4RKIRmTNdPWowS4sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Nicolin Chen <b42378@freescale.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/666] dm log: fix out-of-bounds write due to region_count overflow
-Date: Wed, 20 May 2026 18:15:49 +0200
-Message-ID: <20260520162114.203685947@linuxfoundation.org>
+Subject: [PATCH 6.12 121/666] ASoC: soc-compress: use function to clear symmetric params
+Date: Wed, 20 May 2026 18:15:32 +0200
+Message-ID: <20260520162113.840501380@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,79 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit c20e36b7631d83e7535877f08af8b0af72c44b1a ]
+[ Upstream commit 07c774dd64ba0c605dbf844132122e3edbdbea93 ]
 
-The local variable region_count in create_log_context() is declared as
-unsigned int (32-bit), but dm_sector_div_up() returns sector_t (64-bit).
-When a device-mapper target has a sufficiently large ti->len with a small
-region_size, the division result can exceed UINT_MAX. The truncated
-value is then used to calculate bitset_size, causing clean_bits,
-sync_bits, and recovering_bits to be allocated far smaller than needed
-for the actual number of regions.
+Current soc-compress.c clears symmetric_rate, but it clears rate only,
+not clear other symmetric_channels/sample_bits.
 
-Subsequent log operations (log_set_bit, log_clear_bit, log_test_bit) use
-region indices derived from the full untruncated region space, causing
-out-of-bounds writes to kernel heap memory allocated by vmalloc.
+	static int soc_compr_clean(...)
+	{
+		...
+		if (!snd_soc_dai_active(cpu_dai))
+=>			cpu_dai->symmetric_rate = 0;
 
-This can be reproduced by creating a mirror target whose region_count
-overflows 32 bits:
+		if (!snd_soc_dai_active(codec_dai))
+=>			codec_dai->symmetric_rate = 0;
+		...
+	};
 
-  dmsetup create bigzero --table '0 8589934594 zero'
-  dmsetup create mymirror --table '0 8589934594 mirror \
-    core 2 2 nosync 2 /dev/mapper/bigzero 0 \
-    /dev/mapper/bigzero 0'
+This feature was added when v3.7 kernel [1], and there was only
+symmetric_rate, no symmetric_channels/sample_bits in that timing.
 
-The status output confirms the truncation (sync_count=1 instead of
-4294967297, because 0x100000001 was truncated to 1):
+symmetric_channels/sample_bits were added in v3.14 [2],
+but I guess it didn't notice that soc-compress.c is updating symmetric_xxx.
 
-  $ dmsetup status mymirror
-  0 8589934594 mirror 2 254:1 254:1 1/4294967297 ...
+We are clearing symmetry_xxx by soc_pcm_set_dai_params(), but is soc-pcm.c
+local function. Makes it global function and clear symmetry_xxx by it.
 
-This leads to a kernel crash in core_in_sync:
+[1] commit 1245b7005de02 ("ASoC: add compress stream support")
+[2] commit 3635bf09a89cf ("ASoC: soc-pcm: add symmetry for channels and
+			   sample bits")
 
-  BUG: scheduling while atomic: (udev-worker)/9150/0x00000000
-  RIP: 0010:core_in_sync+0x14/0x30 [dm_log]
-  CR2: 0000000000000008
-  Fixing recursive fault but reboot is needed!
-
-Fix by widening the local region_count to sector_t and adding an
-explicit overflow check before the value is assigned to lc->region_count.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 3635bf09a89c ("ASoC: soc-pcm: add symmetry for channels and sample bits")
+Cc: Nicolin Chen <b42378@freescale.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87ms15e3kv.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-log.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/sound/soc.h      | 3 +++
+ sound/soc/soc-compress.c | 4 ++--
+ sound/soc/soc-pcm.c      | 4 ++--
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
-index bced5a783ee33..4a1369b8f44a0 100644
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -373,7 +373,7 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index db3b464a91c7b..cd467f8babdb6 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1452,6 +1452,9 @@ struct snd_soc_dai *snd_soc_find_dai(
+ struct snd_soc_dai *snd_soc_find_dai_with_mutex(
+ 	const struct snd_soc_dai_link_component *dlc);
  
- 	struct log_c *lc;
- 	uint32_t region_size;
--	unsigned int region_count;
-+	sector_t region_count;
- 	size_t bitset_size, buf_size;
- 	int r;
- 	char dummy;
-@@ -401,6 +401,10 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
- 	}
++void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
++			    struct snd_pcm_hw_params *params);
++
+ #include <sound/soc-dai.h>
  
- 	region_count = dm_sector_div_up(ti->len, region_size);
-+	if (region_count > UINT_MAX) {
-+		DMWARN("region count exceeds limit of %u", UINT_MAX);
-+		return -EINVAL;
-+	}
+ static inline
+diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
+index f787f60a16a11..249cafe54f561 100644
+--- a/sound/soc/soc-compress.c
++++ b/sound/soc/soc-compress.c
+@@ -69,10 +69,10 @@ static int soc_compr_clean(struct snd_compr_stream *cstream, int rollback)
+ 	snd_soc_dai_digital_mute(codec_dai, 1, stream);
  
- 	lc = kmalloc(sizeof(*lc), GFP_KERNEL);
- 	if (!lc) {
+ 	if (!snd_soc_dai_active(cpu_dai))
+-		cpu_dai->symmetric_rate = 0;
++		soc_pcm_set_dai_params(cpu_dai, NULL);
+ 
+ 	if (!snd_soc_dai_active(codec_dai))
+-		codec_dai->symmetric_rate = 0;
++		soc_pcm_set_dai_params(codec_dai, NULL);
+ 
+ 	snd_soc_link_compr_shutdown(cstream, rollback);
+ 
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 83e6a76da7e63..628322790c878 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -458,8 +458,8 @@ int dpcm_dapm_stream_event(struct snd_soc_pcm_runtime *fe, int dir,
+ 	return 0;
+ }
+ 
+-static void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
+-				   struct snd_pcm_hw_params *params)
++void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
++			    struct snd_pcm_hw_params *params)
+ {
+ 	if (params) {
+ 		dai->symmetric_rate	   = params_rate(params);
 -- 
 2.53.0
 
