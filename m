@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C29E2F363F;
-	Wed, 20 May 2026 18:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3AB3D5647;
+	Wed, 20 May 2026 18:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300899; cv=none; b=rOlvoqs+e1tkU56/4vAJQVReVCXdtjBKD04YGqDM6qVmEr+3KFxv8Jth0tVmMqtIKAzb1bMQxE/clZoa8NYOScePcJQmut8GsgxeQ0zUvj2bQAZx7T49hySyLeEeipRHCKERRXjXGchR+Q4LXZG9NNCriuHfmehfGvdNCEbqE7s=
+	t=1779300902; cv=none; b=eMel78KaBUpTg2dGcPwJIu6uH7MgGPPUv/Zquap6gHmqUx28SY6cFnxETLSNKfaRR0iFjFo67i0XtwkPuuHGLyMM3T8xuEufGefLARoFeWtYKnrm7PBZfPqY5W0g9zN1T+9qD0DU2AKAj3QgmhpREXmp+PdPmqHY+lCC671mky8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300899; c=relaxed/simple;
-	bh=cDhTqZgGDYfGs+ntE2gaGfvDGFjFejS1AmzslzK/d4o=;
+	s=arc-20240116; t=1779300902; c=relaxed/simple;
+	bh=YGKtFRmZmIn36gl78KRutRoTAb1mmPbPgxHVslyWAeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZ6DUdQb47m6gk5aifovqgZ0H04HJTRDH5zEZCRP+O2jQwi6roOr6Ui8PIB7n4cx6RjthaCVYG5oeakXLbRMiYmvJ8BKRZ9BIwI99GDle3uPm6v02XmMM4ZJu3u5gjxC/mOxl7vOs8Bk1envxph6ci3sIB3LbGpx7Ad1W/z0hvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gayPgFku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RshpfpKRL9zTXHxe80y0UUi2GiZiyZiBhjbrm4l9p1C0grNrFgbhb8t1zPp2WMbBGHgcuL9R1jUAq+Dj45PIQ8khxmK3RUiajeSOhEmMFV+e+g3WiU4/5+Eayl5cYC06bjetpvwtbSnaG2FRHc4TgnKhMikBNtDpxE19vNmCB4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywxNxCfx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gayPgFku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C141F000E9;
-	Wed, 20 May 2026 18:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywxNxCfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8501B1F000E9;
+	Wed, 20 May 2026 18:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300898;
-	bh=zx01TzF6pRuSMxzCt8mKdwxNjmCwmC3/fxBLz4x4j8k=;
+	s=korg; t=1779300901;
+	bh=V+fUF+36u0dGiJoIW2cKSEfh5p3OikaDxoG2ibyqXbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gayPgFkuoY3SmcbImb6CmdgBF1OTBCHRc41VckEvDG/5sKH0sOwRZMCU02xmZQV3C
-	 NsrDdMR3D7UE0ivWKF4Nv5eD+yqWmtNouTAPMWoOCNcV0hQ08AmXb/nhyhbBE+jCTp
-	 a45NoWqp1CMfN5+RdP8uW0bbRN4K8zQDpQpDlPSw=
+	b=ywxNxCfxgEvGdlR+hHPdjw+qJcT3JJlwJ+eO+CzgYmZMUZ5+XILxSzxNHM24beAgY
+	 Um9d/Seb5NG4k9bMcszXHYHjFWuQaS0xU79I9jQneTZrO5fV4MBvIE/fePmqpU7uzG
+	 8frMbWRE1+Upqk9E3gR+Bp2Dry7v2cL4uhpDUv4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hiker Cl <clhiker365@gmail.com>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Yihan Ding <dingyihan@uniontech.com>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/666] bpf: Fix NULL deref in map_kptr_match_type for scalar regs
-Date: Wed, 20 May 2026 18:19:22 +0200
-Message-ID: <20260520162118.839191080@linuxfoundation.org>
+Subject: [PATCH 6.12 352/666] bpf: allow UTF-8 literals in bpf_bprintf_prepare()
+Date: Wed, 20 May 2026 18:19:23 +0200
+Message-ID: <20260520162118.862589010@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,54 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Yihan Ding <dingyihan@uniontech.com>
 
-[ Upstream commit 4d0a375887ab4d49e4da1ff10f9606cab8f7c3ad ]
+[ Upstream commit b960430ea8862ef37ce53c8bf74a8dc79d3f2404 ]
 
-Commit ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local
-kptr") refactored map_kptr_match_type() to branch on btf_is_kernel()
-before checking base_type(). A scalar register stored into a kptr
-slot has no btf, so the btf_is_kernel(reg->btf) call dereferences
-NULL.
+bpf_bprintf_prepare() only needs ASCII parsing for conversion
+specifiers. Plain text can safely carry bytes >= 0x80, so allow
+UTF-8 literals outside '%' sequences while keeping ASCII control
+bytes rejected and format specifiers ASCII-only.
 
-Move the base_type() != PTR_TO_BTF_ID guard before any reg->btf
-access.
+This keeps existing parsing rules for format directives unchanged,
+while allowing helpers such as bpf_trace_printk() to emit UTF-8
+literal text.
 
-Fixes: ab6c637ad027 ("bpf: Fix a bpf_kptr_xchg() issue with local kptr")
-Reported-by: Hiker Cl <clhiker365@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221372
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Update test_snprintf_negative() in the same commit so selftests keep
+matching the new plain-text vs format-specifier split during bisection.
+
+Fixes: 48cac3f4a96d ("bpf: Implement formatted output helpers with bstr_printf")
+Signed-off-by: Yihan Ding <dingyihan@uniontech.com>
 Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260416-kptr_crash-v1-1-5589356584b4@meta.com
+Link: https://lore.kernel.org/r/20260416120142.1420646-2-dingyihan@uniontech.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/bpf/helpers.c                            | 17 ++++++++++++++++-
+ .../testing/selftests/bpf/prog_tests/snprintf.c |  3 ++-
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 56a74ce4a29b9..64a6ec8eb847b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5473,6 +5473,9 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
- 	int perm_flags;
- 	const char *reg_name = "";
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index db4739951702e..8aa7ca9c34c74 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -847,7 +847,13 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 		data->buf = buffers->buf;
  
-+	if (base_type(reg->type) != PTR_TO_BTF_ID)
-+		goto bad_type;
+ 	for (i = 0; i < fmt_size; i++) {
+-		if ((!isprint(fmt[i]) && !isspace(fmt[i])) || !isascii(fmt[i])) {
++		unsigned char c = fmt[i];
 +
- 	if (btf_is_kernel(reg->btf)) {
- 		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
++		/*
++		 * Permit bytes >= 0x80 in plain text so UTF-8 literals can pass
++		 * through unchanged, while still rejecting ASCII control bytes.
++		 */
++		if (isascii(c) && !isprint(c) && !isspace(c)) {
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
+@@ -869,6 +875,15 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 		 * always access fmt[i + 1], in the worst case it will be a 0
+ 		 */
+ 		i++;
++		c = fmt[i];
++		/*
++		 * The format parser below only understands ASCII conversion
++		 * specifiers and modifiers, so reject non-ASCII after '%'.
++		 */
++		if (!isascii(c)) {
++			err = -EINVAL;
++			goto out;
++		}
  
-@@ -5485,7 +5488,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
- 			perm_flags |= MEM_PERCPU;
- 	}
+ 		/* skip optional "[0 +-][num]" width formatting field */
+ 		while (fmt[i] == '0' || fmt[i] == '+'  || fmt[i] == '-' ||
+diff --git a/tools/testing/selftests/bpf/prog_tests/snprintf.c b/tools/testing/selftests/bpf/prog_tests/snprintf.c
+index 4be6fdb78c6a1..20a3c622bd28a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/snprintf.c
++++ b/tools/testing/selftests/bpf/prog_tests/snprintf.c
+@@ -114,7 +114,8 @@ static void test_snprintf_negative(void)
+ 	ASSERT_ERR(load_single_snprintf("%--------"), "invalid specifier 5");
+ 	ASSERT_ERR(load_single_snprintf("%lc"), "invalid specifier 6");
+ 	ASSERT_ERR(load_single_snprintf("%llc"), "invalid specifier 7");
+-	ASSERT_ERR(load_single_snprintf("\x80"), "non ascii character");
++	ASSERT_OK(load_single_snprintf("\x80"), "non ascii plain text");
++	ASSERT_ERR(load_single_snprintf("%\x80"), "non ascii in specifier");
+ 	ASSERT_ERR(load_single_snprintf("\x1"), "non printable character");
+ }
  
--	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
-+	if (type_flag(reg->type) & ~perm_flags)
- 		goto bad_type;
- 
- 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
 -- 
 2.53.0
 
