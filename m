@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2DA340A57;
-	Wed, 20 May 2026 18:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB722332EBD;
+	Wed, 20 May 2026 18:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301611; cv=none; b=pGT48j6RxHQCkb+uO7uKIt+Ejy8SqTavu+KHa2cGWveq1eWg8+FmckYzJgobtOZLwcHfKI2SECr3giomhbnDo+Ax539obmYFns5SvEh2TlRPYQ5IQEETmQEEKrTjlC7DOpceDsikNo62uSjW0giqWggjWHwB0+ny0dVOsDCTZZ4=
+	t=1779301614; cv=none; b=TY2MFv3Gis+GTiJcBZQI4wiZFTZYMgDhIhN+gxMLezdDkkQAeq5PCM3+xOneNvkShgf87t4DHWB6Itdd/tF88X+mVjVjTqvz35CjVcqbm9fei9wNepWB/1eXQ7x9KJVQ8m3ZuUQMwR5GqpggofOAlb268XnCyAxLRHK95Fy/bxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301611; c=relaxed/simple;
-	bh=QGFxto/Cs2Qd3jjj2gklC4g+87Hp5lgXHWhintGpW4k=;
+	s=arc-20240116; t=1779301614; c=relaxed/simple;
+	bh=nqBk7KMo66Aj6NIB4IBv6bzfFARsLvu3pdmifhU9ths=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSJc4kLwUO4ja7DK6hHxFh5WbwJFQQ/gdIl5o4caw2zSHsXp8E7xYPJr7usTtLVTMMoH6XuNrq+qZnalT3lubm6G+UjiK8QU75syq/ecvCNHTuVJvV0T6wIxU3q4gLZ8L7UWVIkMpiRnvKchHTpsNo4LCNqfCmbqnJsjrlX8WMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aq7coeu5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bjl5fG58IN1gGlbzvGE+uVfoCMAZ2KYQUGx6TgjyJL6p8G4t7NZeQzrhF9ULUwj1sELPXcrqHoAanKCZdLzw+16TbS+xdpqrO3cntXVb0O68v8YugrZPgggXj/W/UKAew73/k38Z5i4np5bDQRH4+9q4zixMugYkByGQm5r/YLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxctQuhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aq7coeu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6FE1F000E9;
-	Wed, 20 May 2026 18:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxctQuhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204BB1F00896;
+	Wed, 20 May 2026 18:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301609;
-	bh=OTafZLmGhDhV2Wh41niC7+bEeQMsCZOQJCzoHfHFnW4=;
+	s=korg; t=1779301612;
+	bh=f8o7QBO1fhB8oBAplIbUyN2E68apeRsyqjo2WR3Bqlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aq7coeu5cISVkK1Zlndcxy+s1WJBq1sFpGuE+PytJCFdQc1VeHiLVkUCDbvbc2Zow
-	 rmD3ikTxANBiggAj5bCNnZAcupKhkL4ruUyK3jD6Z1ia/rHoVhObACZxhMkf3rHHZR
-	 t8HmIwRMLLCmiWboHwIBZHlvZIWVhUrbjLYtHTsQ=
+	b=ZxctQuheoyFB8zxrvT0C47ZP/jUCwrB1z5dr3dTU5lV6cRqLYOGc2ZDQTMtYN59M0
+	 yj7cpEU4jeXu2bydQovRFXZFYcARV5qi2PJon2on+jLu1tXGCFNt7hop+ZQd1Ufakk
+	 CgNWjmF8Jt76VCYZZK91y7Kwr6EESCVyeO7VwCSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 621/666] KVM: x86: Fix Xen hypercall tracepoint argument assignment
-Date: Wed, 20 May 2026 18:23:52 +0200
-Message-ID: <20260520162124.731306965@linuxfoundation.org>
+	Inseo An <y0un9sa@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Li hongliang <1468888505@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 622/666] netfilter: nf_tables: unconditionally bump set->nelems before insertion
+Date: Wed, 20 May 2026 18:23:53 +0200
+Message-ID: <20260520162124.753709190@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,35 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 2b72f1674e427c56e3772c5ccf785fdda2138820 upstream.
+[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
 
-TRACE_EVENT(kvm_xen_hypercall) stores a5 in __entry->a4 instead of
-__entry->a5.
+In case that the set is full, a new element gets published then removed
+without waiting for the RCU grace period, while RCU reader can be
+walking over it already.
 
-That overwrites the recorded a4 argument and leaves a5 unset in the
-trace entry. Fix the typo so both arguments are captured correctly.
+To address this issue, add the element transaction even if set is full,
+but toggle the set_full flag to report -ENFILE so the abort path safely
+unwinds the set to its previous state.
 
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Link: https://patch.msgid.link/20260512015313.1685784-1-maqianga@uniontech.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As for element updates, decrement set->nelems to restore it.
+
+A simpler fix is to call synchronize_rcu() in the error path.
+However, with a large batch adding elements to already maxed-out set,
+this could cause noticeable slowdown of such batches.
+
+Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
+Reported-by: Inseo An <y0un9sa@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/trace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
---- a/arch/x86/kvm/trace.h
-+++ b/arch/x86/kvm/trace.h
-@@ -140,7 +140,7 @@ TRACE_EVENT(kvm_xen_hypercall,
- 		__entry->a2 = a2;
- 		__entry->a3 = a3;
- 		__entry->a4 = a4;
--		__entry->a4 = a5;
-+		__entry->a5 = a5;
- 	),
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index e373afdf0f072..838c9f49e4e01 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6981,6 +6981,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	enum nft_registers dreg;
+ 	struct nft_trans *trans;
+ 	u8 update_flags;
++	bool set_full = false;
+ 	u64 expiration;
+ 	u64 timeout;
+ 	int err, i;
+@@ -7267,10 +7268,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (err < 0)
+ 		goto err_elem_free;
  
- 	TP_printk("cpl %d nr 0x%lx a0 0x%lx a1 0x%lx a2 0x%lx a3 0x%lx a4 0x%lx a5 %lx",
++	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
++		unsigned int max = nft_set_maxsize(set), nelems;
++
++		nelems = atomic_inc_return(&set->nelems);
++		if (nelems > max)
++			set_full = true;
++	}
++
+ 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
+ 	if (trans == NULL) {
+ 		err = -ENOMEM;
+-		goto err_elem_free;
++		goto err_set_size;
+ 	}
+ 
+ 	ext->genmask = nft_genmask_cur(ctx->net);
+@@ -7312,7 +7321,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 						nft_trans_elem_priv(trans) = elem_priv;
+ 						nft_trans_elem_update_flags(trans) = update_flags;
+ 						nft_trans_commit_list_add_tail(ctx->net, trans);
+-						goto err_elem_free;
++						goto err_set_size;
+ 					}
+ 				}
+ 			}
+@@ -7330,23 +7339,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		goto err_element_clash;
+ 	}
+ 
+-	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
+-		unsigned int max = nft_set_maxsize(set);
+-
+-		if (!atomic_add_unless(&set->nelems, 1, max)) {
+-			err = -ENFILE;
+-			goto err_set_full;
+-		}
+-	}
+-
+ 	nft_trans_elem_priv(trans) = elem.priv;
+ 	nft_trans_commit_list_add_tail(ctx->net, trans);
+-	return 0;
+ 
+-err_set_full:
+-	nft_setelem_remove(ctx->net, set, elem.priv);
++	return set_full ? -ENFILE : 0;
++
+ err_element_clash:
+ 	kfree(trans);
++err_set_size:
++	if (!(flags & NFT_SET_ELEM_CATCHALL))
++		atomic_dec(&set->nelems);
+ err_elem_free:
+ 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
+ err_parse_data:
+-- 
+2.53.0
+
 
 
