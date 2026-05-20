@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C116E3F0A83;
-	Wed, 20 May 2026 17:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717283A3E60;
+	Wed, 20 May 2026 17:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299593; cv=none; b=jZs2n04hVXCQtjILMZftwJRhvC0BwcMSwe+R35Cg350u3qiCUXRxacECsCfSOTluFd0dXd+vQ0xQchmZxOJX8k0x3sKcGCTiIoLXoD+2LuGm+1ES9M7W7ZdpOBHR6cC1S88uT1skKa8H0SaNflPD71pBriPbdmrB6Bh8aDPoyiA=
+	t=1779299596; cv=none; b=D90/YDfB/bjpQbudUhiUq42BzJZK0U7ePMLVsPqbhCPAVjVUEm7mIPWfGaGe1vgaPQxq+XRT0xQ0uDc5vH/itZQ4n2xkrwc78TWrBv0+IRb8zQOfi0n6oobPwSZ2053PUWNZwUJXHh9lKrDgFTYfehXiM09NQgZZQuO5MEceqcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299593; c=relaxed/simple;
-	bh=APgAErVJKI1ZDYLOoS6sBQTqsLw5Rm6QWbZjJnkYPy0=;
+	s=arc-20240116; t=1779299596; c=relaxed/simple;
+	bh=joRlpJ2M0oMYmTsTiHxrHytMBbMHfdLPAES+K1L6xuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ttJ6BdFob0E1HumSkgK/83srCMR6kkXGbx67P5utE3PdlvXZCw4hMqc0XeewDtVc7fuX5O/Kanoc0JySLZ4hBW9HrFznWplp7X8DAh/267lC5VkC0yV/NqNXec+l8+ECpLNKFmmxgOD4KePE9MGTUhfs/dIbEOfvYPlzqVK/CKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYGerEd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YhLJ7HnlSIz8y5HoyZSsDfBzYx0WCdOVIg9bmqvgDnuG9XgwUMefm/Os80jNUs3stjcPl94JhJlYt2HOKt2MjYfe0jwLzAYfWLH9FVs3nA7P4c7GX1iATh2BpXDx/9FSmYtxBtHzIgc861gGj1jOGw9C6BzAXB4raZ7ToUgK8Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=II4TInvX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYGerEd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F7D1F000E9;
-	Wed, 20 May 2026 17:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="II4TInvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55251F000E9;
+	Wed, 20 May 2026 17:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299592;
-	bh=DoIvSsbLry12+G2+2nGAOvvHtzhQ1Jtyrwo/b2hOTe8=;
+	s=korg; t=1779299595;
+	bh=QhWO4hc1CKCHgil+U5tCVLmjPDISUsxfOcHyPwxJVOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYGerEd8/MKboKGUl0hEsrb0S/AwsXmYV2SiDafM5wdf1Sl55hboa3uxC7+HEQSFO
-	 a7D2DFHryIMdsvgv99vPlVcyaUqXp6ONih+NZbrHBSFM/CjkWEPwpwgctk9OwIx4zN
-	 HG4oxHqo0mzvUiuHYm27ICSUUzuHCrFds5DcHhFM=
+	b=II4TInvXYWe2s3u8RerVb4vdH4IAu0LxPvpdUlx/KWKJZHxAREmnzbIXh8lmZC/v+
+	 MOVS87JXfnUDeBxCvGDHEFn78YysYnbshDvnxjv9I2XKOjmG2ud77108AM3mREVQk7
+	 IqyyG5cJmsZSaI/OEayvx9cWsqy1NaOAcXOMdNBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 830/957] drm/amd/display: Allow constructing DCE8 link encoder without DDC
-Date: Wed, 20 May 2026 18:21:53 +0200
-Message-ID: <20260520162152.567736902@linuxfoundation.org>
+Subject: [PATCH 6.18 831/957] drm/amd/display: Read EDID from VBIOS embedded panel info
+Date: Wed, 20 May 2026 18:21:54 +0200
+Message-ID: <20260520162152.588422410@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,10 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 60af4605ef35ecb7ad649a8534b83a2f7c69576d ]
+[ Upstream commit 9ea16f64189bf7b6ba50fc7f0325b3c1f836d105 ]
 
-When the DDC channel ID is set to CHANNEL_ID_UNKNOWN,
-pass NULL to the AUX regs array.
+Some board manufacturers hardcode the EDID for the embedded
+panel in the VBIOS. This EDID should be used when the panel
+doesn't have a DDC.
+
+For reference, see the legacy non-DC display code:
+amdgpu_atombios_encoder_get_lcd_info()
 
 This is necessary to support embedded connectors without DDC.
 
@@ -65,26 +69,115 @@ Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
 Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5192
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 155baf3038c1af50b602723022ed869b38e86a99)
+(cherry picked from commit eb105e63b474c11ef6a84a1c6b18100d851ff364)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/bios/bios_parser.c | 62 +++++++++++++++++++
+ .../display/include/grph_object_ctrl_defs.h   |  4 ++
+ 2 files changed, 66 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-index 8822d5818d29e..b645c0c8ec3c5 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-@@ -734,7 +734,8 @@ static struct link_encoder *dce80_link_encoder_create(
- 				      enc_init_data,
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
--				      &link_enc_aux_regs[enc_init_data->channel - 1],
-+				      enc_init_data->channel == CHANNEL_ID_UNKNOWN ?
-+				      NULL : &link_enc_aux_regs[enc_init_data->channel - 1],
- 				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
- 				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+index 154fd2c18e884..c800c603bf708 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
+@@ -1215,6 +1215,60 @@ static enum bp_result bios_parser_get_embedded_panel_info(
+ 	return BP_RESULT_FAILURE;
+ }
+ 
++static enum bp_result get_embedded_panel_extra_info(
++	struct bios_parser *bp,
++	struct embedded_panel_info *info,
++	const uint32_t table_offset)
++{
++	uint8_t *record = bios_get_image(&bp->base, table_offset, 1);
++	ATOM_PANEL_RESOLUTION_PATCH_RECORD *panel_res_record;
++	ATOM_FAKE_EDID_PATCH_RECORD *fake_edid_record;
++
++	while (*record != ATOM_RECORD_END_TYPE) {
++		switch (*record) {
++		case LCD_MODE_PATCH_RECORD_MODE_TYPE:
++			record += sizeof(ATOM_PATCH_RECORD_MODE);
++			break;
++		case LCD_RTS_RECORD_TYPE:
++			record += sizeof(ATOM_LCD_RTS_RECORD);
++			break;
++		case LCD_CAP_RECORD_TYPE:
++			record += sizeof(ATOM_LCD_MODE_CONTROL_CAP);
++			break;
++		case LCD_FAKE_EDID_PATCH_RECORD_TYPE:
++			fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
++			if (fake_edid_record->ucFakeEDIDLength) {
++				if (fake_edid_record->ucFakeEDIDLength == 128)
++					info->fake_edid_size =
++						fake_edid_record->ucFakeEDIDLength;
++				else
++					info->fake_edid_size =
++						fake_edid_record->ucFakeEDIDLength * 128;
++
++				info->fake_edid = fake_edid_record->ucFakeEDIDString;
++
++				record += struct_size(fake_edid_record,
++						      ucFakeEDIDString,
++						      info->fake_edid_size);
++			} else {
++				/* empty fake edid record must be 3 bytes long */
++				record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
++			}
++			break;
++		case LCD_PANEL_RESOLUTION_RECORD_TYPE:
++			panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
++			info->panel_width_mm = panel_res_record->usHSize;
++			info->panel_height_mm = panel_res_record->usVSize;
++			record += sizeof(ATOM_PANEL_RESOLUTION_PATCH_RECORD);
++			break;
++		default:
++			return BP_RESULT_BADBIOSTABLE;
++		}
++	}
++
++	return BP_RESULT_OK;
++}
++
+ static enum bp_result get_embedded_panel_info_v1_2(
+ 	struct bios_parser *bp,
+ 	struct embedded_panel_info *info)
+@@ -1331,6 +1385,10 @@ static enum bp_result get_embedded_panel_info_v1_2(
+ 	if (ATOM_PANEL_MISC_API_ENABLED & lvds->ucLVDS_Misc)
+ 		info->lcd_timing.misc_info.API_ENABLED = true;
+ 
++	if (lvds->usExtInfoTableOffset)
++		return get_embedded_panel_extra_info(bp, info,
++			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
++
+ 	return BP_RESULT_OK;
+ }
+ 
+@@ -1456,6 +1514,10 @@ static enum bp_result get_embedded_panel_info_v1_3(
+ 			(uint32_t) (ATOM_PANEL_MISC_V13_GREY_LEVEL &
+ 				lvds->ucLCD_Misc) >> ATOM_PANEL_MISC_V13_GREY_LEVEL_SHIFT;
+ 
++	if (lvds->usExtInfoTableOffset)
++		return get_embedded_panel_extra_info(bp, info,
++			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
++
+ 	return BP_RESULT_OK;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
+index cc467031651da..05eda9b28b328 100644
+--- a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
++++ b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
+@@ -153,6 +153,10 @@ struct embedded_panel_info {
+ 	uint32_t drr_enabled;
+ 	uint32_t min_drr_refresh_rate;
+ 	bool realtek_eDPToLVDS;
++	uint16_t panel_width_mm;
++	uint16_t panel_height_mm;
++	uint16_t fake_edid_size;
++	const uint8_t *fake_edid;
+ };
+ 
+ struct dc_firmware_info {
 -- 
 2.53.0
 
