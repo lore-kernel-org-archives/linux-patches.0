@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EDC331220;
-	Wed, 20 May 2026 17:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC7F3C6A5C;
+	Wed, 20 May 2026 17:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298190; cv=none; b=iY/SqrLcXfZutyEAPPShJeNqql2PmKZ6xgJAlEiDabYSIRGL+piBN/qfQew0r4wk5lce6u77sHRz5W8xhIoakbYggPRsQqBkr6ky+ZiFUvDKjPdjbhM7frluukYFtmAmzU0H2LTd8DpkcmU219JylRELBHuhpR59r3i7WQLODPA=
+	t=1779298192; cv=none; b=MGWGzurkyS1hzKPL5GbqWnJkVJTSzkQQwK3jt1blusgLl4gYB23YmiTwo7BPC3JN3yfBkAPROV6Z93DmhV9tNzv3u+VKcjATZnB5E3Zu64IQTZS3ZdRLUYKhyKfLdq0el4IaoKiv7QMPh/A1dSt3Jq8B69zqfxINw8spJwSGIDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298190; c=relaxed/simple;
-	bh=U7GhfzBoy4iJeafwoCpYNMet7JYFlaUunob7qtHDqxY=;
+	s=arc-20240116; t=1779298192; c=relaxed/simple;
+	bh=2ugaQbucOyPtOAMkUNF7HoNnjNNxlYqwBqMQTEXMAm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sE27a4brkHv3/Fwr5a1M3IhzQS6sJgayuOwVdUCqER6F4hj/I5GHJltlLzz+EyJV5t4EaAs15cEeg6sdbpD6Eoe1BxqQVGBoXfp7nbNZHAUJKQ4Cp1NIS7i/hJy4umjigrFUki5kjdLjoGEnk6TP71bipRsJgr+P/pxvetvglDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S125akIy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYlX4trTeB9MD3jc07Q1xl2vFwTAMuQSk9eYs7qUTs3jxLR8yYOpi9uudnJES5+G54dlRG+8MqnHMc3wj9nrh+MLEMW6axkCI9w7zCCAPbqw6G+MUfzXobUjJF4BusP8OkKFi6RV76jVbo923KKj9SPduyTA136ZYGijfwsPjEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMDfbFJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S125akIy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0CD1F000E9;
-	Wed, 20 May 2026 17:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMDfbFJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2431A1F000E9;
+	Wed, 20 May 2026 17:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298189;
-	bh=A3lDS8ymGEkvWAE/2pyhfzDf02YlJ0GLkdFrAFBZ7Wk=;
+	s=korg; t=1779298191;
+	bh=JTK7tlvDJ4jDUi2SBilYt+NyMgDW7AIifRY9788l+/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S125akIyTQKaV4HZGgl0vdaIfLlVRA4gJ5u0hpvGiFKWFIykiEYtKwXa9yMU2eH92
-	 7/9cBsDO5+AsE/S3o5s790hLEMF7hTHCWKDrwXuKxpHjpk3bZt38Y+0cZaeBUgAEHn
-	 yKnPbveRk6CzljJKmw4Wg33yxSpW61CC9ffpYpm0=
+	b=XMDfbFJJBFX0b4aIvh4R7wMKGmNZkfvm0zPwoKYcHwUxD3oaQEWV8rh7Xdipc5BYT
+	 ctwAsTEPuLFisXzTOCHDhX8thXPF65Onyx2U3Ythk3ATQvdLHmbX4JJ+5muNrrCDLf
+	 G1DMBxflUicxMg+F8ZGbbzIxbirnEjzvP1dgiMl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	songxiebing <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 317/957] ALSA: usb-audio: qcom: Fix incorrect type in enable_audio_stream
-Date: Wed, 20 May 2026 18:13:20 +0200
-Message-ID: <20260520162141.407427163@linuxfoundation.org>
+Subject: [PATCH 6.18 318/957] PCI: tegra194: Fix polling delay for L2 state
+Date: Wed, 20 May 2026 18:13:21 +0200
+Message-ID: <20260520162141.428592931@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,40 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: songxiebing <songxiebing@kylinos.cn>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 292286b2d229fb732421429b027d38ac3f969383 ]
+[ Upstream commit adaffed907f14f954096555665ad6af2ae724d83 ]
 
-Fix sparse warning:
-sound/usb/qcom/qc_audio_offload.c:943:27: sparse: incorrect type in argument 2
-expected unsigned int val but got snd_pcm_format_t.
+As per PCIe r7.0, sec 5.3.3.2.1, after sending PME_Turn_Off message, Root
+Port should wait for 1-10 msec for PME_TO_Ack message. Currently, driver is
+polling for 10 msec with 1 usec delay which is aggressive.  Use existing
+macro PCIE_PME_TO_L2_TIMEOUT_US to poll for 10 msec with 1 msec delay.
+Since this function is used in non-atomic context only, use non-atomic poll
+function.
 
-Explicitly cast pcm_format to unsigned int for snd_mask_leave().
-
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202604062109.Oxi8JjWW-lkp@intel.com/
-Signed-off-by: songxiebing <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260408083311.774173-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-2-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 542eae3a57d9d..fc25e709ed4b2 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -948,7 +948,7 @@ static int enable_audio_stream(struct snd_usb_substream *subs,
- 	_snd_pcm_hw_params_any(&params);
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 3934757baa30c..d2d3139e81d36 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -198,8 +198,6 @@
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_MASK	GENMASK(11, 8)
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_SHIFT	8
  
- 	m = hw_param_mask(&params, SNDRV_PCM_HW_PARAM_FORMAT);
--	snd_mask_leave(m, pcm_format);
-+	snd_mask_leave(m, (__force unsigned int)pcm_format);
+-#define PME_ACK_TIMEOUT 10000
+-
+ #define LTSSM_TIMEOUT 50000	/* 50ms */
  
- 	i = hw_param_interval(&params, SNDRV_PCM_HW_PARAM_CHANNELS);
- 	snd_interval_setinteger(i);
+ #define GEN3_GEN4_EQ_PRESET_INIT	5
+@@ -1582,9 +1580,10 @@ static int tegra_pcie_try_link_l2(struct tegra_pcie_dw *pcie)
+ 	val |= APPL_PM_XMT_TURNOFF_STATE;
+ 	appl_writel(pcie, val, APPL_RADM_STATUS);
+ 
+-	return readl_poll_timeout_atomic(pcie->appl_base + APPL_DEBUG, val,
+-				 val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
+-				 1, PME_ACK_TIMEOUT);
++	return readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
++				  val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
++				  PCIE_PME_TO_L2_TIMEOUT_US/10,
++				  PCIE_PME_TO_L2_TIMEOUT_US);
+ }
+ 
+ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
 -- 
 2.53.0
 
