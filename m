@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F173E95A4;
-	Wed, 20 May 2026 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7632D3F6619;
+	Wed, 20 May 2026 18:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300209; cv=none; b=MbsiN/rpUhq5AGPvzFyAuvTHmRZkOpYYxIL0XQvFiWQL6jAcN4LWX44Bl/RVeNtU/5DQhoLC4/hGFlbPAPPvGaJJjpCpgBssKwimMCgM37ZttovdNFcRlrRZlgsnVNhQRlbPwgfzRuTrKkSMteSqTpwf6g/NCtBikGOFmr35Fks=
+	t=1779300212; cv=none; b=ZGaT6YZUli4W+2sMMP21GQS39ZyhabTsEEmsTt4S2h6tAVpiXgS+qWCfWVC4w+z3V7O6BQ9GFEo6F99BY3Kdp1lydoD6Y+wSiyqpxDDlgPEDWvFaoIeYANBJbwVHLF5Jxqg8cs8c0e6s+PwSlwDyAFkH8w3FOHy3LxFpRxi3NcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300209; c=relaxed/simple;
-	bh=TANEXezBMwMpI2mPl4jmf+FcTViImnfV8yhn+bN8AJk=;
+	s=arc-20240116; t=1779300212; c=relaxed/simple;
+	bh=7ET3afKGSxH9dULYBc9Q3iCW5DNsLHdmzRFoLqvAFvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIwEVbAW0MHDKbw11Yc+5FnH6bLcSJ9JLRpOjfWAObTNnatNnokyKt4l6i0hOezmPZ0BUzzMkWIR6F2+QXcJidi997lRW0yEW48l2aObKHN8rTUwDSGaiBv8o/UQoOblIuZMiAmb3B6DpQ/smYoLv8cMUwKLXm4ewDiBhdbVfao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGrhD3gk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjSyRM9bZ5AXM4qebZhnKck0/DAWl0uaocUvRVOQNIPis77XjBJsmMqh4giv+BkObwJVCCg+pC5gcvL/wdVqTWwD4YGsjcJ+hfTbBZ9UdvsJ+wN4xFJ4ud0NzbNkC/92CZQPKRi76QjwO6IYfXj/XPt3vrz215R8eShwP8RKoWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6b5BHs+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGrhD3gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A341F00893;
-	Wed, 20 May 2026 18:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6b5BHs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE581F00893;
+	Wed, 20 May 2026 18:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300208;
-	bh=fwvRBmwCFInE4S4/MxvPYokjmr8XgG+Xm5kj1Itm0Ws=;
+	s=korg; t=1779300211;
+	bh=8Hm1fsPuSvb1zCxUwCyjA8kXC2tWxZZbVya6oiVyTvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jGrhD3gkhWNhhm0spP3cAFToEU+nnmQ33b4REEAR0BfTCUahnEv0yPdq0iUWtwlsv
-	 e8KabJX5E8XzULEKifaBWwEvqesS0wi/8quyPOvQBMmov/CS5sZpPY942N4BEEdU04
-	 hXYop4E+z57TxG/E2eI7BNtds4FR7xyTrFof4/4o=
+	b=o6b5BHs+Qn5xgllckNwDi0v2jdK09Bw6EOXZ4AkIIdkLn86IS6GAMvpAtIEBCp4xq
+	 VEQmroen9pSqvMiVYSjJmMaHvfTp2V8zMgxe5FdIaXEidrhK5RexwMuqWFzXdI6lF4
+	 ZefiIundEovrWajxQWHYnhTDxr6h9XCYIezjYY+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/666] selftests/bpf: fix __jited_unpriv tag name
-Date: Wed, 20 May 2026 18:15:00 +0200
-Message-ID: <20260520162113.156846657@linuxfoundation.org>
+Subject: [PATCH 6.12 090/666] net/sched: act_ct: Only release RCU read lock after ct_ft
+Date: Wed, 20 May 2026 18:15:01 +0200
+Message-ID: <20260520162113.177766746@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,37 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit cdd54fe98c00549264a92613af6bb0e9a5fd0d1c ]
+[ Upstream commit f462dca0c8415bf0058d0ffa476354c4476d0f09 ]
 
-__jited_unpriv was using "test_jited=" as its tag name, same as the
-priv variant __jited. Fix by using "test_jited_unpriv=".
+When looking up a flow table in act_ct in tcf_ct_flow_table_get(),
+rhashtable_lookup_fast() internally opens and closes an RCU read critical
+section before returning ct_ft.
+The tcf_ct_flow_table_cleanup_work() can complete before refcount_inc_not_zero()
+is invoked on the returned ct_ft resulting in a UAF on the already freed ct_ft
+object. This vulnerability can lead to privilege escalation.
 
-Fixes: 7d743e4c759c ("selftests/bpf: __jited test tag to check disassembly after jit")
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260410-selftests-global-tags-ordering-v2-1-c566ec9781bf@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Analysis from zdi-disclosures@trendmicro.com:
+When initializing act_ct, tcf_ct_init() is called, which internally triggers
+tcf_ct_flow_table_get().
+
+static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+
+{
+                struct zones_ht_key key = { .net = net, .zone = params->zone };
+                struct tcf_ct_flow_table *ct_ft;
+                int err = -ENOMEM;
+
+                mutex_lock(&zones_mutex);
+                ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params); // [1]
+                if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) // [2]
+                                goto out_unlock;
+                ...
+}
+
+static __always_inline void *rhashtable_lookup_fast(
+                struct rhashtable *ht, const void *key,
+                const struct rhashtable_params params)
+{
+                void *obj;
+
+                rcu_read_lock();
+                obj = rhashtable_lookup(ht, key, params);
+                rcu_read_unlock();
+
+                return obj;
+}
+
+At [1], rhashtable_lookup_fast() looks up and returns the corresponding ct_ft
+from zones_ht . The lookup is performed within an RCU read critical section
+through rcu_read_lock() / rcu_read_unlock(), which prevents the object from
+being freed. However, at the point of function return, rcu_read_unlock() has
+already been called, and there is nothing preventing ct_ft from being freed
+before reaching refcount_inc_not_zero(&ct_ft->ref) at [2]. This interval becomes
+the race window, during which ct_ft can be freed.
+
+Free Process:
+
+tcf_ct_flow_table_put() is executed through the path tcf_ct_cleanup() call_rcu()
+tcf_ct_params_free_rcu() tcf_ct_params_free() tcf_ct_flow_table_put().
+
+static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)
+{
+                if (refcount_dec_and_test(&ct_ft->ref)) {
+                                rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);
+                                INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work); // [3]
+                                queue_rcu_work(act_ct_wq, &ct_ft->rwork);
+                }
+}
+
+At [3], tcf_ct_flow_table_cleanup_work() is scheduled as RCU work
+
+static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
+
+{
+                struct tcf_ct_flow_table *ct_ft;
+                struct flow_block *block;
+
+                ct_ft = container_of(to_rcu_work(work), struct tcf_ct_flow_table,
+                                                                rwork);
+                nf_flow_table_free(&ct_ft->nf_ft);
+                block = &ct_ft->nf_ft.flow_block;
+                down_write(&ct_ft->nf_ft.flow_block_lock);
+                WARN_ON(!list_empty(&block->cb_list));
+                up_write(&ct_ft->nf_ft.flow_block_lock);
+                kfree(ct_ft); // [4]
+
+                module_put(THIS_MODULE);
+}
+
+tcf_ct_flow_table_cleanup_work() frees ct_ft at [4]. When this function executes
+between [1] and [2], UAF occurs.
+
+This race condition has a very short race window, making it generally
+difficult to trigger. Therefore, to trigger the vulnerability an msleep(100) was
+inserted after[1]
+
+Fixes: 138470a9b2cc2 ("net/sched: act_ct: fix lockdep splat in tcf_ct_flow_table_get")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260410111627.46611-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_misc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_ct.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index eccaf955e3947..9c0d71f0b3cc3 100644
---- a/tools/testing/selftests/bpf/progs/bpf_misc.h
-+++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -115,7 +115,7 @@
- #define __description(desc)	__attribute__((btf_decl_tag("comment:test_description=" desc)))
- #define __msg_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_msg_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __xlated_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_expect_xlated_unpriv=" XSTR(__COUNTER__) "=" msg)))
--#define __jited_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_jited=" XSTR(__COUNTER__) "=" msg)))
-+#define __jited_unpriv(msg)	__attribute__((btf_decl_tag("comment:test_jited_unpriv=" XSTR(__COUNTER__) "=" msg)))
- #define __failure_unpriv	__attribute__((btf_decl_tag("comment:test_expect_failure_unpriv")))
- #define __success_unpriv	__attribute__((btf_decl_tag("comment:test_expect_success_unpriv")))
- #define __log_level(lvl)	__attribute__((btf_decl_tag("comment:test_log_level="#lvl)))
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 945b64be4c1f1..c82755749211c 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -326,9 +326,13 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ 	int err = -ENOMEM;
+ 
+ 	mutex_lock(&zones_mutex);
+-	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
+-	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
++	rcu_read_lock();
++	ct_ft = rhashtable_lookup(&zones_ht, &key, zones_params);
++	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) {
++		rcu_read_unlock();
+ 		goto out_unlock;
++	}
++	rcu_read_unlock();
+ 
+ 	ct_ft = kzalloc(sizeof(*ct_ft), GFP_KERNEL);
+ 	if (!ct_ft)
 -- 
 2.53.0
 
