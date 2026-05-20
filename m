@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6230F3D3D1C;
-	Wed, 20 May 2026 16:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569503AE6E6;
+	Wed, 20 May 2026 16:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296377; cv=none; b=kAU0ne202BKvaM+QDZee55wf9nbAMtEMb6SeOqnUyfM2tA8nZkxzxn8q4zD/fx4X0wwk4/TJkBl/GuVwj6g7Lgk3YuU3MbwNXPSWgOy3s72vl8Djoxd+FqzGYDNIp7axSxgvXRj9An2aCXkikvasWYPfXznaFka/nXTrnfMPHME=
+	t=1779296379; cv=none; b=cFHRsyHDd2FJmmW/NTh7q6Ukx5SnpqL+SFw/4Rfmz2Q0cpuonFZTEhTAA1Aq8shH/6bbVBwy/lo0n0BCYWKxdeLGo6zL2zUM1nJGyZaPUmExz4kNmiGwNA/WHCWDpNNAyPQLUm+d+cl5Pj57vBFqpgoZ23JcwP+jGt4I9sRKM7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296377; c=relaxed/simple;
-	bh=hRWruLYIHQRo/S2oRGiQd6NOLtTBULVoA9NlGi5AoQ0=;
+	s=arc-20240116; t=1779296379; c=relaxed/simple;
+	bh=Lt4wVlloakOAjWAuzM4Yw+9d/f29QngZ+nzQ+w+ulzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkVZbQCB8A+ILcrkGX+K/QqEB3pOdmZ7/EySA6yTax3W9WJDhWnq7CasiyzaBbPKm/LgTpPyww/+nAQnSMDQv4LmzIUYmr3jvOUbAEEWV2FvgvaUE3ZpZdYB4155Que6v5ZwtXpBSx/wPtI/QG/FoQJOnQIrx9wlztJJME7z0zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRDWmI9c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L1+5w+RvKNteaVXw0MP0Ly3ctMfOtvW595y08GY/7lzL0jKnQWSFauISviuXMJ+PXnkQBtt2nRLMO2PLszfzLKd1BoIaKUE7259YWs08FNMBFuFz1WDRgsxpWyFjzfXoDcuoJbt9bXy6FnTAG/NK4/hjfpovWuMlvHpcWb+kHOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulCbSytt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRDWmI9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A611B1F00893;
-	Wed, 20 May 2026 16:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulCbSytt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6681F000E9;
+	Wed, 20 May 2026 16:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296374;
-	bh=xWzWKfDEc7qizbOCrBWKjGdaWxcUmP9ph8GbEzYU5pE=;
+	s=korg; t=1779296376;
+	bh=schnMygN1FyymYTy2KbcIG0dUJTiN3HhiyXbpF6yw8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kRDWmI9cUuBVWW2PqxEWffuKf/4S+7nBjKAykodLtXuYG9UBU3xobCahSG1jlIlB2
-	 +RZprSwlkbOrUEmG2j47btIh02yvJEopUaj//dc/Zh4CpqGc7cA2e5rK715t2nEX7y
-	 jvwxIaMGmzlfU5H7Ya0KtRqlTafbGWTxmxeGjyLU=
+	b=ulCbSyttmIth1uH1dX1Lqw04woQgkdt7qiToW/rpBUmKQ2U6h8CzDSDNP+8zT8ApB
+	 6erTNfBNluSukRINpGjkFXG4igqGQ7rWo2sBcmbENnauKsPDORLaYjqhDQllBqVr6Q
+	 K2DyvPt1eP3KcOdHhbSD/ekvTKJndE1B7eR1qymI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0773/1146] net/sched: taprio: fix use-after-free in advance_sched() on schedule switch
-Date: Wed, 20 May 2026 18:17:03 +0200
-Message-ID: <20260520162205.711361743@linuxfoundation.org>
+Subject: [PATCH 7.0 0774/1146] net: dsa: remove redundant netdev_lock_ops() from conduit ethtool ops
+Date: Wed, 20 May 2026 18:17:04 +0200
+Message-ID: <20260520162205.733770778@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,57 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 105425b1969c5affe532713cfac1c0b320d7ac2b ]
+[ Upstream commit 0f99e0c3e19badaf3fdced0d3feba623e59eed41 ]
 
-In advance_sched(), when should_change_schedules() returns true,
-switch_schedules() is called to promote the admin schedule to oper.
-switch_schedules() queues the old oper schedule for RCU freeing via
-call_rcu(), but 'next' still points into an entry of the old oper
-schedule. The subsequent 'next->end_time = end_time' and
-rcu_assign_pointer(q->current_entry, next) are use-after-free.
+DSA replaces the conduit (master) device's ethtool_ops with its own
+wrappers that aggregate stats from both the conduit and DSA switch
+ports. Taking the lock again inside the DSA wrappers causes a deadlock.
 
-Fix this by selecting 'next' from the new oper schedule immediately
-after switch_schedules(), and using its pre-calculated end_time.
-setup_first_end_time() sets the first entry's end_time to
-base_time + interval when the schedule is installed, so the value
-is already correct.
+Stumbled upon this when booting qemu with fbnic and CONFIG_NET_DSA_LOOP=y
+(which looks like some kind of testing device that auto-populates the ports
+of eth0). `ethtool -i` is enough to deadlock. This means we have basically zero
+coverage for DSA stuff with real ops locked devs.
 
-The deleted 'end_time = sched_base_time(admin)' assignment was also
-harmful independently: it would overwrite the new first entry's
-pre-calculated end_time with just base_time.
+Remove the redundant netdev_lock_ops()/netdev_unlock_ops() calls from
+the DSA conduit ethtool wrappers.
 
-Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
-Reported-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Fixes: 2bcf4772e45a ("net: ethtool: try to protect all callback with netdev instance lock")
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260414231035.1917035-1-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/dsa/conduit.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index f721c03514f60..0316f2dee06ac 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -972,11 +972,12 @@ static enum hrtimer_restart advance_sched(struct hrtimer *timer)
+diff --git a/net/dsa/conduit.c b/net/dsa/conduit.c
+index a1b044467bd6f..8398d72d7e4d3 100644
+--- a/net/dsa/conduit.c
++++ b/net/dsa/conduit.c
+@@ -27,9 +27,7 @@ static int dsa_conduit_get_regs_len(struct net_device *dev)
+ 	int len;
+ 
+ 	if (ops && ops->get_regs_len) {
+-		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+-		netdev_unlock_ops(dev);
+ 		if (len < 0)
+ 			return len;
+ 		ret += len;
+@@ -60,15 +58,11 @@ static void dsa_conduit_get_regs(struct net_device *dev,
+ 	int len;
+ 
+ 	if (ops && ops->get_regs_len && ops->get_regs) {
+-		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+-		if (len < 0) {
+-			netdev_unlock_ops(dev);
++		if (len < 0)
+ 			return;
+-		}
+ 		regs->len = len;
+ 		ops->get_regs(dev, regs, data);
+-		netdev_unlock_ops(dev);
+ 		data += regs->len;
  	}
  
- 	if (should_change_schedules(admin, oper, end_time)) {
--		/* Set things so the next time this runs, the new
--		 * schedule runs.
--		 */
--		end_time = sched_base_time(admin);
- 		switch_schedules(q, &admin, &oper);
-+		/* After changing schedules, the next entry is the first one
-+		 * in the new schedule, with a pre-calculated end_time.
-+		 */
-+		next = list_first_entry(&oper->entries, struct sched_entry, list);
-+		end_time = next->end_time;
+@@ -115,10 +109,8 @@ static void dsa_conduit_get_ethtool_stats(struct net_device *dev,
+ 	int count, mcount = 0;
+ 
+ 	if (ops && ops->get_sset_count && ops->get_ethtool_stats) {
+-		netdev_lock_ops(dev);
+ 		mcount = ops->get_sset_count(dev, ETH_SS_STATS);
+ 		ops->get_ethtool_stats(dev, stats, data);
+-		netdev_unlock_ops(dev);
  	}
  
- 	next->end_time = end_time;
+ 	list_for_each_entry(dp, &dst->ports, list) {
+@@ -149,10 +141,8 @@ static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
+ 		if (count >= 0)
+ 			phy_ethtool_get_stats(dev->phydev, stats, data);
+ 	} else if (ops && ops->get_sset_count && ops->get_ethtool_phy_stats) {
+-		netdev_lock_ops(dev);
+ 		count = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
+ 		ops->get_ethtool_phy_stats(dev, stats, data);
+-		netdev_unlock_ops(dev);
+ 	}
+ 
+ 	if (count < 0)
+@@ -176,13 +166,11 @@ static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
+ 	struct dsa_switch_tree *dst = cpu_dp->dst;
+ 	int count = 0;
+ 
+-	netdev_lock_ops(dev);
+ 	if (sset == ETH_SS_PHY_STATS && dev->phydev &&
+ 	    (!ops || !ops->get_ethtool_phy_stats))
+ 		count = phy_ethtool_get_sset_count(dev->phydev);
+ 	else if (ops && ops->get_sset_count)
+ 		count = ops->get_sset_count(dev, sset);
+-	netdev_unlock_ops(dev);
+ 
+ 	if (count < 0)
+ 		count = 0;
+@@ -239,7 +227,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
+ 	struct dsa_switch_tree *dst = cpu_dp->dst;
+ 	int count, mcount = 0;
+ 
+-	netdev_lock_ops(dev);
+ 	if (stringset == ETH_SS_PHY_STATS && dev->phydev &&
+ 	    !ops->get_ethtool_phy_stats) {
+ 		mcount = phy_ethtool_get_sset_count(dev->phydev);
+@@ -253,7 +240,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
+ 			mcount = 0;
+ 		ops->get_strings(dev, stringset, data);
+ 	}
+-	netdev_unlock_ops(dev);
+ 
+ 	list_for_each_entry(dp, &dst->ports, list) {
+ 		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
 -- 
 2.53.0
 
