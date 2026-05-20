@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28233F23C5;
-	Wed, 20 May 2026 18:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980BD3F7884;
+	Wed, 20 May 2026 18:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300405; cv=none; b=uRhotveyHOPib99/28CD/UVwZfuO8mEmqYKt7g+laqXhyEhlGmftXtTAY/P62KmfjXeYbM9Z1TL1EAXDzRujNGCoiY7rb1jy2qFZDVGi/cDefci2m0vVSHMzijNczQTYEFMWURQbG8BxqdFGtH6DmAZjQOseZU+1nLwOfAfnV6U=
+	t=1779300407; cv=none; b=OiQXONZTClr6aPNwlmH+bqSpAxseVW/YQt0CrhtuHNpsEupdrNxSHk9XdZtwczQsyYkzkkw6JVfrauJbggUK+BrSS9BLyni5G6cHE6xpboTvUS95X3eJIGo7xh+MPxMGr5liQEwsRtU61orch9Xam6jGCYTQAwQKQfh4fX/+w+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300405; c=relaxed/simple;
-	bh=OYm3otGO+HR8MWllN/+iQBsj03iBwp6aG8hhjseMFkQ=;
+	s=arc-20240116; t=1779300407; c=relaxed/simple;
+	bh=Sn6g7U8J6JCnYulKAQQmhdZAbD0AWnQ2473wIxhVrm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqEaN+NUt7m4qbi4KGCRHJGe7Xm73Qe1RMw0XsIEeTS2NkdJU/qsFBxE2Z2wQEsjRL20y46iNANGk+I7iVFaa8OfNmDsNRWi6/dTPAtMuNy3EcaxzLSZpvOUgnh3XwsdcY6e29vZ/ErLrB1Sz2vA47LmbIWBRZR7KKdwZD8ilqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoVPBfi1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EmtaD9Zjk5TSV/xhheAqhIHdoHRTW9uYz+cuc8a2T2wMH/DK4Niysc+JRfL/TXC6xX4ChNvyqd0i9I2Fuqc8xoxfVD06MD7NNIdnwHRATaBvQuiqxJYshNqydWZS5acS+50xZZNFLg4tyUiToFxTAyhvIHefnxPM522ziJnZlsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA+vPmEI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoVPBfi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645861F000E9;
-	Wed, 20 May 2026 18:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA+vPmEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099921F000E9;
+	Wed, 20 May 2026 18:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300403;
-	bh=c4Kg+NFuKxvQ/MLAVKXe3nynv9VcFYG9FKtxeaszgwo=;
+	s=korg; t=1779300406;
+	bh=AVornoZmqmeWenNkmumCaIT3V0xXX3LYC9LnruM8aCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoVPBfi1guNCZm6oyzcdTCCeNVcpDAaGdC20gqU/0Fdrs3MrPhql6uWLkT1GnPOEG
-	 Z8pBmYfBfWoVVIy1buqIKe/7BKGiadFjO+LxjOvYAwQI9eonj+AZe7mkRe9QWX4W+x
-	 h3TaG+jjH/ab+nQOMBbd6lfNN/6JtLmzeqwFeG4A=
+	b=sA+vPmEISjqYTDvr1jknUfYCJ/T8q7DWTroY/a0mN/cm4bnEojCXo4Nz2kB6lE1nn
+	 8ElQF4gWaINv1tEElA4rKjc5jQ1VCK/2zKDuMWgkYaetQghKcGE6gt2fg1dYNcj5NA
+	 QwMGJzNRIGj+XJiDT6VyfibASabxpLNu1Z6eOt1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+123e1b70473ce213f3af@syzkaller.appspotmail.com,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 160/666] padata: Put CPU offline callback in ONLINE section to allow failure
-Date: Wed, 20 May 2026 18:16:11 +0200
-Message-ID: <20260520162114.675587392@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 161/666] PCI: dwc: rcar-gen4: Change EPC BAR alignment to 4K as per the documentation
+Date: Wed, 20 May 2026 18:16:12 +0200
+Message-ID: <20260520162114.697735546@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,370 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Jordan <daniel.m.jordan@oracle.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit c8c4a2972f83c8b68ff03b43cecdb898939ff851 ]
+[ Upstream commit 13f55a7ca773c731a1e645934c1ae48577f48785 ]
 
-syzbot reported the following warning:
+R-Car S4 Series (R8A779F[4-7]*) EP controller uses a 4K minimum iATU region
+size (CX_ATU_MIN_REGION_SIZE = 4K) as per R19UH0161EJ0130 Rev.1.30. Also,
+the controller itself can only be configured in the range 4 KB to 64 KB, so
+the current 1 MB alignment requirement is incorrect.
 
-    DEAD callback error for CPU1
-    WARNING: kernel/cpu.c:1463 at _cpu_down+0x759/0x1020 kernel/cpu.c:1463, CPU#0: syz.0.1960/14614
+Hence, change the alignment to the min size 4K as per the documentation.
 
-at commit 4ae12d8bd9a8 ("Merge tag 'kbuild-fixes-7.0-2' of git://git.kernel.org/pub/scm/linux/kernel/git/kbuild/linux")
-which tglx traced to padata_cpu_dead() given it's the only
-sub-CPUHP_TEARDOWN_CPU callback that returns an error.
+This also fixes needless unusability of BAR4 on this platform when the
+target address is fixed, such as for doorbell targets.
 
-Failure isn't allowed in hotplug states before CPUHP_TEARDOWN_CPU
-so move the CPU offline callback to the ONLINE section where failure is
-possible.
-
-Fixes: 894c9ef9780c ("padata: validate cpumask without removed CPU during offline")
-Reported-by: syzbot+123e1b70473ce213f3af@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69af0a05.050a0220.310d8.002f.GAE@google.com/
-Debugged-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e311b3834dfa ("PCI: rcar-gen4: Add endpoint mode support")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260305151050.1834007-1-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cpuhotplug.h |   1 -
- include/linux/padata.h     |   8 +--
- kernel/padata.c            | 120 +++++++++++++++++++------------------
- 3 files changed, 65 insertions(+), 64 deletions(-)
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index 2361ed4d2b152..6645faf1cc1d5 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -94,7 +94,6 @@ enum cpuhp_state {
- 	CPUHP_PCI_XGENE_DEAD,
- 	CPUHP_IOMMU_IOVA_DEAD,
- 	CPUHP_AP_ARM_CACHE_B15_RAC_DEAD,
--	CPUHP_PADATA_DEAD,
- 	CPUHP_AP_DTPM_CPU_DEAD,
- 	CPUHP_RANDOM_PREPARE,
- 	CPUHP_WORKQUEUE_PREP,
-diff --git a/include/linux/padata.h b/include/linux/padata.h
-index 765f2778e264a..b6232bea6edf5 100644
---- a/include/linux/padata.h
-+++ b/include/linux/padata.h
-@@ -149,23 +149,23 @@ struct padata_mt_job {
- /**
-  * struct padata_instance - The overall control structure.
-  *
-- * @cpu_online_node: Linkage for CPU online callback.
-- * @cpu_dead_node: Linkage for CPU offline callback.
-+ * @cpuhp_node: Linkage for CPU hotplug callbacks.
-  * @parallel_wq: The workqueue used for parallel work.
-  * @serial_wq: The workqueue used for serial work.
-  * @pslist: List of padata_shell objects attached to this instance.
-  * @cpumask: User supplied cpumasks for parallel and serial works.
-+ * @validate_cpumask: Internal cpumask used to validate @cpumask during hotplug.
-  * @kobj: padata instance kernel object.
-  * @lock: padata instance lock.
-  * @flags: padata flags.
-  */
- struct padata_instance {
--	struct hlist_node		cpu_online_node;
--	struct hlist_node		cpu_dead_node;
-+	struct hlist_node		cpuhp_node;
- 	struct workqueue_struct		*parallel_wq;
- 	struct workqueue_struct		*serial_wq;
- 	struct list_head		pslist;
- 	struct padata_cpumask		cpumask;
-+	cpumask_var_t			validate_cpumask;
- 	struct kobject                   kobj;
- 	struct mutex			 lock;
- 	u8				 flags;
-diff --git a/kernel/padata.c b/kernel/padata.c
-index af10aff28ff68..483239c7fe826 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -558,7 +558,8 @@ static void padata_init_reorder_list(struct parallel_data *pd)
- }
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 397c2f9477a15..8dcb63f813beb 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -427,7 +427,7 @@ static const struct pci_epc_features rcar_gen4_pcie_epc_features = {
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_4] = { .type = BAR_FIXED, .fixed_size = 256 },
+ 	.bar[BAR_5] = { .type = BAR_RESERVED, },
+-	.align = SZ_1M,
++	.align = SZ_4K,
+ };
  
- /* Allocate and initialize the internal cpumask dependend resources. */
--static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
-+static struct parallel_data *padata_alloc_pd(struct padata_shell *ps,
-+					     int offlining_cpu)
- {
- 	struct padata_instance *pinst = ps->pinst;
- 	struct parallel_data *pd;
-@@ -584,6 +585,10 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
- 
- 	cpumask_and(pd->cpumask.pcpu, pinst->cpumask.pcpu, cpu_online_mask);
- 	cpumask_and(pd->cpumask.cbcpu, pinst->cpumask.cbcpu, cpu_online_mask);
-+	if (offlining_cpu >= 0) {
-+		__cpumask_clear_cpu(offlining_cpu, pd->cpumask.pcpu);
-+		__cpumask_clear_cpu(offlining_cpu, pd->cpumask.cbcpu);
-+	}
- 
- 	padata_init_reorder_list(pd);
- 	padata_init_squeues(pd);
-@@ -630,11 +635,11 @@ static void __padata_stop(struct padata_instance *pinst)
- }
- 
- /* Replace the internal control structure with a new one. */
--static int padata_replace_one(struct padata_shell *ps)
-+static int padata_replace_one(struct padata_shell *ps, int offlining_cpu)
- {
- 	struct parallel_data *pd_new;
- 
--	pd_new = padata_alloc_pd(ps);
-+	pd_new = padata_alloc_pd(ps, offlining_cpu);
- 	if (!pd_new)
- 		return -ENOMEM;
- 
-@@ -644,7 +649,7 @@ static int padata_replace_one(struct padata_shell *ps)
- 	return 0;
- }
- 
--static int padata_replace(struct padata_instance *pinst)
-+static int padata_replace(struct padata_instance *pinst, int offlining_cpu)
- {
- 	struct padata_shell *ps;
- 	int err = 0;
-@@ -652,7 +657,7 @@ static int padata_replace(struct padata_instance *pinst)
- 	pinst->flags |= PADATA_RESET;
- 
- 	list_for_each_entry(ps, &pinst->pslist, list) {
--		err = padata_replace_one(ps);
-+		err = padata_replace_one(ps, offlining_cpu);
- 		if (err)
- 			break;
- 	}
-@@ -669,9 +674,21 @@ static int padata_replace(struct padata_instance *pinst)
- 
- /* If cpumask contains no active cpu, we mark the instance as invalid. */
- static bool padata_validate_cpumask(struct padata_instance *pinst,
--				    const struct cpumask *cpumask)
-+				    const struct cpumask *cpumask,
-+				    int offlining_cpu)
- {
--	if (!cpumask_intersects(cpumask, cpu_online_mask)) {
-+	cpumask_copy(pinst->validate_cpumask, cpu_online_mask);
-+
-+	/*
-+	 * @offlining_cpu is still in cpu_online_mask, so remove it here for
-+	 * validation.  Using a sub-CPUHP_TEARDOWN_CPU hotplug state where
-+	 * @offlining_cpu wouldn't be in the online mask doesn't work because
-+	 * padata_cpu_offline() can fail but such a state doesn't allow failure.
-+	 */
-+	if (offlining_cpu >= 0)
-+		__cpumask_clear_cpu(offlining_cpu, pinst->validate_cpumask);
-+
-+	if (!cpumask_intersects(cpumask, pinst->validate_cpumask)) {
- 		pinst->flags |= PADATA_INVALID;
- 		return false;
- 	}
-@@ -687,13 +704,13 @@ static int __padata_set_cpumasks(struct padata_instance *pinst,
- 	int valid;
- 	int err;
- 
--	valid = padata_validate_cpumask(pinst, pcpumask);
-+	valid = padata_validate_cpumask(pinst, pcpumask, -1);
- 	if (!valid) {
- 		__padata_stop(pinst);
- 		goto out_replace;
- 	}
- 
--	valid = padata_validate_cpumask(pinst, cbcpumask);
-+	valid = padata_validate_cpumask(pinst, cbcpumask, -1);
- 	if (!valid)
- 		__padata_stop(pinst);
- 
-@@ -701,7 +718,7 @@ static int __padata_set_cpumasks(struct padata_instance *pinst,
- 	cpumask_copy(pinst->cpumask.pcpu, pcpumask);
- 	cpumask_copy(pinst->cpumask.cbcpu, cbcpumask);
- 
--	err = padata_setup_cpumasks(pinst) ?: padata_replace(pinst);
-+	err = padata_setup_cpumasks(pinst) ?: padata_replace(pinst, -1);
- 
- 	if (valid)
- 		__padata_start(pinst);
-@@ -753,26 +770,6 @@ EXPORT_SYMBOL(padata_set_cpumask);
- 
- #ifdef CONFIG_HOTPLUG_CPU
- 
--static int __padata_add_cpu(struct padata_instance *pinst, int cpu)
--{
--	int err = padata_replace(pinst);
--
--	if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu) &&
--	    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
--		__padata_start(pinst);
--
--	return err;
--}
--
--static int __padata_remove_cpu(struct padata_instance *pinst, int cpu)
--{
--	if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu) ||
--	    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
--		__padata_stop(pinst);
--
--	return padata_replace(pinst);
--}
--
- static inline int pinst_has_cpu(struct padata_instance *pinst, int cpu)
- {
- 	return cpumask_test_cpu(cpu, pinst->cpumask.pcpu) ||
-@@ -784,27 +781,39 @@ static int padata_cpu_online(unsigned int cpu, struct hlist_node *node)
- 	struct padata_instance *pinst;
- 	int ret;
- 
--	pinst = hlist_entry_safe(node, struct padata_instance, cpu_online_node);
-+	pinst = hlist_entry_safe(node, struct padata_instance, cpuhp_node);
- 	if (!pinst_has_cpu(pinst, cpu))
- 		return 0;
- 
- 	mutex_lock(&pinst->lock);
--	ret = __padata_add_cpu(pinst, cpu);
-+
-+	ret = padata_replace(pinst, -1);
-+
-+	if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu, -1) &&
-+	    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu, -1))
-+		__padata_start(pinst);
-+
- 	mutex_unlock(&pinst->lock);
- 	return ret;
- }
- 
--static int padata_cpu_dead(unsigned int cpu, struct hlist_node *node)
-+static int padata_cpu_offline(unsigned int cpu, struct hlist_node *node)
- {
- 	struct padata_instance *pinst;
- 	int ret;
- 
--	pinst = hlist_entry_safe(node, struct padata_instance, cpu_dead_node);
-+	pinst = hlist_entry_safe(node, struct padata_instance, cpuhp_node);
- 	if (!pinst_has_cpu(pinst, cpu))
- 		return 0;
- 
- 	mutex_lock(&pinst->lock);
--	ret = __padata_remove_cpu(pinst, cpu);
-+
-+	if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu, cpu) ||
-+	    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu, cpu))
-+		__padata_stop(pinst);
-+
-+	ret = padata_replace(pinst, cpu);
-+
- 	mutex_unlock(&pinst->lock);
- 	return ret;
- }
-@@ -815,15 +824,14 @@ static enum cpuhp_state hp_online;
- static void __padata_free(struct padata_instance *pinst)
- {
- #ifdef CONFIG_HOTPLUG_CPU
--	cpuhp_state_remove_instance_nocalls(CPUHP_PADATA_DEAD,
--					    &pinst->cpu_dead_node);
--	cpuhp_state_remove_instance_nocalls(hp_online, &pinst->cpu_online_node);
-+	cpuhp_state_remove_instance_nocalls(hp_online, &pinst->cpuhp_node);
- #endif
- 
- 	WARN_ON(!list_empty(&pinst->pslist));
- 
- 	free_cpumask_var(pinst->cpumask.pcpu);
- 	free_cpumask_var(pinst->cpumask.cbcpu);
-+	free_cpumask_var(pinst->validate_cpumask);
- 	destroy_workqueue(pinst->serial_wq);
- 	destroy_workqueue(pinst->parallel_wq);
- 	kfree(pinst);
-@@ -983,10 +991,10 @@ struct padata_instance *padata_alloc(const char *name)
- 
- 	if (!alloc_cpumask_var(&pinst->cpumask.pcpu, GFP_KERNEL))
- 		goto err_free_serial_wq;
--	if (!alloc_cpumask_var(&pinst->cpumask.cbcpu, GFP_KERNEL)) {
--		free_cpumask_var(pinst->cpumask.pcpu);
--		goto err_free_serial_wq;
--	}
-+	if (!alloc_cpumask_var(&pinst->cpumask.cbcpu, GFP_KERNEL))
-+		goto err_free_p_mask;
-+	if (!alloc_cpumask_var(&pinst->validate_cpumask, GFP_KERNEL))
-+		goto err_free_cb_mask;
- 
- 	INIT_LIST_HEAD(&pinst->pslist);
- 
-@@ -994,7 +1002,7 @@ struct padata_instance *padata_alloc(const char *name)
- 	cpumask_copy(pinst->cpumask.cbcpu, cpu_possible_mask);
- 
- 	if (padata_setup_cpumasks(pinst))
--		goto err_free_masks;
-+		goto err_free_v_mask;
- 
- 	__padata_start(pinst);
- 
-@@ -1003,18 +1011,19 @@ struct padata_instance *padata_alloc(const char *name)
- 
- #ifdef CONFIG_HOTPLUG_CPU
- 	cpuhp_state_add_instance_nocalls_cpuslocked(hp_online,
--						    &pinst->cpu_online_node);
--	cpuhp_state_add_instance_nocalls_cpuslocked(CPUHP_PADATA_DEAD,
--						    &pinst->cpu_dead_node);
-+						    &pinst->cpuhp_node);
- #endif
- 
- 	cpus_read_unlock();
- 
- 	return pinst;
- 
--err_free_masks:
--	free_cpumask_var(pinst->cpumask.pcpu);
-+err_free_v_mask:
-+	free_cpumask_var(pinst->validate_cpumask);
-+err_free_cb_mask:
- 	free_cpumask_var(pinst->cpumask.cbcpu);
-+err_free_p_mask:
-+	free_cpumask_var(pinst->cpumask.pcpu);
- err_free_serial_wq:
- 	destroy_workqueue(pinst->serial_wq);
- err_put_cpus:
-@@ -1057,7 +1066,7 @@ struct padata_shell *padata_alloc_shell(struct padata_instance *pinst)
- 	ps->pinst = pinst;
- 
- 	cpus_read_lock();
--	pd = padata_alloc_pd(ps);
-+	pd = padata_alloc_pd(ps, -1);
- 	cpus_read_unlock();
- 
- 	if (!pd)
-@@ -1106,32 +1115,25 @@ void __init padata_init(void)
- 	int ret;
- 
- 	ret = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN, "padata:online",
--				      padata_cpu_online, NULL);
-+				      padata_cpu_online, padata_cpu_offline);
- 	if (ret < 0)
- 		goto err;
- 	hp_online = ret;
--
--	ret = cpuhp_setup_state_multi(CPUHP_PADATA_DEAD, "padata:dead",
--				      NULL, padata_cpu_dead);
--	if (ret < 0)
--		goto remove_online_state;
- #endif
- 
- 	possible_cpus = num_possible_cpus();
- 	padata_works = kmalloc_array(possible_cpus, sizeof(struct padata_work),
- 				     GFP_KERNEL);
- 	if (!padata_works)
--		goto remove_dead_state;
-+		goto remove_online_state;
- 
- 	for (i = 0; i < possible_cpus; ++i)
- 		list_add(&padata_works[i].pw_list, &padata_free_works);
- 
- 	return;
- 
--remove_dead_state:
--#ifdef CONFIG_HOTPLUG_CPU
--	cpuhp_remove_multi_state(CPUHP_PADATA_DEAD);
- remove_online_state:
-+#ifdef CONFIG_HOTPLUG_CPU
- 	cpuhp_remove_multi_state(hp_online);
- err:
- #endif
+ static const struct pci_epc_features*
 -- 
 2.53.0
 
