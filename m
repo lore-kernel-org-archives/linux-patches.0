@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEFD285CBA;
-	Wed, 20 May 2026 18:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE99333441;
+	Wed, 20 May 2026 18:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301812; cv=none; b=AYwz1sgOaPzcnl/3Z9FgVQgrGST24s1l4kWtfH8nmV5klVf70o4YhXiwAkWu/WgWW0nldXBdMKqTLzAcdhOYj4MTD5FOFkV+PRPLz4APPiHGLvy5D85gKfqybO/tiF7luQrIWY9tlA6JYwAGLWM1Jw9IEdQRn998x/9meGBcQG4=
+	t=1779301814; cv=none; b=Q5/N7yZFJa5WMSsoXxBPAZDo5q6QR/8w1AYd/ueMSfx8P1QliDDeZTJeWCZmWa2r6f66bMaz5r0vPb5T9gGDJblv6rJpoZp93KVshP2uGl51hodM7N/a4lJvItMLvwNI0iTz46rkZFMufMRgYhTTP2uJzA/M4mi7Ki7bSk5oTIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301812; c=relaxed/simple;
-	bh=GwGkcMhx7QWh/FDCsSI7XYAxZMZrYR7VWN+v4BaARIQ=;
+	s=arc-20240116; t=1779301814; c=relaxed/simple;
+	bh=b9IJivf9QNQ7zmuTg/rJb/pmaWaahTgbV9y8TnSPkJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuTVnAgw7LX4GwUlCuZ90g8uglUP9c6CmooRV4VZylTjhmpP4Cp8HQU2J0Wuabjqs59kZTQ/K4jrOUk+cozTfmfvrMn9V6GFn+2zel/HZxQINHu9qWYRycf+qsE8dYcKn0R0VDhaIC81g7xvXaNwU4QKYCZUYmHz7aMxNghw+Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXahF4TN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=axRuUG9B5jUbBeKWxzaq7FQBXeuF664KjIXABNG2QxUoXP4J+g4YVBmwohe72Vo4oJu7nrnNqsfvjPXO4fvplAiW+4P1MKnTo0tQXxcsVhvPKt4bWgU2lhsBJCLY63obtkqSNTLerrz6XjtV0gkSBIOQjBYW4gva4ckpBgMUUkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JS6N06z0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXahF4TN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623B91F000E9;
-	Wed, 20 May 2026 18:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JS6N06z0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6E91F000E9;
+	Wed, 20 May 2026 18:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301810;
-	bh=ctuFBVsgEaebp4f9ulwHVWKofrQkdMw2/Y2GA0qyb1o=;
+	s=korg; t=1779301813;
+	bh=sLwgRBkXpzWmSJaM6eWF1BDTed7+Mufe7E2kMlDsiuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pXahF4TNXCV2ahbuEJOHKSILD3n5NZkbSqNkJ8Ivfjs72GdIlmCABZ2Kp82RBla8d
-	 JKzg/dclcZesSxutWfMTutoby52vlaWJf/5UCCDnoyqzHv67TOqpMMWmNh0bDpCdmS
-	 7tJ0bldibk9O9qiIY5HhhI/4cREpoMekhTaeaIiM=
+	b=JS6N06z0oK2+wDCwHECpEaog6IaCZpfkdRiyV32/eqBd7lkO0cpOQDibA38sexa5D
+	 m+JtT0yqvi0XRhbUurVY5ctMsBcgd8ITucTJS6GYTyQ2F2UdAt1lN5sAgwHyD21Ag/
+	 GcStJ/JkCbib5sDhHeh3BxEDbCIxb5Waf693rpZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/508] s390/bpf: Zero-extend bpf prog return values and kfunc arguments
-Date: Wed, 20 May 2026 18:17:32 +0200
-Message-ID: <20260520162059.221531408@linuxfoundation.org>
+Subject: [PATCH 6.6 003/508] drbd: Balance RCU calls in drbd_adm_dump_devices()
+Date: Wed, 20 May 2026 18:17:06 +0200
+Message-ID: <20260520162058.652855024@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -47,107 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 202e42e4aa890172366354b233c42c73107a3f59 ]
+[ Upstream commit 2b31e86387e60b3689339f0f0fbb4d3623d9d494 ]
 
-s390x ABI requires callers to zero-extend unsigned arguments and
-sign-extend signed arguments, and callees to zero-extend unsigned
-return values and sign-extend signed return values.
+Make drbd_adm_dump_devices() call rcu_read_lock() before
+rcu_read_unlock() is called. This has been detected by the Clang
+thread-safety analyzer.
 
-s390 BPF JIT currently implements only sign extension. Fix this
-omission and implement zero extension too.
-
-Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
-Reported-by: Hari Bathini <hbathini@linux.ibm.com>
-Closes: https://lore.kernel.org/bpf/20260312080113.843408-1-hbathini@linux.ibm.com/
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260313174807.581826-1-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Tested-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: a55bbd375d18 ("drbd: Backport the "status" command")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260326214054.284593-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 39 ++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ drivers/block/drbd/drbd_nl.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 5a64d34a37482..491789420d7c0 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -759,25 +759,34 @@ static int bpf_jit_probe_mem(struct bpf_jit *jit, struct bpf_prog *fp,
- }
- 
- /*
-- * Sign-extend the register if necessary
-+ * Sign- or zero-extend the register if necessary
-  */
--static int sign_extend(struct bpf_jit *jit, int r, u8 size, u8 flags)
-+static int sign_zero_extend(struct bpf_jit *jit, int r, u8 size, u8 flags)
- {
--	if (!(flags & BTF_FMODEL_SIGNED_ARG))
--		return 0;
--
- 	switch (size) {
- 	case 1:
--		/* lgbr %r,%r */
--		EMIT4(0xb9060000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lgbr %r,%r */
-+			EMIT4(0xb9060000, r, r);
-+		else
-+			/* llgcr %r,%r */
-+			EMIT4(0xb9840000, r, r);
- 		return 0;
- 	case 2:
--		/* lghr %r,%r */
--		EMIT4(0xb9070000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lghr %r,%r */
-+			EMIT4(0xb9070000, r, r);
-+		else
-+			/* llghr %r,%r */
-+			EMIT4(0xb9850000, r, r);
- 		return 0;
- 	case 4:
--		/* lgfr %r,%r */
--		EMIT4(0xb9140000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lgfr %r,%r */
-+			EMIT4(0xb9140000, r, r);
-+		else
-+			/* llgfr %r,%r */
-+			EMIT4(0xb9160000, r, r);
- 		return 0;
- 	case 8:
- 		return 0;
-@@ -1452,9 +1461,9 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 				return -1;
- 
- 			for (j = 0; j < m->nr_args; j++) {
--				if (sign_extend(jit, BPF_REG_1 + j,
--						m->arg_size[j],
--						m->arg_flags[j]))
-+				if (sign_zero_extend(jit, BPF_REG_1 + j,
-+						     m->arg_size[j],
-+						     m->arg_flags[j]))
- 					return -1;
- 			}
+diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
+index d3538bd83fb3b..1ba81a5e77215 100644
+--- a/drivers/block/drbd/drbd_nl.c
++++ b/drivers/block/drbd/drbd_nl.c
+@@ -3368,8 +3368,10 @@ int drbd_adm_dump_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 			cb->args[0] = (long)resource;
  		}
-@@ -2186,7 +2195,7 @@ static int invoke_bpf_prog(struct bpf_tramp_jit *tjit,
- 	call_r1(jit);
- 	/* stg %r2,retval_off(%r15) */
- 	if (save_ret) {
--		if (sign_extend(jit, REG_2, m->ret_size, m->ret_flags))
-+		if (sign_zero_extend(jit, REG_2, m->ret_size, m->ret_flags))
- 			return -1;
- 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_2, REG_0, REG_15,
- 			      tjit->retval_off);
+ 	}
+@@ -3618,8 +3620,10 @@ int drbd_adm_dump_peer_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 		}
+ 		cb->args[0] = (long)resource;
+ 	}
 -- 
 2.53.0
 
