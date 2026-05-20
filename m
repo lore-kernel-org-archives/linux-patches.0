@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9D836405A;
-	Wed, 20 May 2026 16:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2155366567;
+	Wed, 20 May 2026 16:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294388; cv=none; b=m699jPXVafWcneeEhg1F2RDoduct2DLpPf9j9ZZzBxw1TkvoKKOnwFQdbKMRkZBzpsfJ1Vg2OhNrBuN0YE9yHMGofzVCV4A/slIgdN7gFh0nbcZgqFK8WychjqtXkLCCGhSswoB6CyTBhx5epZstsXotDSM4yCg6584BnVB4z54=
+	t=1779294391; cv=none; b=GLPbg4COIZeFtxwbb0uejHUJvAZgywCq5qW2qifBSH3rGUR7ih/pi6CiV0FaGwGnlbo++30nlcwpLe5VZwho7NflaC4WmsyZUFSV/pvOvSyJRf28iTZUtbHxZrZMg8rDJiSfMsxVwpFZ3/iLtSqDNR7Icubkux+yPA4TzBSYe20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294388; c=relaxed/simple;
-	bh=EC2olcZ9oZT3bsHpUV49uhzEf6MUA8aZayVO4Zx4w8Y=;
+	s=arc-20240116; t=1779294391; c=relaxed/simple;
+	bh=uy8WiMbWZjRf9mtu10zoz5mrooBf8afisw41YjciQYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBItpLc31oChEn6zz3Er7eWAUnnLCnkEwsyyAioj7ZdzmZnBc8VGlY1QuQq3HL/JPfC6YL2E+UwOnFLyPCUNg1jKMRspIJ4mY2gOR9MH6x+tQ0o38vuaHJwpchO1x5BIThwzEaMaBYxnGIUyZLgBpduzXg7t5n5sng9FZMMCJeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANVh6kcW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c7rUoITWfB+l3rBr2Yc5IcQw2yXOR2xlaOIkhRCYoF95+l8FtccGa3z+jbfTV51D8bDx8DFGADzZRRFQqPSr7QPBqLVWdv4fLp/m+L0SvqIxG6wW2eOBG10vG3C5+Hanxg1uiWGORA8XqCMThh2cEfOgFXMvzN1W5ZuElKWrDaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QB7JLpG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANVh6kcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767FD1F000E9;
-	Wed, 20 May 2026 16:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QB7JLpG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8C31F000E9;
+	Wed, 20 May 2026 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294387;
-	bh=tydZZzxgknKEnhdIjZHTXHM1M/0wYW4G6J79TzjQfBs=;
+	s=korg; t=1779294389;
+	bh=KTSQ2a9wFE25z+bKwgVPqsaclfTUMqIJCygm6cCGH5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ANVh6kcWf0zDBFzP3FOa2yrvCif4KDeF6hNFpu1kvpwU+zMoCZmSLctDOaZsTwjOd
-	 vkR7EkFCQg+KRc1TlP47d5Q7IrBq40msQjN1aob3SL+qukyyk3qmgDia9TEC8+ZSPh
-	 pesFCogqGH5LAzxafwI9ef26AAi3kfLXe/hsFlKw=
+	b=0QB7JLpGSgM16s7KlLOg9NKfG98mSJzFCoazDWm/Dc4ZtO9Il010GkIXE10lxKALK
+	 LJnhpWeSGTmeX/AzOo+9oBS32Eov1RyKk3oFOj2CKESbQX72kS9RvN/n94vT1md0p4
+	 nmfNELkrYky/yT34dHg5blN9cx10TcJm7RoCu/x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
+	Aleksa Sarai <aleksa@amutable.com>,
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0020/1146] md: wake raid456 reshape waiters before suspend
-Date: Wed, 20 May 2026 18:04:30 +0200
-Message-ID: <20260520162148.844582839@linuxfoundation.org>
+Subject: [PATCH 7.0 0021/1146] dcache: permit dynamic_dname()s up to NAME_MAX
+Date: Wed, 20 May 2026 18:04:31 +0200
+Message-ID: <20260520162148.866551032@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,57 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Aleksa Sarai <aleksa@amutable.com>
 
-[ Upstream commit cf86bb53b9c92354904a328e947a05ffbfdd1840 ]
+[ Upstream commit 97b67e64affb0e709eeecc50f6a9222fc20bd14b ]
 
-During raid456 reshape, direct IO across the reshape position can sleep
-in raid5_make_request() waiting for reshape progress while still
-holding an active_io reference. If userspace then freezes reshape and
-writes md/suspend_lo or md/suspend_hi, mddev_suspend() kills active_io
-and waits for all in-flight IO to drain.
+dynamic_dname() has had an implicit limit of 64 characters since it was
+introduced in commit c23fbb6bcb3e ("VFS: delay the dentry name
+generation on sockets and pipes"), however it seems that this was a
+fairly arbitrary number (suspiciously it was double the previously
+hardcoded buffer size).
 
-This can deadlock: the IO needs reshape progress to continue, but the
-reshape thread is already frozen, so the active_io reference is never
-dropped and suspend never completes.
+NAME_MAX seems like a more reasonable and consistent limit for d_name
+lengths. While we're at it, we can also remove the unnecessary
+stack-allocated array and just memmove() the formatted string to the end
+of the buffer.
 
-raid5_prepare_suspend() already wakes wait_for_reshape for dm-raid. Do
-the same for normal md suspend when reshape is already interrupted, so
-waiting raid456 IO can abort, drop its reference, and let suspend
-finish.
+It should also be noted that at least one driver (in particular,
+liveupdate's usage of anon_inode for session files) already exceeded
+this limit without noticing that readlink(/proc/self/fd/$n) always
+returns -ENAMETOOLONG, so this fixes those drivers as well.
 
-The mdadm test tests/25raid456-reshape-deadlock reproduces the hang.
-
-Fixes: 714d20150ed8 ("md: add new helpers to suspend/resume array")
-Link: https://lore.kernel.org/linux-raid/20260327140729.2030564-1-yukuai@fnnas.com/
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Fixes: 0153094d03df ("liveupdate: luo_session: add sessions support")
+Fixes: c23fbb6bcb3e ("VFS: delay the dentry name generation on sockets and pipes")
+Signed-off-by: Aleksa Sarai <aleksa@amutable.com>
+Link: https://patch.msgid.link/20260401-dynamic-dname-name_max-v1-1-8ca20ab2642e@amutable.com
+Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/d_path.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 159af8d7ccf0b..9c552904a5ddc 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -488,6 +488,17 @@ int mddev_suspend(struct mddev *mddev, bool interruptible)
- 	}
+diff --git a/fs/d_path.c b/fs/d_path.c
+index bb365511066b2..a48957c0971ef 100644
+--- a/fs/d_path.c
++++ b/fs/d_path.c
+@@ -301,18 +301,19 @@ EXPORT_SYMBOL(d_path);
+ char *dynamic_dname(char *buffer, int buflen, const char *fmt, ...)
+ {
+ 	va_list args;
+-	char temp[64];
++	char *start;
+ 	int sz;
  
- 	percpu_ref_kill(&mddev->active_io);
-+
-+	/*
-+	 * RAID456 IO can sleep in wait_for_reshape while still holding an
-+	 * active_io reference. If reshape is already interrupted or frozen,
-+	 * wake those waiters so they can abort and drop the reference instead
-+	 * of deadlocking suspend.
-+	 */
-+	if (mddev->pers && mddev->pers->prepare_suspend &&
-+	    reshape_interrupted(mddev))
-+		mddev->pers->prepare_suspend(mddev);
-+
- 	if (interruptible)
- 		err = wait_event_interruptible(mddev->sb_wait,
- 				percpu_ref_is_zero(&mddev->active_io));
+ 	va_start(args, fmt);
+-	sz = vsnprintf(temp, sizeof(temp), fmt, args) + 1;
++	sz = vsnprintf(buffer, buflen, fmt, args) + 1;
+ 	va_end(args);
+ 
+-	if (sz > sizeof(temp) || sz > buflen)
++	if (sz > NAME_MAX || sz > buflen)
+ 		return ERR_PTR(-ENAMETOOLONG);
+ 
+-	buffer += buflen - sz;
+-	return memcpy(buffer, temp, sz);
++	/* Move the formatted d_name to the end of the buffer. */
++	start = buffer + (buflen - sz);
++	return memmove(start, buffer, sz);
+ }
+ 
+ char *simple_dname(struct dentry *dentry, char *buffer, int buflen)
 -- 
 2.53.0
 
