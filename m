@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E8A3F7A9F;
-	Wed, 20 May 2026 17:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D366A3F7ABC;
+	Wed, 20 May 2026 17:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296539; cv=none; b=iuHyVk2++WR6iYvawCSBwuf6Le8kb1v4cDHyrzzp8VC8l3Da7lRaisiJ9q381sDMIgga3g5NrRcvHJ+fIypWb0rmy0gFEDLcrfSTtyd4HKEdQwq6YQX1eOTLb/ZzuLdEuMhJBNLbCWdejt3ic6u5+XtdYrARNNhthwYPMPt77JQ=
+	t=1779296543; cv=none; b=HhrHj1JGSoP4oYWM1l34x/qLOoStl3KJAfMOL600pk6s+DDBD7h1ftRpRHbGOTT9kOT4865g9rliGwJ6EEsDw+h6Nnvy2dbEGjGI/J/Wspi+O+CwhCkNUSNXGvABDjEcKU52YhdC1zAaVmdT8TxmUAgcdBZ0iFlKx5+2BYy/KRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296539; c=relaxed/simple;
-	bh=VVJ0NZX1mFCDlILyf5QtOG01kuJl/zRK/D2x3mjnPCw=;
+	s=arc-20240116; t=1779296543; c=relaxed/simple;
+	bh=+rVsf2HnUTAOiIh9kM6xPITlZoPnP6kJv7H1QltdKDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QImxcCr3J9rBSshhuLkcYsqPl1NtUcG/a3mMHWhS9TnbjiC3H1fq7G5O34B+/S62QAUrlorwG1/UcCO77SMTGp848EXD4c2pAlJN/P8rTzwiQY9Gk0aXSvGzgn76+cxAkpEMbPzaukH3bJ2GdpXnwmd0H34UErAaItR0TuaEWZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWrGuSeY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJEdYJykZlXqRvhmvOmrR4qS0oy1WGI1WobbGzOQr+EJcCZH7hrHcKelADGIHrO9ztCg3V6nZJU6PByP5BLtwW4CiJNdWyiVVXyoARaJlfR3s/yIL6WTinbyEIxF88baUDAhVHPEKhzOHt0nGdbhGg+3U7I/ns0O6u9OPWbu0yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMPJBZux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWrGuSeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1991F000E9;
-	Wed, 20 May 2026 17:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMPJBZux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B5D1F000E9;
+	Wed, 20 May 2026 17:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296537;
-	bh=rQPgzjXO5/ApL61otSYho3aSdUEIXUZps18bgxGoPXY=;
+	s=korg; t=1779296540;
+	bh=8mN4fMN1J72ZwS5zWEQfgMQyFHx0+k3K7pPnbiSa/l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWrGuSeYMf8+TKh9GBSuMbjSMyOZ0Pml5VZpxZdvzSpEpEjZLLOBQ/2MVjUvjnQys
-	 EAdsfsYYDUZHGCk2nlu611SkuomiHVX5f4mUIfO3iph/k6nJbeZ6Pot1c7p7H5moHm
-	 G+k/H23Z5+0O9ERzgtSVq/0Iy5+NP8dcUgjZbGxc=
+	b=pMPJBZuxCXVw1MRgxbNt9zaau2an6Uxb704zawnqTtaGiQ4mDo2FF9kiYttsyFhDw
+	 5zyvFuEK4bqkHhbAj4nH9NdG4ZxSo5FUXkaKA8/JfZLXFW4Bhb0u+/m+rCX/ayGrmZ
+	 EuQ56NXAceFV8ALIOdH113uQjPwxM4q+g24+28XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Petr Oros <poros@redhat.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0838/1146] ice: fix ice_ptp_read_tx_hwtstamp_status_eth56g
-Date: Wed, 20 May 2026 18:18:08 +0200
-Message-ID: <20260520162207.197723254@linuxfoundation.org>
+Subject: [PATCH 7.0 0839/1146] net_sched: sch_hhf: annotate data-races in hhf_dump_stats()
+Date: Wed, 20 May 2026 18:18:09 +0200
+Message-ID: <20260520162207.220981574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,61 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1f75dbc53f68f0fb2acd99f92315e426a3d0b446 ]
+[ Upstream commit a6edf2cd4156b71e07258876b7626692e158f7e8 ]
 
-The ice_ptp_read_tx_hwtstamp_status_eth56g function calls
-ice_read_phy_eth56g with a PHY index. However the function actually expects
-a port index. This causes the function to read the wrong PHY_PTP_INT_STATUS
-registers, and effectively makes the status wrong for the second set of
-ports from 4 to 7.
+hhf_dump_stats() only runs with RTNL held,
+reading fields that can be changed in qdisc fast path.
 
-The ice_read_phy_eth56g function uses the provided port index to determine
-which PHY device to read. We could refactor the entire chain to take a PHY
-index, but this would impact many code sites. Instead, multiply the PHY
-index by the number of ports, so that we read from the first port of each
-PHY.
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Petr Oros <poros@redhat.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-4-bc2240f42251@intel.com
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260421143349.4052215-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/sched/sch_hhf.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 4795af06b983e..24fb7a3e14d63 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -2219,13 +2219,19 @@ int ice_ptp_read_tx_hwtstamp_status_eth56g(struct ice_hw *hw, u32 *ts_status)
- 	*ts_status = 0;
- 
- 	for (phy = 0; phy < params->num_phys; phy++) {
-+		u8 port;
- 		int err;
- 
--		err = ice_read_phy_eth56g(hw, phy, PHY_PTP_INT_STATUS, &status);
-+		/* ice_read_phy_eth56g expects a port index, so use the first
-+		 * port of the PHY
-+		 */
-+		port = phy * hw->ptp.ports_per_phy;
-+
-+		err = ice_read_phy_eth56g(hw, port, PHY_PTP_INT_STATUS, &status);
- 		if (err)
- 			return err;
- 
--		*ts_status |= (status & mask) << (phy * hw->ptp.ports_per_phy);
-+		*ts_status |= (status & mask) << port;
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index 95e5d9bfd9c8c..96021f52d835b 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -198,7 +198,8 @@ static struct hh_flow_state *seek_list(const u32 hash,
+ 				return NULL;
+ 			list_del(&flow->flowchain);
+ 			kfree(flow);
+-			q->hh_flows_current_cnt--;
++			WRITE_ONCE(q->hh_flows_current_cnt,
++				   q->hh_flows_current_cnt - 1);
+ 		} else if (flow->hash_id == hash) {
+ 			return flow;
+ 		}
+@@ -226,7 +227,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
  	}
  
- 	ice_debug(hw, ICE_DBG_PTP, "PHY interrupt err: %x\n", *ts_status);
+ 	if (q->hh_flows_current_cnt >= q->hh_flows_limit) {
+-		q->hh_flows_overlimit++;
++		WRITE_ONCE(q->hh_flows_overlimit, q->hh_flows_overlimit + 1);
+ 		return NULL;
+ 	}
+ 	/* Create new entry. */
+@@ -234,7 +235,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
+ 	if (!flow)
+ 		return NULL;
+ 
+-	q->hh_flows_current_cnt++;
++	WRITE_ONCE(q->hh_flows_current_cnt, q->hh_flows_current_cnt + 1);
+ 	INIT_LIST_HEAD(&flow->flowchain);
+ 	list_add_tail(&flow->flowchain, head);
+ 
+@@ -309,7 +310,7 @@ static enum wdrr_bucket_idx hhf_classify(struct sk_buff *skb, struct Qdisc *sch)
+ 			return WDRR_BUCKET_FOR_NON_HH;
+ 		flow->hash_id = hash;
+ 		flow->hit_timestamp = now;
+-		q->hh_flows_total_cnt++;
++		WRITE_ONCE(q->hh_flows_total_cnt, q->hh_flows_total_cnt + 1);
+ 
+ 		/* By returning without updating counters in q->hhf_arrays,
+ 		 * we implicitly implement "shielding" (see Optimization O1).
+@@ -403,7 +404,7 @@ static int hhf_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return NET_XMIT_SUCCESS;
+ 
+ 	prev_backlog = sch->qstats.backlog;
+-	q->drop_overlimit++;
++	WRITE_ONCE(q->drop_overlimit, q->drop_overlimit + 1);
+ 	/* Return Congestion Notification only if we dropped a packet from this
+ 	 * bucket.
+ 	 */
+@@ -686,10 +687,10 @@ static int hhf_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct hhf_sched_data *q = qdisc_priv(sch);
+ 	struct tc_hhf_xstats st = {
+-		.drop_overlimit = q->drop_overlimit,
+-		.hh_overlimit	= q->hh_flows_overlimit,
+-		.hh_tot_count	= q->hh_flows_total_cnt,
+-		.hh_cur_count	= q->hh_flows_current_cnt,
++		.drop_overlimit = READ_ONCE(q->drop_overlimit),
++		.hh_overlimit	= READ_ONCE(q->hh_flows_overlimit),
++		.hh_tot_count	= READ_ONCE(q->hh_flows_total_cnt),
++		.hh_cur_count	= READ_ONCE(q->hh_flows_current_cnt),
+ 	};
+ 
+ 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
