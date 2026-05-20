@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6261A348C55;
-	Wed, 20 May 2026 18:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1281B372B31;
+	Wed, 20 May 2026 18:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301334; cv=none; b=NjV4l8NmHD9nDWkE52WIU289Jz6IfznRto7JOCf6YwckLlDDRoSuM+ipQeN4/CEnvwnSMxu4VRRTbCMz8GTk5w+7uBjGOlPwst0Z7akvuL7KYJEqG150l1tT+2fIUTaneOlgVPz11DftWlcWw9SljslIW3OGlmoa0uatTZozM08=
+	t=1779301337; cv=none; b=X8ZvdOnGt820xbur9AzAmYL3y5/9Lfegg8fSISNcdVEXOBXZG5F4ZAYmerUnzmN4n34JxzrI7rlbwrfnMmSW60Q8dTxc/C0DQkIHyGIhe4qGx3k5TuDk9Np+LOXsvwrcs6GFB9h+LMU3jyy8l0tQE+p6xMAY87Oac5Qtyd3imYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301334; c=relaxed/simple;
-	bh=NmgH9e+TXicOqcjREQ1b+tOIXBG+MtXmdrjv7TBoXjQ=;
+	s=arc-20240116; t=1779301337; c=relaxed/simple;
+	bh=HMOu+PTW28CZfBLiIJCYyi3uPUeScAa2w81pfDau9D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYV4yseDe2PdeKpKmJ8ku/SwFXoeE/hyiayMCsQgv7hfv4XaQou+/4wtF+udlZYxtJOeHzuBnXOO7oNFJ2drKMUtHNZE1w4QzYJM73zpdJt+QFnRw8vcPSjciSz2uj7OepVTKAK2tHDswqyf1ewEPni2vB3b5B24ZTtvV6Jv6ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzXkGx2S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gULw/Ue7bL21fkGbcElSyiuuQPhoyuJosNknugSZIJJy4TqqL/j8vj41tdUOAjd8iFUKt8piPc+SqMZNQGoKmE1vXk1QRnDZLxe/7eMMlsMNzmE64mabcSMzcYgu9VjKtqaQR1ukKwOjNFQ7GNtJRG7Qas+x+Yzn+1FTuzU0pt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQ8jHqIN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzXkGx2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBD91F00894;
-	Wed, 20 May 2026 18:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQ8jHqIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0FC1F00893;
+	Wed, 20 May 2026 18:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301333;
-	bh=+aJLyq9FT39J+IRJ7An5kzV1xIi5F2yf6yO/6GA5WXM=;
+	s=korg; t=1779301335;
+	bh=9rM3e4hCVG5haXXDCHFex7CGvCKvHQElS0vOydZv5RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TzXkGx2SVrhwhSTZvFT7myFZyo4igXwc6MFUffKhZh19WPnQpRoEVVhEMfX4Gi1z6
-	 9+Um43TD5h8i9YgvoqctBqC09fmaDJdWgmRW35fA+4tca4N2gaewWiQSy5Y/+l02BH
-	 J2BP5d/Hp62PbI2nsFsV0V4Hl9d/d3R+Z0IkgeAk=
+	b=ZQ8jHqIN95fVyvzfFHrf3ll2xKSI6fKgzM56qSehogfIG7IVrNbRPVPg8uVjKKGPL
+	 a4azjRNn7Ji4wtouT7DlpMkH5C6yTyx3Ysk4cPVTk+ofcyBUv2zXYnFrT+YllGuvOs
+	 vDQDYfZP5NwWzPUvNuZReX2QlpnmcR6oUTvjb258=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@elte.hu>,
-	Frederic Weisbecker <fweisbec@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 514/666] tracing: branch: Fix inverted check on stat tracer registration
-Date: Wed, 20 May 2026 18:22:05 +0200
-Message-ID: <20260520162122.401979019@linuxfoundation.org>
+Subject: [PATCH 6.12 479/666] ksmbd: destroy async_ida in ksmbd_conn_free()
+Date: Wed, 20 May 2026 18:21:30 +0200
+Message-ID: <20260520162121.648022725@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,67 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 3b75dd76e64a04771861bb5647951c264919e563 ]
+[ Upstream commit b32c8db48212a34998c36d0bbc05b29d5c407ef5 ]
 
-init_annotated_branch_stats() and all_annotated_branch_stats() check the
-return value of register_stat_tracer() with "if (!ret)", but
-register_stat_tracer() returns 0 on success and a negative errno on
-failure. The inverted check causes the warning to be printed on every
-successful registration, e.g.:
+When per-connection async_ida was converted from a dynamically
+allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
+removed from the connection teardown path but no matching
+ida_destroy() was added.  The connection is therefore freed with the
+IDA's backing xarray still intact.
 
-  Warning: could not register annotated branches stats
+The kernel IDA API expects ida_init() and ida_destroy() to be paired
+over an object's lifetime, so add the missing cleanup before the
+connection is freed.
 
-while leaving real failures silent. The initcall also returned a
-hard-coded 1 instead of the actual error.
+No leak has been observed in testing; this is a pairing fix to match
+the IDA lifetime rules, not a response to a reproduced regression.
 
-Invert the check and propagate ret so that the warning fires on real
-errors and the initcall reports the correct status.
-
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Ingo Molnar <mingo@elte.hu>
-Cc: Frederic Weisbecker <fweisbec@gmail.com>
-Link: https://patch.msgid.link/20260420-tracing-v1-1-d8f4cd0d6af1@debian.org
-Fixes: 002bb86d8d42 ("tracing/ftrace: separate events tracing and stats tracing engine")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: d40012a83f87 ("cifsd: declare ida statically")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_branch.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/server/connection.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/trace/trace_branch.c b/kernel/trace/trace_branch.c
-index e47fdb4c92fbc..30f72e0ecb5d4 100644
---- a/kernel/trace/trace_branch.c
-+++ b/kernel/trace/trace_branch.c
-@@ -379,10 +379,10 @@ __init static int init_annotated_branch_stats(void)
- 	int ret;
- 
- 	ret = register_stat_tracer(&annotated_branch_stats);
--	if (!ret) {
-+	if (ret) {
- 		printk(KERN_WARNING "Warning: could not register "
- 				    "annotated branches stats\n");
--		return 1;
-+		return ret;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 8470aba1233a9..1610b4d2fd414 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -41,6 +41,15 @@ void ksmbd_conn_free(struct ksmbd_conn *conn)
+ 	kfree(conn->preauth_info);
+ 	kfree(conn->mechToken);
+ 	if (atomic_dec_and_test(&conn->refcnt)) {
++		/*
++		 * async_ida is embedded in struct ksmbd_conn, so pair
++		 * ida_destroy() with the final kfree() rather than with
++		 * the unconditional field teardown above.  This keeps
++		 * the IDA valid for the entire lifetime of the struct,
++		 * even while other refcount holders (oplock / vfs
++		 * durable handles) still reference the connection.
++		 */
++		ida_destroy(&conn->async_ida);
+ 		conn->transport->ops->free_transport(conn->transport);
+ 		kfree(conn);
  	}
- 	return 0;
- }
-@@ -444,10 +444,10 @@ __init static int all_annotated_branch_stats(void)
- 	int ret;
- 
- 	ret = register_stat_tracer(&all_branch_stats);
--	if (!ret) {
-+	if (ret) {
- 		printk(KERN_WARNING "Warning: could not register "
- 				    "all branches stats\n");
--		return 1;
-+		return ret;
- 	}
- 	return 0;
- }
 -- 
 2.53.0
 
