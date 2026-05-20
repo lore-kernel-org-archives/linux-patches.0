@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F6A3F65E6;
-	Wed, 20 May 2026 18:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC88E36CE19;
+	Wed, 20 May 2026 18:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300558; cv=none; b=REMKAjNXJFUhPPSjfpSoDjZkLezIV2z1apBsLS++t2gT3cbBeKjxSuhwwObBFmYJfX7NQ2tXIy8Knujr7NKOxZyhoXfsBUK+emum1BWCfgFPb++2kFovmrUJmLm+m8FNfNS8YsrlS3u3ePu4u1eo6qCQNk2dpL306FQGb4fzGWg=
+	t=1779300560; cv=none; b=JnpXGZvjCCsZq8sCxP3U/KKH8VeESNrtqccGjNtKLzKQ+Da3r/V3CnK69bLZCo0/XekB8J/cd1iI5Hd60bLrbXrFSfviYlta8vWseiIvP60QxoTVG2I1s50lcDwG+wwsvb0FuAFc9Pcn1gtm0/zUlM0Up2QVT6HZjv1J8+Rmewg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300558; c=relaxed/simple;
-	bh=qJGQhPF7NAo0KjTkL3oMNxGumeRflEJxFDR2VNvGVjM=;
+	s=arc-20240116; t=1779300560; c=relaxed/simple;
+	bh=ME+xed5Hgc0ZklNViv98QZOn9a/c/TBVziB/Gwu8DRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnlwQumBgCOMujbJ2ZK3klnKRbbcgPs9TVeMkQfrLCUUUJuMt0E1OcwWx4xruYCjbw+JOoi2xUK9K+6q2qJVPm7We3NKM7BjVR0p1uuGnU6OZbARLtvMlZOd3FNL5GaoP6BbXsVgIwqB+VzPifqTeWLxpAiC9Eg5S2PcadxLkZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vyd5zw6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FhlSeZT2ExpUN4q6QwAbRJeIEDcnW2sahFDuQmAajZMCcTWmaIbLpYqvGhgi+e9cLUHKcKilpH9Z91X20D0H+rFH054upbp2alBcc/KtL4RhrvU+2pjJ/ZCz8QB/GQ4fZkF25We0jjxM5UZ6FBtxAiXKNGEcqzlzIXppkZQeIfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+WSKgeP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vyd5zw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B02F1F000E9;
-	Wed, 20 May 2026 18:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+WSKgeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5691F000E9;
+	Wed, 20 May 2026 18:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300557;
-	bh=PJY9aoT0OJ/DGXRM1YefqCslhBOzXBX5b812Be1qUdw=;
+	s=korg; t=1779300559;
+	bh=YfhKsm1BrSBtuTSMlVcyF3KXvZTqP0/v3Z1mKjAUJ0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1vyd5zw6hCUrogOWpeAgUliHtm5EdltU36eOSjuKIezmcDeDFP1QdkRIjQgBKBbh7
-	 /3hA19aanwmnz+rJA4U4boh5ucHVzB8DujxQvTaBSM8Y5fjNjaVStdeF1Xm42xiI0v
-	 5N9OEoSp1rtVSFWmuAwL7h/P7VtqPoCgV/cdKMxM=
+	b=f+WSKgePyrokTshOx7cyt1r4s/W2roCG1Jmct9GhV+W8Z7EJc9nFv2sp6GJaNnEqo
+	 hHU5t7Gc5p8mXvBB3r26Aa0LJVCyGqAQZnq+XFr1RtDHYdqlU+z+rkOfp8Bjo/ruXW
+	 W7qeCdP8vrOMmAvZDNJbgfPaXKX+wqjyKbqTivc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 221/666] crypto: qat - fix type mismatch in RAS sysfs show functions
-Date: Wed, 20 May 2026 18:17:12 +0200
-Message-ID: <20260520162116.000070829@linuxfoundation.org>
+Subject: [PATCH 6.12 222/666] crypto: qat - use swab32 macro
+Date: Wed, 20 May 2026 18:17:13 +0200
+Message-ID: <20260520162116.022640806@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,82 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit ec23d75c4b77ae42af0777ea59599b1d4f611371 ]
+[ Upstream commit 35ecb77ae0749a2f1b04872c9978d9d7ddbbeb79 ]
 
-ADF_RAS_ERR_CTR_READ() expands to atomic_read(), which returns int.
-The local variable 'counter' was declared as 'unsigned long', causing
-a type mismatch on the assignment. The format specifier '%ld' was
-consequently wrong in two ways: wrong length modifier and wrong
-signedness.
+Replace __builtin_bswap32() with swab32 in icp_qat_hw_20_comp.h to fix
+the following build errors on architectures without native byte-swap
+support:
 
-Use int to match the return type of atomic_read() and update the
-format specifier to '%d' accordingly.
+   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.o: in function `adf_gen4_build_decomp_block':
+   drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:141:(.text+0xeec): undefined reference to `__bswapsi2'
+   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:141:(.text+0xef8): undefined reference to `__bswapsi2'
+   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.o: in function `adf_gen4_build_comp_block':
+   drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:57:(.text+0xf64): undefined reference to `__bswapsi2'
+   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:57:(.text+0xf7c): undefined reference to `__bswapsi2'
 
-Fixes: 532d7f6bc458 ("crypto: qat - add error counters")
+Fixes: 5b14b2b307e4 ("crypto: qat - enable deflate for QAT GEN4")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603290259.Ig9kDOmI-lkp@intel.com/
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_common/adf_sysfs_ras_counters.c    | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ .../crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h   | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-index e97c67c87b3cf..6abb57bfd3285 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-@@ -13,14 +13,14 @@ static ssize_t errors_correctable_show(struct device *dev,
- 				       char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
+diff --git a/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h b/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
+index 7ea8962272f2f..d28732225c9e0 100644
+--- a/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
++++ b/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
+@@ -3,6 +3,8 @@
+ #ifndef _ICP_QAT_HW_20_COMP_H_
+ #define _ICP_QAT_HW_20_COMP_H_
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
++#include <linux/swab.h>
++
+ #include "icp_qat_hw_20_comp_defs.h"
+ #include "icp_qat_fw.h"
  
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_CORR);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+@@ -54,7 +56,7 @@ ICP_QAT_FW_COMP_20_BUILD_CONFIG_LOWER(struct icp_qat_hw_comp_20_config_csr_lower
+ 	QAT_FIELD_SET(val32, csr.abd, ICP_QAT_HW_COMP_20_CONFIG_CSR_ABD_BITPOS,
+ 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_ABD_MASK);
+ 
+-	return __builtin_bswap32(val32);
++	return swab32(val32);
  }
  
- static ssize_t errors_nonfatal_show(struct device *dev,
-@@ -28,14 +28,14 @@ static ssize_t errors_nonfatal_show(struct device *dev,
- 				    char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
+ struct icp_qat_hw_comp_20_config_csr_upper {
+@@ -106,7 +108,7 @@ ICP_QAT_FW_COMP_20_BUILD_CONFIG_UPPER(struct icp_qat_hw_comp_20_config_csr_upper
+ 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_NICE_PARAM_BITPOS,
+ 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_NICE_PARAM_MASK);
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
- 
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_UNCORR);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+-	return __builtin_bswap32(val32);
++	return swab32(val32);
  }
  
- static ssize_t errors_fatal_show(struct device *dev,
-@@ -43,14 +43,14 @@ static ssize_t errors_fatal_show(struct device *dev,
- 				 char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
+ struct icp_qat_hw_decomp_20_config_csr_lower {
+@@ -138,7 +140,7 @@ ICP_QAT_FW_DECOMP_20_BUILD_CONFIG_LOWER(struct icp_qat_hw_decomp_20_config_csr_l
+ 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_LZ4_BLOCK_CHECKSUM_PRESENT_BITPOS,
+ 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_LZ4_BLOCK_CHECKSUM_PRESENT_MASK);
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
- 
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_FATAL);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+-	return __builtin_bswap32(val32);
++	return swab32(val32);
  }
  
- static ssize_t reset_error_counters_store(struct device *dev,
+ struct icp_qat_hw_decomp_20_config_csr_upper {
+@@ -158,7 +160,7 @@ ICP_QAT_FW_DECOMP_20_BUILD_CONFIG_UPPER(struct icp_qat_hw_decomp_20_config_csr_u
+ 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_MINI_CAM_CONTROL_BITPOS,
+ 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_MINI_CAM_CONTROL_MASK);
+ 
+-	return __builtin_bswap32(val32);
++	return swab32(val32);
+ }
+ 
+ #endif
 -- 
 2.53.0
 
