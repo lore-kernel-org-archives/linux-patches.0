@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282E23D1CC6;
-	Wed, 20 May 2026 18:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF89E3F7ABC;
+	Wed, 20 May 2026 18:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301735; cv=none; b=BKTB3FAmOE/jY1ruhAw4XqdCcMTYwxZV8dMdgGQGgpgfImpYuEWQCPQw1UBmE7qslB43BOMtOhTKObskUMqWhc5h1G3gcpM9LD5H0Ur2Nl0PdXKxLdeANwLtRPWZ168INJLunFHsZgbHS0S4WMVejspvJiWciYKj28Q6vzuc7P8=
+	t=1779301738; cv=none; b=iyyvIc7lnde8IAWQtIjA0pSSdMxv25ugxQQHv4WG4OzTCugUNcEJ+KHYeOOdnq0Mrb0EbB0qthskPZgVAJpwnj7LbFGXoTS6YWiyD0BLaZTLJOtIYFCl+l1k2evrsO5ot1eAbqWQMRmuT3n2cwhq2fzkOH4+lSyeTi+jCiO7sNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301735; c=relaxed/simple;
-	bh=d8UZa0kKG+VsqoujEGTrh4op+mgODuzirfZGBbgUnps=;
+	s=arc-20240116; t=1779301738; c=relaxed/simple;
+	bh=x4Vaj/cO+UXufd21FcuQTdjtDh9FkNgj0pBt8XoQltE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lA42ar0n5pJ8ah+uMbARdRoLF9srZT1lIV1OKB2iTlY1I3wF9pd1ciNB/8D4vsVvVg9tPnBdJRN0yTO86C6HKHnrm+O0mCog8JNcled2cp4h1r/t/NjCqh8CdTJwb64u2II8r8pgUbk1uukLRT/Yhft4V055FmaaFOsXLp8QT6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulY1UbPD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZTnMuyJXM37b6J/Zvckn3cx8wSAsMTYe9c6EGadf9CAeyeivlMXSCNpTqvMDyb/vPGKUI1UDeR4p5ucKwqk/aohQfduAfVhAWRJ0/7GnBet9tDkqse+MooE1wpx52CHtpM812wXFaEULCDJB/v7ob6AwKXACWOK10xbmLzYdyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejR7yhQy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulY1UbPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE7E1F000E9;
-	Wed, 20 May 2026 18:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejR7yhQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302F71F000E9;
+	Wed, 20 May 2026 18:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301734;
-	bh=yFBv5OL5+3GB+Wn3a2OBpb8ALiJq9nLQmBNOahhesvc=;
+	s=korg; t=1779301736;
+	bh=2CUP8Qe2zXHZEKSwTq8DmtM1pWeLQdTqVRUE6H1WfFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulY1UbPDlnweFqNew8zQydf9S12FJg9fzvNMmLjf2QsIwUCRuUxRtwaDgoZjdPSbL
-	 MG1Wz3oVfhQLTYeqi4DzIteblepl0ixeYnvHMVfK7aR2ONIjOaWAYAi+Vom1QBi7fF
-	 2I0SAAP4BRAf2EzAEQkf9sPeTKAcvzOe9YN/a7ts=
+	b=ejR7yhQyDc2UOcYQcFdkgPGbON/XhJpPfXvCjFNb3VXHSnnbCPRRSXFw9FAQfEYUy
+	 NWk6kbuJs7BXkrtKombXEI0v/ElnS0rEZ9ZRf/0hANdCQXoILhz81s4rbeUKhl7Jvk
+	 mUsGL4Cux/78RiJ2TciDmmJCfEqoTrzmA0P2fMLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 656/666] sched_ext: Guard scx_dsq_move() against NULL kit->dsq after failed iter_new
-Date: Wed, 20 May 2026 18:24:27 +0200
-Message-ID: <20260520162125.504155804@linuxfoundation.org>
+Subject: [PATCH 6.12 657/666] mptcp: pm: prio: skip closed subflows
+Date: Wed, 20 May 2026 18:24:28 +0200
+Message-ID: <20260520162125.526578760@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 4fda9f0e7c950da4fe03cedeb2ac818edf5d03e9 ]
+[ Upstream commit 166b78344031bf7ac9f55cb5282776cfd85f220e ]
 
-bpf_iter_scx_dsq_new() clears kit->dsq on failure and
-bpf_iter_scx_dsq_{next,destroy}() guard against that. scx_dsq_move() doesn't -
-it dereferences kit->dsq immediately, so a BPF program that calls
-scx_bpf_dsq_move[_vtime]() after a failed iter_new oopses the kernel.
+When sending an MP_PRIO, closed subflows need to be skipped.
 
-Return false if kit->dsq is NULL.
+This fixes the case where the initial subflow got closed, re-opened
+later, then an MP_PRIO is needed for the same local address.
 
-Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ dropped the `struct scx_sched *sch` declaration and `sch = src_dsq->sched` line ]
+Note that explicit MP_PRIO cannot be sent during the 3WHS, so it is fine
+to use __mptcp_subflow_active().
+
+Fixes: 067065422fcd ("mptcp: add the outgoing MP_PRIO support")
+Cc: stable@vger.kernel.org
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-9-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to renamed function `mptcp_pm_nl_mp_prio_send_ack()` in `pm_netlink.c` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/mptcp/pm_netlink.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6346,6 +6346,14 @@ static bool scx_dispatch_from_dsq(struct
- 	bool in_balance;
- 	unsigned long flags;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -920,6 +920,9 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		struct mptcp_addr_info local, remote;
  
-+	/*
-+	 * The verifier considers an iterator slot initialized on any
-+	 * KF_ITER_NEW return, so a BPF program may legally reach here after
-+	 * bpf_iter_scx_dsq_new() failed and left @kit->dsq NULL.
-+	 */
-+	if (unlikely(!src_dsq))
-+		return false;
++		if (!__mptcp_subflow_active(subflow))
++			continue;
 +
- 	if (!scx_kf_allowed_if_unlocked() && !scx_kf_allowed(SCX_KF_DISPATCH))
- 		return false;
- 
+ 		mptcp_local_address((struct sock_common *)ssk, &local);
+ 		if (!mptcp_addresses_equal(&local, addr, addr->port))
+ 			continue;
 
 
