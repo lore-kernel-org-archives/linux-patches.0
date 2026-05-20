@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463AB2BE02A;
-	Wed, 20 May 2026 16:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBE236A352;
+	Wed, 20 May 2026 16:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294704; cv=none; b=lRvxiMPQPonexmACBhUA1ACSZFChKY9LExLF7ZkuXeJMVEN0bgWutaqhwIZXiUPIHx6UVXzuhvlOD/ukNehKPDyy6Q3K9/xCBblwLOpQRnriJMXrFnRzSbha57BAqqCKpTzaKRraVppgNU3Ynv1ajwBUhOF2gvLtwpddv+JUa1g=
+	t=1779294705; cv=none; b=NXVT9kc3xsMc/gs8rxmD5yEiuECMyny9jXmUgdSHLYAZTPWEwAY8h6xBIUl87NNoxvjKCbZ1sQCxWI/yUbHqMGK0Qo5qKpI+PstmT6D7GXn+FVRibUr6HekpWajLH0STkVUKi+r8hRNfrcTtaBIzVWsCWAC+Ojxh59vabQaONOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294704; c=relaxed/simple;
-	bh=BO6veDwrDQhQKxRo6h8LYRJVXJScWrLcZSvyw6tTqOw=;
+	s=arc-20240116; t=1779294705; c=relaxed/simple;
+	bh=+PyMmiUs8W/w4iDud4bsZyQTcMOmE2E3m73GmLFmoKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lmw5+9e8gVSLCvC6wzxGgIkPCZ25DG29FXlepVMq4PgBc9+0r4L/t+p3jykFnhvqqi2mRdlQzdHSplpZDA41DSt4Kzx3L5Pq0NWxbhzL8j3+E9kPp84v4NTO+CFRnUP4DRukxp8H2r9iykJCyA2glv5jOaVhOWsMThRBoRWK0us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTgv0OlT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnyLwwHQfQ8rb54xMzJA1VDDot+4ZPtvYaUsyCQf5F0a/Gb1W2ajzoEravH+ldgyfzQe3zAWfMGp5r2aFAOOpAGvFO1hdr+KOw7ToRpPVRhJQKj+2ImGn3qZTbkuQieD1Gje7CFb8yxeyft/9xG1F8jvsiXc6e/Ji+EW+G2qd9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUnzZVNH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTgv0OlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5171F00894;
-	Wed, 20 May 2026 16:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUnzZVNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2A41F000E9;
+	Wed, 20 May 2026 16:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294703;
-	bh=giBLbnEekUR2hmNCWyprFXQ0qtihOKAQ43QjHurAK7I=;
+	s=korg; t=1779294700;
+	bh=sEY758YV2dLHGoRlz0BDJncxH0ooefaupnyq22G5/As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTgv0OlTvXBLadBTZg3J1+uAAWUtF63Sp+Mt8fn2nrA2PjYvmAjw149uZ77fVEbSw
-	 YD8kC7a+5zKq5vkW6PYsQrdfuc0jpDK+8SMp49LQbER23hKl3tiiqw5/t2qvcbL1Tu
-	 Ax7dFjg8tMv7YdjJYjYAELDpvyFj0gXmZGrEqvko=
+	b=RUnzZVNHeK2AZsgC/Oaj31V4pTHOF9sOCBzrguK9BSmQKRCk1q3h7zSpm7V30jGUJ
+	 Z13ov0mVfcdjIDY2uVdAuloNN74g3uUGYi5XUd8ds7bbnVJ90+f5CaCoHCnS5HSrMk
+	 qsprV7Krq3H9tuapT7lt1i6RoWB/Wb6j0dd5EExo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0141/1146] selftests/tracing: Fix to make --logdir option work again
-Date: Wed, 20 May 2026 18:06:31 +0200
-Message-ID: <20260520162151.504339201@linuxfoundation.org>
+Subject: [PATCH 7.0 0140/1146] r8152: fix incorrect register write to USB_UPHY_XTAL
+Date: Wed, 20 May 2026 18:06:30 +0200
+Message-ID: <20260520162151.482511830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,71 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
 
-[ Upstream commit e011853dd78f97898ae8e0b0b949603987e24c4b ]
+[ Upstream commit 48afd5124fd6129c46fd12cb06155384b1c4a0c4 ]
 
-Since commit a0aa283c53a7 ("selftest/ftrace: Generalise ftracetest to
-use with RV") moved the default LOG_DIR setting after --logdir option
-parser, it overwrites the user given LOG_DIR.
-This fixes it to check the --logdir option parameter when setting new
-default LOG_DIR with a new TOP_DIR.
+The old code used ocp_write_byte() to clear the OOBS_POLLING bit
+(BIT(8)) in the USB_UPHY_XTAL register, but this doesn't correctly
+clear a bit in the upper byte of the 16-bit register.
 
-Fixes: a0aa283c53a7 ("selftest/ftrace: Generalise ftracetest to use with RV")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/r/177071725191.2369897.14781037901532893911.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fix this by using ocp_write_word() instead.
+
+Fixes: 195aae321c82 ("r8152: support new chips")
+Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260326073925.32976-454-nic_swsd@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/usb/r8152.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index 3230bd54dba84..0a56bf209f6c0 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -130,8 +130,7 @@ parse_opts() { # opts
-       shift 1
-     ;;
-     --logdir|-l)
--      LOG_DIR=$2
--      LINK_PTR=
-+      USER_LOG_DIR=$2
-       shift 2
-     ;;
-     --rv)
-@@ -199,6 +198,7 @@ fi
- TOP_DIR=`absdir $0`
- TEST_DIR=$TOP_DIR/test.d
- TEST_CASES=`find_testcases $TEST_DIR`
-+USER_LOG_DIR=
- KEEP_LOG=0
- KTAP=0
- DEBUG=0
-@@ -210,12 +210,18 @@ RV_TEST=0
- # Parse command-line options
- parse_opts $*
- 
-+[ $DEBUG -ne 0 ] && set -x
-+
-+# TOP_DIR can be changed for rv. Setting log directory.
- LOG_TOP_DIR=$TOP_DIR/logs
- LOG_DATE=`date +%Y%m%d-%H%M%S`
--LOG_DIR=$LOG_TOP_DIR/$LOG_DATE/
--LINK_PTR=$LOG_TOP_DIR/latest
--
--[ $DEBUG -ne 0 ] && set -x
-+if [ -n "$USER_LOG_DIR" ]; then
-+  LOG_DIR=$USER_LOG_DIR
-+  LINK_PTR=
-+else
-+  LOG_DIR=$LOG_TOP_DIR/$LOG_DATE/
-+  LINK_PTR=$LOG_TOP_DIR/latest
-+fi
- 
- if [ $RV_TEST -ne 0 ]; then
- 	TRACING_DIR=$TRACING_DIR/rv
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 0c83bbbea2e7c..f69e7e1ab7788 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -3890,7 +3890,7 @@ static void r8156_ups_en(struct r8152 *tp, bool enable)
+ 		case RTL_VER_15:
+ 			ocp_data = ocp_read_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL);
+ 			ocp_data &= ~OOBS_POLLING;
+-			ocp_write_byte(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
++			ocp_write_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
+ 			break;
+ 		default:
+ 			break;
 -- 
 2.53.0
 
