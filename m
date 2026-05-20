@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E6C28DC4;
-	Wed, 20 May 2026 17:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C61D28DC4;
+	Wed, 20 May 2026 17:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296791; cv=none; b=uu39E8J7KJ8/VViXwPKoFZdibmlbPshLloE7ejyu9lt1LgU/VmZHIYRSEcSUG/yVeRcxFGhNq2ROBJoIF3O8lV6TaekLPI8RrjONgZihrqHrWScLcokuGWNv+XoIhqhaAeWBdLUupHp/ltVAUu5ht8glc0RnibL/c1xaL1ApRP0=
+	t=1779296794; cv=none; b=LSF7mLrW1XAhk5IpcXOYqT2kJdU6ttpk9srW8/bcNYQTCIqPvchWwtU+cwoTpCFrjY/aBKO8eRO4EYtPMkcXgb/W4OSx0uN4tyBFWTJdcUIrGXgFG09wQkGSvJvrmt0ItC3E4qfRRA0n/BfAm0cskNCVZf+pZzZF5//lri3MXFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296791; c=relaxed/simple;
-	bh=lox6GWvndpyX5rDqYowcsWpEGjOy3x/OA/zFeybwBhY=;
+	s=arc-20240116; t=1779296794; c=relaxed/simple;
+	bh=y20OK16J2SIOBUue0Jd3DncTICFE3aU+imEX2RImsbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azASW0OFLMfRkv+FUUZscyc3QbtJa8ZgEJ6nShk100Vv6nd0PNDD6m+pvKjiPKuoP8W/d2mm74JixAHO2le6NKAm8Cpfwq4ldtmrVO+NlleUSqmOAB78q7ZP8xnFgaMbQHKgsv6o+oog+ZYGYUvLPwKs8B7AYndH/wDVP6DDwdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIntqhG1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUG3jOTscXpLIRbpSl8lHEuidy41mf9UFLiz4zTZHw1EG9ARRgtec7SH7yrtopY2MvFj8sChyhV4BNS6PMOEt+J5Hgf5NFJdTIht4AYT5i9hANIs0K1QtcIMJaqanPlur2eZE/wKBI7fl6OnTRC8zrYBUdzLEcUM4KV7Ot+8/B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgO2LYgi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIntqhG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4533F1F000E9;
-	Wed, 20 May 2026 17:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgO2LYgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C6B1F000E9;
+	Wed, 20 May 2026 17:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296790;
-	bh=a/cWamvj85eI6Oy2fJXerlXve4W/q3J5cRl4kn956Ww=;
+	s=korg; t=1779296793;
+	bh=L8EvwecYNzHovF4tkl2MA4E0kJ0b66ebMiASLpRqrdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XIntqhG1/wMsqz4dfW1nVheB0h/N6Htg89oFP/vFIkLAUiZTMxEIdTT21B/S3yEqI
-	 0KHw6Oma8M5k72EZOQQEd6/VhiowOw/88A+98k8YNhMVPOBZDwQc081CYVVoG4k/fq
-	 v7gNVkdj6iZ0mHQI98oYEAUaKdu+nySretGlu9eU=
+	b=hgO2LYgiTVOXqkig6wgOfsnOmkY3IYi6PVLWBrJbxLki9XNot4rL8UhVlTQMdNDjl
+	 0AfjzAkhgA61SxB7FN55WLIuFNe+iIgq5cfgzKj0/cf1w1iaxW8kjPuXnEzYkNoiLa
+	 5XPZuildR4BzC871tM0ks3kdoc3A63gcEx2yffhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0933/1146] net/sched: netem: check for negative latency and jitter
-Date: Wed, 20 May 2026 18:19:43 +0200
-Message-ID: <20260520162209.349797160@linuxfoundation.org>
+Subject: [PATCH 7.0 0934/1146] net: airoha: fix BQL imbalance in TX path
+Date: Wed, 20 May 2026 18:19:44 +0200
+Message-ID: <20260520162209.372261798@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,71 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 90be9fedb218ee95a1cf59050d1306fbfb0e8b87 ]
+[ Upstream commit 2d9f5a118205da2683ffcec78b9347f1f01a820e ]
 
-Reject requests with negative latency or jitter.
-A negative value added to current timestamp (u64) wraps
-to an enormous time_to_send, disabling dequeue.
-The original UAPI used u32 for these values; the conversion to 64-bit
-time values via TCA_NETEM_LATENCY64 and TCA_NETEM_JITTER64
-allowed signed values to reach the kernel without validation.
+Fix a possible BQL imbalance in airoha_dev_xmit(), where inflight
+packets are accounted only for the AIROHA_NUM_TX_RING netdev TX
+queues. The queue index is computed as:
 
-Jitter is already silently clamped by an abs() in netem_change();
-that abs() can be removed in a follow-up once this rejection is in
-place.
+    qid = skb_get_queue_mapping(skb) % ARRAY_SIZE(qdma->q_tx)
+    txq = netdev_get_tx_queue(dev, qid);
 
-Fixes: 99803171ef04 ("netem: add uapi to express delay and jitter in nanoseconds")
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-7-stephen@networkplumber.org
+However, airoha_qdma_tx_napi_poll() accounts completions across all
+netdev TX queues (num_tx_queues), leading to inconsistent BQL
+accounting.
+
+Also reset all netdev TX queues in the ndo_stop callback.
+
+Fixes: 1d304174106c ("net: airoha: Implement BQL support")
+Fixes: c9f947769b77 ("net: airoha: Reset BQL stopping the netdevice")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260421-airoha-fix-bql-v1-1-f135afe4275b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/ethernet/airoha/airoha_eth.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 475c14b3dbdbf..bc18e1976b6e0 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -826,6 +826,16 @@ static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 1bdf90b311060..a73c224d65755 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -929,10 +929,9 @@ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
+ 		q->queued--;
  
-+static int validate_time(const struct nlattr *attr, const char *name,
-+			 struct netlink_ext_ack *extack)
-+{
-+	if (nla_get_s64(attr) < 0) {
-+		NL_SET_ERR_MSG_ATTR_FMT(extack, attr, "negative %s", name);
-+		return -EINVAL;
-+	}
-+	return 0;
-+}
-+
- static int validate_slot(const struct nlattr *attr, struct netlink_ext_ack *extack)
- {
- 	const struct tc_netem_slot *c = nla_data(attr);
-@@ -1068,6 +1078,18 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 			goto table_free;
- 	}
+ 		if (skb) {
+-			u16 queue = skb_get_queue_mapping(skb);
+ 			struct netdev_queue *txq;
  
-+	if (tb[TCA_NETEM_LATENCY64]) {
-+		ret = validate_time(tb[TCA_NETEM_LATENCY64], "latency", extack);
-+		if (ret)
-+			goto table_free;
-+	}
-+
-+	if (tb[TCA_NETEM_JITTER64]) {
-+		ret = validate_time(tb[TCA_NETEM_JITTER64], "jitter", extack);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
+-			txq = netdev_get_tx_queue(skb->dev, queue);
++			txq = skb_get_tx_queue(skb->dev, skb);
+ 			netdev_tx_completed_queue(txq, 1, skb->len);
+ 			dev_kfree_skb_any(skb);
+ 		}
+@@ -1735,7 +1734,7 @@ static int airoha_dev_stop(struct net_device *dev)
+ 	if (err)
+ 		return err;
+ 
+-	for (i = 0; i < ARRAY_SIZE(qdma->q_tx); i++)
++	for (i = 0; i < dev->num_tx_queues; i++)
+ 		netdev_tx_reset_subqueue(dev, i);
+ 
+ 	if (atomic_dec_and_test(&qdma->users)) {
+@@ -2037,7 +2036,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 
+ 	spin_lock_bh(&q->lock);
+ 
+-	txq = netdev_get_tx_queue(dev, qid);
++	txq = skb_get_tx_queue(dev, skb);
+ 	nr_frags = 1 + skb_shinfo(skb)->nr_frags;
+ 
+ 	if (q->queued + nr_frags >= q->ndesc) {
 -- 
 2.53.0
 
