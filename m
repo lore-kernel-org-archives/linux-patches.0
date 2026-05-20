@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82A93A382F;
-	Wed, 20 May 2026 16:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35133F54C7;
+	Wed, 20 May 2026 16:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296365; cv=none; b=jLyAnQOWiiq6QYTVX/e8feWWb+SMGwFkiO0xp1JsWN0xb3Naiz6a+olJX9c8RW6c8GOd9KTfLYIsrw2qK2QoRodEetyubWK9s0BynWdcJrzxjrvPmm4jOuI3RfNtsFBlbgWFyLimYSvdFACxUo1CqqOxrH7ST/Ls9N5xb+BzQqg=
+	t=1779296368; cv=none; b=YVxy5l/g720Ay9WxemAXAy1ZhJ6gCfGz2NXPHcQB4aUHcdzX0WmuWfmKbU28q1gUKPkUUcWv/Ed+kAycG/V6qWSs/YazKkmI64hT3DSfMVglYhrvhaENHyKbW6jX3xnZzs3/IkvMxKNRbToqIHRADyrPJkQdNTAxoZMigNK8WhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296365; c=relaxed/simple;
-	bh=Zr0WlZRttywWaE0Mw7B1AbLFbPyj8MNhGgz9o8RBQQE=;
+	s=arc-20240116; t=1779296368; c=relaxed/simple;
+	bh=3ywPlawiaeKkKEpi+cAMwrPf22hqBwvy+keQW1KBlm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D5pqrvqn3rVei81O5KoWlW7DQU9cB3DGuZ1wNnDod41L6oKRnbtXJmhD/sQkbpbKccSuk9/4OwNiI2wv5tBYzZJT3BjfKnRjixJKdEZa0Nd8X8p0neFcLJQMBvQFP3TMLgiChvOQseZXyg8SUPfqChxgn4lcCScOnhSw9fJBVs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPyReckV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eSowxNbl5ufqBPBw98aGA3tsozkuD7tM3lT/KQ19NuupePBgnhlM6NUEYkogb552rum603a+mo3r6thIFkbA1+ldi9xPdpIhruNDHks1DmX+nVwXDJiuTGjznq1MBBhkpY63lPHdARVsMhpBFlKS7BrhcXN441a81iQdD+XgsGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XonxZdMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPyReckV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083F61F000E9;
-	Wed, 20 May 2026 16:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XonxZdMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56FF1F000E9;
+	Wed, 20 May 2026 16:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296363;
-	bh=eJFeav8ZDQBo6aiuB64qeeNVnrHISGtPitV8Nx3Ov5s=;
+	s=korg; t=1779296366;
+	bh=XEPDYlpNjIu9OQj51r6oTCv6g8Zju3JV7eWihnA6OkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bPyReckV2nzzBQPPwd8dhjTtIY3VqzcChDlf0Qqjm33YAs/cjQucLORD+rzvTy7h2
-	 SwHsP4TDp91aij7ut+Mk52lZhh9vloy5+SvA4B5Ha1n6razBiBG2zU34wo3aPV7VeH
-	 HHfPrRbCY+b3NmuUBLMHACXVh8+B/ZdYJ3SsEeqY=
+	b=XonxZdMgQzIzUAhvqJOoKBBLB1QMxRMOxPG5yIsGqwv0liU7OS9GMOdxexnrt+GyD
+	 o1QLaDLsaYs7K9/yhv1GDWa95TXSB1bIfGa7Q2OX5VY7YaAQmY5OK5DoAuBqzYx36D
+	 QTYZYksnUmHSPgwfcBX5NL1YhIWSyNnfp9w/u/AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0770/1146] net/sched: sch_cake: fix NAT destination port not being updated in cake_update_flowkeys
-Date: Wed, 20 May 2026 18:17:00 +0200
-Message-ID: <20260520162205.642780104@linuxfoundation.org>
+Subject: [PATCH 7.0 0771/1146] nexthop: fix IPv6 route referencing IPv4 nexthop
+Date: Wed, 20 May 2026 18:17:01 +0200
+Message-ID: <20260520162205.666322541@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,65 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit f9e40664706927d7ae22a448a3383e23c38a4c0b ]
+[ Upstream commit 29c95185ba32b621fbc3800fb86e7dc3edf5c2be ]
 
-cake_update_flowkeys() is supposed to update the flow dissector keys
-with the NAT-translated addresses and ports from conntrack, so that
-CAKE's per-flow fairness correctly identifies post-NAT flows as
-belonging to the same connection.
+syzbot reported a panic [1] [2].
 
-For the source port, this works correctly:
-    keys->ports.src = port;
+When an IPv6 nexthop is replaced with an IPv4 nexthop, the has_v4 flag
+of all groups containing this nexthop is not updated. This is because
+nh_group_v4_update is only called when replacing AF_INET to AF_INET6,
+but the reverse direction (AF_INET6 to AF_INET) is missed.
 
-But for the destination port, the assignment is reversed:
-    port = keys->ports.dst;
+This allows a stale has_v4=false to bypass fib6_check_nexthop, causing
+IPv6 routes to be attached to groups that effectively contain only AF_INET
+members. Subsequent route lookups then call nexthop_fib6_nh() which
+returns NULL for the AF_INET member, leading to a NULL pointer
+dereference.
 
-This means the NAT destination port is never updated in the flow keys.
-As a result, when multiple connections are NATed to the same destination,
-CAKE treats them as separate flows because the original (pre-NAT)
-destination ports differ. This breaks CAKE's NAT-aware flow isolation
-when using the "nat" mode.
+Fix by calling nh_group_v4_update whenever the family changes, not just
+AF_INET to AF_INET6.
 
-The bug was introduced in commit b0c19ed6088a ("sch_cake: Take advantage
-of skb->hash where appropriate") which refactored the original direct
-assignment into a compare-and-conditionally-update pattern, but wrote
-the destination port update backwards.
+Reproducer:
+	# AF_INET6 blackhole
+	ip -6 nexthop add id 1 blackhole
+	# group with has_v4=false
+	ip nexthop add id 100 group 1
+	# replace with AF_INET (no -6), has_v4 stays false
+	ip nexthop replace id 1 blackhole
+	# pass stale has_v4 check
+	ip -6 route add 2001:db8::/64 nhid 100
+	# panic
+	ping -6 2001:db8::1
 
-Fix by reversing the assignment direction to match the source port
-pattern.
-
-Fixes: b0c19ed6088a ("sch_cake: Take advantage of skb->hash where appropriate")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260413110041.44704-1-phx0fer@gmail.com
+[1] https://syzkaller.appspot.com/bug?id=e17283eb2f8dcf3dd9b47fe6f67a95f71faadad0
+[2] https://syzkaller.appspot.com/bug?id=8699b6ae54c9f35837d925686208402949e12ef3
+Fixes: 7bf4796dd099 ("nexthops: add support for replace")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260413114522.147784-1-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/nexthop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 9efe23f8371b3..4ac6c36ca6e41 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -619,7 +619,7 @@ static bool cake_update_flowkeys(struct flow_keys *keys,
- 		}
- 		port = rev ? tuple.src.u.all : tuple.dst.u.all;
- 		if (port != keys->ports.dst) {
--			port = keys->ports.dst;
-+			keys->ports.dst = port;
- 			upd = true;
- 		}
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 2c9036c719b68..11a763cbc8482 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2466,10 +2466,10 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
+ 			goto err_notify;
  	}
+ 
+-	/* When replacing an IPv4 nexthop with an IPv6 nexthop, potentially
++	/* When replacing a nexthop with one of a different family, potentially
+ 	 * update IPv4 indication in all the groups using the nexthop.
+ 	 */
+-	if (oldi->family == AF_INET && newi->family == AF_INET6) {
++	if (oldi->family != newi->family) {
+ 		list_for_each_entry(nhge, &old->grp_list, nh_list) {
+ 			struct nexthop *nhp = nhge->nh_parent;
+ 			struct nh_group *nhg;
 -- 
 2.53.0
 
