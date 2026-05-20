@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9560A3F39EE;
-	Wed, 20 May 2026 17:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A68336405A;
+	Wed, 20 May 2026 17:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299689; cv=none; b=nu52Y8vscB3+S9sN0YqHMUIoLfweEs8wbNlpQjfJiLW5E2zUq3iLcBoDet79eu9bictz+f4CP/s9UUf1XbvJGz/z1HT4Fu1zcsigLK1XdIUftCLY2q8Z9cLyWym7X/RnYHTvvSgIeMxzFtcgNttUnz5xFLoGhXXSAbysh39x9fQ=
+	t=1779299691; cv=none; b=Ov5Wfu+8d1vWKTKUWaJDsE6zy3e3aT5+s1FJ6VJYC3wV2FVaiK7be3qWSNUHzImW3O5D3AurxI1tKzC3gtUvoMYsvHFvk++1ZeUSdGXQWH5u8D38vmGJeTXFf0GHlxds1GjutAfirmD7X7G3IRydVC/+ZC3hU4gj9YKVF7Ff6ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299689; c=relaxed/simple;
-	bh=jp5SBvh6gSo+d548Fmn1s2wLN4S2HdNKqQJwZolCn+4=;
+	s=arc-20240116; t=1779299691; c=relaxed/simple;
+	bh=lS+52D/hZ7gS8ZD3LxW5PoRnEDOiu9iYrXiOpwhMWB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKMjxqOpCjW/sLk8uEJrdqX64nrPtGwM1GpI5gycAgV0yBwzeeeg6i0XgjHXyD9zPs4I7yLpHXt7JwXuPy2I13rbDcbzLFRsl88pRsUFLN+tXp1HqiJZkjghPN4jtsG/b76klptDdY4vJJ+Txi89JS8uK7BO6svw5Tla85RQSwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiHewQQf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hzE2sMOi2Z/TuJwKZVNAv1AsgcI3gMU7S6MVEjUljJLZyQ1TARvDYRUPonS7gLt8kB5PmQa3LNK5cIvLd7BKhWNWc9Y6wLGTOFPPIIOIVjWPII7zCvA37G2ZIRqolzmckjQdMX9Ug78yLKBdct9BovnKJzodM7vUB9GYhy2G3rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5e2JynV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiHewQQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EE51F000E9;
-	Wed, 20 May 2026 17:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5e2JynV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C241F000E9;
+	Wed, 20 May 2026 17:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299687;
-	bh=j4XSGZjTK4rBjENL1nMNHkCnty6P5rQvTWkTozd6DWc=;
+	s=korg; t=1779299690;
+	bh=AFq1xrGLYTOLAld3gm+S1YCaZZaTPcHj4Hv++jn/q2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PiHewQQfCqnqubfOF5Da6iuIupMID7HZ+/1ihP62m46/2edVbLD1mHYPqIxr5ILkG
-	 oWB4Fo68Qv8zvhOovJRyHkYaz1U69M+6IpKRDR7XilWrj6mWZQCLtWnCv4wpsqK6fk
-	 96nyqAaD39A6yrIEnvl1Qk6CJ+n2epSh/1aaa+y0=
+	b=B5e2JynVgoz4VMvfDQUmk4deTbOV5OHa4hz1sEuMUlZn3ORpHRaFTZpL5wQGEyZMA
+	 p+gcNGMf9lnbUqyHpGzBUvRZF+PeurWW/0AnXcZstLqbC80hILt5kOwKjlz1B3fDzB
+	 8Xv/XuSPNQicLekFKuXtOsakTonJmXbhjnxQ5obs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Costa Shulyupin <costa.shul@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 867/957] fuse: make sure dentry is evicted if stale
-Date: Wed, 20 May 2026 18:22:30 +0200
-Message-ID: <20260520162153.369620886@linuxfoundation.org>
+Subject: [PATCH 6.18 868/957] rtla: Fix parse_cpu_set() bug introduced by strtoi()
+Date: Wed, 20 May 2026 18:22:31 +0200
+Message-ID: <20260520162153.391842750@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,42 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Costa Shulyupin <costa.shul@redhat.com>
 
-[ Upstream commit 1e2c1af1beb395841743e240a59ab37edc9a7d33 ]
+[ Upstream commit 6ea8a206108fe8b5940c2797afc54ae9f5a7bbdd ]
 
-d_dispose_if_unused() may find the dentry with a positive refcount, in
-which case it won't be put on the dispose list even though it has already
-timed out.
+The patch 'Replace atoi() with a robust strtoi()' introduced a bug
+in parse_cpu_set(), which relies on partial parsing of the input string.
 
-"Reinstall" the d_delete() callback, which was optimized out in
-fuse_dentry_settime().  This will result in the dentry being evicted as
-soon as the refcount hits zero.
+The function parses CPU specifications like '0-3,5' by incrementing
+a pointer through the string. strtoi() rejects strings with trailing
+characters, causing parse_cpu_set() to fail on any CPU list with
+multiple entries.
 
-Fixes: ab84ad597386 ("fuse: new work queue to periodically invalidate expired dentries")
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260114145344.468856-3-mszeredi@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Restore the original use of atoi() in parse_cpu_set().
+
+Fixes: 7e9dfccf8f11 ("rtla: Replace atoi() with a robust strtoi()")
+Signed-off-by: Costa Shulyupin <costa.shul@redhat.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20260112192642.212848-2-costa.shul@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/tracing/rtla/src/utils.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index b7a6a5b6bbc8a..ac5d0c305b51f 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -172,6 +172,10 @@ static void fuse_dentry_tree_work(struct work_struct *work)
- 			if (time_after64(get_jiffies_64(), fd->time)) {
- 				rb_erase(&fd->node, &dentry_hash[i].tree);
- 				RB_CLEAR_NODE(&fd->node);
-+				spin_lock(&fd->dentry->d_lock);
-+				/* If dentry is still referenced, let next dput release it */
-+				fd->dentry->d_flags |= DCACHE_OP_DELETE;
-+				spin_unlock(&fd->dentry->d_lock);
- 				d_dispose_if_unused(fd->dentry, &dispose);
- 				spin_unlock(&dentry_hash[i].lock);
- 				cond_resched();
+diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
+index bf20077cca742..b4cd93f784522 100644
+--- a/tools/tracing/rtla/src/utils.c
++++ b/tools/tracing/rtla/src/utils.c
+@@ -113,18 +113,16 @@ int parse_cpu_set(char *cpu_list, cpu_set_t *set)
+ 	nr_cpus = sysconf(_SC_NPROCESSORS_CONF);
+ 
+ 	for (p = cpu_list; *p; ) {
+-		if (strtoi(p, &cpu))
+-			goto err;
+-		if (cpu < 0 || cpu >= nr_cpus)
++		cpu = atoi(p);
++		if (cpu < 0 || (!cpu && *p != '0') || cpu >= nr_cpus)
+ 			goto err;
+ 
+ 		while (isdigit(*p))
+ 			p++;
+ 		if (*p == '-') {
+ 			p++;
+-			if (strtoi(p, &end_cpu))
+-				goto err;
+-			if (end_cpu < cpu || end_cpu >= nr_cpus)
++			end_cpu = atoi(p);
++			if (end_cpu < cpu || (!end_cpu && *p != '0') || end_cpu >= nr_cpus)
+ 				goto err;
+ 			while (isdigit(*p))
+ 				p++;
 -- 
 2.53.0
 
