@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524183FC5B7;
-	Wed, 20 May 2026 18:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46953F7A9F;
+	Wed, 20 May 2026 18:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300705; cv=none; b=fVRnkbJ+lPTCxLgasbw0NDG+nP7E8rnBDEdXZsTmX9XfwAFsO4iw8BlAakCaaC5wUJ6ImWJfEXrSnwG43W6FQ+ptUKyBtMGl/hpxIy0H6IgF7iL+IMm4pbGVPwR/4bNEKQEU4aovTJFyaigHNjIJ36MYrS9GS7nycEBCLJXte+k=
+	t=1779300707; cv=none; b=SkleebK7GCqVxgAvMwI1tGZYho24cmTkc4v0uYvQLvXCI+3FPmDi36RzEgoSuZFsJltuW2rPp0X/b9TJ1e3WUFoArzAdrPJtj31f0BqthzAw0lDeO3Jn/205F9uGLiODJOJht1MRWab9rIzpJVOG1R3Gm29OK4MUsDD1uDIaFeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300705; c=relaxed/simple;
-	bh=EGr9+hB6rccyoXakziAxh3e8fP/cr/bPz12rLjPRXdQ=;
+	s=arc-20240116; t=1779300707; c=relaxed/simple;
+	bh=2HVSJ1Vx4iVcJJanuosBZRbMmv4iHdZgMBxyWbjmINA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NN3x25+Xv0EKVJ/2yoNfGfR4XwddDg8A/DbXmJvtS5sOgwdOrdgRtV6OIro582EbTLnau8U2Y+x/TiFS8Po40MFCHOXMa17nQFu6bYIWd/mNbfld1eKu+zx4FDpJoVVWH1bdRT6AuQtwSa6tM4yyNOK23TsQDWEYzRSkW+e4odE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9K8cPC1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKS/NCcefrnSoWKl+CAbdH1N8jTdh4B6ujaOvp2xZ1cT4VPkvOrMY5b+WSF9kERvNuZhH9POQjJYSp+imPYcXsEnbLFqSkgxSP/yLs481oRvSwkHscZNPCwYzB+pS3qB2gXDyEN+fsU2rR7G/R2ZSMPfB2UzfzwYO5DgiNwM62k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXofwmb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9K8cPC1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4DD1F000E9;
-	Wed, 20 May 2026 18:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXofwmb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AD31F000E9;
+	Wed, 20 May 2026 18:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300704;
-	bh=/E17RD3rIyyOSNupYCBODg6EEaPlQIRE34JZJUR0bbk=;
+	s=korg; t=1779300706;
+	bh=HLyI92k9cNMBWxXWU4jPetIumMvnWCz6k0+HpqNkrQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b9K8cPC1Yjz+WP7L89jdA+3vUUnWMhaWPOykpH2SbIAlLOq3FzUjMNtjK1rdphgx1
-	 N9m+QYYRlmIaMV+GvhDYmWhqOtcezz5hBVJBoB6HkU4GtD0kKLvn76qH9tl13bEsSd
-	 JVc48kwYNJk+HOD6jE0WzyZXIuMXnixuI+Dc+ZDY=
+	b=CXofwmb2uwYTPm3zkh8bX0mZh5QcDAH1zUMZ4I/kYRtvrDMTSPt9hln0MAptnUR79
+	 wxglh3VO6gjIRLx1MBFL+GNSzvfOGrFHpXADF9HX9oIEfm5GZJkBWHEA+KgjdN54uf
+	 2OfbGSR/wvYEP8uwbXZ9vMNEkO3XEIZvAluSnwrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming5719@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/666] arm64: dts: rockchip: Fix Bluetooth stability on LCKFB TaiShan Pi
-Date: Wed, 20 May 2026 18:18:07 +0200
-Message-ID: <20260520162117.195670819@linuxfoundation.org>
+Subject: [PATCH 6.12 277/666] arm64: dts: rockchip: Correct Fan Supply for Gameforce Ace
+Date: Wed, 20 May 2026 18:18:08 +0200
+Message-ID: <20260520162117.217194215@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Wang <wangming5719@gmail.com>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 861a9593e10bb6ab2a492b315c8a2a3aad70ac00 ]
+[ Upstream commit c7079215b7dbf88b84a95ff13982bf3dab3cfbe1 ]
 
-The AP6212 WiFi/BT module on the LCKFB TaiShan Pi (RK3566) is prone to
-communication timeouts and reset failures (error -110) when operating at
-3 Mbps.
+Correct the regulator providing power to the PWM controlled fan.
+Without this fix the fan only runs when the audio path is playing
+audio (because the speaker amplifier and PWM fan share the same
+regulator).
 
-This patch stabilizes the Bluetooth interface by:
-1. Updating the compatible string to 'brcm,bcm43430a1-bt' to better reflect
-   the actual chip revision used in the AP6212 module.
-2. Lowering the maximum UART baud rate from 3,000,000 to 1,500,000 bps.
-   Tests show that 1.5 Mbps is the reliable upper limit for this board's
-   UART configuration, eliminating the initialization timeouts.
-
-Fixes: 251e5ade9ba4 ("arm64: dts: rockchip: add dts for LCKFB Taishan Pi RK3566")
-Signed-off-by: Ming Wang <wangming5719@gmail.com>
-Link: https://patch.msgid.link/20260206090453.1041919-1-wming126@126.com
+Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://patch.msgid.link/20260310134648.550006-1-macroalpha82@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-index 7cd91f8000cb0..419225a4806c1 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-@@ -635,10 +635,10 @@ &uart1 {
- 	status = "okay";
- 
- 	bluetooth: bluetooth {
--		compatible = "brcm,bcm43438-bt";
-+		compatible = "brcm,bcm43430a1-bt";
- 		clocks = <&rk809 1>;
- 		clock-names = "lpo";
--		max-speed = <3000000>;
-+		max-speed = <1500000>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&bt_host_wake_l &bt_wake_l &bt_enable_h>;
- 		shutdown-gpios = <&gpio2 RK_PB7 GPIO_ACTIVE_HIGH>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+index 467f69594089b..dc1639574f367 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+@@ -303,7 +303,7 @@ pwm_fan: pwm-fan {
+ 		compatible = "pwm-fan";
+ 		#cooling-cells = <2>;
+ 		cooling-levels = <0 120 150 180 210 240 255>;
+-		fan-supply = <&vcc5v0_sys>;
++		fan-supply = <&vcc5v0_spk>;
+ 		interrupt-parent = <&gpio4>;
+ 		interrupts = <RK_PB2 IRQ_TYPE_EDGE_RISING>;
+ 		pulses-per-revolution = <4>;
 -- 
 2.53.0
 
