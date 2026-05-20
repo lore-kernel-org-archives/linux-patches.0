@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549433F8707;
-	Wed, 20 May 2026 18:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B659D3DC4DA;
+	Wed, 20 May 2026 18:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300857; cv=none; b=RXl4hJ6q2AZhfwTuYl2VPETyGvRFYUg8KHsvNggt1EyYIAdqkyYpuJb0DBj89TUsGtHopw8oULbM1Gs4kpiBsbeQRcsgsiQg2hjiyzeoTKQfdP28xoqHlpWMA3DrCErpMoo6ZmFfUnkMvIjbLbjahTcBhSDeq+/V5UNrVnoqg/s=
+	t=1779300859; cv=none; b=a1056qD0EVos4jFxFx5BzRgoP4yxb66t3WxgEeTfG3N0o84HOhXQsWja5jGbFHZwJpuxkMRDK31f2hAlit7NBE2mQjMHC+eFOBCTEv/xLc4yRHwa7x6Je181rBaAPzVUYZrKEIlN2tjJblWGV9h0/J5BiEViieszImF28DGjcN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300857; c=relaxed/simple;
-	bh=ayB5LISmOZllfjWqZGowuRiticb7P12YdZXVlEMThb8=;
+	s=arc-20240116; t=1779300859; c=relaxed/simple;
+	bh=Kiqx7jOQm2E3JsfnuDTVqS6PjsgebepTZkavPcC0vB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMgbHH/It/oXHRK7Z9s0dRbQSH03Own1MIn8Yiry1f/kQwWYJWI8r3cIimUzu0FeZ7KlAApZNtsSz8tqth0mHXNdgIUcnXnVu6+8AeEKPwnY8VE85kbI9vfsA66wCjRyaEHwzZEku+Zs+bmxSM+vpulAstyptwMO5SXIA6v0AtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wu6xTk04; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u64mWItrDE1Y9waKbcFOXErneQosXCRCwXOGU3pNvEbx+OuKN0/NZIaKD+p+LOh+jdcYIx1OjWxDc79qe2TqRk4I4QFqytUdwbDVihcN+v4mqF4rEk4a30WMTy5pb4BJJco5QxNs2FLkij8vUi5zYhU5eK0I6PmB47f3+hm+idM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SM2mcQ0r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wu6xTk04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA3D1F000E9;
-	Wed, 20 May 2026 18:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SM2mcQ0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276CB1F000E9;
+	Wed, 20 May 2026 18:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300856;
-	bh=ekJRZH5AaLc1hasOvQzyuU/hgGecOe2ne8waqosiSho=;
+	s=korg; t=1779300858;
+	bh=FWXibHDyYeY9ug83KNHDhkYeIiXqUNNg2USIfLi04rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wu6xTk04sbkFA45KUFgpFDMxGPzBpOE/M8hUDZK+t4Kd14groGfgZakBiv/Kgm+cY
-	 7WwoOFBgGbCfR2s52k03dWNXtnu74LSWvtyO/h3fa0I4vlq5hxJaeF0qV7OJ5DcWj3
-	 yCRac2gwvzDZzG5LXLdTrAJ5Z0hK3nw4dESOTS0Q=
+	b=SM2mcQ0rkvQ4Ce5hB3NEbQwLFNRJyfsGr5OGBOaEEVjsX9yU9dwRQAdaALbpucugN
+	 WZ8mq2lnRUDFnPqbJP1VSGHF2HlKo1gA3XMKj6s6WcwIvJGUBvkfgUdKvmeX+FDOzD
+	 +0cgiS997ycLJqi79sqJfv5I632sbxpPdKTztu9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Zyngier <maz@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/666] dt-bindings: interrupt-controller: arm,gic-v3: Fix EPPI range
-Date: Wed, 20 May 2026 18:19:04 +0200
-Message-ID: <20260520162118.448567996@linuxfoundation.org>
+Subject: [PATCH 6.12 334/666] mtd: spi-nor: core: correct the op.dummy.nbytes when check read operations
+Date: Wed, 20 May 2026 18:19:05 +0200
+Message-ID: <20260520162118.471527027@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 15cfc8984defc17e5e4de1f58db7b993240fcbda ]
+[ Upstream commit 756564a536ecd8c9d33edd89f0647a91a0b03587 ]
 
-According to the "Arm Generic Interrupt Controller (GIC) Architecture
-Specification, v3 and v4", revision H.b[1], there can be only 64
-Extended PPI interrupts.
+When check read operation, need to setting the op.dummy.nbytes based
+on current read operation rather than the nor->read_proto.
 
-[1] https://developer.arm.com/documentation/ihi0069/hb/
-
-Fixes: 4b049063e0bcbfd3 ("dt-bindings: interrupt-controller: arm,gic-v3: Describe EPPI range support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Brain-farted-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/3e49a63c6b2b6ee48e3737adee87781f9c136c5f.1772792753.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 0e30f47232ab ("mtd: spi-nor: add support for DTR protocol")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/interrupt-controller/arm,gic-v3.yaml    | 2 +-
+ drivers/mtd/spi-nor/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
-index 5f051c666cbe5..9deaf132d0e9b 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
-@@ -50,7 +50,7 @@ properties:
-       The 2nd cell contains the interrupt number for the interrupt type.
-       SPI interrupts are in the range [0-987]. PPI interrupts are in the
-       range [0-15]. Extended SPI interrupts are in the range [0-1023].
--      Extended PPI interrupts are in the range [0-127].
-+      Extended PPI interrupts are in the range [0-63].
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index a3e6a8c28dfbe..d666e044b0c4d 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2416,7 +2416,7 @@ static int spi_nor_spimem_check_readop(struct spi_nor *nor,
+ 	/* convert the dummy cycles to the number of bytes */
+ 	op.dummy.nbytes = (read->num_mode_clocks + read->num_wait_states) *
+ 			  op.dummy.buswidth / 8;
+-	if (spi_nor_protocol_is_dtr(nor->read_proto))
++	if (spi_nor_protocol_is_dtr(read->proto))
+ 		op.dummy.nbytes *= 2;
  
-       The 3rd cell is the flags, encoded as follows:
-       bits[3:0] trigger type and level flags.
+ 	return spi_nor_spimem_check_op(nor, &op);
 -- 
 2.53.0
 
