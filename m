@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF25D3A382F;
-	Wed, 20 May 2026 16:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEF73A383C;
+	Wed, 20 May 2026 16:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296140; cv=none; b=JY4LK0APLQ5O16qtITsk22pDE5Fcyh/OVmuxUiK6G2afSF8znhLPTY527kx4n5HBBBzLqZVXam8MCEc3OtO4plYUiKi0jyQq8T4xxm35y3//XSCK9zsyln0CgE4oTcXKGxCJvN5614gJqicHxz9egm+PcQ1eL4BcTdvkSigNNhI=
+	t=1779296143; cv=none; b=M6BVUwMyZvZpl+XKbQj/c/LCQgNxle8TsNKbmpe9Sta6GRKRJ+1VXtuZk/M9HRpuVW9n9S0rZuhzKIv8aSiNqm5Z1ceVowTMOB5uw/WCYLiGpv3kTI3UnRM6vpopSCnj2vtsxPjmFktr5fXOqnxLaDoNR7inQyTAbG8NoqRSFtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296140; c=relaxed/simple;
-	bh=J1+vTIy1xDweDTjEzMmvCC9/Uj0/OoCbkeNzPMmqKBs=;
+	s=arc-20240116; t=1779296143; c=relaxed/simple;
+	bh=8Ez8ukCe8TAUfrIC6BBoi1N5kPB+48RSinNNVbLyyD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hr+YWIj8qHIU0F3D/gXiS1OerHzYsQlHmwitRAEdJ7JN1wWiLVL2+YJriSQx0E0+qeDMyZdlGQy8XChxZVUKx0Fi03Fv/YjRpI72psyzgDHdKcuiFsjSkyPKJUTmaN2gf1C6K1SmMvCkPXFhbY3NU1ObAE0qDkf6S2EdZOXINMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxXmSES4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGEKLUbPRYZlEh6ZsatXJnoese4zvyWKDyEZp5hxTy8X0MqaS4F1qaWMV7L1WxagBhSUl2ieNujBmHdUZJ3aGDfdw9rnMAsUsHKDTZDR3tG83mff4OJaQYXQsAJEgTpKcelLkDwSEFu+U7bqNuaeW8Bbini2UEZgvqWfEJCHxUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MU0eBIvL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxXmSES4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ABE1F000E9;
-	Wed, 20 May 2026 16:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MU0eBIvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844D11F000E9;
+	Wed, 20 May 2026 16:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296139;
-	bh=0IptEVblN/xwPTMiVpV5FtNoT1C5J2A5i38V9lSZxtE=;
+	s=korg; t=1779296142;
+	bh=v68j0a7C5BFlAFxgaRO2di+TJdAmyssvb3gunoTMuXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxXmSES44sC1WabCtI2ogNtrDhl8HKxsW7WeiMaRRrzuRp9+1XHNcTH0q6SVbWAwS
-	 N5pZh9Q5tydBYGBYwRlCWet8BjngHnfdpgsn4n1cw1w1NyCXustRsS+17CKJHqGSXU
-	 hha4MIDMqFhYhYld0rOYqDlS3LYLEnL2m0poIBtI=
+	b=MU0eBIvLnF/1DpKkVcM1mD5OdZiBmlGN76LMUh/i1bOixRhqyUkktlS7EyazCXEFi
+	 FNcO4dz+awlnhncn9XNs7w2dt8KD7kT5HG5p+UEBnOTMaHRy+XXyBc/H0AAK5cVcOq
+	 z5KaCa1thhYHeB0TFPJJ9wXiD4wqkap7DgCjlPLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Ian Rogers <irogers@google.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0685/1146] fs/ntfs3: terminate the cached volume label after UTF-8 conversion
-Date: Wed, 20 May 2026 18:15:35 +0200
-Message-ID: <20260520162203.692108345@linuxfoundation.org>
+Subject: [PATCH 7.0 0650/1146] perf cgroup: Update metric leader in evlist__expand_cgroup
+Date: Wed, 20 May 2026 18:15:00 +0200
+Message-ID: <20260520162202.894899531@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,49 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a6cd43fe9b083fa23fe1595666d5738856cb261a ]
+[ Upstream commit c9ef786c0970991578397043f1c819229e2b7197 ]
 
-ntfs_fill_super() loads the on-disk volume label with utf16s_to_utf8s()
-and stores the result in sbi->volume.label. The converted label is later
-exposed through ntfs3_label_show() using %s, but utf16s_to_utf8s() only
-returns the number of bytes written and does not add a trailing NUL.
+When the evlist is expanded the metric leader wasn't being updated. As
+the original evsel is deleted this creates a use-after-free in
+stat-shadow's prepare_metric. This was detected running the "perf stat
+--bpf-counters --for-each-cgroup test" with sanitizers.
 
-If the converted label fills the entire fixed buffer,
-ntfs3_label_show() can read past the end of sbi->volume.label while
-looking for a terminator.
+The change itself puts the copied evsel into the priv field (known
+unused because of evsel__clone use) and then in a second pass over the
+list updates the copied values using the priv pointer.
 
-Terminate the cached label explicitly after a successful conversion and
-clamp the exact-full case to the last byte of the buffer.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: d1c5a0e86a4e ("perf stat: Add --for-each-cgroup option")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Sun Jian <sun.jian.kdev@gmail.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/perf/util/cgroup.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 174a7cb202a08..9ed485f9efbae 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1339,8 +1339,13 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 				      le32_to_cpu(attr->res.data_size) >> 1,
- 				      UTF16_LITTLE_ENDIAN, sbi->volume.label,
- 				      sizeof(sbi->volume.label));
--		if (err < 0)
-+		if (err < 0) {
- 			sbi->volume.label[0] = 0;
-+		} else if (err >= sizeof(sbi->volume.label)) {
-+			sbi->volume.label[sizeof(sbi->volume.label) - 1] = 0;
-+		} else {
-+			sbi->volume.label[err] = 0;
+diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
+index 040eb75f08048..1b5664d1481f5 100644
+--- a/tools/perf/util/cgroup.c
++++ b/tools/perf/util/cgroup.c
+@@ -417,7 +417,6 @@ static bool has_pattern_string(const char *str)
+ int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgroup)
+ {
+ 	struct evlist *orig_list, *tmp_list;
+-	struct evsel *pos, *evsel, *leader;
+ 	struct rblist orig_metric_events;
+ 	struct cgroup *cgrp = NULL;
+ 	struct cgroup_name *cn;
+@@ -452,6 +451,7 @@ int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgro
+ 		goto out_err;
+ 
+ 	list_for_each_entry(cn, &cgroup_list, list) {
++		struct evsel *pos;
+ 		char *name;
+ 
+ 		if (!cn->used)
+@@ -467,21 +467,37 @@ int evlist__expand_cgroup(struct evlist *evlist, const char *str, bool open_cgro
+ 		if (cgrp == NULL)
+ 			continue;
+ 
+-		leader = NULL;
++		/* copy the list and set to the new cgroup. */
+ 		evlist__for_each_entry(orig_list, pos) {
+-			evsel = evsel__clone(/*dest=*/NULL, pos);
++			struct evsel *evsel = evsel__clone(/*dest=*/NULL, pos);
++
+ 			if (evsel == NULL)
+ 				goto out_err;
+ 
++			/* stash the copy during the copying. */
++			pos->priv = evsel;
+ 			cgroup__put(evsel->cgrp);
+ 			evsel->cgrp = cgroup__get(cgrp);
+ 
+-			if (evsel__is_group_leader(pos))
+-				leader = evsel;
+-			evsel__set_leader(evsel, leader);
+-
+ 			evlist__add(tmp_list, evsel);
+ 		}
++		/* update leader information using stashed pointer to copy. */
++		evlist__for_each_entry(orig_list, pos) {
++			struct evsel *evsel = pos->priv;
++
++			if (evsel__leader(pos))
++				evsel__set_leader(evsel, evsel__leader(pos)->priv);
++
++			if (pos->metric_leader)
++				evsel->metric_leader = pos->metric_leader->priv;
++
++			if (pos->first_wildcard_match)
++				evsel->first_wildcard_match = pos->first_wildcard_match->priv;
 +		}
- 	} else {
- 		/* Should we break mounting here? */
- 		//err = -EINVAL;
++		/* the stashed copy is no longer used. */
++		evlist__for_each_entry(orig_list, pos)
++			pos->priv = NULL;
++
+ 		/* cgroup__new() has a refcount, release it here */
+ 		cgroup__put(cgrp);
+ 		nr_cgroups++;
 -- 
 2.53.0
 
