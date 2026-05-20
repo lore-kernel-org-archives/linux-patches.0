@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3283A3E9C;
-	Wed, 20 May 2026 11:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8A23A381C;
+	Wed, 20 May 2026 11:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276001; cv=none; b=WbdKDKws8NxnO1KualdcWdiK1LVcbv9nm/iJXiPydH9C3FZfpVgmuJBjsGz+/UhiK2PpWbuZdBY1wMdr358XShJYEWhb/bk2I2QFXIQAZSbDUabcQfeUsMOnkyDydkl2j01kw26Algo9/HFBje+sby4F2Wj2KADGyDU/4f7dEI0=
+	t=1779276001; cv=none; b=RoDQOwDgqgwBgEQCnrVcTdmZiIrdndwn/KbWeJVozD/FFy/OqXgI378UNqfDy296bp2DclNCzpmAd/wFhxIVvDjJ9tBHFMhRPB2q+WQadeWGHn6XaU97LTMssCu9cCe217kJsRYulu8Qb9ME++q8NxiiZppO6Ak1Yoc2CFCuf3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779276001; c=relaxed/simple;
-	bh=NQc4CnQWhGH095J57HFMfL4NRzo/EKU/flET+NJ+iRU=;
+	bh=ml+G5+JCQ5h+voXXANy33pfz69ElvWpDb6Wv7+uPcyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XmaQcCb/ROWG98qK2UTOGzQP4xPl5+K9GnDukZ29U5zRexXDGLclJW8p0vebxw2w/HIkeX2Qe5upxaiVHtK4OLBkbHNcCu6BRJaPzFiFi9hHJKA7X6e/eTqj0yFDwD1LuAjBJ6ssLUfqURvKZ7kbGhVNyMlf/CLXBB61PEmtIGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HHkGQqMC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q5z5dvWUd4RIzilZNNZsnWQFH1I+KerYcAYMF/Gh8kWpwA6oKWh03SIa3XrLPmhCCo6sKeOIjJvnPXS0wbW/yYO2LQ5eOgDs3YnkP1ngTNGFApCL6iKEQXxKFtICLB767g18i+kV1XFRWAb0KXRXlc6EHW9Vqi2meoYKAOPbB6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SMnYUfvp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HHkGQqMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF36E1F00899;
-	Wed, 20 May 2026 11:19:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SMnYUfvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDB61F000E9;
+	Wed, 20 May 2026 11:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779275997;
-	bh=o8yikqMBR73n80l53MqCB/5Pcdd2h9+MR666hYJgGV8=;
+	s=k20260515; t=1779275999;
+	bh=nlY92QB3mvBfJmeeOnE6vg9zLpMxhZsUSgGEybZgriI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHkGQqMCv9QD5dxLIpvLKPasYO5WwBYuo+sZ5vzfY4IQiw1rWnGxnfvagE9jhych3
-	 BlBiCb43y7otiVtbnLABf5GSVn5Sz2omL2MpivLGq9FT6EMfDZM56sdv7x5zDvlSBt
-	 aSiN50d0r/WXwcMcu9G1dv8f+vUreLzqZtsOd2qIMAx7svpUSpW3I1cVVFUZgHXuKw
-	 48O94rhqCDmXGQ9ZvcPcVpBgVUce8g4hzYwMMx3L+RDKy4zduw1Ysw2MDjTYIGwQfV
-	 /ES9FJplGqN0dXAL1zXuP3XbRAfjottTQyPspNvLRW3027obYAkei9T8R+rK6eb/ro
-	 oSedEHlkBZt2g==
+	b=SMnYUfvpv+fZC6pQ5v0rx10ErQYxDUNMbE1pYHD2h0By+EmVCAKAmR2wxECXhJ1So
+	 Dpmvvt172DIWhUPiYJW0ZeJEokwWJpQHwCQECN6Xo/F9n6qpJ4hBAbILm0eMmBFhcE
+	 qGD+V/PcgXWL7v66P+JfJ4csELVdK3NeiLTlJ0W3MLpZbAvsF5zCgtUnDdrYXe7Zyz
+	 vGz78OsifYzHS8zVAWvD/73qGuDR4u7xJlYKV5mYCWITuvYFvR4YiTj2LJGSNSTsyR
+	 0b3RZIMAPEwTYfGNq5MhYu886NbRKGBYcFWKtGqix/MlAmYNFNgW+XSscgqvxgyp3T
+	 vOYD8YRZG+oMA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lee Jones <lee@kernel.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Jeremy Erazo <mendozayt13@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] HID: magicmouse: Prevent out-of-bounds (OOB) read during DOUBLE_REPORT_ID
-Date: Wed, 20 May 2026 07:18:41 -0400
-Message-ID: <20260520111944.3424570-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] smb: client: avoid integer overflow in SMB2 READ length check
+Date: Wed, 20 May 2026 07:18:42 -0400
+Message-ID: <20260520111944.3424570-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -49,275 +48,312 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Jeremy Erazo <mendozayt13@gmail.com>
 
-[ Upstream commit d93ba918a185aca2594da63e92fdc5495b559c0f ]
+[ Upstream commit 81a874233c305d29e37fdb70b691ff4254294c0b ]
 
-It is currently possible for a malicious or misconfigured USB device to
-cause an out-of-bounds (OOB) read when submitting reports using
-DOUBLE_REPORT_ID by specifying a large report length and providing a
-smaller one.
+SMB2 READ response validation in cifs_readv_receive() and
+handle_read_data() checks data_offset + data_len against the received
+buffer length.  Both values are attacker-controlled fields from the
+server response and are stored as unsigned int, so the addition can
+wrap before the bounds check:
 
-Let's prevent that by comparing the specified report length with the
-actual size of the data read in from userspace.  If the actual data
-length ends up being smaller than specified, we'll politely warn the
-user and prevent any further processing.
+	fs/smb/client/transport.c:1259
+		if (!use_rdma_mr && (data_offset + data_len > buflen))
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+	fs/smb/client/smb2ops.c:4839
+		else if (buf_len >= data_offset + data_len)
+
+A malicious SMB server can use this to bypass validation.  In the
+non-encrypted receive path the client attempts an oversized socket
+read and stalls for the SMB response timeout (180 seconds) before
+reconnecting.  In the SMB3 encrypted path, runtime testing shows the
+malformed length can reach copy_to_iter() in handle_read_data() with
+attacker-controlled size, where usercopy hardening stops the oversized
+copy before bytes reach userspace.
+
+Guard both call sites with check_add_overflow(), which is already
+used elsewhere in this subsystem (smb2pdu.c).  On overflow, treat the
+response as malformed and reject with -EIO.
+
+Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem `HID: magicmouse`; action verb `Prevent`;
-claimed intent is preventing an out-of-bounds read while parsing
-`DOUBLE_REPORT_ID`.
+## Phase Walkthrough
 
-Step 1.2 Record: Tags present: `Signed-off-by: Lee Jones
-<lee@kernel.org>`, `Reviewed-by: Günther Noack <gnoack@google.com>`,
-`Signed-off-by: Jiri Kosina <jkosina@suse.com>`. No `Fixes:`, `Reported-
-by:`, `Tested-by:`, `Link:`, or `Cc: stable@vger.kernel.org` tag was
-present in the supplied commit text.
+### Phase 1: Commit Message Forensics
+Record: Subsystem is `smb: client`; action verb is `avoid`; claimed
+intent is preventing integer overflow in SMB2 READ response length
+validation.
 
-Step 1.3 Record: The body describes a malformed HID report where
-`data[1]` advertises a larger embedded report length than the actual
-received buffer. Symptom/failure mode: OOB read during recursive
-parsing. No affected kernel versions are named. Root cause:
-`magicmouse_raw_event()` trusted the embedded length before checking
-that the buffer actually contained that many bytes.
+Record: Tags present are `Signed-off-by: Jeremy Erazo
+<mendozayt13@gmail.com>` and `Signed-off-by: Steve French
+<stfrench@microsoft.com>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by:`, `Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
+tags were present.
 
-Step 1.4 Record: This is not a hidden cleanup; it is an explicit memory-
-safety bug fix.
+Record: The body describes attacker-controlled SMB2 READ response fields
+`DataOffset` and `DataLength` being added as `unsigned int`, allowing
+wraparound before bounds checks. The stated symptoms are a 180-second
+client stall/reconnect in the non-encrypted path and an oversized
+`copy_to_iter()` attempt in the encrypted path, stopped by usercopy
+hardening.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `drivers/hid/hid-magicmouse.c`, 16
-insertions, no removals. Modified function: `magicmouse_raw_event()`.
-Scope: single-file surgical fix.
+Record: This is a direct bug fix, not hidden cleanup: it changes
+overflow-prone bounds checks into checked arithmetic and rejects
+malformed responses with `-EIO`.
 
-Step 2.2 Record: First hunk adds `if (size < 1) return 0;` before
-`switch (data[0])`, preventing zero-sized recursive calls from
-dereferencing `data[0]`. Second hunk adds `size < 2` before reading
-`data[1]`, then validates `size >= data[1] + 2` before splitting the
-double report into recursive calls.
+### Phase 2: Diff Analysis
+Record: Files changed: `fs/smb/client/smb2ops.c` and
+`fs/smb/client/transport.c`; upstream stat is 12 insertions and 7
+deletions. Modified functions are `handle_read_data()` and
+`cifs_readv_receive()`. Scope is small and surgical.
 
-Step 2.3 Record: Bug category is memory safety / bounds validation.
-Broken mechanism: the `DOUBLE_REPORT_ID` case used `data[1]` to choose
-recursive buffer pointers and sizes without proving the first embedded
-report existed in the received buffer.
+Record: In `handle_read_data()`, before the patch `buf_len >=
+data_offset + data_len` could pass after unsigned wrap. After the patch,
+`check_add_overflow(data_offset, data_len, &end_off)` must be false and
+`buf_len >= end_off` must be true before copying from `buf +
+data_offset`.
 
-Step 2.4 Record: The fix is obviously correct by inspection: it checks
-the exact fields before use and follows existing invalid-report behavior
-of returning `0`. Regression risk is very low; only malformed undersized
-reports are rejected. Minor concern: the new `hid_warn()` string lacks a
-trailing newline, but that is logging style, not functional risk.
+Record: In `cifs_readv_receive()`, before the patch `data_offset +
+data_len > buflen` could wrap and fail to reject malformed lengths.
+After the patch, overflow or `end_off > buflen` marks the response
+malformed and discards the frame.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows `magicmouse_raw_event()` dates back
-to `128537cea464` from 2010, while the `DOUBLE_REPORT_ID` recursive
-parsing lines were introduced by `a462230e16acc` (`HID: magicmouse:
-enable Magic Trackpad support`). `git describe --contains` places that
-introduction at `v2.6.37-rc1~144^2~3^5~2`.
+Record: Bug category is integer overflow leading to bounds-check bypass.
+The fix quality is good: it uses the kernel overflow helper already used
+in this SMB client area, changes no ABI, and affects only malformed
+server responses. Regression risk is low.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there was no tagged
-introducing commit to follow. Blame independently identifies the
-relevant old code.
+### Phase 3: Git History Investigation
+Record: Upstream commit found on `origin/master` as
+`81a874233c305d29e37fdb70b691ff4254294c0b`, merged by `b0662be9131d8` in
+“Pull smb client fixes from Steve French”, explicitly listing “Fix
+integer overflow in read”.
 
-Step 3.3 Record: Recent `drivers/hid/hid-magicmouse.c` history contains
-other fixes such as missing input crash prevention and report-fixup leak
-fixes, but no prerequisite for this bounds check was identified. This
-patch is standalone.
+Record: `git blame` shows the current `handle_read_data()` vulnerable
+expression attributed to `7c00c3a625f8`, but `git grep` confirmed the
+same expression exists as far back as `v4.14`, so the bug predates that
+current-line attribution. The `cifs_readv_receive()` vulnerable
+expression is attributed to `fb157ed226d2`, described by `git describe
+--contains` as `v6.0-rc1~75^2~4`.
 
-Step 3.4 Record: `git log --author='Lee Jones' -- drivers/hid` shows Lee
-Jones has multiple recent HID fixes, including OOB/UAF-related HID work.
-The patch was reviewed by Günther Noack and applied by HID maintainer
-Jiri Kosina in the mailing-list thread.
+Record: No `Fixes:` tag exists, so Step 3.2 is not applicable.
 
-Step 3.5 Record: No dependency was found. The patch only uses existing
-`hid_warn()` and local variables already present in
-`magicmouse_raw_event()`.
+Record: Recent file history contains other SMB client fixes, including
+OOB and data-corruption fixes, but no prerequisite for this commit was
+identified. The commit is standalone.
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: No commit hash was supplied and the commit object was
-not found in local `git log`, so `b4 dig -c <commit>` was not
-applicable. I used `b4 mbox` with the v2 Message-ID instead. Lore URL:
-`https://lore.kernel.org/all/20260416131655.2279756-1-lee@kernel.org/`.
-Series revisions found: v1 and v2.
+Record: Jeremy Erazo had no prior SMB client commits in the checked
+history. Steve French has many SMB/CIFS commits and is the SMB client
+maintainer who committed this patch.
 
-Step 4.2 Record: The v2 headers show Lee sent it to Jiri Kosina,
-Benjamin Tissoires, `linux-input@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`, and Cc’d Günther Noack. Jiri later replied
-“Applied”.
+### Phase 4: Mailing List And External Research
+Record: `b4 dig -c 81a874233c305d29e37fdb70b691ff4254294c0b` found the
+original submission at `https://patch.msgid.link/20260514120334.2925013-
+1-mendozayt13@gmail.com`.
 
-Step 4.3 Record: No `Reported-by` or external bug-report link was
-present. The thread itself contains the bug explanation.
+Record: `b4 dig -a` found only v1 of the patch; no later revisions were
+found.
 
-Step 4.4 Record: v1 added only the `size < data[1] + 2` check. Günther
-Noack objected that `size == data[1] + 2` still caused a zero-sized
-second recursive call which then dereferenced `data[0]`. v2 added the
-top-level `size < 1` and `DOUBLE_REPORT_ID` `size < 2` checks; Günther
-replied “This looks correct now” and gave `Reviewed-by`.
+Record: `b4 dig -w` showed Jeremy Erazo, Steve French, `linux-
+cifs@vger.kernel.org`, `samba-technical@lists.samba.org`, and `linux-
+kernel@vger.kernel.org` were included.
 
-Step 4.5 Record: Web search for stable-specific discussion did not find
-a stable nomination or a reason not to backport.
+Record: Saved mbox contained the patch only; no review replies, NAKs,
+stable nominations, or objections were present in that matched thread.
+WebFetch to lore search pages was blocked by Anubis, so stable-list
+search via web could not be independently verified.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `magicmouse_raw_event()`.
+### Phase 5: Code Semantic Analysis
+Record: Modified functions are `handle_read_data()` and
+`cifs_readv_receive()`.
 
-Step 5.2 Record: Callers are HID core through the driver `.raw_event`
-callback and recursive self-calls in the `DOUBLE_REPORT_ID` case. `hid-
-core.c` calls `hdrv->raw_event(hid, report, data, size)` before generic
-report processing.
+Record: Callers: `smb2_async_readv()` passes `cifs_readv_receive` and
+`smb3_handle_read_data` to `cifs_call_async()`. `cifs_call_async()`
+stores them in the MID entry. The receive loop in `connect.c` invokes
+`mids[0]->receive()` for non-encrypted async reads, while encrypted
+large reads call `receive_encrypted_read()` and then
+`handle_read_data()`.
 
-Step 5.3 Record: Key callees in the affected path are recursive
-`magicmouse_raw_event()` calls, `magicmouse_emit_touch()`, input event
-reporting helpers, and `hid_warn()`. The new checks run before recursive
-pointer arithmetic.
+Record: User reachability is verified through normal file reads:
+`cifs_issue_read()` calls the dialect `async_readv()` operation, and
+SMB2/SMB3 operation tables use `smb2_async_readv()`.
 
-Step 5.4 Record: Reachability is verified through `hid_input_report()`,
-including `usbhid` interrupt/control paths and `uhid` input paths. A
-matched or emulated HID device can feed raw reports to this parser.
-Unprivileged triggering was not verified and is not needed for the
-decision.
+Record: Key callees are `server->ops->read_data_offset()`,
+`server->ops->read_data_length()`, `cifs_read_iter_from_socket()`,
+`cifs_readv_discard()`, and `copy_to_iter()`. `smb2_read_data_offset()`
+reads `DataOffset`; `smb2_read_data_length()` reads `DataLength` or
+`DataRemaining`.
 
-Step 5.5 Record: Search in `drivers/hid` found this `DOUBLE_REPORT_ID`
-split pattern only in `hid-magicmouse.c`.
+Record: Similar pattern search found the same vulnerable `data_offset +
+data_len` expressions in active stable tags; `check_add_overflow()` is
+already used elsewhere in SMB client files.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: The vulnerable pattern exists in `v6.6`, `v6.1`,
-`v5.15`, `v5.10`, `v5.4`, and `v4.19` by `git grep`. The relevant code
-was introduced around `v2.6.37-rc1`.
+### Phase 6: Stable Tree Analysis
+Record: The vulnerable `handle_read_data()` expression exists in `v7.0`,
+`v6.12`, `v6.6`, `v6.1`, `v5.15`, `v5.10`, `v4.19`, and `v4.14`. The
+vulnerable `cifs_readv_receive()` expression exists in `v7.0`, `v6.12`,
+`v6.6`, and `v6.1`; it was not found in `v5.15`/`v5.10` by the checked
+grep.
 
-Step 6.2 Record: Expected backport difficulty is low: the same block and
-function exist across checked stable baselines, though line offsets
-differ. Exact clean application to every stable branch was not tested.
+Record: The patch applies cleanly to the current `7.0` tree with `git
+apply --check`.
 
-Step 6.3 Record: Local history searches for `DOUBLE_REPORT_ID` and `out-
-of-bounds.*magicmouse` found no prior equivalent fix in this checkout.
+Record: Backport difficulty should be low for `v7.0`, `v6.12`, and
+`v6.6`; `v6.1` and older need path adjustment from `fs/smb/client` to
+`fs/cifs`. Older trees may need per-tree adjustment because
+`v5.15`/`v5.10` only showed the `smb2ops.c` instance, and `v4.14` did
+not have `check_add_overflow()` in `include/linux`.
 
-## Phase 7: Subsystem Context
-Step 7.1 Record: Subsystem is HID input driver support for Apple Magic
-Mouse/Trackpad, under `drivers/hid`. Criticality: peripheral/driver-
-specific, but memory-safety relevant.
+### Phase 7: Subsystem Context
+Record: Subsystem is SMB/CIFS client filesystem/network filesystem code.
+Criticality is important: it affects SMB/CIFS mounts and reads from
+remote servers.
 
-Step 7.2 Record: HID is actively maintained; recent `drivers/hid`
-history shows multiple 2026 fixes including OOB, UAF, and NULL-deref
-fixes.
+Record: The subsystem is active; recent history includes SMB client
+fixes for OOB reads, data corruption, replay initialization, races, and
+read-path issues.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: Affected users are systems with `CONFIG_HID_MAGICMOUSE`
-and matching Apple Magic Trackpad/Magic Mouse style HID devices or
-emulated/spoofed devices reaching this driver.
+### Phase 8: Impact And Risk
+Record: Affected users are SMB2/SMB3 client users mounting shares from a
+malicious or broken server.
 
-Step 8.2 Record: Trigger requires a malformed `DOUBLE_REPORT_ID` report
-where the embedded length does not fit the actual received size, or
-where the second recursive call would be zero-sized. This is not a
-normal-path trigger, but it is reachable via raw HID reports.
+Record: Trigger condition is a crafted SMB2 READ response with
+`DataOffset + DataLength` wrapping `unsigned int`. This is reachable
+from normal file read paths over an SMB mount. Whether an unprivileged
+local user can trigger it depends on mount/access policy; a malicious
+server can trigger it once the client reads from that share.
 
-Step 8.3 Record: Failure mode is OOB read in kernel HID parsing.
-Severity: HIGH because it is memory safety in a device-input path and
-can be triggered by malformed device input; exact crash or disclosure
-behavior was not independently reproduced.
+Record: Failure mode is high severity: denial of service via read
+stall/reconnect in the non-encrypted path, and malformed attacker-
+controlled copy length reaching `copy_to_iter()` in the encrypted path.
+I verified the call path to `copy_to_iter()` and the 3 * default
+60-second unresponsive timeout logic; I did not independently reproduce
+the runtime usercopy-hardening behavior.
 
-Step 8.4 Record: Benefit is high for affected systems because it blocks
-a concrete OOB read. Risk is very low: 16 inserted validation lines,
-single function, no ABI/API change, no locking change.
+Record: Benefit is high because this prevents a remotely supplied
+malformed SMB response from bypassing validation. Risk is low because
+the patch only rejects overflowed or out-of-bounds malformed READ
+responses and does not alter valid response handling.
 
-## Phase 9: Final Synthesis
-Step 9.1 Record: Evidence for backporting: real OOB read, old code
-present in many stable baselines, small surgical validation, reviewed
-after v1 caught an incomplete fix, applied by HID maintainer. Evidence
-against: no `Tested-by`, no explicit stable nomination, exact clean
-apply to every tree not tested. Unresolved: exact upstream commit hash
-unavailable locally; exact unprivileged triggerability unverified; exact
-USB-vs-Bluetooth trigger wording not independently verified.
+### Phase 9: Final Synthesis
+Evidence for backporting: real bounds-check bypass from attacker-
+controlled network fields; reachable in normal SMB read paths; high-
+impact DoS/memory-safety-adjacent behavior; tiny two-function fix;
+committed by the SMB maintainer; merged by Linus as an SMB client fix;
+vulnerable code exists in multiple stable trees.
 
-Step 9.2 Record: Stable rules: obviously correct: yes, by code
-inspection and review; tested: no explicit `Tested-by`. Fixes real bug:
-yes, OOB read. Important issue: yes, memory safety. Small and contained:
-yes, one function, 16 insertions. No new features/APIs: yes. Can apply
-to stable: likely low difficulty; exact apply unverified.
+Evidence against backporting: no `Fixes:`/`Cc: stable`/review tags;
+older stable trees need path/context adjustments, and very old trees may
+lack `check_add_overflow()`.
 
-Step 9.3 Record: No exception category applies; this is a normal memory-
-safety bug fix, not a device ID, quirk, DT, build, or documentation
-patch.
+Unresolved: I could not verify stable-list discussion because lore
+WebFetch search was blocked, and I did not reproduce the runtime
+hardening behavior. These do not change the decision because the integer
+overflow and reachable bounds-check bypass are verified from code.
 
-Step 9.4 Record: The technical merit strongly favors backporting. The
-fix is narrow, old affected code is present across stable trees, and the
-mailing-list review specifically corrected the subtle recursive zero-
-size case.
+Stable rules checklist: obviously correct and tested enough by
+review/merge evidence, yes; fixes a real bug, yes; important issue, yes;
+small and contained, yes; no new feature/API, yes; applies cleanly to
+7.0 and should be straightforward elsewhere with noted adjustments,
+yes/minor backport work.
 
-## Verification
-- Phase 1: Parsed supplied commit message and tags.
-- Phase 2: Compared supplied diff with local `drivers/hid/hid-
-  magicmouse.c` context.
-- Phase 3: Ran `git blame -L 386,496 -- drivers/hid/hid-magicmouse.c`;
-  identified `a462230e16acc` as the `DOUBLE_REPORT_ID` recursive parsing
-  introduction.
-- Phase 3: Ran `git describe --contains --match 'v[0-9]*'
-  a462230e16acc`; found `v2.6.37-rc1~144^2~3^5~2`.
-- Phase 4: Used `b4 mbox 20260416131655.2279756-1-lee@kernel.org`; found
-  v2 thread, reviewer approval, and Jiri’s “Applied” reply.
-- Phase 4: Used `b4 mbox ad-S8Riah-f6mEWm@google.com`; found v1 review
-  pointing out the remaining zero-sized recursive-call bug.
-- Phase 5: Used `rg` and read `hid-core.c`; verified `.raw_event`
-  dispatch and `hid_input_report()` reachability.
-- Phase 6: Used `git grep` on `v6.6`, `v6.1`, `v5.15`, `v5.10`, `v5.4`,
-  and `v4.19`; confirmed vulnerable code exists.
-- Phase 7: Checked `drivers/hid/Kconfig`; confirmed
-  `CONFIG_HID_MAGICMOUSE`.
-- Phase 8: Severity assessment is based on verified OOB read mechanics;
-  exact crash/leak manifestation is unverified.
-- UNVERIFIED: Exact commit hash in local repository; exact clean apply
-  to every stable branch; unprivileged triggerability.
+Verification:
+- [Phase 1] Parsed upstream commit
+  `81a874233c305d29e37fdb70b691ff4254294c0b`; found only Jeremy/Steve
+  `Signed-off-by` tags.
+- [Phase 2] `git show --stat` confirmed 2 files, 12 insertions, 7
+  deletions.
+- [Phase 3] `git blame` and `git describe --contains` checked history
+  for both changed sites.
+- [Phase 4] `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
+  lore URL, v1-only series, recipients, and lack of replies.
+- [Phase 5] `rg` and source reads verified read call path from
+  `cifs_issue_read()` to `smb2_async_readv()` to receive handlers.
+- [Phase 6] `git grep` checked vulnerable expressions in `v7.0`,
+  `v6.12`, `v6.6`, `v6.1`, `v5.15`, `v5.10`, `v4.19`, and `v4.14`; `git
+  apply --check` confirmed clean 7.0 application.
+- [Phase 8] Source reads verified socket-read loop, reconnect timeout
+  basis, and `copy_to_iter()` path.
+- UNVERIFIED: independent runtime reproduction of the oversized
+  copy/usercopy-hardening stop.
+- UNVERIFIED: stable mailing-list search beyond `b4` mbox, because lore
+  WebFetch search pages were blocked.
+
+This should be backported to stable trees.
 
 **YES**
 
- drivers/hid/hid-magicmouse.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/smb/client/smb2ops.c   |  4 +++-
+ fs/smb/client/transport.c | 15 +++++++++------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index 9eadf3252d0dc..f53839484c861 100644
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -390,6 +390,10 @@ static int magicmouse_raw_event(struct hid_device *hdev,
- 	struct input_dev *input = msc->input;
- 	int x = 0, y = 0, ii, clicks = 0, npoints;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index ccc06c83956b5..d443cc8097df6 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4721,6 +4721,7 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ {
+ 	unsigned int data_offset;
+ 	unsigned int data_len;
++	unsigned int end_off;
+ 	unsigned int cur_off;
+ 	unsigned int cur_page_idx;
+ 	unsigned int pad_len;
+@@ -4836,7 +4837,8 @@ handle_read_data(struct TCP_Server_Info *server, struct mid_q_entry *mid,
+ 		}
+ 		rdata->got_bytes = buffer_len;
  
-+	/* Protect against zero sized recursive calls from DOUBLE_REPORT_ID */
-+	if (size < 1)
-+		return 0;
-+
- 	switch (data[0]) {
- 	case TRACKPAD_REPORT_ID:
- 	case TRACKPAD2_BT_REPORT_ID:
-@@ -490,6 +494,18 @@ static int magicmouse_raw_event(struct hid_device *hdev,
- 		/* Sometimes the trackpad sends two touch reports in one
- 		 * packet.
- 		 */
-+
-+		/* Ensure that we have at least 2 elements (report type and size) */
-+		if (size < 2)
-+			return 0;
-+
-+		if (size < data[1] + 2) {
-+			hid_warn(hdev,
-+				 "received report length (%d) was smaller than specified (%d)",
-+				 size, data[1] + 2);
-+			return 0;
+-	} else if (buf_len >= data_offset + data_len) {
++	} else if (!check_add_overflow(data_offset, data_len, &end_off) &&
++		   buf_len >= end_off) {
+ 		/* read response payload is in buf */
+ 		WARN_ONCE(buffer, "read data can be either in buf or in buffer");
+ 		copied = copy_to_iter(buf + data_offset, data_len, &rdata->subreq.io_iter);
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index 05f8099047e1a..fdf4e50c27ceb 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1158,7 +1158,7 @@ int
+ cifs_readv_receive(struct TCP_Server_Info *server, struct mid_q_entry *mid)
+ {
+ 	int length, len;
+-	unsigned int data_offset, data_len;
++	unsigned int data_offset, data_len, end_off;
+ 	struct cifs_io_subrequest *rdata = mid->callback_data;
+ 	char *buf = server->smallbuf;
+ 	unsigned int buflen = server->pdu_size;
+@@ -1256,11 +1256,14 @@ cifs_readv_receive(struct TCP_Server_Info *server, struct mid_q_entry *mid)
+ 	use_rdma_mr = rdata->mr;
+ #endif
+ 	data_len = server->ops->read_data_length(buf, use_rdma_mr);
+-	if (!use_rdma_mr && (data_offset + data_len > buflen)) {
+-		/* data_len is corrupt -- discard frame */
+-		rdata->result = smb_EIO2(smb_eio_trace_read_rsp_malformed,
+-					 data_offset + data_len, buflen);
+-		return cifs_readv_discard(server, mid);
++	if (!use_rdma_mr) {
++		if (check_add_overflow(data_offset, data_len, &end_off) ||
++		    end_off > buflen) {
++			/* data_len is corrupt -- discard frame */
++			rdata->result = smb_EIO2(smb_eio_trace_read_rsp_malformed,
++						 end_off, buflen);
++			return cifs_readv_discard(server, mid);
 +		}
-+
- 		magicmouse_raw_event(hdev, report, data + 2, data[1]);
- 		magicmouse_raw_event(hdev, report, data + 2 + data[1],
- 			size - 2 - data[1]);
+ 	}
+ 
+ #ifdef CONFIG_CIFS_SMB_DIRECT
 -- 
 2.53.0
 
