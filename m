@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F26836405A;
-	Wed, 20 May 2026 17:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321453F1AD9;
+	Wed, 20 May 2026 17:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299152; cv=none; b=RfPmAq0mlhqm6df03JU27YJPUOhSgs+jVvncPMCDFGwz2C3A34Eu1RsBGphIEuyQrba2FKgx0Fo3xQLOmJLHgp+sISfKAhuT6/NUhLOsGwHJbvJ84Gvu3JUQ+gko6mKBmpWBz+LUL87ZuWckwgljf9s6gA6Mv/i4ZuQ+EE9r4gE=
+	t=1779299155; cv=none; b=BHB3nk+hKR5E5usak5220SBJ7LniamBetAvh3XA3W00uZ7nbJ61a62Vf7MO3k98LnIJtMF8ziGC7tGckNCuNgIrP2/qCvctpsCutOlhyvde1HvlZBhLoOeWIzePAqdXKDRAViyy+WM54snkuqomgzS/+UABv++nrqUeKq4SiSm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299152; c=relaxed/simple;
-	bh=qae5xMEoAntC4Q/KwNTM5DSotB7LXk2Aj2Rd2L5mBGs=;
+	s=arc-20240116; t=1779299155; c=relaxed/simple;
+	bh=3Z3HoFdp638EmGeG4nXnfrq6H13dDiE+wXxh82puoEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpr/3arx/OBaZ1l3z0P+Y3N4SNPxvfbegXMXwSV+C0UzDwdNnwB+mg8KaXwhu1Dppbdc5duJ7PoLj1DD9USWmwJy+ZV7L4fmWbuI+isOvmR4CC/1HUtBgV8VXFG5Qko2CBOcrQiEin59A70lCPU/m5guDjmPcyICBT+9PYjkpUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQy/jM1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XI2eEhg3jAshh8yigu0Y7HDcfJH74csXZP0OnTHIdEl5ZRYiKgl2mpNWHS8++6dty9qGaTJ0/DlitnCZ84wlY5e2IwmiPBlTN+Xq7rAnxPP9t41vulQDHml/bOem1rv8s54vk2js+3X392e8ydPo51m5aH9wDyAwPfzVm/rFbws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfRElpeo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQy/jM1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFFB1F000E9;
-	Wed, 20 May 2026 17:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfRElpeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6063A1F000E9;
+	Wed, 20 May 2026 17:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299151;
-	bh=u2lZ8i885693vMkiRFEQM982ScqKq6Dm5sj1EA1KaRo=;
+	s=korg; t=1779299153;
+	bh=eDhsWzX1ugULquEz7GGUtN/VtcNg+qZ0DuLsRlK66rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQy/jM1nKJHlB5B8rPKTq/p2NCuq5qePogx7X1ouRaDXOmxwoZIaNmg4HopQSjUgy
-	 xfyk7xua6jiJNZbJs91ozkAVSqZDgYwhTDONHzCx7y1RMytEFeUwCbMJWHZMhSYLOf
-	 W96j8TIdHcv3AsL2Q+OPTti3DjKW751rxIKJ477I=
+	b=AfRElpeo6c0ooGCj+935iDQ+i0A9mms7crrIxBI6PrkPwuFmMLXFBUSicC19cpgtP
+	 w6lAo0fuh07v/q/AIyl0RExNibRFYyjiVskWkTnv/4ujTEh193/qkbgCTyvMSvf9m8
+	 0Rjn5O3iyykqQrN58ZoIn5NF9f5vxw8eFBt0x35k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Timothy Miskell <timothy.miskell@intel.com>,
 	Grzegorz Nitka <grzegorz.nitka@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Petr Oros <poros@redhat.com>,
@@ -35,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 682/957] ice: fix timestamp interrupt configuration for E825C
-Date: Wed, 20 May 2026 18:19:25 +0200
-Message-ID: <20260520162149.328038271@linuxfoundation.org>
+Subject: [PATCH 6.18 683/957] ice: perform PHY soft reset for E825C ports at initialization
+Date: Wed, 20 May 2026 18:19:26 +0200
+Message-ID: <20260520162149.350968589@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -58,140 +59,197 @@ Content-Transfer-Encoding: 8bit
 
 From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit c0a575a801a2040eb1e0db54b488f8c548c8458a ]
+[ Upstream commit 3ec46e157c7fa420c77dfc23f7030e61f2f3fd55 ]
 
-The E825C ice_phy_cfg_intr_eth56g() function is responsible for programming
-the PHY interrupt for a given port. This function writes to the
-PHY_REG_TS_INT_CONFIG register of the port. The register is responsible for
-configuring whether the port interrupt logic is enabled, as well as
-programming the threshold of waiting timestamps that will trigger an
-interrupt from this port.
+In some cases the PHY timestamp block of the E825C can become stuck. This
+is known to occur if the software writes 0 to the Tx timestamp threshold,
+and with older versions of the ice driver the threshold configuration is
+buggy and can race in such that hardware briefly operates with a zero
+threshold enabled. There are no other known ways to trigger this behavior,
+but once it occurs, the hardware is not recovered by normal reset, a driver
+reload, or even a warm power cycle of the system. A cold power cycle is
+sufficient to recover hardware, but this is extremely invasive and can
+result in significant downtime on customer deployments.
 
-This threshold value must not be programmed to zero while the interrupt is
-enabled. Doing so puts the port in a misconfigured state where the PHY
-timestamp interrupt for the quad of connected ports will become stuck.
+The PHY for each port has a timestamping block which has its own reset
+functionality accessible by programming the PHY_REG_GLOBAL register.
+Writing to the PHY_REG_GLOBAL_SOFT_RESET_BIT triggers the hardware to
+perform a complete reset of the timestamping block of the PHY. This
+includes clearing the timestamp status for the port, clearing all
+outstanding timestamps in the memory bank, and resetting the PHY timer.
 
-This occurs, because a threshold of zero results in the timestamp interrupt
-status for the port becoming stuck high. The four ports in the connected
-quad have their timestamp status indicators muxed together. A new interrupt
-cannot be generated until the timestamp status indicators return low for
-all four ports.
+The new ice_ptp_phy_soft_reset_eth56g() function toggles the
+PHY_REG_GLOBAL soft reset bit with the required delays, ensuring the
+PHY is properly reinitialized without requiring a full device reset.
+The sequence clears the reset bit, asserts it, then clears it again,
+with short waits between transitions to allow hardware stabilization.
 
-Normally, the timestamp status for a port will clear once there are fewer
-timestamps in that ports timestamp memory bank than the threshold. A
-threshold of zero makes this impossible, so the timestamp status for the
-port does not clear.
+Call this function in the new ice_ptp_init_phc_e825c(), implementing the
+E825C device specific variant of the ice_ptp_init_phc(). Note that if
+ice_ptp_init_phc() fails, PTP functionality may be disabled, but the driver
+will still load to allow basic functionality to continue.
 
-The ice driver never intentionally programs the threshold to zero, indeed
-the driver always programs it to a value of 1, intending to get an
-interrupt immediately as soon as even a single packet is waiting for a
-timestamp.
+This causes the clock owning PF driver to perform a PHY soft reset for
+every port during initialization. This ensures the driver begins life in a
+known functional state regardless of how it was previously programmed.
 
-However, there is a subtle flaw in the programming logic in the
-ice_phy_cfg_intr_eth56g() function. Due to the way that the hardware
-handles enabling the PHY interrupt. If the threshold value is modified at
-the same time as the interrupt is enabled, the HW PHY state machine might
-enable the interrupt before the new threshold value is actually updated.
-This leaves a potential race condition caused by the hardware logic where
-a PHY timestamp interrupt might be triggered before the non-zero threshold
-is written, resulting in the PHY timestamp logic becoming stuck.
-
-Once the PHY timestamp status is stuck high, it will remain stuck even
-after attempting to reprogram the PHY block by changing its threshold or
-disabling the interrupt. Even a typical PF or CORE reset will not reset the
-particular block of the PHY that becomes stuck. Even a warm power cycle is
-not guaranteed to cause the PHY block to reset, and a cold power cycle is
-required.
-
-Prevent this by always writing the PHY_REG_TS_INT_CONFIG in two stages.
-First write the threshold value with the interrupt disabled, and only write
-the enable bit after the threshold has been programmed. When disabling the
-interrupt, leave the threshold unchanged. Additionally, re-read the
-register after writing it to guarantee that the write to the PHY has been
-flushed upon exit of the function.
-
-While we're modifying this function implementation, explicitly reject
-programming a threshold of 0 when enabling the interrupt. No caller does
-this today, but the consequences of doing so are significant. An explicit
-rejection in the code makes this clear.
+This ensures that we properly reconfigure the hardware after a device reset
+or when loading the driver, even if it was previously misconfigured with an
+out-of-date or modified driver.
 
 Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Signed-off-by: Timothy Miskell <timothy.miskell@intel.com>
 Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Reviewed-by: Petr Oros <poros@redhat.com>
 Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-1-bc2240f42251@intel.com
+Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-2-bc2240f42251@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 36 ++++++++++++++++++---
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 90 ++++++++++++++++++++-
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  4 +
+ 2 files changed, 93 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 161a0ae8599c1..0a20ae0c2901b 100644
+index 0a20ae0c2901b..1ae795405ac3c 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -1847,6 +1847,8 @@ static int ice_phy_cfg_mac_eth56g(struct ice_hw *hw, u8 port)
-  * @ena: enable or disable interrupt
-  * @threshold: interrupt threshold
-  *
-+ * The threshold cannot be 0 while the interrupt is enabled.
+@@ -377,6 +377,31 @@ static void ice_ptp_cfg_sync_delay(const struct ice_hw *hw, u32 delay)
+  * The following functions operate on devices with the ETH 56G PHY.
+  */
+ 
++/**
++ * ice_ptp_init_phc_e825c - Perform E825C specific PHC initialization
++ * @hw: pointer to HW struct
 + *
-  * Configure TX timestamp interrupt for the specified port
-  *
-  * Return:
-@@ -1858,19 +1860,45 @@ int ice_phy_cfg_intr_eth56g(struct ice_hw *hw, u8 port, bool ena, u8 threshold)
- 	int err;
- 	u32 val;
- 
-+	if (ena && !threshold)
-+		return -EINVAL;
++ * Perform E825C-specific PTP hardware clock initialization steps.
++ *
++ * Return: 0 on success, or a negative error value on failure.
++ */
++static int ice_ptp_init_phc_e825c(struct ice_hw *hw)
++{
++	int err;
 +
- 	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, &val);
- 	if (err)
- 		return err;
- 
-+	val &= ~PHY_TS_INT_CONFIG_ENA_M;
- 	if (ena) {
--		val |= PHY_TS_INT_CONFIG_ENA_M;
- 		val &= ~PHY_TS_INT_CONFIG_THRESHOLD_M;
- 		val |= FIELD_PREP(PHY_TS_INT_CONFIG_THRESHOLD_M, threshold);
--	} else {
--		val &= ~PHY_TS_INT_CONFIG_ENA_M;
-+		err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG,
-+					       val);
++	/* Soft reset all ports, to ensure everything is at a clean state */
++	for (int port = 0; port < hw->ptp.num_lports; port++) {
++		err = ice_ptp_phy_soft_reset_eth56g(hw, port);
 +		if (err) {
-+			ice_debug(hw, ICE_DBG_PTP,
-+				  "Failed to update 'threshold' PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
-+				  port, !!ena, threshold);
++			ice_debug(hw, ICE_DBG_PTP, "Failed to soft reset port %d, err %d\n",
++				  port, err);
 +			return err;
 +		}
-+		val |= PHY_TS_INT_CONFIG_ENA_M;
- 	}
- 
--	return ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, val);
-+	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, val);
-+	if (err) {
-+		ice_debug(hw, ICE_DBG_PTP,
-+			  "Failed to update 'ena' PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
-+			  port, !!ena, threshold);
-+		return err;
-+	}
-+
-+	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, &val);
-+	if (err) {
-+		ice_debug(hw, ICE_DBG_PTP,
-+			  "Failed to read PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
-+			  port, !!ena, threshold);
-+		return err;
 +	}
 +
 +	return 0;
++}
++
+ /**
+  * ice_ptp_get_dest_dev_e825 - get destination PHY for given port number
+  * @hw: pointer to the HW struct
+@@ -2179,6 +2204,69 @@ int ice_ptp_read_tx_hwtstamp_status_eth56g(struct ice_hw *hw, u32 *ts_status)
+ 	return 0;
  }
  
++/**
++ * ice_ptp_phy_soft_reset_eth56g - Perform a PHY soft reset on ETH56G
++ * @hw: pointer to the HW structure
++ * @port: PHY port number
++ *
++ * Trigger a soft reset of the ETH56G PHY by toggling the soft reset
++ * bit in the PHY global register. The reset sequence consists of:
++ *   1. Clearing the soft reset bit
++ *   2. Asserting the soft reset bit
++ *   3. Clearing the soft reset bit again
++ *
++ * Short delays are inserted between each step to allow the hardware
++ * to settle. This provides a controlled way to reinitialize the PHY
++ * without requiring a full device reset.
++ *
++ * Return: 0 on success, or a negative error code on failure when
++ *         reading or writing the PHY register.
++ */
++int ice_ptp_phy_soft_reset_eth56g(struct ice_hw *hw, u8 port)
++{
++	u32 global_val;
++	int err;
++
++	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, &global_val);
++	if (err) {
++		ice_debug(hw, ICE_DBG_PTP, "Failed to read PHY_REG_GLOBAL for port %d, err %d\n",
++			  port, err);
++		return err;
++	}
++
++	global_val &= ~PHY_REG_GLOBAL_SOFT_RESET_M;
++	ice_debug(hw, ICE_DBG_PTP, "Clearing soft reset bit for port %d, val: 0x%x\n",
++		  port, global_val);
++	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
++	if (err) {
++		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
++			  port, err);
++		return err;
++	}
++
++	usleep_range(5000, 6000);
++
++	global_val |= PHY_REG_GLOBAL_SOFT_RESET_M;
++	ice_debug(hw, ICE_DBG_PTP, "Set soft reset bit for port %d, val: 0x%x\n",
++		  port, global_val);
++	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
++	if (err) {
++		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
++			  port, err);
++		return err;
++	}
++	usleep_range(5000, 6000);
++
++	global_val &= ~PHY_REG_GLOBAL_SOFT_RESET_M;
++	ice_debug(hw, ICE_DBG_PTP, "Clear soft reset bit for port %d, val: 0x%x\n",
++		  port, global_val);
++	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
++	if (err)
++		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
++			  port, err);
++	return err;
++}
++
  /**
+  * ice_get_phy_tx_tstamp_ready_eth56g - Read the Tx memory status register
+  * @hw: pointer to the HW struct
+@@ -5592,7 +5680,7 @@ int ice_ptp_init_phc(struct ice_hw *hw)
+ 	case ICE_MAC_GENERIC:
+ 		return ice_ptp_init_phc_e82x(hw);
+ 	case ICE_MAC_GENERIC_3K_E825:
+-		return 0;
++		return ice_ptp_init_phc_e825c(hw);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
+index 5896b346e5790..9d7acc7eb2ceb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
+@@ -374,6 +374,7 @@ int ice_stop_phy_timer_eth56g(struct ice_hw *hw, u8 port, bool soft_reset);
+ int ice_start_phy_timer_eth56g(struct ice_hw *hw, u8 port);
+ int ice_phy_cfg_intr_eth56g(struct ice_hw *hw, u8 port, bool ena, u8 threshold);
+ int ice_phy_cfg_ptp_1step_eth56g(struct ice_hw *hw, u8 port);
++int ice_ptp_phy_soft_reset_eth56g(struct ice_hw *hw, u8 port);
+ 
+ #define ICE_ETH56G_NOMINAL_INCVAL	0x140000000ULL
+ #define ICE_ETH56G_NOMINAL_PCS_REF_TUS	0x100000000ULL
+@@ -676,6 +677,9 @@ static inline u64 ice_get_base_incval(struct ice_hw *hw)
+ #define ICE_P0_GNSS_PRSNT_N	BIT(4)
+ 
+ /* ETH56G PHY register addresses */
++#define PHY_REG_GLOBAL			0x0
++#define PHY_REG_GLOBAL_SOFT_RESET_M	BIT(11)
++
+ /* Timestamp PHY incval registers */
+ #define PHY_REG_TIMETUS_L		0x8
+ #define PHY_REG_TIMETUS_U		0xC
 -- 
 2.53.0
 
