@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6AE362143;
-	Wed, 20 May 2026 16:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A4A366048;
+	Wed, 20 May 2026 16:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295190; cv=none; b=XrgJHFq06JHeu1e9ssAIZ2gpQAQ+LPSLbhqHldPzdCovRt4k+uHpFOZcoAaXSb77ReDVnAaE/rNt1rgChI4pWUY/bIiMHbw1dWaLCQ6BurzieYG6uoX18Kc4Ixn+shC8kQQ/i2eBZRaswDjMgTYyLL4ZAK65Ygr37oc1x5+RWA8=
+	t=1779295191; cv=none; b=F2Gn5OJG08Gi8g4VCVt3cr+gBWZCd3eJ/rNsN/O/TJWXvv+XDVbSJNQBlaeqJMCfj/rZKH0hF4Wkdh7l3sC58WDgfFguqNvOaulggC3GBQ2PSB5wuHSMuxhRV5xKc8scyPqA55lJVYdoCK9JkeKPrFZ6QqUYSWtunbAqopo9hQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295190; c=relaxed/simple;
-	bh=SsjuOsl1RTnp3spkV/buLWP8uVclozUsmQ8Hn7DaUg8=;
+	s=arc-20240116; t=1779295191; c=relaxed/simple;
+	bh=l1/Htgo++woRsD2AgHMYcvDmvCdY06s1EGFNxLGxtf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQiP0tkhR0NpUf+YURhuYjbxC1TnCzY8lVjS6qUiCW8lGAG20Ez1bMK+IwFLhJ2GykRzZMPLhGUQgs/YFX57XhGH6DoKkPoiYT6Xovn503Cu9ioN7OAQoth7ULpTozrpnNSR/csBnX/0zI9tFdh80TBjAByyKnhBbKoc7/ux7z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8SUGD6k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A4COQg+f/BsdUJFDrAXP2Xdj86gDgYb6/AlVWdOu9/VjF+j4nAuukVf6bnCA2PSrFc6gfI+zfva19J7g9yTZUR0brSjWWFNlnP4nZE/Llrx4+PBZMHgQ0Jzqz8Mqdm0DvPiGGNq+PyK4z9hHM0OmSVHKLU/mHv9MttbxuQgK8r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sR9+8pS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8SUGD6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1239C1F00893;
-	Wed, 20 May 2026 16:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sR9+8pS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D991F000E9;
+	Wed, 20 May 2026 16:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295187;
-	bh=iKD3oTJaG/xow5mAak7j4ld0rrcdEpuE5NHbt1V1eic=;
+	s=korg; t=1779295190;
+	bh=JgwAF5eSerWzZ0+IEQZNnvTYvqY1Wu0GR/O8NssDZV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T8SUGD6kfza9io/cSSnGuV5tp4uJIqqKzDZalbnCuWNjTgt6AwN3hL2KvaSUU99QX
-	 k0L2+NOnXy8EzR26BoNQzncKsAvMKR0IRE9nuNIKLI5yjoVJob2uKlKY2kP4kOjYg3
-	 IQh+bSJZvWBOCXidkg/aVl7QVRt9aqRSwcMTIBuM=
+	b=sR9+8pS+vBRlBdHm4vZ+cEK8MdoExKL80cwHT0CrLXOpBLx/HC5xhs2Uf03KN+O9U
+	 kjFTJbCFtWd1ml4bVXgE+zJU7zrNMd5cZmCdZKZ1E84wLfSX8OuHmyz82laU4vApam
+	 GpK7uTdPmLasZuP/2gohdO01idgwGTpqeNGn4WAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
+	Alexey Charkov <alchark@flipper.net>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0324/1146] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-Date: Wed, 20 May 2026 18:09:34 +0200
-Message-ID: <20260520162155.531225070@linuxfoundation.org>
+Subject: [PATCH 7.0 0325/1146] ASoC: rockchip: rockchip_sai: Set slot width for non-TDM mode
+Date: Wed, 20 May 2026 18:09:35 +0200
+Message-ID: <20260520162155.553690229@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,60 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Alexey Charkov <alchark@flipper.net>
 
-[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
+[ Upstream commit 8a6391ec669366cbe7bde92b468c561e8b309fd6 ]
 
-The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
-("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
-always correct just the name was wrong.
+Currently the slot width in non-TDM mode is always kept at the POR value
+of 32 bits, regardless of the sample width, which doesn't work well for
+some codecs such as NAU8822.
 
-Rename and reorder to maintain version sorting.
+Set the slot width according to the sample width in non-TDM mode, which
+is what other CPU DAI drivers do.
 
-Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Patchwork: https://patchwork.freedesktop.org/patch/713717/
-Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested on the following RK3576 configurations:
+- SAI2 + NAU8822 (codec as the clock master), custom board
+- SAI1 + ES8388 (codec as the clock master), RK3576 EVB1
+- SAI2 + RT5616 (SAI as the clock master), FriendlyElec NanoPi M5
+
+NAU8822 didn't work prior to this patch but works after the patch. Other
+two configurations work both before and after the patch.
+
+Fixes: cc78d1eaabad ("ASoC: rockchip: add Serial Audio Interface (SAI) driver")
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Tested-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://patch.msgid.link/20260318-sai-slot-width-v1-1-1f68186f71e3@flipper.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/rockchip/rockchip_sai.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index bd3c51c350e73..da3fe68244952 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -317,10 +317,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
- 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
-+		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
- 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
--	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
--		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 5dc812028bd54..ccf06679608e0 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -19,8 +19,8 @@
- #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
- #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
- #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
-+#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
--#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
- #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_3_1	0x20030001
+diff --git a/sound/soc/rockchip/rockchip_sai.c b/sound/soc/rockchip/rockchip_sai.c
+index 1bf614dbdf4d0..ed393e5034a49 100644
+--- a/sound/soc/rockchip/rockchip_sai.c
++++ b/sound/soc/rockchip/rockchip_sai.c
+@@ -628,6 +628,10 @@ static int rockchip_sai_hw_params(struct snd_pcm_substream *substream,
+ 
+ 	regmap_update_bits(sai->regmap, reg, SAI_XCR_VDW_MASK | SAI_XCR_CSR_MASK, val);
+ 
++	if (!sai->is_tdm)
++		regmap_update_bits(sai->regmap, reg, SAI_XCR_SBW_MASK,
++				   SAI_XCR_SBW(params_physical_width(params)));
++
+ 	regmap_read(sai->regmap, reg, &val);
+ 
+ 	slot_width = SAI_XCR_SBW_V(val);
 -- 
 2.53.0
 
