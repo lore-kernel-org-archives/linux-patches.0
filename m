@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B5836A033;
-	Wed, 20 May 2026 16:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C00369D64;
+	Wed, 20 May 2026 16:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294830; cv=none; b=gUa5VeonqoJlEChU3Nh4J6wPpIa3iqfitaLgg+qX7qk0P5aXoGe1i3vbMkfx0EERI2CYWywyjfaJ9YlrKtPw+GpPk88XLoaMIxeToVhJu7pCVGR91nF6+avrYjSfL+1V4Vgo6DdzD5iBSb6ZMvMIq3JT37P2EtwB7X9dpHrU4mA=
+	t=1779294833; cv=none; b=KhjaxwQK13vWsYPQIwH5V+C4SrIKG3oLWRH4akxRQx1ORXMj1zifDGNMHjIs2pjhnwKfaos35Owi0eD0smxCmVmYnx8Dew6Q3A32XyfKcjlYTgcr94Kd6O5aHjIEuyRlwlPuHXzyL8TT+Zz7R+tsM3KJhVLXWVkWN3X7MZppby4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294830; c=relaxed/simple;
-	bh=DrFWNwnHVORktO7pAxH0+cpJWiArZHXU+ah8IZfPTco=;
+	s=arc-20240116; t=1779294833; c=relaxed/simple;
+	bh=YKD04oPAMQNkqHZ26kX0atEXQ2P008rzhlFpwnQHMRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QU1aRmV/hrlKQ4Is2jjB6Xc6J6+M2nXjSB0KEjScggdJSU7+CkM1XcN88xrSG+4PK6h3PsGr/fvIpKGEIOgaLvI0sNrQFObR6j9WnjU8YypoyTMWLarfYQb5vlXRuWfEdpzVhW/zE5dbK+g9dy8fM23hMliFsoOZ0FiR/WVckk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF1lwiRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bxuyzAU+PVAmDnDUtfqiXoPFQKU/4yIlYdUEtUgvUowiVUHIJbZ8LbPcGWiNUwSTtvD27EEPscUQzDejtTGDkQVOwa6ezKrNGi+3I8Q8mqe4YBWKy/+HGYb9pnX8YFzl2ydpOoARmgC3A3fAMktotNrLdRTK+/xbO73KtmO1EKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqhhd33M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF1lwiRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF53B1F000E9;
-	Wed, 20 May 2026 16:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqhhd33M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882241F00899;
+	Wed, 20 May 2026 16:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294829;
-	bh=uVFiXwSLmrSNEVEAJev8ITiClyp63MqzhffHh7IWO0w=;
+	s=korg; t=1779294832;
+	bh=o9MF20V6pEyjjSMFAyOwi9wLbKeT6iZLDLYERmPeex0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GF1lwiRZQqYZzAbo/D17nim2r/JA1oeFB4f8b/wnYQCh1kRyohxPIx8KqFSiEZGGm
-	 d9yAUVl3eAKvsTQvo/6vI5ZVjMObjqgheH9Wb7kSLhN0cHUHjyUJXVv/lpq1g6JLSp
-	 1feSDpq6BViR1Go7Xtl1Ipn+pNYPhRZejVFd4O/A=
+	b=uqhhd33MMYsrNE5NKzmJ+PLD5VodecI+LnesLUKjw/z4CdLgwB6eD8mcaV2hxxM+A
+	 1diDwJ0NwjvCjz+Xu641LGSeWIAMbEmPBqPlf9jGvVhdT3dLjDjjGbdZN2Wcgj4EEt
+	 kGgqicRBP8TGEXd/SFZCSKZabY43415JPlRj22zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0188/1146] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
-Date: Wed, 20 May 2026 18:07:18 +0200
-Message-ID: <20260520162152.529340724@linuxfoundation.org>
+Subject: [PATCH 7.0 0189/1146] net/sched: act_ct: Only release RCU read lock after ct_ft
+Date: Wed, 20 May 2026 18:07:19 +0200
+Message-ID: <20260520162152.552084402@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,119 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 65782b2db7321d5f97c16718c4c7f6c7205a56be ]
+[ Upstream commit f462dca0c8415bf0058d0ffa476354c4476d0f09 ]
 
-Like pointed out by Sashiko [1], since commit ed76f5edccc9 ("net: sched:
-protect filter_chain list with filter_chain_lock mutex") TC filters are
-added to a shared block and published to datapath before their ->change()
-function is called. This is a problem for cls_fw: an invalid filter
-created with the "old" method can still classify some packets before it
-is destroyed by the validation logic added by Xiang.
-Therefore, insisting with repeated runs of the following script:
+When looking up a flow table in act_ct in tcf_ct_flow_table_get(),
+rhashtable_lookup_fast() internally opens and closes an RCU read critical
+section before returning ct_ft.
+The tcf_ct_flow_table_cleanup_work() can complete before refcount_inc_not_zero()
+is invoked on the returned ct_ft resulting in a UAF on the already freed ct_ft
+object. This vulnerability can lead to privilege escalation.
 
- # ip link add dev crash0 type dummy
- # ip link set dev crash0 up
- # mausezahn  crash0 -c 100000 -P 10 \
- > -A 4.3.2.1 -B 1.2.3.4 -t udp "dp=1234" -q &
- # sleep 1
- # tc qdisc add dev crash0 egress_block 1 clsact
- # tc filter add block 1 protocol ip prio 1 matchall \
- > action skbedit mark 65536 continue
- # tc filter add block 1 protocol ip prio 2 fw
- # ip link del dev crash0
+Analysis from zdi-disclosures@trendmicro.com:
+When initializing act_ct, tcf_ct_init() is called, which internally triggers
+tcf_ct_flow_table_get().
 
-can still make fw_classify() hit the WARN_ON() in [2]:
+static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
 
- WARNING: ./include/net/pkt_cls.h:88 at fw_classify+0x244/0x250 [cls_fw], CPU#18: mausezahn/1399
- Modules linked in: cls_fw(E) act_skbedit(E)
- CPU: 18 UID: 0 PID: 1399 Comm: mausezahn Tainted: G            E       7.0.0-rc6-virtme #17 PREEMPT(full)
- Tainted: [E]=UNSIGNED_MODULE
- Hardware name: Red Hat KVM, BIOS 1.16.3-2.el9 04/01/2014
- RIP: 0010:fw_classify+0x244/0x250 [cls_fw]
- Code: 5c 49 c7 45 00 00 00 00 00 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 5b b8 ff ff ff ff 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 eb a0 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90
- RSP: 0018:ffffd1b7026bf8a8 EFLAGS: 00010202
- RAX: ffff8c5ac9c60800 RBX: ffff8c5ac99322c0 RCX: 0000000000000004
- RDX: 0000000000000001 RSI: ffff8c5b74d7a000 RDI: ffff8c5ac8284f40
- RBP: ffffd1b7026bf8d0 R08: 0000000000000000 R09: ffffd1b7026bf9b0
- R10: 00000000ffffffff R11: 0000000000000000 R12: 0000000000010000
- R13: ffffd1b7026bf930 R14: ffff8c5ac8284f40 R15: 0000000000000000
- FS:  00007fca40c37740(0000) GS:ffff8c5b74d7a000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fca40e822a0 CR3: 0000000005ca0001 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  tcf_classify+0x17d/0x5c0
-  tc_run+0x9d/0x150
-  __dev_queue_xmit+0x2ab/0x14d0
-  ip_finish_output2+0x340/0x8f0
-  ip_output+0xa4/0x250
-  raw_sendmsg+0x147d/0x14b0
-  __sys_sendto+0x1cc/0x1f0
-  __x64_sys_sendto+0x24/0x30
-  do_syscall_64+0x126/0xf80
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7fca40e822ba
- Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
- RSP: 002b:00007ffc248a42c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
- RAX: ffffffffffffffda RBX: 000055ef233289d0 RCX: 00007fca40e822ba
- RDX: 000000000000001e RSI: 000055ef23328c30 RDI: 0000000000000003
- RBP: 000055ef233289d0 R08: 00007ffc248a42d0 R09: 0000000000000010
- R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000001e
- R13: 00000000000186a0 R14: 0000000000000000 R15: 00007fca41043000
-  </TASK>
- irq event stamp: 1045778
- hardirqs last  enabled at (1045784): [<ffffffff864ec042>] __up_console_sem+0x52/0x60
- hardirqs last disabled at (1045789): [<ffffffff864ec027>] __up_console_sem+0x37/0x60
- softirqs last  enabled at (1045426): [<ffffffff874d48c7>] __alloc_skb+0x207/0x260
- softirqs last disabled at (1045434): [<ffffffff874fe8f8>] __dev_queue_xmit+0x78/0x14d0
+{
+                struct zones_ht_key key = { .net = net, .zone = params->zone };
+                struct tcf_ct_flow_table *ct_ft;
+                int err = -ENOMEM;
 
-Then, because of the value in the packet's mark, dereference on 'q->handle'
-with NULL 'q' occurs:
+                mutex_lock(&zones_mutex);
+                ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params); // [1]
+                if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) // [2]
+                                goto out_unlock;
+                ...
+}
 
- BUG: kernel NULL  pointer dereference, address: 0000000000000038
- [...]
- RIP: 0010:fw_classify+0x1fe/0x250 [cls_fw]
- [...]
+static __always_inline void *rhashtable_lookup_fast(
+                struct rhashtable *ht, const void *key,
+                const struct rhashtable_params params)
+{
+                void *obj;
 
-Skip "old-style" classification on shared blocks, so that the NULL
-dereference is fixed and WARN_ON() is not hit anymore in the short
-lifetime of invalid cls_fw "old-style" filters.
+                rcu_read_lock();
+                obj = rhashtable_lookup(ht, key, params);
+                rcu_read_unlock();
 
-[1] https://sashiko.dev/#/patchset/20260331050217.504278-1-xmei5%40asu.edu
-[2] https://elixir.bootlin.com/linux/v7.0-rc6/source/include/net/pkt_cls.h#L86
+                return obj;
+}
 
-Fixes: faeea8bbf6e9 ("net/sched: cls_fw: fix NULL pointer dereference on shared blocks")
-Fixes: ed76f5edccc9 ("net: sched: protect filter_chain list with filter_chain_lock mutex")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/e39cbd3103a337f1e515d186fe697b4459d24757.1775661704.git.dcaratti@redhat.com
+At [1], rhashtable_lookup_fast() looks up and returns the corresponding ct_ft
+from zones_ht . The lookup is performed within an RCU read critical section
+through rcu_read_lock() / rcu_read_unlock(), which prevents the object from
+being freed. However, at the point of function return, rcu_read_unlock() has
+already been called, and there is nothing preventing ct_ft from being freed
+before reaching refcount_inc_not_zero(&ct_ft->ref) at [2]. This interval becomes
+the race window, during which ct_ft can be freed.
+
+Free Process:
+
+tcf_ct_flow_table_put() is executed through the path tcf_ct_cleanup() call_rcu()
+tcf_ct_params_free_rcu() tcf_ct_params_free() tcf_ct_flow_table_put().
+
+static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)
+{
+                if (refcount_dec_and_test(&ct_ft->ref)) {
+                                rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);
+                                INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work); // [3]
+                                queue_rcu_work(act_ct_wq, &ct_ft->rwork);
+                }
+}
+
+At [3], tcf_ct_flow_table_cleanup_work() is scheduled as RCU work
+
+static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
+
+{
+                struct tcf_ct_flow_table *ct_ft;
+                struct flow_block *block;
+
+                ct_ft = container_of(to_rcu_work(work), struct tcf_ct_flow_table,
+                                                                rwork);
+                nf_flow_table_free(&ct_ft->nf_ft);
+                block = &ct_ft->nf_ft.flow_block;
+                down_write(&ct_ft->nf_ft.flow_block_lock);
+                WARN_ON(!list_empty(&block->cb_list));
+                up_write(&ct_ft->nf_ft.flow_block_lock);
+                kfree(ct_ft); // [4]
+
+                module_put(THIS_MODULE);
+}
+
+tcf_ct_flow_table_cleanup_work() frees ct_ft at [4]. When this function executes
+between [1] and [2], UAF occurs.
+
+This race condition has a very short race window, making it generally
+difficult to trigger. Therefore, to trigger the vulnerability an msleep(100) was
+inserted after[1]
+
+Fixes: 138470a9b2cc2 ("net/sched: act_ct: fix lockdep splat in tcf_ct_flow_table_get")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260410111627.46611-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sched/act_ct.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 23884ef8b80ce..646a730dca93c 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -74,9 +74,13 @@ TC_INDIRECT_SCOPE int fw_classify(struct sk_buff *skb,
- 			}
- 		}
- 	} else {
--		struct Qdisc *q = tcf_block_q(tp->chain->block);
-+		struct Qdisc *q;
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 7d5e50c921a07..6158e13c98d35 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -328,9 +328,13 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ 	int err = -ENOMEM;
  
- 		/* Old method: classify the packet using its skb mark. */
-+		if (tcf_block_shared(tp->chain->block))
-+			return -1;
-+
-+		q = tcf_block_q(tp->chain->block);
- 		if (id && (TC_H_MAJ(id) == 0 ||
- 			   !(TC_H_MAJ(id ^ q->handle)))) {
- 			res->classid = id;
+ 	mutex_lock(&zones_mutex);
+-	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
+-	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
++	rcu_read_lock();
++	ct_ft = rhashtable_lookup(&zones_ht, &key, zones_params);
++	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) {
++		rcu_read_unlock();
+ 		goto out_unlock;
++	}
++	rcu_read_unlock();
+ 
+ 	ct_ft = kzalloc_obj(*ct_ft);
+ 	if (!ct_ft)
 -- 
 2.53.0
 
