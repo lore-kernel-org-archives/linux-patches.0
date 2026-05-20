@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705B42DC76C;
-	Wed, 20 May 2026 17:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAE1331220;
+	Wed, 20 May 2026 17:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297533; cv=none; b=IOpJnnhUE/UEs+PQioY992OuHAa2AHm3WhuIlhQhTNojyByW079Ibkp0FT+wbIP4Gp/CXBR3YGL2Tysj7NfBn58aykxKfoCN/WbeXgcXD9im1kiPadyjR0oPa5wN+CQZTXbM3f5jWOWOHZEbplCFhEOz6RoBbmB2ZOGxT0FggeQ=
+	t=1779297536; cv=none; b=eR8JP/ymcZsGdfy356Z1BeoNf7xnl6aej12UtB36XuJL/0S3N/40sxjf9a6RqAh58jBjPTUGPUfeI9jKPol7rIF3IcI/88TBJ81QldoyP3IqVAnULBgFv2BlyXhTy9C/BX9XU8BzhZu/kjSWbVGYS5ObTH2FK0SPP+fSkGZ96f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297533; c=relaxed/simple;
-	bh=dwAh/kDjJLJJsDftMJjT02E4V/3N59KcuEOWxxbKUuI=;
+	s=arc-20240116; t=1779297536; c=relaxed/simple;
+	bh=T7N+8hwKymuysgq4mCO5aOTswE2U0oPLf2s9qES+fd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lew6pxmdmbDyu0nvW1DMk4M3fOhFGGExxBIZVV7DU9Uyl0Sny49hb8ssJIahe4hwfm0GI7Mc3W8vKIgJM9topqBCd1fBMjoEERH/9AxaiHTSxttc6Ot0aYnkQn4097XXsW5uCC9vjsqUnmF831ZmXyeDhi6KdewV8Uow1fzdqgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1Gedyf8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rj1FmWqiRweXflMiPW06U0xQDzOUp4GdOZY8j171ruAth6m0LLycH4ldktJ/L8ET0CiyjUrnIKXAEsh7R6ztdarck/qQO9V+FUWSwSiz8gDfVcAgx9MjtPh7fUiwbKsQxvS5K0BEi+rtsriEmQubB+ie2bPlgKdJAij4KHo2gxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyMuzsEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1Gedyf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7F61F000E9;
-	Wed, 20 May 2026 17:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyMuzsEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B981F000E9;
+	Wed, 20 May 2026 17:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297532;
-	bh=b9fROuNLzeaV+AkB1TUvwq0REh4VBSpXbkjd9qgXTXQ=;
+	s=korg; t=1779297535;
+	bh=tUVL/nuF94naZR1D9XQoNCZfPCB3CeWAOpmRpd1+XYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1Gedyf8kRB6JyRinRNoHkleD6WxFav38+9zPvgd7eOxV2PLgyIxTF2FaLitt4TVZ
-	 Q5K5DYjMPvLx4wGC9hK6MFSU91+pUpnGue8u4Y1Mf2ofTx8uDboOEKXbzyBSU/qfoD
-	 lUMpWDx4DswLHR44h7AsBZt6KpOgLP6sF4N83uVI=
+	b=oyMuzsEXIA1UDJEU72WPYdm8/3JNPAuBFvXaa0B5dUOvmG3IxLE/j8Qu4+FEXNIQL
+	 LElgBaugNzA3bN8AW/hbOTDYsEinrYjTisn3+5P0fX81+MaTcepMXpNiV1NWAVn+1a
+	 GX+OPV1RrY2RqdJxn7cAkSCkSOeArqgH96vQD5hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/957] x86/tdx: Fix the typo in TDX_ATTR_MIGRTABLE
-Date: Wed, 20 May 2026 18:08:43 +0200
-Message-ID: <20260520162135.429140060@linuxfoundation.org>
+Subject: [PATCH 6.18 067/957] params: Replace __modinit with __init_or_module
+Date: Wed, 20 May 2026 18:09:10 +0200
+Message-ID: <20260520162136.017195720@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,65 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 3aecb2e7b948400354399b26f3f1653bd2c1bae0 ]
+[ Upstream commit 3cb0c3bdea5388519bc1bf575dca6421b133302b ]
 
-The TD scoped TDCS attributes are defined by bit positions. In the guest
-side of the TDX code, the 'tdx_attributes' string array holds pretty
-print names for these attributes, which are generated via macros and
-defines. Today these pretty print names are only used to print the
-attribute names to dmesg.
+Remove the custom __modinit macro from kernel/params.c and instead use the
+common __init_or_module macro from include/linux/module.h. Both provide the
+same functionality.
 
-Unfortunately there is a typo in the define for the migratable bit.
-Change the defines TDX_ATTR_MIGRTABLE* to TDX_ATTR_MIGRATABLE*. Update
-the sole user, the tdx_attributes array, to use the fixed name.
-
-Since these defines control the string printed to dmesg, the change is
-user visible. But the risk of breakage is almost zero since it is not
-exposed in any interface expected to be consumed programmatically.
-
-Fixes: 564ea84c8c14 ("x86/tdx: Dump attributes and TD_CTLS on boot")
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Link: https://patch.msgid.link/20260303030335.766779-2-xiaoyao.li@intel.com
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Stable-dep-of: deffe1edba62 ("module: Fix freeing of charp module parameters when CONFIG_SYSFS=n")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/coco/tdx/debug.c         | 2 +-
- arch/x86/include/asm/shared/tdx.h | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ kernel/params.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/coco/tdx/debug.c b/arch/x86/coco/tdx/debug.c
-index cef847c8bb67f..28990c2ab0a14 100644
---- a/arch/x86/coco/tdx/debug.c
-+++ b/arch/x86/coco/tdx/debug.c
-@@ -17,7 +17,7 @@ static __initdata const char *tdx_attributes[] = {
- 	DEF_TDX_ATTR_NAME(ICSSD),
- 	DEF_TDX_ATTR_NAME(LASS),
- 	DEF_TDX_ATTR_NAME(SEPT_VE_DISABLE),
--	DEF_TDX_ATTR_NAME(MIGRTABLE),
-+	DEF_TDX_ATTR_NAME(MIGRATABLE),
- 	DEF_TDX_ATTR_NAME(PKS),
- 	DEF_TDX_ATTR_NAME(KL),
- 	DEF_TDX_ATTR_NAME(TPA),
-diff --git a/arch/x86/include/asm/shared/tdx.h b/arch/x86/include/asm/shared/tdx.h
-index 8bc074c8d7c6a..11f3cf30b1ac8 100644
---- a/arch/x86/include/asm/shared/tdx.h
-+++ b/arch/x86/include/asm/shared/tdx.h
-@@ -35,8 +35,8 @@
- #define TDX_ATTR_LASS			BIT_ULL(TDX_ATTR_LASS_BIT)
- #define TDX_ATTR_SEPT_VE_DISABLE_BIT	28
- #define TDX_ATTR_SEPT_VE_DISABLE	BIT_ULL(TDX_ATTR_SEPT_VE_DISABLE_BIT)
--#define TDX_ATTR_MIGRTABLE_BIT		29
--#define TDX_ATTR_MIGRTABLE		BIT_ULL(TDX_ATTR_MIGRTABLE_BIT)
-+#define TDX_ATTR_MIGRATABLE_BIT		29
-+#define TDX_ATTR_MIGRATABLE		BIT_ULL(TDX_ATTR_MIGRATABLE_BIT)
- #define TDX_ATTR_PKS_BIT		30
- #define TDX_ATTR_PKS			BIT_ULL(TDX_ATTR_PKS_BIT)
- #define TDX_ATTR_KL_BIT			31
+diff --git a/kernel/params.c b/kernel/params.c
+index b96cfd693c996..7c2242f64bf08 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -596,12 +596,6 @@ static ssize_t param_attr_store(const struct module_attribute *mattr,
+ }
+ #endif
+ 
+-#ifdef CONFIG_MODULES
+-#define __modinit
+-#else
+-#define __modinit __init
+-#endif
+-
+ #ifdef CONFIG_SYSFS
+ void kernel_param_lock(struct module *mod)
+ {
+@@ -626,9 +620,9 @@ EXPORT_SYMBOL(kernel_param_unlock);
+  * create file in sysfs.  Returns an error on out of memory.  Always cleans up
+  * if there's an error.
+  */
+-static __modinit int add_sysfs_param(struct module_kobject *mk,
+-				     const struct kernel_param *kp,
+-				     const char *name)
++static __init_or_module int add_sysfs_param(struct module_kobject *mk,
++					    const struct kernel_param *kp,
++					    const char *name)
+ {
+ 	struct module_param_attrs *new_mp;
+ 	struct attribute **new_attrs;
+@@ -761,7 +755,8 @@ void destroy_params(const struct kernel_param *params, unsigned num)
+ 			params[i].ops->free(params[i].arg);
+ }
+ 
+-struct module_kobject __modinit * lookup_or_create_module_kobject(const char *name)
++struct module_kobject * __init_or_module
++lookup_or_create_module_kobject(const char *name)
+ {
+ 	struct module_kobject *mk;
+ 	struct kobject *kobj;
 -- 
 2.53.0
 
