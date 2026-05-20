@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616923E123F;
-	Wed, 20 May 2026 17:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082BC3D75D3;
+	Wed, 20 May 2026 17:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298694; cv=none; b=Om5CwShKXrFk4IlOryg7+WbzimK77sUEa+TSrPJV3rSXwduULqCjbfy95+aj5GpSdlfLTneefy0WuZiu1tKnDyQDhBo8DQL442ub84VDohUiq3g/L14O71qHocAzzcBCbOD2AT6Bj1NT/QPuTmYJcWqm3IGk2nGRpP6oIEutX8k=
+	t=1779298697; cv=none; b=ohTJk3DzQCTYdCNTFPH4IfSBTnKrFCVhsJ/Hu6ZgMo1JTskKSKzEBWkPQQ+YMFHhLGs1Ac1Hy8FpZZODhv83p5qnPB6DeH7xL0vfu/qrqPTmWio5rIQ7hhziLp+DgN72OvwyUtTGxZMvAX0lEktVap9RTs0K/Yylxf29rR7NPNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298694; c=relaxed/simple;
-	bh=QLa8pnxM3ayuVGkvBBGDbFCPKMtVBeLEjis8l7jzLA8=;
+	s=arc-20240116; t=1779298697; c=relaxed/simple;
+	bh=z2PnkFdJDqCzD4b66Gb0/GjGmjnCdzec1bppY6+APl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKkB3v6HDtqhLwz6N/jgnL95xpv/70Dt0EhJ5kz3Gkh7z9NWMQYjudMAc2a5L91T6gGDdtrEYmiMvuIEUW6BbLnHAv0y/5M5wf5Lw1PO42rph99WfRVUGVNN8mguEdfB5uyJQnyxEHfMalAEm3QU6+AM8oBF8ywxebyXC18dg5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dn7Ekvl9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fHPVSXxmhOQ4hE0OSybFkwtI9yFe/P3b9Ieu2MEU7bRKxl2tauFtUPNnpSDDDmV09pe2o/0D+TQxUbLyInS66D5wRHEQcZVD4q6Y+HPOFU+hQjbhYLkz33470AexCAgRThC9NG4oO2Dr8U+VLweKUsHdncoo43o1nMHgFjYdP90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4fpWSCI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dn7Ekvl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B7A1F000E9;
-	Wed, 20 May 2026 17:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4fpWSCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAFC1F000E9;
+	Wed, 20 May 2026 17:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298693;
-	bh=wsDI5K2HQsrHoDp8EVURSVJUqg/tJ8/4xkrhyJzc3fU=;
+	s=korg; t=1779298695;
+	bh=cS7u3K2Zj6/Qtz6nrVj8r/zUjNRu1AL48UTpRZudQBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dn7Ekvl9olBP+TKTGeCNRrnON+Ly6bULqGXT2Zi2BFwEfqfzz/I4GA58dSzsYYf49
-	 Rl2dgTsA10enXiSOORuiC91OwXWnKpcybQaSc1ZWEpMP43XNncUuu5S1Hv2kjnhlFN
-	 f8wcXx7t7W9FTYb8+CcfRNreY8d+9S7p7dBfIqGw=
+	b=T4fpWSCInWIFArh2jJNhUhf5gdqMdaZB78mkvJi3kpKmXRzcmG61zSA65Gf1JyhIp
+	 5LbEkl2s3XwrMMsc9WZSRLNdxMLWQlADh5s1Q6bUBsvkliaXcf+UiUMxL9eu4CuZD2
+	 IkJX8ueVcdP3zZhhWPEhehp6OJTYclwOE13bZue8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 508/957] pinctrl: renesas: rzg2l: Fix save/restore of {IOLH,IEN,PUPD,SMT} registers
-Date: Wed, 20 May 2026 18:16:31 +0200
-Message-ID: <20260520162145.553642133@linuxfoundation.org>
+Subject: [PATCH 6.18 509/957] perf lock: Fix option value type in parse_max_stack
+Date: Wed, 20 May 2026 18:16:32 +0200
+Message-ID: <20260520162145.574874291@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d9a60e367919752a1d398ebeba667f1e200fae1e ]
+[ Upstream commit cfaade34b52aa1ec553044255702c4b31b57c005 ]
 
-The rzg2l_pinctrl_pm_setup_regs() handles save/restore of
-{IOLH,IEN,PUPD,SMT} registers during s2ram, but only for ports where all
-pins share the same pincfg. Extend the code to also support ports with
-variable pincfg per pin, so that {IOLH,IEN,PUPD,SMT} registers are
-correctly saved and restored for all pins.
+The value is a void* and the address of an int, max_stack_depth, is
+set up in the perf lock options. The parse_max_stack function treats
+the int* as a long*, make this more correct by declaring the value to
+be an int*.
 
-Fixes: 254203f9a94c ("pinctrl: renesas: rzg2l: Add suspend/resume support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260326162459.101414-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 0a277b622670 ("perf lock contention: Check --max-stack option")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/builtin-lock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index c2711b2de374d..ca360185740a8 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -2997,6 +2997,13 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 		off = RZG2L_PIN_CFG_TO_PORT_OFFSET(cfg);
- 		pincnt = hweight8(FIELD_GET(PIN_CFG_PIN_MAP_MASK, cfg));
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index e8962c985d34a..5585aeb97684d 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -2250,7 +2250,7 @@ static int parse_map_entry(const struct option *opt, const char *str,
+ static int parse_max_stack(const struct option *opt, const char *str,
+ 			   int unset __maybe_unused)
+ {
+-	unsigned long *len = (unsigned long *)opt->value;
++	int *len = opt->value;
+ 	long val;
+ 	char *endptr;
  
-+		if (cfg & RZG2L_VARIABLE_CFG) {
-+			unsigned int pin = port * RZG2L_PINS_PER_PORT;
-+
-+			for (unsigned int i = 0; i < RZG2L_PINS_PER_PORT; i++)
-+				cfg |= *(u64 *)pctrl->desc.pins[pin + i].drv_data;
-+		}
-+
- 		caps = FIELD_GET(PIN_CFG_MASK, cfg);
- 		has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B | PIN_CFG_IOLH_C));
- 		has_ien = !!(caps & PIN_CFG_IEN);
 -- 
 2.53.0
 
