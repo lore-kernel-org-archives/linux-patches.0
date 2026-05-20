@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A831C3BFC;
-	Wed, 20 May 2026 17:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445AC36D9EA;
+	Wed, 20 May 2026 17:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298829; cv=none; b=Uow0mZuQR6ZT5KfNSxA4nloutG99o5YbD8S3FVz0H+BMhfQG/vFvJaylH+YInzxnepugOCJ55QDzCvL6NRF11QCaE52GCx/CvM0IFaC/BSUOyQLbBtNyTUoxcX2f3gEPQQ6w7u8XMLIvnjeysGUz5SD4KA21fi/oNyXZdYK/D+4=
+	t=1779298831; cv=none; b=O16hKIFB7jdG7U7HkbCs+cAM73NNQWRBPHvqKROjq9ibq3QgGGUbBD7kfUjlkWwNqc7NwEm822DzpzQ3p9haHkOtpUDRJBMUTQ2FNagAOcQvAsZXMDMuKdqujMtVaR29mgfDOSmSjacK5CYfFndHwrbQKivIwqhjszVBe0bFN9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298829; c=relaxed/simple;
-	bh=fUWAokZ6icpE2Ts59BewdhzTJGYI3ZLYqEUX9cULMNw=;
+	s=arc-20240116; t=1779298831; c=relaxed/simple;
+	bh=01kQ6Aqsal/jZ8RqSaKIPgxi4cQZ9QVDNGfdQ2D+FrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=og/dNrrjAPL605EhLkIzoY6eeQQdUKPEs64EdcGY9HbXHDBDdHl90Dv4wcw2LpFVnoYHhYWQVdT7wQFvn06f39c0eMD2ZZWMOOoXMEdBvC6R1z+siivA3eJ8bmw7zyBKx3EnGBpJ37Eywxvk2lX0n5+kk3cVxMOOrW+pxRrbarU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj3hYDKG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eBk1VIYy3LXHdTwR8RQAG8C5YRp7L/Nbs9bwHiA7Q+ggjd7SISvsev1Vi30+VQY8MBNv+FwtbnPwJ21KqdSvoCO74nYsER+EF5mkEX5YmrzqgwOhZXuOYASd7spwGaJT9TQ/i9PQ5kJvT17IgtgHravllA8jx18XKtrAve1F49o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4rsXIhq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj3hYDKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C211F000E9;
-	Wed, 20 May 2026 17:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4rsXIhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D247E1F00893;
+	Wed, 20 May 2026 17:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298827;
-	bh=ClIRSmpi8EhmqXlL8eHiY+74H/hj/3iWmbY12XSlp70=;
+	s=korg; t=1779298830;
+	bh=g+4MxEWO8AzMUJBTzwWjktkqBr3B+A3aAGKTv2Z2WC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tj3hYDKG1HNG09FUBk5TNWuaDtR/fUtC9nxjubAXAHenXRZ+GaovE+0czk/uV6Tix
-	 jWbuoxLTsZQJsjtMPP/m2VxJ9LZgdMd0ECDspnkPQM5a7IkD6MHwDz7dO5WV9KyQY3
-	 7DarM0BnKMeKtUe4HPeQ2/3Nq34pzXkqMwAPVMFs=
+	b=L4rsXIhqXng3sEirpxVSi6/6HyLkeJyr8hVZnAX4r+K/KFnJnqPYWzfS7KcP9BHZz
+	 jHf3GZHFsmPFTcc2aSqEtwWRixt38To6QP937A8p2OIxLIzChwFx5jEAyIhAzjhGjg
+	 MpG0Y2fErpAXlz1BTGoHqYY1pzEeT3TC6kRQ8UvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 558/957] clk: qcom: dispcc[01]-sa8775p: Fix DSI byte clock rate setting
-Date: Wed, 20 May 2026 18:17:21 +0200
-Message-ID: <20260520162146.633475350@linuxfoundation.org>
+Subject: [PATCH 6.18 559/957] clk: renesas: r9a09g057: Add clock and reset entries for RTC
+Date: Wed, 20 May 2026 18:17:22 +0200
+Message-ID: <20260520162146.654966467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,83 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 2851b6c6a42e22c243aa4cd606a49e2b9acfb6d6 ]
+[ Upstream commit 7a03ef9f8223434f19e19a37acc32dcb581ab475 ]
 
-The clock tree for byte_clk_src is as follows:
+Add module clock and reset entries for the RTC module on the Renesas RZ/V2H
+(R9A09G057) SoC.
 
-   ┌──────byte0_clk_src─────┐
-   │                        │
-byte0_clk            byte0_div_clk_src
-                            │
-                     byte0_intf_clk
-
-If both of its direct children have CLK_SET_RATE_PARENT with different
-requests, byte0_clk_src (and its parent) will be reconfigured. In this
-case, byte0_intf should strictly follow the rate of byte0_clk (with
-some adjustments based on PHY mode).
-
-Remove CLK_SET_RATE_PARENT from byte0_div_clk_src to avoid this issue.
-
-Fixes: e700bfd2f976 ("clk: qcom: Add support for Display clock Controllers on SA8775P")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260304-topic-dsi_byte_fixup-v1-5-b79b29f83176@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251021080705.18116-2-ovidiu.panait.rb@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Stable-dep-of: 1b4f047dc401 ("clk: renesas: r9a09g057: Remove entries for WDT{0,2,3}")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc0-sa8775p.c | 2 --
- drivers/clk/qcom/dispcc1-sa8775p.c | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/clk/renesas/r9a09g057-cpg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/qcom/dispcc0-sa8775p.c b/drivers/clk/qcom/dispcc0-sa8775p.c
-index aeda9cf4bfee8..b248fa9705873 100644
---- a/drivers/clk/qcom/dispcc0-sa8775p.c
-+++ b/drivers/clk/qcom/dispcc0-sa8775p.c
-@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte0_div_clk_src = {
- 			&mdss_0_disp_cc_mdss_byte0_clk_src.clkr.hw,
- 		},
- 		.num_parents = 1,
--		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_regmap_div_ops,
- 	},
- };
-@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte1_div_clk_src = {
- 			&mdss_0_disp_cc_mdss_byte1_clk_src.clkr.hw,
- 		},
- 		.num_parents = 1,
--		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_regmap_div_ops,
- 	},
- };
-diff --git a/drivers/clk/qcom/dispcc1-sa8775p.c b/drivers/clk/qcom/dispcc1-sa8775p.c
-index cd55d1c119024..9882edbb79f9e 100644
---- a/drivers/clk/qcom/dispcc1-sa8775p.c
-+++ b/drivers/clk/qcom/dispcc1-sa8775p.c
-@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte0_div_clk_src = {
- 			&mdss_1_disp_cc_mdss_byte0_clk_src.clkr.hw,
- 		},
- 		.num_parents = 1,
--		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_regmap_div_ops,
- 	},
- };
-@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte1_div_clk_src = {
- 			&mdss_1_disp_cc_mdss_byte1_clk_src.clkr.hw,
- 		},
- 		.num_parents = 1,
--		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_regmap_div_ops,
- 	},
- };
+diff --git a/drivers/clk/renesas/r9a09g057-cpg.c b/drivers/clk/renesas/r9a09g057-cpg.c
+index 6389c4b6a5231..4e47fea3f8946 100644
+--- a/drivers/clk/renesas/r9a09g057-cpg.c
++++ b/drivers/clk/renesas/r9a09g057-cpg.c
+@@ -239,6 +239,8 @@ static const struct rzv2h_mod_clk r9a09g057_mod_clks[] __initconst = {
+ 						BUS_MSTOP(5, BIT(13))),
+ 	DEF_MOD("wdt_3_clk_loco",		CLK_QEXTAL, 5, 2, 2, 18,
+ 						BUS_MSTOP(5, BIT(13))),
++	DEF_MOD("rtc_0_clk_rtc",		CLK_PLLCM33_DIV16, 5, 3, 2, 19,
++						BUS_MSTOP(3, BIT(11) | BIT(12))),
+ 	DEF_MOD("rspi_0_pclk",			CLK_PLLCLN_DIV8, 5, 4, 2, 20,
+ 						BUS_MSTOP(11, BIT(0))),
+ 	DEF_MOD("rspi_0_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 5, 2, 21,
+@@ -401,6 +403,8 @@ static const struct rzv2h_reset r9a09g057_resets[] __initconst = {
+ 	DEF_RST(7, 6, 3, 7),		/* WDT_1_RESET */
+ 	DEF_RST(7, 7, 3, 8),		/* WDT_2_RESET */
+ 	DEF_RST(7, 8, 3, 9),		/* WDT_3_RESET */
++	DEF_RST(7, 9, 3, 10),		/* RTC_0_RST_RTC */
++	DEF_RST(7, 10, 3, 11),		/* RTC_0_RST_RTC_V */
+ 	DEF_RST(7, 11, 3, 12),		/* RSPI_0_PRESETN */
+ 	DEF_RST(7, 12, 3, 13),		/* RSPI_0_TRESETN */
+ 	DEF_RST(7, 13, 3, 14),		/* RSPI_1_PRESETN */
 -- 
 2.53.0
 
