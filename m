@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D252231842;
-	Wed, 20 May 2026 17:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800433E0C70;
+	Wed, 20 May 2026 17:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296721; cv=none; b=gp4S80lx0OHfJhU7vn0M1D6qlW/d/K7Lx9RGi9X2cYfNK6cmsE06C0WNhk6JYQ90bNxWJWsNK7y5N1KTUsYrllBIJS1ckaW4eljaR1dSSOoAtj2XJdA2HvRp29YHGawCwxti8xERw0z/eCaBT10QyA8PDERojA3z66MV1VVMDSc=
+	t=1779296723; cv=none; b=q/EEMoglvx/e6Tumn0I/U0jkxQG4XlW5sf7ty28MtWLnzm01rwEjTZKnzPH3g/q2Unp6KMhV9WrqNt8m04zwlDRwRR20L8+uNY/eSuB29PBI893wGvIZbvZaD8OSTMR3gwulKv1LGLsidjUCfbsFV7wfCrv4G6PJeC+3Y8ZVPF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296721; c=relaxed/simple;
-	bh=tXg68tLUy+P+Gvz9YGWYFLqz4QW4hDtVSLWWO8aPP8c=;
+	s=arc-20240116; t=1779296723; c=relaxed/simple;
+	bh=FgURfTNWx3AMIdyDyVa+vIz/hYWdog3B6298yq7ZP/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G5tRipMQYsfC0MUGAvE3M+5FWR2wasjEYzT7M2sPhlnECuFHXXLziOaxmbeR4GZb/f2LlOZvFGsDosXTng5xYwUSqZEiAqa5Zyy/tfbE70YiJcQLtyUVzOE/7+1S+WpC3fGRWRCno9vJiBG9/6VX2Jf/2eQYRDhEIVuEiZzKMNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWH4t/Uc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Se/fvJTeNnxuoltfKFDvwwxC8HykRt89YZeCMUUMTtDnsF7X5jToy3SdzSsIU4JtNgBCmOPVPm8HxrP9fq5bvMnN7C32S1tRAhz1FXDZUKLrKqIjWMmqNFX8dvhZiYTQNOUH3k2zaOL8YdXdEX7gbiRc5J94ST1MkC4Ml1io6AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuJ9kCz+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWH4t/Uc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447361F000E9;
-	Wed, 20 May 2026 17:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuJ9kCz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C6A1F000E9;
+	Wed, 20 May 2026 17:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296719;
-	bh=dng/9GdF97AGWyw/wzfwPALU4J8nVme80QkWNBzJ9Pk=;
+	s=korg; t=1779296722;
+	bh=Ljo+mf1Cu7tC4IYrNRrxBjkMWLNVHnnoV6he+8YYHkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWH4t/UcIvCPo/jA43cc/08QEJsVsKV7MysCYPWfeK9jvLXuAGMhvAtCsq6sab3tR
-	 xcHPYTBDQ7+wjPJ+GS2WymGKHpz9v9lASqJmd7x1nUoYXWzCBvQSF2SbgtGZfFk5Ko
-	 BoNlhYQuKzeU96eOC7vqe3Ll/2DG7+52qSbiPsHY=
+	b=MuJ9kCz+ihn0OkaUDe2Y6JWgC06qaSPN2DuMu1D5tUAyfq6zIcB5N1qmnZkGs3nO0
+	 c6j9rQXDlaaQh1gCWYbDyzncqsYhs2PZdM6iwqMUNJ1nELxyewl3OOPZmbe+jFiumU
+	 YZPpbnF6ugiWORTFs4MExOgzKSqvuJJ+4nRMdrzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0905/1146] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
-Date: Wed, 20 May 2026 18:19:15 +0200
-Message-ID: <20260520162208.720248972@linuxfoundation.org>
+Subject: [PATCH 7.0 0870/1146] kbuild: builddeb - avoid recompiles for non-cross-compiles
+Date: Wed, 20 May 2026 18:18:40 +0200
+Message-ID: <20260520162207.927543971@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,67 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
+[ Upstream commit 2452dcf4d740effff5aa71b7f6529ee8c04fd8f6 ]
 
-UVD 3.1 firmware validation seems to always fail after
-attempting it when it had already been validated.
-(This works similarly with the VCE 1.0 as well.)
+Commit e2c318225ac1 ("kbuild: deb-pkg: add
+pkg.linux-upstream.nokernelheaders build profile") changed how
+install-extmod-build gets called, making it always rebuild the host
+programs below scripts/ if HOSTCC wasn't specified with its full triplet
+on the make command line. That is, apparently, needed to fix up commit
+f1d87664b82a ("kbuild: cross-compile linux-headers package when
+possible") for cross-compiles. However, in the much more common case of
+non-cross-compile builds this will lead to unnecessary rebuilding of
+host tools including gcc plugins. This, in turn, will lead to a full
+kernel rebuild on the next 'make bindeb-pkg' which is unfortunate.
 
-Don't attempt repeating the validation when it's already done.
+Avoid that by only triggering the rebuild of host tools for actual
+cross-compile builds.
 
-This caused issues in situations when the system isn't able
-to suspend the GPU properly and so the GPU isn't actually
-powered down. Then amdgpu would fail when calling the IP
-block resume function.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
-Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Fixes: e2c318225ac1 ("kbuild: deb-pkg: add pkg.linux-upstream.nokernelheaders build profile")
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260402145116.1010901-1-minipli@grsecurity.net
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ scripts/package/builddeb | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index fea576a7f397f..efb3fde919ee3 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
- 	uint64_t addr;
- 	uint32_t size;
+diff --git a/scripts/package/builddeb b/scripts/package/builddeb
+index 3627ca227e5a5..ba1defc616524 100755
+--- a/scripts/package/builddeb
++++ b/scripts/package/builddeb
+@@ -139,7 +139,13 @@ install_kernel_headers () {
+ 	pdir=debian/$1
+ 	version=${1#linux-headers-}
  
-+	/* When the keyselect is already set, don't perturb it. */
-+	if (RREG32(mmUVD_FW_START))
-+		return;
-+
- 	/* program the VCPU memory controller bits 0-27 */
- 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
- 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
-@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
+-	CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
++	# Override $CC only for cross-compiles, to not unnecessarily rebuild
++	# scripts/ including plugins, which may lead to a full kernel rebuild.
++	if [ -n "${CROSS_COMPILE}" ]; then
++		CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
++	else
++		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
++	fi
  
-+	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
-+			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
-+		return 0;
-+	}
-+
- 	WREG32(mmUVD_FW_START, keysel);
- 
- 	for (i = 0; i < 10; ++i) {
+ 	mkdir -p $pdir/lib/modules/$version/
+ 	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
 -- 
 2.53.0
 
