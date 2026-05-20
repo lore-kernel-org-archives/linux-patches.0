@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97B63AE6E6;
-	Wed, 20 May 2026 16:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01EB3AE6E6;
+	Wed, 20 May 2026 16:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296381; cv=none; b=UZlVL0Xv8GoVO+iWSDk2vt+gJLXPZUQ9+n9jQsFta1kza/J+wUZzY2elpxvK02Mw85qY6BIkqtRZ5E3wh8vPrIDZf0Ow7ma9Sf7Esx4GOK7t/KLuLpSKSMu5EWlFZUyXgDy8dxK9RNqwy7TyYZq2FWh5KLCSJaFLZAe45OgGYc0=
+	t=1779296384; cv=none; b=PQVOtlwSWmhMCl7A409eX1NWHXYrr5DVBoav6S2ishFtc3+YhKyqGEwvhSXbr4I3vk0pkvCqjeHS9DvlhqKBKgBgSkzC4gI5wWYq4XIU7GgEZq36H2CEi/dpgq0FuRGOjbxINRrIvb5RnjHn5+KQjeZ5kFIXsw5jYDGMgLCm4j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296381; c=relaxed/simple;
-	bh=Lm3HIleCLI08b4JH5bdEIOdCUiPvrmlgz6gxgIvHYeE=;
+	s=arc-20240116; t=1779296384; c=relaxed/simple;
+	bh=wHitX4L5ANA7vqyetxmtll2BBHRJjQDZ0CgvWUjsruI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JK8bEx4AL9niqhqa1Sh1C32RYNomizsNVKoHZQQ+iAPS4pJStve7UjB2StjHxPO75gQ6Fk6vTpvlMDMjJfo8iqeWbixGKQ2U/z1Oafh0ocfbiFMCXrUcA0EnWxO7U/5VS0rx9UdTLVtHtHlSEvm8KbiYrFmUUyjZ312PpWv9Gv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ax/72dJi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLELqDYg0b/98/tvZAAY42oUkX8zp+LcMnBIrYiMPoP9v9QcEc2gCLf0Jb6l2Od9TMkK5YON54bmVQQ4Zbx4PXiZyylcQdo4BhyApewsDwhbcqM9Z5hGbb3ABvjdsDRdea4QzhhcGhhKpbedAaB5hsKxqzQje2nJIwO/zYhT6ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsmqG2zk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ax/72dJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F011F00893;
-	Wed, 20 May 2026 16:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsmqG2zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927C01F000E9;
+	Wed, 20 May 2026 16:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296379;
-	bh=AHTA9DX+mkqgBzb1pKbEpoguMLjuHXkDWCTcAFsAavM=;
+	s=korg; t=1779296382;
+	bh=AzRlK5JKEl3cIBi2gBONBmsYH2L4sXYEP6hcfkgMrgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ax/72dJiq1/9EYyu1Y3rWMT8iDrWJjQKIS1yKBMysgIjRZL92FDlR7clPk2WTc2uX
-	 k1B6yn2cV60/XBVAb8DFkQ9rHqcRjdvhvn6S+r/bjtmOlmxKKHdxURepn2YYg70VZD
-	 tmfeF/N7NUew6vG/VYOugrp+UjKD6ahQf5WnXMtg=
+	b=FsmqG2zkq4pJW672jZthDYzPE1xUq192knZ/m7KqwTgilfu14u5oh73MGo0+6Apnl
+	 GDHL32LxcC42sTnaL5SlYsRExQbVUfEHkoEMLDAkqgQfxDAPwV594+4qT1kB4i6MeO
+	 KK6S2U8PEOZKXXPD3BqBxJP8gj7ybt738YIHnmPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0775/1146] net: enetc: correct the command BD ring consumer index
-Date: Wed, 20 May 2026 18:17:05 +0200
-Message-ID: <20260520162205.754910257@linuxfoundation.org>
+Subject: [PATCH 7.0 0776/1146] net: enetc: fix NTMP DMA use-after-free issue
+Date: Wed, 20 May 2026 18:17:06 +0200
+Message-ID: <20260520162205.777096257@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,88 +53,573 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 759a32900b6f3db3d0f34a3b61123742723b50b4 ]
+[ Upstream commit 3cade698881eb238f88cbbfec82acc2110440a3f ]
 
-The command BD ring cousumer index register has the consumer index as
-the lower 10 bits, and the bit 31 is SBE, which indicates whether a
-system bus error occurred during execution of the CBD command. So if a
-system bus error occurs, reading the register will get the SBE bit set.
+The AI-generated review reported a potential DMA use-after-free issue
+[1]. If netc_xmit_ntmp_cmd() times out and returns an error, the pending
+command is not explicitly aborted, while ntmp_free_data_mem()
+unconditionally frees the DMA buffer. If the buffer has already been
+reallocated elsewhere, this may lead to silent memory corruption. Because
+the hardware eventually processes the pending command and perform a DMA
+write of the response to the physical address of the freed buffer.
 
-However, the current implementation directly uses the register value as
-the consumer index without masking it. Therefore, if a system bus error
-occurs, an incorrect consumer index will be obtained, causing errors in
-the processing of the command BD ring. Thus, we need to mask out the
-other bits to obtain the correct consumer index.
+To resolve this issue, this patch does the following modifications:
 
-In addition, this patch adds a check for the SBE bit after the polling
-loop and returns an error if the bit is set.
+1. Convert cbdr->ring_lock from a spinlock to a mutex
+
+The lock was originally a spinlock in case NTMP operations might be
+invoked from atomic context. After downstream support for all NTMP
+tables, no such usage has materialized. A mutex lock is now required
+because the driver now needs to reclaim used BDs and release associated
+DMA memory within the lock's context, while dma_free_coherent() might
+sleep.
+
+2. Introduce software command BD (struct netc_swcbd)
+
+The hardware write-back overwrites the addr and len fields of the BD,
+so the driver cannot rely on the hardware BD to free the associated DMA
+memory. The driver now maintains a software shadow BD storing the DMA
+buffer pointer, DMA address, and size. And netc_xmit_ntmp_cmd() only
+reclaims older BDs when the number of used BDs reaches
+NETC_CBDR_CLEAN_WORK (16). The software BD enables correct DMA memory
+release. With this, struct ntmp_dma_buf and ntmp_free_data_mem() are no
+longer needed and are removed.
+
+3. Require callers to hold ring_lock across netc_xmit_ntmp_cmd()
+
+netc_xmit_ntmp_cmd() releases the ring_lock before the caller finishes
+consuming the response. At this point, if a concurrent thread submits
+a new command, it may trigger ntmp_clean_cbdr() and free the DMA buffer
+while it is still in use. Move ring_lock ownership to the caller to
+ensure the response buffer cannot be reclaimed prematurely. So the
+helpers ntmp_select_and_lock_cbdr() and ntmp_unlock_cbdr() are added.
+
+These changes eliminate the DMA use-after-free condition and ensure safe
+and consistent BD reclamation and DMA buffer lifecycle management.
 
 Fixes: 4701073c3deb ("net: enetc: add initial netc-lib driver to support NTMP")
+Link: https://lore.kernel.org/netdev/20260403011729.1795413-1-kuba@kernel.org/ # [1]
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20260415060833.2303846-2-wei.fang@nxp.com
+Link: https://patch.msgid.link/20260415060833.2303846-3-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/ntmp.c         | 13 ++++++++++---
- drivers/net/ethernet/freescale/enetc/ntmp_private.h |  2 ++
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/enetc/ntmp.c   | 214 ++++++++++--------
+ .../ethernet/freescale/enetc/ntmp_private.h   |   8 +-
+ include/linux/fsl/ntmp.h                      |   9 +-
+ 3 files changed, 134 insertions(+), 97 deletions(-)
 
 diff --git a/drivers/net/ethernet/freescale/enetc/ntmp.c b/drivers/net/ethernet/freescale/enetc/ntmp.c
-index 0c1d343253bfb..b188eb2d40c0d 100644
+index b188eb2d40c0d..70bbc5d2d5d42 100644
 --- a/drivers/net/ethernet/freescale/enetc/ntmp.c
 +++ b/drivers/net/ethernet/freescale/enetc/ntmp.c
-@@ -55,7 +55,7 @@ int ntmp_init_cbdr(struct netc_cbdr *cbdr, struct device *dev,
- 	spin_lock_init(&cbdr->ring_lock);
+@@ -7,6 +7,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/fsl/netc_global.h>
+ #include <linux/iopoll.h>
++#include <linux/vmalloc.h>
+ 
+ #include "ntmp_private.h"
+ 
+@@ -42,6 +43,12 @@ int ntmp_init_cbdr(struct netc_cbdr *cbdr, struct device *dev,
+ 	if (!cbdr->addr_base)
+ 		return -ENOMEM;
+ 
++	cbdr->swcbd = vcalloc(cbd_num, sizeof(struct netc_swcbd));
++	if (!cbdr->swcbd) {
++		dma_free_coherent(dev, size, cbdr->addr_base, cbdr->dma_base);
++		return -ENOMEM;
++	}
++
+ 	cbdr->dma_size = size;
+ 	cbdr->bd_num = cbd_num;
+ 	cbdr->regs = *regs;
+@@ -52,7 +59,7 @@ int ntmp_init_cbdr(struct netc_cbdr *cbdr, struct device *dev,
+ 	cbdr->addr_base_align = PTR_ALIGN(cbdr->addr_base,
+ 					  NTMP_BASE_ADDR_ALIGN);
+ 
+-	spin_lock_init(&cbdr->ring_lock);
++	mutex_init(&cbdr->ring_lock);
  
  	cbdr->next_to_use = netc_read(cbdr->regs.pir);
--	cbdr->next_to_clean = netc_read(cbdr->regs.cir);
-+	cbdr->next_to_clean = netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX;
+ 	cbdr->next_to_clean = netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX;
+@@ -71,10 +78,24 @@ int ntmp_init_cbdr(struct netc_cbdr *cbdr, struct device *dev,
+ }
+ EXPORT_SYMBOL_GPL(ntmp_init_cbdr);
  
- 	/* Step 1: Configure the base address of the Control BD Ring */
- 	netc_write(cbdr->regs.bar0, lower_32_bits(cbdr->dma_base_align));
-@@ -98,7 +98,7 @@ static void ntmp_clean_cbdr(struct netc_cbdr *cbdr)
- 	int i;
++static void ntmp_free_data_mem(struct device *dev, struct netc_swcbd *swcbd)
++{
++	if (unlikely(!swcbd->buf))
++		return;
++
++	dma_free_coherent(dev, swcbd->size + NTMP_DATA_ADDR_ALIGN,
++			  swcbd->buf, swcbd->dma);
++}
++
+ void ntmp_free_cbdr(struct netc_cbdr *cbdr)
+ {
+ 	/* Disable the Control BD Ring */
+ 	netc_write(cbdr->regs.mr, 0);
++
++	for (int i = 0; i < cbdr->bd_num; i++)
++		ntmp_free_data_mem(cbdr->dev, &cbdr->swcbd[i]);
++
++	vfree(cbdr->swcbd);
+ 	dma_free_coherent(cbdr->dev, cbdr->dma_size, cbdr->addr_base,
+ 			  cbdr->dma_base);
+ 	memset(cbdr, 0, sizeof(*cbdr));
+@@ -94,40 +115,59 @@ static union netc_cbd *ntmp_get_cbd(struct netc_cbdr *cbdr, int index)
  
- 	i = cbdr->next_to_clean;
--	while (netc_read(cbdr->regs.cir) != i) {
-+	while ((netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX) != i) {
- 		cbd = ntmp_get_cbd(cbdr, i);
+ static void ntmp_clean_cbdr(struct netc_cbdr *cbdr)
+ {
+-	union netc_cbd *cbd;
+-	int i;
++	int i = cbdr->next_to_clean;
+ 
+-	i = cbdr->next_to_clean;
+ 	while ((netc_read(cbdr->regs.cir) & NETC_CBDRCIR_INDEX) != i) {
+-		cbd = ntmp_get_cbd(cbdr, i);
++		union netc_cbd *cbd = ntmp_get_cbd(cbdr, i);
++		struct netc_swcbd *swcbd = &cbdr->swcbd[i];
++
++		ntmp_free_data_mem(cbdr->dev, swcbd);
++		memset(swcbd, 0, sizeof(*swcbd));
  		memset(cbd, 0, sizeof(*cbd));
  		i = (i + 1) % cbdr->bd_num;
-@@ -135,12 +135,19 @@ static int netc_xmit_ntmp_cmd(struct ntmp_user *user, union netc_cbd *cbd)
+ 	}
+ 
++	dma_wmb();
+ 	cbdr->next_to_clean = i;
+ }
+ 
+-static int netc_xmit_ntmp_cmd(struct ntmp_user *user, union netc_cbd *cbd)
++static void ntmp_select_and_lock_cbdr(struct ntmp_user *user,
++				      struct netc_cbdr **cbdr)
++{
++	/* Currently only ENETC is supported, and it has only one command
++	 * BD ring.
++	 */
++	*cbdr = &user->ring[0];
++
++	mutex_lock(&(*cbdr)->ring_lock);
++}
++
++static void ntmp_unlock_cbdr(struct netc_cbdr *cbdr)
++{
++	mutex_unlock(&cbdr->ring_lock);
++}
++
++static int netc_xmit_ntmp_cmd(struct netc_cbdr *cbdr, union netc_cbd *cbd,
++			      struct netc_swcbd *swcbd)
+ {
+ 	union netc_cbd *cur_cbd;
+-	struct netc_cbdr *cbdr;
+-	int i, err;
++	int i, err, used_bds;
+ 	u16 status;
+ 	u32 val;
+ 
+-	/* Currently only i.MX95 ENETC is supported, and it only has one
+-	 * command BD ring
+-	 */
+-	cbdr = &user->ring[0];
+-
+-	spin_lock_bh(&cbdr->ring_lock);
+-
+-	if (unlikely(!ntmp_get_free_cbd_num(cbdr)))
++	used_bds = cbdr->bd_num - ntmp_get_free_cbd_num(cbdr);
++	if (unlikely(used_bds >= NETC_CBDR_CLEAN_WORK)) {
+ 		ntmp_clean_cbdr(cbdr);
++		if (unlikely(!ntmp_get_free_cbd_num(cbdr))) {
++			ntmp_free_data_mem(cbdr->dev, swcbd);
++			return -EBUSY;
++		}
++	}
+ 
+ 	i = cbdr->next_to_use;
+ 	cur_cbd = ntmp_get_cbd(cbdr, i);
+ 	*cur_cbd = *cbd;
++	cbdr->swcbd[i] = *swcbd;
+ 	dma_wmb();
+ 
+ 	/* Update producer index of both software and hardware */
+@@ -135,17 +175,16 @@ static int netc_xmit_ntmp_cmd(struct ntmp_user *user, union netc_cbd *cbd)
  	cbdr->next_to_use = i;
  	netc_write(cbdr->regs.pir, i);
  
--	err = read_poll_timeout_atomic(netc_read, val, val == i,
-+	err = read_poll_timeout_atomic(netc_read, val,
-+				       (val & NETC_CBDRCIR_INDEX) == i,
- 				       NETC_CBDR_DELAY_US, NETC_CBDR_TIMEOUT,
- 				       true, cbdr->regs.cir);
+-	err = read_poll_timeout_atomic(netc_read, val,
+-				       (val & NETC_CBDRCIR_INDEX) == i,
+-				       NETC_CBDR_DELAY_US, NETC_CBDR_TIMEOUT,
+-				       true, cbdr->regs.cir);
++	err = read_poll_timeout(netc_read, val,
++				(val & NETC_CBDRCIR_INDEX) == i,
++				NETC_CBDR_DELAY_US, NETC_CBDR_TIMEOUT,
++				true, cbdr->regs.cir);
  	if (unlikely(err))
- 		goto cbdr_unlock;
+-		goto cbdr_unlock;
++		return err;
  
-+	if (unlikely(val & NETC_CBDRCIR_SBE)) {
-+		dev_err(user->dev, "Command BD system bus error\n");
-+		err = -EIO;
-+		goto cbdr_unlock;
-+	}
-+
+ 	if (unlikely(val & NETC_CBDRCIR_SBE)) {
+-		dev_err(user->dev, "Command BD system bus error\n");
+-		err = -EIO;
+-		goto cbdr_unlock;
++		dev_err(cbdr->dev, "Command BD system bus error\n");
++		return -EIO;
+ 	}
+ 
  	dma_rmb();
- 	/* Get the writeback command BD, because the caller may need
- 	 * to check some other fields of the response header.
+@@ -157,40 +196,29 @@ static int netc_xmit_ntmp_cmd(struct ntmp_user *user, union netc_cbd *cbd)
+ 	/* Check the writeback error status */
+ 	status = le16_to_cpu(cbd->resp_hdr.error_rr) & NTMP_RESP_ERROR;
+ 	if (unlikely(status)) {
+-		err = -EIO;
+-		dev_err(user->dev, "Command BD error: 0x%04x\n", status);
++		dev_err(cbdr->dev, "Command BD error: 0x%04x\n", status);
++		return -EIO;
+ 	}
+ 
+-	ntmp_clean_cbdr(cbdr);
+-	dma_wmb();
+-
+-cbdr_unlock:
+-	spin_unlock_bh(&cbdr->ring_lock);
+-
+-	return err;
++	return 0;
+ }
+ 
+-static int ntmp_alloc_data_mem(struct ntmp_dma_buf *data, void **buf_align)
++static int ntmp_alloc_data_mem(struct device *dev, struct netc_swcbd *swcbd,
++			       void **buf_align)
+ {
+ 	void *buf;
+ 
+-	buf = dma_alloc_coherent(data->dev, data->size + NTMP_DATA_ADDR_ALIGN,
+-				 &data->dma, GFP_KERNEL);
++	buf = dma_alloc_coherent(dev, swcbd->size + NTMP_DATA_ADDR_ALIGN,
++				 &swcbd->dma, GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	data->buf = buf;
++	swcbd->buf = buf;
+ 	*buf_align = PTR_ALIGN(buf, NTMP_DATA_ADDR_ALIGN);
+ 
+ 	return 0;
+ }
+ 
+-static void ntmp_free_data_mem(struct ntmp_dma_buf *data)
+-{
+-	dma_free_coherent(data->dev, data->size + NTMP_DATA_ADDR_ALIGN,
+-			  data->buf, data->dma);
+-}
+-
+ static void ntmp_fill_request_hdr(union netc_cbd *cbd, dma_addr_t dma,
+ 				  int len, int table_id, int cmd,
+ 				  int access_method)
+@@ -241,37 +269,39 @@ static int ntmp_delete_entry_by_id(struct ntmp_user *user, int tbl_id,
+ 				   u8 tbl_ver, u32 entry_id, u32 req_len,
+ 				   u32 resp_len)
+ {
+-	struct ntmp_dma_buf data = {
+-		.dev = user->dev,
++	struct netc_swcbd swcbd = {
+ 		.size = max(req_len, resp_len),
+ 	};
+ 	struct ntmp_req_by_eid *req;
++	struct netc_cbdr *cbdr;
+ 	union netc_cbd cbd;
+ 	int err;
+ 
+-	err = ntmp_alloc_data_mem(&data, (void **)&req);
++	err = ntmp_alloc_data_mem(user->dev, &swcbd, (void **)&req);
+ 	if (err)
+ 		return err;
+ 
+ 	ntmp_fill_crd_eid(req, tbl_ver, 0, 0, entry_id);
+-	ntmp_fill_request_hdr(&cbd, data.dma, NTMP_LEN(req_len, resp_len),
++	ntmp_fill_request_hdr(&cbd, swcbd.dma, NTMP_LEN(req_len, resp_len),
+ 			      tbl_id, NTMP_CMD_DELETE, NTMP_AM_ENTRY_ID);
+ 
+-	err = netc_xmit_ntmp_cmd(user, &cbd);
++	ntmp_select_and_lock_cbdr(user, &cbdr);
++	err = netc_xmit_ntmp_cmd(cbdr, &cbd, &swcbd);
+ 	if (err)
+ 		dev_err(user->dev,
+ 			"Failed to delete entry 0x%x of %s, err: %pe",
+ 			entry_id, ntmp_table_name(tbl_id), ERR_PTR(err));
+-
+-	ntmp_free_data_mem(&data);
++	ntmp_unlock_cbdr(cbdr);
+ 
+ 	return err;
+ }
+ 
+-static int ntmp_query_entry_by_id(struct ntmp_user *user, int tbl_id,
+-				  u32 len, struct ntmp_req_by_eid *req,
+-				  dma_addr_t dma, bool compare_eid)
++static int ntmp_query_entry_by_id(struct netc_cbdr *cbdr, int tbl_id,
++				  struct ntmp_req_by_eid *req,
++				  struct netc_swcbd *swcbd,
++				  bool compare_eid)
+ {
++	u32 len = NTMP_LEN(sizeof(*req), swcbd->size);
+ 	struct ntmp_cmn_resp_query *resp;
+ 	int cmd = NTMP_CMD_QUERY;
+ 	union netc_cbd cbd;
+@@ -283,10 +313,11 @@ static int ntmp_query_entry_by_id(struct ntmp_user *user, int tbl_id,
+ 		cmd = NTMP_CMD_QU;
+ 
+ 	/* Request header */
+-	ntmp_fill_request_hdr(&cbd, dma, len, tbl_id, cmd, NTMP_AM_ENTRY_ID);
+-	err = netc_xmit_ntmp_cmd(user, &cbd);
++	ntmp_fill_request_hdr(&cbd, swcbd->dma, len, tbl_id, cmd,
++			      NTMP_AM_ENTRY_ID);
++	err = netc_xmit_ntmp_cmd(cbdr, &cbd, swcbd);
+ 	if (err) {
+-		dev_err(user->dev,
++		dev_err(cbdr->dev,
+ 			"Failed to query entry 0x%x of %s, err: %pe\n",
+ 			entry_id, ntmp_table_name(tbl_id), ERR_PTR(err));
+ 		return err;
+@@ -300,7 +331,7 @@ static int ntmp_query_entry_by_id(struct ntmp_user *user, int tbl_id,
+ 
+ 	resp = (struct ntmp_cmn_resp_query *)req;
+ 	if (unlikely(le32_to_cpu(resp->entry_id) != entry_id)) {
+-		dev_err(user->dev,
++		dev_err(cbdr->dev,
+ 			"%s: query EID 0x%x doesn't match response EID 0x%x\n",
+ 			ntmp_table_name(tbl_id), entry_id, le32_to_cpu(resp->entry_id));
+ 		return -EIO;
+@@ -312,15 +343,15 @@ static int ntmp_query_entry_by_id(struct ntmp_user *user, int tbl_id,
+ int ntmp_maft_add_entry(struct ntmp_user *user, u32 entry_id,
+ 			struct maft_entry_data *maft)
+ {
+-	struct ntmp_dma_buf data = {
+-		.dev = user->dev,
++	struct netc_swcbd swcbd = {
+ 		.size = sizeof(struct maft_req_add),
+ 	};
+ 	struct maft_req_add *req;
++	struct netc_cbdr *cbdr;
+ 	union netc_cbd cbd;
+ 	int err;
+ 
+-	err = ntmp_alloc_data_mem(&data, (void **)&req);
++	err = ntmp_alloc_data_mem(user->dev, &swcbd, (void **)&req);
+ 	if (err)
+ 		return err;
+ 
+@@ -329,14 +360,15 @@ int ntmp_maft_add_entry(struct ntmp_user *user, u32 entry_id,
+ 	req->keye = maft->keye;
+ 	req->cfge = maft->cfge;
+ 
+-	ntmp_fill_request_hdr(&cbd, data.dma, NTMP_LEN(data.size, 0),
++	ntmp_fill_request_hdr(&cbd, swcbd.dma, NTMP_LEN(swcbd.size, 0),
+ 			      NTMP_MAFT_ID, NTMP_CMD_ADD, NTMP_AM_ENTRY_ID);
+-	err = netc_xmit_ntmp_cmd(user, &cbd);
++
++	ntmp_select_and_lock_cbdr(user, &cbdr);
++	err = netc_xmit_ntmp_cmd(cbdr, &cbd, &swcbd);
+ 	if (err)
+ 		dev_err(user->dev, "Failed to add MAFT entry 0x%x, err: %pe\n",
+ 			entry_id, ERR_PTR(err));
+-
+-	ntmp_free_data_mem(&data);
++	ntmp_unlock_cbdr(cbdr);
+ 
+ 	return err;
+ }
+@@ -345,31 +377,31 @@ EXPORT_SYMBOL_GPL(ntmp_maft_add_entry);
+ int ntmp_maft_query_entry(struct ntmp_user *user, u32 entry_id,
+ 			  struct maft_entry_data *maft)
+ {
+-	struct ntmp_dma_buf data = {
+-		.dev = user->dev,
++	struct netc_swcbd swcbd = {
+ 		.size = sizeof(struct maft_resp_query),
+ 	};
+ 	struct maft_resp_query *resp;
+ 	struct ntmp_req_by_eid *req;
++	struct netc_cbdr *cbdr;
+ 	int err;
+ 
+-	err = ntmp_alloc_data_mem(&data, (void **)&req);
++	err = ntmp_alloc_data_mem(user->dev, &swcbd, (void **)&req);
+ 	if (err)
+ 		return err;
+ 
+ 	ntmp_fill_crd_eid(req, user->tbl.maft_ver, 0, 0, entry_id);
+-	err = ntmp_query_entry_by_id(user, NTMP_MAFT_ID,
+-				     NTMP_LEN(sizeof(*req), data.size),
+-				     req, data.dma, true);
++
++	ntmp_select_and_lock_cbdr(user, &cbdr);
++	err = ntmp_query_entry_by_id(cbdr, NTMP_MAFT_ID, req, &swcbd, true);
+ 	if (err)
+-		goto end;
++		goto unlock_cbdr;
+ 
+ 	resp = (struct maft_resp_query *)req;
+ 	maft->keye = resp->keye;
+ 	maft->cfge = resp->cfge;
+ 
+-end:
+-	ntmp_free_data_mem(&data);
++unlock_cbdr:
++	ntmp_unlock_cbdr(cbdr);
+ 
+ 	return err;
+ }
+@@ -385,8 +417,9 @@ EXPORT_SYMBOL_GPL(ntmp_maft_delete_entry);
+ int ntmp_rsst_update_entry(struct ntmp_user *user, const u32 *table,
+ 			   int count)
+ {
+-	struct ntmp_dma_buf data = {.dev = user->dev};
+ 	struct rsst_req_update *req;
++	struct netc_swcbd swcbd;
++	struct netc_cbdr *cbdr;
+ 	union netc_cbd cbd;
+ 	int err, i;
+ 
+@@ -394,8 +427,8 @@ int ntmp_rsst_update_entry(struct ntmp_user *user, const u32 *table,
+ 		/* HW only takes in a full 64 entry table */
+ 		return -EINVAL;
+ 
+-	data.size = struct_size(req, groups, count);
+-	err = ntmp_alloc_data_mem(&data, (void **)&req);
++	swcbd.size = struct_size(req, groups, count);
++	err = ntmp_alloc_data_mem(user->dev, &swcbd, (void **)&req);
+ 	if (err)
+ 		return err;
+ 
+@@ -405,15 +438,15 @@ int ntmp_rsst_update_entry(struct ntmp_user *user, const u32 *table,
+ 	for (i = 0; i < count; i++)
+ 		req->groups[i] = (u8)(table[i]);
+ 
+-	ntmp_fill_request_hdr(&cbd, data.dma, NTMP_LEN(data.size, 0),
++	ntmp_fill_request_hdr(&cbd, swcbd.dma, NTMP_LEN(swcbd.size, 0),
+ 			      NTMP_RSST_ID, NTMP_CMD_UPDATE, NTMP_AM_ENTRY_ID);
+ 
+-	err = netc_xmit_ntmp_cmd(user, &cbd);
++	ntmp_select_and_lock_cbdr(user, &cbdr);
++	err = netc_xmit_ntmp_cmd(cbdr, &cbd, &swcbd);
+ 	if (err)
+ 		dev_err(user->dev, "Failed to update RSST entry, err: %pe\n",
+ 			ERR_PTR(err));
+-
+-	ntmp_free_data_mem(&data);
++	ntmp_unlock_cbdr(cbdr);
+ 
+ 	return err;
+ }
+@@ -421,8 +454,9 @@ EXPORT_SYMBOL_GPL(ntmp_rsst_update_entry);
+ 
+ int ntmp_rsst_query_entry(struct ntmp_user *user, u32 *table, int count)
+ {
+-	struct ntmp_dma_buf data = {.dev = user->dev};
+ 	struct ntmp_req_by_eid *req;
++	struct netc_swcbd swcbd;
++	struct netc_cbdr *cbdr;
+ 	union netc_cbd cbd;
+ 	int err, i;
+ 	u8 *group;
+@@ -431,21 +465,23 @@ int ntmp_rsst_query_entry(struct ntmp_user *user, u32 *table, int count)
+ 		/* HW only takes in a full 64 entry table */
+ 		return -EINVAL;
+ 
+-	data.size = NTMP_ENTRY_ID_SIZE + RSST_STSE_DATA_SIZE(count) +
+-		    RSST_CFGE_DATA_SIZE(count);
+-	err = ntmp_alloc_data_mem(&data, (void **)&req);
++	swcbd.size = NTMP_ENTRY_ID_SIZE + RSST_STSE_DATA_SIZE(count) +
++		     RSST_CFGE_DATA_SIZE(count);
++	err = ntmp_alloc_data_mem(user->dev, &swcbd, (void **)&req);
+ 	if (err)
+ 		return err;
+ 
+ 	/* Set the request data buffer */
+ 	ntmp_fill_crd_eid(req, user->tbl.rsst_ver, 0, 0, 0);
+-	ntmp_fill_request_hdr(&cbd, data.dma, NTMP_LEN(sizeof(*req), data.size),
++	ntmp_fill_request_hdr(&cbd, swcbd.dma, NTMP_LEN(sizeof(*req), swcbd.size),
+ 			      NTMP_RSST_ID, NTMP_CMD_QUERY, NTMP_AM_ENTRY_ID);
+-	err = netc_xmit_ntmp_cmd(user, &cbd);
++
++	ntmp_select_and_lock_cbdr(user, &cbdr);
++	err = netc_xmit_ntmp_cmd(cbdr, &cbd, &swcbd);
+ 	if (err) {
+ 		dev_err(user->dev, "Failed to query RSST entry, err: %pe\n",
+ 			ERR_PTR(err));
+-		goto end;
++		goto unlock_cbdr;
+ 	}
+ 
+ 	group = (u8 *)req;
+@@ -453,8 +489,8 @@ int ntmp_rsst_query_entry(struct ntmp_user *user, u32 *table, int count)
+ 	for (i = 0; i < count; i++)
+ 		table[i] = group[i];
+ 
+-end:
+-	ntmp_free_data_mem(&data);
++unlock_cbdr:
++	ntmp_unlock_cbdr(cbdr);
+ 
+ 	return err;
+ }
 diff --git a/drivers/net/ethernet/freescale/enetc/ntmp_private.h b/drivers/net/ethernet/freescale/enetc/ntmp_private.h
-index 34394e40fddd4..3459cc45b6103 100644
+index 3459cc45b6103..f8dff3ba2c28a 100644
 --- a/drivers/net/ethernet/freescale/enetc/ntmp_private.h
 +++ b/drivers/net/ethernet/freescale/enetc/ntmp_private.h
-@@ -12,6 +12,8 @@
- 
- #define NTMP_EID_REQ_LEN	8
+@@ -14,6 +14,7 @@
  #define NETC_CBDR_BD_NUM	256
-+#define NETC_CBDRCIR_INDEX	GENMASK(9, 0)
-+#define NETC_CBDRCIR_SBE	BIT(31)
+ #define NETC_CBDRCIR_INDEX	GENMASK(9, 0)
+ #define NETC_CBDRCIR_SBE	BIT(31)
++#define NETC_CBDR_CLEAN_WORK	16
  
  union netc_cbd {
  	struct {
+@@ -56,13 +57,6 @@ union netc_cbd {
+ 	} resp_hdr; /* NTMP Response Message Header Format */
+ };
+ 
+-struct ntmp_dma_buf {
+-	struct device *dev;
+-	size_t size;
+-	void *buf;
+-	dma_addr_t dma;
+-};
+-
+ struct ntmp_cmn_req_data {
+ 	__le16 update_act;
+ 	u8 dbg_opt;
+diff --git a/include/linux/fsl/ntmp.h b/include/linux/fsl/ntmp.h
+index 916dc4fe7de3b..83a449b4d6ec4 100644
+--- a/include/linux/fsl/ntmp.h
++++ b/include/linux/fsl/ntmp.h
+@@ -31,6 +31,12 @@ struct netc_tbl_vers {
+ 	u8 rsst_ver;
+ };
+ 
++struct netc_swcbd {
++	void *buf;
++	dma_addr_t dma;
++	size_t size;
++};
++
+ struct netc_cbdr {
+ 	struct device *dev;
+ 	struct netc_cbdr_regs regs;
+@@ -44,9 +50,10 @@ struct netc_cbdr {
+ 	void *addr_base_align;
+ 	dma_addr_t dma_base;
+ 	dma_addr_t dma_base_align;
++	struct netc_swcbd *swcbd;
+ 
+ 	/* Serialize the order of command BD ring */
+-	spinlock_t ring_lock;
++	struct mutex ring_lock;
+ };
+ 
+ struct ntmp_user {
 -- 
 2.53.0
 
