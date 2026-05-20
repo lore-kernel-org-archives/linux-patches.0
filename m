@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56343D8138;
-	Wed, 20 May 2026 17:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA4F3D6CB7;
+	Wed, 20 May 2026 17:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297203; cv=none; b=J3+oEoChtQGHl9Bplhr4A/cgElWsWN9sKZE7AuRDJU9zYHLAHq8Uwh2BSujgt4PADSpEyd71p2WbewGNYUG519fEcuMYRu5OnJQ9BcLeHrDpjGYaTjl98Bm/d0W29JbBG98ISppuvpDW8QLrSOGtMZfgQPwFwtOskZ/0TAtoqWY=
+	t=1779297205; cv=none; b=V6kpoZ3qQJ7pZueAWbqH2GEsrwgGu1KbpKzDsHq+V24SoJXLGzm4a/3XxJk9PJK2DeuT64Xa4AmlfySYEB67svTkThrsnwCV7khOZgVQFf2c7p1kOJ1uHeTc7dxlgRPr9nVz32LO0xTujxEutqt/Y+gClGnacdVbecA2afBdvG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297203; c=relaxed/simple;
-	bh=VRDXyZjmKgZQ1I1W918xuRP7s1CGutN6iaWN9RHIaYg=;
+	s=arc-20240116; t=1779297205; c=relaxed/simple;
+	bh=5K5f5fZs5U1jmZWcNMVHk03QFngu4vmsVwNXcvoEov8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhELlidO5UOhhcjhpgW5a1jZzu5JuT2u+z5ijt1XWY0GdSzhOHx/hqp3cvdJQGFOIrbFqM+5dgracarg7IYjbBpUpWaaJoYxE17O2O0vKtl2d3ELbZ7+8aDn9GXG40mzUmeAqOkp2NqhmNM4NtXvvmSIH9kdEvkgAcGpllGvhLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lU9hoVcD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KTkfx7sXZ1TPMWpULJPkcN/mI/wcaMtRlbQp1vzY3tk4vvwjPqy9U7hu1kAurnaYJHoeuvaxiELy5Alx02icKMc+vK3fgd9NDJf6hN27TajH0aEfC0h46p5uAyC51ZBSJ9Ff9/13+1kJzH7+4zkTiZ8iKIB6+6FvKHiK3mQIn2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hrwtdsxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lU9hoVcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5644F1F000E9;
-	Wed, 20 May 2026 17:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hrwtdsxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007F61F000E9;
+	Wed, 20 May 2026 17:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297201;
-	bh=OB5VGmhDzXGlNrlHipUesl7F1qMEoo7EBYo0BJ48WDE=;
+	s=korg; t=1779297204;
+	bh=FihiYs5QTLqKw1S0A9ddAmvG4RNYtMhaK7MwGnsBlG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lU9hoVcDYigOs0Jcf7fx0xegWepw29b3dukqhqKzi/tzE6T/VlghMjUL/+RVmMjDb
-	 S6d2ZIaCFXeqYhLmZ5lz8eAVU8tvxiDZU4hQi454TAKQGVqh6v9oqCpJ0hLuIHd2nv
-	 A0a1n0eGcog/Z1bI5V77FHrDRzPFmR2HJN+AE3Sg=
+	b=Hrwtdsxgosi0nVJP8+IUJpDKYaYLnodZDwqF57dzXc7eOkxIzJHm5uTdsizUzEZ54
+	 duKrjjGvBlNaXd9mOg+c13miqHbuZyMB1o7A/ADtbD08XfiGLxDXVHoQ0Clp5feZ4e
+	 8CQreXGoCp5btyLS/gNALgHQ+XkfpT4kE9RYJQ+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 7.0 1087/1146] accel/rocket: Fix prep_bo ioctl leaking positive return from dma_resv_wait_timeout()
-Date: Wed, 20 May 2026 18:22:17 +0200
-Message-ID: <20260520162212.835663388@linuxfoundation.org>
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 1048/1146] net: ena: PHC: Check return code before setting timestamp output
+Date: Wed, 20 May 2026 18:21:38 +0200
+Message-ID: <20260520162211.948305464@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,38 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Arthur Kiyanovski <akiyano@amazon.com>
 
-commit 74570e12b4705ea11dcdfbfbd0a0b0fdaeff3059 upstream.
+commit 24a08d7d6218d60c033015cf4870b6096446e734 upstream.
 
-dma_resv_wait_timeout() returns a positive 'remaining jiffies' value
-on success, 0 on timeout, and -errno on failure.
+ena_phc_gettimex64() is setting the output parameter regardless
+of whether ena_com_phc_get_timestamp() succeeded or failed.
 
-rocket_ioctl_prep_bo() returns this 'long' result from an int-typed
-ioctl handler, so positive values reach userspace as bogus errors.
-Explicitly set ret to 0 on the success path.
+When ena_com_phc_get_timestamp() returns an error, the timestamp
+parameter may contain uninitialized stack memory (e.g., when PHC is
+disabled or in blocked state) or invalid hardware values. Passing
+these to userspace via the PTP ioctl is both a security issue
+(information leak) and a correctness bug.
 
-Fixes: 525ad89dd904 ("accel/rocket: Add IOCTLs for synchronizing memory accesses")
+Fix by checking the return code after releasing the lock and only
+setting the output timestamp on success.
+
+Fixes: e0ea34158ee8 ("net: ena: Add PHC support in the ENA driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Link: https://patch.msgid.link/c0ebf83b345721701b22d8f5bc41c52c0ecf5e16.1776581974.git.gye976@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260507003518.22554-1-akiyano@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/rocket/rocket_gem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amazon/ena/ena_phc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/accel/rocket/rocket_gem.c
-+++ b/drivers/accel/rocket/rocket_gem.c
-@@ -145,6 +145,8 @@ int rocket_ioctl_prep_bo(struct drm_devi
- 	ret = dma_resv_wait_timeout(gem_obj->resv, DMA_RESV_USAGE_WRITE, true, timeout);
- 	if (!ret)
- 		ret = timeout ? -ETIMEDOUT : -EBUSY;
-+	else if (ret > 0)
-+		ret = 0;
+--- a/drivers/net/ethernet/amazon/ena/ena_phc.c
++++ b/drivers/net/ethernet/amazon/ena/ena_phc.c
+@@ -46,9 +46,12 @@ static int ena_phc_gettimex64(struct ptp
  
- 	shmem_obj = &to_rocket_bo(gem_obj)->base;
+ 	spin_unlock_irqrestore(&phc_info->lock, flags);
  
++	if (rc)
++		return rc;
++
+ 	*ts = ns_to_timespec64(timestamp_nsec);
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int ena_phc_settime64(struct ptp_clock_info *clock_info,
 
 
