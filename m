@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1C436D9EA;
-	Wed, 20 May 2026 17:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFE136D9EA;
+	Wed, 20 May 2026 17:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298807; cv=none; b=CruGAVatj6ZforUZKGu7+LpYJo7sBfOkqjhO/Z59r7rehmWKTpQj+m1D3HFxvt8FrFZ9g+ZQ6kwGn2prgYf0F/2FZbiquDgTeWnHuE773mnzkO/KFr9OKUQEM4OkA7NPO3wxq4nBZijTt8Sh2o7En1zTDc5ITs0ZMEhWstCy6MQ=
+	t=1779298810; cv=none; b=j2YMPuU5wU3kG95BKAi+1T3C2OHzfETPAorUiqC6Lu/S9VqRebsqLA/iLGPy2fE7mSvFBVRaImsqWnb6V+Uz+yY+XDJLF/bwersGNSNElj/7H2iEBf7EE11iI1CIirJoItPnI5IglHIlrafE95CJLvFNZLteIEexr4wbIJt0Gso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298807; c=relaxed/simple;
-	bh=X15LCvcBBRm3f9hwgww8bj60coE7Hz/ybYz4izLaDDk=;
+	s=arc-20240116; t=1779298810; c=relaxed/simple;
+	bh=DIPsSIg3+IxYAUXtW/+YH//YNxj/2tLVc6r0S5WRQ8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEAZd0DJrShgaysTQmwQRQa6YzoPpKkrlNsuxSl/HbhvPUSC2uyFv+xFr9rcUailA6t3zu8XhtXTYKCBG5JHj9JZBEOf708AMQacWoBEag/7nY1OEHh6/YBotSRuO6fUf44CfTDgavf89XLF226QfCFUrYWlSn8U3Up+/vrNnIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGBr1XfG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PlgAE8PqlnrUScV5MosfJneP0TNFhZFWEhyDz/JHBER9jixFPHaHLBmaLaZDvOIqVer68/sfDn14dy0Z0B6Efr1J+LbUXQjqWfGLVk8Q0dRWvNLport2EWNWGJvgGto21A56YjymfUAEI6gZ22urrMZEb9Rthhy6u3VHFvnfEAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orCeirWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGBr1XfG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE21F000E9;
-	Wed, 20 May 2026 17:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orCeirWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABEF1F000E9;
+	Wed, 20 May 2026 17:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298806;
-	bh=2Ku6LufMI05PHM5z48Vl8pCxasp0ih4kqxpCe+pn0sA=;
+	s=korg; t=1779298809;
+	bh=sBOK0ycwWjGKazCVNo7tPePAvbkvULvIJ0nGUeQWAaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGBr1XfGU73MPYLeyD5NmANo27T6xQp9vhdsLK63y3SUbDR4uyObI3S6p0c5MhD5G
-	 BTqJDc88h3AwK7ewVBevib9+o0bdvHHOlkrOmyZEQt0zXEgUF8NQjrMbYeBmobzfrn
-	 pFmkP2JiozPyE29pI2Wl70W5TxIUUGlGlXLYJb+Y=
+	b=orCeirWLjyYfqIzEJjRKE0Sgp7ZpYdkOFjfeKkOssNmU/wk+KOgPw6QV0TM2wc7g3
+	 z0R5Q8WLtLeDH7Bc9858QMly2KWTlhlXe702yN2XcVep94Vc484/rqKTb2/Zp+GoPP
+	 KhnON1NIYM100a+odA2UpAWkrs5hiLuv2ljvDHXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 551/957] clk: sunxi-ng: sun55i-a523-r: Add missing r-spi module clock
-Date: Wed, 20 May 2026 18:17:14 +0200
-Message-ID: <20260520162146.482099784@linuxfoundation.org>
+Subject: [PATCH 6.18 552/957] scsi: sg: Fix sysctl sg-big-buff register during sg_init()
+Date: Wed, 20 May 2026 18:17:15 +0200
+Message-ID: <20260520162146.503892353@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,69 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit fb20ccf70cf695f178d7c32e2d33b376560df0ff ]
+[ Upstream commit 3033c471aaf675254efaa0da431e95d91a104b41 ]
 
-When the PRCM clk driver was added, somehow the r-spi module clock
-was skipped over.
+Commit 26d1c80fd61e ("scsi/sg: move sg-big-buff sysctl to scsi/sg.c") made
+a mistake. sysctl sg-big-buff was not created because the call to
+register_sg_sysctls() was placed on the wrong code path.
 
-Add it so that r-spi can actually work.
-
-Fixes: 8cea339cfb81 ("clk: sunxi-ng: add support for the A523/T527 PRCM CCU")
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260217093004.3239051-1-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 26d1c80fd61e ("scsi/sg: move sg-big-buff sysctl to scsi/sg.c")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260127062044.3034148-2-yangerkun@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/scsi/sg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-index 0339c4af0fe5b..db0e36d8838e7 100644
---- a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-@@ -83,9 +83,22 @@ static SUNXI_CCU_MUX_DATA_WITH_GATE(r_pwmctrl_clk, "r-pwmctrl",
- static SUNXI_CCU_GATE_HW(bus_r_pwmctrl_clk, "bus-r-pwmctrl",
- 			 &r_apb0_clk.common.hw, 0x13c, BIT(0), 0);
- 
--/* SPI clock is /M/N (same as new MMC?) */
-+static const struct clk_parent_data r_spi_parents[] = {
-+	{ .fw_name = "hosc" },
-+	{ .fw_name = "pll-periph" },
-+	{ .name = "pll-periph0-300M" },
-+	{ .name = "pll-periph1-300M" },
-+	{ .name = "pll-audio" },
-+};
-+static SUNXI_CCU_DUALDIV_MUX_GATE(r_spi_clk, "r-spi", r_spi_parents, 0x150,
-+				  0, 5,		/* M */
-+				  8, 5,		/* P */
-+				  24, 3,	/* mux */
-+				  BIT(31),	/* gate */
-+				  0);
- static SUNXI_CCU_GATE_HW(bus_r_spi_clk, "bus-r-spi",
- 			 &r_ahb_clk.common.hw, 0x15c, BIT(0), 0);
-+
- static SUNXI_CCU_GATE_HW(bus_r_spinlock_clk, "bus-r-spinlock",
- 			 &r_ahb_clk.common.hw, 0x16c, BIT(0), 0);
- static SUNXI_CCU_GATE_HW(bus_r_msgbox_clk, "bus-r-msgbox",
-@@ -138,6 +151,7 @@ static struct ccu_common *sun55i_a523_r_ccu_clks[] = {
- 	&bus_r_twd_clk.common,
- 	&r_pwmctrl_clk.common,
- 	&bus_r_pwmctrl_clk.common,
-+	&r_spi_clk.common,
- 	&bus_r_spi_clk.common,
- 	&bus_r_spinlock_clk.common,
- 	&bus_r_msgbox_clk.common,
-@@ -169,6 +183,7 @@ static struct clk_hw_onecell_data sun55i_a523_r_hw_clks = {
- 		[CLK_BUS_R_TWD]		= &bus_r_twd_clk.common.hw,
- 		[CLK_R_PWMCTRL]		= &r_pwmctrl_clk.common.hw,
- 		[CLK_BUS_R_PWMCTRL]	= &bus_r_pwmctrl_clk.common.hw,
-+		[CLK_R_SPI]		= &r_spi_clk.common.hw,
- 		[CLK_BUS_R_SPI]		= &bus_r_spi_clk.common.hw,
- 		[CLK_BUS_R_SPINLOCK]	= &bus_r_spinlock_clk.common.hw,
- 		[CLK_BUS_R_MSGBOX]	= &bus_r_msgbox_clk.common.hw,
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index 57fba34832ad1..c93cc9323f563 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -1689,13 +1689,13 @@ init_sg(void)
+ 	sg_sysfs_valid = 1;
+ 	rc = scsi_register_interface(&sg_interface);
+ 	if (0 == rc) {
++		register_sg_sysctls();
+ #ifdef CONFIG_SCSI_PROC_FS
+ 		sg_proc_init();
+ #endif				/* CONFIG_SCSI_PROC_FS */
+ 		return 0;
+ 	}
+ 	class_unregister(&sg_sysfs_class);
+-	register_sg_sysctls();
+ err_out:
+ 	unregister_chrdev_region(MKDEV(SCSI_GENERIC_MAJOR, 0), SG_MAX_DEVS);
+ 	return rc;
 -- 
 2.53.0
 
