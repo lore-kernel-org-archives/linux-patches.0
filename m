@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E886429B78D;
-	Wed, 20 May 2026 18:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E267E347515;
+	Wed, 20 May 2026 18:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301145; cv=none; b=n1EmNXVD7HJK64psTQFv0LsvwSjAllUd1iC5y0YytKsyu5BuZtZEO6T6eMEjEATzhfnyKfNCJKgJxOmHDiBz/AxN0zFpAYrNskbc2pdUKXyaov6LYYUoJcbdEF7cuqpCZxWt5i0dy8vqIuGAeztCL9RVQ5eRTBilsigoRggwO8c=
+	t=1779301148; cv=none; b=nG3dmFhH+/bzzqW5qEwoxA4bX25JLVnnYLcuXGi3ZVfpI9G2LJbmq8HRAmoPUcxMqOaDMe4+HdRPxIT/5XdbXBiqgz7OW0PDgti9DnJKzBbvZOPt1wIFojUfq1HMuR6nEl/tGx61PFpMKcg/5Vdt69mUQeZc6z70n3lagMXKru0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301145; c=relaxed/simple;
-	bh=d232ufAf8t3RrWUPgVBglohy3PbUBQt3bp65ld975oI=;
+	s=arc-20240116; t=1779301148; c=relaxed/simple;
+	bh=w/d3Le4xsE9S9jJyOnxcYWFRHgVH14aSJu8Q2FvhkAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eDoUi06DRDfq7xBPhbukQ7qIGCz+hr1OlWtZJtVkzQHr136O4W1SrO4JfrwlG0D+Pgv6gwJ0gRUlkaIV71J2b7g2zcASJs19Th2nUJrKz614/lF9N7pK3FZ4RzUYd+FCTWBuWF3W7Gw70lYm6UttTD3riWQK/8Pc6GBwniNYYeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRpfGOhG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xob2IIP6Hxxhv6CkgsaLrA90Cr6TzN5VB1Xk6kLF4FvHkx/YBhQdLDyM/9wjJEiS78s/AnO5fbqzWq/jQQqMrrehwvJO3je0imxU2A92OyLSfjXYnk+ox+UXfFpcAI09XpLNfazXBv6b2q/mPhMUWluwVAwHraOI/sW15//sEP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hG5jT7oZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRpfGOhG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A49E1F000E9;
-	Wed, 20 May 2026 18:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hG5jT7oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023FE1F000E9;
+	Wed, 20 May 2026 18:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301143;
-	bh=yf6dKVe6Sucr9MymKkUeYDivLrcrMa8eMkV5nmDsfqc=;
+	s=korg; t=1779301146;
+	bh=8JYREuzL1OuzzIo+vSAyaWr+OyXXEH3Pt4kOC3guJ90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jRpfGOhG/U7vsQVOfaaigL/W2NDmVHAkWkg4aS8Kb2VptnUY1Zh1MXqyoemt7cJX3
-	 orHzzsdqcGFlmW0YHnJ5KxXuAnXVCfbwa5YfFtg14LRTYoIuQVDT0fzuujvGfJ5zmH
-	 ezos/4yU2P5c/NiDS1lSC/WrYPunG0Op7BAgodZ4=
+	b=hG5jT7oZKmfQTW7C/CtoPV7uyHVeCVXoxkpSNzO8VUB42KMpanJiDJub/+zO64kU7
+	 jndtGnapQekb1/Tg90h62e6Jc90AT1EOVFjiaRVnugM1jSMrAtZnO4llaX3JpLm6Dr
+	 R1vtE0/5bWpSWY23zmUHV+pfra+2kmbzaVoZVGXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dudu Lu <phx0fer@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 444/666] net/sched: act_mirred: fix wrong device for mac_header_xmit check in tcf_blockcast_redir
-Date: Wed, 20 May 2026 18:20:55 +0200
-Message-ID: <20260520162120.894792140@linuxfoundation.org>
+Subject: [PATCH 6.12 445/666] macvlan: fix macvlan_get_size() not reserving space for IFLA_MACVLAN_BC_CUTOFF
+Date: Wed, 20 May 2026 18:20:56 +0200
+Message-ID: <20260520162120.915519891@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,51 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 4510d140524ca7d6e772db962e013f26f09a63b1 ]
+[ Upstream commit fa92a77b0ed4d5f11a71665a232ac5a54a4b055d ]
 
-In tcf_blockcast_redir(), when iterating block ports to redirect
-packets to multiple devices, the mac_header_xmit flag is queried
-from the wrong device. The loop sends to dev_prev but queries
-dev_is_mac_header_xmit(dev) — which is the NEXT device in the
-iteration, not the one being sent to.
+macvlan_get_size() does not account for IFLA_MACVLAN_BC_CUTOFF, but
+macvlan_fill_info() conditionally includes it when port->bc_cutoff != 1.
+This causes nla_put_s32() to fail with -EMSGSIZE when the netlink skb
+runs out of space, triggering a WARN_ON in rtnetlink and preventing the
+interface from being dumped.
 
-This causes tcf_mirred_to_dev() to make incorrect decisions about
-whether to push or pull the MAC header. When the block contains
-mixed device types (e.g., an ethernet veth and a tunnel device),
-intermediate devices get the wrong mac_header_xmit flag, leading to
-skb header corruption. In the worst case, skb_push_rcsum with an
-incorrect mac_len can exhaust headroom and panic.
+The bug can be reproduced with:
 
-The last device in the loop is handled correctly (line 365-366 uses
-dev_is_mac_header_xmit(dev_prev)), confirming this is a copy-paste
-oversight for the intermediate devices.
+  ip link add macvlan0 link eth0 type macvlan mode bridge
+  ip link set macvlan0 type macvlan bc_cutoff 0
+  ip -d link show macvlan0   # fails with -EMSGSIZE
 
-Fix by using dev_prev instead of dev for the mac_header_xmit query,
-consistent with the device actually being sent to.
+The bc_cutoff feature was added in commit 954d1fa1ac93 ("macvlan: Add
+netlink attribute for broadcast cutoff"), which added the nla_put_s32()
+call in macvlan_fill_info() but missed adding the corresponding
+nla_total_size(4) in macvlan_get_size(). A follow-up commit
+55cef78c244d ("macvlan: add forgotten nla_policy for
+IFLA_MACVLAN_BC_CUTOFF") fixed the missing nla_policy entry but still
+did not fix the size calculation.
 
-Fixes: 42f39036cda8 ("net/sched: act_mirred: Allow mirred to block")
+Fixes: 954d1fa1ac93 ("macvlan: Add netlink attribute for broadcast cutoff")
 Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260413084927.71353-1-phx0fer@gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260413085349.73977-1-phx0fer@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macvlan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 5b38143659249..b1b0049d7a0e9 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -348,7 +348,7 @@ static int tcf_blockcast_redir(struct sk_buff *skb, struct tcf_mirred *m,
- 			goto assign_prev;
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index b43a1221a5908..e778367c1d296 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1678,6 +1678,7 @@ static size_t macvlan_get_size(const struct net_device *dev)
+ 		+ macvlan_get_size_mac(vlan) /* IFLA_MACVLAN_MACADDR */
+ 		+ nla_total_size(4) /* IFLA_MACVLAN_BC_QUEUE_LEN */
+ 		+ nla_total_size(4) /* IFLA_MACVLAN_BC_QUEUE_LEN_USED */
++		+ nla_total_size(4) /* IFLA_MACVLAN_BC_CUTOFF */
+ 		);
+ }
  
- 		tcf_mirred_to_dev(skb, m, dev_prev,
--				  dev_is_mac_header_xmit(dev),
-+				  dev_is_mac_header_xmit(dev_prev),
- 				  mirred_eaction, retval);
- assign_prev:
- 		dev_prev = dev;
 -- 
 2.53.0
 
