@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA15B3D3002;
-	Wed, 20 May 2026 11:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603543BCD04;
+	Wed, 20 May 2026 11:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276020; cv=none; b=KdiUhvEtvxURB47KSlzFVxbpX6LwuMIZlyi6lFlS0kBsG6O+G5JWYkhxsoybIfPGJPbb1EM4UW39yaGiFFxTonc+KDGtmmRJ3HCOGDSa5XsQ5hGCtWNu8z6qXDCia0YToKmOsLNuPDczxWuUuHY8PG30R6M5RcLoHyXmX0Oa+go=
+	t=1779276021; cv=none; b=l91QemeMEVGytQN71uq8+POP1ARVFiNpKOsZk6xIhEaGZj/FVCtMQhAuVn/xPegWHc780yyJ2j6WTySTkyFqcXf52UTO/PcW+jKuhfoP3uOvbf7P40wmqanr9THRfF9yUYZXuaesCJPTyD/LeqgjyRQnFwnimLZJt37bNEga+wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276020; c=relaxed/simple;
-	bh=zGb5XWpc6ZIDpU9QwhdmaqYvZSeao8Zu2vRfr5h3CZ8=;
+	s=arc-20240116; t=1779276021; c=relaxed/simple;
+	bh=GJYylXcn2nsU8fJDFYpyDxNo2CMymQnw6UwK2SAQfhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AE+7xmjI6y4V8kFijcbdQPfFwmCzNujLjSUL0y0+wCpiXBICCuIZK9iZ7STAEVkPQfm5keHBIz9cd+2z3c4FMZrkxBsBDiAb1F7JHPdV9VZD1N8VNpzH2EouKy3Hr6v5I5D+hntuRLtwW9zkI57Si+UMxVH/7ftFRlT4w56nLrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUtTWfy5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dgb+ruyHIha2XI/30DAfXylsGvgSJFzCo/khmCZi6SZrHXfIjubCFhkMGk3xu9XDBhyw8nBznoTyj0TqiUP/2z/Gz0Uv/MkGoCPeJWymlfZ3LvKRmJcy3OY1zi5ouCaPqoWpd2rm+PO7UD02J1AvkKfSD/DvECd47uO/B1iMbss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wq0uEDSf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUtTWfy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4ED1F00896;
-	Wed, 20 May 2026 11:20:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wq0uEDSf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042AB1F00897;
+	Wed, 20 May 2026 11:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276016;
-	bh=jUTfMqqDDJxFfr+dLoEBVtFnN+A04vnvH69Uzit7gWQ=;
+	s=k20260515; t=1779276017;
+	bh=ZllhInPl3X19BGDDi+9GN535sfAEyUN6+8KBtVJVIxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZUtTWfy51U0NJxlxaugirdw+0fmsVFQ8+vxLbr8GQXW7RV7Ny7ldQ9sovvF66hmvd
-	 ZV4hThAMsb6gsNlTdx8YA9i+YnFGAPyZTXW4TUs7ZLYkt9KoReko24owclmvVU4P/O
-	 xMKMuBUUWapGIAdlVDry2SEJ3oZvvhNVxeSwqHbs4pX1EP+7+xvTAudQmLw9cuByUJ
-	 lgYWHIG7xL37+zMG6QqRmv4OTqT1vZe1Rta9b09sHOavnp9MpOR6/KJEYTCnCNlg/5
-	 k4KMco/mxVpxo7maGJU2fIq6KogB9nym2uJYcxreefZrKOQYUhOMIq4NCCL6O+JGvW
-	 4fmG8x9EfYQWw==
+	b=Wq0uEDSfBkJt7M0xB8wQgvr80TDQOKyVVZC7GIcmweCBigc8VYolBogLYuFnjHDEy
+	 8naSUo0zrBfmttmvbHGyTjj4LhKc/hxvTn4tLubrDPEUEHIB9Qv3DmCxqobxgRN+Hs
+	 lPB2WnJgrrC6cv6tSHiRCSpP3VpwuU3lKhVO1wXjdJy/fkuOc3yAtPAlGxUEEH6WAz
+	 VVVK0huZ153L1Q7KrhFKyk8Q1xJZmVO/pi0eV43odFpILlSdaR/mQtuQz4CgM3b0Qd
+	 4tkj6pvy42JDkRwDxkFdHoE0QduorQ+YVUCb+8uTBm5uG3Dv0FM7ZUEXrQwsEp6E/r
+	 BC0rVcxWOMbNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Pauli Virtanen <pav@iki.fi>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] powerpc/vmx: avoid KASAN instrumentation in enter_vmx_ops() for kexec
-Date: Wed, 20 May 2026 07:18:54 -0400
-Message-ID: <20260520111944.3424570-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: usb-audio: add min_mute quirk for Razer Nommo V2 X
+Date: Wed, 20 May 2026 07:18:55 -0400
+Message-ID: <20260520111944.3424570-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -55,366 +54,221 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 38e989d504fc52900a3786b7144fb53cd67e0389 ]
+[ Upstream commit ad39a189bfebb3de580f390bc000f9e121c6aca3 ]
 
-The kexec sequence invokes enter_vmx_ops() via copy_page() with the MMU
-disabled. In this context, code must not rely on normal virtual address
-translations or trigger page faults.
+ID 1532:055e Razer USA, Ltd Razer Nommo V2 X
+is tested to have muted min playback volume. Apply quirk for that.
 
-With KASAN enabled, functions get instrumented and may access shadow
-memory using regular address translation. When executed with the MMU
-off, this can lead to page faults (bad_page_fault) from which the
-kernel cannot recover in the kexec path, resulting in a hang.
-
-The kexec path sets preempt_count to HARDIRQ_OFFSET before entering
-the MMU-off copy sequence.
-
-current_thread_info()->preempt_count = HARDIRQ_OFFSET
-  kexec_sequence(..., copy_with_mmu_off = 1)
-    -> kexec_copy_flush(image)
-         copy_segments()
-           -> copy_page(dest, addr)
-	         bl enter_vmx_ops()
-                   if (in_interrupt())
-                     return 0
-	         beq .Lnonvmx_copy
-
-Since kexec sets preempt_count to HARDIRQ_OFFSET, in_interrupt()
-evaluates to true and enter_vmx_ops() returns early.
-
-As in_interrupt() (and preempt_count()) are always inlined, mark
-enter_vmx_ops() with __no_sanitize_address to avoid KASAN
-instrumentation and shadow memory access with MMU disabled, helping
-kexec boot fine with KASAN enabled.
-
-Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260407124349.1698552-2-sourabhjain@linux.ibm.com
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/work_items/5235
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Link: https://patch.msgid.link/94449577332d14d7974864903825f27e5824ddbc.1777579951.git.pav@iki.fi
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Record: subsystem `powerpc/vmx`; action verb `avoid`; intent is to
-prevent KASAN instrumentation of `enter_vmx_ops()` when it is reached
-from the kexec MMU-off copy path.
+Step 1.1 Record: subsystem `ALSA: usb-audio`; action verb `add`; intent:
+add a playback-minimum-is-mute quirk for USB ID `1532:055e`, Razer Nommo
+V2 X.
 
-Record: tags parsed from the candidate message:
-- `Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>`
-- `Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>`
-- `Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>`
-- `Link: https://patch.msgid.link/20260407124349.1698552-2-
-  sourabhjain@linux.ibm.com`
-- No `Fixes:` tag in this commit. Absence is not a negative signal.
+Step 1.2 Record: tags in supplied message: `Link` to PipeWire work item,
+`Signed-off-by: Pauli Virtanen`, `Link` to patch msgid, `Signed-off-by:
+Takashi Iwai`. No `Fixes`, `Reported-by`, `Tested-by`, `Reviewed-by`,
+`Acked-by`, or `Cc: stable`. The lore patch mbox verifies the Pauli SOB
+and PipeWire link; Takashi replied “Applied now.”
 
-Record: bug description from the message: `kexec_sequence()` may call
-`copy_page()` with the MMU disabled; on PowerPC Book3S this can enter
-`copypage_power7.S`, which calls `enter_vmx_ops()`. If KASAN instruments
-`enter_vmx_ops()`, the instrumentation may access shadow memory using
-normal virtual translation, which is invalid with MMU off and can cause
-an unrecoverable `bad_page_fault`/hang in kexec.
+Step 1.3 Record: bug description is device-specific: Razer Nommo V2 X
+has muted minimum playback volume. Symptom: userspace may expose the
+minimum playback volume as a normal low audible volume even though
+hardware treats it as mute. Version info: none in commit message. Root
+cause: device has nonstandard mixer semantics.
 
-Record: hidden bug fix: yes. Although phrased as “avoid
-instrumentation,” this fixes a real boot/hang failure in the kexec/kdump
-path under KASAN.
+Step 1.4 Record: yes, hidden bug/hardware workaround. It is a quirk for
+incorrect USB-audio volume semantics on real hardware.
 
 ## Phase 2: Diff Analysis
-Record: one file changed: `arch/powerpc/lib/vmx-helper.c`, with 8
-insertions and 1 deletion in the fetched v3 patch. The only functional
-change is changing `int enter_vmx_ops(void)` to `int
-__no_sanitize_address enter_vmx_ops(void)`; the remaining additions are
-explanatory comments.
+Step 2.1 Record: `sound/usb/quirks.c`, `+2/-0`, in
+`quirk_flags_table[]`. Scope: single-file surgical hardware quirk.
 
-Record: modified function: `enter_vmx_ops()`.
+Step 2.2 Record: before, USB ID `1532:055e` had no built-in quirk flag.
+After, matching that device sets `QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`.
+Affected path is USB-audio device initialization and mixer control
+construction.
 
-Record: before behavior: `enter_vmx_ops()` could be KASAN-instrumented.
-During kexec with MMU off, the function first checks `in_interrupt()`
-and should return `0`, but KASAN prologue/body instrumentation can run
-before or around normal code and touch shadow memory.
+Step 2.3 Record: bug category is hardware workaround / quirk table
+entry. Mechanism: `snd_usb_init_quirk_flags_table()` ORs the flag into
+`chip->quirk_flags`; `snd_usb_mixer_fu_apply_quirk()` sees that flag on
+Playback controls and sets `cval->min_mute = 1`;
+`snd_usb_mixer_vol_tlv()` then reports `SNDRV_CTL_TLVT_DB_MINMAX_MUTE`.
 
-Record: after behavior: `__no_sanitize_address` suppresses KASAN
-instrumentation for this function, preserving the intended early return
-path when `preempt_count` contains `HARDIRQ_OFFSET`.
-
-Record: bug category: sanitizer/real-mode correctness bug causing kexec
-hang. This is a crash/hang class fix, not a cleanup.
-
-Record: fix quality: small, surgical, and low risk. It does not alter
-normal logic, public API, data structures, or userspace-visible
-behavior. The only behavioral effect is disabling KASAN instrumentation
-for one helper that can run in an MMU-off path.
+Step 2.4 Record: fix is obviously correct for kernels with this quirk
+infrastructure: one ID-specific table entry, no public API, no locking
+or lifetime changes. Regression risk is very low and limited to this
+VID:PID.
 
 ## Phase 3: Git History Investigation
-Record: local `HEAD` is a stable release commit, not the candidate. `git
-log --grep` on current history, `master`, and `power-next` did not find
-the candidate commit locally, so there was no commit hash available for
-`b4 dig -c`.
+Step 3.1 Record: blame around the insertion area shows the surrounding
+quirk table is longstanding, with the nearby `NeuralDSP Quad Cortex`
+exception from `bc5b4e5ae1a67` and Denon entries from older Takashi Iwai
+commits. The common min-mute quirk infrastructure comes from
+`2c3ca8cc55a3` and follow-ups.
 
-Record: `git blame` on current `arch/powerpc/lib/vmx-helper.c` shows the
-unannotated `enter_vmx_ops()` present in the local tree; due this
-repository’s history shape, blame attributes the original lines to a
-merge/root history point, so the exact original introduction commit was
-not verifiable locally.
+Step 3.2 Record: no `Fixes:` tag, so no introducing commit to follow.
 
-Record: no candidate `Fixes:` tag to follow. The companion patch in the
-same series has `Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address
-sanitization in kexec paths")`; `git show` confirms that commit disabled
-sanitization for PowerPC kexec real-mode paths in 2022.
+Step 3.3 Record: recent `sound/usb/quirks.c` history contains many
+similar device-specific quirk fixes. Related min-mute commits include
+`2b929b6eec0c7` Logitech H390, `9af61fc91486c` MS LifeChat, and
+`b98b69c38512c` SteelSeries Arctis.
 
-Record: related recent local history: `6bc9c0a905228` changed VMX
-usercopy flow and added export context around the same file. That
-affects hunk context for older stable trees, but not the actual one-line
-fix.
+Step 3.4 Record: Pauli Virtanen has prior USB-audio quirk commits in
+this exact area, including Logitech H390, MS LifeChat, and SteelSeries
+Arctis min-mute quirks.
 
-Record: author context: `git log --author="Sourabh Jain" --
-arch/powerpc/...` shows multiple PowerPC kexec/crash/fadump commits.
-`MAINTAINERS` lists Madhavan Srinivasan and Michael Ellerman as PowerPC
-maintainers; Madhavan signed off the candidate.
-
-Record: dependencies: no source-level prerequisite for the annotation
-itself. Function `enter_vmx_ops()` and `__no_sanitize_address` exist in
-checked stable tags. Functional completeness is best with the companion
-patch fixing `KASAN_SANITIZE_core_$(BITS).o`, because review/test
-discussion says both patches together make KASAN kexec succeed.
+Step 3.5 Record: dependency is the min-mute quirk infrastructure.
+Present in current `7.0.y`; present in `v6.18` with
+`QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`; `v6.17` has older
+`QUIRK_FLAG_MIXER_MIN_MUTE`; `v6.16`/`v6.12` did not show the generic
+flag.
 
 ## Phase 4: Mailing List And External Research
-Record: `b4 am` for message id
-`20260407124349.1698552-2-sourabhjain@linux.ibm.com` fetched a v3 two-
-patch series. It reported total patches: 2, current tree apply clean,
-and DKIM signature valid for patch 2.
+Step 4.1 Record: no local commit hash was found, so `b4 dig -c` could
+not be used successfully. `b4 am` and `b4 mbox` by message-id found a
+single-patch thread at the supplied msgid. Thread has patch plus Takashi
+Iwai reply: “Applied now.” No NAKs or concerns found in fetched thread.
 
-Record: `b4 am -c` checked for newer revisions and did not report a
-newer v4. v3 appears to be the latest fetched revision.
+Step 4.2 Record: original patch To/Cc from mbox: `linux-
+sound@vger.kernel.org`, Pauli Virtanen, Jaroslav Kysela, Takashi Iwai,
+`linux-kernel@vger.kernel.org`. Appropriate sound maintainers/lists were
+included.
 
-Record: `b4 mbox` fetched the v3 thread. Patch 2 was addressed to
-`linuxppc-dev` and CC’d PowerPC/kexec stakeholders including Michael
-Ellerman, Madhavan Srinivasan, Mahesh Salgaonkar, Hari Bathini, Daniel
-Axtens, Venkat Rao Bagalkote, Aboorva Devarajan, and Ritesh Harjani.
+Step 4.3 Record: PipeWire link was blocked by Anubis via WebFetch, so
+details could not be verified. GitHub OpenRazer issue independently
+verifies device name and VID:PID `1532:055E`, but it is not the PipeWire
+volume bug report.
 
-Record: `WebFetch` of lore URLs was blocked by Anubis, but `b4` and the
-`yhbt.net` lore mirror provided the thread content.
+Step 4.4 Record: thread is a standalone one-patch submission. Similar
+prior min-mute quirk patches exist, but this patch does not depend on a
+same-series patch.
 
-Record: v2 review discussion verified:
-- Ritesh Harjani reviewed patch 2 and said “LGTM,” granting `Reviewed-
-  by`.
-- Aboorva Devarajan reported an actual KASAN-enabled kexec hang on
-  pseries PowerVM: system reached “kexec: Starting switchover sequence”
-  and then hung.
-- Aboorva tested that “with both the patches applied, kexec completes
-  successfully with KASAN enabled.”
-- v1 annotated both `enter_vmx_ops()` and `exit_vmx_ops()`; v2 removed
-  `exit_vmx_ops()` annotation and added the explanatory comment. This
-  shows review-driven narrowing of the fix.
-
-Record: stable-specific discussion: Ritesh explicitly suggested `Cc:
-stable@vger.kernel.org` for patch 1. I did not find a direct stable
-nomination for patch 2, but patch 2 was reviewed and tested as part of
-the same two-patch functional fix.
+Step 4.5 Record: lore stable search via WebFetch was blocked by Anubis;
+local stable branch searches found no existing Razer Nommo V2 X commit.
 
 ## Phase 5: Code Semantic Analysis
-Record: modified function: `enter_vmx_ops()`.
+Step 5.1 Record: modified data object is `quirk_flags_table[]`; affected
+functions are `snd_usb_init_quirk_flags_table()`,
+`snd_usb_init_quirk_flags()`, `snd_usb_audio_create()`,
+`snd_usb_mixer_fu_apply_quirk()`, and `snd_usb_mixer_vol_tlv()`.
 
-Record: callers found by exact search:
-- `arch/powerpc/lib/copypage_power7.S`
-- `arch/powerpc/lib/memcpy_power7.S`
-- `arch/powerpc/lib/memcmp_64.S`
+Step 5.2 Record: `snd_usb_audio_create()` calls
+`snd_usb_init_quirk_flags()` during USB audio card creation; that calls
+`snd_usb_init_quirk_flags_table()`. `build_feature_ctl()` calls
+`snd_usb_mixer_fu_apply_quirk()` while building mixer controls.
 
-Record: relevant kexec call chain verified in code:
-`reboot(LINUX_REBOOT_CMD_KEXEC)` -> `kernel_kexec()` ->
-`machine_kexec()` -> `default_machine_kexec()` -> `kexec_sequence()` ->
-`kexec_copy_flush()` -> `copy_segments()` -> `copy_page()` ->
-`copypage_power7.S` -> `enter_vmx_ops()`.
+Step 5.3 Record: key callees/side effects are table lookup, setting
+`chip->quirk_flags`, setting `cval->min_mute`, and TLV reporting through
+`copy_to_user()`.
 
-Record: key callees/logic in `enter_vmx_ops()`: `in_interrupt()`,
-`preempt_disable()`, and `enable_kernel_altivec()`. In the kexec MMU-off
-path, `default_machine_kexec()` sets
-`current_thread_info()->preempt_count = HARDIRQ_OFFSET`, and
-`include/linux/preempt.h` defines `in_interrupt()` via `irq_count()`,
-which observes the hardirq bits.
+Step 5.4 Record: reachable when the specific USB audio device is
+connected and its mixer controls are created. This is device-specific,
+not universal.
 
-Record: reachability: reachable from privileged kexec/kdump paths. It is
-not unprivileged-user reachable, but kdump reliability is operationally
-important.
+Step 5.5 Record: many existing `QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`
+entries exist for similar USB audio devices, confirming this is an
+established local pattern.
 
-Record: similar patterns: PowerPC already disables KASAN for sensitive
-real-mode/interrupt code in multiple Makefiles and uses
-`__no_sanitize_address` in PowerPC interrupt/stack code, so the
-attribute is consistent with local practice.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: current `7.0.y` lacks the Razer entry and contains the
+necessary infrastructure. `v6.18`/`v6.19` contain the named playback
+min-mute flag. `v6.17` has the older generic
+`QUIRK_FLAG_MIXER_MIN_MUTE`; `v6.16`/`v6.12` did not show the generic
+flag.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Record: buggy code exists in stable tags checked: `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`, `v6.19`, and `v7.0` all have
-`enter_vmx_ops()` without `__no_sanitize_address`.
+Step 6.2 Record: `git apply --check` succeeds on current `7.0.y`. Older
+trees may need minor contextual adjustment; `v6.17` would need the older
+flag name. Older LTS trees without the common quirk infrastructure would
+need a nontrivial backport or prerequisite series.
 
-Record: the kexec `copy_segments()` -> `copy_page()` path and
-`preempt_count = HARDIRQ_OFFSET` were verified in `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, and current/v7.0-era code.
+Step 6.3 Record: no related Razer Nommo V2 X fix found in local
+`stable/linux-7.0.y`.
 
-Record: `copypage_power7.S` calls `enter_vmx_ops()` in `v5.4`, `v5.10`,
-`v5.15`, and current code.
+## Phase 7: Subsystem Context
+Step 7.1 Record: subsystem is ALSA USB audio driver under `sound/usb`;
+criticality is driver-specific/peripheral, but real hardware user-
+visible behavior.
 
-Record: `__no_sanitize_address` exists in compiler headers in checked
-stable tags, including `v5.4`, `v5.10`, `v6.1`, `v6.6`, and current.
+Step 7.2 Record: USB-audio quirks are active, with recent commits
+adding/fixing device-specific quirks and min-mute behavior.
 
-Record: backport difficulty: clean on current `7.0.y` per `git apply
---check` and `b4`. Older stable trees may need a tiny context adjustment
-because `EXPORT_SYMBOL(exit_vmx_usercopy)` is not present in older
-versions, but the actual function signature is present and the backport
-is straightforward.
+## Phase 8: Impact And Risk
+Step 8.1 Record: affected population is users of Razer Nommo V2 X using
+USB audio.
 
-Record: related fixes already in stable: not verified as already
-present; local stable tags checked do not contain the candidate
-annotation.
+Step 8.2 Record: trigger is normal volume-control use on that device.
+Unprivileged audio clients can read/use ALSA mixer metadata, but no
+security impact was verified.
 
-## Phase 7: Subsystem And Maintainer Context
-Record: subsystem is PowerPC architecture library/kexec path:
-`arch/powerpc/lib` and `arch/powerpc/kexec`.
+Step 8.3 Record: failure mode is functional audio control
+misrepresentation: minimum playback volume is mute. Severity: medium for
+affected hardware, not crash/corruption.
 
-Record: criticality: important/platform-specific. It affects PowerPC
-systems using kexec/kdump with KASAN enabled, especially pseries/PowerVM
-cases verified in review. It is not universal across all architectures.
-
-Record: subsystem activity: local history shows recent PowerPC VMX
-usercopy and kexec/crash/fadump activity, and the patch was handled
-through the PowerPC maintainer path.
-
-## Phase 8: Impact And Risk Assessment
-Record: affected users: PowerPC Book3S/PowerVM-style systems using
-kexec/kdump with KASAN-enabled kernels and VMX copy paths.
-
-Record: trigger conditions: kexec/kdump switchover, MMU-off copy path,
-KASAN enabled, and `copy_page()` selecting the Power7 VMX copy path. The
-triggering operation is privileged, but the failure impacts crash dump
-capture and reboot into the new kernel.
-
-Record: failure mode: system hang during kexec/kdump. Review discussion
-includes an observed hang after “kexec: Starting switchover sequence,”
-and the commit message explains unrecoverable `bad_page_fault` risk with
-MMU off. Severity: HIGH to CRITICAL for affected debug/crash-dump
-deployments.
-
-Record: benefit: high for affected PowerPC KASAN/kdump users because it
-prevents a hard hang and restores kexec completion.
-
-Record: risk: very low. One function annotation plus comment; no logic
-change. The main concern is that stable maintainers should also take the
-companion Makefile fix for full KASAN/kexec coverage.
+Step 8.4 Record: benefit is high for affected device users and low
+system-wide; risk is very low because the change is a two-line VID:PID-
+scoped quirk.
 
 ## Phase 9: Final Synthesis
-Record: evidence for backporting:
-- Fixes a real, reviewed, and tested kexec hang with KASAN enabled.
-- Aboorva Devarajan reported and tested the failure/fix.
-- Ritesh Harjani reviewed the final approach.
-- The fix is one function attribute and explanatory comment.
-- It affects a serious operational path: kexec/kdump boot into a
-  new/capture kernel.
-- The buggy code and call path exist across active stable versions
-  checked.
-- Backport is clean for current `7.0.y` and trivial for older stable
-  trees.
+Step 9.1 Record: evidence for backporting: real tested hardware quirk,
+established USB-audio pattern, two-line scoped change, maintainer
+applied, clean on `7.0.y`, no global behavior change. Evidence against:
+not a crash/security/data-corruption fix; older stable trees may need
+adjustment or prerequisites. Unresolved: PipeWire bug details
+unavailable due Anubis; no upstream commit hash found locally for `b4
+dig`.
 
-Record: evidence against backporting:
-- The issue is config/platform specific: PowerPC plus KASAN plus
-  kexec/kdump plus VMX copy path.
-- Older stable trees may require minor context adjustment.
-- The commit is part of a two-patch series; the companion Makefile KASAN
-  fix should be included for the tested complete fix.
+Step 9.2 Record: stable rules: obviously correct: yes for trees with
+infrastructure; fixes real user-visible hardware bug: yes; important
+enough: yes under hardware-quirk exception; small/contained: yes, 2
+lines; no new APIs/features: yes; applies to stable: clean on current
+`7.0.y`, minor/unknown adjustments for older trees.
 
-Record: unresolved questions:
-- Exact original introduction commit for `enter_vmx_ops()` could not be
-  verified from local history.
-- Direct lore `WebFetch` was blocked by Anubis; I used `b4` and a lore
-  mirror instead.
-- I did not build-test the backport.
+Step 9.3 Record: exception category applies: hardware quirk/workaround
+for an existing driver and existing quirk mechanism.
 
-Stable rules checklist:
-1. Obviously correct and tested: yes. The annotation directly suppresses
-   KASAN instrumentation on the one helper that can execute with MMU
-   off; tested-by is present.
-2. Fixes a real bug: yes. Review discussion reports an actual kexec hang
-   with KASAN.
-3. Important issue: yes. Failure mode is kexec/kdump hang.
-4. Small and contained: yes. One file, one function annotation.
-5. No new features/APIs: yes.
-6. Can apply to stable: yes for current `7.0.y`; older trees may need
-   trivial context adjustment.
+Step 9.4 Record: decision is to backport to stable trees that contain
+the min-mute quirk infrastructure, especially `7.0.y`/`6.19.y`/`6.18.y`;
+older trees should only take it with the appropriate small backport
+adjustment or prerequisites.
 
-Exception category: not a device ID/quirk/build/doc exception. It is a
-normal stability fix.
-
-## Verification
-- [Phase 1] Parsed the supplied commit message and fetched patch mbox;
-  confirmed tags, no `Fixes:` tag in patch 2, and the linked message id.
-- [Phase 2] Inspected fetched v3 diff; confirmed `arch/powerpc/lib/vmx-
-  helper.c` has 8 insertions and 1 deletion, changing only
-  `enter_vmx_ops()`.
-- [Phase 3] Ran `git log --grep` on current history, `master`, and
-  `power-next`; candidate not present locally.
-- [Phase 3] Ran `git blame` around `enter_vmx_ops()`; local history
-  could not identify true original introduction beyond repository
-  history shape.
-- [Phase 3] Ran `git show 2ab2d5794f14`; confirmed related PowerPC kexec
-  KASAN sanitization commit from 2022.
-- [Phase 4] Ran `b4 am` and `b4 am -c`; fetched v3 two-patch series, no
-  newer revision reported, patch 2 DKIM valid.
-- [Phase 4] Ran `b4 mbox`; confirmed original recipients and patch
-  content.
-- [Phase 4] Used lore mirror for v2 thread; confirmed Ritesh review,
-  Aboorva tested-by/reported hang, and v1-to-v2 narrowing.
-- [Phase 5] Searched call sites; confirmed `copypage_power7.S`,
-  `memcpy_power7.S`, and `memcmp_64.S` call `enter_vmx_ops()`.
-- [Phase 5] Read kexec and assembly code; confirmed kexec path reaches
-  `copy_page()` with MMU-off logic and `preempt_count = HARDIRQ_OFFSET`.
-- [Phase 6] Checked stable tags `v5.4` through `v7.0`; confirmed
-  `enter_vmx_ops()` exists without the annotation and the relevant
-  kexec/copy path exists in checked trees.
-- [Phase 6] Ran `git apply --check` on current tree for patch 2 and the
-  series; clean on current `7.0.y`.
-- [Phase 7] Checked `MAINTAINERS`; confirmed PowerPC maintainers and
-  that Madhavan Srinivasan is listed for PowerPC.
-- [Phase 8] Verified failure mode from review discussion: KASAN-enabled
-  kexec hangs after switchover; with both patches applied, kexec
-  completes.
-
-This should be backported, ideally together with the companion
-`powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o` patch
-for the tested complete KASAN/kexec fix.
+Verification: performed semantic search; inspected current HEAD and
+branch state; read `sound/usb/quirks.c`, `usbaudio.h`, `mixer_quirks.c`,
+`mixer.c`, and `card.c`; used `rg` for quirk usage/callers; used `git
+blame`, `git log`, `git show`, `git merge-base`, and `git apply
+--check`; fetched lore thread with `b4 am`/`b4 mbox`; attempted `b4 dig`
+but no commit hash/local commit match was available; attempted WebFetch
+for PipeWire/lore search but Anubis blocked; verified device VID:PID via
+OpenRazer/WebSearch.
 
 **YES**
 
- arch/powerpc/lib/vmx-helper.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/lib/vmx-helper.c b/arch/powerpc/lib/vmx-helper.c
-index 554b248002b4f..57e897b60db86 100644
---- a/arch/powerpc/lib/vmx-helper.c
-+++ b/arch/powerpc/lib/vmx-helper.c
-@@ -52,7 +52,14 @@ int exit_vmx_usercopy(void)
- }
- EXPORT_SYMBOL(exit_vmx_usercopy);
- 
--int enter_vmx_ops(void)
-+/*
-+ * Can be called from kexec copy_page() path with MMU off. The kexec
-+ * code sets preempt_count to HARDIRQ_OFFSET so we return early here.
-+ * Since in_interrupt() is always inline, __no_sanitize_address on this
-+ * function is sufficient to avoid KASAN shadow memory accesses in real
-+ * mode.
-+ */
-+int __no_sanitize_address enter_vmx_ops(void)
- {
- 	if (in_interrupt())
- 		return 0;
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 4cfa24c06fcdf..148bf7e4e4d72 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2307,6 +2307,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
+ 		   0), /* Doesn't have the vendor quirk which would otherwise apply */
++	DEVICE_FLG(0x1532, 0x055e, /* Razer Nommo V2 X */
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
 -- 
 2.53.0
 
