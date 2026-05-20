@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FBA34EF05;
-	Wed, 20 May 2026 16:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A50356762;
+	Wed, 20 May 2026 16:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296040; cv=none; b=exa/6FI5PxDla3eCQt+S6DJp80gLgNBaH+BvTH9pV/AIXUvBDgutbiqOQCSWfI+CLLOslXldBZBPPPgMWXD+yTS975xeqRLMu1gU/S1KowhfWCSAkePFhsmBggstf12IgubRRaAuc7ocXhcChNt2IgkfB/aWQN9F9z5wuXj2eBE=
+	t=1779296043; cv=none; b=kaJBSkVW5pcRQLIsNwfRe3S6a3khJLS1sXGdWB3QPOZTxj3MNYyfnv6SgjsCiHDHP71wSkdIuLePc7Occ3ZWnT6HDm5rjTEutXBL9iu/rPYzJ/2ZU4vwr2cF6ZnSWhrObNucxFSh9Sh2o1zpUsOIs1ShZUv74DbU5QSCx/BmHMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296040; c=relaxed/simple;
-	bh=34eSHC/IuNfmRxmI2JkZW+YLKVX6RqI+3+VTnu2rjBs=;
+	s=arc-20240116; t=1779296043; c=relaxed/simple;
+	bh=jqlxzx6ovpsWvRQ2HnKe6mnB84nKNda6ilrNGZPhSfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osi/sRslYG3xwWozXYKBK6YYPw29gksiN/NfWRnUnE61QcUKo6kHUEW+mifDQmRSTke9LnNsylOp+4Adm2C5o5OSkpdeodZeP4eXEusyr/oYNx84/U3uOPnWYJraz32IVG5KY0W/PCYMpTneCK0o4HNXXP+Tf6TOnamJBv/WnHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMHCxnX/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=makRn8leH5uNByoDXE4e6uCkj22tE3cP2YlvodPvW/3lW+gyZlGAY8tfdCVPhTnAIeG1nd2dd/ipntGH+8E7Exz/rmifX993ePm5Qi2IeuZRyejNnJoJ+sw308FTbcXeRYFy6FzK+MYxGKLeTr74iaoXtxdrlf0KVerwaE/z3vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5Q3bG7a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMHCxnX/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDE41F000E9;
-	Wed, 20 May 2026 16:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5Q3bG7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA9C1F000E9;
+	Wed, 20 May 2026 16:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296039;
-	bh=TZBINoxmHAh2cPCADfs9vy+jb9eGzTJOWZdF5jEPglc=;
+	s=korg; t=1779296041;
+	bh=PYrHJrIsDBP3vxayc39/GCm5bvklEmAtZAzddTRtI68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMHCxnX/lSQcwRg94BGA4YNzfZttCkB8msqGz967Nt8FiFO/w3Lq6XbKW/kUnvZxa
-	 BI+qY9lT91IHGL2CZ6CGAGMcRk2/6XrxXDkxRhfdCD+kSd5RWpowQck0t5xMSH5v0W
-	 6ZcNBLWKDnRtURwgxTPTgHtN807j8D7eF72LgBX4=
+	b=R5Q3bG7ajsc/vrPul0AL855WEgah2CM/UYIlr5sdyIdDDRht4lGendsUFepYOKDy8
+	 9TvZsgY56ioukl5JwzgVq/7W8Z2d6TFohfsXijtXMfirNpgy8DDs3xV7yOXpLPTfYB
+	 sguhBGEMggbBbq9Wa5S4jv7fjHocaA3I2xigzNKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ye Bin <yebin10@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0607/1146] ext4: fix possible null-ptr-deref in extents_kunit_exit()
-Date: Wed, 20 May 2026 18:14:17 +0200
-Message-ID: <20260520162201.917760489@linuxfoundation.org>
+Subject: [PATCH 7.0 0608/1146] ext4: fix possible null-ptr-deref in mbt_kunit_exit()
+Date: Wed, 20 May 2026 18:14:18 +0200
+Message-ID: <20260520162201.940377556@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,12 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit ca78c31af467ffe94b15f6a2e4e1cc1c164db19b ]
+[ Upstream commit 22f53f08d9eb837ce69b1a07641d414aac8d045f ]
 
 There's issue as follows:
-KASAN: null-ptr-deref in range [0x00000000000002c0-0x00000000000002c7]
+    # test_new_blocks_simple: failed to initialize: -12
+KASAN: null-ptr-deref in range [0x0000000000000638-0x000000000000063f]
 Tainted: [E]=UNSIGNED_MODULE, [N]=TEST
-RIP: 0010:extents_kunit_exit+0x2e/0xc0 [ext4_test]
+RIP: 0010:mbt_kunit_exit+0x5e/0x3e0 [ext4_test]
 Call Trace:
  <TASK>
  kunit_try_run_case_cleanup+0xbc/0x100 [kunit]
@@ -69,39 +70,51 @@ Call Trace:
  ret_from_fork+0xa76/0xdf0
  ret_from_fork_asm+0x1a/0x30
 
-Above issue happens as extents_kunit_init() init testcase failed.
-So test if testcase is inited success.
+If mbt_kunit_init() init testcase failed will lead to null-ptr-deref.
+So add test if 'sb' is inited success in mbt_kunit_exit().
 
-Fixes: cb1e0c1d1fad ("ext4: kunit tests for extent splitting and conversion")
+Fixes: 7c9fa399a369 ("ext4: add first unit test for ext4_mb_new_blocks_simple in mballoc")
 Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://patch.msgid.link/20260330133035.287842-5-yebin@huaweicloud.com
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260330133035.287842-6-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents-test.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc-test.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents-test.c b/fs/ext4/extents-test.c
-index 4042bc8a95e2f..6b53a3f39fcd6 100644
---- a/fs/ext4/extents-test.c
-+++ b/fs/ext4/extents-test.c
-@@ -142,9 +142,12 @@ static struct file_system_type ext_fs_type = {
+diff --git a/fs/ext4/mballoc-test.c b/fs/ext4/mballoc-test.c
+index 6f5bfbb0e8a42..95cb644cd32fa 100644
+--- a/fs/ext4/mballoc-test.c
++++ b/fs/ext4/mballoc-test.c
+@@ -362,7 +362,6 @@ static int mbt_kunit_init(struct kunit *test)
+ 		return ret;
+ 	}
  
- static void extents_kunit_exit(struct kunit *test)
+-	test->priv = sb;
+ 	kunit_activate_static_stub(test,
+ 				   ext4_read_block_bitmap_nowait,
+ 				   ext4_read_block_bitmap_nowait_stub);
+@@ -383,6 +382,8 @@ static int mbt_kunit_init(struct kunit *test)
+ 		return -ENOMEM;
+ 	}
+ 
++	test->priv = sb;
++
+ 	return 0;
+ }
+ 
+@@ -390,6 +391,9 @@ static void mbt_kunit_exit(struct kunit *test)
  {
--	struct super_block *sb = k_ctx.k_ei->vfs_inode.i_sb;
--	struct ext4_sb_info *sbi = sb->s_fs_info;
-+	struct ext4_sb_info *sbi;
+ 	struct super_block *sb = (struct super_block *)test->priv;
  
-+	if (!k_ctx.k_ei)
++	if (!sb)
 +		return;
 +
-+	sbi = k_ctx.k_ei->vfs_inode.i_sb->s_fs_info;
- 	ext4_es_unregister_shrinker(sbi);
- 	deactivate_super(sbi->s_sb);
- 	kfree(sbi);
+ 	mbt_mb_release(sb);
+ 	mbt_ctx_release(sb);
+ 	mbt_ext4_free_super_block(sb);
 -- 
 2.53.0
 
