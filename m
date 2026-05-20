@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C940347512;
-	Wed, 20 May 2026 17:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D163D75D3;
+	Wed, 20 May 2026 17:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296483; cv=none; b=Ce+CJsQ60iOJ0xT7LTaztahxQ8F8OfKxIG9EEP/eiwCNcWqApRoIYs+v8Tpqqit6n9+3jNjaC6RmXL5P6LAJQLb+51QNG3To5nfbsaUdbGe8ACdkOGPiwMYbOD5pAenM90Q1esj3NEjFTJC0zPJHZFxvFTo/uCVWPQdmRlhoakg=
+	t=1779296486; cv=none; b=BL1FKq5Uwsn2T7KOuCxcItKB3/iuhrWA70XRRNMd1061G80DCzqPFhO3NZmKUTshC6+glyyYxYQI/YBbeT/5YlLUpTD8kFO8aYf76wrT8+1+s++3B0D8bbzlwFmrqu5491ZX7AFxTSUrLOZktUezEIGq8L66u37dn9L+bJy7gR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296483; c=relaxed/simple;
-	bh=zWICowioXNflianshNaJCjmWnntuduGQAZq7DeiXrOE=;
+	s=arc-20240116; t=1779296486; c=relaxed/simple;
+	bh=ndov55ukpfyT3Pn4Ym9OGXDLNKJkJxqV7lE3hkxm71c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUWjHm93jqnJDRKncF/NQQkG+jVwS7tSSjY5njZfiFwKX/4XO4XWSGsxm4iSxpgA2YkZwmTeG4d1I1U40U5ngFcX6ibrtm8ohXGARsg1KfXaW/hFBEK7vnhqiTRfcW2XByWzBV/xe9Ksu3LJziN52zDWAsAQKGgyxccOud4b/dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYGMxD6q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sEdNVCsNPTibSt9QehwYuSJ/mJZKMqGuZOPFCARaycp7oqr4rprOqveToBfXHZ1/eQoABPdZ5MjJfebszYun98lYiJQE89KpyYc3m/HC8WOLzxnzDjPS4UdOv7tEVPH5pmsz42yODg103bZ10q9APrfZZuhZPhoMnhkrB5NZrvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BN0mwC8i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYGMxD6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28E41F000E9;
-	Wed, 20 May 2026 17:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BN0mwC8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA21F000E9;
+	Wed, 20 May 2026 17:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296482;
-	bh=SDMzWEafZLqLVtRdpoQeL3Fj7W5kKrrxPNwutDRt5AE=;
+	s=korg; t=1779296484;
+	bh=2Elnzs48jdYzD53LI/OKF82zsG8LXy1EKqvsSrxDmKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYGMxD6qZp0Jsp95rjTvp/ACDUe3R6pDd/VbWMcprD/4dtFqlQUewoEw9rgyckMsV
-	 fJhr6jWv5MgZQfRsInz5tvk/HvpOrwVE4PtidacQTUkjp+Ts6AFeQ+mdSKLu24kPPE
-	 tKNVvGtwYiA4JvH9cMk7HA5qdEZ4RGArkdky2zM4=
+	b=BN0mwC8i+59WKP1zAoDlQUfeNjMksDADkw/rfKd6ZHdv7icJlD8W9RPW8mkeJPjiV
+	 Y5odWWTWcj3tksJdRLKtmUiCFZeRSRqbg5VZWvQyiTpoRqDSHGmFSRpn0PdFYT9Fft
+	 ZyUmtYM4Msip39r3Xh4Ejytt+1V4PSO+n3QBZ+ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yingnan Zhang <342144303@qq.com>,
+	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0815/1146] netfilter: nat: use kfree_rcu to release ops
-Date: Wed, 20 May 2026 18:17:45 +0200
-Message-ID: <20260520162206.670449673@linuxfoundation.org>
+Subject: [PATCH 7.0 0816/1146] ipvs: fix MTU check for GSO packets in tunnel mode
+Date: Wed, 20 May 2026 18:17:46 +0200
+Message-ID: <20260520162206.693939731@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,112 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yingnan Zhang <342144303@qq.com>
 
-[ Upstream commit 6eda0d771f94267f73f57c94630aa47e90957915 ]
+[ Upstream commit 67bf42cae41d847fd6e5749eb68278ca5d748b25 ]
 
-Florian Westphal says:
+Currently, IPVS skips MTU checks for GSO packets by excluding them with
+the !skb_is_gso(skb) condition. This creates problems when IPVS tunnel
+mode encapsulates GSO packets with IPIP headers.
 
-"Historically this is not an issue, even for normal base hooks: the data
-path doesn't use the original nf_hook_ops that are used to register the
-callbacks.
+The issue manifests in two ways:
 
-However, in v5.14 I added the ability to dump the active netfilter
-hooks from userspace.
+1. MTU violation after encapsulation:
+   When a GSO packet passes through IPVS tunnel mode, the original MTU
+   check is bypassed. After adding the IPIP tunnel header, the packet
+   size may exceed the outgoing interface MTU, leading to unexpected
+   fragmentation at the IP layer.
 
-This code will peek back into the nf_hook_ops that are available
-at the tail of the pointer-array blob used by the datapath.
+2. Fragmentation with problematic IP IDs:
+   When net.ipv4.vs.pmtu_disc=1 and a GSO packet with multiple segments
+   is fragmented after encapsulation, each segment gets a sequentially
+   incremented IP ID (0, 1, 2, ...). This happens because:
 
-The nat hooks are special, because they are called indirectly from
-the central nat dispatcher hook. They are currently invisible to
-the nfnl hook dump subsystem though.
+   a) The GSO packet bypasses MTU check and gets encapsulated
+   b) At __ip_finish_output, the oversized GSO packet is split into
+      separate SKBs (one per segment), with IP IDs incrementing
+   c) Each SKB is then fragmented again based on the actual MTU
 
-But once that changes the nat ops structures have to be deferred too."
+   This sequential IP ID allocation differs from the expected behavior
+   and can cause issues with fragment reassembly and packet tracking.
 
-Update nf_nat_register_fn() to deal with partial exposition of the hooks
-from error path which can be also an issue for nfnetlink_hook.
+Fix this by properly validating GSO packets using
+skb_gso_validate_network_len(). This function correctly validates
+whether the GSO segments will fit within the MTU after segmentation. If
+validation fails, send an ICMP Fragmentation Needed message to enable
+proper PMTU discovery.
 
-Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
+Fixes: 4cdd34084d53 ("netfilter: nf_conntrack_ipv6: improve fragmentation handling")
+Signed-off-by: Yingnan Zhang <342144303@qq.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/iptable_nat.c  |  4 ++--
- net/ipv6/netfilter/ip6table_nat.c |  4 ++--
- net/netfilter/nf_nat_core.c       | 10 ++++++----
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
-index a5db7c67d61be..625a1ca13b1ba 100644
---- a/net/ipv4/netfilter/iptable_nat.c
-+++ b/net/ipv4/netfilter/iptable_nat.c
-@@ -79,7 +79,7 @@ static int ipt_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv4_unregister_fn(net, &ops[--i]);
- 
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
- 	}
-@@ -100,7 +100,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv4_ops); i++)
- 		nf_nat_ipv4_unregister_fn(net, &ops[i]);
- 
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 3601eb86d0250..7c570f48ade28 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -102,6 +102,18 @@ __ip_vs_dst_check(struct ip_vs_dest *dest)
+ 	return dest_dst;
  }
  
- static int iptable_nat_table_init(struct net *net)
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index e119d4f090cc8..5be723232df8f 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -81,7 +81,7 @@ static int ip6t_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv6_unregister_fn(net, &ops[--i]);
- 
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
- 	}
-@@ -102,7 +102,7 @@ static void ip6t_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv6_ops); i++)
- 		nf_nat_ipv6_unregister_fn(net, &ops[i]);
- 
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
++/* Based on ip_exceeds_mtu(). */
++static bool ip_vs_exceeds_mtu(const struct sk_buff *skb, unsigned int mtu)
++{
++	if (skb->len <= mtu)
++		return false;
++
++	if (skb_is_gso(skb) && skb_gso_validate_network_len(skb, mtu))
++		return false;
++
++	return true;
++}
++
+ static inline bool
+ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+ {
+@@ -111,10 +123,9 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+ 		 */
+ 		if (IP6CB(skb)->frag_max_size > mtu)
+ 			return true; /* largest fragment violate MTU */
+-	}
+-	else if (skb->len > mtu && !skb_is_gso(skb)) {
++	} else if (ip_vs_exceeds_mtu(skb, mtu))
+ 		return true; /* Packet size violate MTU size */
+-	}
++
+ 	return false;
  }
  
- static int ip6table_nat_table_init(struct net *net)
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index 3b5434e4ec9c1..b30ca94c2bb7f 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1228,9 +1228,11 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		ret = nf_register_net_hooks(net, nat_ops, ops_count);
- 		if (ret < 0) {
- 			mutex_unlock(&nf_nat_proto_mutex);
--			for (i = 0; i < ops_count; i++)
--				kfree(nat_ops[i].priv);
--			kfree(nat_ops);
-+			for (i = 0; i < ops_count; i++) {
-+				priv = nat_ops[i].priv;
-+				kfree_rcu(priv, rcu_head);
-+			}
-+			kfree_rcu(nat_ops, rcu);
- 			return ret;
- 		}
+@@ -232,7 +243,7 @@ static inline bool ensure_mtu_is_adequate(struct netns_ipvs *ipvs, int skb_af,
+ 			return true;
  
-@@ -1294,7 +1296,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		}
- 
- 		nat_proto_net->nat_hook_ops = NULL;
--		kfree(nat_ops);
-+		kfree_rcu(nat_ops, rcu);
- 	}
- unlock:
- 	mutex_unlock(&nf_nat_proto_mutex);
+ 		if (unlikely(ip_hdr(skb)->frag_off & htons(IP_DF) &&
+-			     skb->len > mtu && !skb_is_gso(skb) &&
++			     ip_vs_exceeds_mtu(skb, mtu) &&
+ 			     !ip_vs_iph_icmp(ipvsh))) {
+ 			icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
+ 				  htonl(mtu));
 -- 
 2.53.0
 
