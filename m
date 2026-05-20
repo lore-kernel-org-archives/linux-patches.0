@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD913C6A5C;
-	Wed, 20 May 2026 17:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508EE3F4DD8;
+	Wed, 20 May 2026 17:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297276; cv=none; b=O/zjHxm2U/Rux7asgR5b7jVMVJtiTKwxLD2Y4/6OaUbN/fLpNug8MTVn2xGVSS4QeE+sUc/MTbHHkrX3l1iMTt/OhXeCC7BXjpbDqFkxaT0XMztdGr9Eo554d3ULtQrwnC4baohZWjT7bjj4gP/B0FT66oo4gx2RZ8GrlDSAPck=
+	t=1779297279; cv=none; b=LkkiEdAA4jYkU7rgjGWLIN5DuMgzAGojWd9hn7qNOB3+Ch9Y3MdFGZ45kTYfb34rKKxsqqwYu4OUbP0FnIZ/QCWfWcjxsxevPX1VwHkk+f+5FLNlE808IDDfW0u4gKaW/vi1ojmHL0IcPl/t1L8tNqWgu0+E5fam1BCkW9zUYnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297276; c=relaxed/simple;
-	bh=G5NvtBiafaOqDYG0UzGTnFQJQwZ9HedHremagF8nSE8=;
+	s=arc-20240116; t=1779297279; c=relaxed/simple;
+	bh=Ao3EtdLE0yYHACkf9SjgRcenSGCyNdEOrePyiRE2GUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mC7a2+su5dfYYZQYgEMfgw6KpWpbOnasTnKhNRwUMpYGMlEMVh6zCnY2Vh9+LL9YgrEMuL1H977Bih0KJS0WDMElnJJnDRWKQS+ZPOT/0SOPrugUtTBARkoVbRJI5phAuuINnvKYnZrKg9rQol3HS/GgyWhQ/ce8DqxaEYgmgU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYw8pbI0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TSIfrEIEHTa+OYWVXPF2ZOuxP1r8MXo0vmz/dXlgRy96xU7SCEiw+AaUwuLR4VmvALgfLbJqI2p+NBCn0QsTPv2uj5myjRbvWlhtdIPXE+7gpDxXRpy/dwSB+XXG4zjY5enrnCzv3+TKsTE8kaXDphtpDBCCWxc1ztlfYXXz9Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2OCc0uS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYw8pbI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC151F000E9;
-	Wed, 20 May 2026 17:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2OCc0uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B031F000E9;
+	Wed, 20 May 2026 17:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297275;
-	bh=NlyK/auqC7gmCAv/BEgjb0tH9bRnpfWuZ6DF2ew5MeM=;
+	s=korg; t=1779297278;
+	bh=3XCgqMu+VYtSBwDIheu9nt3gPgv+86GO84vupH2EXD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qYw8pbI0MD6S9g7UyeiL43acJqzeqSD8KNpcYomohdNZDDoRkD4UYcuBMdFRbo+pi
-	 veFHZscawD+0eRRqfjN+IvTZ3bsPARpSxq2xF6ZdCW4w7GuwZZhbpjJdaPmzqbrSGM
-	 TRMQsdn7TYyppcoKHaBFXW4f0iFnRCz2jDmSKtQU=
+	b=e2OCc0uShkurPklguuGXjeQV0RU2hTiRjSktQZ0ndnIgxUxTMTx5RDzWwm53o6kZ9
+	 wRaYKHNUsnZjnyZkXWHZq4tpxVyQE0mkrwKSXVttFIHhKnp32cXkwxLrjg47XbNH15
+	 Do7ogd+K/9qbntDWW7b9Ff0jPd1PrvO0sJuLa8uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.0 1117/1146] libceph: Fix potential out-of-bounds access in crush_decode()
-Date: Wed, 20 May 2026 18:22:47 +0200
-Message-ID: <20260520162213.521776052@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 1091/1146] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
+Date: Wed, 20 May 2026 18:22:21 +0200
+Message-ID: <20260520162212.927544209@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -44,104 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 4c79fc2d598694bda845b46229c9d48b65042970 upstream.
+commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
 
-A message of type CEPH_MSG_OSD_MAP containing a crush map with at least
-one bucket has two fields holding the bucket algorithm. If the values
-in these two fields differ, an out-of-bounds access can occur. This is
-the case because the first algorithm field (alg) is used to allocate
-the correct amount of memory for a bucket of this type, while the second
-algorithm field inside the bucket (b->alg) is used in the subsequent
-processing.
+snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
+descriptor size before using baAssocJackID[], but the descriptor walker can
+still return a class-specific endpoint descriptor whose bLength exceeds the
+remaining bytes in the endpoint-extra scan.
 
-This patch fixes the issue by adding a check that compares alg and
-b->alg and aborts the processing in case they differ. Furthermore,
-b->alg is set to 0 in this case, because the destruction of the crush
-map also uses this field to determine the bucket type, which can again
-result in an out-of-bounds access when trying to free the memory pointed
-to by the fields of the bucket. To correctly free the memory allocated
-for the bucket in such a case, the corresponding call to kfree is moved
-from the algorithm-specific crush_destroy_bucket functions to the
-generic crush_destroy_bucket().
+That leaves later flexible-array reads bounded by bLength, but not by the
+remaining bytes in the endpoint-extra scan.
 
+Stop walking when bLength is zero or
+extends past the remaining endpoint-extra scan.
+
+Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/crush/crush.c |    6 +-----
- net/ceph/osdmap.c      |    4 ++++
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ sound/usb/midi.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/ceph/crush/crush.c
-+++ b/net/ceph/crush/crush.c
-@@ -47,7 +47,6 @@ int crush_get_bucket_item_weight(const s
- void crush_destroy_bucket_uniform(struct crush_bucket_uniform *b)
- {
- 	kfree(b->h.items);
--	kfree(b);
- }
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1947,15 +1947,17 @@ static struct usb_ms_endpoint_descriptor
+ 	while (extralen > 3) {
+ 		struct usb_ms_endpoint_descriptor *ms_ep =
+ 				(struct usb_ms_endpoint_descriptor *)extra;
++		int length = ms_ep->bLength;
  
- void crush_destroy_bucket_list(struct crush_bucket_list *b)
-@@ -55,14 +54,12 @@ void crush_destroy_bucket_list(struct cr
- 	kfree(b->item_weights);
- 	kfree(b->sum_weights);
- 	kfree(b->h.items);
--	kfree(b);
- }
- 
- void crush_destroy_bucket_tree(struct crush_bucket_tree *b)
- {
- 	kfree(b->h.items);
- 	kfree(b->node_weights);
--	kfree(b);
- }
- 
- void crush_destroy_bucket_straw(struct crush_bucket_straw *b)
-@@ -70,14 +67,12 @@ void crush_destroy_bucket_straw(struct c
- 	kfree(b->straws);
- 	kfree(b->item_weights);
- 	kfree(b->h.items);
--	kfree(b);
- }
- 
- void crush_destroy_bucket_straw2(struct crush_bucket_straw2 *b)
- {
- 	kfree(b->item_weights);
- 	kfree(b->h.items);
--	kfree(b);
- }
- 
- void crush_destroy_bucket(struct crush_bucket *b)
-@@ -99,6 +94,7 @@ void crush_destroy_bucket(struct crush_b
- 		crush_destroy_bucket_straw2((struct crush_bucket_straw2 *)b);
- 		break;
+-		if (ms_ep->bLength > 3 &&
++		if (!length || length > extralen)
++			break;
++
++		if (length > 3 &&
+ 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
+ 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
+ 			return ms_ep;
+-		if (!extra[0])
+-			break;
+-		extralen -= extra[0];
+-		extra += extra[0];
++		extralen -= length;
++		extra += length;
  	}
-+	kfree(b);
+ 	return NULL;
  }
- 
- /**
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -517,6 +517,10 @@ static struct crush_map *crush_decode(vo
- 		b->id = ceph_decode_32(p);
- 		b->type = ceph_decode_16(p);
- 		b->alg = ceph_decode_8(p);
-+		if (b->alg != alg) {
-+			b->alg = 0;
-+			goto bad;
-+		}
- 		b->hash = ceph_decode_8(p);
- 		b->weight = ceph_decode_32(p);
- 		b->size = ceph_decode_32(p);
 
 
