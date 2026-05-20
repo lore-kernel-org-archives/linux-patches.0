@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505343EDACC;
-	Wed, 20 May 2026 17:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36AD3EDACC;
+	Wed, 20 May 2026 17:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298989; cv=none; b=KZ4r31J2ErL0FOam/0yJ9r1vIFXK2L5rlraf6xL+LMEkdiQiALdIbk35lW6IXr1nRadSI1U/kekG1BOgAFKSmLxQiAQ73MXSQh/e91bzvti3v4dQSaqbTdFHyqNyCxvhsp3vWgxcdyj+qdCflTfSKdikxa3KszlL9QH38dpPpVk=
+	t=1779298992; cv=none; b=oL75pBNLDTB/EXdwqNYd0ae7j31I4beSOgqvDSk9d3unpnUE0klQAoHA3hq/g1tD6UpzgpxkXluOHuGtSpqkgW2vBxM1VDz2gHpsW7I5YhtkXH8DS/fsC36thTvVan151oC4IHkaj75lj0XE67z2SYwoHRXovvV5WGq2Hjf5kqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298989; c=relaxed/simple;
-	bh=OA8AWPKOj/dRFgGvVV+q97SdKcd/LDh2U/Faz97i5gI=;
+	s=arc-20240116; t=1779298992; c=relaxed/simple;
+	bh=h4WyGgBazxHcUGs9QLC9KkG9n70xGtytQQWaR714Su8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qK1cTp72KrgE5CXMkkrGDZeOAxAWaNctiM3UdUv2+4HHOle3/yCDFWYzUvrJ3oOMCvhdJqtbkKIc3ZPEV2nnsRWTJ7T15c8wKK7LOAipjQwQeCLGDvXf1f5/PpwY6nd7J4QDBpRo8tQFeedoHlvt8u9vjCS/QIQiq9zd5MltrTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTBI5ebx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjidRkdxlrFUnuFlq8MejAPPMZnJlocxFdcPJQj4hrPI+chPbU1eUutFp+Ik1i/pVmil8LhBYtGTdLSz6JofYiOncRpZRtSU0pxH4/h7P4bgZQHkFrYhCcJBNgRQe8peA0R0q8PCD3O/rZ11iKpZ0KdBZEeZRQWQd9yLp4vg0ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gcab69bh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTBI5ebx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2C81F000E9;
-	Wed, 20 May 2026 17:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gcab69bh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFED1F000E9;
+	Wed, 20 May 2026 17:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298988;
-	bh=jpB9vi+5p+iTi2G9fQhJmGHVuiDJ1ZzQw8/dJ6jNfRo=;
+	s=korg; t=1779298990;
+	bh=/NdUEoC2MY9oiS1BUYCbYxQ4iIn+TdEtuN0gqcjW7do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTBI5ebx+PFIwl/FMZhC2V0oxWUr3Oc6bk0aLikyKKeuuuih66/6e2OIasUmxexIb
-	 tR5+zKIyqAQqHcGFmqQOJ1J8qGe446c4d4hX+xXWA5urPMXGayNJ4qLoH24GDpYE0y
-	 bjZ4ht+FRsCR6ElpOTFJNtpKoBml/zMhOlLYyozE=
+	b=Gcab69bhdCLDay0m2SiMgPpKq5jUQOrL7ZaMsDgu+MdXz1F48abKzFPrrtUu/HBPo
+	 JtR0gUSZTaTAz1kcG1AD8BroWsIvTprwcu673eoVmsfevqPXqfskdSWctSTQ3Lc/MD
+	 5h4hjsPwNIzF//rocFEQuKxIXDNf97Y1+4ex5JHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Val Packett <val@packett.cool>
-Subject: [PATCH 6.18 579/957] clk: qcom: dispcc-sc7180: Add missing MDSS resets
-Date: Wed, 20 May 2026 18:17:42 +0200
-Message-ID: <20260520162147.087150340@linuxfoundation.org>
+	Shuwei Wu <shuwei.wu@mailbox.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 580/957] clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
+Date: Wed, 20 May 2026 18:17:43 +0200
+Message-ID: <20260520162147.109025023@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Shuwei Wu <shuwei.wu@mailbox.org>
 
-[ Upstream commit b0bc6011c5499bdfddd0390262bfa13dce1eff74 ]
+[ Upstream commit 54e97360b44bed6b4399dd3be3d65f392df940fa ]
 
-The MDSS resets have so far been left undescribed. Fix that.
+Fix inverted condition that skips frequency change trigger,
+causing kernel panics during cpufreq scaling.
 
-Fixes: dd3d06622138 ("clk: qcom: Add display clock controller driver for SC7180")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Tested-by: Val Packett <val@packett.cool> # sc7180-ecs-liva-qc710
-Link: https://lore.kernel.org/r/20260120-topic-7180_dispcc_bcr-v1-2-0b1b442156c3@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://lore.kernel.org/r/20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sc7180.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/spacemit/ccu_mix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
-index ab1a8d419863d..d7e37fbbe87ed 100644
---- a/drivers/clk/qcom/dispcc-sc7180.c
-+++ b/drivers/clk/qcom/dispcc-sc7180.c
-@@ -17,6 +17,7 @@
- #include "clk-regmap-divider.h"
- #include "common.h"
- #include "gdsc.h"
-+#include "reset.h"
+diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
+index 67f8b12b4f5b7..9a3fc9ea1ce56 100644
+--- a/drivers/clk/spacemit/ccu_mix.c
++++ b/drivers/clk/spacemit/ccu_mix.c
+@@ -69,7 +69,7 @@ static int ccu_mix_trigger_fc(struct clk_hw *hw)
+ 	struct ccu_common *common = hw_to_ccu_common(hw);
+ 	unsigned int val;
  
- enum {
- 	P_BI_TCXO,
-@@ -636,6 +637,11 @@ static struct gdsc mdss_gdsc = {
- 	.flags = HW_CTRL,
- };
+-	if (common->reg_fc)
++	if (!common->reg_fc)
+ 		return 0;
  
-+static const struct qcom_reset_map disp_cc_sc7180_resets[] = {
-+	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
-+	[DISP_CC_MDSS_RSCC_BCR] = { 0x4000 },
-+};
-+
- static struct gdsc *disp_cc_sc7180_gdscs[] = {
- 	[MDSS_GDSC] = &mdss_gdsc,
- };
-@@ -687,6 +693,8 @@ static const struct qcom_cc_desc disp_cc_sc7180_desc = {
- 	.config = &disp_cc_sc7180_regmap_config,
- 	.clks = disp_cc_sc7180_clocks,
- 	.num_clks = ARRAY_SIZE(disp_cc_sc7180_clocks),
-+	.resets = disp_cc_sc7180_resets,
-+	.num_resets = ARRAY_SIZE(disp_cc_sc7180_resets),
- 	.gdscs = disp_cc_sc7180_gdscs,
- 	.num_gdscs = ARRAY_SIZE(disp_cc_sc7180_gdscs),
- };
+ 	ccu_update(common, fc, common->mask_fc, common->mask_fc);
 -- 
 2.53.0
 
