@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F028332F770;
-	Wed, 20 May 2026 18:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8461402BAA;
+	Wed, 20 May 2026 18:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302579; cv=none; b=OgtBsPSqZRap/y2Vl5rzdGoZmz0rwz3KF6UfDq0hP/45zNhF/63g/MmmGLkrcQgO1fWsicJfauoqGu2cpo4IN/2YwXLWZpuCmn8WWug4+2PvQACOMtQ4O8QMAeidhuL39p+G9OFRhn6qo12T2dcGur987U9ulZVVawkltaUeaRs=
+	t=1779302582; cv=none; b=g/nv+xuHPajyJLwUrlixRPyK9ddhlELyVuJkqInJXoSx7BtRq+7A6xtx2Aq25iecvQ+Fzqs7bycvZbvwmugXsiyvMdKMnJrnvw2EmUxd8a+Vypqf21p+wUd6hReaRPuCrAFbl45sEmXd8dMe5TMwiQVv1lZGseW1fEOd4RVvx3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302579; c=relaxed/simple;
-	bh=W0x9qhxWQxkHHxjHjNGBrc801YZrA24VYK0HzltaCc0=;
+	s=arc-20240116; t=1779302582; c=relaxed/simple;
+	bh=k3cqNzJ/8TsaXEmSbut49LYXwTXR+3Izi3ZX0GMX2QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y61GKzltnsgfDDMU5e4DDDK7jXabeH5LbiGNA0J0jsNFXzxghy5CEjkFrHOcMVfwspdtH4vCQSNzdtckHahR2yemb7gyqbs85XD6+xErNRhvU+Xnch91IxXcgvLw7XKc+gBYnuRvnttj8KCfzbHhO2Ow7Dk7WAru+tAJk5FqC6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQD8ccG0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIqJvImadgjtz+bgBZQCpMqyisC0IXvLCHdOBE48Tb9JrKe5SioXTWBicYznhVnmd7yWF6nyJ7XIDXID5s+SzWPzyhZOQkDTE1WUv8W6B16t9AQ+FiRCm13j9vmf97Aq5rPNYdcSb4YOsHxXef2LloUGpJk0T/CH0UQC8y/t0Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAwYIu+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQD8ccG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F171F000E9;
-	Wed, 20 May 2026 18:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAwYIu+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACE81F000E9;
+	Wed, 20 May 2026 18:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302577;
-	bh=eHiaS1+bXM56pkE3CV8o5zEwb0QrYiVUIbEGyaks0FQ=;
+	s=korg; t=1779302580;
+	bh=cCbd2CJuUWZXALeoYSjYooG7IVHrXTmtQfmgUQzuq2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQD8ccG0WHJJEON2wlI+JkdiynaOvHqwjA0IDviKfIrXZkKsZ7gLyvP1496IR8Wm8
-	 FhLZzfe5CjMplzPf+xplVsh32O18/AL6wJ96pUrymSdej5VgpexgB+36hswHSYqMlj
-	 jksSu27Nz9kQpOmwaY+duFC+xngKvmYKIaMbjgWI=
+	b=CAwYIu+yCq1A5RtAI/vFq2fYOzQh1VWQIhH1gSwd3puRWf2cAF3mdSL4wUUuwFQ3V
+	 CMXfnlCt0HTOzLPnaCmOx4sBfeHQyKU/fWj25F5stcrOrhlQKSdnh+UWXdz4V+FDJb
+	 jksRzqxvwQHz1/8oTIOuV2Ny2akENs9YVGN+1+cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alice Mikityanska <alice@isovalent.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 320/508] tcp: annotate data-races around tp->plb_rehash
-Date: Wed, 20 May 2026 18:22:23 +0200
-Message-ID: <20260520162105.571297522@linuxfoundation.org>
+Subject: [PATCH 6.6 321/508] ice: Remove jumbo_remove step from TX path
+Date: Wed, 20 May 2026 18:22:24 +0200
+Message-ID: <20260520162105.592723781@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,50 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 9e89b9d03a2d2e30dcca166d5af52f9a8eceab25 ]
+[ Upstream commit 8b76102c5e00d1f090e0c31d17b060c76d8fa859 ]
 
-tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
+Now that the kernel doesn't insert HBH for BIG TCP IPv6 packets, remove
+unnecessary steps from the ice TX path, that used to check and remove
+HBH.
 
-Fixes: 29c1c44646ae ("tcp: add u32 counter in tcp_sock and an SNMP counter for PLB")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-15-edumazet@google.com
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260205133925.526371-8-alice.kernel@fastmail.im
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 1a303baa715e ("ice: fix double-free of tx_buf skb")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c     | 3 ++-
- net/ipv4/tcp_plb.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index a8cba4dc7df5c..5b1fbb0ca2ff6 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4003,7 +4003,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 		nla_put_u8(stats, TCP_NLA_TTL,
- 			   tcp_skb_ttl_or_hop_limit(ack_skb));
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index eae4376c68595..66da8a34be0f1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -2364,9 +2364,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
  
--	nla_put_u32(stats, TCP_NLA_REHASH, tp->plb_rehash + tp->timeout_rehash);
-+	nla_put_u32(stats, TCP_NLA_REHASH,
-+		    READ_ONCE(tp->plb_rehash) + READ_ONCE(tp->timeout_rehash));
- 	return stats;
- }
+ 	ice_trace(xmit_frame_ring, tx_ring, skb);
  
-diff --git a/net/ipv4/tcp_plb.c b/net/ipv4/tcp_plb.c
-index 4bcf7eff95e39..b7f9b60d8991f 100644
---- a/net/ipv4/tcp_plb.c
-+++ b/net/ipv4/tcp_plb.c
-@@ -79,7 +79,7 @@ void tcp_plb_check_rehash(struct sock *sk, struct tcp_plb_state *plb)
- 
- 	sk_rethink_txhash(sk);
- 	plb->consec_cong_rounds = 0;
--	tcp_sk(sk)->plb_rehash++;
-+	WRITE_ONCE(tcp_sk(sk)->plb_rehash, tcp_sk(sk)->plb_rehash + 1);
- 	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPPLBREHASH);
- }
- EXPORT_SYMBOL_GPL(tcp_plb_check_rehash);
+-	if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
+-		goto out_drop;
+-
+ 	count = ice_xmit_desc_count(skb);
+ 	if (ice_chk_linearize(skb, count)) {
+ 		if (__skb_linearize(skb))
 -- 
 2.53.0
 
