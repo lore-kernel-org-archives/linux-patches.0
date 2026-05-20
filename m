@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B174331A41;
-	Wed, 20 May 2026 18:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B729A3D1CA0;
+	Wed, 20 May 2026 18:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302147; cv=none; b=aeZ9xRicR4h0UIHrHyQ7/bP31zDxV8d1Fxim3dJLpttmsmpPKwisHZIkgn3Bt4QFGRVhtDD5ocJZ/GF7/Ce6SMZ3H1MMcszL64GCyNtLa+RpmUrqZ1q58TEHyZ5h3A4bLu5n4NOIk9zWCvVYALjIrhcgQvNxkNV7cailYihHrfE=
+	t=1779302149; cv=none; b=K0tGBlykPawWZ0QsjNzPu47csBnTUVPjLge9UFhzO+vUchrHYH4vOCSx29HNw7bAw7pGnlU5wsIDqWBDAGI7agtLmURkWEkbfXD5GkJ06N611TKFtJki/QkVAwSd2uQmYMzaPGi6byXxRnjKsJDnvD5uWsJ4UxLl4efGEZzo4lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302147; c=relaxed/simple;
-	bh=hiMKw4OvvQi9isMPthQy0qGpBKMB1uiwVJwaSmdJgrg=;
+	s=arc-20240116; t=1779302149; c=relaxed/simple;
+	bh=yMB2sL2HVh259HUAYU5rfFxympZQTHk2d9SU+pMnkA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fA5wRw8VU+AAKexm98t+eybfiXk24qFOh1oHrht9ZfSkGU1Xkk+voWIzDF/Rj0n5ECiNWwZwgNOMKuTzZ4pcQLr73BcdMSG5+9SDxQsPywH6FRz7Zox4nxlZB3ldg1UP9kjanTGcrI99IMsdYcYHggTtCmh7GaJphkRe2HsnS28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvLfhqcR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lu4ip5/UVgmt6CwH8CX7AQ72DzlKvtNraWLa82Yd6MjMqmWTB4OtvcFi6eJ4AtlMhHDyeVGSigaoVA5EVA4RF1fOkvQFdVd05zH0LsRy/BBf2dFywXEBykQiC1+T6LKyKkPPzYlZKZAJCX+Hsn3PhdN928xx9wRup64eFpYM14c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8g07tre; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvLfhqcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807331F000E9;
-	Wed, 20 May 2026 18:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8g07tre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3A01F000E9;
+	Wed, 20 May 2026 18:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302146;
-	bh=CQz7Emw5MzTDUJBaU/KphRlnyQILjhQDtpWhuO3Jr8w=;
+	s=korg; t=1779302148;
+	bh=XIVDQC2gEAZnlQjRThW/w1AOL02WQ3UFTvefGIsPXHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvLfhqcRh2KI0bcBsCckbJOTCogdDiBzym+Xk1VCy6r6LxUsiUvbATa09VRlvuvWh
-	 JleZTzfuD0W4lzQQ04akvu+rs8Dx3oE6eJ8n14ytexQAzXNfWDgQ4TiJphpq9tBtgY
-	 EwAorKOUaUTDAwL2g97U8yD9r5F+Ua9ibts2KwPQ=
+	b=x8g07treWzerAHlAu9ZEOaRLe48OkWLP1W8OXNA4b+ZLrlpeHzR4kqj2U1nsfSgkd
+	 ww8MyCh8u2o4aJlxfFOmMUjikBDQnjFhmMxHW7IARnE63jT7nHUxEG5G1IRc+7/aUe
+	 AZ5GJlYJELNEBzTc1piGWyM7tp4LyCE0quy1f9zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/508] ASoC: SOF: compress: return the configured codec from get_params
-Date: Wed, 20 May 2026 18:19:38 +0200
-Message-ID: <20260520162101.995726500@linuxfoundation.org>
+Subject: [PATCH 6.6 156/508] PCI: tegra194: Fix polling delay for L2 state
+Date: Wed, 20 May 2026 18:19:39 +0200
+Message-ID: <20260520162102.017668043@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,90 +48,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 2c4fdd055f92a2fc8602dcd88bcea08c374b7e8b ]
+[ Upstream commit adaffed907f14f954096555665ad6af2ae724d83 ]
 
-The SOF compressed offload path accepts codec parameters in
-sof_compr_set_params() and forwards them to firmware as
-extended data in the SOF IPC stream params message.
+As per PCIe r7.0, sec 5.3.3.2.1, after sending PME_Turn_Off message, Root
+Port should wait for 1-10 msec for PME_TO_Ack message. Currently, driver is
+polling for 10 msec with 1 usec delay which is aggressive.  Use existing
+macro PCIE_PME_TO_L2_TIMEOUT_US to poll for 10 msec with 1 msec delay.
+Since this function is used in non-atomic context only, use non-atomic poll
+function.
 
-However, sof_compr_get_params() still returns success without
-filling the snd_codec structure. Since the compress core allocates
-that structure zeroed and copies it back to userspace on success,
-SNDRV_COMPRESS_GET_PARAMS returns an all-zero codec description
-even after the stream has been configured successfully.
-
-The stale TODO in this callback conflates get_params() with capability
-discovery. Supported codec enumeration belongs in get_caps() and
-get_codec_caps(). get_params() should report the current codec settings.
-
-Cache the codec accepted by sof_compr_set_params() in the per-stream SOF
-compress state and return it from sof_compr_get_params().
-
-Fixes: 6324cf901e14 ("ASoC: SOF: compr: Add compress ops implementation")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260325-sof-compr-get-params-v1-1-0758815f13c7@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-2-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/compress.c | 8 +++++---
- sound/soc/sof/sof-priv.h | 2 ++
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/sof/compress.c b/sound/soc/sof/compress.c
-index c469bb706e4a4..b64a5d99fe608 100644
---- a/sound/soc/sof/compress.c
-+++ b/sound/soc/sof/compress.c
-@@ -247,6 +247,7 @@ static int sof_compr_set_params(struct snd_soc_component *component,
- 	sstream->sampling_rate = params->codec.sample_rate;
- 	sstream->channels = params->codec.ch_out;
- 	sstream->sample_container_bytes = pcm->params.sample_container_bytes;
-+	sstream->codec_params = params->codec;
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index ce2a7a6dab90c..6a4e0dc0d1dce 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -205,8 +205,6 @@
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_MASK	GENMASK(11, 8)
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_SHIFT	8
  
- 	spcm->prepared[cstream->direction] = true;
+-#define PME_ACK_TIMEOUT 10000
+-
+ #define LTSSM_TIMEOUT 50000	/* 50ms */
  
-@@ -259,9 +260,10 @@ static int sof_compr_set_params(struct snd_soc_component *component,
- static int sof_compr_get_params(struct snd_soc_component *component,
- 				struct snd_compr_stream *cstream, struct snd_codec *params)
- {
--	/* TODO: we don't query the supported codecs for now, if the
--	 * application asks for an unsupported codec the set_params() will fail.
--	 */
-+	struct sof_compr_stream *sstream = cstream->runtime->private_data;
-+
-+	*params = sstream->codec_params;
-+
- 	return 0;
+ #define GEN3_GEN4_EQ_PRESET_INIT	5
+@@ -1583,9 +1581,10 @@ static int tegra_pcie_try_link_l2(struct tegra_pcie_dw *pcie)
+ 	val |= APPL_PM_XMT_TURNOFF_STATE;
+ 	appl_writel(pcie, val, APPL_RADM_STATUS);
+ 
+-	return readl_poll_timeout_atomic(pcie->appl_base + APPL_DEBUG, val,
+-				 val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
+-				 1, PME_ACK_TIMEOUT);
++	return readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
++				  val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
++				  PCIE_PME_TO_L2_TIMEOUT_US/10,
++				  PCIE_PME_TO_L2_TIMEOUT_US);
  }
  
-diff --git a/sound/soc/sof/sof-priv.h b/sound/soc/sof/sof-priv.h
-index d4f6702e93dcb..6bf461506ce37 100644
---- a/sound/soc/sof/sof-priv.h
-+++ b/sound/soc/sof/sof-priv.h
-@@ -17,6 +17,7 @@
- #include <sound/sof/info.h>
- #include <sound/sof/pm.h>
- #include <sound/sof/trace.h>
-+#include <sound/compress_params.h>
- #include <uapi/sound/sof/fw.h>
- #include <sound/sof/ext_manifest.h>
- 
-@@ -119,6 +120,7 @@ struct sof_compr_stream {
- 	u32 sampling_rate;
- 	u16 channels;
- 	u16 sample_container_bytes;
-+	struct snd_codec codec_params;
- 	size_t posn_offset;
- };
- 
+ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
 -- 
 2.53.0
 
