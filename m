@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AC131F9BE;
-	Wed, 20 May 2026 16:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B6D33A9CF;
+	Wed, 20 May 2026 16:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295644; cv=none; b=FOnpLnhW3txOYs0FNYbG8jIbKH/IFf3QjjDPnE5Dgu1O8x+CRXeoNI6VT6WkaLstmRB4jDq7Yr2xNJuXVoEPCrqVKGAkcK3RtFUIKzuAjXhpM7hRQUe64ZoPNiq4L9oZPObmkRhrECoeuBBHnoywXdHgAIpObXhE9wvkBLRoo/w=
+	t=1779295646; cv=none; b=pnTpsoBZ881rDXJUklMUUDSb1gcAjfQedqCcERtS/WItXNuMP8s2MAyQn0XQxvKLCCa2hSZIRqgcmbsGD1nt5eYoL3GtUUinSLi+MveKhOVg8KrudBExUGEa7W3d4jy2hnNFoaUoyE2sU1cQ7iw/SPx1ly/OxvQFLbVfx1v5nbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295644; c=relaxed/simple;
-	bh=3ISGNAYadrqBpacr2c7WcgM8EfPyQ/f5FLwyFxcDcu0=;
+	s=arc-20240116; t=1779295646; c=relaxed/simple;
+	bh=B6XRtMW3guKzMkCbYQnBMMfuRKFckqenLuU3PpDhPfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/xlfC9q/utihWfgk/F4z2InHsgBKnUKDn2gKCx6l9nT78NZtrwAY5QkeSKeR/hnb6F1uNAeVXicVzx4cNqsqAghrUQfGuX/a3h+1ixzQwplYf8rmtC1iffy+92ce/v7Ks9oyDFt2aBOjtwacgiqFIMIFzM9Wdw+xL2I0hNBckY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdUywiyK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OfRUQ3H1NWfVvRmcetAC38bnF2mzqShBV8efDlmp7Go7m97hwavv2Wa2ilynHQi6BNTkWrSu/ha39Xr1OCq/XLXLnPaPEbGRY91sFjQ32Ea00LwcBu0SYhjdFMp9KYZC2f3KK3mu1KAAKdwosBkzbf04oGeo7HywGDZjTj/ExsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6ECWlSx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdUywiyK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034C51F000E9;
-	Wed, 20 May 2026 16:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6ECWlSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAE71F000E9;
+	Wed, 20 May 2026 16:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295642;
-	bh=7W4iFepCU/n3j52SFCmf5ZA7L8XHmddSylP77BRwUs4=;
+	s=korg; t=1779295645;
+	bh=GYJTOPh/h3/LYdixn5Y9E844xPLT9W7JoMtNc3MZb8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DdUywiyKlo7xtx/C1g5dAzt0pU1I9H6eoNxGRukBHj+ivxLKjDX9tuapuKBL/jncc
-	 v4y2dCfT2JhLI3vW0lo6l+najY/now6EDa/YP1mf1zybZCdx5DgbfA32XIrT2O12BJ
-	 O0ovXT9fUA643YtHc1Rh5aOiDb5KINPjsEvdKtjs=
+	b=M6ECWlSx70Mdwf9gcGwFaIwMBJgUHh8ObsMv7n43MrDrxYorDamJMA0Pnxb20MWgV
+	 7+xqBPWP4LWOWsMKmULw5kQ8eeeNrEkePsvHc3QU/Z2/OKwfSWSIRFJnAOjLEICfCO
+	 jaTv1gbXFrNfz2FT1ZcdKkLJ+3MnnlGpRB+bV8P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ming Wang <wangming5719@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0497/1146] soc: qcom: ubwc: disable bank swizzling for Glymur platform
-Date: Wed, 20 May 2026 18:12:27 +0200
-Message-ID: <20260520162159.441338145@linuxfoundation.org>
+Subject: [PATCH 7.0 0498/1146] arm64: dts: rockchip: Fix Bluetooth stability on LCKFB TaiShan Pi
+Date: Wed, 20 May 2026 18:12:28 +0200
+Message-ID: <20260520162159.462815010@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,42 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Ming Wang <wangming5719@gmail.com>
 
-[ Upstream commit e031e7ceac4ee04973bd77362c363734e79dd08c ]
+[ Upstream commit 861a9593e10bb6ab2a492b315c8a2a3aad70ac00 ]
 
-Due to the way the DDR controller is organized on Glymur, hardware
-engineers strongly recommended disabling UBWC bank swizzling on Glymur.
-Follow that recommendation.
+The AP6212 WiFi/BT module on the LCKFB TaiShan Pi (RK3566) is prone to
+communication timeouts and reset failures (error -110) when operating at
+3 Mbps.
 
-Fixes: 9b21c3bd2480 ("soc: qcom: ubwc: Add configuration Glymur platform")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Acked-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Link: https://lore.kernel.org/r/20260228-fix-glymur-ubwc-v2-1-70819bd6a6b4@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This patch stabilizes the Bluetooth interface by:
+1. Updating the compatible string to 'brcm,bcm43430a1-bt' to better reflect
+   the actual chip revision used in the AP6212 module.
+2. Lowering the maximum UART baud rate from 3,000,000 to 1,500,000 bps.
+   Tests show that 1.5 Mbps is the reliable upper limit for this board's
+   UART configuration, eliminating the initialization timeouts.
+
+Fixes: 251e5ade9ba4 ("arm64: dts: rockchip: add dts for LCKFB Taishan Pi RK3566")
+Signed-off-by: Ming Wang <wangming5719@gmail.com>
+Link: https://patch.msgid.link/20260206090453.1041919-1-wming126@126.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ubwc_config.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
-index 1c25aaf55e523..8304463f238a6 100644
---- a/drivers/soc/qcom/ubwc_config.c
-+++ b/drivers/soc/qcom/ubwc_config.c
-@@ -231,8 +231,7 @@ static const struct qcom_ubwc_cfg_data x1e80100_data = {
- static const struct qcom_ubwc_cfg_data glymur_data = {
- 	.ubwc_enc_version = UBWC_5_0,
- 	.ubwc_dec_version = UBWC_5_0,
--	.ubwc_swizzle = UBWC_SWIZZLE_ENABLE_LVL2 |
--			UBWC_SWIZZLE_ENABLE_LVL3,
-+	.ubwc_swizzle = 0,
- 	.ubwc_bank_spread = true,
- 	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
- 	.highest_bank_bit = 16,
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
+index ed65d31204446..18a560a6e2a4a 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
+@@ -635,10 +635,10 @@ &uart1 {
+ 	status = "okay";
+ 
+ 	bluetooth: bluetooth {
+-		compatible = "brcm,bcm43438-bt";
++		compatible = "brcm,bcm43430a1-bt";
+ 		clocks = <&rk809 1>;
+ 		clock-names = "lpo";
+-		max-speed = <3000000>;
++		max-speed = <1500000>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&bt_host_wake_l &bt_wake_l &bt_enable_h>;
+ 		shutdown-gpios = <&gpio2 RK_PB7 GPIO_ACTIVE_HIGH>;
 -- 
 2.53.0
 
