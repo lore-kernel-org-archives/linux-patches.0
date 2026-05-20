@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778FF3A3833;
-	Wed, 20 May 2026 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B82F3CAE61;
+	Wed, 20 May 2026 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296976; cv=none; b=qebPIvRx8O8TJFiD1UM3EhaQhlTOPRelSYJjejuxHmGRnLFrxjRX4FfQmF69TSWucMdlW/9SJj30fN8W8MjNa8Ey/yyd86LdimEZeR2Jrv4SlwSEwyclRu5fX2KaYNyck6L7x+Shy/9oYN/9vn+HYMx+gb8skEoQIhiYZqOD61k=
+	t=1779296979; cv=none; b=V5khOjZ7zQ189N4IV3zvrjdviAptdOol6HCyM48nRsGPCQwHLXt/CxEaXk95aCoM6jL+cBw03xvZkvOCdIClImeWDAFPnHo3AcvQKfuSYUY9t/vAWgeV8uG97fkLrEf6/R1Rz8Nskehy9+QvD8FGxMGxIAo2BJSP2GyrKXVjlh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296976; c=relaxed/simple;
-	bh=uwRPRCpkbtCcEmxPyssExzX5nILP7StXY5EcbnyWEg4=;
+	s=arc-20240116; t=1779296979; c=relaxed/simple;
+	bh=itFMrjgmvMXn++Zfwvvliw7vLggmusJ6ryFutm1RyYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8so5NLJ2aWujy17zbbjs99gXiOTrX71dvAsMMRZic0j/CIhvovust369UxoJoGPedfuBe9q15JQdDyQGna5o3swSM8IzA+h3fi07QUQd5OsOvCWsa9IlrQV8NM+BIx0Zjle+TpZQBkpXgzdEBJmXmzrG9m/vVRrHi3go/0Bb2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHwLUH8V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g93gqkbU+cqagUAwzQ87aaniZagBsqCiABoOY8IMr9efLC8ZIPCOx+SRCXgHUad1m+ABygb1IzZxfwSRdHRRxP8+Ui6ttXrculu3IdB1+wjr1eN0Qn0ozFDuiUYy/UHCh3e6lx83kD/LW/HAd+VD3fxj6Ud11dLQGYe61KiCGdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGTHREQp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHwLUH8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3041F000E9;
-	Wed, 20 May 2026 17:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGTHREQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814C01F000E9;
+	Wed, 20 May 2026 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296975;
-	bh=8GvRlRGDYzE0GXGNQ8HbTmSQY51u8sFxUdiGBHFttX8=;
+	s=korg; t=1779296978;
+	bh=OF2yvdfP06TiERYazNt2oQtQaH8HsoGAbGPtM9084zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHwLUH8VEwfCIJt3qwVUHLSGjyxSmvoHYRpUZgzkLJrxNIwk8mj82R1UAWsUwyEca
-	 1F4GDNsPRDYs9dkBBmyxI9tn29GGfg0SZImzdWWL/F3jT2nf/ZwB0Idb7i+m09xOPK
-	 Hqw5xXO5ZFyVO/OvDAY3lo4q7E4UPUj/bqBnDxE4=
+	b=FGTHREQpp7E5zKldtTJX60ESMp2l/b1vceCk5MOyRgliaxb7Qs7OJs/tmllSj7BfT
+	 umJmWpKIpyb0i5YD3Rqfori8bqVaB+pvqrNT7iPHp/6NBIU6Bv0iaF55Swt9Qy1bil
+	 Js1OYpmVP8sVVAq96MGnE3hmi0j0zDolWVnpYQGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Schocher <hs@nabladev.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0961/1146] net: phy: dp83869: fix setting CLK_O_SEL field.
-Date: Wed, 20 May 2026 18:20:11 +0200
-Message-ID: <20260520162209.981333762@linuxfoundation.org>
+Subject: [PATCH 7.0 0962/1146] drm/amd/display: properly handle family setting for early GC 11.5.4
+Date: Wed, 20 May 2026 18:20:12 +0200
+Message-ID: <20260520162210.005354878@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,62 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Schocher <hs@nabladev.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 46f74a3f7d57d9cc0110b09cbc8163fa0a01afa2 ]
+[ Upstream commit 31bc64e87f5f3d9ccbb7e625d570cfd8f52c77fc ]
 
-Table 7-121 in datasheet says we have to set register 0xc6
-to value 0x10 before CLK_O_SEL can be modified. No more infos
-about this field found in datasheet. With this fix, setting
-of CLK_O_SEL field in IO_MUX_CFG register worked through dts
-property "ti,clk-output-sel" on a DP83869HMRGZR.
+Early variants need an override.
 
-Signed-off-by: Heiko Schocher <hs@nabladev.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 01db923e8377 ("net: phy: dp83869: Add TI dp83869 phy")
-Link: https://patch.msgid.link/20260425031339.3318-1-hs@nabladev.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 57d00816c6a9 ("drm/amdgpu: set family for GC 11.5.4")
+Cc: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+Cc: Roman Li <Roman.Li@amd.com>
+Cc: Mario Limonciello <superm1@kernel.org>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 922fccc2d3f8186008c19ba08a49ae8a9463cb50)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c     | 4 +---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index 1f381d7b13ff3..96a7d255f50fd 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -31,6 +31,7 @@
- #define DP83869_RGMIICTL	0x0032
- #define DP83869_STRAP_STS1	0x006e
- #define DP83869_RGMIIDCTL	0x0086
-+#define DP83869_ANA_PLL_PROG_PI	0x00c6
- #define DP83869_RXFCFG		0x0134
- #define DP83869_RXFPMD1		0x0136
- #define DP83869_RXFPMD2		0x0137
-@@ -826,12 +827,22 @@ static int dp83869_config_init(struct phy_device *phydev)
- 		dp83869_config_port_mirroring(phydev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index af3d2fd61cf3f..3459d356151ef 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -2986,10 +2986,8 @@ int amdgpu_discovery_set_ip_blocks(struct amdgpu_device *adev)
+ 	case IP_VERSION(11, 5, 1):
+ 	case IP_VERSION(11, 5, 2):
+ 	case IP_VERSION(11, 5, 3):
+-		adev->family = AMDGPU_FAMILY_GC_11_5_0;
+-		break;
+ 	case IP_VERSION(11, 5, 4):
+-		adev->family = AMDGPU_FAMILY_GC_11_5_4;
++		adev->family = AMDGPU_FAMILY_GC_11_5_0;
+ 		break;
+ 	case IP_VERSION(12, 0, 0):
+ 	case IP_VERSION(12, 0, 1):
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 2328c1aa0ead1..0aee65503642d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1891,7 +1891,11 @@ static int amdgpu_dm_init(struct amdgpu_device *adev)
+ 		goto error;
+ 	}
  
- 	/* Clock output selection if muxing property is set */
--	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK)
-+	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK) {
-+		/*
-+		 * Table 7-121 in datasheet says we have to set register 0xc6
-+		 * to value 0x10 before CLK_O_SEL can be modified.
-+		 */
-+		ret = phy_write_mmd(phydev, DP83869_DEVADDR,
-+				    DP83869_ANA_PLL_PROG_PI, 0x10);
-+		if (ret)
-+			return ret;
-+
- 		ret = phy_modify_mmd(phydev,
- 				     DP83869_DEVADDR, DP83869_IO_MUX_CFG,
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_MASK,
- 				     dp83869->clk_output_sel <<
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_SHIFT);
-+	}
+-	init_data.asic_id.chip_family = adev->family;
++	/* special handling for early revisions of GC 11.5.4 */
++	if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(11, 5, 4))
++		init_data.asic_id.chip_family = AMDGPU_FAMILY_GC_11_5_4;
++	else
++		init_data.asic_id.chip_family = adev->family;
  
- 	if (phy_interface_is_rgmii(phydev)) {
- 		ret = phy_write_mmd(phydev, DP83869_DEVADDR, DP83869_RGMIIDCTL,
+ 	init_data.asic_id.pci_revision_id = adev->pdev->revision;
+ 	init_data.asic_id.hw_internal_rev = adev->external_rev_id;
 -- 
 2.53.0
 
