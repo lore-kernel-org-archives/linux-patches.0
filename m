@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F413D6CB5;
-	Wed, 20 May 2026 17:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05990331220;
+	Wed, 20 May 2026 17:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298137; cv=none; b=lGhyWwRxh7JDLPWWP1VGN35GydEwC4gPwLPzA8GwjMtCWne4nU8BBGQCO3xAkb99V7VAcmp4cdQHuI6egDgqvRqVU8KHNBITD0+7JqovlDOkBBqu8i53NhgT2VRbtcfFdhheGD40T9qn07ZINXP5fxD0/BY8Z/X4vFGTNm6P+lI=
+	t=1779298140; cv=none; b=GATBdoAP0LaB3TsyogNo6mmRNU+nMUjWrUWyiiyP4z92Q1XRWfvVhoi0wj5/Z33wgtjsMR0URrO+VjJBDP0G6OFsmGckS+4N54jki3VR9/BT5S9bqf08cgdXfEzMlRQh5o6rttGJyCcJZloUQou/mM0GjsgIKWF1K3SMge39JXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298137; c=relaxed/simple;
-	bh=zgekUuNlWhbbEvof3bSZ7fn/lRNoZrWpILPziuXNqLk=;
+	s=arc-20240116; t=1779298140; c=relaxed/simple;
+	bh=jUXjx/56MfTYXWLFQJpuGf5GpgS/h/c6YYFweDXqsBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukw6yQOPnO2xTi86RJzqvDui78dUEmeRP4yS0aCRiYJuLcz++Vi+WuB9VQGT387uZ1VDGWwiM3JziEsU1BA3/BbQjOQ2DayEVyHlnOnUrcwaX8+QOHoX4zTrhfrd9aF+BGBVh5ZiKIjYBwtJARXnXh0EuIR3wky+K/e9+PR6pMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3+U+U5A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WbQ9bBraOlgC1ny5jqGS0yclJGoqC+eme/z3HYaa7KtEWRMw34zIRE84GoVeTwhxi0k5zVH5HZuYhKaNws+jH907yv8IQgthBADNzlkomjs7jnF3Xg8uLpFEprqzSEliohunCI0feMVz1SysqOZRMX6nOI4gQa1N4LQ3yS0kUmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu2g5k0V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3+U+U5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04621F000E9;
-	Wed, 20 May 2026 17:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu2g5k0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6357C1F000E9;
+	Wed, 20 May 2026 17:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298136;
-	bh=ir8P2r9ninLPX6RdnWzsHPGeYdCgDVJJJoQYKvwCJrM=;
+	s=korg; t=1779298138;
+	bh=J7cszxHD1xSJ7OM/glTrubTdG7nhx1zrROmawWMqjog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V3+U+U5AUnVIvRajveCupvmj4VOTmso2cNJDQgao+AXvrKBkNu4dMdMQtmKrRLIPZ
-	 XFfdtTzp9Nd4G5OFV3aP04Hvos7j7y3Fw8i7y/Au2E8hfE8lebqJb9EcjIzPBut7Ky
-	 4mLU+Lm+1ydkAwnSGzTd0z7+HepwYxQ6SLCUTx6k=
+	b=iu2g5k0V+S57eNlTLJ39IMdCUIMvUnZhGk6c3qRbRenbHGzEe4/M5M+ni6UUWhLpI
+	 702hEaO1NC3kyZ2SR8PYq/O9qlVP7gDT3HXjQYi8RL9wEKUR0Gs3poJPpiPiYf81fg
+	 /KwcGD5t71L6HWwFGV8o4/JE+JtRuAZi7orRZUpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 295/957] iommu/riscv: Remove overflows on the invalidation path
-Date: Wed, 20 May 2026 18:12:58 +0200
-Message-ID: <20260520162140.933183040@linuxfoundation.org>
+Subject: [PATCH 6.18 296/957] ASoC: qcom: qdsp6: topology: check widget type before accessing data
+Date: Wed, 20 May 2026 18:12:59 +0200
+Message-ID: <20260520162140.954669520@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 40a13b49957937427bc23e78eb50679df4396a47 ]
+[ Upstream commit d5bfdd28e0cdd45043ae6e0ac168a451d59283dc ]
 
-Since RISC-V supports a sign extended page table it should support
-a gather->end of ULONG_MAX, but if this happens it will infinite loop
-because of the overflow.
+Check widget type before accessing the private data, as this could a
+virtual widget which is no associated with a dsp graph, container and
+module. Accessing witout check could lead to incorrect memory access.
 
-Also avoid overflow computing the length by moving the +1 to the other
-side of the <
-
-Fixes: 488ffbf18171 ("iommu/riscv: Paging domain support")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 36ad9bf1d93d ("ASoC: qdsp6: audioreach: add topology support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260402081118.348071-4-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/qcom/qdsp6/topology.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index 1e8007a153c32..de286563bd44e 100644
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -931,8 +931,6 @@ static void riscv_iommu_iotlb_inval(struct riscv_iommu_domain *domain,
- 	struct riscv_iommu_bond *bond;
- 	struct riscv_iommu_device *iommu, *prev;
- 	struct riscv_iommu_command cmd;
--	unsigned long len = end - start + 1;
--	unsigned long iova;
+diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
+index f61285e7dcf20..f8d3bb83e3b0d 100644
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -952,9 +952,6 @@ static int audioreach_widget_unload(struct snd_soc_component *scomp,
+ 	struct audioreach_container *cont;
+ 	struct audioreach_module *mod;
  
- 	/*
- 	 * For each IOMMU linked with this protection domain (via bonds->dev),
-@@ -975,11 +973,14 @@ static void riscv_iommu_iotlb_inval(struct riscv_iommu_domain *domain,
- 
- 		riscv_iommu_cmd_inval_vma(&cmd);
- 		riscv_iommu_cmd_inval_set_pscid(&cmd, domain->pscid);
--		if (len && len < RISCV_IOMMU_IOTLB_INVAL_LIMIT) {
--			for (iova = start; iova < end; iova += PAGE_SIZE) {
-+		if (end - start < RISCV_IOMMU_IOTLB_INVAL_LIMIT - 1) {
-+			unsigned long iova = start;
+-	mod = dobj->private;
+-	cont = mod->container;
+-
+ 	if (w->id == snd_soc_dapm_mixer) {
+ 		/* virtual widget */
+ 		struct snd_ar_control *scontrol = dobj->private;
+@@ -963,6 +960,11 @@ static int audioreach_widget_unload(struct snd_soc_component *scomp,
+ 		kfree(scontrol);
+ 		return 0;
+ 	}
++	mod = dobj->private;
++	if (!mod)
++		return 0;
 +
-+			do {
- 				riscv_iommu_cmd_inval_set_addr(&cmd, iova);
- 				riscv_iommu_cmd_send(iommu, &cmd);
--			}
-+			} while (!check_add_overflow(iova, PAGE_SIZE, &iova) &&
-+				 iova < end);
- 		} else {
- 			riscv_iommu_cmd_send(iommu, &cmd);
- 		}
++	cont = mod->container;
+ 
+ 	mutex_lock(&apm->lock);
+ 	idr_remove(&apm->modules_idr, mod->instance_id);
 -- 
 2.53.0
 
