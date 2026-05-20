@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB8435AC18;
-	Wed, 20 May 2026 17:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E9535AC18;
+	Wed, 20 May 2026 17:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297626; cv=none; b=cE6oedp/UpU3g5+ixGGl9Q3uzTTFTAOID+alb8S9korOQsnuutn75kdQDh1mx2xPmIK5jaITzntlOOPgliFhPew6S40LTYaN0iJ22QYbMjt+Z5ey0vagumKbiLmxziPLMelFDPucUpESXmH2qwky2wZjH7/eioLM3qFpF2gVlwQ=
+	t=1779297628; cv=none; b=aWhHczJJ95sGfWzNuGOdZMmeoEI624Omu18fYdpusaMVc5CrQcIEWFgIfp8eaevmSBbtpFa50xskGB0HNAgmmYi6LW59YvRhjSHEuydUmGLlek2gMTE0um4Z85dAy98YUs7HFo6qIUn+tnLlXm/eCSJX0kDRaNN5bAz0RP1ya+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297626; c=relaxed/simple;
-	bh=DQiZP+RAqmP+A1Q10W/4Sic6RnB40VB7nh/C2qjVf6c=;
+	s=arc-20240116; t=1779297628; c=relaxed/simple;
+	bh=cN3hi2evkfiYGh/oPMl3YPft416HvR9PyzD9rkjhgCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9fiIWh1Xf0VCc+l4z4DO41ByGx5bKsNcl3VrVEtHkfoIM+UT1sHGopVvYYQUzI3QbmF5gjyQSfP+mrz8PKRsop09yekg4tb8WK9SSGTilm/wGFHpXyjHXqcE4L+4papxKxwQUzpc/LtYTvBDjTpTDJHrJ1lTlXcu8DxllTZFDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/i7eFNL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ytdx0n9WtOrfIWxW1gJCDZgXiwBpd1Q4RS1pflQLC8oTLFXoJ9R+x/AhbxiXyr/PLAM+vqAIGEsC5BpqqgroUryWAHMWAI0uBo8NWc0JNyNrywDRrVyQZ5Y6nF/B47YIcM/nk/89yLDmuuNf5JCp8ouZiQvsAopVBuC/gdlD6Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jU7mQZf5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/i7eFNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05D31F000E9;
-	Wed, 20 May 2026 17:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jU7mQZf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CFA1F000E9;
+	Wed, 20 May 2026 17:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297624;
-	bh=uW8WM/HsuP+693PXrQ0ZEudlhLxYiwW5WLlIiHywN5U=;
+	s=korg; t=1779297627;
+	bh=TQ1H3fllQYBpO58OYUdBH5nAyC9FT3IaC/4w/SSM+fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K/i7eFNLNduM6NI8GoxehfM/K0TtDbDxC/ByvRNeEnrKqB3g8K6zYLgdQbRCI9ZwE
-	 AhDZPhzpV7iD1g8W2kit2kSK5yB7i1wAj7LNr8vBG8eM+nwi0tHgwZOlTiXmZ+ZXTs
-	 VyRxhtq+cyd3J1OCkiZx6iWuWh4n+Ft2Hp4BYXbI=
+	b=jU7mQZf5jx2TsNB4H86NTvmopcKP5ROBIDi0uXr0OwLBlo7wwDnOj6Oro1Vgzabwl
+	 DZxiNpERFkh7yAaC97eRwL53uFEEPwbcmFWpkdUp5rDZ/vnTqW8XYrEmzqQwd1zULU
+	 xti6NeHEm0ym2ywUtGdefaZx+ROsdyoxVOEtosYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/957] wifi: mt76: mt7996: use correct link_id when filling TXD and TXP
-Date: Wed, 20 May 2026 18:09:45 +0200
-Message-ID: <20260520162136.772361209@linuxfoundation.org>
+Subject: [PATCH 6.18 103/957] wifi: mt76: mt7996: Switch to the secondary link if the default one is removed
+Date: Wed, 20 May 2026 18:09:46 +0200
+Message-ID: <20260520162136.795121031@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,169 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 85cd5534a3f2ec93e7d88713a77df5b4255520df ]
+[ Upstream commit 5ef44c200618430b004233cbfc1b0929a13d5ac8 ]
 
-Obtain the correct link ID and, if needed, switch to the corresponding
-wcid before populating the TX descriptor and TX payload.
+Switch to the secondary link if available in mt7996_mac_sta_remove_links
+routine if the primary one is removed.
+Moreover reset secondary link index for single link scenario.
 
-Rules for link id:
-- For QoS data of MLD peers (excluding EAPOL), select the primary or
-  secondary wcid based on whether the TID is odd or even to meet FW/HW
-  requirements
-- For other packets, use IEEE80211_TX_CTRL_MLO_LINK if specified
-  (such as multicast and broadcast packets)
-
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251106064203.1000505-8-shayne.chen@mediatek.com
+Fixes: 85cd5534a3f2e ("wifi: mt76: mt7996: use correct link_id when filling TXD and TXP")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251205-mt76-txq-wicd-fix-v2-3-f19ba48af7c1@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Stable-dep-of: e648051d52af ("wifi: mt76: mt7996: Decrement sta counter removing the link in mt7996_mac_reset_sta_iter()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/mac.c   | 34 ++++++++++++++++---
- .../net/wireless/mediatek/mt76/mt7996/main.c  |  9 +++++
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   |  4 +--
- .../wireless/mediatek/mt76/mt7996/mt7996.h    |  1 +
- 4 files changed, 42 insertions(+), 6 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/mac.c   | 12 ++---
+ .../net/wireless/mediatek/mt76/mt7996/main.c  | 51 +++++++++++++------
+ 2 files changed, 41 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 0b5194e708b3a..13a3b521437be 100644
+index 13a3b521437be..3280446f7caa8 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1040,15 +1040,20 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 			  struct ieee80211_sta *sta,
- 			  struct mt76_tx_info *tx_info)
- {
-+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx_info->skb->data;
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx_info->skb);
- 	struct ieee80211_key_conf *key = info->control.hw_key;
- 	struct ieee80211_vif *vif = info->control.vif;
-+	struct mt7996_vif *mvif = vif ? (struct mt7996_vif *)vif->drv_priv : NULL;
-+	struct mt7996_sta *msta = sta ? (struct mt7996_sta *)sta->drv_priv : NULL;
-+	struct mt76_vif_link *mlink = NULL;
- 	struct mt76_txwi_cache *t;
- 	int id, i, pid, nbuf = tx_info->nbuf - 1;
- 	bool is_8023 = info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP;
- 	__le32 *ptr = (__le32 *)txwi_ptr;
- 	u8 *txwi = (u8 *)txwi_ptr;
-+	u8 link_id;
+@@ -2406,14 +2406,12 @@ mt7996_mac_reset_sta_iter(void *data, struct ieee80211_sta *sta)
+ 			continue;
  
- 	if (unlikely(tx_info->skb->len <= ETH_HLEN))
- 		return -EINVAL;
-@@ -1056,6 +1061,30 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
- 
-+	if ((is_8023 || ieee80211_is_data_qos(hdr->frame_control)) && sta->mlo &&
-+	    likely(tx_info->skb->protocol != cpu_to_be16(ETH_P_PAE))) {
-+		u8 tid = tx_info->skb->priority & IEEE80211_QOS_CTL_TID_MASK;
-+
-+		link_id = (tid % 2) ? msta->seclink_id : msta->deflink_id;
-+	} else {
-+		link_id = u32_get_bits(info->control.flags,
-+				       IEEE80211_TX_CTRL_MLO_LINK);
-+	}
-+
-+	if (link_id != wcid->link_id && link_id != IEEE80211_LINK_UNSPECIFIED) {
-+		if (msta) {
-+			struct mt7996_sta_link *msta_link =
-+				rcu_dereference(msta->link[link_id]);
-+
-+			if (msta_link)
-+				wcid = &msta_link->wcid;
-+		} else if (mvif) {
-+			mlink = rcu_dereference(mvif->mt76.link[link_id]);
-+			if (mlink && mlink->wcid)
-+				wcid = mlink->wcid;
-+		}
-+	}
-+
- 	t = (struct mt76_txwi_cache *)(txwi + mdev->drv->txwi_size);
- 	t->skb = tx_info->skb;
- 
-@@ -1162,10 +1191,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 		if (!is_8023 && mt7996_tx_use_mgmt(dev, tx_info->skb))
- 			txp->fw.flags |= cpu_to_le16(MT_CT_INFO_MGMT_FRAME);
- 
--		if (vif) {
--			struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
--			struct mt76_vif_link *mlink = NULL;
+ 		mt7996_mac_sta_deinit_link(dev, msta_link);
 -
-+		if (mvif) {
- 			if (wcid->offchannel)
- 				mlink = rcu_dereference(mvif->mt76.offchannel_link);
- 			if (!mlink)
+-		if (msta->deflink_id == i) {
+-			msta->deflink_id = IEEE80211_LINK_UNSPECIFIED;
+-			continue;
+-		}
+-
+-		kfree_rcu(msta_link, rcu_head);
++		if (msta_link != &msta->deflink)
++			kfree_rcu(msta_link, rcu_head);
+ 	}
++
++	msta->deflink_id = IEEE80211_LINK_UNSPECIFIED;
++	msta->seclink_id = msta->deflink_id;
+ }
+ 
+ static void
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 32d44540605fc..af322f505f8ab 100644
+index af322f505f8ab..d714b7f3efe56 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -982,6 +982,7 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+@@ -961,6 +961,22 @@ mt7996_post_channel_switch(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	return ret;
+ }
  
++static void
++mt7996_sta_init_txq_wcid(struct ieee80211_sta *sta, int idx)
++{
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(sta->txq); i++) {
++		struct mt76_txq *mtxq;
++
++		if (!sta->txq[i])
++			continue;
++
++		mtxq = (struct mt76_txq *)sta->txq[i]->drv_priv;
++		mtxq->wcid = idx;
++	}
++}
++
+ static int
+ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 			 struct ieee80211_bss_conf *link_conf,
+@@ -978,21 +994,10 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 		return -ENOSPC;
+ 
+ 	if (msta->deflink_id == IEEE80211_LINK_UNSPECIFIED) {
+-		int i;
+-
  		msta_link = &msta->deflink;
  		msta->deflink_id = link_id;
-+		msta->seclink_id = msta->deflink_id;
- 
- 		for (i = 0; i < ARRAY_SIZE(sta->txq); i++) {
- 			struct mt76_txq *mtxq;
-@@ -996,6 +997,11 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 		msta->seclink_id = msta->deflink_id;
+-
+-		for (i = 0; i < ARRAY_SIZE(sta->txq); i++) {
+-			struct mt76_txq *mtxq;
+-
+-			if (!sta->txq[i])
+-				continue;
+-
+-			mtxq = (struct mt76_txq *)sta->txq[i]->drv_priv;
+-			mtxq->wcid = idx;
+-		}
++		mt7996_sta_init_txq_wcid(sta, idx);
+ 	} else {
  		msta_link = kzalloc(sizeof(*msta_link), GFP_KERNEL);
  		if (!msta_link)
- 			return -ENOMEM;
-+
-+		if (msta->seclink_id == msta->deflink_id &&
-+		    (sta->valid_links & ~BIT(msta->deflink_id)))
-+			msta->seclink_id = __ffs(sta->valid_links &
-+						 ~BIT(msta->deflink_id));
- 	}
+@@ -1070,12 +1075,28 @@ mt7996_mac_sta_remove_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
  
- 	INIT_LIST_HEAD(&msta_link->rc_list);
-@@ -1065,6 +1071,8 @@ mt7996_mac_sta_remove_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
  		if (msta->deflink_id == link_id) {
  			msta->deflink_id = IEEE80211_LINK_UNSPECIFIED;
- 			continue;
-+		} else if (msta->seclink_id == link_id) {
-+			msta->seclink_id = IEEE80211_LINK_UNSPECIFIED;
+-			continue;
++			if (msta->seclink_id == link_id) {
++				/* no secondary link available */
++				msta->seclink_id = msta->deflink_id;
++			} else {
++				struct mt7996_sta_link *msta_seclink;
++
++				/* switch to the secondary link */
++				msta_seclink = mt76_dereference(
++						msta->link[msta->seclink_id],
++						mdev);
++				if (msta_seclink) {
++					msta->deflink_id = msta->seclink_id;
++					mt7996_sta_init_txq_wcid(sta,
++						msta_seclink->wcid.idx);
++				}
++			}
+ 		} else if (msta->seclink_id == link_id) {
+-			msta->seclink_id = IEEE80211_LINK_UNSPECIFIED;
++			msta->seclink_id = msta->deflink_id;
  		}
  
- 		kfree_rcu(msta_link, rcu_head);
-@@ -1160,6 +1168,7 @@ mt7996_mac_sta_add(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 	mutex_lock(&dev->mt76.mutex);
- 
- 	msta->deflink_id = IEEE80211_LINK_UNSPECIFIED;
-+	msta->seclink_id = IEEE80211_LINK_UNSPECIFIED;
- 	msta->vif = mvif;
- 	err = mt7996_mac_sta_add_links(dev, vif, sta, links);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index c2d15128784bc..38b8743409a0c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2399,8 +2399,8 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 	mld_setup->primary_id = cpu_to_le16(msta_link->wcid.idx);
- 
- 	if (nlinks > 1) {
--		link_id = __ffs(sta->valid_links & ~BIT(msta->deflink_id));
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt76_dereference(msta->link[msta->seclink_id],
-+					     &dev->mt76);
- 		if (!msta_link)
- 			return;
+-		kfree_rcu(msta_link, rcu_head);
++		if (msta_link != &msta->deflink)
++			kfree_rcu(msta_link, rcu_head);
  	}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 6190fbcd4df7e..6793161ed198c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -243,6 +243,7 @@ struct mt7996_sta {
- 	struct mt7996_sta_link deflink; /* must be first */
- 	struct mt7996_sta_link __rcu *link[IEEE80211_MLD_MAX_NUM_LINKS];
- 	u8 deflink_id;
-+	u8 seclink_id;
+ }
  
- 	struct mt7996_vif *vif;
- };
 -- 
 2.53.0
 
