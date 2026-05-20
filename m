@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05F3403F4;
-	Wed, 20 May 2026 17:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691A63F1AC7;
+	Wed, 20 May 2026 17:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297240; cv=none; b=antsTzqgq3b1Lpg6JmuvWjnkpOb39GWUWswP+LdyTytgaHY3Z4ITybqgGnnyh52lFT62paQE8tUNfzxVfPPr637f4WS4YZh0DqVr5hcviU4VJ8MQc3Q6u6TuxBb32DNCNnt4e41/6YN7Lqb2hZ5pIaegrkH+QBUcYa/pF9sKVko=
+	t=1779297242; cv=none; b=hlma4410Oh3mnHOTz+cBjW7wz/CF8pAd4gzXvbgziB5enhd1/ZgrhzHGxW8rPGZ62pxwEM+h1obA5SXdd4e2x/vIckgXzWRq4X15CVP+CJ2VF2BWyT0WrbC8DTWeEUbWU9ywuFeK2M81mATJmh1fcOGO+GggAsbo6f41NotC9ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297240; c=relaxed/simple;
-	bh=1hmCuTcXUFoLmn1bisYIeCDsrKkL5VVs5t88Oej/rDE=;
+	s=arc-20240116; t=1779297242; c=relaxed/simple;
+	bh=Oi5buXI8eX+fVTl3A3kuSkyKMrVyTB/hEH19G5ZQlZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gE9WV4sF+BZ3suwm4nUcaoA+XFDNLg95aW3Jo2eOGVke2xR9BwV9bU2k7fohoGK+CfbygJQFRsLybvWEa2fKU90UoL9jYZxX4aifUwKjNS3tNp2lOeGcCzuoTTQon7FlNaWaHjJna0SyfnYxqlaNbX8/rrNuwzpuqT6WjpYkdHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLFBpVk5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NEP7Amu+i3HelQTQFxP0AmQcQ0/xeL1fOUtbfDk1mbFq1gWMwMsJ49G8A8SpQJREe1+NJvPOKVExJqm/WHeNK0b9fBOuGIJ8WbL0RgjW2SCsXUAPWIU6GtcAEWWN6KG3Om0yctWcWIfirqpsNnhXW2PMw2SCzRh0hDMpoDFp4aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPAZdvx6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLFBpVk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFAF1F000E9;
-	Wed, 20 May 2026 17:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPAZdvx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF5F1F000E9;
+	Wed, 20 May 2026 17:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297238;
-	bh=csUTH6NMqWm4B2zZNHtgTWDhklabwa47K1n+pX5UZQ8=;
+	s=korg; t=1779297241;
+	bh=rcrGGFrUWnGw1u+LoNBXHoavp3KUbrJxHrQhB0yv5uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLFBpVk5UBuo0t5e0kZ4fa0gvWF3LgcM5iOnjd1cmmMWDwBQXuu/DXE+VxUJXOUed
-	 RiKtjgTYoecwo/ZjUZLQSNh/jRMFUxQgqvjcn1YngmgzndFLTucgs15cushbmYoHV6
-	 WlLatsyV0j9nVsu5jLzrai8g9MIwmk4SuWqEPH9o=
+	b=tPAZdvx6D9deo0vsOgwVnAy2KE8efokofbqqYOeycUHcIdClMv47YB7c416m8CIIx
+	 aO9C0mZSgnfVAuv0QL42LW94r+FvXMQP3cVSonFxLY1cA8sFXYeknul6SO9VCDm6yj
+	 2BcI3FqHc4zEB4aeZSjYiH30anmpb6MX1sGnAl/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoli Feng <xifeng@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 7.0 1104/1146] netfs: fix error handling in netfs_extract_user_iter()
-Date: Wed, 20 May 2026 18:22:34 +0200
-Message-ID: <20260520162213.229460888@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.0 1105/1146] nfsd: fix GET_DIR_DELEGATION when VFS leases are disabled
+Date: Wed, 20 May 2026 18:22:35 +0200
+Message-ID: <20260520162213.252357435@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,67 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
+commit b0bf14546bcefa4ea49f5efcd7db2a99f0cabde9 upstream.
 
-In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
-extract user pages, bail out on -ENOMEM, otherwise return the error
-code only if @npages == 0, allowing short DIO reads and writes to be
-issued.
+When leases are disabled on the server, running xfstest generic/309 leads
+to an error because GET_DIR_DELEGATION returns EINVAL.
 
-This fixes mmapstress02 from LTP tests against CIFS.
+nfsd_get_dir_deleg() can fail in several ways: like memory allocation and
+unable to get a lease because either leases are disable or it's already
+held. Currently only the condition "already held" is translated to
+returning directory-delegation-is-unavailable error. However, other failure
+conditions are likely temporary and thus should result in the same kind
+of error.
 
-Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-Reported-by: Xiaoli Feng <xifeng@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
-Cc: netfs@lists.linux.dev
+Fixes: 8b99f6a8c116 ("nfsd: wire up GET_DIR_DELEGATION handling")
 Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/iterator.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/fs/netfs/iterator.c
-+++ b/fs/netfs/iterator.c
-@@ -22,7 +22,7 @@
-  *
-  * Extract the page fragments from the given amount of the source iterator and
-  * build up a second iterator that refers to all of those bits.  This allows
-- * the original iterator to disposed of.
-+ * the original iterator to be disposed of.
-  *
-  * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
-  * allowed on the pages extracted.
-@@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
- 		ret = iov_iter_extract_pages(orig, &pages, count,
- 					     max_pages - npages, extraction_flags,
- 					     &offset);
--		if (ret < 0) {
--			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
-+		if (unlikely(ret <= 0)) {
-+			ret = ret ?: -EIO;
- 			break;
- 		}
- 
-@@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
- 		npages += cur_npages;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 85e94c30285a..2797da8cc950 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -2535,10 +2535,6 @@ nfsd4_get_dir_delegation(struct svc_rqst *rqstp,
+ 	dd = nfsd_get_dir_deleg(cstate, gdd, nf);
+ 	nfsd_file_put(nf);
+ 	if (IS_ERR(dd)) {
+-		int err = PTR_ERR(dd);
+-
+-		if (err != -EAGAIN)
+-			return nfserrno(err);
+ 		gdd->gddrnf_status = GDD4_UNAVAIL;
+ 		return nfs_ok;
  	}
- 
-+	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
-+		for (i = 0; i < npages; i++)
-+			unpin_user_page(bv[i].bv_page);
-+		kvfree(bv);
-+		return ret;
-+	}
-+
- 	iov_iter_bvec(new, orig->data_source, bv, npages, orig_len - count);
- 	return npages;
- }
+-- 
+2.54.0
+
 
 
