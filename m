@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEB13E2764;
-	Wed, 20 May 2026 16:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765AE3E2764;
+	Wed, 20 May 2026 16:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294573; cv=none; b=RvHrlf0EK3JPwVIvACMt8jbhhQA+UDnhyQa/5ohQGQTX+AysiKtmd4cxnuuD8kH7AdGON8/VBsCwODWcFEXiLimWJs7V9JobK0ZarukeKzVhBJSdwkiBTll7dqpc/Mrg+sTJRE8u6bNoY+WEu/hY5sCFAuL09ceZu24S62WlKsQ=
+	t=1779294575; cv=none; b=hHnlGjvrhnxesoaJlCgb8MUKZNNZh6Mv/zXVa+gIJjKG9YPy6N4Hu+EzdYMnAJ/53BIkWdnVhfohHh0+Tpco3D2Lrpc/GEoSePsPnaz1FLZ96df7rz0M//e//kQpe7Mx3s+/9XEjjqsKveHHKn8R3K3JBZ7RsFs3GZ8BrbHrr1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294573; c=relaxed/simple;
-	bh=lbcwavmg6CB2CPSPYr5ClHj1U8AvymfBpL5cAW8R3lI=;
+	s=arc-20240116; t=1779294575; c=relaxed/simple;
+	bh=fhDd1YU2p0BTQeKO9tS6XvwCKi8+hhy5kShgz4hSgFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uxhV5058L/V8rOkRL4R0Bnw31yRyfYy8SfHDa11oV/zVKi7eAyRo4lMbc4cLUl7gjTqHkABLO9OhAzd8iG2SJG0dSZzmbNaBPfK1d5TcFjMHqq4ho8wmz58yk4IWtr0DU/ySRzhtGvePGq8ztD9+vgsUWIAagzmApliX1xeXpuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyNUyone; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dYOGflT88k1axtWH9oaLPpbpcJDuye8pZzTD2a8DyuIXzHtGk9ytA7ZychyQPN2GRR7CcfQWVGfe+wVeV199egT8FHv80KkzeuTqiYFRfcaHKR2O9YpiDjBKJ47O0X+OyJGYOOlekLLBgeMatyVfodQlt5h68cRjmeKtx8d3eCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNbwXiYM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyNUyone"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297E71F000E9;
-	Wed, 20 May 2026 16:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNbwXiYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E051F00893;
+	Wed, 20 May 2026 16:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294571;
-	bh=EBHPKRYYJ2U6VOF8wO69aqegEJ3vNaap7lQXWDwVA7k=;
+	s=korg; t=1779294574;
+	bh=gjcZOsWjHsWo4vdVR/8x4gzKH6QV9dvQHPUPI6EYGhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyNUyonePdP95YYdSWgIjbiUzxEm/GaeRqrpfrVNdFqXFJkg4aCFfm2wKbv9VKTLV
-	 rm72/NXDdE4qbgN8NKQBmvBfbX+sB/TvjgnvnZHBhYdWnz87r8rn7GoCH2RRcYnl3c
-	 U05xKuTvkCn2qlWfIPk1bqB7GKsLmy35JMhFwrnY=
+	b=XNbwXiYMzTXLR03jXCJ4nYXK6u/o5QKgNcJW9SGZ7NTQasO/QXmvw/g/2ttokzOon
+	 yTPV0j5i1BR/GuwwvG1YDZWqqOnHeji2A1uTFOUW+U82XwcXiXBWHScSaCu8lHzvca
+	 C2WGyU4euVbmpFF/9wXKYaQd6IxhHcl/Z7arc+5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0091/1146] tools/nolibc: MIPS: fix clobbers of lo and hi registers on different ISAs
-Date: Wed, 20 May 2026 18:05:41 +0200
-Message-ID: <20260520162150.412219106@linuxfoundation.org>
+Subject: [PATCH 7.0 0092/1146] tools/nolibc: avoid -Wundef warning for __STDC_VERSION__
+Date: Wed, 20 May 2026 18:05:42 +0200
+Message-ID: <20260520162150.434519168@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit e83b07dc8c05a55d02057b1484724a0b188f6f8d ]
+[ Upstream commit 3eb97c4cbd4d874e7e327ec512f6169934e12b8a ]
 
-All MIPS ISAs before r6 use the 'lo' and 'hi' special registers.
-These are clobbered by system calls and need to be marked as such to
-avoid miscompilations. Currently nolibc ties the clobbers to the ABI.
-But this is wrong and leads to ISA<->ABI combinations which are not
-handled correctly, leading to compiler errors or miscompilations.
+With -std=c89 the macro __STDC_VERSION__ is not defined.
+While undefined identifiers in '#if' directives are assumed to be '0',
+with -Wundef a warning is emitted.
 
-Handle all different combinations of ABI and ISA.
+Avoid the warning by explicitly falling back to '0' if __STDC_VERSION__
+is not provided by the preprocessor.
 
-Fixes: a6a2a8a42972 ("tools/nolibc: MIPS: add support for N64 and N32 ABIs")
-Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc")
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Link: https://lore.kernel.org/lkml/alpine.DEB.2.21.2603141744240.55200@angie.orcam.me.uk/
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20260317-nolibc-mips-clobber-v2-1-5b9a97761a9e@linutronix.de
+Fixes: 37219aa5b123 ("tools/nolibc: add __nolibc_static_assert()")
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260318-nolibc-wundef-v1-1-fcb7f9ac7298@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-mips.h | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ tools/include/nolibc/compiler.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
-index a72506ceec6bd..0c5818149f17e 100644
---- a/tools/include/nolibc/arch-mips.h
-+++ b/tools/include/nolibc/arch-mips.h
-@@ -39,11 +39,19 @@
-  *   - stack is 16-byte aligned
-  */
+diff --git a/tools/include/nolibc/compiler.h b/tools/include/nolibc/compiler.h
+index a8c7619dcdde2..a8d5ca58dd632 100644
+--- a/tools/include/nolibc/compiler.h
++++ b/tools/include/nolibc/compiler.h
+@@ -47,6 +47,12 @@
+ #  define __nolibc_fallthrough do { } while (0)
+ #endif /* __nolibc_has_attribute(fallthrough) */
  
-+#if !defined(__mips_isa_rev) || __mips_isa_rev < 6
-+#define _NOLIBC_SYSCALL_CLOBBER_HI_LO "hi", "lo"
++#if defined(__STDC_VERSION__)
++#  define __nolibc_stdc_version __STDC_VERSION__
 +#else
-+#define _NOLIBC_SYSCALL_CLOBBER_HI_LO "$0"
++#  define __nolibc_stdc_version 0
 +#endif
 +
- #if defined(_ABIO32)
+ #define __nolibc_version(_major, _minor, _patch) ((_major) * 10000 + (_minor) * 100 + (_patch))
  
- #define _NOLIBC_SYSCALL_CLOBBERLIST \
--	"memory", "cc", "at", "v1", "hi", "lo", \
--	"t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9"
-+	"memory", "cc", "at", "v1", \
-+	"t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", \
-+	_NOLIBC_SYSCALL_CLOBBER_HI_LO
-+
- #define _NOLIBC_SYSCALL_STACK_RESERVE "addiu $sp, $sp, -32\n"
- #define _NOLIBC_SYSCALL_STACK_UNRESERVE "addiu $sp, $sp, 32\n"
+ #ifdef __GNUC__
+@@ -63,7 +69,7 @@
+ #  define __nolibc_clang_version 0
+ #endif /* __clang__ */
  
-@@ -52,7 +60,8 @@
- /* binutils, GCC and clang disagree about register aliases, use numbers instead. */
- #define _NOLIBC_SYSCALL_CLOBBERLIST \
- 	"memory", "cc", "at", "v1", \
--	"10", "11", "12", "13", "14", "15", "24", "25"
-+	"10", "11", "12", "13", "14", "15", "24", "25", \
-+	_NOLIBC_SYSCALL_CLOBBER_HI_LO
- 
- #define _NOLIBC_SYSCALL_STACK_RESERVE
- #define _NOLIBC_SYSCALL_STACK_UNRESERVE
+-#if __STDC_VERSION__ >= 201112L || \
++#if __nolibc_stdc_version >= 201112L || \
+ 	__nolibc_gnuc_version >= __nolibc_version(4, 6, 0) || \
+ 	__nolibc_clang_version >= __nolibc_version(3, 0, 0)
+ #  define __nolibc_static_assert(_t) _Static_assert(_t, "")
 -- 
 2.53.0
 
