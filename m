@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE55363C4C;
-	Wed, 20 May 2026 18:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFBE340A57;
+	Wed, 20 May 2026 18:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301624; cv=none; b=Mf4Y++dwMFOt1OrCMTvoMiW0DUMspY81uIosvl6CXzCYccRWV43iNkmSUTzUn+WJkQGNQWSfe1PwYELG1YJEt+3r3Wvl1TyunSKAaQKKu6uuTf06kLuz7fNX6BlQaNEwpBE9PSasypjip6biH/df732A4AnFita8NkibSGi1aCU=
+	t=1779301627; cv=none; b=oRuq/LWbL6jGIjLAIIYrA8lfH4i/3z1xARvo8jnvXymDMKTca++Qoxx5JdD8E4MasPcJg7Cb1Ql8tAaTWyRL08PgyuDfNB/N7ntgm+LQIvarQc/RLNHhMVhtrrEMuNutFRzHaJ3cU7+cU81aIVEQkpz2mNy39+UT7URz1wnerTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301624; c=relaxed/simple;
-	bh=nmYXTMofhdh/0h1Y/3Cf4hT8MsO4tuLZiAxGfXmzsnM=;
+	s=arc-20240116; t=1779301627; c=relaxed/simple;
+	bh=5hR0srLJ6kwX5P9SlBI7HWbVrTm000iostdUqL9lrbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KR+lRy2hZ+WJPOsWwRRahQE9ccbmnc4RFLRMt3/B0SBxGzQmMAQVdKv7fWha3PUuJCBMF3IqWoLHvMp+F8mTLoO2V+MXWvtOVz9u/L6a5tlgwKmMpOTncT+N6tqu6k579HEzA0VRrdVMWz8vSLoC1D7YJkiJ3dRVLwztmBXxHsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaGGtHXu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jRvNR5tLIciaCHYstmr4/pCDxggmNR39k3GUI8whC3926/lfAmHeFq85txqa4rhn7Mur76EQgESi3VUeg47oVaOxnbiJgxZuEUmlLJKJqDoCEh8hLTop0VVc9HLx4zPZbFiGCIEmON4PJVjX++fkxBK6OzRUG3bCVAIfebxgWuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJ8E2Cuh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaGGtHXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B0D1F000E9;
-	Wed, 20 May 2026 18:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJ8E2Cuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500981F000E9;
+	Wed, 20 May 2026 18:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301623;
-	bh=LbCaJCzYKgvlU2Hzy/G3o9CI8T0oaxcTmPcWQC21lww=;
+	s=korg; t=1779301625;
+	bh=mOW2pLDpznbtz+qvcc7YTIvdvzX12VfhLwY7SzcSB30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CaGGtHXu65GtV0SGpQR07afvuaimfEdN4uU+V+ZZYPnAJR6ChiAsP+u2GLI0vAj6G
-	 aGUiVlKe3Yz79+MGmdAC3HD38aO3YEVXj32ZD3z3FLjZ+QAYQySLbPP5BMBFWbnwYM
-	 /R6jH+e2XsQHQciOi10pWFj8uidihxeWrzVTl8ws=
+	b=VJ8E2Cuh97CvhsXnocwv08sQSTfaJufN+o1Gv0wICdP3f8KO/qtE6lkQfcIaHq8W5
+	 CqDe8sxjHNEB7VpJYqwpUILIRBFBApJizl7mClJ5kOJHJAFoNX8+j09BKaAxgCbfP+
+	 mSoMrlxz6UTR+h1MXwDugmoiXjo1pxUuxpd5YO1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.12 626/666] drm/loongson: Use managed KMS polling
-Date: Wed, 20 May 2026 18:23:57 +0200
-Message-ID: <20260520162124.844134124@linuxfoundation.org>
+	DeepChirp <DeepChirp@outlook.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.12 627/666] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
+Date: Wed, 20 May 2026 18:23:58 +0200
+Message-ID: <20260520162124.866693936@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,46 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 0a9c56dd387605d17dabeedd9fdd2c4c1d0bab7b upstream.
+commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
 
-lsdc_pci_probe() initializes KMS polling before setting up vblank support,
-requesting the IRQ and registering the DRM device. If any of those later
-steps fails, probe returns without finalizing polling. The driver also
-never finalizes polling on regular removal.
+For RGB, set dynamic_range to CTA or VESA based on
+crtc_state->limited_color_range so sinks apply correct
+quantization. YCbCr remains limited (CTA) range.
+(DP v1.4, Table 5-1)
 
-Use drmm_kms_helper_poll_init() so polling is tied to the DRM device
-lifetime and automatically finalized on probe failure and device removal.
+v2:
+- Added Reported-by and Tested-by tags
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+v3:
+- Add back YCbCr comment(Suraj)
 
-Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Jianmin Lv <lvjianmin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260513065706.23803-1-mhun512@gmail.com
+Cc: stable@vger.kernel.org #v5.8+
+Reported-by: DeepChirp <DeepChirp@outlook.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
+Tested-by: DeepChirp <DeepChirp@outlook.com>
+Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
+Assisted-by: GitHub-Copilot:GPT-5.4
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/loongson/lsdc_drv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/loongson/lsdc_drv.c
-+++ b/drivers/gpu/drm/loongson/lsdc_drv.c
-@@ -291,7 +291,7 @@ static int lsdc_pci_probe(struct pci_dev
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2726,8 +2726,13 @@ static void intel_dp_compute_vsc_colorim
+ 	drm_WARN_ON(&dev_priv->drm,
+ 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
  
- 	vga_client_register(pdev, lsdc_vga_set_decode);
+-	/* all YCbCr are always limited range */
+-	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++	/* All YCbCr formats are always limited range. */
++	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
++		vsc->dynamic_range = crtc_state->limited_color_range ?
++			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
++	else
++		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++
+ 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
+ }
  
--	drm_kms_helper_poll_init(ddev);
-+	drmm_kms_helper_poll_init(ddev);
- 
- 	if (loongson_vblank) {
- 		ret = drm_vblank_init(ddev, descp->num_of_crtc);
 
 
