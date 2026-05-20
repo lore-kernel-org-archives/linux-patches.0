@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64E73F44EA;
-	Wed, 20 May 2026 17:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB613EF647;
+	Wed, 20 May 2026 17:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296526; cv=none; b=WIMW1AQlMigl2+GL+xOSfhjSy3EUBhJn1nJdfLuUqYCcWiKrGTqJ9E4O0l6AzvSNWoQWqxoPZp2DdyfcYCAoLfXFx8bp5jGkTPCkUZpjqpBwzVrBZxWvoaCzE8w7qJMsD/SscqGRg5nAV6pqgFbn7uTwcdwYsEuiAGzhrhjegFA=
+	t=1779296529; cv=none; b=rU2pKqh1xQCE4htlsqn6I36OYQ5KfioB4KwX69bsptyRJzaruB+iGWP7G6UeNr5nKJdv5J1FTCiNav7l9BT2KsTHYwuLpsXa5Vr5xRBp9n3o4p4H93SFhq+iM+HA/7mxbium2pgjRvRkCqadGytWJYmhnS70L3Zx8Lf3QqiT7vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296526; c=relaxed/simple;
-	bh=r9FLj31QSPKuoMq43fcow4hKMC2XLpo6f/nyHFN+s2A=;
+	s=arc-20240116; t=1779296529; c=relaxed/simple;
+	bh=OGdlTXPmA8i0uPey7Sv7SgWIgwpLd5xEZp1pA9h/jYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iM25yAF0rPDQ0tiybekR/DUB9XVp3oBN1c1+CuxIX+sGHf5oduHKyBI0D0d1dY/RNI/TGmtEUiIZwZ9fhxPffiP3CZZjL5acHC5lTHx7d3i5ASZfFuQq3SqXyOUSyz/iuImXctbIZpZre30Ct92DxdutwfAOidKtNuqXm4h+pBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyZ9j+7+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h4g8SuSwFE3/8PbRtlSJNy2TL3M73sYzQ9GWKC6vTwM6Omv4K7Wq9xN4LDfLFcG0H5ckBSAfFzPzBkYve1bK5X5JgqmQi1TGUy3SbwAyTnf3OY+quU5KWevA+MgJrxR0aOwqPyitxzXq99Qs4b/9q3A+4o/JK2jivwxlmJDn2Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmFvzPtF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyZ9j+7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8791F000E9;
-	Wed, 20 May 2026 17:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmFvzPtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEFD1F000E9;
+	Wed, 20 May 2026 17:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296524;
-	bh=CpcOCVzvh7byRFcTVcinZWn8+aVtvXOiGd/Oxu/9WGQ=;
+	s=korg; t=1779296527;
+	bh=3oi3dK8gQr9K/ci2OTyvNGZpWzsdeM4L8mPL0Y8k0b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyZ9j+7+9luZqhQe7WKRyG/rChFOj29AQMSG3Rhq745PKBVLut12GnCGUmV6MxoZo
-	 5I2t6TcbZ9C8jFBL8x67kHODX8dm0zqz8YNEfPOXEDp0CusUiqVKvgoORu8b0W8mXp
-	 ChQ7FcNXtR6LaDPc2KC4y95g2Gl5m1x/B7By9iL8=
+	b=MmFvzPtFhh+86yK+XZF0AjHC4/NljEkrghZAKtIJEjboJqACO6c0zRZQxRa0U133e
+	 W/U2Pq2Kr+fm3X3AhthN1XSL6Gl/1/HpZy/WtY2F18Cxn+6wDcFOFe4A8EbWmxBq5U
+	 XagFrs6JZ9AdnmfiOLvlRCCEL+PKYpzBXYNq7lFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0833/1146] sctp: fix sockets_allocated imbalance after sk_clone()
-Date: Wed, 20 May 2026 18:18:03 +0200
-Message-ID: <20260520162207.081451463@linuxfoundation.org>
+Subject: [PATCH 7.0 0834/1146] net/rds: zero per-item info buffer before handing it to visitors
+Date: Wed, 20 May 2026 18:18:04 +0200
+Message-ID: <20260520162207.104442682@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,44 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 7c9b012d6367a335f1e91da28401a7c612305a46 ]
+[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
 
-sk_clone() increments sockets_allocated and sets the socket refcount to 2.
-SCTP performs additional accounting in sctp_clone_sock(), so the clone-time
-increment must be undone to avoid double counting.
+rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
+caller-allocated on-stack u64 buffer to a per-connection visitor and
+then copy the full item_len bytes back to user space via
+rds_info_copy() regardless of how much of the buffer the visitor
+actually wrote.
 
-Note we cannot simply remove the SCTP-side increment, because the SCTP
-destroy path in sctp_destroy_sock() only decrements sockets_allocated when
-sp->ep is set, which may not be true for all failure paths in
-sctp_clone_sock().
+rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
+write a subset of their output struct when the underlying
+rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
+and the two GIDs via explicit memsets). Several u32 fields
+(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
+cache_allocs) and the 2-byte alignment hole between sl and
+cache_allocs remain as whatever stack contents preceded the visitor
+call and are then memcpy_to_user()'d out to user space.
 
-Fixes: 16942cf4d3e3 ("sctp: Use sk_clone() in sctp_accept().")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/af8d66f928dec3e9fcbee8d4a85b7d5a6b86f515.1776460180.git.lucien.xin@gmail.com
+struct rds_info_rdma_connection and struct rds6_info_rdma_connection
+are the only rds_info_* structs in include/uapi/linux/rds.h that are
+not marked __attribute__((packed)), so they have a real alignment
+hole. The other info visitors (rds_conn_info_visitor,
+rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
+their packed output struct today and are not known to be vulnerable,
+but a future visitor that adds a conditional write-path would have
+the same bug.
+
+Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
+a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
+binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
+any netdev is sufficient), sendto()'s any peer on the same subnet
+(fails cleanly but installs an rds_connection in the global hash in
+RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
+RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
+bytes of stack garbage including kernel text/data pointers:
+
+    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
+    8..39  00 ...                      gids (memset-zeroed)
+    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
+    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
+    56..59 01 00 08 00                 rdma_mr_size (garbage)
+    60..61 00 00                       tos, sl
+    62..63 00 00                       alignment padding
+    64..67 18 00 00 00                 cache_allocs (garbage)
+
+Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
+and rds_walk_conn_path_info() before invoking the visitor. This
+covers the IPv4/IPv6 IB visitors and hardens all current and future
+visitors against the same class of bug.
+
+No functional change for visitors that fully populate their output.
+
+Changes in v2:
+- retarget at the net tree (subject prefix "[PATCH net v2]",
+  net/rds: prefix in the title)
+- pick up Reviewed-by tags from Sharath Srinivasan and
+  Allison Henderson
+
+Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rds/connection.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 6c58ad092e512..aeffa10ff2d34 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -4864,8 +4864,9 @@ static struct sock *sctp_clone_sock(struct sock *sk,
- 	if (!newsk)
- 		return ERR_PTR(err);
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 412441aaa298e..c10b7ed06c49f 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -701,6 +701,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
  
--	/* sk_clone() sets refcnt to 2 */
-+	/* sk_clone() sets refcnt to 2 and increments sockets_allocated */
- 	sock_put(newsk);
-+	sk_sockets_allocated_dec(newsk);
++			/* Zero the per-item buffer before handing it to the
++			 * visitor so any field the visitor does not write -
++			 * including implicit alignment padding - cannot leak
++			 * stack contents to user space via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no c_lock usage.. */
+ 			if (!visitor(conn, buffer))
+ 				continue;
+@@ -750,6 +757,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 			 */
+ 			cp = conn->c_path;
  
- 	newinet = inet_sk(newsk);
- 	newsp = sctp_sk(newsk);
++			/* Zero the per-item buffer for the same reason as
++			 * rds_for_each_conn_info(): any byte the visitor
++			 * does not write (including alignment padding) must
++			 * not leak stack contents via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no cp_lock usage.. */
+ 			if (!visitor(cp, buffer))
+ 				continue;
 -- 
 2.53.0
 
