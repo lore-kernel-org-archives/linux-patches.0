@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786A13546E6;
-	Wed, 20 May 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C85346E5E;
+	Wed, 20 May 2026 17:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297900; cv=none; b=P9fjuQOZmliZ6r93+1xsHAhYyPffXnGI8dzklaFwyJVXtHSBIYDXcD2puXs1tz2yTMkS5jAym+wAIDRog2QauddZe1z3TRjsbEwcENbYGNpqLIx8/9Inc6EpKnGoqXdN9bFWvFcZXZjam0cDDS1+4cgCUxuu2cvySQHHQgRkqUM=
+	t=1779297902; cv=none; b=dxO3hHKNgmOTGIyzWSWea5xV7HRmEKc0iHwEICp8EXSUhcCYdNhWp52Sw0htSPjTWaBxIFu9U8lZwgqf9UkEEE0OeqKucllsn9fXjtmoBVAfRIEbZJ6KfI0Y6p39UHOQVYdVMMLM8yGb3XfSc3oN3uMotYrAt5XuqYuf55+En5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297900; c=relaxed/simple;
-	bh=G5mxCgGh+QQk2yd+swPzuRKJ63h4kX8E4rT85D/FuRA=;
+	s=arc-20240116; t=1779297902; c=relaxed/simple;
+	bh=oxoNwqNIwGUFzjs4iBtQ/34nrIHxt2C6FcvCpPDHknY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbDzQtmUhs/B5oAr9z6NmMG0l/EJxM8vzft62bem0p785EdEx/h7HPgmzJR/ssx4eNLYk3IlRUvyu6ebfB6rusiSFAuwLIfjSi+o4yteLgacNnLYRzkQMu5HZqRQbCwUncRTsPHHUjY+oDF1EKnKMRW/N7qdlwPna4xiCf/FmAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaQ4PLYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X5niLg4FStTg55vDD/H/J1YCfdp4ajhYybinULY62REZwCUH0hJqc4i3intw5HPP+G5444FHzQGM13hk3W3oDgirGL6g1INSVqji9lywQ/WihfmgpEYgy3b78+ObRc+GKymWuvUP1+3N5HpUUTb+USWmpGrkOF9wsS6drSiREM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1PB2Mlj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaQ4PLYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8689F1F000E9;
-	Wed, 20 May 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1PB2Mlj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DC11F000E9;
+	Wed, 20 May 2026 17:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297899;
-	bh=gYDmLeMJ2udARTsZVwjDV4rlG7QnmcxDDM7e8bZ4HSY=;
+	s=korg; t=1779297901;
+	bh=TOm2ldGxirDEl9oTdCCLs22idVyYkkceerwPqt73U1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EaQ4PLYiWGmzdJmRpTfxNiRAZKOI4GSB3xms0mNNxzfe4sHiik+FRWnmphYR0r9NU
-	 9OZVhvS5rgrrKZ6ZF4b4PpH36ue9Pnk4yfe5E/IXT22xFXAYnxNLP6NDTgsLM9iKjm
-	 5NkpJdvchO8zispU3yV+Bud3JpP4z8Yifzb7Mt14=
+	b=B1PB2MljA1QRJb6Ld580aA8SdurXjC4SrubTYzUukcXj8uP1XJOmYUqJxf+3su4Rz
+	 arvfVlvFqWn2z9lLCZ5s4tXN6bhh6E3wFQrdK2koZyuXFMedegZqiFJ7vvB9AMrvaC
+	 5ow8u50+bifr/x5qLw66kDDmCDdVpUpE0g8LlqoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Aksh Garg <a-garg7@ti.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 205/957] platform/chrome: chromeos_tbmc: Drop wakeup source on remove
-Date: Wed, 20 May 2026 18:11:28 +0200
-Message-ID: <20260520162138.989242146@linuxfoundation.org>
+Subject: [PATCH 6.18 206/957] PCI: dwc: ep: Fix MSI-X Table Size configuration in dw_pcie_ep_set_msix()
+Date: Wed, 20 May 2026 18:11:29 +0200
+Message-ID: <20260520162139.010739392@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Aksh Garg <a-garg7@ti.com>
 
-[ Upstream commit 5d441a4bc93642ed6f41da87327a39946b4e1455 ]
+[ Upstream commit 271d0b1f058ae9815e75233d04b23e3558c3e4f4 ]
 
-The wakeup source added by device_init_wakeup() in chromeos_tbmc_add()
-needs to be dropped during driver removal, so add a .remove() callback
-to the driver for this purpose.
+In dw_pcie_ep_set_msix(), while updating the MSI-X Table Size value for
+individual functions, Message Control register is read from the passed
+function number register space using dw_pcie_ep_readw_dbi(), but always
+written back to the Function 0's register space using dw_pcie_writew_dbi().
+This causes incorrect MSI-X configuration for the rest of the functions,
+other than Function 0.
 
-Fixes: 0144c00ed86b ("platform/chrome: chromeos_tbmc: Report wake events")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/6151957.MhkbZ0Pkbq@rafael.j.wysocki
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fix this by using dw_pcie_ep_writew_dbi() to write to the correct
+function's register space, matching the read operation.
+
+Fixes: 70fa02ca1446 ("PCI: dwc: Add dw_pcie_ep_{read,write}_dbi[2] helpers")
+Signed-off-by: Aksh Garg <a-garg7@ti.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260224083817.916782-2-a-garg7@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/chromeos_tbmc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/chromeos_tbmc.c b/drivers/platform/chrome/chromeos_tbmc.c
-index d1cf8f3463ce3..e248567c0a182 100644
---- a/drivers/platform/chrome/chromeos_tbmc.c
-+++ b/drivers/platform/chrome/chromeos_tbmc.c
-@@ -95,6 +95,11 @@ static int chromeos_tbmc_add(struct acpi_device *adev)
- 	return 0;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index e2e18beb2951d..7350a703c4d19 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -538,7 +538,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	val = dw_pcie_ep_readw_dbi(ep, func_no, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+ 	val |= nr_irqs - 1; /* encoded as N-1 */
+-	dw_pcie_writew_dbi(pci, reg, val);
++	dw_pcie_ep_writew_dbi(ep, func_no, reg, val);
  
-+static void chromeos_tbmc_remove(struct acpi_device *adev)
-+{
-+	device_init_wakeup(&adev->dev, false);
-+}
-+
- static const struct acpi_device_id chromeos_tbmc_acpi_device_ids[] = {
- 	{ ACPI_DRV_NAME, 0 },
- 	{ }
-@@ -110,6 +115,7 @@ static struct acpi_driver chromeos_tbmc_driver = {
- 	.ids = chromeos_tbmc_acpi_device_ids,
- 	.ops = {
- 		.add = chromeos_tbmc_add,
-+		.remove = chromeos_tbmc_remove,
- 		.notify = chromeos_tbmc_notify,
- 	},
- 	.drv.pm = &chromeos_tbmc_pm_ops,
+ 	reg = ep_func->msix_cap + PCI_MSIX_TABLE;
+ 	val = offset | bir;
 -- 
 2.53.0
 
