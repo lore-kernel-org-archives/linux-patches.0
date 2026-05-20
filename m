@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CB63F9F2D;
-	Wed, 20 May 2026 18:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980CD368968;
+	Wed, 20 May 2026 18:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301677; cv=none; b=RZw0z+B1qqAiUgyHn4zWL+eBJpuPBNKLJMuN6SWrFFLeCyQMr0nuAPOyvdjIxEaTEeq1KhYwQpDv54N00Yz8i7N5my8qUSXfQlHRmDNzapISqi7Y7JWAJSKH5+I2JknN+QO+4nOWtl51BaxhNEh10zs5BHJ86Wzn+6xlMRbT28U=
+	t=1779301679; cv=none; b=nogOYjizQxmE+mDw6lt4PSccjXntvfZpx2B5C+dh6S6RnxRv6yQSQ1kwYdY74n7UTN53m54nyp0rzLT6jMKJ/3/vFYN8UC+KCflMpGH/xB+ZuOMiJnAsEMTgjlCErKWR2A3RWnFI62kofExTxAoV8d5ZPcb4rEuEfbkRkg9Zu28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301677; c=relaxed/simple;
-	bh=4x3jn3w9ml+mW63lPbCil1Fft2r1J3kblC7ucOwQLL0=;
+	s=arc-20240116; t=1779301679; c=relaxed/simple;
+	bh=DKwoybAVTLcUEKojwUzEyUsTRH2iep95xnmKJX+9+6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/jEt9JC6ogffxwyjs6UsTTnsRJRDYFZZ0PsME5agtQ0IXiTeMyvJOCiIsCOR8O6xJ0KGK5l4livz+hBIYzQrTg/LFUdYfK0vG88FxB2vgspXceD0o1458aOVDk2oduh64PEm2OJI+yE0Q8FnG7594g50CfyqG7TrADwCetWtqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/hTP9GY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wg/pXnPJI22ZevuJBEPJg19J6Y0AGOXr6eCdImvCgZStP4Bqr8jBPFW1+IZK0jzXYh/zOqlV6lcbuXizSaJaCKzAeAGKJhxGMgwdbAPrcl8PQE1irxN3r/8xNcBvH+n8iKKp5KKV5fPmOJ5LoEWN3D8hJt/Atk9X5p/06DrjRaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4I7OQ0+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/hTP9GY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642301F000E9;
-	Wed, 20 May 2026 18:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4I7OQ0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8941F000E9;
+	Wed, 20 May 2026 18:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301675;
-	bh=Veg+9/5sXcpvFpgSUgqFWDtJCzg6w1svKcQkKNNDk58=;
+	s=korg; t=1779301678;
+	bh=CB27hDgeiEprPbdsZzzLgEaFi9hJ7kTIWmg0W9f7Q40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/hTP9GY3bMrPPItWHX/S7LFfaHfpeB0v1LAn19MbZfIzgSeXA2ag8RHKNG0N4mX5
-	 lD/T+fWX+WXX6z95a0cUhSl9PUbyDRkqcskSRFrFN4gmLYmWp1TTsW3cy/oWb1QEnF
-	 r0Z+LNQMaHTtR4yz9QRWopkQ4oCph00Q+C/02Mbs=
+	b=b4I7OQ0+tpOJ8ztdCb6f/iouZhpPdrJgRjoWPiBnhg9FS+78Dy/8KIxfae2JrakpL
+	 ICdK4uQHNuOyhiL9+GMRvqHTzXrFpgIshmarIsDY3+httNstNc8zc9gfRDxD2vZYMi
+	 LS67Lw0NkN7qeU5T5SSK0feTFJJWE/EGyMLIvo40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Subject: [PATCH 6.12 644/666] drm/gma500/oaktrail_hdmi: fix i2c adapter leak on setup
-Date: Wed, 20 May 2026 18:24:15 +0200
-Message-ID: <20260520162125.238992296@linuxfoundation.org>
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 645/666] drm/gma500/oaktrail_lvds: fix hang on init failure
+Date: Wed, 20 May 2026 18:24:16 +0200
+Message-ID: <20260520162125.260908381@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,30 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 950953f774b3f69da6f413e045ef075e1f3da2df upstream.
+commit 657a091ab6d01d0091b77660c75cfed573c9a53e upstream.
 
-Make sure to drop the reference taken to the I2C adapter (and its
-module) when setting up HDMI to allow the adapter to be deregistered.
+The LVDS init code looks up an I2C adapter using i2c_get_adapter() and
+tries to read the EDID before falling back to allocating and registering
+its own adapter.
 
-Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
-Cc: stable@vger.kernel.org	# 3.3
+The error handling does not separate these cases so on a late init
+failure it will try to deregister and free also an adapter that had
+previously been registered. Since i2c_get_adapter() takes another
+reference to the adapter, deregistration hangs indefinitely while
+waiting for the reference to be released.
+
+Fix this by only destroying adapters allocated during LVDS init on
+errors.
+
+Fixes: a57ebfc0b4da ("drm/gma500: Make oaktrail lvds use ddc adapter from drm_connector")
+Cc: stable@vger.kernel.org	# 6.0
+Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260508144446.59722-2-johan@kernel.org
+Link: https://patch.msgid.link/20260508144446.59722-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/gma500/oaktrail_lvds.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-@@ -579,6 +579,7 @@ static int oaktrail_hdmi_get_modes(struc
- 	} else {
- 		edid = (struct edid *)raw_edid;
- 		/* FIXME ? edid = drm_get_edid(connector, i2c_adap); */
-+		i2c_put_adapter(i2c_adap);
- 	}
+--- a/drivers/gpu/drm/gma500/oaktrail_lvds.c
++++ b/drivers/gpu/drm/gma500/oaktrail_lvds.c
+@@ -292,7 +292,7 @@ void oaktrail_lvds_init(struct drm_devic
+ {
+ 	struct gma_encoder *gma_encoder;
+ 	struct gma_connector *gma_connector;
+-	struct gma_i2c_chan *ddc_bus;
++	struct gma_i2c_chan *ddc_bus = NULL;
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
+@@ -420,7 +420,8 @@ out:
  
- 	if (edid) {
+ err_unlock:
+ 	mutex_unlock(&dev->mode_config.mutex);
+-	gma_i2c_destroy(to_gma_i2c_chan(connector->ddc));
++	if (!IS_ERR_OR_NULL(ddc_bus))
++		gma_i2c_destroy(ddc_bus);
+ 	drm_encoder_cleanup(encoder);
+ err_connector_cleanup:
+ 	drm_connector_cleanup(connector);
 
 
