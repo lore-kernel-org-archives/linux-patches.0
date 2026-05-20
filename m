@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F4E3F660B;
-	Wed, 20 May 2026 18:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BA536A02E;
+	Wed, 20 May 2026 18:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300420; cv=none; b=agn4g6dmGkxo7tOSABVvtsrr/LVF5Jn3o8Bpejz37s+DzhyIoZ9Tywy2PtTHP5rMFbmMDKjLgywC0/cEWjx9IksVTsKPCNoIosctst1sb1hoZ+YBvaXR5dJcmd2DZ2aTm3Od+zwV9tuxX0xifmXgNvMpeUmDzNabDXmSX4TttFg=
+	t=1779300423; cv=none; b=bQ+mZHCIwrJJ0pl0Bi7I1NT9MYlPIM31ht2Sxyd7lxZn8ycCnRz4/7wQcYTPEp1jA6dczaxczGRG8bTSwOkVsaki9pzp5bOs5y27bWAuDK/5Yhy7ACuFRiGa8cArcRzDH2pu63okaDgh2MfgUHSq/MvLxFC7Sl3078n1+1YCSAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300420; c=relaxed/simple;
-	bh=hiVA9+ACFpege8Nv+JFLJFIXUMvbH72eD4xHqBKjG/E=;
+	s=arc-20240116; t=1779300423; c=relaxed/simple;
+	bh=wG96jBI3C2SZcS2McELdmqus/CqUoVlDWlinPtomd/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aw9NN1arys2BwPMltW2ovojCUQHkbart7yMfd0WdJfJXBmCHx1QGrkuzzYy5I+btdjEHN3VpPePmFIMcniYZAZ81QJheTMOpdfvTzjud0PExVHFsFWfLon9jH7k9Tbpt31dnb9iRVzvxvkYWjIXLM/AhPclykAgsR3E3q7T22CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hing7m5y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VmAwggoZgY1LXhbMR4Vtr0BhK6emDuXSacjW6r7F55qD3EX1D0oJr4+5zGAHYqJHN54+Js5tiCJ2D45Aw954bC232Ull9Fu6qJ/WzvYejBaARedyVLCdcnrYKrqf4V690T9lHj11lEhBPY2K73/Mw1jeFOe6DJ2KjRg4PqaxCJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSq5GF2M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hing7m5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430741F000E9;
-	Wed, 20 May 2026 18:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSq5GF2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50A21F000E9;
+	Wed, 20 May 2026 18:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300419;
-	bh=oznq/M1B9KM8ubItvhEhXj9IkCZO56rgo3cB4uz9DBQ=;
+	s=korg; t=1779300422;
+	bh=FJ1ZJf5NY35Xy4LGivVS9h7qyzPwizHQQOZycI7A87Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hing7m5yAdhw5PnA6ImwTdaAG/tarLcv6X1ts0Usg25EYp7kra8xd3twM/Azl9M/7
-	 3YEhASrK08Ewl15a6/gUgqC07/1MHeHtIfkEz+k6iPv38CNP+2bi6SGWJmuFpmj1Nm
-	 9AuN7HLOsQzd+GsGAtKpppveReSnqsmj4CDccxVU=
+	b=JSq5GF2MYNHEmU6AB7KbSEGg/IuWDa7fqJB4jPkeLBjjSmmcRe5bIc2jjoYpxC0PW
+	 cYRxNF4gjRDUIv5yhcmIs+AwNk3xCyiDJ9QCuuKibMc9LAs2w+mo9OWzgLPKDvBjIi
+	 9EJsLiUF3IGNRUtr0nqc6OPXuFTDPTWEkS1k4wcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/666] dm cache: fix write hang in passthrough mode
-Date: Wed, 20 May 2026 18:15:38 +0200
-Message-ID: <20260520162113.967495289@linuxfoundation.org>
+Subject: [PATCH 6.12 128/666] dm cache policy smq: fix missing locks in invalidating cache blocks
+Date: Wed, 20 May 2026 18:15:39 +0200
+Message-ID: <20260520162113.988554547@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,82 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 4ca8b8bd952df7c3ccdc68af9bd3419d0839a04b ]
+[ Upstream commit 2d1f7b65f5deedd2e6b09fdc6ea27f8375f24b45 ]
 
-The invalidate_remove() function has incomplete logic for handling write
-hit bios after cache invalidation. It sets up the remapping for the
-overwrite_bio but then drops it immediately without submission, causing
-write operations to hang.
+In passthrough mode, the policy invalidate_mapping operation is called
+simultaneously from multiple workers, thus it should be protected by a
+lock. Otherwise, we might end up with data races on the allocated blocks
+counter, or even use-after-free issues with internal data structures
+when doing concurrent writes.
 
-Fix by adding a new invalidate_committed() continuation that submits
-the remapped writes to the cache origin after metadata commit completes,
-while using the overwrite_endio hook to ensure proper completion
-sequencing. This maintains existing coherency. Also improve error
-handling in invalidate_complete() to preserve the original error status
-instead of using bio_io_error() unconditionally.
+Note that the existing FIXME in smq_invalidate_mapping() doesn't affect
+passthrough mode since migration tasks don't exist there, but would need
+attention if supporting fast device shrinking via suspend/resume without
+target reloading.
+
+Reproduce steps:
+
+1. Create a cache device consisting of 1024 cache entries
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
+dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. Populate the cache, and record the number of cached blocks
+
+fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
+--size=64m --direct=1
+nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
+
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the passthrough cache. By setting multiple jobs with I/O
+   size equal to the cache block size, cache blocks are invalidated
+   concurrently from different workers.
+
+fio --filename=/dev/mapper/cache --name=test --rw=randwrite --bs=64k \
+--direct=1 --numjobs=2 --randrepeat=0 --size=64m
+
+5. Check if demoted matches cached block count. These numbers should
+   match but may differ due to the data race.
+
+nr_demoted=$(dmsetup status cache | awk '{print $12}')
+echo "$nr_cached, $nr_demoted"
 
 Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/md/dm-cache-policy-smq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 61f6050479d15..2f882eb77dacf 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1461,8 +1461,14 @@ static void invalidate_complete(struct dm_cache_migration *mg, bool success)
- 			free_prison_cell(cache, mg->cell);
- 	}
- 
--	if (!success && mg->overwrite_bio)
--		bio_io_error(mg->overwrite_bio);
-+	if (mg->overwrite_bio) {
-+		// Set generic error if the bio hasn't been issued yet,
-+		// e.g., invalidation or metadata commit failed before bio
-+		// submission. Otherwise preserve the bio's own error status.
-+		if (!success && !mg->overwrite_bio->bi_status)
-+			mg->overwrite_bio->bi_status = BLK_STS_IOERR;
-+		bio_endio(mg->overwrite_bio);
-+	}
- 
- 	free_migration(mg);
- 	defer_bios(cache, &bios);
-@@ -1502,6 +1508,22 @@ static int invalidate_cblock(struct cache *cache, dm_cblock_t cblock)
- 	return r;
- }
- 
-+static void invalidate_committed(struct work_struct *ws)
-+{
-+	struct dm_cache_migration *mg = ws_to_mg(ws);
-+	struct cache *cache = mg->cache;
-+	struct bio *bio = mg->overwrite_bio;
-+	struct per_bio_data *pb = get_per_bio_data(bio);
-+
-+	if (mg->k.input)
-+		invalidate_complete(mg, false);
-+
-+	init_continuation(&mg->k, invalidate_completed);
-+	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
-+	dm_hook_bio(&pb->hook_info, bio, overwrite_endio, mg);
-+	dm_submit_bio_remap(bio, NULL);
-+}
-+
- static void invalidate_remove(struct work_struct *ws)
+diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
+index 2ed894155cabb..d81a87142cacf 100644
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -1589,14 +1589,18 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
  {
- 	int r;
-@@ -1514,10 +1536,8 @@ static void invalidate_remove(struct work_struct *ws)
- 		return;
- 	}
+ 	struct smq_policy *mq = to_smq_policy(p);
+ 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
++	unsigned long flags;
  
--	init_continuation(&mg->k, invalidate_completed);
-+	init_continuation(&mg->k, invalidate_committed);
- 	continue_after_commit(&cache->committer, &mg->k);
--	remap_to_origin_clear_discard(cache, mg->overwrite_bio, mg->invalidate_oblock);
--	mg->overwrite_bio = NULL;
- 	schedule_commit(&cache->committer);
+ 	if (!e->allocated)
+ 		return -ENODATA;
+ 
++	spin_lock_irqsave(&mq->lock, flags);
+ 	// FIXME: what if this block has pending background work?
+ 	del_queue(mq, e);
+ 	h_remove(&mq->table, e);
+ 	free_entry(&mq->cache_alloc, e);
++	spin_unlock_irqrestore(&mq->lock, flags);
++
+ 	return 0;
  }
  
 -- 
