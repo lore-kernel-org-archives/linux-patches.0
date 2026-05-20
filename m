@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CC6407CE5;
-	Wed, 20 May 2026 18:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7AB3FC5D1;
+	Wed, 20 May 2026 18:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302594; cv=none; b=k5EBc4cipKat6Q4JEPrq7YmxF8loYKU9Qfhmw56n5RID8oYzvzvMBMoTqdtwbNu8w2yvu4IfekTSv6LPfAwHsxWfRV8oZF/byxrBdmzzM6WKBoqpo9QkmlPIcej6mdtB98ZEaS5Fv8zX7QclUUDh9tHhnC2+uOteGqUokIf8G2g=
+	t=1779302597; cv=none; b=m9zMz+2RRjp8elpejgYMyubtfl0lliWGVGDI5IDbpeODYhbSk6kICiKHwW8sOUi2TK/tQlJ8rS1R/frbKmGeZwfSMX2aTH5H2hFICpXYW4pjVuwt3MMiYFJzEAfa1SnG/yudDHF/BxxUQsEui2fPgOnULYdX86DE22Rz6Po57Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302594; c=relaxed/simple;
-	bh=wjvxNcsEiIhO1FlfYf+MQKGmlNNwYbXaPooikdjjOhc=;
+	s=arc-20240116; t=1779302597; c=relaxed/simple;
+	bh=p4hUuUenbcVMI3BTj7tPmS1CwHjcTGvIHEGXmoY+hM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/wGGAd7Sp8JB7gh/ZcySutwe09Z9W5wjj45UmRQxoUTt+1fAbJfufyDsOKVLjXUoiC2fv+Wx6ntUx3ioD4XBXYF70FodIbSzfxFAsX4N37stAUeFhYd+Yn/y/Ad/PMD97QgjH4x936zITNW/KofonlKZDy2No/vdd4dBSE34hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaigRYjD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DCTst2uYDdNlydYttBG6XjmnYSHsIn4dEGzWJBFDREZhFdBuLeqwfgILqcHXYp4wgm53zC30r+Bsyg2lpuDBukmKv7uCJVOVACqvHgiAznQtO80mmvLe1BhBsC6i0fYPyiWNXOSKtdDHmdK0GEeEJRrEjnRMZNsQTXmc7JUWzqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6McLOhc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaigRYjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270C21F000E9;
-	Wed, 20 May 2026 18:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6McLOhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1F81F00893;
+	Wed, 20 May 2026 18:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302593;
-	bh=Eux4KWiEA77LkCtvt90kC8oVnxXvM7PKZIIDbCYPXdM=;
+	s=korg; t=1779302596;
+	bh=oXErK6f5EBInueMOB9dccw1hfUvKyYkx9buqhuDP3YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaigRYjDZuXbHRxjNgmAfRyx3UsOPac7sLoOa+f7wWOV28sGSjwFv7eHdieDCieO9
-	 KY7N9p/RkRjBC0kxuau33VgNsIIV027PksM9voUhQXYpFSMcjW71n6wctiw7p3Z+7P
-	 vD6oOlhTdOE7V5eX4cXWmbbGpZwRCUYDHk69hYiY=
+	b=r6McLOhcaGdjzeZG4vjirXeelfBrfy99pTFGiMEnRix79xPTycxVE4YJ3W2sRtMyd
+	 sou+j2mKuFBs0uhhgiWhC1f2u2dLlmSoNHqxnzOA66hnsIDcY+Njkd9Jq9rLdzSqCk
+	 kVl4D1BV7akfLHwiX+8KWjPUZA7jzXvGGbw+tTzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/508] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
-Date: Wed, 20 May 2026 18:22:29 +0200
-Message-ID: <20260520162105.698089107@linuxfoundation.org>
+Subject: [PATCH 6.6 327/508] pppoe: drop PFC frames
+Date: Wed, 20 May 2026 18:22:30 +0200
+Message-ID: <20260520162105.719838642@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,66 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
+[ Upstream commit cc1ff87bce1ccd38410ab10960f576dcd17db679 ]
 
-sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
-buffer is large enough for the peer AUTH chunk list with
+RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
+RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
+PFC for PPPoE sessions, and the current PPPoE driver assumes an
+uncompressed (2-byte) protocol field. However, the generic PPP layer
+function ppp_input() is not aware of the negotiation result, and still
+accepts PFC frames.
 
-    if (len < num_chunks)
-            return -EINVAL;
+If a peer with a broken implementation or an attacker sends a frame with
+a compressed (1-byte) protocol field, the subsequent PPP payload is
+shifted by one byte. This causes the network header to be 4-byte
+misaligned, which may trigger unaligned access exceptions on some
+architectures.
 
-but then writes num_chunks bytes to p->gauth_chunks, which lives
-at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
-inside optval.  The check is missing the sizeof(struct
-sctp_authchunks) = 8-byte header.  When the caller supplies
-len == num_chunks (for any num_chunks > 0) the test passes but
-copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
-past the declared buffer.
+To reduce the attack surface, drop PPPoE PFC frames. Introduce
+ppp_skb_is_compressed_proto() helper function to be used in both
+ppp_generic.c and pppoe.c to avoid open-coding.
 
-The sibling function sctp_getsockopt_local_auth_chunks() at the
-next line already has the correct check:
-
-    if (len < sizeof(struct sctp_authchunks) + num_chunks)
-            return -EINVAL;
-
-Align the peer variant with its sibling.
-
-Reproducer confirms on v7.0-13-generic: an unprivileged userspace
-caller that opens a loopback SCTP association with AUTH enabled,
-queries num_chunks with a short optval, then issues the real
-getsockopt with len == num_chunks and sentinel bytes painted past
-the buffer observes those sentinel bytes overwritten with the
-peer's AUTH chunk type.  The bytes written are under the peer's
-control but land in the caller's own userspace; this is not a
-kernel memory corruption, but it is a kernel-side contract
-violation that can silently corrupt adjacent userspace data.
-
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
+Fixes: 7fb1b8ca8fa1 ("ppp: Move PFC decompression to PPP generic layer")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260415022456.141758-2-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/ppp_generic.c |  2 +-
+ drivers/net/ppp/pppoe.c       |  8 +++++++-
+ include/linux/ppp_defs.h      | 16 ++++++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index b3c19210667fb..98586bcf83ceb 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -6997,7 +6997,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 7c863cb99383b..2b5843d14cbb8 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -2245,7 +2245,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+  */
+ static void __ppp_decompress_proto(struct sk_buff *skb)
+ {
+-	if (skb->data[0] & 0x01)
++	if (ppp_skb_is_compressed_proto(skb))
+ 		*(u8 *)skb_push(skb, 1) = 0x00;
+ }
  
- 	/* See if the user provided enough room for all the data */
- 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
--	if (len < num_chunks)
-+	if (len < sizeof(struct sctp_authchunks) + num_chunks)
- 		return -EINVAL;
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index 96cca4ee470a4..bc726b54ca745 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -425,7 +425,7 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb_mac_header_len(skb) < ETH_HLEN)
+ 		goto drop;
  
- 	if (copy_to_user(to, ch->chunks, num_chunks))
+-	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
++	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
+ 		goto drop;
+ 
+ 	ph = pppoe_hdr(skb);
+@@ -435,6 +435,12 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->len < len)
+ 		goto drop;
+ 
++	/* skb->data points to the PPP protocol header after skb_pull_rcsum.
++	 * Drop PFC frames.
++	 */
++	if (ppp_skb_is_compressed_proto(skb))
++		goto drop;
++
+ 	if (pskb_trim_rcsum(skb, len))
+ 		goto drop;
+ 
+diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
+index b7e57fdbd4139..b1d1f46d7d3be 100644
+--- a/include/linux/ppp_defs.h
++++ b/include/linux/ppp_defs.h
+@@ -8,6 +8,7 @@
+ #define _PPP_DEFS_H_
+ 
+ #include <linux/crc-ccitt.h>
++#include <linux/skbuff.h>
+ #include <uapi/linux/ppp_defs.h>
+ 
+ #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
+@@ -25,4 +26,19 @@ static inline bool ppp_proto_is_valid(u16 proto)
+ 	return !!((proto & 0x0101) == 0x0001);
+ }
+ 
++/**
++ * ppp_skb_is_compressed_proto - checks if PPP protocol in a skb is compressed
++ * @skb: skb to check
++ *
++ * Check if the PPP protocol field is compressed (the least significant
++ * bit of the most significant octet is 1). skb->data must point to the PPP
++ * protocol header.
++ *
++ * Return: Whether the PPP protocol field is compressed.
++ */
++static inline bool ppp_skb_is_compressed_proto(const struct sk_buff *skb)
++{
++	return unlikely(skb->data[0] & 0x01);
++}
++
+ #endif /* _PPP_DEFS_H_ */
 -- 
 2.53.0
 
