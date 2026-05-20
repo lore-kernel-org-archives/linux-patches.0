@@ -1,118 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247FC285CBA;
-	Wed, 20 May 2026 18:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301960; cv=none; b=sm7sCSBSXBYeRqWsfjyi6dcXAodYQ/oGCgtCt8+IrNvB5NM1A9boBIqoic1UnHXu9wwxSwwtkXnEMp0UmklpXSufiGxWoLzPVFo4ypHlbDHdOkMrUQZMIjWFUsWzvqmu3MevjqEE/gSf9dIJzsZLwQImCSVYuCx3xsgUN4stPaI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5F917A2FC
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 18:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779301960; cv=pass; b=dIiFmvSeW2hXXTej6ufZWWtTQi1FkBN0tHixPYVT/aUSxfs/GOhbqIJtDdqXSTi/AIJtfrwhwh6zw5hkLg8nzXsqjPp2YdugBHFg+Ve3XC0bbLzujffw9ENcaK2+2mSc1tRVjxCS2lESP1Q65I2/gp+bgVVHqOnRiD07JPP6G4c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779301960; c=relaxed/simple;
-	bh=JdRflIeGAdzxtZGBY/50EUpnkxMkEbYWKX1tIC8oRGw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqhNWWgnikyc4xl8rB/dJPFBRKcaqPfowgwc1NU4ph8kWP2KHEJi1aRbB+aDbPoqe3dcsNQh+5PErImOg99k0XqvmGWQwzyZYsMtcEZUpWTKc9imiyL8eds3XXqwNhUFB3genjRaGzPhB+06BpZZI5QDgj75uH2azknhIXnAVUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaVoUhT1; arc=none smtp.client-ip=100.103.45.18
+	bh=Iyx8dnBn0kYwBZ0SP5ro0ffqifZw18RfJZjsNcvONIo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=K9pHlx1qWmQPicMhy5ASEv6LTbq8mZQaz8t3Vl9Ay9mdRQRQsUtLLyVkqV5h0wNK1erIA095G9cIoEmDo1izuCHod3zMmStnQ6v7UdlKaA+iflCKXrnb1LYHvsQZ0UPAFWdGxz4PhI9b37IzSSiTquk4FNmMCN3plO8SlBKBH0c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W6RmlaMC; arc=pass smtp.client-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaVoUhT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DA51F000E9;
-	Wed, 20 May 2026 18:32:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301959;
-	bh=TJiE3LoDUS/ghxOiNqSIUZlJBkfXQvCmwKiM3SdE+FU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BaVoUhT1XqgC46vvKfk8PTruPZBQNJQCU66jDRp4vlj7pZdjOoWE/tJMzfvhI/Xr5
-	 OICIA8LtDHSGonhSwddQrN0u26tqhIyCkcWzW9KqfWKt8wpiRZ5A5ngZprkpR1pueh
-	 Oqyw0hinqTn9hC3A+TQaw2qKLpiZpF8VZHO2Bf9M=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+80e046b8da2820b6ba73@syzkaller.appspotmail.com,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/508] net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master
-Date: Wed, 20 May 2026 18:18:29 +0200
-Message-ID: <20260520162100.475426844@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
-References: <20260520162058.573354582@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W6RmlaMC"
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-134fe980658so6938862c88.1
+        for <patches@lists.linux.dev>; Wed, 20 May 2026 11:32:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779301959; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YkQDYwtZY6MUR04qlQukP7tJv8fjsu9kbRhMjpA/E/+FY6q6hcBsRnQY+9p7N8X8kP
+         NasTReJuZzvDQUxjJbuUirUq604iOUjwP1z2ZRTeaJvXfGMDSHwVQ0/tduy/JvNZY7Ph
+         fsf/6M1qSdUHrywwtnE0u0oKVp2vGo8BNsJILuTq0uBTkZi27EfRnMTu5I1VcatHvykb
+         PVmJbyBAqYH/MQUHH7Yd/vVc5dPVixN+3LB7yiEZPNKcF6RpSUKkYiekR61oHDOaeCPE
+         xWC3A9VfRoBzPzVmsnrmcSiIdrroAkvppFWhc2zlv/8rEVR6WMmyS22vWRbEfrHp2HW1
+         GLcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YcognBcrpWvnvJQi1n7S900RyaKYlaiNOYb48LzSaSo=;
+        fh=uG7oBvh1O3h7dk/wWOE1bGsLu+cjcvaFfaI/jDK5+cY=;
+        b=UvgfuFMsjLMwlBfqtOh5fnxEw+ctDGMW9ctRw6nyFAm/QcNOOhMW7x2qq4KXLgYlSJ
+         uW2Z5CYvTUgVnuO6o4IwpAl+EkPLEk+BeMQ3PuN8iybF/A5G7B3MU4MRkKT/qTTJXDDb
+         8ODeK2f9QEPDTOH0eqdoUE01nZuoVdW9pSTjBxTe4UxcFF914cTvUgqhE6qkc0jKb7nW
+         AtC8NQ0WStvulpi1hbfrzIqB2zt1JzdGpRyjhNV7g455AEampnGuOrnlHiUns2SoCwLR
+         lZQPUK33n1f7o2YFx82Hj13k4j1FmdipTSE99EIcfHEg2sGd4IVGZX4dg0osB5ceWvHY
+         MYGA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1779301959; x=1779906759; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YcognBcrpWvnvJQi1n7S900RyaKYlaiNOYb48LzSaSo=;
+        b=W6RmlaMCIdMDWYnio9KDVUsZK8xp4e3HzMQllnHUzniQjW/gr0t9bAZrTJ97mL9N88
+         PivBZtjGM11CQeHjh+YrsHIHlE1FKkd9d+tY04AIokIfeBXCBLFCcLAgdmrwsgbbrpwh
+         cw4mTOAbEvPhMg6yn6MqsQNd0QDIAmE1vvcnsy9ClAWJ7loTVdvxly2DEcpxj/+NmVn/
+         +rquBzyERmjFh4Q27ILnyIGOHLZYvQrGRqJptlvp1O5yP8k+qhLbH2qYtBpL03/b/wXo
+         wYlSM7rVvf3AKZDqBVmoBepO/QliJdKP6gdkxcV1WJ6ElzpA7WYhveM5egqBxc56dIWw
+         BR6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779301959; x=1779906759;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YcognBcrpWvnvJQi1n7S900RyaKYlaiNOYb48LzSaSo=;
+        b=APZxsFxIEYKfCKu8W8O2D7l6ZgOnjNxaTfDLu1wdH1mBN2ZPbanUbjrQ3KQPkTEj/W
+         5skdoh+/dpxWOXgoVLkrXNYHDg5Z+crMCSW278ANKvhJkzawos/+RTRSAUbsZVe7js49
+         ZRW3oZTgvLzkbbjKZSH+TjHYjPVVUbuOaKxCiadhfTQiP/a9Lf/782vLmqR3OmQuOliF
+         SryLlV/Qp8PxyZfQKbXp5F+pFVj4S1xhwswMwQ6xpdt16e7j3nIrr8wTSdmvw3zHb7IA
+         V73sAj4lfJ0wGNUM4LOH21GZzfMhYg9qPZAwUEQSI7uLGy2Yjjc2Z80lLVc07JObLK6s
+         ROiA==
+X-Forwarded-Encrypted: i=1; AFNElJ/NsbELS3MdpVTgnAeI09q6Q2zc3dRbVijRWyx4t/uVput9/46aNqadqDWwa2EYyumCy1LcJAcy@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy+n+fCP1lW0J0aTQUYc3su7agGfe6h2hFVkg494cjB4JJ0JY9u
+	PmX+xNzeosODzOB7lMJHmNRUODDOfIeQggPavp6Y63TSQ2HWpB3D908tgyO9lLMK2WqlOIlWpfL
+	Ud6CHywZ14rRCjW1DPJqZzWz9l+zmqUQ6CSuT32M=
+X-Gm-Gg: Acq92OEIjNDlWjC/2ycd1/pn4DmadCLobhutU5af5+1sEBN7HEHTVCMoislIhFfAO0A
+	RnA0yDGykAU+MK9tONFGYNVz4v22rUTCdHqhY7JLoYZi+T7818WO5dL0kvSx060aEX+Vq++0j0Y
+	dlVWlE0J4H8LbNNetFXS2J5S3p5MRbHpVVrwI1gHeiduzwogMwi3BdY4vZrP1T1InL6bBNwwLcC
+	zohd9bAdnSM2AEz6XqaOhDu4nbR2ZsTENCSxIuOogv2+BGUD6OxGOcXvkr/qVg+XKQ53hUCeuvQ
+	2RJHTgq2QrgjuozANtFFni0Xl/y6qv3Zp6VW/OlnDdlsoNubGRQhDgrhDdZQx4+bvD7ZNiSDKPa
+	tP+R6bp7MuEB0f1TTV8hCwvWebsL1aGiDI5oUxOv8/Av0qw==
+X-Received: by 2002:a05:7022:fb09:b0:134:def6:e73f with SMTP id
+ a92af1059eb24-13505433a9fmr9856930c88.21.1779301958047; Wed, 20 May 2026
+ 11:32:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260520162134.554764788@linuxfoundation.org> <20260520162135.687777470@linuxfoundation.org>
+In-Reply-To: <20260520162135.687777470@linuxfoundation.org>
+From: John Stultz <jstultz@google.com>
+Date: Wed, 20 May 2026 11:32:26 -0700
+X-Gm-Features: AVHnY4Kgob_5L6wVdbe5hNklqyGV6AbNPh2DYL9FVbYHSV_a8rpBk1d5OS6HIcU
+Message-ID: <CANDhNCpZWMk6GWubK8+E0rxKUqtuhOtrjqxunS=Kmho-UbR0UA@mail.gmail.com>
+Subject: Re: [PATCH 6.18 052/957] sched: Make class_schedulers avoid pushing
+ current, and get rid of proxy_tag_curr()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	K Prateek Nayak <kprateek.nayak@amd.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Wed, May 20, 2026 at 10:18=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.18-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>
+> ------------------
+>
+> From: John Stultz <jstultz@google.com>
+>
+> [ Upstream commit e0ca8991b2de6c9dfe6fcd8a0364951b2bd56797 ]
+>
+> With proxy-execution, the scheduler selects the donor, but for
+> blocked donors, we end up running the lock owner.
 
-------------------
+Eh, I'm not sure of the urgency of this going back to 6.18-stable, and
+I'm not sure its worth the churn.
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+Proxy-exec is still in development and requires CONFIG_EXPERT to be
+enabled, so I'm not sure how many folks are actively using it with
+vanilla 6.18-stable, as it wouldn't bring much benefit, and even if
+folks are experimenting, the downside of not ideally balancing tasks
+isn't likely to cause a crash, just not ideal performance.
 
-[ Upstream commit 1921f91298d1388a0bb9db8f83800c998b649cb3 ]
+And I've already pulled this change back to android17-6.18 where we
+are using the full proxy-exec series,  where the actual usage of
+proxy-exec is likely to be.  So I'm just not sure this is worth the
+churn/risk.
 
-syzkaller reported a kernel panic in bond_rr_gen_slave_id() reached via
-xdp_master_redirect(). Full decoded trace:
-
-  https://syzkaller.appspot.com/bug?extid=80e046b8da2820b6ba73
-
-bond_rr_gen_slave_id() dereferences bond->rr_tx_counter, a per-CPU
-counter that bonding only allocates in bond_open() when the mode is
-round-robin. If the bond device was never brought up, rr_tx_counter
-stays NULL.
-
-The XDP redirect path can still reach that code on a bond that was
-never opened: bpf_master_redirect_enabled_key is a global static key,
-so as soon as any bond device has native XDP attached, the
-XDP_TX -> xdp_master_redirect() interception is enabled for every
-slave system-wide. The path xdp_master_redirect() ->
-bond_xdp_get_xmit_slave() -> bond_xdp_xmit_roundrobin_slave_get() ->
-bond_rr_gen_slave_id() then runs against a bond that has no
-rr_tx_counter and crashes.
-
-Fix this in the generic xdp_master_redirect() by refusing to call into
-the master's ->ndo_xdp_get_xmit_slave() when the master device is not
-up. IFF_UP is only set after ->ndo_open() has successfully returned,
-so this reliably excludes masters whose XDP state has not been fully
-initialized. Drop the frame with XDP_ABORTED so the exception is
-visible via trace_xdp_exception() rather than silently falling through.
-This is not specific to bonding: any current or future master that
-defers XDP state allocation to ->ndo_open() is protected.
-
-Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
-Reported-by: syzbot+80e046b8da2820b6ba73@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/698f84c6.a70a0220.2c38d7.00cc.GAE@google.com/T/
-Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260411005524.201200-2-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/core/filter.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 2cd58d1d4a7aa..c24510037334c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4354,6 +4354,8 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
- 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
- 
- 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
-+	if (unlikely(!(master->flags & IFF_UP)))
-+		return XDP_ABORTED;
- 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
- 	if (slave && slave != xdp->rxq->dev) {
- 		/* The target device is different from the receiving device, so
--- 
-2.53.0
-
-
-
+thanks
+-john
