@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EEA2F0C62;
-	Wed, 20 May 2026 16:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FED33BBBA;
+	Wed, 20 May 2026 16:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296045; cv=none; b=ooYAcVpN9cBe3h1qKngTr0kvSaPajXQmiKrXnGAERjX03KkrwsZ6dR3dSEPGN/aYog886z70nEFQE1Xi7fHyRAnsi5yuqvAnCr7ZZ249IZYs0h8S/p9IwqF6g1XCVmrAPcDO4sc3oFESppXpyKF8HcEtxOVUsgR8gh2pBNQuxzk=
+	t=1779296048; cv=none; b=nzNM5+2i4axHQCpgao9ZoTpppDRAP7QjhTfB0LGsWQGT0LNdqXsNcC12NGyQy98m6aiMwKkf6+Y+FK/zsvuYFbaGyY5HetPy6ua0u3M5Qxa6SlknRObJ4psGW1zLaSsUMZB6ZebjmMrliCWwsjOC108tGe9Xaw26mh9yuTNWlK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296045; c=relaxed/simple;
-	bh=hM2GRG1dusJfioV4eSH6TJRnVxrx4fdWIex0+QXaHJE=;
+	s=arc-20240116; t=1779296048; c=relaxed/simple;
+	bh=kVsmAB1tiOydDOccFbIqT31+4TrqQ4kubqNDk6pua6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciw0RKt9tGDwTE2V2Fq6MWur5jxdKFFpPlKHsyTnHc+iTpkGoJlMdW2mZaXtQouygBcAKTV09mVx7GqS5GZEXKgsMCc02HFfyNNIoK99jdroAPLH3fX84jb3jNpJvIgXvAnWW62pyMDpsIQ6P7BtqyrUPDL1huhZfnBCeApNwE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDN6QVqU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EJhif7TpfkNQQmKhx7tMeexVQJjfdsW7aEafaBIQXbt4wHNdqhdMOpczHWcZMgeoH279MU1j8pbj0exwEWP8q+0664WqYXfpa+Nu1ZPkpzbI6GFkffSZrOuyL3jyUqcDfWU5Yo0Jx8qEaf/qrPyJ9pf55q7mhgHEEuMgZ8iTWo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrO+qvaI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDN6QVqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7711F000E9;
-	Wed, 20 May 2026 16:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrO+qvaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D8B1F000E9;
+	Wed, 20 May 2026 16:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296044;
-	bh=+oCHvi4/gWQxQ7MbHu7QF1Wo4ig1pLV2LRG1U9fC5g0=;
+	s=korg; t=1779296047;
+	bh=LOjghyUFlUePxwW2b8v2Ss4P0zAzKfACRHXf2FF7lRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDN6QVqUWmMkoQq+cEU5BV456KDxTAmMmzDjRfBMUFYuabDqBvvc3JotVN/sb4Y5M
-	 iCmpg66n8j/3NIoMUFt/i2+CUONM79xiK0qcI0dZE8RkXKw/DtJKzabzFU05p/+JZm
-	 jABUayrfjKcbET/nJ3LhWhIJIxoxEKnke31RkCBc=
+	b=SrO+qvaIIZgOrqBymdJUkm20ivbivfhNoAWeIfPAEI84PHd5fGw75IZYTfnOp8E6i
+	 gzljQB3mlMgEnDI42JUg3lePBcQFCVNjnmqXp9C5zXLJo43Mz6LEJZMzcdB9zeKDYu
+	 446UwIYcQI8vCQ8l3dKiYKWFJTkdF4iqteEqQUm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Puranjay Mohan <puranjay@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0609/1146] bpf, arm64: Reject out-of-range B.cond targets
-Date: Wed, 20 May 2026 18:14:19 +0200
-Message-ID: <20260520162201.964945964@linuxfoundation.org>
+Subject: [PATCH 7.0 0610/1146] bpf, arm64: Fix off-by-one in check_imm signed range check
+Date: Wed, 20 May 2026 18:14:20 +0200
+Message-ID: <20260520162201.987957163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -54,54 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 48d83d94930eb4db4c93d2de44838b9455cff626 ]
+[ Upstream commit 1dd8be4ec722ce54e4cace59f3a4ba658111b3ec ]
 
-aarch64_insn_gen_cond_branch_imm() calls label_imm_common() to
-compute a 19-bit signed byte offset for a conditional branch,
-but unlike its siblings aarch64_insn_gen_branch_imm() and
-aarch64_insn_gen_comp_branch_imm(), it does not check whether
-label_imm_common() returned its out-of-range sentinel (range)
-before feeding the value to aarch64_insn_encode_immediate().
+check_imm(bits, imm) is used in the arm64 BPF JIT to verify that
+a branch displacement (in arm64 instruction units) fits into the
+signed N-bit immediate field of a B, B.cond or CBZ/CBNZ encoding
+before it is handed to the encoder. The macro currently tests for
+(imm > 0 && imm >> bits) || (imm < 0 && ~imm >> bits) which admits
+values in [-2^N, 2^N) — effectively a signed (N+1)-bit range. A
+signed N-bit field only holds [-2^(N-1), 2^(N-1)), so the check
+admits one extra bit of range on each side.
 
-aarch64_insn_encode_immediate() unconditionally masks the value
-with the 19-bit field mask, so an offset that was rejected by
-label_imm_common() gets silently truncated. With the sentinel
-value SZ_1M, the resulting field ends up with bit 18 (the sign
-bit of the 19-bit signed displacement) set, and the CPU decodes
-it as a ~1 MiB *backward* branch, producing an incorrectly
-targeted B.cond instruction. For code-gen locations like the
-emit_bpf_tail_call() this function is the only barrier between
-an overflowing displacement and a silently miscompiled branch.
+In particular, for check_imm19(), values in [2^18, 2^19) slip past
+the check but do not fit into the 19-bit signed imm19 field of
+B.cond. aarch64_insn_encode_immediate() then masks the raw value
+into the 19-bit field, setting bit 18 (the sign bit) and flipping
+a forward branch into a backward one. Same class of issue exists
+for check_imm26() and the B/BL encoding. Shift by (bits - 1)
+instead of bits so the actual signed N-bit range is enforced.
 
-Fix it by returning AARCH64_BREAK_FAULT when the offset is out
-of range, so callers see a loud failure instead of a silently
-misencoded branch. validate_code() scans the generated image
-for any AARCH64_BREAK_FAULT and then lets the JIT fail.
-
-Fixes: 345e0d35ecdd ("arm64: introduce aarch64_insn_gen_cond_branch_imm()")
-Fixes: c94ae4f7c5ec ("arm64: insn: remove BUG_ON from codegen")
+Fixes: e54bcde3d69d ("arm64: eBPF JIT compiler")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260415121403.639619-1-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260415121403.639619-2-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/lib/insn.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/net/bpf_jit_comp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/lib/insn.c b/arch/arm64/lib/insn.c
-index cc5b40917d0dd..37ce75f7f1f08 100644
---- a/arch/arm64/lib/insn.c
-+++ b/arch/arm64/lib/insn.c
-@@ -338,6 +338,8 @@ u32 aarch64_insn_gen_cond_branch_imm(unsigned long pc, unsigned long addr,
- 	long offset;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index adf84962d579d..4aad9483f8a50 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -35,8 +35,8 @@
+ #define ARENA_VM_START (MAX_BPF_JIT_REG + 5)
  
- 	offset = label_imm_common(pc, addr, SZ_1M);
-+	if (offset >= SZ_1M)
-+		return AARCH64_BREAK_FAULT;
- 
- 	insn = aarch64_insn_get_bcond_value();
- 
+ #define check_imm(bits, imm) do {				\
+-	if ((((imm) > 0) && ((imm) >> (bits))) ||		\
+-	    (((imm) < 0) && (~(imm) >> (bits)))) {		\
++	if ((((imm) > 0) && ((imm) >> ((bits) - 1))) ||		\
++	    (((imm) < 0) && (~(imm) >> ((bits) - 1)))) {	\
+ 		pr_info("[%2d] imm=%d(0x%x) out of range\n",	\
+ 			i, imm, imm);				\
+ 		return -EINVAL;					\
 -- 
 2.53.0
 
