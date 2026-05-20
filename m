@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BCF34EF05;
-	Wed, 20 May 2026 16:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6673539C00B;
+	Wed, 20 May 2026 16:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296224; cv=none; b=QE1COZkJlxoK6AR46cQvE78/hng6zstKk9I+HeIbvOkIVgM/LyKzAAUUtav48za3fvIVAErhxNSrdq8WW2DczMtQVUurRwte8CB/ePVHyyvNkIP6k5aOW23Mjji+ON7+vRiznJxh5waqmrwB84mSjBathvU+2V8sO50Zmprc24Q=
+	t=1779296227; cv=none; b=dGdayWM6HgawT2TOqMksJ9fYB0qtic5LI/u3rVkCzbAJDZ4VyGpBVoAjliIF4Pt9lI2idFVCNwLnaO8W0e3DDo7v144cGno+WmYufJHxexQnE9PsKrHY7Vd493cw8wIWXJFeXmPW9phaRhfvcBrwunJ0Pum434CawPU2gAMoO3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296224; c=relaxed/simple;
-	bh=ioyEfAE9zNffwbQqTsczKiLLcSJQWHLtRedIBj4NPeA=;
+	s=arc-20240116; t=1779296227; c=relaxed/simple;
+	bh=bxo+D5yr3QtRyJ3jRAJ5DnoTAv5OcJjLAXbqOUOur7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tArOV+jMHEBp56aSrp8AvbnzqDaAW/qZDmwj6XdX7AfFaCMw8EvIYUFuhqVCOUk229lmBH0Yqmt74iNW98jQ+hTcv5XGzazi723Zk6eRJ/j56I8WoJIcioW/BNSzqqoqZDN8L1sFcdD0SZBfQdJXyb1W6XlWRFZKAP8gpRi5RBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2e08ovGv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ssKcUnqT9QyFZEBXcNYIY8XAN0Km4B1oQH1exqtwVmXzqbRg6htR+LZkgI5wZajDEGO32jDpDMB2sdE/4Eo5CTKDmu0zyaIIIbuSHbr8ZQCUtRKPjdl30mDiifDRBNNMSWtf5Jrg5DW5P9ALQdctXwL5o5SMjkws8MUoyfs7Yik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA9N09jR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2e08ovGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353E11F000E9;
-	Wed, 20 May 2026 16:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA9N09jR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC72B1F000E9;
+	Wed, 20 May 2026 16:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296223;
-	bh=Y7m2rnsOI7hESHUgtfLh+XXfbqI6jxYQ75VWVBXFS1o=;
+	s=korg; t=1779296226;
+	bh=EcBDjIJd1Bni1l4IR0Xf0wBgxw+oI36fSonpUNEMwCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2e08ovGvQYD1SVOF2Y2zUBQqV3iOLwvEd9clN3b68h17KsFzlmewZieAuqnOwIV3r
-	 ybzRI7HcXeW4i+N+J7cR02rtDR3rqtz6Rw3xJ/ZNJ5PNFm1kYE5g7PFdgkkErVS0Pf
-	 stN3XITfvhLQpY2NdBFM7PrsX2Ya9R7HA+u9UbEU=
+	b=oA9N09jRsKFDvDBuZFdYWx9FhlLeKENFRSNsELnwBGTZGmeGFijCjgVKid81+RUeT
+	 tJP08I2kbPXiobiYjYsPKZnMipZ4lfNErJq+xYdzA49jU7/y/74+IA0ms60029s6y4
+	 BwNq0FVzcUw0K4XOpei31OoyMbqJaQXxe8S4RAQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0718/1146] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
-Date: Wed, 20 May 2026 18:16:08 +0200
-Message-ID: <20260520162204.454799774@linuxfoundation.org>
+Subject: [PATCH 7.0 0692/1146] platform/x86: dell-wmi-sysman: bound enumeration string aggregation
+Date: Wed, 20 May 2026 18:15:42 +0200
+Message-ID: <20260520162203.849171861@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,49 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 8c522da70f0c2e5148c4c13ccb1c64cca57a6fdb ]
+[ Upstream commit 3c34471c26abc52a37f5ad90949e2e4b8027eb14 ]
 
-mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
-As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-registration") introduced a callback to ensure the RCG is off upon init.
-However, the fix depends on all shared RCGs being marked as such in code.
+populate_enum_data() aggregates firmware-provided value-modifier
+and possible-value strings into fixed 512-byte struct members.
+The current code bounds each individual source string but then
+appends every string and separator with raw strcat() and no
+remaining-space check.
 
-For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
-unlike the same clock in the SC7180 code. This was causing display to
-frequently fail to initialize after rebooting on the Surface Pro X.
-Fix by using shared ops for this clock.
+Switch the aggregation loops to a bounded append helper and
+reject enumeration packages whose combined strings do not fit
+in the destination buffers.
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-8-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260408084501.1-dell-wmi-sysman-v2-pengpeng@iscas.ac.cn
+[ij: add include]
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dell/dell-wmi-sysman/enum-attributes.c    | 34 +++++++++++++++----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index 8f433e1e70283..cdfdb2cfb02b2 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -632,7 +632,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
+index 09996fbdc7074..a85639d8a076f 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
+@@ -6,10 +6,32 @@
+  *  Copyright (c) 2020 Dell Inc.
+  */
  
++#include <linux/bug.h>
++
+ #include "dell-wmi-sysman.h"
+ 
+ get_instance_id(enumeration);
+ 
++static int append_enum_string(char *dest, const char *src)
++{
++	size_t dest_len = strlen(dest);
++	ssize_t copied;
++
++	if (WARN_ON_ONCE(dest_len >= MAX_BUFF))
++		return -EINVAL;
++
++	copied = strscpy(dest + dest_len, src, MAX_BUFF - dest_len);
++	if (copied < 0)
++		return -EINVAL;
++
++	dest_len += copied;
++	copied = strscpy(dest + dest_len, ";", MAX_BUFF - dest_len);
++	if (copied < 0)
++		return -EINVAL;
++
++	return 0;
++}
++
+ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+ 	int instance_id = get_enumeration_instance_id(kobj);
+@@ -176,9 +198,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
+ 			return -EINVAL;
+ 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
+ 			return -EINVAL;
+-		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
+-			enumeration_obj[next_obj++].string.pointer);
+-		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier, ";");
++		if (append_enum_string(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
++				       enumeration_obj[next_obj++].string.pointer))
++			return -EINVAL;
+ 	}
+ 
+ 	if (next_obj >= enum_property_count)
+@@ -193,9 +215,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
+ 			return -EINVAL;
+ 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
+ 			return -EINVAL;
+-		strcat(wmi_priv.enumeration_data[instance_id].possible_values,
+-			enumeration_obj[next_obj++].string.pointer);
+-		strcat(wmi_priv.enumeration_data[instance_id].possible_values, ";");
++		if (append_enum_string(wmi_priv.enumeration_data[instance_id].possible_values,
++				       enumeration_obj[next_obj++].string.pointer))
++			return -EINVAL;
+ 	}
+ 
+ 	return sysfs_create_group(attr_name_kobj, &enumeration_attr_group);
 -- 
 2.53.0
 
