@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B106331220;
-	Wed, 20 May 2026 18:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2E83C140F;
+	Wed, 20 May 2026 18:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300618; cv=none; b=sFp1oko9VnnH3kh4RQ8LPqhT863BDQySOBpFOgAW9oI66/i3OUcyVB5zxLSkekY+HBKv8pWxt4rI4gtt83JhAZSMmeqsqPmHqI5qKn7TT2wEF3w/IwKhL4I4Kvvj403eV2r7oPeN3K8X/vOJpIcPPNtle4h7pjH4ThEgLPRUok8=
+	t=1779300621; cv=none; b=jdspuvncsIiIZ2RaJQPRxvbyWvXHsKHbk1hO8HHWbm65rN0rYRIkn69H9wyOyts0WRy7Kuu7KkqhcSa9N+yqwsCTlQwQMUc5oJvEXoUYVpoFISNZiIgf1B6VJdu+OUeeMpoj6XB8rGg8CdBcMGiINSGtPVsn36Fj47acEAhTvJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300618; c=relaxed/simple;
-	bh=kcJ4gsUIa4SBGX8TV5RcRPxvZc8BeHuVzuO/EbWKQt4=;
+	s=arc-20240116; t=1779300621; c=relaxed/simple;
+	bh=DZN9Jflrokius9LNcNzjjWs1HnsVs+wZal0Zyx1rMGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJUxCBnn6HXW8vQC3K6mUCGhjIu7ByQ7DwepSPd7nzNI/qfpDaXZmZ8e4QG01f8SoNCdlnNZoYI+hXnFNrzgxsbiNdjJmlFkp/VAj7lvTBt6ncNhxs58xiRwepOxqzrubpobASNXGdRGdAZVcu8IDZK4S5mJlB8A4+TkuzvCzFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LExWUff3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C3g5pNMsfCQCPL2IkR4tecaChvfNIpYid1jh+i++hEPqe/zwwWpluolLCeJeeBiJW0Q3ZqCorgQMjg77yh5TXpM1CviS8e2rXQPlvEHwGzqyIxU0gGSm2Dqu/6EqSY+WG3fMnncPuN+DQaHl/eRQc2TMp4dPopWsR0cXrg3gzis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGAK0BQR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LExWUff3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962A41F000E9;
-	Wed, 20 May 2026 18:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGAK0BQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CD51F000E9;
+	Wed, 20 May 2026 18:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300617;
-	bh=gH7yDrkxrTkO0LWc9VdRD4KEwdlXGW7xcAa0pBgvR1w=;
+	s=korg; t=1779300619;
+	bh=WXEUKwceE2bUM+csIB1W+ulgBG9q9ZQc3/A4WxhNT9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LExWUff3BWTGNh7AqfKH7OdRc0b221FTbsNxRiBj5Rm3rXY6bAcmJWQByMpUE6NlO
-	 zOaJkDf4pOrPsZIanQpnlg7e886x1aVgpX7hijuuxj59/+9rOKxjVLZ7/wD7T9sbPQ
-	 HzeOCH34HluUj6jJiWFgxM/eyaDw/5bcKRryAe2Q=
+	b=WGAK0BQRoOA39yAh6SK/r1MvTD7sO40+EBSkexPPhnJG0DNeOCS6RYqUrFMid2Fv/
+	 NFLcK0iwTNiPQHJ/z9Okqk/rWXGxtN2DFpPamL9tbTAkwCVn5Wj58DiU4b6IA09Tkz
+	 L3G7xVRhZl84qHw5wwtdlN3rfT1yp4nf2qXDqbHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
 	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 242/666] PCI: tegra194: Free up Endpoint resources during remove()
-Date: Wed, 20 May 2026 18:17:33 +0200
-Message-ID: <20260520162116.463571762@linuxfoundation.org>
+Subject: [PATCH 6.12 243/666] PCI: tegra194: Use DWC IP core version
+Date: Wed, 20 May 2026 18:17:34 +0200
+Message-ID: <20260520162116.485423500@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,47 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 
-[ Upstream commit 8870f02f7868209eb9bdc5dc53540a6262cf9227 ]
+[ Upstream commit ea60ca067f0f098043610c96a915d162113c1aac ]
 
-Free up the resources during remove() that were acquired by the DesignWare
-driver for the Endpoint mode during probe().
+Tegra194 PCIe driver used custom version numbers to detect Tegra194 and
+Tegra234 IPs. With version detect logic added, version check results in
+mismatch warnings:
 
-Fixes: bb617cbd8151 ("PCI: tegra194: Clean up the exit path for Endpoint mode")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+  tegra194-pcie 14100000.pcie: Versions don't match (0000562a != 3536322a)
+
+Use HW version numbers which match to PORT_LOGIC.PCIE_VERSION_OFF in
+Tegra194 driver to avoid these kernel warnings.
+
+Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
 Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-11-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-12-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware.h | 2 ++
+ drivers/pci/controller/dwc/pcie-tegra194.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 0fad7751490f5..a5f58ac8ea941 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -31,8 +31,10 @@
+ #define DW_PCIE_VER_470A		0x3437302a
+ #define DW_PCIE_VER_480A		0x3438302a
+ #define DW_PCIE_VER_490A		0x3439302a
++#define DW_PCIE_VER_500A		0x3530302a
+ #define DW_PCIE_VER_520A		0x3532302a
+ #define DW_PCIE_VER_540A		0x3534302a
++#define DW_PCIE_VER_562A		0x3536322a
+ 
+ #define __dw_pcie_ver_cmp(_pci, _ver, _op) \
+ 	((_pci)->version _op DW_PCIE_VER_ ## _ver)
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index bf7acdb725a33..dd08ad8d08cbd 100644
+index dd08ad8d08cbd..5faac8b7190ca 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -2282,6 +2282,7 @@ static int tegra_pcie_dw_probe(struct platform_device *pdev)
- static void tegra_pcie_dw_remove(struct platform_device *pdev)
- {
- 	struct tegra_pcie_dw *pcie = platform_get_drvdata(pdev);
-+	struct dw_pcie_ep *ep = &pcie->pci.ep;
+@@ -35,8 +35,8 @@
+ #include <soc/tegra/bpmp-abi.h>
+ #include "../../pci.h"
  
- 	if (pcie->of_data->mode == DW_PCIE_RC_TYPE) {
- 		if (!pcie->link_state)
-@@ -2293,6 +2294,7 @@ static void tegra_pcie_dw_remove(struct platform_device *pdev)
- 	} else {
- 		disable_irq(pcie->pex_rst_irq);
- 		pex_ep_event_pex_rst_assert(pcie);
-+		dw_pcie_ep_deinit(ep);
- 	}
+-#define TEGRA194_DWC_IP_VER			0x490A
+-#define TEGRA234_DWC_IP_VER			0x562A
++#define TEGRA194_DWC_IP_VER			DW_PCIE_VER_500A
++#define TEGRA234_DWC_IP_VER			DW_PCIE_VER_562A
  
- 	pm_runtime_disable(pcie->dev);
+ #define APPL_PINMUX				0x0
+ #define APPL_PINMUX_PEX_RST			BIT(0)
 -- 
 2.53.0
 
