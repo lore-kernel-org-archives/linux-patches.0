@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3AC3A1E72;
-	Wed, 20 May 2026 17:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D1A3164C3;
+	Wed, 20 May 2026 17:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296451; cv=none; b=B1ZKMupko7AnZgsAAvmxFErEWKPzrzYqkaSvdMFkxBZCxilKXPBxS5Z3UPaeULGFIPTj8/vfnI3Au3eyphUFZdbUghP5eXKrm+8ASYb0ne4JVoHotVJeK8kFSZ/uiN0GABQ6hapCXx6sCH6Um1GBUvIMzGT/KAGlax+EqZ+AWU8=
+	t=1779296454; cv=none; b=DRXQ2qKQMgNIeeYrNjWDbpqZX9lSg7oW6+NhkgnBXdqj8KEBK+QqcrrespE9m+VbNa0VYBHnAO3Mf9UL/CqMtC/C3FiQN9YWtw9Rc824osT/JRhCkF0BgXEIxKedqwByGgRRoAk+fJzp1W9Noa+Tm5cDq/rCBfAErWYmHYLykTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296451; c=relaxed/simple;
-	bh=szayO4GfZkqYNlZNwwM16cnLL14oPpjZfsONDVvxfiM=;
+	s=arc-20240116; t=1779296454; c=relaxed/simple;
+	bh=oBc1RLvNvb2ezckIL+kDLCFj4NAme7dNIK0+VS80uqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iW64HksxsXKfnWu0jTl2XNtzjWs7qZSFcqnuIiG7vgxd+jXJdNrbrC0BtTkV3PX+Aj7hx/su+Q0tvkSPjZLNSB2ti5rzZDoQqwubqyJ5cbTqI4Toq/Ur+P6JNI7S4T+no1TBtoDAJmTCxMtBzKBE5TXC5dZ/uaN/QGnxnSuIYz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1C6jk/ZX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gk2rENUm5uhluOeoclzU4yZujYsmH33JRQ+R1OrF4o3dJeTVDoMOteP4DkKNQP45nC0cYH7gf8Yt2gOZnld9BUzAleBBb96m+aSFtWvhdBPGY/B3sQpILgkXaTIoNhyZWOh56FINpqJ9vUxnNi8ggl/1bztTA1iJnYsw4SU1MxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNhxY9ib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1C6jk/ZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477471F000E9;
-	Wed, 20 May 2026 17:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNhxY9ib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6F01F000E9;
+	Wed, 20 May 2026 17:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296450;
-	bh=92qIOK5MKCchAJQHy1aSogYet81RuwL6//I2sUccDuA=;
+	s=korg; t=1779296453;
+	bh=1jFRtaWWXbNvs6CXItHJ1qRxN6GZo/UlSxdzbieGzqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1C6jk/ZX82jOACJFtcDOIewp4kxTuY6bfeSjC8OBYa7YhX2kqkQD/9Ulm8w1mpD0J
-	 E28stDd3ptUPFc3bnztqABeCxow/8E87y68vkVWKNTaEDEQbcvhfDB3IoUSQhhMWaH
-	 HpQ4+RagrInAKjaafs8DR0rNxIqEwvA7EBTv5W3s=
+	b=rNhxY9ibfaX1U3RO4b9rgw26Y0ltn/NVTC7jdlikd02SGP5agxZEKXudUBpuGXkNq
+	 soOPU6k+jULpVFWLNPRiOre3ZXoy3wmj2D6aiyE3fU6T9atRv0rzHokzr8IIqzKoGW
+	 mcGhKzvXcu3ORDS+Tyuaqz281C9wwqjfyjjhBwbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Joe Damato <joe@dama.to>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Xingyu Jin <xingyuj@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0804/1146] ipv6: fix possible UAF in icmpv6_rcv()
-Date: Wed, 20 May 2026 18:17:34 +0200
-Message-ID: <20260520162206.422865228@linuxfoundation.org>
+Subject: [PATCH 7.0 0805/1146] af_unix: Drop all SCM attributes for SOCKMAP.
+Date: Wed, 20 May 2026 18:17:35 +0200
+Message-ID: <20260520162206.444604788@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,69 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit f996edd7615e686ada141b7f3395025729ff8ccb ]
+[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
 
-Caching saddr and daddr before pskb_pull() is problematic
-since skb->head can change.
+SOCKMAP can hide inflight fd from AF_UNIX GC.
 
-Remove these temporary variables:
+When a socket in SOCKMAP receives skb with inflight fd,
+sk_psock_verdict_data_ready() looks up the mapped socket and
+enqueue skb to its psock->ingress_skb.
 
-- We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr
-  when net_dbg_ratelimited() is called in the slow path.
+Since neither the old nor the new GC can inspect the psock
+queue, the hidden skb leaks the inflight sockets.  Note that
+this cannot be detected via kmemleak because inflight sockets
+are linked to a global list.
 
-- Avoid potential future misuse after pskb_pull() call.
+In addition, SOCKMAP redirect breaks the Tarjan-based GC's
+assumption that unix_edge.successor is always alive, which
+is no longer true once skb is redirected, resulting in
+use-after-free below. [0]
 
-Fixes: 4b3418fba0fe ("ipv6: icmp: include addresses in debug messages")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260416103505.2380753-1-edumazet@google.com
+Moreover, SOCKMAP does not call scm_stat_del() properly,
+so unix_show_fdinfo() could report an incorrect fd count.
+
+sk_msg_recvmsg() does not support any SCM attributes in the
+first place.
+
+Let's drop all SCM attributes before passing skb to the
+SOCKMAP layer.
+
+[0]:
+BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
+Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
+
+CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+Workqueue: events sk_psock_backlog
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:122)
+ print_report (mm/kasan/report.c:379)
+ kasan_report (mm/kasan/report.c:597)
+ unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
+ unix_destroy_fpl (net/unix/garbage.c:317)
+ unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
+ sk_psock_backlog (./include/linux/skbuff.h:?)
+ process_scheduled_works (kernel/workqueue.c:?)
+ worker_thread (kernel/workqueue.c:?)
+ kthread (kernel/kthread.c:438)
+ ret_from_fork (arch/x86/kernel/process.c:164)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+ </TASK>
+
+Allocated by task 955:
+ kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
+ __kasan_slab_alloc (mm/kasan/common.c:369)
+ kmem_cache_alloc_noprof (mm/slub.c:4539)
+ sk_prot_alloc (net/core/sock.c:2240)
+ sk_alloc (net/core/sock.c:2301)
+ unix_create1 (net/unix/af_unix.c:1099)
+ unix_create (net/unix/af_unix.c:1169)
+ __sock_create (net/socket.c:1606)
+ __sys_socketpair (net/socket.c:1811)
+ __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:?)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Freed by task 496:
+ kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
+ kasan_save_free_info (mm/kasan/generic.c:587)
+ __kasan_slab_free (mm/kasan/common.c:287)
+ kmem_cache_free (mm/slub.c:6165)
+ __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
+ sk_psock_destroy (./include/net/sock.h:?)
+ process_scheduled_works (kernel/workqueue.c:?)
+ worker_thread (kernel/workqueue.c:?)
+ kthread (kernel/kthread.c:438)
+ ret_from_fork (arch/x86/kernel/process.c:164)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+
+Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
+Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/unix/af_unix.c | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index d5d23a9296eac..88356cbfb68b1 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -1104,7 +1104,6 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 	struct net *net = dev_net_rcu(skb->dev);
- 	struct net_device *dev = icmp6_dev(skb);
- 	struct inet6_dev *idev = __in6_dev_get(dev);
--	const struct in6_addr *saddr, *daddr;
- 	struct icmp6hdr *hdr;
- 	u8 type;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 660c7c441e0db..001f6602a6659 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1964,16 +1964,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
  
-@@ -1135,12 +1134,10 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ static void unix_destruct_scm(struct sk_buff *skb)
+ {
+-	struct scm_cookie scm;
++	struct scm_cookie scm = {};
++
++	swap(scm.pid, UNIXCB(skb).pid);
  
- 	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_INMSGS);
+-	memset(&scm, 0, sizeof(scm));
+-	scm.pid = UNIXCB(skb).pid;
+ 	if (UNIXCB(skb).fp)
+ 		unix_detach_fds(&scm, skb);
  
--	saddr = &ipv6_hdr(skb)->saddr;
--	daddr = &ipv6_hdr(skb)->daddr;
--
- 	if (skb_checksum_validate(skb, IPPROTO_ICMPV6, ip6_compute_pseudo)) {
- 		net_dbg_ratelimited("ICMPv6 checksum failed [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
- 		goto csum_error;
+-	/* Alas, it calls VFS */
+-	/* So fscking what? fput() had been SMP-safe since the last Summer */
+ 	scm_destroy(&scm);
++}
++
++static void unix_wfree(struct sk_buff *skb)
++{
++	unix_destruct_scm(skb);
+ 	sock_wfree(skb);
+ }
+ 
+@@ -1989,7 +1992,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
+ 	if (scm->fp && send_fds)
+ 		err = unix_attach_fds(scm, skb);
+ 
+-	skb->destructor = unix_destruct_scm;
++	skb->destructor = unix_wfree;
+ 	return err;
+ }
+ 
+@@ -2066,6 +2069,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
  	}
+ }
  
-@@ -1220,7 +1217,8 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 			break;
++static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
++{
++	scm_stat_del(sk, skb);
++	unix_destruct_scm(skb);
++	skb->destructor = sock_wfree;
++}
++
+ /*
+  *	Send AF_UNIX data.
+  */
+@@ -2679,10 +2689,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	int err;
  
- 		net_dbg_ratelimited("icmpv6: msg of unknown type [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
+ 	mutex_lock(&u->iolock);
++
+ 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
+-	mutex_unlock(&u->iolock);
+-	if (!skb)
++	if (!skb) {
++		mutex_unlock(&u->iolock);
+ 		return err;
++	}
++
++	unix_orphan_scm(sk, skb);
++
++	mutex_unlock(&u->iolock);
  
- 		/*
- 		 * error of unknown type.
+ 	return recv_actor(sk, skb);
+ }
+@@ -2882,6 +2898,9 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ #endif
+ 
+ 	spin_unlock(&queue->lock);
++
++	unix_orphan_scm(sk, skb);
++
+ 	mutex_unlock(&u->iolock);
+ 
+ 	return recv_actor(sk, skb);
 -- 
 2.53.0
 
