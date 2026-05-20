@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6702701C4;
-	Wed, 20 May 2026 16:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488AC317160;
+	Wed, 20 May 2026 16:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296024; cv=none; b=F8eUIn9HuT75nLyE8b4jP9C3LYg1v44jJizyR3BkULddcYgxAnXOGqI8FWW2YhmYPhWMF/695J7ZLzx3bq5x091i2MOYlKbNg+5/feZlZawW41JnmYt2rjtHQK683ijqnKof9gPTp4Gl4p2X+OAx1sf99rQUj5wH/iDZg/ezz0E=
+	t=1779296027; cv=none; b=OFPb7oRma4q3kD6ksmQCtNcyFwKVDk9AZZlIoxyzRIWR9l+CuzKzGuTUV8vHeCoYmoSh1u8bH/5nb4UZjCoZo5funYD/IfwGU/XcecmvwcFWCiFFwWrxoFl+MdsQNZg9HXoSTJF5WGaOQ6E+827Z1hunf/Uw118/Tckjxiq9aXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296024; c=relaxed/simple;
-	bh=4MccKmamZYvlABKVFj6YCe5MAn6H45bQzxi1IhUHbUw=;
+	s=arc-20240116; t=1779296027; c=relaxed/simple;
+	bh=WgCgJrnqWquAnd7EjvFd//MGWa+7Q+B6te5Y3wiOGAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/h2mX148Qxrpmc27Y6m6f7P5nIAjiu9auDQ4p+xtWwy903xXwNoOsAe0mOaU0VEHBPvs5Z1Lv4WkgkZk07EeILK/alPsO5Ld7FiKiM4wlJiMsSsnJo7Cdx8BvKGO6bmq95o69khgN7hEw20cCRJ2XHkXMM+xYiUKew2deZpe7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNESgLlE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ntpi5orBRyDiFJkor+UA9HU3Ilgpcq9cNiw0Fgkya2lDALj0p3U4925VFiIF2bttTikfkKZ2QxbsGz/94BEbcyNpfLcs2wU2f3fEBFECzUhAOaPvydtiqcZrZTNmDASLkkgPWNx2/FOC4Bsxv2hjQutZRpl5A1M7deZbPDaliwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcUobdJS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNESgLlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155EB1F000E9;
-	Wed, 20 May 2026 16:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcUobdJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF9D1F000E9;
+	Wed, 20 May 2026 16:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296023;
-	bh=VJfXwYoPU1S6nwYcQLauak7mJaCrC7EYG5rR51ePVto=;
+	s=korg; t=1779296026;
+	bh=1Zr+jpgjXMxN5lMPi4F20vea2+LeC6kXqtSU28FGW9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNESgLlELh8h7R1KNi/K1dtHzofV6DfxhU16PdaOInJ+TLagJnX11PQwHStmqZfuQ
-	 MgVNbf/2bny7/CrjkK4WXTEbMHa9QYzRwUMA6MR/CoiR/x0mVv9Ry/Z8n/YTMdTyIt
-	 7S+JtVhx6EXjPm5OL8xaPkVHWLqKEdEYScWDQurk=
+	b=PcUobdJSfha/AIDJki4+zJWhVamimQCDg/1C13vGZjJNWy9GYB20ewicNw0qg40xP
+	 iEKON9xa3n8buq2KZldkTJAsYtUteIQJqp0BPEGRMWAttmSmYubOb2HQ85pFffav/P
+	 U0y+/W5czzIT7byAKEKJbE+FLcSSmQ9lDlkqQVDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Yaroshevskiy <dyaroshev@meta.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
-	Ian Rogers <irogers@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ye Bin <yebin10@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0641/1146] perf stat: Fix crash on arm64
-Date: Wed, 20 May 2026 18:14:51 +0200
-Message-ID: <20260520162202.686130484@linuxfoundation.org>
+Subject: [PATCH 7.0 0606/1146] ext4: fix the error handling process in extents_kunit_init).
+Date: Wed, 20 May 2026 18:14:16 +0200
+Message-ID: <20260520162201.894102779@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,91 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit b5708a308a5602d4a3caf0720dce452082d443ec ]
+[ Upstream commit 17f73c95d47325000ee68492be3ad76ae09f6f19 ]
 
-Perf stat is crashing on arm64 hosts with the following issue:
+The error processing in extents_kunit_init() is improper, causing
+resource leakage.
+Reconstruct the error handling process to prevent potential resource
+leaks
 
-  # make -C tools/perf DEBUG=1
-  # perf stat sleep 1
-  perf: util/evsel.c:2034: get_group_fd: Assertion `!(!leader->core.fd)' failed.
-  [1]    1220794 IOT instruction (core dumped)  ./perf stat
-
-The sorting function introduced by commit a745c0831c15c ("perf stat:
-Sort default events/metrics") compares events based on their individual
-properties. This can cause events from different groups to be
-interleaved, resulting in group members appearing before their leaders
-in the sorted evlist.
-
-When the iterator opens events in list order, a group member may be
-processed before its leader has been opened.
-
-For example, CPU_CYCLES (idx=32) with leader STALL_SLOT_BACKEND (idx=37)
-could be sorted before its leader, causing the crash when CPU_CYCLES
-tries to get its group fd from the not-yet-opened leader.
-
-Fix this by comparing events based on their leader's attributes instead
-of their own attributes when the events are in different groups. This
-ensures all members of a group share the same sort key as their leader,
-keeping groups together and guaranteeing leaders are opened before their
-members.
-
-Fixes: a745c0831c15c ("perf stat: Sort default events/metrics")
-Reported-by: Denis Yaroshevskiy <dyaroshev@meta.com>
-Tested-by: Dmitry Ilvokhin <d@ilvokhin.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: cb1e0c1d1fad ("ext4: kunit tests for extent splitting and conversion")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260330133035.287842-4-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ fs/ext4/extents-test.c | 50 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 15 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 2eb76d7476b7f..6a12c1068d8a0 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -1917,25 +1917,33 @@ static int default_evlist_evsel_cmp(void *priv __maybe_unused,
- 	const struct evsel *lhs = container_of(lhs_core, struct evsel, core);
- 	const struct perf_evsel *rhs_core = container_of(r, struct perf_evsel, node);
- 	const struct evsel *rhs = container_of(rhs_core, struct evsel, core);
-+	const struct evsel *lhs_leader = evsel__leader(lhs);
-+	const struct evsel *rhs_leader = evsel__leader(rhs);
+diff --git a/fs/ext4/extents-test.c b/fs/ext4/extents-test.c
+index 3d4663d99eb13..4042bc8a95e2f 100644
+--- a/fs/ext4/extents-test.c
++++ b/fs/ext4/extents-test.c
+@@ -225,34 +225,38 @@ static int extents_kunit_init(struct kunit *test)
+ 		(struct kunit_ext_test_param *)(test->param_value);
+ 	int err;
  
--	if (evsel__leader(lhs) == evsel__leader(rhs)) {
-+	if (lhs_leader == rhs_leader) {
- 		/* Within the same group, respect the original order. */
- 		return lhs_core->idx - rhs_core->idx;
- 	}
+-	sb = sget(&ext_fs_type, NULL, ext_set, 0, NULL);
+-	if (IS_ERR(sb))
+-		return PTR_ERR(sb);
+-
+-	sb->s_blocksize = 4096;
+-	sb->s_blocksize_bits = 12;
+-
+ 	sbi = kzalloc_obj(struct ext4_sb_info);
+ 	if (sbi == NULL)
+ 		return -ENOMEM;
  
-+	/*
-+	 * Compare using leader's attributes so that all members of a group
-+	 * stay together. This ensures leaders are opened before their members.
-+	 */
++	sb = sget(&ext_fs_type, NULL, ext_set, 0, NULL);
++	if (IS_ERR(sb)) {
++		kfree(sbi);
++		return PTR_ERR(sb);
++	}
 +
- 	/* Sort default metrics evsels first, and default show events before those. */
--	if (lhs->default_metricgroup != rhs->default_metricgroup)
--		return lhs->default_metricgroup ? -1 : 1;
-+	if (lhs_leader->default_metricgroup != rhs_leader->default_metricgroup)
-+		return lhs_leader->default_metricgroup ? -1 : 1;
+ 	sbi->s_sb = sb;
+ 	sb->s_fs_info = sbi;
  
--	if (lhs->default_show_events != rhs->default_show_events)
--		return lhs->default_show_events ? -1 : 1;
-+	if (lhs_leader->default_show_events != rhs_leader->default_show_events)
-+		return lhs_leader->default_show_events ? -1 : 1;
++	sb->s_blocksize = 4096;
++	sb->s_blocksize_bits = 12;
++
+ 	if (!param || !param->disable_zeroout)
+ 		sbi->s_extent_max_zeroout_kb = 32;
  
- 	/* Sort by PMU type (prefers legacy types first). */
--	if (lhs->pmu != rhs->pmu)
--		return lhs->pmu->type - rhs->pmu->type;
-+	if (lhs_leader->pmu != rhs_leader->pmu)
-+		return lhs_leader->pmu->type - rhs_leader->pmu->type;
++	err = ext4_es_register_shrinker(sbi);
++	if (err)
++		goto out_deactivate;
++
+ 	/* setup the mock inode */
+ 	k_ctx.k_ei = kzalloc_obj(struct ext4_inode_info);
+-	if (k_ctx.k_ei == NULL)
+-		return -ENOMEM;
++	if (k_ctx.k_ei == NULL) {
++		err = -ENOMEM;
++		goto out;
++	}
+ 	ei = k_ctx.k_ei;
+ 	inode = &ei->vfs_inode;
  
--	/* Sort by name. */
--	return strcmp(evsel__name((struct evsel *)lhs), evsel__name((struct evsel *)rhs));
-+	/* Sort by leader's name. */
-+	return strcmp(evsel__name((struct evsel *)lhs_leader),
-+		      evsel__name((struct evsel *)rhs_leader));
+-	err = ext4_es_register_shrinker(sbi);
+-	if (err)
+-		return err;
+-
+ 	ext4_es_init_tree(&ei->i_es_tree);
+ 	rwlock_init(&ei->i_es_lock);
+ 	INIT_LIST_HEAD(&ei->i_es_list);
+@@ -267,8 +271,10 @@ static int extents_kunit_init(struct kunit *test)
+ 	inode->i_sb = sb;
+ 
+ 	k_ctx.k_data = kzalloc(EXT_DATA_LEN * 4096, GFP_KERNEL);
+-	if (k_ctx.k_data == NULL)
+-		return -ENOMEM;
++	if (k_ctx.k_data == NULL) {
++		err = -ENOMEM;
++		goto out;
++	}
+ 
+ 	/*
+ 	 * set the data area to a junk value
+@@ -313,6 +319,20 @@ static int extents_kunit_init(struct kunit *test)
+ 	up_write(&sb->s_umount);
+ 
+ 	return 0;
++
++out:
++	kfree(k_ctx.k_ei);
++	k_ctx.k_ei = NULL;
++
++	kfree(k_ctx.k_data);
++	k_ctx.k_data = NULL;
++
++	ext4_es_unregister_shrinker(sbi);
++out_deactivate:
++	deactivate_locked_super(sb);
++	kfree(sbi);
++
++	return err;
  }
  
  /*
