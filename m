@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135F33D1CC6;
-	Wed, 20 May 2026 18:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2BB371048;
+	Wed, 20 May 2026 18:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301746; cv=none; b=iEeNTlH8Sj1z53AAYG5PrukM5W3qsVyMnQl516isR0nKTnQ77GXay8LJ2Zyjtt+ujBgTEUPiXLWrcRFJvDOr4UHA88LEiiSzG5FQaVdltI6xNu0RIpL6iJH5AC7LFU9qCJspjYFkSv4nOXxwd5PlmmGi0rQD04DuqpFRmZcX2Vg=
+	t=1779301748; cv=none; b=Gaz6lObGoTASIkZqFo1BlWil7LKl9rM+yXvGyLUxef5zNBVRikxjKtH7XS228KSpJqOF7uK1tm9HlV2qMPDhAJEgMcyBNP/2QOQTQZg7b/o3EG5sUNgVNm7Aprf96hpC/83ONWflqMedto/N179U9cBHQJamOftwgZ4mfz04hmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301746; c=relaxed/simple;
-	bh=aumo05n1nj9s+Hl/oPX7HfGLNOGRnElspchcyskp8Gs=;
+	s=arc-20240116; t=1779301748; c=relaxed/simple;
+	bh=MZAcWi0r7+kKpnAA7r7nbdivguIBnIJ8WhBxaRTiZPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inm1C9IRoT+0+rsCxFrkEeBjaZTBTWqL8bDUfoRJivQQV40dioMgfzNj7fPGOcb3sys341mP/Tr7pIzcW3FQE2bD4LQGZ5yxg7Y1rREmdBgbeXRIMai6J8EP9qtl1nu+qgsb9z6jfZIXeRRWbTe6FXOre4j27r+gZAQh1NnRsus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuvIfZ7N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Snvk7UECZ2BcmzAkXeXjhtSyLSSWPKQIZ82CL4q2rJWTmwwsGtuRcJFfnOrrjNzq9UaJ820lT+cFBC5Zh4INMiTD/HCd6Y7QjPyZQ6E/hxPjTRCnvXRK9onFTVJy4/iqn6GWAhDwF7TtadtazooBySbCK3uAbrw/BXzbMmdcEQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApujYdBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuvIfZ7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DB41F00893;
-	Wed, 20 May 2026 18:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApujYdBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B871F00893;
+	Wed, 20 May 2026 18:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301744;
-	bh=OskyDKhikISSgIBLMQwzz51+OGBoIP8C/ke2lKzP+ZE=;
+	s=korg; t=1779301747;
+	bh=sS9FdlKYetLsnAltaek6nUAzqHxLhLiZXrN94Jz+KPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vuvIfZ7NUcFY6IXp6qyCYXXPXF5iBT9IzCO13MBHR/Ob6ai21POTgxeNcTz8nd5Ip
-	 7s+FIO2miH6LdaiCNIbtcDs+UMf+QNxWe227XVP3+RpEuWb4tVEZ+K97idFv2c6hx+
-	 BWcBv5LG4aP46bEVAqv8BsyQ9/J9/5bjvfIWGqmQ=
+	b=ApujYdBCLcreGrHF8kHr4QUM8X/dyhoLgCMfn6cxxkEvU0lqeRmD/MLLAVfXKp8xv
+	 UHcp47DNGlo0mrVFZBeV6blpUkidMMmcHdN7ay3GAD7znBtwmsRg2dMPt5rj3ha+GD
+	 +CxhgSfoMVCHj/+R54qVaVN0rqnL6mrDfuqEQ3BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 660/666] f2fs: fix incorrect file address mapping when inline inode is unwritten
-Date: Wed, 20 May 2026 18:24:31 +0200
-Message-ID: <20260520162125.594705847@linuxfoundation.org>
+Subject: [PATCH 6.12 661/666] f2fs: fix false alarm of lockdep on cp_global_sem lock
+Date: Wed, 20 May 2026 18:24:32 +0200
+Message-ID: <20260520162125.616553719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,65 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 68a0178981a0f493295afa29f8880246e561494c ]
+[ Upstream commit 6a5e3de9c2bb0b691d16789a5d19e9276a09b308 ]
 
-When `fileinfo->fi_flags` does not have the `FIEMAP_FLAG_SYNC` bit set
-and inline data has not been persisted yet, the physical address of the
-extent is calculated incorrectly for unwritten inline inodes.
+lockdep reported a potential deadlock:
 
-root@vm:/mnt/f2fs# dd if=/dev/zero of=data.3k bs=3k count=1
-root@vm:/mnt/f2fs# f2fs_io fiemap 0 100 data.3k
-Fiemap: offset = 0 len = 100
-	logical addr.    physical addr.   length           flags
-0	0000000000000000 00000ffffffff16c 0000000000000c00 00000301
+a) TCMU device removal context:
+ - call del_gendisk() to get q->q_usage_counter
+ - call start_flush_work() to get work_completion of wb->dwork
+b) f2fs writeback context:
+ - in wb_workfn(), which holds work_completion of wb->dwork
+ - call f2fs_balance_fs() to get sbi->gc_lock
+c) f2fs vfs_write context:
+ - call f2fs_gc() to get sbi->gc_lock
+ - call f2fs_write_checkpoint() to get sbi->cp_global_sem
+d) f2fs mount context:
+ - call recover_fsync_data() to get sbi->cp_global_sem
+ - call f2fs_check_and_fix_write_pointer() to call blkdev_report_zones()
+   that goes down to blk_mq_alloc_request and get q->q_usage_counter
 
-This patch fixes the issue by checking if the inode's address is valid.
-If the inline inode is unwritten, set the physical address to 0 and
-mark the extent with `FIEMAP_EXTENT_UNKNOWN | FIEMAP_EXTENT_DELALLOC`
-flags.
+Original callstack is in Closes tag.
 
+However, I think this is a false alarm due to before mount returns
+successfully (context d), we can not access file therein via vfs_write
+(context c).
+
+Let's introduce per-sb cp_global_sem_key, and assign the key for
+cp_global_sem, so that lockdep can recognize cp_global_sem from
+different super block correctly.
+
+A lot of work are done by Shin'ichiro Kawasaki, thanks a lot for
+the work.
+
+Fixes: c426d99127b1 ("f2fs: Check write pointer consistency of open zones")
 Cc: stable@kernel.org
-Fixes: 67f8cf3cee6f ("f2fs: support fiemap for inline_data")
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Reported-and-tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/20260218125237.3340441-1-shinichiro.kawasaki@wdc.com
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ renamed `ifolio` to `ipage` in `inline_data_addr()` and `F2FS_INODE()` calls ]
+[ adapted context to use `init_f2fs_rwsem()` instead of the not-yet-backported `init_f2fs_rwsem_trace()` macro ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inline.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/f2fs/f2fs.h  |    3 +++
+ fs/f2fs/super.c |   11 +++++++++++
+ 2 files changed, 14 insertions(+)
 
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -790,7 +790,7 @@ int f2fs_read_inline_dir(struct file *fi
- int f2fs_inline_data_fiemap(struct inode *inode,
- 		struct fiemap_extent_info *fieinfo, __u64 start, __u64 len)
- {
--	__u64 byteaddr, ilen;
-+	__u64 byteaddr = 0, ilen;
- 	__u32 flags = FIEMAP_EXTENT_DATA_INLINE | FIEMAP_EXTENT_NOT_ALIGNED |
- 		FIEMAP_EXTENT_LAST;
- 	struct node_info ni;
-@@ -823,9 +823,14 @@ int f2fs_inline_data_fiemap(struct inode
- 	if (err)
- 		goto out;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1858,6 +1858,9 @@ struct f2fs_sb_info {
+ 	spinlock_t iostat_lat_lock;
+ 	struct iostat_lat_info *iostat_io_lat;
+ #endif
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++	struct lock_class_key cp_global_sem_key;
++#endif
+ };
  
--	byteaddr = (__u64)ni.blk_addr << inode->i_sb->s_blocksize_bits;
--	byteaddr += (char *)inline_data_addr(inode, ipage) -
--					(char *)F2FS_INODE(ipage);
-+	if (__is_valid_data_blkaddr(ni.blk_addr)) {
-+		byteaddr = (__u64)ni.blk_addr << inode->i_sb->s_blocksize_bits;
-+		byteaddr += (char *)inline_data_addr(inode, ipage) -
-+						(char *)F2FS_INODE(ipage);
-+	} else {
-+		f2fs_bug_on(F2FS_I_SB(inode), ni.blk_addr != NEW_ADDR);
-+		flags |= FIEMAP_EXTENT_DELALLOC | FIEMAP_EXTENT_UNKNOWN;
-+	}
- 	err = fiemap_fill_next_extent(fieinfo, start, byteaddr, ilen, flags);
- 	trace_f2fs_fiemap(inode, start, byteaddr, ilen, flags, err);
- out:
+ /* Definitions to access f2fs_sb_info */
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4490,6 +4490,11 @@ try_onemore:
+ 	init_f2fs_rwsem(&sbi->gc_lock);
+ 	mutex_init(&sbi->writepages);
+ 	init_f2fs_rwsem(&sbi->cp_global_sem);
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++	lockdep_register_key(&sbi->cp_global_sem_key);
++	lockdep_set_class(&sbi->cp_global_sem.internal_rwsem,
++					&sbi->cp_global_sem_key);
++#endif
+ 	init_f2fs_rwsem(&sbi->node_write);
+ 	init_f2fs_rwsem(&sbi->node_change);
+ 	spin_lock_init(&sbi->stat_lock);
+@@ -4963,6 +4968,9 @@ free_sb_buf:
+ free_sbi:
+ 	if (sbi->s_chksum_driver)
+ 		crypto_free_shash(sbi->s_chksum_driver);
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++	lockdep_unregister_key(&sbi->cp_global_sem_key);
++#endif
+ 	kfree(sbi);
+ 	sb->s_fs_info = NULL;
+ 
+@@ -5015,6 +5023,9 @@ static void kill_f2fs_super(struct super
+ 	/* Release block devices last, after fscrypt_destroy_keyring(). */
+ 	if (sbi) {
+ 		destroy_device_list(sbi);
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++		lockdep_unregister_key(&sbi->cp_global_sem_key);
++#endif
+ 		kfree(sbi);
+ 		sb->s_fs_info = NULL;
+ 	}
 
 
