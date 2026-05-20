@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA08D3FD147;
-	Wed, 20 May 2026 18:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443AE40B6F7;
+	Wed, 20 May 2026 18:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302687; cv=none; b=Zqj/5gvD4cyW916VeT5RwP/CXVJ30XqYdMA8/eYbai2IJH8sLT2ZS9eDeyxdr2zQKJ2a9bn+U6ZJ7oVPGxbyHE8rG9Yu5zGY+Ryx17OaP+ZeQ3Kv6StrWRIOrrFrTMCT/+cjiD1DbHQ4E7eaLpaZK2KJbnfzLgdHjqvBaXfgbFs=
+	t=1779302689; cv=none; b=Zo/uf4/rRAteVRWfEHlK+UAmB/4STNsPpZuxbULp4aPLQSLuvoTaqLNnCaHVCMFVZHYXQwNffAkvHe5fRhuxpMG0lZumvAsfTFZEDTKAQ+KxQRlOrJHC70qiwN+JXjzGjMvae6Sui0g9sxsJlGMVvilsThOjOCbwTWQeDcKHEIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302687; c=relaxed/simple;
-	bh=XoPB1ZLHpiBK3pK0fH4si/8ucsAZy/J6ilcBcRg+XzM=;
+	s=arc-20240116; t=1779302689; c=relaxed/simple;
+	bh=MMaZ5QjLUL7rLdD6AzzUeSeFbsomRMtyF0frsWf+xLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGMBb0MmTg+I8xTdWOMl2xG4c30tlpfwHC6p6Kv94M4lkDdZBH0Uok3G1sFB4fH55rn9ANIy9VMbxrR1rcBICXDFrdOGfx+ptMW6pjad1/H+e2loGdPqoYyxjb/f6WG3dfudF7HViYN4K+z0ANfJqCovyUgibB4RW3lm46cDYII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHmBvZIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XxXjsSlak+qCF2sBXGReSmNjRGMYcJEF4235KtjaOkERBhWb8hc9NvIy35rpG9vRNCsU4mz+tCCPqC0o4oAEUfxOD+tZfRq84hsvbHJR7xNtKxza6WbqqHVZrpWpwmUOmonrBWJRc0jAj+VZYAm06illluPdNB4a1roXVDetj5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FucFaakp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHmBvZIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CFF1F000E9;
-	Wed, 20 May 2026 18:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FucFaakp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF701F000E9;
+	Wed, 20 May 2026 18:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302685;
-	bh=bkhGaHKAbemsgZy/pu0uTYbBf+aTKRQVKYsCFWLQAoM=;
+	s=korg; t=1779302688;
+	bh=PrkgW+0tmUbrHrseAkom5KwpZJyvm0qizYawogvzjIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHmBvZIShGTskWV1fbHus6JlKlKvNHInaMRn4o6ibz8FXyZg4F4E9wiyfJ7uXQ81r
-	 VfOZkYAJioq7nqvgHPnVSzXpHrn+hUc5a3ca/8WoBw+hQHz0mmDqFm1CcyW/qDxTa7
-	 9FXunYAlR9i5inFIbR9ioGtFoCDmncJTe3FH7CB0=
+	b=FucFaakpIL2Jvg+q0ZDdzxd3/oVqCEPvIkewY8qqkbtr7xMN+ZPqhvkRoGKHsLLsg
+	 nytFEBgdmkfeUySzTyvpAEUmfg5rG40JTZ0xKFq9f4BeAL0RXvbHXnAs0nHiKdnY6S
+	 hlvS3BVnqrufHFJONWltokwKfea/aPzPV18KbqHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 362/508] mailbox: mailbox-test: dont free the reused channel
-Date: Wed, 20 May 2026 18:23:05 +0200
-Message-ID: <20260520162106.474642879@linuxfoundation.org>
+Subject: [PATCH 6.6 345/508] net/rds: zero per-item info buffer before handing it to visitors
+Date: Wed, 20 May 2026 18:22:48 +0200
+Message-ID: <20260520162106.108408293@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,44 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 88ebadbf0deefdaccdab868b44ff70a0a257f473 ]
+[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
 
-The RX channel can be aliased to the TX channel if it has a different
-MMIO. This special case needs to be handled when freeing the channels
-otherwise a double-free occurs.
+rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
+caller-allocated on-stack u64 buffer to a per-connection visitor and
+then copy the full item_len bytes back to user space via
+rds_info_copy() regardless of how much of the buffer the visitor
+actually wrote.
 
-Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
+write a subset of their output struct when the underlying
+rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
+and the two GIDs via explicit memsets). Several u32 fields
+(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
+cache_allocs) and the 2-byte alignment hole between sl and
+cache_allocs remain as whatever stack contents preceded the visitor
+call and are then memcpy_to_user()'d out to user space.
+
+struct rds_info_rdma_connection and struct rds6_info_rdma_connection
+are the only rds_info_* structs in include/uapi/linux/rds.h that are
+not marked __attribute__((packed)), so they have a real alignment
+hole. The other info visitors (rds_conn_info_visitor,
+rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
+their packed output struct today and are not known to be vulnerable,
+but a future visitor that adds a conditional write-path would have
+the same bug.
+
+Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
+a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
+binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
+any netdev is sufficient), sendto()'s any peer on the same subnet
+(fails cleanly but installs an rds_connection in the global hash in
+RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
+RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
+bytes of stack garbage including kernel text/data pointers:
+
+    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
+    8..39  00 ...                      gids (memset-zeroed)
+    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
+    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
+    56..59 01 00 08 00                 rdma_mr_size (garbage)
+    60..61 00 00                       tos, sl
+    62..63 00 00                       alignment padding
+    64..67 18 00 00 00                 cache_allocs (garbage)
+
+Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
+and rds_walk_conn_path_info() before invoking the visitor. This
+covers the IPv4/IPv6 IB visitors and hardens all current and future
+visitors against the same class of bug.
+
+No functional change for visitors that fully populate their output.
+
+Changes in v2:
+- retarget at the net tree (subject prefix "[PATCH net v2]",
+  net/rds: prefix in the title)
+- pick up Reviewed-by tags from Sharath Srinivasan and
+  Allison Henderson
+
+Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/rds/connection.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 6d431a8b275c7..c06d128c44764 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -422,7 +422,7 @@ static int mbox_test_probe(struct platform_device *pdev)
- err_free_chans:
- 	if (tdev->tx_channel)
- 		mbox_free_channel(tdev->tx_channel);
--	if (tdev->rx_channel)
-+	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
- 		mbox_free_channel(tdev->rx_channel);
- 	return ret;
- }
-@@ -435,7 +435,7 @@ static int mbox_test_remove(struct platform_device *pdev)
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 98c0d5ff9de9c..cd41f83863c89 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
  
- 	if (tdev->tx_channel)
- 		mbox_free_channel(tdev->tx_channel);
--	if (tdev->rx_channel)
-+	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
- 		mbox_free_channel(tdev->rx_channel);
++			/* Zero the per-item buffer before handing it to the
++			 * visitor so any field the visitor does not write -
++			 * including implicit alignment padding - cannot leak
++			 * stack contents to user space via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no c_lock usage.. */
+ 			if (!visitor(conn, buffer))
+ 				continue;
+@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 			 */
+ 			cp = conn->c_path;
  
- 	return 0;
++			/* Zero the per-item buffer for the same reason as
++			 * rds_for_each_conn_info(): any byte the visitor
++			 * does not write (including alignment padding) must
++			 * not leak stack contents via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no cp_lock usage.. */
+ 			if (!visitor(cp, buffer))
+ 				continue;
 -- 
 2.53.0
 
