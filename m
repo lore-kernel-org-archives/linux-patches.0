@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D6B4F5E0;
-	Wed, 20 May 2026 18:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B014F5E0;
+	Wed, 20 May 2026 18:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300030; cv=none; b=OeyIfyIxzO122xVH/IkOz1jVNbCz6zjGSOj0AqTkUS87YVOIAO5XdxsB/XiQStKnqBz3cDWFXX9z/vT8mv1g1y1AKdKZxMYpMw+kHA8Tg1fbdL+Qjyrmzdo+rCuL9emJPjma1LqsKIPLcZbk6FXAxU2CRTUTXsMzfsM194Uvp18=
+	t=1779300032; cv=none; b=hlPD66Y3OiL3F/+wFK8drvb1n8sFd7Ev0KToUi8kN6LMKhfhBTIXWQRPb1EBAeyf0zJSpU6cNt8NJj/5xs1add9bnLmAbs84gIyWcK3adcNM6Vo50A3h9Pg4awtD2NMF/nrHVwaf+9JJ8VA93pXWRO1bpWaw4Rkb6IBYzC2IOu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300030; c=relaxed/simple;
-	bh=mysAR7jHoDMe6BKcM5pC4HIMqM3PsJQ4NC3yof/z91M=;
+	s=arc-20240116; t=1779300032; c=relaxed/simple;
+	bh=9+MQjh0laZe8pD/h0TKW9JOSfbnmyxLeQBxmTNUp0qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pI+VwXj8GXAX+dbiVYQ3fjpps/pNPzOZE2HHkx01cVzU7jPIa1GJrkHOIM9MEjqm0M/ER8/sjgw1JbiISrN8MowBz62rKzrgCWc2RR5qjAKO9SKBq/hQJpbSaCV6Fkkoyxuf2w2kvFQTr6rVVxqvZgp2hAiCrLQmy+bkr1uZqP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzMLK3ku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ygjk6ogAbSXS08u8Mx+ZBHTA+K9jPWzLf5JGdUyvDs6mZ2xqrPYp6jstUo+9ka3v9BPP/n+McP81gXvAe012QvhytIDcuqM4bAJBRsbjYVjG6XSirxqoierGqpVvRuUcOeBPh/KqPE5j8CuKScKV6YxnPKqjDtdT3b1N3kggpFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcPfC9aN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzMLK3ku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993671F000E9;
-	Wed, 20 May 2026 18:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcPfC9aN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E101F000E9;
+	Wed, 20 May 2026 18:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300029;
-	bh=6eKwN6ISbfsyXajIn9NOltcrOY0w2lsPfueT68eHpno=;
+	s=korg; t=1779300031;
+	bh=4nj1tSrJlOHsmRqc7lGN7wCW9oS/iVezEmEoYKqA5nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rzMLK3kuUikvGEfRKZapZPSJ0IM+r8vIRVLPuN+BKIaKm3ivk8EApTOWbelIO+mB1
-	 bKhv1cA8eqA3CUmL4v8B8NOhJxcoPrUt3I8ajj8tqERxcSkc82cSgl/0aYbkpz+Zzm
-	 urLdFzZxU1L+KM/3n08Mbuz/qWHzXXOcwmzkgxtM=
+	b=TcPfC9aNhwPLCqc5SkypCTvNzlhz5Iqfde85ynxNix0hkLLdwu6VkPVU8UrNl0cLx
+	 yYMtrYIkgcnlzUMoMqljRNzGZFb7xUCv0Mhdj1e3W6AJHpSpQri/OGi9TvXa/707OE
+	 O48ZjTjcudbdLfnydEOAbqMn/fNHRn8w4HBn8HWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	yangshiguang <yangshiguang@xiaomi.com>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/666] debugfs: fix placement of EXPORT_SYMBOL_GPL for debugfs_create_str()
-Date: Wed, 20 May 2026 18:13:51 +0200
-Message-ID: <20260520162111.667952303@linuxfoundation.org>
+Subject: [PATCH 6.12 021/666] soundwire: debugfs: initialize firmware_file to empty string
+Date: Wed, 20 May 2026 18:13:52 +0200
+Message-ID: <20260520162111.690467587@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,41 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 4afc929c0f74c4f22b055a82b371d50586da58ca ]
+[ Upstream commit 7215e4552f31e53595eae56a834f7e286beecccc ]
 
-The EXPORT_SYMBOL_GPL() for debugfs_create_str was placed incorrectly
-away from the function definition. Move it immediately below the
-debugfs_create_str() function where it belongs.
+Passing NULL to debugfs_create_str() causes a NULL pointer dereference,
+and creating debugfs nodes with NULL string pointers is no longer
+permitted.
 
-Fixes: d60b59b96795 ("debugfs: Export debugfs_create_str symbol")
+Additionally, firmware_file is a global pointer. Previously, adding every
+new slave blindly overwrote it with NULL.
+
+Fix these issues by initializing firmware_file to an allocated empty
+string once in the subsystem init path (sdw_debugfs_init), and freeing
+it in the exit path. Existing driver code handles empty strings
+correctly.
+
+Fixes: fe46d2a4301d ("soundwire: debugfs: add interface to read/write commands")
+Reported-by: yangshiguang <yangshiguang@xiaomi.com>
+Closes: https://lore.kernel.org/lkml/17647e4c.d461.19b46144a4e.Coremail.yangshiguang1011@163.com/
 Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260323085930.88894-3-hanguidong02@gmail.com
+Link: https://patch.msgid.link/20260323085930.88894-4-hanguidong02@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soundwire/debugfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index d3ffd954d6f94..cc9587a1c9a9f 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -991,7 +991,6 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
+diff --git a/drivers/soundwire/debugfs.c b/drivers/soundwire/debugfs.c
+index c30f571934ee2..93c93a128fb23 100644
+--- a/drivers/soundwire/debugfs.c
++++ b/drivers/soundwire/debugfs.c
+@@ -295,8 +295,8 @@ void sdw_slave_debugfs_init(struct sdw_slave *slave)
+ 	debugfs_create_file("go", 0200, d, slave, &cmd_go_fops);
  
- 	return ret;
+ 	debugfs_create_file("read_buffer", 0400, d, slave, &read_buffer_fops);
+-	firmware_file = NULL;
+-	debugfs_create_str("firmware_file", 0200, d, &firmware_file);
++	if (firmware_file)
++		debugfs_create_str("firmware_file", 0200, d, &firmware_file);
+ 
+ 	slave->debugfs = d;
  }
--EXPORT_SYMBOL_GPL(debugfs_create_str);
+@@ -308,10 +308,15 @@ void sdw_slave_debugfs_exit(struct sdw_slave *slave)
  
- static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
- 				      size_t count, loff_t *ppos)
-@@ -1086,6 +1085,7 @@ void debugfs_create_str(const char *name, umode_t mode,
- 	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
- 				   &fops_str_ro, &fops_str_wo);
+ void sdw_debugfs_init(void)
+ {
++	if (!firmware_file)
++		firmware_file = kstrdup("", GFP_KERNEL);
++
+ 	sdw_debugfs_root = debugfs_create_dir("soundwire", NULL);
  }
-+EXPORT_SYMBOL_GPL(debugfs_create_str);
  
- static ssize_t read_file_blob(struct file *file, char __user *user_buf,
- 			      size_t count, loff_t *ppos)
+ void sdw_debugfs_exit(void)
+ {
+ 	debugfs_remove_recursive(sdw_debugfs_root);
++	kfree(firmware_file);
++	firmware_file = NULL;
+ }
 -- 
 2.53.0
 
