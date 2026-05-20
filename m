@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66862349AFF;
-	Wed, 20 May 2026 17:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEE4349AFF;
+	Wed, 20 May 2026 17:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299173; cv=none; b=S6RpXfbO0dZxMhpY43dl5KUV01yuyB0FIkYtZfzJDHK3W2q3OcvTLX2C+IfAES6/l45iB7I1p5OwG3B3udMw/6j5sydt0ClmqBK+6fDGvnGuITAA80DmVCOfL+oAH/AfsqjKsS/u7LHYJjMvbe9Us3jSxijdlf5q4B9nX1hdAFk=
+	t=1779299176; cv=none; b=jWiXiVRHq4CjbQMboFU3KeJdkFs9TOYqlS4MTn9bfYz7Ka4jK3dlhDGhAdv8l36pc+pKfjJlF371mgFzY+rGlIi1Z98GR20HeJwLl1cQhOUJg5Wb/tNmukSaAx5ekIan7SSlnL2qlZC01VJElkpICck+zOusHscoZBSNQkvL724=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299173; c=relaxed/simple;
-	bh=frgD5WnDc6inQBlcztNdySqPBieYpq6+YL9bxJsMWNE=;
+	s=arc-20240116; t=1779299176; c=relaxed/simple;
+	bh=OIK6fYivEkEByqiRwIvzrXGRldLrtY3c0L3qEXnuqmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qbc9P/hupVBid9fyqIM3mbzRmJ7h2tCEpBKZInDlr/vUQyC6bwgvBtTB8efJF4gnj7FuVKZjQuBqi+ojKLFqqpn4STyhKMe4wircOL4XdommSfBoL5yyVBG+OsZLiRXvMqZ07L0fhawr1UJuS9wEQj0aYUHfhkPI6m9/gwiV9eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGstAd1I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gHdBspvChYXueKbcvI7ZlVT2Av3oTJNGsdE9rDXXS/Fbzns8HdsEs5A0d5V74YfxjEy5EZT/Qz4pHLkRS7FsjcrGNIUcsz42s3ezKQHAr+NqdmpjVrPeZ6jGTI89tQs/Zk2GUOd6DjWfnlgtabL6jgrdZKzz6MTuuWL52g0Muy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRCmctdU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGstAd1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFD51F000E9;
-	Wed, 20 May 2026 17:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRCmctdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DCC1F000E9;
+	Wed, 20 May 2026 17:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299172;
-	bh=EwDUO7HTon8TMpuSV3dr/clmkTzjX6kBZTSIa3oWYk4=;
+	s=korg; t=1779299175;
+	bh=N3HIKl831OdrmmbP+Z0MoOKwfH0iWPZHXcK8Qh7g+PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGstAd1IMCvdc3ArcV1n4VN6PbhNyfU242D7zwMQ4YV4PIr8KHi8DpxmgREEXs8D1
-	 eLJsNlPBZSN0btAYhtifltrU9pxrffJj8BtobnBcOPkmyx4E+XjphVRnmeflfon3V1
-	 p458Fz+jZ76T5QNBkG1gwjWxcE/y22pq+rsuB8G0=
+	b=PRCmctdU2RM4dFz0H5wPBo5iwWDCEn6rJOf0MEmMs/dO16xNseRw4TdStf1ub0NFf
+	 Gx/8p32jhg8+e3LbUr7bBHf54AfXrsih6V50Zxj8XSQR9mr6pEF0U78mIbSRp1Mpa8
+	 Fkbf+jnyLtBXEJqmkjslnBFSsKm9PI2r7of1Zldg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 690/957] net/sched: sch_sfb: annotate data-races in sfb_dump_stats()
-Date: Wed, 20 May 2026 18:19:33 +0200
-Message-ID: <20260520162149.504117277@linuxfoundation.org>
+Subject: [PATCH 6.18 664/957] netfilter: nat: use kfree_rcu to release ops
+Date: Wed, 20 May 2026 18:19:07 +0200
+Message-ID: <20260520162148.931332635@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,167 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1ada03fdef82d3d7d2edb9dcd3acc91917675e48 ]
+[ Upstream commit 6eda0d771f94267f73f57c94630aa47e90957915 ]
 
-sfb_dump_stats() only runs with RTNL held,
-reading fields that can be changed in qdisc fast path.
+Florian Westphal says:
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
+"Historically this is not an issue, even for normal base hooks: the data
+path doesn't use the original nf_hook_ops that are used to register the
+callbacks.
 
-Alternative would be to acquire the qdisc spinlock, but our long-term
-goal is to make qdisc dump operations lockless as much as we can.
+However, in v5.14 I added the ability to dump the active netfilter
+hooks from userspace.
 
-tc_sfb_xstats fields don't need to be latched atomically,
-otherwise this bug would have been caught earlier.
+This code will peek back into the nf_hook_ops that are available
+at the tail of the pointer-array blob used by the datapath.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260421141655.3953721-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The nat hooks are special, because they are called indirectly from
+the central nat dispatcher hook. They are currently invisible to
+the nfnl hook dump subsystem though.
+
+But once that changes the nat ops structures have to be deferred too."
+
+Update nf_nat_register_fn() to deal with partial exposition of the hooks
+from error path which can be also an issue for nfnetlink_hook.
+
+Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfb.c | 54 +++++++++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+ net/ipv4/netfilter/iptable_nat.c  |  4 ++--
+ net/ipv6/netfilter/ip6table_nat.c |  4 ++--
+ net/netfilter/nf_nat_core.c       | 10 ++++++----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/sch_sfb.c b/net/sched/sch_sfb.c
-index d2835f1168e1d..00286c930b8de 100644
---- a/net/sched/sch_sfb.c
-+++ b/net/sched/sch_sfb.c
-@@ -130,7 +130,7 @@ static void increment_one_qlen(u32 sfbhash, u32 slot, struct sfb_sched_data *q)
+diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
+index a5db7c67d61be..625a1ca13b1ba 100644
+--- a/net/ipv4/netfilter/iptable_nat.c
++++ b/net/ipv4/netfilter/iptable_nat.c
+@@ -79,7 +79,7 @@ static int ipt_nat_register_lookups(struct net *net)
+ 			while (i)
+ 				nf_nat_ipv4_unregister_fn(net, &ops[--i]);
  
- 		sfbhash >>= SFB_BUCKET_SHIFT;
- 		if (b[hash].qlen < 0xFFFF)
--			b[hash].qlen++;
-+			WRITE_ONCE(b[hash].qlen, b[hash].qlen + 1);
- 		b += SFB_NUMBUCKETS; /* next level */
- 	}
- }
-@@ -159,7 +159,7 @@ static void decrement_one_qlen(u32 sfbhash, u32 slot,
- 
- 		sfbhash >>= SFB_BUCKET_SHIFT;
- 		if (b[hash].qlen > 0)
--			b[hash].qlen--;
-+			WRITE_ONCE(b[hash].qlen, b[hash].qlen - 1);
- 		b += SFB_NUMBUCKETS; /* next level */
- 	}
- }
-@@ -179,12 +179,12 @@ static void decrement_qlen(const struct sk_buff *skb, struct sfb_sched_data *q)
- 
- static void decrement_prob(struct sfb_bucket *b, struct sfb_sched_data *q)
- {
--	b->p_mark = prob_minus(b->p_mark, q->decrement);
-+	WRITE_ONCE(b->p_mark, prob_minus(b->p_mark, q->decrement));
- }
- 
- static void increment_prob(struct sfb_bucket *b, struct sfb_sched_data *q)
- {
--	b->p_mark = prob_plus(b->p_mark, q->increment);
-+	WRITE_ONCE(b->p_mark, prob_plus(b->p_mark, q->increment));
- }
- 
- static void sfb_zero_all_buckets(struct sfb_sched_data *q)
-@@ -202,11 +202,14 @@ static u32 sfb_compute_qlen(u32 *prob_r, u32 *avgpm_r, const struct sfb_sched_da
- 	const struct sfb_bucket *b = &q->bins[q->slot].bins[0][0];
- 
- 	for (i = 0; i < SFB_LEVELS * SFB_NUMBUCKETS; i++) {
--		if (qlen < b->qlen)
--			qlen = b->qlen;
--		totalpm += b->p_mark;
--		if (prob < b->p_mark)
--			prob = b->p_mark;
-+		u32 b_qlen = READ_ONCE(b->qlen);
-+		u32 b_mark = READ_ONCE(b->p_mark);
-+
-+		if (qlen < b_qlen)
-+			qlen = b_qlen;
-+		totalpm += b_mark;
-+		if (prob < b_mark)
-+			prob = b_mark;
- 		b++;
- 	}
- 	*prob_r = prob;
-@@ -295,7 +298,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 	if (unlikely(sch->q.qlen >= q->limit)) {
- 		qdisc_qstats_overlimit(sch);
--		q->stats.queuedrop++;
-+		WRITE_ONCE(q->stats.queuedrop,
-+			   q->stats.queuedrop + 1);
- 		goto drop;
- 	}
- 
-@@ -348,7 +352,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 	if (unlikely(minqlen >= q->max)) {
- 		qdisc_qstats_overlimit(sch);
--		q->stats.bucketdrop++;
-+		WRITE_ONCE(q->stats.bucketdrop,
-+			   q->stats.bucketdrop + 1);
- 		goto drop;
- 	}
- 
-@@ -374,7 +379,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		}
- 		if (sfb_rate_limit(skb, q)) {
- 			qdisc_qstats_overlimit(sch);
--			q->stats.penaltydrop++;
-+			WRITE_ONCE(q->stats.penaltydrop,
-+				   q->stats.penaltydrop + 1);
- 			goto drop;
- 		}
- 		goto enqueue;
-@@ -390,14 +396,17 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 * In either case, we want to start dropping packets.
- 			 */
- 			if (r < (p_min - SFB_MAX_PROB / 2) * 2) {
--				q->stats.earlydrop++;
-+				WRITE_ONCE(q->stats.earlydrop,
-+					   q->stats.earlydrop + 1);
- 				goto drop;
- 			}
- 		}
- 		if (INET_ECN_set_ce(skb)) {
--			q->stats.marked++;
-+			WRITE_ONCE(q->stats.marked,
-+				   q->stats.marked + 1);
- 		} else {
--			q->stats.earlydrop++;
-+			WRITE_ONCE(q->stats.earlydrop,
-+				   q->stats.earlydrop + 1);
- 			goto drop;
+-			kfree(ops);
++			kfree_rcu(ops, rcu);
+ 			return ret;
  		}
  	}
-@@ -410,7 +419,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		sch->q.qlen++;
- 		increment_qlen(&cb, q);
- 	} else if (net_xmit_drop_count(ret)) {
--		q->stats.childdrop++;
-+		WRITE_ONCE(q->stats.childdrop,
-+			   q->stats.childdrop + 1);
- 		qdisc_qstats_drop(sch);
- 	}
- 	return ret;
-@@ -599,12 +609,12 @@ static int sfb_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct sfb_sched_data *q = qdisc_priv(sch);
- 	struct tc_sfb_xstats st = {
--		.earlydrop = q->stats.earlydrop,
--		.penaltydrop = q->stats.penaltydrop,
--		.bucketdrop = q->stats.bucketdrop,
--		.queuedrop = q->stats.queuedrop,
--		.childdrop = q->stats.childdrop,
--		.marked = q->stats.marked,
-+		.earlydrop = READ_ONCE(q->stats.earlydrop),
-+		.penaltydrop = READ_ONCE(q->stats.penaltydrop),
-+		.bucketdrop = READ_ONCE(q->stats.bucketdrop),
-+		.queuedrop = READ_ONCE(q->stats.queuedrop),
-+		.childdrop = READ_ONCE(q->stats.childdrop),
-+		.marked = READ_ONCE(q->stats.marked),
- 	};
+@@ -100,7 +100,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
+ 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv4_ops); i++)
+ 		nf_nat_ipv4_unregister_fn(net, &ops[i]);
  
- 	st.maxqlen = sfb_compute_qlen(&st.maxprob, &st.avgprob, q);
+-	kfree(ops);
++	kfree_rcu(ops, rcu);
+ }
+ 
+ static int iptable_nat_table_init(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
+index e119d4f090cc8..5be723232df8f 100644
+--- a/net/ipv6/netfilter/ip6table_nat.c
++++ b/net/ipv6/netfilter/ip6table_nat.c
+@@ -81,7 +81,7 @@ static int ip6t_nat_register_lookups(struct net *net)
+ 			while (i)
+ 				nf_nat_ipv6_unregister_fn(net, &ops[--i]);
+ 
+-			kfree(ops);
++			kfree_rcu(ops, rcu);
+ 			return ret;
+ 		}
+ 	}
+@@ -102,7 +102,7 @@ static void ip6t_nat_unregister_lookups(struct net *net)
+ 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv6_ops); i++)
+ 		nf_nat_ipv6_unregister_fn(net, &ops[i]);
+ 
+-	kfree(ops);
++	kfree_rcu(ops, rcu);
+ }
+ 
+ static int ip6table_nat_table_init(struct net *net)
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index e6b24586d2fed..8e36b4e3e5c47 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1228,9 +1228,11 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		ret = nf_register_net_hooks(net, nat_ops, ops_count);
+ 		if (ret < 0) {
+ 			mutex_unlock(&nf_nat_proto_mutex);
+-			for (i = 0; i < ops_count; i++)
+-				kfree(nat_ops[i].priv);
+-			kfree(nat_ops);
++			for (i = 0; i < ops_count; i++) {
++				priv = nat_ops[i].priv;
++				kfree_rcu(priv, rcu_head);
++			}
++			kfree_rcu(nat_ops, rcu);
+ 			return ret;
+ 		}
+ 
+@@ -1294,7 +1296,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 		}
+ 
+ 		nat_proto_net->nat_hook_ops = NULL;
+-		kfree(nat_ops);
++		kfree_rcu(nat_ops, rcu);
+ 	}
+ unlock:
+ 	mutex_unlock(&nf_nat_proto_mutex);
 -- 
 2.53.0
 
