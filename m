@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58FB1C3BFC;
-	Wed, 20 May 2026 17:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CEE369D67;
+	Wed, 20 May 2026 17:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299084; cv=none; b=JBZyEf+AOxvrNTbu2TbdsGMV7hgDaRu6Z0zQMXCHi1ZeAEhtc1JEso3NDPLA2HYHHIAWUuxM2paAu0itpAQYsCHoe8BDz624GWMlI1v9aaVDPBWyzHYQVeQns4k1swPOPS4MBJQK7fva0s6yXpr7K+Zlfn6lPrD9ynSepsmlokU=
+	t=1779299086; cv=none; b=KE326BiYKQ6Jv3ZZBoXX1Gqz5L+7MRiRdlj4q9p3fGeL3ncPmvQoWPvfdi9K1YFUFcC//oSjgMMoxTYUAoMjX6tO/QrtFTT7fEcNqTvQhuPhr/MeIKUbQxacQtU861lC4AE4AUfH8/K9iipE60WSyRXKB7UU8zfX0K3hWcmnIIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299084; c=relaxed/simple;
-	bh=VGo7tLB2i2ZBiTHdSJkRy7l49rRo+neqEEFctFtNBtw=;
+	s=arc-20240116; t=1779299086; c=relaxed/simple;
+	bh=2esuF5Ehx7XD8w64SlUEjhlTAtQ2CLwt9SA1Pv0dLq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7QYANmaZnBbFpkwyQDMsHwe9KkN3Kq6S4iRaoWDoIJNy+OwhyoUgyEzyDWT67OzQY9BexS/3uNkHjyX7n8+cQTV3zVhcaFiofDgz2gWfuBJwbzl5elMAgcEABWEH9m1WYlWyOATPwKOFvDgrD1XeGyccBaRtSP18H9lw2RGZRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obbgOBV7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hdGasusl07JSM5G3duMvmLHf9ZWTm7/yqeRDhBAayd7JiS8WKb454wpreFLj32J7NMVTkiUNGIqE6lW2C4WSL82GwpP11TkDw82MCohdcbRbvHp6++ASDw3gSpmSJxvtoAx/6dj79GJldm/FS2J63nYRoBg/Ba6exsFstYdXMlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bca6WkwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obbgOBV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575F81F000E9;
-	Wed, 20 May 2026 17:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bca6WkwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A301F000E9;
+	Wed, 20 May 2026 17:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299082;
-	bh=c7Cu3OBw4UVC2rQSWiKwOBTYcrLNmKzdf1+EFq1wCv4=;
+	s=korg; t=1779299085;
+	bh=VJHFlvBQUoKsRDQ7PQqksov//dvyTdQjZ7gMpWKbBwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obbgOBV75m0KGSoBHnRDD2P2mzIYZpL6uX4VYrsSKsDmWZJ7WvU4ELGGOs24/JPF+
-	 WUa331oSPmbfZJOh8cbEgy2OKg7JJTCCuJroNZwxK7bg00CtFlWeHQat2/y8uf+0fJ
-	 Ylji80yeHuySkjAHTBOYmPdEHgnWScDTdjdPR/WA=
+	b=bca6WkwLvUZWjQJIWtNq3sDBxFvZ7GwE44TmW5uiZRLcUX27dna0fp+1aTJ5RF3Us
+	 cond1/VXNrANFDTUvPvu9PSapzsaa+WGGItLl6eCBfxr7sgnUVHeAFFhMxV7Jk7pz/
+	 j6EIwd4xB1+7Wf3cHX7QUmAvC83aDAGTjkH3HS70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Junxi Qian <qjx1298677004@gmail.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 655/957] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
-Date: Wed, 20 May 2026 18:18:58 +0200
-Message-ID: <20260520162148.737436068@linuxfoundation.org>
+Subject: [PATCH 6.18 620/957] net/sched: taprio: fix use-after-free in advance_sched() on schedule switch
+Date: Wed, 20 May 2026 18:18:23 +0200
+Message-ID: <20260520162147.978156321@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,66 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
+[ Upstream commit 105425b1969c5affe532713cfac1c0b320d7ac2b ]
 
-sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
-buffer is large enough for the peer AUTH chunk list with
+In advance_sched(), when should_change_schedules() returns true,
+switch_schedules() is called to promote the admin schedule to oper.
+switch_schedules() queues the old oper schedule for RCU freeing via
+call_rcu(), but 'next' still points into an entry of the old oper
+schedule. The subsequent 'next->end_time = end_time' and
+rcu_assign_pointer(q->current_entry, next) are use-after-free.
 
-    if (len < num_chunks)
-            return -EINVAL;
+Fix this by selecting 'next' from the new oper schedule immediately
+after switch_schedules(), and using its pre-calculated end_time.
+setup_first_end_time() sets the first entry's end_time to
+base_time + interval when the schedule is installed, so the value
+is already correct.
 
-but then writes num_chunks bytes to p->gauth_chunks, which lives
-at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
-inside optval.  The check is missing the sizeof(struct
-sctp_authchunks) = 8-byte header.  When the caller supplies
-len == num_chunks (for any num_chunks > 0) the test passes but
-copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
-past the declared buffer.
+The deleted 'end_time = sched_base_time(admin)' assignment was also
+harmful independently: it would overwrite the new first entry's
+pre-calculated end_time with just base_time.
 
-The sibling function sctp_getsockopt_local_auth_chunks() at the
-next line already has the correct check:
-
-    if (len < sizeof(struct sctp_authchunks) + num_chunks)
-            return -EINVAL;
-
-Align the peer variant with its sibling.
-
-Reproducer confirms on v7.0-13-generic: an unprivileged userspace
-caller that opens a loopback SCTP association with AUTH enabled,
-queries num_chunks with a short optval, then issues the real
-getsockopt with len == num_chunks and sentinel bytes painted past
-the buffer observes those sentinel bytes overwritten with the
-peer's AUTH chunk type.  The bytes written are under the peer's
-control but land in the caller's own userspace; this is not a
-kernel memory corruption, but it is a kernel-side contract
-violation that can silently corrupt adjacent userspace data.
-
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
+Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
+Reported-by: Junxi Qian <qjx1298677004@gmail.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_taprio.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index c57a53192beef..2c5ad53984906 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -6990,7 +6990,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 39b735386996e..91b85360f8091 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -971,11 +971,12 @@ static enum hrtimer_restart advance_sched(struct hrtimer *timer)
+ 	}
  
- 	/* See if the user provided enough room for all the data */
- 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
--	if (len < num_chunks)
-+	if (len < sizeof(struct sctp_authchunks) + num_chunks)
- 		return -EINVAL;
+ 	if (should_change_schedules(admin, oper, end_time)) {
+-		/* Set things so the next time this runs, the new
+-		 * schedule runs.
+-		 */
+-		end_time = sched_base_time(admin);
+ 		switch_schedules(q, &admin, &oper);
++		/* After changing schedules, the next entry is the first one
++		 * in the new schedule, with a pre-calculated end_time.
++		 */
++		next = list_first_entry(&oper->entries, struct sched_entry, list);
++		end_time = next->end_time;
+ 	}
  
- 	if (copy_to_user(to, ch->chunks, num_chunks))
+ 	next->end_time = end_time;
 -- 
 2.53.0
 
