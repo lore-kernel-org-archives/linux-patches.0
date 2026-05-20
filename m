@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D8833B969;
-	Wed, 20 May 2026 16:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287583D8137;
+	Wed, 20 May 2026 16:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296169; cv=none; b=M2SDjOHXQYc8fDICBFjcO+P0g0ZP2snTxndovIS8PIdBGas57CZHu0Log2m5KY4Qi/RzFUH47sTmboY2anK6bPAvqg2kd9ect3a3wO4D1L9yKFBtDW/nYsKnuLg23PtIF6l/SttQ9vqVGvSzIj1+pPUN5RgGB/kAR/i0xC37bpY=
+	t=1779296172; cv=none; b=aumZbm1HhKByPD+R+b4dnX+/22fpn19eilsrLcjBBxnP44U/qAyTwDe7DssxRO+mNi7trQkTr9EjkfEEpAEGh5ygQlyb+ELe/sfCD6BOMHhl530HZWgSWbHEhLdTtwOyUcg6QUYk7NZKB9zgdt/sWHutgoY+wT2EbF82b7bdaO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296169; c=relaxed/simple;
-	bh=5CZxis/n+MuCB4SRHMr/Ndqz7ziaC5DdzMCBjZOHKZo=;
+	s=arc-20240116; t=1779296172; c=relaxed/simple;
+	bh=Lvk3TAwkyenN0/zLXPINqn6JO54DN6D//L+QqkAhCSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s7rY4yHAVjnWNrp+72+sSWjI3T9OUAbepoz5fOwUconUyhKsR6DyQ09ZCuk6QTKwEgsdsOYfFmsFU2hWEA5dzuxpy8pdKPJQTdOtAtBTl5TRbe2G1YQshuSRkhe7bBfYmRk2tt/mgnpbj9vHoUEVshOpuL0x7dlI+Yi6VMg4yaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0xZrhAC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WoDsDDZTyKcXUHTreSKfcWoEQxRQBigPTFcQqm+nfu2ULyBUhhj4Hy6c3GJF6gbCzxASIOWZ98pzAFvQvVfZIFw7PlVOjqjBvceZMB1a+kCi3CX6Z+lDXyUKl4hbZHDhlmjfacdWvkq45JNf5qXU51QQyjh+lPkrJu5TCokvGAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOV8wyat; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0xZrhAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4441F000E9;
-	Wed, 20 May 2026 16:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOV8wyat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841571F000E9;
+	Wed, 20 May 2026 16:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296168;
-	bh=TnBkEGfF2NfizyettGVNKjNGhqNEpsYitKk3ZbH0te4=;
+	s=korg; t=1779296171;
+	bh=RoOdOu7W2qqn53niUyfB1TbEbs5SXj9329tE17tGHxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0xZrhACH7zlVp6LrcowiyeYUoP+IU8inr4bs5hyeJXuxM732Gn5BG06kVpS4sLw7
-	 GzI95pOeqnaZWUHFGHnKkg29jGYsRQJioMHGTcZH0WrI4abPLfmSpeLaIMQdtQSNzR
-	 o3sRUFSsIRrmFRVU3pJ009o6JeK530WGdShORbjE=
+	b=LOV8wyatZ2Uit1gTJzaQZreUAcohSF3u65HhzFhkQmxF/jHfK+Onr7EijqG+SHjDt
+	 M6lG7LM8+ZLr5vn78+3zJffbuyw53ehav6VLv2YRIm+xUkinu+9iXzv1jz0wgi59UO
+	 rbZFdSWs7UOpa77eJ3jxjbJfrMbN7jbhy3KZC5jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Emre Cecanpunar <emreleno@gmail.com>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0690/1146] platform/x86: hp-wmi: add locking for concurrent hwmon access
-Date: Wed, 20 May 2026 18:15:40 +0200
-Message-ID: <20260520162203.804450666@linuxfoundation.org>
+Subject: [PATCH 7.0 0699/1146] clk: renesas: r9a09g057: Fix ordering of module clocks array
+Date: Wed, 20 May 2026 18:15:49 +0200
+Message-ID: <20260520162204.010713460@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,105 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emre Cecanpunar <emreleno@gmail.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 5969c55e2145368254194edbe0e64880314be69f ]
+[ Upstream commit 79cac2b8dc1d9f63fbf6c6793e423052118cc51a ]
 
-hp_wmi_hwmon_priv.mode and .pwm are written by hp_wmi_hwmon_write() in
-sysfs context and read by hp_wmi_hwmon_keep_alive_handler() in a
-workqueue. A concurrent write and keep-alive expiry can observe an
-inconsistent mode/pwm pair (e.g. mode=MANUAL with a stale pwm).
+The r9a09g057_mod_clks array is sorted by CPG_CLKON register number and
+bit position.  Move the RTC and RSPI module clock entries to their
+correct position to restore the array sort order.
 
-Add a mutex to hp_wmi_hwmon_priv protecting mode and pwm. Hold it in
-hp_wmi_hwmon_write() across the field update and apply call, and in
-hp_wmi_hwmon_keep_alive_handler() before calling apply.
-
-In hp_wmi_hwmon_read(), only the pwm_enable path reads priv->mode; use
-scoped_guard() there to avoid holding the lock across unrelated WMI
-calls.
-
-Fixes: c203c59fb5de ("platform/x86: hp-wmi: implement fan keep-alive")
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
-Link: https://patch.msgid.link/20260407142515.20683-6-emreleno@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 2efea3b35cc9 ("clk: renesas: r9a09g057: Add entries for RSCIs")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260125190314.26729-1-ovidiu.panait.rb@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/clk/renesas/r9a09g057-cpg.c | 40 ++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index dd0f86b8807fa..851056bee6146 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -458,6 +458,7 @@ enum pwm_modes {
- };
- 
- struct hp_wmi_hwmon_priv {
-+	struct mutex lock;	/* protects mode, pwm */
- 	u8 min_rpm;
- 	u8 max_rpm;
- 	int gpu_delta;
-@@ -2427,6 +2428,7 @@ static int hp_wmi_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- {
- 	struct hp_wmi_hwmon_priv *priv;
- 	int rpm, ret;
-+	u8 mode;
- 
- 	priv = dev_get_drvdata(dev);
- 	switch (type) {
-@@ -2450,11 +2452,13 @@ static int hp_wmi_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			*val = rpm_to_pwm(rpm / 100, priv);
- 			return 0;
- 		}
--		switch (priv->mode) {
-+		scoped_guard(mutex, &priv->lock)
-+			mode = priv->mode;
-+		switch (mode) {
- 		case PWM_MODE_MAX:
- 		case PWM_MODE_MANUAL:
- 		case PWM_MODE_AUTO:
--			*val = priv->mode;
-+			*val = mode;
- 			return 0;
- 		default:
- 			/* shouldn't happen */
-@@ -2472,6 +2476,7 @@ static int hp_wmi_hwmon_write(struct device *dev, enum hwmon_sensor_types type,
- 	int rpm;
- 
- 	priv = dev_get_drvdata(dev);
-+	guard(mutex)(&priv->lock);
- 	switch (type) {
- 	case hwmon_pwm:
- 		if (attr == hwmon_pwm_input) {
-@@ -2540,6 +2545,8 @@ static void hp_wmi_hwmon_keep_alive_handler(struct work_struct *work)
- 
- 	dwork = to_delayed_work(work);
- 	priv = container_of(dwork, struct hp_wmi_hwmon_priv, keep_alive_dwork);
-+
-+	guard(mutex)(&priv->lock);
- 	/*
- 	 * Re-apply the current hwmon context settings.
- 	 * NOTE: hp_wmi_apply_fan_settings will handle the re-scheduling.
-@@ -2596,6 +2603,10 @@ static int hp_wmi_hwmon_init(void)
- 	if (!priv)
- 		return -ENOMEM;
- 
-+	ret = devm_mutex_init(dev, &priv->lock);
-+	if (ret)
-+		return ret;
-+
- 	ret = hp_wmi_setup_fan_settings(priv);
- 	if (ret)
- 		return ret;
+diff --git a/drivers/clk/renesas/r9a09g057-cpg.c b/drivers/clk/renesas/r9a09g057-cpg.c
+index 6943cad318b5d..b0e43e5e50dde 100644
+--- a/drivers/clk/renesas/r9a09g057-cpg.c
++++ b/drivers/clk/renesas/r9a09g057-cpg.c
+@@ -296,6 +296,26 @@ static const struct rzv2h_mod_clk r9a09g057_mod_clks[] __initconst = {
+ 						BUS_MSTOP(5, BIT(13))),
+ 	DEF_MOD("wdt_3_clk_loco",		CLK_QEXTAL, 5, 2, 2, 18,
+ 						BUS_MSTOP(5, BIT(13))),
++	DEF_MOD("rtc_0_clk_rtc",		CLK_PLLCM33_DIV16, 5, 3, 2, 19,
++						BUS_MSTOP(3, BIT(11) | BIT(12))),
++	DEF_MOD("rspi_0_pclk",			CLK_PLLCLN_DIV8, 5, 4, 2, 20,
++						BUS_MSTOP(11, BIT(0))),
++	DEF_MOD("rspi_0_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 5, 2, 21,
++						BUS_MSTOP(11, BIT(0))),
++	DEF_MOD("rspi_0_tclk",			CLK_PLLCLN_DIV8, 5, 6, 2, 22,
++						BUS_MSTOP(11, BIT(0))),
++	DEF_MOD("rspi_1_pclk",			CLK_PLLCLN_DIV8, 5, 7, 2, 23,
++						BUS_MSTOP(11, BIT(1))),
++	DEF_MOD("rspi_1_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 8, 2, 24,
++						BUS_MSTOP(11, BIT(1))),
++	DEF_MOD("rspi_1_tclk",			CLK_PLLCLN_DIV8, 5, 9, 2, 25,
++						BUS_MSTOP(11, BIT(1))),
++	DEF_MOD("rspi_2_pclk",			CLK_PLLCLN_DIV8, 5, 10, 2, 26,
++						BUS_MSTOP(11, BIT(2))),
++	DEF_MOD("rspi_2_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 11, 2, 27,
++						BUS_MSTOP(11, BIT(2))),
++	DEF_MOD("rspi_2_tclk",			CLK_PLLCLN_DIV8, 5, 12, 2, 28,
++						BUS_MSTOP(11, BIT(2))),
+ 	DEF_MOD("rsci0_pclk",			CLK_PLLCLN_DIV16, 5, 13, 2, 29,
+ 						BUS_MSTOP(11, BIT(3))),
+ 	DEF_MOD("rsci0_tclk",			CLK_PLLCLN_DIV16, 5, 14, 2, 30,
+@@ -396,26 +416,6 @@ static const struct rzv2h_mod_clk r9a09g057_mod_clks[] __initconst = {
+ 						BUS_MSTOP(11, BIT(12))),
+ 	DEF_MOD("rsci9_ps_ps1_n",		CLK_PLLCLN_DIV64, 8, 14, 4, 14,
+ 						BUS_MSTOP(11, BIT(12))),
+-	DEF_MOD("rtc_0_clk_rtc",		CLK_PLLCM33_DIV16, 5, 3, 2, 19,
+-						BUS_MSTOP(3, BIT(11) | BIT(12))),
+-	DEF_MOD("rspi_0_pclk",			CLK_PLLCLN_DIV8, 5, 4, 2, 20,
+-						BUS_MSTOP(11, BIT(0))),
+-	DEF_MOD("rspi_0_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 5, 2, 21,
+-						BUS_MSTOP(11, BIT(0))),
+-	DEF_MOD("rspi_0_tclk",			CLK_PLLCLN_DIV8, 5, 6, 2, 22,
+-						BUS_MSTOP(11, BIT(0))),
+-	DEF_MOD("rspi_1_pclk",			CLK_PLLCLN_DIV8, 5, 7, 2, 23,
+-						BUS_MSTOP(11, BIT(1))),
+-	DEF_MOD("rspi_1_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 8, 2, 24,
+-						BUS_MSTOP(11, BIT(1))),
+-	DEF_MOD("rspi_1_tclk",			CLK_PLLCLN_DIV8, 5, 9, 2, 25,
+-						BUS_MSTOP(11, BIT(1))),
+-	DEF_MOD("rspi_2_pclk",			CLK_PLLCLN_DIV8, 5, 10, 2, 26,
+-						BUS_MSTOP(11, BIT(2))),
+-	DEF_MOD("rspi_2_pclk_sfr",		CLK_PLLCLN_DIV8, 5, 11, 2, 27,
+-						BUS_MSTOP(11, BIT(2))),
+-	DEF_MOD("rspi_2_tclk",			CLK_PLLCLN_DIV8, 5, 12, 2, 28,
+-						BUS_MSTOP(11, BIT(2))),
+ 	DEF_MOD("scif_0_clk_pck",		CLK_PLLCM33_DIV16, 8, 15, 4, 15,
+ 						BUS_MSTOP(3, BIT(14))),
+ 	DEF_MOD("i3c_0_pclkrw",			CLK_PLLCLN_DIV16, 9, 0, 4, 16,
 -- 
 2.53.0
 
