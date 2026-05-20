@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23BC3CCFB0;
-	Wed, 20 May 2026 18:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DCB3EDAC6;
+	Wed, 20 May 2026 18:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301656; cv=none; b=l7+R7QbgzJZc+FPJNYcFlESGA0+P5LekBcFCBewnaB46S/5s16ZO4NT6dXO2g4j04kdWx29nuyV2ZWvy3FF4AmPdiAm4iCdytPoXlF4EJjguebGFt0jcZ9oZrsuxNRdN9C6uPZTih/keMf21bNBBvwM3OFBXQbN+M1qHiMEQbHE=
+	t=1779301658; cv=none; b=K4IU+tHzkpZqIx6kUbKl9fB28oGCMVD67ASsOif6ultdMEM3eKq7L4zoYPJ1HFCTsLfQ0mDm9/BoUvTvRy5QTzEHxrazSgBX1esYP2dAXRiRs8pPu6L6Rp1atGWrlnh4GlIPemuAniQuYttwyMzW6erJVDXosi9KmWj3T0q7fv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301656; c=relaxed/simple;
-	bh=TScwjoSuYt0nRQ+yCAM79Fs2B66cJohZMjFcHR6yfUU=;
+	s=arc-20240116; t=1779301658; c=relaxed/simple;
+	bh=aCI5zWD73LaKtLj8+vqpxPUM2cMJesWfHjNy5V+2Z5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ83PMF100AWkKxkx9ejdx/lNYySL3KnZBAyeIT1RPjpZxRRPshrrEiDw4SF/lf0b9n3Ska512rZsPmISZ+XSKj+83kQJ4sDJCu5bTKCjV4t2VTGLoYL7VD97E6cNjwjM4RkXm4Vx0Aa5YHCuGFHVZlG4udry46vgrz9lEuej7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/15VIZz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lj9mkHnR8Ap2IKk9YES5JPGhKTnYnkS2Tby3/UqQnSh5aunCG6k6xQ9t7F2c1ZvXw/swQAN4z9CcMNwQ+3bbY1/+kVAdTCthnORtjOx2UtPCzxrXepLnNZTMQ462mzsEkeq+SAPFQBRgsW2Qsjc9GRStNa1tuTQCHIvhFjenGm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sj1+a0Er; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/15VIZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476291F000E9;
-	Wed, 20 May 2026 18:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sj1+a0Er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5A61F00894;
+	Wed, 20 May 2026 18:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301654;
-	bh=9mI5m3KlpSSYyjE5dElR8Sfx6c3tRMRaD13iwFLyzeU=;
+	s=korg; t=1779301657;
+	bh=dFL0yo5BQ02dPnV2YYxU/hgL+9SBu67mYLXlscDLP78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/15VIZzpaxWxBvGnpvkOvATTLBp2V/O9sADcGJ/mXLLe7p5wYJSJWxkzDmsHNIYy
-	 u+NdsBRLxBk508LF0taKSs9wFM+3IwIHX7V5/VzI/4kNRRrVMVHg/SH84pBuy7JZJK
-	 +Htsa9JoQutWvn+hXfOFdHHWJ21BLtnCC3zbkQIc=
+	b=Sj1+a0ErIXBqKtnRYsARZThZoMJwDUMmKowyjBF+GZbNFrh9zmkgBFOK9kI0pmUg+
+	 oCxmjuz8je5UsDDb2UIi0wAtU3NGPb79PVZXcB3Gf4em9Fbv5z4KIK2+gnbGGvrUHc
+	 8WqkgrTq5JbHCZiSlaXGdvP2QWf232+vzuAAitdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 637/666] libceph: Fix potential null-ptr-deref in decode_choose_args()
-Date: Wed, 20 May 2026 18:24:08 +0200
-Message-ID: <20260520162125.082892187@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Matt Vollrath <tactii@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 611/666] i40e: Cleanup PTP pins on probe failure
+Date: Wed, 20 May 2026 18:23:42 +0200
+Message-ID: <20260520162124.514908913@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,47 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit 28b0a2ab8c82d0bbdeb8013029c67c978ce6e4bf upstream.
+commit 678b713ece1e853f11e670a84cb887c35e1381b7 upstream.
 
-A message of type CEPH_MSG_OSD_MAP contains an OSD map that itself
-contains a CRUSH map. When decoding this CRUSH map in crush_decode(), an
-array of max_buckets CRUSH buckets is decoded, where some indices may
-not refer to actual buckets and are therefore set to NULL. The received
-CRUSH map may optionally contain choose_args that get decoded in
-decode_choose_args(). When decoding a crush_choose_arg_map, a series of
-choose_args for different buckets is decoded, with the bucket_index
-being read from the incoming message. It is only checked that the bucket
-index does not exceed max_buckets, but not that it doesn't point to an
-index with a NULL bucket. If a (potentially corrupted) message contains
-a crush_choose_arg_map including such a bucket_index, a null pointer
-dereference may occur in the subsequent processing when attempting to
-access the bucket with the given index.
+PTP pin structs are allocated early in probe, but never cleaned up.
 
-This patch fixes the issue by extending the affected check. Now, it is
-only attempted to access the bucket if it is not NULL.
+Fix this by calling i40e_ptp_free_pins in the error path.
 
+To support this, i40e_ptp_free_pins is added to the header and
+pin_config is correctly nullified after being freed.
+
+This has been an issue since i40e_ptp_alloc_pins was introduced.
+
+Fixes: 1050713026a08 ("i40e: add support for PTP external synchronization clock")
+Reported-by: Kohei Enju <kohei@enjuk.jp>
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Kohei Enju <kohei@enjuk.jp>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-2-a5ea4dc837a9@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e.h      |    1 +
+ drivers/net/ethernet/intel/i40e/i40e_main.c |    1 +
+ drivers/net/ethernet/intel/i40e/i40e_ptp.c  |    3 ++-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -390,7 +390,8 @@ static int decode_choose_args(void **p,
- 				goto fail;
- 
- 			if (arg->ids_size &&
--			    arg->ids_size != c->buckets[bucket_index]->size)
-+			    (!c->buckets[bucket_index] ||
-+			     arg->ids_size != c->buckets[bucket_index]->size))
- 				goto e_inval;
- 		}
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -1310,6 +1310,7 @@ void i40e_ptp_restore_hw_time(struct i40
+ void i40e_ptp_init(struct i40e_pf *pf);
+ void i40e_ptp_stop(struct i40e_pf *pf);
+ int i40e_ptp_alloc_pins(struct i40e_pf *pf);
++void i40e_ptp_free_pins(struct i40e_pf *pf);
+ int i40e_update_adq_vsi_queues(struct i40e_vsi *vsi, int vsi_offset);
+ int i40e_is_vsi_uplink_mode_veb(struct i40e_vsi *vsi);
+ int i40e_get_partition_bw_setting(struct i40e_pf *pf);
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -16226,6 +16226,7 @@ err_vsis:
+ 	i40e_clear_interrupt_scheme(pf);
+ 	kfree(pf->vsi);
+ err_switch_setup:
++	i40e_ptp_free_pins(pf);
+ 	i40e_reset_interrupt_capability(pf);
+ 	timer_shutdown_sync(&pf->service_timer);
+ err_mac_addr:
+--- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
+@@ -937,12 +937,13 @@ int i40e_ptp_get_ts_config(struct i40e_p
+  *
+  * Release memory allocated for PTP pins.
+  **/
+-static void i40e_ptp_free_pins(struct i40e_pf *pf)
++void i40e_ptp_free_pins(struct i40e_pf *pf)
+ {
+ 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
+ 		kfree(pf->ptp_pins);
+ 		kfree(pf->ptp_caps.pin_config);
+ 		pf->ptp_pins = NULL;
++		pf->ptp_caps.pin_config = NULL;
+ 	}
+ }
  
 
 
