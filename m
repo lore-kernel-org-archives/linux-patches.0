@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728A3FA5D5;
-	Wed, 20 May 2026 18:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC314014B4;
+	Wed, 20 May 2026 18:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302407; cv=none; b=Vzdz2+tSbME2tKc7Gj9W4krCvu2Y2PKT8o2L0CkHR6a9Vk24yeAvvSAbYNJjN+Lw7XcFpGOLbrsWV+cspgT0ctTj/a5lZuOR13YQR/ZrsWW18LEiUjqq7CGDnW4lzfO/dLipiIb8nZjRP//gcNMkRHIJ0cvpe+oh6laCm3DtiWA=
+	t=1779302410; cv=none; b=qn93PNc/x7GfOag2NiEVV5R/1n/3sSNSXy9r42vGGdSX+Yk+KwfmMw5QsgNx/pNKwd4k/ndkbInZjI8SbWVbPcdBNUusvC9zPu67X9A2Hu6PGnkFsFvBaHsob23wTHNuhfk3pc828R+mqLCFO8xB6QDadZXNJFcibNPDM2QEh6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302407; c=relaxed/simple;
-	bh=tn4n80Hl50CYWpPQvD30/hutT5rw8j2FKgseoRFVxJA=;
+	s=arc-20240116; t=1779302410; c=relaxed/simple;
+	bh=eonR9oLji5tJPVfIOgdDVHIxNZ1rOmRY4rJl91xFW30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFJYDYM8SiBMOojVHp7sAQIJD0gnEbD7Ft/w8LnGFFbdzoaIRhNv0VP9CatlntuVshtm65uoFHWiuTi6irTbNPM94G/cjiIispQNWfyxapOff198fVH1UZ9mPqBby7WXkvt5TcMEb4Le1XmQSoFF7MsMSGZL0pTrepYRZ1xyHpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qu81TS9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UyslJdrRTlQwxnAJx298xhfrarbEqbyk6ACAnKfaldI5dlnN9g3Skzh716vk2ZLpWlEnrD0omhDaZ0LRwGWgJ8ZG+3y2OiHnlRUZCx6u3/NrUWab98qplkWy17sMZMHNzxBhL9YESXO+i+DBPXVk4Ns55bUX5UJ1snqFpEeEwV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzAUwsfk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qu81TS9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D11F0089C;
-	Wed, 20 May 2026 18:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzAUwsfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3251F000E9;
+	Wed, 20 May 2026 18:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302406;
-	bh=wHjhS/zZfqUM+5Drzq18mCbxMo+mYLN581AhRwyCgTw=;
+	s=korg; t=1779302409;
+	bh=HVYfsAjk8FMPThzFKmxAYYgFSylD7w3Uf1Q7XeqnmmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qu81TS9tYiGyog8VFZk0Cp5C69F4X5/nAyUlVK0mFeLCIwbR03s6RzWbMNSyGwXED
-	 kmGyhTrUHK17T4LiyEET0AdeY0lr9PnHPx6pHIt6afZjUd0ibm+PWBEpWqgMYAsG0t
-	 rOcVdM6S18XVdcRCMh6XAH7NDLXUP2EEQJn+SJtg=
+	b=XzAUwsfkWpPWuHd50hvTSMr9k1gG/KXgXVZPcuDPgepUx3QGev5P4E4bBYlxLRSIB
+	 dxfwJlrHkD00nP8gys9nJ7poxccvJ8pjBComS5cW8sO21KedQc3mlsrPb1G/RJp3Tt
+	 XGaRRt1+eAqYc9fuQ/S/73ewdxfyQLJCGwYi8jTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 253/508] perf expr: Return -EINVAL for syntax error in expr__find_ids()
-Date: Wed, 20 May 2026 18:21:16 +0200
-Message-ID: <20260520162104.131401224@linuxfoundation.org>
+Subject: [PATCH 6.6 214/508] ocfs2: validate bg_bits during freefrag scan
+Date: Wed, 20 May 2026 18:20:37 +0200
+Message-ID: <20260520162103.276620992@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,55 +58,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 3a61fd866ef9aaa1d3158b460f852b74a2df07f4 ]
+[ Upstream commit 8f687eeed3da3012152b0f9473f578869de0cd7b ]
 
-expr__find_ids() propagates the parser return value directly.  For syntax
-errors, the parser can return a positive value, but callers treat it as
-success, e.g., for below case on Arm64 platform:
+[BUG]
+A crafted filesystem can trigger an out-of-bounds bitmap walk when
+OCFS2_IOC_INFO is issued with OCFS2_INFO_FL_NON_COHERENT.
 
-  metric expr 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES) for backend_bound
-  parsing metric: 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES)
-  Failure to read '#slots' literal: #slots = nan
-  syntax error
+BUG: KASAN: use-after-free in instrument_atomic_read include/linux/instrumented.h:68 [inline]
+BUG: KASAN: use-after-free in _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
+BUG: KASAN: use-after-free in test_bit_le include/asm-generic/bitops/le.h:21 [inline]
+BUG: KASAN: use-after-free in ocfs2_info_freefrag_scan_chain fs/ocfs2/ioctl.c:495 [inline]
+BUG: KASAN: use-after-free in ocfs2_info_freefrag_scan_bitmap fs/ocfs2/ioctl.c:588 [inline]
+BUG: KASAN: use-after-free in ocfs2_info_handle_freefrag fs/ocfs2/ioctl.c:662 [inline]
+BUG: KASAN: use-after-free in ocfs2_info_handle_request+0x1c66/0x3370 fs/ocfs2/ioctl.c:754
+Read of size 8 at addr ffff888031bce000 by task syz.0.636/1435
+Call Trace:
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xd1/0x650 mm/kasan/report.c:482
+ kasan_report+0xfb/0x140 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:186 [inline]
+ kasan_check_range+0x11c/0x200 mm/kasan/generic.c:200
+ __kasan_check_read+0x11/0x20 mm/kasan/shadow.c:31
+ instrument_atomic_read include/linux/instrumented.h:68 [inline]
+ _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
+ test_bit_le include/asm-generic/bitops/le.h:21 [inline]
+ ocfs2_info_freefrag_scan_chain fs/ocfs2/ioctl.c:495 [inline]
+ ocfs2_info_freefrag_scan_bitmap fs/ocfs2/ioctl.c:588 [inline]
+ ocfs2_info_handle_freefrag fs/ocfs2/ioctl.c:662 [inline]
+ ocfs2_info_handle_request+0x1c66/0x3370 fs/ocfs2/ioctl.c:754
+ ocfs2_info_handle+0x18d/0x2a0 fs/ocfs2/ioctl.c:828
+ ocfs2_ioctl+0x632/0x6e0 fs/ocfs2/ioctl.c:913
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
+ ...
 
-Convert positive parser returns in expr__find_ids() to -EINVAL, as a
-result, the error value will be respected by callers.
+[CAUSE]
+ocfs2_info_freefrag_scan_chain() uses on-disk bg_bits directly as the
+bitmap scan limit. The coherent path reads group descriptors through
+ocfs2_read_group_descriptor(), which validates the descriptor before
+use. The non-coherent path uses ocfs2_read_blocks_sync() instead and
+skips that validation, so an impossible bg_bits value can drive the
+bitmap walk past the end of the block.
 
-Before:
+[FIX]
+Compute the bitmap capacity from the filesystem format with
+ocfs2_group_bitmap_size(), report descriptors whose bg_bits exceeds
+that limit, and clamp the scan to the computed capacity. This keeps the
+freefrag report going while avoiding reads beyond the buffer.
 
-  perf stat -C 5
-  Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Segmentation fault
-
-After:
-
-  perf stat -C 5
-  Failure to read '#slots'Cannot find metric or group `Default'
-
-Fixes: ded80bda8bc9 ("perf expr: Migrate expr ids table to a hashmap")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20260410034220.3825769-1-gality369@gmail.com
+Fixes: d24a10b9f8ed ("Ocfs2: Add a new code 'OCFS2_INFO_FREEFRAG' for o2info ioctl.")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/expr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/ioctl.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
-index fa0473f7a4ff4..d952ce37c873b 100644
---- a/tools/perf/util/expr.c
-+++ b/tools/perf/util/expr.c
-@@ -377,7 +377,8 @@ int expr__find_ids(const char *expr, const char *one,
- 	if (one)
- 		expr__del_id(ctx, one);
+diff --git a/fs/ocfs2/ioctl.c b/fs/ocfs2/ioctl.c
+index b1550ba73f963..f34f404af2f77 100644
+--- a/fs/ocfs2/ioctl.c
++++ b/fs/ocfs2/ioctl.c
+@@ -442,13 +442,16 @@ static int ocfs2_info_freefrag_scan_chain(struct ocfs2_super *osb,
+ 	struct buffer_head *bh = NULL;
+ 	struct ocfs2_group_desc *bg = NULL;
  
--	return ret;
-+	/* A positive value means syntax error, convert to -EINVAL */
-+	return ret > 0 ? -EINVAL : ret;
- }
+-	unsigned int max_bits, num_clusters;
++	unsigned int max_bits, max_bitmap_bits, num_clusters;
+ 	unsigned int offset = 0, cluster, chunk;
+ 	unsigned int chunk_free, last_chunksize = 0;
  
- double expr_id_data__value(const struct expr_id_data *data)
+ 	if (!le32_to_cpu(rec->c_free))
+ 		goto bail;
+ 
++	max_bitmap_bits = 8 * ocfs2_group_bitmap_size(osb->sb, 0,
++					      osb->s_feature_incompat);
++
+ 	do {
+ 		if (!bg)
+ 			blkno = le64_to_cpu(rec->c_blkno);
+@@ -480,6 +483,19 @@ static int ocfs2_info_freefrag_scan_chain(struct ocfs2_super *osb,
+ 			continue;
+ 
+ 		max_bits = le16_to_cpu(bg->bg_bits);
++
++		/*
++		 * Non-coherent scans read raw blocks and do not get the
++		 * bg_bits validation from
++		 * ocfs2_read_group_descriptor().
++		 */
++		if (max_bits > max_bitmap_bits) {
++			mlog(ML_ERROR,
++			     "Group desc #%llu has %u bits, max bitmap bits %u\n",
++			     (unsigned long long)blkno, max_bits, max_bitmap_bits);
++			max_bits = max_bitmap_bits;
++		}
++
+ 		offset = 0;
+ 
+ 		for (chunk = 0; chunk < chunks_in_group; chunk++) {
 -- 
 2.53.0
 
