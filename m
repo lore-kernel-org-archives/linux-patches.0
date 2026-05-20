@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABE43D75DA;
-	Wed, 20 May 2026 17:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F273F4124;
+	Wed, 20 May 2026 17:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297926; cv=none; b=lQCiBLI0ge6aHhaWvVeA4S0q+2ZhwJ636IUMBrTmXSv8XXonZhnZw8k2bhHEvSpkMOkA9bJCU3x8hHkbFgObKpzNWvS7iPE8pq9Jicg1hAATjDkjeb0JY2l2U9GxkBr8fIVMrod183q2zwS3aY2uF8AxhyWA2i/OpPeF4UJqvDY=
+	t=1779297929; cv=none; b=GQ5zoqrzXbbh7TMSc49mAX6o9WrV1A9RltmZymWP2hEywYq+KuizUdYOgEmowNZPGQ3b0mcUX6OWhq6mBvsP5pH5mBUpjxjHFkUHHmr3r608drK75kRl6xxaF2by38qy3CqHyIoYC874WRlkm3WwCfh4YSUqZc6LJ6UuFBWFa+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297926; c=relaxed/simple;
-	bh=9/DSOy6V8YSwWyOdI4X1TVplpf2Xfn9PeDbg1sVftxo=;
+	s=arc-20240116; t=1779297929; c=relaxed/simple;
+	bh=AXVHIOfgstHdeMZDcTzmaOfXjVt87eqMOEWSbUXrs9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvReSgO6uLTl8gYqSP4d3yTu2dWOayDtFM9QokT/pvhwly5Fkh3wiwE+jm2oPqE6i8Imxy4nffkLdjBM8xcNMjMeh8zmG2RBa9KpJyHxZstvjMIO1jUILjf/UiQ7trPvGtBcd2ojunM8/CbZm8WQDnSJBd7kOIw8q7ox5nWSt60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2v66gOrp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IODOuq3bbHg81KF0bqbfhVYmleXHZTFFnCLYk8Epo7LksLsAQ16TkpadfZnF4up/IIlHAkXopWo+Ofy4mmUz08N3udXpx9WpsBUm8MXB51U9RXR8fGJmTZ6xa1zf6/PGQhGAmw4ovBVYTEGZbkBk81P18LjmnU4Lr0mCvC06jiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LA5yy1PC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2v66gOrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07681F00893;
-	Wed, 20 May 2026 17:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LA5yy1PC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B72C1F000E9;
+	Wed, 20 May 2026 17:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297925;
-	bh=f299kKuOY81JN6bCJ28I+bvoF3ruest8KCVUWVhBjsU=;
+	s=korg; t=1779297927;
+	bh=mcNDrDmBstKrAuojUtQsbuMIJ2sffocQB2LumpnuC14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2v66gOrphIitSYU+T1CCmUFUe1xrggQTTKSHqV7GbcegSrhm4hex1xfPu4rHtNKvR
-	 Qkt9up85wq+nUzl5/Og6iPeNipmS9mR9rg8AFjBzrTQXq4agxES0CbuCoOTUa9dDNH
-	 Rx422eSZswVOSGsb9lAE3bXfIz/yz9qsQh3MPzpg=
+	b=LA5yy1PC53Jiu2WqIQgLvtIN6iBIwuZdZNxuigqx0WFPBACjASXTNE5gRKST1XWBh
+	 Je7Ob1saAQSWAxQvU9D9+jy7d5IS7xVPmpj5KNcY4ws93E+0qkXZjvxJy7xhTA8vYp
+	 fX8E4oehXuMif8GxMB2n8QG4MBo4ceWohUbKUVfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 214/957] drm/bridge: cadence: cdns-mhdp8546-core: Handle HDCP state in bridge atomic check
-Date: Wed, 20 May 2026 18:11:37 +0200
-Message-ID: <20260520162139.180906252@linuxfoundation.org>
+Subject: [PATCH 6.18 176/957] Bluetooth: fix locking in hci_conn_request_evt() with HCI_PROTO_DEFER
+Date: Wed, 20 May 2026 18:10:59 +0200
+Message-ID: <20260520162138.370956810@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,71 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harikrishna Shenoy <h-shenoy@ti.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 4a8edd658489ec2a3d7e20482fa9e8d366153d8d ]
+[ Upstream commit 5c7209a341ff2ac338b2b0375c34a307b37c9ac2 ]
 
-Now that we have DRM_BRIDGE_ATTACH_NO_CONNECTOR framework, handle the
-HDCP state change in bridge atomic check as well to enable correct
-functioning for HDCP in both DRM_BRIDGE_ATTACH_NO_CONNECTOR and
-!DRM_BRIDGE_ATTACH_NO_CONNECTOR case.
+When protocol sets HCI_PROTO_DEFER, hci_conn_request_evt() calls
+hci_connect_cfm(conn) without hdev->lock. Generally hci_connect_cfm()
+assumes it is held, and if conn is deleted concurrently -> UAF.
 
-Without this patch, when using DRM_BRIDGE_ATTACH_NO_CONNECTOR flag, HDCP
-state changes would not be properly handled during atomic commits,
-potentially leading to HDCP authentication failures or incorrect
-protection status for content requiring HDCP encryption.
+Only SCO and ISO set HCI_PROTO_DEFER and only for defer setup listen,
+and HCI_EV_CONN_REQUEST is not generated for ISO.  In the non-deferred
+listening socket code paths, hci_connect_cfm(conn) is called with
+hdev->lock held.
 
-Fixes: 6a3608eae6d33 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
-Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patch.msgid.link/20251209120332.3559893-4-h-shenoy@ti.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fix by holding the lock.
+
+Fixes: 70c464256310 ("Bluetooth: Refactor connection request handling")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/bridge/cadence/cdns-mhdp8546-core.c   | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ net/bluetooth/hci_event.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index 2fb8acd363b14..7ee19b7cc92fc 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -2123,6 +2123,10 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- {
- 	struct cdns_mhdp_device *mhdp = bridge_to_mhdp(bridge);
- 	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
-+	struct drm_connector_state *old_state, *new_state;
-+	struct drm_atomic_state *state = crtc_state->state;
-+	struct drm_connector *conn = mhdp->connector_ptr;
-+	u64 old_cp, new_cp;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 6f77ab2629d65..b6b52b81b7b9c 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3309,8 +3309,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
  
- 	mutex_lock(&mhdp->link_mutex);
+ 	memcpy(conn->dev_class, ev->dev_class, 3);
  
-@@ -2142,6 +2146,25 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- 	if (mhdp->info)
- 		bridge_state->input_bus_cfg.flags = *mhdp->info->input_bus_flags;
+-	hci_dev_unlock(hdev);
+-
+ 	if (ev->link_type == ACL_LINK ||
+ 	    (!(flags & HCI_PROTO_DEFER) && !lmp_esco_capable(hdev))) {
+ 		struct hci_cp_accept_conn_req cp;
+@@ -3344,7 +3342,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 		hci_connect_cfm(conn, 0);
+ 	}
  
-+	if (conn && mhdp->hdcp_supported) {
-+		old_state = drm_atomic_get_old_connector_state(state, conn);
-+		new_state = drm_atomic_get_new_connector_state(state, conn);
-+		old_cp = old_state->content_protection;
-+		new_cp = new_state->content_protection;
-+
-+		if (old_state->hdcp_content_type != new_state->hdcp_content_type &&
-+		    new_cp != DRM_MODE_CONTENT_PROTECTION_UNDESIRED) {
-+			new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+			crtc_state = drm_atomic_get_new_crtc_state(state, new_state->crtc);
-+			crtc_state->mode_changed = true;
-+		}
-+
-+		if (!new_state->crtc) {
-+			if (old_cp == DRM_MODE_CONTENT_PROTECTION_ENABLED)
-+				new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+		}
-+	}
-+
- 	mutex_unlock(&mhdp->link_mutex);
- 	return 0;
+-	return;
+ unlock:
+ 	hci_dev_unlock(hdev);
  }
 -- 
 2.53.0
