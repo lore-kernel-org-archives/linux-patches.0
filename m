@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AFE3546C8;
-	Wed, 20 May 2026 17:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D6369D67;
+	Wed, 20 May 2026 17:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299120; cv=none; b=c+Ks2itV0IbAfs5YNLrsPfYFoKLcqFmzD8NzEzw7uCaGQRneezDQX/xP0r2Z6pBjzZlnumiM0MGA/mHZNPL9yg3yj4KLjqqNEEB8JKPKICIPDxjbOZFLOlk5xiQ3Nqi+EGiXEv0bcFzP33kWj0Hlxbh4rJz0HaBLMOt3sFjGnc0=
+	t=1779299123; cv=none; b=j80VRqDhouI/jfzs7dogk4K3QN/QVdVLlB+yXFg3xnMeFHlwXzdEZrickEx5KY4GpDe4gBWDZotd+SqiyhbpteUsUHK0hhvyZeH9Fd2RcJKmeSyZKi0bf0JXgbWnWi3JE090tlBIqeKdCyw4P/MC7KsGUGjUgEb4N6lZfPe2lcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299120; c=relaxed/simple;
-	bh=+hNB/xM016X17cYR0quPmDItlwJ9ZCsX/HUNcPa14A0=;
+	s=arc-20240116; t=1779299123; c=relaxed/simple;
+	bh=fEGd3uZO0gHIoM5femBZXSJTleMvTAV0UMsLsMCGS4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fyUfNOnxb6JQ+635iCVn9V8frY7eGNbyqWBEk5x210sSnuPo5QzYaoYaDp/ald/YWCHDSf4PIF3nzryL3XHji8r11ReJAcS40Y/iulqTkqUvdf+LAvWrPFNIcMngytxk5VlB7zjV2EfUKTC0XlDMVkW9O7Ta7dv2K0qpEnr1FiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJxD/czu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kyfWW7uShxYhEVRgF7cSpN7vXjJZO9dhRJAoIwA4/6DPUZ0Z8JSGYnkYNVlTc/GTpctJnxcabsBChjAzKUh97xmT0LrCPgcTRmqZBpGDq16o4+l1IZB0wGNtoHDV3V6usfyzroSdNQp8CQq6umWpYScWwRDGs6ET2FibSMhB1j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlpNdSlq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJxD/czu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273261F000E9;
-	Wed, 20 May 2026 17:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlpNdSlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC62E1F000E9;
+	Wed, 20 May 2026 17:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299119;
-	bh=jyuvZEKo21vEAgYebhHYvWRF5vEGxj8CuBdXB40zRnA=;
+	s=korg; t=1779299122;
+	bh=WxSM6sUgvGyuETTiXnh1YtycyYGm/9PFcynTNEZuxMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJxD/czuCnrLbdGf2iB0vC5KOXiDaR66+8Ocs8F1cgUI9tBBevb06nNwNYZ9yddPd
-	 EbPLrUTg21S0rRsPAuQBsgW8sl/A/2v8abDeJtBmfS1xkbMNDckF0Q0s/8LvYgV4K3
-	 6o+8Fjog2FWDCn3EJlzL2sq2Bcxc2rB4fpWSoCpI=
+	b=MlpNdSlqC6qA/QIp8skmRHxUsvap8shLLGth+msXga8PAejde0gIzCOVincGDMntz
+	 y7kjXloqV1JbuIzW59Nagf6w+gGoesIFcnuft0NVyNoPwS3psyr6KmPZxqGD+89Eay
+	 oJolteaIGJfJ1lxo1iXSk/d30NPFteex94I8/U+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Moon <linux.amoon@gmail.com>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 671/957] arm64: dts: amlogic: meson-axg: Add missing cache information to cpu0
-Date: Wed, 20 May 2026 18:19:14 +0200
-Message-ID: <20260520162149.088807439@linuxfoundation.org>
+Subject: [PATCH 6.18 672/957] arm64: dts: meson-gxl-p230: fix ethernet PHY interrupt number
+Date: Wed, 20 May 2026 18:19:15 +0200
+Message-ID: <20260520162149.110819968@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Moon <linux.amoon@gmail.com>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 918273be0885362a9a00615b46e03f15f8b55667 ]
+[ Upstream commit 174a0ef3b33434f475c87e66f37980e39b73805a ]
 
-Add missing L1 data and instruction cache parameters to the CPU node 0
-for the Cortex-A53 caches on the Meson AXG SoC.
+Correct the interrupt number assigned to the Realtek PHY in the p230
 
-Fixes: 3b6ad2a43367 ("arm64: dts: amlogic: Add cache information to the Amlogic AXG SoCS")
-Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-Link: https://patch.msgid.link/20260219103548.18392-1-linux.amoon@gmail.com
+following the same logic as commit 3106507e1004 ("ARM64: dts: meson-gxm:
+fix q200 interrupt number"),as reported in [PATCH 0/2] Ethernet PHY
+interrupt improvements [1].
+
+[1] https://lore.kernel.org/all/20171202214037.17017-1-martin.blumenstingl@googlemail.com/
+
+Fixes: b94d22d94ad2 ("ARM64: dts: meson-gx: add external PHY interrupt on some platforms")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260330145111.115318-1-jerrysteve1101@gmail.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-index bbf94a1f92a10..3058b60338dbf 100644
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -72,6 +72,12 @@ cpu0: cpu@0 {
- 			compatible = "arm,cortex-a53";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
-+			d-cache-line-size = <32>;
-+			d-cache-size = <0x8000>;
-+			d-cache-sets = <32>;
-+			i-cache-line-size = <32>;
-+			i-cache-size = <0x8000>;
-+			i-cache-sets = <32>;
- 			next-level-cache = <&l2>;
- 			clocks = <&scpi_dvfs 0>;
- 			dynamic-power-coefficient = <140>;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+index 7dffeb5931c9b..701de57ff0f37 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+@@ -84,7 +84,8 @@ external_phy: ethernet-phy@0 {
+ 		reset-gpios = <&gpio GPIOZ_14 GPIO_ACTIVE_LOW>;
+ 
+ 		interrupt-parent = <&gpio_intc>;
+-		interrupts = <29 IRQ_TYPE_LEVEL_LOW>;
++		/* MAC_INTR on GPIOZ_15 */
++		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+ 		eee-broken-1000t;
+ 	};
+ };
 -- 
 2.53.0
 
