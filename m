@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8972270545;
-	Wed, 20 May 2026 18:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DA43FC5A9;
+	Wed, 20 May 2026 18:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779303063; cv=none; b=GzmrESvlf1QEvnnuzPFIPanEKRHrZGGJiU0OXay8Q7krSszBXsodVbGXnWSadzFk/UT2oIMCGKeB7oYtytswHgnV/vK1k7deZddayfm+bpStjlMl3UzeHRMEHpXuEbGCA0jAmGVWIuSlaY84PpQrYYmeSqZDmImKg04lBj5c+Tg=
+	t=1779303066; cv=none; b=cYEZadIgx2blX4BqUXqcTFD6jTqRGPzOViL7xaUzy6lJTbBKM7Nv2RFjpKBhxQfFUmgChc0cy5MJHmyaaqHEuG7b85icp3Lrjhb7Wmw51KcQ0+bmLM1kv0TNhHLif1511HpvXCiLGgx4d6UPrdS7ByXit967VF/qb4HtvFlEt48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779303063; c=relaxed/simple;
-	bh=qT9pjsLA1dV81KCPWtjsWdhEiOXfBlc64IDngt95/rU=;
+	s=arc-20240116; t=1779303066; c=relaxed/simple;
+	bh=lt+Dv5tVIH6iikWfAxZENwHQnck8Y+zQvL0Mki8QkpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sp1Z6msKKptJiQgZuC2R14EB3SrtjfCH6G3HVnR5pEHQZBW1dOsxxTMc2VeORXCFkDXLxc5m3oHDuZFacG7PkX/7pkoHz81czIpKM/ySmWSaudmbLwNEX0tNCVsbUQ+NuSyqqrci2+nODYf6ViXxuY6lksmJQ6qwNt0a1fUZFXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07Xdyex8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WSOlpNDr0kTpnCRYZBLuL6twFmeEyIbYycE67G3ntB2k1f8fZ0yqxfjX77H8sZx27M+E1hO0BArnPYGaFgzeVVVDyNVBLEEDWv5KzMRB+ydXsR+Xli7tXR/p2HHq0bO5rZ7PiPhrt9oRG29KdCMR7IG23AGYUvSPYZ2zWfbaVKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvRE8DGn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07Xdyex8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5684F1F000E9;
-	Wed, 20 May 2026 18:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvRE8DGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25F41F000E9;
+	Wed, 20 May 2026 18:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779303061;
-	bh=y+iunH6z4ka0SRqPRbNTRqBIrkLIGZghOkNF+OqGVl4=;
+	s=korg; t=1779303064;
+	bh=M1WI9enX5A9/QmjB3MCDJEaF0ZM3pjKCPMBp/rUCdOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=07Xdyex8dleg+bUhI+mzbor9yCTqxhhR7H5z+xj6iwZrL+P+U39FivUI3PIhgtsbA
-	 tmLWYteNWX1L4tUqHSyq5tCaO6FhEd5lm9FPaxZYeWgmOp0BGISv7d7fk+STwxvEdZ
-	 J65B63+HL3T7sW/2+ZbVgPNFYjl3oRNvf/o8qrlY=
+	b=qvRE8DGnpjltM2rm9F/8xGcsFkVyaSfqCBBDvCu2IeBZdJ3Ac67OjjKaaFIOi/Q+M
+	 p+7V1wN5oXYOIUAWEtrXnFGs/Q0EW4rdm/dUuCTLBKYsFAHgngVNS7cSJNptFF3QKp
+	 lynraibM+4BgTA3BF08xjq0fOFQpqmNEOv+afTfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoniu Zhou <guoniu.zhou@nxp.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 504/508] media: nxp: imx8-isi: Reduce minimum queued buffers from 2 to 0
-Date: Wed, 20 May 2026 18:25:27 +0200
-Message-ID: <20260520162109.521774630@linuxfoundation.org>
+Subject: [PATCH 6.6 505/508] spi: sifive: Simplify clock handling with devm_clk_get_enabled()
+Date: Wed, 20 May 2026 18:25:28 +0200
+Message-ID: <20260520162109.544024816@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,44 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu Zhou <guoniu.zhou@nxp.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 2f38622d0f85f317be9e6b131da6cd511db94fd2 ]
+[ Upstream commit 140039c23aca067b9ff0242e3c0ce96276bb95f3 ]
 
-Fix a hang issue when capturing a single frame with applications like cam
-in libcamera. It would hang waiting for the driver to complete the buffer,
-but streaming never starts because min_queued_buffers was set to 2.
+Replace devm_clk_get() followed by clk_prepare_enable() with
+devm_clk_get_enabled() for the bus clock. This reduces boilerplate code
+and error handling, as the managed API automatically disables the clock
+when the device is removed or if probe fails.
 
-The ISI module uses a ping-pong buffer mechanism that requires two buffers
-to be programmed at all times. However, when fewer than 2 user buffers are
-available, the driver use internal discard buffers to fill the remaining
-slot(s). Reduce minimum queued buffers from 2 to 0 allows streaming to
-start without any queued buffers.
+Remove the now-unnecessary clk_disable_unprepare() calls from the probe
+error path and the remove callback. Adjust the error handling to use the
+existing put_host label.
 
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guoniu Zhou <guoniu.zhou@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260312-isi_min_buffers-v2-1-d5ea1c79ad81@nxp.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ renamed `min_queued_buffers` to `min_buffers_needed` ]
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/73d0d8ecb4e1af5a558d6a7866c0f886d94fe3d1.1773885292.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0f25236694a2 ("spi: sifive: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sifive.c |   21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-@@ -1456,7 +1456,7 @@ int mxc_isi_video_register(struct mxc_is
- 	q->mem_ops = &vb2_dma_contig_memops;
- 	q->buf_struct_size = sizeof(struct mxc_isi_buffer);
- 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
--	q->min_buffers_needed = 2;
-+	q->min_buffers_needed = 0;
- 	q->lock = &video->lock;
- 	q->dev = pipe->isi->dev;
+--- a/drivers/spi/spi-sifive.c
++++ b/drivers/spi/spi-sifive.c
+@@ -312,7 +312,8 @@ static int sifive_spi_probe(struct platf
+ 		goto put_host;
+ 	}
  
+-	spi->clk = devm_clk_get(&pdev->dev, NULL);
++	/* Spin up the bus clock before hitting registers */
++	spi->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(spi->clk)) {
+ 		dev_err(&pdev->dev, "Unable to find bus clock\n");
+ 		ret = PTR_ERR(spi->clk);
+@@ -342,13 +343,6 @@ static int sifive_spi_probe(struct platf
+ 		goto put_host;
+ 	}
+ 
+-	/* Spin up the bus clock before hitting registers */
+-	ret = clk_prepare_enable(spi->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Unable to enable bus clock\n");
+-		goto put_host;
+-	}
+-
+ 	/* probe the number of CS lines */
+ 	spi->cs_inactive = sifive_spi_read(spi, SIFIVE_SPI_REG_CSDEF);
+ 	sifive_spi_write(spi, SIFIVE_SPI_REG_CSDEF, 0xffffffffU);
+@@ -357,14 +351,14 @@ static int sifive_spi_probe(struct platf
+ 	if (!cs_bits) {
+ 		dev_err(&pdev->dev, "Could not auto probe CS lines\n");
+ 		ret = -EINVAL;
+-		goto disable_clk;
++		goto put_host;
+ 	}
+ 
+ 	num_cs = ilog2(cs_bits) + 1;
+ 	if (num_cs > SIFIVE_SPI_MAX_CS) {
+ 		dev_err(&pdev->dev, "Invalid number of spi targets\n");
+ 		ret = -EINVAL;
+-		goto disable_clk;
++		goto put_host;
+ 	}
+ 
+ 	/* Define our host */
+@@ -393,7 +387,7 @@ static int sifive_spi_probe(struct platf
+ 			       dev_name(&pdev->dev), spi);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Unable to bind to interrupt\n");
+-		goto disable_clk;
++		goto put_host;
+ 	}
+ 
+ 	dev_info(&pdev->dev, "mapped; irq=%d, cs=%d\n",
+@@ -402,13 +396,11 @@ static int sifive_spi_probe(struct platf
+ 	ret = devm_spi_register_controller(&pdev->dev, host);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "spi_register_host failed\n");
+-		goto disable_clk;
++		goto put_host;
+ 	}
+ 
+ 	return 0;
+ 
+-disable_clk:
+-	clk_disable_unprepare(spi->clk);
+ put_host:
+ 	spi_controller_put(host);
+ 
+@@ -422,7 +414,6 @@ static void sifive_spi_remove(struct pla
+ 
+ 	/* Disable all the interrupts just in case */
+ 	sifive_spi_write(spi, SIFIVE_SPI_REG_IE, 0);
+-	clk_disable_unprepare(spi->clk);
+ }
+ 
+ static int sifive_spi_suspend(struct device *dev)
 
 
