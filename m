@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6625372EED;
-	Wed, 20 May 2026 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACC33A3E90;
+	Wed, 20 May 2026 16:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295979; cv=none; b=jVSRl4Pggajf/mGYrz6EOxqt9QcQXBc6OxDq+/mDQJYXstrJVIHLgHtztowoWqALnlZvPVPYiZZwYAZpwnRj7KF8h067P2zHqWlq6XFct8c9bHjzFKCSfSDVr1RYK1M9fuXZ2DuiHpBg1q+CQyLJebc1/DwMuZYYiobY4TGSZ18=
+	t=1779295981; cv=none; b=VeJLHUAl9PM+6p1KW5yZ/SOZR/ZzyVqBLyCuUBs5Iyyl0hcEGN9Sg29GtBepXE/EXTdM2kqHVsBzgeS6MmoX3/xaSuuPpvTFTbxJpQzIE7kUukqYDAXyPOO09IOx5TLPBcwfVzkaCg++ihvA1eCi+zQHZwkEQM9fMP12W187igc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295979; c=relaxed/simple;
-	bh=MHJINnBNq0P46jV+ryheoaGuUR8vPNXcSTvbxZBOfwo=;
+	s=arc-20240116; t=1779295981; c=relaxed/simple;
+	bh=lkKOAUIaMZLg9R4DnfUpy1lq5c+l17ZFYI+/41sotw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+o4GIeTuwB2xfHxx8/6ThWY6X/C0DRL2hC8LfGgL0vuxDQWjd/S8FAS2pMRUFxRDwtw3lTM7dj+/TFsFJLTrSPWltv4L5M8yr7lrYMOQRW0AwS+JEJqWb6vWLYNoZ5fwoR4XSVkvoehnQylE8M/bNnMcD/IVDOxb7pWureHoRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aj7JOjUJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgX73GW3p1KKR7nlOuVWvmZZa6p/1YU90fMnvSEkp4ZKtp1T5XQtHmgckVikmswlEIEN6dKaKr7iVdQ0vGFpKax0UZyCyutKuL8gzv/Z3EradvMU9RS3sb8Xcoptjxt9phAbYZYZqxrKWsT91pKRML3kA+s3rBpX05Q4bQixYa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ3BFy1z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aj7JOjUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0991F000E9;
-	Wed, 20 May 2026 16:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ3BFy1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3545F1F00894;
+	Wed, 20 May 2026 16:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295976;
-	bh=VBkkdlKocMzfRhyFXc4SgmYzwmiVZlqDOU47S0Yi/78=;
+	s=korg; t=1779295978;
+	bh=gq8OkOyXSdQuewQS+OjAmZUmZQW8mFA2U9hKcJW6aBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aj7JOjUJ7waton0d7ASedxAg8DqqyyeEsUZvY83Jq3mz2noluM0DU2e3WjQRY/Nvm
-	 r6pU/HuLILtO6vwAgUQCOsnmrqhu88nOp+PqaBrfUlN0Gq1rld5czDyJj5rcgZJ9my
-	 4APBxReTjQGy4CbNeex8si3aYEGjoIHER9gFOdc8=
+	b=tQ3BFy1zriUpF6Jh2OdmtWLxDiiPknKTVCDXdbT53UTe8sNPE8brhnuEGt9v3x7Q9
+	 YsMmLUb8CzlPt2+EfaZVTmZwulsBm6ys6rtQOdS/EYUnvn7ZhWQbgU64mf6BX4E+wt
+	 gcWm7BWggVK48PTfJ9urnvzmNMplKgGapp+69dho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0624/1146] pinctrl: pinctrl-pic32: Fix resource leak
-Date: Wed, 20 May 2026 18:14:34 +0200
-Message-ID: <20260520162202.305351400@linuxfoundation.org>
+Subject: [PATCH 7.0 0625/1146] perf trace: Avoid an ERR_PTR in syscall_stats
+Date: Wed, 20 May 2026 18:14:35 +0200
+Message-ID: <20260520162202.327796329@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,68 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit fe5560688f3ba98364c7de7b4f8dc240ffd1ff75 ]
+[ Upstream commit d05073adda0f047e9b2115a2932bcb2797eab238 ]
 
-Fix three possible resource leaks by using the devres version of
-clk_prepare_enable(). Also, update error message accordingly.
+hashmap__new may return an ERR_PTR and previously this would be
+assigned to syscall_stats meaning all use of syscall_stats needs to
+test for NULL (uninitialized) or an ERR_PTR. Given the only reason
+hashmap__new can fail is ENOMEM, just use NULL to indicate the
+allocation failure and avoid the code having to test for NULL and
+IS_ERR.
 
-Detected by Smatch:
-drivers/pinctrl/pinctrl-pic32.c:2211 pic32_pinctrl_probe() warn:
-'pctl->clk' from clk_prepare_enable() not released on lines: 2208.
-
-drivers/pinctrl/pinctrl-pic32.c:2274 pic32_gpio_probe() warn:
-'bank->clk' from clk_prepare_enable() not released on lines: 2264,2272.
-
-Fixes: 2ba384e6c3810 ("pinctrl: pinctrl-pic32: Add PIC32 pin control driver")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 96f202eab813 (perf trace: Fix IS_ERR() vs NULL check bug)
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-pic32.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ tools/perf/builtin-trace.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-pic32.c b/drivers/pinctrl/pinctrl-pic32.c
-index 16bbbcf720628..f61ab89bc0f7b 100644
---- a/drivers/pinctrl/pinctrl-pic32.c
-+++ b/drivers/pinctrl/pinctrl-pic32.c
-@@ -2174,16 +2174,10 @@ static int pic32_pinctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(pctl->reg_base))
- 		return PTR_ERR(pctl->reg_base);
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 295b272c6c299..7ff85fa90d988 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1565,7 +1565,9 @@ static bool syscall_id_equal(long key1, long key2, void *ctx __maybe_unused)
  
--	pctl->clk = devm_clk_get(&pdev->dev, NULL);
-+	pctl->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(pctl->clk)) {
- 		ret = PTR_ERR(pctl->clk);
--		dev_err(&pdev->dev, "clk get failed\n");
--		return ret;
--	}
--
--	ret = clk_prepare_enable(pctl->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "clk enable failed\n");
-+		dev_err(&pdev->dev, "Failed to get and enable clock\n");
- 		return ret;
+ static struct hashmap *alloc_syscall_stats(void)
+ {
+-	return hashmap__new(syscall_id_hash, syscall_id_equal, NULL);
++	struct hashmap *result = hashmap__new(syscall_id_hash, syscall_id_equal, NULL);
++
++	return IS_ERR(result) ? NULL : result;
+ }
+ 
+ static void delete_syscall_stats(struct hashmap *syscall_stats)
+@@ -1573,7 +1575,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
+ 	struct hashmap_entry *pos;
+ 	size_t bkt;
+ 
+-	if (IS_ERR(syscall_stats))
++	if (!syscall_stats)
+ 		return;
+ 
+ 	hashmap__for_each_entry(syscall_stats, pos, bkt)
+@@ -1589,7 +1591,7 @@ static struct thread_trace *thread_trace__new(struct trace *trace)
+ 		ttrace->files.max = -1;
+ 		if (trace->summary) {
+ 			ttrace->syscall_stats = alloc_syscall_stats();
+-			if (IS_ERR(ttrace->syscall_stats))
++			if (!ttrace->syscall_stats)
+ 				zfree(&ttrace);
+ 		}
+ 	}
+@@ -4464,7 +4466,7 @@ static int trace__run(struct trace *trace, int argc, const char **argv)
+ 
+ 	if (trace->summary_mode == SUMMARY__BY_TOTAL && !trace->summary_bpf) {
+ 		trace->syscall_stats = alloc_syscall_stats();
+-		if (IS_ERR(trace->syscall_stats))
++		if (!trace->syscall_stats)
+ 			goto out_delete_evlist;
  	}
  
-@@ -2239,16 +2233,10 @@ static int pic32_gpio_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
+@@ -4771,7 +4773,7 @@ static int trace__replay(struct trace *trace)
  
--	bank->clk = devm_clk_get(&pdev->dev, NULL);
-+	bank->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(bank->clk)) {
- 		ret = PTR_ERR(bank->clk);
--		dev_err(&pdev->dev, "clk get failed\n");
--		return ret;
--	}
--
--	ret = clk_prepare_enable(bank->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "clk enable failed\n");
-+		dev_err(&pdev->dev, "Failed to get and enable clock\n");
- 		return ret;
+ 	if (trace->summary_mode == SUMMARY__BY_TOTAL) {
+ 		trace->syscall_stats = alloc_syscall_stats();
+-		if (IS_ERR(trace->syscall_stats))
++		if (!trace->syscall_stats)
+ 			goto out;
  	}
  
 -- 
