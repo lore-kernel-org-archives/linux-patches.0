@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E40A28DC4;
-	Wed, 20 May 2026 17:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548C528DC4;
+	Wed, 20 May 2026 17:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298271; cv=none; b=EEhzR4iK3wC3XBGCpMA5SATETl64mUgrPX6vsIaqLLotsYTts6hkt7oTHdrxczw/bIsfyNM5CaGK/nAI0OEZpNtLOvbFaECj1Iu19iOZYAys91U/OixU6X4Ns4mOgGle8n6SZKSMbRqf6JV43b1v7U6+P5l17V01HI6O+co86OU=
+	t=1779298274; cv=none; b=q8G25HqRuaPsJoZCN0z7Nb4G3W4bX/Srh5iXcSWgM9+JxRcS5+4+YuCwzq6g7EafxwM4JH0Wlln11rr0j08FwZUI0tUVwK6n/XSBkcQXEkq/7q1o3AOmSvXwTwS24gwD95VjVhUS8Srxt7PhVFlN+jzyrz99Hg2fmXzQjmhdAQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298271; c=relaxed/simple;
-	bh=TGJSEPiiuYxUxry9V/xKKs6XDlQQIvRQev1wJPA8tFs=;
+	s=arc-20240116; t=1779298274; c=relaxed/simple;
+	bh=+7UzZLEdrfOPlisLWpTbDe6gm7PaPHzX41KOlxJZt64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3XBKTAUPRctyjznXRBTTfJupJPWfXV2Qag2NnmLiOGlwMpy4oxvzXqzXWr+z84s3ZGbpwsG+txOudR/3wfqLA5rBDsDD/pqxSdbOzD5J1d/tC25tepwL/bFN9Bgf2Si6In+Qkt8aEcVW20wkEnzNtabOSWX+4ziNTajZhN9dHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeRA90KW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m8kqtHNZxRcgvOfQH4535ixh3gw1uCI4QFIk5XNZL64TGBRvte6N99FmiURpcbbIU8R3YkFtmyCc4lcBcb8TNw3AnpBFoYgm240S2QVxLo++BIggSCs7PpCAigxs9y096LC2DBoAon7Igx7GI/NxPttYqOTm6lKH51L/9Odf/0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmMc632h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeRA90KW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AFB1F000E9;
-	Wed, 20 May 2026 17:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmMc632h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7081F000E9;
+	Wed, 20 May 2026 17:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298270;
-	bh=XfX8sdYrX/7ZPnn8fAnTstuVv1HEGZ5jCi6+tVtLa9s=;
+	s=korg; t=1779298273;
+	bh=wE3rrU7l5sKYudPs6QjubXVMJz8yydkzZ+bgNnH4GII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zeRA90KWhV/sv+JYsWEy/jRLMt5JRhirfwWaF/FemU+wi3RzZuPcKc4Y3NjqMXdw6
-	 bwO++DCijNNOhd01HeXANbZvIrHSS/2BBpGj6AUeAG+pq8F1H5yvF9pZvdFjHtacC+
-	 w0nvyirU3S8hAeAGEQNnkgmtsISWxP5PUoKQ4iiQ=
+	b=cmMc632hLV/9wB4AtiXMzxNDQPTss97/1WMUEUZln3Qd/tLQ1QfrWSMCXRRSmSniH
+	 kBi3H2LJbJoE1JX1saTh+EiNhCys2wyhxV60Q0Hcgpksph/35jrh+UU2uLxfbAtl7u
+	 2RHAh+ZCjpIn2iOXM1NG6PHmeBg6zPyBF7Y4toFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
 	Luis Henriques <luis@igalia.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 345/957] dcache: export shrink_dentry_list() and add new helper d_dispose_if_unused()
-Date: Wed, 20 May 2026 18:13:48 +0200
-Message-ID: <20260520162142.013144340@linuxfoundation.org>
+Subject: [PATCH 6.18 346/957] fuse: new work queue to periodically invalidate expired dentries
+Date: Wed, 20 May 2026 18:13:49 +0200
+Message-ID: <20260520162142.034488466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,80 +53,363 @@ Content-Transfer-Encoding: 8bit
 
 From: Luis Henriques <luis@igalia.com>
 
-[ Upstream commit 395b95530343e7f4bdd2870190d985a222997fb6 ]
+[ Upstream commit ab84ad5973869a660ca3ad0c54a2b84d975d47c4 ]
 
-Add and export a new helper d_dispose_if_unused() which is simply a wrapper
-around to_shrink_list(), to add an entry to a dispose list if it's not used
-anymore.
+This patch adds the necessary infrastructure to keep track of all dentries
+created for FUSE file systems.  A set of rbtrees, protected by hashed
+locks, will be used to keep all these dentries sorted by expiry time.
 
-Also export shrink_dentry_list() to kill all dentries in a dispose list.
+A new module parameter 'inval_wq' is also added.  When set, it will start
+a work queue which will periodically invalidate expired dentries.  The
+value of this new parameter is the period, in seconds, for this work
+queue.  Once this parameter is set, every new dentry will be added to one
+of the rbtrees.
 
-Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
+When the work queue is executed, it will check all the rbtrees and will
+invalidate those dentries that have timed-out.
+
+The work queue period can not be smaller than 5 seconds, but can be
+disabled by setting 'inval_wq' to zero (which is the default).
+
 Signed-off-by: Luis Henriques <luis@igalia.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Stable-dep-of: 5a6baf204610 ("fuse: fix uninit-value in fuse_dentry_revalidate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c            | 18 ++++++++++++------
- include/linux/dcache.h |  2 ++
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ fs/fuse/dir.c    | 216 ++++++++++++++++++++++++++++++++++++++++++-----
+ fs/fuse/fuse_i.h |  10 +++
+ fs/fuse/inode.c  |   3 +
+ 3 files changed, 208 insertions(+), 21 deletions(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index 8bf82b002b4d4..fcc8ddf7d3fa4 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -1086,6 +1086,15 @@ struct dentry *d_find_alias_rcu(struct inode *inode)
- 	return de;
- }
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index ecaec0fea3a13..77982fdbcf278 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -27,6 +27,67 @@ module_param(allow_sys_admin_access, bool, 0644);
+ MODULE_PARM_DESC(allow_sys_admin_access,
+ 		 "Allow users with CAP_SYS_ADMIN in initial userns to bypass allow_other access check");
  
-+void d_dispose_if_unused(struct dentry *dentry, struct list_head *dispose)
-+{
-+	spin_lock(&dentry->d_lock);
-+	if (!dentry->d_lockref.count)
-+		to_shrink_list(dentry, dispose);
-+	spin_unlock(&dentry->d_lock);
-+}
-+EXPORT_SYMBOL(d_dispose_if_unused);
++struct dentry_bucket {
++	struct rb_root tree;
++	spinlock_t lock;
++};
 +
- /*
-  *	Try to kill dentries associated with this inode.
-  * WARNING: you must own a reference to inode.
-@@ -1096,12 +1105,8 @@ void d_prune_aliases(struct inode *inode)
- 	struct dentry *dentry;
- 
- 	spin_lock(&inode->i_lock);
--	hlist_for_each_entry(dentry, &inode->i_dentry, d_u.d_alias) {
--		spin_lock(&dentry->d_lock);
--		if (!dentry->d_lockref.count)
--			to_shrink_list(dentry, &dispose);
--		spin_unlock(&dentry->d_lock);
--	}
-+	hlist_for_each_entry(dentry, &inode->i_dentry, d_u.d_alias)
-+		d_dispose_if_unused(dentry, &dispose);
- 	spin_unlock(&inode->i_lock);
- 	shrink_dentry_list(&dispose);
++#define HASH_BITS	5
++#define HASH_SIZE	(1 << HASH_BITS)
++static struct dentry_bucket dentry_hash[HASH_SIZE];
++struct delayed_work dentry_tree_work;
++
++/* Minimum invalidation work queue frequency */
++#define FUSE_DENTRY_INVAL_FREQ_MIN 5
++
++unsigned __read_mostly inval_wq;
++static int inval_wq_set(const char *val, const struct kernel_param *kp)
++{
++	unsigned int num;
++	unsigned int old = inval_wq;
++	int ret;
++
++	if (!val)
++		return -EINVAL;
++
++	ret = kstrtouint(val, 0, &num);
++	if (ret)
++		return ret;
++
++	if ((num < FUSE_DENTRY_INVAL_FREQ_MIN) && (num != 0))
++		return -EINVAL;
++
++	/* This should prevent overflow in secs_to_jiffies() */
++	if (num > USHRT_MAX)
++		return -EINVAL;
++
++	*((unsigned int *)kp->arg) = num;
++
++	if (num && !old)
++		schedule_delayed_work(&dentry_tree_work,
++				      secs_to_jiffies(num));
++	else if (!num && old)
++		cancel_delayed_work_sync(&dentry_tree_work);
++
++	return 0;
++}
++static const struct kernel_param_ops inval_wq_ops = {
++	.set = inval_wq_set,
++	.get = param_get_uint,
++};
++module_param_cb(inval_wq, &inval_wq_ops, &inval_wq, 0644);
++__MODULE_PARM_TYPE(inval_wq, "uint");
++MODULE_PARM_DESC(inval_wq,
++		 "Dentries invalidation work queue period in secs (>= "
++		 __stringify(FUSE_DENTRY_INVAL_FREQ_MIN) ").");
++
++static inline struct dentry_bucket *get_dentry_bucket(struct dentry *dentry)
++{
++	int i = hash_ptr(dentry, HASH_BITS);
++
++	return &dentry_hash[i];
++}
++
+ static void fuse_advise_use_readdirplus(struct inode *dir)
+ {
+ 	struct fuse_inode *fi = get_fuse_inode(dir);
+@@ -34,33 +95,131 @@ static void fuse_advise_use_readdirplus(struct inode *dir)
+ 	set_bit(FUSE_I_ADVISE_RDPLUS, &fi->state);
  }
-@@ -1141,6 +1146,7 @@ void shrink_dentry_list(struct list_head *list)
- 		shrink_kill(dentry);
+ 
+-#if BITS_PER_LONG >= 64
+-static inline void __fuse_dentry_settime(struct dentry *entry, u64 time)
++struct fuse_dentry {
++	u64 time;
++	union {
++		struct rcu_head rcu;
++		struct rb_node node;
++	};
++	struct dentry *dentry;
++};
++
++static void __fuse_dentry_tree_del_node(struct fuse_dentry *fd,
++					struct dentry_bucket *bucket)
+ {
+-	entry->d_fsdata = (void *) time;
++	if (!RB_EMPTY_NODE(&fd->node)) {
++		rb_erase(&fd->node, &bucket->tree);
++		RB_CLEAR_NODE(&fd->node);
++	}
+ }
+ 
+-static inline u64 fuse_dentry_time(const struct dentry *entry)
++static void fuse_dentry_tree_del_node(struct dentry *dentry)
+ {
+-	return (u64)entry->d_fsdata;
++	struct fuse_dentry *fd = dentry->d_fsdata;
++	struct dentry_bucket *bucket = get_dentry_bucket(dentry);
++
++	spin_lock(&bucket->lock);
++	__fuse_dentry_tree_del_node(fd, bucket);
++	spin_unlock(&bucket->lock);
+ }
+ 
+-#else
+-union fuse_dentry {
+-	u64 time;
+-	struct rcu_head rcu;
+-};
++static void fuse_dentry_tree_add_node(struct dentry *dentry)
++{
++	struct fuse_dentry *fd = dentry->d_fsdata;
++	struct dentry_bucket *bucket;
++	struct fuse_dentry *cur;
++	struct rb_node **p, *parent = NULL;
++
++	if (!inval_wq)
++		return;
++
++	bucket = get_dentry_bucket(dentry);
++
++	spin_lock(&bucket->lock);
++
++	__fuse_dentry_tree_del_node(fd, bucket);
++
++	p = &bucket->tree.rb_node;
++	while (*p) {
++		parent = *p;
++		cur = rb_entry(*p, struct fuse_dentry, node);
++		if (fd->time < cur->time)
++			p = &(*p)->rb_left;
++		else
++			p = &(*p)->rb_right;
++	}
++	rb_link_node(&fd->node, parent, p);
++	rb_insert_color(&fd->node, &bucket->tree);
++	spin_unlock(&bucket->lock);
++}
++
++/*
++ * work queue which, when enabled, will periodically check for expired dentries
++ * in the dentries tree.
++ */
++static void fuse_dentry_tree_work(struct work_struct *work)
++{
++	LIST_HEAD(dispose);
++	struct fuse_dentry *fd;
++	struct rb_node *node;
++	int i;
++
++	for (i = 0; i < HASH_SIZE; i++) {
++		spin_lock(&dentry_hash[i].lock);
++		node = rb_first(&dentry_hash[i].tree);
++		while (node) {
++			fd = rb_entry(node, struct fuse_dentry, node);
++			if (time_after64(get_jiffies_64(), fd->time)) {
++				rb_erase(&fd->node, &dentry_hash[i].tree);
++				RB_CLEAR_NODE(&fd->node);
++				spin_unlock(&dentry_hash[i].lock);
++				d_dispose_if_unused(fd->dentry, &dispose);
++				cond_resched();
++				spin_lock(&dentry_hash[i].lock);
++			} else
++				break;
++			node = rb_first(&dentry_hash[i].tree);
++		}
++		spin_unlock(&dentry_hash[i].lock);
++		shrink_dentry_list(&dispose);
++	}
++
++	if (inval_wq)
++		schedule_delayed_work(&dentry_tree_work,
++				      secs_to_jiffies(inval_wq));
++}
++
++void fuse_dentry_tree_init(void)
++{
++	int i;
++
++	for (i = 0; i < HASH_SIZE; i++) {
++		spin_lock_init(&dentry_hash[i].lock);
++		dentry_hash[i].tree = RB_ROOT;
++	}
++	INIT_DELAYED_WORK(&dentry_tree_work, fuse_dentry_tree_work);
++}
++
++void fuse_dentry_tree_cleanup(void)
++{
++	int i;
++
++	inval_wq = 0;
++	cancel_delayed_work_sync(&dentry_tree_work);
++
++	for (i = 0; i < HASH_SIZE; i++)
++		WARN_ON_ONCE(!RB_EMPTY_ROOT(&dentry_hash[i].tree));
++}
+ 
+ static inline void __fuse_dentry_settime(struct dentry *dentry, u64 time)
+ {
+-	((union fuse_dentry *) dentry->d_fsdata)->time = time;
++	((struct fuse_dentry *) dentry->d_fsdata)->time = time;
+ }
+ 
+ static inline u64 fuse_dentry_time(const struct dentry *entry)
+ {
+-	return ((union fuse_dentry *) entry->d_fsdata)->time;
++	return ((struct fuse_dentry *) entry->d_fsdata)->time;
+ }
+-#endif
+ 
+ static void fuse_dentry_settime(struct dentry *dentry, u64 time)
+ {
+@@ -81,6 +240,7 @@ static void fuse_dentry_settime(struct dentry *dentry, u64 time)
  	}
+ 
+ 	__fuse_dentry_settime(dentry, time);
++	fuse_dentry_tree_add_node(dentry);
  }
-+EXPORT_SYMBOL(shrink_dentry_list);
  
- static enum lru_status dentry_lru_isolate(struct list_head *item,
- 		struct list_lru_one *lru, void *arg)
-diff --git a/include/linux/dcache.h b/include/linux/dcache.h
-index c83e02b943894..2bc1339bf6d03 100644
---- a/include/linux/dcache.h
-+++ b/include/linux/dcache.h
-@@ -268,6 +268,8 @@ extern void d_tmpfile(struct file *, struct inode *);
+ /*
+@@ -283,21 +443,36 @@ static int fuse_dentry_revalidate(struct inode *dir, const struct qstr *name,
+ 	goto out;
+ }
  
- extern struct dentry *d_find_alias(struct inode *);
- extern void d_prune_aliases(struct inode *);
-+extern void d_dispose_if_unused(struct dentry *, struct list_head *);
-+extern void shrink_dentry_list(struct list_head *);
+-#if BITS_PER_LONG < 64
+ static int fuse_dentry_init(struct dentry *dentry)
+ {
+-	dentry->d_fsdata = kzalloc(sizeof(union fuse_dentry),
+-				   GFP_KERNEL_ACCOUNT | __GFP_RECLAIMABLE);
++	struct fuse_dentry *fd;
  
- extern struct dentry *d_find_alias_rcu(struct inode *);
+-	return dentry->d_fsdata ? 0 : -ENOMEM;
++	fd = kzalloc(sizeof(struct fuse_dentry),
++			  GFP_KERNEL_ACCOUNT | __GFP_RECLAIMABLE);
++	if (!fd)
++		return -ENOMEM;
++
++	fd->dentry = dentry;
++	RB_CLEAR_NODE(&fd->node);
++	dentry->d_fsdata = fd;
++
++	return 0;
++}
++
++static void fuse_dentry_prune(struct dentry *dentry)
++{
++	struct fuse_dentry *fd = dentry->d_fsdata;
++
++	if (!RB_EMPTY_NODE(&fd->node))
++		fuse_dentry_tree_del_node(dentry);
+ }
++
+ static void fuse_dentry_release(struct dentry *dentry)
+ {
+-	union fuse_dentry *fd = dentry->d_fsdata;
++	struct fuse_dentry *fd = dentry->d_fsdata;
  
+ 	kfree_rcu(fd, rcu);
+ }
+-#endif
+ 
+ static int fuse_dentry_delete(const struct dentry *dentry)
+ {
+@@ -331,10 +506,9 @@ static struct vfsmount *fuse_dentry_automount(struct path *path)
+ const struct dentry_operations fuse_dentry_operations = {
+ 	.d_revalidate	= fuse_dentry_revalidate,
+ 	.d_delete	= fuse_dentry_delete,
+-#if BITS_PER_LONG < 64
+ 	.d_init		= fuse_dentry_init,
++	.d_prune	= fuse_dentry_prune,
+ 	.d_release	= fuse_dentry_release,
+-#endif
+ 	.d_automount	= fuse_dentry_automount,
+ };
+ 
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index c288f28f6c6ea..276dfddce5b53 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -54,6 +54,13 @@
+ /** Frequency (in jiffies) of request timeout checks, if opted into */
+ extern const unsigned long fuse_timeout_timer_freq;
+ 
++/*
++ * Dentries invalidation workqueue period, in seconds.  The value of this
++ * parameter shall be >= FUSE_DENTRY_INVAL_FREQ_MIN seconds, or 0 (zero), in
++ * which case no workqueue will be created.
++ */
++extern unsigned inval_wq __read_mostly;
++
+ /** Maximum of max_pages received in init_out */
+ extern unsigned int fuse_max_pages_limit;
+ /*
+@@ -1278,6 +1285,9 @@ void fuse_wait_aborted(struct fuse_conn *fc);
+ /* Check if any requests timed out */
+ void fuse_check_timeout(struct work_struct *work);
+ 
++void fuse_dentry_tree_init(void);
++void fuse_dentry_tree_cleanup(void);
++
+ /**
+  * Invalidate inode attributes
+  */
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index e9ed693fc7b37..a090c91abb89d 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -2296,6 +2296,8 @@ static int __init fuse_init(void)
+ 	if (res)
+ 		goto err_sysfs_cleanup;
+ 
++	fuse_dentry_tree_init();
++
+ 	sanitize_global_limit(&max_user_bgreq);
+ 	sanitize_global_limit(&max_user_congthresh);
+ 
+@@ -2315,6 +2317,7 @@ static void __exit fuse_exit(void)
+ {
+ 	pr_debug("exit\n");
+ 
++	fuse_dentry_tree_cleanup();
+ 	fuse_ctl_cleanup();
+ 	fuse_sysfs_cleanup();
+ 	fuse_fs_cleanup();
 -- 
 2.53.0
 
