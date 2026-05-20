@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E683131F9BE;
-	Wed, 20 May 2026 16:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8636239B969;
+	Wed, 20 May 2026 16:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294849; cv=none; b=izRwd/nvYPsg0ILYCChzR0IBUwBWTVQZTJW3BdlHTC/8W000IXQiXWUnArzmDS600tGF4b4qIG4i9NBudFejWU0GTQsUGj/v7dUf9t+lGntKG0fYuQ20m6FSQ8ojGz4ugDIEy7Y//JVGf60v+zJXusYM0v/9j5Qd8U9UImiEKSk=
+	t=1779294852; cv=none; b=iIvhIRxutE4iFpZjnx8xLQ0E398upk8BCEgMRXu8GOFdF4YhOG+ngp+FwTXVf6q3GG5m224jdbxkvhTtZA1EXLwmF0/3ddmRTu834Gc2bqr9VR0Jd0HBJyfPo6ldURUAPphUG5szx7vjTFu4BOIOChbKMCvUDTGbv1rFWwjMsyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294849; c=relaxed/simple;
-	bh=5STfWjJs7YjB9jjxBlTx2B2KKqKYik698PKV7PBHUhk=;
+	s=arc-20240116; t=1779294852; c=relaxed/simple;
+	bh=R/VBoTs+7yc0vEwl27fEubOo20h7UIAohSpIWl1Rtpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWuOyTcfacf/82O5gO4zyKxMZ7mznTCf6wbYm5OLxrZlqNFJpjvmzFc3DHQxCVj5tfxbdIwaAt/5GsYhdOiXrx1QiSyiIfdVt75/5gMf659pa6/mTfNbfeOXCCnbl5V9ZXA8YaC0qy34F1ca8SbTNRm5eXuQiZ4bZATeTPd+F0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMYco4kt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1WAuSePZiRYjqSFhDiGu916Ehl6dAlaff+29zPAWnK6fgBSKvtmI6vIhThDbh95rQyeOI8JvX1HEBmW4Ou7iSWbY8fcEXdhyIeusan67q7pw9hdmFuMXyXsFykv18qVOWTdY9pIEB8hcfyeYeXVWGwuLV/edl59f2bw3QCQytQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bwlzc6wn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMYco4kt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8971F000E9;
-	Wed, 20 May 2026 16:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bwlzc6wn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEBC1F000E9;
+	Wed, 20 May 2026 16:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294847;
-	bh=6FGkH5y6O8fo49nRcMg5H8vH6CzVD0e0Lt+nXtyMXps=;
+	s=korg; t=1779294850;
+	bh=HQR3VVGXi5sRYDG0Jf30u68sjB6JLNIKRLyds/VW4vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BMYco4ktDhamkzvumNvamDs6mACq8uLJ1ktEDsZFffwD29xCBME2Fi4cH1KRsjsC1
-	 AmWiNIH1kmEJ2GNR5HuiLbhZFQvhinNDFkaS/Em81ekG6DWS8xrvCmZSZDGVDk1uiq
-	 pn6WK5N++lNttNMetzMc4sYSt1mYTs5rvb1OBJpM=
+	b=Bwlzc6wn0cH+/B3sJZKwEtz9ffb69pgzyhMwkCE9MXpo7tVFd2ZbIr/IGEn7o03wa
+	 VLuk1ieh7/hBnGJyjDi35i74O2XSGi+n26QEy3SqGZvpNn8zkef3te7y6KZCa7wUUx
+	 7dw+GorkyhvCT3QLFwT0bYqAZMDVQnRVwzt7vtHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Quan Sun <2022090917019@std.uestc.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0168/1146] bpf: Fix ld_{abs,ind} failure path analysis in subprogs
-Date: Wed, 20 May 2026 18:06:58 +0200
-Message-ID: <20260520162152.091555090@linuxfoundation.org>
+Subject: [PATCH 7.0 0195/1146] bpf: Fix same-register dst/src OOB read and pointer leak in sock_ops
+Date: Wed, 20 May 2026 18:07:25 +0200
+Message-ID: <20260520162152.689361140@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,101 +57,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit ee861486e377edc55361c08dcbceab3f6b6577bd ]
+[ Upstream commit 10f86a2a5c91fc4c4d001960f1c21abe52545ef6 ]
 
-Usage of ld_{abs,ind} instructions got extended into subprogs some time
-ago via commit 09b28d76eac4 ("bpf: Add abnormal return checks."). These
-are only allowed in subprograms when the latter are BTF annotated and
-have scalar return types.
+When a BPF sock_ops program accesses ctx fields with dst_reg == src_reg,
+the SOCK_OPS_GET_SK() and SOCK_OPS_GET_FIELD() macros fail to zero the
+destination register in the !fullsock / !locked_tcp_sock path.
 
-The code generator in bpf_gen_ld_abs() has an abnormal exit path (r0=0 +
-exit) from legacy cBPF times. While the enforcement is on scalar return
-types, the verifier must also simulate the path of abnormal exit if the
-packet data load via ld_{abs,ind} failed.
+Both macros borrow a temporary register to check is_fullsock /
+is_locked_tcp_sock when dst_reg == src_reg, because dst_reg holds the
+ctx pointer. When the check is false (e.g., TCP_NEW_SYN_RECV state with
+a request_sock), dst_reg should be zeroed but is not, leaving the stale
+ctx pointer:
 
-This is currently not the case. Fix it by having the verifier simulate
-both success and failure paths, and extend it in similar ways as we do
-for tail calls. The success path (r0=unknown, continue to next insn) is
-pushed onto stack for later validation and the r0=0 and return to the
-caller is done on the fall-through side.
+ - SOCK_OPS_GET_SK: dst_reg retains the ctx pointer, passes NULL checks
+   as PTR_TO_SOCKET_OR_NULL, and can be used as a bogus socket pointer,
+   leading to stack-out-of-bounds access in helpers like
+   bpf_skc_to_tcp6_sock().
 
-Fixes: 09b28d76eac4 ("bpf: Add abnormal return checks.")
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260408191242.526279-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+ - SOCK_OPS_GET_FIELD: dst_reg retains the ctx pointer which the
+   verifier believes is a SCALAR_VALUE, leaking a kernel pointer.
+
+Fix both macros by:
+ - Changing JMP_A(1) to JMP_A(2) in the fullsock path to skip the
+   added instruction.
+ - Adding BPF_MOV64_IMM(si->dst_reg, 0) after the temp register
+   restore in the !fullsock path, placed after the restore because
+   dst_reg == src_reg means we need src_reg intact to read ctx->temp.
+
+Fixes: fd09af010788 ("bpf: sock_ops ctx access may stomp registers in corner case")
+Fixes: 84f44df664e9 ("bpf: sock_ops sk access may stomp registers when dst_reg = src_reg")
+Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Closes: https://lore.kernel.org/bpf/6fe1243e-149b-4d3b-99c7-fcc9e2f75787@std.uestc.edu.cn/T/#u
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20260407022720.162151-2-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ net/core/filter.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2949cdc7565f7..71c078d18683a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -17943,6 +17943,23 @@ static int check_ld_abs(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 	mark_reg_unknown(env, regs, BPF_REG_0);
- 	/* ld_abs load up to 32-bit skb data. */
- 	regs[BPF_REG_0].subreg_def = env->insn_idx + 1;
-+	/*
-+	 * See bpf_gen_ld_abs() which emits a hidden BPF_EXIT with r0=0
-+	 * which must be explored by the verifier when in a subprog.
-+	 */
-+	if (env->cur_state->curframe) {
-+		struct bpf_verifier_state *branch;
-+
-+		mark_reg_scratched(env, BPF_REG_0);
-+		branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
-+		if (IS_ERR(branch))
-+			return PTR_ERR(branch);
-+		mark_reg_known_zero(env, regs, BPF_REG_0);
-+		err = prepare_func_exit(env, &env->insn_idx);
-+		if (err)
-+			return err;
-+		env->insn_idx--;
-+	}
- 	return 0;
- }
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 78b548158fb05..53ce06ed4a88e 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10581,10 +10581,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 				      si->dst_reg, si->dst_reg,		      \
+ 				      offsetof(OBJ, OBJ_FIELD));	      \
+ 		if (si->dst_reg == si->src_reg)	{			      \
+-			*insn++ = BPF_JMP_A(1);				      \
++			*insn++ = BPF_JMP_A(2);				      \
+ 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
+ 				      offsetof(struct bpf_sock_ops_kern,      \
+ 				      temp));				      \
++			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
+ 		}							      \
+ 	} while (0)
  
-@@ -18815,7 +18832,12 @@ static int visit_gotox_insn(int t, struct bpf_verifier_env *env)
- 	return keep_exploring ? KEEP_EXPLORING : DONE_EXPLORING;
- }
+@@ -10618,10 +10619,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 				      si->dst_reg, si->src_reg,		      \
+ 				      offsetof(struct bpf_sock_ops_kern, sk));\
+ 		if (si->dst_reg == si->src_reg)	{			      \
+-			*insn++ = BPF_JMP_A(1);				      \
++			*insn++ = BPF_JMP_A(2);				      \
+ 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
+ 				      offsetof(struct bpf_sock_ops_kern,      \
+ 				      temp));				      \
++			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
+ 		}							      \
+ 	} while (0)
  
--static int visit_tailcall_insn(struct bpf_verifier_env *env, int t)
-+/*
-+ * Instructions that can abnormally return from a subprog (tail_call
-+ * upon success, ld_{abs,ind} upon load failure) have a hidden exit
-+ * that the verifier must account for.
-+ */
-+static int visit_abnormal_return_insn(struct bpf_verifier_env *env, int t)
- {
- 	static struct bpf_subprog_info *subprog;
- 	struct bpf_iarray *jt;
-@@ -18850,6 +18872,13 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
- 	/* All non-branch instructions have a single fall-through edge. */
- 	if (BPF_CLASS(insn->code) != BPF_JMP &&
- 	    BPF_CLASS(insn->code) != BPF_JMP32) {
-+		if (BPF_CLASS(insn->code) == BPF_LD &&
-+		    (BPF_MODE(insn->code) == BPF_ABS ||
-+		     BPF_MODE(insn->code) == BPF_IND)) {
-+			ret = visit_abnormal_return_insn(env, t);
-+			if (ret)
-+				return ret;
-+		}
- 		insn_sz = bpf_is_ldimm64(insn) ? 2 : 1;
- 		return push_insn(t, t + insn_sz, FALLTHROUGH, env);
- 	}
-@@ -18895,7 +18924,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
- 			if (bpf_helper_changes_pkt_data(insn->imm))
- 				mark_subprog_changes_pkt_data(env, t);
- 			if (insn->imm == BPF_FUNC_tail_call) {
--				ret = visit_tailcall_insn(env, t);
-+				ret = visit_abnormal_return_insn(env, t);
- 				if (ret)
- 					return ret;
- 			}
 -- 
 2.53.0
 
