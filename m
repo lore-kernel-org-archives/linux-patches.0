@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274933E314D;
-	Wed, 20 May 2026 16:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16EE366075;
+	Wed, 20 May 2026 16:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296056; cv=none; b=uRmtSyJSXVryhUttlmZ2OLyN2uZ3fGnIvs5BIkQgrNJ0cwe7EpDMTu7BjC/jo3L2Ga9F9SJA6dGXx1jBk0yiWoMfsfNZSxGkiIL+M5hAhKqppVQWnCTGNV+vKSq3Q0Kr77L/+rXXE4Z0dYjgPRZupPQgdh4ocXYMfIGDOwY8ci0=
+	t=1779296058; cv=none; b=eXgYNCzdYJdlCEYWnm/3jh8SIQrSm/Jsf1rhzXFQVS6YIroL2fuoNtmqAKdLcwEobEJfNfniHMAtqe02whvh37i3W7gcZZlJWqpLkctcNoWx8i/WQrewbpySGYFZYZ3PnBY4shHrl3mmPqDqsLkfx+uta3qlxDlQz7XJLE7KFuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296056; c=relaxed/simple;
-	bh=GiUB/xUfmNR/I+Fa9lO0hXIxUrQjNeu1Y4kRAkdOXag=;
+	s=arc-20240116; t=1779296058; c=relaxed/simple;
+	bh=xqH8izd76JXPjjhxJccKoBWrjna2FG4E5WFpU/nB/AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVEoJJZp2hSuRh5+3Hmcpzg1zjGktBeX7lwtXkXBsSJfH1YA+33Y4/b0OaIMf88rnPqxe8QNQs/QwqHzF/YubyxSHL97/cqpD6KV5HTc8+c23X9NYjdKSGXgYJb9rn7wQxBFOeUpYuOEV3pHvNk/cNRgWMFnqfkB0Y4Rtxx/ZeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVnzmyI0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p12G9IsKWb2nRoUXYWOZ2YbFvGYRuim5ZuUINVDUSQGPddpSqTF9SgNclKVJU+6OzWjghP+sznhezswzufodSUVbCdxWznleQhI22ZTmKqZT0MMxC1lCUQWMZ0LaVnmhW3DBkGgMcpw8NjmTLwezlgwfN1JHEnMi6hmCnBEbooA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggiQu2kj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVnzmyI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF0D1F000E9;
-	Wed, 20 May 2026 16:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggiQu2kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E541F000E9;
+	Wed, 20 May 2026 16:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296055;
-	bh=bhAHFvtgB00aLHLfGOko8E4r6DlQk+p9pp+imZQ21OU=;
+	s=korg; t=1779296057;
+	bh=8zg/He0MWDmtcWjhG7go8idu+1Bzp9pP3Mx2pHBTQzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QVnzmyI00vsuSP3c8tIuvS2W6puL2M7DeQnsn5nCm2J/fjhSQmWa07hoIiTp4Tsjb
-	 PNb0qsInsQNiSYHO+dHPPu9WJ7YV/WZBkJQrB64dLhKvql4PliNGG8ATqcDb1J4iaK
-	 62OZAmlXesgA1k0NgJz0V+VegjLAIpX1dU1hCvxY=
+	b=ggiQu2kjOzC2/6XXe22kwdNgDgCo7oyNJ7Dbu/xMSeQeNsLTHgh9hMwXs+aG1E2B9
+	 k3mKkGb+tVLAQsdPd4bZS9ZdZ8F0tETse9KaAqrrKuvXU/IQ+FDsfGvS8zOHpfbZCB
+	 V9oohO6dMQDzvDdreWuKyUjN/u5bAjC/sFeAlE/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhang <zhangjian.3032@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0647/1146] ipmi: ssif_bmc: fix missing check for copy_to_user() partial failure
-Date: Wed, 20 May 2026 18:14:57 +0200
-Message-ID: <20260520162202.827476522@linuxfoundation.org>
+Subject: [PATCH 7.0 0656/1146] i3c: master: dw-i3c: Fix missing reset assertion in remove() callback
+Date: Wed, 20 May 2026 18:15:06 +0200
+Message-ID: <20260520162203.028033149@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,40 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit ea641be7a4faee4351f9c5ed6b188e1bbf5586a6 ]
+[ Upstream commit bef1eef667186cedb0bc6d152464acb3c97d5f72 ]
 
-copy_to_user() returns the number of bytes that could not be copied,
-with a non-zero value indicating a partial or complete failure. The
-current code only checks for negative return values and treats all
-non-negative results as success.
+The reset line acquired during probe is currently left deasserted when
+the driver is unbound.
 
-Treating any positive return value from copy_to_user() as
-an error and returning -EFAULT.
+Switch to devm_reset_control_get_optional_exclusive_deasserted() to
+ensure the reset is automatically re-asserted by the devres core when
+the driver is removed.
 
-Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Message-ID: <20260403090603.3988423-2-zhangjian.3032@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Fixes: 62fe9d06f570 ("i3c: dw: Add power management support")
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260320-dw-i3c-v3-1-477040c2e3f5@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ssif_bmc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i3c/master/dw-i3c-master.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
-index 7a52e3ea49ed8..6cc5c210799ca 100644
---- a/drivers/char/ipmi/ssif_bmc.c
-+++ b/drivers/char/ipmi/ssif_bmc.c
-@@ -163,6 +163,8 @@ static ssize_t ssif_bmc_read(struct file *file, char __user *buf, size_t count,
- 		spin_unlock_irqrestore(&ssif_bmc->lock, flags);
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index d6bdb32397fb9..3379cb16eeca5 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1606,13 +1606,11 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	if (IS_ERR(master->pclk))
+ 		return PTR_ERR(master->pclk);
  
- 		ret = copy_to_user(buf, &msg, count);
-+		if (ret > 0)
-+			ret = -EFAULT;
- 	}
+-	master->core_rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
+-								    "core_rst");
++	master->core_rst = devm_reset_control_get_optional_exclusive_deasserted(&pdev->dev,
++										"core_rst");
+ 	if (IS_ERR(master->core_rst))
+ 		return PTR_ERR(master->core_rst);
  
- 	return (ret < 0) ? ret : count;
+-	reset_control_deassert(master->core_rst);
+-
+ 	spin_lock_init(&master->xferqueue.lock);
+ 	INIT_LIST_HEAD(&master->xferqueue.list);
+ 
+@@ -1624,7 +1622,7 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 			       dw_i3c_master_irq_handler, 0,
+ 			       dev_name(&pdev->dev), master);
+ 	if (ret)
+-		goto err_assert_rst;
++		return ret;
+ 
+ 	platform_set_drvdata(pdev, master);
+ 
+@@ -1673,9 +1671,6 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 
+-err_assert_rst:
+-	reset_control_assert(master->core_rst);
+-
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
 -- 
 2.53.0
 
