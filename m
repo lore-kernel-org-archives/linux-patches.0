@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CBD233933;
-	Wed, 20 May 2026 17:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF396369D7E;
+	Wed, 20 May 2026 17:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299391; cv=none; b=sZXaApDbN2gaB+Q8QL4zMIQeDmI3qpAgvR/JKlVhoKBPOcujhCGwNgbc+5D/ZAbZNFIrCy3EH0JWKbw0iTXPdoI2plCFj2xnJgz04jdzwGxR2Kr2VgK4LDuUmXTuuYl2Wy2FuXMnQAsJ1OAWQvhxdoFCtQvUEJMiJCGRe43d3ns=
+	t=1779299393; cv=none; b=VqwPqEIAHY5fvg9qv8YhlTYvonorcrjMJujUKWXiWlhx0hqz0WWiQKNLI8X2JcplnE1M2AsbebNyrCW+Wx3DNX3snPtZAIXwi4r0gzEQKROuGbNUP5Rrk4cacGHvp3W+NZIkdm/AVNBEIbPwMr37LSEALgmiyixRTBCw7Nbmjp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299391; c=relaxed/simple;
-	bh=iF6vkfrlB+hkAjHibw73A19lZkRYGv/qeRCTjPpNRKQ=;
+	s=arc-20240116; t=1779299393; c=relaxed/simple;
+	bh=ZQ/BFJld5+i8VwaLINPmh5NbtVlJ98rlaw8fmgJjYDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ddlk/tAV4bv2L33wBeSTjmHQDryoJJ3Xkha4cXJyEzuVbTGOKYPjAFFFeP5W4x/J1XJwPpN91VqWMHDyXHVh753JfrX6vX8fm9vZ4q+BWhn9qCDZoKA8IAFlr6jrpqDuQCnJffzU6J26Fk05efdsfnjaVERmtV+vX0bcT2wQ97A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9t6mBSh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UyDNFIHVoaDjtJiUfK6Xej0pRzzfPFlAAYCHZSzmouPZ3mTtu4yrKdM04Hcjk7FLf/uL4i3CrYe4k9tS3s/9px6dfCjiU/KH5SFEnQ/qsBnO9F7ioij0k1eQUaL5cDWyYyQI4rAcv5SBJG41s9YwRS8pdVFjwRibXBdrEix3v+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRzAk8RY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9t6mBSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883241F000E9;
-	Wed, 20 May 2026 17:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRzAk8RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B44D1F00896;
+	Wed, 20 May 2026 17:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299390;
-	bh=8m0izHOHDuXM3D9+pQ56KhHTAXVA2EPj2mW+9mqhb0s=;
+	s=korg; t=1779299392;
+	bh=iFpvIN9jmqtGova8Ukb87bxpnCmgIgkfPh3BpAuSeUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9t6mBSh5+BUM0uwvK5tzB+/lS+YgiYcv/Jkz5UBQFVYaZbq2muKgB0comNlJuaAP
-	 4bUaav1eQvwocH6c4M+o07UcukuquR+yuG9DETzU4T+Z0FNeOqpw3WX4Sw1UWtFqQC
-	 kMAVmgCEKTYUCDNWOsgSqFKClc8mudkYyvIHMgx8=
+	b=VRzAk8RYgX2xn2BRZ4CMzpEAoSdASoxTVRC/9RGL0lpb0HCSQKUTJd9a3HtOZAXI6
+	 f3J+Hdq2yiL8YC4hS9xNRxrYrwUBnY2p7moNX7G/GgIFOW8dnHzI4nLoJdyMkyXRJP
+	 yRU6z6deqmsV6Ou8G4yIpXAFYY4FZHfPa/3Jmlww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 712/957] nfp: fix swapped arguments in nfp_encode_basic_qdr() calls
-Date: Wed, 20 May 2026 18:19:55 +0200
-Message-ID: <20260520162149.987610557@linuxfoundation.org>
+Subject: [PATCH 6.18 713/957] tcp: send a challenge ACK on SEG.ACK > SND.NXT
+Date: Wed, 20 May 2026 18:19:56 +0200
+Message-ID: <20260520162150.008766991@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,105 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 4078c5611d7585548b249377ebd60c272e410490 ]
+[ Upstream commit 42726ec644cbdde0035c3e0417fee8ed9547e120 ]
 
-There is a mismatch between the passed arguments and the actual
-nfp_encode_basic_qdr() function parameter names:
+RFC 5961 Section 5.2 validates an incoming segment's ACK value
+against the range [SND.UNA - MAX.SND.WND, SND.NXT] and states:
 
-  static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
-                                  int mode, bool addr40, int isld1,
-                                  int isld0)
-  {
-      ...
+  "All incoming segments whose ACK value doesn't satisfy the above
+   condition MUST be discarded and an ACK sent back."
 
-But "dest_island" and "cpp_tgt" are swapped at every call-site.
-For example:
+Commit 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack
+Mitigation") opted Linux into this mitigation and implements the
+challenge ACK on the lower side (SEG.ACK < SND.UNA - MAX.SND.WND),
+but the symmetric upper side (SEG.ACK > SND.NXT) still takes the
+pre-RFC-5961 path and silently returns
+SKB_DROP_REASON_TCP_ACK_UNSENT_DATA, even though RFC 793 Section 3.9
+(now RFC 9293 Section 3.10.7.4) has always required:
 
-  return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-                              mode, addr40, isld1, isld0);
+  "If the ACK acknowledges something not yet sent (SEG.ACK > SND.NXT)
+   then send an ACK, drop the segment, and return."
 
-As a result, nfp_encode_basic_qdr() receives "dest_island" as CPP target
-type, which is always NFP_CPP_TARGET_QDR(2) for these calls, and "cpp_tgt"
-as the destination island ID, which can accidentally match or be outside
-the valid NFP_CPP_TARGET_* types (e.g. '-1' for any destination).
+Complete the mitigation by sending a challenge ACK on that branch,
+reusing the existing tcp_send_challenge_ack() path which already
+enforces the per-socket RFC 5961 Section 7 rate limit via
+__tcp_oow_rate_limited().  FLAG_NO_CHALLENGE_ACK is honoured for
+symmetry with the lower-edge case.
 
-Since code already worked for years, also add extra pr_warn() to error
-paths in nfp_encode_basic_qdr() to help identify any potential address
-verification failures.
+Update the existing tcp_ts_recent_invalid_ack.pkt selftest, which
+drives this exact path, to consume the new challenge ACK.
 
-Detected using the static analysis tool - Svace.
-
-Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Link: https://patch.msgid.link/20260422160536.61855-1-aleksei.kodanev@bell-sw.com
+Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260422123605.320000-2-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/netronome/nfp/nfpcore/nfp_target.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/ipv4/tcp_input.c                                   | 10 +++++++---
+ .../net/packetdrill/tcp_ts_recent_invalid_ack.pkt      |  4 +++-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-index 79470f198a62a..9cf19446657c6 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-@@ -435,12 +435,17 @@ static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 5fb5f3f6393c1..b5cf32a56c04a 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4025,11 +4025,15 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 		goto old_ack;
+ 	}
  
- 	/* Full Island ID and channel bits overlap? */
- 	ret = nfp_decode_basic(addr, &v, cpp_tgt, mode, addr40, isld1, isld0);
--	if (ret)
-+	if (ret) {
-+		pr_warn("%s: decode dest_island failed: %d\n", __func__, ret);
- 		return ret;
+-	/* If the ack includes data we haven't sent yet, discard
+-	 * this segment (RFC793 Section 3.9).
++	/* If the ack includes data we haven't sent yet, drop the
++	 * segment.  RFC 793 Section 3.9 and RFC 5961 Section 5.2
++	 * require us to send an ACK back in that case.
+ 	 */
+-	if (after(ack, tp->snd_nxt))
++	if (after(ack, tp->snd_nxt)) {
++		if (!(flag & FLAG_NO_CHALLENGE_ACK))
++			tcp_send_challenge_ack(sk, false);
+ 		return -SKB_DROP_REASON_TCP_ACK_UNSENT_DATA;
 +	}
  
- 	/* The current address won't go where expected? */
--	if (dest_island != -1 && dest_island != v)
-+	if (dest_island != -1 && dest_island != v) {
-+		pr_warn("%s: dest_island mismatch: current (%d) != decoded (%d)\n",
-+			__func__, dest_island, v);
- 		return -EINVAL;
-+	}
+ 	if (after(ack, prior_snd_una)) {
+ 		flag |= FLAG_SND_UNA_ADVANCED;
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt b/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
+index 174ce9a1bfc07..ee6baf7c36cfa 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
+@@ -19,7 +19,9 @@
  
- 	/* If dest_island was -1, we don't care where it goes. */
- 	return 0;
-@@ -493,7 +498,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * the address but we can verify if the existing
- 			 * contents will point to a valid island.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
+ // bad packet with high tsval (its ACK sequence is above our sndnxt)
+    +0 < F. 1:1(0) ack 9999 win 20000 <nop,nop,TS val 200000 ecr 100>
+-
++// Challenge ACK for SEG.ACK > SND.NXT (RFC 5961 5.2 / RFC 793 3.9).
++// ecr=200 (not 200000) proves ts_recent was not updated from the bad packet.
++   +0 > . 1:1(0) ack 1 <nop,nop,TS val 200 ecr 200>
  
- 		iid_lsb = addr40 ? 34 : 26;
-@@ -504,7 +509,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 		return 0;
- 	case 1:
- 		if (cpp_tgt == NFP_CPP_TARGET_QDR && !addr40)
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		idx_lsb = addr40 ? 39 : 31;
-@@ -530,7 +535,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * be set before hand and with them select an island.
- 			 * So we need to confirm that it's at least plausible.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		/* Make sure we compare against isldN values
-@@ -551,7 +556,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * iid<1> = addr<30> = channel<0>
- 			 * channel<1> = addr<31> = Index
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		isld[0] &= ~3;
+    +0 < . 1:1001(1000) ack 1 win 20000 <nop,nop,TS val 201 ecr 100>
+    +0 > . 1:1(0) ack 1001 <nop,nop,TS val 200 ecr 201>
 -- 
 2.53.0
 
