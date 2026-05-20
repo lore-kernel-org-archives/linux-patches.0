@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788212D7386;
-	Wed, 20 May 2026 18:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6420E3D1CC6;
+	Wed, 20 May 2026 18:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301355; cv=none; b=liyJQpL0nirJ5KI/Gq09AN+QAvgzX9vXoAFhiVTcDrq0lTafcKFKwSr7ko8mIHcas5mW5lxKTCdtVaechUh6CO63RXHiPCPGDL5p/zw5yihE0uGeSCDWe9cbm454ujRiSOeHjnrS12fbFNmZjbwCXDw91Tz8bYHxqH6pSUtm6rw=
+	t=1779301358; cv=none; b=HENaapORAt0/wp5B/a0Yi27zuAL67+BUS8krd5BX+Zf27WnN5HO08SLe97t+eVAIy/RU8TVIQN1XQ287hXYLwjOJ0jTil/+ITxXll1NxB5C9a1pZ4mQYxLglvf9A3/H0iNT3tYPpyosDTPH5eq3RS4/YeGkMZqWOxGetKn9Ngik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301355; c=relaxed/simple;
-	bh=c0LLlvJrD05ZVUGE5A8K1gqXjdVXr3AurO8gjSW6ezI=;
+	s=arc-20240116; t=1779301358; c=relaxed/simple;
+	bh=KzByY0IrFiIO5ZZo9BPCe/34KgGcajjb7NDj2dMxdKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0BqC7QLrcf586SDUwySpGMbwOu1H4s6evMx0fAOpQ6ekXeVWL9INM6/nV+9vovihdZ78ecvGW0+FymfzSlJaauxoYoHh8/hLUHUG3+9Wh3NsuGnSfawPrjp+50nV1HOhThhkANnORaA5LizopNIBVMcZu66ZddLpQG9YxdzegI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7l5lZ95; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EQ7pzntvRpxSRn2gKB98BWS+/PcGcSj56uQCRuSNbU1HY8XriiGLOhe/vAEl31jhCOJJRr8qEpyvCj/6aPdevYFvCivlXW7+4z1NEGM4pngABGdw4DAKkg2DgBTKvNbAnWDI5NV3+FBNbkebR9C5Dmio3KZX+FEGHeKpxmRzBsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpQj0SK6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7l5lZ95"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9DC1F000E9;
-	Wed, 20 May 2026 18:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpQj0SK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865C01F000E9;
+	Wed, 20 May 2026 18:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301354;
-	bh=/xsiD3ia+LZlx4XgkrUY755nJRQnfUd10Psyd/lu2b4=;
+	s=korg; t=1779301357;
+	bh=1sI/AU8lC1EnNrxHRNQO8SlcoMPNszkkjvg9ANFcRP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7l5lZ9564b5I6EWGwhLCfTAa6lwF7IE1ecCLW5go/XgJeYhDQOYYZisFyOpIMCcb
-	 o+lk8LlefQQlGtIlrW5rZGXIngnMxfib1x3vZTaCeST/6acIklhgsFJOIhTENwkrup
-	 J5ri0YUQVD3VUormRJk09N6RCs8WDFQA/t8ZTQVw=
+	b=QpQj0SK6bNolQ1MeSGJ5AquTb2yp2RCU1Uy/cY4xBvCa4S42CnLAEtwOSpZgdYbdK
+	 A8igLoLfWUBuf006ZLYH/mI99/6k4ivprtbiHZ0j33MdOK4pASbIYwr1Jx0pI09IzY
+	 sQvXLPcVb/3fsRNAZZU8LSVRyKgVE9B0vM1W8/+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Petr Oros <poros@redhat.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 482/666] net/rds: zero per-item info buffer before handing it to visitors
-Date: Wed, 20 May 2026 18:21:33 +0200
-Message-ID: <20260520162121.712473942@linuxfoundation.org>
+Subject: [PATCH 6.12 483/666] ice: fix timestamp interrupt configuration for E825C
+Date: Wed, 20 May 2026 18:21:34 +0200
+Message-ID: <20260520162121.734338770@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,109 +56,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
+[ Upstream commit c0a575a801a2040eb1e0db54b488f8c548c8458a ]
 
-rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
-caller-allocated on-stack u64 buffer to a per-connection visitor and
-then copy the full item_len bytes back to user space via
-rds_info_copy() regardless of how much of the buffer the visitor
-actually wrote.
+The E825C ice_phy_cfg_intr_eth56g() function is responsible for programming
+the PHY interrupt for a given port. This function writes to the
+PHY_REG_TS_INT_CONFIG register of the port. The register is responsible for
+configuring whether the port interrupt logic is enabled, as well as
+programming the threshold of waiting timestamps that will trigger an
+interrupt from this port.
 
-rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
-write a subset of their output struct when the underlying
-rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
-and the two GIDs via explicit memsets). Several u32 fields
-(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
-cache_allocs) and the 2-byte alignment hole between sl and
-cache_allocs remain as whatever stack contents preceded the visitor
-call and are then memcpy_to_user()'d out to user space.
+This threshold value must not be programmed to zero while the interrupt is
+enabled. Doing so puts the port in a misconfigured state where the PHY
+timestamp interrupt for the quad of connected ports will become stuck.
 
-struct rds_info_rdma_connection and struct rds6_info_rdma_connection
-are the only rds_info_* structs in include/uapi/linux/rds.h that are
-not marked __attribute__((packed)), so they have a real alignment
-hole. The other info visitors (rds_conn_info_visitor,
-rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
-their packed output struct today and are not known to be vulnerable,
-but a future visitor that adds a conditional write-path would have
-the same bug.
+This occurs, because a threshold of zero results in the timestamp interrupt
+status for the port becoming stuck high. The four ports in the connected
+quad have their timestamp status indicators muxed together. A new interrupt
+cannot be generated until the timestamp status indicators return low for
+all four ports.
 
-Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
-a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
-binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
-any netdev is sufficient), sendto()'s any peer on the same subnet
-(fails cleanly but installs an rds_connection in the global hash in
-RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
-RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
-bytes of stack garbage including kernel text/data pointers:
+Normally, the timestamp status for a port will clear once there are fewer
+timestamps in that ports timestamp memory bank than the threshold. A
+threshold of zero makes this impossible, so the timestamp status for the
+port does not clear.
 
-    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
-    8..39  00 ...                      gids (memset-zeroed)
-    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
-    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
-    56..59 01 00 08 00                 rdma_mr_size (garbage)
-    60..61 00 00                       tos, sl
-    62..63 00 00                       alignment padding
-    64..67 18 00 00 00                 cache_allocs (garbage)
+The ice driver never intentionally programs the threshold to zero, indeed
+the driver always programs it to a value of 1, intending to get an
+interrupt immediately as soon as even a single packet is waiting for a
+timestamp.
 
-Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
-and rds_walk_conn_path_info() before invoking the visitor. This
-covers the IPv4/IPv6 IB visitors and hardens all current and future
-visitors against the same class of bug.
+However, there is a subtle flaw in the programming logic in the
+ice_phy_cfg_intr_eth56g() function. Due to the way that the hardware
+handles enabling the PHY interrupt. If the threshold value is modified at
+the same time as the interrupt is enabled, the HW PHY state machine might
+enable the interrupt before the new threshold value is actually updated.
+This leaves a potential race condition caused by the hardware logic where
+a PHY timestamp interrupt might be triggered before the non-zero threshold
+is written, resulting in the PHY timestamp logic becoming stuck.
 
-No functional change for visitors that fully populate their output.
+Once the PHY timestamp status is stuck high, it will remain stuck even
+after attempting to reprogram the PHY block by changing its threshold or
+disabling the interrupt. Even a typical PF or CORE reset will not reset the
+particular block of the PHY that becomes stuck. Even a warm power cycle is
+not guaranteed to cause the PHY block to reset, and a cold power cycle is
+required.
 
-Changes in v2:
-- retarget at the net tree (subject prefix "[PATCH net v2]",
-  net/rds: prefix in the title)
-- pick up Reviewed-by tags from Sharath Srinivasan and
-  Allison Henderson
+Prevent this by always writing the PHY_REG_TS_INT_CONFIG in two stages.
+First write the threshold value with the interrupt disabled, and only write
+the enable bit after the threshold has been programmed. When disabling the
+interrupt, leave the threshold unchanged. Additionally, re-read the
+register after writing it to guarantee that the write to the PHY has been
+flushed upon exit of the function.
 
-Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Assisted-by: Claude:claude-opus-4-7
-Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
+While we're modifying this function implementation, explicitly reject
+programming a threshold of 0 when enabling the interrupt. No caller does
+this today, but the consequences of doing so are significant. An explicit
+rejection in the code makes this clear.
+
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Petr Oros <poros@redhat.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-1-bc2240f42251@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 36 ++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 3a1b548dcdcb2..d6ee386fd820e 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
- 	     i++, head++) {
- 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 7190fde16c868..dc97bee4fd2ea 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -2340,6 +2340,8 @@ static int ice_phy_cfg_mac_eth56g(struct ice_hw *hw, u8 port)
+  * @ena: enable or disable interrupt
+  * @threshold: interrupt threshold
+  *
++ * The threshold cannot be 0 while the interrupt is enabled.
++ *
+  * Configure TX timestamp interrupt for the specified port
+  *
+  * Return:
+@@ -2351,19 +2353,45 @@ int ice_phy_cfg_intr_eth56g(struct ice_hw *hw, u8 port, bool ena, u8 threshold)
+ 	int err;
+ 	u32 val;
  
-+			/* Zero the per-item buffer before handing it to the
-+			 * visitor so any field the visitor does not write -
-+			 * including implicit alignment padding - cannot leak
-+			 * stack contents to user space via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
++	if (ena && !threshold)
++		return -EINVAL;
 +
- 			/* XXX no c_lock usage.. */
- 			if (!visitor(conn, buffer))
- 				continue;
-@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
- 			 */
- 			cp = conn->c_path;
+ 	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, &val);
+ 	if (err)
+ 		return err;
  
-+			/* Zero the per-item buffer for the same reason as
-+			 * rds_for_each_conn_info(): any byte the visitor
-+			 * does not write (including alignment padding) must
-+			 * not leak stack contents via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
++	val &= ~PHY_TS_INT_CONFIG_ENA_M;
+ 	if (ena) {
+-		val |= PHY_TS_INT_CONFIG_ENA_M;
+ 		val &= ~PHY_TS_INT_CONFIG_THRESHOLD_M;
+ 		val |= FIELD_PREP(PHY_TS_INT_CONFIG_THRESHOLD_M, threshold);
+-	} else {
+-		val &= ~PHY_TS_INT_CONFIG_ENA_M;
++		err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG,
++					       val);
++		if (err) {
++			ice_debug(hw, ICE_DBG_PTP,
++				  "Failed to update 'threshold' PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
++				  port, !!ena, threshold);
++			return err;
++		}
++		val |= PHY_TS_INT_CONFIG_ENA_M;
+ 	}
+ 
+-	return ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, val);
++	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, val);
++	if (err) {
++		ice_debug(hw, ICE_DBG_PTP,
++			  "Failed to update 'ena' PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
++			  port, !!ena, threshold);
++		return err;
++	}
 +
- 			/* XXX no cp_lock usage.. */
- 			if (!visitor(cp, buffer))
- 				continue;
++	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_TS_INT_CONFIG, &val);
++	if (err) {
++		ice_debug(hw, ICE_DBG_PTP,
++			  "Failed to read PHY_REG_TS_INT_CONFIG port=%u ena=%u threshold=%u\n",
++			  port, !!ena, threshold);
++		return err;
++	}
++
++	return 0;
+ }
+ 
+ /**
 -- 
 2.53.0
 
