@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE56F3769E0;
-	Wed, 20 May 2026 18:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537AA3FB060;
+	Wed, 20 May 2026 18:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300838; cv=none; b=ePZHpO2cfavkHNkdnTImBkVB/ha5NGHnEq9MO9r7727jOmX39DTcEIsfaq2X+nJofTG7Pe4MNXtYs4hFZL8aQi3KxX0xx/YIEA2nIL/r4Z1pjAGoD+XfKQA2r6ALuXl/jxM6nOtwZ4xjsK4NglPHKthaxbRapM2BIj8KyPqKX+I=
+	t=1779300841; cv=none; b=dnirJuB0iTbnf3fUPmJYwuOCAdCAHwyaKxy/S//qGMZ5FUO5tmnQNZTI3Esr/uhzSNniH8Cq9oAe48SgEF7iFOU7i/X+tVvK1uR6qSLsZXl0MfH+T+vRLrZEghiJwl8csUf6hYI3Xl9AS+Qbnib2gizx41AwpGA/67TtqcZ8mN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300838; c=relaxed/simple;
-	bh=c8A6AvX1qcmiuiEuwHe4D7CMEr8SlzBvOGUofVls0T0=;
+	s=arc-20240116; t=1779300841; c=relaxed/simple;
+	bh=BiztyTxfZJgzl0SXH8nY5ZrOt+hbyeHyGVbebca5Oks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+1Je22blovqVHDyKLnuEfWABHknejEGKCqG05YsN0HsbqMEkxZzutNP2cXpWf0wfEuXdt7jvLxV3mKYtrF6tRT09ngupC+ixQZBoqlmelNJuMjhVUIIkXJnzHp2i8dWy1ovVhggyliLQ/puMPvkvrMg6xovaf1+y/OwPJmJsuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adgoOp/F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gKSV8V3X0WYf8if1qN3b2YVdl+X5vJQYadrOqsTAFuQuoj91yHmj7m0uig/Jx3ye3owMliWDrAdS2ji/5YIab08xyqT16F/4P2sL38089RyIiaJvACyEblS0Td+UqsNge/OhC1pUZfA8XLfiMZTSLHdeAYfzqYluMmZP9Mf1cTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fthHDjy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adgoOp/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E201F00894;
-	Wed, 20 May 2026 18:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fthHDjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D571F000E9;
+	Wed, 20 May 2026 18:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300837;
-	bh=4cZ4iLYMK8Jta0aAtQrV6GqTMRCdou8GrLvAS2tnaRo=;
+	s=korg; t=1779300840;
+	bh=TaPVugcrLUDe1RZC62sL2qCTl3g2tB0drTfBcJPZb24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adgoOp/Fk/4MHjGgu4wnlsCeZYuTAn29gTT6qXe4R5IoYjXJ2+rLi9QWxWvCKTopn
-	 vHoThbaiLukODHq8y8Yxu/1H/VUfKhqgP9RWbrqbUHL7lsbdXAA34dKfZQECv0EGPs
-	 1b+xf5km0aCAyyGhDLygwpp+5S2/LALZ2/KLtkZU=
+	b=0fthHDjysfxUEMGYnhrEsPSby9oqlPJvT2dVyoKV6I9WoLw77gx+HcS6v4QHFRf/V
+	 5p+Bzr1mn9e5dhqGrHM7DidIsadJoeg5P+JugVYbFpWangCDtwEmjHTCTduIHjhC55
+	 MjbCTsis+68g3/rvyverSCtNuoz4uB4gDnIMuYQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/666] arm64: dts: lx2160a: add sda gpio references for i2c bus recovery
-Date: Wed, 20 May 2026 18:18:31 +0200
-Message-ID: <20260520162117.719433920@linuxfoundation.org>
+Subject: [PATCH 6.12 327/666] HID: asus: make asus_resume adhere to linux kernel coding standards
+Date: Wed, 20 May 2026 18:18:58 +0200
+Message-ID: <20260520162118.315483893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,96 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit 89ea0dbd701f89805499d26bd90657468c789545 ]
+[ Upstream commit 51d33b42b8ae23da92819d28439fdd5636c45186 ]
 
-LX2160A pinmux is done in groups by various length bitfields within
-configuration registers.
+Linux kernel coding standars requires functions opening brackets to be in
+a newline: move the opening bracket of asus_resume in its own line.
 
-In particular i2c sda/scl pins are always configured together. Therefore
-bus recovery may control both sda and scl.
-
-When pinmux nodes and bus recovery was enabled originally for LX2160,
-only the scl-gpios were added to the i2c controller nodes.
-
-Add references to sda-gpios for each i2c controller.
-
-Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 546edbd26cff ("HID: hid-asus: reset the backlight brightness level on resume")
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hid/hid-asus.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index 2b322cdab9479..83e618df6f4b9 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -753,6 +753,7 @@ i2c0: i2c@2000000 {
- 			pinctrl-0 = <&i2c0_pins>;
- 			pinctrl-1 = <&gpio0_3_2_pins>;
- 			scl-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index b2788bb0477f0..cba383ccfc74c 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1092,7 +1092,8 @@ static int asus_start_multitouch(struct hid_device *hdev)
+ 	return 0;
+ }
  
-@@ -769,6 +770,7 @@ i2c1: i2c@2010000 {
- 			pinctrl-0 = <&i2c1_pins>;
- 			pinctrl-1 = <&gpio0_31_30_pins>;
- 			scl-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 30 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -785,6 +787,7 @@ i2c2: i2c@2020000 {
- 			pinctrl-0 = <&i2c2_pins>;
- 			pinctrl-1 = <&gpio0_29_28_pins>;
- 			scl-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -801,6 +804,7 @@ i2c3: i2c@2030000 {
- 			pinctrl-0 = <&i2c3_pins>;
- 			pinctrl-1 = <&gpio0_27_26_pins>;
- 			scl-gpios = <&gpio0 27 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 26 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -817,6 +821,7 @@ i2c4: i2c@2040000 {
- 			pinctrl-0 = <&i2c4_pins>;
- 			pinctrl-1 = <&gpio0_25_24_pins>;
- 			scl-gpios = <&gpio0 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -833,6 +838,7 @@ i2c5: i2c@2050000 {
- 			pinctrl-0 = <&i2c5_pins>;
- 			pinctrl-1 = <&gpio0_23_22_pins>;
- 			scl-gpios = <&gpio0 23 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -849,6 +855,7 @@ i2c6: i2c@2060000 {
- 			pinctrl-0 = <&i2c6_i2c7_pins>;
- 			pinctrl-1 = <&gpio1_18_15_pins>;
- 			scl-gpios = <&gpio1 16 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
- 
-@@ -865,6 +872,7 @@ i2c7: i2c@2070000 {
- 			pinctrl-0 = <&i2c6_i2c7_pins>;
- 			pinctrl-1 = <&gpio1_18_15_pins>;
- 			scl-gpios = <&gpio1 18 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+			sda-gpios = <&gpio1 17 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
- 			status = "disabled";
- 		};
+-static int __maybe_unused asus_resume(struct hid_device *hdev) {
++static int __maybe_unused asus_resume(struct hid_device *hdev)
++{
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
+ 	int ret = 0;
  
 -- 
 2.53.0
