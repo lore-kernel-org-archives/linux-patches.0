@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2736A376;
-	Wed, 20 May 2026 16:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F2C36A376;
+	Wed, 20 May 2026 16:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295031; cv=none; b=tLdoXgTTIKnt2UjGJE0X8EKyiMddJk62T+Ahzg+dRZU9UtxJAjfs4AxoDonOKjzhXFdQGtTN3a2AyDEabfDIJuTdgDEXHARwfomc+Uco+QfS5ybAWkagNQSLGPVbN2HUCUYQBBpILavdecZKwxpc52qBNQtqZNm5d11hIput44Y=
+	t=1779295033; cv=none; b=FKh53RCSd5j9ICpNIQEHs9UGvq+9ZCIiKWamAbBrUjxaxuZBeYB3E7zZ4v0SJEati34TAOEjEuZhzO585ylsmrbF8XSSlpG+XHs/RkCKFjPdIJhHn9fkArySO0RIHT1nKLMHZ//3S0Ti9NQ0JD0sI1+EuofSOZ9JDiwlNZElr/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295031; c=relaxed/simple;
-	bh=VNe666gkcjVKC5/UO94CKsawOfPvfev6UHp6h3fyYVQ=;
+	s=arc-20240116; t=1779295033; c=relaxed/simple;
+	bh=vJcaWHcJCTMd267gAhXNsWk93mLnmZl5o51J28GXTAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDAnz132+upsXEj3hewc+pnAchnHYIGdUgLpIcJxops+5R+7KNbgBXTnikYAJOetCq+L0nk7p2w1w0MQ11ax3hgIfEC/4TzgA0gHIaR+1vUWm8W9thYKNcqIWGzKSjNWwvoIt+Y+60rCA/KLb4cFwip0AdQwtp61wBYwh+DzMkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3S9p7dq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M8oRfp/v40fXDE5vVCjQe/AkWcXGkXyZywcNPZUpZhQLb6YYs7SGe3ltpw1rru0OeSnEqOry1aALYWeMSvYc4vzSYic7ZxoiAHHGi5EBtnTC+Zx7n5CqgeJ0dyEFvwx1k5L8cE3MoAROqS4xnLv9I6VGy1j0F0/SXxhR9mB8lN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWM8NzS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3S9p7dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0254A1F00893;
-	Wed, 20 May 2026 16:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWM8NzS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A2B1F000E9;
+	Wed, 20 May 2026 16:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295029;
-	bh=0SRIPSg60bk7tq0gTSaQ1QfwHlKUYaAMaD20gIqcEvc=;
+	s=korg; t=1779295032;
+	bh=19rwA/3f5jAO+VMXVUhRDr2U/Z6c3imldCsBAkh1U94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K3S9p7dqUkhKde+DCgxT0d1WCvgsPh2vDP3PxZ/4TDj024gtFkcnAquWS8R+UHweH
-	 DLPpcQ8IQ/msc0lnqfPWEDp/42xz73nQsDwZzNbRBRBOHxX8SLoz1D9/oR7bCA7nDj
-	 tu+79CBMQLJTKPG4HSyDbZAKyJm7cQPLVeNm6HR8=
+	b=mWM8NzS13mEPlt5d39QOa6kM4Xy5FSUSjpEedkUd+E7EKwXQMZLk5f7UM2qIMKmAk
+	 kjdXjuCBztpFvCek0vexiXr9kHX2idtv/Fqt3JRhGj8JJ+3cb9zme7IEI5V+YInmIQ
+	 bUc8brZphMjuyEVBRDIq/idGDn3UQAHtdWPlkwuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aksh Garg <a-garg7@ti.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0265/1146] PCI: dwc: ep: Fix MSI-X Table Size configuration in dw_pcie_ep_set_msix()
-Date: Wed, 20 May 2026 18:08:35 +0200
-Message-ID: <20260520162154.221927543@linuxfoundation.org>
+Subject: [PATCH 7.0 0266/1146] PCI: dwc: ep: Mirror the max link width and speed fields to all functions
+Date: Wed, 20 May 2026 18:08:36 +0200
+Message-ID: <20260520162154.245640046@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,42 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Aksh Garg <a-garg7@ti.com>
 
-[ Upstream commit 271d0b1f058ae9815e75233d04b23e3558c3e4f4 ]
+[ Upstream commit 94cbea0f636b55602a9a10583670976680ecea67 ]
 
-In dw_pcie_ep_set_msix(), while updating the MSI-X Table Size value for
-individual functions, Message Control register is read from the passed
-function number register space using dw_pcie_ep_readw_dbi(), but always
-written back to the Function 0's register space using dw_pcie_writew_dbi().
-This causes incorrect MSI-X configuration for the rest of the functions,
-other than Function 0.
+PCIe r7.0, section 7.5.3.6 states that for multi-function devices, the
+Max Link Width and Max Link Speed fields in the Link Capabilities
+Register must report the same values for all functions.
 
-Fix this by using dw_pcie_ep_writew_dbi() to write to the correct
-function's register space, matching the read operation.
+Currently, dw_pcie_setup() programs these fields only for Function 0
+via dw_pcie_link_set_max_speed() and dw_pcie_link_set_max_link_width().
+For multi-function endpoint configurations, Function 1 and beyond retain
+their default values, violating the PCIe specification.
 
-Fixes: 70fa02ca1446 ("PCI: dwc: Add dw_pcie_ep_{read,write}_dbi[2] helpers")
+Fix this by reading the Max Link Width and Max Link Speed fields from
+Link Capabilities Register of Function 0 after dw_pcie_setup() completes,
+then mirroring these values to all other functions.
+
+Fixes: 24ede430fa49 ("PCI: designware-ep: Add multiple PFs support for DWC")
+Fixes: 89db0793c9f2 ("PCI: dwc: Add missing PCI_EXP_LNKCAP_MLW handling")
 Signed-off-by: Aksh Garg <a-garg7@ti.com>
-[mani: commit log]
+[mani: renamed ref_lnkcap to func0_lnkcap]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260224083817.916782-2-a-garg7@ti.com
+Link: https://patch.msgid.link/20260224083817.916782-3-a-garg7@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../pci/controller/dwc/pcie-designware-ep.c   | 29 ++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index c57ae4d6c5c0e..10d6f53cf7bad 100644
+index 10d6f53cf7bad..ab2e7de5c55eb 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -754,7 +754,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	val = dw_pcie_ep_readw_dbi(ep, func_no, reg);
- 	val &= ~PCI_MSIX_FLAGS_QSIZE;
- 	val |= nr_irqs - 1; /* encoded as N-1 */
--	dw_pcie_writew_dbi(pci, reg, val);
-+	dw_pcie_ep_writew_dbi(ep, func_no, reg, val);
+@@ -1110,7 +1110,8 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+ {
+ 	struct dw_pcie_ep *ep = &pci->ep;
+ 	u8 funcs = ep->epc->max_functions;
+-	u8 func_no;
++	u32 func0_lnkcap, lnkcap;
++	u8 func_no, offset;
  
- 	reg = ep_func->msix_cap + PCI_MSIX_TABLE;
- 	val = offset | bir;
+ 	dw_pcie_dbi_ro_wr_en(pci);
+ 
+@@ -1118,6 +1119,32 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+ 		dw_pcie_ep_init_rebar_registers(ep, func_no);
+ 
+ 	dw_pcie_setup(pci);
++
++	/*
++	 * PCIe r7.0, section 7.5.3.6 states that for multi-function
++	 * endpoints, max link width and speed fields must report same
++	 * values for all functions. However, dw_pcie_setup() programs
++	 * these fields only for function 0. Hence, mirror these fields
++	 * to all other functions as well.
++	 */
++	if (funcs > 1) {
++		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
++		func0_lnkcap = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
++		func0_lnkcap = FIELD_GET(PCI_EXP_LNKCAP_MLW |
++					 PCI_EXP_LNKCAP_SLS, func0_lnkcap);
++
++		for (func_no = 1; func_no < funcs; func_no++) {
++			offset = dw_pcie_ep_find_capability(ep, func_no,
++							    PCI_CAP_ID_EXP);
++			lnkcap = dw_pcie_ep_readl_dbi(ep, func_no,
++						      offset + PCI_EXP_LNKCAP);
++			FIELD_MODIFY(PCI_EXP_LNKCAP_MLW | PCI_EXP_LNKCAP_SLS,
++				     &lnkcap, func0_lnkcap);
++			dw_pcie_ep_writel_dbi(ep, func_no,
++					      offset + PCI_EXP_LNKCAP, lnkcap);
++		}
++	}
++
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+ }
+ 
 -- 
 2.53.0
 
