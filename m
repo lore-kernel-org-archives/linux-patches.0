@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5F93ED5C8;
-	Wed, 20 May 2026 17:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906DC1C3BFC;
+	Wed, 20 May 2026 17:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299099; cv=none; b=cK/lopcc0Sl8yfXVsVG+/1wyk6U+UdL0SlIo2rUK0Pyw5rkNqPGMBvK50BsTu87EguPJFlVCH7SfoKBAoMGu6457dp0fx7S9W6ei6+XPRvlMbwXDB6ymTzY8D0ep0IwgF+XLZGdwHEXSMFafrwI7Tteib0QIgqB2QJ0Maof938U=
+	t=1779299102; cv=none; b=I4Yzi3gSfau2J3bdU85CZch57+o//kLlQNxrhzFs9fp7L5Ckm1hPhskZbDclkrTqxc9jSf2/kVH1awAoeltYR+J/9kyJwfw54JbZ1cfDPpZuVTShroCz6pfh3+vq8FuhCuf9XDwpWPkgEK93nvq2RQfU5YjIRXJfZVjgKVAHuq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299099; c=relaxed/simple;
-	bh=84pQi8l2ojD7V3lP/SkcQ18kG+0WWVnR088Go0t5RCk=;
+	s=arc-20240116; t=1779299102; c=relaxed/simple;
+	bh=UoEbtJY+ASF/fSzKWD6Ee4SxS/QcUQYP9wduuX935Yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDv7vVZayOp+65ms2ycKqqRLDHFcEisUhIIAbM6NVztsoZS0CR6QWhRhl4aHiXPuBy2/+fALlBooZjeUDHsRjhyd0r1Lv433hDUxd1W0AJIZxLuVSM8e4L/WCGU+3LE2l20P+cpeYakzuleRuw5yTHHWmSIiz5nwkmfJpp2KETU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teaLVcdF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qWUJlEQCIpf/Y+TU3++RVxt8BsHW8qxT1DywMDp+a+4BOBKeog2bIEW/qcvaRG4TbYiYDFnCzz3KtJ96+YuLkswhLlzZRZWSyiw6nHRFD9lkBJd+M2kiAVXS8MrtjcmWUW+gCRTmcq2fPodlc13EK999CM7Hvga1NoH/4RDv1qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8Dp09iD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teaLVcdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9191F000E9;
-	Wed, 20 May 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8Dp09iD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F0B1F000E9;
+	Wed, 20 May 2026 17:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299098;
-	bh=aYGCXy4BPyMQjLgP705qK7w037XxPy7GdtDyE8/1bWw=;
+	s=korg; t=1779299101;
+	bh=CF9rOuNJ//AdLNgC9yB6fLHTxU1doBvMg6U7+dCzxXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=teaLVcdFKIYVO2vhwN+uuT38p66G/T0FikyOuBzm8wh7+AHVH+mcNfB15zpYWEbg+
-	 vqKxQXtOukKPEsD0KVRQ5YtGbt/IrwMCEhfEQdcvDp53H69Fx9odhw3/bDuG8hKIJY
-	 dONAYeKbQSfGSFi0z7HFOm3ty6emWu1C2cJsfO2E=
+	b=y8Dp09iD1lR/NFQhG4t6HzvAkzTJPFny3w6uRPIcUesMWWEfo3Q3PPbKVMU1Gje/4
+	 B4xleP/rZhgA/KmyZlUdoqVSyHL9XbgenWzkIPjZCti5d3cAb+oYiW//VGJph/Ydql
+	 8m+YSot9QRhWJ5aRSfhl+hG6NPmUdmBpNzeCa9bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 660/957] netfilter: nft_osf: restrict it to ipv4
-Date: Wed, 20 May 2026 18:19:03 +0200
-Message-ID: <20260520162148.844607065@linuxfoundation.org>
+Subject: [PATCH 6.18 621/957] net: dsa: cpu_dp->orig_ethtool_ops might be NULL
+Date: Wed, 20 May 2026 18:18:24 +0200
+Message-ID: <20260520162147.999590383@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,45 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b336fdbb7103fb1484e1dcb6741151d4b5a41e35 ]
+[ Upstream commit eba81b0a6de39e2466d37e410003642282b4e546 ]
 
-This expression only supports for ipv4, restrict it.
+In theory this would have been seen by now, but it seems that all
+drivers used as DSA conduit interfaces thus far have had ethtool_ops
+set, and it's hard to even find modern Ethernet drivers (and not VF
+ones) which don't use ethtool.
 
-Fixes: b96af92d6eaf ("netfilter: nf_tables: implement Passive OS fingerprint module in nft_osf")
-Acked-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Here is the unfiltered list of drivers which register any sort of
+net_device but don't set its ethtool_ops pointer. I don't think any of
+them 'risks' being used as a DSA conduit, maybe except for moxart,
+rnpbge and icssm, I'm not sure.
+
+- drivers/net/can/dev/dev.c
+- drivers/net/wwan/qcom_bam_dmux.c
+- drivers/net/wwan/t7xx/t7xx_netdev.c
+- drivers/net/arcnet/arcnet.c
+- drivers/net/hamradio/
+- drivers/net/slip/slip.c
+- drivers/net/ethernet/ezchip/nps_enet.c
+- drivers/net/ethernet/moxa/moxart_ether.c
+- drivers/net/ethernet/wangxun/txgbevf/txgbevf_main.c
+- drivers/net/ethernet/wangxun/ngbevf/ngbevf_main.c
+- drivers/net/ethernet/huawei/hinic3/hinic3_main.c
+- drivers/net/ethernet/i825xx/
+- drivers/net/ethernet/ti/icssm/icssm_prueth.c
+- drivers/net/ethernet/seeq/
+- drivers/net/ethernet/litex/litex_liteeth.c
+- drivers/net/ethernet/sunplus/spl2sw_driver.c
+- drivers/net/ethernet/mucse/rnpgbe/rnpgbe_main.c
+- drivers/net/ipa/
+- drivers/net/wireless/microchip/wilc1000/
+- drivers/net/wireless/mediatek/mt76/dma.c
+- drivers/net/wireless/ath/ath12k/
+- drivers/net/wireless/ath/ath11k/
+- drivers/net/wireless/ath/ath6kl/
+- drivers/net/wireless/ath/ath10k/
+- drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
+- drivers/net/wireless/virtual/mac80211_hwsim.c
+- drivers/net/wireless/quantenna/qtnfmac/pcie/pcie.c
+- drivers/net/wireless/realtek/rtw89/core.c
+- drivers/net/wireless/realtek/rtw88/pci.c
+- drivers/net/caif/
+- drivers/net/plip/
+- drivers/net/wan/
+- drivers/net/mctp/
+- drivers/net/ppp/
+- drivers/net/thunderbolt/
+
+Nonetheless, it's good for the framework not to make such assumptions,
+and not panic when coming across such kind of host device in the future.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251122112311.138784-2-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0f99e0c3e19b ("net: dsa: remove redundant netdev_lock_ops() from conduit ethtool ops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_osf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/dsa/conduit.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nft_osf.c b/net/netfilter/nft_osf.c
-index 1c0b493ef0a99..bdc2f6c90e2f7 100644
---- a/net/netfilter/nft_osf.c
-+++ b/net/netfilter/nft_osf.c
-@@ -28,6 +28,11 @@ static void nft_osf_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 	struct nf_osf_data data;
- 	struct tcphdr _tcph;
+diff --git a/net/dsa/conduit.c b/net/dsa/conduit.c
+index 4ae255cfb23f8..f80795b3d0460 100644
+--- a/net/dsa/conduit.c
++++ b/net/dsa/conduit.c
+@@ -26,7 +26,7 @@ static int dsa_conduit_get_regs_len(struct net_device *dev)
+ 	int ret = 0;
+ 	int len;
  
-+	if (nft_pf(pkt) != NFPROTO_IPV4) {
-+		regs->verdict.code = NFT_BREAK;
-+		return;
-+	}
-+
- 	if (pkt->tprot != IPPROTO_TCP) {
- 		regs->verdict.code = NFT_BREAK;
- 		return;
-@@ -114,7 +119,6 @@ static int nft_osf_validate(const struct nft_ctx *ctx,
+-	if (ops->get_regs_len) {
++	if (ops && ops->get_regs_len) {
+ 		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+ 		netdev_unlock_ops(dev);
+@@ -59,7 +59,7 @@ static void dsa_conduit_get_regs(struct net_device *dev,
+ 	int port = cpu_dp->index;
+ 	int len;
  
- 	switch (ctx->family) {
- 	case NFPROTO_IPV4:
--	case NFPROTO_IPV6:
- 	case NFPROTO_INET:
- 		hooks = (1 << NF_INET_LOCAL_IN) |
- 			(1 << NF_INET_PRE_ROUTING) |
+-	if (ops->get_regs_len && ops->get_regs) {
++	if (ops && ops->get_regs_len && ops->get_regs) {
+ 		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+ 		if (len < 0) {
+@@ -97,7 +97,7 @@ static void dsa_conduit_get_ethtool_stats(struct net_device *dev,
+ 	int port = cpu_dp->index;
+ 	int count = 0;
+ 
+-	if (ops->get_sset_count && ops->get_ethtool_stats) {
++	if (ops && ops->get_sset_count && ops->get_ethtool_stats) {
+ 		netdev_lock_ops(dev);
+ 		count = ops->get_sset_count(dev, ETH_SS_STATS);
+ 		ops->get_ethtool_stats(dev, stats, data);
+@@ -118,11 +118,11 @@ static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
+ 	int port = cpu_dp->index;
+ 	int count = 0;
+ 
+-	if (dev->phydev && !ops->get_ethtool_phy_stats) {
++	if (dev->phydev && (!ops || !ops->get_ethtool_phy_stats)) {
+ 		count = phy_ethtool_get_sset_count(dev->phydev);
+ 		if (count >= 0)
+ 			phy_ethtool_get_stats(dev->phydev, stats, data);
+-	} else if (ops->get_sset_count && ops->get_ethtool_phy_stats) {
++	} else if (ops && ops->get_sset_count && ops->get_ethtool_phy_stats) {
+ 		netdev_lock_ops(dev);
+ 		count = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
+ 		ops->get_ethtool_phy_stats(dev, stats, data);
+@@ -145,9 +145,9 @@ static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
+ 
+ 	netdev_lock_ops(dev);
+ 	if (sset == ETH_SS_PHY_STATS && dev->phydev &&
+-	    !ops->get_ethtool_phy_stats)
++	    (!ops || !ops->get_ethtool_phy_stats))
+ 		count = phy_ethtool_get_sset_count(dev->phydev);
+-	else if (ops->get_sset_count)
++	else if (ops && ops->get_sset_count)
+ 		count = ops->get_sset_count(dev, sset);
+ 	netdev_unlock_ops(dev);
+ 
 -- 
 2.53.0
 
