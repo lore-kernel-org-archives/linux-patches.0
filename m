@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35833D8129;
-	Wed, 20 May 2026 16:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B9373BEB;
+	Wed, 20 May 2026 16:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296254; cv=none; b=g40644JhvIndcRVt1ce4C8Nye9fEh/SxV0ix0Bvj/jNr1psuDq9CVwQAXcRwmo+OWYEvCuIK98Zg15tPSXIu4wrBAzFWMHG5gyDWq7PP1mGxjps7NrFtbXoWeZ7RNbW04RYv3Z0yC1y0E2KpDhXZ4sWyjpjOkFsVX0T/6OLzpMY=
+	t=1779296256; cv=none; b=YaY9wSNaIj1KIwjoWHosEFNq62ORmov7QYA7WVhEET+W5sAq7NtO9REYrCIF/fZQkzXqia709RqXQGswS1vyWc0qrUqSyV6REdeTJauaf555c4cAfgtGPenMoKptjkfCQGCj/iBgWo//v/Od+2Q1Qi+chrxfYrIWfWdGumY25y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296254; c=relaxed/simple;
-	bh=Ys3GzXCMqwuOIFbibxoIf9qRU+NeUon/ZNxa2Xo9pfQ=;
+	s=arc-20240116; t=1779296256; c=relaxed/simple;
+	bh=laEm0dPvnNKNe3Daq6OXx9T3zXUX6LIg0M4ub98c+GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB6SVtEPfg37tosyBewqmKPWuxvpGRRgItJCk/En+avVhXST+TXxlWEL468Edcw54+TlgVxPbqqSnyxjai3ybg05KmUZbaCveejDCbIhqXGoOf5v0zPKdmb6EFwKEf6vpdk+vo2AWEJLKuHs3QaLmg730tG481K+QFW8Ft0q2E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQGXkmpT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SGMIElLD1LXNEqQ6kE3rmfKOdzzYkKYMbBNJ3er7adcEqBwtDPnJTqzAjr/ZY7pROmfiSBgUPBIejdqh6D2GdSgnSIRqJ5pJ8wWEV0eV3ZuLdPIU3zHa/jAqQafTfuMl6aPrK6ju2PS7ElMjfIBkNcFKyjNJb0putSyRK9yka1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hz8+r8D5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQGXkmpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC4F1F000E9;
-	Wed, 20 May 2026 16:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hz8+r8D5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA82A1F000E9;
+	Wed, 20 May 2026 16:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296252;
-	bh=YNgF2SXFFUmBy4Vtm1VVEmD4IUmXj0vke7iysudoFfg=;
+	s=korg; t=1779296255;
+	bh=1nLVc4DUDEFrAXuPoD4nVukZyUvN2+QyUTKNohizI9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQGXkmpTjnc7IqyMsg3UuRKbl7fyFB82eO2ZfsGDXAAP8KZ2/XqWwLpMds87iYSbi
-	 d+7qJY32j7y61umE8dS65R5bYGrW1yDoOceMgYxOZloXQ3AkT7v+cV8Z0BITkwj3k/
-	 YoqEFO6S/3bBaajPkmr0CmY6yXmHQ6ebPcDFKUjA=
+	b=hz8+r8D5/UPTbIqcpF3WjSPwqrUBc8R9qenDDt6whf1i9QUVmSU7iYhNgFLlsyj+n
+	 5hlnX1obaJgRyv/KgjRLfIlbXb+PptRiwfLfCanznefcstqfoR3QPfawsgJsPa12ZF
+	 UzE3KDRVPEhiGGiwBOkZOn068nBF/mnsMbB+UHNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <huangjianan@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0728/1146] f2fs: avoid reading already updated pages during GC
-Date: Wed, 20 May 2026 18:16:18 +0200
-Message-ID: <20260520162204.682332112@linuxfoundation.org>
+Subject: [PATCH 7.0 0693/1146] RDMA/core: Prefer NLA_NUL_STRING
+Date: Wed, 20 May 2026 18:15:43 +0200
+Message-ID: <20260520162203.871105092@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,93 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianan Huang <huangjianan@xiaomi.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 570e2ccc7cb35fe720106964e65060602d3d2ac4 ]
+[ Upstream commit 6ed3d14fc45d3da6025e7fe4a6a09066856698e2 ]
 
-We found the following issue during fuzz testing:
+These attributes are evaluated as c-string (passed to strcmp), but
+NLA_STRING doesn't check for the presence of a \0 terminator.
 
-page: refcount:3 mapcount:0 mapping:00000000b6e89c65 index:0x18b2dc pfn:0x161ba9
-memcg:f8ffff800e269c00
-aops:f2fs_meta_aops ino:2
-flags: 0x52880000000080a9(locked|waiters|uptodate|lru|private|zone=1|kasantag=0x4a)
-raw: 52880000000080a9 fffffffec6e17588 fffffffec0ccc088 a7ffff8067063618
-raw: 000000000018b2dc 0000000000000009 00000003ffffffff f8ffff800e269c00
-page dumped because: VM_BUG_ON_FOLIO(folio_test_uptodate(folio))
-page_owner tracks the page as allocated
- post_alloc_hook+0x58c/0x5ec
- prep_new_page+0x34/0x284
- get_page_from_freelist+0x2dcc/0x2e8c
- __alloc_pages_noprof+0x280/0x76c
- __folio_alloc_noprof+0x18/0xac
- __filemap_get_folio+0x6bc/0xdc4
- pagecache_get_page+0x3c/0x104
- do_garbage_collect+0x5c78/0x77a4
- f2fs_gc+0xd74/0x25f0
- gc_thread_func+0xb28/0x2930
- kthread+0x464/0x5d8
- ret_from_fork+0x10/0x20
-------------[ cut here ]------------
-kernel BUG at mm/filemap.c:1563!
- folio_end_read+0x140/0x168
- f2fs_finish_read_bio+0x5c4/0xb80
- f2fs_read_end_io+0x64c/0x708
- bio_endio+0x85c/0x8c0
- blk_update_request+0x690/0x127c
- scsi_end_request+0x9c/0xb8c
- scsi_io_completion+0xf0/0x250
- scsi_finish_command+0x430/0x45c
- scsi_complete+0x178/0x6d4
- blk_mq_complete_request+0xcc/0x104
- scsi_done_internal+0x214/0x454
- scsi_done+0x24/0x34
+Either this needs to switch to nla_strcmp() and needs to adjust printf fmt
+specifier to not use plain %s, or this needs to use NLA_NUL_STRING.
 
-which is similar to the problem reported by syzbot:
-https://syzkaller.appspot.com/bug?extid=3686758660f980b402dc
+As the code has been this way for long time, it seems to me that userspace
+does include the terminating nul, even tough its not enforced so far, and
+thus NLA_NUL_STRING use is the simpler solution.
 
-This case is consistent with the description in commit 9bf1a3f
-("f2fs: avoid GC causing encrypted file corrupted"):
-Page 1 is moved from blkaddr A to blkaddr B by move_data_block, and after
-being written it is marked as uptodate. Then, Page 1 is moved from blkaddr
-B to blkaddr C, VM_BUG_ON_FOLIO was triggered in the endio initiated by
-ra_data_block.
-
-There is no need to read Page 1 again from blkaddr B, since it has already
-been updated. Therefore, avoid initiating I/O in this case.
-
-Fixes: 6aa58d8ad20a ("f2fs: readahead encrypted block during GC")
-Signed-off-by: Jianan Huang <huangjianan@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
+Link: https://patch.msgid.link/r/20260330122742.13315-1-fw@strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/iwpm_msg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index f46b2673d31f5..ec0680187c0db 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1230,7 +1230,7 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
- 		.encrypted_page = NULL,
- 		.in_list = 0,
- 	};
--	int err;
-+	int err = 0;
+diff --git a/drivers/infiniband/core/iwpm_msg.c b/drivers/infiniband/core/iwpm_msg.c
+index 69c85249b4650..4625abd29ac06 100644
+--- a/drivers/infiniband/core/iwpm_msg.c
++++ b/drivers/infiniband/core/iwpm_msg.c
+@@ -365,9 +365,9 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
+ /* netlink attribute policy for the received response to register pid request */
+ static const struct nla_policy resp_reg_policy[IWPM_NLA_RREG_PID_MAX] = {
+ 	[IWPM_NLA_RREG_PID_SEQ]     = { .type = NLA_U32 },
+-	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_STRING,
++	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_DEVNAME_SIZE - 1 },
+-	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_STRING,
++	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_ULIBNAME_SIZE - 1 },
+ 	[IWPM_NLA_RREG_ULIB_VER]    = { .type = NLA_U16 },
+ 	[IWPM_NLA_RREG_PID_ERR]     = { .type = NLA_U16 }
+@@ -677,7 +677,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
  
- 	folio = f2fs_grab_cache_folio(mapping, index, true);
- 	if (IS_ERR(folio))
-@@ -1283,6 +1283,9 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
- 
- 	fio.encrypted_page = &efolio->page;
- 
-+	if (folio_test_uptodate(efolio))
-+		goto put_encrypted_page;
-+
- 	err = f2fs_submit_page_bio(&fio);
- 	if (err)
- 		goto put_encrypted_page;
+ /* netlink attribute policy for the received request for mapping info */
+ static const struct nla_policy resp_mapinfo_policy[IWPM_NLA_MAPINFO_REQ_MAX] = {
+-	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_STRING,
++	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_ULIBNAME_SIZE - 1 },
+ 	[IWPM_NLA_MAPINFO_ULIB_VER]  = { .type = NLA_U16 }
+ };
 -- 
 2.53.0
 
