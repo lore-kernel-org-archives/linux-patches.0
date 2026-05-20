@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1EF34F462;
-	Wed, 20 May 2026 17:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6449336405A;
+	Wed, 20 May 2026 17:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298313; cv=none; b=mo97onQeXwvg3BlEXgdWDqg99JGX1WT3KUsL12EptVKN4v0bjx0vQsaCLK28Z3TYQv+LFo/EFe3j8VxmXI8tdHG4lGIqrH81so/PdE7KpdS0ymWPqiwsD8QH9SHyfwcNm/4Ea/jKOFgfkZ/eEPooHOksLldpNYYzxMYiM2vSG+c=
+	t=1779298316; cv=none; b=EbnGc9YKVlc64perANOX4PDrhzBoBpKK20zqQ2yO354GjeAeUZrHmcFDF238daKsmYRLrZCebO+WoxinukSem7zuoc+pAU2sDyp5eCL0cGKfIn+Wg5iyqdkvnn+XnFTXUXR4AXY99TVXAxlfMYk/0B5Q813NMZOJ7iY6kxSrQdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298313; c=relaxed/simple;
-	bh=MrCxFlWzrSGBaTEOk68cFNkaXLXyVwJhG5MBiPCI2fc=;
+	s=arc-20240116; t=1779298316; c=relaxed/simple;
+	bh=nrkXquzQwblRczCV1OeLTfqQcdeX9+nlKT3EvwkttMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q15hHQD4b8hRcefi21zR3JYVdidTJBsZpmc9vwiq6RniUv2HiUBmUpFPml/oPC4lgymqgGoM0M4/OKhFS7LBHHVrIVqKc8sfAF7JKkwIXmbNYhoTv4R4MMweoh4BaQPJ+dVCwhESeu/dsueskCFAynT6Q/J1i5RsBPRDiy88mbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHf9QUbz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DGGC0+Gj7Qc/TwlWKYf/gwdcD40/TBvTIjxlZIvJ1YApCLI5dlRtTMQ/zOh/8ExHUjQMpXs1ntG7vzM+A5TztoYobUreun7/GrfYGP5FILg7AWr7/ZTJZXGqb+boCuiL03BConSzOA87uq6DWL3b9pFZqn8zOMDQoDISdawrloI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtnxxuGH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHf9QUbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8F51F000E9;
-	Wed, 20 May 2026 17:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtnxxuGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2C91F000E9;
+	Wed, 20 May 2026 17:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298312;
-	bh=HOtWqhPlDwmFrM1EglSu0EJ2933SkoBpSJbdSmpqCuQ=;
+	s=korg; t=1779298315;
+	bh=1UxlbP+OsTEaotfldOf3XDSLk1cztPiPIhGUpN77p1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHf9QUbzvnCyrsJ9pvr+2tKy0Sq1siX0ds3xCrr8GUA7IxP1FRAkBDKPftjaTmI98
-	 BQ2D6PpkLBhdYVx15/bSj6Wp5QC5cSwzxaKyQ07OXBNGztpQ9Y398MAyr9tHsTmgRS
-	 28M5ejJtD52MjRLNaTv3wkkXpIz85DtV3pDSsfnE=
+	b=QtnxxuGH8n8DMlOm+SHftbyWMFfNjRlY631ObPF/W88oWcQc4B5SYUVCI3ppJuwY5
+	 w/3JYSAKERPDER1tlCzS1Vj+l8+5rzNQP1dbls26GGGisKt60IUaP/4UOgQfqA34V3
+	 h1BPxLkvKESn+YmXnaxvUUnxdJN+eOPadWLc5lUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 364/957] memory: tegra30-emc: Fix dll_change check
-Date: Wed, 20 May 2026 18:14:07 +0200
-Message-ID: <20260520162142.423890306@linuxfoundation.org>
+Subject: [PATCH 6.18 365/957] arm64: dts: imx8-apalis: Fix LEDs name collision
+Date: Wed, 20 May 2026 18:14:08 +0200
+Message-ID: <20260520162142.444875624@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,45 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 0a93f2355cf4922ad2399dbef5ea1049fef116d4 ]
+[ Upstream commit 92ab53b9bb2a72581c32073755077af916eb9aee ]
 
-The code checking whether the specified memory timing enables DLL
-in the EMRS register was reversed. DLL is enabled if bit A0 is low.
-Fix the check.
+Ixora boards have multiple instances of status leds, to avoid a name
+collision add the function-enumerator property.
 
-Fixes: e34212c75a68 ("memory: tegra: Introduce Tegra30 EMC driver")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Link: https://patch.msgid.link/20260126-fix-emc-dllchange-v1-2-47ad3bb63262@nvidia.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+This fixes the following Linux kernel warnings:
+
+  leds-gpio leds: Led green:status renamed to green:status_1 due to name collision
+  leds-gpio leds: Led red:status renamed to red:status_1 due to name collision
+
+Fixes: c083131c9021 ("arm64: dts: freescale: add apalis imx8 aka quadmax carrier board support")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/tegra30-emc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi | 4 ++++
+ arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/memory/tegra/tegra30-emc.c b/drivers/memory/tegra/tegra30-emc.c
-index 921dce1b8bc63..4981b7fa0f780 100644
---- a/drivers/memory/tegra/tegra30-emc.c
-+++ b/drivers/memory/tegra/tegra30-emc.c
-@@ -554,14 +554,14 @@ static int emc_prepare_timing_change(struct tegra_emc *emc, unsigned long rate)
- 	emc->emc_cfg = readl_relaxed(emc->regs + EMC_CFG);
- 	emc_dbg = readl_relaxed(emc->regs + EMC_DBG);
+diff --git a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
+index 3d8731504ce15..1e8b6e61e33d4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
+@@ -21,6 +21,7 @@ led-1 {
+ 			color = <LED_COLOR_ID_GREEN>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <1>;
+ 			gpios = <&lsio_gpio5 27 GPIO_ACTIVE_HIGH>;
+ 		};
  
--	if (emc->dll_on == !!(timing->emc_mode_1 & 0x1))
-+	if (emc->dll_on == !(timing->emc_mode_1 & 0x1))
- 		dll_change = DLL_CHANGE_NONE;
--	else if (timing->emc_mode_1 & 0x1)
-+	else if (!(timing->emc_mode_1 & 0x1))
- 		dll_change = DLL_CHANGE_ON;
- 	else
- 		dll_change = DLL_CHANGE_OFF;
+@@ -29,6 +30,7 @@ led-2 {
+ 			color = <LED_COLOR_ID_RED>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <1>;
+ 			gpios = <&lsio_gpio5 29 GPIO_ACTIVE_HIGH>;
+ 		};
  
--	emc->dll_on = !!(timing->emc_mode_1 & 0x1);
-+	emc->dll_on = !(timing->emc_mode_1 & 0x1);
+@@ -37,6 +39,7 @@ led-3 {
+ 			color = <LED_COLOR_ID_GREEN>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <2>;
+ 			gpios = <&lsio_gpio5 20 GPIO_ACTIVE_HIGH>;
+ 		};
  
- 	if (timing->data[80] && !readl_relaxed(emc->regs + EMC_ZCAL_INTERVAL))
- 		emc->zcal_long = true;
+@@ -45,6 +48,7 @@ led-4 {
+ 			color = <LED_COLOR_ID_RED>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <2>;
+ 			gpios = <&lsio_gpio5 21 GPIO_ACTIVE_HIGH>;
+ 		};
+ 	};
+diff --git a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
+index 106e802a68ba5..70dcb66f8fda4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
+@@ -21,6 +21,7 @@ led-1 {
+ 			color = <LED_COLOR_ID_GREEN>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <1>;
+ 			gpios = <&lsio_gpio5 27 GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+@@ -29,6 +30,7 @@ led-2 {
+ 			color = <LED_COLOR_ID_RED>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <1>;
+ 			gpios = <&lsio_gpio5 29 GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+@@ -37,6 +39,7 @@ led-3 {
+ 			color = <LED_COLOR_ID_GREEN>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <2>;
+ 			gpios = <&lsio_gpio5 20 GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+@@ -45,6 +48,7 @@ led-4 {
+ 			color = <LED_COLOR_ID_RED>;
+ 			default-state = "off";
+ 			function = LED_FUNCTION_STATUS;
++			function-enumerator = <2>;
+ 			gpios = <&lsio_gpio5 21 GPIO_ACTIVE_HIGH>;
+ 		};
+ 	};
 -- 
 2.53.0
 
