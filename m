@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA0910F2;
-	Wed, 20 May 2026 18:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA352318ED6;
+	Wed, 20 May 2026 18:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302226; cv=none; b=mncKcZ9oFyGqTFYbhwFL1xg5CCsfLa9mN1b+zjmoUnHtHn8jme74cSvKFMNkTzClGiD4EPZcKanBbUYazFdYC4nv9Tfmpd1RIICaS4dZOYSJzlp2r14LqQBlKWmolWUgy8U2Yi/LJfmwIxYt9sOo8MgLuyQ9kz4njPS1Corikxc=
+	t=1779302228; cv=none; b=KEigoFGDF4XODSVwvmXh+p4ptOHHka46AY1GWSjjzyotcQ8ueOr4DTGz76eSl3VKaVJlPNT6FVSK5XmaTFRuPL0rEzR0BHXTv6XdrIHdDH9TXPjv8ztFMf4o96uySsGnUU9nKjJ1OTiqPy5Vt7CV3E4S2X53myELmMNGQNhxiVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302226; c=relaxed/simple;
-	bh=q0YGmtna5xA92tAd5P1qRBl7zZ/lvO5Y1HUcaVRj+FQ=;
+	s=arc-20240116; t=1779302228; c=relaxed/simple;
+	bh=0/NYMyDRFWRJMKvPVq/dxORzHdbAv7XPSYIKY9IHACI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PO5BX4AIysz5Np0qishcstKHcbWUqzsA6/yGr5GAGgvz27+WhdXvIk0Qn0TIU3rtTTVzurRMhIFe/OKNSB4II01olO4Qv4GKMt1+6Th/xuqjTlzxlzCVbQDnS6/plFTZDqQgqoeZCq8yHmIV4zJCY+uvF+UlEoSOuKrKqCfASW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0PHEeGF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lh34FpjyLYpiyIN/osFFhsC3DQDzp1/43z0Mk58FgtbLcnwTAZQ2N7+Wz0mdLpNItAdXtyFLVi5/AFdK4DrAuuStWXCTZ+fuVfnOU4Xk4JBiJVfBOtYdQXRjXNnHlODlxiia47opXwVc+0ZgOXp/N2+wDRzq3jlgHw2Zg1QE9F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=telOL5uO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0PHEeGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711461F000E9;
-	Wed, 20 May 2026 18:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="telOL5uO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8B81F000E9;
+	Wed, 20 May 2026 18:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302224;
-	bh=vBxWOmwd70HYmGugln2ysTKGpnoioT8fCTeSHKVZ1aU=;
+	s=korg; t=1779302227;
+	bh=cQ15i/vlY6oiWMqCFGFRhjfO577ZVRk5es5DXMZL/2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0PHEeGFtiv6JFxUG6xhIalCBv3GeShcNGKso0+wQLjLZBGkTssWxcgB0S1THGLl0
-	 yjg+7PpnsDO3hEMHTo8DSXhoyaWyaJ3OwcOODMP0TGFx7tFXtf+pfAF2cy8t1aTwvS
-	 cKGcP9tUSH2vuWM/2yPj/GMf7hhnGN4pIJ8kG2VM=
+	b=telOL5uO2inmZ595meGR9miBNPzwfGmwiXT3JEiSyYuevkYMUBz0pU+BWduCqB0tM
+	 EcFguNNay2ScD2WP2yH3PFEsW3hTLpKhHiD238xcYM/kFOZLH8h+5Hnw+mrQ6+bz9/
+	 A2uKMDRVmVVKBtGCX66BLE0IpVRnx6zT15fGxEVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Pan <jacob.pan@linux.microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Akari Tsuyukusa <akkun11.open@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/508] iommufd: vfio compatibility extension check for noiommu mode
-Date: Wed, 20 May 2026 18:20:09 +0200
-Message-ID: <20260520162102.667777611@linuxfoundation.org>
+Subject: [PATCH 6.6 187/508] arm64: dts: mediatek: mt6795: Fix gpio-ranges pin count
+Date: Wed, 20 May 2026 18:20:10 +0200
+Message-ID: <20260520162102.689569059@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Pan <jacob.pan@linux.microsoft.com>
+From: Akari Tsuyukusa <akkun11.open@gmail.com>
 
-[ Upstream commit 7147ec874ea08c322d779d8eba28946e294ed1f3 ]
+[ Upstream commit c4c4823c8a5baa10b8100b01f49d7c3f4a871689 ]
 
-VFIO_CHECK_EXTENSION should return false for TYPE1_IOMMU variants when
-in NO-IOMMU mode and IOMMUFD compat container is set. This change makes
-the behavior match VFIO_CONTAINER in noiommu mode. It also prevents
-userspace from incorrectly attempting to use TYPE1 IOMMU operations
-in a no-iommu context.
+The gpio-ranges in the MT6795 pinctrl node were incorrectly defined,
+therefore, GPIO196 cannot be used.
+Correct the range count to match the driver.
 
-Fixes: d624d6652a65 ("iommufd: vfio container FD ioctl compatibility")
-Link: https://patch.msgid.link/r/20260213183636.3340-1-jacob.pan@linux.microsoft.com
-Signed-off-by: Jacob Pan <jacob.pan@linux.microsoft.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: b888886a4536 ("arm64: dts: mediatek: mt6795: Add pinctrl controller node")
+Signed-off-by: Akari Tsuyukusa <akkun11.open@gmail.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/vfio_compat.c | 2 +-
+ arch/arm64/boot/dts/mediatek/mt6795.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommufd/vfio_compat.c b/drivers/iommu/iommufd/vfio_compat.c
-index 6c810bf80f99a..7351320394c85 100644
---- a/drivers/iommu/iommufd/vfio_compat.c
-+++ b/drivers/iommu/iommufd/vfio_compat.c
-@@ -283,7 +283,7 @@ static int iommufd_vfio_check_extension(struct iommufd_ctx *ictx,
- 	case VFIO_TYPE1_IOMMU:
- 	case VFIO_TYPE1v2_IOMMU:
- 	case VFIO_UNMAP_ALL:
--		return 1;
-+		return !ictx->no_iommu_mode;
- 
- 	case VFIO_NOIOMMU_IOMMU:
- 		return IS_ENABLED(CONFIG_VFIO_NOIOMMU);
+diff --git a/arch/arm64/boot/dts/mediatek/mt6795.dtsi b/arch/arm64/boot/dts/mediatek/mt6795.dtsi
+index 597bce2fed729..228c15b962ea0 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6795.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6795.dtsi
+@@ -353,7 +353,7 @@ pio: pinctrl@10005000 {
+ 				     <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>;
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
+-			gpio-ranges = <&pio 0 0 196>;
++			gpio-ranges = <&pio 0 0 197>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <2>;
+ 		};
 -- 
 2.53.0
 
