@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A130D400E0E;
-	Wed, 20 May 2026 18:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1675D400E0E;
+	Wed, 20 May 2026 18:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302839; cv=none; b=RXmE3gAf9HVwQXHqZuONMh9wMpo9Gmw/QjZXg9Nx1PX6VsIyb3nedMbFdJ5JAs9vx7tgW1YZV+uwUOjQPtB2eTJGGFuiQisW6rLpC7EePww6vQrDeHmLncsiXy5n1sHmtklYGuBa8IAgF02nX0auHfvbPGhIF8ZYUmIx3qKXIp0=
+	t=1779302842; cv=none; b=BVJGUvjhAFBIdnZSUaG8axf94d1NtL0JhY2eE6gYiFrWP9nweJ0ETFoGIuN7GWCeJ8Wh7yr0z0e7lK9wZc2VHQ19PWHcqv6i7xM4q6wtrGA7CTLMWcHmbakOWLXZPkDRSGmQF2Uj3L7Yf7u84vK8g7V99x7rpxSnt++KVaNnX/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302839; c=relaxed/simple;
-	bh=6dlPH9MioAO+uphQE8FAY90CneWtEWAtEJpc/X9io4k=;
+	s=arc-20240116; t=1779302842; c=relaxed/simple;
+	bh=zxy0wanKzRcTktfoaTDKdqdeNWW8PFF7D2QEKMdkYjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHuZgxNzrXTSL/wGSGvGMyuQJXl4WBd68zGCHPXeA6LN0p8TGtLoqKzEBRE32YTWk1U9sfh30BHnvdfT2I7Co2qGpK82QDFKHj0dEF3ijuxrv2gpozwZrB3tThP21ckBpbylzUDL35h7kUs+X58mqjeV80Pks2PvZ4gZ6Sum3RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNb7NCMF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUISGrgsERAikjFUl7nWLHR7l5Er7iPLj7hjpKn7+2lei5yD4+aYb4NZnZCrPXZN8rb7eNOqkYbrWQWMBbOjjdZI1GBasbRzzB5iwTGCUACSGV5c3EdNzPYBrWxMYp79Frw0ic3cb0+FxxQAlk+tOhYc6/CxTKIc9r7S436Z9WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2iM7tBu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNb7NCMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1111F000E9;
-	Wed, 20 May 2026 18:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2iM7tBu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B9B1F000E9;
+	Wed, 20 May 2026 18:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302838;
-	bh=Hm8dPmmWWtuPpMSUBYb1KQ25XAewV9ucF1SlgcD3b7s=;
+	s=korg; t=1779302840;
+	bh=0+PLjhvBE+VW0R6h2JhoAkAdTgLhDu3bNuVmaRt2CsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNb7NCMFp3vkqPDe1RTPoPw2sDva6NW4NkCR+bjM2V7gzZqAx1pIDJyjxy1SuZ8XQ
-	 tQ5fisqP6XvugAQxz3u0Ia2UDcqa4CoKvDiiqNcIQk5tf81mO9DXNpZI0JfDdK84ef
-	 avFRzU4S8YgcRduJwX9Uvq8p/Qiu17dN4HM9/Gac=
+	b=v2iM7tBuKtsn23PReS2gpHgZqMBvNLfAep1fb0dSS/zh24mO73HdB/7/Eiw8XvMtr
+	 CGmMtUzDFUqAqfq47z1P2qSiTQUPjE+IzuAFLL0MLklUkOBMxld8zsVtxjGKwHX8GJ
+	 gQ1IHpkREqhZTjKT9HUuv3K+E3jYTnvJCtOvPw6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oldherl Oh <me@oldherl.one>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 418/508] netconsole: propagate device name truncation in dev_name_store()
-Date: Wed, 20 May 2026 18:24:01 +0200
-Message-ID: <20260520162107.663803973@linuxfoundation.org>
+Subject: [PATCH 6.6 419/508] ALSA: hda/conexant: fix some typos
+Date: Wed, 20 May 2026 18:24:02 +0200
+Message-ID: <20260520162107.685598785@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,56 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Oldherl Oh <me@oldherl.one>
 
-[ Upstream commit 92ceb7bff62c2606f664c204750eca0b85d44112 ]
+[ Upstream commit 73253f2fd1d0a44708735c842e37163712e3f03b ]
 
-dev_name_store() calls strscpy(nt->np.dev_name, buf, IFNAMSIZ) without
-checking the return value. If userspace writes an interface name longer
-than IFNAMSIZ - 1, strscpy() silently truncates and returns -E2BIG, but
-the function ignores it and reports a fully successful write back to
-userspace.
+Fix some typos in patch_conexant.c
 
-If a real interface happens to match the truncated name, netconsole will
-bind to the wrong device on the next enable, sending kernel logs and
-panic output to an unintended network segment with no indication to
-userspace that anything was rewritten.
-
-Reject writes whose length cannot fit in nt->np.dev_name up front:
-
-	if (count >= IFNAMSIZ)
-		return -ENAMETOOLONG;
-
-This is not a big deal of a problem, but, it is still the correct
-approach.
-
-Fixes: 0bcc1816188e57 ("[NET] netconsole: Support dynamic reconfiguration using configfs")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260427-netconsole_ai_fixes-v2-3-59965f29d9cc@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oldherl Oh <me@oldherl.one>
+Link: https://patch.msgid.link/20240930084132.3373750-1-me@oldherl.one
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: b0e2333a2311 ("ALSA: hda/conexant: Fix missing error check for jack detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netconsole.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/patch_conexant.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
-index 2045872de5328..f58643bdafc5c 100644
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -476,6 +476,13 @@ static ssize_t dev_name_store(struct config_item *item, const char *buf,
- 		size_t count)
- {
- 	struct netconsole_target *nt = to_target(item);
-+	size_t len = count;
-+
-+	/* Account for a trailing newline appended by tools like echo */
-+	if (len && buf[len - 1] == '\n')
-+		len--;
-+	if (len >= IFNAMSIZ)
-+		return -ENAMETOOLONG;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 355b26583eb4e..08e2c836fd07e 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -166,18 +166,18 @@ static void cxt_init_gpio_led(struct hda_codec *codec)
  
- 	mutex_lock(&dynamic_netconsole_mutex);
- 	if (nt->enabled) {
+ static void cx_fixup_headset_recog(struct hda_codec *codec)
+ {
+-	unsigned int mic_persent;
++	unsigned int mic_present;
+ 
+ 	/* fix some headset type recognize fail issue, such as EDIFIER headset */
+-	/* set micbiasd output current comparator threshold from 66% to 55%. */
++	/* set micbias output current comparator threshold from 66% to 55%. */
+ 	snd_hda_codec_write(codec, 0x1c, 0, 0x320, 0x010);
+-	/* set OFF voltage for DFET from -1.2V to -0.8V, set headset micbias registor
++	/* set OFF voltage for DFET from -1.2V to -0.8V, set headset micbias register
+ 	 * value adjustment trim from 2.2K ohms to 2.0K ohms.
+ 	 */
+ 	snd_hda_codec_write(codec, 0x1c, 0, 0x3b0, 0xe10);
+ 	/* fix reboot headset type recognize fail issue */
+-	mic_persent = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
+-	if (mic_persent & AC_PINSENSE_PRESENCE)
++	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
++	if (mic_present & AC_PINSENSE_PRESENCE)
+ 		/* enable headset mic VREF */
+ 		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x24);
+ 	else
+@@ -247,9 +247,9 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
+ {
+ 	unsigned int mic_present;
+ 
+-	/* In cx8070 and sn6140, the node 16 can only be config to headphone or disabled,
+-	 * the node 19 can only be config to microphone or disabled.
+-	 * Check hp&mic tag to process headset pulgin&plugout.
++	/* In cx8070 and sn6140, the node 16 can only be configured to headphone or disabled,
++	 * the node 19 can only be configured to microphone or disabled.
++	 * Check hp&mic tag to process headset plugin & plugout.
+ 	 */
+ 	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
+ 	if (!(mic_present & AC_PINSENSE_PRESENCE)) /* mic plugout */
 -- 
 2.53.0
 
