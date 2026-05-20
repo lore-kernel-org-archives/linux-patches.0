@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B80B3FB05C;
-	Wed, 20 May 2026 18:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED27E340A57;
+	Wed, 20 May 2026 18:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301550; cv=none; b=pO/eVmk2L7bD++ZnUWPb1FGkUUcZa60YpLXAhjOrwXQgQg5OAPgApI3iohckUFmrSvnnT8Eamc/qd+N1Pj4zKSd9nNHzWtEi6MKXlnliChn5DsWCD3qt5gsaebGSuW5x/SoCKyqpeZ6CokDQV6LA43vpVCT4iu49ySf82RHnnT0=
+	t=1779301553; cv=none; b=K0UXbQoPIKZ9Y8n84MUlOe8PfdkgPDMya1sktYR0IGkLAFGJjsh+oWZcZ3lSNAqlw/NEiVognKfbcfrM+jji7uJubn+Jzt2drJFIU2Oq5o7AejzaN1iCMTSy75t5qYiCl/7OHp3CQpDfCmwxS4a++YN1yYudJLFqaeg7jSWL1cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301550; c=relaxed/simple;
-	bh=9DlASsqkdyjSGE94UdQxqhHOp0msXDnwW+HQCr0OEE0=;
+	s=arc-20240116; t=1779301553; c=relaxed/simple;
+	bh=m/Fr0nKeDJAHXiYGBKB5nFGApm5fzW86YAP1/lv7c6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtL+E/b8uYAdqgEAKcERsfuY4xrvaUgmPAVDSl6kvHDZjbJHqTI0jZrMCBPm6nFwjxzRq277XOxEOizAx0/9V5eIHSqmV6OLrwlrTiHCBEO3SViQlEoPUnTCgLnqNJ3ub8ifycverqhQQvcw+t31dXsbqWs0697zjmyq5E6Dd7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDWHgyA2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ppj8qYo/A40mjIIzMtQQ5xFKf/1iJ83wr8s7G32+rJ7NaMoy1aRYKvwQrvg+RQM/cTMq8V6zgjkBXAXy67MN79JOzH81zVfpYs8HxsSm7BSwlX1fN4ZmNy7JJ7IvxNeEWaKSlhFzO83jqZCi3hPolNn0FvJjuFinJP7zd4/Q/no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOwEcCCL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDWHgyA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB801F000E9;
-	Wed, 20 May 2026 18:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOwEcCCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D15F1F000E9;
+	Wed, 20 May 2026 18:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301549;
-	bh=6eMVNHlOFSONiUOKGkWEz4JeIptxIqp71zYlm7Vhrew=;
+	s=korg; t=1779301551;
+	bh=cy+c1YccUMTWYamSxVlUrBI4jTrbTi79EjeLA1bJE1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDWHgyA2241kAJwBbcn7EttHHNE59pg94NmktFrXQlUGdexc+KwLKuqBMTBAFcg7G
-	 8lpVuZ50CqBw8fsH0htvSMdqRbHdXY8sYAgebpoTPyAPJVSI/LZqSZQ40i4Tw4gg5B
-	 uZ0dz1vgo1kZll/EazJR/hITTOT7qHofkl/vkt/g=
+	b=nOwEcCCLLY9/RUxQ/rVq/UQf/tV2MQj2hz7WhT8kOafLfm0hJAehm8UjJrU9tBE1Z
+	 QJqRfgXUleXYbmiKcBSnjQ+s9ktgrrUNIbS/0KuUT1AgtGTP6awjHTTELckM1sjNgi
+	 l2A3nHe+5xcAJbFGBy5TRGbgR8uPmxTPtZRWA1/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	stable <stable@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
-	Alva Lan <alvalan9@foxmail.com>,
+	Xianglai Li <lixianglai@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 596/666] smb: client: fix OOB reads parsing symlink error response
-Date: Wed, 20 May 2026 18:23:27 +0200
-Message-ID: <20260520162124.183837571@linuxfoundation.org>
+Subject: [PATCH 6.12 597/666] LoongArch: KVM: Compile switch.S directly into the kernel
+Date: Wed, 20 May 2026 18:23:28 +0200
+Message-ID: <20260520162124.206233346@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -59,119 +51,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Xianglai Li <lixianglai@loongson.cn>
 
-[ Upstream commit 3df690bba28edec865cf7190be10708ad0ddd67e ]
+commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
 
-When a CREATE returns STATUS_STOPPED_ON_SYMLINK, smb2_check_message()
-returns success without any length validation, leaving the symlink
-parsers as the only defense against an untrusted server.
+If we directly compile the switch.S file into the kernel, the address of
+the kvm_exc_entry function will definitely be within the DMW memory area.
+Therefore, we will no longer need to perform a copy relocation of the
+kvm_exc_entry.
 
-symlink_data() walks SMB 3.1.1 error contexts with the loop test "p <
-end", but reads p->ErrorId at offset 4 and p->ErrorDataLength at offset
-0.  When the server-controlled ErrorDataLength advances p to within 1-7
-bytes of end, the next iteration will read past it.  When the matching
-context is found, sym->SymLinkErrorTag is read at offset 4 from
-p->ErrorContextData with no check that the symlink header itself fits.
+So this patch compiles switch.S directly into the kernel, and then remove
+the copy relocation execution logic for the kvm_exc_entry function.
 
-smb2_parse_symlink_response() then bounds-checks the substitute name
-using SMB2_SYMLINK_STRUCT_SIZE as the offset of PathBuffer from
-iov_base.  That value is computed as sizeof(smb2_err_rsp) +
-sizeof(smb2_symlink_err_rsp), which is correct only when
-ErrorContextCount == 0.
-
-With at least one error context the symlink data sits 8 bytes deeper,
-and each skipped non-matching context shifts it further by 8 +
-ALIGN(ErrorDataLength, 8).  The check is too short, allowing the
-substitute name read to run past iov_len.  The out-of-bound heap bytes
-are UTF-16-decoded into the symlink target and returned to userspace via
-readlink(2).
-
-Fix this all up by making the loops test require the full context header
-to fit, rejecting sym if its header runs past end, and bound the
-substitute name against the actual position of sym->PathBuffer rather
-than a fixed offset.
-
-Because sub_offs and sub_len are 16bits, the pointer math will not
-overflow here with the new greater-than.
-
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Cc: stable <stable@kernel.org>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2file.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/loongarch/Kbuild                       |  2 +-
+ arch/loongarch/include/asm/asm-prototypes.h | 20 ++++++++++++
+ arch/loongarch/include/asm/kvm_host.h       |  3 --
+ arch/loongarch/kvm/Makefile                 |  3 +-
+ arch/loongarch/kvm/main.c                   | 35 ++-------------------
+ arch/loongarch/kvm/switch.S                 | 19 ++++++++---
+ 6 files changed, 40 insertions(+), 42 deletions(-)
 
-diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
-index 35d2933982d31..fd331a9f2f4d2 100644
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -27,10 +27,11 @@ static struct smb2_symlink_err_rsp *symlink_data(const struct kvec *iov)
+diff --git a/arch/loongarch/Kbuild b/arch/loongarch/Kbuild
+index bfa21465d83af..604adaff2623a 100644
+--- a/arch/loongarch/Kbuild
++++ b/arch/loongarch/Kbuild
+@@ -3,7 +3,7 @@ obj-y += mm/
+ obj-y += net/
+ obj-y += vdso/
+ 
+-obj-$(CONFIG_KVM) += kvm/
++obj-$(subst m,y,$(CONFIG_KVM)) += kvm/
+ obj-$(CONFIG_BUILTIN_DTB) += boot/dts/
+ 
+ # for cleaning
+diff --git a/arch/loongarch/include/asm/asm-prototypes.h b/arch/loongarch/include/asm/asm-prototypes.h
+index 51f224bcfc654..50c66b2a817aa 100644
+--- a/arch/loongarch/include/asm/asm-prototypes.h
++++ b/arch/loongarch/include/asm/asm-prototypes.h
+@@ -12,3 +12,23 @@ __int128_t __ashlti3(__int128_t a, int b);
+ __int128_t __ashrti3(__int128_t a, int b);
+ __int128_t __lshrti3(__int128_t a, int b);
+ #endif
++
++struct kvm_run;
++struct kvm_vcpu;
++struct loongarch_fpu;
++
++void kvm_exc_entry(void);
++int  kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu);
++
++void kvm_save_fpu(struct loongarch_fpu *fpu);
++void kvm_restore_fpu(struct loongarch_fpu *fpu);
++
++#ifdef CONFIG_CPU_HAS_LSX
++void kvm_save_lsx(struct loongarch_fpu *fpu);
++void kvm_restore_lsx(struct loongarch_fpu *fpu);
++#endif
++
++#ifdef CONFIG_CPU_HAS_LASX
++void kvm_save_lasx(struct loongarch_fpu *fpu);
++void kvm_restore_lasx(struct loongarch_fpu *fpu);
++#endif
+diff --git a/arch/loongarch/include/asm/kvm_host.h b/arch/loongarch/include/asm/kvm_host.h
+index d6bb72424027a..4f813fd89ac54 100644
+--- a/arch/loongarch/include/asm/kvm_host.h
++++ b/arch/loongarch/include/asm/kvm_host.h
+@@ -73,7 +73,6 @@ struct kvm_context {
+ struct kvm_world_switch {
+ 	int (*exc_entry)(void);
+ 	int (*enter_guest)(struct kvm_run *run, struct kvm_vcpu *vcpu);
+-	unsigned long page_order;
+ };
+ 
+ #define MAX_PGTABLE_LEVELS	4
+@@ -317,8 +316,6 @@ void kvm_exc_entry(void);
+ int  kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu);
+ 
+ extern unsigned long vpid_mask;
+-extern const unsigned long kvm_exception_size;
+-extern const unsigned long kvm_enter_guest_size;
+ extern struct kvm_world_switch *kvm_loongarch_ops;
+ 
+ #define SW_GCSR		(1 << 0)
+diff --git a/arch/loongarch/kvm/Makefile b/arch/loongarch/kvm/Makefile
+index 2e188e8f14687..cbc27edfd1a27 100644
+--- a/arch/loongarch/kvm/Makefile
++++ b/arch/loongarch/kvm/Makefile
+@@ -9,11 +9,12 @@ include $(srctree)/virt/kvm/Makefile.kvm
+ 
+ obj-$(CONFIG_KVM) += kvm.o
+ 
++obj-y += switch.o
++
+ kvm-y += exit.o
+ kvm-y += interrupt.o
+ kvm-y += main.o
+ kvm-y += mmu.o
+-kvm-y += switch.o
+ kvm-y += timer.o
+ kvm-y += tlb.o
+ kvm-y += vcpu.o
+diff --git a/arch/loongarch/kvm/main.c b/arch/loongarch/kvm/main.c
+index 34fad2c29ee69..550ce2b4df70b 100644
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -320,8 +320,7 @@ void kvm_arch_disable_virtualization_cpu(void)
+ 
+ static int kvm_loongarch_env_init(void)
  {
- 	struct smb2_err_rsp *err = iov->iov_base;
- 	struct smb2_symlink_err_rsp *sym = ERR_PTR(-EINVAL);
-+	u8 *end = (u8 *)err + iov->iov_len;
- 	u32 len;
+-	int cpu, order;
+-	void *addr;
++	int cpu;
+ 	struct kvm_context *context;
  
- 	if (err->ErrorContextCount) {
--		struct smb2_error_context_rsp *p, *end;
-+		struct smb2_error_context_rsp *p;
- 
- 		len = (u32)err->ErrorContextCount * (offsetof(struct smb2_error_context_rsp,
- 							      ErrorContextData) +
-@@ -39,8 +40,7 @@ static struct smb2_symlink_err_rsp *symlink_data(const struct kvec *iov)
- 			return ERR_PTR(-EINVAL);
- 
- 		p = (struct smb2_error_context_rsp *)err->ErrorData;
--		end = (struct smb2_error_context_rsp *)((u8 *)err + iov->iov_len);
--		do {
-+		while ((u8 *)p + sizeof(*p) <= end) {
- 			if (le32_to_cpu(p->ErrorId) == SMB2_ERROR_ID_DEFAULT) {
- 				sym = (struct smb2_symlink_err_rsp *)p->ErrorContextData;
- 				break;
-@@ -50,14 +50,16 @@ static struct smb2_symlink_err_rsp *symlink_data(const struct kvec *iov)
- 
- 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
- 			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
--		} while (p < end);
-+		}
- 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
- 		   iov->iov_len >= SMB2_SYMLINK_STRUCT_SIZE) {
- 		sym = (struct smb2_symlink_err_rsp *)err->ErrorData;
+ 	vmcs = alloc_percpu(struct kvm_context);
+@@ -337,30 +336,8 @@ static int kvm_loongarch_env_init(void)
+ 		return -ENOMEM;
  	}
  
--	if (!IS_ERR(sym) && (le32_to_cpu(sym->SymLinkErrorTag) != SYMLINK_ERROR_TAG ||
--			     le32_to_cpu(sym->ReparseTag) != IO_REPARSE_TAG_SYMLINK))
-+	if (!IS_ERR(sym) &&
-+	    ((u8 *)sym + sizeof(*sym) > end ||
-+	     le32_to_cpu(sym->SymLinkErrorTag) != SYMLINK_ERROR_TAG ||
-+	     le32_to_cpu(sym->ReparseTag) != IO_REPARSE_TAG_SYMLINK))
- 		sym = ERR_PTR(-EINVAL);
+-	/*
+-	 * PGD register is shared between root kernel and kvm hypervisor.
+-	 * So world switch entry should be in DMW area rather than TLB area
+-	 * to avoid page fault reenter.
+-	 *
+-	 * In future if hardware pagetable walking is supported, we won't
+-	 * need to copy world switch code to DMW area.
+-	 */
+-	order = get_order(kvm_exception_size + kvm_enter_guest_size);
+-	addr = (void *)__get_free_pages(GFP_KERNEL, order);
+-	if (!addr) {
+-		free_percpu(vmcs);
+-		vmcs = NULL;
+-		kfree(kvm_loongarch_ops);
+-		kvm_loongarch_ops = NULL;
+-		return -ENOMEM;
+-	}
+-
+-	memcpy(addr, kvm_exc_entry, kvm_exception_size);
+-	memcpy(addr + kvm_exception_size, kvm_enter_guest, kvm_enter_guest_size);
+-	flush_icache_range((unsigned long)addr, (unsigned long)addr + kvm_exception_size + kvm_enter_guest_size);
+-	kvm_loongarch_ops->exc_entry = addr;
+-	kvm_loongarch_ops->enter_guest = addr + kvm_exception_size;
+-	kvm_loongarch_ops->page_order = order;
++	kvm_loongarch_ops->exc_entry = (void *)kvm_exc_entry;
++	kvm_loongarch_ops->enter_guest = (void *)kvm_enter_guest;
  
- 	return sym;
-@@ -82,8 +84,10 @@ int smb2_parse_symlink_response(struct cifs_sb_info *cifs_sb, const struct kvec
- 	print_len = le16_to_cpu(sym->PrintNameLength);
- 	print_offs = le16_to_cpu(sym->PrintNameOffset);
+ 	vpid_mask = read_csr_gstat();
+ 	vpid_mask = (vpid_mask & CSR_GSTAT_GIDBIT) >> CSR_GSTAT_GIDBIT_SHIFT;
+@@ -380,16 +357,10 @@ static int kvm_loongarch_env_init(void)
  
--	if (iov->iov_len < SMB2_SYMLINK_STRUCT_SIZE + sub_offs + sub_len ||
--	    iov->iov_len < SMB2_SYMLINK_STRUCT_SIZE + print_offs + print_len)
-+	if ((char *)sym->PathBuffer + sub_offs + sub_len >
-+		(char *)iov->iov_base + iov->iov_len ||
-+	    (char *)sym->PathBuffer + print_offs + print_len >
-+		(char *)iov->iov_base + iov->iov_len)
- 		return -EINVAL;
+ static void kvm_loongarch_env_exit(void)
+ {
+-	unsigned long addr;
+-
+ 	if (vmcs)
+ 		free_percpu(vmcs);
  
- 	return smb2_parse_native_symlink(path,
+ 	if (kvm_loongarch_ops) {
+-		if (kvm_loongarch_ops->exc_entry) {
+-			addr = (unsigned long)kvm_loongarch_ops->exc_entry;
+-			free_pages(addr, kvm_loongarch_ops->page_order);
+-		}
+ 		kfree(kvm_loongarch_ops);
+ 	}
+ }
+diff --git a/arch/loongarch/kvm/switch.S b/arch/loongarch/kvm/switch.S
+index 42c9fc99dc7e9..df8e5a705b714 100644
+--- a/arch/loongarch/kvm/switch.S
++++ b/arch/loongarch/kvm/switch.S
+@@ -7,6 +7,7 @@
+ #include <asm/asm.h>
+ #include <asm/asmmacro.h>
+ #include <asm/loongarch.h>
++#include <asm/page.h>
+ #include <asm/regdef.h>
+ #include <asm/unwind_hints.h>
+ 
+@@ -108,8 +109,13 @@
+ 	 *  -        is still in guest mode, such as pgd table/vmid registers etc,
+ 	 *  -        will fix with hw page walk enabled in future
+ 	 * load kvm_vcpu from reserved CSR KVM_VCPU_KS, and save a2 to KVM_TEMP_KS
++	 *
++	 * PGD register is shared between root kernel and kvm hypervisor.
++	 * So world switch entry should be in DMW area rather than TLB area
++	 * to avoid page fault re-enter.
+ 	 */
+ 	.text
++	.p2align PAGE_SHIFT
+ 	.cfi_sections	.debug_frame
+ SYM_CODE_START(kvm_exc_entry)
+ 	UNWIND_HINT_END_OF_STACK
+@@ -198,8 +204,8 @@ ret_to_host:
+ 	kvm_restore_host_gpr    a2
+ 	jr      ra
+ 
+-SYM_INNER_LABEL(kvm_exc_entry_end, SYM_L_LOCAL)
+ SYM_CODE_END(kvm_exc_entry)
++EXPORT_SYMBOL_GPL(kvm_exc_entry)
+ 
+ /*
+  * int kvm_enter_guest(struct kvm_run *run, struct kvm_vcpu *vcpu)
+@@ -223,8 +229,8 @@ SYM_FUNC_START(kvm_enter_guest)
+ 	/* Save kvm_vcpu to kscratch */
+ 	csrwr	a1, KVM_VCPU_KS
+ 	kvm_switch_to_guest
+-SYM_INNER_LABEL(kvm_enter_guest_end, SYM_L_LOCAL)
+ SYM_FUNC_END(kvm_enter_guest)
++EXPORT_SYMBOL_GPL(kvm_enter_guest)
+ 
+ SYM_FUNC_START(kvm_save_fpu)
+ 	fpu_save_csr	a0 t1
+@@ -232,6 +238,7 @@ SYM_FUNC_START(kvm_save_fpu)
+ 	fpu_save_cc	a0 t1 t2
+ 	jr              ra
+ SYM_FUNC_END(kvm_save_fpu)
++EXPORT_SYMBOL_GPL(kvm_save_fpu)
+ 
+ SYM_FUNC_START(kvm_restore_fpu)
+ 	fpu_restore_double a0 t1
+@@ -239,6 +246,7 @@ SYM_FUNC_START(kvm_restore_fpu)
+ 	fpu_restore_cc	   a0 t1 t2
+ 	jr                 ra
+ SYM_FUNC_END(kvm_restore_fpu)
++EXPORT_SYMBOL_GPL(kvm_restore_fpu)
+ 
+ #ifdef CONFIG_CPU_HAS_LSX
+ SYM_FUNC_START(kvm_save_lsx)
+@@ -247,6 +255,7 @@ SYM_FUNC_START(kvm_save_lsx)
+ 	lsx_save_data   a0 t1
+ 	jr              ra
+ SYM_FUNC_END(kvm_save_lsx)
++EXPORT_SYMBOL_GPL(kvm_save_lsx)
+ 
+ SYM_FUNC_START(kvm_restore_lsx)
+ 	lsx_restore_data a0 t1
+@@ -254,6 +263,7 @@ SYM_FUNC_START(kvm_restore_lsx)
+ 	fpu_restore_csr  a0 t1 t2
+ 	jr               ra
+ SYM_FUNC_END(kvm_restore_lsx)
++EXPORT_SYMBOL_GPL(kvm_restore_lsx)
+ #endif
+ 
+ #ifdef CONFIG_CPU_HAS_LASX
+@@ -263,6 +273,7 @@ SYM_FUNC_START(kvm_save_lasx)
+ 	lasx_save_data  a0 t1
+ 	jr              ra
+ SYM_FUNC_END(kvm_save_lasx)
++EXPORT_SYMBOL_GPL(kvm_save_lasx)
+ 
+ SYM_FUNC_START(kvm_restore_lasx)
+ 	lasx_restore_data a0 t1
+@@ -270,10 +281,8 @@ SYM_FUNC_START(kvm_restore_lasx)
+ 	fpu_restore_csr   a0 t1 t2
+ 	jr                ra
+ SYM_FUNC_END(kvm_restore_lasx)
++EXPORT_SYMBOL_GPL(kvm_restore_lasx)
+ #endif
+-	.section ".rodata"
+-SYM_DATA(kvm_exception_size, .quad kvm_exc_entry_end - kvm_exc_entry)
+-SYM_DATA(kvm_enter_guest_size, .quad kvm_enter_guest_end - kvm_enter_guest)
+ 
+ #ifdef CONFIG_CPU_HAS_LBT
+ STACK_FRAME_NON_STANDARD kvm_restore_fpu
 -- 
 2.53.0
 
