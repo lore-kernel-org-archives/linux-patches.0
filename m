@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D60E3F6C53;
-	Wed, 20 May 2026 17:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39663F1AD9;
+	Wed, 20 May 2026 17:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299496; cv=none; b=OXvVlqbISJ/iL5fgC6WXnnS7P0NfPm7gBtuN0KglSHuAWoueATujxQRy2OkdaLnBGC98xzH2BGGlwgHL98FcexCjhokNdFq74PkJ9QikGBCUkD05B8WQTI1UdhXtbfcJEBNKeRvsK+W0mgh4h3NPBmoMCVWiKIg+i46RuYu2610=
+	t=1779299499; cv=none; b=QZPMINvtzhR6mTzWxK6YJRPwpUSr123YWR0mby9swfd/jCHU6ISc/YKFTuwhZd4ljIGoGpoiZuLds4BG/NYSWmLBkeCzWXI4fIqF0/5C73US+PfIWYoV129Auplp7rgv0NQy0Dz34IMDsWzXWSFnnAAqCBEjU+il1t844j1yJoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299496; c=relaxed/simple;
-	bh=DBU2QBL5c0g+4J2qo/codwbL1fEEWXhAnJKhEjU3ckU=;
+	s=arc-20240116; t=1779299499; c=relaxed/simple;
+	bh=TIRj1GifDqPGPNtWQT3DbuWrZ+zzbaB2LqYVv8cgrGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVwbk21J8OCesnGnc6bgNS3Z6jGMGpLQs3cRcwRBe052+TZJKEqtDTV29KoJ4/+bxF5mgUZd+hI/QswlMiG3f507YImWwvr8b0CVQQMXqRVfmo/VBQKwZ92enfZP0vhL1WJhEKQ84MDkpvIRH4UwCZhUJ5NjmGsu3RkxAbz7wFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ8Blw8d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMxtZvi4BWt/ncMQ9dAS81VkrnkxupvYvj0/At7euefpOCqyf8ov96UDDDPuLPZIx5N49j81T4iJFdjf8ge+BLas62JK0OH1NtDv2/PUkAK9YTHDx5NWWw5w4xiymAxpGnkHDClr5Ewt2m7gobBBT/827s12RrtGiA06ip9CK54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTtRrNZ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ8Blw8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46961F000E9;
-	Wed, 20 May 2026 17:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTtRrNZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CF61F000E9;
+	Wed, 20 May 2026 17:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299495;
-	bh=kIUBx5YXGdYbzRAtSHP8Ie/W7QaVxUJQYN+mD7+Wljs=;
+	s=korg; t=1779299497;
+	bh=ygzInL6wOqXBZFQQl5oXWSEs65cTNxnHAOb0QMQJ6fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQ8Blw8dUsWwAcVgYM825kFzcQa/tQP4RWFK3BnVeicD87eWE8Elwh+6uixJ5dXu6
-	 uqtuT+26pOIpqv66pHuhJ00Zhc3b2MPfB8EvcCDy4vsCzPwlj771ucv5h6VSnkWg0j
-	 ZISfiEj4KmBJeHd5FQgbW41gmZo/73lNPfmsrOqY=
+	b=pTtRrNZ8qw97fKuIgMmDbgTQjIDdRY2q6S1oe7llu2pn5QL8W+crSLJZcboEUY8zv
+	 p808PVOHF2TR/xcmZM+ZCHu7RVe3mBzPAgpAhIBp7kzLgfhgz8mMJLHta1yxblJ+Di
+	 An1+sJODMzFldFSCTh1bbxqA2UfIY5WiwedPLPdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Su Yue <glass.su@suse.com>,
 	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 792/957] md: add fallback to correct bitmap_ops on version mismatch
-Date: Wed, 20 May 2026 18:21:15 +0200
-Message-ID: <20260520162151.740633956@linuxfoundation.org>
+Subject: [PATCH 6.18 793/957] md: factor bitmap creation away from sysfs handling
+Date: Wed, 20 May 2026 18:21:16 +0200
+Message-ID: <20260520162151.761963310@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,150 +53,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 09af773650024279a60348e7319d599e6571b15c ]
+[ Upstream commit 8776d342cf8fa0b98ca5e6fb2d956966fb5ca364 ]
 
-If default bitmap version and on-disk version doesn't match, and mdadm
-is not the latest version to set bitmap_type, set bitmap_ops based on
-the disk version.
+Factor bitmap creation and destruction into helpers that do not touch
+bitmap sysfs registration.
 
-Link: https://lore.kernel.org/linux-raid/20260323054644.3351791-2-yukuai@fnnas.com/
+This prepares the bitmap sysfs rework so callers such as the sysfs
+bitmap location path can create or destroy a bitmap backend without
+coupling that to sysfs group lifetime management.
+
+Reviewed-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/r/20260425024615.1696892-2-yukuai@fnnas.com
 Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Stable-dep-of: f2926a533d03 ("md/md-bitmap: add a none backend for bitmap grow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 111 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 110 insertions(+), 1 deletion(-)
+ drivers/md/md.c | 78 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 49 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index b91ac1b7d7a15..4520c485c0c06 100644
+index 4520c485c0c06..3061370e959b3 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -6329,15 +6329,124 @@ static void md_safemode_timeout(struct timer_list *t)
+@@ -686,7 +686,25 @@ static void active_io_release(struct percpu_ref *ref)
  
- static int start_dirty_degraded;
+ static void no_op(struct percpu_ref *r) {}
  
-+/*
-+ * Read bitmap superblock and return the bitmap_id based on disk version.
-+ * This is used as fallback when default bitmap version and on-disk version
-+ * doesn't match, and mdadm is not the latest version to set bitmap_type.
-+ */
-+static enum md_submodule_id md_bitmap_get_id_from_sb(struct mddev *mddev)
+-static bool mddev_set_bitmap_ops(struct mddev *mddev)
++static void md_bitmap_sysfs_add(struct mddev *mddev)
 +{
-+	struct md_rdev *rdev;
-+	struct page *sb_page;
-+	bitmap_super_t *sb;
-+	enum md_submodule_id id = ID_BITMAP_NONE;
-+	sector_t sector;
-+	u32 version;
-+
-+	if (!mddev->bitmap_info.offset)
-+		return ID_BITMAP_NONE;
-+
-+	sb_page = alloc_page(GFP_KERNEL);
-+	if (!sb_page) {
-+		pr_warn("md: %s: failed to allocate memory for bitmap\n",
++	if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
++		pr_warn("md: cannot register extra bitmap attributes for %s\n",
 +			mdname(mddev));
-+		return ID_BITMAP_NONE;
-+	}
-+
-+	sector = mddev->bitmap_info.offset;
-+
-+	rdev_for_each(rdev, mddev) {
-+		u32 iosize;
-+
-+		if (!test_bit(In_sync, &rdev->flags) ||
-+		    test_bit(Faulty, &rdev->flags) ||
-+		    test_bit(Bitmap_sync, &rdev->flags))
-+			continue;
-+
-+		iosize = roundup(sizeof(bitmap_super_t),
-+				 bdev_logical_block_size(rdev->bdev));
-+		if (sync_page_io(rdev, sector, iosize, sb_page, REQ_OP_READ,
-+				 true))
-+			goto read_ok;
-+	}
-+	pr_warn("md: %s: failed to read bitmap from any device\n",
-+		mdname(mddev));
-+	goto out;
-+
-+read_ok:
-+	sb = kmap_local_page(sb_page);
-+	if (sb->magic != cpu_to_le32(BITMAP_MAGIC)) {
-+		pr_warn("md: %s: invalid bitmap magic 0x%x\n",
-+			mdname(mddev), le32_to_cpu(sb->magic));
-+		goto out_unmap;
-+	}
-+
-+	version = le32_to_cpu(sb->version);
-+	switch (version) {
-+	case BITMAP_MAJOR_LO:
-+	case BITMAP_MAJOR_HI:
-+	case BITMAP_MAJOR_CLUSTERED:
-+		id = ID_BITMAP;
-+		break;
-+	case BITMAP_MAJOR_LOCKLESS:
-+		id = ID_LLBITMAP;
-+		break;
-+	default:
-+		pr_warn("md: %s: unknown bitmap version %u\n",
-+			mdname(mddev), version);
-+		break;
-+	}
-+
-+out_unmap:
-+	kunmap_local(sb);
-+out:
-+	__free_page(sb_page);
-+	return id;
++	else
++		/*
++		 * Inform user with KOBJ_CHANGE about new bitmap
++		 * attributes.
++		 */
++		kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
 +}
 +
- static int md_bitmap_create(struct mddev *mddev)
- {
-+	enum md_submodule_id orig_id = mddev->bitmap_id;
-+	enum md_submodule_id sb_id;
-+	int err;
++static void md_bitmap_sysfs_del(struct mddev *mddev)
++{
++	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
++}
 +
++static bool mddev_set_bitmap_ops_nosysfs(struct mddev *mddev)
+ {
+ 	struct bitmap_operations *old = mddev->bitmap_ops;
+ 	struct md_submodule_head *head;
+@@ -710,18 +728,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
+ 
+ 	mddev->bitmap_ops = (void *)head;
+ 	xa_unlock(&md_submodule);
+-
+-	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group) {
+-		if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
+-			pr_warn("md: cannot register extra bitmap attributes for %s\n",
+-				mdname(mddev));
+-		else
+-			/*
+-			 * Inform user with KOBJ_CHANGE about new bitmap
+-			 * attributes.
+-			 */
+-			kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
+-	}
+ 	return true;
+ 
+ err:
+@@ -729,15 +735,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
+ 	return false;
+ }
+ 
+-static void mddev_clear_bitmap_ops(struct mddev *mddev)
+-{
+-	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
+-	    mddev->bitmap_ops->group)
+-		sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
+-
+-	mddev->bitmap_ops = NULL;
+-}
+-
+ int mddev_init(struct mddev *mddev)
+ {
+ 	int err = 0;
+@@ -6404,7 +6401,7 @@ static enum md_submodule_id md_bitmap_get_id_from_sb(struct mddev *mddev)
+ 	return id;
+ }
+ 
+-static int md_bitmap_create(struct mddev *mddev)
++static int md_bitmap_create_nosysfs(struct mddev *mddev)
+ {
+ 	enum md_submodule_id orig_id = mddev->bitmap_id;
+ 	enum md_submodule_id sb_id;
+@@ -6413,7 +6410,7 @@ static int md_bitmap_create(struct mddev *mddev)
  	if (mddev->bitmap_id == ID_BITMAP_NONE)
  		return -EINVAL;
  
- 	if (!mddev_set_bitmap_ops(mddev))
+-	if (!mddev_set_bitmap_ops(mddev))
++	if (!mddev_set_bitmap_ops_nosysfs(mddev))
  		return -ENOENT;
  
--	return mddev->bitmap_ops->create(mddev);
-+	err = mddev->bitmap_ops->create(mddev);
-+	if (!err)
-+		return 0;
-+
-+	/*
-+	 * Create failed, if default bitmap version and on-disk version
-+	 * doesn't match, and mdadm is not the latest version to set
-+	 * bitmap_type, set bitmap_ops based on the disk version.
-+	 */
-+	mddev_clear_bitmap_ops(mddev);
-+
-+	sb_id = md_bitmap_get_id_from_sb(mddev);
-+	if (sb_id == ID_BITMAP_NONE || sb_id == orig_id)
-+		return err;
-+
-+	pr_info("md: %s: bitmap version mismatch, switching from %d to %d\n",
-+		mdname(mddev), orig_id, sb_id);
-+
-+	mddev->bitmap_id = sb_id;
-+	if (!mddev_set_bitmap_ops(mddev)) {
-+		mddev->bitmap_id = orig_id;
-+		return -ENOENT;
-+	}
-+
-+	err = mddev->bitmap_ops->create(mddev);
-+	if (err) {
-+		mddev_clear_bitmap_ops(mddev);
-+		mddev->bitmap_id = orig_id;
-+	}
-+
-+	return err;
+ 	err = mddev->bitmap_ops->create(mddev);
+@@ -6425,7 +6422,7 @@ static int md_bitmap_create(struct mddev *mddev)
+ 	 * doesn't match, and mdadm is not the latest version to set
+ 	 * bitmap_type, set bitmap_ops based on the disk version.
+ 	 */
+-	mddev_clear_bitmap_ops(mddev);
++	mddev->bitmap_ops = NULL;
+ 
+ 	sb_id = md_bitmap_get_id_from_sb(mddev);
+ 	if (sb_id == ID_BITMAP_NONE || sb_id == orig_id)
+@@ -6435,27 +6432,50 @@ static int md_bitmap_create(struct mddev *mddev)
+ 		mdname(mddev), orig_id, sb_id);
+ 
+ 	mddev->bitmap_id = sb_id;
+-	if (!mddev_set_bitmap_ops(mddev)) {
++	if (!mddev_set_bitmap_ops_nosysfs(mddev)) {
+ 		mddev->bitmap_id = orig_id;
+ 		return -ENOENT;
+ 	}
+ 
+ 	err = mddev->bitmap_ops->create(mddev);
+ 	if (err) {
+-		mddev_clear_bitmap_ops(mddev);
++		mddev->bitmap_ops = NULL;
+ 		mddev->bitmap_id = orig_id;
+ 	}
+ 
+ 	return err;
  }
  
- static void md_bitmap_destroy(struct mddev *mddev)
+-static void md_bitmap_destroy(struct mddev *mddev)
++static int md_bitmap_create(struct mddev *mddev)
++{
++	int err;
++
++	err = md_bitmap_create_nosysfs(mddev);
++	if (err)
++		return err;
++
++	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group)
++		md_bitmap_sysfs_add(mddev);
++
++	return 0;
++}
++
++static void md_bitmap_destroy_nosysfs(struct mddev *mddev)
+ {
+ 	if (!md_bitmap_registered(mddev))
+ 		return;
+ 
+ 	mddev->bitmap_ops->destroy(mddev);
+-	mddev_clear_bitmap_ops(mddev);
++	mddev->bitmap_ops = NULL;
++}
++
++static void md_bitmap_destroy(struct mddev *mddev)
++{
++	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
++	    mddev->bitmap_ops->group)
++		md_bitmap_sysfs_del(mddev);
++
++	md_bitmap_destroy_nosysfs(mddev);
+ }
+ 
+ int md_run(struct mddev *mddev)
 -- 
 2.53.0
 
