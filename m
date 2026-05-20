@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C393EAC82;
-	Wed, 20 May 2026 18:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1499E3FB7EE;
+	Wed, 20 May 2026 18:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300681; cv=none; b=paGGuzagmIKIWjHlHi/j4WyqV98vHVJ53NULjmmr2BCtST7diozc+Fp6Zhc1zK/lQRtQdKpQjFn3CzrsnOICMJ84lpKI8Z7ZZDbFokQL+wp+z8EyZJMJSabmODscX5VEmVMlyI1S+W2Jd8ycLuPfg3sgf0N8ZGJMW56+g7RpzQ8=
+	t=1779300684; cv=none; b=CEfXFtR6xl0T+U27fPJm2DWvx4Ri53/Gp7/qSZIfLMmaIvZ1Euq2nk0nP32+61FBBHltqzBxI7IGXGLR8IP/KrHhFh6RZVXFsc87PEGvCKFU8MYf4GCrcpiAV5jnMfhbOS5hX+xlkkcJVjGKs2eD5tN/CCxltdVsSsOZ2ULj0PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300681; c=relaxed/simple;
-	bh=i0vDDr68pht7/xPK2eLw/5F2+30epmPo2Byga2Kbbto=;
+	s=arc-20240116; t=1779300684; c=relaxed/simple;
+	bh=1C7QZZEs5Ocqa07oG0ky/DT5M6lapBC6eRVKR1343wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7dqzVp5PB1HZqZ4u4L9GlE30mBX+S9S5nSG2nNfX/sGX49yTahEo8PyPW458IxR7Ayut2BiUAYwmmkXSDMX8PfUWOLf33Fes/eWmJPLyh/O5Bqzjp0Z8F2JZPDafI4kuv3wsmN5WiwtxAzHtpaRVFTNRE/FBWK8BAdTCUzErOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+HBzVXC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L8yxUz7gmURktGvRBMNGKI1SW7XgHOckM46P9hW9CngiUe5opxfZ7wX56XZ6Kb4FPdjvueYFbqp+/+1m5lBMDY1D+7uk4yu/wcHLIEDYN4V/br8IbP27W52lOVUU8FcAWYSrnl5Sn2PQIeGRj1nSDJQ9YCcB4eP6fbDF9xc/VZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clD9Gz4E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+HBzVXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18F01F000E9;
-	Wed, 20 May 2026 18:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clD9Gz4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F9A1F000E9;
+	Wed, 20 May 2026 18:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300680;
-	bh=aqfJlShfrd9Kgegpsg0Gbgt3W9SuV4fX/6WVXKbUA5M=;
+	s=korg; t=1779300683;
+	bh=wfpGbgENj9fwGpB5B5eDyzYoucDV0xFEceL0EVPkLoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+HBzVXCJeYY31YkdoU+fmJg66Nm0AnAtbt11yCFj+tvsDlwf6YjVnLS1YCm3MPE5
-	 9Q3RgNcUxhn1MqADMnzZ8Gc+PMQ1Rju7btLDSzAFqeJG6XdoNLT68p/na+oBHpg53N
-	 nepptLYqaNHwwFASW2Qy65MWsOdMuAUNjyd51Pgc=
+	b=clD9Gz4E+cU/omjz8hSH4vvUGJwGoD3GVDLGQfaWBgNngLQ2FMqDX2fIQGJaAIBNA
+	 lOuB7hC89Q/dnJHa7kDo2o7IxyEkaMuSxLYOJeIx4JwB2v4zOx3a98GtfxRB+A6glp
+	 uxWiYsK9MircLSbPE9B/jKWrc9GX2kdU2k7b++yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 268/666] arm64: dts: rockchip: Make Jaguar PCIe-refclk pin use pull-up config
-Date: Wed, 20 May 2026 18:17:59 +0200
-Message-ID: <20260520162117.024962026@linuxfoundation.org>
+Subject: [PATCH 6.12 269/666] arm64: dts: imx8mp-evk: Enable pull select bit for PCIe regulator GPIO (M.2 W_DISABLE1)
+Date: Wed, 20 May 2026 18:18:00 +0200
+Message-ID: <20260520162117.046982148@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko.stuebner@cherry.de>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit f45d4356feeba1c8dac3414b688f59292ddfc9f9 ]
+[ Upstream commit d1e7eab6033f9885a02c4b4e8f09e34d8e9d21ab ]
 
-The hardware PU/PD config of the pin after reset is to pull-up and on
-Jaguar this will also keep the device in reset until the driver actually
-enables the pin. So restore this boot pull-up config of the pin on Jaguar
-instead of setting it to pull-none.
+The current pin configuration for MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06
+sets the weak pull-up but does not enable the pull select field.
+Bit 8 in the IOMUX register must be set in order for the weak pull-up
+to actually take effect.
 
-Suggested-by: Quentin Schulz <quentin.schulz@cherry.de>
-Fixes: 0ec7e1096332 ("arm64: dts: rockchip: add PCIe3 support on rk3588-jaguar")
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Link: https://patch.msgid.link/20260210080303.680403-5-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Update the pinctrl setting from 0x40 to 0x140 to enable both the pull
+select and the weak pull-up, ensuring the line behaves as expected.
+
+Fixes: d50650500064 ("arm64: dts: imx8mp-evk: Add PCIe support")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mp-evk.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-index e61c5731fb99f..46834d9ae565e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-@@ -424,7 +424,7 @@ led1_pin: led1-pin {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+index d26930f1a9e9d..2f1ef1b188bed 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+@@ -947,7 +947,7 @@ MX8MP_IOMUXC_SD1_DATA5__GPIO2_IO07	0x40
  
- 	pcie30x4 {
- 		pcie30x4_clkreqn_m0: pcie30x4-clkreqn-m0 {
--			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
-+			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
- 		};
+ 	pinctrl_pcie0_reg: pcie0reggrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x40
++			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x140
+ 		>;
+ 	};
  
- 		pcie30x4_perstn_m0: pcie30x4-perstn-m0 {
 -- 
 2.53.0
 
