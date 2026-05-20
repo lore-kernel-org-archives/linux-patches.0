@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C13136A357;
-	Wed, 20 May 2026 16:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31AF36B05E;
+	Wed, 20 May 2026 16:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295278; cv=none; b=rAoZeGlNXyKYN+Gn0Jydsshw8Lhype0QEimAwxZdruiws8a8BhqZtL8SFpNcowaqK+eA7Uacqj1RBMzmGQERK/iA9SSJyayM4DnowM8mGgH9R/Ik0MsaindP3OBXnOR4/6rIttCTZqZF8O8XO3C025b1MTFxq74HCP9B/U7D0ps=
+	t=1779295281; cv=none; b=cwhZWeyNjUv/aRPnLW0QOKrSYP9IgCN8Q39I9rKqcpJ6XwgB5djwBVoiMRYJSDvVr9HRzowffXWwwNyW8fBVI8Gqh3H50xojG8SSA3FsRtusyv/xb7S50YM/XbMHFtoUPVOhTA+tqRXhFnpPqY2lpH9xAKoI63KHqXW4zwXx8wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295278; c=relaxed/simple;
-	bh=ZGzbpRCKwBhc3l722EDHTfIvV1b7CaJZi2Lwk0ogACk=;
+	s=arc-20240116; t=1779295281; c=relaxed/simple;
+	bh=r0vci2TfYZas9C0a5Gz08V8CGeCEA+v2Is58dr/XKb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmESTmNBS27HtlXtnlBp/4TSGgq5nuQDEknk8qVWeVZR9vI9Agmrab7j8oPFH8YZozowL9gB0Oc8G1RVOylNVlKbBfOKBq83lqz/BQGSAyYw5SaKOumzKq5+XHSYJI5R8sDYQexxQDnbCG+ceYY0yQ3hJ+3SEEIQkUqeE4EMCTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAthVhFY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pHBQ5QajWhP/Pg3ib9eppXSNhtloqexRfus9UWLMsmaCEMHwKhpCJ88qjCb5Pl/2O3cy+u9u7eSP3GcVzYHwESuAk4j6ox+zneq3v+RPtwQEHFqmRwRj8lTb5MPWEcyjPZQjCZTkgrLPisvErKeawcv/KYChosNmSTkG78YZgpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6Y4DgTI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAthVhFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C136E1F000E9;
-	Wed, 20 May 2026 16:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6Y4DgTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644051F000E9;
+	Wed, 20 May 2026 16:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295277;
-	bh=pJ6F+ZyNqTtQkAiSmcs3kUZiC+EDTBIXaorgS7K96Mg=;
+	s=korg; t=1779295279;
+	bh=ghtvidYwyFhC9Q+M79aniIodkd4Owz3JSg+B2P7snTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAthVhFYte0tHhHCANGD6pQG4JwjJnI24KQ5hXh4vh2j5Wi8iJNQgxpv0+Ozo5XD8
-	 AXiq1epTDmKrXTw8dCXKZTpAlfWVC5ecIA+YjlUl1ZKD7lzRXwAgZj+9qqanfz+1rE
-	 2J+mDy8S9i8L+68GdGwbCOGLoE8ztP6kxqDsPZao=
+	b=w6Y4DgTIn+bZ6RKIyCbqkovpLP+2qdQ3xwD10xFNP8zaaxG7xoUkrnsClD9MQvBwf
+	 MytDT6/GjHA/wKbFNgS6FjcLp4jfuJGzvSIA28qVB7v65Vsw2MM5Y3qKnky1LV2Uak
+	 q9Zk0SIUxM8V1/xP10sbSznYOZOWkFsLAQuqkQZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0359/1146] drm/msm/a8xx: Fix the ticks used in submit traces
-Date: Wed, 20 May 2026 18:10:09 +0200
-Message-ID: <20260520162156.325561511@linuxfoundation.org>
+Subject: [PATCH 7.0 0342/1146] drm/amd/pm/ci: Clear EnabledForActivity field for memory levels
+Date: Wed, 20 May 2026 18:09:52 +0200
+Message-ID: <20260520162155.940810894@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,233 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit cfc8b48649e159ff394fb4b7b08e5006c5c1c234 ]
+[ Upstream commit 5facfd4c4c67e8500116ffec0d9da35d92b9c787 ]
 
-GMU_ALWAYS_ON_COUNTER_* registers got moved in A8x, but currently, A6x
-register offsets are used in the submit traces instead of A8x offsets.
-To fix this, refactor a bit and use adreno_gpu->funcs->get_timestamp()
-everywhere.
+Follow what radeon did and what amdgpu does for other GPUs with SMU7.
 
-While we are at it, update a8xx_gmu_get_timestamp() to use the GMU AO
-counter.
-
-Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714655/
-Message-ID: <20260327-a8xx-gpu-batch2-v2-2-2b53c38d2101@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |  6 ++---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  6 ++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c         | 23 ++++++-------------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h         |  2 +-
- drivers/gpu/drm/msm/adreno/a8xx_gpu.c         | 20 +++++++---------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  6 ++---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  2 +-
- .../gpu/drm/msm/registers/adreno/a6xx_gmu.xml |  6 +++--
- 8 files changed, 27 insertions(+), 44 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-index 8464d89e37f31..e6ab731f8e9a3 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-@@ -604,11 +604,9 @@ static int a4xx_pm_suspend(struct msm_gpu *gpu) {
- 	return 0;
- }
- 
--static int a4xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
-+static u64 a4xx_get_timestamp(struct msm_gpu *gpu)
- {
--	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO);
--
--	return 0;
-+	return gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO);
- }
- 
- static u64 a4xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ef9fd6171af71..e44302251de56 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1435,11 +1435,9 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
- 	return 0;
- }
- 
--static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
-+static u64 a5xx_get_timestamp(struct msm_gpu *gpu)
- {
--	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO);
--
--	return 0;
-+	return gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO);
- }
- 
- struct a5xx_crashdumper {
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index f17bb5e78e0b9..4fe2b86e7a839 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -16,8 +16,10 @@
- 
- #define GPU_PAS_ID 13
- 
--static u64 read_gmu_ao_counter(struct a6xx_gpu *a6xx_gpu)
-+static u64 a6xx_gmu_get_timestamp(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
- 	u64 count_hi, count_lo, temp;
- 
- 	do {
-@@ -404,7 +406,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
- 	OUT_RING(ring, submit->seqno);
- 
--	trace_msm_gpu_submit_flush(submit, read_gmu_ao_counter(a6xx_gpu));
-+	trace_msm_gpu_submit_flush(submit, adreno_gpu->funcs->get_timestamp(gpu));
- 
- 	a6xx_flush(gpu, ring);
- }
-@@ -614,7 +616,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+index b5f6a5da6549d..9898c846c78e2 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+@@ -1217,7 +1217,7 @@ static int ci_populate_single_memory_level(
  	}
  
- 
--	trace_msm_gpu_submit_flush(submit, read_gmu_ao_counter(a6xx_gpu));
-+	trace_msm_gpu_submit_flush(submit, adreno_gpu->funcs->get_timestamp(gpu));
- 
- 	a6xx_flush(gpu, ring);
- 
-@@ -2414,20 +2416,9 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
- 	return 0;
- }
- 
--static int a6xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
-+static u64 a6xx_get_timestamp(struct msm_gpu *gpu)
- {
--	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
--	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
--
--	*value = read_gmu_ao_counter(a6xx_gpu);
--
--	return 0;
--}
--
--static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
--{
--	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
--	return 0;
-+	return gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
- }
- 
- static struct msm_ringbuffer *a6xx_active_ring(struct msm_gpu *gpu)
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 4eaa047112460..a4434a6a56dd8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -320,7 +320,7 @@ int a6xx_zap_shader_init(struct msm_gpu *gpu);
- void a8xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
- int a8xx_fault_handler(void *arg, unsigned long iova, int flags, void *data);
- void a8xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
--int a8xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value);
-+u64 a8xx_gmu_get_timestamp(struct msm_gpu *gpu);
- u64 a8xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate);
- int a8xx_gpu_feature_probe(struct msm_gpu *gpu);
- void a8xx_gpu_get_slice_info(struct msm_gpu *gpu);
-diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-index b1887e0cf6983..840af9c4d718c 100644
---- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-@@ -1174,23 +1174,19 @@ void a8xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
- 	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
- }
- 
--int a8xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
-+u64 a8xx_gmu_get_timestamp(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-+	u64 count_hi, count_lo, temp;
- 
--	mutex_lock(&a6xx_gpu->gmu.lock);
--
--	/* Force the GPU power on so we can read this register */
--	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
--
--	*value = gpu_read64(gpu, REG_A8XX_CP_ALWAYS_ON_COUNTER);
--
--	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
--
--	mutex_unlock(&a6xx_gpu->gmu.lock);
-+	do {
-+		count_hi = gmu_read(&a6xx_gpu->gmu, REG_A8XX_GMU_ALWAYS_ON_COUNTER_H);
-+		count_lo = gmu_read(&a6xx_gpu->gmu, REG_A8XX_GMU_ALWAYS_ON_COUNTER_L);
-+		temp = gmu_read(&a6xx_gpu->gmu, REG_A8XX_GMU_ALWAYS_ON_COUNTER_H);
-+	} while (unlikely(count_hi != temp));
- 
--	return 0;
-+	return (count_hi << 32) | count_lo;
- }
- 
- u64 a8xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index d5fe6f6f0decc..785e99fb5bd5d 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -391,13 +391,11 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		return 0;
- 	case MSM_PARAM_TIMESTAMP:
- 		if (adreno_gpu->funcs->get_timestamp) {
--			int ret;
--
- 			pm_runtime_get_sync(&gpu->pdev->dev);
--			ret = adreno_gpu->funcs->get_timestamp(gpu, value);
-+			*value = adreno_gpu->funcs->get_timestamp(gpu);
- 			pm_runtime_put_autosuspend(&gpu->pdev->dev);
- 
--			return ret;
-+			return 0;
- 		}
- 		return -EINVAL;
- 	case MSM_PARAM_PRIORITIES:
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 1d0145f8b3ecb..c08725ed54c4f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -79,7 +79,7 @@ struct adreno_gpu;
- struct adreno_gpu_funcs {
- 	struct msm_gpu_funcs base;
- 	struct msm_gpu *(*init)(struct drm_device *dev);
--	int (*get_timestamp)(struct msm_gpu *gpu, uint64_t *value);
-+	u64 (*get_timestamp)(struct msm_gpu *gpu);
- 	void (*bus_halt)(struct adreno_gpu *adreno_gpu, bool gx_off);
- 	int (*mmu_fault_handler)(void *arg, unsigned long iova, int flags, void *data);
- };
-diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
-index c4e00b1263cda..33404eb18fd02 100644
---- a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
-@@ -141,8 +141,10 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
- 	<reg32 offset="0x1f9f0" name="GMU_BOOT_KMD_LM_HANDSHAKE"/>
- 	<reg32 offset="0x1f957" name="GMU_LLM_GLM_SLEEP_CTRL"/>
- 	<reg32 offset="0x1f958" name="GMU_LLM_GLM_SLEEP_STATUS"/>
--	<reg32 offset="0x1f888" name="GMU_ALWAYS_ON_COUNTER_L"/>
--	<reg32 offset="0x1f889" name="GMU_ALWAYS_ON_COUNTER_H"/>
-+	<reg32 offset="0x1f888" name="GMU_ALWAYS_ON_COUNTER_L" variants="A6XX-A7XX"/>
-+	<reg32 offset="0x1f840" name="GMU_ALWAYS_ON_COUNTER_L" variants="A8XX-"/>
-+	<reg32 offset="0x1f889" name="GMU_ALWAYS_ON_COUNTER_H" variants="A6XX-A7XX"/>
-+	<reg32 offset="0x1f841" name="GMU_ALWAYS_ON_COUNTER_H" variants="A8XX-"/>
- 	<reg32 offset="0x1f8c3" name="GMU_GMU_PWR_COL_KEEPALIVE" variants="A6XX-A7XX"/>
- 	<reg32 offset="0x1f7e4" name="GMU_GMU_PWR_COL_KEEPALIVE" variants="A8XX-"/>
- 	<reg32 offset="0x1f8c4" name="GMU_PWR_COL_PREEMPT_KEEPALIVE" variants="A6XX-A7XX"/>
+ 	memory_level->EnabledForThrottle = 1;
+-	memory_level->EnabledForActivity = 1;
++	memory_level->EnabledForActivity = 0;
+ 	memory_level->UpH = data->current_profile_setting.mclk_up_hyst;
+ 	memory_level->DownH = data->current_profile_setting.mclk_down_hyst;
+ 	memory_level->VoltageDownH = 0;
 -- 
 2.53.0
 
