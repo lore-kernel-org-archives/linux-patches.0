@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4A13F1661;
-	Wed, 20 May 2026 11:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF223F0AAD;
+	Wed, 20 May 2026 11:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276043; cv=none; b=MzbOVfnhdMm1Wwg9yMO2gjaF25jsP+k3oeQKSRo/nSJzXF5MCw2kPw3cmxwVcZDPDTYBFHEJhug0e5gWkaddZWaHQKjk7++6nvPhfKtAHJnTSJVijagOt2Hw3Fd2oyl0BqOqMJvXztY+dvGWYAHnZvEsqtXYMDkLOAd1oJ6nEBU=
+	t=1779276045; cv=none; b=subGB536S+E0xEr/i2oU4/EHI1pQOUcqAerzwfhrOF+tM1p8CAA3TaA0pA2OtyNuret2QQab20zNGnwpCwSDeu4EUtkcztGP7a/e18PQ8jBalzjLHtVfCTX++7ZKuzBURjQmL0JlM+bjivAejwaP5NExR18AkFdMJPaN7Oq3NXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276043; c=relaxed/simple;
-	bh=8/YBaicmIR+/koRGrveQQ2zETy5i6mDtlV4qssVhNng=;
+	s=arc-20240116; t=1779276045; c=relaxed/simple;
+	bh=4G9kU/fwjTWatwA4DPKHnqEysSEpelPUffGr/yQ8afI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RBhALZXJimtkfo7ikNeONQmV6N+Akj9xmSoZV/g85FB6E88B6T4xYeI/UAGcGhM1UljmlVlYQumxXvz3FOejn6XZWG0d7AJoOGXqAhVUPNODhXdtMvubdngg5b95C5WqwkT9Oj/i9RDr44qWCHWgewBT16JqF8MxvfMkrg8WIec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTd8vY28; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BZRh+7RaaTqxAlm1xGtqqIPTksmjKnYcZk+yjtrnfZfFr1/I9ffBwJNoVANBmXwI3z0G4QyQ6QPvNiakslkJ8M8ZxcFs4bq5oj4rr+ZwoZW/eYfn80kCcOgkhyVY3TEkpUalQbBLlNEPf/fbUWmCAWLQ9IludXx2W/KBdq1OK9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNYXhfMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTd8vY28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCC11F000E9;
-	Wed, 20 May 2026 11:20:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNYXhfMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AF61F00897;
+	Wed, 20 May 2026 11:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276042;
-	bh=4r0b79gth2S7r/zdOPKesNo2Nh2lUQWQHcWgM+q4up4=;
+	s=k20260515; t=1779276043;
+	bh=NLcLKE1qweZHpmXWDsmKRycBCNcWwp0hbw6Af7P9fos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTd8vY28SVhBKkXI16aOGse33gu+o57QrMcpA8ROuKjq7hT52SYZb8c9e/4D7ycFS
-	 Qi1YNSz+yzXUwinhe+d/BjIWWcYjelzMbzPLYH5AP4y0kFCEZJzzzoW2ZKsrEloxXT
-	 eAWwk8x5cXqLRmWS9wdzfsmxeEovbpGLz0FTEfRl3B4M9oSNnaoAhwTRrs4M7ftDzC
-	 UeUQzBbHYHyC+HlI94qWG1UrAhivz1ObJTplqL4tMyNosvyYdEGLWoBW3kP9uVgbq+
-	 ba+mnFTQZt8Oj0gc+CHssFxfyl4Bac3DpFiHCFyv11FKLa5pDcb8s5tx0X6/0sKnad
-	 UY0DwTsQoZzMQ==
+	b=lNYXhfMgXF6VLZmdC0qE1rjax2vR17S4CRrqfIm0jS31qG71Rdn5VeUNUhCyvkgyX
+	 wEx9geJ/UMnMw/hkJSCA7Rz0AjmThSbfsfUBCK+FIr7uCwtmAJHzxh3gkl+c5N2m1R
+	 iEnewlZAOfFsNIXV9d9Cp7vHDgYR7iQyWp79088ZNwipUR2B/t2g15dNTzK2EtRc8O
+	 k7axhJpdSLnaIRQ3CO7CDk5EeX9tg146ZHbOAj2rsHjx4x3xCacwXWzIpykjUqGyzf
+	 xGhi84RNVAEumaRopv3N70Oj6WgOKC1S6GQDnXouSxRD7DemTwpgI5Kw9qWG2IIY5r
+	 Z65+fNc0GIvAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Walleij <linusw@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: =?UTF-8?q?R=C3=A1mon=20van=20Raaij?= <ramon@vanraaij.eu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] powerpc/g5: Enable all windfarms by default
-Date: Wed, 20 May 2026 07:19:12 -0400
-Message-ID: <20260520111944.3424570-40-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: hda/realtek: Add codec SSID quirk for Lenovo Yoga Pro 9 16IMH9
+Date: Wed, 20 May 2026 07:19:13 -0400
+Message-ID: <20260520111944.3424570-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -47,219 +48,267 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linusw@kernel.org>
+From: Rámon van Raaij <ramon@vanraaij.eu>
 
-[ Upstream commit 8d57bb61734b23f6342e9de781173f1d83f90d3a ]
+[ Upstream commit 56722cfbb78d7eb41756cd78dc5192d08bd14f3d ]
 
-The G5 defconfig is clearly intended for the G5 Powermac
-series, and that should enable all the available
-windfarm drivers, or the machine will overheat a short
-while after booting and shut itself down, which is
-annoying.
+The Yoga Pro 9 16IMH9 (codec SSID 17aa:38d6) shares PCI audio device
+subsystem ID 17aa:3811 with the Legion S7 15IMH05. The existing
+SND_PCI_QUIRK entry for the Legion routes both machines to
+ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS, which does not bind the TAS2781
+smart amplifiers, resulting in near-silent built-in speakers.
 
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260505-powermac-g5-config-v3-1-7747bf72f874@kernel.org
+Add an HDA_CODEC_QUIRK entry immediately before the conflicting PCI quirk
+that matches the Yoga Pro 9's unique codec SSID and routes it to
+ALC287_FIXUP_TAS2781_I2C. Codec quirks are evaluated after PCI quirks and
+take precedence, leaving the Legion S7 15IMH05 entry unaffected.
+
+This follows the same pattern used to disambiguate PCI SSID 17aa:3847
+(shared between Yoga Pro 7 14IMH9 and Legion 7 16ACHG6), where a
+HDA_CODEC_QUIRK for codec SSID 17aa:38cf resolves the conflict.
+
+Signed-off-by: Rámon van Raaij <ramon@vanraaij.eu>
+Link: https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `powerpc/g5`; action verb `Enable`; intent: enable
-all existing windfarm thermal drivers in `g5_defconfig`.
+## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `ALSA: hda/realtek`; action is `Add`;
+claimed intent is adding a codec-SSID quirk so Lenovo Yoga Pro 9 16IMH9
+uses the TAS2781 fixup instead of the Legion S7 PCI-SSID fixup.
 
-Record 1.2: Tags found: `Signed-off-by: Linus Walleij
-<linusw@kernel.org>`, `Signed-off-by: Madhavan Srinivasan
-<maddy@linux.ibm.com>`, `Link: https://patch.msgid.link/20260505-
-powermac-g5-config-v3-1-7747bf72f874@kernel.org`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-stable`.
+Step 1.2 Record: Tags present are `Signed-off-by: Rámon van Raaij
+<ramon@vanraaij.eu>`, `Link:
+https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`, and
+`Signed-off-by: Takashi Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-
+by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+stable@vger.kernel.org` tag is present.
 
-Record 1.3: The body says G5 machines using this defconfig may overheat
-shortly after boot and shut down if not all windfarm drivers are
-enabled. Root cause: the G5 defconfig enables some, but not all, G5
-windfarm thermal control drivers.
+Step 1.3 Record: The commit describes a real hardware misidentification:
+Yoga Pro 9 16IMH9 has codec SSID `17aa:38d6` but shares PCI audio SSID
+`17aa:3811` with Legion S7 15IMH05, causing
+`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS` to be selected. The stated
+symptom is near-silent built-in speakers because TAS2781 smart
+amplifiers are not bound.
 
-Record 1.4: This is a hidden bug fix despite “Enable” wording: it
-changes default configuration to include missing existing thermal-
-management drivers, preventing hardware overheat shutdown.
+Step 1.4 Record: This is a bug fix disguised as an “add quirk” change.
+It is a hardware-specific workaround for wrong quirk selection, one of
+the standard stable exception categories.
 
-## Phase 2: Diff Analysis
-Record 2.1: One file changed: `arch/powerpc/configs/g5_defconfig`,
-`+2/-0`. No functions modified. Scope: single-file surgical defconfig
-fix.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed: `sound/hda/codecs/realtek/alc269.c`,
+4 insertions, 0 deletions. No function body is changed; the modified
+object is `alc269_fixup_tbl`. Scope is single-file, table-only,
+surgical.
 
-Record 2.2: Before: `g5_defconfig` enabled `WINDFARM_PM81`, `PM91`,
-`PM112`, and `PM121`, but omitted `PM72` and `RM31`. After: it also
-enables `CONFIG_WINDFARM_PM72=y` and `CONFIG_WINDFARM_RM31=y`.
+Step 2.2 Record: Before, a Yoga Pro 9 16IMH9 with PCI SSID `17aa:3811`
+would hit the existing Legion S7 `SND_PCI_QUIRK` and get
+`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`. After, the earlier
+`HDA_CODEC_QUIRK(0x17aa, 0x38d6, ..., ALC287_FIXUP_TAS2781_I2C)` matches
+by codec SSID first due table order and routes that machine to the
+TAS2781 I2C fixup.
 
-Record 2.3: Bug category: hardware/default-config correctness fix.
-Mechanism: builds in already-existing thermal control drivers for
-PowerMac7,2/7,3 and RackMac3,1 systems.
+Step 2.3 Record: Bug category is hardware workaround / logic
+correctness. The broken mechanism is ambiguous PCI SSID reuse; the fix
+uses the more specific codec SSID.
 
-Record 2.4: Fix quality is high: two config lines, no API change, no
-code refactor. Regression risk is low because the enabled drivers check
-machine compatibility and return `-ENODEV` on nonmatching hardware.
+Step 2.4 Record: Fix quality is high. It is a 4-line exact-match quirk,
+no API change, no broad behavior change. Regression risk is very low and
+limited to devices reporting codec SSID `17aa:38d6`.
 
-## Phase 3: Git History Investigation
-Record 3.1: Blame shows surrounding windfarm entries came from
-`2c39bf49fd0530` in 2012, while PM72/RM31 drivers were introduced by
-`6cd320996746` and are present from v3.5. Checked v3.5, v3.6, v4.0,
-v5.4, v5.10: the defconfig omitted PM72/RM31.
+### Phase 3: Git History
+Step 3.1 Record: `git blame` shows the conflicting
+`SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ...)` came from
+`67f4c61a73e9b` by Eric Naim. `git describe --contains 67f4c61a73e9b`
+reports `v7.1-rc1~166^2~6`; candidate `56722cfbb78d` is contained by
+`v7.1-rc3~27^2~13`.
 
-Record 3.2: No `Fixes:` tag, so no Fixes target to follow.
+Step 3.2 Record: No `Fixes:` tag is present, so there is no tagged
+introducer to follow. Manual blame identifies the relevant prior Legion
+quirk.
 
-Record 3.3: Recent `g5_defconfig` history is mostly defconfig
-maintenance and symbol removals; no prerequisite patch was identified.
-The mailed patch is a one-patch series.
+Step 3.3 Record: Recent file history is mostly audio quirk additions.
+Related commit `217d5bc9f9627` adds the same codec-SSID disambiguation
+pattern for Yoga Pro 7 14IMH9 versus Legion 7 16ACHG6.
 
-Record 3.4: Linus Walleij is an established kernel
-maintainer/contributor, though not listed as PowerPC maintainer. The
-patch was acked by Michael Ellerman in-thread and applied by Madhavan
-Srinivasan, both PowerPC maintainers per `MAINTAINERS`.
+Step 3.4 Record: `git log --author='Rámon van Raaij' ... master --
+sound/hda/codecs/realtek/alc269.c` returned no earlier matching commits
+in this local history. Maintainer Takashi Iwai committed the patch.
 
-Record 3.5: Dependencies are existing Kconfig symbols and are satisfied.
-`make ARCH=powerpc g5_defconfig` on the candidate produced
-`CONFIG_WINDFARM_PM72=y`, `CONFIG_WINDFARM_RM31=y`, and `CONFIG_I2C=y`.
+Step 3.5 Record: Dependencies are the existing `HDA_CODEC_QUIRK`
+infrastructure, `ALC287_FIXUP_TAS2781_I2C`, and the conflicting Legion
+`17aa:3811` entry. All exist in the checked 7.0 tree; `git apply
+--check` of the candidate diff against current `HEAD` succeeded.
 
-## Phase 4: Mailing List And External Research
-Record 4.1: `b4 am` found the v3 submission and three revisions: v1, v2,
-v3. `b4 dig` matched the patch-id and found lore/patch.msgid links.
-Direct `WebFetch` to lore was blocked by Anubis, but `b4 mbox`
-downloaded the full v3 thread.
+### Phase 4: Mailing List / External Research
+Step 4.1 Record: `b4 dig -c 56722cfbb78d -a` found one revision, v1, at
+`https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`. No
+newer revision for this exact patch was found.
 
-Record 4.2: `b4 dig -w` showed the patch was sent to Madhavan
-Srinivasan, Michael Ellerman, Nicholas Piggin, Christophe Leroy,
-`linuxppc-dev`, and `linux-kernel`.
+Step 4.2 Record: `b4 dig -c 56722cfbb78d -w` shows recipients were Rámon
+van Raaij, `linux-sound@vger.kernel.org`, `alsa-devel@alsa-project.org`,
+and Takashi Iwai. The maintainer replied “Applied now. Thanks.”
 
-Record 4.3: No separate bug report link was present. Thread evidence
-confirms impact: Segher Boessenkool wrote that affected machines boot
-but “won’t run for even a minute”; Linus said Debian likely works by
-having the driver in initramfs/rootfs and that built-in is safer.
+Step 4.3 Record: No separate bug report link or `Reported-by` tag is in
+the candidate. Web search found public Yoga Pro 9i/TIAS2781/ALC287 audio
+issue reports, but I did not use those as primary evidence for the exact
+`17aa:38d6` SSID.
 
-Record 4.4: Series context: same two-line patch rebased from v1 to v3,
-no multi-patch dependency.
+Step 4.4 Record: `b4 mbox -c` showed a later related patch for codec
+SSID `17aa:38d5`, referencing this candidate commit and the same
+hardware class. It is related context, not a prerequisite.
 
-Record 4.5: Web search found no stable-list discussion for this exact
-patch. No known stable objection found.
+Step 4.5 Record: Web search for stable-specific discussion of
+`56722cfbb78d` did not find a stable-thread result. Lore `WebFetch` was
+blocked by anti-bot HTML, but `b4` access succeeded.
 
-## Phase 5: Code Semantic Analysis
-Record 5.1: No functions changed. Relevant enabled init functions are
-`wf_pm72_init()` and `wf_rm31_init()`.
+### Phase 5: Semantic Code Analysis
+Step 5.1 Record: No function is modified. Key affected symbols are
+`alc269_fixup_tbl`, `snd_hda_pick_fixup`, `HDA_CODEC_QUIRK`,
+`ALC287_FIXUP_TAS2781_I2C`, and `ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`.
 
-Record 5.2: These init functions are run at boot/module init when built.
-`windfarm_core_init()` registers the `windfarm` platform device.
+Step 5.2 Record: `alc269_probe()` calls `snd_hda_pick_fixup(codec,
+alc269_fixup_models, alc269_fixup_tbl, alc269_fixups)`.
+`hda_codec_driver_probe()` calls the codec driver probe op, so this is
+reached during HDA codec binding/probe.
 
-Record 5.3: `wf_pm72_init()` checks `PowerMac7,2`/`PowerMac7,3`;
-`wf_rm31_init()` checks `RackMac3,1`; both register a platform driver
-only after compatibility checks.
+Step 5.3 Record: `HDA_CODEC_QUIRK` sets `.match_codec_ssid = true`.
+`snd_hda_pick_fixup()` checks such entries against
+`codec->core.subsystem_id`; the TAS2781 fixup calls
+`comp_generic_fixup(..., "i2c", "TIAS2781", ...)`. The Legion fixup is
+HDA verb/coefficient based and does not call the TAS2781 component
+binding helper.
 
-Record 5.4: Reachability is boot-time on affected hardware using
-`g5_defconfig`, not syscall-triggered. The failure mode is hardware
-thermal shutdown, not userspace API behavior.
+Step 5.4 Record: Reachability is hardware probe path: HDA controller
+probes codecs, Realtek codec driver probes, `alc269_probe()` picks the
+fixup. The bug is not syscall/security-triggered; it affects audio
+functionality on matching hardware.
 
-Record 5.5: Similar pattern already exists in the same defconfig for
-other G5 windfarm drivers (`PM81`, `PM91`, `PM112`, `PM121`).
+Step 5.5 Record: Similar patterns exist in the same table, especially
+`HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ...)`
+immediately before a conflicting Legion PCI SSID entry.
 
-## Phase 6: Stable Tree Analysis
-Record 6.1: Checked v5.10, v5.15, v6.1, v6.6, v6.12, v6.18, v6.19, and
-v7.0 tags: the buggy omission exists and the PM72/RM31 Kconfig symbols
-exist.
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: In checked local refs, `HEAD` and `pending-6.18`
+contain the conflicting `17aa:3811` Legion quirk and do not contain the
+candidate `HDA_CODEC_QUIRK(0x17aa, 0x38d6, ...)`. Older checked pending
+refs did not show the conflicting line in the `git grep` run.
 
-Record 6.2: Generated patch applied cleanly to all checked tags: v5.10
-through v7.0.
+Step 6.2 Record: Backport difficulty is clean for current `HEAD`: `git
+apply --check` succeeded. For older trees without `HDA_CODEC_QUIRK` or
+without the Legion `17aa:3811` quirk, this patch is either not
+applicable or would need prerequisites.
 
-Record 6.3: Checked those tags for the exact subject; no related fix
-already present.
+Step 6.3 Record: No equivalent `17aa:38d6` codec quirk was found in
+checked stable refs. Existing `SND_PCI_QUIRK(0x17aa, 0x38d6, ...)`
+entries are PCI-SSID entries and do not fix the reported Yoga Pro 9 case
+where the PCI SSID is `17aa:3811`.
 
-## Phase 7: Subsystem Context
-Record 7.1: Subsystem: PowerPC defconfig / Power Macintosh thermal
-management. Criticality: platform-specific but important for affected
-hardware because thermal control is required for safe operation.
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is ALSA HDA Realtek codec support under
+`sound/hda/codecs/realtek`. Criticality is driver-specific/important for
+affected laptop users, not core-kernel-wide.
 
-Record 7.2: `drivers/macintosh` has low-to-moderate activity, mostly
-treewide cleanups and small fixes; PowerMac is marked orphan, while
-broader PowerPC is supported.
+Step 7.2 Record: The subsystem is actively maintained; recent history
+shows many Realtek laptop quirk additions and related fixes. Takashi
+Iwai applied the patch.
 
-## Phase 8: Impact And Risk
-Record 8.1: Affected users: PowerMac G5 AGP systems (`PowerMac7,2`,
-`PowerMac7,3`) and Xserve G5 (`RackMac3,1`) using kernels built from
-`g5_defconfig`.
+### Phase 8: Impact / Risk
+Step 8.1 Record: Affected population is Lenovo Yoga Pro 9 16IMH9 units
+with codec SSID `17aa:38d6` on stable trees containing the Legion
+`17aa:3811` quirk.
 
-Record 8.2: Trigger: booting affected hardware with the default G5
-config lacking the built-in thermal driver. Not unprivileged-user-
-triggered.
+Step 8.2 Record: Trigger is normal boot/device probe and use of built-in
+speakers. It is hardware/config specific, not unprivileged exploitation.
 
-Record 8.3: Failure mode: overheating followed by shutdown shortly after
-boot. Severity: CRITICAL for affected hardware availability and hardware
-safety.
+Step 8.3 Record: Failure mode is broken built-in speaker output,
+described as near-silent speakers. Severity is high for affected
+hardware functionality, though not crash/data-corruption/security
+severity.
 
-Record 8.4: Benefit is high for affected stable users; risk is very low:
-two defconfig lines, existing drivers, clean applies, machine-specific
-init guards.
+Step 8.4 Record: Benefit is high for affected laptops and also prevents
+a regression caused by the shared PCI SSID quirk. Risk is very low: 4
+lines, exact match, no new API, no shared logic changes.
 
-## Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: fixes real hardware thermal
-shutdown; two-line contained patch; existing drivers; dependencies
-verified; applies cleanly to checked stable tags; maintainer
-ack/application in PowerPC fixes. Evidence against: affects only niche
-old hardware; no explicit `Cc: stable` or `Tested-by`. No unresolved
-technical blockers.
+### Phase 9: Synthesis
+Step 9.1 Record: Evidence for backporting: real user-visible hardware
+breakage, standard stable hardware-quirk category, tiny table-only
+patch, maintainer-applied, exact existing pattern, clean apply to
+current checked stable tree. Evidence against: no `Tested-by`, no `Cc:
+stable`, no separate bug-report link in the commit, and not applicable
+to trees lacking the prerequisite Legion quirk or `HDA_CODEC_QUIRK`
+infrastructure. Unresolved: I did not independently verify the physical
+uniqueness of codec SSID `17aa:38d6` beyond the submitted patch and
+maintainer acceptance.
 
-Record 9.2: Stable rules: obviously correct: yes; tested: config
-generation verified, no runtime `Tested-by`; real bug: yes; important
-issue: yes, overheating/shutdown; small/contained: yes; no new
-API/features: yes, only enables existing drivers in defconfig; applies
-to stable: yes for checked tags.
+Step 9.2 Record: Stable rules: already upstream/mainline yes; obviously
+correct yes by code inspection and `checkpatch`; fixes a real bug yes,
+wrong quirk causing near-silent speakers; important enough yes as a
+hardware quirk / broken device functionality; small and contained yes, 4
+insertions; no new feature/API yes; applies cleanly to current checked
+stable `HEAD`, with older-tree applicability depending on prerequisites.
 
-Record 9.3: Exception category: closest match is hardware-support/config
-fix for existing drivers, not new driver code.
+Step 9.3 Record: Exception category applies: hardware quirk/workaround
+for a specific laptop audio configuration.
 
-Record 9.4: Decision: backport. This is a small, low-risk default-config
-fix for a severe hardware failure mode.
+Step 9.4 Record: Decision is YES for stable trees that contain the
+conflicting Legion S7 `17aa:3811` quirk and the
+`HDA_CODEC_QUIRK`/TAS2781 infrastructure. It should not be forced into
+older trees where the buggy conflicting quirk is absent.
 
 ## Verification
-- Phase 1: Parsed tags from supplied commit and b4-fetched mbox.
-- Phase 2: Verified diff is `+2/-0` in
-  `arch/powerpc/configs/g5_defconfig`.
-- Phase 3: Used `git blame`, `git log`, and `git show`; found PM72/RM31
-  drivers introduced by `6cd320996746`, present since v3.5.
-- Phase 4: Used `b4 am`, `b4 dig`, `b4 dig -w`, `b4 mbox`; full thread
-  shows Michael Ellerman ack and Madhavan Srinivasan applied it to
-  `powerpc/fixes`.
-- Phase 5: Read `drivers/macintosh/Kconfig`, `Makefile`,
-  `windfarm_pm72.c`, `windfarm_rm31.c`, and `windfarm_core.c`; verified
-  machine-specific guards and boot/init path.
-- Phase 6: Checked v5.10, v5.15, v6.1, v6.6, v6.12, v6.18, v6.19, v7.0
-  for symbol presence and clean patch application.
-- Phase 8: Failure mode verified from commit text and mailing-list
-  thread; no independent runtime test performed here.
+- [Phase 1] Parsed commit `56722cfbb78d7eb41756cd78dc5192d08bd14f3d`
+  with `git show`; confirmed tags and message.
+- [Phase 2] Inspected diff: `sound/hda/codecs/realtek/alc269.c`, 4
+  insertions.
+- [Phase 3] Ran `git blame` around the conflicting quirk; confirmed
+  `67f4c61a73e9b` introduced `17aa:3811`.
+- [Phase 3] Ran `git show 67f4c61a73e9b`; confirmed it adds the Legion
+  S7 quirk.
+- [Phase 4] Ran `b4 dig -c 56722cfbb78d -a` and `-w`; found v1
+  submission, recipients, and maintainer application.
+- [Phase 5] Read `snd_hda_pick_fixup()`, `HDA_CODEC_QUIRK`,
+  `alc269_probe()`, TAS2781 fixup, and Legion fixup paths.
+- [Phase 6] Ran `git grep` across checked stable refs; found conflict in
+  `HEAD` and `pending-6.18`, and no candidate codec quirk there.
+- [Phase 6] Ran `git apply --check`; candidate applies to current
+  checked `HEAD`.
+- [Phase 8] Ran `scripts/checkpatch.pl --no-tree`; 0 errors, 0 warnings.
+- UNVERIFIED: No runtime test on Lenovo Yoga Pro 9 16IMH9 hardware; no
+  full build performed; exact affected stable branch set beyond checked
+  local refs not exhaustively proven because broad branch containment
+  checks were too slow and stopped.
 
 **YES**
 
- arch/powerpc/configs/g5_defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/powerpc/configs/g5_defconfig b/arch/powerpc/configs/g5_defconfig
-index 428f17b455132..2fe8ca266b5f6 100644
---- a/arch/powerpc/configs/g5_defconfig
-+++ b/arch/powerpc/configs/g5_defconfig
-@@ -85,6 +85,8 @@ CONFIG_PMAC_SMU=y
- CONFIG_MAC_EMUMOUSEBTN=y
- CONFIG_WINDFARM=y
- CONFIG_WINDFARM_PM81=y
-+CONFIG_WINDFARM_PM72=y
-+CONFIG_WINDFARM_RM31=y
- CONFIG_WINDFARM_PM91=y
- CONFIG_WINDFARM_PM112=y
- CONFIG_WINDFARM_PM121=y
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index ded6e78142a07..a55b73ced81d6 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7624,6 +7624,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x3802, "DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8", ALC287_FIXUP_TAS2781_I2C),
++	/* Yoga Pro 9 16IMH9 shares PCI SSID 17aa:3811 with Legion S7 15IMH05;
++	 * use codec SSID to distinguish them
++	 */
++	HDA_CODEC_QUIRK(0x17aa, 0x38d6, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
 -- 
 2.53.0
 
