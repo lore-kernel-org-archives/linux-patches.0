@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD582701C4;
-	Wed, 20 May 2026 16:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D8A2701C4;
+	Wed, 20 May 2026 16:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295890; cv=none; b=IUIXIGy/XBuZKlF8zeQr9apGcR+61lu+XJWVUEHoT1+1v5aL/ZWJTCw0dfun8o54UNBaTiORzp78mY5cRQOlNIp/CtZSJovhPgvXmG/WWKI2NlKoX4TRtk4qllkW7riTLcQIhLqneunGxEqEWpfCuTxnaoO6YcALIzOCh50i3HE=
+	t=1779295893; cv=none; b=BCjRhIV+jws2nqNoMDOEsn5GfrNgQm8q6vXbYZwJBkq31BHH7LTM28tBZWwaVRIq8O/4xogt6/Bh6IhKJk7N+lquR78FHhnQNpz/7hWuDVDE97wx7h1PmBcv0rCTPnPKdDA4g4oxfRO/tBa0S0WWhtHzvmWlf0MZmSgjgLZxal4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295890; c=relaxed/simple;
-	bh=nRlok2kiLA0CbGFyHwBZpL/7Dry4KqdkDuuCgydbpcQ=;
+	s=arc-20240116; t=1779295893; c=relaxed/simple;
+	bh=OJJOghORRPaAZ1diCr+7t7xBGG2BJwpQK3X8TadK9ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nW/mRQxoEVVx8dhzqEbJZoe23nb3h/MsmmNX7kyCup5iEbwow/CG0ur9+txb2n6PAN/7dMF0lkCQHrsPVBLygDVWOJ/7m/h9EPiP9E3xTK4fBaYPs7p+gcWCBjIR95xFzoGNaCC2K9tGdS19uiiyxfhiwbfQm37HwlRzXMP+GcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGCZTQCZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4igowOnpe5+hNxKmX3uIBSsvyIGKRA/N8QyLRA25if9P2dhtEoTIFBXkWP6AZBP5H6CPRhPV/eEiEgbMBRprMr4j4PHTiQwKsyZE0v4TijewFEQmEiD+i3/pIv2L2I1VFnbpRP1TuPfu8GlwRspkXUkvVzq2F3wpKEeizvEdZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxhhqL9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGCZTQCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61231F00893;
-	Wed, 20 May 2026 16:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxhhqL9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD9A1F000E9;
+	Wed, 20 May 2026 16:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295889;
-	bh=GuBCNX9yX5D54vnYj//oVkZFE4QY0cI64hpBt8TQo2o=;
+	s=korg; t=1779295891;
+	bh=25m5qK2TywBH2XM+LmSGk+xNw5LyQ+RNoYtVWMNdgwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGCZTQCZBmVvQ+Fd3QyA/28BTxUoNvZZ7VGYEDjVRxkug+rpQ5ezI6H4bu8ALQR5v
-	 nlTSJT/EARhBQcJn6Obju4vkSggIx4cHxqxpo7IfbuTWsJtVuVXKlc7H8jeIkUGtJa
-	 J1JaTgftTxDPa3jXuobfk5i+n1YNrZTqcXznLu2g=
+	b=IxhhqL9npPYJz/NXOckJzw617IT5ISSqG11GtXccKjsW4q4d8I7GkKIcT9slnwoGO
+	 sQDhKy7Zl6jalwHUJeL5kKwmXUV6s13lnEuj+eZlA5TE5S3M8VUhVGLTxaxjHzx4Ak
+	 2QpaOk/e5mC6XZ+5A/PKgoJ7H6d8fpOR1kIKLgq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0590/1146] power: supply: max77705: Free allocated workqueue and fix removal order
-Date: Wed, 20 May 2026 18:14:00 +0200
-Message-ID: <20260520162201.529538270@linuxfoundation.org>
+Subject: [PATCH 7.0 0591/1146] mtd: physmap_of_gemini: Fix disabled pinctrl state check
+Date: Wed, 20 May 2026 18:14:01 +0200
+Message-ID: <20260520162201.551608256@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,105 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 1e668baadefb16e81269dbfebf3ffc2672e3a3bb ]
+[ Upstream commit b7c0982184b0661f5b1b805f3a56f1bd3757b63e ]
 
-Use devm interface for allocating workqueue to fix two bugs at the same
-time:
+The condition for checking the disabled pinctrl state incorrectly checks
+gf->enabled_state instead of gf->disabled_state. This causes misleading
+error messages and could lead to incorrect behavior when only one of the
+pinctrl states is defined.
 
-1. Driver leaks the memory on remove(), because the workqueue is not
-   destroyed.
+Fix the condition to properly check gf->disabled_state.
 
-2. Driver allocates workqueue and then registers interrupt handlers
-   with devm interface.  This means that probe error paths will not use a
-   reversed order, but first destroy the workqueue and then, via devm
-   release handlers, free the interrupt.
-
-   The interrupt handler schedules work on this exact workqueue, thus if
-   interrupt is hit in this short time window - after destroying
-   workqueue, but before devm() frees the interrupt - the schedulled
-   work will lead to use of freed memory.
-
-Change is not equivalent in the workqueue itself: use non-legacy API
-which does not set (__WQ_LEGACY | WQ_MEM_RECLAIM).  The workqueue is
-used to update power supply (power_supply_changed()) status, thus there
-is no point to run it for memory reclaim.  Note that dev_name() is not
-directly used in second argument to prevent possible unlikely parsing
-any "%" character in device name as format.
-
-Fixes: 11741b8e382d ("power: supply: max77705: Fix workqueue error handling in probe")
-Fixes: a6a494c8e3ce ("power: supply: max77705: Add charger driver for Maxim 77705")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260305-workqueue-devm-v2-4-66a38741c652@oss.qualcomm.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 9d3b5086f6d4 ("mtd: physmap_of_gemini: Handle pin control")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max77705_charger.c | 28 ++++++++-----------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ drivers/mtd/maps/physmap-gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max77705_charger.c b/drivers/power/supply/max77705_charger.c
-index 0dfe4ab10919f..63b0b4f0cd217 100644
---- a/drivers/power/supply/max77705_charger.c
-+++ b/drivers/power/supply/max77705_charger.c
-@@ -646,47 +646,37 @@ static int max77705_charger_probe(struct i2c_client *i2c)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to add irq chip\n");
+diff --git a/drivers/mtd/maps/physmap-gemini.c b/drivers/mtd/maps/physmap-gemini.c
+index 9d3b4bf84a1ad..1c34b4ef77ea3 100644
+--- a/drivers/mtd/maps/physmap-gemini.c
++++ b/drivers/mtd/maps/physmap-gemini.c
+@@ -181,7 +181,7 @@ int of_flash_probe_gemini(struct platform_device *pdev,
+ 		dev_err(dev, "no enabled pin control state\n");
  
--	chg->wqueue = create_singlethread_workqueue(dev_name(dev));
-+	chg->wqueue = devm_alloc_ordered_workqueue(dev, "%s", 0, dev_name(dev));
- 	if (!chg->wqueue)
- 		return -ENOMEM;
- 
- 	ret = devm_work_autocancel(dev, &chg->chgin_work, max77705_chgin_isr_work);
--	if (ret) {
--		dev_err_probe(dev, ret, "failed to initialize interrupt work\n");
--		goto destroy_wq;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to initialize interrupt work\n");
- 
- 	ret = max77705_charger_initialize(chg);
--	if (ret) {
--		dev_err_probe(dev, ret, "failed to initialize charger IC\n");
--		goto destroy_wq;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to initialize charger IC\n");
- 
- 	ret = devm_request_threaded_irq(dev, regmap_irq_get_virq(irq_data, MAX77705_CHGIN_I),
- 					NULL, max77705_chgin_irq,
- 					IRQF_TRIGGER_NONE,
- 					"chgin-irq", chg);
- 	if (ret)
--		goto destroy_wq;
-+		return ret;
- 
- 	ret = devm_request_threaded_irq(dev, regmap_irq_get_virq(irq_data, MAX77705_AICL_I),
- 					NULL, max77705_aicl_irq,
- 					IRQF_TRIGGER_NONE,
- 					"aicl-irq", chg);
- 	if (ret)
--		goto destroy_wq;
-+		return ret;
- 
- 	ret = max77705_charger_enable(chg);
--	if (ret) {
--		dev_err_probe(dev, ret, "failed to enable charge\n");
--		goto destroy_wq;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to enable charge\n");
- 
- 	return devm_add_action_or_reset(dev, max77705_charger_disable, chg);
--
--destroy_wq:
--	destroy_workqueue(chg->wqueue);
--	return ret;
- }
- 
- static const struct of_device_id max77705_charger_of_match[] = {
+ 	gf->disabled_state = pinctrl_lookup_state(gf->p, "disabled");
+-	if (IS_ERR(gf->enabled_state)) {
++	if (IS_ERR(gf->disabled_state)) {
+ 		dev_err(dev, "no disabled pin control state\n");
+ 	} else {
+ 		ret = pinctrl_select_state(gf->p, gf->disabled_state);
 -- 
 2.53.0
 
