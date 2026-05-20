@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FFF30675C;
-	Wed, 20 May 2026 17:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9D04F5E0;
+	Wed, 20 May 2026 17:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299866; cv=none; b=I/CzTC9mTj8plX7Xpap2HVDUlhe/mlYLl3zAs4Vlbc53yo+juwe5Qs2Ks9sKqkCs4E4RO7bVFcJgE1MeB442SKo0za3D+wM8ubx5+yqpF3eWxqbvFFVDV1FSeg3/HUclB4jpUT/+gK/n9Nl7YTeDNIxoxaY8zXFDjxc710n+nBA=
+	t=1779299869; cv=none; b=myvSSMEXWQdfGlmRUuXVoOWX90WwUdiutz+9ueyeEEKFaHV+VsrGjFyHXNLNTWUUQKGHGVRZ3BRijILoGFErL5131VBMKUqJPIdpT49T4C1F6cEhl67x3pxljjEz5hH3czeLTSRmizmrRleNgvUyRnJQyPq98EORWU2iPTSQAQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299866; c=relaxed/simple;
-	bh=O39okzC32fyFq+6miS6LmQgYHDBiqK6lpIjUVEhkgUk=;
+	s=arc-20240116; t=1779299869; c=relaxed/simple;
+	bh=y7//oqThvCDXK0N9m6texK3HAAgBoVQ+mIQBufqRCeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lvBwYfRSPHS3EetY4hCvL6cyyhA++e55yHlrZn17XM6OmWx4LZ6AQCPsHgzFW4mpsHrt3PTnzMpgk6R9yZTrUDDRsnNlNx5KJQavRtIlKgQx+3sJ99nsgxu0ci6VbFZD2+U+Q9OIT+wCxV+iLUVNsNmnVC6++JZUGMZeXGVy78M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOSmPUhC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCmcfNO0U8s0RL9esWamN7SjjvFI5DEdrMDgTswDLgHXauQ+EVadZRukfSfcfnRqnUcBlaGhXYkaHJCT2BDC9d9uJWZAaAB+56mRLkpiIQ5/QVVArZXb932BNFImC7QZ44ule0f5bmp/DGcm3MyyLMMBEwZG2U/gRrZrH62gM6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Dsin0lG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOSmPUhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9281F000E9;
-	Wed, 20 May 2026 17:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Dsin0lG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F241F000E9;
+	Wed, 20 May 2026 17:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299865;
-	bh=QhFQXw7fRWTlDb0Q2CX23SAF0xxSnDBf5qigTmK0ohk=;
+	s=korg; t=1779299868;
+	bh=11SHJ3svCgksjCx0U60Zt8hVDf4EIMlhqTD2VdAwRhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOSmPUhCFsWC+GHA/X8fMcx2+fiLVvHdq7k6pyfCAWg9fIWl7SoJ5bipMVwwgNsAB
-	 bOTwymtuSHZ6P0lh9dU8o9bQhDeA6u9gDd+cv2/qHaRfCAPNuHM4iZVlp4IWy/iDbQ
-	 yg8pg42MXjGN5sJ7MwLm7/xX6dK0zJCg9br9Hci4=
+	b=2Dsin0lGniaNlADDMQt8+2ThmDjVfgZ5z0MKq732QLKH6zSY0lIfyGlzS+NLC+fzk
+	 Wy5myg1eDgu+n/45ad17S7Yw/fxaZYV+MmGtVOyeMlZt5C8DvL6geefNKAfvkbi9jv
+	 na7xQUWCrVi7vBsnDx7eE/WAffquqFRbH/4YqCXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 915/957] ALSA: usb-audio: qcom: Check offload mapping failures
-Date: Wed, 20 May 2026 18:23:18 +0200
-Message-ID: <20260520162154.421150237@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 916/957] btrfs: only release the dirty pages io tree after successful writes
+Date: Wed, 20 May 2026 18:23:19 +0200
+Message-ID: <20260520162154.443605242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -44,112 +45,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 814b2c9b30e56074e11fc0a6e5419b3fee0639bc upstream.
+commit 4066c55e109475a06d18a1f127c939d551211956 upstream.
 
-uaudio_transfer_buffer_setup() calls dma_get_sgtable() and then passes
-the sg_table to uaudio_iommu_map_xfer_buf() without checking whether sg
-table construction succeeded. If dma_get_sgtable() fails, the sg_table
-contents are not valid.
+[WARNING]
+With extra warning on dirty extent buffers at umount (aka, the next
+patch in the series), test case generic/388 can trigger the following
+warning about dirty extent buffers at unmount time:
 
-uaudio_iommu_map_pa() also ignores iommu_map() failures for the event and
-transfer rings and still returns the allocated IOVA to the QMI response.
-That can expose an unmapped IOVA to the audio DSP. For transfer rings,
-the failed mapping also leaves the IOVA allocator state marked in use.
+  BTRFS critical (device dm-2 state E): emergency shutdown
+  BTRFS error (device dm-2 state E): error while writing out transaction: -30
+  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
+  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
+  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
+  BTRFS info (device dm-2 state EA): forced readonly
+  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
+  ------------[ cut here ]------------
+  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
+  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
+  Call Trace:
+   <TASK>
+   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   generic_shutdown_super+0x89/0x1a0
+   kill_anon_super+0x16/0x40
+   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   deactivate_locked_super+0x2d/0xb0
+   cleanup_mnt+0xdc/0x140
+   task_work_run+0x5a/0xa0
+   exit_to_user_mode_loop+0x123/0x4b0
+   do_syscall_64+0x243/0x7c0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
 
-Check both operations. Free the coherent transfer buffer when sg table
-construction fails, free the sg table when transfer-buffer IOMMU mapping
-fails, and release the transfer-ring IOVA if iommu_map() fails. Also
-return the existing event-ring IOVA when the event ring is already mapped,
-matching the pre-split helper behavior.
+I'm using a stripped down version, which seems to trigger the warning
+more reliably:
 
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Fixes: 44499ecb4f28 ("ALSA: usb: qcom: Fix false-positive address space check")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260511-alsa-usb-qcom-offload-map-errors-v1-1-6502695e58bc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  _fsstress_pid=""
+  workload()
+  {
+  	dmesg -C
+  	mkfs.btrfs -f -K $dev > /dev/null
+  	echo 1 > /sys/kernel/debug/clear_warn_once
+  	mount $dev $mnt
+  	$fsstress -w -n 1024 -p 4 -d $mnt &
+  	_fsstress_pid=$!
+  	sleep 0
+  	$godown $mnt
+  	pkill --echo -PIPE fsstress > /dev/null
+  	wait $_fsstress_pid
+  	unset _fsstress_pid
+  	umount $mnt
+
+  	if dmesg | grep -q "WARNING"; then
+  		fail
+  	fi
+  }
+
+  for (( i = 0; i < $runtime; i++ )); do
+  	echo "=== $i/$runtime ==="
+  	workload
+  done
+
+[CAUSE]
+Inside btrfs_write_and_wait_transaction(), we first try to write all
+dirty ebs, then wait for them to finish.
+
+After that we call btrfs_extent_io_tree_release() to free all
+extent states from dirty_pages io tree.
+
+However if we hit an error from btrfs_write_marked_extent(), then we
+still call btrfs_extent_io_tree_release() to clear that dirty_pages io
+tree, which may contain dirty records that we haven't yet submitted.
+
+Furthermore, the later transaction cleanup path will utilize that
+dirty_pages io tree to properly cleanup those dirty ebs, but since it's
+already empty, no dirty ebs are properly cleaned up, thus will later
+trigger the warnings inside invalidate_btree_folios().
+
+[FIX]
+Normally such dirty ebs won't cause problems, as when the iput() is
+called on the btree inode, the dirty ebs will be forcibly written back,
+and since the fs is already in an error status, such writeback will not
+reach disk and finish immediately.
+
+But it's still better to get rid of such dirty ebs, if we ended up with
+dirty ebs but the fs is not in an error status, then such writeback at
+iput() time will be too late, as all workers are already stopped but
+writeback will utilize workers, which will lead to NULL pointer
+dereferences.
+
+Instead of unconditionally calling btrfs_extent_io_tree_release(), only
+call it if btrfs_write_and_wait_transaction() finished successfully, so
+that @dirty_pages extent io tree is kept untouched for transaction
+cleanup.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/qcom/qc_audio_offload.c |   31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ fs/btrfs/disk-io.c     |    1 +
+ fs/btrfs/transaction.c |    9 ++++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -565,6 +565,7 @@ static unsigned long uaudio_iommu_map_pa
- 	unsigned long iova = 0;
- 	bool map = true;
- 	int prot = uaudio_iommu_map_prot(dma_coherent);
-+	int ret;
- 
- 	switch (mtype) {
- 	case MEM_EVENT_RING:
-@@ -582,10 +583,24 @@ static unsigned long uaudio_iommu_map_pa
- 		dev_err(uaudio_qdev->data->dev, "unknown mem type %d\n", mtype);
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4646,6 +4646,7 @@ static void btrfs_destroy_marked_extents
+ 			free_extent_buffer_stale(eb);
+ 		}
  	}
- 
--	if (!iova || !map)
-+	if (!iova)
- 		return 0;
- 
--	iommu_map(uaudio_qdev->data->domain, iova, pa, size, prot, GFP_KERNEL);
-+	if (!map)
-+		return iova;
-+
-+	ret = iommu_map(uaudio_qdev->data->domain, iova, pa, size, prot,
-+			GFP_KERNEL);
-+	if (ret) {
-+		dev_err(uaudio_qdev->data->dev,
-+			"failed to map %zu bytes at iova 0x%08lx: %d\n",
-+			size, iova, ret);
-+		if (mtype == MEM_XFER_RING)
-+			uaudio_put_iova(iova, size,
-+					&uaudio_qdev->xfer_ring_list,
-+					&uaudio_qdev->xfer_ring_iova_size);
-+		return 0;
-+	}
- 
- 	return iova;
++	btrfs_extent_io_tree_release(dirty_pages);
  }
-@@ -1054,15 +1069,17 @@ static int uaudio_transfer_buffer_setup(
- 	if (!xfer_buf)
- 		return -ENOMEM;
  
--	dma_get_sgtable(subs->dev->bus->sysdev, &xfer_buf_sgt, xfer_buf,
--			xfer_buf_dma, len);
-+	ret = dma_get_sgtable(subs->dev->bus->sysdev, &xfer_buf_sgt, xfer_buf,
-+			      xfer_buf_dma, len);
-+	if (ret)
-+		goto free_xfer_buf;
+ static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1268,14 +1268,13 @@ static int btrfs_write_and_wait_transact
+ 	blk_finish_plug(&plug);
+ 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
  
- 	/* map the physical buffer into sysdev as well */
- 	xfer_buf_dma_sysdev = uaudio_iommu_map_xfer_buf(dma_coherent,
- 							len, &xfer_buf_sgt);
- 	if (!xfer_buf_dma_sysdev) {
- 		ret = -ENOMEM;
--		goto unmap_sync;
-+		goto free_sgt;
- 	}
+-	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
+-
+ 	if (ret)
+ 		return ret;
+-	else if (ret2)
++	if (ret2)
+ 		return ret2;
+-	else
+-		return 0;
++
++	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
++	return 0;
+ }
  
- 	mem_info->dma = xfer_buf_dma;
-@@ -1073,7 +1090,9 @@ static int uaudio_transfer_buffer_setup(
- 
- 	return 0;
- 
--unmap_sync:
-+free_sgt:
-+	sg_free_table(&xfer_buf_sgt);
-+free_xfer_buf:
- 	usb_free_coherent(subs->dev, len, xfer_buf, xfer_buf_dma);
- 
- 	return ret;
+ /*
 
 
