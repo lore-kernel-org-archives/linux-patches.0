@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FECA33A033;
-	Wed, 20 May 2026 17:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6B933A033;
+	Wed, 20 May 2026 17:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297390; cv=none; b=Kw9SF/B8pEHkqKt3ryjVwoCDIGXonIjX+UeSIJxl1nsakXxQqATyVpnNooXvLbGfp7/gOC0+zmRPyE43IrZDwplN+i6mueSY5d3TmX2h2Y+x8lHT3k3Lt58YkhWbPYz4JWf3gbNZzZYAeMjOA1Eu5hmlFnWNX0oxvH66/4fMMrs=
+	t=1779297392; cv=none; b=llueIibyWdllIevAnAGqZVNyJIq2+BMqGKjxQV3m9LaHSp6r6udI2Y6brKKUka+bulbtCWPuSLXDSauYjlN65evgwuwJBty4DCwsC+H/gAmYRuSCZXKsOzmWNYjk7PcDMB73G3CPdgJ2bGCSvoKQdbceYrpQBYIJd3+ByYUwcqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297390; c=relaxed/simple;
-	bh=otMoREQd7uaUrENXZgy5HW/pDqsQx1IOUAQbLQIZ/c4=;
+	s=arc-20240116; t=1779297392; c=relaxed/simple;
+	bh=8ZtGPJpqBEW9zBYUHUDdRyuMvt33ZBVbyD1KvpZaMU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oHMS53C7Jwe3Fh2CzN5UB0S/wD7x8/MX6FqXvOlblHpntg9ILSeMQ/yKZ0n31cQjiOVAeJ6Y+AjItFKWG4xoRia/ue2waqtTDvYAYZ9i7cvHQqCh8oz2UEvwH+xkjWfqjNeL2t92JgTrine5/NFUzsbC6tw/uyvgx2GRKO1UiPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOf9m3D6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dP9KjaEoA8CMGCrLKZmABwim+t7Avvyz4P/Ob/rH2islPqq8znFBlWT6w+ionDUHFEXUBq6NttNr52vVo9hUoYN7RVJ99sWStTWQh0zAvnanRjbUZ4gjz8E8hm67agu0gY4yHrrwohBBlJC+CWKQjKT0gGR5Z6TZnvIWSNTS3u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brhaa2XU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOf9m3D6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D151F000E9;
-	Wed, 20 May 2026 17:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brhaa2XU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46661F000E9;
+	Wed, 20 May 2026 17:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297388;
-	bh=pxu7NXAEJOIhz7FB8hhTQDOvxc7BWrTHr4jHlPOsp74=;
+	s=korg; t=1779297391;
+	bh=vaOD/baxAaYkju7Q3/XdFXC6/iv88DqYsi3zm3VDDzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOf9m3D6E/NDduHLjHINSHrUeMlgGUGkuyaE9ee0VxMjDyUHYRQStgi8rIiAnASUQ
-	 FWFVwD8KplKlccnw9olqVC2jlzmhw4NiXQrFinFPTImsLs95ulxOXORQrBbtXahcS/
-	 5LjOf1HPlY5IPI9uSSy3BLVdbHORyNgBxHvU6JFE=
+	b=brhaa2XU5ngPgTwepdWm+32H+0+0MxzQ7HaaFMjSAm2nDGak2katEZQSGM58M/gPz
+	 iIWEtfICkhnfsCuSHJqD1v+/5qzO6A2SYIuHZD4N8hqKHpvDlwD7FyVVLKZLim4pwO
+	 ZjXAt6tqDRtH63fGFCmN5qDDLVIppAEXOHB7q+ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/957] dm: add WQ_PERCPU to alloc_workqueue users
-Date: Wed, 20 May 2026 18:08:17 +0200
-Message-ID: <20260520162134.870436409@linuxfoundation.org>
+Subject: [PATCH 6.18 015/957] md: remove unused static md_wq workqueue
+Date: Wed, 20 May 2026 18:08:18 +0200
+Message-ID: <20260520162134.891211050@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,354 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit d4880868670198df321627a949e7b7f2d76cf54e ]
+[ Upstream commit e4979f4fac4d6bbe757be50441b45e28e6bf7360 ]
 
-This continues the effort to refactor workqueue APIs, which began with
-the introduction of new workqueues and a new alloc_workqueue flag in:
+The md_wq workqueue is defined as static and initialized in md_init(),
+but it is not used anywhere within md.c.
 
-   commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
-   commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+All asynchronous and deferred work in this file is handled via
+md_misc_wq or dedicated md threads.
 
-The refactoring is going to alter the default behavior of
-alloc_workqueue() to be unbound by default.
-
-With the introduction of the WQ_PERCPU flag (equivalent to !WQ_UNBOUND),
-any alloc_workqueue() caller that doesn’t explicitly specify WQ_UNBOUND
-must now use WQ_PERCPU. For more details see the Link tag below.
-
-In order to keep alloc_workqueue() behavior identical, explicitly request
-WQ_PERCPU.
-
-Link: https://lore.kernel.org/all/20250221112003.1dSuoGyc@linutronix.de/
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Stable-dep-of: e4979f4fac4d ("md: remove unused static md_wq workqueue")
+Fixes: b75197e86e6d3 ("md: Remove flush handling")
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://lore.kernel.org/linux-raid/20260328193522.3624-1-abd.masalkhi@gmail.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-bufio.c              |  3 ++-
- drivers/md/dm-cache-target.c       |  3 ++-
- drivers/md/dm-clone-target.c       |  3 ++-
- drivers/md/dm-crypt.c              |  6 ++++--
- drivers/md/dm-delay.c              |  4 +++-
- drivers/md/dm-integrity.c          | 15 ++++++++++-----
- drivers/md/dm-kcopyd.c             |  3 ++-
- drivers/md/dm-log-userspace-base.c |  3 ++-
- drivers/md/dm-mpath.c              |  5 +++--
- drivers/md/dm-raid1.c              |  5 +++--
- drivers/md/dm-snap-persistent.c    |  3 ++-
- drivers/md/dm-stripe.c             |  2 +-
- drivers/md/dm-verity-target.c      |  4 +++-
- drivers/md/dm-writecache.c         |  3 ++-
- drivers/md/dm.c                    |  3 ++-
- drivers/md/md.c                    |  4 ++--
- 16 files changed, 45 insertions(+), 24 deletions(-)
+ drivers/md/md.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
-index 5235f3e4924b7..f41f649c01d4e 100644
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -2833,7 +2833,8 @@ static int __init dm_bufio_init(void)
- 	__cache_size_refresh();
- 	mutex_unlock(&dm_bufio_clients_lock);
- 
--	dm_bufio_wq = alloc_workqueue("dm_bufio_cache", WQ_MEM_RECLAIM, 0);
-+	dm_bufio_wq = alloc_workqueue("dm_bufio_cache",
-+				      WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!dm_bufio_wq)
- 		return -ENOMEM;
- 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index a10d75a562db0..7bad7cc87d370 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2533,7 +2533,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 		goto bad;
- 	}
- 
--	cache->wq = alloc_workqueue("dm-" DM_MSG_PREFIX, WQ_MEM_RECLAIM, 0);
-+	cache->wq = alloc_workqueue("dm-" DM_MSG_PREFIX,
-+				    WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!cache->wq) {
- 		*error = "could not create workqueue for metadata object";
- 		goto bad;
-diff --git a/drivers/md/dm-clone-target.c b/drivers/md/dm-clone-target.c
-index e956d980672c8..b25845e362744 100644
---- a/drivers/md/dm-clone-target.c
-+++ b/drivers/md/dm-clone-target.c
-@@ -1877,7 +1877,8 @@ static int clone_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	clone->hydration_offset = 0;
- 	atomic_set(&clone->hydrations_in_flight, 0);
- 
--	clone->wq = alloc_workqueue("dm-" DM_MSG_PREFIX, WQ_MEM_RECLAIM, 0);
-+	clone->wq = alloc_workqueue("dm-" DM_MSG_PREFIX,
-+				    WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!clone->wq) {
- 		ti->error = "Failed to allocate workqueue";
- 		r = -ENOMEM;
-diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
-index 5ef43231fe77f..fd735155336bc 100644
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -3441,7 +3441,9 @@ static int crypt_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	if (test_bit(DM_CRYPT_HIGH_PRIORITY, &cc->flags))
- 		common_wq_flags |= WQ_HIGHPRI;
- 
--	cc->io_queue = alloc_workqueue("kcryptd_io-%s-%d", common_wq_flags, 1, devname, wq_id);
-+	cc->io_queue = alloc_workqueue("kcryptd_io-%s-%d",
-+				       common_wq_flags | WQ_PERCPU, 1,
-+				       devname, wq_id);
- 	if (!cc->io_queue) {
- 		ti->error = "Couldn't create kcryptd io queue";
- 		goto bad;
-@@ -3449,7 +3451,7 @@ static int crypt_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 
- 	if (test_bit(DM_CRYPT_SAME_CPU, &cc->flags)) {
- 		cc->crypt_queue = alloc_workqueue("kcryptd-%s-%d",
--						  common_wq_flags | WQ_CPU_INTENSIVE,
-+						  common_wq_flags | WQ_CPU_INTENSIVE | WQ_PERCPU,
- 						  1, devname, wq_id);
- 	} else {
- 		/*
-diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
-index 4bb6553278c74..029f04776490a 100644
---- a/drivers/md/dm-delay.c
-+++ b/drivers/md/dm-delay.c
-@@ -290,7 +290,9 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	} else {
- 		timer_setup(&dc->delay_timer, handle_delayed_timer, 0);
- 		INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
--		dc->kdelayd_wq = alloc_workqueue("kdelayd", WQ_MEM_RECLAIM, 0);
-+		dc->kdelayd_wq = alloc_workqueue("kdelayd",
-+						 WQ_MEM_RECLAIM | WQ_PERCPU,
-+						 0);
- 		if (!dc->kdelayd_wq) {
- 			ret = -EINVAL;
- 			DMERR("Couldn't start kdelayd");
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index ba52631052503..a9c0157bf42fe 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -5003,7 +5003,8 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 	}
- 
- 	ic->metadata_wq = alloc_workqueue("dm-integrity-metadata",
--					  WQ_MEM_RECLAIM, METADATA_WORKQUEUE_MAX_ACTIVE);
-+					  WQ_MEM_RECLAIM | WQ_PERCPU,
-+					  METADATA_WORKQUEUE_MAX_ACTIVE);
- 	if (!ic->metadata_wq) {
- 		ti->error = "Cannot allocate workqueue";
- 		r = -ENOMEM;
-@@ -5021,7 +5022,8 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 		goto bad;
- 	}
- 
--	ic->offload_wq = alloc_workqueue("dm-integrity-offload", WQ_MEM_RECLAIM,
-+	ic->offload_wq = alloc_workqueue("dm-integrity-offload",
-+					  WQ_MEM_RECLAIM | WQ_PERCPU,
- 					  METADATA_WORKQUEUE_MAX_ACTIVE);
- 	if (!ic->offload_wq) {
- 		ti->error = "Cannot allocate workqueue";
-@@ -5029,7 +5031,8 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 		goto bad;
- 	}
- 
--	ic->commit_wq = alloc_workqueue("dm-integrity-commit", WQ_MEM_RECLAIM, 1);
-+	ic->commit_wq = alloc_workqueue("dm-integrity-commit",
-+					WQ_MEM_RECLAIM | WQ_PERCPU, 1);
- 	if (!ic->commit_wq) {
- 		ti->error = "Cannot allocate workqueue";
- 		r = -ENOMEM;
-@@ -5038,7 +5041,8 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 	INIT_WORK(&ic->commit_work, integrity_commit);
- 
- 	if (ic->mode == 'J' || ic->mode == 'B') {
--		ic->writer_wq = alloc_workqueue("dm-integrity-writer", WQ_MEM_RECLAIM, 1);
-+		ic->writer_wq = alloc_workqueue("dm-integrity-writer",
-+						WQ_MEM_RECLAIM | WQ_PERCPU, 1);
- 		if (!ic->writer_wq) {
- 			ti->error = "Cannot allocate workqueue";
- 			r = -ENOMEM;
-@@ -5210,7 +5214,8 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
- 	}
- 
- 	if (ic->internal_hash) {
--		ic->recalc_wq = alloc_workqueue("dm-integrity-recalc", WQ_MEM_RECLAIM, 1);
-+		ic->recalc_wq = alloc_workqueue("dm-integrity-recalc",
-+						WQ_MEM_RECLAIM | WQ_PERCPU, 1);
- 		if (!ic->recalc_wq) {
- 			ti->error = "Cannot allocate workqueue";
- 			r = -ENOMEM;
-diff --git a/drivers/md/dm-kcopyd.c b/drivers/md/dm-kcopyd.c
-index 6ea75436a433a..cec9a60227b6f 100644
---- a/drivers/md/dm-kcopyd.c
-+++ b/drivers/md/dm-kcopyd.c
-@@ -934,7 +934,8 @@ struct dm_kcopyd_client *dm_kcopyd_client_create(struct dm_kcopyd_throttle *thro
- 		goto bad_slab;
- 
- 	INIT_WORK(&kc->kcopyd_work, do_work);
--	kc->kcopyd_wq = alloc_workqueue("kcopyd", WQ_MEM_RECLAIM, 0);
-+	kc->kcopyd_wq = alloc_workqueue("kcopyd", WQ_MEM_RECLAIM | WQ_PERCPU,
-+					0);
- 	if (!kc->kcopyd_wq) {
- 		r = -ENOMEM;
- 		goto bad_workqueue;
-diff --git a/drivers/md/dm-log-userspace-base.c b/drivers/md/dm-log-userspace-base.c
-index 9fbb4b48fb2bb..607436804a8b2 100644
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -299,7 +299,8 @@ static int userspace_ctr(struct dm_dirty_log *log, struct dm_target *ti,
- 	}
- 
- 	if (lc->integrated_flush) {
--		lc->dmlog_wq = alloc_workqueue("dmlogd", WQ_MEM_RECLAIM, 0);
-+		lc->dmlog_wq = alloc_workqueue("dmlogd",
-+					       WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 		if (!lc->dmlog_wq) {
- 			DMERR("couldn't start dmlogd");
- 			r = -ENOMEM;
-diff --git a/drivers/md/dm-mpath.c b/drivers/md/dm-mpath.c
-index 7d3fdd96f4edf..00df5be165759 100644
---- a/drivers/md/dm-mpath.c
-+++ b/drivers/md/dm-mpath.c
-@@ -2330,7 +2330,8 @@ static int __init dm_multipath_init(void)
- {
- 	int r = -ENOMEM;
- 
--	kmultipathd = alloc_workqueue("kmpathd", WQ_MEM_RECLAIM, 0);
-+	kmultipathd = alloc_workqueue("kmpathd", WQ_MEM_RECLAIM | WQ_PERCPU,
-+				      0);
- 	if (!kmultipathd) {
- 		DMERR("failed to create workqueue kmpathd");
- 		goto bad_alloc_kmultipathd;
-@@ -2349,7 +2350,7 @@ static int __init dm_multipath_init(void)
- 		goto bad_alloc_kmpath_handlerd;
- 	}
- 
--	dm_mpath_wq = alloc_workqueue("dm_mpath_wq", 0, 0);
-+	dm_mpath_wq = alloc_workqueue("dm_mpath_wq", WQ_PERCPU, 0);
- 	if (!dm_mpath_wq) {
- 		DMERR("failed to create workqueue dm_mpath_wq");
- 		goto bad_alloc_dm_mpath_wq;
-diff --git a/drivers/md/dm-raid1.c b/drivers/md/dm-raid1.c
-index bc8e04f6832a6..d9ec783a37ddc 100644
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -1128,7 +1128,8 @@ static int mirror_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	ti->num_discard_bios = 1;
- 	ti->per_io_data_size = sizeof(struct dm_raid1_bio_record);
- 
--	ms->kmirrord_wq = alloc_workqueue("kmirrord", WQ_MEM_RECLAIM, 0);
-+	ms->kmirrord_wq = alloc_workqueue("kmirrord",
-+					  WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!ms->kmirrord_wq) {
- 		DMERR("couldn't start kmirrord");
- 		r = -ENOMEM;
-@@ -1500,7 +1501,7 @@ static int __init dm_mirror_init(void)
- {
- 	int r;
- 
--	dm_raid1_wq = alloc_workqueue("dm_raid1_wq", 0, 0);
-+	dm_raid1_wq = alloc_workqueue("dm_raid1_wq", WQ_PERCPU, 0);
- 	if (!dm_raid1_wq) {
- 		DMERR("Failed to alloc workqueue");
- 		return -ENOMEM;
-diff --git a/drivers/md/dm-snap-persistent.c b/drivers/md/dm-snap-persistent.c
-index 568d10842b1f4..0e13d60bfdd12 100644
---- a/drivers/md/dm-snap-persistent.c
-+++ b/drivers/md/dm-snap-persistent.c
-@@ -871,7 +871,8 @@ static int persistent_ctr(struct dm_exception_store *store, char *options)
- 	atomic_set(&ps->pending_count, 0);
- 	ps->callbacks = NULL;
- 
--	ps->metadata_wq = alloc_workqueue("ksnaphd", WQ_MEM_RECLAIM, 0);
-+	ps->metadata_wq = alloc_workqueue("ksnaphd",
-+					  WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!ps->metadata_wq) {
- 		DMERR("couldn't start header metadata update thread");
- 		r = -ENOMEM;
-diff --git a/drivers/md/dm-stripe.c b/drivers/md/dm-stripe.c
-index 1461dc740dae6..1cff9df5b8b47 100644
---- a/drivers/md/dm-stripe.c
-+++ b/drivers/md/dm-stripe.c
-@@ -489,7 +489,7 @@ int __init dm_stripe_init(void)
- {
- 	int r;
- 
--	dm_stripe_wq = alloc_workqueue("dm_stripe_wq", 0, 0);
-+	dm_stripe_wq = alloc_workqueue("dm_stripe_wq", WQ_PERCPU, 0);
- 	if (!dm_stripe_wq)
- 		return -ENOMEM;
- 	r = dm_register_target(&stripe_target);
-diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
-index c8695c079cfe0..a5cd55b2ba02f 100644
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -1549,7 +1549,9 @@ static int verity_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	 * will fall-back to using it for error handling (or if the bufio cache
- 	 * doesn't have required hashes).
- 	 */
--	v->verify_wq = alloc_workqueue("kverityd", WQ_MEM_RECLAIM | WQ_HIGHPRI, 0);
-+	v->verify_wq = alloc_workqueue("kverityd",
-+				       WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_PERCPU,
-+				       0);
- 	if (!v->verify_wq) {
- 		ti->error = "Cannot allocate workqueue";
- 		r = -ENOMEM;
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index d8de4a3076a17..af54e289bcebe 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -2275,7 +2275,8 @@ static int writecache_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 		goto bad;
- 	}
- 
--	wc->writeback_wq = alloc_workqueue("writecache-writeback", WQ_MEM_RECLAIM, 1);
-+	wc->writeback_wq = alloc_workqueue("writecache-writeback",
-+					   WQ_MEM_RECLAIM | WQ_PERCPU, 1);
- 	if (!wc->writeback_wq) {
- 		r = -ENOMEM;
- 		ti->error = "Could not allocate writeback workqueue";
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 52f01c44e73a6..fb6bcd598c5b8 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2363,7 +2363,8 @@ static struct mapped_device *alloc_dev(int minor)
- 
- 	format_dev_t(md->name, MKDEV(_major, minor));
- 
--	md->wq = alloc_workqueue("kdmflush/%s", WQ_MEM_RECLAIM, 0, md->name);
-+	md->wq = alloc_workqueue("kdmflush/%s", WQ_MEM_RECLAIM | WQ_PERCPU, 0,
-+				 md->name);
- 	if (!md->wq)
- 		goto bad;
- 
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 7560e98dc35b3..0fc779493fa78 100644
+index 0fc779493fa78..0a3152f21d488 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -10345,11 +10345,11 @@ static int __init md_init(void)
+@@ -84,7 +84,6 @@ static DEFINE_XARRAY(md_submodule);
+ static const struct kobj_type md_ktype;
+ 
+ static DECLARE_WAIT_QUEUE_HEAD(resync_wait);
+-static struct workqueue_struct *md_wq;
+ 
+ /*
+  * This workqueue is used for sync_work to register new sync_thread, and for
+@@ -10345,10 +10344,6 @@ static int __init md_init(void)
  		goto err_bitmap;
  
  	ret = -ENOMEM;
--	md_wq = alloc_workqueue("md", WQ_MEM_RECLAIM, 0);
-+	md_wq = alloc_workqueue("md", WQ_MEM_RECLAIM | WQ_PERCPU, 0);
- 	if (!md_wq)
- 		goto err_wq;
- 
--	md_misc_wq = alloc_workqueue("md_misc", 0, 0);
-+	md_misc_wq = alloc_workqueue("md_misc", WQ_PERCPU, 0);
+-	md_wq = alloc_workqueue("md", WQ_MEM_RECLAIM | WQ_PERCPU, 0);
+-	if (!md_wq)
+-		goto err_wq;
+-
+ 	md_misc_wq = alloc_workqueue("md_misc", WQ_PERCPU, 0);
  	if (!md_misc_wq)
  		goto err_misc_wq;
+@@ -10373,8 +10368,6 @@ static int __init md_init(void)
+ err_md:
+ 	destroy_workqueue(md_misc_wq);
+ err_misc_wq:
+-	destroy_workqueue(md_wq);
+-err_wq:
+ 	md_llbitmap_exit();
+ err_bitmap:
+ 	md_bitmap_exit();
+@@ -10683,7 +10676,6 @@ static __exit void md_exit(void)
+ 	spin_unlock(&all_mddevs_lock);
+ 
+ 	destroy_workqueue(md_misc_wq);
+-	destroy_workqueue(md_wq);
+ 	md_bitmap_exit();
+ }
  
 -- 
 2.53.0
