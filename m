@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42C2400DE3;
-	Wed, 20 May 2026 18:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3739436EA8B;
+	Wed, 20 May 2026 18:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302824; cv=none; b=JEwVbFbtn44ct/UlEIliaCZb8LG4Mx7W97566YF9xk8/1C2V+o6X25TrftCt7K7O0FwtUeiD5waMSWtA2JClWcBdswp3GGxFwSHCpqFT8b7fMP/8oT95IPhJZ/4J4Dh3F9Be29zctBI6yWsgxqAA+vUK5JteidszP2Wmn7qFJjw=
+	t=1779302826; cv=none; b=sn9IX+dSeUjOGQZQoqIQeEZmXw2jHm4IIcuVrM7sqHiu5rLqt93gf3a7vbbX9hFF/TVh9wo59W7wIpa55vQZvaPFnJ6TiVB3pu8tcxT9tz6MlL6QQJTR3+n8nDm/yhuXQVuNQ0oIDWMNrSBwbtNLrkCnvg63rvldQosEj1CDfs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302824; c=relaxed/simple;
-	bh=HnJbIhMAJkq90RMbelgvpabjA07TdMfg8n5LS3bHvZQ=;
+	s=arc-20240116; t=1779302826; c=relaxed/simple;
+	bh=ykh2ULy62SyY6wT4PfoZZBifO0kY6XUgNnAlcaQXT0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMF5ynrSBr+cLkoiHPAloeMwTlamgRbwcbygrH4P037bXfC/Ai2YJG9Ph+Ew8Djdn3YHudga7/2pqGIZpYG4/hjmbsDKrhfDswszehj36MnG966RQk4J8AAiVS0TQ4Ipf/mnw3L2Q2jKhWVWxBv9fuN5BToDJR4YdzVLeUAslCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdRs5Efx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ehw9LZB4HoDQJPW4C80WBBKmMPyyz8cYWh14I+It/zd/+ZylGiNtmWXDoatLqM1NXMiaNhp7vhSlqwQoW+RqE/pILqYHHvAOL4DpURUwZQpOJHVw5rRFrIuLrdppfPi8y3WnoR1nAJXwgDEu+dpaMFaGWR/AsBjvuMNFKnOUAPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALlIxb1Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdRs5Efx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024411F000E9;
-	Wed, 20 May 2026 18:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALlIxb1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE601F000E9;
+	Wed, 20 May 2026 18:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302822;
-	bh=mLuv27cMFpksuI+RMf446+Sud47twW2amTWqSYNu+0U=;
+	s=korg; t=1779302825;
+	bh=KFXN0KlKGGuz8MiW2SpmuYtLuyxndKvc6swim272+XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RdRs5EfxlboOL9xnWJpGU7+0stQethEqSXiOtoURgVXdEEZENNHPMtPA6dXkLg39z
-	 NSW7/h/Z6aFB2nIhvrkMLC8sTmH9ZyCGjcPUGvG5Wb4HSr0+FCQw6yaCIMjULiJzLN
-	 JDuhN48ufjkavHgUbmFaCTBAqAEx9qaiRsqWfNVs=
+	b=ALlIxb1QYaPtXwDlDpnKo34LZgwTgSUUAl/iKHm1ldWTEC7z0bGROQpP2aMpNma+s
+	 sMOqKceMltLPJdUa8REj5jK0S3tOeDbQ9fWWdHeoyBBxYO6HmuBfSUUocHNk5go/9Q
+	 WWYLG/J8IJwOSwAK2+2NR7rgeIRGU0R6mVGypz0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 413/508] ipv4: add new arguments to udp_tunnel_dst_lookup()
-Date: Wed, 20 May 2026 18:23:56 +0200
-Message-ID: <20260520162107.557721309@linuxfoundation.org>
+Subject: [PATCH 6.6 414/508] ipv6: rename and move ip6_dst_lookup_tunnel()
+Date: Wed, 20 May 2026 18:23:57 +0200
+Message-ID: <20260520162107.578990834@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -55,23 +55,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Beniamino Galvani <b.galvani@gmail.com>
 
-[ Upstream commit 72fc68c6356b663a8763f02d9b0ec773d59a4949 ]
+[ Upstream commit fc47e86dbfb75a864c0c9dd8e78affb6506296bb ]
 
-We want to make the function more generic so that it can be used by
-other UDP tunnel implementations such as geneve and vxlan. To do that,
-add the following arguments:
+At the moment ip6_dst_lookup_tunnel() is used only by bareudp.
+Ideally, other UDP tunnel implementations should use it, but to do so
+the function needs to accept new parameters that are specific for UDP
+tunnels, such as the ports.
 
- - source and destination UDP port;
- - ifindex of the output interface, needed by vxlan;
- - the tos, because in some cases it is not taken from struct
-   ip_tunnel_info (for example, when it's inherited from the inner
-   packet);
- - the dst cache, because not all tunnel types (e.g. vxlan) want to
-   use the one from struct ip_tunnel_info.
+Prepare for these changes by renaming the function to
+udp_tunnel6_dst_lookup() and move it to file
+net/ipv6/ip6_udp_tunnel.c.
 
-With these parameters, the function no longer needs the full struct
-ip_tunnel_info as argument and we can pass only the relevant part of
-it (struct ip_tunnel_key).
+This is similar to what already done for IPv4 in commit bf3fcbf7e7a0
+("ipv4: rename and move ip_route_output_tunnel()").
 
 Suggested-by: Guillaume Nault <gnault@redhat.com>
 Signed-off-by: Beniamino Galvani <b.galvani@gmail.com>
@@ -80,116 +76,237 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: aa6c6d9ee064 ("bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bareudp.c      | 11 +++++++----
- include/net/udp_tunnel.h   |  8 +++++---
- net/ipv4/udp_tunnel_core.c | 26 +++++++++++++-------------
- 3 files changed, 25 insertions(+), 20 deletions(-)
+ drivers/net/bareudp.c     | 10 +++---
+ include/net/ipv6.h        |  6 ----
+ include/net/udp_tunnel.h  |  7 ++++
+ net/ipv6/ip6_output.c     | 68 --------------------------------------
+ net/ipv6/ip6_udp_tunnel.c | 69 +++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 81 insertions(+), 79 deletions(-)
 
 diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
-index 1a9a43ed462a8..385cc386ecaee 100644
+index 385cc386ecaee..150049d9a81a7 100644
 --- a/drivers/net/bareudp.c
 +++ b/drivers/net/bareudp.c
-@@ -325,8 +325,10 @@ static int bareudp_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+@@ -393,8 +393,8 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
  	if (!sock)
  		return -ESHUTDOWN;
  
--	rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, &saddr, info,
--				   use_cache);
-+	rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, 0, &saddr, &info->key,
-+				   0, 0, key->tos,
-+				   use_cache ?
-+				   (struct dst_cache *)&info->dst_cache : NULL);
+-	dst = ip6_dst_lookup_tunnel(skb, dev, bareudp->net, sock, &saddr, info,
+-				    IPPROTO_UDP, use_cache);
++	dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock, &saddr, info,
++				     IPPROTO_UDP, use_cache);
+ 	if (IS_ERR(dst))
+ 		return PTR_ERR(dst);
  
- 	if (IS_ERR(rt))
- 		return PTR_ERR(rt);
-@@ -505,8 +507,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
- 		struct rtable *rt;
- 		__be32 saddr;
+@@ -520,9 +520,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
+ 		struct in6_addr saddr;
+ 		struct socket *sock = rcu_dereference(bareudp->sock);
  
--		rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, &saddr,
--					   info, use_cache);
-+		rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, 0, &saddr,
-+					   &info->key, 0, 0, info->key.tos,
-+					   use_cache ? &info->dst_cache : NULL);
- 		if (IS_ERR(rt))
- 			return PTR_ERR(rt);
+-		dst = ip6_dst_lookup_tunnel(skb, dev, bareudp->net, sock,
+-					    &saddr, info, IPPROTO_UDP,
+-					    use_cache);
++		dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock,
++					     &saddr, info, IPPROTO_UDP,
++					     use_cache);
+ 		if (IS_ERR(dst))
+ 			return PTR_ERR(dst);
+ 
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index d98f5390ffad3..3645776d71c9c 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1133,12 +1133,6 @@ struct dst_entry *ip6_dst_lookup_flow(struct net *net, const struct sock *sk, st
+ struct dst_entry *ip6_sk_dst_lookup_flow(struct sock *sk, struct flowi6 *fl6,
+ 					 const struct in6_addr *final_dst,
+ 					 bool connected);
+-struct dst_entry *ip6_dst_lookup_tunnel(struct sk_buff *skb,
+-					struct net_device *dev,
+-					struct net *net, struct socket *sock,
+-					struct in6_addr *saddr,
+-					const struct ip_tunnel_info *info,
+-					u8 protocol, bool use_cache);
+ struct dst_entry *ip6_blackhole_route(struct net *net,
+ 				      struct dst_entry *orig_dst);
  
 diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
-index fd664b2001053..a8ff2613fabc2 100644
+index a8ff2613fabc2..6818a59a1ebcb 100644
 --- a/include/net/udp_tunnel.h
 +++ b/include/net/udp_tunnel.h
-@@ -163,9 +163,11 @@ void udp_tunnel_sock_release(struct socket *sock);
- 
- struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
- 				     struct net_device *dev,
--				     struct net *net, __be32 *saddr,
--				     const struct ip_tunnel_info *info,
--				     bool use_cache);
-+				     struct net *net, int oif,
-+				     __be32 *saddr,
-+				     const struct ip_tunnel_key *key,
-+				     __be16 sport, __be16 dport, u8 tos,
-+				     struct dst_cache *dst_cache);
+@@ -168,6 +168,13 @@ struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
+ 				     const struct ip_tunnel_key *key,
+ 				     __be16 sport, __be16 dport, u8 tos,
+ 				     struct dst_cache *dst_cache);
++struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
++					 struct net_device *dev,
++					 struct net *net,
++					 struct socket *sock,
++					 struct in6_addr *saddr,
++					 const struct ip_tunnel_info *info,
++					 u8 protocol, bool use_cache);
  
  struct metadata_dst *udp_tun_rx_dst(struct sk_buff *skb, unsigned short family,
  				    __be16 flags, __be64 tunnel_id,
-diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
-index 9b0cfd72d5fda..494685e828563 100644
---- a/net/ipv4/udp_tunnel_core.c
-+++ b/net/ipv4/udp_tunnel_core.c
-@@ -206,31 +206,31 @@ EXPORT_SYMBOL_GPL(udp_tun_rx_dst);
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index a824c707dffff..710aadbb2e267 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1307,74 +1307,6 @@ struct dst_entry *ip6_sk_dst_lookup_flow(struct sock *sk, struct flowi6 *fl6,
+ }
+ EXPORT_SYMBOL_GPL(ip6_sk_dst_lookup_flow);
  
- struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
- 				     struct net_device *dev,
--				     struct net *net, __be32 *saddr,
--				     const struct ip_tunnel_info *info,
--				     bool use_cache)
-+				     struct net *net, int oif,
-+				     __be32 *saddr,
-+				     const struct ip_tunnel_key *key,
-+				     __be16 sport, __be16 dport, u8 tos,
-+				     struct dst_cache *dst_cache)
- {
+-/**
+- *      ip6_dst_lookup_tunnel - perform route lookup on tunnel
+- *      @skb: Packet for which lookup is done
+- *      @dev: Tunnel device
+- *      @net: Network namespace of tunnel device
+- *      @sock: Socket which provides route info
+- *      @saddr: Memory to store the src ip address
+- *      @info: Tunnel information
+- *      @protocol: IP protocol
+- *      @use_cache: Flag to enable cache usage
+- *      This function performs a route lookup on a tunnel
+- *
+- *      It returns a valid dst pointer and stores src address to be used in
+- *      tunnel in param saddr on success, else a pointer encoded error code.
+- */
+-
+-struct dst_entry *ip6_dst_lookup_tunnel(struct sk_buff *skb,
+-					struct net_device *dev,
+-					struct net *net,
+-					struct socket *sock,
+-					struct in6_addr *saddr,
+-					const struct ip_tunnel_info *info,
+-					u8 protocol,
+-					bool use_cache)
+-{
+-	struct dst_entry *dst = NULL;
 -#ifdef CONFIG_DST_CACHE
 -	struct dst_cache *dst_cache;
 -#endif
- 	struct rtable *rt = NULL;
- 	struct flowi4 fl4;
--	__u8 tos;
- 
- #ifdef CONFIG_DST_CACHE
+-	struct flowi6 fl6;
+-	__u8 prio;
+-
+-#ifdef CONFIG_DST_CACHE
 -	dst_cache = (struct dst_cache *)&info->dst_cache;
 -	if (use_cache) {
-+	if (dst_cache) {
- 		rt = dst_cache_get_ip4(dst_cache, saddr);
- 		if (rt)
- 			return rt;
- 	}
- #endif
-+
- 	memset(&fl4, 0, sizeof(fl4));
- 	fl4.flowi4_mark = skb->mark;
- 	fl4.flowi4_proto = IPPROTO_UDP;
--	fl4.daddr = info->key.u.ipv4.dst;
--	fl4.saddr = info->key.u.ipv4.src;
--	tos = info->key.tos;
-+	fl4.flowi4_oif = oif;
-+	fl4.daddr = key->u.ipv4.dst;
-+	fl4.saddr = key->u.ipv4.src;
-+	fl4.fl4_dport = dport;
-+	fl4.fl4_sport = sport;
- 	fl4.flowi4_tos = RT_TOS(tos);
- 
- 	rt = ip_route_output_key(net, &fl4);
-@@ -244,7 +244,7 @@ struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
- 		return ERR_PTR(-ELOOP);
- 	}
- #ifdef CONFIG_DST_CACHE
+-		dst = dst_cache_get_ip6(dst_cache, saddr);
+-		if (dst)
+-			return dst;
+-	}
+-#endif
+-	memset(&fl6, 0, sizeof(fl6));
+-	fl6.flowi6_mark = skb->mark;
+-	fl6.flowi6_proto = protocol;
+-	fl6.daddr = info->key.u.ipv6.dst;
+-	fl6.saddr = info->key.u.ipv6.src;
+-	prio = info->key.tos;
+-	fl6.flowlabel = ip6_make_flowinfo(prio, info->key.label);
+-
+-	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sock->sk, &fl6,
+-					      NULL);
+-	if (IS_ERR(dst)) {
+-		netdev_dbg(dev, "no route to %pI6\n", &fl6.daddr);
+-		return ERR_PTR(-ENETUNREACH);
+-	}
+-	if (dst->dev == dev) { /* is this necessary? */
+-		netdev_dbg(dev, "circular route to %pI6\n", &fl6.daddr);
+-		dst_release(dst);
+-		return ERR_PTR(-ELOOP);
+-	}
+-#ifdef CONFIG_DST_CACHE
 -	if (use_cache)
-+	if (dst_cache)
- 		dst_cache_set_ip4(dst_cache, &rt->dst, fl4.saddr);
- #endif
- 	*saddr = fl4.saddr;
+-		dst_cache_set_ip6(dst_cache, dst, &fl6.saddr);
+-#endif
+-	*saddr = fl6.saddr;
+-	return dst;
+-}
+-EXPORT_SYMBOL_GPL(ip6_dst_lookup_tunnel);
+-
+ static inline struct ipv6_opt_hdr *ip6_opt_dup(struct ipv6_opt_hdr *src,
+ 					       gfp_t gfp)
+ {
+diff --git a/net/ipv6/ip6_udp_tunnel.c b/net/ipv6/ip6_udp_tunnel.c
+index cdc4d4ee24206..7aef559e60ec5 100644
+--- a/net/ipv6/ip6_udp_tunnel.c
++++ b/net/ipv6/ip6_udp_tunnel.c
+@@ -1,3 +1,4 @@
++
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <linux/module.h>
+ #include <linux/errno.h>
+@@ -111,4 +112,72 @@ int udp_tunnel6_xmit_skb(struct dst_entry *dst, struct sock *sk,
+ }
+ EXPORT_SYMBOL_GPL(udp_tunnel6_xmit_skb);
+ 
++/**
++ *      udp_tunnel6_dst_lookup - perform route lookup on UDP tunnel
++ *      @skb: Packet for which lookup is done
++ *      @dev: Tunnel device
++ *      @net: Network namespace of tunnel device
++ *      @sock: Socket which provides route info
++ *      @saddr: Memory to store the src ip address
++ *      @info: Tunnel information
++ *      @protocol: IP protocol
++ *      @use_cache: Flag to enable cache usage
++ *      This function performs a route lookup on a UDP tunnel
++ *
++ *      It returns a valid dst pointer and stores src address to be used in
++ *      tunnel in param saddr on success, else a pointer encoded error code.
++ */
++
++struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
++					 struct net_device *dev,
++					 struct net *net,
++					 struct socket *sock,
++					 struct in6_addr *saddr,
++					 const struct ip_tunnel_info *info,
++					 u8 protocol,
++					 bool use_cache)
++{
++	struct dst_entry *dst = NULL;
++#ifdef CONFIG_DST_CACHE
++	struct dst_cache *dst_cache;
++#endif
++	struct flowi6 fl6;
++	__u8 prio;
++
++#ifdef CONFIG_DST_CACHE
++	dst_cache = (struct dst_cache *)&info->dst_cache;
++	if (use_cache) {
++		dst = dst_cache_get_ip6(dst_cache, saddr);
++		if (dst)
++			return dst;
++	}
++#endif
++	memset(&fl6, 0, sizeof(fl6));
++	fl6.flowi6_mark = skb->mark;
++	fl6.flowi6_proto = protocol;
++	fl6.daddr = info->key.u.ipv6.dst;
++	fl6.saddr = info->key.u.ipv6.src;
++	prio = info->key.tos;
++	fl6.flowlabel = ip6_make_flowinfo(prio, info->key.label);
++
++	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sock->sk, &fl6,
++					      NULL);
++	if (IS_ERR(dst)) {
++		netdev_dbg(dev, "no route to %pI6\n", &fl6.daddr);
++		return ERR_PTR(-ENETUNREACH);
++	}
++	if (dst->dev == dev) { /* is this necessary? */
++		netdev_dbg(dev, "circular route to %pI6\n", &fl6.daddr);
++		dst_release(dst);
++		return ERR_PTR(-ELOOP);
++	}
++#ifdef CONFIG_DST_CACHE
++	if (use_cache)
++		dst_cache_set_ip6(dst_cache, dst, &fl6.saddr);
++#endif
++	*saddr = fl6.saddr;
++	return dst;
++}
++EXPORT_SYMBOL_GPL(udp_tunnel6_dst_lookup);
++
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
