@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0F336F421;
-	Wed, 20 May 2026 16:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74324356754;
+	Wed, 20 May 2026 16:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294543; cv=none; b=I7pAuDPsa9u7gMXJ4PRToCfhig5VttxxYpbU6L0u+YJuBf+4mginpxtMSe5+bFXfMpEKRhQcHnSSMYe4/tpCJGmAQpr3L6pei9ppoJO7atKFE/j7OFxxCyOwsZvPrV9WLinQnsy0qQhKyRxNrQaYibiqTfrzPcDr0d4PEnk9obg=
+	t=1779294546; cv=none; b=txPP9qjFydTn0Od/ifXgYy6t74D76uCM9yLBgpcV+jagwJQQHoFYMunc6JKDFWq2Ezu36E+3ifbz+dwwSRH+inAIEZOg4u6vz9foF1Vo6o2/at8Y6wVW/MM6ewWgpN6wn4cvI2NYVIpLhphfqyYTATyiTE4vbV4eM0nPx/7NpIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294543; c=relaxed/simple;
-	bh=XwxwWOAMLP3tF/YUbgzrzMvGej76+7vToctiaJhJ/Aw=;
+	s=arc-20240116; t=1779294546; c=relaxed/simple;
+	bh=CJwWC9C5bOGlIkqvFklXM8xpsk60Mq9kwPtZGHYRf38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SdhiCBvc1biOG4iV6SRY30hpZgCWjqSWtqewak4fxWzMu3J41hxPyTrJi91W1qJ+8CKRIilIuAvM5IH7t1PYtBOhjPnawjXYqbJbGbloYDWJCCO5QUwmEcpldSoW7HHQt9mwD9qrcyTKNAY6j/m0rBTKr2IwFc2f4RECdqeoJiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQfAAzZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dXH43zued0VvHcNVpZzCWtm9vnZZMGUvAkORn5sruXbN+b++cdaBaCZ6s9qieAlKufTq5NjZtusYQsTkVbwiDyy10fp5yoXZA6dWuEcij5AxaQbCYZqGQOBlN+T7E4LLqlAworSy5B99Lt2BGLEqmTQybF2tCY3q2Rt64hiRZew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF1RHhsb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQfAAzZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1681F000E9;
-	Wed, 20 May 2026 16:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF1RHhsb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91B31F00893;
+	Wed, 20 May 2026 16:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294542;
-	bh=wyfgxxtBxNrIv9oe87zFnevoXRfqTeb1X6vbx+mFr5g=;
+	s=korg; t=1779294545;
+	bh=fxRWKmPXwj23YdNXqboerPFLAAjMUpu6O7OYXMBaS7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZQfAAzZmh+NVvg9mptNRyWk3qr24rkP/gjKmsla+nte2ay5MWjBkzQkXPp6dugT7D
-	 owhoJfmDj6JayYVOdnCftUFL1Gd8uvS3JEXPdVlbgPh1Spjq6hpwMJce2CtVr4csPw
-	 kA2U3yWDn9RxnkPkrHU4shg0sLoS6z0Tf43656z8=
+	b=bF1RHhsbXrqnd+rv4lNw2cxOJtUTD1kiXHdg8EhHEGeeVAViPjvEibnBoxd36y0Wg
+	 rED/PEC05Up3eNEpQoon3/1pDd+15wlGBZVWWPcDd853LTMozbO3aq035YhXGQsZwS
+	 WLzQAYP8AMoJV9xbDcRpE2Mx087osUpgTpIjm6oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Cai Xinchen <caixinchen1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0077/1146] wifi: ieee80211: fix definition of EHT-MCS 15 in MRU
-Date: Wed, 20 May 2026 18:05:27 +0200
-Message-ID: <20260520162150.097740466@linuxfoundation.org>
+Subject: [PATCH 7.0 0078/1146] dpaa2: add independent dependencies for FSL_DPAA2_SWITCH
+Date: Wed, 20 May 2026 18:05:28 +0200
+Message-ID: <20260520162150.119954198@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,49 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit cb0caadb64ca0894c4a24e1a34841f260d462f90 ]
+[ Upstream commit 12589892f41c4c645c80ef9f036f7451a6045624 ]
 
-According to the definition in IEEE Std 802.11be-2024, Table 9-417r, each
-bit indicates support for the transmission and reception of EHT-MCS 15 in:
-- B0: 52+26-tone and 106+26-tone MRUs.
-- B1: a 484+242-tone MRU if 80 MHz is supported.
-- B2: a 996+484-tone MRU and a 996+484+242-tone MRU if 160 MHz is
-      supported.
-- B3: a 3×996-tone MRU if 320 MHz is supported.
+Since the commit 84cba72956fd ("dpaa2-switch: integrate
+the MAC endpoint support") included dpaa2-mac.o in the driver,
+but it didn't select PCS_LYNX, PHYLINK and FSL_XGMAC_MDIO. it
+will lead to link error, such as
+undefined reference to `phylink_ethtool_ksettings_set'
+undefined reference to `lynx_pcs_create_fwnode'
 
-Fixes: 6239da18d2f9 ("wifi: mac80211: adjust EHT capa when lowering bandwidth")
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20260313062150.3165433-1-shayne.chen@mediatek.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+And the same reason as the commit d2624e70a2f53 ("dpaa2-eth: select
+XGMAC_MDIO for MDIO bus support"), enable the FSL_XGMAC_MDIO Kconfig
+option in order to have MDIO access to internal and external PHYs.
+
+Because dpaa2-switch uses fsl_mc_driver APIs, add depends on FSL_MC_BUS
+&& FSL_MC_DPIO as FSL_DPAA2_SWITCH do.
+
+FSL_XGMAC_MDIO and FSL_MC_BUS depend on OF, thus the dependence of
+FSL_MC_BUS can satisfy FSL_XGMAC_MDIO's OF requirement.
+
+Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
+Suggested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
+Link: https://patch.msgid.link/20260312065907.476663-2-caixinchen1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211-eht.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/ieee80211-eht.h b/include/linux/ieee80211-eht.h
-index f8e9f5d36d2a2..a97b1d01f3acf 100644
---- a/include/linux/ieee80211-eht.h
-+++ b/include/linux/ieee80211-eht.h
-@@ -251,8 +251,8 @@ struct ieee80211_eht_operation_info {
- #define IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF		0x40
- #define IEEE80211_EHT_PHY_CAP6_MAX_NUM_SUPP_EHT_LTF_MASK	0x07
- 
--#define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_80MHZ			0x08
--#define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_160MHZ		0x30
-+#define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_80MHZ			0x10
-+#define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_160MHZ		0x20
- #define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_320MHZ		0x40
- #define IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK			0x78
- #define IEEE80211_EHT_PHY_CAP6_EHT_DUP_6GHZ_SUPP		0x80
+diff --git a/drivers/net/ethernet/freescale/dpaa2/Kconfig b/drivers/net/ethernet/freescale/dpaa2/Kconfig
+index d029b69c3f183..36280e5d99e1f 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/Kconfig
++++ b/drivers/net/ethernet/freescale/dpaa2/Kconfig
+@@ -34,6 +34,10 @@ config FSL_DPAA2_SWITCH
+ 	tristate "Freescale DPAA2 Ethernet Switch"
+ 	depends on BRIDGE || BRIDGE=n
+ 	depends on NET_SWITCHDEV
++	depends on FSL_MC_BUS && FSL_MC_DPIO
++	select PHYLINK
++	select PCS_LYNX
++	select FSL_XGMAC_MDIO
+ 	help
+ 	  Driver for Freescale DPAA2 Ethernet Switch. This driver manages
+ 	  switch objects discovered on the Freeescale MC bus.
 -- 
 2.53.0
 
