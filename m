@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3913FB05A;
-	Wed, 20 May 2026 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365193FA5EB;
+	Wed, 20 May 2026 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301484; cv=none; b=JZSO6Hlk+zIciUWz0V9oeBPT9Use1yjbLszdwr1WQpRLV67nTgWrUNKDjIH/dNEQU/7AJbdmxIhdrNbdhP15E218aMpyvKJKOz9s/KI8y6T3r5NFcimVJcLu0wAEWhvPxudQsHWUSQ3JNzlOaisroQ7raPl8d+9lbvscATy/CkQ=
+	t=1779301487; cv=none; b=Li7anepdmfavvycyDyEVE/f9vUD+iufl5Dw9QmXbkatakimx2CioBeSsSJt/9nLcTr/lg8lhJ2b2aIpzYsBHm2QnN+eVvQDz2FdNCvwLjcoeC8qKTXRTZesR8y6V6Ez8pUHEYHA/TKY/Hri+HxIQntiABlSVek/eznazex/Sulc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301484; c=relaxed/simple;
-	bh=ikXV4+oKAwRz1hfmtzV8KyBoXCXU3+mXrqGlyITQwRc=;
+	s=arc-20240116; t=1779301487; c=relaxed/simple;
+	bh=JIICw/VBZeeKlySORs+0Y8ZNsoTxwBMnGOKUvRDYh5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=anm1pPZvF6Vv0BD12jEBw6luJyU5FCVAy3gzPWh+u4xQ9DAvFNsmXC7JVbvDqCq56wiC2FyGTE38P/aaEX+QsK/YFtIrtdKgsDnHzxfFyohZVsDPtz5BoTCYbwf5NtssXOe6HeIFox6Cr1RcrV6LMMgy+OLEr59uIfGEr1BvuAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kyrpt6z0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bI+75rpWg8+vTAsR5lxjyeCIEjKlLKkZt8HO0SgrWvcChrIZZS9ukVRz94iuSXeKCaHuJPWzzLFuJ/vPuPP5hlapTdKkS4RNZwamT+kqt126qJfLxocUVWLdqQdqsPQqm7uDUaRIXOXm6UxbRMjm3RtQkNLvmnvLtPPsqHTaZs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQbx2cNi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kyrpt6z0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9691F000E9;
-	Wed, 20 May 2026 18:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQbx2cNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9361F00894;
+	Wed, 20 May 2026 18:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301483;
-	bh=Q+HEZqZYvZDZ/PLYu20+LC2jX55Aj9ANho42YMJlsug=;
+	s=korg; t=1779301486;
+	bh=hJNuT4FAkq0T2wOiyruJGyhiidDR8Mw24dACDV4huxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kyrpt6z00+/R2hQwExnVoQDkahrEXl9N1AfylHvFBnffLFWGDCi5kv4Nt7GOUVxh8
-	 IUkCjQgVxlQIsdz46bNAWzPt3hbTxEf/42qh1lyAEqNQgIceqmqBwjNAesjaomQSgM
-	 zSzUV8wg/lQuNjWIYGxnOcD7jIHBvWJ3BFwC4gDg=
+	b=bQbx2cNiE2rHGpuUgFGqrHjD/BBvOLBaK0UgbvgydYwVGhx7cBV35jHOhyWCjh2Oc
+	 QQOuAtxBQA/wP+dfBzWFBU42KIoiFU33LEJCS3kdx/kIyg7RqNeLfKoZgMiIIuncwe
+	 p+3DannVXjlIFWv1I+N5yso92csmMC1JkUW/k9OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yinjie Yao <yinjie.yao@amd.com>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 565/666] drm/amdgpu/jpeg: set no_user_fence for JPEG v4.0.3 ring
-Date: Wed, 20 May 2026 18:22:56 +0200
-Message-ID: <20260520162123.514013794@linuxfoundation.org>
+Subject: [PATCH 6.12 574/666] ALSA: hda/conexant: Renaming the codec with device ID 0x1f86 and 0x1f87
+Date: Wed, 20 May 2026 18:23:05 +0200
+Message-ID: <20260520162123.708602270@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,43 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yinjie Yao <yinjie.yao@amd.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 83e37c0987ca92f9e87789b46dd311dcf5a4a6c8 ]
+[ Upstream commit 7f4c540e0859e2025675d2c5c5c6ab88eaf817e2 ]
 
-JPEG rings do not support 64-bit user fence writes, reject CS
-submissions with user fences.
+Due to changes in the manufacturer's plan, all 0x14f11f86 will be
+named CX11880, and 0x14f11f87 will be named SN6140
 
-Fixes: e684e654eba9 ("drm/amdgpu/jpeg: add jpeg support for VCN4_0_3")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2f6afc97d259d530f4f86c7743efbc573a8da927)
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20250616074331.581309-1-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: b0e2333a2311 ("ALSA: hda/conexant: Fix missing error check for jack detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_conexant.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-index fd0ba04a66045..c4f812939a85f 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -1122,6 +1122,7 @@ static const struct amd_ip_funcs jpeg_v4_0_3_ip_funcs = {
- static const struct amdgpu_ring_funcs jpeg_v4_0_3_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.get_rptr = jpeg_v4_0_3_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v4_0_3_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v4_0_3_dec_ring_set_wptr,
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index b7c9eba9236d8..00ac0e170619b 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -42,7 +42,7 @@ struct conexant_spec {
+ 	unsigned int gpio_led;
+ 	unsigned int gpio_mute_led_mask;
+ 	unsigned int gpio_mic_led_mask;
+-	bool is_cx8070_sn6140;
++	bool is_cx11880_sn6140;
+ };
+ 
+ 
+@@ -195,7 +195,7 @@ static int cx_auto_init(struct hda_codec *codec)
+ 	cxt_init_gpio_led(codec);
+ 	snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_INIT);
+ 
+-	if (spec->is_cx8070_sn6140)
++	if (spec->is_cx11880_sn6140)
+ 		cx_fixup_headset_recog(codec);
+ 
+ 	return 0;
+@@ -247,7 +247,7 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
+ {
+ 	unsigned int mic_present;
+ 
+-	/* In cx8070 and sn6140, the node 16 can only be configured to headphone or disabled,
++	/* In cx11880 and sn6140, the node 16 can only be configured to headphone or disabled,
+ 	 * the node 19 can only be configured to microphone or disabled.
+ 	 * Check hp&mic tag to process headset plugin & plugout.
+ 	 */
+@@ -1193,11 +1193,11 @@ static int patch_conexant_auto(struct hda_codec *codec)
+ 	codec->spec = spec;
+ 	codec->patch_ops = cx_auto_patch_ops;
+ 
+-	/* init cx8070/sn6140 flag and reset headset_present_flag */
++	/* init cx11880/sn6140 flag and reset headset_present_flag */
+ 	switch (codec->core.vendor_id) {
+ 	case 0x14f11f86:
+ 	case 0x14f11f87:
+-		spec->is_cx8070_sn6140 = true;
++		spec->is_cx11880_sn6140 = true;
+ 		snd_hda_jack_detect_enable_callback(codec, 0x19, cx_update_headset_mic_vref);
+ 		break;
+ 	}
+@@ -1285,7 +1285,7 @@ static int patch_conexant_auto(struct hda_codec *codec)
+  */
+ 
+ static const struct hda_device_id snd_hda_id_conexant[] = {
+-	HDA_CODEC_ENTRY(0x14f11f86, "CX8070", patch_conexant_auto),
++	HDA_CODEC_ENTRY(0x14f11f86, "CX11880", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f11f87, "SN6140", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f12008, "CX8200", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f120d0, "CX11970", patch_conexant_auto),
 -- 
 2.53.0
 
