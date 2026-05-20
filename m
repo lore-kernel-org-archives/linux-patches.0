@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE116369999;
-	Wed, 20 May 2026 17:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9F4366075;
+	Wed, 20 May 2026 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297721; cv=none; b=ERNNheF91jXrK/8gePqrT11yPIjYVbWHcRoJGnxxs0AY3HJT51tKJdirfzKLtG0gIukLqNd3c4Irivc1WF23MNllqrhTSD77dgVhQ69YUZVUf2Q72ca0Ly2LSOjCpzMDj78KAqRwsExc/Tu71XpnKKlAf50CL4KZ0Uf0sv8mNww=
+	t=1779297723; cv=none; b=QQLQ/u2/z+qV3xu0EXkcvrvqxL4Cnsq0RFHpAJZVrsjZdfMOFcVBQCrI5mmTcbvu7TWDOHMmrfRzb3L2k6YYdLq97gcjAFAptZA2N5CxNQkRjcIfmsZn/RZLGLbzkMOob5FZQvlCrNkF9p6ryVu1lmDxzKPSfdVb2ihzamK3dwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297721; c=relaxed/simple;
-	bh=vAkYgmeCrTrG4ojg/GPR6/s2pD5cwUfmsNf2MIohQD4=;
+	s=arc-20240116; t=1779297723; c=relaxed/simple;
+	bh=RC66k9Telz+lLovEjBHJiWJohi1aH1OSoxTEzrI7R9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpBXY+4lhmrLwyKlyFCyQBdxNdRkIfxbUAeQCcE4wzDx6LOyuz3qUjf8mF2jEL7x1k8nM0p1IxI1CTfKdiDgRh11z08obw/v5D51dRZlPachlEl4XeXA2eXmcCZ6RjkfJI9wnXcIW6CjP0eyeuPncU9S7ygqfVF3rrNaRqthReo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwug0tRd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l+fG/TytNdam7phbkASHUTi5UEFFKqhhv/FmtrBZye+ouKihSCEaERiQ1XbQfHf5yydc75c2EOIftFva0VJgrPb7bM3fI8o5B79EvuOvly5I8AbnaPmafAwjYmepiyOi5oUNfOlJPJK5JoAYESQU7Vwcp35jWB31wQoo6RZt5qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMSiPUyp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwug0tRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329421F000E9;
-	Wed, 20 May 2026 17:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMSiPUyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC361F000E9;
+	Wed, 20 May 2026 17:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297719;
-	bh=E87gjGX8stJfjgXkM5ubPOdl04MNw+r+wXXxMghdfS0=;
+	s=korg; t=1779297722;
+	bh=RzkEZ6pSt4naS3I/IOqSetfC0x0+Dr7TjejzpchNQQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwug0tRdtV7LmZeXorJAs10NjFep0eCConntbCE9kOa7E6qZa8omKj7g+8DDe1M1s
-	 6n+ZpReFtouPrWiYW6O7EHPYDl3KVI6RvwQeUWw7gbifyjxor8GXJkceCvED6EhJaI
-	 RiW9pnemlpUbx9beTb/0rCTXxyL4VYSUTaV4/1eI=
+	b=RMSiPUypzRwVG0YyEVdElw5BD//brXSZoCB0Xkdwe+psMFLb/r+90mLYrTHg1/F2H
+	 n4HRxRGuNXW3FR827CXggIkDKhUEO/OgTat+Bi9XobVGrBas2FjWnTto+Gjp8wEQiS
+	 CkLRMhynEKZoqHjH+tHw05kY1TRP2JVSVlBOcqHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Mohsin Bashir <hmohsin@meta.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 139/957] net: airoha: Add dma_rmb() and READ_ONCE() in airoha_qdma_rx_process()
-Date: Wed, 20 May 2026 18:10:22 +0200
-Message-ID: <20260520162137.569810805@linuxfoundation.org>
+Subject: [PATCH 6.18 140/957] eth: fbnic: Use wake instead of start
+Date: Wed, 20 May 2026 18:10:23 +0200
+Message-ID: <20260520162137.591156082@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,85 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Mohsin Bashir <hmohsin@meta.com>
 
-[ Upstream commit 4ae0604a0673e11e2075b178387151fcad5111b5 ]
+[ Upstream commit 12ff2a4aee6c86746623d5aed24389dbf6dffded ]
 
-Add missing dma_rmb() in airoha_qdma_rx_process routine to make sure the
-DMA read operations are completed when the NIC reports the processing on
-the current descriptor is done. Moreover, add missing READ_ONCE() in
-airoha_qdma_rx_process() for DMA descriptor control fields in order to
-avoid any compiler reordering.
+fbnic_up() calls netif_tx_start_all_queues(), which only clears
+__QUEUE_STATE_DRV_XOFF.  If qdisc backlog has accumulated on any TX
+queue before the reconfiguration (e.g. ring resize via ethtool -G),
+start does not call __netif_schedule() to kick the qdisc, so the
+pending backlog is never drained and the queue stalls.
 
-Fixes: 23020f0493270 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260407-airoha_qdma_rx_process-fix-reordering-v3-1-91c36e9da31f@kernel.org
+Switch to netif_tx_wake_all_queues(), which clears DRV_XOFF and also
+calls __netif_schedule() on every queue, ensuring any backlog that
+built up before the down/up cycle is promptly dequeued.
+
+Fixes: bc6107771bb4 ("eth: fbnic: Allocate a netdevice and napi vectors with queues")
+Signed-off-by: Mohsin Bashir <hmohsin@meta.com>
+Link: https://patch.msgid.link/20260408002415.2963915-1-mohsin.bashr@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index bdf600fea9508..060865b98880e 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -596,7 +596,7 @@ static int airoha_qdma_fill_rx_queue(struct airoha_queue *q)
- static int airoha_qdma_get_gdm_port(struct airoha_eth *eth,
- 				    struct airoha_qdma_desc *desc)
- {
--	u32 port, sport, msg1 = le32_to_cpu(desc->msg1);
-+	u32 port, sport, msg1 = le32_to_cpu(READ_ONCE(desc->msg1));
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+index 698b8a85afb31..99b7c0718e80e 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+@@ -139,7 +139,7 @@ void fbnic_up(struct fbnic_net *fbn)
  
- 	sport = FIELD_GET(QDMA_ETH_RXMSG_SPORT_MASK, msg1);
- 	switch (sport) {
-@@ -624,21 +624,24 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
- 	while (done < budget) {
- 		struct airoha_queue_entry *e = &q->entry[q->tail];
- 		struct airoha_qdma_desc *desc = &q->desc[q->tail];
--		u32 hash, reason, msg1 = le32_to_cpu(desc->msg1);
--		struct page *page = virt_to_head_page(e->buf);
--		u32 desc_ctrl = le32_to_cpu(desc->ctrl);
-+		u32 hash, reason, msg1, desc_ctrl;
- 		struct airoha_gdm_port *port;
- 		int data_len, len, p;
-+		struct page *page;
+ 	/* Enable Tx/Rx processing */
+ 	fbnic_napi_enable(fbn);
+-	netif_tx_start_all_queues(fbn->netdev);
++	netif_tx_wake_all_queues(fbn->netdev);
  
-+		desc_ctrl = le32_to_cpu(READ_ONCE(desc->ctrl));
- 		if (!(desc_ctrl & QDMA_DESC_DONE_MASK))
- 			break;
- 
-+		dma_rmb();
-+
- 		q->tail = (q->tail + 1) % q->ndesc;
- 		q->queued--;
- 
- 		dma_sync_single_for_cpu(eth->dev, e->dma_addr,
- 					SKB_WITH_OVERHEAD(q->buf_size), dir);
- 
-+		page = virt_to_head_page(e->buf);
- 		len = FIELD_GET(QDMA_DESC_LEN_MASK, desc_ctrl);
- 		data_len = q->skb ? q->buf_size
- 				  : SKB_WITH_OVERHEAD(q->buf_size);
-@@ -682,8 +685,8 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
- 			 * DMA descriptor. Report DSA tag to the DSA stack
- 			 * via skb dst info.
- 			 */
--			u32 sptag = FIELD_GET(QDMA_ETH_RXMSG_SPTAG,
--					      le32_to_cpu(desc->msg0));
-+			u32 msg0 = le32_to_cpu(READ_ONCE(desc->msg0));
-+			u32 sptag = FIELD_GET(QDMA_ETH_RXMSG_SPTAG, msg0);
- 
- 			if (sptag < ARRAY_SIZE(port->dsa_meta) &&
- 			    port->dsa_meta[sptag])
-@@ -691,6 +694,7 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
- 						  &port->dsa_meta[sptag]->dst);
- 		}
- 
-+		msg1 = le32_to_cpu(READ_ONCE(desc->msg1));
- 		hash = FIELD_GET(AIROHA_RXD4_FOE_ENTRY, msg1);
- 		if (hash != AIROHA_RXD4_FOE_ENTRY)
- 			skb_set_hash(q->skb, jhash_1word(hash, 0),
+ 	fbnic_service_task_start(fbn);
+ }
 -- 
 2.53.0
 
