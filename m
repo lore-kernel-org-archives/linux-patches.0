@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2040336494B;
-	Wed, 20 May 2026 17:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7AA36494B;
+	Wed, 20 May 2026 17:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296797; cv=none; b=tBVAYVVOar887nNkBBdz08MZze8pXNabwJJ7F8Jhe93Ucr0cuFfgBYIfSXNpKtPi6ZkdwrQWsmqGfq4afR2go8wP17y+T+dcj7W4anoap3rREsE8bsawHCcewMicwoU5rb0J5xXd/FDcZw4+ybeSq/rFInoY/Lazi1esBLrD1go=
+	t=1779296799; cv=none; b=AskslQwiXc5HKCHf8+G7qJphYqtZcPjWainMTBMJODy3OVZXDeKc/M0DQEr/naipMuytmcb+OuOS+p2NXJ1Pv/epEo37loWDFIEE/y6lg9pFGx2BcTP1JB6sDraTN1WB+Hc0A7L7VBnbRV0FxkD+xMZkXew9uIVgLUzBf0QvKZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296797; c=relaxed/simple;
-	bh=6YcistEXAHR46oZzqWCTBn0ss+wpmaP3HLCLW+lCa7c=;
+	s=arc-20240116; t=1779296799; c=relaxed/simple;
+	bh=VZv13RkwTKnuzZgEfIfjNsRbXeqBQh88cri/ja1zC20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2nMkrnWPlTGrAUo9oq7DDHcicXQgyumASKBFX7uYe70Ia/O23OMf+pWuIw9R4Q0w/jmhcKKuTg9syXqMsK1EoIUyndoUVsEBnHZXcj70Z5c3LkB+YXCCKqYykHnrwVUq9b0wHx2pM0YYYcMP6MH3O9F0rUoxWXkzivXiERPJ1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEReHb3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNzpmDLx8Atam9uUoaWVUs2PhaOvu+WUCs11AB87glSFNBGrd0IghXNxcoHlhk62QwX0bPonK0DDepqeHRLDcJQogvlEeUbytrwcS0F5sqXXOZUr+AQby56K8w5cMspWnxW+gKWTFo6ckuaw+ryAv2dUV+EYB4G88yRX2eF2Vlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7n2oR5d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEReHb3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C1A1F000E9;
-	Wed, 20 May 2026 17:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7n2oR5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC041F000E9;
+	Wed, 20 May 2026 17:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296796;
-	bh=AAdIsMpcBibQP93e7+U586zClDSvBGYYbEN3RZVFwIo=;
+	s=korg; t=1779296798;
+	bh=7isUPM1BGnfr3WQ5+E/KeMyXMZUjWdMe3MXhSYPo38g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GEReHb3Xi+c163xX3swR8c8wJPbnNwQfpxIB07SdUSfbhJRDYuZzt3w96Xg+OcpzQ
-	 3ukemJBbszBCz46teDR4vUuctPUMNpLwKs/yfizWacj9q5nWSR5IIpBQoUlGRWG0mD
-	 CqJMOHOkUMR8O+W/DopxGX5r3A1VPtcM5kq2q9vU=
+	b=w7n2oR5dq1ekuPTov54MyMw6tEHWdqB773R38P24pnE1bsg0HtrWPrz6K6LQ87x2h
+	 AwWVSIQUTRu0LsFti0AbLXUvocuWHEzWHMeRMgvqZLPxRI0vPPX1NxTikOfbxWNMMc
+	 FMNA5HVORHj0QW5isbmXB/NmLvgnrt5aoEOtWKpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhengping Zhang <aquapinn@qq.com>,
+	Simon Horman <horms@kernel.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0935/1146] net: airoha: stop net_device TX queue before updating CPU index
-Date: Wed, 20 May 2026 18:19:45 +0200
-Message-ID: <20260520162209.394838315@linuxfoundation.org>
+Subject: [PATCH 7.0 0936/1146] net: airoha: fix typo in function name
+Date: Wed, 20 May 2026 18:19:46 +0200
+Message-ID: <20260520162209.419167503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,53 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Zhengping Zhang <aquapinn@qq.com>
 
-[ Upstream commit 3854de7b38be742cf7558476956d12414cb274f2 ]
+[ Upstream commit aebf15e8eb09b01e99f043e9f5d423798aac9d32 ]
 
-Currently, airoha_eth driver updates the CPU index register prior of
-verifying whether the number of free descriptors has fallen below the
-threshold.
-Move net_device TX queue length check before updating the TX CPU index
-in order to update TX CPU index even if there are more packets to be
-transmitted but the net_device TX queue is going to be stopped
-accounting the inflight packets.
+Corrected the typo in the function name from
+ `airhoa_is_lan_gdm_port` to `airoha_is_lan_gdm_port`. This change ensures
+ consistency in the API naming convention.
 
-Fixes: 1d304174106c ("net: airoha: Implement BQL support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260421-airoha-xmit-stop-condition-v1-1-e670d6a48467@kernel.org
+Signed-off-by: Zhengping Zhang <aquapinn@qq.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/tencent_E4FD5D6BC0131E617D848896F5F9FCED6E0A@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e070aac63b42 ("net: airoha: Do not wake all netdev TX queues in airoha_qdma_wake_netdev_txqs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 2 +-
+ drivers/net/ethernet/airoha/airoha_eth.h | 2 +-
+ drivers/net/ethernet/airoha/airoha_ppe.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index a73c224d65755..4b804ca927819 100644
+index 4b804ca927819..8819e24283abc 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.c
 +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2092,17 +2092,16 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+@@ -76,7 +76,7 @@ static void airoha_set_macaddr(struct airoha_gdm_port *port, const u8 *addr)
+ 	struct airoha_eth *eth = port->qdma->eth;
+ 	u32 val, reg;
  
- 	skb_tx_timestamp(skb);
- 	netdev_tx_sent_queue(txq, skb->len);
-+	if (q->ndesc - q->queued < q->free_thr) {
-+		netif_tx_stop_queue(txq);
-+		q->txq_stopped = true;
-+	}
+-	reg = airhoa_is_lan_gdm_port(port) ? REG_FE_LAN_MAC_H
++	reg = airoha_is_lan_gdm_port(port) ? REG_FE_LAN_MAC_H
+ 					   : REG_FE_WAN_MAC_H;
+ 	val = (addr[0] << 16) | (addr[1] << 8) | addr[2];
+ 	airoha_fe_wr(eth, reg, val);
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
+index c9d1abda47768..46f4197007074 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.h
++++ b/drivers/net/ethernet/airoha/airoha_eth.h
+@@ -630,7 +630,7 @@ u32 airoha_rmw(void __iomem *base, u32 offset, u32 mask, u32 val);
+ #define airoha_qdma_clear(qdma, offset, val)			\
+ 	airoha_rmw((qdma)->regs, (offset), (val), 0)
  
- 	if (netif_xmit_stopped(txq) || !netdev_xmit_more())
- 		airoha_qdma_rmw(qdma, REG_TX_CPU_IDX(qid),
- 				TX_RING_CPU_IDX_MASK,
- 				FIELD_PREP(TX_RING_CPU_IDX_MASK, index));
- 
--	if (q->ndesc - q->queued < q->free_thr) {
--		netif_tx_stop_queue(txq);
--		q->txq_stopped = true;
--	}
--
- 	spin_unlock_bh(&q->lock);
- 
- 	return NETDEV_TX_OK;
+-static inline bool airhoa_is_lan_gdm_port(struct airoha_gdm_port *port)
++static inline bool airoha_is_lan_gdm_port(struct airoha_gdm_port *port)
+ {
+ 	/* GDM1 port on EN7581 SoC is connected to the lan dsa switch.
+ 	 * GDM{2,3,4} can be used as wan port connected to an external
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index 684c8ae9576f1..f2af45f7d66d4 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -331,7 +331,7 @@ static int airoha_ppe_foe_entry_prepare(struct airoha_eth *eth,
+ 			/* For downlink traffic consume SRAM memory for hw
+ 			 * forwarding descriptors queue.
+ 			 */
+-			if (airhoa_is_lan_gdm_port(port))
++			if (airoha_is_lan_gdm_port(port))
+ 				val |= AIROHA_FOE_IB2_FAST_PATH;
+ 			if (dsa_port >= 0)
+ 				val |= FIELD_PREP(AIROHA_FOE_IB2_NBQ,
 -- 
 2.53.0
 
