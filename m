@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603543BCD04;
-	Wed, 20 May 2026 11:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FDD3D565B;
+	Wed, 20 May 2026 11:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276021; cv=none; b=l91QemeMEVGytQN71uq8+POP1ARVFiNpKOsZk6xIhEaGZj/FVCtMQhAuVn/xPegWHc780yyJ2j6WTySTkyFqcXf52UTO/PcW+jKuhfoP3uOvbf7P40wmqanr9THRfF9yUYZXuaesCJPTyD/LeqgjyRQnFwnimLZJt37bNEga+wE=
+	t=1779276022; cv=none; b=FPpH37ObO9Qqjif4ljayaBodapSXXZ4TdroDCVqpWZwVdcnOhx3CVO9uMJ8Fv435ceVcRtIuxYZq39o4FEJJEPBwh7sxALpbMyLV6gUxiRdgw4QR0j1M3d2P8ICKK40bm1zrsu0sWogWZe9YjNHcJSMKNw1XMSroullLESnPJoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276021; c=relaxed/simple;
-	bh=GJYylXcn2nsU8fJDFYpyDxNo2CMymQnw6UwK2SAQfhs=;
+	s=arc-20240116; t=1779276022; c=relaxed/simple;
+	bh=9XqgKcjYiXNDXU5OJxr+za0FK/nyzKGrvh5Ed/wllDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dgb+ruyHIha2XI/30DAfXylsGvgSJFzCo/khmCZi6SZrHXfIjubCFhkMGk3xu9XDBhyw8nBznoTyj0TqiUP/2z/Gz0Uv/MkGoCPeJWymlfZ3LvKRmJcy3OY1zi5ouCaPqoWpd2rm+PO7UD02J1AvkKfSD/DvECd47uO/B1iMbss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wq0uEDSf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g4SvkvLv4en7acF5YYt5TSM5IRSyt5CuoLY+OAGjBulwLyk7bxreV9UHyYya1nVWmMv50J3CJoloKZkoqx/Us+vYyFRmwSpjw+f/Nv3NA/CVD47ZaWGHFHr2/ufNV4NU00sOmPctmlKmXmEegVO7p7l8Le6xuGb2ztA/thuNGI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVvC94ct; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wq0uEDSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042AB1F00897;
-	Wed, 20 May 2026 11:20:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVvC94ct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1BA1F0089A;
+	Wed, 20 May 2026 11:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276017;
-	bh=ZllhInPl3X19BGDDi+9GN535sfAEyUN6+8KBtVJVIxg=;
+	s=k20260515; t=1779276019;
+	bh=86pkA5p74HDwTMFjudY77u2qEq7BzgKXWCa8owjS5ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wq0uEDSfBkJt7M0xB8wQgvr80TDQOKyVVZC7GIcmweCBigc8VYolBogLYuFnjHDEy
-	 8naSUo0zrBfmttmvbHGyTjj4LhKc/hxvTn4tLubrDPEUEHIB9Qv3DmCxqobxgRN+Hs
-	 lPB2WnJgrrC6cv6tSHiRCSpP3VpwuU3lKhVO1wXjdJy/fkuOc3yAtPAlGxUEEH6WAz
-	 VVVK0huZ153L1Q7KrhFKyk8Q1xJZmVO/pi0eV43odFpILlSdaR/mQtuQz4CgM3b0Qd
-	 4tkj6pvy42JDkRwDxkFdHoE0QduorQ+YVUCb+8uTBm5uG3Dv0FM7ZUEXrQwsEp6E/r
-	 BC0rVcxWOMbNA==
+	b=GVvC94ct4I8khklouz1uHSfLgUmFxhLNVBCbtHCKPxvwH5vGcBnYqpoTAPsEiNRsS
+	 yvnEOtTcsIVwLHVlSo042BSUj2gj1jN8ymDGGLnvr1iyRdQ5ER9pL0kId6V9tw+Fsd
+	 7T5EryqOPg8OWmX0m7YFwefUF+uyiksW48qkMpeSAgjLkaCP3yqubdc/IriOlkOjGR
+	 ziI8XsUxrY5ApMUwLT6y0xj0gaYJH46sIbJCvm4Nx5rKYokjLo6QAcngK5IasIa4oB
+	 7NqvU9iDCx/c7baGvpATzDUIaykCQQ6eYu503b80Frs9m3GSRXTHQzu3XPRPN+icX2
+	 6Db2vVJZ7Qlkw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	libertas-dev@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: usb-audio: add min_mute quirk for Razer Nommo V2 X
-Date: Wed, 20 May 2026 07:18:55 -0400
-Message-ID: <20260520111944.3424570-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] wifi: libertas: fix integer underflow in process_cmdrequest()
+Date: Wed, 20 May 2026 07:18:56 -0400
+Message-ID: <20260520111944.3424570-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,221 +53,270 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-[ Upstream commit ad39a189bfebb3de580f390bc000f9e121c6aca3 ]
+[ Upstream commit 3994b4afd521d60e47e012fe2ed7b606aaec370b ]
 
-ID 1532:055e Razer USA, Ltd Razer Nommo V2 X
-is tested to have muted min playback volume. Apply quirk for that.
+The existing validation only checks if recvlength exceeds
+LBS_CMD_BUFFER_SIZE, but doesn't check the lower bound. When a
+USB device sends a response shorter than MESSAGE_HEADER_LEN, the
+subtraction (recvlength - MESSAGE_HEADER_LEN) wraps to a huge
+value, causing memcpy to corrupt the heap.
+Add the same lower bound check that libertas_tf already has.
 
-Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/work_items/5235
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Link: https://patch.msgid.link/94449577332d14d7974864903825f27e5824ddbc.1777579951.git.pav@iki.fi
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Link: https://patch.msgid.link/20260418004247.368944-1-a.jahangirzad@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `ALSA: usb-audio`; action verb `add`; intent:
-add a playback-minimum-is-mute quirk for USB ID `1532:055e`, Razer Nommo
-V2 X.
+## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `wifi: libertas`; action verb is `fix`;
+claimed intent is to prevent integer underflow in
+`process_cmdrequest()`.
 
-Step 1.2 Record: tags in supplied message: `Link` to PipeWire work item,
-`Signed-off-by: Pauli Virtanen`, `Link` to patch msgid, `Signed-off-by:
-Takashi Iwai`. No `Fixes`, `Reported-by`, `Tested-by`, `Reviewed-by`,
-`Acked-by`, or `Cc: stable`. The lore patch mbox verifies the Pauli SOB
-and PipeWire link; Takashi replied “Applied now.”
+Step 1.2 Record: Tags present are `Signed-off-by: Amir Mohammad
+Jahangirzad`, `Link: https://patch.msgid.link/20260418004247.368944-1-
+a.jahangirzad@gmail.com`, and `Signed-off-by: Johannes Berg`. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by`, or
+`Cc: stable` tag was present in the supplied commit message or original
+posted patch.
 
-Step 1.3 Record: bug description is device-specific: Razer Nommo V2 X
-has muted minimum playback volume. Symptom: userspace may expose the
-minimum playback volume as a normal low audible volume even though
-hardware treats it as mute. Version info: none in commit message. Root
-cause: device has nonstandard mixer semantics.
+Step 1.3 Record: The commit body describes a concrete memory corruption
+bug: `recvlength` is only checked against the upper bound, then
+`recvlength - MESSAGE_HEADER_LEN` is stored in `priv->resp_len[i]` and
+used as the `memcpy()` length. If a USB device supplies fewer than 4
+bytes, the subtraction becomes negative and is converted to a huge
+unsigned copy length. Symptom/failure mode: heap/driver memory
+corruption from `memcpy()`. Version information: none in the message.
+Root cause: missing lower-bound validation.
 
-Step 1.4 Record: yes, hidden bug/hardware workaround. It is a quirk for
-incorrect USB-audio volume semantics on real hardware.
+Step 1.4 Record: This is not hidden; it is explicitly a memory-safety
+fix. It matches the same already-present guard in `libertas_tf`.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: `sound/usb/quirks.c`, `+2/-0`, in
-`quirk_flags_table[]`. Scope: single-file surgical hardware quirk.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed:
+`drivers/net/wireless/marvell/libertas/if_usb.c`, 3 insertions and 2
+deletions. Modified function: `process_cmdrequest()`. Scope: single-file
+surgical fix.
 
-Step 2.2 Record: before, USB ID `1532:055e` had no built-in quirk flag.
-After, matching that device sets `QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`.
-Affected path is USB-audio device initialization and mixer control
-construction.
+Step 2.2 Record: Before, `process_cmdrequest()` rejected only
+`recvlength > LBS_CMD_BUFFER_SIZE`; lengths `1..3` passed and produced
+`recvlength - MESSAGE_HEADER_LEN`. After, it rejects `recvlength <
+MESSAGE_HEADER_LEN` as well as overlarge responses. This affects the USB
+command-response receive path.
 
-Step 2.3 Record: bug category is hardware workaround / quirk table
-entry. Mechanism: `snd_usb_init_quirk_flags_table()` ORs the flag into
-`chip->quirk_flags`; `snd_usb_mixer_fu_apply_quirk()` sees that flag on
-Playback controls and sets `cval->min_mute = 1`;
-`snd_usb_mixer_vol_tlv()` then reports `SNDRV_CTL_TLVT_DB_MINMAX_MUTE`.
+Step 2.3 Record: Bug category is memory safety, specifically integer
+underflow leading to oversized `memcpy()`. Verified details:
+`MESSAGE_HEADER_LEN` is 4, `resp_len` is `u32`, `resp_buf` is `u8
+resp_buf[2][LBS_UPLD_SIZE]`, and `LBS_UPLD_SIZE` is 2312. A negative
+subtraction assigned to `u32` becomes a huge length, far beyond the
+destination buffer.
 
-Step 2.4 Record: fix is obviously correct for kernels with this quirk
-infrastructure: one ID-specific table entry, no public API, no locking
-or lifetime changes. Regression risk is very low and limited to this
-VID:PID.
+Step 2.4 Record: Fix quality is high: minimal bounds check, no API
+change, no new behavior except rejecting malformed command responses.
+Regression risk is very low; valid command responses must already
+include the 4-byte command type/header.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: blame around the insertion area shows the surrounding
-quirk table is longstanding, with the nearby `NeuralDSP Quad Cortex`
-exception from `bc5b4e5ae1a67` and Denon entries from older Takashi Iwai
-commits. The common min-mute quirk infrastructure comes from
-`2c3ca8cc55a3` and follow-ups.
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the upper-bound check came from
+`ddac452680a516` in the v2.6.25-rc1 era, and the `resp_len = recvlength
+- MESSAGE_HEADER_LEN` plus `memcpy()` flow came from `7919b89c8276` in
+the v2.6.26-rc1 era. This code is old and widely present.
 
-Step 3.2 Record: no `Fixes:` tag, so no introducing commit to follow.
+Step 3.2 Record: No `Fixes:` tag is present in the candidate, so there
+is no specific tagged introducing commit to follow. Blame nevertheless
+identifies the relevant old code.
 
-Step 3.3 Record: recent `sound/usb/quirks.c` history contains many
-similar device-specific quirk fixes. Related min-mute commits include
-`2b929b6eec0c7` Logitech H390, `9af61fc91486c` MS LifeChat, and
-`b98b69c38512c` SteelSeries Arctis.
+Step 3.3 Record: Recent file history includes unrelated cleanup/fix
+commits such as `3968e81ba644` changing skb free placement and
+`d66676e6ca96` fixing a warning in `usb_tx_block()`. I found no
+prerequisite commit needed for this bounds check.
 
-Step 3.4 Record: Pauli Virtanen has prior USB-audio quirk commits in
-this exact area, including Logitech H390, MS LifeChat, and SteelSeries
-Arctis min-mute quirks.
+Step 3.4 Record: `git log --author='Amir Mohammad Jahangirzad'` found no
+prior local commits in this Marvell wireless subtree. The final signoff
+is from Johannes Berg; `MAINTAINERS` lists Johannes Berg as wireless
+maintainer, while the Libertas driver itself is marked orphaned under
+`linux-wireless` and `libertas-dev`.
 
-Step 3.5 Record: dependency is the min-mute quirk infrastructure.
-Present in current `7.0.y`; present in `v6.18` with
-`QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`; `v6.17` has older
-`QUIRK_FLAG_MIXER_MIN_MUTE`; `v6.16`/`v6.12` did not show the generic
-flag.
+Step 3.5 Record: Dependencies found: none. The patch uses existing local
+constants and mirrors the already-existing `libertas_tf` check.
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: no local commit hash was found, so `b4 dig -c` could
-not be used successfully. `b4 am` and `b4 mbox` by message-id found a
-single-patch thread at the supplied msgid. Thread has patch plus Takashi
-Iwai reply: “Applied now.” No NAKs or concerns found in fetched thread.
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: No commit hash was available in local history, so `b4
+dig -c` could not be used successfully; `b4 dig -c
+20260418004247.368944-1-a.jahangirzad@gmail.com` failed because it
+expects a commit. Fallback `b4 mbox` and the lore mirror found the
+original patch at `https://yhbt.net/lore/lkml/20260418004247.368944-1-
+a.jahangirzad@gmail.com/T/`. The thread has one message and no replies.
+`b4 mbox -c` found no newer revision in the thread.
 
-Step 4.2 Record: original patch To/Cc from mbox: `linux-
-sound@vger.kernel.org`, Pauli Virtanen, Jaroslav Kysela, Takashi Iwai,
-`linux-kernel@vger.kernel.org`. Appropriate sound maintainers/lists were
-included.
+Step 4.2 Record: Original recipients included Johannes Berg, Kees Cook,
+Ingo Molnar, Johan Hovold, `linux-wireless`, `libertas-dev`, and `linux-
+kernel`. No reviewer replies, NAKs, or explicit stable nominations were
+present in the fetched thread.
 
-Step 4.3 Record: PipeWire link was blocked by Anubis via WebFetch, so
-details could not be verified. GitHub OpenRazer issue independently
-verifies device name and VID:PID `1532:055E`, but it is not the PipeWire
-volume bug report.
+Step 4.3 Record: No `Reported-by` or bug-report link was present. I
+found no separate public bug report for this exact issue. The message
+itself provides the failure mechanism.
 
-Step 4.4 Record: thread is a standalone one-patch submission. Similar
-prior min-mute quirk patches exist, but this patch does not depend on a
-same-series patch.
+Step 4.4 Record: Related precedent exists: commit `3348ef6a6a126` fixed
+the identical underflow in `libertas_tf: process_cmdrequest()`, with
+message “If recvlength is less than MESSAGE_HEADER_LEN (4) we would end
+up corrupting memory.” That analogous fix was later carried in stable
+review postings for 4.19 and 3.16.
 
-Step 4.5 Record: lore stable search via WebFetch was blocked by Anubis;
-local stable branch searches found no existing Razer Nommo V2 X commit.
+Step 4.5 Record: Web searches found the exact candidate posting and
+stable history for the analogous `libertas_tf` fix, but no exact stable
+discussion for this new `libertas` patch.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified data object is `quirk_flags_table[]`; affected
-functions are `snd_usb_init_quirk_flags_table()`,
-`snd_usb_init_quirk_flags()`, `snd_usb_audio_create()`,
-`snd_usb_mixer_fu_apply_quirk()`, and `snd_usb_mixer_vol_tlv()`.
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `process_cmdrequest()`.
 
-Step 5.2 Record: `snd_usb_audio_create()` calls
-`snd_usb_init_quirk_flags()` during USB audio card creation; that calls
-`snd_usb_init_quirk_flags_table()`. `build_feature_ctl()` calls
-`snd_usb_mixer_fu_apply_quirk()` while building mixer controls.
+Step 5.2 Record: Caller is `if_usb_receive()`, reached as the receive
+URB completion callback installed by `usb_fill_bulk_urb()` through
+`if_usb_submit_rx_urb()`.
 
-Step 5.3 Record: key callees/side effects are table lookup, setting
-`chip->quirk_flags`, setting `cval->min_mute`, and TLV reporting through
-`copy_to_user()`.
+Step 5.3 Record: Key callees are `memcpy()`, `dev_kfree_skb_irq()`, and
+`lbs_notify_command_response()`. The command response is later consumed
+by the main thread through `lbs_process_command_response()`.
 
-Step 5.4 Record: reachable when the specific USB audio device is
-connected and its mixer controls are created. This is device-specific,
-not universal.
+Step 5.4 Record: Reachability is verified through USB receive
+completion: a Libertas USB device response with type `CMD_TYPE_REQUEST`
+reaches `process_cmdrequest()`. The triggering input is device-
+controlled USB receive data, so this is reachable with affected hardware
+or a malicious/faulty USB device.
 
-Step 5.5 Record: many existing `QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE`
-entries exist for similar USB audio devices, confirming this is an
-established local pattern.
+Step 5.5 Record: Similar pattern found in `libertas_tf`; that sibling
+driver already has the exact lower-bound check. `if_sdio` and `if_spi`
+use different response formats and do not subtract `MESSAGE_HEADER_LEN`
+in the same way.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: current `7.0.y` lacks the Razer entry and contains the
-necessary infrastructure. `v6.18`/`v6.19` contain the named playback
-min-mute flag. `v6.17` has the older generic
-`QUIRK_FLAG_MIXER_MIN_MUTE`; `v6.16`/`v6.12` did not show the generic
-flag.
+### Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: Representative tags `v3.16`, `v4.14`, `v4.19`, `v5.4`,
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, and newer `v6.13` through
+`v6.17` all contain the buggy `process_cmdrequest()` pattern without the
+lower-bound check. The bug dates back to at least the v2.6.26-rc1 era.
 
-Step 6.2 Record: `git apply --check` succeeds on current `7.0.y`. Older
-trees may need minor contextual adjustment; `v6.17` would need the older
-flag name. Older LTS trees without the common quirk infrastructure would
-need a nontrivial backport or prerequisite series.
+Step 6.2 Record: Expected backport difficulty is low for modern stable
+trees: the same context is present in representative stable tags, and
+`git apply --check` succeeds against the current tree. Very old trees
+before the Marvell directory move may need path/context adjustment, as
+verified by older tags using `drivers/net/wireless/libertas/if_usb.c`.
 
-Step 6.3 Record: no related Razer Nommo V2 X fix found in local
-`stable/linux-7.0.y`.
+Step 6.3 Record: No exact related fix for `libertas` was found in local
+history. The sibling `libertas_tf` fix exists and was stable-backported.
 
-## Phase 7: Subsystem Context
-Step 7.1 Record: subsystem is ALSA USB audio driver under `sound/usb`;
-criticality is driver-specific/peripheral, but real hardware user-
-visible behavior.
+### Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is wireless driver code under
+`drivers/net/wireless/marvell/libertas`. Criticality: driver-specific,
+but memory corruption in a kernel USB receive path is high severity for
+affected systems.
 
-Step 7.2 Record: USB-audio quirks are active, with recent commits
-adding/fixing device-specific quirks and min-mute behavior.
+Step 7.2 Record: Subsystem activity is low-to-moderate; recent history
+shows occasional fixes and cleanups. `MAINTAINERS` marks Marvell
+Libertas as orphaned, with `linux-wireless` and `libertas-dev` lists.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: affected population is users of Razer Nommo V2 X using
-USB audio.
+### Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected population is config- and hardware-specific:
+systems with `CONFIG_LIBERTAS_USB` and Marvell Libertas 8388 USB
+devices, or systems exposed to a malicious USB device matching the
+driver IDs.
 
-Step 8.2 Record: trigger is normal volume-control use on that device.
-Unprivileged audio clients can read/use ALSA mixer metadata, but no
-security impact was verified.
+Step 8.2 Record: Trigger condition is a USB command response shorter
+than `MESSAGE_HEADER_LEN` but with `CMD_TYPE_REQUEST` dispatch. This is
+device-controlled. I did not verify an unprivileged software-only
+trigger; physical or device-level control is the verified trigger model.
 
-Step 8.3 Record: failure mode is functional audio control
-misrepresentation: minimum playback volume is mute. Severity: medium for
-affected hardware, not crash/corruption.
+Step 8.3 Record: Failure mode is heap/driver memory corruption from
+oversized `memcpy()`. Severity: HIGH to CRITICAL, because kernel memory
+corruption can crash the system and can have security implications.
 
-Step 8.4 Record: benefit is high for affected device users and low
-system-wide; risk is very low because the change is a two-line VID:PID-
-scoped quirk.
+Step 8.4 Record: Benefit is high for affected systems: prevents kernel
+memory corruption from malformed USB responses. Risk is very low: 3-line
+effective validation change in one driver function, with precedent in
+sibling driver.
 
-## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: real tested hardware quirk,
-established USB-audio pattern, two-line scoped change, maintainer
-applied, clean on `7.0.y`, no global behavior change. Evidence against:
-not a crash/security/data-corruption fix; older stable trees may need
-adjustment or prerequisites. Unresolved: PipeWire bug details
-unavailable due Anubis; no upstream commit hash found locally for `b4
-dig`.
+### Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real memory corruption bug;
+old code present across many stable release tags; tiny surgical fix; no
+new API or feature; exact validation already used by `libertas_tf`;
+analogous `libertas_tf` fix was stable-backported. Evidence against:
+driver-specific and no external bug report or tested-by tag. Unresolved:
+exact final upstream commit hash was not present in local history, so
+`b4 dig -c <commit_hash>` could not be completed.
 
-Step 9.2 Record: stable rules: obviously correct: yes for trees with
-infrastructure; fixes real user-visible hardware bug: yes; important
-enough: yes under hardware-quirk exception; small/contained: yes, 2
-lines; no new APIs/features: yes; applies to stable: clean on current
-`7.0.y`, minor/unknown adjustments for older trees.
+Step 9.2 Record:
+1. Obviously correct and tested? Obviously correct by code inspection;
+   no explicit `Tested-by`.
+2. Fixes a real bug? Yes, verified underflow into oversized `memcpy()`.
+3. Important issue? Yes, kernel memory corruption.
+4. Small and contained? Yes, one function in one file.
+5. No new features/APIs? Yes.
+6. Can apply to stable trees? Yes for modern representative tags with
+   likely clean/minor context; old pre-directory-move trees may need
+   path adjustment.
 
-Step 9.3 Record: exception category applies: hardware quirk/workaround
-for an existing driver and existing quirk mechanism.
+Step 9.3 Record: No exception category such as device ID, quirk, DT,
+build, or docs applies. This is a direct memory-safety bug fix.
 
-Step 9.4 Record: decision is to backport to stable trees that contain
-the min-mute quirk infrastructure, especially `7.0.y`/`6.19.y`/`6.18.y`;
-older trees should only take it with the appropriate small backport
-adjustment or prerequisites.
+Step 9.4 Record: Stable backport decision is YES. The fix prevents
+kernel memory corruption in an old, stable-present USB driver path with
+extremely low regression risk.
 
-Verification: performed semantic search; inspected current HEAD and
-branch state; read `sound/usb/quirks.c`, `usbaudio.h`, `mixer_quirks.c`,
-`mixer.c`, and `card.c`; used `rg` for quirk usage/callers; used `git
-blame`, `git log`, `git show`, `git merge-base`, and `git apply
---check`; fetched lore thread with `b4 am`/`b4 mbox`; attempted `b4 dig`
-but no commit hash/local commit match was available; attempted WebFetch
-for PipeWire/lore search but Anubis blocked; verified device VID:PID via
-OpenRazer/WebSearch.
+## Verification
+- Phase 1: Parsed supplied tags and fetched original patch thread with
+  `b4 mbox`; confirmed no `Fixes`, `Reported-by`, `Tested-by`,
+  `Reviewed-by`, `Acked-by`, or stable tag.
+- Phase 2: Read `drivers/net/wireless/marvell/libertas/if_usb.c`,
+  `dev.h`, and `defs.h`; confirmed `MESSAGE_HEADER_LEN`, `resp_len`,
+  `resp_buf`, and `memcpy()` behavior.
+- Phase 3: Ran `git blame` on `process_cmdrequest()`; identified old
+  introducing history around `ddac452680a516` and `7919b89c8276`.
+- Phase 3: Ran `git describe --contains`; confirmed relevant code dates
+  to v2.6.25/v2.6.26-era history.
+- Phase 4: `b4 dig` with the message-id failed because no local commit
+  hash was available; recorded as unresolved.
+- Phase 4: `b4 mbox` fetched the patch thread; `b4 mbox -c` found one
+  message and no newer revision.
+- Phase 4: Fetched lore mirror and stable archive pages; confirmed
+  analogous `libertas_tf` fix and stable review postings.
+- Phase 5: Traced callers from `if_usb_receive()` through
+  `usb_fill_bulk_urb()` and `if_usb_submit_rx_urb()`.
+- Phase 6: Checked release tags from `v3.16` through representative
+  active v6 tags; confirmed the buggy code exists broadly.
+- Phase 6: Ran `git apply --check` against the current tree; patch
+  applies cleanly there.
+- Phase 7: Checked `MAINTAINERS`; confirmed Libertas is orphaned under
+  wireless lists and Johannes Berg is listed for wireless maintenance.
+- Phase 8: Verified trigger is USB device-controlled receive data; no
+  unprivileged software-only trigger was verified.
 
 **YES**
 
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/marvell/libertas/if_usb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 4cfa24c06fcdf..148bf7e4e4d72 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2307,6 +2307,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
- 		   0), /* Doesn't have the vendor quirk which would otherwise apply */
-+	DEVICE_FLG(0x1532, 0x055e, /* Razer Nommo V2 X */
-+		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
- 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
+index 8a6bf1365cfab..42d3fd32ece28 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas/if_usb.c
+@@ -625,9 +625,10 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	unsigned long flags;
+ 	u8 i;
+ 
+-	if (recvlength > LBS_CMD_BUFFER_SIZE) {
++	if (recvlength < MESSAGE_HEADER_LEN ||
++	    recvlength > LBS_CMD_BUFFER_SIZE) {
+ 		lbs_deb_usbd(&cardp->udev->dev,
+-			     "The receive buffer is too large\n");
++			     "The receive buffer is invalid: %d\n", recvlength);
+ 		kfree_skb(skb);
+ 		return;
+ 	}
 -- 
 2.53.0
 
