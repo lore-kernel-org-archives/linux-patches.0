@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FE53F8EA7;
-	Wed, 20 May 2026 17:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303E27E045;
+	Wed, 20 May 2026 17:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296586; cv=none; b=hVY44Qf87FEGP9w0GhzLDi3p0TOOzM2OsgcSWPZuNrMAF6244qG6wn99i1l2jl32rt94/yzKCq/Qlv4DjS5HO+YJUpdRrYQURCKK3aaUVqWRuKZKVGToGXeFeBdTHYjlUX350HeruvynRy4KWfOZ8Ot36WKJ/1CmDO0Kd8xSfAA=
+	t=1779296588; cv=none; b=tkH4U6M5L+RT/oBFBA6VqifqhVZVc2UiRC2cZ9KJPVRlNE4Xj+2tVonA2eQS48YTcB2gZycCuVEDKvgNHkQfWtumF7xjf61Zi8kdkmJT349OaHQLVtD3KqXl/sq9R1w1YCi4jlAxjtj0NAotoPoG6AJyX92uuuohXQf8TfeuIhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296586; c=relaxed/simple;
-	bh=kj5EESWoKw/EV7XKFwA4SlX0kRCJgR/V91nJw8nk1M8=;
+	s=arc-20240116; t=1779296588; c=relaxed/simple;
+	bh=DJNAU/Qhqg7nLRLD16Vh3dB1p9+sodAp5EzXFFzZ/Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7j7ChrRDpYqxq6+yt7GmyEm4is4iSTON7VUOcrxF27pB5es+AaVo2yM5gIf1ZzZyQe2j7OxOWjXtaJ2MZ0ymP0ZTE7WHtzkBcZR6XooZbx4XIpAu8mdMbBSX3DyudlyCmGzr1wOU9hLr63nAKKC6dTkSOaIWTaiNGhcFFEctFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNXCsPyR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uStxSqVS9a3FEx3hDbGP1g8pPO3TFR5XCRqhOwCw1wnnBFVXfOFM3E+BX7tCLOV+Ahafn09lXhOViQkkL50UKhzU/JIrm1iBoSrHAbbsn6AciB9Q5ZE3FOnk/t7UgDjZ0VVGKEZKm2uDyEzudr2eNd09ZV4ONiRIvrPMsoxMsoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yql7GLOc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNXCsPyR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB411F00894;
-	Wed, 20 May 2026 17:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yql7GLOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD03B1F000E9;
+	Wed, 20 May 2026 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296582;
-	bh=3kpA4HnR/pc5Kl5l4jh5eMZiQ8KogBP2DzDKV/zijkQ=;
+	s=korg; t=1779296585;
+	bh=63iGXUbq4/KktTLZnv673niiGkBdI9U+cshMNcctqMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wNXCsPyRO0xd88umnROpENeXS4cFxyDYNxqqeVY5Dw7wXZROmsXFsJ8p302XL6Cco
-	 A9xAUkoMidlztfeUZmhUzdU1CRWLgVEINvsG3BfMPuwGUAJ/6VEK0yl/RTmAmDiSZQ
-	 bVaNIEiawEj/dSI1pAKc/Fsdg/nGfDrQHe5gu6k0=
+	b=yql7GLOcZgcooxIKcAEnX9EVTna6QjVTAej8EkJcGE1b4r5lIFDnNW7FnCyX2iRP6
+	 GJhV9quvsigecuxkHbBk462RGtlXXwh0w+QCJi2h3Ci/sAsysFy55ZN0dn+pl6yXs3
+	 /eXGV1og7/Hb9iv6dM9rX4HtKtRzq1BW4TnflS7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0853/1146] net: mana: Dont overwrite port probe error with add_adev result
-Date: Wed, 20 May 2026 18:18:23 +0200
-Message-ID: <20260520162207.543350661@linuxfoundation.org>
+Subject: [PATCH 7.0 0854/1146] net: mana: Fix EQ leak in mana_remove on NULL port
+Date: Wed, 20 May 2026 18:18:24 +0200
+Message-ID: <20260520162207.566329562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,69 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit a7fdaf069bd031fcc234581fa6a580be11bf2175 ]
+[ Upstream commit 65267c9c4f28199985505977bc2c628c82fc50ef ]
 
-In mana_probe(), if mana_probe_port() fails for any port, the error
-is stored in 'err' and the loop breaks. However, the subsequent
-unconditional 'err = add_adev(gd, "eth")' overwrites this error.
-If add_adev() succeeds, mana_probe() returns success despite ports
-being left in a partially initialized state (ac->ports[i] == NULL).
+In mana_remove(), when a NULL port is encountered in the port iteration
+loop, 'goto out' skips the mana_destroy_eq(ac) call, leaking the event
+queues allocated earlier by mana_create_eq().
 
-Only call add_adev() when there is no prior error, so the probe
-correctly fails and triggers mana_remove() cleanup.
+This can happen when mana_probe_port() fails for port 0, leaving
+ac->ports[0] as NULL. On driver unload or error cleanup, mana_remove()
+hits the NULL entry and jumps past mana_destroy_eq().
 
-Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
+Change 'goto out' to 'break' so the for-loop exits normally and
+mana_destroy_eq() is always reached. Remove the now-unreferenced out:
+label.
+
+Fixes: 1e2d0824a9c3 ("net: mana: Add support for EQ sharing")
 Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260420124741.1056179-5-ernis@linux.microsoft.com
+Link: https://patch.msgid.link/20260420124741.1056179-6-ernis@linux.microsoft.com
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index e5b4f07e009bf..09d67617dfbbf 100644
+index 09d67617dfbbf..14d6f68eaa695 100644
 --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
 +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -3643,10 +3643,9 @@ int mana_probe(struct gdma_dev *gd, bool resuming)
- 	if (!resuming) {
- 		for (i = 0; i < ac->num_ports; i++) {
- 			err = mana_probe_port(ac, i, &ac->ports[i]);
--			/* we log the port for which the probe failed and stop
--			 * probes for subsequent ports.
--			 * Note that we keep running ports, for which the probes
--			 * were successful, unless add_adev fails too
-+			/* Log the port for which the probe failed, stop probing
-+			 * subsequent ports, and skip add_adev.
-+			 * mana_remove() will clean up already-probed ports.
- 			 */
- 			if (err) {
- 				dev_err(dev, "Probe Failed for port %d\n", i);
-@@ -3660,10 +3659,9 @@ int mana_probe(struct gdma_dev *gd, bool resuming)
- 			enable_work(&apc->queue_reset_work);
- 			err = mana_attach(ac->ports[i]);
- 			rtnl_unlock();
--			/* we log the port for which the attach failed and stop
--			 * attach for subsequent ports
--			 * Note that we keep running ports, for which the attach
--			 * were successful, unless add_adev fails too
-+			/* Log the port for which the attach failed, stop
-+			 * attaching subsequent ports, and skip add_adev.
-+			 * mana_remove() will clean up already-attached ports.
- 			 */
- 			if (err) {
- 				dev_err(dev, "Attach Failed for port %d\n", i);
-@@ -3672,7 +3670,8 @@ int mana_probe(struct gdma_dev *gd, bool resuming)
+@@ -3715,7 +3715,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
+ 		if (!ndev) {
+ 			if (i == 0)
+ 				dev_err(dev, "No net device to remove\n");
+-			goto out;
++			break;
  		}
+ 
+ 		apc = netdev_priv(ndev);
+@@ -3746,7 +3746,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
  	}
  
--	err = add_adev(gd, "eth");
-+	if (!err)
-+		err = add_adev(gd, "eth");
- 
- 	schedule_delayed_work(&ac->gf_stats_work, MANA_GF_STATS_PERIOD);
- 
+ 	mana_destroy_eq(ac);
+-out:
++
+ 	if (ac->per_port_queue_reset_wq) {
+ 		destroy_workqueue(ac->per_port_queue_reset_wq);
+ 		ac->per_port_queue_reset_wq = NULL;
 -- 
 2.53.0
 
