@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBAA340A57;
-	Wed, 20 May 2026 18:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6856B3FA5EB;
+	Wed, 20 May 2026 18:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301605; cv=none; b=XM/rvfedt0wqXTjGes+NJ6iUbgzLnT9WKbk7tXIbOM7HxW/qo8MMnIfRCML6CrUGa0hoO02tKt3mSM/Wq5BOAvqFXygzUkIbrMpbbXJKNbsxnF1XAnXucRsuPnSDuMblukHKNSB72FbzhRCH25Cj0oCntNVUtSATdv7C7dWMuoU=
+	t=1779301608; cv=none; b=oIWBvxZcp+hI/KWgk8Jgeeb35Af6b7+9HsLhccZMfwzQGbnruh6hJoaOAQ6Ol9x2unONXHQ1YWpYwfRSO4qMQZKVE0jwZlB+2jMFjb8P9kjXZLVpsN8x213yC5KQgeXX1XDdLgScsm/UTyhGOdx8uWIv4Sair9w+9w7877WDs+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301605; c=relaxed/simple;
-	bh=fCEb2gV5i1bDRHtZb73YCsaRrtqpN79NQl0TdFUHLrY=;
+	s=arc-20240116; t=1779301608; c=relaxed/simple;
+	bh=tOsD8sugrIc823wibGroUi8hzTUm3yOMvp8Rl9fuu2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEfYeF4RKvvowzEQkd0YyCOBaymWaTLTO5rqsSAgc7787kuK3OWruQJ0Lhcnfz0dsLQ4KEZNIYrGwPpkRKU9qnbIXQ3uPln2Qu/l8ZykyBR1tT582FXn0E6jlW49l1lr4a+EfqExUErZazFxgZkdswuPN3RPQevSBReJjD3g9vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZKjEnnF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m2rIfPR6giRmGmihnh1qsRFrhMaKbSLvUNqyfYi41sIvO3iQTJTueRADL9rar/eAM+27AHoLIO16WvOc+MK4+mMRa1qulzEJKTS/tD4gW/+JZZYK31cZBgGAGcLtUtMBVp4GesxLerESOBq8FdNh5NsW9kaJLIQU/a5VvzjAHqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8AehUis; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZKjEnnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAE61F000E9;
-	Wed, 20 May 2026 18:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8AehUis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6E81F000E9;
+	Wed, 20 May 2026 18:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301604;
-	bh=ECW/y++QxW6heRhTAaQElyqZ1ROLHN73KHAmutOKd9A=;
+	s=korg; t=1779301607;
+	bh=trUw5WfNsftrJ64VPCPJyQMu8T9/apsMrhE/rIhOJZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZKjEnnF2TU1KMOwcUq0qfKfwpyQC7Qhq8+6KL2l0IW9CGac3wPFp5buYCm0U5aQk
-	 aIM58jlemOYYkuAiPJsfazhqNQh62JRr8MKaEJ3Utt4LGGvclWM+vCiACFp/jPElRd
-	 DOgluiKrY8m/bm8wYHeBHyi5UGLFewh/Cehl/f8E=
+	b=j8AehUisqUYGZ3Glzoxw/1w2AHs5Fx5Q9kCbTofbojnzgHX8/omP04NL4C+ySMBor
+	 n3xu742Q3HvxCa872LD7EXW0vxaLcqH5JpApoRahNEll1+YHclZbbHFiBvwFU5GEnx
+	 G1QW0YgBLdM04HpL5ZRg1qE8G0KcV8d2ybCdDkNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Sacks <contact@xchglabs.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 619/666] KVM: Reject wrapped offset in kvm_reset_dirty_gfn()
-Date: Wed, 20 May 2026 18:23:50 +0200
-Message-ID: <20260520162124.688902418@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PATCH 6.12 620/666] KVM: s390: pci: fix GAIT table indexing due to double-scaling pointer arithmetic
+Date: Wed, 20 May 2026 18:23:51 +0200
+Message-ID: <20260520162124.710480355@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,75 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Sacks <contact@xchglabs.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 577a8d3bae0531f0e5ccfac919cd8192f920a804 upstream.
+commit 16d990a15491cf76cd6eef0846e1b4100e63261a upstream.
 
-kvm_reset_dirty_gfn() guards the gfn range with
+kvm_s390_pci_aif_enable(), kvm_s390_pci_aif_disable(), and
+aen_host_forward() index the GAIT by manually multiplying the index
+with sizeof(struct zpci_gaite).
 
-	if (!memslot || (offset + __fls(mask)) >= memslot->npages)
-		return;
+Since aift->gait is already a struct zpci_gaite pointer, this
+double-scales the offset, accessing element aisb*16 instead of aisb.
 
-but offset is u64 and the addition is unchecked.  The check can be
-silently bypassed by a u64 wrap.
+This causes out-of-bounds accesses when aisb >= 32 (with
+ZPCI_NR_DEVICES=512)
 
-The dirty ring backing those entries is MAP_SHARED at
-KVM_DIRTY_LOG_PAGE_OFFSET of the vcpu fd, so the VMM can rewrite the
-slot and offset fields of any entry between when the kernel pushes
-them and when KVM_RESET_DIRTY_RINGS consumes them.  On reset,
-kvm_dirty_ring_reset() re-reads the values via READ_ONCE() and feeds
-them straight back into this check; only the flags handshake is
-treated as the handover, the slot/offset payload is taken on trust.
+Fix by removing the erroneous sizeof multiplication.
 
-Crafting two entries
-
-	entry[i].offset   = 0xffffffffffffffc1
-	entry[i+1].offset = 0
-
-makes the coalescing loop in kvm_dirty_ring_reset() compute
-
-	delta = (s64)(0 - 0xffffffffffffffc1) = 63
-
-which falls in [0, BITS_PER_LONG), so it folds entry[i+1] into the
-existing mask by setting bit 63.  The trailing kvm_reset_dirty_gfn()
-call then sees offset = 0xffffffffffffffc1 and __fls(mask) = 63;
-the sum is 0 in u64 and the bounds check passes.
-
-That offset propagates into kvm_arch_mmu_enable_log_dirty_pt_masked()
-unchanged.  On the legacy MMU path -- kvm_memslots_have_rmaps() ==
-true, i.e. shadow paging, any VM that has allocated shadow roots, or
-a write-tracked slot -- it reaches gfn_to_rmap(), which indexes
-slot->arch.rmap[0][] with a near-U64_MAX gfn.  That is an
-out-of-bounds load of a kvm_rmap_head, followed by a conditional
-clear of PT_WRITABLE_MASK in whatever the loaded pointer points at.
-The path is reachable from any process holding /dev/kvm.
-
-Range-check offset on its own first, so the addition cannot wrap.
-memslot->npages is bounded well below U64_MAX, so once offset <
-npages holds, offset + __fls(mask) (with __fls(mask) < BITS_PER_LONG)
-stays in range.
-
-Fixes: fb04a1eddb1a ("KVM: X86: Implement ring-based dirty memory tracking")
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+Fixes: 73f91b004321 ("KVM: s390: pci: enable host forwarding of Adapter Event Notifications")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Sacks <contact@xchglabs.com>
-Link: https://patch.msgid.link/20260512060742.1628959-1-contact@xchglabs.com/
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/dirty_ring.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kvm/interrupt.c |    3 +--
+ arch/s390/kvm/pci.c       |    6 ++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
---- a/virt/kvm/dirty_ring.c
-+++ b/virt/kvm/dirty_ring.c
-@@ -66,7 +66,8 @@ static void kvm_reset_dirty_gfn(struct k
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -3329,8 +3329,7 @@ static void aen_host_forward(unsigned lo
+ 	struct zpci_gaite *gaite;
+ 	struct kvm *kvm;
  
- 	memslot = id_to_memslot(__kvm_memslots(kvm, as_id), id);
- 
--	if (!memslot || (offset + __fls(mask)) >= memslot->npages)
-+	if (!memslot || offset >= memslot->npages ||
-+	    offset + __fls(mask) >= memslot->npages)
+-	gaite = (struct zpci_gaite *)aift->gait +
+-		(si * sizeof(struct zpci_gaite));
++	gaite = aift->gait + si;
+ 	if (gaite->count == 0)
  		return;
+ 	if (gaite->aisb != 0)
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -292,8 +292,7 @@ static int kvm_s390_pci_aif_enable(struc
+ 				    phys_to_virt(fib->fmt0.aibv));
  
- 	KVM_MMU_LOCK(kvm);
+ 	spin_lock_irq(&aift->gait_lock);
+-	gaite = (struct zpci_gaite *)aift->gait + (zdev->aisb *
+-						   sizeof(struct zpci_gaite));
++	gaite = aift->gait + zdev->aisb;
+ 
+ 	/* If assist not requested, host will get all alerts */
+ 	if (assist)
+@@ -359,8 +358,7 @@ static int kvm_s390_pci_aif_disable(stru
+ 	if (zdev->kzdev->fib.fmt0.aibv == 0)
+ 		goto out;
+ 	spin_lock_irq(&aift->gait_lock);
+-	gaite = (struct zpci_gaite *)aift->gait + (zdev->aisb *
+-						   sizeof(struct zpci_gaite));
++	gaite = aift->gait + zdev->aisb;
+ 	isc = gaite->gisc;
+ 	gaite->count--;
+ 	if (gaite->count == 0) {
 
 
