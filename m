@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A3836A352;
-	Wed, 20 May 2026 17:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BC1372EDE;
+	Wed, 20 May 2026 17:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297047; cv=none; b=tr79CBDxW7MwVUTdkGEmBXQ+LbHewXAqB1Sa30+o4j95zBxRPxRi3M4kL82ZwrM8ZEiDQS/Km/uIC3fUzDET+v0YLKpUx5ZpWNLkc27coopseTJ9qqFrmjM4FvlcwC85pulHsw7u4SZO23iGUvmGjD28elAlRiegNGAyeKXAq/Q=
+	t=1779297050; cv=none; b=lRp5LwM+AbWQ1dWYXwlKrgS2wWodn17g6xnhlMHd//Sszrb+h5EuAc9tJWMBHn8toFpUNHXM/tQ0imIa4py3Htozja1liY1MUVsTSoF5+GkKg7SgznRQZSFQpQfdciaGYMNM/GdephCvl+70Zziebumc2JB9yjFGvDPGO1fewog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297047; c=relaxed/simple;
-	bh=AvMrL5rk8IlChiulO2CEIPAU/0GmPoqExXxbiguM0lk=;
+	s=arc-20240116; t=1779297050; c=relaxed/simple;
+	bh=fztoqgVzaIesVqWX6NsaxAemvlKWppfrdjRrsN/4Qak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuU5sSA+A9G4e3jVfEqdp/GtUGBAa3t2R6HhoFuHtyOR14oTwIubqsvfu8oRghtRAIqQNtLx4Cl6kN5adNzgtKtMJtukF8URR8rfyUTudQq6j/dZu57BW/uQamzjLy/CYJRPdZmDisZHqDQAvmAlGWD1JkAVKiPHNK/FRdmXBa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnAeCdX6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=swFEMBGX1i8xt1MjnKFGmLu+oNZFZnNmKW9tEHHVvPCGguVScWsu4py1+VpJMbaebnO7kqKdC1W2zESJhdZNd7eJRBnJPD1+ujz3T5NuCjs41O+Q5hZsOlCp8FDRiHqxdtzJ8neE7dUaME+T2fS7uEuzTiRYl3Kegc0mrtFEtM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1pDocAV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnAeCdX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B361F000E9;
-	Wed, 20 May 2026 17:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1pDocAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743221F000E9;
+	Wed, 20 May 2026 17:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297046;
-	bh=gR8Q2h3VEI2L+Ua2GYAdkkrDfnAni00GLLZozOjZgP8=;
+	s=korg; t=1779297048;
+	bh=SBEiP+RYS8h2pigGj3pbIJQi/0TR1ahe4Jrx9hZvsJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UnAeCdX605XocOW6f9Ij8LmFXInUBL+G/JYw+i29LPdZYgPtPk4OUzNCGvIl6el5M
-	 1A8UO2fw6eRRQW6sanOp+T5rxrHd/RXaZwFqziuh1DoLN0nhRFlC5a64x2vrlgTU5t
-	 J4o1Tf3MX8igv8Vp06Aog8vjlTnuiPzpa76SqitU=
+	b=d1pDocAVXC4viYjDrle/psOpkEcAxajsjQ8T1RuYPu9uGWsNTTd8dia8brn74C1qD
+	 +0WCZEgvZOxdOVpmKqh6Tn2jJzbN5ppN/AE8Y+sOmwNKo0pVJygA5hIA9odaBZo32K
+	 UAE1YPkvJkDmC/gsg+RzJNkm4A9a2mRunQ1raM3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Ivan Vecera <ivecera@redhat.com>,
 	Petr Oros <poros@redhat.com>,
 	Alexander Nowlin <alexander.nowlin@intel.com>,
 	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1029/1146] dpll: export __dpll_pin_change_ntf() for use under dpll_lock
-Date: Wed, 20 May 2026 18:21:19 +0200
-Message-ID: <20260520162211.517271918@linuxfoundation.org>
+Subject: [PATCH 7.0 1030/1146] ice: add dpll peer notification for paired SMA and U.FL pins
+Date: Wed, 20 May 2026 18:21:20 +0200
+Message-ID: <20260520162211.539255464@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,81 +55,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 620055cb1036a6125fd912e7a14b47a6572b809b ]
+[ Upstream commit 9e5dead140af10e8b5f975b8f04e46197d48d274 ]
 
-Export __dpll_pin_change_ntf() so that drivers can send pin change
-notifications from within pin callbacks, which are already called
-under dpll_lock. Using dpll_pin_change_ntf() in that context would
-deadlock.
+SMA and U.FL pins share physical signal paths in pairs (SMA1/U.FL1 and
+SMA2/U.FL2).  When one pin's state changes via a PCA9575 GPIO write,
+the paired pin's state also changes, but no notification is sent for
+the peer pin.  Userspace consumers monitoring the peer via dpll netlink
+subscribe never learn about the update.
 
-Add lockdep_assert_held() to catch misuse without the lock held.
+Add ice_dpll_sw_pin_notify_peer() which sends a change notification for
+the paired SW pin.  Call it from ice_dpll_pin_sma_direction_set(),
+ice_dpll_sma_pin_state_set(), and ice_dpll_ufl_pin_state_set() after
+pf->dplls.lock is released.  Use __dpll_pin_change_ntf() because
+dpll_lock is still held by the dpll netlink layer (dpll_pin_pre_doit).
 
-Acked-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
 Signed-off-by: Petr Oros <poros@redhat.com>
 Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
 Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-9-cdcb48303fd8@intel.com
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-11-cdcb48303fd8@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 9e5dead140af ("ice: add dpll peer notification for paired SMA and U.FL pins")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_netlink.c | 10 ++++++++++
- drivers/dpll/dpll_netlink.h |  2 --
- include/linux/dpll.h        |  1 +
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 32 +++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index 83cbd64abf5a4..95ae786e98aab 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -842,11 +842,21 @@ int dpll_pin_delete_ntf(struct dpll_pin *pin)
- 	return dpll_pin_event_send(DPLL_CMD_PIN_DELETE_NTF, pin);
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index 721a3f4d6a28f..27b460926bace 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -1154,6 +1154,32 @@ ice_dpll_input_state_get(const struct dpll_pin *pin, void *pin_priv,
+ 				      extack, ICE_DPLL_PIN_TYPE_INPUT);
  }
  
 +/**
-+ * __dpll_pin_change_ntf - notify that the pin has been changed
-+ * @pin: registered pin pointer
++ * ice_dpll_sw_pin_notify_peer - notify the paired SW pin after a state change
++ * @d: pointer to dplls struct
++ * @changed: the SW pin that was explicitly changed (already notified by dpll core)
 + *
-+ * Context: caller must hold dpll_lock. Suitable for use inside pin
-+ *          callbacks which are already invoked under dpll_lock.
-+ * Return: 0 if succeeds, error code otherwise.
++ * SMA and U.FL pins share physical signal paths in pairs (SMA1/U.FL1 and
++ * SMA2/U.FL2).  When one pin's routing changes via the PCA9575 GPIO
++ * expander, the paired pin's state may also change.  Send a change
++ * notification for the peer pin so userspace consumers monitoring the
++ * peer via dpll netlink learn about the update.
++ *
++ * Context: Called from dpll_pin_ops callbacks after pf->dplls.lock is
++ *          released.  Uses __dpll_pin_change_ntf() because dpll_lock is
++ *          still held by the dpll netlink layer.
 + */
- int __dpll_pin_change_ntf(struct dpll_pin *pin)
- {
-+	lockdep_assert_held(&dpll_lock);
- 	dpll_pin_notify(pin, DPLL_PIN_CHANGED);
- 	return dpll_pin_event_send(DPLL_CMD_PIN_CHANGE_NTF, pin);
- }
-+EXPORT_SYMBOL_GPL(__dpll_pin_change_ntf);
- 
++static void ice_dpll_sw_pin_notify_peer(struct ice_dplls *d,
++					struct ice_dpll_pin *changed)
++{
++	struct ice_dpll_pin *peer;
++
++	peer = (changed >= d->sma && changed < d->sma + ICE_DPLL_PIN_SW_NUM) ?
++		&d->ufl[changed->idx] : &d->sma[changed->idx];
++	if (peer->pin)
++		__dpll_pin_change_ntf(peer->pin);
++}
++
  /**
-  * dpll_pin_change_ntf - notify that the pin has been changed
-diff --git a/drivers/dpll/dpll_netlink.h b/drivers/dpll/dpll_netlink.h
-index dd28b56d27c56..a9cfd55f57fc4 100644
---- a/drivers/dpll/dpll_netlink.h
-+++ b/drivers/dpll/dpll_netlink.h
-@@ -11,5 +11,3 @@ int dpll_device_delete_ntf(struct dpll_device *dpll);
- int dpll_pin_create_ntf(struct dpll_pin *pin);
+  * ice_dpll_sma_direction_set - set direction of SMA pin
+  * @p: pointer to a pin
+@@ -1344,6 +1370,8 @@ ice_dpll_ufl_pin_state_set(const struct dpll_pin *pin, void *pin_priv,
  
- int dpll_pin_delete_ntf(struct dpll_pin *pin);
--
--int __dpll_pin_change_ntf(struct dpll_pin *pin);
-diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index 2ce295b46b8cd..8f97120ee7b37 100644
---- a/include/linux/dpll.h
-+++ b/include/linux/dpll.h
-@@ -276,6 +276,7 @@ int dpll_pin_ref_sync_pair_add(struct dpll_pin *pin,
+ unlock:
+ 	mutex_unlock(&pf->dplls.lock);
++	if (!ret)
++		ice_dpll_sw_pin_notify_peer(&pf->dplls, p);
  
- int dpll_device_change_ntf(struct dpll_device *dpll);
+ 	return ret;
+ }
+@@ -1462,6 +1490,8 @@ ice_dpll_sma_pin_state_set(const struct dpll_pin *pin, void *pin_priv,
  
-+int __dpll_pin_change_ntf(struct dpll_pin *pin);
- int dpll_pin_change_ntf(struct dpll_pin *pin);
+ unlock:
+ 	mutex_unlock(&pf->dplls.lock);
++	if (!ret)
++		ice_dpll_sw_pin_notify_peer(&pf->dplls, sma);
  
- int register_dpll_notifier(struct notifier_block *nb);
+ 	return ret;
+ }
+@@ -1657,6 +1687,8 @@ ice_dpll_pin_sma_direction_set(const struct dpll_pin *pin, void *pin_priv,
+ 	mutex_lock(&pf->dplls.lock);
+ 	ret = ice_dpll_sma_direction_set(p, direction, extack);
+ 	mutex_unlock(&pf->dplls.lock);
++	if (!ret)
++		ice_dpll_sw_pin_notify_peer(&pf->dplls, p);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
