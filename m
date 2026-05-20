@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043C31C3BFC;
-	Wed, 20 May 2026 17:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3903036405A;
+	Wed, 20 May 2026 17:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299066; cv=none; b=H1xv4DGTwujylN3Z7Z4vY2BUwQ8h/hT4XZdIk7kjxB/OnIDGgw330otaKdAf86xsZQts8seJ7EBy0UKj5VlUuQmc54jOeVFhLRo602iNcvgJTV3YW0kAPnoBSEoBDvxP96f1W54zyXcR59PZA5E102CFnXDnqCMxN4KjDojBe2E=
+	t=1779299068; cv=none; b=SjhFYqRd7B2D3FwCfRz5FYugcY+up2nWVi+urUDkanNFZqDDxr5KMGauT1ubEzRcD4AC4EU9YYQ0S5NvpKsbQKNJOUfh7nXMJncQvTyUVblh1+NSlaaWAnrbZdpteXay/VJgQ2eEBpT4N+apN7m3U7tGGpXOork7nFFbk509OOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299066; c=relaxed/simple;
-	bh=ROgacIQtwCaS80dFD+3vBfzkpIpM+kqV5S/LaKNx8Rw=;
+	s=arc-20240116; t=1779299068; c=relaxed/simple;
+	bh=oZQRMgEnYEJwvMtiAfubwSkrGf+D0aJisEkVAZa5sNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inVIKF/sMDQ+OwO1PiPedeE0cmyYzkyd00V0EEWNOjhu39PgT70D7asHujnbBvB3dcVt7RzTUkerHkPDSlsHtYlWaf1N6vYUux73YOVdFdMhp7O/ZiTYl9TUv1qrl/GPAwAE0q77D/jdKebvpdW+I3s+M9Nq1EvnQ/Hdzx7k49g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8g/POAG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9mkwYw6UtJUq6UY4mamkkt/Aohik4+hbfT/jlDsmMghNwZu6JoacZTU+PwSNnr6rpsY9Ld5LUm9E1wly39ANI0tep1jFGYenWaPVul3Zf843dHJd4b8DoR7LP6LtRTVcJp6JUg/aLb4R8C2eT1ZXCsPtGG/Dse22snrDBjeIEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIGM0/7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8g/POAG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26171F000E9;
-	Wed, 20 May 2026 17:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIGM0/7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0EF1F000E9;
+	Wed, 20 May 2026 17:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299064;
-	bh=vYEgn7ij4I3UgUglpgYdJ0vyFFNVaGan6DgPTEQRtoU=;
+	s=korg; t=1779299067;
+	bh=DZ3Tiw+ekTmu02V9IidQRy4nJW3czdHZaSBwgzjbqLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8g/POAGZrfbrmvaSd5l8mEUUnMKxhITVUSOct0iUjhQewnkPh5bVGdUmhLtJOVQ1
-	 g96GR51yqqIkDdaAO+IfjepmjqjoHeB9sJ7bifSdm5TRlKPzisgSIYnh+jphkZoDRq
-	 JLNaOMjvvE6/gtZhZ0NxHlIqCJaqo1KkGzoED+T0=
+	b=VIGM0/7nkrWjMMvKKRVqnO8ZVaCyFgqXPvGCSGEksMcqJ9dJCHH7/OZBa4bgRvXfK
+	 7G/63AlGtk7vWAQGZ3sdH254KUuY6h5Ronf8JLB1eof/gP3cULOViTVpl79U/EUer1
+	 m0RI6dEnsIE4iVrPP1wNpl/8WCLh5+XrwHCLZeuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Mikityanska <alice@isovalent.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 648/957] ice: Remove jumbo_remove step from TX path
-Date: Wed, 20 May 2026 18:18:51 +0200
-Message-ID: <20260520162148.582539866@linuxfoundation.org>
+Subject: [PATCH 6.18 649/957] ice: fix double-free of tx_buf skb
+Date: Wed, 20 May 2026 18:18:52 +0200
+Message-ID: <20260520162148.604993708@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,39 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 8b76102c5e00d1f090e0c31d17b060c76d8fa859 ]
+[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
 
-Now that the kernel doesn't insert HBH for BIG TCP IPv6 packets, remove
-unnecessary steps from the ice TX path, that used to check and remove
-HBH.
+If ice_tso() or ice_tx_csum() fail, the error path in
+ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
+to it and is marked as valid (ICE_TX_BUF_SKB).
+'next_to_use' remains unchanged, so the potential problem will
+likely fix itself when the next packet is transmitted and the tx_buf
+gets overwritten. But if there is no next packet and the interface is
+brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
+will find the tx_buf and free the skb for the second time.
 
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260205133925.526371-8-alice.kernel@fastmail.im
+The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
+path, so that ice_unmap_and_free_tx_buf().
+Move the initialization of 'first' up, to ensure it's already valid in
+case we hit the linearization error path.
+
+The bug was spotted by AI while I had it looking for something else.
+It also proposed an initial version of the patch.
+
+I reproduced the bug and tested the fix by adding code to inject
+failures, on a build with KASAN.
+
+I looked for similar bugs in related Intel drivers and did not find any.
+
+Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1a303baa715e ("ice: fix double-free of tx_buf skb")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 73f08d02f9c76..90dbe5266ce78 100644
+index 90dbe5266ce78..e0774a640955d 100644
 --- a/drivers/net/ethernet/intel/ice/ice_txrx.c
 +++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -2594,9 +2594,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+@@ -2594,6 +2594,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
  
  	ice_trace(xmit_frame_ring, tx_ring, skb);
  
--	if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
--		goto out_drop;
--
++	/* record the location of the first descriptor for this packet */
++	first = &tx_ring->tx_buf[tx_ring->next_to_use];
++
  	count = ice_xmit_desc_count(skb);
  	if (ice_chk_linearize(skb, count)) {
  		if (__skb_linearize(skb))
+@@ -2619,8 +2622,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	offload.tx_ring = tx_ring;
+ 
+-	/* record the location of the first descriptor for this packet */
+-	first = &tx_ring->tx_buf[tx_ring->next_to_use];
+ 	first->skb = skb;
+ 	first->type = ICE_TX_BUF_SKB;
+ 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
+@@ -2685,6 +2686,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ out_drop:
+ 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
+ 	dev_kfree_skb_any(skb);
++	first->type = ICE_TX_BUF_EMPTY;
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.53.0
 
