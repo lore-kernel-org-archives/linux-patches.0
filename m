@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1C2369999;
-	Wed, 20 May 2026 17:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6CD366075;
+	Wed, 20 May 2026 17:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297736; cv=none; b=j77rhnlSsrUMzIdhfintTTiyRULF9Qxzz6034CRidCZbKoY5zXu0Sc6iZ+faPCs9ZZW7DvNMROYCaVlwic8oqYufEXdv+gla/O6q4xF7pp5QC82wqi6G8pgJntHKVnwaA8tvEFj4wOPMnbb/3Aidg6p5tYbjWKJimTkto1voVkk=
+	t=1779297739; cv=none; b=eL07oUA5It4MKoPAN2dFikiE5YesR+z9NGR2YdMzBhELOSKbLN3+daGOrbpIg+sVAWeBcVy0wcu7Nivy2PVntZLV2GF7agbSss3KyABm5Xu1YiokQZJU1T0E0rAaFZQ2rcuA2RYTWxQvCYm41TpkvraTSxBt0gng9R4s4u7yWtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297736; c=relaxed/simple;
-	bh=qEB2THl6YbfvDBTdliWZUW619WUEzYTJNQC+VJyBQaI=;
+	s=arc-20240116; t=1779297739; c=relaxed/simple;
+	bh=OJUBo0CyJnOij67LKKFf7k6It1AlWv0QG0a5WyvixTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJe9plCwM9UiyvqR2wu+tFpdiI3Lq+iap9z34+BYJCEI2OoPGVNWy89dut4MOJrF9KDNESdbuObW/Ou49jiDEIZ9w8Ko+qUnYGmV3L7b3NY/aVk8vC/ssh/4nGdKQP+vXgR68Rb2aQJVU27Y1JpmqZiDYur6mpnYgSTKF6RICvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e41DUzY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YUhVynUiq+kmgLQpVbB5KeFjlkAOAhVnOznAbnTPWBw+nODy2rF0i5f3RZzui4VPIgDmoPFb1SW6lwZ7lPBHZcNo9+IdcXbEmQ20wJ1juT3CWDfss27gfNnTktXNRc8g6lbTowthsbjUfrMOArPLkVtFS5Lh7afOwfw00bu3kWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSJnnwIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e41DUzY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCB81F000E9;
-	Wed, 20 May 2026 17:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSJnnwIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF45C1F00893;
+	Wed, 20 May 2026 17:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297735;
-	bh=SsIYKo29v1d+rBSJvQXuig7sab7og1YkNry9os0jDo8=;
+	s=korg; t=1779297738;
+	bh=1tzKuovqeQpI0tnhuXJh4vagfPfj6Gtmx7HGTxeybxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e41DUzY3oDxlo6QHKtBhhn4RcXoYBLGapAPyQJ/+qUrGNhVcE1GkRERmrI+fQNVw7
-	 My/Y5Z0Y5q0OoKYpHJbRdC0p6YQTixOoeWFvPct8J+58Xi5Wnkn28gfKUIlbNVB3nS
-	 U9PMijsin7hZjurl8L6b3KOUWo7yWUlYaV/YgXd4=
+	b=oSJnnwICIJGDofT2Th20XZe6JY2Ax14sXDEW/15YTu62SswOXMs2HXpOY719c4kPi
+	 gxk9GL8loKETPSgg06HN1F7uo7L4CqY4hFaFI0eKBe/q5Ca62yTEZnsRkkc9Ve4a2r
+	 9i+A3Tq99906yC9wveWeV3ADWAqUEUcCXd1Vm8Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 145/957] bpf: return VMA snapshot from task_vma iterator
-Date: Wed, 20 May 2026 18:10:28 +0200
-Message-ID: <20260520162137.698996725@linuxfoundation.org>
+Subject: [PATCH 6.18 146/957] bpf: Fix RCU stall in bpf_fd_array_map_clear()
+Date: Wed, 20 May 2026 18:10:29 +0200
+Message-ID: <20260520162137.720585659@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,131 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit 4cbee026db54cad39c39db4d356100cb133412b3 ]
+[ Upstream commit 4406942e65ca128c56c67443832988873c21d2e9 ]
 
-Holding the per-VMA lock across the BPF program body creates a lock
-ordering problem when helpers acquire locks that depend on mmap_lock:
+Add a missing cond_resched() in bpf_fd_array_map_clear() loop.
 
-  vm_lock -> i_rwsem -> mmap_lock -> vm_lock
+For PROG_ARRAY maps with many entries this loop calls
+prog_array_map_poke_run() per entry which can be expensive, and
+without yielding this can cause RCU stalls under load:
 
-Snapshot the VMA under the per-VMA lock in _next() via memcpy(), then
-drop the lock before returning. The BPF program accesses only the
-snapshot.
+  rcu: Stack dump where RCU GP kthread last ran:
+  CPU: 0 UID: 0 PID: 30932 Comm: kworker/0:2 Not tainted 6.14.0-13195-g967e8def1100 #2 PREEMPT(undef)
+  Workqueue: events prog_array_map_clear_deferred
+  RIP: 0010:write_comp_data+0x38/0x90 kernel/kcov.c:246
+  Call Trace:
+   <TASK>
+   prog_array_map_poke_run+0x77/0x380 kernel/bpf/arraymap.c:1096
+   __fd_array_map_delete_elem+0x197/0x310 kernel/bpf/arraymap.c:925
+   bpf_fd_array_map_clear kernel/bpf/arraymap.c:1000 [inline]
+   prog_array_map_clear_deferred+0x119/0x1b0 kernel/bpf/arraymap.c:1141
+   process_one_work+0x898/0x19d0 kernel/workqueue.c:3238
+   process_scheduled_works kernel/workqueue.c:3319 [inline]
+   worker_thread+0x770/0x10b0 kernel/workqueue.c:3400
+   kthread+0x465/0x880 kernel/kthread.c:464
+   ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:153
+   ret_from_fork_asm+0x19/0x30 arch/x86/entry/entry_64.S:245
+   </TASK>
 
-The verifier only trusts vm_mm and vm_file pointers (see
-BTF_TYPE_SAFE_TRUSTED_OR_NULL in verifier.c). vm_file is reference-
-counted with get_file() under the lock and released via fput() on the
-next iteration or in _destroy(). vm_mm is already correct because
-lock_vma_under_rcu() verifies vma->vm_mm == mm. All other pointers
-are left as-is by memcpy() since the verifier treats them as untrusted.
-
-Fixes: 4ac454682158 ("bpf: Introduce task_vma open-coded iterator kfuncs")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/r/20260408154539.3832150-4-puranjay@kernel.org
+Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
+Fixes: da765a2f5993 ("bpf: Add poke dependency tracking for prog array maps")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Link: https://lore.kernel.org/r/20260407103823.3942156-1-rhkrqnwk98@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/task_iter.c | 42 ++++++++++++++++++++++++++++++------------
- 1 file changed, 30 insertions(+), 12 deletions(-)
+ kernel/bpf/arraymap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
-index 87e87f18913d9..e791ae065c39b 100644
---- a/kernel/bpf/task_iter.c
-+++ b/kernel/bpf/task_iter.c
-@@ -808,7 +808,7 @@ static inline void bpf_iter_mmput_async(struct mm_struct *mm)
- struct bpf_iter_task_vma_kern_data {
- 	struct task_struct *task;
- 	struct mm_struct *mm;
--	struct vm_area_struct *locked_vma;
-+	struct vm_area_struct snapshot;
- 	u64 next_addr;
- };
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 80b1765a31596..248ab6854cf24 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -1006,8 +1006,10 @@ static void bpf_fd_array_map_clear(struct bpf_map *map, bool need_defer)
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	int i;
  
-@@ -842,7 +842,7 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
- 
- 	/*
- 	 * Reject irqs-disabled contexts including NMI. Operations used
--	 * by _next() and _destroy() (vma_end_read, bpf_iter_mmput_async)
-+	 * by _next() and _destroy() (vma_end_read, fput, bpf_iter_mmput_async)
- 	 * can take spinlocks with IRQs disabled (pi_lock, pool->lock).
- 	 * Running from NMI or from a tracepoint that fires with those
- 	 * locks held could deadlock.
-@@ -885,7 +885,7 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
- 		goto err_cleanup_iter;
- 	}
- 
--	kit->data->locked_vma = NULL;
-+	kit->data->snapshot.vm_file = NULL;
- 	kit->data->next_addr = addr;
- 	return 0;
- 
-@@ -947,26 +947,45 @@ bpf_iter_task_vma_find_next(struct bpf_iter_task_vma_kern_data *data)
- 	return vma;
- }
- 
-+static void bpf_iter_task_vma_snapshot_reset(struct vm_area_struct *snap)
-+{
-+	if (snap->vm_file) {
-+		fput(snap->vm_file);
-+		snap->vm_file = NULL;
+-	for (i = 0; i < array->map.max_entries; i++)
++	for (i = 0; i < array->map.max_entries; i++) {
+ 		__fd_array_map_delete_elem(map, &i, need_defer);
++		cond_resched();
 +	}
-+}
-+
- __bpf_kfunc struct vm_area_struct *bpf_iter_task_vma_next(struct bpf_iter_task_vma *it)
- {
- 	struct bpf_iter_task_vma_kern *kit = (void *)it;
--	struct vm_area_struct *vma;
-+	struct vm_area_struct *snap, *vma;
- 
- 	if (!kit->data) /* bpf_iter_task_vma_new failed */
- 		return NULL;
- 
--	if (kit->data->locked_vma) {
--		vma_end_read(kit->data->locked_vma);
--		kit->data->locked_vma = NULL;
--	}
-+	snap = &kit->data->snapshot;
-+
-+	bpf_iter_task_vma_snapshot_reset(snap);
- 
- 	vma = bpf_iter_task_vma_find_next(kit->data);
- 	if (!vma)
- 		return NULL;
- 
--	kit->data->locked_vma = vma;
-+	memcpy(snap, vma, sizeof(*snap));
-+
-+	/*
-+	 * The verifier only trusts vm_mm and vm_file (see
-+	 * BTF_TYPE_SAFE_TRUSTED_OR_NULL in verifier.c). Take a reference
-+	 * on vm_file; vm_mm is already correct because lock_vma_under_rcu()
-+	 * verifies vma->vm_mm == mm. All other pointers are untrusted by
-+	 * the verifier and left as-is.
-+	 */
-+	if (snap->vm_file)
-+		get_file(snap->vm_file);
-+
- 	kit->data->next_addr = vma->vm_end;
--	return vma;
-+	vma_end_read(vma);
-+	return snap;
  }
  
- __bpf_kfunc void bpf_iter_task_vma_destroy(struct bpf_iter_task_vma *it)
-@@ -974,8 +993,7 @@ __bpf_kfunc void bpf_iter_task_vma_destroy(struct bpf_iter_task_vma *it)
- 	struct bpf_iter_task_vma_kern *kit = (void *)it;
- 
- 	if (kit->data) {
--		if (kit->data->locked_vma)
--			vma_end_read(kit->data->locked_vma);
-+		bpf_iter_task_vma_snapshot_reset(&kit->data->snapshot);
- 		put_task_struct(kit->data->task);
- 		bpf_iter_mmput_async(kit->data->mm);
- 		bpf_mem_free(&bpf_global_ma, kit->data);
+ static void prog_array_map_seq_show_elem(struct bpf_map *map, void *key,
 -- 
 2.53.0
 
