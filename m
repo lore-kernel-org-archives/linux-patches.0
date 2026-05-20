@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E449363C6F;
-	Wed, 20 May 2026 17:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E472736D9EA;
+	Wed, 20 May 2026 17:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298852; cv=none; b=usH+fsxoco++s/x2J7z/R1r1X9L7RBEO8HuGSbyxi1gnfpOCLk7xL4PUuoRBBqc5ws/QKm0LC7MewwQfRJVk5a+hY1jIEnUJffD9vFkHyMmloW2dJHFKKYLhoBJsNVjLd3vjeXZY6s90b7FtBfhHCErDMK8vhC9KD1e9hBp7tvs=
+	t=1779298855; cv=none; b=pa3143g5n6SogiKeHdb2hCsGo14Ky1/mJ3lN8jgiWII3Hap79jFp7HOtYPvICRbo/K+g5dMslV92gtAp+rS4cGPPdgWzuWXr6G5+/9Jjq78whrlk+f21xWZs3sPUW3EU+H7EkacfHJmqBGKB+fM3jWIBIP7BhjrMLC4Y5Vs9coY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298852; c=relaxed/simple;
-	bh=XYFFeH4MsA5/Tw2zgk/8IZuDe6A/1fgRWbGbRzOKnFE=;
+	s=arc-20240116; t=1779298855; c=relaxed/simple;
+	bh=sdfQXAWWM4iSyUODaXPfH/rTYbN/jfmJ7/IvAztQQ2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3P4I19gr538feSWDCk2gAVTq9jO8oXImS8J1t7JQmK+jzpdfZY9OmLHOVfIznYw9i2/LzLVv82gsEh6T8XGAqPdoJn3qwAc37zGEwwCgH9RN8L9H7cZvgFgXo56IK3Jh3DheXQ7SPlP3N4t48j2v/kEquzplGztW+ssfwb1Pyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB4R2YZD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LapsfskxSCFfwoWu44k0mUlplMM7zTaOSQZLZrUo0uLhpe/k9uDdOzu12upASMd6vuIPIrsAHYVuneZzyC5yNNF2BSVDcGtcoqf1h5FV0SfG1z+ExbsoLllQomT9t/2BIfUp9UrDppj84PW2Wu36yPQeMcjk8z79cP3VFers8/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kU1ezhm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB4R2YZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F771F000E9;
-	Wed, 20 May 2026 17:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kU1ezhm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AB21F000E9;
+	Wed, 20 May 2026 17:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298851;
-	bh=lv6q+K2dSt76xCCOzZH7ONG5d+MTXaiFxtA9n70169s=;
+	s=korg; t=1779298853;
+	bh=D4ju9tXMvdpmBibWu0f/EG6xHBOAAqlQdhSFjXmxh1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB4R2YZDwH3JmFHL7U+Xm9uhZRdSIFha/cxttwK6KEWZSQkWCIi31cHVhZLz4TPjm
-	 +VxwMCruIznM7P50GpWqeLpDePQJomfV1aZdDQV31rsyfoSkv4XCDmKxhvF+5wH6qA
-	 2XNxsPYZ5+sjZSElPC1jcVipl7qNTObz8NlRkykk=
+	b=kU1ezhm3CT2m2nq9dtpejpTn7bEllHJy3ujf4iXnuAGcVdgszQm4OMCPC8oL8gr59
+	 dpsYyQDJMpN2dqjbTpwt+DVpVjucOIBPBR5nXBd/mNqL1gDVeK+rgpCgJae6hhimQK
+	 FYqCBjAJC1EgNe7aEHsCnWtdzCEC8dIQ6UwdL0vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 531/957] leds: lgm-sso: Remove duplicate assignments for priv->mmap
-Date: Wed, 20 May 2026 18:16:54 +0200
-Message-ID: <20260520162146.048402318@linuxfoundation.org>
+Subject: [PATCH 6.18 567/957] clk: qcom: gcc-sc8180x: Use retention for USB power domains
+Date: Wed, 20 May 2026 18:17:30 +0200
+Message-ID: <20260520162146.825636722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,34 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 7186d0330c3f3e86de577687a82f4ebd96dcb5ac ]
+[ Upstream commit 25bc96f26cd6c19dde13a0b9859183e531d6fbfc ]
 
-Remove duplicate assignment of priv->mmap in intel_sso_led_probe().
+The USB subsystem does not expect to lose its state on suspend:
 
-Fixes: fba8a6f2263b ("leds: lgm-sso: Fix clock handling")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260226033048.3715915-1-nichen@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+    xhci-hcd xhci-hcd.0.auto: xHC error in resume, USBSTS 0x401, Reinit
+    usb usb1: root hub lost power or was reset
+
+(The reinitialization usually succeeds, but it does slow down resume.)
+
+To maintain state during suspend, the relevant GDSCs need to stay in
+retention mode, like they do on other similar SoCs. Change the mode to
+PWRSTS_RET_ON to fix.
+
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20260312112321.370983-4-val@packett.cool
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/blink/leds-lgm-sso.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/clk/qcom/gcc-sc8180x.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
-index 8923d2df47049..3d9ef9a54805c 100644
---- a/drivers/leds/blink/leds-lgm-sso.c
-+++ b/drivers/leds/blink/leds-lgm-sso.c
-@@ -808,8 +808,6 @@ static int intel_sso_led_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
+index 55dabf6259b29..b116a9c0b2d94 100644
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -4172,7 +4172,7 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR,
+ };
  
- 	priv->fpid_clkrate = clk_get_rate(priv->clocks[1].clk);
+@@ -4190,7 +4190,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR,
+ };
  
--	priv->mmap = syscon_node_to_regmap(dev->of_node);
--
- 	priv->mmap = syscon_node_to_regmap(dev->of_node);
- 	if (IS_ERR(priv->mmap)) {
- 		dev_err(dev, "Failed to map iomem!\n");
+@@ -4262,7 +4262,7 @@ static struct gdsc usb30_mp_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_mp_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR,
+ };
+ 
 -- 
 2.53.0
 
