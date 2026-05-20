@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C55E35C1A0;
-	Wed, 20 May 2026 17:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE1335C1A0;
+	Wed, 20 May 2026 17:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297499; cv=none; b=tB7BsiyxVUyHl3yuDlIttQ6uOC7ngNC8KAuxbgpgMNg/CzeKo2erwFiDdYxNqMvIgl30wZ0poE2+METIqut52BIPz5SRKFJBPkutdOMJUn24YCOCfyPO2lBkFNgYc02sNkPJzkJwXfvdC3APwbGleQVZvj12jkd0aDQM9uAufNo=
+	t=1779297501; cv=none; b=nXNFzuTGEpEQ6Hzv2s8kyQVnU8n+FL9ZQ3G3utcwIHcb85EcjIfGTfceKnnUh8K4yQHA2i2Ek0iyXQe4uayY3uKU7fxfY3z0e26s/xZcnvNDwAAVFwcqiGaq16g347uvCG1ffroAShyf881ARhaAk/+GVe/wgxLaeRczmge2FiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297499; c=relaxed/simple;
-	bh=E94hPZJF3suVGIrEcU5bluhNgtqssSe50PzG1kg3a/A=;
+	s=arc-20240116; t=1779297501; c=relaxed/simple;
+	bh=SY3gxJIk9agpDARHeONTKSzOVvJt09E26uypu2AmDXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C79rkWTL1Og9P2CrI9whrUJkXDLHztGUKMIt3OjApRdORmTH19ItB9VvCDKW9DdyK9QCuSkHLjM8tlJVZo9NqqXs41P6lQSfuJg2P/OKWVyoiq2qv/U9b2ijS1Ai/97CMzVCwkAPT2PeeCc0Wtbfd7jLqdn7AKvEFuSM/s1p2ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdSoU7lL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R5+fkZht/6TO9dJkvxbO7uZGvq929xeyTIXQ6c1zok7LXD7YoCf63sbMhPDuHoZ8OZeNjLjL5icS74HRcagFEiD3+JrmLmjLzYw74UJkwpcJHAwm0TLECz9mSR2GOP87lHEETu6oVrp84E/VBIdoPk4pI/AVcLu9lwtqjmygk1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuzrsPv0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdSoU7lL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF41C1F000E9;
-	Wed, 20 May 2026 17:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuzrsPv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F131F00893;
+	Wed, 20 May 2026 17:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297497;
-	bh=g8cE+ozKX+0zEmtmMh3fPYa6ooaJtJy5ZG7DC5gOF1s=;
+	s=korg; t=1779297499;
+	bh=Z/17KTTEuPMEV8fxQ1u0y5W0djQJLsGgMamCO7lvjww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZdSoU7lLfW/xFWtl4f/w3rfUSgilGX4H7A4ffj3K3jKN3GTgj6W4mC5lVNm9A9j3+
-	 v3Epx15J728sRnQr0hhbm1i8M8Exr/YN6O4HVhQ47JJ14cznhOqTlU+8IXYamPsaZV
-	 uAXew/hCC/5ppAdOAKr6vNqIpBgHal4UCQOlCeKM=
+	b=MuzrsPv0tM5s9OFyeHrmYFxu65XvBcxknlNP19qNV9dOCfqSYW4jBoF0UwNu210LZ
+	 OKoF4roU00KxYDDQtY7p/TlwMILeQk+A/VdBC7nYCx2glysBftVx9sbcO5LnbpY1Eq
+	 Vlu0CZTeDBqnwKc44A1XPzLqCNI2q2uBaF/Jt404=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yun Lu <luyun@kylinos.cn>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/957] wifi: rtlwifi: pci: fix possible use-after-free caused by unfinished irq_prepare_bcn_tasklet
-Date: Wed, 20 May 2026 18:08:58 +0200
-Message-ID: <20260520162135.752144120@linuxfoundation.org>
+Subject: [PATCH 6.18 056/957] bpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap
+Date: Wed, 20 May 2026 18:08:59 +0200
+Message-ID: <20260520162135.774474116@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,46 +55,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 039cd522dc70151da13329a5e3ae19b1736f468a ]
+[ Upstream commit 972787479ee73006fddb5e59ab5c8e733810ff42 ]
 
-The irq_prepare_bcn_tasklet is initialized in rtl_pci_init() and
-scheduled when RTL_IMR_BCNINT interrupt is triggered by hardware.
-But it is never killed in rtl_pci_deinit(). When the rtlwifi card
-probe fails or is being detached, the ieee80211_hw is deallocated.
-However, irq_prepare_bcn_tasklet may still be running or pending,
-leading to use-after-free when the freed ieee80211_hw is accessed
-in _rtl_pci_prepare_bcn_tasklet().
+The bpf_lwt_xmit_push_encap helper needs to access skb_dst(skb)->dev to
+calculate the needed headroom:
 
-Similar to irq_tasklet, add tasklet_kill() in rtl_pci_deinit() to
-ensure that irq_prepare_bcn_tasklet is properly terminated before
-the ieee80211_hw is released.
+	err = skb_cow_head(skb,
+			   len + LL_RESERVED_SPACE(skb_dst(skb)->dev));
 
-The issue was identified through static analysis.
+But skb->_skb_refdst may not be initialized when the skb is set up by
+bpf_prog_test_run_skb function. Executing bpf_lwt_push_ip_encap function
+in this scenario will trigger null pointer dereference, causing a kernel
+crash as Yinhao reported:
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260223045522.48377-1-duoming@zju.edu.cn
+[  105.186365] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  105.186382] #PF: supervisor read access in kernel mode
+[  105.186388] #PF: error_code(0x0000) - not-present page
+[  105.186393] PGD 121d3d067 P4D 121d3d067 PUD 106c83067 PMD 0
+[  105.186404] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[  105.186412] CPU: 3 PID: 3250 Comm: poc Kdump: loaded Not tainted 6.19.0-rc5 #1
+[  105.186423] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  105.186427] RIP: 0010:bpf_lwt_push_ip_encap+0x1eb/0x520
+[  105.186443] Code: 0f 84 de 01 00 00 0f b7 4a 04 66 85 c9 0f 85 47 01 00 00 31 c0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc 48 8b 73 58 48 83 e6 fe <48> 8b 36 0f b7 be ec 00 00 00 0f b7 b6 e6 00 00 00 01 fe 83 e6 f0
+[  105.186449] RSP: 0018:ffffbb0e0387bc50 EFLAGS: 00010246
+[  105.186455] RAX: 000000000000004e RBX: ffff94c74e036500 RCX: ffff94c74874da00
+[  105.186460] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff94c74e036500
+[  105.186463] RBP: 0000000000000001 R08: 0000000000000002 R09: 0000000000000000
+[  105.186467] R10: ffffbb0e0387bd50 R11: 0000000000000000 R12: ffffbb0e0387bc98
+[  105.186471] R13: 0000000000000014 R14: 0000000000000000 R15: 0000000000000002
+[  105.186484] FS:  00007f166aa4d680(0000) GS:ffff94c8b7780000(0000) knlGS:0000000000000000
+[  105.186490] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  105.186494] CR2: 0000000000000000 CR3: 000000015eade001 CR4: 0000000000770ee0
+[  105.186499] PKRU: 55555554
+[  105.186502] Call Trace:
+[  105.186507]  <TASK>
+[  105.186513]  bpf_lwt_xmit_push_encap+0x2b/0x40
+[  105.186522]  bpf_prog_a75eaad51e517912+0x41/0x49
+[  105.186536]  ? kvm_clock_get_cycles+0x18/0x30
+[  105.186547]  ? ktime_get+0x3c/0xa0
+[  105.186554]  bpf_test_run+0x195/0x320
+[  105.186563]  ? bpf_test_run+0x10f/0x320
+[  105.186579]  bpf_prog_test_run_skb+0x2f5/0x4f0
+[  105.186590]  __sys_bpf+0x69c/0xa40
+[  105.186603]  __x64_sys_bpf+0x1e/0x30
+[  105.186611]  do_syscall_64+0x59/0x110
+[  105.186620]  entry_SYSCALL_64_after_hwframe+0x76/0xe0
+[  105.186649] RIP: 0033:0x7f166a97455d
+
+Temporarily add the setting of skb->_skb_refdst before bpf_test_run to resolve the issue.
+
+Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Closes: https://groups.google.com/g/hust-os-kernel-patches/c/8-a0kPpBW2s
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260304094429.168521-2-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bpf/test_run.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index d080469264cf8..f0010336e78c1 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -1674,6 +1674,7 @@ static void rtl_pci_deinit(struct ieee80211_hw *hw)
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 6b04f47301c1e..65d7f8d51823e 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1093,6 +1093,21 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		skb->ip_summed = CHECKSUM_COMPLETE;
+ 	}
  
- 	synchronize_irq(rtlpci->pdev->irq);
- 	tasklet_kill(&rtlpriv->works.irq_tasklet);
-+	tasklet_kill(&rtlpriv->works.irq_prepare_bcn_tasklet);
- 	cancel_work_sync(&rtlpriv->works.lps_change_work);
- }
- 
++	if (prog->type == BPF_PROG_TYPE_LWT_XMIT) {
++		if (!ipv6_bpf_stub) {
++			pr_warn_once("Please test this program with the IPv6 module loaded\n");
++			ret = -EOPNOTSUPP;
++			goto out;
++		}
++#if IS_ENABLED(CONFIG_IPV6)
++		/* For CONFIG_IPV6=n, ipv6_bpf_stub is NULL which is
++		 * handled by the above if statement.
++		 */
++		dst_hold(&net->ipv6.ip6_null_entry->dst);
++		skb_dst_set(skb, &net->ipv6.ip6_null_entry->dst);
++#endif
++	}
++
+ 	ret = bpf_test_run(prog, skb, repeat, &retval, &duration, false);
+ 	if (ret)
+ 		goto out;
 -- 
 2.53.0
 
