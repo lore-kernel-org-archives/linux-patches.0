@@ -1,148 +1,164 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11022115.outbound.protection.outlook.com [52.101.66.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1761730B508
-	for <patches@lists.linux.dev>; Thu, 21 May 2026 15:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF80363C79
+	for <patches@lists.linux.dev>; Thu, 21 May 2026 15:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.115
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779376264; cv=pass; b=tAVt3jh42GEpktMPXyOrKs7AXHjA5X/uSjQnBs11F8TVRWJgkciC32wfZf75Tvykl10v5z0T18sN7VRfTRmZY85S5Fcwi/fo3UKWv1oVF9+qJONZ/s7fR3g5HcEudk/ZU5ITab2QSBEaynuCtFBLcBmk4gqbZiyaELWV8143ghU=
+	t=1779377318; cv=fail; b=s0TM5aFb+Xt9UHd1QvQQVKdbRM0KvdLPyGDcOLtnHbw946+G5275vLgZFzQJDdyGbBnPn6v8AcdGFbk6+W4ZeI87N/AGwzs5MrP9hCAQp0rAHvl3szQNFXe2ZrUt0gO0twfCxqgwJCwpO3O1KraKa+DQj1OpV1lt11c8dtLam1M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779376264; c=relaxed/simple;
-	bh=ILfPKmm6WIP8+pTKfALGk8orSX2OR5gYrWIIqKa6xG8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nFdSUDmIKimxmYxoE3l36w+ywXxQdbGTc9pedKxqLvTtjkQL8WA5Z7X9cPuZedxO0zCfxSdxrKEpXN2IEiOrf9coVyFW2tNQmnQ0t02/R6m0hbM4x16cW5HTdq8XRcCKE7iq0unmzMliyIKAo1wptOQRiwrsZA/xIc6EPIXYor8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FYovcun1; arc=pass smtp.client-ip=74.125.82.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779377318; c=relaxed/simple;
+	bh=2KL58sH6OMto/fbKJShSyN9huWxrk4Bqhm2PXNjNO3E=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Max/Aql9jn7tJX8kn15WSq0s/qVcXxoKstMcJj+uyL5Z0A9nTlpJvQnUYoTzzQulXyHiRlJHPhxkjijNWLyj9lUUkzSP/8bTwp6BUojlugdf2jg1aTdezugHzBMT5nITXPH3lvO6MDBprZDKPJA9U9FTx2DFtCE5ZB637RbXjNQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=polito.it; spf=pass smtp.mailfrom=polito.it; dkim=pass (1024-bit key) header.d=polito.it header.i=@polito.it header.b=GPsPMt5n; arc=fail smtp.client-ip=52.101.66.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=polito.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=polito.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FYovcun1"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2c156c4a9efso8820368eec.1
-        for <patches@lists.linux.dev>; Thu, 21 May 2026 08:11:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779376262; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YJQs+p3Ja6KjWpfgdUkco5NtR2kP8/9KfQDrBPkh5UfMEa1zlrJo8WLobRvV+NJLQj
-         NITSt6m4epfUva4TlzI49wJk63z2/hHNLC92R9QX7vsgy8qTSM9VxVxA/m7sXyG9afZD
-         ljDM2Wlt7Lro1GVFEFDecfF+PFzMYfAAVCKyjMkaIhf5OzpFaDu4Tjn5EWJNpKPqZc/z
-         FC3kh7JbZDPMJwgvp1BKV5cwXh8vJ9q67Il8EIBMQ4XZ3bo6IpLsmvsowOLiXhbYlJgH
-         RPWEzCuXvRnrubXviA+omXM4q/kEs8/puzCxQudQSmKMsBqiWQhpp/0uhKiIeVaGTwDV
-         a3Dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=/zKjoIM90nBhcCHwQGZzjnKjYO07HjblWjtUDxE6Lnw=;
-        fh=KSYsSx/6A5CKt5XnO+xmwSh6NTFBKldgoMK9Pr13mUw=;
-        b=eaHtkvHg/IqAQa4gYFF1/edDiJMmVTcYPgb0i0MI2tiN8PosrK22QDdAjOHyxjRF0l
-         b79a/EunjkX0s+2+HXNEQ76R9GWu7RqSIYgrVjOtI+GKZUYnSRx2+iloOi/HAM4CLTjL
-         5EsmP6GAE0LLFjIHkXwSCz7cXJiLAsNRGieoFYYB+2eAF+FV2zZsU25tRmMjq+4SzYov
-         ae0e+Ygy8LpLQJQ4ahNTt0/RAWqSs36Ud5DMwVqGLWuYMoNb6gNsvT5s6iuhOu15hKfW
-         GICp4VVyYqM2vjQ3i/mFW9mTKnOTi+7L6SqtUSvu/BQNX/cPQPPprpsVPhHVMwW8oebz
-         vpDA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779376262; x=1779981062; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/zKjoIM90nBhcCHwQGZzjnKjYO07HjblWjtUDxE6Lnw=;
-        b=FYovcun1Dp8Hltti2iWY1Mf5zSNfBHpVZQfFLzHy+7yncCGKDLYkrKkL+kad03Gakg
-         GJOGXl9OdtiHoUMW0tCT+ol88BiiSsrz66Xu18eUHOdLFEIEj2XWM1B3quW4SBOe66JA
-         ja+WOSPv40sTzc2VTQZz/PDngRfLIP9YS5ZX/pm/F+iKE/gFEuihjxlOvaJ8BxqxvEM5
-         kJ4RouPc7b+X9gfb1RRqLanYXP4FhkxK/uyeMoH1AFLVUaLNTet85KRy0brMymE1r3qm
-         DDtZyAxspeeMpiNEKJ/qNM5U+YQ2gGTpOOnlZtwNTP1dET/tPxEIQUSopVRMvQdzDhom
-         FpHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779376262; x=1779981062;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/zKjoIM90nBhcCHwQGZzjnKjYO07HjblWjtUDxE6Lnw=;
-        b=Zd6PPFxIbjz9Ks1vkuyIjWP88POFoeoAVfYhk9LeOU24Qhe1EiEwNlRzEOTz113ecf
-         eOWtnu0PmT0hNvid5CdF1YU+wRO+khwURv6n4Y01enBNjEP42Iw7VNbj8IeQe0kd/arN
-         DkCg+AEjq/YXUvQAPP8Rzq0JPBVG6tjBQpnYuOuFRLSnG6Y+GPYnJQ0nfHq7nMJDhJxT
-         Qw+9fjwpBizQgiBjrRnUlqWZpCZarueyXkfMM8YUWae9aoxf4aSuCWI+CFpIcBJ7Jeef
-         M0FAXVsBTpZqOm99fGJWqWCuztqYrbUVycXinRVH4nxuzjtDFon09LP/lfNC3LKIT5g6
-         M/mw==
-X-Forwarded-Encrypted: i=1; AFNElJ8n5kVadUKUnslHuZGPwYjTaQ92MiAmDbH6y2L5k9Dme8Y6BBWeTNNamJMu2pAhbZGJsBp78cgs@lists.linux.dev
-X-Gm-Message-State: AOJu0YxhvIo7CkDXOfliL6rHKUjQCQOKrrfFkw+e1J5PjTCGLI7x9DwL
-	tzwMiHgmSPwjiDSV7hAw076Z73M0l0z4x1mv+lcQ1NCkb/k7gkqKnS2wWcpBq6bGp+NzhS1bJaU
-	HIWoMBWDTbWzaSpQHdFnKXchRcQ29qFc=
-X-Gm-Gg: Acq92OETt4DYHYss2qKgravCCEZ1HwJdC1uw8PMnB7rE0Vwf5vYmJYxtg1adpN3Ouys
-	CqMEMJUhX2earuPjDfZeSOF9qxc1ZfDhJfWtKcZYzM/iq2ixR2+aW2PnbvZGZgcDHkTDnl1EC8p
-	aJhehdVA0xelRKreWtjv+h+I0paQflEApLBnqfGFETXCpE+Ud6UpETTvF/2M2dxYuu3pSvoQByM
-	3MLITKihDReufbTLRqKxx4yRa3dBtoXTrebkYU7087i3vEFe52JC7IvazdpN5pzxYiFiX/p8ZTV
-	wr91qr1cZ8vOft2HGywBYFn58OvdhYkrjY4eCji9dIUbAPEsnGc1N5Gg+8wbcp9ha0UJC7Qg/08
-	omzJVi0bOIT+a+CxTxRrd2hFiV3KTPli0p6AL0vHrfc1dV4RQP/yIE/KP3/0HDjbAXXagCHlWcm
-	x3xCTbV8N4mXXHHc59VTbuT6XwSxdcVoRN+bIDyA==
-X-Received: by 2002:a05:7301:e2a:b0:2c4:61be:1d33 with SMTP id
- 5a478bee46e88-3042f48021fmr1929829eec.6.1779376261938; Thu, 21 May 2026
- 08:11:01 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=polito.it header.i=@polito.it header.b="GPsPMt5n"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gnL8X6OyJVCA6u7v9MY3byYqFtOO+5EvQp/zKFw1eCP+ofgttWYJfry8QNZdPFWR5DJTqO7el84cGEK4OEl+KCvPGQYrrRTBGIzoZj2yu4IUKpVuWcPe0YjhPrf0RnBNcLHYXdS9VkrsRhHvI2w+Rhd2ulb1SVIW9+SZFhl5hYfDOH9wwrOALkS8+UBLiZEuGiSGqD0XD+o2bwcm+39ycQiOVzld0qayY4ShUHZDKeQosovi1FsEpWddmzUXvHj6na6wsqrVpp4miEVVfutc8e50y+vObNk2Ww3+nqLyACQ2c4HasWDUCHHjYN7A/hRdZhXkaVUPqXQQi14ujxyHRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2KL58sH6OMto/fbKJShSyN9huWxrk4Bqhm2PXNjNO3E=;
+ b=kf7yoABeidApEXfpoqFGxAxsqXWlHOgeB7TkJXSMnxc5YMrkvyCuVuTSYmeq+eFDNjIf0/HkndgW1rVF9VSIlWovmZibqRiY2pfF0NaPBWL7z93MUprZQNwosC8sXjbrpMv2LFYfPj1QwJWd0nPv7BxbP9m9ZGljC9EI7qIqXSBDP6UhyrNlicWaQZ2H0X8qqugAnhWkqiK0weH11MqRrWtY0wuNUxGoHRnFn+jKYaXw3GQD9AUWeOg5fruhXUpY1+tt+BL4DKCzKbfnmbQCQEk6T6/pj9HFETRBsN6pSZ+0yuj8K6HdBFCzxt+3S/ndJCHolSqvVG4eguCHeDqM6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=polito.it; dmarc=pass action=none header.from=polito.it;
+ dkim=pass header.d=polito.it; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=polito.it;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2KL58sH6OMto/fbKJShSyN9huWxrk4Bqhm2PXNjNO3E=;
+ b=GPsPMt5no/Yr4tCSaBamkZ6rSDRlYmgujtM6Q9MAyHcir3ykij2wqnbEyJ4fqa9wY3D1S/QpojTT6AG3ETZ06kUifSGC5I3J3EQwA3k8nemQuShBLD2+9e8GzR7TIhZPkB0WNVCWo9E7a8zOPEllEcn0MPaFDs5e6QOqtXkpHqA=
+Received: from AS8PR05MB7880.eurprd05.prod.outlook.com (2603:10a6:20b:253::20)
+ by PAXPR05MB8269.eurprd05.prod.outlook.com (2603:10a6:102:15a::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.16; Thu, 21 May
+ 2026 15:28:32 +0000
+Received: from AS8PR05MB7880.eurprd05.prod.outlook.com
+ ([fe80::b739:4a27:cccc:cd64]) by AS8PR05MB7880.eurprd05.prod.outlook.com
+ ([fe80::b739:4a27:cccc:cd64%3]) with mapi id 15.20.9913.009; Thu, 21 May 2026
+ 15:28:31 +0000
+From: "Enrico  Bravi" <enrico.bravi@polito.it>
+To: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>
+CC: "jonathanh@nvidia.com" <jonathanh@nvidia.com>, "shuah@kernel.org"
+	<shuah@kernel.org>, "torvalds@linux-foundation.org"
+	<torvalds@linux-foundation.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "pavel@nabladev.com" <pavel@nabladev.com>,
+	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "conor@kernel.org"
+	<conor@kernel.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "sr@sladewatkins.com" <sr@sladewatkins.com>,
+	"linux@roeck-us.net" <linux@roeck-us.net>, "hargar@microsoft.com"
+	<hargar@microsoft.com>, "achill@achill.org" <achill@achill.org>,
+	"f.fainelli@gmail.com" <f.fainelli@gmail.com>, "rwarsow@gmx.de"
+	<rwarsow@gmx.de>, "broonie@kernel.org" <broonie@kernel.org>
+Subject: Re: [PATCH 6.18 000/957] 6.18.32-rc1 review
+Thread-Topic: [PATCH 6.18 000/957] 6.18.32-rc1 review
+Thread-Index: AQHc6Q9UDzTIV8ORTUqn7jXpCn+j17YYmtaA
+Date: Thu, 21 May 2026 15:28:31 +0000
+Message-ID: <59aa899745c980f74f422ac63bca106fd6173e66.camel@polito.it>
+References: <20260520162134.554764788@linuxfoundation.org>
+In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=polito.it;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR05MB7880:EE_|PAXPR05MB8269:EE_
+x-ms-office365-filtering-correlation-id: 8f1200c5-e2d2-473e-f7dd-08deb74d9db8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|7416014|786006|366016|1800799024|11063799006|18002099003|22082099003|56012099003|38070700021;
+x-microsoft-antispam-message-info:
+ 8cRwbM4KCRJV+cz8O3vaiSw8Wk8Bv1PO3O56u+dUVfBCjgisdevp35VXCNhXQkEHoM3xfvxVa4k3rJg5Ix41ShmUGJe0ykBKy34wyJAqp1N43+UQ/DJWbWmhjXzvUEuMWbZmzzDHsLtnQTtpQQbXPTF5V8RkiWgYFW6pzjYg//cyo8+/U0olxfpC2QZDE1VCgB8GsjZeMMhn4K/SD7OfUol78urlf+DKW+pwjvvOkLo+bFpv9nWraHhp5HmfcIPdA4Es3s3C+qjHuDS8JaWvEmrEF2ov+AbXuO1/O/ttdjU3+UO2ZB2NuVvvSs6H2tytmnnaHjpUalsWl4wxBOx1eEQ0v+Ja9ztBopP1n5ED4mkXJmbkezcxr3svjmT9DAxp14QaaIaXlo7plT4PGfFDewQcbUC1Jv9GGvT6anJxcCtp9GYmT04YktWdVNdk5reftVuVm2aRNm7NvdYPx2/LxbvVc2qy30gC+5k0w0xJblIcOvJ4dil7d++SPYEY3UriwNc6gZGgcXl5cppzJ6FhSCmOK7ogW3ktD3wV672TINJ0Rjkl474kT29EDbj5sBtmoZfGucXcljqvil1zt39iEqSX4b1MrII/bEjP3DqKbqFip24gNc7v0CInL116YWMKhwAYens7CTo8RLI4BIcEDORA3XLkP5NitJfLZmHLQRp3iFynyIqxdAm4X3d7W1FGUQ38yKaA79jISFeoszgFabmz1I5lePQN28ZPBU4j8wn1e/bR0QS7A0cQnLqdExZP
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR05MB7880.eurprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(786006)(366016)(1800799024)(11063799006)(18002099003)(22082099003)(56012099003)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?V0dsb0xvVElIQTJYRXBNUERvd2JMTGJUdXpnQ0lqVlBaM1pBaVNSdWZEcUg4?=
+ =?utf-8?B?WVF4QnhQQk9haG8zQW0zdnlDbGdjbXhwRnBtYU5ncHpST0FwMk90bFdTVzVa?=
+ =?utf-8?B?WWl0YWU2a1BGcTJrQWpKeHVrNFhTQ1hJbm51TS9Gc01sLzJ5djJka3VGZ3I1?=
+ =?utf-8?B?WnpvQVFNeUNxMk9HOHA5ZnIwREo4SWNPRGdzdTdqWFlUeEFFTjRWU2E2blpn?=
+ =?utf-8?B?TXg1NXBGSXpQMUpQc1E3VDlNTCt0T2FSSHA5M0VtWU1HaENZNUxZS1FmN2w1?=
+ =?utf-8?B?ZWY5b2pLREIrdGRxd1VCUlNuZnVJWkl6ajVSdUVQYnk3RnFwNzRlUmRyZGNI?=
+ =?utf-8?B?aFBZUlU2SXBlSzN0dGRwR2dJTk1YbnptQlpmVk1Ha1FCUGdkeExSUVQ2Q1ZR?=
+ =?utf-8?B?QXc3bjNub0FTWG1zZnp3SHhtWjdNRGFMNWJYOUhoSlBZSlBVL20xN3RuR2xq?=
+ =?utf-8?B?RHBYMWhJSTNDS3Q4Z0J4S2Q4RzdhSS9hb3c2RkF3YnowK1lCMVVHK202KzJi?=
+ =?utf-8?B?UE9qZDRjYlJEKzZqd3pmUEhoQTlRcVdSWExOQTRhd3RuT2pEdDNoTUhPUXh3?=
+ =?utf-8?B?Y3l2MGtZalA1NXdrWndXTDJzODI5R3JaNm91N1pUK1l2S29yNjBvODl0RUtN?=
+ =?utf-8?B?UWx0dXp3K1JVUDlKNEcxYkQ5enEySmFOcjc3YVlpcWtmbktxWXFDaFh0M09Q?=
+ =?utf-8?B?S2RwUzIybktaaTZWTitmVUZEQ1lHZFZETEk4NTJsRTllYW9vQ1ViYlBTWVRm?=
+ =?utf-8?B?NktjVHVncFM3Zmx5Qnp4ZlJuRXNLV3BkQmxic2p3RDY5TkhSSTR0OE82Skt0?=
+ =?utf-8?B?WE5BOFB6RkZGSGZaTnBGakhqQ3k5Q1Y4elRicVFaV3lvV1FERW5pRXV3Ym1a?=
+ =?utf-8?B?UTczTitYSWJuUzBleFJNZmJnc0ZUOEg5RjZNYmtqemZZb1dJekF3Ny9qRnlV?=
+ =?utf-8?B?b09PQ21QbUxQdGZCZTYwTW5SckwvbDJKQWk1cTFMM0djYnpEQjgzWm11NDRB?=
+ =?utf-8?B?d2E2Z2JxVnFLL3pIalk3aVgrUGExN2ZGVzU0YnVxY0x3cWhVMGZOUjhjdUZQ?=
+ =?utf-8?B?eEl1cURqNDdnVEEzRlR0a0w3cVplVU1NbWJhLzFhemh4Yi9CT1loODZoK0FQ?=
+ =?utf-8?B?Q0dkcXoxamtGelRzckI4SFo0RXhIR3hOb2J0WkdJRWFyWG5Icks1WklCcTVh?=
+ =?utf-8?B?YXdaek9uWXhxdlIwT1NXckkvM1Z5eWVZR0xrdlZJZXZUcnNDeWFtMTd2TmNh?=
+ =?utf-8?B?U2NtWFBhQ0dBU2dwUmkzbnZ5L0JQanI3L2lTVkFLY1FuL3NDY0F6MUd2MmxO?=
+ =?utf-8?B?SXdWa2grTXRTbzBiYnFmMlBHeCtHVjc0YVhITGJWT2MwUzh6MmFtVnFMT3hD?=
+ =?utf-8?B?aHhJcG43eFM3RGlSeHVtWUlwMHdZTktmQlEyTUlMTDJnSTBtcjhDN2VFaGY0?=
+ =?utf-8?B?OVp1c3JXTHpHTDgwSFZjNTNCdlNQSHdOUlhWSEJjaUNWeEVUbDg3VkF2T1c0?=
+ =?utf-8?B?YURBSFp2Yi9lUXpETWhyc3ROZEljOGJJVVV1RnhrVkE3RG1LQWFHcnJhcXh3?=
+ =?utf-8?B?WElBTUpmOE4zdUlHaGltTkJvQUIyaXZoaU1WMG0ybkl2a0VQRFhTZ0Qzb0VV?=
+ =?utf-8?B?a1hCZlRJRnZuZFVwWEVzMFJac1BESDNaZ2Vma2tYenRDZW4wd3RUZlQwU0My?=
+ =?utf-8?B?M3l3Z1dYWVZVdXh1NlYwSVlJTGZndytDWHdQbTdURTREMWZyR1l0T0xDQzk2?=
+ =?utf-8?B?MjFJdW4wUlNldkxUbHJWRVFYaUQwMFo4T3RubFNFcEFOVzdJYU9RSUtubnVH?=
+ =?utf-8?B?dTU3OFVjbHlLSVQyYnhtVi80S1ZDeXBWaVpaR0V3cXVRVHU2TlBxSlVmVUhJ?=
+ =?utf-8?B?eW45anQzR3JpL1pqNWxIRlZ5UGxqSkIzaFZQbllCcTN1MHUyR0xENlpBRTV4?=
+ =?utf-8?B?YWJZSmwwZFp1cDBkRlRBcHhoMElCNXlYQjRwNjZiZU1rSlg4RGpjTU8vTncv?=
+ =?utf-8?B?RW1zaEFzaWY4b2NnV2xDWFVDeThzWm13Y21lYmVhcE1kL2UybFF1UUgzRHRX?=
+ =?utf-8?B?N3JXc21YQlhpSkpRNXhLSFl1VnlUQ2NxZTF3cGdwTWFndmtwWXdyc040OVI0?=
+ =?utf-8?B?VzN6a2IwaFZoa0cyMWhtbzBUMG5YRjV3VTVBbU9sUCtEV1FCTnVPdzhDRXZW?=
+ =?utf-8?B?MTNvMUE4cjRKSldQWnpJQVVBMXFGUHhKdnp5SlVDTWdIbThnTU1ibVRnNnNT?=
+ =?utf-8?B?REtON2VYWFNIS25tc0lqRFJBRzJEREJKWk9oTElsRWZjUjdMTlc3REtRejQv?=
+ =?utf-8?B?dEp5WXlJK2ordHhOWVhOYzhCdkFlWTkwek1LYTY3ZkNOc0VSSHBGVnFhZzda?=
+ =?utf-8?Q?U4gQ5pTeJi1f4kFs=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <8520D82C6FB6A941A9ADA383C3A2F491@eurprd05.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260520162148.390695140@linuxfoundation.org> <0d67203ea22a7e63018ec8faf64ed2926a35b217.camel@polito.it>
-In-Reply-To: <0d67203ea22a7e63018ec8faf64ed2926a35b217.camel@polito.it>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Thu, 21 May 2026 17:10:48 +0200
-X-Gm-Features: AVHnY4I0z_lnmAtyJSTYF4yO7FwKP_QbNXUE4-v__QJHCIyrlaCcdQay2R76stQ
-Message-ID: <CADo9pHhq41HL66NxeFBoPZjhmowJuDPOn39zw4n=KLzuAwrwhA@mail.gmail.com>
-Subject: Re: [PATCH 7.0 0000/1146] 7.0.10-rc1 review
-To: Enrico Bravi <enrico.bravi@polito.it>
-Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, 
-	"stable@vger.kernel.org" <stable@vger.kernel.org>, "jonathanh@nvidia.com" <jonathanh@nvidia.com>, 
-	"shuah@kernel.org" <shuah@kernel.org>, 
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "pavel@nabladev.com" <pavel@nabladev.com>, 
-	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>, 
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"patches@kernelci.org" <patches@kernelci.org>, "conor@kernel.org" <conor@kernel.org>, 
-	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>, "sr@sladewatkins.com" <sr@sladewatkins.com>, 
-	"linux@roeck-us.net" <linux@roeck-us.net>, "hargar@microsoft.com" <hargar@microsoft.com>, 
-	"achill@achill.org" <achill@achill.org>, "f.fainelli@gmail.com" <f.fainelli@gmail.com>, 
-	"rwarsow@gmx.de" <rwarsow@gmx.de>, "broonie@kernel.org" <broonie@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: polito.it
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR05MB7880.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f1200c5-e2d2-473e-f7dd-08deb74d9db8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 May 2026 15:28:31.9132
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2a05ac92-2049-4a26-9b34-897763efc8e2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: V2CSoBK8MUO4A7hfRvLkMspK2fl7FCZDXJP19YJ/cc7aowfOvOC3KojK0Oc17IByUB9uSgK6kWO5DiwNS6OCUQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR05MB8269
 
-Tested-by: Luna Jernberg <droidbittin@gmail.com>
-
-AMD Ryzen 5 5600 6-Core Processor:
-https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
-https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
-https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
-motherboard :)
-
-Den tors 21 maj 2026 kl 15:52 skrev Enrico Bravi <enrico.bravi@polito.it>:
->
-> Hi,
->
-> On Wed, 2026-05-20 at 18:04 +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 7.0.10 release.
-> > There are 1146 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 22 May 2026 16:20:16 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >
-> > https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.10-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-
-> > rc.git linux-7.0.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> kernel builds and boots with no regressions. Tested on x86_64 (13th Gen Intel(R)
-> Core(TM) i9-13900H).
->
-> Tested-by: Enrico Bravi <enrico.bravi@polito.it>
->
-> Best regards,
->
-> Enrico
+SGksDQoNCk9uIFdlZCwgMjAyNi0wNS0yMCBhdCAxODowOCArMDIwMCwgR3JlZyBLcm9haC1IYXJ0
+bWFuIHdyb3RlOg0KPiBUaGlzIGlzIHRoZSBzdGFydCBvZiB0aGUgc3RhYmxlIHJldmlldyBjeWNs
+ZSBmb3IgdGhlIDYuMTguMzIgcmVsZWFzZS4NCj4gVGhlcmUgYXJlIDk1NyBwYXRjaGVzIGluIHRo
+aXMgc2VyaWVzLCBhbGwgd2lsbCBiZSBwb3N0ZWQgYXMgYSByZXNwb25zZQ0KPiB0byB0aGlzIG9u
+ZS7CoCBJZiBhbnlvbmUgaGFzIGFueSBpc3N1ZXMgd2l0aCB0aGVzZSBiZWluZyBhcHBsaWVkLCBw
+bGVhc2UNCj4gbGV0IG1lIGtub3cuDQo+IA0KPiBSZXNwb25zZXMgc2hvdWxkIGJlIG1hZGUgYnkg
+RnJpLCAyMiBNYXkgMjAyNiAxNjoyMDoxNiArMDAwMC4NCj4gQW55dGhpbmcgcmVjZWl2ZWQgYWZ0
+ZXIgdGhhdCB0aW1lIG1pZ2h0IGJlIHRvbyBsYXRlLg0KPiANCj4gVGhlIHdob2xlIHBhdGNoIHNl
+cmllcyBjYW4gYmUgZm91bmQgaW4gb25lIHBhdGNoIGF0Og0KPiAJDQo+IGh0dHBzOi8vd3d3Lmtl
+cm5lbC5vcmcvcHViL2xpbnV4L2tlcm5lbC92Ni54L3N0YWJsZS1yZXZpZXcvcGF0Y2gtNi4xOC4z
+Mi1yYzEuZw0KPiB6DQo+IG9yIGluIHRoZSBnaXQgdHJlZSBhbmQgYnJhbmNoIGF0Og0KPiAJZ2l0
+Oi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3N0YWJsZS9saW51eC1z
+dGFibGUtDQo+IHJjLmdpdCBsaW51eC02LjE4LnkNCj4gYW5kIHRoZSBkaWZmc3RhdCBjYW4gYmUg
+Zm91bmQgYmVsb3cuDQo+IA0KPiB0aGFua3MsDQo+IA0KPiBncmVnIGstaA0KDQprZXJuZWwgYnVp
+bGRzIGFuZCBib290cyB3aXRoIG5vIHJlZ3Jlc3Npb25zLiBUZXN0ZWQgb24geDg2XzY0ICgxM3Ro
+IEdlbiBJbnRlbChSKQ0KQ29yZShUTSkgaTktMTM5MDBIKS4NCg0KVGVzdGVkLWJ5OiBFbnJpY28g
+QnJhdmkgPGVucmljby5icmF2aUBwb2xpdG8uaXQ+DQoNCkJlc3QgcmVnYXJkcywNCg0KRW5yaWNv
+DQo=
