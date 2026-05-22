@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA6737DE85
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1612D0C72
 	for <patches@lists.linux.dev>; Fri, 22 May 2026 19:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779477332; cv=none; b=uPDLmW9+PPEkaibZRHk0Sni5YgRc2/RGxImKLenzycK9LJCZNKv9INEb5bDEK/VgY7Gq6ugkIQSGgqDQI56ArH9zb4vEFTXOkmutTdmhGm6Bg7IQbv2bdt1p3qReZB97pFDcRxHQ2C2JmFu9XR14mNacj04P9s8AqAfaUCcjV04=
+	t=1779477333; cv=none; b=L85O54IDV6KT1sri9S/sfSQapXrbJFdNsSNZHBwKq4awI0tI5reptjRGu22zFVCtQJUqukJMeuM7sRGILUQmhB7iqgLEBwgBh4gAO0o/zTXF7HsHNenqJl5ljlpCOQJlKJJkKXi3+hxLAQjes2jrspS2eM3Q6/Ib9p1uHIujsvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779477332; c=relaxed/simple;
-	bh=1iXFgQCwrYTU794BU7ayq2EciWf+wRYONptSagDlmxY=;
+	s=arc-20240116; t=1779477333; c=relaxed/simple;
+	bh=C+0z1oFt2EtVMPc6oB1Qc1vexbhegTpMehSW92wyaFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1FnnKuNqSGXSNbKmPWlDDEQ/dzaevTLjTtX6Z19Q1J5HlKRyL4XZui1Tzv0Mi0ku7zXmG5vxOaHMJ0jQmPT4r96iNADBmDmnj73lyeiKJVqU9eWJOGlg8d+D+dvJF073OhRt+Myfivq8X+YydeRUGHJhoZEiLtRtjfrkVoAbsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UhoacE3Q; arc=none smtp.client-ip=198.175.65.20
+	 MIME-Version; b=V1ejbAHcd9eNegoTADuQsERC6jPHPeG+qHJoLfQ9XsdR8YdTwg+EvcsvQcN6mZi1LySIznmVI7iZtM4vd/3HrwqYzEhAofAuexaW5SxTfH2fhidCfaGrQWbii8jkW26Bqnw+o987wRun5CSMKeddvtDa/JVFImj/df/e4SSDhdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kdjPJsew; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UhoacE3Q"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kdjPJsew"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1779477330; x=1811013330;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=1iXFgQCwrYTU794BU7ayq2EciWf+wRYONptSagDlmxY=;
-  b=UhoacE3QQ/L3dsxXroD+XiBJ3RB72stnVxowlLSlPJ+OXrKNGpC61xyq
-   1fV/xEZWL23BEr0d6h9+2k1D3tHjSKGDA02PZirHHqQA64oo3DCWCtUCq
-   K9KKkPS+4dtdINMGk8WPoJmSXnWuqtBGmJinzvNie/yu2MdHHoJSAMVYY
-   chlc8RUTpGllQuZwG1iBq0jl4UOZaS1yKNrymkFdvpOfQ7l9ZgN18m5sF
-   RuSiTkzbVv8P4q4OMeueouzbW8Yt7o9B95f7Xsfh4kmFFYvDUW5bSG3Va
-   tWbjoOXQAy2He+XPY2dpxIrgUljdG9jUjL3Fz20ZaULYGSmxjYf/bfyt5
-   g==;
-X-CSE-ConnectionGUID: BzrZi9X3RI2gHJ0+pQkgtQ==
-X-CSE-MsgGUID: Sysj7J24Qf+HN4CvTwGMtQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="80140500"
+  bh=C+0z1oFt2EtVMPc6oB1Qc1vexbhegTpMehSW92wyaFo=;
+  b=kdjPJsewAYCQdk+FWZoBl1QYaNqQ8UWQWPdN2l2WUoIQx4emfetIhNYg
+   qDyzXTnHf1Xct5EiLkIzmypF3Vxslk7AoG837eO5mX5y/aeEzV+a+AfJi
+   tNYlkeBs5FFO95Vau4QXKURoYnbmB5lyZV3F7jbpEddm8fFiD5iQXwyzn
+   QvhON4vMEGc6JMYYUFZnaUpfOnpWGwThTeNUHzPtcMZu4c0n0DEA70hFQ
+   fgmu+wklU4uL4nBUj4Oqjyg3NDhYxVNDTt/adnBXhkdCZzcMHpyWgSx5J
+   m6GtNbzoGbz9atzlBhJk2sS48NhQnHyeA6RaHZa1CEMbG4E+A691amy36
+   Q==;
+X-CSE-ConnectionGUID: HScyq24BR++cn+V80U2p2w==
+X-CSE-MsgGUID: FbUe5Lj2Qw+4Zg6xJlVP5A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="80140509"
 X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="80140500"
+   d="scan'208";a="80140509"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
   by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:15:24 -0700
-X-CSE-ConnectionGUID: SoH3CDk9TYq/OwejbVrA2A==
-X-CSE-MsgGUID: cEGOx0u1T3+4V+SbyzM+Rw==
+X-CSE-ConnectionGUID: DrvbXD6QT7mmeps81PA/dA==
+X-CSE-MsgGUID: dpnw58TaT/KaVQs1FesIWw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="271336480"
+   d="scan'208";a="271336483"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:15:24 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -61,9 +61,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v3 8/9] x86/resctrl: Ensure domain fully initialized before placed on RCU list
-Date: Fri, 22 May 2026 12:15:12 -0700
-Message-ID: <3ba2959b1cd3596e1e340eaee6b43487edaec0a4.1779476724.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 9/9] fs/resctrl: Fix UAF from worker threads when domains are removed
+Date: Fri, 22 May 2026 12:15:13 -0700
+Message-ID: <accc44062440c9b9ef220fe7570588e00f8a238a.1779476724.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1779476724.git.reinette.chatre@intel.com>
 References: <cover.1779476724.git.reinette.chatre@intel.com>
@@ -75,125 +75,273 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A resctrl domain consists of the domain structure self that includes
-pointers to dynamically allocated filesystem as well as architecture
-specific data. For example, the L3 monitoring domain structure consists
-of the architecture specific struct rdt_hw_l3_mon_domain that contains
-the dynamically allocated rdt_hw_l3_mon_domain::arch_mbm_states
-architectural state and the embedded struct rdt_l3_mon_domain contains
-the dynamically allocated rdt_l3_mon_domain::mbm_states resctrl fs state.
+The mbm_handle_overflow() and cqm_handle_limbo() workers read event
+counters and may sleep while doing so. They are scheduled via
+delayed_work embedded in struct rdt_l3_mon_domain. Architecture allocates
+and frees these domains from CPU hotplug callbacks under cpus_write_lock(),
+and the workers acquire cpus_read_lock() to keep the domain alive across
+their access.
 
-The domains are placed on an RCU protected list so that readers could
-access domains via cpus_read_lock() or from an RCU read-side critical
-section.
+A use-after-free can occur when a worker is blocked waiting for
+cpus_read_lock() while the hotplug core holds cpus_write_lock():
+the architecture frees the rdt_l3_mon_domain that contains the worker's
+work_struct. When the worker unblocks, the container_of() it performs on
+the embedded work pointer dereferences freed memory.
 
-A reader accessing a domain via the RCU list expects that the domain and
-all its dynamically allocated data is accessible.  Only place domain on RCU
-list when all its dynamically allocated data is ready, similarly unlink
-from RCU list before removing any of its dynamically allocated data.
+Drop cpus_read_lock() from the workers and instead drain pending and
+in-flight work synchronously before the architecture can free the domain.
+Since architecture offlines the domain under cpus_write_lock() after it has
+been unlinked from the RCU list and a grace period has elapsed no new work
+can be scheduled. The cancel only needs to wait out existing work.
+Drop rdtgroup_mutex during CPU offline around cancel_delayed_work_sync()
+so that a worker waiting on the mutex can complete before re-pinning the
+work on a different CPU.
 
-There are no readers accessing a domain via RCU list. Ensure safety of
-access when such reader arrives.
-
+Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com # [1]
+Co-developed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Changes since V2:
-- New patch
+Changes since v2:
+- Rewrite changelog
+- v2 attempted to solve the issue by using is_percpu_thread() within the
+  worker to learn if CPU worker was running on is going offline. A
+  Sashiko (https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=5)
+  pointed out that this would not be able to handle the scenario if one
+  of the hotplug handlers following the resctrl offline handlers failed.
+- Some other fixes attempted that failed:
+  - Switch to accessing domain structure in handler via RCU so that CPU
+    hotplug lock no longer needed. Use cancel_delayed_work_sync() with
+    mutex dropped to cancel worker. Running worker from RCU read-side
+    critical section is a problem since the worker needs to be
+    able to sleep (mbm_handle_overflow()->mbm_update()->
+		    mbm_update_one_event()->resctrl_arch_mon_ctx_alloc()->
+		    might_sleep())
+  - Adding a reference count to the domain structure to avoid the worker
+    needing to take CPU hotplug lock. This ended up being very complicated
+    with the architecture needing new APIs to manage the reference count
+    which cannot cleanly integrate into MPAM since it uses a single
+    architecture domain structure to contain both the control and monitoring
+    domain structures. Managing the references across mount, unmount,
+    online, offline, as well as worker self exit resulted in several
+    asymmetrical and complicated paths that were error prone. Locking also
+    proved to be complicated since architecture would need to initiate
+    domain free that will need to call back into resctrl that will take
+    rdtgroup_mutex which means that references need to be taken/released
+    without locking.
 ---
- arch/x86/kernel/cpu/resctrl/core.c      | 18 +++++++-----------
- arch/x86/kernel/cpu/resctrl/intel_aet.c |  5 ++---
- 2 files changed, 9 insertions(+), 14 deletions(-)
+ fs/resctrl/monitor.c  | 52 ++++++++++++++++++++++++++++++++++---------
+ fs/resctrl/rdtgroup.c | 52 ++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 89 insertions(+), 15 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 9c01d2562b7a..bca782050198 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -515,14 +515,12 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
- 		return;
- 	}
- 
--	list_add_tail_rcu(&d->hdr.list, add_pos);
--
- 	err = resctrl_online_ctrl_domain(r, d);
- 	if (err) {
--		list_del_rcu(&d->hdr.list);
--		synchronize_rcu();
- 		ctrl_domain_free(hw_dom);
-+		return;
- 	}
-+	list_add_tail_rcu(&d->hdr.list, add_pos);
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 4565b9864a9e..37df65229109 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -623,14 +623,22 @@ void mon_event_count(void *info)
+ 		rr->err = 0;
  }
  
- static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct list_head *add_pos)
-@@ -556,14 +554,12 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
+-static struct rdt_ctrl_domain *get_ctrl_domain_from_cpu(int cpu,
+-							struct rdt_resource *r)
++/*
++ * Find the software controller's ctrl domain that contains @cpu on resource @r.
++ *
++ * Only called from the mbm_over worker via update_mba_bw() where the returned
++ * domain is kept alive by cancel_delayed_work_sync() in
++ * resctrl_offline_ctrl_domain(). This drains this worker and then waits on
++ * rdtgroup_mutex held here before the architecture can free the ctrl domain.
++ *
++ * Context: Call from RCU read-side critical section.
++ */
++static struct rdt_ctrl_domain *get_sc_ctrl_domain_from_cpu(int cpu,
++							   struct rdt_resource *r)
+ {
+ 	struct rdt_ctrl_domain *d;
+ 
+-	lockdep_assert_cpus_held();
+-
+-	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
++	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list) {
+ 		/* Find the domain that contains this CPU */
+ 		if (cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
+ 			return d;
+@@ -691,7 +699,8 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_l3_mon_domain *dom_m
+ 	if (WARN_ON_ONCE(!pmbm_data))
  		return;
+ 
+-	dom_mba = get_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
++	guard(rcu)();
++	dom_mba = get_sc_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+ 		pr_warn_once("Failure to get domain for MBA update\n");
+ 		return;
+@@ -794,9 +803,19 @@ void cqm_handle_limbo(struct work_struct *work)
+ 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+ 	struct rdt_l3_mon_domain *d;
+ 
+-	cpus_read_lock();
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
+ 
++	/*
++	 * Ensure the worker is dedicated to a CPU as intended and not
++	 * relocated by workqueue subsystem as part of CPU going offline.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
++
+ 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
+ 
+ 	__check_limbo(d, false);
+@@ -808,8 +827,8 @@ void cqm_handle_limbo(struct work_struct *work)
+ 					 delay);
  	}
  
--	list_add_tail_rcu(&d->hdr.list, add_pos);
--
- 	err = resctrl_online_mon_domain(r, &d->hdr);
- 	if (err) {
--		list_del_rcu(&d->hdr.list);
--		synchronize_rcu();
- 		l3_mon_domain_free(hw_dom);
-+		return;
- 	}
-+	list_add_tail_rcu(&d->hdr.list, add_pos);
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
  }
  
- static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
-@@ -642,9 +638,9 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
- 	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
- 	hw_dom = resctrl_to_arch_ctrl_dom(d);
+ /**
+@@ -841,7 +860,10 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	struct list_head *head;
+ 	struct rdt_resource *r;
  
--	resctrl_offline_ctrl_domain(r, d);
- 	list_del_rcu(&hdr->list);
- 	synchronize_rcu();
-+	resctrl_offline_ctrl_domain(r, d);
+-	cpus_read_lock();
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
  
  	/*
- 	 * rdt_ctrl_domain "d" is going to be freed below, so clear
-@@ -689,9 +685,9 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+@@ -851,6 +873,17 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	if (!resctrl_mounted || !resctrl_arch_mon_capable())
+ 		goto out_unlock;
  
- 		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
- 		hw_dom = resctrl_to_arch_mon_dom(d);
--		resctrl_offline_mon_domain(r, hdr);
- 		list_del_rcu(&hdr->list);
- 		synchronize_rcu();
-+		resctrl_offline_mon_domain(r, hdr);
- 		l3_mon_domain_free(hw_dom);
- 		break;
- 	}
-@@ -702,9 +698,9 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
- 			return;
++	/*
++	 * Ensure the worker is dedicated to a CPU and not relocated by
++	 * workqueue subsystem as part of CPU going offline since reading
++	 * events depend on smp_processor_id(). After passing this check
++	 * smp_processor_id() is valid for entire duration of this worker
++	 * since it runs with rdtgroup_mutex held and the offline handler needs
++	 * rdtgroup_mutex to offline the CPU being run on here.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
++
+ 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
  
- 		pkgd = container_of(hdr, struct rdt_perf_pkg_mon_domain, hdr);
--		resctrl_offline_mon_domain(r, hdr);
- 		list_del_rcu(&hdr->list);
- 		synchronize_rcu();
-+		resctrl_offline_mon_domain(r, hdr);
- 		kfree(pkgd);
- 		break;
- 	}
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 89b8b619d5d5..c22c3cf5167d 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -398,12 +398,11 @@ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 	d->hdr.type = RESCTRL_MON_DOMAIN;
- 	d->hdr.rid = RDT_RESOURCE_PERF_PKG;
- 	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
--	list_add_tail_rcu(&d->hdr.list, add_pos);
+@@ -875,7 +908,6 @@ void mbm_handle_overflow(struct work_struct *work)
  
- 	err = resctrl_online_mon_domain(r, &d->hdr);
- 	if (err) {
--		list_del_rcu(&d->hdr.list);
--		synchronize_rcu();
- 		kfree(d);
-+		return;
- 	}
-+	list_add_tail_rcu(&d->hdr.list, add_pos);
+ out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
  }
+ 
+ /**
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 6601b138ac7a..9281c5a71063 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -4493,6 +4493,29 @@ static void domain_destroy_l3_mon_state(struct rdt_l3_mon_domain *d)
+ 
+ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
+ {
++	/*
++	 * mbm_handle_overflow() may dereference this ctrl domain via
++	 * update_mba_bw()->get_sc_ctrl_domain_from_cpu(). The architecture has
++	 * unlinked the domain from the RCU list and waited a grace period, so
++	 * no new worker iteration can find it; drain any worker that already
++	 * holds a pointer to it before the architecture frees the domain.
++	 *
++	 * Software controller is enabled/disabled on mount/unmount with
++	 * cpus_read_lock() held. Running here with cpus_write_lock() so
++	 * there are no concurrent changes to software controller status.
++	 */
++	if (r->rid == RDT_RESOURCE_MBA && is_mba_sc(r)) {
++		struct rdt_resource *l3 = resctrl_arch_get_resource(RDT_RESOURCE_L3);
++		struct rdt_l3_mon_domain *mon_d;
++
++		list_for_each_entry(mon_d, &l3->mon_domains, hdr.list) {
++			if (mon_d->hdr.id == d->hdr.id) {
++				cancel_delayed_work_sync(&mon_d->mbm_over);
++				break;
++			}
++		}
++	}
++
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	if (supports_mba_mbps() && r->rid == RDT_RESOURCE_MBA)
+@@ -4505,6 +4528,24 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ {
+ 	struct rdt_l3_mon_domain *d;
+ 
++	/*
++	 * Called by architecture under CPU hotplug lock as it prepares to remove
++	 * the domain which is guaranteed to be accessible here.
++	 * The domain has been unlinked from the RCU list and a grace period
++	 * has elapsed, so no new worker can be scheduled. Drain any worker that
++	 * is in flight or pending before letting architecture proceed to free
++	 * the domain that has the workers' struct delayed_work embedded.
++	 * Do so before taking rdtgroup_mutex since the workers also acquire it.
++	 */
++	if (r->rid == RDT_RESOURCE_L3 &&
++	    domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3)) {
++		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
++		if (resctrl_is_mbm_enabled())
++			cancel_delayed_work_sync(&d->mbm_over);
++		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
++			cancel_delayed_work_sync(&d->cqm_limbo);
++	}
++
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	/*
+@@ -4521,8 +4562,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		goto out_unlock;
+ 
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+-	if (resctrl_is_mbm_enabled())
+-		cancel_delayed_work(&d->mbm_over);
+ 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+ 		/*
+ 		 * When a package is going down, forcefully
+@@ -4533,7 +4572,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		 * package never comes back.
+ 		 */
+ 		__check_limbo(d, true);
+-		cancel_delayed_work(&d->cqm_limbo);
+ 	}
+ 
+ 	domain_destroy_l3_mon_state(d);
+@@ -4714,12 +4752,16 @@ void resctrl_offline_cpu(unsigned int cpu)
+ 	d = get_mon_domain_from_cpu(cpu, l3);
+ 	if (d) {
+ 		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
+-			cancel_delayed_work(&d->mbm_over);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->mbm_over);
++			mutex_lock(&rdtgroup_mutex);
+ 			mbm_setup_overflow_handler(d, 0, cpu);
+ 		}
+ 		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
+ 		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
+-			cancel_delayed_work(&d->cqm_limbo);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->cqm_limbo);
++			mutex_lock(&rdtgroup_mutex);
+ 			cqm_setup_limbo_handler(d, 0, cpu);
+ 		}
+ 	}
 -- 
 2.50.1
 
