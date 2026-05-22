@@ -1,849 +1,399 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B36937DE80
-	for <patches@lists.linux.dev>; Fri, 22 May 2026 19:15:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779477334; cv=none; b=I0xsiDUflkT94slba5q3Il6tz+pUW1dYU8wF1fi80V5NYjn9181x3XGq0W8Hvsnf/ov270/jXoRAcjSeUA7jJsjqgc5FwCxLkQYgQG+/TB/vGFbJWynmToHMS4HC9Syi8TjDPMFRcNak75Rr50gfC24LGAiYqrSRMu+XFm6eLVE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779477334; c=relaxed/simple;
-	bh=K1I8MxIbzIiAAPzk/lJsJPaSkWTpswYCOD+0zt+b7Ek=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2eHOEauhRYwNsPIT6a+7ROsB78Euh8jpTdBW5iVPEd+7HLR1Ap4FlU+zg1NH3h1K5ogSK9ijS2KO2ugu9qKxZA7P+y2cqcp8IrcHPjnUAZYp2NOL+9lgQv3og3gkBSrqr4Xt+tT0Asl1jY5Ke/5cp+uzWGriR/JT9s5h0QMZDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TluKrzZU; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71A93603DA
+	for <patches@lists.linux.dev>; Fri, 22 May 2026 19:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779479301; cv=fail; b=RQqhQM1L4ePA9nAzWOXPmGyLT/Z2+R9wYHGT83XEqAlTg/unj+EXU8h4rNHJ/kGm60Vw73I8RiEWIfkMZwN1sldJMnqthHExOeW2aYvDK1YbGitD7hlvWDnV9lLx8WidYw8D16LU+PMoOUn9NMDFzcDfpONZMdTNVPSgWmsLX5w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779479301; c=relaxed/simple;
+	bh=iRcGIUjvl2h4R5VtLjlTiygqoOrnZVi33gMP3UgmCBU=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=hVD4FfwOtEp6Ogs89lu1/p3QqGbZkyhZNwicIaxebHW5uZaZ4o3+IIael1wQUsqOIWtHLq/VAOpCHG8FXziYrzHre3q1BDMnhD+757JEU0yjnsghKZpsHRS3QNnaAXDbg2wqvgWZqcuoXrAtctg5sBi1SMgsCmrGcmbJT7SScbE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=Y3vPT+oY; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=nFgfNLHY; arc=fail smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TluKrzZU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779477330; x=1811013330;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=K1I8MxIbzIiAAPzk/lJsJPaSkWTpswYCOD+0zt+b7Ek=;
-  b=TluKrzZUPipQzgOBJSYxP1DiPYrpPbM3cLKn/FZum9Q0jbBf/MsrLkb6
-   iiShMA2lwda99Q7/b0j/8BMlyEYE7XsKXBnmmzohEyS+iXsEy3DhcXPI+
-   t3w8F0ijMNifMkN7lUB+sgjlIamG2P7t3wU8j4PN5K+Zgv5zlf9C8EWr7
-   NkbXqLXuLUYrwnIofzyk4D/Gm+NIC1mikZyP9z7sFVDZ/jH+dwKj2BbH4
-   h4Prh+VWODjv50Ds5U3X/xxVmV+HyzD3Rifa7szm0FznWzJ3qaErp93gL
-   g363dnu0Jggvli7VEzNNR7cih9dHQ114hLrzxQUVIojI4Pnc72ZLzTQqN
-   A==;
-X-CSE-ConnectionGUID: xkuZpaX0QfOXjc66LUfWiA==
-X-CSE-MsgGUID: aZLlfQiSQcy0Q/ud38wD/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="80140490"
-X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="80140490"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:15:24 -0700
-X-CSE-ConnectionGUID: f4Nj/o7fRq2xCfUKXEs9GQ==
-X-CSE-MsgGUID: ygJDEnrOSY23qpP5Oja3TQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="271336478"
-Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:15:24 -0700
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: tony.luck@intel.com,
-	james.morse@arm.com,
-	Dave.Martin@arm.com,
-	babu.moger@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	dave.hansen@linux.intel.com
-Cc: x86@kernel.org,
-	hpa@zytor.com,
-	ben.horgan@arm.com,
-	fustini@kernel.org,
-	fenghuay@nvidia.com,
-	peternewman@google.com,
-	yu.c.chen@intel.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	reinette.chatre@intel.com
-Subject: [PATCH v3 7/9] fs/resctrl: Prevent deadlock and use-after-free in info file handlers
-Date: Fri, 22 May 2026 12:15:11 -0700
-Message-ID: <04548591d62d3ae3e9937814d4b3926f8d0424c9.1779476724.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1779476724.git.reinette.chatre@intel.com>
-References: <cover.1779476724.git.reinette.chatre@intel.com>
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="Y3vPT+oY";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="nFgfNLHY"
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64MCbm8h3752874;
+	Fri, 22 May 2026 19:48:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=cl7eIOOhqFTqVhUWZrTlZyc24ntrhYjyZ8DaT7vBo2M=; b=
+	Y3vPT+oYvbfjVE3xG91zIRwKNTCHDF3LTmwdJ9MRjSnwfB727lxBAuK3B0XJAW53
+	VwIy0X1gHRaVVR4PyqyYfpN7Xm0CyZP7SqV/hKG/zJGcmq9mOIjBD+U3uu/WCn4o
+	J15bw0piLzTCNQLvs8EfEiBZ8vyC/Skm5pIkzDDnSNvK7u2LHKseE5NsZbkvybJg
+	twSBj0zKRQw/2+gXHMLUku0+CmMyObhGxzxxUVIKHpBAbod+7y0QXh4fXA1XL0/J
+	QT0AZv40YtB+BdFuqsZAwkpyQ1lbbGkCcktiD4sm9yGHO9+QrqQVpMcPpHddhyLP
+	1EnBdOomHbHLopHWbmHGeQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e6h1t3gcu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 22 May 2026 19:48:08 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64MJjnaF026767;
+	Fri, 22 May 2026 19:48:07 GMT
+Received: from sa9pr02cu001.outbound.protection.outlook.com (mail-southcentralusazon11013021.outbound.protection.outlook.com [40.93.196.21])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4eau1u5ydx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 22 May 2026 19:48:07 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=D58Gvdq84ihTsNK7V20rX3t3EZyGiuE9CGgvyUGv5w1pe2cl4i80YLbXAItzDeYL5npPAVLUXD/lXDCGM89ycCRgZWzvlplnda56HtwvKEjhfsmR4Y7gAxVZschrd4J7B0/U/p6wo/zbGUsPfpk+qucRffHPxgmy1FIwGps05Q2cV2vti/rQJcQAZqjy1ZW3iacNOBgg5VYilKzuQ+7WYT66ZDmMcv1B0p45Om+k49146Y6Bxm07c6r9kTyGZGf4hlAiiZ60TxrKWK9rG8pYZDvQDaywPILBgu0qey/2+81hda+fpDb9tkxjjRH+cNQM4M33sCHddKEaqeDg6KkiqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cl7eIOOhqFTqVhUWZrTlZyc24ntrhYjyZ8DaT7vBo2M=;
+ b=XKe8QPi5YXdJIQh15uQbrw8DgrNcT/8kLm8+MMUJlW8eV2ygfutcvi9OrCuHGb0NADPHcOgCC0EWg6I+g70YSZ0kFqNuFiDTMfZOZSgF2AXM4TEahLoy4MC1rga0LZzd0Si10H6dAhZoJpLhmie0OtaH/2cE3vzY9LPG89d47SxrO1tGMgYzj+BoEa3kLiYfulUNmgB12lCBBW2q7sBPGUOQGSwm37Fhmqvr8J/qv6sgnGBJbmUVE8bOL5ZCwVE03XUHJZ/kc2tDzOJN6b/0eSi/ywIZRhHgqF7pc5gzBiaNSoQf8hR9nrB0DGNNIjd3cUNMr9ysP4TNwm3qGrRH/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cl7eIOOhqFTqVhUWZrTlZyc24ntrhYjyZ8DaT7vBo2M=;
+ b=nFgfNLHYcR31okZLcIJJkY6YUYQF96QX80GwsYdJe22IC6CAwFqjjLXhTYbVaPquwXSwuq8Zk/R1XMAQPQpW+H/p+7k20bMhRwzAGWFnH4+IGJ3xNogtE6HRV5uowkT1PeFxGWGirx5qwK+0c9k55bBFOyh1OWPwZ8dQZGqR6m8=
+Received: from DS3PR10MB997700.namprd10.prod.outlook.com (2603:10b6:8:347::19)
+ by LV8PR10MB7726.namprd10.prod.outlook.com (2603:10b6:408:1e8::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
+ 2026 19:48:04 +0000
+Received: from DS3PR10MB997700.namprd10.prod.outlook.com
+ ([fe80::4c1c:3bb:c4c9:8e7a]) by DS3PR10MB997700.namprd10.prod.outlook.com
+ ([fe80::4c1c:3bb:c4c9:8e7a%7]) with mapi id 15.21.0048.016; Fri, 22 May 2026
+ 19:48:04 +0000
+Message-ID: <8a06c5c3-8f7a-4252-a3b1-0c0d812e2654@oracle.com>
+Date: Sat, 23 May 2026 01:17:57 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 505/666] sched/psi: fix race between file release and
+ pressure write
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+        syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com,
+        Edward Adam Davis <eadavis@qq.com>,
+        Chen Ridong
+ <chenridong@huaweicloud.com>, Tejun Heo <tj@kernel.org>,
+        Sasha Levin <sashal@kernel.org>
+References: <20260520162111.222830634@linuxfoundation.org>
+ <20260520162122.206605865@linuxfoundation.org>
+Content-Language: en-US
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20260520162122.206605865@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0216.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:e4::20) To DS3PR10MB997700.namprd10.prod.outlook.com
+ (2603:10b6:8:347::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PR10MB997700:EE_|LV8PR10MB7726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8bacc1b6-6f4d-4a24-08e9-08deb83b0a0b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|18002099003|22082099003|56012099003|6133799003|4143699003|5023799004;
+X-Microsoft-Antispam-Message-Info:
+	iyEhVBprSdZhv+5CVeCAfXkGJ2/OYTjI5M/JvvEx8I3rgpTO50zGfoe+nbwZ/9Cix262FQWb1CKfDilE/YOOjaDuJuoDezuPSamIhtv5KwdQG7pZOJBe085Fmy7P6pPZSKNwVEatMGI3Gp0p5Knj8YvX0UCQPEyFl9MKs4eAGJb/knHNgFPyIaLKk7z9hrr6YlHAqypgpKrlsVuKtXjk9rE1Qo7an+fzc7vOl7u7HX93U75D/hIsW9zg91fu8CiFYDY9GZFkpJ4tMCA/blcagO+A9rzqjAMpkmWQeEGlYwb4mAIsyvHOlY1PCU3iTLffD/WcoSG1xaNPhSkVDU3O5bmDf1Qk+M6TwmKBJ+BixYgQt8AmFxi1btmIt5RnjbrVe3TmHElcsrx1KwwYNf4J3pMowrmTWt9v6RhI0rrIccKiuzIEEt96ihATmmVjbRwxEXzOys2YAkRNY8mqO3c1aBnguiz2yeDN43LnJAcXXxI8YpecZBoaPS2dPTa5soaRl2jgctfT0OeRSe0HUhEelMSKwRK1U0yndZD+zKGyeAncYys/r/fUUqcZBgVncrg9yLcLxCQM4AJmnjQzqvW+uQsu1r5XSAA3c4OIkeRy7FDzDyHWqgrj5415YuW7kIQ0k5qJANVVww/3eLrS6ykLjg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS3PR10MB997700.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(18002099003)(22082099003)(56012099003)(6133799003)(4143699003)(5023799004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?a1UxYlhKRGtUMG9UNTRaaHdleWx0cEVLejVIOU5ib1hhbDIvMDNoNytsNkMz?=
+ =?utf-8?B?L0NGY2NTMmVBZktCWHJ3MWUrUE9GNytVMlQybU83UmpWODdIeUF4MmRwdHRp?=
+ =?utf-8?B?SWhpbEJwTnlvaWhUTzdZLzA2SS9vTEptSEhKS04ydjc3aUtxOHlxSzNUaEFQ?=
+ =?utf-8?B?dHlOSzloQjIyeHZNak1qcW5Za0drZ1k4WGptZHpxVnAwUzNWU1ZuVURya2g3?=
+ =?utf-8?B?QVpORittZEFBZXFaT3ZBellRangxbXdIeFV2ZU1IcnBqKzVJdDBnTWVrWnRY?=
+ =?utf-8?B?SzR0dTg5VU9nYjhaWHJINitTSm1USTB1eTU1dk5HUnMzV3Q0emcxVmlMYkdQ?=
+ =?utf-8?B?aVloSkh4UlArM2FWZGMvY2JuS1JJMnFzWDYvR0d1ZFFldnRTZHluZFdhT2JD?=
+ =?utf-8?B?bDNKT0pIeGl2QzNQOCs4Nkd5bWM4SDQycXNDY0hXQVZxUzZOczdqeVgxWXlr?=
+ =?utf-8?B?eG5nMW9sM1EvWG1CbHZkbjl4NGd1SXpvdmY2OGVJRzJlbk1OTXh3NWhseVRk?=
+ =?utf-8?B?VXkwcXViNjB4aEZMRVIzRVN0a2cxekR2YjArckxWUUxoQ2c1Znl6cHpyeUN1?=
+ =?utf-8?B?OU9POFZkcE1rb2ZHUXk4dFhxNXhNZitIQUp6Tk5XRnNnKzVpNXFhZ1lSUnhV?=
+ =?utf-8?B?RTNBQktSM25tTCtIRlNWQWYrT1hiaVJSOXZXc1EwR1g3Y1NqbWRYOS9IM2Jr?=
+ =?utf-8?B?ekE0MUQwTENhcG56U1dreVpLa0tWWHdNWUxrdit6UnlYNlh1VjZ2U3A4N1Jo?=
+ =?utf-8?B?RkFJZTFHcFhlazVtbkM5MlRtY011ZlowQkNtZkhad0x2WGtSdW9uNmZmSnJZ?=
+ =?utf-8?B?VVFORkdQVGo3TlRaYTVLSjY1Q3VQbmlJZnJlZytJaTVvV05MSUw0aytrOXZQ?=
+ =?utf-8?B?NE56anFTQm8wY1FicDRueHpYMzA4WjVveDdKUk5VdUYxUUdrb29qbi9zajlk?=
+ =?utf-8?B?QWQzVzA1NlRaTlg1aDZQUmo2RTRCKzRGS1JVRHZ6amRvSlpYblRWcDBoOXoz?=
+ =?utf-8?B?QU9iZFBQL3JMN08wdmxQRk9LRi93MTZKTE9CcmNERjFHN2tCMXVKdXdPZzZL?=
+ =?utf-8?B?eEMxeG1HbkwrZWExVTJOSkVBQVZlU2Z2bWRUc096eWhJSEtMV09rZnpEVWdI?=
+ =?utf-8?B?RmY1c3lWM2Z2NjZpUHgxdXFoRGRMYlljV0pNSVd2NVFNb0JwOWIyeHRDSnl1?=
+ =?utf-8?B?a3ZReDZpL0FnZGNra05KM3ZGV1BKUHk2aHB6OTNIZWQ0WkVXTXRvYzdnWmZu?=
+ =?utf-8?B?YVpPcTY4ZDIyc0JObStzS2plTnJlSGhYRnRiazJlbXdzTENLNmdQdklFK2ZX?=
+ =?utf-8?B?bjJFQThjOUczN3pxZFRraURDWG9Ob1RrQS8ydVplNHZpV1duNVBKYStpQU5B?=
+ =?utf-8?B?QUlZQ1lkMVZmaGV0Y3Eyd0ZZTFhSOGpYdlJvNTAxSWZPRjNuallYa0ZGbXVq?=
+ =?utf-8?B?ekhGaVdvRmc3V1M1eFRKMVdOamo2VkFZZExQM0pqMS91dDJYMjlwY1ZFZ0JZ?=
+ =?utf-8?B?cE1aSU0wNFhsRkxhdUdqRVVEazhqZ1VySW0yTjlRdW4weVVpOGJjVFU0UVlO?=
+ =?utf-8?B?SzhLOEU5Q0hpTXZFeEdndzRJWHlXR1dIWndkUTJmUWhUWFVWVlYzQnBwMVRV?=
+ =?utf-8?B?Y2dBUVB2MEVuYlJjbEJnQlZyYU80K3JQeDNNMWp4K0d4Ukk5VHYrMC9jVTZ4?=
+ =?utf-8?B?cGZSK0ZoN093TUp5MmxySlNpRGpEdXYrOEl5VXFreUdkcE81R0NYTEk1V1lk?=
+ =?utf-8?B?Zm1IWFZKbURqVmwvZmZwSDFQRkk2MWJFbVpQelpQMUFsRmVtU1NkQzByc1pr?=
+ =?utf-8?B?Wjh3amkzUGt4eDIrV0NmOVl0bzFaMDl0bmVQZE5LTUg0NjVsNG95TFk4c0g0?=
+ =?utf-8?B?cmNsbnlDODdUcUQ1S1U3eXQxY3dXOG00dnJHT2UrdVJqaEd6cVQ0WjlocDRO?=
+ =?utf-8?B?eG1TMFVCM2xJVDVvUS9xaEt2anlreGNMbG9lazdCYjErR0ZKK05HOUN3NU93?=
+ =?utf-8?B?MStXNndZWVhOREpFWmlWbkEzZ3ppOXFZRzRSdDBtNjBVNFgvZ0lDRlhEYjlt?=
+ =?utf-8?B?b3ZMZ0E5Q2FZQTdnUzZoZ25DYU1OSVY4Z3hPTFkzck1DWFppVytGZjczcUQr?=
+ =?utf-8?B?RFQ1NEZkTm40N0YzRitHelUzNHRVcDBxVStGZUtNUDFPSUE1aThpbEEzbWhC?=
+ =?utf-8?B?aTNtNDNLcFl5eit0TE9rVXNIZ3JuWEt3Q3JpWitKMWhHSm0xWEJ6N0djSCtP?=
+ =?utf-8?B?YzRTUk1RRmVBeFd0L29qVjZud1MvYUVWbVlUc0c3M2kzb3JLSWVvTHU2b1Qz?=
+ =?utf-8?B?SDdlZkZ5cVRqZmYvNnBqcmZTa0tkZHlmMWVVWXE2N3lwOFVOalo2VnNnblF6?=
+ =?utf-8?Q?I1Hp061DHq4xRBMQATxA4y0HptQPhpo9dy6lV?=
+X-Exchange-RoutingPolicyChecked:
+	IADdZIQxAJ4STyKDWSHTQ9+YM4aqkNRx6s34h79H5rxdabckfaaTVoTRdOoWoyO7dR8B+nZPGheJMbpwdv7dGYoysuRy1J4iXEMrFKxlGgqRfzkRg+7CXq2UeyF2uo9Qto8i433wrGY/JN9HgH16snI1Nb2qcJhkLnoKlLG27duFpzDuL2W6aJXtdLeuEnoCAvtG3nQyFZJAtGAFm2Be+bnh/BSQSdHB8t+NmBOP6xnA8lzlZ7kMokPlv7+QffxcO/8ArnsfDj9tPjM5rUyXD81c6cVq9D2bZsyxBkG/RLemJCeJSYJDdE+/eL5D6l3C1quW9mDpaOvbO6WDTrepkA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	A5gIz9MoIYguxBrz8N2KlwhlQX6u7wWjTU/eThSJX8kA+dx7ubN8pQUYlL9m08AiN1jhJLUZKIyV7LxOKEkqvSSDeoGotDzNW6PkC7+SEKgVgIvQXQRRFhVte3u+9Kj22HhteDZSpGHoLQLwizlQgQ4Yw4AfVEzZ9T57eLnFS5ULyfYxPb2DihDpe69WNVPS65obPR0qkpeGLn7dw1iW62YwMN8ZUdD4PnOSORm+JXOj2qIhkW47V7rJGEUw93i0IMCbe8xOw6WXpmskN9LMU1cWZd5/hp7vCCWisXur3FlC6h4eeplNy4fVSi4SahIby4qsSpqamTsaVWDM8M2IxyZ0fcIS4gSgcGramvZThLNsnh5Hc3N4tsCv+Mfl7vakJ/RghGgCy+YETJ43IXU4kIjARHxyImQdedLt5ek6Ba/OmlAStJ/BKZDtgf37CcMyselDU441G3rbLA9GJ8RXlNwMkmn7wOJEP97hlVNdUzq6NNS7ARFR9JUhQTqPYQqwhJnDgbdkekFXzdOPZsa+iRrCF64whCagYrY1lz7CvyJ5fxM/I94avh5jEDNYw7J3WspOvopDzw4vMsWypyIS7SNcC3+G9Fs6BIr+zzhf6Lo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8bacc1b6-6f4d-4a24-08e9-08deb83b0a0b
+X-MS-Exchange-CrossTenant-AuthSource: DS3PR10MB997700.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 19:48:04.5397
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zGXKFcYSRurx86sY327Zp7v/IGa/qAHNyw+QHG4FPoDlghRfZFNcsGcj+/Ha6l4jOuQTfp9RWYBjAX0qtjgG8QL8ltmzi59k38KnpgCrCKLOo921FAdqZZO9QzByxe2H
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR10MB7726
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-22_05,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999
+ spamscore=0 suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2605130000 definitions=main-2605220197
+X-Proofpoint-ORIG-GUID: lgSHWNuOPodHUMuCoRwZ8sGVHNh7NAI3
+X-Authority-Analysis: v=2.4 cv=aoKCzyZV c=1 sm=1 tr=0 ts=6a10b2f8 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=o5oIOnhZENCTenyL_yNV:22 a=edf1wS77AAAA:8
+ a=dZbOZ2KzAAAA:8 a=hSkVLCK3AAAA:8 a=AiHppB-aAAAA:8 a=VwQbUJbxAAAA:8
+ a=pQkuGY2LVspxzYj3u7cA:9 a=QEXdDO2ut3YA:10 a=DcSpbTIhAlouE1Uv7lRv:22
+ a=cQPPKAXgyycSBL8etih5:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf awl=host:13835
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE5NiBTYWx0ZWRfX6Oj2fO1DS5fx
+ sTh+S0O1+kYRnBeFizk1CAWvcjqMOeNvkOuDpUzRpDf5WoFrAP+0WPd4J75VrYn4nuGmbL3UziR
+ N3hzdxrYy+HDSXaBEj1RihBlGN+If+YwhP8Ho7V9CH7y3SkhV1RTVhxi9T3ToNcIH9UeEfVtxeu
+ 7Z8zXExk3FkLzGDDD7vDVzjKeGym4Q5kDwBIe02BwiZh8ckHVGR0UA/nxhGnlctAXe5CGgAdtsa
+ u3UWryiy/s3bM3RC9samAldIPswbR25t4lGsa73OIQH9rPwxjOcD1+Im3rDglTevseergnotTtO
+ GRCBkRPTF3Df0c6yDzox/7on9P18ITCFSBLOf7y3oBE/SaC+1rp0rIFF1JO2Nvj+0vTR5ZdZv5R
+ 622DpOaDyZrU4Butr+5wTqAbAajy4vxBj+yWeEjiSY6DYyBmeFz/W2vaGwkqcB/VFbKjgOXMbpZ
+ eaIikOL138M5fts+TxdaGtudqGZdSwlTX+IpWP9I=
+X-Proofpoint-GUID: lgSHWNuOPodHUMuCoRwZ8sGVHNh7NAI3
 
-resctrl provides files under the info/ directory to expose global
-configuration and capabilities to userspace. These files are instantiated
-statically during filesystem mount and expose data associated with internal
-schema structures via kernfs private pointers.
+Hi Greg/Sasha,
 
-A potential deadlock exists between userspace readers of these info files
-and the unmount filesystem teardown process. Reading an info file invokes
-kernfs which acquires an active reference, after which the handler typically
-attempts to acquire the rdtgroup_mutex. Concurrently, unmounting the
-filesystem holds the rdtgroup_mutex and then attempts to recursively
-remove the info kernfs nodes involving kernfs_drain() which blocks until
-all active references are released. Another problem exists where info files
-might be accessed from an outdated mount if the filesystem is unmounted and
-remounted during a reader's execution, leading to a use-after-free when
-reading the now-deleted private schema data.
+On 20/05/26 21:51, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Edward Adam Davis <eadavis@qq.com>
+> 
+> [ Upstream commit a5b98009f16d8a5fb4a8ff9a193f5735515c38fa ]
+> 
+> A potential race condition exists between pressure write and cgroup file
+> release regarding the priv member of struct kernfs_open_file, which
+> triggers the uaf reported in [1].
+> 
+> Consider the following scenario involving execution on two separate CPUs:
+> 
+>     CPU0					CPU1
+>     ====					====
+> 					vfs_rmdir()
+> 					kernfs_iop_rmdir()
+> 					cgroup_rmdir()
+> 					cgroup_kn_lock_live()
+> 					cgroup_destroy_locked()
+> 					cgroup_addrm_files()
+> 					cgroup_rm_file()
+> 					kernfs_remove_by_name()
+> 					kernfs_remove_by_name_ns()
+>   vfs_write()				__kernfs_remove()
+>   new_sync_write()			kernfs_drain()
+>   kernfs_fop_write_iter()		kernfs_drain_open_files()
+>   cgroup_file_write()			kernfs_release_file()
+>   pressure_write()			cgroup_file_release()
+>   ctx = of->priv;
+> 					kfree(ctx);
+>   					of->priv = NULL;
+> 					cgroup_kn_unlock()
+>   cgroup_kn_lock_live()
+>   cgroup_get(cgrp)
+>   cgroup_kn_unlock()
+>   if (ctx->psi.trigger)  // here, trigger uaf for ctx, that is of->priv
+> 
+> The cgroup_rmdir() is protected by the cgroup_mutex, it also safeguards
+> the memory deallocation of of->priv performed within cgroup_file_release().
+> However, the operations involving of->priv executed within pressure_write()
+> are not entirely covered by the protection of cgroup_mutex. Consequently,
+> if the code in pressure_write(), specifically the section handling the
+> ctx variable executes after cgroup_file_release() has completed, a uaf
+> vulnerability involving of->priv is triggered.
+> 
+> Therefore, the issue can be resolved by extending the scope of the
+> cgroup_mutex lock within pressure_write() to encompass all code paths
+> involving of->priv, thereby properly synchronizing the race condition
+> occurring between cgroup_file_release() and pressure_write().
+> 
+> And, if an live kn lock can be successfully acquired while executing
+> the pressure write operation, it indicates that the cgroup deletion
+> process has not yet reached its final stage; consequently, the priv
+> pointer within open_file cannot be NULL. Therefore, the operation to
+> retrieve the ctx value must be moved to a point *after* the live kn
+> lock has been successfully acquired.
+> 
+> In another situation, specifically after entering cgroup_kn_lock_live()
+> but before acquiring cgroup_mutex, there exists a different class of
+> race condition:
+> 
+> CPU0: write memory.pressure               CPU1: write cgroup.pressure=0
+> ===========================		  =============================
+> 
+> kernfs_fop_write_iter()
+>   kernfs_get_active_of(of)
+>   pressure_write()
+>     cgroup_kn_lock_live(memory.pressure)
+>       cgroup_tryget(cgrp)
+>       kernfs_break_active_protection(kn)
+>       ... blocks on cgroup_mutex
+> 
+>                                       	  cgroup_pressure_write()
+>                                       	  cgroup_kn_lock_live(cgroup.pressure)
+>                                       	  cgroup_file_show(memory.pressure, false)
+>                                       	    kernfs_show(false)
+>                                       	      kernfs_drain_open_files()
+>                                       	        cgroup_file_release(of)
+>                                       	          kfree(ctx)
+>                                       	            of->priv = NULL
+>                                       	  cgroup_kn_unlock()
+> 
+>     ... acquires cgroup_mutex
+>     ctx = of->priv;        // may now be NULL
+>     if (ctx->psi.trigger)  // NULL dereference
+> 
+> Consequently, there is a possibility that of->priv is NULL, the pressure
+> write needs to check for this.
+> 
+> Now that the scope of the cgroup_mutex has been expanded, the original
+> explicit cgroup_get/put operations are no longer necessary, this is
+> because acquiring/releasing the live kn lock inherently executes a
+> cgroup get/put operation.
+> 
+> [1]
+> BUG: KASAN: slab-use-after-free in pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+> Call Trace:
+>   pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+>   cgroup_file_write+0x36f/0x790 kernel/cgroup/cgroup.c:4311
+>   kernfs_fop_write_iter+0x3b0/0x540 fs/kernfs/file.c:352
+> 
+> Allocated by task 9352:
+>   cgroup_file_open+0x90/0x3a0 kernel/cgroup/cgroup.c:4256
+>   kernfs_fop_open+0x9eb/0xcb0 fs/kernfs/file.c:724
+>   do_dentry_open+0x83d/0x13e0 fs/open.c:949
+> 
+> Freed by task 9353:
+>   cgroup_file_release+0xd6/0x100 kernel/cgroup/cgroup.c:4283
+>   kernfs_release_file fs/kernfs/file.c:764 [inline]
+>   kernfs_drain_open_files+0x392/0x720 fs/kernfs/file.c:834
+>   kernfs_drain+0x470/0x600 fs/kernfs/dir.c:525
+> 
+> Fixes: 0e94682b73bf ("psi: introduce psi monitor")
+> Reported-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=33e571025d88efd1312c
+> Tested-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+> Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+> Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   kernel/cgroup/cgroup.c | 24 ++++++++++++++++--------
+>   1 file changed, 16 insertions(+), 8 deletions(-)
+> 
+> diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+> index 046f671532b04..0914a1a189ee1 100644
+> --- a/kernel/cgroup/cgroup.c
+> +++ b/kernel/cgroup/cgroup.c
+> @@ -3876,33 +3876,41 @@ static int cgroup_cpu_pressure_show(struct seq_file *seq, void *v)
+>   static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
+>   			      size_t nbytes, enum psi_res res)
+>   {
+> -	struct cgroup_file_ctx *ctx = of->priv;
+> +	struct cgroup_file_ctx *ctx;
+>   	struct psi_trigger *new;
+>   	struct cgroup *cgrp;
+>   	struct psi_group *psi;
+> +	ssize_t ret = 0;
+>   
+>   	cgrp = cgroup_kn_lock_live(of->kn, false);
+>   	if (!cgrp)
+>   		return -ENODEV;
+>   
+> -	cgroup_get(cgrp);
+> -	cgroup_kn_unlock(of->kn);
+> +	ctx = of->priv;
+> +	if (!ctx) {
+> +		ret = -ENODEV;
+> +		goto out_unlock;
+> +	}
+>   
 
-Introduce info_kn_lock() and info_kn_unlock() helpers to coordinate locking
-across all info handlers. These helpers mirror similar logic used by resource
-group handlers by deliberately breaking the kernfs active protection before
-attempting to acquire the rdtgroup_mutex, preventing the deadlock. To guard
-against the vulnerability from rapid mount cycling, info_kn_lock() securely
-walks the parent lineage of the kernfs node under an RCU section to confirm
-the node belongs to the globally active root before permitting the operation
-to proceed. Convert all info file handlers to use this helper and only
-de-reference the schema after it determined safe to do so.
+I have run an AI assisted backport review and it spotted an issue: I
+have taken a look and the issues goes like:
 
-Make no attempt to output error message to last_cmd_status on failure
-since failure implies there is no filesystem with which to display error
-to user space.
+Upstream has:
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=3
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
----
-Changes since V2:
-- New patch
----
- fs/resctrl/ctrlmondata.c |  38 ++++----
- fs/resctrl/internal.h    |   3 +-
- fs/resctrl/monitor.c     |  48 +++++-----
- fs/resctrl/rdtgroup.c    | 192 ++++++++++++++++++++++++++++++++-------
- 4 files changed, 203 insertions(+), 78 deletions(-)
+static void cgroup_file_release(struct kernfs_open_file *of)
+{
+         struct cftype *cft = of_cft(of);
+         struct cgroup_file_ctx *ctx = of->priv;
 
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index 9a7dfc48cb2e..b95bf6208be2 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -769,10 +769,12 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- int resctrl_io_alloc_show(struct kernfs_open_file *of, struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	if (r->cache.io_alloc_capable) {
- 		if (resctrl_arch_get_io_alloc_enabled(r))
- 			seq_puts(seq, "enabled\n");
-@@ -782,7 +784,7 @@ int resctrl_io_alloc_show(struct kernfs_open_file *of, struct seq_file *seq, voi
- 		seq_puts(seq, "not supported\n");
- 	}
- 
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -847,7 +849,7 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 			       size_t nbytes, loff_t off)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	char const *grp_name;
- 	u32 io_alloc_closid;
- 	bool enable;
-@@ -857,9 +859,10 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 	if (ret)
- 		return ret;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	rdt_last_cmd_clear();
- 
- 	if (!r->cache.io_alloc_capable) {
-@@ -907,8 +910,7 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- 	}
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -916,14 +918,15 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
- int resctrl_io_alloc_cbm_show(struct kernfs_open_file *of, struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	int ret = 0;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-+	r = s->res;
- 	if (!r->cache.io_alloc_capable) {
- 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
- 		ret = -ENODEV;
-@@ -945,8 +948,7 @@ int resctrl_io_alloc_cbm_show(struct kernfs_open_file *of, struct seq_file *seq,
- 	show_doms(seq, s, NULL, resctrl_io_alloc_closid(r));
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return ret;
- }
- 
-@@ -1013,7 +1015,7 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- 				   size_t nbytes, loff_t off)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 	u32 io_alloc_closid;
- 	int ret = 0;
- 
-@@ -1023,10 +1025,11 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- 
- 	buf[nbytes - 1] = '\0';
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
-+	r = s->res;
- 	if (!r->cache.io_alloc_capable) {
- 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
- 		ret = -ENODEV;
-@@ -1051,8 +1054,7 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
- out_clear_configs:
- 	rdt_staged_configs_clear();
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index e7e415ee7766..4e3173f25e92 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -345,8 +345,9 @@ void rdt_last_cmd_printf(const char *fmt, ...);
- 
- void rdtgroup_remove(struct rdtgroup *rdtgrp);
- struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn);
--
- void rdtgroup_kn_unlock(struct kernfs_node *kn);
-+bool info_kn_lock(struct kernfs_node *kn);
-+void info_kn_unlock(struct kernfs_node *kn);
- 
- int rdtgroup_kn_mode_restrict(struct rdtgroup *r, const char *name);
- 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 0e6a389a16bf..4565b9864a9e 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -1052,7 +1052,8 @@ int event_filter_show(struct kernfs_open_file *of, struct seq_file *seq, void *v
- 	bool sep = false;
- 	int ret = 0, i;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
- 	r = resctrl_arch_get_resource(mevt->rid);
-@@ -1073,7 +1074,7 @@ int event_filter_show(struct kernfs_open_file *of, struct seq_file *seq, void *v
- 	seq_putc(seq, '\n');
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
- }
-@@ -1084,7 +1085,8 @@ int resctrl_mbm_assign_on_mkdir_show(struct kernfs_open_file *of, struct seq_fil
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	int ret = 0;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
-@@ -1096,7 +1098,7 @@ int resctrl_mbm_assign_on_mkdir_show(struct kernfs_open_file *of, struct seq_fil
- 	seq_printf(s, "%u\n", r->mon.mbm_assign_on_mkdir);
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
- }
-@@ -1112,7 +1114,8 @@ ssize_t resctrl_mbm_assign_on_mkdir_write(struct kernfs_open_file *of, char *buf
- 	if (ret)
- 		return ret;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	rdt_last_cmd_clear();
- 
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
-@@ -1124,7 +1127,7 @@ ssize_t resctrl_mbm_assign_on_mkdir_write(struct kernfs_open_file *of, char *buf
- 	r->mon.mbm_assign_on_mkdir = value;
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1414,8 +1417,8 @@ ssize_t event_filter_write(struct kernfs_open_file *of, char *buf, size_t nbytes
- 
- 	buf[nbytes - 1] = '\0';
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1438,8 +1441,7 @@ ssize_t event_filter_write(struct kernfs_open_file *of, char *buf, size_t nbytes
- 	}
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1450,7 +1452,8 @@ int resctrl_mbm_assign_mode_show(struct kernfs_open_file *of,
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	bool enabled;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	enabled = resctrl_arch_mbm_cntr_assign_enabled(r);
- 
- 	if (r->mon.mbm_cntr_assignable) {
-@@ -1469,7 +1472,7 @@ int resctrl_mbm_assign_mode_show(struct kernfs_open_file *of,
- 		seq_puts(s, "[default]\n");
- 	}
- 
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -1488,8 +1491,8 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
- 
- 	buf[nbytes - 1] = '\0';
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1547,8 +1550,7 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
- 	}
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1560,8 +1562,8 @@ int resctrl_num_mbm_cntrs_show(struct kernfs_open_file *of,
- 	struct rdt_l3_mon_domain *dom;
- 	bool sep = false;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
- 		if (sep)
-@@ -1572,8 +1574,7 @@ int resctrl_num_mbm_cntrs_show(struct kernfs_open_file *of,
- 	}
- 	seq_putc(s, '\n');
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1586,8 +1587,8 @@ int resctrl_available_mbm_cntrs_show(struct kernfs_open_file *of,
- 	u32 cntrs, i;
- 	int ret = 0;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1613,8 +1614,7 @@ int resctrl_available_mbm_cntrs_show(struct kernfs_open_file *of,
- 	seq_putc(s, '\n');
- 
- out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret;
- }
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index a8b4ac7dd823..6601b138ac7a 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -977,13 +977,14 @@ static int rdt_last_cmd_status_show(struct kernfs_open_file *of,
- {
- 	int len;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	len = seq_buf_used(&last_cmd_status);
- 	if (len)
- 		seq_printf(seq, "%.*s", len, last_cmd_status_buf);
- 	else
- 		seq_puts(seq, "ok\n");
--	mutex_unlock(&rdtgroup_mutex);
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1002,7 +1003,11 @@ static int rdt_num_closids_show(struct kernfs_open_file *of,
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", s->num_closid);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1010,9 +1015,14 @@ static int rdt_default_ctrl_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%x\n", resctrl_get_default_ctrl(r));
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1020,9 +1030,15 @@ static int rdt_min_cbm_bits_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
-+
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->cache.min_cbm_bits);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1030,9 +1046,14 @@ static int rdt_shareable_bits_show(struct kernfs_open_file *of,
- 				   struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%x\n", r->cache.shareable_bits);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1060,15 +1081,16 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
- 	 */
- 	unsigned long sw_shareable = 0, hw_shareable = 0;
- 	unsigned long exclusive = 0, pseudo_locked = 0;
--	struct rdt_resource *r = s->res;
- 	struct rdt_ctrl_domain *dom;
- 	int i, hwb, swb, excl, psl;
-+	struct rdt_resource *r;
- 	enum rdtgrp_mode mode;
- 	bool sep = false;
- 	u32 ctrl_val;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	list_for_each_entry(dom, &r->ctrl_domains, hdr.list) {
- 		if (sep)
- 			seq_putc(seq, ';');
-@@ -1144,8 +1166,7 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
- 		sep = true;
- 	}
- 	seq_putc(seq, '\n');
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1153,9 +1174,14 @@ static int rdt_min_bw_show(struct kernfs_open_file *of,
- 			   struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.min_bw);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1164,8 +1190,12 @@ static int rdt_num_rmids_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", r->mon.num_rmid);
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1175,6 +1205,8 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 	struct mon_evt *mevt;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	for_each_mon_event(mevt) {
- 		if (mevt->rid != r->rid || !mevt->enabled)
- 			continue;
-@@ -1184,6 +1216,8 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
- 			seq_printf(seq, "%s_config\n", mevt->name);
- 	}
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1191,9 +1225,14 @@ static int rdt_bw_gran_show(struct kernfs_open_file *of,
- 			    struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.bw_gran);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1201,16 +1240,24 @@ static int rdt_delay_linear_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->membw.delay_linear);
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
- static int max_threshold_occ_show(struct kernfs_open_file *of,
- 				  struct seq_file *seq, void *v)
- {
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 	seq_printf(seq, "%u\n", resctrl_rmid_realloc_threshold);
-+	info_kn_unlock(of->kn);
- 
- 	return 0;
- }
-@@ -1219,22 +1266,28 @@ static int rdt_thread_throttle_mode_show(struct kernfs_open_file *of,
- 					 struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
-+
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
-+	r = s->res;
- 	switch (r->membw.throttle_mode) {
- 	case THREAD_THROTTLE_PER_THREAD:
- 		seq_puts(seq, "per-thread\n");
--		return 0;
-+		break;
- 	case THREAD_THROTTLE_MAX:
- 		seq_puts(seq, "max\n");
--		return 0;
-+		break;
- 	case THREAD_THROTTLE_UNDEFINED:
- 		seq_puts(seq, "undefined\n");
--		return 0;
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		break;
- 	}
- 
--	WARN_ON_ONCE(1);
--
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1248,12 +1301,20 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
- 	if (ret)
- 		return ret;
- 
--	if (bytes > resctrl_rmid_realloc_limit)
--		return -EINVAL;
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
-+	if (bytes > resctrl_rmid_realloc_limit) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
- 
- 	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(bytes);
- 
--	return nbytes;
-+out_unlock:
-+	info_kn_unlock(of->kn);
-+
-+	return ret ?: nbytes;
- }
- 
- /*
-@@ -1293,10 +1354,15 @@ static int rdt_has_sparse_bitmasks_show(struct kernfs_open_file *of,
- 					struct seq_file *seq, void *v)
- {
- 	struct resctrl_schema *s = rdt_kn_parent_priv(of->kn);
--	struct rdt_resource *r = s->res;
-+	struct rdt_resource *r;
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+	r = s->res;
- 	seq_printf(seq, "%u\n", r->cache.arch_has_sparse_bitmasks);
- 
-+	info_kn_unlock(of->kn);
-+
- 	return 0;
- }
- 
-@@ -1652,8 +1718,8 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 	struct rdt_l3_mon_domain *dom;
- 	bool sep = false;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	lockdep_assert_cpus_held();
-+	lockdep_assert_held(&rdtgroup_mutex);
- 
- 	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
- 		if (sep)
-@@ -1670,8 +1736,6 @@ static int mbm_config_show(struct seq_file *s, struct rdt_resource *r, u32 evtid
- 	}
- 	seq_puts(s, "\n");
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
- 
- 	return 0;
- }
-@@ -1681,8 +1745,12 @@ static int mbm_total_bytes_config_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
- 	mbm_config_show(seq, r, QOS_L3_MBM_TOTAL_EVENT_ID);
- 
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1691,8 +1759,12 @@ static int mbm_local_bytes_config_show(struct kernfs_open_file *of,
- {
- 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
- 
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
-+
- 	mbm_config_show(seq, r, QOS_L3_MBM_LOCAL_EVENT_ID);
- 
-+	info_kn_unlock(of->kn);
- 	return 0;
- }
- 
-@@ -1790,8 +1862,8 @@ static ssize_t mbm_total_bytes_config_write(struct kernfs_open_file *of,
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n')
- 		return -EINVAL;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1799,8 +1871,7 @@ static ssize_t mbm_total_bytes_config_write(struct kernfs_open_file *of,
- 
- 	ret = mon_config_write(r, buf, QOS_L3_MBM_TOTAL_EVENT_ID);
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -1816,8 +1887,8 @@ static ssize_t mbm_local_bytes_config_write(struct kernfs_open_file *of,
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n')
- 		return -EINVAL;
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
-+	if (!info_kn_lock(of->kn))
-+		return -ENOENT;
- 
- 	rdt_last_cmd_clear();
- 
-@@ -1825,8 +1896,7 @@ static ssize_t mbm_local_bytes_config_write(struct kernfs_open_file *of,
- 
- 	ret = mon_config_write(r, buf, QOS_L3_MBM_LOCAL_EVENT_ID);
- 
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
-+	info_kn_unlock(of->kn);
- 
- 	return ret ?: nbytes;
- }
-@@ -2660,6 +2730,58 @@ void rdtgroup_kn_unlock(struct kernfs_node *kn)
- 	rdtgroup_kn_put(rdtgrp, kn);
- }
- 
-+/*
-+ * Accessing the kn after breaking active protection is safe since the open
-+ * of resctrl file holds a kernfs base reference (different from active
-+ * protection) on the kn ensuring that it remains accessible even if it was
-+ * unlinked. Each kn in turn holds base reference to parent so the kn's
-+ * genealogy remains in memory until all base references dropped.
-+ */
-+static bool is_active_resctrl_node(struct kernfs_node *kn)
-+{
-+	struct kernfs_node *p;
-+	bool match = false;
-+
-+	guard(rcu)();
-+	p = kn;
-+	while (p) {
-+		if (p == rdtgroup_default.kn) {
-+			match = true;
-+			break;
-+		}
-+		p = rcu_dereference(p->__parent);
-+	}
-+
-+	return match;
-+}
-+
-+bool info_kn_lock(struct kernfs_node *kn)
-+{
-+	kernfs_break_active_protection(kn);
-+	cpus_read_lock();
-+	mutex_lock(&rdtgroup_mutex);
-+
-+	/*
-+	 * Check both if resctrl is torn down (!rdtgroup_default.kn) and
-+	 * if the reader's kernfs_node originates from a dead mount.
-+	 */
-+	if (!rdtgroup_default.kn || !is_active_resctrl_node(kn)) {
-+		mutex_unlock(&rdtgroup_mutex);
-+		cpus_read_unlock();
-+		kernfs_unbreak_active_protection(kn);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+void info_kn_unlock(struct kernfs_node *kn)
-+{
-+	mutex_unlock(&rdtgroup_mutex);
-+	cpus_read_unlock();
-+	kernfs_unbreak_active_protection(kn);
-+}
-+
- static int mkdir_mondata_all(struct kernfs_node *parent_kn,
- 			     struct rdtgroup *prgrp,
- 			     struct kernfs_node **mon_data_kn);
--- 
-2.50.1
+         if (cft->release)
+                 cft->release(of);
+         put_cgroup_ns(ctx->ns);
+         kfree(ctx);
+         of->priv = NULL;
+}
+
+
+
+On 6.12.y:
+
+static void cgroup_file_release(struct kernfs_open_file *of)
+{
+         struct cftype *cft = of_cft(of);
+         struct cgroup_file_ctx *ctx = of->priv;
+
+         if (cft->release)
+                 cft->release(of);
+         put_cgroup_ns(ctx->ns);
+         kfree(ctx);
+}
+
+On 6.12.y, cgroup_file_release() frees ctx but does not clear of->priv. 
+The posted backport adds
+	ctx = of->priv;
+	if (!ctx)
+
+in pressure_write(), but that only works if release turns of->priv into 
+NULL. In the pressure_write() vs cgroup_pressure_write() race from the 
+commit message, 6.12.y still leaves a dangling pointer there, so this 
+backport alone is incomplete and can still hit UAF.
+
+So upstream has commit: 94a4acfec146 ("cgroup/psi: Set of->priv to NULL 
+upon file release") which might be needed here as well, without that I 
+would suggest a drop.
+
+
+Thanks,
+Harshit
 
