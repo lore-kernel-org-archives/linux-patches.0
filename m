@@ -1,152 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7218E29E116;
-	Sat, 23 May 2026 09:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E771D3A63E0
+	for <patches@lists.linux.dev>; Sat, 23 May 2026 14:23:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779528174; cv=none; b=UIq1ikexo4aQIQhSsw9BfaBtdwdWrouSvyzzv03I18x5A5Em6wEJbXr3TuXJJlsRmFfEOnPvbnX7xPXqESNjOvfnJPaBihDJ/YUIBtpXVrGqmYcAXPLwZw6orhn+eQdACyUT8LMti+sPGHXWoWEKrM0JkYiFKiZAqhhcU647lDc=
+	t=1779546197; cv=none; b=ew+zTbYQPR487Z5IBYc55wA0hUUwpTpRl0EUXE0VnwUWFISNrEcgSHcmZbhh/NuZKFGP8NRBppBj0tj3lLuV1o7IZWtOPUYKooSJeaKAGZwqUK9tx2dZA0UPDtmcIs5F5zXHUubzXfsQtFljZK858zUBle+S+VKES3tic2qo/BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779528174; c=relaxed/simple;
-	bh=WzWnaxafrb449AME7UJ7Iy8ifl+TzT0qDjt5jndyN98=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MxfAK9HQ/G7J9Ez8V2mL1LT7nIpXwf1uahw2s+N3/bS/nUfaPw5DAi6BdWDHIyFmbclh7QE2jSpoRiEEIS+/vlI0QqZCYAnh5i1jhLwPcyquOO31Ev9fxkpqQatsWXL+olP30TjjnX9Rs1Xgl1QE7jXLTenP3iagvPfpz5CfGUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXBz4P3K; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779546197; c=relaxed/simple;
+	bh=B1SkOVQybuYZKnQkgQqnT8euq6KxNqLE/BvgDc/1ZEs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g4YD7XTDOrlVb212zd/hmufa3xOX/CuU7vCKYASyYSuf+0+OjHQlw1rX4915+eabnOBipkDfBntfwLuctCpsP3gm1lmmKiDXpeSA2j5J+DOI5lsgroBQnVSBoCTH3ZoeOy4xe+ZbmxLi9KLfJDxe24ayC5n/d+r8DtyAGU6N/8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b=UzVB5wkr; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXBz4P3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9511F000E9;
-	Sat, 23 May 2026 09:22:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779528173;
-	bh=F7dDuv7wc6zC9c//1ET26gyJLdKCLeEDcRpy9I2R+8Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=uXBz4P3KU8bZCZGDAbposvHdqoVXnw0VCLY48PV3EclKMT2rkEO9lgDoHa7XMlznA
-	 xV+Se3w+1vAxlUc9yEsETXH11BjPFcHSMTE53qsufFww9bO76TAo++EABkZWI8UGlt
-	 K5Kef4NRsHBEG+Q2LJEWookbdckoOiG81HbempBQ=
-Date: Sat, 23 May 2026 11:22:55 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Xiaoli Feng <xifeng@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>, netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH 6.12 634/666] netfs: fix error handling in
- netfs_extract_user_iter()
-Message-ID: <2026052349-handset-ambiguity-b618@gregkh>
-References: <20260520162111.222830634@linuxfoundation.org>
- <20260520162125.016902019@linuxfoundation.org>
- <7ed573be-1df9-43ee-bfef-4499af0767b4@oracle.com>
+	dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b="UzVB5wkr"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7e582b3bcaaso6973242a34.3
+        for <patches@lists.linux.dev>; Sat, 23 May 2026 07:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1779546195; x=1780150995; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cy9jYvmsFlyJHrWwIX2opm2bPqsw1+AmzdT1aGicVEs=;
+        b=UzVB5wkrkZelJ8eZsaWGRQ3P25ZYvUvS++g2+kFlouMky8Lb3/pAXMlqC8W9MonOC6
+         OjkaLCt2LQ9FyF78iLzJuLBJmpBYqZhn3WQLNfFK4wAm8UqrD9W441W0JXMu5c6WPk9/
+         UFZVdk361U0jXAEoVzhFV3UkJ8YkWne5TrTEds/+ZKqX8aNwb4RnCxfa15ZKVUQagMWd
+         YLVl/VrJrStJklnhE26SsQOvR0INLC4ykmPaVVKckyA4GC9g0C2T6TTw3RUbk+tiDWft
+         cPmAZrYwJetOAAepnWMCtEDhJKuulMPUrStXRQT+KIQZHbtVOpYfBG+9O5+wpfaCFnxM
+         XiMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779546195; x=1780150995;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cy9jYvmsFlyJHrWwIX2opm2bPqsw1+AmzdT1aGicVEs=;
+        b=PqDV9ToL4BbyquptDMMh/XK4/yWakdeD6aHB/GuxMZ5STRdPGfxOqPzJF4NdOmTkGT
+         hzunlhEUAX1EyVS5Nz61HoWgvjrQhuu2EVLcg9PIX7gLVV3kaUpmsA4OTU6f/eaEbbGj
+         Uet1xJ7Pq/cEE1XAgrfXbCiSIX0GGg9KC2raRBEeTl165go83xGT8Bwl7HIabhhRierM
+         2Zjo5eUZ4ZM/t4iwBCCDidy+FF9+RfljLi2WFpQytLrGTzddE16TdP6LoEEVORpnNIw0
+         3oatRY7jsx/qMxqWRLuLAPemSQrxCKLFCdcmzG9ylmKe57MsmWbVyVxNXL7Yh+VaXxH0
+         p1Pw==
+X-Forwarded-Encrypted: i=1; AFNElJ+NQI6CAl8BiUJNGXDUoiaYyND566lwEvJqKNTFvKW/jCavLS5ykEfyEWa0j5lYCtVvPm3Th2im@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqlakNvU3ipeDdfFUwqd3rKdxRaYIMQNdj/8WD5atSH9eP4Qnw
+	E4KCDGi55neAyn3yZgI9vKxBIJZqaSV1lctFLQ9/OyNvcTmzJsqO25CwbByfz8DfxdU=
+X-Gm-Gg: Acq92OF2rQqnOwF9zfn+Pf+oe/nm6eSrcnyL5Ygu48omX5VLT+mWBa3GD5+fxRGggw/
+	IG7PJ6Q13hv3YJdpyB49+GyEnO614ybOxvEWX7u1OiWK35Fioo0xEEDMiyzTjfX0LN1TkC3IaCq
+	mthZeet5K7n125BBiGY10vNvpsXFzDOxJNxMUJFffANjQwl19N3+3YtzRrEIyfJS+FAp6T8sneq
+	SU++jYE7GMY/J1R3E2cmSGCDMPGYP2OzyAiyI/q58nwUXc0WXiATEy2yLIZe8Z206fxJCXHpkC8
+	gcL+0zO/6CKrp+Zg5u33RvCYRBBX9Dwe6sHFmhymcdHCz+hml53psKy66YKDAK1H0eq1LewEh24
+	baNgL/qxptxKy6cw8ucp7P7WTNqfdB1cHceWuWsrQPJi2B9J5AiE8Qp3LQ3SzhfebB601lkDI34
+	SgiD5fkasexvlITxo2ReX7Y3RLq1TKvUYWphifrW9DVowabJr3m1KDQtJRmWfSrrBhSVOmdh/x7
+	rB+NeBM3Q==
+X-Received: by 2002:a05:6830:6285:b0:7df:5fc:3fd8 with SMTP id 46e09a7af769-7e5fed0ab9cmr4772009a34.1.1779546194811;
+        Sat, 23 May 2026 07:23:14 -0700 (PDT)
+Received: from [192.168.1.150] ([198.8.77.157])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e606459dadsm3299655a34.4.2026.05.23.07.23.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 23 May 2026 07:23:14 -0700 (PDT)
+Message-ID: <8e853555-604e-46e5-8e25-a5f80b88e51c@kernel.dk>
+Date: Sat, 23 May 2026 08:23:13 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7ed573be-1df9-43ee-bfef-4499af0767b4@oracle.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH AUTOSEL 7.0] io_uring/wait: honour caller's time namespace
+ for IORING_ENTER_ABS_TIMER
+From: Jens Axboe <axboe@kernel.dk>
+To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
+ stable@vger.kernel.org
+Cc: Maoyi Xie <maoyixie.tju@gmail.com>,
+ Pavel Begunkov <asml.silence@gmail.com>, Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+ io-uring@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260520111944.3424570-1-sashal@kernel.org>
+ <20260520111944.3424570-26-sashal@kernel.org>
+ <5a50c3f5-a5ef-4b2b-821c-5858d8b1ac13@kernel.dk>
+Content-Language: en-US
+In-Reply-To: <5a50c3f5-a5ef-4b2b-821c-5858d8b1ac13@kernel.dk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, May 23, 2026 at 01:53:15AM +0530, Harshit Mogalapalli wrote:
-> Hi Greg/Sasha,
+On 5/20/26 5:40 AM, Jens Axboe wrote:
+> On 5/20/26 5:18 AM, Sasha Levin wrote:
+>> From: Maoyi Xie <maoyixie.tju@gmail.com>
+>>
+>> [ Upstream commit 45d2b37a37ab98484693533496395c610a2cab96 ]
+>>
+>> io_uring_enter() with IORING_ENTER_ABS_TIMER takes an absolute
+>> timespec from the caller via ext_arg->ts. It arms an ABS mode
+>> hrtimer in __io_cqring_wait_schedule(). The conversion path in
+>> io_uring/wait.c parses ext_arg->ts inline rather than going
+>> through io_parse_user_time(). It therefore does not pick up the
+>> time namespace conversion added by the previous patch.
 > 
-> On 20/05/26 21:54, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Paulo Alcantara <pc@manguebit.org>
-> > 
-> > commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
-> > 
-> > In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
-> > extract user pages, bail out on -ENOMEM, otherwise return the error
-> > code only if @npages == 0, allowing short DIO reads and writes to be
-> > issued.
-> > 
-> > This fixes mmapstress02 from LTP tests against CIFS.
-> > 
-> > Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-> > Reported-by: Xiaoli Feng <xifeng@redhat.com>
-> > Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-> > Signed-off-by: David Howells <dhowells@redhat.com>
-> > Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
-> > Cc: netfs@lists.linux.dev
-> > Cc: stable@vger.kernel.org
-> > Cc: linux-cifs@vger.kernel.org
-> > Cc: linux-fsdevel@vger.kernel.org
-> > Signed-off-by: Christian Brauner <brauner@kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >   fs/netfs/iterator.c |   13 ++++++++++---
-> >   1 file changed, 10 insertions(+), 3 deletions(-)
-> > 
-> > --- a/fs/netfs/iterator.c
-> > +++ b/fs/netfs/iterator.c
-> > @@ -22,7 +22,7 @@
-> >    *
-> >    * Extract the page fragments from the given amount of the source iterator and
-> >    * build up a second iterator that refers to all of those bits.  This allows
-> > - * the original iterator to disposed of.
-> > + * the original iterator to be disposed of.
-> >    *
-> >    * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
-> >    * allowed on the pages extracted.
-> > @@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
-> >   		ret = iov_iter_extract_pages(orig, &pages, count,
-> >   					     max_pages - npages, extraction_flags,
-> >   					     &offset);
-> > -		if (ret < 0) {
-> > -			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
-> > +		if (unlikely(ret <= 0)) {
-> > +			ret = ret ?: -EIO;
-> >   			break;
-> >   		}
-> > @@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
-> >   		npages += cur_npages;
-> >   	}
-> > +	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
-> > +		for (i = 0; i < npages; i++)
-> > +			unpin_user_page(bv[i].bv_page);
-> > +		kvfree(bv);
-> > +		return ret;
-> > +	}
-> > +
-> 
-> I have run an AI assisted backport review and it spotted an issue: I
-> have taken a look and the issues goes like:
-> 
-> Upstream has:
-> 
-> 
-> 
-> ssize_t ret = 0;
-> 
-> ...
-> if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
->         for (i = 0; i < npages; i++)
->                 unpin_user_page(bv[i].bv_page);
->         kvfree(bv);
->         return ret;
-> }
-> 
-> 6.12.y has:
-> 
-> ssize_t ret;
-> 
-> ...
-> if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
->         for (i = 0; i < npages; i++)
->                 unpin_user_page(bv[i].bv_page);
->         kvfree(bv);
->         return ret;
-> }
-> 
-> I think 6.12.y misses commit: 7e3d8db899d5 ("netfs: Fix potential
-> uninitialised var in netfs_extract_user_iter()") so backport might not be
-> complete, thoughts ?
+> Once again - If you auto-pick this one, please also do the other one in
+> the series, 9cc6bac1bebf8310d2950d1411a91479e86d69a1. Makes no sense to
+> do just one of them.
 
-Now applied, thanks.
+And once again, no reply. What is going on with stable these days?
 
-greg k-h
+-- 
+Jens Axboe
+
