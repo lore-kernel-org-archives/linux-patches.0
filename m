@@ -1,52 +1,78 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922B1274B39;
-	Sun, 24 May 2026 10:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1707D391822
+	for <patches@lists.linux.dev>; Sun, 24 May 2026 14:46:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779620022; cv=none; b=RYX/WtWktoJnJ/0SubiUAnFganEfxdTERTJ6H7dKSOx9GVpsWwf0cEHCPry2lApRlDDQhQaLQu/iB9OvdJdaH6x/ZF4vo6geP6N83Dc1U2dt2rE/pf2G8okQ81DRo4U8tn6HcdwOH8PgYBi3EHXVgDL7p725MtJ9nkRfAedxN2A=
+	t=1779634013; cv=none; b=DoHfZXL00Y6s7xSLlE1pOkn5iIPE1aD7G1pzRmHQbSu2L+ShmdEgNAHvGJu6yA+hzlUjckBZrlyWVo01B1mWpjR1JaAcI9SwzUtsLF+7OfZRO8vvz9piUZMhf/u881v2jTfRMKioG6+7v7YQk2vTpsWR3pePU0qIiS0RLds4flU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779620022; c=relaxed/simple;
-	bh=ENFncFyeXcwIrdxcdDsY13sreIEZseI5yxq9k84jnvY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l/wWrgxoJEmGDZTbB2anD24hFBNRs2MS0Jh9sMs/iqUhXt0jTpqLNCGe6644F3GD+EohpCfke+UpzFVr1FUZC238MaCSjARsY64AnKhQbXgsCvIf1sDHygZnh8AjdHAIdVDCxldHAoaak7pQYuolsG0mjzX296BjwzABguBxRP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=FqrUiUhi; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1779634013; c=relaxed/simple;
+	bh=JEZWG6SWAXC3kSsKtJeswOT8sOerhSc4wffC3XsQE5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TqIfKoW2scVBU1HIgekgb1/sanV+q6fjF9DOZiS8MrDgi1BVq7aWdRw71FDlzF5RyaYvKqD5ofm6KUB3rTPFIcPODcCWCK9ayzZcdoY5mIzSVctlmA+z3YLAFgvH8tTRiD6VVQSGzGWt+Nx/iAo0lCENXnvJGs0dSizWy3Dm2ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sTi5XOjb; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="FqrUiUhi"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Date:References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=fAWMcU92HgG7+vOjjnyRXeJtYtmkx/dVf7qKqMX7lY8=; b=FqrUiUhiLvJl0UvhE6FrTrJrFS
-	WbTDTHFU21MUbDVkDRL2o+kcy0qZ0BziKZDovK/TkEo+wuHDaNYl1UWLYguoJfrbiWoLtq1UUNemX
-	My7CcxOi6p95dyBm4pwjtGdsunL6HkzjdBwpWJzAgM0MmF818RwW9molytqCUkBGj1olcxmrvw7BY
-	rIIY/Nt91itzorrHowm77yWuUb2uFFU3/n7KHFvv4FpaHFoRsKogocNw/BgFhvKMqttdtUs2XVv65
-	SaQ+LYs1HeCLD+5NjxlsmL3RCb4llNcTzDh+mjoZV44/xb4bpDfzrZ3VUPC5g5R+3TspDxj6XW0Kw
-	o8V3wzRg==;
-Received: from dsl-196-116.bl27.telepac.pt ([176.79.196.116] helo=localhost)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wR6SX-007Cou-3P; Sun, 24 May 2026 12:53:29 +0200
-From: Luis Henriques <luis@igalia.com>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-  stable@vger.kernel.org,  patches@lists.linux.dev,  Miklos Szeredi
- <mszeredi@redhat.com>
-Subject: Re: [PATCH 6.18 346/957] fuse: new work queue to periodically
- invalidate expired dentries
-In-Reply-To: <20260522123641.rc-drop-ab84ad597386@kernel.org> (Sasha Levin's
-	message of "Fri, 22 May 2026 09:12:26 -0400")
-References: <20260520162134.554764788@linuxfoundation.org>
-	<20260520162142.034488466@linuxfoundation.org>
-	<CAOssrKcqmVW3kJ131tRF3LCJVQUtdRB31B5HENDfpgrq6r=jEA@mail.gmail.com>
-	<20260522123641.rc-drop-ab84ad597386@kernel.org>
-Date: Sun, 24 May 2026 11:53:22 +0100
-Message-ID: <87se7h6pul.fsf@igalia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sTi5XOjb"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4903d730b1fso27020165e9.2
+        for <patches@lists.linux.dev>; Sun, 24 May 2026 07:46:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779634010; x=1780238810; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A6knduYAQaCV7hHxlTFEjJDyN7v2hRFonwrpL8674II=;
+        b=sTi5XOjbDMsODsbwYWU+V6zmNfJ3uXDlbjrRmxmmQs8ybod7mxeWy+mC0w4yv4UZST
+         h58avnTrmTLorHrIIqAGW73Lz4DjutiVGZbXiZd02dE0L1i89/mF/KV4w9OV92vLFCz7
+         Ixvl1tPreOkcGNRZlbbi1PEbRdBsEkjotJ+qgLPDJLkFu+oTsLHM5EAGng/EC00s2TmX
+         l+sgQ6df6syCI0FR20zeuagyG4DmoI1rvUmhul+y06JnIRMxOmajXBZxIQ1+0upwakv2
+         yrdQxP0kwos3t/robVmZMYLHxVkZjPzU05osah/ZLSwQL/G9RfJQo+T8hrje7wrBdSut
+         Fu/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779634010; x=1780238810;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A6knduYAQaCV7hHxlTFEjJDyN7v2hRFonwrpL8674II=;
+        b=S7f21/lWnwCe/8jmmoVERiTdNA1I8grcUtWWadPfUw7X6KwQAl8L+lBE78qykhgNKM
+         ZTmx2qkREg5YWb0B4UzODLzbvNHV2slQPtpsqAUq3Y+tyjpG/pqIlyOnf0w4yowj5Djx
+         83EKnPhMzICzLWVVRnk4CUeD8xUmcmNTlVZBsDr4YN7/m9xo5BRHnBmN1FedmJLufQU/
+         HPlEChebNCKCIV4x2IeD9j8Oiri9k8goPJNeIOTUSQnjKKhK4gAvxLEEPcaH5vK3m8oL
+         rdKy+SEQwjTtY6PN2AhNNEYHuHXS60osPLqdAxfZwBQPyel1p+eTKgjhLagYcQONSdpa
+         mbbA==
+X-Forwarded-Encrypted: i=1; AFNElJ/RUssQp4exQ+k7dlGzq681LYFR/r6S80kMAuMAYynReBxut4PQNI9P01D1I9r9rSN+PJ+b5ONY@lists.linux.dev
+X-Gm-Message-State: AOJu0YyV4DULOiWo9B4xUA8UUzzo8h60eNfhgiAro5Mw3L4QV04j8A5I
+	WA3ttdzlZI7grqJznZJsK0IvSE0oFmUx+30Y0ZpGSe5tN77wx054F+1P
+X-Gm-Gg: Acq92OGotrWO90tSm2aSMgrv9vcnOoe5bsBJ6O5/iGLuKpqqhhAoQDhH9i0Qn1AK9VC
+	m46BxI0AW00o9+31hT4NXr4gXUoYZEzJgFg32ll1QC+8gxybNRqNz5NDO5uBDUM84iMTSS060Kw
+	KPv3N8fDoL656/Y9pRGUM7+wxfHE6FIH+dx+lZHswMyXVx5l7lP9wEGWmvz1CC5+jztIKxxxs8f
+	3b9eWL+Px9gGXOj4Crg4W3mnyPtGirEgpVooSn0vN0/uPoymcNahV/FlB9FkO0QdfL3qZELUwtP
+	9ITU/0wzOgOtmXG8W6Jaw38B3WsNRB8UQ3IWtRc3XOdwH3Jde9lByVU9TwxkbD11c7wtQs//qye
+	hvrmbR5vvDhYrWUzQe+fz1NO4+IN++4dipDAmk2UHUR7+J75DGKn0tAQGZSKZSmUaBFG+fEQZN2
+	Qi5ajf4hdZBwvd2gCHRwSSHGG9rOJ49gDK0VdVMuQ89zwXutPd2vC31mxAJy0=
+X-Received: by 2002:a05:600d:6450:10b0:48a:7a10:4f17 with SMTP id 5b1f17b1804b1-4904249d125mr126693985e9.6.1779634010232;
+        Sun, 24 May 2026 07:46:50 -0700 (PDT)
+Received: from eldamar.lan (c-82-192-247-196.customer.ggaweb.ch. [82.192.247.196])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490454cfcaesm177192395e9.4.2026.05.24.07.46.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 May 2026 07:46:49 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id 77111BE2EE7; Sun, 24 May 2026 16:46:48 +0200 (CEST)
+Date: Sun, 24 May 2026 16:46:48 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Ian Rogers <irogers@google.com>, Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>, regressions@lists.linux.dev
+Subject: Re: [PATCH 6.12 375/666] perf tool_pmu: Factor tool events into
+ their own PMU
+Message-ID: <ahMPWN_PZlQLisk4@eldamar.lan>
+References: <20260520162111.222830634@linuxfoundation.org>
+ <20260520162119.375577583@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,137 +80,94 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260520162119.375577583@linuxfoundation.org>
 
-On Fri, May 22 2026, Sasha Levin wrote:
+hi Greg, 
+On Wed, May 20, 2026 at 06:19:46PM +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Ian Rogers <irogers@google.com>
+> 
+> [ Upstream commit 240505b2d0adcdc8fd018117e88dc27b09734735 ]
+> 
+> Rather than treat tool events as a special kind of event, create a
+> tool only PMU where the events/aliases match the existing
+> duration_time, user_time and system_time events. Remove special
+> parsing and printing support for the tool events, but add function
+> calls for when PMU functions are called on a tool_pmu.
+> 
+> Move the tool PMU code in evsel into tool_pmu.c to better encapsulate
+> the tool event behavior in that file.
 
-> On Wed, May 20, 2026 at 08:45:09PM +0200, Miklos Szeredi wrote:
->> This is not stable material, and I don't think the dependency is real.
->>
->> Just need to resolve the trivial conflict when applying 5a6baf204610
->> ("fuse: fix uninit-value in fuse_dentry_revalidate()")
->
-> Dropped from the 6.18 queue along with the following Stable-dep-of /
-> Fixes-of patches that no longer apply without it:
->
->   - dcache: export shrink_dentry_list() and add new helper d_dispose_if_u=
-nused()
->   - fuse: fix uninit-value in fuse_dentry_revalidate()
->   - fuse: fix race when disposing stale dentries
->   - fuse: make sure dentry is evicted if stale
->
-> If anyone wants to send a backport of 5a6baf204610, we can apply it.
+While building now a complete set of packages for Debian for 6.12.91
+where perf tools are included as well, I noticed that now the builds
+fails. In fact in v6.12.91 
 
-Below is a attempt at the backporting.  I had to enable ->d_init/d_release
-operations unconditionally, so that dentries d_time could be initialised.
-(Maybe d_release could be left out.) It doesn't look pretty, but I guess
-it's the solution closer to upstream.
+$ cd tools
+$ LC_ALL=C.UTF-8 ARCH=x86 make perf
 
-Cheers,
---=20
-Lu=C3=ADs
+fails with:
 
-From 3000e3b879f66afb47d22f360567c546ca9214ad Mon Sep 17 00:00:00 2001
-From: Luis Henriques <luis@igalia.com>
-Date: Mon, 16 Feb 2026 14:48:30 +0000
-Subject: [PATCH] fuse: fix uninit-value in fuse_dentry_revalidate()
-
-commit 5a6baf204610589f8a5b5a1cd69d1fe661d9d3cd upstream.
-
-fuse_dentry_revalidate() may be called with a dentry that didn't had
-->d_time initialised.  The issue was found with KMSAN, where lookup_open()
-calls __d_alloc(), followed by d_revalidate(), as shown below:
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-BUG: KMSAN: uninit-value in fuse_dentry_revalidate+0x150/0x13d0 fs/fuse/dir=
-.c:394
- fuse_dentry_revalidate+0x150/0x13d0 fs/fuse/dir.c:394
- d_revalidate fs/namei.c:1030 [inline]
- lookup_open fs/namei.c:4405 [inline]
- open_last_lookups fs/namei.c:4583 [inline]
- path_openat+0x1614/0x64c0 fs/namei.c:4827
- do_file_open+0x2aa/0x680 fs/namei.c:4859
 [...]
+  CC      util/stat.o
+util/tool_pmu.c: In function ‘tool_pmu__config_term’:
+util/tool_pmu.c:62:49: error: implicit declaration of function ‘parse_events__term_type_str’; did you mean ‘parse_events_term__str’? [-Wimplicit-function-declaration]
+   62 |                                                 parse_events__term_type_str(term->type_term),
+      |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                 parse_events_term__str
+util/tool_pmu.c:61:79: error: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Werror=format=]
+   61 |                                                 "unexpected tool event term (%s) %s",
+      |                                                                              ~^
+      |                                                                               |
+      |                                                                               char *
+      |                                                                              %d
+   62 |                                                 parse_events__term_type_str(term->type_term),
+      |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                 |
+      |                                                 int
+cc1: all warnings being treated as errors
+  CC      util/stat-shadow.o
+  LD      util/hisi-ptt-decoder/perf-util-in.o
+  CC      util/stat-display.o
+make[5]: *** [/home/build/linux-stable-rc/tools/build/Makefile.build:105: util/tool_pmu.o] Error 1
+make[5]: *** Waiting for unfinished jobs....
+  CC      util/perf_api_probe.o
+  LD      util/perf-regs-arch/perf-util-in.o
+util/cgroup.c: In function ‘evlist__expand_cgroup’:
+util/cgroup.c:498:32: error: ‘struct evsel’ has no member named ‘first_wildcard_match’
+  498 |                         if (pos->first_wildcard_match)
+      |                                ^~
+util/cgroup.c:499:38: error: ‘struct evsel’ has no member named ‘first_wildcard_match’
+  499 |                                 evsel->first_wildcard_match = pos->first_wildcard_match->priv;
+      |                                      ^~
+util/cgroup.c:499:66: error: ‘struct evsel’ has no member named ‘first_wildcard_match’
+  499 |                                 evsel->first_wildcard_match = pos->first_wildcard_match->priv;
+      |                                                                  ^~
+make[5]: *** [/home/build/linux-stable-rc/tools/build/Makefile.build:105: util/cgroup.o] Error 1
+  LD      util/arm-spe-decoder/perf-util-in.o
+  LD      ui/browsers/perf-ui-in.o
+  LD      tests/workloads/perf-test-in.o
+  LD      ui/perf-ui-in.o
+  LD      perf-ui-in.o
+  AR      libperf-ui.a
+  LD      tests/perf-test-in.o
+  LD      perf-test-in.o
+  AR      libperf-test.a
+  LD      util/scripting-engines/perf-util-in.o
+  LD      util/intel-pt-decoder/perf-util-in.o
+  LD      perf-in.o
+make[4]: *** [/home/build/linux-stable-rc/tools/build/Makefile.build:162: util] Error 2
+make[3]: *** [Makefile.perf:789: perf-util-in.o] Error 2
+make[3]: *** Waiting for unfinished jobs....
+  CC      pmu-events/pmu-events.o
+  LD      pmu-events/pmu-events-in.o
+make[2]: *** [Makefile.perf:292: sub-make] Error 2
+make[1]: *** [Makefile:76: all] Error 2
+make: *** [Makefile:93: perf] Error 2
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4466 [inline]
- slab_alloc_node mm/slub.c:4788 [inline]
- kmem_cache_alloc_lru_noprof+0x382/0x1280 mm/slub.c:4807
- __d_alloc+0x55/0xa00 fs/dcache.c:1740
- d_alloc_parallel+0x99/0x2740 fs/dcache.c:2604
- lookup_open fs/namei.c:4398 [inline]
- open_last_lookups fs/namei.c:4583 [inline]
- path_openat+0x135f/0x64c0 fs/namei.c:4827
- do_file_open+0x2aa/0x680 fs/namei.c:4859
-[...]
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-
-Reported-by: syzbot+fdebb2dc960aa56c600a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69917e0d.050a0220.340abe.02e2.GAE@googl=
-e.com
-Fixes: 2396356a945b ("fuse: add more control over cache invalidation behavi=
-our")
-Signed-off-by: Luis Henriques <luis@igalia.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
----
- fs/fuse/dir.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
-
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index ecaec0fea3a1..1bc6982b5d6a 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -283,21 +283,33 @@ static int fuse_dentry_revalidate(struct inode *dir, =
-const struct qstr *name,
- 	goto out;
- }
-=20
--#if BITS_PER_LONG < 64
- static int fuse_dentry_init(struct dentry *dentry)
- {
-+	int ret =3D 0;
-+
-+	/*
-+	 * Initialising d_time (epoch) to '0' ensures the dentry is invalid
-+	 * if compared to fc->epoch, which is initialized to '1'.
-+	 */
-+	dentry->d_time =3D 0;
-+
-+#if BITS_PER_LONG < 64
- 	dentry->d_fsdata =3D kzalloc(sizeof(union fuse_dentry),
- 				   GFP_KERNEL_ACCOUNT | __GFP_RECLAIMABLE);
-=20
--	return dentry->d_fsdata ? 0 : -ENOMEM;
-+	ret =3D dentry->d_fsdata ? 0 : -ENOMEM;
-+#endif
-+
-+	return ret;
- }
- static void fuse_dentry_release(struct dentry *dentry)
- {
-+#if BITS_PER_LONG < 64
- 	union fuse_dentry *fd =3D dentry->d_fsdata;
-=20
- 	kfree_rcu(fd, rcu);
--}
- #endif
-+}
-=20
- static int fuse_dentry_delete(const struct dentry *dentry)
- {
-@@ -331,10 +343,8 @@ static struct vfsmount *fuse_dentry_automount(struct p=
-ath *path)
- const struct dentry_operations fuse_dentry_operations =3D {
- 	.d_revalidate	=3D fuse_dentry_revalidate,
- 	.d_delete	=3D fuse_dentry_delete,
--#if BITS_PER_LONG < 64
- 	.d_init		=3D fuse_dentry_init,
- 	.d_release	=3D fuse_dentry_release,
--#endif
- 	.d_automount	=3D fuse_dentry_automount,
- };
-=20
+Regards,
+Salvatore
