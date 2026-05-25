@@ -1,34 +1,34 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
+Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA980149C6F
-	for <patches@lists.linux.dev>; Mon, 25 May 2026 05:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269D2355F2B
+	for <patches@lists.linux.dev>; Mon, 25 May 2026 06:03:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779688140; cv=none; b=TMvgKNm/wcaKCqjp/GusGpjQIdO28BydMKnQA20XCeDV6as1ACXbhj34Vek5MBtq12P7gK88t2H4ESNbMmkhhvFzPjjSvztCsp7Afk+zwOEkb6XNPw1rZOMPSclPUYwECyypwlOIf6fUCtUl6U+ENmlJ2Y4NQ+YeNs7HhFkgpQQ=
+	t=1779689022; cv=none; b=hd6PqxlV77CC8vY6rYiFXC4W9eTcLBYH9LqoLX5lPnydactdIOW9HuXMdPimqGkkpRz6MgFyYWzk6r8IGlBO38n7MJu7VVAUBA4M8bYJoKPy+fzPZUlYvFN/cKjO7vHzT2Zv093KNh+3q8igxswET6FFzjehd9Da1X57ufZwfiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779688140; c=relaxed/simple;
-	bh=1KivS5QoCAdUrG5zSQuzPZujS6vFlKYxo7tDq+2xOFk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FLY1CReCt9NvgaiurSg5GVv0kWX792rNFhviwjl7lPRHcSZSE1qBrNfmZY5h6Q75JiLw3YlUclE0gdakxfuQJHKEMlmfPFEVjzK2Vvq2xtnkzYfgg9fXY8dBjwIqcqmy8NzQSWHtiiIBBs6fQTFDdGWlaKdAfg9ar+++qi0pZ00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=hAQE2lrp; arc=none smtp.client-ip=120.232.169.111
+	s=arc-20240116; t=1779689022; c=relaxed/simple;
+	bh=M11jHMT5Ir/WrS8vwUnco3nI1PPClK1HlRkDcheaekQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CuKbB8R5CaEkJRJXueSm9QMwxpLZvOxB7gMphQnIF6rkl/mG+GuMYTzsvU2CxSo9ckLxQubETwEeDU26O6OKWChTvFSe7zapyQFl7LmZuGzAJ7vi1k7XvNkge3fkyYxCcagH25aCITeQkD2Tpue2mt5jYCEgfhTJPjLBnROO+H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=WhFGyqWs; arc=none smtp.client-ip=120.232.169.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="hAQE2lrp"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="WhFGyqWs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=hAQE2lrpwhHpYTxO+Uows007Z4DFXNofo3fM5qieodxlIWE5/4LKEQMmXEKrKY2vHMIO9a/pgWVoY
-	 DiM8R61glgwJTSCgQj/KzWaq72sDvFHxO2OoE6fZ13G6T9jnv7uf531rQfevczT+3Lm7nYn8pJdz4j
-	 t7Ywa7/5sbPm3J/Q=
+	b=WhFGyqWs8c1Fw3Y4hj//ST9/xHGFQ/wTux/FRY3WylPXcAHA3bJefhxebpa8vkadQi5rGBhFMTXXi
+	 1xtBMeiL8cs4hz4tf/WK1+yM26SHqUYDHQfok+qf+iT0LWrHQWaYwB402K7gpmlwz7B53A3gkiQDNr
+	 RmdYBsLC/rn7h4rk=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-18-12021 (RichMail) with SMTP id 2ef56a13e2c45fe-00606;
-	Mon, 25 May 2026 13:48:55 +0800 (CST)
-X-RM-TRANSID:2ef56a13e2c45fe-00606
+	by rmsmtp-lg-appmail-43-12057 (RichMail) with SMTP id 2f196a13e635cb3-09d6e;
+	Mon, 25 May 2026 14:03:37 +0800 (CST)
+X-RM-TRANSID:2f196a13e635cb3-09d6e
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -43,9 +43,9 @@ Cc: patches@lists.linux.dev,
 	linux-wireless@vger.kernel.org,
 	netdev@vger.kernel.org,
 	johannes.berg@intel.com
-Subject: [PATCH 6.1.y] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
-Date: Mon, 25 May 2026 13:48:54 +0800
-Message-Id: <20260525054854.2457807-1-1468888505@139.com>
+Subject: [PATCH 5.15.y] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Mon, 25 May 2026 14:03:36 +0800
+Message-Id: <20260525060336.2460138-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -82,10 +82,10 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
-index 1f07b598a6a1..57bd4fc8d237 100644
+index c2d7479c119a..d25dfeb347f2 100644
 --- a/net/mac80211/tdls.c
 +++ b/net/mac80211/tdls.c
-@@ -1382,7 +1382,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+@@ -1380,7 +1380,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
  
  		mutex_lock(&local->sta_mtx);
  		sta = sta_info_get(sdata, peer);
