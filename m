@@ -1,44 +1,52 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AD81DB95E;
-	Sun, 24 May 2026 15:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA2E125AA
+	for <patches@lists.linux.dev>; Mon, 25 May 2026 05:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779636265; cv=none; b=qIFo2KdxvvUh6nxp9cNWPNmOR+BVmegmCCCb3oVjD/d8Z3T3weUNpJq2mwp74vW+FNZnT+gvOD1le4lgFrL/H+K2u4ApXfNPf+3yP1RGeY4XQmIgXK4K/pVHPktY4W6IPqj3M1RPifMW7IUEU9atuiwzKR6iP09p6NnPYCJpM7A=
+	t=1779688131; cv=none; b=UPjULdi+RM66THDjCvBAprEJTWfQgDsjhbx4SrAYEeH7lh0nbq63UTOEi3pBMxfRvhqJG50HlCbWjf+lS94SLLvRUCN8VHK/+hicm6xX6BgqQlwzmzXOc3AnWTQRAtQ+09lHrxhSXPll+kdBXFVlSjdpZmhYWDPuz487FTfaWGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779636265; c=relaxed/simple;
-	bh=bCmyFjdA4iHIcezigm6L8aV0+RJvDjszZV0U6GoEwxs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yx/QY7NBwf2uHT5mFL5Xq7q1NNz5H0jv5foR88ggo1ZNdye7hGmMIDGYHPyrdhYE1dDT84bDo1rc0b8Xcvh1st+TFb5zHGACm+o1HbJkW2A4h+rJBu3LfQTKGgfFzjzKleHucLx0CDb3MuQeOg/Fsjp2rGxGN9HcFWNsSuYjS3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HHPsiYXs; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779688131; c=relaxed/simple;
+	bh=sBdeIIbu9Ngax4MVo+D791EZCg+rVSGe/Srj3TD7kuo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=EHc1I98Esh43ASR2gxRCSJzUd8tr5QwIdepA627nzNJmsyJojLdbPauE42miGzdEzffD5z7qfs6nLwdyWWEfgHPPWbrTLKD5pSyB4AICXFK6IxMvPhCnIGBRGMmAdJUgWIzhnMi3Xr8H94D6jYTwp0qhmuBCCjIR73TgcLSdfbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=Zr6xHTJc; arc=none smtp.client-ip=120.232.169.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HHPsiYXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23BA1F00A3C;
-	Sun, 24 May 2026 15:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779636264;
-	bh=YVnkto8I5OXMziaCAPLSNc2/SiJXFVDLCRyLCKuVUNQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHPsiYXsXTPJ+Ix8OXjSvGV4ncXpsfpk2DgEbzmPmlORIHF9Fn7ZjTUjIUffPTIJX
-	 yk8z/AIq4JkNG8JDolt2dcO9dUEL5GgnOzjRjzhGKLS3NEmhaFKXqenrDC/1kAY7j9
-	 QzQaHs3NH91yITyPnI5VLL76AsFGuJ/76p/wnnO8P9tbW/0JuwE9qDgstj3XAR/Kp0
-	 mg+lXzo4PAiUOGuFagHOPsKjRVtkg1IHGsQUyTQhJcnA6wf1D9dKfBpxKpsu30FzqN
-	 vy89MQHg4+1SdUwP5YgNVDzeOOUV46lsGcbrkvEnZy/H6l/SWEBeyoPBKLwPepcli8
-	 RSWiHZFppP1vQ==
-From: Sasha Levin <sashal@kernel.org>
-To: Luis Henriques <luis@igalia.com>
-Cc: Sasha Levin <sashal@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="Zr6xHTJc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=Zr6xHTJctM3T5X6FnR3PVXAQa6FwBV6vZNP71JVP+H6NUmi+BIof4YMWiUpTaZI0ksXunAs1v1pc6
+	 EedaPIyO82HpWEYqaKUpkDpW9mY+rYtkDW3OWK6FUgXuEh29j0khbQt6E81VqCaud9fsfiRjRYwdXY
+	 VdG0liEA01XAE5tg=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-39-12053 (RichMail) with SMTP id 2f156a13e2b3d55-01d96;
+	Mon, 25 May 2026 13:48:37 +0800 (CST)
+X-RM-TRANSID:2f156a13e2b3d55-01d96
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: Re: [PATCH 6.18 346/957] fuse: new work queue to periodically invalidate expired dentries
-Date: Sun, 24 May 2026 11:24:17 -0400
-Message-ID: <20260524150046.agent5-0004@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <87se7h6pul.fsf@igalia.com>
-References: <20260520162134.554764788@linuxfoundation.org> <20260520162142.034488466@linuxfoundation.org> <CAOssrKcqmVW3kJ131tRF3LCJVQUtdRB31B5HENDfpgrq6r=jEA@mail.gmail.com> <20260522123641.rc-drop-ab84ad597386@kernel.org> <87se7h6pul.fsf@igalia.com>
+	kartikey406@gmail.com
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	johannes@sipsolutions.net,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	johannes.berg@intel.com
+Subject: [PATCH 6.6.y] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Mon, 25 May 2026 13:48:35 +0800
+Message-Id: <20260525054835.2457749-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,11 +55,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Hopefully I got everything correctly, but it would be great if someone
-> could double-check.
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-Applied to pending-6.18, thanks.
+[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
 
+When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
+station exists but not whether it is actually a TDLS station. This
+allows the operation to proceed for non-TDLS stations, causing
+unintended side effects like modifying channel context and HT
+protection before failing.
+
+Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
+any side effects occur, to ensure the operation is only allowed for
+actual TDLS peers.
+
+Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
+Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index 0fd353fec9fc..c3622f779d12 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1481,7 +1481,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+ 
+ 		mutex_lock(&local->sta_mtx);
+ 		sta = sta_info_get(sdata, peer);
+-		if (!sta) {
++		if (!sta || !sta->sta.tdls) {
+ 			mutex_unlock(&local->sta_mtx);
+ 			ret = -ENOLINK;
+ 			break;
 -- 
-Thanks,
-Sasha
+2.34.1
+
+
