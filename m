@@ -1,274 +1,187 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF0C4218A1
-	for <patches@lists.linux.dev>; Tue, 26 May 2026 17:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779818056; cv=fail; b=N5IaEnnOiTnJ8+zzyzdA8xk0Z70oKOdjLhvOo9DmF4YQtJUXD2+P+iVa8ZNYwAS5i5CZ9mMbnBIOBXX2EIBdfFa86MrVF7EFpNYDeNXuveUjlKwORCazP6QMM6jDlbAnmcZKtpgxBh7PtFibiAeMpq1ahv0vGEM/XfA/BdC63Iw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779818056; c=relaxed/simple;
-	bh=Gq90CenSHBjs8PSoVYQTAcf0VezjsKNvvfod5BQLhNI=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=R9Tgwy7z1UQ/e83uw9wXFUEcPp2wv8YFpUpg3GZa69QZ4Dqg6KbpuW3zK7mzze/uPcsNnGTbnzeBaG3aWZ4qlC8X2kcU2c48u0PD6Dp3A8VSvFkywSHEVsAtsf57yGAQfyN7nfgL5O0dW7i8MfBqJkLHJGzSxGBJv9DnvudwA5Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WnV09PE5; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927E409132
+	for <patches@lists.linux.dev>; Tue, 26 May 2026 18:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779818762; cv=none; b=mE7q4kP7myqdgEEbmpshHwvZR0nor2q8MpztWxESYkFnK1D7rwXNCoOs99BZPzFS2qRP02zuNKRVww0xK1FnbJMhnaGmwCuVJlkQ47mrrizEqenJgSHEg3eezAyjHx1lGAThgmdFAMSu7Wo2pAkNlt/8X9tkx+3fbSjGXM5djtQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779818762; c=relaxed/simple;
+	bh=kIP2+evibNPf3LsLn2/w+GsVX1bv56Y0F/lDGcHB188=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qEgc0XiGkjtgfupOlb/0pX4ANHZzAx9Dov+KtzjbEdIz6qi4N4EMgpxQH5X4n+sqXJOAa93WJqcvDJrMHwpXoPAUNfJZre1TBlOx8r9WRcRuK8kWXraWmjOodxE4r1d1AfdJXTsq7jWYCRUsjSMbfZToyLe7BOn6sBR3HnfCZe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kOHV4zmj; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WnV09PE5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779818055; x=1811354055;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Gq90CenSHBjs8PSoVYQTAcf0VezjsKNvvfod5BQLhNI=;
-  b=WnV09PE5MSJdIAuLVMdLxkxxCR/eGTpNJE4Mh+ZqCnn4LBqJkTnm8ap0
-   zSEs4FPbVGsKDYEz5heSD5hsU6sILKKhxtfK+HIt3eqlBqEDLpePGRxtn
-   UwmtO0VE1J5q7+I3e+sXz1KtO9lLUhMm46AS7pe4gIX35RiPvyInTxt1M
-   Me8r9z0o22l00TkeIAR3E73dksF/g0rkaLnj7dZj+CenCSlp+VPyT9MwN
-   Sz3btOChVuI1eiPryh8FlVJkvNH9uuK2Okw09X2tJ6U3252dbzuVbhEqx
-   f+IACfJNALKptTlBlL9is4s72YBqjVzOixM8jsJrWVBNgQfPX7yXb2vT8
-   A==;
-X-CSE-ConnectionGUID: cZptutuBT4yN2gqbsG6Jlw==
-X-CSE-MsgGUID: 6L6BrWQqRXaagopykrxIAg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="92112149"
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; 
-   d="scan'208";a="92112149"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 10:54:08 -0700
-X-CSE-ConnectionGUID: UfayrUXOQlW+osRk0d8aTg==
-X-CSE-MsgGUID: ft94XEH5SfaNTZpF9VzxCA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; 
-   d="scan'208";a="237820333"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 10:54:07 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 26 May 2026 10:54:06 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Tue, 26 May 2026 10:54:06 -0700
-Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.70) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 26 May 2026 10:54:05 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ioBpkDU6+GEp3fr/PqmXxaD9sd8j/m+Cjvm7cQm+t8lFxVFYiuV5GKv/EwATcSWWd8RcTgpWYeiHHk/Ogu50VYnkCaYl/3qOcj6ablIwr7A8vYHGiX6mncTtQzOX/iKtB+H1Hhn8Ctzov0+Nh74/1+qE428op84Z5ySyzcM73bo+9HMUYXyu1MYNXeBmULyoxOWaqZIsMOzpyIqe9iB6FzEzR6wkIk0wDa8JlWaiIWlO0cdDbtWjMz5gu8afjQbX8O0l0PoM2PSZN2+b1u53TZypUQU/bEud15Hv7JcDcjOBOt1ZwQK2lQ/J6m/RTv4Z/Vo5RmOjEaQ+NYIbTZlHNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RcPLZ6yikJYpK9C1PvPJU4VNUdLJ4WJ9WY2rajl3vVQ=;
- b=gnsoOR5dc/w/ibVc3YA9xUqoQq8Ibyw/371zc4mX5swxySXEWf06Sn3NihSs9hCuTmwzBC6PKKBU4WqJrqvZig4u5Yy1aawN+5BH/uZKQIEC+BJR4eLzOAZIrVJ4mSM/RGDogycIkWk3s1tyO6L19iXl6RXgmu0C4/QQpv2hAKgMTo7oTBLAOPFooyDdp7xenU6SxPOGUycE5jLtX3NO5JaDcX2MVahQsT+mEcMuT0/xqnnxDtsR3vL2cQJ264VpFnn/ouSGFgAwVG+J+mwGZlo1cB5xQln/5Kne8T7jQYT+DQb0iDd9JmPSptu6ttw3J9nVtRHm79++ROK6MCHbuA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
- by SA3PR11MB7556.namprd11.prod.outlook.com (2603:10b6:806:31f::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Tue, 26 May
- 2026 17:54:02 +0000
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc%4]) with mapi id 15.21.0048.019; Tue, 26 May 2026
- 17:54:01 +0000
-Message-ID: <da9ec0a6-8ea6-4b85-b4b2-6f4fbd32f687@intel.com>
-Date: Tue, 26 May 2026 10:53:59 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] fs/resctrl: Fix UAF from worker threads when
- domains are removed
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: <james.morse@arm.com>, <Dave.Martin@arm.com>, <babu.moger@amd.com>,
-	<bp@alien8.de>, <tglx@linutronix.de>, <dave.hansen@linux.intel.com>,
-	<x86@kernel.org>, <hpa@zytor.com>, <ben.horgan@arm.com>,
-	<fustini@kernel.org>, <fenghuay@nvidia.com>, <peternewman@google.com>,
-	<yu.c.chen@intel.com>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <cover.1779476724.git.reinette.chatre@intel.com>
- <accc44062440c9b9ef220fe7570588e00f8a238a.1779476724.git.reinette.chatre@intel.com>
- <ahW9EJORpIqnvthk@agluck-desk3>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <ahW9EJORpIqnvthk@agluck-desk3>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0192.namprd04.prod.outlook.com
- (2603:10b6:303:86::17) To SJ2PR11MB8370.namprd11.prod.outlook.com
- (2603:10b6:a03:540::20)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOHV4zmj"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-835c98b659eso8826034b3a.0
+        for <patches@lists.linux.dev>; Tue, 26 May 2026 11:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779818760; x=1780423560; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MWi74t3bYV7mM8mv2QAR7wV+HKAWFpjIBovoKvmCAWo=;
+        b=kOHV4zmjwygBZGKXoMy6gvmDGHIvd1DgtWOvV2cdgphNoVacjSctB3+PgU9nNjf15+
+         5fQ0+9EODSx9MR43tBj0C7Cnn4SrMEQDL8kM07WHXDVE8VywyPbue0eMnzvzqOl+7Ne0
+         TVcCuRHSRU6Dpy0Jf9LV4C7RsTlo2BbCC2cYH0FC9ju6xgDHVS7mvyCRt02mHccJ+nEz
+         ZpodV1b30yjWcUHGcE7tCj8rQO+bfJfOvmAhPN5UtevZjdS7zeVlYJZ9z5OzXYqrDOPh
+         RZe5wVUCM/jyiZk4u1Y7TM/CakDgfcgW1wLaLkbMaxlK1F2Lx/MkDo2akT36cLXNW0I5
+         7n1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779818760; x=1780423560;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MWi74t3bYV7mM8mv2QAR7wV+HKAWFpjIBovoKvmCAWo=;
+        b=dnsQ8BIrL4y92ceDrBDbGaOU2CXUlvpL4F7NavtWmBdq9tfQ/7QicxojmU2XiqIy6r
+         1UCUonYsNoQ+Qt14BaCCxvV5x5FWzCMdJHSFm+g+NrQq8GcwV4sb574O2o/tKK6dWqm1
+         oD6fGk00hg/ZIlYzdePvZVrC7G9ymN/7M+ct6ojkZWAblIFVnbWBgp2dxJkIbo5fFUv2
+         8j/4SozXh98ijw0jYuDy+7eJ2XTqoBoPhhlpmOG1NZCOpskFbhvg697czzGE2xcLUmu/
+         1qxh1VfymBidmH39G0RQpNK6GA/otaZCWojq/HASoeF+3dmUaX/FSYWerBePP/CaVfag
+         nZ+g==
+X-Forwarded-Encrypted: i=1; AFNElJ/fOXUz5NG1gIHV3WhVqKI5PutBds68XB8zZn1v280nv/ZI4o91LkCjnE8rKLp7zc87jM3lEoLV@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywt2esX2vNgxH0fOYLuMmNrbnFBMbzVdKxNIe2huyANtfnwEoVE
+	Szd1dfSkFlAauDBjUDVe4FzwLLNoio0db4oIZM2FtHC6UtfOOWLDxkbf
+X-Gm-Gg: Acq92OEEwE2dfJ0BW3hioPm8fVcNetP1flT9AO6lhkufsSLORGC84iFYrMzQuGDEhgV
+	S0Zs/0YbPU1103QcGYowFZLesUYlmxVwJOD+8JW8xnEnM6KkhAkM4dEc75Pg2qWWZRK/EjJ9Qxv
+	jaGp8j2xGuweQrBSWvroB4d0/QR9O7hoz5z2cP8eyYMLgRuDeGRvxnRGH3kOTY0PNsjDsPF0vJp
+	59szNX7pLtcA3ZIHkp8bdS4UXL+6tAN3ZwlGe4k8OnnGYjcqyewNoIrcBYJFmg8P0ZYk2fuvmOh
+	wQogdaXdhSPolyHPMBcW1hmPxvthrbGnvCBHywuu9+FslH58dXgZpmdmYQCO5a2XX+m41UDNP2u
+	LW8Tr+gnF8kadhLvbg/AQyA0MGufJyNVd/nykdpWdK8nk0FRpy8imKt0zCUKxX/HJ61qnH4otjN
+	Sg8PW9MOWFuV2X1MXOgarEPoovGTpu9wijNfjzq/KeLaMJLYOKh+ZaPxlU/g3UF+Pyn1+k1RUOK
+	YzOap3ewnDf6WFXui3sUdDxmUidQBqoA2cflMjvIfYPrfyxzIQ=
+X-Received: by 2002:a05:6a00:1f11:b0:83b:905:c9fd with SMTP id d2e1a72fcca58-8415f32e8b0mr17791524b3a.24.1779818759878;
+        Tue, 26 May 2026 11:05:59 -0700 (PDT)
+Received: from leonardoc-nb (201-68-197-52.dsl.telesp.net.br. [201.68.197.52])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164e9e7cdsm13841950b3a.34.2026.05.26.11.05.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2026 11:05:59 -0700 (PDT)
+From: Leonardo Costa <leoreis.costa@gmail.com>
+To: ryanmatthews@fastmail.com,
+	hongxing.zhu@nxp.com,
+	bhelgaas@google.com,
+	linux-pci@vger.kernel.org,
+	linux-imx@nxp.com
+Cc: francesco@dolcini.it,
+	achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	gregkh@linuxfoundation.org,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 6.6 000/508] 6.6.141-rc1 review
+Date: Tue, 26 May 2026 15:05:37 -0300
+Message-ID: <20260526180537.21223-1-leoreis.costa@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260521052241.GA8766@francesco-nb>
+References: <20260521052241.GA8766@francesco-nb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|SA3PR11MB7556:EE_
-X-MS-Office365-Filtering-Correlation-Id: b01b5e49-63b0-4214-aca4-08debb4fc4e3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014|6133799003|11063799006|4143699003|5023799004|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: sEeXcjKywwr3zo49r8Fof68W2YD3nXeRmQg7dAyXqiWxIn2AwWSuKICYjBjqYyTeNY/2tGOZVwcYxldT+ZjH2ScE/bc0Qfy0y6hPkis1OkiiHFYhhXNhTWu/C8BfnBHT+cNcSx5D2MoEUAcfrzwF/jSv/7ZyMNizDQ6C+VSBwjehTmNKGcuy8iH5lAM6TSV3jbhiSbT5HxTtQlF+jhLEmmiQT0WGZcqTZKBpTErdCm5LnvAZ3+5ZrOn1vLMLg7UXEBL5w2adzdv5i+05++idi5MXKetk4bOOoQTimUsodDciXScLn9UfC6E8MaUqGQ21T+lhEDsySElE+Q9dm51A/EIenSEuyyp6BpNiPJrahuBHbekB8qjmauJnDahxtvzlqNn8CDF30R9iT7z6BYeoPvcViSwdSfqG+/qVo3UKpFTmhbKTmeC+LOteREwReOXHfv7R85hgIerR1v7s9ZtlU5v13rWH4ZOPZ8IsmqA32KCc/pWs+LmMIzvflTgd51bMwb2S70aGL1H+2dk0j+oP//ibbK3Zf61ixQEAmrkQdbe0bAleBiD+/w2JioVAOZZuSQWCeHff4a+ZIPlRVubjllVI3hF72d5ZuIBNPrEbTQxA/RLB2zPSEK3y/kRByuoODw1xajXPHh1xaF4Scjv6SI5wPiHrTUJIWA3aH22tsLj5EtH9T8N4HOU/25ExXWoj
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(6133799003)(11063799006)(4143699003)(5023799004)(18002099003)(22082099003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MSt1dmJKUC9Wb2xrV09QNmU2Z2xWc3ZsY2dKaE5ZT2lWQ240UGM2VXMxTXZ2?=
- =?utf-8?B?SGl0bk4yZW15V0ZMd3VjT3RreGREaFVUTTNmcktvNmtaQTVXNmZSaXloQ0pK?=
- =?utf-8?B?VkU0UkpsTWdicS96QTBlWlR2cnF3aEgwMjZ1R2tXRkFPNllZS2JKSS9QaXRL?=
- =?utf-8?B?dDZSV29xNk5JcGlMbWVuVmhObnRwOXFsdks3OCthcytaLzNsSWk2aXZTQXov?=
- =?utf-8?B?NTFTajJRWlJrMC9QSU1USDdpbWprR25FZGNwUlYyUFA4T0VibG1zOWhTbzVS?=
- =?utf-8?B?QVIrVGppRE9DS0V6NHBGMEtBK3dlWndsTHhWWWE0VXdFZms3SlhvMFVqZjJW?=
- =?utf-8?B?eFRaNEwxTnhwU2NOdHRqbjdnMG51VHlOUWViaWhDZ2lvUkZuaERnTXpYKzh4?=
- =?utf-8?B?V3YyamNRaU03YUt4RXcyQW1kOElXbStyb1hXNC9NWjVHWjRWeEMyWklYTWdX?=
- =?utf-8?B?SkxydTIwK3RvdjhZdXBCa0Z0TXJpQUV4cXVPZXJFc0Z1UFZtVFZYWkhTdUJM?=
- =?utf-8?B?OWMwU0czU2ZpNXVUSjZpdWJwQmVac1Zpd1htOHpvQmtrM1FaLzh2VzhiKzBZ?=
- =?utf-8?B?REx5SHZsNFFkRENLek5KaWw2b29CdWlMTG0vYmpDMDZCYlpZbDFjaXp6QTha?=
- =?utf-8?B?SlkvRHZZTUFjNmR5WDdVMy9tQW5GTk5EL3cxSDFKREdtdTVZSHlyM1JtejBB?=
- =?utf-8?B?cXZBN3FjQlFNd3BGakQwMFcwMDByUktIaEN1OER2SjdoaEh3NjJuc2dXczY2?=
- =?utf-8?B?MFNwNldXS2dPWElGTkU3Ri9DMEx5U3MxQm41MllrNTRrZ3JkZWJ0b0Jnd043?=
- =?utf-8?B?QktZMWJZVWsxMVEzUUdLN0xVQThVTVBEdzBEbFY4U2tvTUlXeGZudk1Sblhj?=
- =?utf-8?B?NDZOeVBJbjRycXVqc013dUJrRGFxVzRLUHo5ZkR1MVRscGl0eXlBM3dUMUJ4?=
- =?utf-8?B?RXdBSDRlSU5VL2tmU3ZabUFnTzE2QWNsN09nRE50Wm9BYmw5YUg1eVpHbzI1?=
- =?utf-8?B?ZVlwcjRFVzdUVXlOMkZuL0xrS3A1TzFBNW1ySUlpZm1rUGQ4YWw0dlhRWnlq?=
- =?utf-8?B?L2szT0tDL1Q1bG5ZVm90RkRzdk1PMFdtMWtjUEZJY1IrOGQ1ejZuRW5jUUl4?=
- =?utf-8?B?QzRET1ZnRkJOZWdyVWpMaGtBNlkvVnFnMlMrR0hBeldZYWtQTytLVjBacjBp?=
- =?utf-8?B?d2FzeUdqYlRVN1Jjck9rSGxsYlA1Y2NqenM0UlJWaHF2YS8zY3BlZnF4bFNX?=
- =?utf-8?B?TzNxeWhOTTJRTmoxMDBMTkxsTDZuZHQrY0lkYkU1MmNqRnlnYXowcHBxZkhY?=
- =?utf-8?B?VmQvNk1ET3VZUHBlNkZVMmhTOUZycmF2RS9hcnhKMDBBR2xkc05abjJCdTJU?=
- =?utf-8?B?eWZxYkNlWWUrZVZoYWxUQUVrQjVuTnExK3pHem4vN2xaYVcvTGxVZGlnSThC?=
- =?utf-8?B?Z0d2T1FQU1hGbWx4L1hYazZ3U1BpMS96UXNFa1NTMG90UEM5ekRpQ3lnbmYv?=
- =?utf-8?B?T0Zxcmw0bURscDhXUS82VlZ4Ti8rWkRoQ2doVEFYeTNoMEdra1VDSEZHWkxo?=
- =?utf-8?B?UTM5L0N3eDk1NlhTUktyQXB5ZzVBOXQzNWlva3NxMmREWkJsbllqZDlTcFNz?=
- =?utf-8?B?SUJnREVLQW1oS3c1c1ZGWFVFSWZEYUhIdHgrMVhjYmFnZkluMFZScU90SHYv?=
- =?utf-8?B?YUZOcXZxbXByNlJUSmRYQkNXbzY4L1lRL0ViN0NnSndRUnF6K0tvbDhqVkJM?=
- =?utf-8?B?TlRFbFgwdWRmV3kxYXh2Rm9qTS9lSGxneUtxd1hEeDEvT1hHRERXdzEvT3Ez?=
- =?utf-8?B?VVJpVFg3dUxwTXlvaDlid1VDZ3p0Y21tVmlXSzBtd1NEdTZuMEFBaFArdlcy?=
- =?utf-8?B?TTBKSS9OS2R4T2ZKbWdjWnVDaEhwUDFSb01rMGhCMzhTUHVCcUN2OEU1Mmlm?=
- =?utf-8?B?Wkpka0g2R1EzV0phbjFYRkRiTnkxdDV6YU8xeDAvalh6ckRPMjA4V1VGR1ZJ?=
- =?utf-8?B?Ky9Oa2o0ZjNMM2hwU2hBeHJBZGthek1kVkdCcVg0SWVweVVxYmp2bnd1RGNq?=
- =?utf-8?B?TjNpSDZrZHZIYUphS2pycW1DczBETDYzSUVBMDl4b1dVM0QxdFlzQWR3NHZP?=
- =?utf-8?B?YmVGWStodU5lMEduenlJdnMwN01uNnNyc2FGZVRad3d2RnZkYXlPMmlTYVZX?=
- =?utf-8?B?cGNYVGpuc1lKYitNWVNBQkJpYitFWjVPYTE4QVZwWHJQVGw0UldNcEsyQWFM?=
- =?utf-8?B?SHhKbmlFM1drL2drWVhrV2dRc1UwdWo3bEZpeWo5ZC9DL3BmTE9vZ2FINE43?=
- =?utf-8?B?azQwTnc0M3RoN3VVSEJaYkhIbm1SMk1oMVh0ME5QYzd0NUtyeG9QVHVnSWQz?=
- =?utf-8?Q?0TAWAzh7+aRiKtUU=3D?=
-X-Exchange-RoutingPolicyChecked: aE18e8M9B+avkvp4j27PMDbIO3LJXi8Ub1vsqrHj0uHCbAMM1WcLEeyxShAPpEOqkyPT6tYZnqbwrtmZkFNd0vgk+OjqVX2PRrTbSIZMEgWydhb/8FCDJl4G6YGpd9K5UqJmdvyCDFByNRoXjx2iXpoimgkQRUHn8cL0UhVsiO69tiogBWSh9HX73v70n9aVudWmQnZsg2Qy4P6e2n1NmHvFOKp/BHNfeTGjWuWDPodn+v1/Nr4E3WvZBeWDxV2lzrh2whKmEZutbPmDuVV7ng2eStLgEBC+E+JO/2t7nzvy8FXbCE4BDvEiH3ynVbUcamvICmWefTtzk1u5BUIlrA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: b01b5e49-63b0-4214-aca4-08debb4fc4e3
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 17:54:01.6420
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KGvwLWn28KpaNNkt9i64EE2Cx+HIrxooauOIE45f6dCztKfB/oA/pro+uHuBtaCURZA6BW74KMOMGzSWN1itoxplkE5xoUa47lQu4RXGAtE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB7556
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+Hello all,
 
-On 5/26/26 8:32 AM, Luck, Tony wrote:
+> kern  :info  : [    0.593597] pci 0000:01:00.0: BAR 4 [io  0x1000-0x101f]: assigned
+> kern  :info  : [    0.593629] pci 0000:01:00.0: BAR 0 [io  0x1020-0x1027]: assigned
+> kern  :info  : [    0.593660] pci 0000:01:00.0: BAR 2 [io  0x1028-0x102f]: assigned
+> kern  :info  : [    0.593692] pci 0000:01:00.0: BAR 1 [io  0x1030-0x1033]: assigned
+> kern  :info  : [    0.593722] pci 0000:01:00.0: BAR 3 [io  0x1034-0x1037]: assigned
+> kern  :info  : [    0.593753] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+> kern  :info  : [    0.593767] pci 0000:00:00.0:   bridge window [io  0x1000-0x1fff]
+> kern  :info  : [    0.593781] pci 0000:00:00.0:   bridge window [mem 0x01100000-0x011fffff]
+> kern  :info  : [    0.593795] pci 0000:00:00.0:   bridge window [mem 0x01200000-0x012fffff pref]
+> kern  :warn  : [    0.593856] sysfs: cannot create duplicate filename '/devices/platform/soc/1ffc000.pcie/pci0000:00/0000:00:00.0/resource0'
+> kern  :warn  : [    0.593875] CPU: 1 PID: 28 Comm: kworker/u5:1 Not tainted 6.6.141-rc1-7.7.0-devel #1
+> kern  :warn  : [    0.593891] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
+> kern  :warn  : [    0.593904] Workqueue: events_unbound async_run_entry_fn
+> kern  :warn  : [    0.593959]  unwind_backtrace from show_stack+0x10/0x14
+> kern  :warn  : [    0.594004]  show_stack from dump_stack_lvl+0x40/0x4c
+> kern  :warn  : [    0.594040]  dump_stack_lvl from sysfs_warn_dup+0x58/0x64
+> kern  :warn  : [    0.594080]  sysfs_warn_dup from sysfs_add_bin_file_mode_ns+0xbc/0xcc
+> kern  :warn  : [    0.594112]  sysfs_add_bin_file_mode_ns from sysfs_create_bin_file+0xac/0xb4
+> kern  :warn  : [    0.594144]  sysfs_create_bin_file from pci_create_resource_files+0x84/0x13c
+> kern  :warn  : [    0.594181]  pci_create_resource_files from pci_bus_add_device+0x24/0x94
+> kern  :warn  : [    0.594220]  pci_bus_add_device from pci_bus_add_devices+0x2c/0x70
+> kern  :warn  : [    0.594250]  pci_bus_add_devices from pci_host_probe+0x40/0x90
+> kern  :warn  : [    0.594276]  pci_host_probe from dw_pcie_host_init+0x3e4/0x614
+> kern  :warn  : [    0.594309]  dw_pcie_host_init from imx6_pcie_probe+0x414/0x6ec
+> kern  :warn  : [    0.594340]  imx6_pcie_probe from platform_probe+0x5c/0xb0
+> kern  :warn  : [    0.594375]  platform_probe from really_probe+0xd0/0x3c8
+> kern  :warn  : [    0.594415]  really_probe from __driver_probe_device+0x98/0x20c
+> kern  :warn  : [    0.594448]  __driver_probe_device from driver_probe_device+0x30/0xc0
+> kern  :warn  : [    0.594482]  driver_probe_device from __driver_attach_async_helper+0x50/0xd8
+> kern  :warn  : [    0.594515]  __driver_attach_async_helper from async_run_entry_fn+0x30/0x144
+> kern  :warn  : [    0.594548]  async_run_entry_fn from process_one_work+0x144/0x2cc
+> kern  :warn  : [    0.594584]  process_one_work from worker_thread+0x18c/0x3b8
+> kern  :warn  : [    0.594611]  worker_thread from kthread+0x110/0x12c
+> kern  :warn  : [    0.594647]  kthread from ret_from_fork+0x14/0x28
+> kern  :warn  : [    0.594670] Exception stack(0xf08edfb0 to 0xf08edff8)
+> kern  :warn  : [    0.594683] dfa0:                                     00000000 00000000 00000000 00000000
+> kern  :warn  : [    0.594697] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+> kern  :warn  : [    0.594709] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+> kern  :info  : [    0.594873] mmc0: SDHCI controller on 2198000.mmc [2198000.mmc] using ADMA
+> kern  :info  : [    0.594997] mmc1: SDHCI controller on 2190000.mmc [2190000.mmc] using ADMA
+> kern  :info  : [    0.595838] pcieport 0000:00:00.0: PME: Signaling with IRQ 291
+> kern  :info  : [    0.596396] pcieport 0000:00:00.0: AER: enabled with IRQ 291
+> kern  :warn  : [    0.596583] sysfs: cannot create duplicate filename '/devices/platform/soc/1ffc000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/resource0'
+> kern  :warn  : [    0.596598] CPU: 1 PID: 28 Comm: kworker/u5:1 Not tainted 6.6.141-rc1-7.7.0-devel #1
+> kern  :warn  : [    0.596614] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
+> kern  :warn  : [    0.596626] Workqueue: events_unbound async_run_entry_fn
+> kern  :warn  : [    0.596659]  unwind_backtrace from show_stack+0x10/0x14
+> kern  :warn  : [    0.596702]  show_stack from dump_stack_lvl+0x40/0x4c
+> kern  :warn  : [    0.596738]  dump_stack_lvl from sysfs_warn_dup+0x58/0x64
+> kern  :warn  : [    0.596772]  sysfs_warn_dup from sysfs_add_bin_file_mode_ns+0xbc/0xcc
+> kern  :warn  : [    0.596804]  sysfs_add_bin_file_mode_ns from sysfs_create_bin_file+0xac/0xb4
+> kern  :warn  : [    0.596836]  sysfs_create_bin_file from pci_create_resource_files+0x84/0x13c
+> kern  :warn  : [    0.596872]  pci_create_resource_files from pci_bus_add_device+0x24/0x94
+> kern  :warn  : [    0.596907]  pci_bus_add_device from pci_bus_add_devices+0x2c/0x70
+> kern  :warn  : [    0.596938]  pci_bus_add_devices from pci_bus_add_devices+0x60/0x70
+> kern  :warn  : [    0.596968]  pci_bus_add_devices from pci_host_probe+0x40/0x90
+> kern  :warn  : [    0.596994]  pci_host_probe from dw_pcie_host_init+0x3e4/0x614
+> kern  :warn  : [    0.597022]  dw_pcie_host_init from imx6_pcie_probe+0x414/0x6ec
+> kern  :warn  : [    0.597048]  imx6_pcie_probe from platform_probe+0x5c/0xb0
+> kern  :warn  : [    0.597074]  platform_probe from really_probe+0xd0/0x3c8
+> kern  :warn  : [    0.597105]  really_probe from __driver_probe_device+0x98/0x20c
+> kern  :warn  : [    0.597138]  __driver_probe_device from driver_probe_device+0x30/0xc0
+> kern  :warn  : [    0.597170]  driver_probe_device from __driver_attach_async_helper+0x50/0xd8
+> kern  :warn  : [    0.597202]  __driver_attach_async_helper from async_run_entry_fn+0x30/0x144
+> kern  :warn  : [    0.597232]  async_run_entry_fn from process_one_work+0x144/0x2cc
+> kern  :warn  : [    0.597261]  process_one_work from worker_thread+0x18c/0x3b8
+> kern  :warn  : [    0.597288]  worker_thread from kthread+0x110/0x12c
+> kern  :warn  : [    0.597315]  kthread from ret_from_fork+0x14/0x28
+> kern  :warn  : [    0.597335] Exception stack(0xf08edfb0 to 0xf08edff8)
+> kern  :warn  : [    0.597350] dfa0:                                     00000000 00000000 00000000 00000000
+> kern  :warn  : [    0.597364] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+> kern  :warn  : [    0.597376] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
+> kern  :info  : [    0.631336] mmc1: new high speed SDXC card at address 0001
+> kern  :info  : [    0.632908] mmcblk1: mmc1:0001 SD64G 58.2 GiB
+> kern  :info  : [    0.642235] fec 2188000.ethernet eth0: registered PHC device 0
+> kern  :info  : [    0.643162] imx_thermal 20c8000.anatop:tempmon: Industrial CPU temperature grade - max:105C critical:105C passive:95C
 
-Instead of deleting the patch without any comments, could you please provide some
-insight to what problems it has and why your solution is better?
+This warning happens on our tests for Apalis iMX6, and seems to come from the
+imx6_pcie_probe function in the pci-imx6.c driver. We found some instances of
+this happening on as early as 6.6.129. This went unnoticed until now, we're 
+not sure when this started to happen.
 
-> On Fri, May 22, 2026 at 12:15:13PM -0700, Reinette Chatre wrote:
->>   - Adding a reference count to the domain structure to avoid the worker
->>     needing to take CPU hotplug lock. This ended up being very complicated
->>     with the architecture needing new APIs to manage the reference count
->>     which cannot cleanly integrate into MPAM since it uses a single
->>     architecture domain structure to contain both the control and monitoring
->>     domain structures. Managing the references across mount, unmount,
->>     online, offline, as well as worker self exit resulted in several
->>     asymmetrical and complicated paths that were error prone. Locking also
->>     proved to be complicated since architecture would need to initiate
->>     domain free that will need to call back into resctrl that will take
->>     rdtgroup_mutex which means that references need to be taken/released
->>     without locking.
-> 
-> I'd been working on a reference count approach too. The MPAM combined
-> domain for control and monitoring doesn't seem insurmountable. Mostly
-
-While technically possible I do not think it is a clean solution to have
-the lifetime of the control domain be controlled with a reference in the
-monitoring domain.
-
-> because it seems unlikely that the problem with worker threads would
-> ever apply to control domains. Maybe I missed something, but just adding
-> an architecture *release() function that can be used by file system code
-> to drop reference counts on the domain when worker threads exit seems
-> enough.
-
-Did you consider the locking implications that I mention in the description
-you quoted? More below ...
-
-> 
-> My patch below.
-
-heh 
-
-> 
-> -Tony
-> 
-> 
-> From 611fd8ad816abd37ef9a65b39175ce05907a1d41 Mon Sep 17 00:00:00 2001
-> From: Tony Luck <tony.luck@intel.com>
-> Date: Thu, 21 May 2026 15:14:27 -0700
-> Subject: [PATCH] fs,mpam,x86/resctrl: Track reference count for L3 monitor
->  domains
-> 
-> There are race conditions[1] when the last CPU of a domain is taken offline
-> and a worker thread may access the domain structure after it is freed.
-> 
-> Add a rdt_l3_mon_domain::kref to track users of the domain. Don't try
-> to cancel worker threads when CPUs are taken offline. Just set the
-> target CPU for the thread to nr_cpu_ids to indicate the worker needs
-> to take action next time it runs.
-
-One test I have found to be useful when digging into this is to offline all CPUs
-of a domain starting with lowest number. Since overflow worker runs on lowest number
-and then is moved to next CPU when it goes offline this stresses this new mechanics.
-Have you tried something similar or could you try this test with this solution? 
-
-...
-
-> @@ -680,18 +692,16 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
->  
->  	switch (r->rid) {
->  	case RDT_RESOURCE_L3: {
-> -		struct rdt_hw_l3_mon_domain *hw_dom;
->  		struct rdt_l3_mon_domain *d;
->  
->  		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
->  			return;
->  
->  		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
-> -		hw_dom = resctrl_to_arch_mon_dom(d);
->  		resctrl_offline_mon_domain(r, hdr);
->  		list_del_rcu(&hdr->list);
->  		synchronize_rcu();
-> -		l3_mon_domain_free(hw_dom);
-> +		kref_put(&d->kref, resctrl_arch_l3_mon_domain_release);
->  		break;
->  	}
-
-To me the idea behind a "domain reference count" is to provide guarantee to any holder of
-a reference that the domain *and* its data remains accessible while it holds the reference.
-There is the domain structure itself and then the architecture specific, for example,
-rdt_hw_l3_mon_domain::arch_mbm_states, and the fs state, for example rdt_l3_mon_domain::mbm_states.
-
-Above snippet moves the freeing of the *architecture* state to be called on kref_put()
-while *always* freeing the fs state (resctrl_offline_mon_domain()->domain_destroy_l3_mon_state()).
-
-A worker may thus have a reference to the domain but when it runs it runs without 
-fs state which is just a new use-after-free.
-
-As I mentioned in the description the release managed by architecture implies that
-reference needs to be dropped without rdtgroup_mutex held since the architecture
-should also call resctrl_offline_mon_domain() as part of release. Locking needs
-to be reworked and needs to adhere to kref rules on kref_get()/kref_put() without
-locking.
-
-Reinette
+Do you know what could be causing the duplicate file here?
