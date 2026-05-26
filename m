@@ -1,159 +1,153 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010064.outbound.protection.outlook.com [52.101.61.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42618376497
-	for <patches@lists.linux.dev>; Tue, 26 May 2026 15:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7823ABD9F
+	for <patches@lists.linux.dev>; Tue, 26 May 2026 16:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779810032; cv=fail; b=Yex/WS79NHeFJFDsU4eAOG474s5rxosam71Z6N09FaRWWiMoRIMq8j4ZvN1rpo426nVZkggokH/aPz0lFBB65aoaieqApk4VetWI3nDVAa/XiQ5o9bLL6niGxSDiNyHSV7kxtPAG4ghIWleCkoK1f7ROI5n9/dcJt22AWXbXVuM=
+	t=1779811289; cv=pass; b=Uq1IbCp0d/qERIYQhp7meDLmcupHslG4V9nhy3LXpZqyNSqcQcg6rC0XU/y7Fa0lpy1KazUOv/QDbGI25v7sMgQGhIBDUUy0MkV1RrQmpyHIuuilMrqe1aM9hiIDg30zwVSEjcGV8zQFtdu7SLgFarsIUtozf+opYRYReZMyvjQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779810032; c=relaxed/simple;
-	bh=yy5+q4BJ0yrnkI4AlXWChtZzbEddlnznI25eFBLEUxg=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Kc7Rs8KwLUzmqd6xrOeMVJAsjmpfgXVq9flya+7p0SL12rnRnUNxhHtLAUEHoWdjapR9nce+Ohmxv/iEIcE1JiTTcmVr9OV2han8MVQNcW+1oJTrBfVx2Jn0yEv6P2TdHSlyfj+NQnJYhesWm9qcWWbWxWdYVH9U4Tug7XJcuMI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IDYm46ve; arc=fail smtp.client-ip=52.101.61.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1779811289; c=relaxed/simple;
+	bh=pVzqx11hjh7N1pH2gCRYfQFcHOCbS36d82t/QEbOWBY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FulsR/SP11O97DJsTmSGYlNhZFsatqIyriQ9y9wvLH/DqXgzZWCqVA2TlIEIrxu/gYokZLuKFywYY8EVqNQ96sk0nuvnNrHdhlUXh2fDxv+UJEHxyE4ZhDo3G2aIO0RInj8PXSL2ggdFG2JPU2qPFyfyHaMqKkkOmXap38CacHE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com; spf=pass smtp.mailfrom=isovalent.com; dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b=I8lIt01h; arc=pass smtp.client-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=isovalent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IDYm46ve"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m1dPlwwKVtLckzzdeVZK8cmgwVmLTVXg2lKwckPLTobq12HS3TftRLeOodGB/juPnHvOTdbFGlBKRl6u+ksIWv2Z1pci5Q5Y8jjzBUJMjO5py3si8xhOd3JCTuqhpp2G0GooHDFU5NwJ4vfPWwWnXiz+IzF8/GKPf8PhPF38GBHmSvim6xGXGSRNTaW0hWInz38peWga9hGy/DQSaKlp7RBdvfUpfihc9aMKNu23L44spA09rLqp8XiZw28jiaQh0P36K9smXsqvaHlt7Dque+vKw8Y6PSA5+Pvqx24LippG65s4rAzz/mtq79w6aWaGDyShmqJcbLnyCOFgtEdHeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=87h0aTQKqql0JooG7movUH/PSuvqIBDUWzQkvgWEfuk=;
- b=dhZvR009ey179yh92QIp7OC4C2E5FA7DEUnOXK1uSN/FtdHQj/qbsByq+tAYJlBd7snPFFuB/4ugfbXjY8tPnA8yfo2M0oyM3klL16X4W69Ucfkz+l2dM/iTg5TakE4HcNLOZLQ408wtYMiFdE3iiBZD4WgP95W+3UaVTheuUjf5UlMx8UYJO6BDPgDnCEV6LPNZMQRcC0l6o5RxQKSrDrkWh58VjeRUG+HzWmSlnbn9NlsWWl/z2rOsYtm1yAz0vlHpmnHey0Hnnb7lbzeQ8Vp+NnoVyt+bbYweii2gXjCMRDLcrDJsLmCSIU5SEsicnpKvUBtSw6AbrKJvpef3UA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=87h0aTQKqql0JooG7movUH/PSuvqIBDUWzQkvgWEfuk=;
- b=IDYm46vePEOQwssnA1oXTKs6S//L2tMKaKKudVt62DUu5b0AXSDHw1NN5Xt89E4xTqQZ4hpa87S9R68e8uyuGob3HDqUjmjA5uqC60wR2TiE+czgreFWJ9mFyVZlMgHkgMGdaeKUEPGyPt8G8I2bEfPxEL2NvbnSSXYf04EJRzZxUq4h78FXPXY+e7ZwLZ2p/KDaJLhdGeiMSdJNNblZFFxPEx8fnEOMSBBiXGmU0vI0NkwWc+0vlWDSfidXKxfKp1sQn/5Jl1omsi/8g5onbocMZeuEKYsVDyL4hYTHylE/bmc22owNYZ0k4eJgCPg9JOsmTfTNH+NII4ca2ZNdYQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SA3PR12MB8803.namprd12.prod.outlook.com (2603:10b6:806:317::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.19; Tue, 26 May
- 2026 15:40:27 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0071.010; Tue, 26 May 2026
- 15:40:27 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: linux-rdma@vger.kernel.org
-Cc: Chiara Meiohas <cmeiohas@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Yishai Hadas <yishaih@nvidia.com>
-Subject: [PATCH rc] RDMA/core: Validate the passed in fops for ib_get_ucaps()
-Date: Tue, 26 May 2026 12:40:25 -0300
-Message-ID: <0-v1-fd9482545e37+1e25-ib_ucaps_fd_ops_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: YT4PR01CA0477.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:d6::25) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b="I8lIt01h"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1329fc4bf77so9961082c88.1
+        for <patches@lists.linux.dev>; Tue, 26 May 2026 09:01:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779811287; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MJRgqFvt7x8JQ1m3UgVLDJ1zacYKPyKG8Kzw6zzlh+x7tCJdBeMaDsXHPhFVn8l3IG
+         euVFbUH/rw91+h90OnAj3oPaZNk8tkP1ZJveqSJztI8eSB4FJ2ks0CF6+kXRssb7hd5p
+         XnH4uRoJdDkYgMDysDJBwrDxFkvN5j6rzxJxSa7o1lzj8iYFCBYbezVbMnMjp9CNJiPW
+         MEl9iaSolBVfKYJ2U4u7MnX82FSvlgIQhmnuMMZYpSygEf7IOON1ypQhm5MY3TflUCxf
+         5wYK9XcQXkQvLdIr4LS9keqtA3jhL9dM9TeVW+mF9GLikttUsRjLGETnJeoULsAP8O5P
+         veLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
+        fh=W2+pFp+pLN1AUUUanYWQ3NLAxNZ5Q/4MBs/HxWcnuD4=;
+        b=iLGVR1U+qQzBv0uwvJW/3k0rC89S4qiUR9aVdtMxQaEZwc9rGIB56Ao62Xpb4ojgEH
+         XaXwpsuF1r9YtTJqcoRhS8r5/NHUwOdxdq51F75Fd2z5qUvBJnEN0GG2YVuScnuMnUJz
+         NOH6F6BEICyKMm7rKdNwnkFm0uH+uLWekO2MJgC6ICITZ0M/ZTjNtxiwvIHKMNL7b5sp
+         64v10UrZ7Bhw+FJrX+frFkmXGByk0NIbzjdsR5byrh7epvSVVhBk7khKSY0EEaV/+FrI
+         ChL2LEPFdPzqAYbRqIjBO/k8wqpTjuaQdFlxdrE0XxUuY8Ju1envLNG8hjm3gIyW+Di0
+         UAxQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isovalent.com; s=google; t=1779811287; x=1780416087; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
+        b=I8lIt01h3bIrntFEhiDDeEALLFG37mTiklhohmkLavrkqYtNQ0jjb8V60mNzbFGl8L
+         3i28kVl8+1uUh6S+ES84R05c3JpOsqeHWdimOwDFQJMgRGYwg+XgfX4Nd4aZ6Z9SAdcR
+         WwweZ1GzZyNlvk7Ln6Szi7IM1Hc8/a0CESedB6K6ArOyntTEreScPCDsljWv5M4m2VgU
+         jlZb3x0ju8G7Q3qcsiKG2w0XrUxFXWa7xMw/auf6h9r2a27V/gC3emlS8MUDli4zQ44f
+         oHyYRINCdHTR4pGGnqUa6OsIFO3ZZT89sOsM7vNm8+7IxzjNL9Fb4Liu7O+JC1DGCc1X
+         irVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779811287; x=1780416087;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
+        b=F0noyjrn8wTFtI8yEE/4s7BZOVgvKKnl9vUwsBVuVmL3G8QcRBgAhTc3r569trGjSK
+         rhBa3lmwScFObvwW0/0NoNoxAOp6Mi9MZaFGZqU189KQyxAf7bEXYfuZlCgrNHDODpxc
+         vWzzRQV2bDKA5I4GDGV+rpqBz/bWZtM7vhTL+vTLir5HbwjXSyUE12xR3mVGBwD5padA
+         lbyGQXTLXSkxeBwJJG9/VwOiqgkd8vEcY90gxeY910kj2ksa13RQ6Dfu0xsgtXQPBAgG
+         VHJn/j7U3thq6Isg+hTCZ2F/cXIHef/exg1bgqNcbElwwuwiB3M4ggYVgWlRnvpgHkG7
+         TCQg==
+X-Forwarded-Encrypted: i=1; AFNElJ8XPKi8Vqqd2CadUnwrV7kWVRNYiz1d/sWzyQ7ic7XaGr6ieqQJqdB3PU5YjB4u4nrqzq1Oe5F/@lists.linux.dev
+X-Gm-Message-State: AOJu0YwfwJXvlk7Fyx93Z/TDc3p+jMS8Yn+C5Mcf4t+SnmJdv9c71E6F
+	dH7tPXpeKl2SlZI7qIrJ/PP9WnxmH6x0WowWlCuIXdvEHRQK1A+SbfjySG+SEPUllqn/Q/z7U7U
+	Yg51lNLP9zKWWYIb+6cZxxu9QfhG+O0NZoC4hZ7DLtg==
+X-Gm-Gg: Acq92OEhZ9vDrMQPqMKkwNNpJoD/uv9K0Vvu1UvD5csHTamMXztkZpXj/TkwQ17i7Wc
+	8JTO8sshcn+TesszOppQZdBKRPKamOow7SmZlY0TGkGqY30UboPWr0yyBF3a4d0vSwXuNWzoKNg
+	EgtR18z4Ss42ajljIMSyOqycygYdBvOWFA9ijzuVpaPzWhqNy/AgaoQDPLiTMaTvw6QnFinMZcv
+	+Rh1zQre7IO0FmiIU6Mf+jLGzP+bGzNll2gbggPunn9yiNIZlW5qdvOM3PIgnzBh/Pkdo7D1Dy5
+	CYW5m2zzatswhSs9B/J3wo1QL7g0xkoOICyO11MQiweSx35aL/PD3PX3PCpyMhD+exn4iwTgl48
+	WRw==
+X-Received: by 2002:a05:701b:240f:b0:134:fc38:4e5f with SMTP id
+ a92af1059eb24-1365fb534b4mr4742656c88.22.1779811285149; Tue, 26 May 2026
+ 09:01:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA3PR12MB8803:EE_
-X-MS-Office365-Filtering-Correlation-Id: 72f57dd2-0b85-472a-b2ff-08debb3d1bdd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|18002099003|56012099003|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	1bEBuXROZU2Xkz9v4t6DT45XH1HhxgdMpyo3q2OjCa1ohlbPXXhG2Zwu7/90NwjgCB27BlgBmI4scS94VUcsQQmpfjk7CJvOXp7kUsf+MDYArpeawaS1ELIWCG4UyojljttJ7Rw3brAHAq3qGhLL/jaq3MvIYxr8ubCycfv3QPDSWxYYKJr6v0UPVhtK6/Wf03q+7JYWvdApQy7isaek+cRvJms94Uhv/SRxL0esO6BrpTDfdtkjzBpqTP2anEEt+hSoAxkcUKxQ0H3DDCl3PYw/BgRlye5X6aKvmah6XbtMh1av6wWGrpDv9o6TtiDZygN6Hq+DxQN/83Cg+9WNe2Me5dVh/wH2n9wSxp8C3wPmVmTxzj16tSGW4fo5X+jgYWt6Qub5eWHTVwHWUniEPLMDKqSS9O5CrA11tFttctai+iVPcnOSM9liIhmom3FAwbZI1oVGetsUlF9SUNK/yoZGGGP5RGEdehb51CePatPDQOxvPZ4XadDB7zjgvGoH5UzLBPOCVpw77vWOYUPePj1V2Yn06G0CwL450HtDHWX+367vsz8AEP7+XqMTb5isvWr/VZeO8+Pe+UNC7YnMW0fpC0iN1GZISbthG1/coz/r3qM06zJ7Ozrpl0JvVt2AXgrBRhU12q5+QzOy7L82LyBMefuTl/n/WFPbxBTxginx5rwW+eD6w2QweQk61APR
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(18002099003)(56012099003)(11063799006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zru2uJwsVdFXKkbXVU5Xvk1FkOWADlVkUAWNDuT0sgZEDCNAOAYw4ROA6QLt?=
- =?us-ascii?Q?GsJaEkKkBPTeQxL3q+MTIGNybH8KYHRQo2qBjVUnRZrpamkCULOhQDdJArp0?=
- =?us-ascii?Q?c8dh/R/pu0gQTYreiyGyBQWnChZ5phdrqul8PevjhYbUuzCa4W6kGUYmBgCW?=
- =?us-ascii?Q?pSl1qwiJiJEVnRacDDn6JEoPDiKpRvrxMznz3boAPZk6DYy/1zhqphJmJJjB?=
- =?us-ascii?Q?SY1uumSPqfavO0SriSIaNV3/1qKjX0YCnKQU5klHNRxJsMPi1f20ga8jNKjh?=
- =?us-ascii?Q?oaz/EPD8V0L2Hblgx2pI3OGBv7Zr/t2wv6LUvthjr68D8EOKxL1sbxYjWABN?=
- =?us-ascii?Q?jyt6E9p7VEkTJddfTclucqww3nrJMz93r2EFrA4DiBLkRjmeSPTFHJTa/Y6+?=
- =?us-ascii?Q?5w3JOWP7Mj63R76zzi1L24rL6S6OUgiHjwvoGye4f6+NCKuZPnVh11C9PByS?=
- =?us-ascii?Q?UT21Vqloe1BmMRXX+lV14SaZJ4mQXDFuqrrufiSGmcc1WTDVn4t5opa7ahFY?=
- =?us-ascii?Q?2+OuYklHcOogJr8qtvZ3krU5vsGOQ5GNW6KxFORV6mrtYyd9Z+Xdgy/YVzqu?=
- =?us-ascii?Q?roILtktvwWg+L6yiPdUzo+iA5LsO+Dh3k5XZJ/pFYc7P1aFO1I6qG4CRz9Q4?=
- =?us-ascii?Q?H5Yn8kpJNOsw+/XE4pKcbR0HBrSOjz7HLfezNd+nbz6yHZB/Cj07CsK8mo2q?=
- =?us-ascii?Q?Q7MJ1ApzGnhjsYNDTtkzK+NmUJ4Or2tdpMWFv9Sgo2oVtsXaRb/75pJvs1so?=
- =?us-ascii?Q?khiI7O/Rse0Tt7sytNACQmID9kxJBfU9A13G3u59yxGea/+8n9z0nO8tIs1z?=
- =?us-ascii?Q?Xhp0Dv6b44/bLgCkomumujLtZp+TUPH4jFJciY6rKnaY3sQueang7DMTHjDB?=
- =?us-ascii?Q?A7bTn5YD8ZVSwIlQ7Qxs/o3dxglncz9g/WfT1CflzV2LEajT8Ut6mVlDSw9u?=
- =?us-ascii?Q?rIANIVjpnxCO1mDKV5eKEwZ8/cC7neSrlO0WOCvnZtEvBUhY/aquDJHz08Ek?=
- =?us-ascii?Q?GahTkmlm57fugHXrTh/FsyTcVjbMvigCYIb8hJp5SGKB3UgrD25d4PUF65Ng?=
- =?us-ascii?Q?Pf72wCLI/nLi2oEaxhbS9AhjCEaUzys0PwzLFuQXt9JCpRfwJm88/pBH9CHi?=
- =?us-ascii?Q?MNeygabM3hV4cSOoBG25od7pUiDLAaUwJQjZjc30uyqnIhNmqvVUv+iuo37M?=
- =?us-ascii?Q?EVKRZKkou0O5IusUaSiKNxjXITTFsxyfDs8Yg+fhidchaojSKfMDqj8LGSCO?=
- =?us-ascii?Q?7cny+zjUq2mw0CzBUZG1yvUxXA5sUTAbUsUkPI2l33WgPfQ/tVoIhQGltEtx?=
- =?us-ascii?Q?GaoJ5fLMxMD/PSFwT2koUM1S93RzkihIvZX35SqUoE7uxNq1vuFN/VtqV8nY?=
- =?us-ascii?Q?4PaV9lm+s1n9G7StQejkSjhnWHgDqGO6U85Ih3f6o0StkOahB5guMHyjuO+U?=
- =?us-ascii?Q?vQDThqb0xY0j8U2lGTIsTfjWAJgO8S4jxoO/bS68oBMPBIHWJefm1+/v6d+X?=
- =?us-ascii?Q?okYd4HmyHDtK+Vgp4qW+Rey9I6c6fOAf3eWnkD097SCFec6puCsxLHPMODFV?=
- =?us-ascii?Q?7koDJ7Gu/hXxm2l40W7+VNKdVZ4STYLS7b9NsntaI0T+skiRQM1iE9CXFVAe?=
- =?us-ascii?Q?OkEVFTGS8K1+U70uNNCVR1V9PbT41HfNfg3PaYzac+OvbC172EvhciF+AoUr?=
- =?us-ascii?Q?FVgbSGyTxt2iDkvGxOHoBs7pxISOQrLhZRnkd1PiQvEatbjn?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 72f57dd2-0b85-472a-b2ff-08debb3d1bdd
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 15:40:27.1314
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cmzclVdOQl1q+VjdhidlaYQcf4tcQdL4RBBEdxAtYizy7z+HMB1PlkWvnQdrVB9c
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8803
+References: <20260520162134.554764788@linuxfoundation.org> <20260520162148.582539866@linuxfoundation.org>
+In-Reply-To: <20260520162148.582539866@linuxfoundation.org>
+From: Alice Mikityanska <alice@isovalent.com>
+Date: Tue, 26 May 2026 18:01:06 +0200
+X-Gm-Features: AVHnY4IJl_dvx3UZ0ZSVEcvY4jymeZHCGABK9TTIX9K4r8NdaAFfM045Bta1oQg
+Message-ID: <CAD0BsJXt3QurRvFmOGNzh1juYYcQEst=3aYJmHiCCf-4DCZCVw@mail.gmail.com>
+Subject: Re: [PATCH 6.18 648/957] ice: Remove jumbo_remove step from TX path
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Paolo Abeni <pabeni@redhat.com>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Sashiko pointed out it is not safe to rely only on the devt because
-char/block alias so if the user finds a block device with the same dev_t
-it can masquerade as a ucap cdev fd.
+On Wed, 20 May 2026 at 19:44, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
-Test the f_ops to only accept authentic cdevs.
+Sorry for the late reply, I see it's already applied. This commit
+depends on "net/ipv6: Drop HBH for BIG TCP on TX side" (part of the
+same series [1]). As far as I see, this dependency was not applied to
+stable trees, so removing this step from the drivers is not correct.
+Either this commit should not be backported (reverted), or the entire
+series can be backported, if eligible. This consideration applies to
+all stable trees.
 
-Cc: stable@vger.kernel.org
-Fixes: 61e51682816d ("RDMA/uverbs: Introduce UCAP (User CAPabilities) API")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/infiniband/core/ucaps.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Thanks!
 
-diff --git a/drivers/infiniband/core/ucaps.c b/drivers/infiniband/core/ucaps.c
-index c5721d3b0d33c0..03c78ade028963 100644
---- a/drivers/infiniband/core/ucaps.c
-+++ b/drivers/infiniband/core/ucaps.c
-@@ -77,14 +77,12 @@ static int get_ucap_from_devt(dev_t devt, u64 *idx_mask)
- 
- static int get_devt_from_fd(unsigned int fd, dev_t *ret_dev)
- {
--	struct file *file;
-+	CLASS(fd, f)(fd);
- 
--	file = fget(fd);
--	if (!file)
-+	if (fd_empty(f) || fd_file(f)->f_op != &ucaps_cdev_fops)
- 		return -EBADF;
- 
--	*ret_dev = file_inode(file)->i_rdev;
--	fput(file);
-+	*ret_dev = file_inode(fd_file(f))->i_rdev;
- 	return 0;
- }
- 
+[1]: https://lore.kernel.org/netdev/20260205133925.526371-3-alice.kernel@fastmail.im/
 
-base-commit: 9733e9f580fdda2e8c1cd349caddd93f026ab6f5
--- 
-2.43.0
-
+> ------------------
+>
+> From: Alice Mikityanska <alice@isovalent.com>
+>
+> [ Upstream commit 8b76102c5e00d1f090e0c31d17b060c76d8fa859 ]
+>
+> Now that the kernel doesn't insert HBH for BIG TCP IPv6 packets, remove
+> unnecessary steps from the ice TX path, that used to check and remove
+> HBH.
+>
+> Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+> Acked-by: Paolo Abeni <pabeni@redhat.com>
+> Reviewed-by: Eric Dumazet <edumazet@google.com>
+> Link: https://patch.msgid.link/20260205133925.526371-8-alice.kernel@fastmail.im
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Stable-dep-of: 1a303baa715e ("ice: fix double-free of tx_buf skb")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/net/ethernet/intel/ice/ice_txrx.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+> index 73f08d02f9c76..90dbe5266ce78 100644
+> --- a/drivers/net/ethernet/intel/ice/ice_txrx.c
+> +++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+> @@ -2594,9 +2594,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+>
+>         ice_trace(xmit_frame_ring, tx_ring, skb);
+>
+> -       if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
+> -               goto out_drop;
+> -
+>         count = ice_xmit_desc_count(skb);
+>         if (ice_chk_linearize(skb, count)) {
+>                 if (__skb_linearize(skb))
+> --
+> 2.53.0
+>
+>
+>
