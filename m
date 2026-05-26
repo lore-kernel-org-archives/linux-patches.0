@@ -1,153 +1,179 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012071.outbound.protection.outlook.com [40.107.200.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7823ABD9F
-	for <patches@lists.linux.dev>; Tue, 26 May 2026 16:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B8E33F5AB
+	for <patches@lists.linux.dev>; Tue, 26 May 2026 16:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.71
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779811289; cv=pass; b=Uq1IbCp0d/qERIYQhp7meDLmcupHslG4V9nhy3LXpZqyNSqcQcg6rC0XU/y7Fa0lpy1KazUOv/QDbGI25v7sMgQGhIBDUUy0MkV1RrQmpyHIuuilMrqe1aM9hiIDg30zwVSEjcGV8zQFtdu7SLgFarsIUtozf+opYRYReZMyvjQ=
+	t=1779812113; cv=fail; b=CAOIK2CvQnWt9AsiJbd2atVYSFRPv3SYxULH/AN6HidvZTmt06DDiHl81L7wh1II2nfkE1kYbhR8KAdkmYVGs7XZb9EXAkHR5SYVTd/RZGjnLl4jI2D5sxbjdwkcXmuD4mLn/k/sc2CghonDmnAP858/Ot3n/EUdsgvxNTy+UMg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779811289; c=relaxed/simple;
-	bh=pVzqx11hjh7N1pH2gCRYfQFcHOCbS36d82t/QEbOWBY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FulsR/SP11O97DJsTmSGYlNhZFsatqIyriQ9y9wvLH/DqXgzZWCqVA2TlIEIrxu/gYokZLuKFywYY8EVqNQ96sk0nuvnNrHdhlUXh2fDxv+UJEHxyE4ZhDo3G2aIO0RInj8PXSL2ggdFG2JPU2qPFyfyHaMqKkkOmXap38CacHE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com; spf=pass smtp.mailfrom=isovalent.com; dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b=I8lIt01h; arc=pass smtp.client-ip=74.125.82.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=isovalent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=isovalent.com
+	s=arc-20240116; t=1779812113; c=relaxed/simple;
+	bh=CMJLTLxtDDcbyG5cHH6tHalOtzTG01O5N7jfAUfA8Ww=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=TfgK4tFt+bfeWOpc9KWgBfcx4R39M5t2K/j+MazqxlC1sGT7ZOetZSRtBJPvQ9wK7TXWoEX3h2iiet6XHEXL1xorsRi+ekJlhEkNwsY7HuYyAXGbkczAAK6TE0v8f9p+c+TNo16bTr9FKMtOpx8uW6TreYOU30N+Qh7V8LaT50s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JCWN4V/p; arc=fail smtp.client-ip=40.107.200.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=isovalent.com header.i=@isovalent.com header.b="I8lIt01h"
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1329fc4bf77so9961082c88.1
-        for <patches@lists.linux.dev>; Tue, 26 May 2026 09:01:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779811287; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MJRgqFvt7x8JQ1m3UgVLDJ1zacYKPyKG8Kzw6zzlh+x7tCJdBeMaDsXHPhFVn8l3IG
-         euVFbUH/rw91+h90OnAj3oPaZNk8tkP1ZJveqSJztI8eSB4FJ2ks0CF6+kXRssb7hd5p
-         XnH4uRoJdDkYgMDysDJBwrDxFkvN5j6rzxJxSa7o1lzj8iYFCBYbezVbMnMjp9CNJiPW
-         MEl9iaSolBVfKYJ2U4u7MnX82FSvlgIQhmnuMMZYpSygEf7IOON1ypQhm5MY3TflUCxf
-         5wYK9XcQXkQvLdIr4LS9keqtA3jhL9dM9TeVW+mF9GLikttUsRjLGETnJeoULsAP8O5P
-         veLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
-        fh=W2+pFp+pLN1AUUUanYWQ3NLAxNZ5Q/4MBs/HxWcnuD4=;
-        b=iLGVR1U+qQzBv0uwvJW/3k0rC89S4qiUR9aVdtMxQaEZwc9rGIB56Ao62Xpb4ojgEH
-         XaXwpsuF1r9YtTJqcoRhS8r5/NHUwOdxdq51F75Fd2z5qUvBJnEN0GG2YVuScnuMnUJz
-         NOH6F6BEICyKMm7rKdNwnkFm0uH+uLWekO2MJgC6ICITZ0M/ZTjNtxiwvIHKMNL7b5sp
-         64v10UrZ7Bhw+FJrX+frFkmXGByk0NIbzjdsR5byrh7epvSVVhBk7khKSY0EEaV/+FrI
-         ChL2LEPFdPzqAYbRqIjBO/k8wqpTjuaQdFlxdrE0XxUuY8Ju1envLNG8hjm3gIyW+Di0
-         UAxQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=isovalent.com; s=google; t=1779811287; x=1780416087; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
-        b=I8lIt01h3bIrntFEhiDDeEALLFG37mTiklhohmkLavrkqYtNQ0jjb8V60mNzbFGl8L
-         3i28kVl8+1uUh6S+ES84R05c3JpOsqeHWdimOwDFQJMgRGYwg+XgfX4Nd4aZ6Z9SAdcR
-         WwweZ1GzZyNlvk7Ln6Szi7IM1Hc8/a0CESedB6K6ArOyntTEreScPCDsljWv5M4m2VgU
-         jlZb3x0ju8G7Q3qcsiKG2w0XrUxFXWa7xMw/auf6h9r2a27V/gC3emlS8MUDli4zQ44f
-         oHyYRINCdHTR4pGGnqUa6OsIFO3ZZT89sOsM7vNm8+7IxzjNL9Fb4Liu7O+JC1DGCc1X
-         irVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779811287; x=1780416087;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JuWcfKbEhiOQ+qzwtoWjTZXdsQUx+LDCmslbk+9iAr4=;
-        b=F0noyjrn8wTFtI8yEE/4s7BZOVgvKKnl9vUwsBVuVmL3G8QcRBgAhTc3r569trGjSK
-         rhBa3lmwScFObvwW0/0NoNoxAOp6Mi9MZaFGZqU189KQyxAf7bEXYfuZlCgrNHDODpxc
-         vWzzRQV2bDKA5I4GDGV+rpqBz/bWZtM7vhTL+vTLir5HbwjXSyUE12xR3mVGBwD5padA
-         lbyGQXTLXSkxeBwJJG9/VwOiqgkd8vEcY90gxeY910kj2ksa13RQ6Dfu0xsgtXQPBAgG
-         VHJn/j7U3thq6Isg+hTCZ2F/cXIHef/exg1bgqNcbElwwuwiB3M4ggYVgWlRnvpgHkG7
-         TCQg==
-X-Forwarded-Encrypted: i=1; AFNElJ8XPKi8Vqqd2CadUnwrV7kWVRNYiz1d/sWzyQ7ic7XaGr6ieqQJqdB3PU5YjB4u4nrqzq1Oe5F/@lists.linux.dev
-X-Gm-Message-State: AOJu0YwfwJXvlk7Fyx93Z/TDc3p+jMS8Yn+C5Mcf4t+SnmJdv9c71E6F
-	dH7tPXpeKl2SlZI7qIrJ/PP9WnxmH6x0WowWlCuIXdvEHRQK1A+SbfjySG+SEPUllqn/Q/z7U7U
-	Yg51lNLP9zKWWYIb+6cZxxu9QfhG+O0NZoC4hZ7DLtg==
-X-Gm-Gg: Acq92OEhZ9vDrMQPqMKkwNNpJoD/uv9K0Vvu1UvD5csHTamMXztkZpXj/TkwQ17i7Wc
-	8JTO8sshcn+TesszOppQZdBKRPKamOow7SmZlY0TGkGqY30UboPWr0yyBF3a4d0vSwXuNWzoKNg
-	EgtR18z4Ss42ajljIMSyOqycygYdBvOWFA9ijzuVpaPzWhqNy/AgaoQDPLiTMaTvw6QnFinMZcv
-	+Rh1zQre7IO0FmiIU6Mf+jLGzP+bGzNll2gbggPunn9yiNIZlW5qdvOM3PIgnzBh/Pkdo7D1Dy5
-	CYW5m2zzatswhSs9B/J3wo1QL7g0xkoOICyO11MQiweSx35aL/PD3PX3PCpyMhD+exn4iwTgl48
-	WRw==
-X-Received: by 2002:a05:701b:240f:b0:134:fc38:4e5f with SMTP id
- a92af1059eb24-1365fb534b4mr4742656c88.22.1779811285149; Tue, 26 May 2026
- 09:01:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JCWN4V/p"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=i+nkXJkCfHXpRxMZ07CnJsOOk1eU8wyY+MOs+kFBEroCef0iNwi4PNeJAGuDZ9TV7OXC1L8HTAjWNtdBJcK5j+y4wykI7WuPzSCyj+YfWVn9k+YeEMMIVu4Qiyp6APIaA3W33zRkBGS+mQidPztj068uBpKG2HzhG+x7JN8nOnpU2dDslxYCuDqc4pJelR84GQUJkpkX/GpIpLSaASu4w5hFooW5BKWG45C5/APFkJqA21bjfx9rCwT0QsTo0Yxrul3Cfadv3BWDQMLcwbJvK65PQxZYiu95NBUNBLG1o1K6InqgTxts/0p1xWp7NJYb0/JqxoraejEF9DtyCDKToA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=he6ApBcCXqTcwiHP83igeVPT6TpWtcImW5+YaAqvA1Q=;
+ b=Tj+nYEN4iCa+6n/pClPDOGFLdV3mDELfjbD6+rltlOu+HxboBY6blGCpbuZuNlnn6zQ3l+d6t4ucdp7GVMx9qT+ImQZJzZTq8xYe3Mk0EEcuwMUlk1uwagK5/Z0bagyWV/5f1T8dkMX1YaHqUYdFLQb9eDlH87ghI5Ro+pPC1uY6dVtu6f4v7/Z5aC99eyHGNG2UzfJWGl9qtj/Kw5fUZQ+ihNGYswKiv06Z5CCYFw3ExDHXYKlcoJHLuB5XPS/FFx52nGLTOeY8BDiqYPjIh8yM8aNh7LX6F+mz5RUHHKF+l5DqKOkjZaCqyhN5eNUeDjIjv1721OpsTfORoHm9Yw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=he6ApBcCXqTcwiHP83igeVPT6TpWtcImW5+YaAqvA1Q=;
+ b=JCWN4V/p0DOnSjnB8SY0TeZ1DmLXsnMqFd91Y1HPpDkYFn/f8NS5DpKMWsGMVPEk9fvgJ6x18o4u0NWOC5ZNoQPCeKI5DY5pGwrbscZZL3vmTHBqRd6Svipqu7dofNmY+jmI8VZ1B1KDKwfEbY088mXvc9A8StHSS9accOQkbqhddJgYB0GbYohkvFH6HTkSlWeKKOUiPOVT7HYrxWpgfLF7e4uNCFtr3U3FHu3PgBqGuTCKYEboXk+iEBfffUOJWnZxA+KqJaBzpQbe1o/wHfIgGKeXjWYi/KyVjcJ0Xd9y30MgX6GkT4ISjJWKtcuq9n9pR6jAPRraORqkAYp2/A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DS4PR12MB9748.namprd12.prod.outlook.com (2603:10b6:8:29e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.12; Tue, 26 May
+ 2026 16:15:08 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0071.010; Tue, 26 May 2026
+ 16:15:08 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Abhijit Gangurde <abhijit.gangurde@amd.com>,
+	Allen Hubbe <allen.hubbe@amd.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Kai Shen <kaishen@linux.alibaba.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-hyperv@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	Long Li <longli@microsoft.com>,
+	Michal Kalderon <mkalderon@marvell.com>,
+	Nelson Escobar <neescoba@cisco.com>,
+	Satish Kharat <satishkh@cisco.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Zhu Yanjun <zyjzyj2000@gmail.com>
+Cc: Leon Romanovsky <leonro@nvidia.com>,
+	patches@lists.linux.dev
+Subject: [PATCH 0/2] Remove stack ib_udata's
+Date: Tue, 26 May 2026 13:15:04 -0300
+Message-ID: <0-v1-922fa8e828ba+f7-ib_udata_stack_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BN0PR07CA0003.namprd07.prod.outlook.com
+ (2603:10b6:408:141::15) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260520162134.554764788@linuxfoundation.org> <20260520162148.582539866@linuxfoundation.org>
-In-Reply-To: <20260520162148.582539866@linuxfoundation.org>
-From: Alice Mikityanska <alice@isovalent.com>
-Date: Tue, 26 May 2026 18:01:06 +0200
-X-Gm-Features: AVHnY4IJl_dvx3UZ0ZSVEcvY4jymeZHCGABK9TTIX9K4r8NdaAFfM045Bta1oQg
-Message-ID: <CAD0BsJXt3QurRvFmOGNzh1juYYcQEst=3aYJmHiCCf-4DCZCVw@mail.gmail.com>
-Subject: Re: [PATCH 6.18 648/957] ice: Remove jumbo_remove step from TX path
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Paolo Abeni <pabeni@redhat.com>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS4PR12MB9748:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5c516b89-ce84-49e6-23ed-08debb41f478
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|56012099006|921020|18002099003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	2aXYp4qSLQlwPpZCMPMJ+uvuo6sKoXU1iB+AWHElF4RWIXbSPkLjVRY5H5MyhofKuwo67ORKjywjRhkIJMgX9A4989mKAD87BApUf0GUNKAPznLX0lAxsnW2ZlNnEjjXjEqxeiDG+cBSl2M0/rn0LqJ0bzNCbN8zHqpHwjlyMaD1G7IPGTNqCLfAqjHsJiMjTK/SguHRlGUTE9NK5BA5cdlVzq0u6IrVD7AxsBLjNphrR+TAnWZ24mUWbmA3RVuYltq9cClDTrRgj25VDDUDpWRPT/SmGUSoWGFv18JrrpUUYRxh/jnoasqbkyOMHbPvEhqj6zfGqoB/+pID0ERt3SDb3wiu/fsqyvQjmYuK+uHp8CL1cyKNX3J933as+EN0NnzVIomuPosiIx7sZ/7WLuU6Dc9t0ZYM5y6BHHbHutY6PW9bSusKbY8WKkld0zYbqIGUy7YeG+7ZK7uHMt2QBe60+NwjTi/uuD47xS2IaO5PZNkIqvXLX9H6Q3O8y0nbpKL8Oi8rVNqd8DKUamZd6xrR7XggYUwNZGOrpA7HG7jJ+UeFZ/DwS1pfVBhUPKu6ImsDpnXdRQfT9qXMzuTnBeIy1+N7/Kmuuz60kJwnuQke02zfOySOYgLUlN6xpgCf/ncnzLT5Jqddtz6dVow8ujRCB2RrmJ8P2vp0WocTGvO5cGxP6960R1P7GEi1WijP0E7Z5/qZmHKqtv5hg2DrpvVhqQ5OMzVWaQ18MSxmcMw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(56012099006)(921020)(18002099003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?cWRBrCvPuBZ3lY3+D3Ebda1srPA2NvJ1epUQTXvY8TvIvNTzUZDrgKkOdv1p?=
+ =?us-ascii?Q?BPt84v03YsgYbFQRPU6woQa/UjpWen8vghWvmDVZdDLsKU1nnNm5NMT5Xxu9?=
+ =?us-ascii?Q?/GowX29CWDmCf/HBahqS7h/WeHWv7oePatHB1XP10R9asxWY11eqO1JmD2MQ?=
+ =?us-ascii?Q?SXCPMOzQcYa3tLs8KdzMeGMMpVJRzwRSdp3yfOzF+pWo+sGnjzczDgd0i+jY?=
+ =?us-ascii?Q?u0RIvjJVYO9JQCrwffwxIrTyvFkDhpAwr+U6qd0IsV1wpEXOfJ8z1PXQDgNe?=
+ =?us-ascii?Q?fj1HV9f+YO3AjK6sZmNB+uJ5sQut9ms2jjxPTdsPAfdaxUKjyliprICNwbMY?=
+ =?us-ascii?Q?pvv3MwiaHkaSxs3X4xd6fHpGAiFUQEAgOuV0I3Zor/kkg1bKftyZCQBMWcnC?=
+ =?us-ascii?Q?2k+RZZyi+M1Z8sEB+YCn/Yvr2bmslTFFsdGfL1wIn4B5+fTbDgXJFuoJ3gqY?=
+ =?us-ascii?Q?YtIJswgNpjbupe6lW2ssY9lU7w0WUcCQGnfkW32Rq8uL9HpDHRtM15unJfaD?=
+ =?us-ascii?Q?eWaMYHw0Dp+M2cz1gi5m/DYRopfA86Ix9o8NNeqA/tcakEALx0trh8TRMonF?=
+ =?us-ascii?Q?dFiZaOlREwzRT1DTJ5cy4ngEdXtqExoaWNjxipfRkvDHFi0SuUhpfeCah3zm?=
+ =?us-ascii?Q?fUlJb6j4Pmuxu6DUjAcuxp+R8GWdkU61xAhhVNoJvu/008Fl3sBVbVY0dBbQ?=
+ =?us-ascii?Q?uS3tWVOd/rb+xG32LTm8pAhkYPpi0U6UtUT1LI0tCLi/zmr3KQVPY9B6p6c4?=
+ =?us-ascii?Q?eX/+x+mqlg/TO2o6BEF+asSdpUgeMjwSmR3mRhqlBJSJy5TOHvGhq9JWCsbJ?=
+ =?us-ascii?Q?IhevxuSBGOiM3p3OeHUs0uPndRUlVkQhaHek9MuH5Wg4LDCptxRAqM/PureL?=
+ =?us-ascii?Q?CtCrQLS5a2Ttwbco9gQX7ZLM3EBDlbgb+DWZBXWdGyp0GFZZP1U74vo8RmFT?=
+ =?us-ascii?Q?q+qMw1uzGJ5C+Mt8Vpvp52UK7wB1Mm/9Gj4uZn6rg+nJ8yf8rUS8IISNP77e?=
+ =?us-ascii?Q?ykFKcrb5dyjIdJ+k648O6Z1+/WPXTGVuSpN1a7MplB0mwApk1AZdNlajOr/A?=
+ =?us-ascii?Q?PKMFPtGYPgtQA2Zv8PILbROvK6U1r1NIDJNgOiFwkxL7yjZZI5UmpL4WtSuu?=
+ =?us-ascii?Q?X5SeCcbLK5aeQDOkXXfPdXKxDi/zH/Vk0SGT9icGjMBzUh62Ln6StdAlUSAc?=
+ =?us-ascii?Q?VCxNaRDEjLumZ7nT8bhj2kWTsCz3kjwtudcWsRRjS0RcedQxgOrSdwWmagkk?=
+ =?us-ascii?Q?lPqZSIZOsi6ZDWB80qFINC3giit4g65tDH83yQ4chlM7zSDWmUPED5jpIFhK?=
+ =?us-ascii?Q?C9Njxu0fUhIz/61GfmWEFz9GoTYgTNj0MHewzwm2Nk8K3MTeZvPqILoPTlzz?=
+ =?us-ascii?Q?gnjy5gNCxKTwPYqcn236+jPC5Vw3tCmjpGXFqiop0sz2itDR5cyj8OOneelw?=
+ =?us-ascii?Q?9R7ws7PuS3JKUTRJF2QO2T0WMMB5JYW2X3fq0Emj5LFIg92l13C00MLU3hMq?=
+ =?us-ascii?Q?Yo1HjBCTj3dYtsqLvmWLqtz9SF5w/fsl8HOAm/uJWyNEbUcH9Pdkyef8MVfb?=
+ =?us-ascii?Q?D4VmLDDsKjYoKofBEEGGObTxohOBP+tDrX4CNPpY1GtfVaOjAdEswPzQSMLm?=
+ =?us-ascii?Q?F9y6DCbhi125NC5Ly80KuQMY/8JOM5a5b+8LEOQu0zm/2s+dlJKeFUeehNJN?=
+ =?us-ascii?Q?um1po03GCGcNqakxd085tnBq+SnIONmgoyDeo+wTDS1hhIH0?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c516b89-ce84-49e6-23ed-08debb41f478
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 16:15:08.4523
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Si6SWvfeASMeRuYOxDsAWXaSmkQX29jUj7UZLGzvhk5op+hV6E1kKmkur43qg20o
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9748
 
-On Wed, 20 May 2026 at 19:44, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+Sashiko pointed out these are dangerous, and the create_qp() one is in
+fact a bug. The query_device is just ugly old code.
 
-Sorry for the late reply, I see it's already applied. This commit
-depends on "net/ipv6: Drop HBH for BIG TCP on TX side" (part of the
-same series [1]). As far as I see, this dependency was not applied to
-stable trees, so removing this step from the drivers is not correct.
-Either this commit should not be backported (reverted), or the entire
-series can be backported, if eligible. This consideration applies to
-all stable trees.
+Remove the stack ib_udata's from both places.
 
-Thanks!
+Jason Gunthorpe (2):
+  RDMA/core: Don't make a dummy ib_udata on the stack in create_qp
+  RDMA: Update the query_device() op
 
-[1]: https://lore.kernel.org/netdev/20260205133925.526371-3-alice.kernel@fastmail.im/
+ drivers/infiniband/core/core_priv.h           |  2 +-
+ drivers/infiniband/core/device.c              |  3 +--
+ drivers/infiniband/core/ib_core_uverbs.c      | 12 +++++++++++
+ drivers/infiniband/core/rdma_core.h           |  7 +++++++
+ drivers/infiniband/core/uverbs_cmd.c          | 14 +------------
+ drivers/infiniband/core/uverbs_std_types_qp.c |  3 +--
+ drivers/infiniband/core/verbs.c               | 20 ++++++++++---------
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c      |  5 ++++-
+ drivers/infiniband/hw/cxgb4/provider.c        |  8 +++++---
+ drivers/infiniband/hw/erdma/erdma_verbs.c     |  9 +++++++--
+ drivers/infiniband/hw/hns/hns_roce_main.c     |  7 ++++++-
+ drivers/infiniband/hw/ionic/ionic_ibdev.c     |  7 ++++++-
+ drivers/infiniband/hw/irdma/verbs.c           |  8 +++++---
+ drivers/infiniband/hw/mana/main.c             |  7 ++++++-
+ drivers/infiniband/hw/mlx4/main.c             | 13 ++++++------
+ drivers/infiniband/hw/mthca/mthca_provider.c  | 13 +++++++-----
+ drivers/infiniband/hw/ocrdma/ocrdma_verbs.c   |  8 +++++---
+ drivers/infiniband/hw/qedr/verbs.c            |  7 ++++++-
+ drivers/infiniband/hw/usnic/usnic_ib_verbs.c  |  8 +++++---
+ .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.c   |  8 +++++---
+ drivers/infiniband/sw/rdmavt/vt.c             |  9 ++++++---
+ drivers/infiniband/sw/rxe/rxe_verbs.c         | 14 ++++---------
+ drivers/infiniband/sw/siw/siw_verbs.c         |  8 +++++---
+ 23 files changed, 124 insertions(+), 76 deletions(-)
 
-> ------------------
->
-> From: Alice Mikityanska <alice@isovalent.com>
->
-> [ Upstream commit 8b76102c5e00d1f090e0c31d17b060c76d8fa859 ]
->
-> Now that the kernel doesn't insert HBH for BIG TCP IPv6 packets, remove
-> unnecessary steps from the ice TX path, that used to check and remove
-> HBH.
->
-> Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-> Acked-by: Paolo Abeni <pabeni@redhat.com>
-> Reviewed-by: Eric Dumazet <edumazet@google.com>
-> Link: https://patch.msgid.link/20260205133925.526371-8-alice.kernel@fastmail.im
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Stable-dep-of: 1a303baa715e ("ice: fix double-free of tx_buf skb")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/net/ethernet/intel/ice/ice_txrx.c | 3 ---
->  1 file changed, 3 deletions(-)
->
-> diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-> index 73f08d02f9c76..90dbe5266ce78 100644
-> --- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-> +++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-> @@ -2594,9 +2594,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
->
->         ice_trace(xmit_frame_ring, tx_ring, skb);
->
-> -       if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
-> -               goto out_drop;
-> -
->         count = ice_xmit_desc_count(skb);
->         if (ice_chk_linearize(skb, count)) {
->                 if (__skb_linearize(skb))
-> --
-> 2.53.0
->
->
->
+
+base-commit: fd9482545e37fb6b7e04b588ad2bd80a2779776c
+-- 
+2.43.0
+
