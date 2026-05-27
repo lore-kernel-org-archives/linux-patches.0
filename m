@@ -1,38 +1,38 @@
-Received: from mail78-58.sinamail.sina.com.cn (mail78-58.sinamail.sina.com.cn [219.142.78.58])
+Received: from mail78-59.sinamail.sina.com.cn (mail78-59.sinamail.sina.com.cn [219.142.78.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC66C26B2D2
-	for <patches@lists.linux.dev>; Wed, 27 May 2026 06:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=219.142.78.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199DF1E32D6
+	for <patches@lists.linux.dev>; Wed, 27 May 2026 06:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=219.142.78.59
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779862883; cv=none; b=KC/nB0senH5g8m43+6cEYOgQ1gQdLVMe83RTbkl67urnVuL/5Fps19PM3uvcq02w5wObxaKFGa/XLcL0CUBxCZn9oarcfTHcPUYsqcJ1BN/2WT1CtDQwOWUZLjFK9/6ewJAyyyEQKT3XyMTYwARpy/LRMV6wjbJC6nH6szxYvGA=
+	t=1779862918; cv=none; b=Bo+xeGHyRltM9NSypQpht7ME01h2qwVrlI6q0nZyttX8yj/Np0FIg0urWBQeREiXbjcASbdUfTrnG7F6GfCFWVNp+fcHp4yrRRzAyj2bxwwMkseGee3ZRPKSp2O8SAPeT/RtvbYYQDMv2n5b62+bwNI8ZBNqkrOfy/Q1Hp3+4FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779862883; c=relaxed/simple;
-	bh=SpvfvBhg8uS2HxBhP5AfLteJqEFvFAIKcGE0JExYEYc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LDrVlf70IXvMJxGrFrM0YF8QEIbbmgreqWCJG8vBs3sFE1ioddioxF/g6VK/RrYuwJi/Vwg+/co5XzPRL5gUomYbxW91RajjpnqI7k2HNT2opJixNCjsEYD5HSmJO8sC3N89cs0eAKJ4XwyAkriXGfHtWT1cwjUI6tYtspUGKww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=P0HRk7Ki; arc=none smtp.client-ip=219.142.78.58
+	s=arc-20240116; t=1779862918; c=relaxed/simple;
+	bh=GLnREPdO/Z7ak9a1P0bgrLRS+Pmd65pZXmp1EXw7D/o=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S+4oRgs1u6xsomdDvNFy0hf93RZx1iNcmFiBRzcz3Vb3LkbKEuKJ+UT8PlpAU1jdBlS2T//IC35Ql/HxpFFhC9meCZqCXWWPJMssaHQgj3nCr/FDbSKCcGjPDxnrQiqKk6cGcstKTJDBx3TX6diScmmsghIhx/t3JRvejoNhG8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=MmqAzoQK; arc=none smtp.client-ip=219.142.78.59
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="P0HRk7Ki"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1779862880;
-	bh=V/Y6MuG1dUmeFRhVhwjtGhY2waWpqlhOBuklwr+jydU=;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="MmqAzoQK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1779862915;
+	bh=hbnRnoV3Jx+oe1T2d7/QC12cebGRtky6tHNfgSNm7Oo=;
 	h=From:Subject:Date:Message-Id;
-	b=P0HRk7Ki3ziCUFiL/8OUAXU1D9d9rLPh3gK7xCOHCQQpDpWGyLnuJQJgkC42AoBOm
-	 tHIA0Vohh5QHgQorXrF/2jPi9wU+66lVnNDc9z+Ne0YTP1Xh2ayC7ydlZshogGEzwQ
-	 7f4GUOQZD/I3RCbWQtdOHpOvek7eKweKPabJTfFo=
+	b=MmqAzoQKJ8VtHoertmbQ7MKRVxN7yYfAVQT9LgoMF98UW2e5z+zRo7YosC3Oeq39N
+	 Ur/Nqlnkd6xQdRGD3hP8SiKsou3liTYTAcnNQ+GADKxQacGk2o+6SuqVZd/N17atPp
+	 MNgbBmK5dSYRZYLv92x1fb8jRV7WO5tstNGhY0l4=
 X-SMAIL-HELO: NTT-kernel-dev
 Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
 	by sina.cn (10.185.250.24) with ESMTP
-	id 6A168D3800001848; Wed, 27 May 2026 14:20:41 +0800 (CST)
+	id 6A168D5400002623; Wed, 27 May 2026 14:21:16 +0800 (CST)
 X-Sender: jianqkang@sina.cn
 X-Auth-ID: jianqkang@sina.cn
 Authentication-Results: sina.cn;
 	 spf=none smtp.mailfrom=jianqkang@sina.cn;
 	 dkim=none header.i=none;
 	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 81871510747978
-X-SMAIL-UIID: 3EF491FA24E547F983570195DF246D43-20260527-142041-1
+X-SMAIL-MID: 14446610748300
+X-SMAIL-UIID: D03F0158C8954993AB34FEAC1390823A-20260527-142116-1
 From: Jianqiang kang <jianqkang@sina.cn>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -46,9 +46,9 @@ Cc: patches@lists.linux.dev,
 	npitre@baylibre.com,
 	boris.brezillon@collabora.com,
 	linux-i3c@lists.infradead.org
-Subject: [PATCH 6.6.y] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
-Date: Wed, 27 May 2026 14:20:39 +0800
-Message-Id: <20260527062039.3612331-1-jianqkang@sina.cn>
+Subject: [PATCH 6.1.y] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
+Date: Wed, 27 May 2026 14:21:07 +0800
+Message-Id: <20260527062107.3612446-1-jianqkang@sina.cn>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -90,7 +90,7 @@ Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
  1 file changed, 17 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 624d00b853a5..61007167606f 100644
+index e270fcd0f7c3..5616f3a9551b 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
 @@ -448,16 +448,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
