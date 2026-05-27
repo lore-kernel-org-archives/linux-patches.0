@@ -1,34 +1,34 @@
-Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
+Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70325533D6;
-	Wed, 27 May 2026 00:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E012C027B;
+	Wed, 27 May 2026 00:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779843324; cv=none; b=IWaSRiwGmUgyZR0naYaVOkIbLrkcHiebcKoY23uFi03rf2m2i7m77g7d+hCe9dGnvESyCL65f7atWuPCRhaGavYk4osyJFdZ/MVNv/0uxuxfwHL26SL6fC9TRET4f6/1+RXIwQPwMtRn6y5a7pXPcLqsF4RWEQPYijDLZw4Ffwk=
+	t=1779843369; cv=none; b=d+YnCxSPoGXfQQZ6sKejyO/gXceAz9kNmRP8h+6d44Qr3Z9IyOqJAVhqpiW/AFyRVQC15V2tQulMsJJyuB8sA52dSEdufcQfjqbSjG1f3y9qcwgtw1EugyiwQ4Gb1Wxtr5WJAHNCknAWF559FPggsQbhq2dYaIzkcVrN5JD9eoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779843324; c=relaxed/simple;
-	bh=yLP+fe59YbWjNozdB0J6vFtGFhRB5cE6vJY5r0Mz1gE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=g5ibONmY8rwSABKSOe0saAOw+oy+VW7E+q7gjDOxxo08IIa8BF98PYi3rq3ZUGyWGUkEVO58x8niLW5qD63wVWjIOOlFdcd+Hn9+e5Bu5p2OUaWOeT/i/iR4eIXvjX6/0MDinMGbMvQNcBugdSKQYd/jwVEI50iv3SA+tizkWuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=wEH7cCJQ; arc=none smtp.client-ip=120.232.169.114
+	s=arc-20240116; t=1779843369; c=relaxed/simple;
+	bh=YsNiUFhM7ZNl5fxuDEq/DsxQwWAvPPpU0XM+7Vh8HeE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YYbJKFy/R8YcojF0V6b6sctUUQ9bJw2JZ0LGzzeInC4RijMoclw5YDsGhdwgYP4/NmGF9+g5L8cbqvMe48qSPU1RA4jMxpsL+i5t4YN7NQAZbuo7QpjYzwAEO8DVGiBpcO3JZiUmd0N353uZ46Es/4zCaU4Q1KExviNOmxpUlH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=u7HTWalx; arc=none smtp.client-ip=120.232.169.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="wEH7cCJQ"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="u7HTWalx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=wEH7cCJQxJOCzSi1qEjTgWBHgJIztKCZS+SA3bOe+o9lws3V057qbSlTFdON7PWIDUJfYrnOlx442
-	 EKhaAupkswkFFuO3xnuyKDEMsokMyP2ceeMh36vO+h6WAcZyHl9R7JAJhPcnzc0cHn437PNcakBLs5
-	 wug85vZ67djEVNjo=
+	b=u7HTWalxfLlSLzMvvz4JkBA+4Ys1XNlFCnOUt8vBjwadeh8T2ut+aUn2LbKXhSXWS7ZGIdAI8RtSV
+	 HXWb75UKKb2qu88LMEsS5s7L3Q6GR8xTiqoUG/qjfmJi3HNsZUwASNIZvKoC63pkaIEksuU5G66SUt
+	 i751LEhKDrrzGSEE=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-45-12076 (RichMail) with SMTP id 2f2c6a1640ed8c6-008d3;
-	Wed, 27 May 2026 08:55:10 +0800 (CST)
-X-RM-TRANSID:2f2c6a1640ed8c6-008d3
+	by rmsmtp-lg-appmail-24-12027 (RichMail) with SMTP id 2efb6a1641210f5-000f7;
+	Wed, 27 May 2026 08:56:03 +0800 (CST)
+X-RM-TRANSID:2efb6a1641210f5-000f7
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org
@@ -36,9 +36,9 @@ Cc: patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	almaz.alexandrovich@paragon-software.com,
 	ntfs3@lists.linux.dev
-Subject: [PATCH 6.1.y] fs/ntfs3: validate rec->used in journal-replay file record check
-Date: Wed, 27 May 2026 08:55:09 +0800
-Message-Id: <20260527005509.3175451-1-1468888505@139.com>
+Subject: [PATCH 5.15.y] fs/ntfs3: validate rec->used in journal-replay file record check
+Date: Wed, 27 May 2026 08:56:02 +0800
+Message-Id: <20260527005602.3175920-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -88,7 +88,7 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 7e6937e7d471..99bd7a06b2bc 100644
+index d3d006b63b27..9b12d5a7ac8d 100644
 --- a/fs/ntfs3/fslog.c
 +++ b/fs/ntfs3/fslog.c
 @@ -2792,13 +2792,14 @@ static inline bool check_file_record(const struct MFT_REC *rec,
