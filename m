@@ -1,191 +1,316 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C1C2E414
-	for <patches@lists.linux.dev>; Wed, 27 May 2026 01:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779846557; cv=fail; b=BBWxrGif0aEh+4Q4zzqw87Wfmgw+H2NotBpDDK9CQhOLV4t7SIrID0SNGNxT0aI8kcDupj7tzaBqOTiYgFadvvnUxCj+n94gUhONHOQl4HPCE76o7Ql/Znh2ml+QYjRIlytSH0+xN3bO+R8EAvykj3r5vpx++5JkNg3GvaNF2ng=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779846557; c=relaxed/simple;
-	bh=DdidQ5sgIAKU3Pe/8tlOu2IhH1wI3dEtaWA+5PLaolA=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=j46bgYWmP2DRdOimerjhoeTmVv9WhG4xnvHUChDtpNhpUd4ZeI80+4An1ZBYlrkzc/AlQi2hvcbrufwD0PoTZ9QwhFt7Q5j5T16/qSBRaEiPrVYoL9NPd4pXMketgEN8Un6MpfSEEvlj7acFJXa0wFFLiKp6NHD6DCtWnyfebxE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KDbdh0VZ; arc=fail smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD500256C8D
+	for <patches@lists.linux.dev>; Wed, 27 May 2026 02:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.64
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779848567; cv=none; b=oEy42Gl1RDLKuNMhzo75zagXvrSArmvnB3QcIzuXC8gh08bjUK0KIyhi+My5sUoNFiyiE96UW4FRA2VxNXLkZKQdiZz8jb4NgU/QO1GfsWMOPebWD2T3Yxf6fUKTGiXl0/jkcU6nsJXGQX1aD0m7Pc5RFcJQc8eD/2NX5bCMrkU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779848567; c=relaxed/simple;
+	bh=DrCc3UoiDLT5DOG1ABYX25zy5ZWwzI8aTjH3XApC8lg=;
+	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=OoSXyfngqJ61kEcSCuI7Y6OKjw0GjbkXwXV0OE63hrGIzIuF+EcIzucJXgg0tpdnSl27L6SB6ZWPGOY0wFrpfI9rIqDWnYC9XaKJy1wrOycMYui2vUlaE/rOhtM1TQ3RDxdJbi0nXwiEGoJlbY9MNweWBs2jby91rdLCLIl+MGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=T5C0iitE; arc=none smtp.client-ip=162.62.57.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KDbdh0VZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779846556; x=1811382556;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=DdidQ5sgIAKU3Pe/8tlOu2IhH1wI3dEtaWA+5PLaolA=;
-  b=KDbdh0VZAMHHGoJxejsPCF4PtEAgIdURSDZcalJjAFh0ijnMPrsg49cU
-   FZZVOts4fPZeCIXZ1cm0HFX6iiBQ2EKHTzgoE12sslBOIqeJy4/F+Ego4
-   slo/TWZ9SHaFvTpVrQaAsHg9fiEHhPnpDqolB73N5a9vbs5oWizkfUgaP
-   4gHqxxhbXtS9joBwe0Dv+baqJSTI/BA6tzNResHs0lY/ra/QrD7f47fRg
-   xrRKS2Ehi3gM1ahun/gH8AqabQMkNaEEtbs3iszpcKGNAV/5Mf8j26is7
-   CXl22q7E1ym4r1BUhRRuMcDxwvXNGq2u/HR7gs3rJpH3/Vd3msVnqyGCj
-   g==;
-X-CSE-ConnectionGUID: S4Idtf9kQ6W5kVVsRsHsig==
-X-CSE-MsgGUID: F8kVggOYS3Kwdjd7ETdOTA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="79819523"
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; 
-   d="scan'208";a="79819523"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 18:49:15 -0700
-X-CSE-ConnectionGUID: fStct6asQUSB/J+Y8Bawcg==
-X-CSE-MsgGUID: hUd2JdnQRB2yaWQWHzwGCQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; 
-   d="scan'208";a="242254621"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 18:49:15 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 26 May 2026 18:49:14 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Tue, 26 May 2026 18:49:14 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.12) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 26 May 2026 18:49:14 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XklFHHI4zMpQomIF4BjVpymN3c/ZYV8OwdT8CZNkWmDYUVA6HCAH2AgNqzkvcsOFrh5KW3ci1F3E1RicFoak6SKSq4ShngIByRGKkdlqFqEPRXAVxWXE3/0UDhmjKeQqzDbpDd7f365j5YzO2OgBBzT9KRLl5XcwSYJtpoQVoWwguHWi9ZoocLjm8i6IykLaqmabtfD3fvrGmiL9zGdF29+4hVy0EBvieltqtfyao4e8DEnAng9DcIdabJqSZKyd2ahZJ8A9g/L9NdvdtyrfPaLpAo2BrHsS5FFMDkhO+FpRHh1PKhB07zRbJt2DjVPGCujtEBiFGpvrt1/NvTVryA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ljSYBR0eGVXGCJtr3hvgFPj4aO6TO3EmgZIfROcMb7I=;
- b=SM0lbpAqOjvLbp63O6OH5oVsBrlexKNUkt016za/NgJ9qNnSEJcUcvd9QvmrtimcXTGBA1mgtiDJU6EdiOqSwgkuiuGMYUkJmne5Rybdg+VIFuQV5ceNa0QbbCIZ0BlYghwwL7+mZSOhpNNe8wPZHYfJ8yD5g5DCBVCI+s8HwwmZm9QF+B6K5ArQzl8vT+1I8QEDQXv/XqO0FtgxtP+wX4r3ZRRFjui1qlzYnUyi93vF+jg2AnTJklm+FKbGgo9cIxs4Xm+YSahMjOEJbtSr6ywsrUJLjJBNBSqE/WsxsFaNfJ9E2HqDGrsL3KAknHqAWDAlfd+wa2y0Ob5DylYvuA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
- by SJ5PPFC15A51B16.namprd11.prod.outlook.com (2603:10b6:a0f:fc02::851) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.12; Wed, 27 May
- 2026 01:49:10 +0000
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc%4]) with mapi id 15.21.0048.019; Wed, 27 May 2026
- 01:49:09 +0000
-Message-ID: <c1fa0502-974d-4bca-b595-274cf8467458@intel.com>
-Date: Tue, 26 May 2026 18:49:07 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] fs/resctrl: Fix UAF from worker threads when
- domains are removed
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: "james.morse@arm.com" <james.morse@arm.com>, "Dave.Martin@arm.com"
-	<Dave.Martin@arm.com>, "babu.moger@amd.com" <babu.moger@amd.com>,
-	"bp@alien8.de" <bp@alien8.de>, "tglx@linutronix.de" <tglx@linutronix.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
-	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "ben.horgan@arm.com"
-	<ben.horgan@arm.com>, "fustini@kernel.org" <fustini@kernel.org>,
-	"fenghuay@nvidia.com" <fenghuay@nvidia.com>, "peternewman@google.com"
-	<peternewman@google.com>, "Chen, Yu C" <yu.c.chen@intel.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <cover.1779476724.git.reinette.chatre@intel.com>
- <accc44062440c9b9ef220fe7570588e00f8a238a.1779476724.git.reinette.chatre@intel.com>
- <ahW9EJORpIqnvthk@agluck-desk3>
- <da9ec0a6-8ea6-4b85-b4b2-6f4fbd32f687@intel.com>
- <ahXl_UF66yiPiEPB@agluck-desk3>
- <d5ead3e9-f878-41ce-98d0-ad7fbcd778c6@intel.com>
- <SJ1PR11MB60835670CAD544BCFF856022FC0B2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <SJ1PR11MB60835670CAD544BCFF856022FC0B2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0242.namprd04.prod.outlook.com
- (2603:10b6:303:88::7) To SJ2PR11MB8370.namprd11.prod.outlook.com
- (2603:10b6:a03:540::20)
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="T5C0iitE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1779848553; bh=VQCNA6/BlPPG6PdcMmXX/pBbFD+2uu5dKEqOPB5RDlg=;
+	h=From:To:Cc:Subject:Date;
+	b=T5C0iitEFGJCtKdjh7+BS/dopIGB/AA1kjW63yneTxcIR302n6lgdAEd9LnVHTMDe
+	 c0xYfSttW2prsHG1WrdRgZz9mHHmwiz67RamRRymBZrzxPC4dAAMhgIgIP4P1RDmsE
+	 /rkQHFXd7mSbstUdlUPBfitCglL6vcJUdESMhj8o=
+Received: from NTT-kernel-dev ([60.247.85.88])
+	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+	id 59F0C03B; Wed, 27 May 2026 10:22:31 +0800
+X-QQ-mid: xmsmtpt1779848551t8p8g3ixw
+Message-ID: <tencent_1E7EC9319D484C797CF4F159CAB1C3DB3706@qq.com>
+X-QQ-XMAILINFO: OATpkVjS499uU1pcYb472MMx8Bay9mHHtiJGHvs4zW/Ksa4WhBFfdDYhsyDkM9
+	 x9QKXHya+QkKgs1A7NjQ3hcKCWzNzVRGQmsZs3uyWPUj4yiKvRB8mO/vH+WZ4tyI1lvoD9b1jlq2
+	 ekAVbwDKb3ph3haEJss2LIbat09l67APDa/O5YXAVyB8XXi2javQQe7QaJNaXS4pr8PXjP1QvMjF
+	 LPe6zzVyelSOuKFcGAKSNcb1tx7OVxAfFqVoG/1wAOOWhnhT8UdJ6BUxg13j9eGE+Zpw01wleA0u
+	 G3arOZf4HiF5WSi0A4R7lpHg4jhCfMbgoKZc1riDzsY9rerfZ6HbCpS5xXaklobDSHjeoOfLNK3Z
+	 y3NIOQdAZLk0eKwyX4zH6nEbx86WGBXdKqqkiyRF4phT+bpmN1hc6LNbcBYsRfs6WGbMVn+fyVoe
+	 NMGxqgOkkG9logVEnkla2JYtA8PDaXWmfVM8MidAvaVohp2qd3I9W8n1k/kcvYrXFpYJTMzpgV3P
+	 65TtvEsHGx2B1NpIPk6FCkLbBrIL7K8acFJ4FPQ+guqP6G6+iElAjBEt5IGoyKO3qQu1vv8MHIIu
+	 CY1KxlZfd77aQfTYOBtI7bxF8+MD3Aiyux0sxoagOh+xsvlzHWXK4F/MwaWiyLHYI53Vu7uxB0m+
+	 PdJhYgJyqC9+pWFJ+EQ1+GbxMHtSFeZzVa5Z3G/0coMWstGPm4gyk8NDnUN/U7BSOnhgE4mndfzG
+	 FRRJbCzjLoao6zYlND/zNmySgT7Yl4dSREJ6n3s/miUI+0AqJu7UFOuGu1HTr4cqCEbg5iNvCvTN
+	 t87A6dHI1iyaMbpr3E+RwcqaC+YtJKAmOULz9Hmz1y8uQFt+pD38Vz5OBn0CgnPZkDNGAxsWI6wA
+	 4toDhezZiaUQdWUr4ILetJlAgKszBTPKxtssqz8VnqshEHtzAUj3btWgzyDBQ9N6DUmty8eJowX6
+	 5Mz9zFdabpMBHnuQCxWG6pyQ8vzr5UpXQGmlHf9VK9bgWB+1UdqqIyyv47HSF0t3fv6itT2/TvFg
+	 ZJDwE8pzvJ3DpcR6l6ZkHsPH0iDHnlBXpQ17OgDMRX1cVvV6GVpy159i9NbnE=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+From: Fang Wang <32840572@qq.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.12.y] hwmon: (pmbus/core) Protect regulator operations with mutex
+Date: Wed, 27 May 2026 10:22:30 +0800
+X-OQ-MSGID: <20260527022230.3212045-1-32840572@qq.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|SJ5PPFC15A51B16:EE_
-X-MS-Office365-Filtering-Correlation-Id: 21e336de-1d7c-4086-3e86-08debb92251f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014|18002099003|22082099003|56012099006|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info: UKirdsa8/NbNYKesKM7SVwmQh84ONXfAgNuvh9+qkoMXwllTtuXlZrCMruuMH60jTBG5Iq+Du2Wnze5QkyA28o9h5167ds27IuXMDYJjJCHJyZ15NhxCFijfDY182PpiGqnac596eejxoX0wAYbcEZhYqbxsGNtuJ52SfZR2J1xw9YjzOMq0PSWL49Cr2fJ8MR2J8Bof3m1r0EBpBO6Hso2OM4H+YH1Q3oYac93V6WTPwW7dUh59cR0XKIsgwIDVroshH1XLyLUBXacvKa94c4hYL4oL2E8lWN32NqjDZ8mfQZaH9R9GVOLK0x+IRLiNp13cUqZ8EGZ6wz+D/NooN2hYqExHrWMI8yf5KzoL1Uihxj7TUNCe1e3ckL91/cNzaZbnDAAhxLCa0zIo7FJK1CYn+Hq003C9NR053WgS4QB1shvvIi3tu5YsPQdjiKQORIqaHHRxbA8MqnGXvo+GaWJQAzAOeV1PYIuPlCYE1To0WtHx32ehpgY8Veb52W6HCWsS48MyCZiiF/xBdZipziYZ2ggcBFCpubp9/s61sUOhUhLtR8BuUCAmggGqfeFbKuk7rgthMSMktfy2gvDOvgehIgtcNCY4c3Oj5a70RqyCze3TRPcqPyndTmSReoSxuCc5xNQCVg58Nxds+fAQMQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?blBMaWhjeWpmMWZBK2RpTXNxVnpCZlMyT0Z6aCtFeGd2MG5JWndVNVNLcDZ3?=
- =?utf-8?B?QzBlR3BMQkVZTm5KZ3o3OERIR3Z6T1FSU1dtVnZGWlVNWGdORFErVVVzZG5o?=
- =?utf-8?B?NHI2Uzd6MGVnSmpxRDV0QzZJaytPQVAvR3R6K3RtZ3R4RGtVS2QvL1FFZzd5?=
- =?utf-8?B?OCtoS3RiTnpDeVJiYjM5cHlEQTBYNUt4RU9GaGR2QzR2RnlKL2piTlZ4TzJj?=
- =?utf-8?B?ei9kcnRTZ2pLazdHcmFzdTVndXVXdnR5YjV5ZmFNWXp5M255NEtFN2Zlc1Iz?=
- =?utf-8?B?Z25KSlB6T1hsZTlMYjcwOXl1QlAyL3NtWC8rWmMvcmw0RXBlQURhZFhvMGNi?=
- =?utf-8?B?bGZjRVRIOHhFbkZQUm1ENzFlSDJwcVVFdzRvUE5MSDB1MWZjTmV1TzdzR0lH?=
- =?utf-8?B?bE9EeHRwV0hEcElVei9NdWdSa2VzSXoxR1RnZEJ3aHMyR2NhSDdxdnBqMm5G?=
- =?utf-8?B?Z2Y1WEJaNS9yRWU4dDU2NnNsNzQvYlkycEVDT2owOU9yWlkvM2xONVBVYW5k?=
- =?utf-8?B?VitKSTZMeGZSSUFIRVNmZ0MvM3pEM3lpZStkL2dCYlo1cy9vYWI2cG9ldlcz?=
- =?utf-8?B?TnczamlIWkNQd0lPMUVlaTVaNnRTckdUYW1tSG5IWnB0bW9Eb1lhZEwvUXVI?=
- =?utf-8?B?RHB0VkJjMTBpU3pxaXZFc2pRYVI5VUZWZUFxZTlZRUZoZ0NzaS9LY0tKaFVx?=
- =?utf-8?B?RElTTDRGVHJ1ZithcFVJTnBqSzFRMW5RaHEvVXJLMWFwclEyWkpEaTVhVmJl?=
- =?utf-8?B?ZWh6Q25oUmQ0WG9ZZnAzaW92a05VTitMVVc4NjJBR0I3cms1MC9ZazQzSjlE?=
- =?utf-8?B?bU5ZRkJacXVrdzVUVnpQSjl3VGIyd0l3U3BvUStuZmFFeDhuWlZSN2dGY2JN?=
- =?utf-8?B?TXM0MFJITEtsMUdpQnlpWnlROUs0SmZHMnRmYUREbDVCTGV5cFJFcGg1RnNr?=
- =?utf-8?B?YWUzNk5JWVhVOWhWOW5SMmFxaC9mNTI2NHV1R3l0ZTlFYUFnYmRrM05rRUo0?=
- =?utf-8?B?R0ZGeGVKalB2bUNHTXh2TGRBbmtzanplVmdZc3JVQlJpTEJZeTVtQm9NbTdD?=
- =?utf-8?B?SWhvVEVmOXU0U2tpNHYvTzZiV3BWZ1QvQkFLa3NkZzdiNnh2SzNaYnc4eFRS?=
- =?utf-8?B?REdyYWZscjYvSzU4WFcycTF6ZndiOC9HdDBTQTRJL24vdTBsZTZjZE5wNVJl?=
- =?utf-8?B?Qml5dTJIc3hybUkxSCttUkJuYTJMR3dCd3dOc3hWQmxEek9DNGVqUGYwMUpa?=
- =?utf-8?B?RWpUeGkvbDNDSkgyWGlMd0JlL1h1VEM1NDN3UzJZMnNBakZpOXVhaGl3QkZL?=
- =?utf-8?B?VEJkM21MZFhNOHJPdlZkNFc2SFd6RlV3NkpuZG4xMWJ0djhNTjRsL2tnejhv?=
- =?utf-8?B?RU9VZW04VTVkZnVKOThUVHdQSkJZbkpPMXRGcGgzemZ2Qk1XOVAxeVFWNGs4?=
- =?utf-8?B?UUwrdWt0d2E2UXV4UTA1UUtYdkI1UUxSRGtqYnIxOVVhb0ZwM3M3dWZOanJ2?=
- =?utf-8?B?d1lhMUE4WmlEU0xjMDFhd0crYktOczVmUmN2bmQ1TFA3TjUxRVVlM1FUa01N?=
- =?utf-8?B?eC9WRXhxZnhvK3pMTkZtaW5IZFE3UzIzTnFxYURkRjVvd04xeHErZ05MdHFm?=
- =?utf-8?B?UDU1NW5TTmFRMG5rc2JMSWpUL1hLN0VhVGQ5Z3pJRXZxckt6L2x5Mkx5YmIx?=
- =?utf-8?B?a3ZDdHc1SWNBRGFXN2dxcFZXQU9JUWxyZmpBUnk0bnkvOVBrNHZmdGNyL3NP?=
- =?utf-8?B?WHRIVDFUREwxVEtjcjAzNk8vRjBwVjhMMEgwcm5vOVY1K25pcnNVbnV6SXN1?=
- =?utf-8?B?U3N2TDhHc2xJSlJsNjJnT2VRZHk3bUlyZENJVlNCTnQ0OTVacG8zRDNhN2FN?=
- =?utf-8?B?TmhMMjVDbmxYR1JqeEFJUHovbWxZeDVUTm1qVDVWcktjVzZodlZzWEVScFp0?=
- =?utf-8?B?RnpzU1dpVEh6UkROVDU5SXhMTXFsRXpZVXNZZmNyWUxsZUZBNll4bTlBK2Nh?=
- =?utf-8?B?bGVqL3l6ajJTUFhnN1ZWdHR6OXNTMUIxbjhkTG5tWkVmM1RaVEFRZEJxVVZa?=
- =?utf-8?B?MGlQQ252L2FHRHhreFlwdDVpb2N0dFlvVVl6V0ZPa3NjcmJhenhYbTRkcUQr?=
- =?utf-8?B?VHd5dHpKSG44YXhFQW5TYVpSNUF4amEvMDQ4S0pEWTlOSHh1RklVeTlCaGVL?=
- =?utf-8?B?K1dZb3VYeEgyVWRXS1BESzR0MnVKN2VINTBudGxCVnpFalJzOTUwTng3alR3?=
- =?utf-8?B?cmdHMnpwNjd4Wko1Q0lxNGpKanorY1lJK0EvRzFWWVhEU1pQbmwxZ3p3Q2sy?=
- =?utf-8?B?VWpTSnZvTklIK0E0aDRBNEJrdjZXSGZlSGdGZysxbmhuWkFTRXJBb3NZUjVZ?=
- =?utf-8?Q?tvksRAee7Qq9pW0M=3D?=
-X-Exchange-RoutingPolicyChecked: d2eam62xbXN/kNqrzKJmQMMv8UxZn4K705eusbteaNqWrKuzSJimDXEtRuUE8FvQusJSUJJpS8u7sZiMEtkJI9fX25br/7dfJ+ZAvrFTPF/d9IeUyLxPBQSYw3mnSH5TDq9Aq4g8B9idY/uBMurx3ZSZ5mfaUMy/d17d/i6vMBuD0EBoE3nT7pNPNX5tLGWztxRR+0L8dl1OWZAn2t0vcPoGKSQWvisbi8SlWWp1zlF6BgIiYXgpGgwukwyrzM3xZXk5wYLY3834wlzsBRitcb5hB2Gp4xRdK6sOvl8eX5LkeFcJDHlO/0H4mb5aqdY298ayyFuXuGHPkHEQibm81w==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 21e336de-1d7c-4086-3e86-08debb92251f
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2026 01:49:09.7856
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3HB0AipkFdEtN/MncDMaxNgZNYSEw936V2H8IdFZOfRKDY67SZ5HN70Olvk9di2vIqNNd2W0FMgkSW/dPX5MnSBo25KXrWOfbyB+YYbYwBg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFC15A51B16
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
+From: Guenter Roeck <linux@roeck-us.net>
 
+[ Upstream commit 754bd2b4a084b90b5e7b630e1f423061a9b9b761 ]
 
-On 5/26/26 2:26 PM, Luck, Tony wrote:
->>> Can you repost just part 9 (or maybe parts 7-9) on top of latest -rc to
->>> see if sashiko is happy at last?
->>
->> ... and then will you take a look?
-> 
-> Yes.
+The regulator operations pmbus_regulator_get_voltage(),
+pmbus_regulator_set_voltage(), and pmbus_regulator_list_voltage()
+access PMBus registers and shared data but were not protected by
+the update_lock mutex. This could lead to race conditions.
 
-https://sashiko.dev/#/patchset/cover.1779834897.git.reinette.chatre%40intel.com
+However, adding mutex protection directly to these functions causes
+a deadlock because pmbus_regulator_notify() (which calls
+regulator_notifier_call_chain()) is often called with the mutex
+already held (e.g., from pmbus_fault_handler()). If a regulator
+callback then calls one of the now-protected voltage functions,
+it will attempt to acquire the same mutex.
 
-Reinette
+Rework pmbus_regulator_notify() to utilize a worker function to
+send notifications outside of the mutex protection. Events are
+stored as atomics in a per-page bitmask and processed by the worker.
+
+Initialize the worker and its associated data during regulator
+registration, and ensure it is cancelled on device removal using
+devm_add_action_or_reset().
+
+While at it, remove the unnecessary include of linux/of.h.
+
+Cc: Sanman Pradhan <psanman@juniper.net>
+Fixes: ddbb4db4ced1b ("hwmon: (pmbus) Add regulator support")
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Fang Wang <32840572@qq.com>
+---
+ drivers/hwmon/pmbus/pmbus_core.c | 117 ++++++++++++++++++++++++-------
+ 1 file changed, 91 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 41c66ece5177..e37fd206510a 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -6,6 +6,7 @@
+  * Copyright (c) 2012 Guenter Roeck
+  */
+ 
++#include <linux/atomic.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+@@ -20,8 +21,8 @@
+ #include <linux/pmbus.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/of.h>
+ #include <linux/thermal.h>
++#include <linux/workqueue.h>
+ #include "pmbus.h"
+ 
+ /*
+@@ -102,6 +103,11 @@ struct pmbus_data {
+ 
+ 	struct mutex update_lock;
+ 
++#if IS_ENABLED(CONFIG_REGULATOR)
++	atomic_t regulator_events[PMBUS_PAGES];
++	struct work_struct regulator_notify_work;
++#endif
++
+ 	bool has_status_word;		/* device uses STATUS_WORD register */
+ 	int (*read_status)(struct i2c_client *client, int page);
+ 
+@@ -3181,12 +3187,19 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
+ 		.class = PSC_VOLTAGE_OUT,
+ 		.convert = true,
+ 	};
++	int ret;
+ 
++	mutex_lock(&data->update_lock);
+ 	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
+-	if (s.data < 0)
+-		return s.data;
++	if (s.data < 0) {
++		ret = s.data;
++		goto unlock;
++	}
+ 
+-	return (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+@@ -3203,16 +3216,22 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 	};
+ 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
+ 	int low, high;
++	int ret;
+ 
+ 	*selector = 0;
+ 
++	mutex_lock(&data->update_lock);
+ 	low = pmbus_regulator_get_low_margin(client, s.page);
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, s.page);
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+ 	/* Make sure we are within margins */
+ 	if (low > val)
+@@ -3222,7 +3241,10 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 
+ 	val = pmbus_data2reg(data, &s, val);
+ 
+-	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+@@ -3230,7 +3252,9 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
++	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int val, low, high;
++	int ret;
+ 
+ 	if (selector >= rdev->desc->n_voltages ||
+ 	    selector < rdev->desc->linear_min_sel)
+@@ -3240,18 +3264,29 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
+ 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
+ 
++	mutex_lock(&data->update_lock);
++
+ 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+-	if (val >= low && val <= high)
+-		return val * 1000; /* unit is uV */
++	if (val >= low && val <= high) {
++		ret = val * 1000; /* unit is uV */
++		goto unlock;
++	}
+ 
+-	return 0;
++	ret = 0;
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ const struct regulator_ops pmbus_regulator_ops = {
+@@ -3266,12 +3301,42 @@ const struct regulator_ops pmbus_regulator_ops = {
+ };
+ EXPORT_SYMBOL_NS_GPL(pmbus_regulator_ops, PMBUS);
+ 
++static void pmbus_regulator_notify_work_cancel(void *data)
++{
++	struct pmbus_data *pdata = data;
++
++	cancel_work_sync(&pdata->regulator_notify_work);
++}
++
++static void pmbus_regulator_notify_worker(struct work_struct *work)
++{
++	struct pmbus_data *data =
++		container_of(work, struct pmbus_data, regulator_notify_work);
++	int i, j;
++
++	for (i = 0; i < data->info->pages; i++) {
++		int event;
++
++		event = atomic_xchg(&data->regulator_events[i], 0);
++		if (!event)
++			continue;
++
++		for (j = 0; j < data->info->num_regulators; j++) {
++			if (i == rdev_get_id(data->rdevs[j])) {
++				regulator_notifier_call_chain(data->rdevs[j],
++							      event, NULL);
++				break;
++			}
++		}
++	}
++}
++
+ static int pmbus_regulator_register(struct pmbus_data *data)
+ {
+ 	struct device *dev = data->dev;
+ 	const struct pmbus_driver_info *info = data->info;
+ 	const struct pmbus_platform_data *pdata = dev_get_platdata(dev);
+-	int i;
++	int i, ret;
+ 
+ 	data->rdevs = devm_kzalloc(dev, sizeof(struct regulator_dev *) * info->num_regulators,
+ 				   GFP_KERNEL);
+@@ -3295,20 +3360,20 @@ static int pmbus_regulator_register(struct pmbus_data *data)
+ 					     info->reg_desc[i].name);
+ 	}
+ 
++	INIT_WORK(&data->regulator_notify_work, pmbus_regulator_notify_worker);
++
++	ret = devm_add_action_or_reset(dev, pmbus_regulator_notify_work_cancel, data);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
+ static int pmbus_regulator_notify(struct pmbus_data *data, int page, int event)
+ {
+-		int j;
+-
+-		for (j = 0; j < data->info->num_regulators; j++) {
+-			if (page == rdev_get_id(data->rdevs[j])) {
+-				regulator_notifier_call_chain(data->rdevs[j], event, NULL);
+-				break;
+-			}
+-		}
+-		return 0;
++	atomic_or(event, &data->regulator_events[page]);
++	schedule_work(&data->regulator_notify_work);
++	return 0;
+ }
+ #else
+ static int pmbus_regulator_register(struct pmbus_data *data)
+-- 
+2.34.1
 
