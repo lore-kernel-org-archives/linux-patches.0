@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B77C31DD97;
-	Thu, 28 May 2026 20:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFEA25F7B9;
+	Thu, 28 May 2026 20:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000336; cv=none; b=kVQnqXs2pKu695Z6+gPeMRBe40/vnkwk1HssGbKnwTiRjmfqVuSTyN4FZFdADOif81/dxHG4PECM7YItF/SN5+hfKoNAKWpou/Z+l0YcSzwoYofqz6/JV8v8/tuAXnfIZuGZfswronuIJ55a8UMyyj4rUQkWyOp7diOMqIxx4kI=
+	t=1780000339; cv=none; b=qnexSHt55jhJemt4mWJErHj/M4HZhYSIHJ/GF3RdQERqh3klAIBf108FVyWktoP7wEu/tALWZIXJ2x3BnKAF2w1s0yBwwdY0UMzqTlNSUm0cCXZ4GXxztJ0lL6w+WTdEiCAlnFLkEkbU0ex4W20/oXx+D6QEy3cseQaMkYPPNw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000336; c=relaxed/simple;
-	bh=w+4jS/jMibBXLT7ttX7tHGhIn4/GQEmt3fbT66dcuy8=;
+	s=arc-20240116; t=1780000339; c=relaxed/simple;
+	bh=SYi8FXv0FNbkbrBIMtGrrIUCxkcetVXYBNJRycOsdeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWRE8314F9u/gMog0b2IyaHOhOL4rx3MvbnkI/BeQgkOKhDRGIngOopwY776K7IZYyJ48As1qQD2Rq5TU7ye52XUhmR401YBL+oibaav7uFe8a1erc0llPZ1Vivtkd4I0bIw6+2bxcXg3tpDWmP043+Hh50CwYAuhB4h+ZO38a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boh/8yLx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U6bE6XvKi5KkWfAwDpSPmfdxHO7SZaEQXopzJCGY3AaaqZBTsBE5jdZc4YhWQ323ttaCVBodx7YMsNoFcKn2i3ZyuTjjoR0nqxRATZbIIDcOzMWhyMhXXhLZRJtg2gKVNcMRzEnds/j5J/gMTY4nVHhyiDrC27NUpv7cNZZkmk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjXwpcGb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boh/8yLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01191F000E9;
-	Thu, 28 May 2026 20:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjXwpcGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9201F000E9;
+	Thu, 28 May 2026 20:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000335;
-	bh=MytMPCtuN7JtdyzMKKKxS8w7RyE/6HM3IiCZ8riOIMs=;
+	s=korg; t=1780000338;
+	bh=ldDURr0RCh6JXaSv4fa+Zsuf0HYMSOxuFl/veVd6wYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boh/8yLxDMhfG7nd8H8OtmV4c8rtDqYEc8aK679qJSTAT3v0MyN9K+OV0lMZBgJ+8
-	 BazYJ3KXN8uIh2UZxdifg418y38mCnpTDCziWjj42Ol6mzfQs1OyBtbFWAKIUBa37v
-	 ffT/s2KQY0VlRRFGdwcXu6QhEtjSBWRGQsLPLoOA=
+	b=fjXwpcGbyD37+y8w7XBT39/YgFJOFw7biBWBaDSBaYIRPP8KVPlJZ4pIIi35irali
+	 QFzhQZIB68u0ZuVJ8nHzHorfyl2Xwff9TG820UvxcAYHIAw2xczY0lL/DxjgHUhrUc
+	 KcGiKX3iHKhmW4t8bX6zFVG/uIu3w17vY9C6AJc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gang Yan <yangang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/272] mptcp: sync the msk->sndbuf at accept() time
-Date: Thu, 28 May 2026 21:46:15 +0200
-Message-ID: <20260528194629.424529211@linuxfoundation.org>
+Subject: [PATCH 6.12 002/272] mptcp: pm: ADD_ADDR rtx: allow ID 0
+Date: Thu, 28 May 2026 21:46:16 +0200
+Message-ID: <20260528194629.452848735@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,70 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit fcf04b14334641f4b0b8647824480935e9416d52 upstream.
+commit 03f324f3f1f7619a47b9c91282cb12775ab0a2f1 upstream.
 
-On passive MPTCP connections, the msk sndbuf is not updated correctly.
+ADD_ADDR can be sent for the ID 0, which corresponds to the local
+address and port linked to the initial subflow.
 
-The root cause is an order issue in the accept path:
+Indeed, this address could be removed, and re-added later on, e.g. what
+is done in the "delete re-add signal" MPTCP Join selftests. So no reason
+to ignore it.
 
-- tcp_check_req() -> subflow_syn_recv_sock() -> mptcp_sk_clone_init()
-  calls __mptcp_propagate_sndbuf() to copy the ssk sndbuf into msk
-
-- Later, tcp_child_process() -> tcp_init_transfer() ->
-  tcp_sndbuf_expand() grows the ssk sndbuf.
-
-So __mptcp_propagate_sndbuf() runs before the ssk sndbuf has been
-expanded and the msk ends up with a much smaller sndbuf than the
-subflow:
-
-  MPTCP: msk->sndbuf:20480, msk->first->sndbuf:2626560
-
-Fix this by moving the __mptcp_propagate_sndbuf() call from
-mptcp_sk_clone_init() -- the ssk sndbuf is not yet finalized there -- to
-__mptcp_propagate_sndbuf() at accept() time, when the ssk sndbuf has
-been fully expanded by tcp_sndbuf_expand().
-
-Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/602
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260420-net-mptcp-sync-sndbuf-accept-v1-1-e3523e3aeb44@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ No conflicts, but move __mptcp_propagate_sndbuf() above the for-loop
-  (mptcp_for_each_subflow()) present in this version, which will modify
-  'subflow' used by __mptcp_propagate_sndbuf() in this new patch. ]
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-2-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to net/mptcp/pm_netlink.c instead of upstream's pm_kernel.c ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 7dbb666c72c30..c1b1fb0fe8bcb 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3493,7 +3493,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	 * uses the correct data
- 	 */
- 	mptcp_copy_inaddrs(nsk, ssk);
--	__mptcp_propagate_sndbuf(nsk, ssk);
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 5d892583ab4ef..857e8db670a75 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -304,9 +304,6 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
+ 	if (inet_sk_state_load(sk) == TCP_CLOSE)
+ 		return;
  
- 	mptcp_rcv_space_init(msk, ssk);
- 	msk->rcvq_space.time = mptcp_stamp();
-@@ -4101,6 +4100,8 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
- 		msk = mptcp_sk(newsk);
- 		msk->in_accept_queue = 0;
- 
-+		__mptcp_propagate_sndbuf(newsk, mptcp_subflow_tcp_sock(subflow));
-+
- 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
- 		 * This is needed so NOSPACE flag can be set from tcp stack.
- 		 */
+-	if (!entry->addr.id)
+-		return;
+-
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk)) {
+ 		/* Try again later. */
 -- 
 2.53.0
 
