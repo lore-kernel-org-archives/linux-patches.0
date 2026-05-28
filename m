@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AEE335566;
-	Thu, 28 May 2026 20:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CF03164B7;
+	Thu, 28 May 2026 20:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998999; cv=none; b=LwfHcvq6q5qGqQdhc3q+0VkkSAIbOGNCsQOT8CEVdxHUZ0xqsGf1zMb1OWsDEwMg4L8M+pFldCTC2ieOFpbAfUcKNkAhU0cFAMFOyyGSm5kyUOLOY3X8v9RNZow+wI0brPO9TFv5FxkALeDCJRAOOITQN13SZ6I+kp47TjDnL9s=
+	t=1779999002; cv=none; b=NuKVkZu+ss4ajzSUmSWH0SGdzkEd0kLQ4/rENPIYZU5Ll/Zdr8+rcs6IROER1kzuAxaR/o2PZaLd5NuHLHJF9Qxt/hLFB0J3CbxivLscD01NGHFD4cNwMFKmwtKG+OdAmGI24Vp9yLAC5fshNI05/tlJCb5etour68udUiHKZsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998999; c=relaxed/simple;
-	bh=4Vsf4UphiufCRLxMPW0hyYGpecQlKWZg2BF/EIp6wlw=;
+	s=arc-20240116; t=1779999002; c=relaxed/simple;
+	bh=aw8qREzzyXu8Al3+WPDt5eoCfID1voB7n00w7LUS5R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdxPLOAK86spX9SwYGavh473oPWqxHc0yQdydKEcFWcYFkwak6SBE4ePP9fzMyccjOWwp1BipHGyiq5dp7dCMCywLACg8CRcgxoYBjqGkVXqX74VMx0FU7Aaeq2aQyEc5S860bm6UkeV2E3dTpRDv0UVsLM51StBun8B3GtEvSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJ0qsaMf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZhKD3USxD5YvYwbIKT8wrkavrF5alqQUe3TkaDJWI4y2SQy8jm9Xw6JWzP562/l5JVacvcFLkfdUdAP7/zRS3PH3zHxxIgd2j7RwOz6Tz5PipJXO3hF9fqcra869U7LvGd7jfDvzN9RblYUxvWI2kSQA2doB1d/Z/C01hZFO41A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwEKQap8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJ0qsaMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDAF1F000E9;
-	Thu, 28 May 2026 20:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwEKQap8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A161F00A3A;
+	Thu, 28 May 2026 20:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998998;
-	bh=N8LuV9eLHFkgv8vJaVzwFNToqf/sdZrItzG/NST2mpk=;
+	s=korg; t=1779999001;
+	bh=sYmNrDqr+KohwhrRW4lfpzYSn/QPKinM4iVqlVWSY2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fJ0qsaMffan0kZ5wzkf8ykW8cJIXcJ35bKYiEwGnZUX0pIBjoO2Bx1yrFwRVRkkj6
-	 R2CKMz+RX+0Qi8fhoFtnG73bMljej5uR05BYYXnpupgoyzlfeRDhcrQ33Et3+ApGiG
-	 19CF5NgM0qBjrqqVYYJy4mWu17pLng99JcRWUoQg=
+	b=ZwEKQap8Ai8wLmKIyDnABbJSql+SYwJiv0vAHiHLzdRsbXfzGdBtTOYCuHRErSw3r
+	 Y5S//hYPdR1iBp7xG2eR3Kffba9qP5Kn0TDO9DLfSVrgUK9USdpkXXkMbwVYVdUa47
+	 prTMjgoEXbW/K2cqtPySrCcCNvYWKOegIX/K+zRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 372/461] drm/mediatek: mtk_hdmi_ddc: Fix non-static global variable
-Date: Thu, 28 May 2026 21:48:21 +0200
-Message-ID: <20260528194658.214210384@linuxfoundation.org>
+Subject: [PATCH 7.0 373/461] io_uring: propagate array_index_nospec opcode into req->opcode
+Date: Thu, 28 May 2026 21:48:22 +0200
+Message-ID: <20260528194658.243825254@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,40 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 87ed4e845d5a90bba1a56c0a5c580a13982e8648 ]
+[ Upstream commit cf18e36455603d65d4745de83e2d1743c54ada47 ]
 
-The struct 'mtk_hdmi_ddc_driver' is not used outside of the
-mtk_hdmi_ddc.c file, so make it static to silence sparse warning:
-```
-drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c:331:24: sparse: warning: symbol
-  'mtk_hdmi_ddc_driver' was not declared. Should it be static?
-```
+Commit 1e988c3fe126 ("io_uring: prevent opcode speculation") added
+array_index_nospec() to io_init_req(), but applied it only to a local
+opcode variable. req->opcode is initialized from sqe->opcode before the
+bounds check and remains the raw value.
 
-Fixes: c241118b6216 ("drm/mediatek: mtk_hdmi_ddc: Switch to register as module_platform_driver")
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20260429-mediatek-drm-fix-sparse-warnings-v1-4-d95c4d118b83@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Keep req->opcode as the canonical opcode in io_init_req(): reject
+out-of-range values architecturally, then write the array_index_nospec()
+result back to req->opcode before any table lookup. This keeps downstream
+users of req->opcode from observing the raw user byte on a mispredicted
+path.
+
+No functional change: array_index_nospec() is a no-op for opcodes in
+[0, IORING_OP_LAST), and out-of-range opcodes are still rejected at the
+bounds check above the assignment.
+
+Fixes: 1e988c3fe126 ("io_uring: prevent opcode speculation")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260517213010.696135-1-michael.bommarito@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c b/drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c
-index 6358e1af69b49..2acbdb025d893 100644
---- a/drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c
-@@ -328,7 +328,7 @@ static const struct of_device_id mtk_hdmi_ddc_match[] = {
- };
- MODULE_DEVICE_TABLE(of, mtk_hdmi_ddc_match);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 97260bca67e7b..cc4011d843377 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1719,10 +1719,9 @@ static int io_init_req(struct io_ring_ctx *ctx, struct io_kiocb *req,
+ 	const struct io_issue_def *def;
+ 	unsigned int sqe_flags;
+ 	int personality;
+-	u8 opcode;
  
--struct platform_driver mtk_hdmi_ddc_driver = {
-+static struct platform_driver mtk_hdmi_ddc_driver = {
- 	.probe = mtk_hdmi_ddc_probe,
- 	.remove = mtk_hdmi_ddc_remove,
- 	.driver = {
+ 	req->ctx = ctx;
+-	req->opcode = opcode = READ_ONCE(sqe->opcode);
++	req->opcode = READ_ONCE(sqe->opcode);
+ 	/* same numerical values with corresponding REQ_F_*, safe to copy */
+ 	sqe_flags = READ_ONCE(sqe->flags);
+ 	req->flags = (__force io_req_flags_t) sqe_flags;
+@@ -1732,13 +1731,13 @@ static int io_init_req(struct io_ring_ctx *ctx, struct io_kiocb *req,
+ 	req->cancel_seq_set = false;
+ 	req->async_data = NULL;
+ 
+-	if (unlikely(opcode >= IORING_OP_LAST)) {
++	if (unlikely(req->opcode >= IORING_OP_LAST)) {
+ 		req->opcode = 0;
+ 		return io_init_fail_req(req, -EINVAL);
+ 	}
+-	opcode = array_index_nospec(opcode, IORING_OP_LAST);
++	req->opcode = array_index_nospec(req->opcode, IORING_OP_LAST);
+ 
+-	def = &io_issue_defs[opcode];
++	def = &io_issue_defs[req->opcode];
+ 	if (def->is_128 && !(ctx->flags & IORING_SETUP_SQE128)) {
+ 		/*
+ 		 * A 128b op on a non-128b SQ requires mixed SQE support as
 -- 
 2.53.0
 
