@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426C633A702;
-	Thu, 28 May 2026 20:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179952FD7C3;
+	Thu, 28 May 2026 20:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998736; cv=none; b=DmaGTtSCNBOsBciEQ8vENWzdzDGBUVC/vhV2mLown7XSmQVpXx9Ho0Unle3iW3e6gt36a6pjiEi2H9Yqg45+2pFMMmBiYHZBqdrlIWnoauiS0MBMPQziJxuIE85aS2QPTzIn6qmCRvt5zcop4ZbG6JpX4sHKefS1Wfiqb9Jn+6I=
+	t=1779998739; cv=none; b=j9wLk55U5c6li3+UQmhGgAgLgAKEVKwIHd4p6b0Qfm3kMtNoaXtkJ51O2u6DXzM9Tb5qmz8BGS616a5AcO9b8khSrSAzoMi6rPVWJ62FbANusk+5FsOSE6RhS5CHyhM0M5BeRm6lEDSNi7k+QnBjfcA642ZYRsXOc+FST2KrsXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998736; c=relaxed/simple;
-	bh=tetbYVVteLubKttNPlCOzimkYYoh/XyqT44bw4H3Gzg=;
+	s=arc-20240116; t=1779998739; c=relaxed/simple;
+	bh=QOQJ8MyFZtkEN87yTH3Rkn9fJS9bWytk7HMTrKdq6pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXMZyzto6+SsX4k1pw1Tat1DpYbDuU5p+hMGZwUc3pIolo9LCS2cU/zym9QUM7HHsFdM/BCofAUWRO6EF/8NhEL9bhwlrDkNTx77EGkk43pEuHQSwjLRFht+H5Duc00sWjjGuRCih0EZXZB7Z1g6Zdfe8J6bL2Ush401l1SCotM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae+XLsxV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eJxa0FR2bmjTkrVEqREeMNUs+jKcHsGJycU6015NRTfxZoHQuES/eBfjae0YmIr8qzjjpEKL187LhAOs5yC48ArFy6QAiHgnYqja7AyI+8Hd1to4lo7XqPZk/P1TxtGvZyWoBb/A2IeO4lt0QRM9O2tdr2YqysCNZ9tMiexh7Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BC75XX/a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae+XLsxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A063D1F000E9;
-	Thu, 28 May 2026 20:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BC75XX/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B5B1F000E9;
+	Thu, 28 May 2026 20:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998735;
-	bh=D1GLTuInEpsBtaqUWzjbQJiXmLcFAvzUBYrQvoBSsfQ=;
+	s=korg; t=1779998738;
+	bh=Wb0PR+dbX0ONu+FuOt0tlFwX9Aqh6JxnMaeeoFzDCFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ae+XLsxVu8uPyi50e1KkS0c5gXS+cghg4fUWUZo+Mk5ZGoQZcibUE4WDVImiIx5J6
-	 QoyIglbHd92UBOQufHo7HB0rE4Pz4uenvkXOdUCyqiIquHD9zwJRMM/WcaOR6CJ5D8
-	 DEyLpfFu4OeVpWIryd+i3nWNkhndEDR6qk99s11I=
+	b=BC75XX/aMmF/6g2JjAGyXX56u3OZUi1OkDYb1Dlx/w/SAq0qUer/Z53pvAke8mCdv
+	 M2gOxxg2hEivO5+3UJge4F2vDGrlSYxgwGlUd1G+/6VTEd7Zo5urHR7Qreb3kiAoYx
+	 qJJLs4VJoTshsUI+Xqnzr4W9ZUaeDBh3WgpAvqL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mac Chiang <mac.chiang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andreas Haarmann-Thiemann <eitschman@nebelreich.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 233/461] ASoC: sdw_utils: Add quirk to ignore RT721 CODEC_MIC
-Date: Thu, 28 May 2026 21:46:02 +0200
-Message-ID: <20260528194653.886641154@linuxfoundation.org>
+Subject: [PATCH 7.0 273/461] net: ethernet: cortina: Drop half-assembled SKB
+Date: Thu, 28 May 2026 21:46:42 +0200
+Message-ID: <20260528194655.073602255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -46,43 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mac Chiang <mac.chiang@intel.corp-partner.google.com>
+From: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
 
-[ Upstream commit fa749a77bdc50f0d695aaf81f1bd55967d77d10f ]
+[ Upstream commit b266bacba796ff5c4dcd2ae2fc08aacf7ab39153 ]
 
-Add a quirk to skip the CODEC_MIC DAI when it is not present.
-This ensures PCH_DMIC is used as the fallback; otherwise,
-CODEC_MIC remains the default.
+In gmac_rx() (drivers/net/ethernet/cortina/gemini.c), when
+gmac_get_queue_page() returns NULL for the second page of a multi-page
+fragment, the driver logs an error and continues — but does not free the
+partially assembled skb that was being assembled via napi_build_skb() /
+napi_get_frags().
 
-Fixes: 846a8d3cf3ba ("ASoC: Intel: soc-acpi-intel-ptl-match: Add rt721 support")
-Signed-off-by: Mac Chiang <mac.chiang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260508093224.1246282-3-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Free the in-progress partially assembled skb via napi_free_frags()
+and increase the number of dropped frames appropriately
+and assign the skb pointer NULL to make sure it is not lingering
+around, matching the pattern already used elsewhere in the driver.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260505-gemini-ethernet-fix-v2-1-997c31d06079@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ebd8ec2b309e ("net: ethernet: cortina: Carry over frag counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdw_utils/soc_sdw_utils.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/cortina/gemini.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index 827243d09f008..f54043e5ff450 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -463,6 +463,8 @@ struct asoc_sdw_codec_info codec_info_list[] = {
- 				.dai_type = SOC_SDW_DAI_TYPE_MIC,
- 				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_DMIC_DAI_ID},
- 				.rtd_init = asoc_sdw_rt_dmic_rtd_init,
-+				.quirk = SOC_SDW_CODEC_MIC,
-+				.quirk_exclude = true,
- 			},
- 		},
- 		.dai_num = 3,
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 57a25030f883c..e8d973b8fb0c3 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1493,6 +1493,11 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
++			if (skb) {
++				napi_free_frags(&port->napi);
++				port->stats.rx_dropped++;
++				skb = NULL;
++			}
+ 			continue;
+ 		}
+ 		page = gpage->page;
 -- 
 2.53.0
 
