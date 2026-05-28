@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3ED2E6CC0;
-	Thu, 28 May 2026 20:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6DA223328;
+	Thu, 28 May 2026 20:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000205; cv=none; b=avFJe1yBA+z7sGdQEQ6ztiz64PZps21i6MxgeO/H3QiHzApu59Z8MsGysQZ6ks+CXjLBowtKyzEhrFFVSNG/Z5SFaVCRZidQ1iOrXPXTMCbJoI++FQ/PkrxxId/wD80sfzGmO65gmmgdQtGiBFWQa6neEXyoZr5DdE/c7CqUcvA=
+	t=1780000208; cv=none; b=DqG1pJVkYyuTdRyRKjJ7HAZK6gDYCpG80tyiphc4wdb3qTgKyhSzXS/99QxmARWYtk/a741IvVy/MPTlkbKEL14JPbg9jUgPDJ4Aqa6LWgEIvOrylsBHB4ORqN8B+n2n6RV622GjgCEOqnEp63KkiRbdYDiZqpUzzS9w+vlpz1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000205; c=relaxed/simple;
-	bh=3zYRBMHLGkkyvarbZND1CNlQGEy6wq17dL17WdBGqr0=;
+	s=arc-20240116; t=1780000208; c=relaxed/simple;
+	bh=X3CqN40iq2SsV94X4tfYUdglE9duQA4yz8FNIyrMuAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpNNEI0P6MlnfdFHjtv5EHjRDBtrTX5HTtuUo1eD3lF9dAFVKLOOfYQ7IuMuRM5IRb4loOs3/GmOdkQnswK/IK/GLIgLiGQkueFe3hlvcscouaNsWCp+TokZh1CQApuzHkKB0NznObr27RKkVCUgZQK2OcH5gUmQaLDMtVX5jZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eojAuTuw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LJcHfAPsxRzNVTqvEEhKr3IH7UVB/nvRJvWIolnfz8VJzOkW8Jpi8XhmfyIigNk8GkHpbM0tZROIKFCwYD3Ofco0Oujy6C61JMJ0DEC0Dj4gbTBcqrsp+WxMt9p6WftLA+64Ke+y/NmrKClKK5AHpuCCATVaztwccLEIYQy+i5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIZNr8PG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eojAuTuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F371F000E9;
-	Thu, 28 May 2026 20:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIZNr8PG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868A11F000E9;
+	Thu, 28 May 2026 20:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000204;
-	bh=31oFnCz11yHe/+RUta7Bg8rSl5Pqdun4+mvsAHUHWTY=;
+	s=korg; t=1780000207;
+	bh=niD9piviK6C4qZzL26iAVtVg+o7MoH6/GXgYVrcPfUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eojAuTuwi2ndrMfwnXwpTzKEegX/66BOHu88Zq2dgAKnPS42q8E0M2nJRAODBwM8j
-	 sLY3QBWgoSIkDp9aAb3I5sasycdoK9FSTTWOay+hJ+4MGMsSZ9kX47hvuRV+R0RjoJ
-	 Ouh3oTwV1ocBdtfHiU4CfpcuYSG3yYFFEKdEwznI=
+	b=HIZNr8PGuWLS8haCtOJfWRiD7jXYjwCW9fMCNWZv+foOZA2Gj8Qpgpr0OweIi0Z3k
+	 Mo/hirl2tvlTNuOtv9u4+74UTSkA+jKR//v59DdNRZNtpBzP2lGPAz1a4K0mykoZ92
+	 7Icxjm6QtqgT3dkoISV20u1cVS0SI7TQ2H6U+tAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Cole Leavitt <cole@unwrap.rs>,
+	syzbot+ae231e0552fa77b26ea1@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/377] wifi: iwlwifi: mld: fix TSO segmentation explosion when AMSDU is disabled
-Date: Thu, 28 May 2026 21:49:10 +0200
-Message-ID: <20260528194647.415818728@linuxfoundation.org>
+Subject: [PATCH 6.18 339/377] bridge: mcast: Fix a possible use-after-free when removing a bridge port
+Date: Thu, 28 May 2026 21:49:37 +0200
+Message-ID: <20260528194648.237823422@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,73 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cole Leavitt <cole@unwrap.rs>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 92cee08dc4f00e77fd1317e4343c5d458b0abab7 ]
+[ Upstream commit 4df78ff02629c7729168f0696a7a2123c389818d ]
 
-When the TLC notification disables AMSDU for a TID, the MLD driver sets
-max_tid_amsdu_len to the sentinel value 1. The TSO segmentation path in
-iwl_mld_tx_tso_segment() checks for zero but not for this sentinel,
-allowing it to reach the num_subframes calculation:
+When per-VLAN multicast snooping is enabled, the bridge iterates over
+all the bridge ports, disables the per-port multicast context on each
+port and enables the per-{port, VLAN} multicast contexts instead. The
+reverse happens when per-VLAN multicast snooping is disabled.
 
-  num_subframes = (max_tid_amsdu_len + pad) / (subf_len + pad)
-                = (1 + 2) / (1534 + 2) = 0
+When global multicast snooping is enabled, the bridge iterates over all
+the bridge ports and enables the per-port multicast context on each
+port. The reverse happens when multicast snooping is disabled.
 
-This zero propagates to iwl_tx_tso_segment() which sets:
+The above scheme can result in a situation where both types of contexts
+(per-port and per-{port, VLAN}) are enabled on a single bridge port:
 
-  gso_size = num_subframes * mss = 0
+ # ip link add name br1 up type bridge mcast_snooping 1 mcast_querier 1 vlan_filtering 1
+ # ip link add name dummy1 up master br1 type dummy
+ # ip link set dev br1 type bridge mcast_vlan_snooping 1
+ # ip link set dev br1 type bridge mcast_snooping 0
+ # ip link set dev br1 type bridge mcast_snooping 1
 
-Calling skb_gso_segment() with gso_size=0 creates over 32000 tiny
-segments from a single GSO skb. This floods the TX ring with ~1024
-micro-frames (the rest are purged), creating a massive burst of TX
-completion events that can lead to memory corruption and a subsequent
-use-after-free in TCP's retransmit queue (refcount underflow in
-tcp_shifted_skb, NULL deref in tcp_rack_detect_loss).
+This is not intended and it is a problem since the commit cited below.
+Prior to this commit, when removing a bridge port,
+br_multicast_disable_port() would disable the per-port multicast context
+and the per-{port, VLAN} multicast contexts would get disabled when
+flushing VLANs.
 
-The MVM driver is immune because it checks mvmsta->amsdu_enabled before
-reaching the num_subframes calculation. The MLD driver has no equivalent
-bitmap check and relies solely on max_tid_amsdu_len, which does not
-catch the sentinel value.
+After this commit, br_multicast_disable_port() only disables the
+per-port multicast context if per-VLAN multicast snooping is disabled.
+If both types of contexts were enabled on the port when it was removed,
+the per-port multicast context would remain enabled when freeing the
+bridge port, leading to a use-after-free [1].
 
-Fix this by detecting the sentinel value (max_tid_amsdu_len == 1) at the
-existing check and falling back to non-AMSDU TSO segmentation. Also add
-a WARN_ON_ONCE guard after the num_subframes division as defense-in-depth
-to catch any future code paths that produce zero through a different
-mechanism.
+Fix by preventing the bridge from enabling / disabling the per-port
+multicast contexts when toggling global multicast snooping if per-VLAN
+multicast snooping is enabled.
 
-Suggested-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
-Signed-off-by: Cole Leavitt <cole@unwrap.rs>
-Link: https://patch.msgid.link/20260405054145.1064152-3-cole@unwrap.rs
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+[1]
+ODEBUG: free active (active state 0) object: ffff88810f8bda78 object type: timer_list hint: br_ip6_multicast_port_query_expired (net/bridge/br_multicast.c:1927)
+WARNING: lib/debugobjects.c:629 at debug_print_object+0x1b1/0x3e0, CPU#5: swapper/5/0
+[...]
+Call Trace:
+<IRQ>
+__debug_check_no_obj_freed (lib/debugobjects.c:1116)
+kfree (mm/slub.c:2620 mm/slub.c:6250 mm/slub.c:6565)
+kobject_cleanup (lib/kobject.c:689)
+rcu_do_batch (kernel/rcu/tree.c:2617)
+rcu_core (kernel/rcu/tree.c:2869)
+handle_softirqs (kernel/softirq.c:622)
+__irq_exit_rcu (kernel/softirq.c:656 kernel/softirq.c:496 kernel/softirq.c:735)
+irq_exit_rcu (kernel/softirq.c:752)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1061 (discriminator 47) arch/x86/kernel/apic/apic.c:1061 (discriminator 47))
+</IRQ>
+
+Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
+Reported-by: syzbot+ae231e0552fa77b26ea1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/87qznowlfs.ffs@tglx/
+Reported-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260517121122.188333-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/tx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bridge/br_multicast.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/tx.c b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-index c54ea3a91b667..a60bfb1a2ab22 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-@@ -828,7 +828,7 @@ static int iwl_mld_tx_tso_segment(struct iwl_mld *mld, struct sk_buff *skb,
- 		return -EINVAL;
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index e9a7e65304017..b77b3250afbd2 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -4640,10 +4640,24 @@ static void br_multicast_start_querier(struct net_bridge_mcast *brmctx,
+ 	rcu_read_unlock();
+ }
  
- 	max_tid_amsdu_len = sta->cur->max_tid_amsdu_len[tid];
--	if (!max_tid_amsdu_len)
-+	if (!max_tid_amsdu_len || max_tid_amsdu_len == 1)
- 		return iwl_tx_tso_segment(skb, 1, netdev_flags, mpdus_skbs);
+-static void br_multicast_del_grps(struct net_bridge *br)
++static void br_multicast_enable_all_ports(struct net_bridge *br)
+ {
+ 	struct net_bridge_port *port;
  
- 	/* Sub frame header + SNAP + IP header + TCP header + MSS */
-@@ -840,6 +840,9 @@ static int iwl_mld_tx_tso_segment(struct iwl_mld *mld, struct sk_buff *skb,
- 	 */
- 	num_subframes = (max_tid_amsdu_len + pad) / (subf_len + pad);
- 
-+	if (WARN_ON_ONCE(!num_subframes))
-+		return iwl_tx_tso_segment(skb, 1, netdev_flags, mpdus_skbs);
++	if (br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED))
++		return;
 +
- 	if (sta->max_amsdu_subframes &&
- 	    num_subframes > sta->max_amsdu_subframes)
- 		num_subframes = sta->max_amsdu_subframes;
++	list_for_each_entry(port, &br->port_list, list)
++		__br_multicast_enable_port_ctx(&port->multicast_ctx);
++}
++
++static void br_multicast_disable_all_ports(struct net_bridge *br)
++{
++	struct net_bridge_port *port;
++
++	if (br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED))
++		return;
++
+ 	list_for_each_entry(port, &br->port_list, list)
+ 		__br_multicast_disable_port_ctx(&port->multicast_ctx);
+ }
+@@ -4651,7 +4665,6 @@ static void br_multicast_del_grps(struct net_bridge *br)
+ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 			struct netlink_ext_ack *extack)
+ {
+-	struct net_bridge_port *port;
+ 	bool change_snoopers = false;
+ 	int err = 0;
+ 
+@@ -4668,7 +4681,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 	br_opt_toggle(br, BROPT_MULTICAST_ENABLED, !!val);
+ 	if (!br_opt_get(br, BROPT_MULTICAST_ENABLED)) {
+ 		change_snoopers = true;
+-		br_multicast_del_grps(br);
++		br_multicast_disable_all_ports(br);
+ 		goto unlock;
+ 	}
+ 
+@@ -4676,8 +4689,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 		goto unlock;
+ 
+ 	br_multicast_open(br);
+-	list_for_each_entry(port, &br->port_list, list)
+-		__br_multicast_enable_port_ctx(&port->multicast_ctx);
++	br_multicast_enable_all_ports(br);
+ 
+ 	change_snoopers = true;
+ 
 -- 
 2.53.0
 
