@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B393932B13B;
-	Thu, 28 May 2026 20:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B427C3164B7;
+	Thu, 28 May 2026 20:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998968; cv=none; b=Xi/vPYWzhGw8LD3A5xq0KCH3c9a2mUl5hmvDb2P7nG8oBq9JZku2zjnCkFWQySJA+QzVy1ej0YrrlfV74qRWRUc1lB5fuLCjn+NX1tvfwI0CHTAQltCEpvRe6vDUsqcH0j0yNuNubtIOw7gKWTzuK/Y4jp9zzHzpnlFtMHdB6To=
+	t=1779998971; cv=none; b=cKIvMYxR/FcPVU1WP0kEZ+NJWMkKIdlFTBxdFcLPerTx3FIV5qplgkKRP/+p5szs8+WozxjmUSvA/B1mxCqdlv1Gfnvh4C/Tj0f87QO/XnpRNMRB3LL1EnFaNVYKSsIekdGgZZgqv6743hVgi2adh7x80F8uvzCGz/jbKsXXfZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998968; c=relaxed/simple;
-	bh=0uyrUNaEIxVfGKdnFXLk7qwtM7zEnJNAlyDwEKCmRxE=;
+	s=arc-20240116; t=1779998971; c=relaxed/simple;
+	bh=gNEH8lP9jnj9cVULMpXpoxf1MUAY70Q5ZuFLaE+zUVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7ftBC9LeAifCAVGEh0GbQQe6lt5kaaz/7uUutNNj8EBW7n+uQmvl9+irU/CQb/iNIsSouh8E6X1ekK+014PQbj5dHImmOt3Gq9RaghPofrZIqWBUH+VJmo7ctFFaTEMgslnrIZJKlNyElfyfgfTp9KRAtb4wls/SdbkyYYgaUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKQ8JHpu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YusYybSbUf9zM8PRgm03mJSJ1LKO0xgTg+2jFPxdKqyCGL8HVIgpxuK4aY6rtdZZ6KLCeLm7dAVU6ClAF1ysLFq85rOB1gYo8pfmPn+rQorLYV6p6T/3S9obM4mTugy0Duon944Kv8StVggw+w9hMVULSJ6Yoji7uxafDPeWp5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p51lI88N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKQ8JHpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE5A1F000E9;
-	Thu, 28 May 2026 20:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p51lI88N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01BC1F000E9;
+	Thu, 28 May 2026 20:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998967;
-	bh=g0YK15Dd8fJo6Qq8ysNF7jbiKREGJ93NcgwJLCyeytY=;
+	s=korg; t=1779998970;
+	bh=neOxN2tUnYaKj51SKDSIs1Z0KiUF/22LO3tqOlWKmI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKQ8JHpu5r7SCht2vrIoEBwo741TwGGbjlJeroIk3bJpbWbXdH2nrntcsxFw4Fm/X
-	 +UiIK8746hOLmTgFMwhS5ZHtGJW7TfTqPD09DxJopXa+F2d6DkMW7mjQnGNn+3lryQ
-	 OYxG13keZUUSKiY7Y++SiqkCc3Oatls9XNhaXH10=
+	b=p51lI88NjZdjby5qCJxK9NpxmNQm38BI6i0cb78S/JuMJRUx9VpSvRBb6ZQyW8ZvT
+	 A6b3BOTlDcoO9mmiBGAxRJU/Y2YPAkKtHWapYjVQvaR8o3mHFpfYLwb0y/iofa1yvE
+	 RK5+HFN56kipgGBepAJ8qG1xs9N8s6dUvk0foNac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 362/461] drm/xe: Consolidate workaround entries for Wa_14019988906
-Date: Thu, 28 May 2026 21:48:11 +0200
-Message-ID: <20260528194657.913280417@linuxfoundation.org>
+Subject: [PATCH 7.0 363/461] drm/xe: Consolidate workaround entries for Wa_18033852989
+Date: Thu, 28 May 2026 21:48:12 +0200
+Message-ID: <20260528194657.943189738@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,13 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit c2142a1a841525d897ef69b3e6a5ab48183e1fcf ]
+[ Upstream commit fe681e7b44d78fd77d79de21eca58c3b6bdcda0e ]
 
-Wa_14019988906 applies to all graphics versions from 20.01 through 20.04
+Wa_18033852989 applies to all graphics versions from 20.01 through 20.04
 (inclusive).  Consolidate the RTP entries into a single range-based entry.
 
 Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260220-forupstream-wa_cleanup-v2-18-b12005a05af6@intel.com
+Link: https://patch.msgid.link/20260220-forupstream-wa_cleanup-v2-19-b12005a05af6@intel.com
 Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
 Stable-dep-of: a4660bd94973 ("drm/xe: Define and use MCR version of COMMON_SLICE_CHICKEN1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -68,42 +68,42 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 9ddd21a21dcef..c436d0ad51e77 100644
+index c436d0ad51e77..6e3c44bc69daf 100644
 --- a/drivers/gpu/drm/xe/xe_wa.c
 +++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -716,6 +716,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+@@ -720,6 +720,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
  	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2004), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(VF_SCRATCHPAD, XE2_VFG_TED_CREDIT_INTERFACE_DISABLE))
+ 	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
  	},
-+	{ XE_RTP_NAME("14019988906"),
++	{ XE_RTP_NAME("18033852989"),
 +	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2004), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
++	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
 +	},
  
  	/* DG1 */
  
-@@ -772,10 +776,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+@@ -776,10 +780,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
  
  	/* Xe2_LPG */
  
--	{ XE_RTP_NAME("14019988906"),
+-	{ XE_RTP_NAME("18033852989"),
 -	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
--	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+-	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
 -	},
- 	{ XE_RTP_NAME("18033852989"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
-@@ -810,10 +810,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(WM_CHICKEN3, HIZ_PLANE_COMPRESSION_DIS))
+ 	{ XE_RTP_NAME("14021567978"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, XE_RTP_END_VERSION_UNDEFINED),
+ 		       ENGINE_CLASS(RENDER)),
+@@ -827,10 +827,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE))
  	},
--	{ XE_RTP_NAME("14019988906"),
--	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
--	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+-	{ XE_RTP_NAME("18033852989"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
 -	},
+ 
+ 	/* Xe3_LPG */
  	{ XE_RTP_NAME("14021490052"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(FF_MODE,
 -- 
 2.53.0
 
