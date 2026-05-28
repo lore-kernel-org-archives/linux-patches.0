@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C68223328;
-	Thu, 28 May 2026 20:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0A0313550;
+	Thu, 28 May 2026 20:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000230; cv=none; b=KCAJ5pRKsf+RrTa3SAvj4qbpgc02OOh1XfDEraPuGRdHiGnptxKb5DKLqmNHIx5WQpVIWf7DkSdR4G62ehBpiM3Hk/2TEYkqqOBELH8CbyMRMSaqUQNcNstOZg48tmtClpdNAYB8b/1oQpfbMWCyd/2L6V0LNQ2mFlTPTeHh8zI=
+	t=1780000233; cv=none; b=aLSGAmszP3RgiOwLS9skDkqqL3ls13LROKyEGIIhifb8JT5jEtc92IIvVimjy7ln+SaI1OT+rxCUPqE83NujJeiHHeSZUEdXKnzTKSHO0RoX7k0xNNZn0FYs0RIwCcOfPOGivkWfP7wq35ZsjNLwkpH1RyB3TqWsza2TVi37WOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000230; c=relaxed/simple;
-	bh=DShkPhgZT+E/rwdNZYgpclreEmG+wvkZaR4gsR1RPaU=;
+	s=arc-20240116; t=1780000233; c=relaxed/simple;
+	bh=HaWm83QVNkKiL2JFk+KY5QafciSBpEdWAOt9TUsJaFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRLwHAFrDr8BZvbmE5j6b1UskHHwGH2Q56+Q5EalYDHXvIQ4waPi2QOCQedGHFsv9uf4shjqpQ0M84xG1/rBFmTf48l6ezZiNb5p2tZ/guXidEG4AceqRFewaPDT6BHtreehGTAvT/4AcgTV231SFt3T6NILY5WAGMieShGgKLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1U+HhuAR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h2+i6TEXV5MMlnApyCJeZUxxloLjETBrnZS+VECJ0zVdcDT9owinblMs/LFj1IRqWemluopp68RuikwxJushVj1FPXP6SsJwNr7nRY7wZCRaf3UvPCAI+275Idc8Ay0iV4NjvIGAJUi/au27vFscbGSA2wcqBIYA5b9U6t0gk1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybXF1BXr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1U+HhuAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46611F000E9;
-	Thu, 28 May 2026 20:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybXF1BXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB061F000E9;
+	Thu, 28 May 2026 20:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000229;
-	bh=RkdMn9MqlvpdYy6orvICMsmwGSQK4efreQFIiONSd14=;
+	s=korg; t=1780000232;
+	bh=RYT5ndn/RsDveTmsK88sj0fdhrILiBY/BceaPOW9umM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1U+HhuAReJ/luERTeTWQrNJl93rYwMdSLN/28nTDZIGNNZJpdrPbujbt3Bx8gWTzW
-	 HkgHGJnxg90W+gAnBJ2DwlyxoJWolF2tN3PGjs57sFLXZ47RXhw/Pnw56U2pDsdNuT
-	 9eEs145H5IOfTMyhQV31IUH1IUMh3s/+UM70YLsE=
+	b=ybXF1BXr+ctxGnQSxTwmiQRrSkEgOWe1jf9QunIHW+g68qG5ZtX/I4fnMP/Lk8Z10
+	 b50oChQsxiRF4UtsBKPbdOEDAM3ApXXMNEzBjogR/raeT3fMyFML8kytJ1pZGW5Svo
+	 6qU6YrFPH+3R9rcBuroTAh0A6wiNKM3CvvDHI10Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Simon Horman <horms@kernel.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 347/377] wifi: mac80211: fix MLE defragmentation
-Date: Thu, 28 May 2026 21:49:45 +0200
-Message-ID: <20260528194648.469051646@linuxfoundation.org>
+Subject: [PATCH 6.18 348/377] wifi: wilc1000: fix dma_buffer leak on bus acquire failure
+Date: Thu, 28 May 2026 21:49:46 +0200
+Message-ID: <20260528194648.499008459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,158 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-[ Upstream commit a74e893f30db64cdce0fc7a96d3baa417bcd55f5 ]
+[ Upstream commit dd7b6a8671939708cc4b7a46786d8c11297e8f69 ]
 
-If either reconf or EPCS multi-link element (MLE) is contained in
-a non-transmitted profile, the defragmentation routine is called
-with a pointer to the defragmented copy, but the original elements.
+wilc_wlan_firmware_download() allocates dma_buffer with kmalloc() at
+the top of the function and uses a 'fail:' label to free it via
+kfree(dma_buffer) on error.
 
-This is incorrect for two reasons:
- - if the original defragmentation was needed, it will not find the
-   correct data
- - if the original frame is at a higher address, the parsing will
-   potentially overrun the heap data (though given the layout of
-   the buffers, only into the new defragmentation buffer, and then
-   it has to stop and fail once that's filled with copied data.
+All later error paths correctly use 'goto fail' to route through this
+cleanup. However, the early failure path after the first acquire_bus()
+call uses a bare 'return ret;', which leaks dma_buffer whenever the bus
+acquire fails.
 
-Fix it by tracking the container along with the pointer and in
-doing so also unify the two almost identical defragmentation
-routines.
+Replace the early return with goto fail so the existing cleanup path
+runs.
 
-Fixes: 4d70e9c5488d ("wifi: mac80211: defragment reconfiguration MLE when parsing")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260508091031.8a6c34613178.I4de16ebbce2d27f2f8f98fc49949c7a376c2fe8d@changeid
+Found via a custom Coccinelle semantic patch hunting for kmalloc'd
+locals leaked on early-return error paths in driver firmware-download
+code.
+
+Fixes: 1241c5650ff7 ("wifi: wilc1000: Fill in missing error handling")
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260511042732.998311-1-shitalkumar.gandhi@cambiumnetworks.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 71 +++++++++++++++++++-------------------------
- 1 file changed, 31 insertions(+), 40 deletions(-)
+ drivers/net/wireless/microchip/wilc1000/wlan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index c5e0f7f460048..b9ec99f51851a 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -34,6 +34,13 @@
- #include "led.h"
- #include "wep.h"
+diff --git a/drivers/net/wireless/microchip/wilc1000/wlan.c b/drivers/net/wireless/microchip/wilc1000/wlan.c
+index fedc7d59216ad..1cc4ee62987d4 100644
+--- a/drivers/net/wireless/microchip/wilc1000/wlan.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
+@@ -1265,7 +1265,7 @@ int wilc_wlan_firmware_download(struct wilc *wilc, const u8 *buffer,
  
-+struct ieee80211_elem_defrag {
-+	const struct element *elem;
-+	/* container start/len */
-+	const u8 *start;
-+	size_t len;
-+};
-+
- struct ieee80211_elems_parse {
- 	/* must be first for kfree to work */
- 	struct ieee802_11_elems elems;
-@@ -41,11 +48,7 @@ struct ieee80211_elems_parse {
- 	/* The basic Multi-Link element in the original elements */
- 	const struct element *ml_basic_elem;
+ 	ret = acquire_bus(wilc, WILC_BUS_ACQUIRE_AND_WAKEUP);
+ 	if (ret)
+-		return ret;
++		goto fail;
  
--	/* The reconfiguration Multi-Link element in the original elements */
--	const struct element *ml_reconf_elem;
--
--	/* The EPCS Multi-Link element in the original elements */
--	const struct element *ml_epcs_elem;
-+	struct ieee80211_elem_defrag ml_reconf, ml_epcs;
- 
- 	bool multi_link_inner;
- 	bool skip_vendor;
-@@ -162,10 +165,14 @@ ieee80211_parse_extension_element(u32 *crc,
- 				}
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_RECONF:
--				elems_parse->ml_reconf_elem = elem;
-+				elems_parse->ml_reconf.elem = elem;
-+				elems_parse->ml_reconf.start = params->start;
-+				elems_parse->ml_reconf.len = params->len;
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
--				elems_parse->ml_epcs_elem = elem;
-+				elems_parse->ml_epcs.elem = elem;
-+				elems_parse->ml_epcs.start = params->start;
-+				elems_parse->ml_epcs.len = params->len;
- 				break;
- 			default:
- 				break;
-@@ -950,46 +957,27 @@ ieee80211_prep_mle_link_parse(struct ieee80211_elems_parse *elems_parse,
- 				      sub->start, sub->len);
- }
- 
--static void
--ieee80211_mle_defrag_reconf(struct ieee80211_elems_parse *elems_parse)
--{
--	struct ieee802_11_elems *elems = &elems_parse->elems;
--	ssize_t ml_len;
--
--	ml_len = cfg80211_defragment_element(elems_parse->ml_reconf_elem,
--					     elems->ie_start,
--					     elems->total_len,
--					     elems_parse->scratch_pos,
--					     elems_parse->scratch +
--						elems_parse->scratch_len -
--						elems_parse->scratch_pos,
--					     WLAN_EID_FRAGMENT);
--	if (ml_len < 0)
--		return;
--	elems->ml_reconf = (void *)elems_parse->scratch_pos;
--	elems->ml_reconf_len = ml_len;
--	elems_parse->scratch_pos += ml_len;
--}
--
--static void
--ieee80211_mle_defrag_epcs(struct ieee80211_elems_parse *elems_parse)
-+static const void *
-+ieee80211_mle_defrag(struct ieee80211_elems_parse *elems_parse,
-+		     struct ieee80211_elem_defrag *defrag,
-+		     size_t *out_len)
- {
--	struct ieee802_11_elems *elems = &elems_parse->elems;
-+	const void *ret;
- 	ssize_t ml_len;
- 
--	ml_len = cfg80211_defragment_element(elems_parse->ml_epcs_elem,
--					     elems->ie_start,
--					     elems->total_len,
-+	ml_len = cfg80211_defragment_element(defrag->elem,
-+					     defrag->start, defrag->len,
- 					     elems_parse->scratch_pos,
- 					     elems_parse->scratch +
- 						elems_parse->scratch_len -
- 						elems_parse->scratch_pos,
- 					     WLAN_EID_FRAGMENT);
- 	if (ml_len < 0)
--		return;
--	elems->ml_epcs = (void *)elems_parse->scratch_pos;
--	elems->ml_epcs_len = ml_len;
-+		return NULL;
-+	ret = elems_parse->scratch_pos;
-+	*out_len = ml_len;
- 	elems_parse->scratch_pos += ml_len;
-+	return ret;
- }
- 
- struct ieee802_11_elems *
-@@ -1069,9 +1057,12 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
- 		_ieee802_11_parse_elems_full(&sub, elems_parse, NULL);
- 	}
- 
--	ieee80211_mle_defrag_reconf(elems_parse);
--
--	ieee80211_mle_defrag_epcs(elems_parse);
-+	elems->ml_reconf = ieee80211_mle_defrag(elems_parse,
-+						&elems_parse->ml_reconf,
-+						&elems->ml_reconf_len);
-+	elems->ml_epcs = ieee80211_mle_defrag(elems_parse,
-+					      &elems_parse->ml_epcs,
-+					      &elems->ml_epcs_len);
- 
- 	if (elems->tim && !elems->parse_error) {
- 		const struct ieee80211_tim_ie *tim_ie = elems->tim;
+ 	wilc->hif_func->hif_read_reg(wilc, WILC_GLB_RESET_0, &reg);
+ 	reg &= ~BIT(10);
 -- 
 2.53.0
 
