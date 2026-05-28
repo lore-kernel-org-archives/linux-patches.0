@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51CE2E7379;
-	Thu, 28 May 2026 20:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A355622652D;
+	Thu, 28 May 2026 20:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999773; cv=none; b=c71MaYquLH0vhKZkTm1jrQ3Yg3BqIfaBRevZmTWjYkwx9L0hKSb/T+1ysvoDdqlMGCtgbcXOrZJ0KissCnRJrnH4ZEeUhyC4gn5rY9nIMB5u+X8gjuIUypYP8cW2Yg0TRxpqwlF4mbmYiN9zEYWlh4y9SJKNt8f/jZEGjUXOC9I=
+	t=1779999776; cv=none; b=UdWxDB/VB6Ce8cUYqzIGwqJGIC93N+wkk4jAxuVGbzeVZtOXyfIIQRXS9Fw0XCoriR7obhWfN6y6OP7OjdnBvQmG5DJRG6p8YAADeuqMfLQwdk+oYvFe/5IHn8NXeM9NqKZ2xNSkxRPGv2TKBfdoxEJxwVvm2Ywl5RFXPVZETHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999773; c=relaxed/simple;
-	bh=l7sN4yQoYtM0PnJEj2w056bgkz77/1iuGtARZjDzePw=;
+	s=arc-20240116; t=1779999776; c=relaxed/simple;
+	bh=z/Fs+dVQGNWcK2ZMhEWfMbs/GJDCsdBVhFfr0LwhCLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWzSRLqRMnpdXxEKAPfsi+mZ5AfZukU8A+02tUDqU/l9oLLoA5PHNeUCZub/P0eBc15W+cV7yd06LEbYzg5m/V08Ye7SKjIcF232/DrHQGrvof+89ftidGBE8JQ1VkX5gPqLxoH0ckgqUAlG0RoRoQTldVoQg4p9C08tqwA59IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfpqxG5s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mdv2SzTpKbo5JqqWYkX1dZ5R1yxwmaSMoGlvRn1Bq5lAg07AF1yJwsTfG8KlXiRHaal7jrIclb1KUn8dYaJBCBjcSO4SKQyNDkZYYhlOrvtccLUyzhSVabECk55P5BsAq3rBzTXAXRqcHmREPmkGdGIMuPf5VGgycGU+MF/QfI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr/6x76D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfpqxG5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD101F000E9;
-	Thu, 28 May 2026 20:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr/6x76D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7F01F000E9;
+	Thu, 28 May 2026 20:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999772;
-	bh=WBpHNPy0BA0D42u05GLJe1SxjBCa/BbSDofrIb0MwrQ=;
+	s=korg; t=1779999775;
+	bh=cA/sdSBHZexvd/iHhL50vvYq75pMwK2MOnPRcOeYzlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dfpqxG5sPXZh8OkKHE13Kd1B7GFYA+FhUN8b5Zb+LB4tNZNJN7N+ekdLVNlsCK5gq
-	 51AXJuD3G5KB521+b1qbNN85H4/ZE1fm+Be3TGD1zkdOsuLdnNYb72khm4H1tX4DVX
-	 GORCADwdiiBwX9sx3B8VeU3GznCXCCUihWxa/yUY=
+	b=vr/6x76DqdHMrxIw3o19GJaUgIFRPWZrFkBd4hcSyt4TY+PmUD/NzMNuMQnBZqpRd
+	 qz4Sc9BF9y4heTeYfjXXZM+UrFZfiyHG1jYo4xJcSLmJTzIeojA2rk4DoQDykhry8t
+	 xJdIPsm8ZFk65J7R0fTkQxmPHYLsKbmeGL7T1NrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Gow <david@davidgow.net>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 185/377] kunit: config: Enable KUNIT_DEBUGFS by default
-Date: Thu, 28 May 2026 21:47:03 +0200
-Message-ID: <20260528194643.778837687@linuxfoundation.org>
+Subject: [PATCH 6.18 186/377] kunit: config: KUNIT_DEBUGFS should depend on DEBUG_FS
+Date: Thu, 28 May 2026 21:47:04 +0200
+Message-ID: <20260528194643.806484010@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,38 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: David Gow <david@davidgow.net>
 
-[ Upstream commit 17e4c68ff35090d8cb743e3c82c09f92fda1ebda ]
+[ Upstream commit 8f80b5b227ef9ea422080487715c841856339aed ]
 
-The KUNIT_DEBUGFS option is currently enabled based on the value of
-KUNIT_ALL_TESTS, but it really doesn't have anything to do with the set of
-enabled tests, so just enable it by default anyway. In particular, this
-shouldn't be only visible if KUNIT_ALL_TESTS is set, which is quite
-confusing.
+CONFIG_KUNIT_DEBUGFS is totally useless without debugfs, so it should
+depend on CONFIG_DEBUG_FS.
 
-Link: https://lore.kernel.org/r/20260425034155.53913-1-david@davidgow.net
-Fixes: beaed42c427d ("kunit: default KUNIT_* fragments to KUNIT_ALL_TESTS")
+Link: https://lore.kernel.org/r/20260425034155.53913-2-david@davidgow.net
+Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
 Signed-off-by: David Gow <david@davidgow.net>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/kunit/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/lib/kunit/Kconfig b/lib/kunit/Kconfig
-index 7a6af361d2fc6..2b9fd107a69fe 100644
+index 2b9fd107a69fe..889380c2702c3 100644
 --- a/lib/kunit/Kconfig
 +++ b/lib/kunit/Kconfig
-@@ -16,8 +16,8 @@ menuconfig KUNIT
- if KUNIT
+@@ -17,6 +17,7 @@ if KUNIT
  
  config KUNIT_DEBUGFS
--	bool "KUnit - Enable /sys/kernel/debug/kunit debugfs representation" if !KUNIT_ALL_TESTS
--	default KUNIT_ALL_TESTS
-+	bool "KUnit - Enable /sys/kernel/debug/kunit debugfs representation"
-+	default y
+ 	bool "KUnit - Enable /sys/kernel/debug/kunit debugfs representation"
++	depends on DEBUG_FS
+ 	default y
  	help
  	  Enable debugfs representation for kunit.  Currently this consists
- 	  of /sys/kernel/debug/kunit/<test_suite>/results files for each
 -- 
 2.53.0
 
