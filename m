@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A861313550;
-	Thu, 28 May 2026 20:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F1F223328;
+	Thu, 28 May 2026 20:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000308; cv=none; b=io7xc8hTyhKTPGNyH2IMurekYiL78uwZA2P10ySZhRZ8qPrmwJw1/9RIXTghX7DEkzEVSkTws1eMSYcFUF5y9yKy4U0Vme5yFL/PiglrrIp/LUB/KNW6iT5AIAL1Ur3D9Td4VhTsg/c5xggp5TMQrnbbYcL5OAt5Q/dS7wFyq7k=
+	t=1780000311; cv=none; b=eN6Q1aFQxlKKoNmhd/IL9vnHTZzsRU3+tz107iNn4xstSiukXxOzEWow7/7EQaqTwqwzRShhVa2xEHJpqZeLFB71PGssEHVLXZR5X1Gm6T8Kq6j7MZHsJUwAPjRDqqR1pZH1Q1uAgKwg9NWqXml39BEF1CWv5ZlZpAK+349B7gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000308; c=relaxed/simple;
-	bh=690Jv5HT0CV5l+LyIKSqPbfKxB4ceN55eH0thnVFknQ=;
+	s=arc-20240116; t=1780000311; c=relaxed/simple;
+	bh=4W48ycVlQ+/ow7Q1q+s0ypM9YWXK3tyNrBpy9s+45nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CF1N1Z1Y0X/sAcssPa+L1XQGaJtjj01C86TyXBL76OSrWCpKsqUSLuH6FXuGuXjZ8ObbrNuNIoDPq/MVYdHgA79uUnyMVrwJxCkuYSWraauA6Qgd4IYjxDsr7BSg5OV1fNMDQ03SAtVZzsZHJS7iMXong8QO4fhIDeLqs/tuwRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2ID9edJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YyswhrtKNLpug0wUI6Mb9SKXVvwqIiwd11RjkbYBS7k8qfzHRxzYF4mLNgnExBxe+YDPOpnBAuw3/Gatoi7Vis+a/N0ZUQiEtzua8DFUPvTnEgHsgHCCEu1b7qIkGMv9HHPRNcJNwHUM1jvdexTJSC5fm86HV6rbMmJXKpEcWVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bY0bSO3/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2ID9edJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93BB1F000E9;
-	Thu, 28 May 2026 20:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bY0bSO3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38D81F000E9;
+	Thu, 28 May 2026 20:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000307;
-	bh=CPxrkqbq2PcqlwbGboemkJonrJNN059piE427CNWUk8=;
+	s=korg; t=1780000310;
+	bh=sI/YqxyN4hqnuNS0Cg+DDa9mhfEPcCPatUKSZw18U5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f2ID9edJ2CEsVT6ofhgHLJL4firTU8H97OfIWapQft0KubvO+VBoaIddmKUtGOblR
-	 GODmBCSOGsG3f3v00QXj4H7oQbTVw5XY7Q77ziml8sZSBPm0c1BYFzacT7lZIHO5fA
-	 jx2k1n0yCK0vZwMTRZNqJ4rPsn3/eZN29hDccJ8c=
+	b=bY0bSO3/BADalpi7xllLkUTdJ+Xb+z3tQ4uILEkr2plrbJnMIAZlExIlz1/KXR2y9
+	 Q2aBNuYOBOPGFvlDMyemoDQFKG7M6ZNahh7DESQpHde3FxwE/IHU8PHBCocyxxz08r
+	 Zq6kQovfku/WpYDPzBKCHLQ084IqEGCkEQNZokoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyi Liu <moss80199@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 376/377] ksmbd: fix durable reconnect error path file lifetime
-Date: Thu, 28 May 2026 21:50:14 +0200
-Message-ID: <20260528194649.318303731@linuxfoundation.org>
+Subject: [PATCH 6.18 377/377] LoongArch: kprobes: Fix handling of fatal unrecoverable recursions
+Date: Thu, 28 May 2026 21:50:15 +0200
+Message-ID: <20260528194649.348754461@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,61 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyi Liu <moss80199@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 3515503322f4819277091839eed46b695096aca5 ]
+[ Upstream commit 1c856e158fd34ef2c4475a81c1dc386329989938 ]
 
-After a durable reconnect succeeds, ksmbd_reopen_durable_fd() republishes
-the same ksmbd_file into the session volatile-id table. If smb2_open()
-then takes a later error path, cleanup first calls ksmbd_fd_put(work, fp)
-and then unconditionally calls ksmbd_put_durable_fd(dh_info.fp).
+KPROBE_HIT_SS and KPROBE_REENTER are two types of fatal recursions that
+can not be safely recovered in kprobes.
 
-In this case fp and dh_info.fp are the same object. The first put drops the
-reconnect lookup reference, but the final durable put can run
-__ksmbd_close_fd(NULL, fp). Because the final close is not session-aware,
-it can free the file object without removing the volatile-id entry that was
-just published into the session table.
+KPROBE_HIT_SS means that a kprobe is hit during single-stepping. At
+this point, the architecture-specific single-step context is already
+active. Nested single-stepping would corrupt the state, as the kprobe
+control block (kcb) and hardware registers cannot safely store multiple
+levels of stepping state.
 
-Use the session-aware put for the final reconnect drop when the reconnect
-had already succeeded and the error path is cleaning up the republished
-file. Earlier reconnect failures, before fp is assigned to dh_info.fp, keep
-using the durable-only put path.
+KPROBE_REENTER means that a third-level recursion occurs when a probe
+is hit while the system is already handling a nested probe (second-
+level). The kcb only provides a single slot (prev_kprobe) to backup the
+state. When a third probe is hit, there is no more space to save the
+state without corrupting the first-level backup.
 
-Fixes: 1baff47b81f9 ("ksmbd: fix use-after-free in smb2_open during durable reconnect")
-Signed-off-by: Junyi Liu <moss80199@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Kprobes work by replacing instructions with breakpoints. In order to
+execute the original instruction and continue, it must be moved to a
+temporary "single-step" slot. Since there is no backup space left to
+set up this slot safely, the CPU would be forced to return to the same
+original breakpoint address, triggering an endless loop.
+
+Currently, the code only prints a warning and returns. This leads to
+an infinite re-entry loop as the CPU repeatedly hits the same trap and
+a "stuck" CPU core because preemption was disabled at the start of the
+handler and never re-enabled in this early return path.
+
+Fix the logic by:
+1. Merging KPROBE_HIT_SS and KPROBE_REENTER cases, as both represent
+   fatal recursions that cannot be safely recovered.
+2. Replacing WARN_ON_ONCE() with BUG() to terminate the system. This
+   aligns LoongArch with other architectures (x86, arm64, riscv) and
+   prevents stack overflow while providing diagnostic information.
+
+Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ arch/loongarch/kernel/kprobes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 756624b4e90e0..da7b96707186e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3812,8 +3812,19 @@ int smb2_open(struct ksmbd_work *work)
- 		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
- 	}
- 
--	if (dh_info.reconnected)
--		ksmbd_put_durable_fd(dh_info.fp);
-+	if (dh_info.reconnected) {
-+		/*
-+		 * If reconnect succeeded, fp was republished in the
-+		 * session file table.  On a later error, ksmbd_fd_put()
-+		 * above drops the session reference; drop the durable
-+		 * lookup reference through the same session-aware path so
-+		 * final close removes the volatile id before freeing fp.
-+		 */
-+		if (rc && fp == dh_info.fp)
-+			ksmbd_fd_put(work, dh_info.fp);
-+		else
-+			ksmbd_put_durable_fd(dh_info.fp);
-+	}
- 
- 	kfree(name);
- 	kfree(lc);
+diff --git a/arch/loongarch/kernel/kprobes.c b/arch/loongarch/kernel/kprobes.c
+index 04b5b05715cdc..1985ed30dd16f 100644
+--- a/arch/loongarch/kernel/kprobes.c
++++ b/arch/loongarch/kernel/kprobes.c
+@@ -186,16 +186,16 @@ static bool reenter_kprobe(struct kprobe *p, struct pt_regs *regs,
+ 			   struct kprobe_ctlblk *kcb)
+ {
+ 	switch (kcb->kprobe_status) {
+-	case KPROBE_HIT_SS:
+ 	case KPROBE_HIT_SSDONE:
+ 	case KPROBE_HIT_ACTIVE:
+ 		kprobes_inc_nmissed_count(p);
+ 		setup_singlestep(p, regs, kcb, 1);
+ 		break;
++	case KPROBE_HIT_SS:
+ 	case KPROBE_REENTER:
+ 		pr_warn("Failed to recover from reentered kprobes.\n");
+ 		dump_kprobe(p);
+-		WARN_ON_ONCE(1);
++		BUG();
+ 		break;
+ 	default:
+ 		WARN_ON(1);
 -- 
 2.53.0
 
