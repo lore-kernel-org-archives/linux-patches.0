@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5130B2F1FEC;
-	Thu, 28 May 2026 20:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523D12E7F25;
+	Thu, 28 May 2026 20:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000707; cv=none; b=Z6mYL6qw4mrH9sUXYKGnVLDUOrQ91dbTSXmXhLoZYAQMBmngmw+M+bBLtrrjBvQBM2zM0iv4lWzX+sojLIiV3NuBJ1AM0A/d+Be/UsBM7ZyEPvN+pAdZRwLKUXT912TiRy1H+62M/3Hr78U5UY8/EtQ3Wtfqgk0JXw4ZN6kcsko=
+	t=1780000710; cv=none; b=IdTAl0b9vgp3OQ4gORESPNQiGmQGGKlVcpO1tklfVetB0d+BQe1T/20DuJWMu2znmEp85W7sViwUVZ7zYXXDmiSW+gUEiiAJsLulh+h9DruE3rwJ4UR/ezX+1LOb73mRUS2udo2UBGE2hVYjbIKnXTpgWwKkO588CBS1BBbhbzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000707; c=relaxed/simple;
-	bh=FCrN6TbDVppZcQ3e/ap2IlTcHQ1bHHxWhuMKTa0450A=;
+	s=arc-20240116; t=1780000710; c=relaxed/simple;
+	bh=T+eEFRse8n1qs9R+xTGBbLd4L7knUEUgploeDt9e+Bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alihsv9pVEIoxHvGS2O/p7+mAcXfkEKUMS7QcRvQ6WmoROIxbAFwhVWZDEco4c8NdBvxN7HN/UjxzIKR8UYu4Km6R2QQrTjXDas337LCoWvBKtA0dEPBjZNK+ARizqcrIf3sFX97P7OBCA5YGx6D4nok5o/KsnbzhaEtVynPak8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVvbSGPK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LFf6uPzMy8FL/Xy1ezLZDfluV83hvY7+qN1aiuwtEzVggvMf9xlrUEA9F0YeKwAEDeX8a0Rhze1TNVq6PyxBMQcanX6PAcER/eTqlH21fd0X9ZXMHn26VaIV8uND5ATBaBsP9aDK52bf+qYTvaRSqT18QRhSbrX8vF6xY529V6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/Ml07Me; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVvbSGPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A575A1F000E9;
-	Thu, 28 May 2026 20:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/Ml07Me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745851F000E9;
+	Thu, 28 May 2026 20:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000706;
-	bh=sAudlob1gTCwL5Q/55njkYQoLMtLk+T4rFByGLoyAB8=;
+	s=korg; t=1780000709;
+	bh=x/8WlQb44HIL/rxjh5bV8m/m1fBuTZtNmB7uNXcqTDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XVvbSGPKgH8WZqFnz6WEo22ftN/rBd8aW4GcRkJW3JCQHaGnlySy4d+cJz7++C8pL
-	 sdijxOEnZvwsBCG9ufUjtTBQeFBXO7Mcv05Ch/F9rpZEVUfnUuMCEq8rSxWacpTThI
-	 5nV2H7lZj02BStinqPsnN8yFLd3SYtP9bAgmBGgg=
+	b=C/Ml07MehrWk52wzUL733lH5LL2VCgXy1PYx5z31t/WmuUfIrYqnWBJxGWApbILCK
+	 LUW8QyTGF3Elr8uUIwOlcOAtxdu1iFDJODY6ZeHta9DifmJI5yNXWnYdurGC9bn3T2
+	 Tra1LPmqRg1mmwQTLVnq45V+dRjDbRqPBrABxhII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 141/272] hwmon: (pmbus/adm1266) reject short block-read responses in the GPIO accessors
-Date: Thu, 28 May 2026 21:48:35 +0200
-Message-ID: <20260528194633.319801834@linuxfoundation.org>
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 142/272] ARM: dts: renesas: genmai: Drop superfluous cells
+Date: Thu, 28 May 2026 21:48:36 +0200
+Message-ID: <20260528194633.348051308@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,71 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-commit a7232f68c43ca62f545049b7f5fbfc75137b843b upstream.
+[ Upstream commit 714e1d6bba0e0abe5c87c8e189a35fa690540df4 ]
 
-adm1266_gpio_get() and adm1266_gpio_get_multiple() both compose the
-pin-status word as
+Drop superfluous address-cells and size-cells to fix DTC W=1 warning:
 
-	pins_status = read_buf[0] + (read_buf[1] << 8);
+    arch/arm/boot/dts/renesas/r7s72100-genmai.dts:28.17-55.4: Warning (avoid_unnecessary_addr_size): /flash@18000000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
 
-right after i2c_smbus_read_block_data(), guarding only against an
-error return.  A well-behaved device returns 2 bytes for
-GPIO_STATUS/PDIO_STATUS, but the helper happily reports a 0- or
-1-byte response too.  If the device returns 0 bytes, both read_buf
-slots are uninitialized stack memory; if it returns 1 byte, read_buf[1]
-is.
-
-The composed value then flows through set_bit() into the caller's
-*bits in adm1266_gpio_get_multiple(), or into the return value of
-adm1266_gpio_get(), and ends up in userspace via gpiolib (sysfs and
-the char-dev ioctls).  That leaks a few bits of kernel stack per
-request on any device whose firmware glitch, bus error, or hostile
-slave produces a short block-read response.
-
-Add the missing length check to both call sites and surface a short
-response as -EIO.
-
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-3-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Fixes: 30e0a8cf886cb459 ("ARM: dts: renesas: genmai: Add FLASH nodes")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260327234244.91707-6-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/boot/dts/renesas/r7s72100-genmai.dts | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -176,6 +176,8 @@ static int adm1266_gpio_get(struct gpio_
- 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
+diff --git a/arch/arm/boot/dts/renesas/r7s72100-genmai.dts b/arch/arm/boot/dts/renesas/r7s72100-genmai.dts
+index 28e703e0f152b..9bfbd25b25a24 100644
+--- a/arch/arm/boot/dts/renesas/r7s72100-genmai.dts
++++ b/arch/arm/boot/dts/renesas/r7s72100-genmai.dts
+@@ -38,9 +38,6 @@ flash@18000000 {
+ 		clocks = <&mstp9_clks R7S72100_CLK_SPIBSC0>;
+ 		power-domains = <&cpg_clocks>;
  
- 	pins_status = read_buf[0] + (read_buf[1] << 8);
- 	if (offset < ADM1266_GPIO_NR)
-@@ -196,6 +198,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
-@@ -208,6 +212,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-
+ 		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+-- 
+2.53.0
+
 
 
