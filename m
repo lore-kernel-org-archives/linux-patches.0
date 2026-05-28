@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D772C11F9;
-	Thu, 28 May 2026 20:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EB72D1303;
+	Thu, 28 May 2026 20:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999518; cv=none; b=DBG0mMPxi/rxlCS1BFKi6qSM05X14Ont/Je0WjqILvVMhJ3JbeCi79yu+WasumRwqPtPSqJead9ot0hq4cKO1mDc9aJ6OCC6DVklwOBt1dpILf3nS+aCvoop3KukitBQQPJwNV9qZjJlg2n5IVgXozwIjg1FtnrYZd8gfNRPp8o=
+	t=1779999520; cv=none; b=d0/TSXYeh+QkoW4IxwmYO3h+ZaQavuSrES/d/pWZW98ekB21ejDylmCu0jJwrpRZ9sl5R5U6vl2L3aV1tCFf4aOc4SgjGcN+n+UIZvbRMd24waXlNVimCAlnehG6Tyzm1gEJ7Kazb1Qxp3GWhjVUstVkv+68lYzrRy6ZWxHRjfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999518; c=relaxed/simple;
-	bh=6ebgZ2NozLe/1+5aA8LDGglqjtwaJxdnlUsSYpxIdJM=;
+	s=arc-20240116; t=1779999520; c=relaxed/simple;
+	bh=FuLQikTWTI2tisEmcQR2yB36nfunGXLBQvZYqQuxbYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YDPLaTtQtBmG8elqDStNHRcwVVxiDdZUFNqUtZMntaHAmfI6sXA7hC5cSuztdVTrY6PtU2QVDHuXVMTK9CKfB+aXmoMt77ORJKJfjcMKgK0kx8f+QK2XZ3bZXMoT0NEAVC2pSVdsAnPlDpIFLs3zzMIYJnZW0/etSwvvG7AgWeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8KE1Fls; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=khfs3tBDpCrNq8q8s8VpG9HLrN/q08ipvBp7IKIpguxeB9wl3YlzE/+EOEOhgxt1xpagKEd6bXKU3CWGlBFBeVKe7laSk6P3njxJmRcbnlfJ5vw9k265kaF8PxZ5IP63ch5s5CUY1agB/PTFOpsJt7BxNljAiGm6JwKfvHTtfRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjMu5SjN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8KE1Fls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6541A1F000E9;
-	Thu, 28 May 2026 20:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjMu5SjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7871F000E9;
+	Thu, 28 May 2026 20:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999516;
-	bh=XbUwfSe5CQLQNtznpEZ6U0JgJUGydyKhj+KIkk9Mrnc=;
+	s=korg; t=1779999519;
+	bh=yqN7PObfl3EVpoaLTbZT/HZWW8WOP6j4lrOAdFUJZZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8KE1FlskyIA2dSm4JMsg1L76OJIx85fLScFZQn6TtrOPG/fNWOcVSHmvpDLqzsIG
-	 Ai8BWqK9EnNLqqjZuNIbVMA9Kgmvqj9fheeldAKzPPFq8FiXSadoAmNDz2Aj8vio0v
-	 194AooPbaTzzdone4h0GSiDra/m6EpM1q78bLcvM=
+	b=NjMu5SjNEe+Y0XbIw1wopiDJFwQmmuoDhXS4x3Wi+oN6tHKAdC+giJkriyX5Bl0MT
+	 5CZIzaxYQkb7MqLJ3yiY+hM9G4PBJqcSypEKN7QFJXIW6j9pjQJu68YGWSYiN1MwlP
+	 uKstH+vZVVtEmO61InvsjX1X9WWWtlpgefcFIZY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Linu Cherian <lcherian@marvell.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
 	Geetha sowjanya <gakula@marvell.com>,
-	hariprasad <hkelam@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	stable <stable@kernel.org>,
-	Sam Daly <sam@samdaly.ie>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 095/377] octeontx2-af: CGX: add bounds check to cgx_speed_mbps index
-Date: Thu, 28 May 2026 21:45:33 +0200
-Message-ID: <20260528194641.106867100@linuxfoundation.org>
+Subject: [PATCH 6.18 096/377] octeontx2-pf: fix double free in rvu_rep_rsrc_init()
+Date: Thu, 28 May 2026 21:45:34 +0200
+Message-ID: <20260528194641.133848534@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,60 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sam Daly <sam@samdaly.ie>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit c0bf0a4f3f1f5f57aa83e1400ba4f56f0abfd542 upstream.
+commit e8fb3de2a8effcaf62bec2c56b93d8bb480371d1 upstream.
 
-cgx_speed_mbps has 13 elements but RESP_LINKSTAT_SPEED can yield values
-0-15. If it returns a value >= 13, this causes an out-of-bounds array
-access. Add a bounds check and default to speed 0 if the index is out of
-range.
+rvu_rep_rsrc_init() allocates queue memory before calling
+otx2_init_hw_resources(). When hardware resource setup fails,
+otx2_init_hw_resources() already unwinds the partially initialized
+SQ, CQ, and aura state before returning an error. The representor
+error path then calls otx2_free_hw_resources() again and can free
+the same resources a second time.
 
-Fixes: 61071a871ea6 ("octeontx2-af: Forward CGX link notifications to PFs")
-Cc: Sunil Goutham <sgoutham@marvell.com>
-Cc: Linu Cherian <lcherian@marvell.com>
-Cc: Geetha sowjanya <gakula@marvell.com>
-Cc: hariprasad <hkelam@marvell.com>
-Cc: Subbaraya Sundeep <sbhatta@marvell.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sam Daly <sam@samdaly.ie>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026051352-refined-demise-e88d@gregkh
+Fix this by splitting the cleanup labels so that a failure from
+otx2_init_hw_resources() only releases queue memory. Keep the
+otx2_free_hw_resources() call for failures that happen after
+hardware resource initialization completed successfully.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc3.
+
+Runtime validation was not performed because reproducing this path
+requires OcteonTX2 representor hardware.
+
+Fixes: 3937b7308d4f ("octeontx2-pf: Create representor netdev")
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Geetha sowjanya <gakula@marvell.com>
+Link: https://patch.msgid.link/20260513151320.213260-1-dawei.feng@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/rep.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -1294,13 +1294,18 @@ static inline void link_status_user_form
- 					   struct cgx_link_user_info *linfo,
- 					   struct cgx *cgx, u8 lmac_id)
- {
-+	unsigned int speed;
-+
- 	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
- 	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
--	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
- 	linfo->an = FIELD_GET(RESP_LINKSTAT_AN, lstat);
- 	linfo->fec = FIELD_GET(RESP_LINKSTAT_FEC, lstat);
- 	linfo->lmac_type_id = FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, lstat);
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/rep.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/rep.c
+@@ -609,7 +609,7 @@ static int rvu_rep_rsrc_init(struct otx2
  
-+	speed = FIELD_GET(RESP_LINKSTAT_SPEED, lstat);
-+	linfo->speed = speed < ARRAY_SIZE(cgx_speed_mbps) ?
-+		       cgx_speed_mbps[speed] : 0;
-+
- 	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
- 		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
- 			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
+ 	err = otx2_init_hw_resources(priv);
+ 	if (err)
+-		goto err_free_rsrc;
++		goto err_free_mem;
+ 
+ 	/* Set maximum frame size allowed in HW */
+ 	err = otx2_hw_set_mtu(priv, priv->hw.max_mtu);
+@@ -621,6 +621,7 @@ static int rvu_rep_rsrc_init(struct otx2
+ 
+ err_free_rsrc:
+ 	otx2_free_hw_resources(priv);
++err_free_mem:
+ 	otx2_free_queue_mem(qset);
+ 	return err;
+ }
 
 
