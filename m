@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120E72D9787;
-	Thu, 28 May 2026 20:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16332F9D85;
+	Thu, 28 May 2026 20:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999676; cv=none; b=oKWfDa/CSbLKwhSte5IMCviSpTSrATsMR7qPbT/1FMmEHPBmYNNTTvgUdIqmLzc6wyDdyN2rqxpDo/Wh4PKCosKJ4Yr9TRMH4XD/FbEv570JASPqwrFCz+VIs+rM54xtYAaCucW+yAvATlcxrha7Jh6kAJbXSqBh+dVhHb6zlVA=
+	t=1779999678; cv=none; b=Z9VnsiVNwQLoYU8zW2SmZqWKlUF0BQqbGRG10C1i/DTIwZ42BmMWNUqXGPfhfCbn7jOb4ZDlKed++sMn5UPQD9KmZO4JNTd/vyrkGIvN2appRQiKJGd8z0sMGqmEtHyX5ffnmmK9x/0I2pPk/bryRAw4aYiEv0qa9lXRd/kt8aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999676; c=relaxed/simple;
-	bh=VIvoIWgvhbbjMuRHyPNj7+y9uoMfAxq4nWssr43UHH8=;
+	s=arc-20240116; t=1779999678; c=relaxed/simple;
+	bh=l7/mwyUVMzdQoNMoKQzr1w0M/mdaYz/b8VJeXubEn9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZMX4F+uzUWGXh7faemRAvDwYCbhoyj5UvF4VABEoUIyXo3A0ML4sWWIlF26cdt0ZjRVLoBvw11aJ9h1ftSzdy8KWhYFPA8Juk2n4g0Rfhw1j9lWXNsqu3SC4GPUbb9l1ZaXxNqf7C2wLWKPtRwcE/1GpXXNm8xJmXr7kbelcmcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grxyYRs+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WFHNtlFxQYDpf9EfxRhfByjfrf9j5uOfhDX+PV15Pn263ubZ4o3Jg5W7gmXBfOLexqrVdxn3sdw0b/aLYtM+lsoDmvNgjDx5nyyi6+azbC2GM2cUtMXVKVxB3zSFGffvUZ7CAI4NXw7D6RbzKP/BThAcIF1JKb928GTOu6rT/n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0Np44vy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grxyYRs+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D4D1F000E9;
-	Thu, 28 May 2026 20:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0Np44vy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFA41F000E9;
+	Thu, 28 May 2026 20:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999675;
-	bh=cwDw2tlNPXY5ysc27aWiOUmKfORkMSKICEmSuxAVqVc=;
+	s=korg; t=1779999677;
+	bh=i2Cr9CtVYRq3yugTkeVQcDrd0QfcF2DWtbXHBeBYm3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=grxyYRs+aBWjLFhP46f4t7+SuOLqnc+IcesVlcKS/CKgPfSTWSrrjVhNqHbsFXt86
-	 JoWT/LSI3LQNppIFnTWhXlQg0Nq5kXNC1jcegmsERQBgyi46JXd19Tdcus4wpvOWwA
-	 0/0LnPAFzKzRSrSiBg5/4dL92iunifuvlI9hwejE=
+	b=l0Np44vyg6106TDdTCZrnABFoB47cN9ZM5NFEeaHI/jCiJ81aWmDTkxSRMuSQfDD9
+	 EWT8OkKjFZsBHWgHSfmoRqlQJSFh5FILU6uWsoS/lyS2GZUvjuSyZvxWdkxWcAIdhm
+	 xQ4T+KDZ0V2E+ehEA/DjC19drguXNgsBPrUeEr/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 150/377] batman-adv: tp_meter: avoid use of uninit sender vars
-Date: Thu, 28 May 2026 21:46:28 +0200
-Message-ID: <20260528194642.733036091@linuxfoundation.org>
+	Wayne Chang <waynec@nvidia.com>,
+	Wei-Cheng Chen <weichengc@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 116/377] phy: tegra: xusb: Fix per-pad high-speed termination calibration
+Date: Thu, 28 May 2026 21:45:54 +0200
+Message-ID: <20260528194641.695961163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,65 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Wayne Chang <waynec@nvidia.com>
 
-commit 6c65cf23d4c6170fcf5714c32aa64689718cb142 upstream.
+commit da110228b54f2e2143d97ea7151e0dc22e539d67 upstream.
 
-batadv_tp_recv_ack() and batadv_tp_stop() are only valid for tp_vars in the
-BATADV_TP_SENDER role. When called with a BATADV_TP_RECEIVER role, it
-proceeds to read sender-only members that were never initialized, leading
-to undefined behavior.
+The existing code reads a single hs_term_range_adj value from bit field
+[10:7] of FUSE_SKU_CALIB_0 and applies it to all USB2 pads uniformly.
+However, on SoCs that support per-pad termination, each pad has its own
+hs_term_range_adj field: pad 0 in FUSE_SKU_CALIB_0[10:7], and pads 1-3
+in FUSE_USB_CALIB_EXT_0 at bit offsets [8:5], [12:9], and [16:13]
+respectively.
 
-This can be triggered when a node that is currently acting as a receiver in
-an ongoing tp_meter session receives a malicious ACK packet.
+Fix the calibration by reading per-pad values from the appropriate fuse
+registers. For SoCs that do not support per-pad termination, replicate
+pad 0's value to all pads to maintain existing behavior.
 
-Guard against this by checking tp_vars->role immediately after the
-lookup and bailing out if it is not BATADV_TP_SENDER, before any of
-those members are accessed.
+Add a has_per_pad_term flag to the SoC data to indicate whether per-pad
+termination values are available in FUSE_USB_CALIB_EXT_0.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 1ef535c6ba8e ("phy: tegra: xusb: Add Tegra194 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260504033305.2283145-1-weichengc@nvidia.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/phy/tegra/xusb-tegra186.c |   33 ++++++++++++++++++++++++++-------
+ drivers/phy/tegra/xusb.h          |    1 +
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -663,6 +663,9 @@ static void batadv_tp_recv_ack(struct ba
- 	if (unlikely(!tp_vars))
- 		return;
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -20,8 +20,8 @@
+ /* FUSE USB_CALIB registers */
+ #define HS_CURR_LEVEL_PADX_SHIFT(x)	((x) ? (11 + (x - 1) * 6) : 0)
+ #define HS_CURR_LEVEL_PAD_MASK		0x3f
+-#define HS_TERM_RANGE_ADJ_SHIFT		7
+-#define HS_TERM_RANGE_ADJ_MASK		0xf
++#define HS_TERM_RANGE_ADJ_PADX_SHIFT(x)	((x) ? (5 + (x - 1) * 4) : 7)
++#define HS_TERM_RANGE_ADJ_PAD_MASK	0xf
+ #define HS_SQUELCH_SHIFT		29
+ #define HS_SQUELCH_MASK			0x7
  
-+	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
-+		goto out;
+@@ -253,7 +253,7 @@
+ struct tegra_xusb_fuse_calibration {
+ 	u32 *hs_curr_level;
+ 	u32 hs_squelch;
+-	u32 hs_term_range_adj;
++	u32 *hs_term_range_adj;
+ 	u32 rpd_ctrl;
+ };
+ 
+@@ -930,7 +930,7 @@ static int tegra186_utmi_phy_power_on(st
+ 
+ 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
+ 	value &= ~TERM_RANGE_ADJ(~0);
+-	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj);
++	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj[index]);
+ 	value &= ~RPD_CTRL(~0);
+ 	value |= RPD_CTRL(priv->calib.rpd_ctrl);
+ 	padctl_writel(padctl, value, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
+@@ -1464,17 +1464,23 @@ static const char * const tegra186_usb3_
+ static int
+ tegra186_xusb_read_fuse_calibration(struct tegra186_xusb_padctl *padctl)
+ {
++	const struct tegra_xusb_padctl_soc *soc = padctl->base.soc;
+ 	struct device *dev = padctl->base.dev;
+ 	unsigned int i, count;
+ 	u32 value, *level;
++	u32 *hs_term_range_adj;
+ 	int err;
+ 
+-	count = padctl->base.soc->ports.usb2.count;
++	count = soc->ports.usb2.count;
+ 
+ 	level = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
+ 	if (!level)
+ 		return -ENOMEM;
+ 
++	hs_term_range_adj = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
++	if (!hs_term_range_adj)
++		return -ENOMEM;
 +
- 	if (unlikely(atomic_read(&tp_vars->sending) == 0))
- 		goto out;
+ 	err = tegra_fuse_readl(TEGRA_FUSE_SKU_CALIB_0, &value);
+ 	if (err)
+ 		return dev_err_probe(dev, err,
+@@ -1490,8 +1496,8 @@ tegra186_xusb_read_fuse_calibration(stru
  
-@@ -1100,12 +1103,16 @@ void batadv_tp_stop(struct batadv_priv *
- 	if (!tp_vars) {
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: trying to interrupt an already over connection\n");
--		goto out;
-+		goto out_put_orig_node;
- 	}
+ 	padctl->calib.hs_squelch = (value >> HS_SQUELCH_SHIFT) &
+ 					HS_SQUELCH_MASK;
+-	padctl->calib.hs_term_range_adj = (value >> HS_TERM_RANGE_ADJ_SHIFT) &
+-						HS_TERM_RANGE_ADJ_MASK;
++	hs_term_range_adj[0] = (value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(0)) &
++				HS_TERM_RANGE_ADJ_PAD_MASK;
  
-+	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
-+		goto out_put_tp_vars;
+ 	err = tegra_fuse_readl(TEGRA_FUSE_USB_CALIB_EXT_0, &value);
+ 	if (err) {
+@@ -1503,6 +1509,17 @@ tegra186_xusb_read_fuse_calibration(stru
+ 
+ 	padctl->calib.rpd_ctrl = (value >> RPD_CTRL_SHIFT) & RPD_CTRL_MASK;
+ 
++	for (i = 1; i < count; i++) {
++		if (soc->has_per_pad_term)
++			hs_term_range_adj[i] =
++				(value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(i)) &
++				HS_TERM_RANGE_ADJ_PAD_MASK;
++		else
++			hs_term_range_adj[i] = hs_term_range_adj[0];
++	}
 +
- 	batadv_tp_sender_shutdown(tp_vars, return_value);
-+out_put_tp_vars:
- 	batadv_tp_vars_put(tp_vars);
--out:
-+out_put_orig_node:
- 	batadv_orig_node_put(orig_node);
++	padctl->calib.hs_term_range_adj = hs_term_range_adj;
++
+ 	return 0;
  }
  
+@@ -1708,6 +1725,7 @@ const struct tegra_xusb_padctl_soc tegra
+ 	.num_supplies = ARRAY_SIZE(tegra194_xusb_padctl_supply_names),
+ 	.supports_gen2 = true,
+ 	.poll_trk_completed = true,
++	.has_per_pad_term = true,
+ };
+ EXPORT_SYMBOL_GPL(tegra194_xusb_padctl_soc);
+ 
+@@ -1732,6 +1750,7 @@ const struct tegra_xusb_padctl_soc tegra
+ 	.trk_hw_mode = false,
+ 	.trk_update_on_idle = true,
+ 	.supports_lp_cfg_en = true,
++	.has_per_pad_term = true,
+ };
+ EXPORT_SYMBOL_GPL(tegra234_xusb_padctl_soc);
+ #endif
+--- a/drivers/phy/tegra/xusb.h
++++ b/drivers/phy/tegra/xusb.h
+@@ -436,6 +436,7 @@ struct tegra_xusb_padctl_soc {
+ 	bool trk_hw_mode;
+ 	bool trk_update_on_idle;
+ 	bool supports_lp_cfg_en;
++	bool has_per_pad_term;
+ };
+ 
+ struct tegra_xusb_padctl {
 
 
