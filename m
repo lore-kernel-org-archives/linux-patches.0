@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FFB2C15AC;
-	Thu, 28 May 2026 20:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1F5313550;
+	Thu, 28 May 2026 20:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000403; cv=none; b=UAaQxcBVWg9NdCiAasRmmyVTvwiL3BaPgT1GvANuQV9dhhggfISdFGwDatz1j/e0DNcpMqw4LC8Jls8aJ4pLTUQDE14liKW9bm/a7Po0LdrXDuVkp0z8/7R3x6ThJrhd7VdzGhZiyrGg8jTVd34XqYd3T/PoSLj68xn2mbiHNmQ=
+	t=1780000406; cv=none; b=ulHbTTfeEiMMwe4meeidE8B0FCaxJvP3sh0ws+tX2ZxS05Rl0pDd99cnJLAy3yVm8cLZ3S406xzcYulr0G1HDvdaX9I3qoUOAOihofh06Q3JYNauXlXDsRCw240T4h25nVOEfGbqN3PA051rl92zRTRDEra6BaqtMhNiDgikpFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000403; c=relaxed/simple;
-	bh=lafHSACwYpsey980Ky2WIg2qAOkBzKQuTsGDZfTWUFc=;
+	s=arc-20240116; t=1780000406; c=relaxed/simple;
+	bh=/tqN73Tnnh1qDJgpZuHFaoUXQ/xXUQknQQ/cEwrHaPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=baONQIWdvMC7i1N2HfEC2A8OsJHJNCpOQUsA0QeuHkN14ak26HE2BJTl0xmW4Z+TSxXHQrTA5eQdINxh8Rsa0UQvIr/LRqf5xdxrdCsosgHkvilKOLGmhgOcorKVoLtHR+Bmv2dwBxSeBy5ZBxryFbWjK5irKgDUgNBK7xmPFi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QzjXCeW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IzhM+svOPCEXrTjrJhYin+2HqI4d7zFmStiaYcMOxE9GZ5ds+9l7i6IGvILew1r6AIHFZc9KT14+FDcJBDBsMVywSn9sd9eah0osZxeM5iSYBWyd5U6UzK6GjPX4v5BKpRDaOEk/SBd1qMO2TxnlOWsQW/4KtL/YY9Y1CCpM+C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OS1FgGb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QzjXCeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC09F1F000E9;
-	Thu, 28 May 2026 20:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OS1FgGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F3A1F000E9;
+	Thu, 28 May 2026 20:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000402;
-	bh=jmpIBO94319hfOzg+ZbQeZ0DEWv4tTPA9wTOuFC4mmo=;
+	s=korg; t=1780000405;
+	bh=bsraBccOPdMDw1/hniJBOfa+ssvnLrfkpD/ymRnZPZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2QzjXCeWV9zoVJmU8Qhk4AdDiL/Kr8xEBCH9wFX5x8hTLFE36E15P8t0STLF6s97e
-	 DiOMF1M9roX4UYWQ4F49X9T/G1RJ2cWib2dXOybX93ov56NxD8UJlsJcV5WTeZouhq
-	 d4KsMIZ5qNxkTQG5YZlPO170GMO58rXubVewwmOs=
+	b=1OS1FgGbuXyTXwJlL87hVSmGEgZU2UAe7OLT9KzxFLslRh4A8s9Ehul3YJiQYsSef
+	 7OrXWtyUvy+XpAW/yEfJ/kW0dq+BFlTTJBttGGwWy8PHQ069XHFDnUNEPH/t19SZ4s
+	 fy3hxxnLptPeNeQd6SXicTqvpevnoG6fpV7Q+xFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Gyokhan Kochmarla <gyokhan@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/272] tracing: Fix the bug where bpf_get_stackid returns -EFAULT on the ARM64
-Date: Thu, 28 May 2026 21:46:46 +0200
-Message-ID: <20260528194630.288960950@linuxfoundation.org>
+Subject: [PATCH 6.12 033/272] net/mlx5e: Trigger neighbor resolution for unresolved destinations
+Date: Thu, 28 May 2026 21:46:47 +0200
+Message-ID: <20260528194630.316238023@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -54,47 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit fd2f74f8f3d3c1a524637caf5bead9757fae4332 upstream.
+commit 9ab89bde13e5251e1d0507e1cc426edcdfe19142 upstream.
 
-When using bpf_program__attach_kprobe_multi_opts on ARM64 to hook a BPF program
-that contains the bpf_get_stackid function, the BPF program fails
-to obtain the stack trace and returns -EFAULT.
+When initializing the MAC addresses for an outbound IPsec packet offload
+rule in mlx5e_ipsec_init_macs, the call to dst_neigh_lookup is used to
+find the next-hop neighbor (typically the gateway in tunnel mode).
+This call might create a new neighbor entry if one doesn't already
+exist. This newly created entry starts in the INCOMPLETE state, as the
+kernel hasn't yet sent an ARP or NDISC probe to resolve the MAC
+address. In this case, neigh_ha_snapshot will correctly return an
+all-zero MAC address.
 
-This is because ftrace_partial_regs omits the configuration of the pstate register,
-leaving pstate at the default value of 0. When get_perf_callchain executes,
-it uses user_mode(regs) to determine whether it is in kernel mode.
-This leads to a misjudgment that the code is in user mode,
-so perf_callchain_kernel is not executed and the function returns directly.
-As a result, trace->nr becomes 0, and finally -EFAULT is returned.
+IPsec packet offload requires the actual next-hop MAC address to
+program the rule correctly. If the neighbor state is INCOMPLETE when
+the rule is created, the hardware rule is programmed with an all-zero
+destination MAC address. Packets sent using this rule will be
+subsequently dropped by the receiving network infrastructure or host.
 
-Therefore, the assignment of the pstate register is added here.
+This patch adds a check specifically for the outbound offload path. If
+neigh_ha_snapshot returns an all-zero MAC address, it proactively
+calls neigh_event_send(n, NULL). This ensures the kernel immediately
+sends the initial ARP or NDISC probe if one isn't already pending,
+accelerating the resolution process. This helps prevent the hardware
+rule from being programmed with an invalid MAC address and avoids
+packet drops due to unresolved neighbors.
 
-Fixes: b9b55c8912ce ("tracing: Add ftrace_partial_regs() for converting ftrace_regs to pt_regs")
-Closes: https://lore.kernel.org/bpf/20250919071902.554223-1-yangfeng59949@163.com/
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 71670f766b8f ("net/mlx5e: Support routed networks during IPsec MACs initialization")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1765284977-1363052-8-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/ftrace.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/include/asm/ftrace.h b/arch/arm64/include/asm/ftrace.h
-index 10e56522122aa..46d4300dd48d3 100644
---- a/arch/arm64/include/asm/ftrace.h
-+++ b/arch/arm64/include/asm/ftrace.h
-@@ -145,6 +145,7 @@ ftrace_partial_regs(const struct ftrace_regs *fregs, struct pt_regs *regs)
- 	regs->pc = afregs->pc;
- 	regs->regs[29] = afregs->fp;
- 	regs->regs[30] = afregs->lr;
-+	regs->pstate = PSR_MODE_EL1h;
- 	return regs;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 486f05112f5a6..e2915d3143e6b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -365,6 +365,9 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
  
+ 	neigh_ha_snapshot(addr, n, netdev);
+ 	ether_addr_copy(dst, addr);
++	if (attrs->dir == XFRM_DEV_OFFLOAD_OUT &&
++	    is_zero_ether_addr(addr))
++		neigh_event_send(n, NULL);
+ 	dst_release(rt_dst_entry);
+ 	neigh_release(n);
+ 	return;
 -- 
 2.53.0
 
