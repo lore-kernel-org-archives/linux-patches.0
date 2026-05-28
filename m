@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ED12E7379;
-	Thu, 28 May 2026 20:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80807DDC5;
+	Thu, 28 May 2026 20:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000074; cv=none; b=DcEd1FyBSIgysld4LqHtt1LpdxDFFkumGOQ215kkWuBFtSFHCgwb3iFJBHztfeQkryQV4Od+W4AlOUv6LBTHqL6hq4NkiMTVHE7MlFxlhfGuXbsoDVVeX1VPT+UCLBiM/sCsnJbMp1qs+ZFN5xoce9xk/OZFAydZaeMcQPCzhow=
+	t=1780000077; cv=none; b=gNfz6PYP0+rQAEvNiR4AlV3SWlGYMJcCA7RS59ET2mQ+FTbTS4d9wrYpB/1fEIT8FphGeOnxRZYbVhOsS+FTzWj8T/XE2jnENxd7CdjNSXPj9dnDxwkLVR8vM2P0FkCcGFV3dZqOvExXpid8lulCC8KQxVhDfy/906QS90CIsjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000074; c=relaxed/simple;
-	bh=nTA6CN6BIeucD596JuQ5RiXYkwLtEaZpXYo17IC83AM=;
+	s=arc-20240116; t=1780000077; c=relaxed/simple;
+	bh=TmG0ydsMWcnj+CsIFHPBApSYpI0Ve5L240OfC4J8SBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6i1tSWYcHc9xAKrM53Qt7H5O9TAGaEcQ+QfvJPbql1NDHVPIzxa+lma/9fq7b53UnaJsMsx636C4DrsWFoVIlMq87BLyi6r6j46EIks/iLrnlkvfz8sK3CDALBLN4FPuVKi1rD3dMxHGB75iyNN/bo6rZrhnxLZZXUHfHo9OwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QI57o2eO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KfaetNpDgn9Bl1fxw9AaPJIZA3/8ogD9nLftOrVtEGNXpqXCPXfz7Rx6GJMdgPoqwf9qtO9scjjRDrX48uAgy17T0QnrmrA/E0D/0+cza2md5kZ1+b1OOms296H72/s3e3sXUi+lB8vvTXbhHm6pKcISgkl2xAtQl7Y0E6AubKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMyRVMtm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QI57o2eO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C141F000E9;
-	Thu, 28 May 2026 20:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMyRVMtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88F91F000E9;
+	Thu, 28 May 2026 20:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000073;
-	bh=r4IudickBmuSnZTe2/HASr4F1KiJAdYs3sfX2qENMeQ=;
+	s=korg; t=1780000076;
+	bh=fkByEGDvgo+x8iRCy1ohjmkrGvloKaYf4gunMVcAaaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QI57o2eOotHhBVPSH5APk5zZeewp8V2ifd8aEl8NMUQtjU0VvAfN11xHb6OKUE7zr
-	 xG09ke9KC0kCD6zGdEElwNlmDJqKDv3kjjPjR8vPfnGMVRSWU1vI9WxF71w0kmSbYY
-	 8jj/bKnx7ugYZw9LB7Em375wdP14vcUjxSM/cdsk=
+	b=vMyRVMtmy73Qd8cQPk26FQM9IgcLwLNK75dZzLK0tPee9p9c3UbUFqn77bILCZWH9
+	 iClt5TcK1C5p9u5xs3KtjKgyLJF3RQUKYisOz90lMB8vUaFsjNc5O0AHcO1cud9UVV
+	 wfiZgARu1Dx9sgrNEVK02lritvAgfOl6A/VGVXoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
-	Mark Brown <broonie@kernel.org>,
+	Robertus Diawan Chris <robertusdchris@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/377] ASoC: codecs: fs210x: fix possible buffer overflow
-Date: Thu, 28 May 2026 21:48:51 +0200
-Message-ID: <20260528194646.830598830@linuxfoundation.org>
+Subject: [PATCH 6.18 294/377] ALSA: scarlett2: Add missing error check when initialise Autogain Status
+Date: Thu, 28 May 2026 21:48:52 +0200
+Message-ID: <20260528194646.860303935@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,42 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
 
-[ Upstream commit 0d435a7ebcd4e97e47673c1ab6fb27f973a053ec ]
+[ Upstream commit c0e4fffc0f474b7ed10adee4ab2bc1a66d36fc72 ]
 
-In fs210x_effect_scene_info(), a string was copied like this:
+When initialise new control with scarlett2_add_new_ctl() function for
+Autogain Status, scarlett2_add_new_ctl() might throw an error. So, add
+error check after initialise new control for Autogain Status.
 
-    strscpy(DST, SRC, strlen(SRC) + 1);
+This is reported by Coverity Scan with CID 1598781 as UNUSED_VALUE.
 
-A buffer overflow would happen if strlen(SRC) >= sizeof(DST).
-Actually, strscpy() must be used this way:
-
-    strscpy(DST, SRC, sizeof(DST));
-    strscpy(DST, SRC); // defaults to sizeof(DST)
-
-Fixes: 756117701779 ("ASoC: codecs: Add FourSemi FS2104/5S audio amplifier driver")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260513190852.196723-2-grandmaster@al2klimov.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0a995e38dc44 ("ALSA: scarlett2: Add support for software-controllable input gain")
+Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+Link: https://patch.msgid.link/20260508033914.111596-1-robertusdchris@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/fs210x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_scarlett2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/fs210x.c b/sound/soc/codecs/fs210x.c
-index e2f85714972d5..e2207c53c50d5 100644
---- a/sound/soc/codecs/fs210x.c
-+++ b/sound/soc/codecs/fs210x.c
-@@ -968,7 +968,7 @@ static int fs210x_effect_scene_info(struct snd_kcontrol *kcontrol,
- 	if (scene->name)
- 		name = scene->name;
+diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
+index d0cad1d1efa35..da3c2741ef575 100644
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -6707,6 +6707,8 @@ static int scarlett2_add_line_in_ctls(struct usb_mixer_interface *mixer)
+ 		err = scarlett2_add_new_ctl(
+ 			mixer, &scarlett2_autogain_status_ctl,
+ 			i, 1, s, &private->autogain_status_ctls[i]);
++		if (err < 0)
++			return err;
+ 	}
  
--	strscpy(uinfo->value.enumerated.name, name, strlen(name) + 1);
-+	strscpy(uinfo->value.enumerated.name, name);
- 
- 	return 0;
- }
+ 	/* Add autogain target controls */
 -- 
 2.53.0
 
