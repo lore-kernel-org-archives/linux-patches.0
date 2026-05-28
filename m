@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A84298CB2;
-	Thu, 28 May 2026 20:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0D339866;
+	Thu, 28 May 2026 20:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001038; cv=none; b=Z4M2LBM5b1BxtYTHcocpW/pMlIbASGkTx4gstw8wSYt0sJV1TxLEYoDR0zwfoIzNSVYe9MDhSfQRVeLCk8sXvW02caryYfwEcjWZMSRqmLOuYpzq4pWzavWlDMTpJ9aAHXVbeUxransNDqFWpjU62A18LAtgxd7dXDT8LHoroS4=
+	t=1780001041; cv=none; b=APja5XM1lQ1dLcd/wyeonJz9CFsCj3nC6+TkM6aDyiSAxycRF+jyd74q1gDU7Rg8Ym0Lao75XKVcPtAB2d5C6Hbfbf+6Ydj/MQCD0yVVRXA8s4+amBiYyZXIYFSeszTyKjUiTWGUHjPXPz9PlpA1NXSRQ//EuoFn4foX28GK9QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001038; c=relaxed/simple;
-	bh=8sT6vLSeU1KTQh8Ai+CARPMWYNGTMPAEu/h5MWUlaEo=;
+	s=arc-20240116; t=1780001041; c=relaxed/simple;
+	bh=41St2Lz2stu0lSD/Lvs7eT6ydDMNNBhmoAaywyWVt20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuFCegK4gaXIiafZyZNdib0rAmjkfUy5Vttn5YjXZquFMvPgsAt2P8PZlG8t/m7A0BViFwiMd6gDgeZFHwlgjZDbeZpurlHrR0V01ZmseEZlpk3Zf4DJnq+moqStOu8h5c+v8YPKMcwAyhXE7rXgq9bjtsWtFh4oWcz8gT7zZEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7rbQBJg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+unIMa9WQFXn93NdRUsjuWpAMDIsdQ93Q1lmK69TBeSvRQwVxbKCV/rZD3zViZ145NH+mVWwn6+12nHmC3EqfI9ryOZIC1Vfj0V3+0RbmOeHkfWrrk3OOU7WhpyZW0xW9voOMfSCMzMFg97Rck/0B2sKgmsRa0oazbheoTZQlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2I9k1fp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7rbQBJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB68E1F000E9;
-	Thu, 28 May 2026 20:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2I9k1fp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A340B1F000E9;
+	Thu, 28 May 2026 20:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001037;
-	bh=gmE8VPjAzO0+fScIUyBS8CH88ti7jsow8qwxawTEsaI=;
+	s=korg; t=1780001040;
+	bh=6NjDfCmXKdTDduFBX1t8QV5mSi8Kpda42uSq65Y92x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7rbQBJggcYj/tpnJ+6FAzDMQ5/NzNsbOgS2UWhuO0ewLWio82DG1e8mxv1AqwCu8
-	 52zr6MRpvxjYw1geqP92qpMgHv4tsvJfuJjiL3TICwJwQ7WCQX5tlu2PX02lJhiA8G
-	 6HyNTXsJwvw9g4fXguCmu+AnR5EcGZW02oF4s29g=
+	b=K2I9k1fpernJXplB7Ugj+CRq1VMzDcsFiQjNpnOVB1/suxhGy6y+7pmAoZGniXfD8
+	 Wxd7SMaEfOpPuHl9CMIuL41BaJ7T7JklT+Pt4iMM5OEmeQ3W+/xPxw2V9N2J0S/t5V
+	 2cNKbBrgSyXFxZowQiqloLaU22GBgHLbTMFf0sHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 259/272] tracing: Avoid NULL return from hist_field_name() on truncation
-Date: Thu, 28 May 2026 21:50:33 +0200
-Message-ID: <20260528194636.352098351@linuxfoundation.org>
+Subject: [PATCH 6.12 260/272] Bluetooth: btmtk: fix urb->setup_packet leak in error paths
+Date: Thu, 28 May 2026 21:50:34 +0200
+Message-ID: <20260528194636.376852407@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit 576ec047d20b368b43c4d5db98c4f2e0f3c101ec ]
+[ Upstream commit dd1dda6b8d6e1f4376a5b3055a04f0ecbdb4d6bd ]
 
-hist_field_name() returns "" everywhere except the fully-qualified
-VAR_REF/EXPR case, where snprintf() truncation returns NULL early
-and bypasses the bottom NULL->"" guard. Callers don't expect NULL:
-strcat(expr, hist_field_name(field, 0)) at trace_events_hist.c:1758
-and the strcmp() in the sort-key match loop at :4804 both deref it.
+The setup_packet of control urb is not freed if usb_submit_urb fails or
+the submitted urb is killed. Add free in these two paths.
 
-system and event_name are bounded by MAX_EVENT_NAME_LEN, but the
-field name on a VAR_REF is kstrdup'd from a histogram variable
-name parsed out of the trigger string and has no length cap, so
-a long enough var name in a fully qualified reference can reach
-the truncation path.
-
-Keep the length check but leave field_name as "" on overflow.
-
-Link: https://patch.msgid.link/20260508195747.25492-1-devnexen@gmail.com
-Fixes: 5ec1d1e97de1 ("tracing: Rebuild full_name on each hist_field_name() call")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: a1c49c434e150 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btmtk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 2d085115afde3..2a1e3537332d5 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1347,10 +1347,8 @@ static const char *hist_field_name(struct hist_field *field,
- 			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
- 				       field->system, field->event_name,
- 				       field->name);
--			if (len >= sizeof(full_name))
--				return NULL;
--
--			field_name = full_name;
-+			if (len < sizeof(full_name))
-+				field_name = full_name;
- 		} else
- 			field_name = field->name;
- 	} else if (field->flags & HIST_FIELD_FL_TIMESTAMP)
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 98cb8529d8bcd..08a8c3a5d7b7d 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -496,6 +496,7 @@ static void btmtk_usb_wmt_recv(struct urb *urb)
+ 		return;
+ 	} else if (urb->status == -ENOENT) {
+ 		/* Avoid suspend failed when usb_kill_urb */
++		kfree(urb->setup_packet);
+ 		return;
+ 	}
+ 
+@@ -569,6 +570,7 @@ static int btmtk_usb_submit_wmt_recv_urb(struct hci_dev *hdev)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p submission failed (%d)",
+ 				   urb, -err);
++		kfree(dr);
+ 		usb_unanchor_urb(urb);
+ 	}
+ 
 -- 
 2.53.0
 
