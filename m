@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17B62459D1;
-	Thu, 28 May 2026 20:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7B22459D1;
+	Thu, 28 May 2026 20:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999504; cv=none; b=Og11TStBcBMMdYAOLdjYxOOMbSjdm6lH0fOj0v/yC0EpMBR9F3pWq7yImn9K+nUzDKF7LRyeClTTkmf/ITOewYPUqPWGDRxg4qLZjDejxYRE5rZDAR6fXPIXg4Ok4IpQE3IDL8G3+cLNktAu00MYQe9lWN08ZKJtkWfzxrzXBSU=
+	t=1779999506; cv=none; b=IviZeK4LS6ns3yyuR4jjajW/cWC/YDF/aVmhDm5MXtCSc7BjM5VFxv0O+PYOMR6HqH84Ovia0TsxEXeic4X57zkk+zxUTdAMMfzx5U37yEFuxOIgH4NGcVIRNsITO1s0352ti8Xd6Q/68h1SQozaR1MWiaUqoAazXhYguPEtOow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999504; c=relaxed/simple;
-	bh=Mdw2JDzIJBEIuQofaR89pHAw9hvx4N0gcjBHsy7nmvk=;
+	s=arc-20240116; t=1779999506; c=relaxed/simple;
+	bh=hDtoCM21LupLcLSt4LNkqqC6060B+5mtpzAvkPAPeJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUUJFmOKsWDKXkIselfvOTiFeGYoSoitvAi24tOj6Er6VEz9KkcZhQgHEE9cMwPXT2pRCkaHU0WD7XgWWhBTgFZDK02v/+msVkJtOom5ofz/cvar/8AJL3CS+AQfRn85Pyyge7u4+Qt070/sOspEXSRvIXYHsf34+h10zGnF+Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ddyOfqc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZd9W3e2qPoJpB4YoVMhmiwt3R3hnQ9TYF3tENubPRwePFF6FFLAPbWkqq6jFLepU/+Ay/lAdb4Dq6Tq4dDmbLF9ug59ACYnew3vjLKvogkixJvE+EP8B7Kw9AYHwy1e1P4S44XvSX/ap6oWItD9sakqyRsywNZ+P6swQdLbJ7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enFuUeON; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ddyOfqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3201F000E9;
-	Thu, 28 May 2026 20:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enFuUeON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EFA1F000E9;
+	Thu, 28 May 2026 20:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999502;
-	bh=zn9GoUcei1BaWS+7aTNW46sMKl5NP3kT6SeaIpnQojo=;
+	s=korg; t=1779999505;
+	bh=LL5EpOwIjSQjjXSdcWn2fAULG8uEbLcwgO0AM6bSeNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ddyOfqca7w/RsocYio083adG5923OdUHkee2pIlV5BgFaohUPfU0z/YX+ohZQTvA
-	 vcWLhHKSZx+YuHPT+KVOalQOU+Z3rK+XU6SxWSBDrkDp7dWkMFIu0kdMf2CzgnOX+O
-	 yCrU2Y+Id+X0vg4osk7YdP1bRJuBBM2KFcF0cZAs=
+	b=enFuUeONEX8sM4uWGamf9jZn8IZezopyIgH3MSKILW5m3YguJq7bkPbhe6UKRRP53
+	 Ebjcd50NVqHDsb0PH5O7i1UgkQc1SafhAgttSYBWft2SJpDusCNRBYfDLsr0nO/fol
+	 AeAY3NNBh/fOgL0ccwZnTwQzlkR5CydDishQ/NQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 091/377] ipv4: raw: reject IP_HDRINCL packets with ihl < 5
-Date: Thu, 28 May 2026 21:45:29 +0200
-Message-ID: <20260528194640.998769202@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 074/377] tracing/fprobe: Check the same type fprobe on table as the unregistered one
+Date: Thu, 28 May 2026 21:45:12 +0200
+Message-ID: <20260528194640.509661389@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,86 +50,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-commit 915fab69823a14c170dbaa3b41978768e0fe62fc upstream.
+[ Upstream commit 0ac0058a74ac5765c7ce09ea630f4fdeaf4d80fa ]
 
-raw_send_hdrinc() validates that the caller-supplied IPv4 header
-fits within the message length:
+Commit 2c67dc457bc6 ("tracing: fprobe: optimization for entry only case")
+introduced a different ftrace_ops for entry-only fprobes.
 
-    iphlen = iph->ihl * 4;
-    err = -EINVAL;
-    if (iphlen > length)
-        goto error_free;
+However, when unregistering an fprobe, the kernel only checks if another
+fprobe exists at the same address, without checking which type of fprobe
+it is.
+If different fprobes are registered at the same address, the same address
+will be registered in both fgraph_ops and ftrace_ops, but only one of
+them will be deleted when unregistering. (the one removed first will not
+be deleted from the ops).
 
-    if (iphlen >= sizeof(*iph)) {
-        /* fix up saddr, tot_len, id, csum, transport_header */
-    }
+This results in junk entries remaining in either fgraph_ops or ftrace_ops.
+For example:
+ =======
+ cd /sys/kernel/tracing
 
-It does not, however, reject ihl < 5.  For such a packet the
-"if (iphlen >= sizeof(*iph))" branch is skipped, leaving the
-crafted iphdr untouched, but the packet is still handed to
-__ip_local_out() and onward.  Downstream consumers that read
-iph->ihl assume a sane value: net/ipv4/ah4.c:ah_output() in
-particular subtracts sizeof(struct iphdr) from top_iph->ihl * 4
-and passes the (signed-int-negative, then cast to size_t)
-result to memcpy(), producing an OOB access of length close to
-SIZE_MAX and a host kernel panic.
+ # 'Add entry and exit events on the same place'
+ echo 'f:event1 vfs_read' >> dynamic_events
+ echo 'f:event2 vfs_read%return' >> dynamic_events
 
-An IPv4 header with ihl < 5 is malformed by definition (RFC 791:
-"Internet Header Length is the length of the internet header in
-32 bit words ... Note that the minimum value for a correct header
-is 5.").  The kernel should not be willing to inject such a
-packet into its own output path.
+ # 'Enable both of them'
+ echo 1 > events/fprobes/enable
+ cat enabled_functions
+vfs_read (2)            ->arch_ftrace_ops_list_func+0x0/0x210
 
-Reject "iphlen < sizeof(*iph)" alongside the existing
-"iphlen > length" check.  This matches the principle that locally
-constructed packets that re-enter the IP stack must pass the same
-basic sanity tests that a foreign packet would be subjected to.
+ # 'Disable and remove exit event'
+ echo 0 > events/fprobes/event2/enable
+ echo -:event2 >> dynamic_events
 
-Once this lands, the "if (iphlen >= sizeof(*iph))" wrapper around
-the fixup branch becomes redundant; left in place to keep the
-patch minimal and backport-friendly.  A follow-up can unwrap it.
+ # 'Disable and remove all events'
+ echo 0 > events/fprobes/enable
+ echo > dynamic_events
 
-Note that commit 86f4c90a1c5c ("ipv4, ipv6: ensure raw socket
-message is big enough to hold an IP header") ensures the message
-buffer is large enough to hold an iphdr, but does not constrain
-the self-reported iph->ihl.
+ # 'Add another event'
+ echo 'f:event3 vfs_open%return' > dynamic_events
+ cat dynamic_events
+f:fprobes/event3 vfs_open%return
 
-Reachability: the malformed packet source is any caller with
-CAP_NET_RAW, including an unprivileged process in a user+net
-namespace on a kernel with CONFIG_USER_NS=y.  The reproduced AH
-crash also requires a matching xfrm AH policy on the outgoing
-route; a container granted CAP_NET_ADMIN can install that state
-and policy in its netns.  Loopback bypasses xfrm_output, so the
-trigger uses a real netdev.
+ echo 1 > events/fprobes/enable
+ cat enabled_functions
+vfs_open (1)            tramp: 0xffffffffa0001000 (ftrace_graph_func+0x0/0x60) ->ftrace_graph_func+0x0/0x60    subops: {ent:fprobe_fgraph_entry+0x0/0x620 ret:fprobe_return+0x0/0x150}
+vfs_read (1)            tramp: 0xffffffffa0001000 (ftrace_graph_func+0x0/0x60) ->ftrace_graph_func+0x0/0x60    subops: {ent:fprobe_fgraph_entry+0x0/0x620 ret:fprobe_return+0x0/0x150}
+ =======
 
-Reproduced on UML + KASAN: kernel-mode fault at addr 0x0 with
-memcpy_orig at the crash site.  Same shape reproduces inside a
-rootless Docker container with --cap-add NET_ADMIN on a stock
-distro kernel.
+As you can see, an entry for the vfs_read remains.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+To fix this issue, when unregistering, the kernel should also check if
+there is the same type of fprobes still exist at the same address, and
+if not, delete its entry from either fgraph_ops or ftrace_ops.
+
+Link: https://lore.kernel.org/all/177669367993.132053.10553046138528674802.stgit@mhiramat.tok.corp.google.com/
+
+Fixes: 2c67dc457bc6 ("tracing: fprobe: optimization for entry only case")
 Cc: stable@vger.kernel.org
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/77ec2b5e8111961c2c39883c92e8aa2709039c17.1778614451.git.michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/raw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/fprobe.c |   82 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 65 insertions(+), 17 deletions(-)
 
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -390,7 +390,7 @@ static int raw_send_hdrinc(struct sock *
- 	 * in, reject the frame as invalid
- 	 */
- 	err = -EINVAL;
--	if (iphlen > length)
-+	if (iphlen > length || iphlen < sizeof(*iph))
- 		goto error_free;
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -92,11 +92,8 @@ static int insert_fprobe_node(struct fpr
+ 	return ret;
+ }
  
- 	if (iphlen >= sizeof(*iph)) {
+-/* Return true if there are synonims */
+-static bool delete_fprobe_node(struct fprobe_hlist_node *node)
++static void delete_fprobe_node(struct fprobe_hlist_node *node)
+ {
+-	bool ret;
+-
+ 	lockdep_assert_held(&fprobe_mutex);
+ 
+ 	/* Avoid double deleting and non-inserted nodes */
+@@ -105,13 +102,6 @@ static bool delete_fprobe_node(struct fp
+ 		rhltable_remove(&fprobe_ip_table, &node->hlist,
+ 				fprobe_rht_params);
+ 	}
+-
+-	rcu_read_lock();
+-	ret = !!rhltable_lookup(&fprobe_ip_table, &node->addr,
+-				fprobe_rht_params);
+-	rcu_read_unlock();
+-
+-	return ret;
+ }
+ 
+ /* Check existence of the fprobe */
+@@ -343,6 +333,32 @@ static bool fprobe_is_ftrace(struct fpro
+ 	return !fp->exit_handler;
+ }
+ 
++static bool fprobe_exists_on_hash(unsigned long ip, bool ftrace)
++{
++	struct rhlist_head *head, *pos;
++	struct fprobe_hlist_node *node;
++	struct fprobe *fp;
++
++	guard(rcu)();
++	head = rhltable_lookup(&fprobe_ip_table, &ip,
++				fprobe_rht_params);
++	if (!head)
++		return false;
++	/* We have to check the same type on the list. */
++	rhl_for_each_entry_rcu(node, pos, head, hlist) {
++		if (node->addr != ip)
++			break;
++		fp = READ_ONCE(node->fp);
++		if (likely(fp)) {
++			if ((!ftrace && fp->exit_handler) ||
++			    (ftrace && !fp->exit_handler))
++				return true;
++		}
++	}
++
++	return false;
++}
++
+ #ifdef CONFIG_MODULES
+ static void fprobe_remove_ips(unsigned long *ips, unsigned int cnt)
+ {
+@@ -365,6 +381,29 @@ static bool fprobe_is_ftrace(struct fpro
+ 	return false;
+ }
+ 
++static bool fprobe_exists_on_hash(unsigned long ip, bool ftrace __maybe_unused)
++{
++	struct rhlist_head *head, *pos;
++	struct fprobe_hlist_node *node;
++	struct fprobe *fp;
++
++	guard(rcu)();
++	head = rhltable_lookup(&fprobe_ip_table, &ip,
++				fprobe_rht_params);
++	if (!head)
++		return false;
++	/* We only need to check fp is there. */
++	rhl_for_each_entry_rcu(node, pos, head, hlist) {
++		if (node->addr != ip)
++			break;
++		fp = READ_ONCE(node->fp);
++		if (likely(fp))
++			return true;
++	}
++
++	return false;
++}
++
+ #ifdef CONFIG_MODULES
+ static void fprobe_remove_ips(unsigned long *ips, unsigned int cnt)
+ {
+@@ -552,18 +591,25 @@ struct fprobe_addr_list {
+ static int fprobe_remove_node_in_module(struct module *mod, struct fprobe_hlist_node *node,
+ 					 struct fprobe_addr_list *alist)
+ {
++	lockdep_assert_in_rcu_read_lock();
++
+ 	if (!within_module(node->addr, mod))
+ 		return 0;
+ 
+-	if (delete_fprobe_node(node))
+-		return 0;
++	delete_fprobe_node(node);
+ 	/* If no address list is available, we can't track this address. */
+ 	if (!alist->addrs)
+ 		return 0;
++	/*
++	 * Don't care the type here, because all fprobes on the same
++	 * address must be removed eventually.
++	 */
++	if (!rhltable_lookup(&fprobe_ip_table, &node->addr, fprobe_rht_params)) {
++		alist->addrs[alist->index++] = node->addr;
++		if (alist->index == alist->size)
++			return -ENOSPC;
++	}
+ 
+-	alist->addrs[alist->index++] = node->addr;
+-	if (alist->index == alist->size)
+-		return -ENOSPC;
+ 	return 0;
+ }
+ 
+@@ -934,7 +980,9 @@ static int unregister_fprobe_nolock(stru
+ 	/* Remove non-synonim ips from table and hash */
+ 	count = 0;
+ 	for (i = 0; i < hlist_array->size; i++) {
+-		if (!delete_fprobe_node(&hlist_array->array[i]) && addrs)
++		delete_fprobe_node(&hlist_array->array[i]);
++		if (addrs && !fprobe_exists_on_hash(hlist_array->array[i].addr,
++						    fprobe_is_ftrace(fp)))
+ 			addrs[count++] = hlist_array->array[i].addr;
+ 	}
+ 	del_fprobe_hash(fp);
 
 
