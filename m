@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514D9317164;
-	Thu, 28 May 2026 20:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285701DE4E0;
+	Thu, 28 May 2026 20:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000988; cv=none; b=EEie7UfsuGFkg/2sUwj2iDPDyCAIlCxu8BsxiMGZGHuUdum0uRsSIpWn81Y75l4N43mGwkAppqpitqmP+V6fsCbzmeY1crMhoqS0HeOzhsY9fnJEpfHwiOFq1ScgNKmaA4bWc11i99a6yGBFxVofg/372JW8Jw4YipMGV6QK+kc=
+	t=1780000991; cv=none; b=KURBSuUmPrD1qN4h1xnmnXjFHyPDO1u4c4uvg0nY/786HCL+vyc01lejdt2KldtgOf9cLTsP+mUAuUjDHrAag2DPmUrNsQKMdlfT/TpEmCEbi3jBfEuafvCYvLOud8dODn1Ab4YAlpuPIA2v7bbzo7EIaQb4OtBz8nc/XFJ2L/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000988; c=relaxed/simple;
-	bh=3qp8ZhfW9h+1etnDT2HegpOjGRLs1tJyXbxu1N4VI7M=;
+	s=arc-20240116; t=1780000991; c=relaxed/simple;
+	bh=spcqEP6hMflsuAPHPCByBgQeya7n2EIIRngdZPMW2yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXu+gtKV/TLPsHzQ/g7azgYVX7tdzdp5NrCVoAXGQQNKYglE00T4DU2rg41wwyumCy5HNkwuGPeQ+Owghi+djY54Kbhg0g4/6UFCNIaqfs58Cy6s1kR57Zu0+ktSiJvQ4DNJXsBGHJ3iKV91yk3OTg8ICzHXL0GQYPkz3GkCnU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwdYjl0B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lL/zPqpqOdTzghXhiv3dq2Mr4U4uftvGOp6gj62cZjpouMlQbcFqaOZzeqaMfsxCe1hq7jOLIvHUbTJkFFkpJFLVLckKdl9UKivUi9nJ8gwaujOrz06eYKpF7fweu9lDQdcJGZYyGoglnAM9P3HYCclTHNExoYjvt1wOTjR2VcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SV6pZfh8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwdYjl0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE7B1F000E9;
-	Thu, 28 May 2026 20:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SV6pZfh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD7D1F000E9;
+	Thu, 28 May 2026 20:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000987;
-	bh=RDXWdFlgcHU38pGeYGZnIfnBaj6PNQlIDro3vVdtu8Y=;
+	s=korg; t=1780000990;
+	bh=4DMgJwJH8zFOJUupx94+8m6B6pUmJHmo9kjVNNvJKkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KwdYjl0B1JgX2rBeetPYgdVUDC6ql+QVMUjLE++x7JDZkFtQhttsomcxBzt2Swvmw
-	 EdwnXq8simVRrsjf02H6muM9T3vr6W397RUQ90mj15ZmdAQ36UtPhFyjRcobW12obD
-	 0e0fvAK/j0dEzILTZ09ffOLqL4upKa3eaNSSXoCs=
+	b=SV6pZfh8HIs95OSgPrGHmmm7OjRse6jAWSsSMYTAOGsFrRlH/GvpZOLoAkpyLCAxo
+	 xNB8xx8J4k7v+EXvXyrwYI+0kfLlWCR/v9GfdGUUYi9CjnjzCeJ7CH8f3FU1MavqkJ
+	 REgppCIqe41+x5LpPga67KtdR17Lwwp+Ukhe6YhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Matthew Leach <matthew.leach@collabora.com>,
+	P Praneesh <praneesh.p@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/272] drm/xe/pf: Fix CFI failure in debugfs access
-Date: Thu, 28 May 2026 21:50:13 +0200
-Message-ID: <20260528194635.843783556@linuxfoundation.org>
+Subject: [PATCH 6.12 240/272] wifi: ath11k: fix peer resolution on rx path when peer_id=0
+Date: Thu, 28 May 2026 21:50:14 +0200
+Message-ID: <20260528194635.868849873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,74 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
+From: Matthew Leach <matthew.leach@collabora.com>
 
-[ Upstream commit 96bf49b526e2d03a2b7f6e861925a08f46ed0d28 ]
+[ Upstream commit 2a2451a34afdf563b3102d36a4b6cf335cf813e2 ]
 
-Reading debugfs file (/sys/kernel/debug/dri/0/gt*/pf/adverse_events)
-with CFI (Control Flow Integrity) enabled, the kernel panics at
-xe_gt_debugfs_simple_show+0x82/0xc0.
+It has been observed that on certain chipsets a peer can be assigned
+peer_id=0. For reception of non-aggregated MPDUs this is fine as
+ath11k_dp_rx_h_find_peer() has a fallback case where it locates the peer
+based upon the source MAC address. On an aggregated link, the mpdu_start
+header is only populated by hardware on the first sub-MSDU. This causes
+the peer resolution to be skipped for the subsequent MSDUs and the
+encryption type of these frames to be set to an incorrect value,
+resulting in these MSDUs being dropped by ieee80211.
 
-xe_gt_debugfs_simple_show() declare a function pointer expecting int
-return type, but xe_gt_sriov_pf_monitor_print_events() is void return
-type, leading to CFI failure and kernel panic.
+ath11k_pci 0000:03:00.0: data rx skb 000000002f4b704d len 1534 peer xx:xx:xx:xx:xx:xx 0 ucast sn 3063 he160 rate_idx 9 vht_nss 2 freq 5240 band 1 flag 0x40d1a fcs-err 0 mic-err 0 amsdu-more 0 peer_id 0 first_msdu 1 last_msdu 0
+ath11k_pci 0000:03:00.0: data rx skb 0000000038acd580 len 1534 peer (null) 0 ucast sn 3063 he160 rate_idx 9 vht_nss 2 freq 5240 band 1 flag 0x40d00 fcs-err 0 mic-err 0 amsdu-more 0 peer_id 0 first_msdu 0 last_msdu 1
 
-[507620.973657] CFI failure at xe_gt_debugfs_simple_show+0x82/0xc0 [xe]
-(target: xe_gt_sriov_pf_monitor_print_events+0x0/0x130 [xe]; expected
-type: 0xd72c7139)
+Remove the null peer_id checks in ath11k_dp_rx_h_find_peer() and
+ath11k_hal_rx_parse_mon_status_tlv(), allowing peers with an assigned ID
+of 0 to be resolved.
 
-Fix xe_gt_sriov_pf_monitor_print_events() function by updating to return
-an int type.
+Tested-on: QCA2066 hw2.1 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.9
 
-Fixes: 1c99d3d3edab ("drm/xe/pf: Expose PF monitor details via debugfs")
-Signed-off-by: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://patch.msgid.link/20260514174918.1556357-2-mohanram.meenakshisundaram@intel.com
-(cherry picked from commit ff1d386a8359746d9699ac30336e3b0684c68958)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 2167fa606c0f ("ath11k: Add support for RX decapsulation offload")
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Matthew Leach <matthew.leach@collabora.com>
+Reviewed-by: P Praneesh <praneesh.p@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260424-ath11k-null-peerid-workaround-v4-1-252b224d3cf6@collabora.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c | 6 +++++-
- drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c  | 3 +--
+ drivers/net/wireless/ath/ath11k/hal_rx.c | 5 +----
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
-index 7d532bded02a8..a85ba44353789 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
-@@ -114,8 +114,10 @@ int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32
-  * VFs with no events are not printed.
-  *
-  * This function can only be called on PF.
-+ *
-+ * Return: always 0
-  */
--void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
- {
- 	unsigned int n, total_vfs = xe_gt_sriov_pf_get_totalvfs(gt);
- 	const struct xe_gt_sriov_monitor *data;
-@@ -144,4 +146,6 @@ void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p
- #undef __format
- #undef __value
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index e3eabd9e223aa..78b0fa8d4f339 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -2214,8 +2214,7 @@ ath11k_dp_rx_h_find_peer(struct ath11k_base *ab, struct sk_buff *msdu)
+ 
+ 	lockdep_assert_held(&ab->base_lock);
+ 
+-	if (rxcb->peer_id)
+-		peer = ath11k_peer_find_by_id(ab, rxcb->peer_id);
++	peer = ath11k_peer_find_by_id(ab, rxcb->peer_id);
+ 
+ 	if (peer)
+ 		return peer;
+diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.c b/drivers/net/wireless/ath/ath11k/hal_rx.c
+index 753bd93f02123..51e0840bc0d1e 100644
+--- a/drivers/net/wireless/ath/ath11k/hal_rx.c
++++ b/drivers/net/wireless/ath/ath11k/hal_rx.c
+@@ -1467,11 +1467,8 @@ ath11k_hal_rx_parse_mon_status_tlv(struct ath11k_base *ab,
+ 	case HAL_RX_MPDU_START: {
+ 		struct hal_rx_mpdu_info *mpdu_info =
+ 				(struct hal_rx_mpdu_info *)tlv_data;
+-		u16 peer_id;
+ 
+-		peer_id = ath11k_hal_rx_mpduinfo_get_peerid(ab, mpdu_info);
+-		if (peer_id)
+-			ppdu_info->peer_id = peer_id;
++		ppdu_info->peer_id = ath11k_hal_rx_mpduinfo_get_peerid(ab, mpdu_info);
+ 		break;
  	}
-+
-+	return 0;
- }
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
-index 7ca9351a271b7..0b8f088d3a16a 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
-@@ -13,7 +13,7 @@ struct drm_printer;
- struct xe_gt;
- 
- void xe_gt_sriov_pf_monitor_flr(struct xe_gt *gt, u32 vfid);
--void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
- 
- #ifdef CONFIG_PCI_IOV
- int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32 len);
+ 	case HAL_RXPCU_PPDU_END_INFO: {
 -- 
 2.53.0
 
