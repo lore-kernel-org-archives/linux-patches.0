@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B94313539;
-	Thu, 28 May 2026 19:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A18F31159C;
+	Thu, 28 May 2026 19:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779997973; cv=none; b=bOsMFmK3bdbQs08Uq+ul5TL4sWZIWAUzhwt0hCxvY88LxSHQBctwm3MQCTnIUhui6b7b01YGb+TZJvMNxntuVH0AwQOSihV41+U8+hVzo17cGqR2MWdjZ4mk8YnHxGdKW8GoosHy6pL2LZZ8DjphkrkmvTmnAtbLLMLo8cWp6wY=
+	t=1779997976; cv=none; b=M2EEy0gcGRbgXBkWnHrgA+hRQvfV5094fBS27gRvaT6cN4JdjtGSBvey0D0Y5Xv9QOmLu17RRXqoCaIDJK8sdHkFtEnO7E2kIioe4gsjSzMVht49vQX0xTAbz+gDMwc/QdriZtpUhqesueYFFIO3tiTNsCf0v52qlCzBfO6gqnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779997973; c=relaxed/simple;
-	bh=lMi+qjbz1mvz1GUjCAB5FJ46xNemBZ1a8201txOnjC0=;
+	s=arc-20240116; t=1779997976; c=relaxed/simple;
+	bh=iymlFJRWxbRKZuzf2kXTZ3KCrfqaEPWk8bafW37N0x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H67EsXiSe5RDqyGgh7R4RjQg3Q0z/D3T2CzD7Tq3duDP883QJbIxJepJ5Ge3KT3ID4X5jqS5VQq0jI861d7VGSxze1Ne0AKziYmQQ7e/YtWhsoC6zv8x3jk9w69/IVqI9ZEOqAZflxl3Z2Dr2MDExECsok3S4jY5bInVm73GmT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/QceUhv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fvRuiOnDhQqDrz2kqKCl0h4PUCWp+KKdCbO0aqMHCRexzpB+3/dJClR9dKgHfFgKpFbU2tqYn5X7FQejCvSBfq9gsH4BKFEkKw1THmDSowW9D3a3YQsGcBaTmRd2OX/9CtvSEBePlc+Oba5MqhWxV1QWQEEN73QgCHIi5UTEw58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDJz3VXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/QceUhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616431F000E9;
-	Thu, 28 May 2026 19:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDJz3VXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427DF1F000E9;
+	Thu, 28 May 2026 19:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779997971;
-	bh=frhP/4glibT/qRamKZsot7O7CvSeBBAWlm9NrWhvTQQ=;
+	s=korg; t=1779997974;
+	bh=qYs+Hc25GsIvivGsvSDByMZc/x1eN0cSKgGFfe+RFv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/QceUhv2s2sxkD6at3/i2G88BQDB24h6n/q/4niKYg/9rrcZje5eO9c5N7zqWFOL
-	 R5+nwT7uIzbcCBvomuw+Aiu6oZn9VGv7UyOz5Sf/0EcSOCZAEAA7mGQr1LuhW5BS6l
-	 OFqDZBjEGWatdk/ykGkNXfDAJmaqOFnLyZDBksJM=
+	b=qDJz3VXJ8jZb/kGbHwDuuwEDqQL4wgzkELyc9iirQqURM3P5Ornol8cvXXmv6lmjy
+	 mjm8/0coDfNjdEsWIJXW/pUoIkE925X4apfThKr3hfLVKy6yo8Ri/uYsBY+bVHvKXy
+	 fe110VgL+bXvnFcx4cPEg9eTQSOKF7MiiXKWAWPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 001/461] iommu/amd: Fix illegal cap/mmio access in IOMMU debugfs
-Date: Thu, 28 May 2026 21:42:10 +0200
-Message-ID: <20260528194646.868340781@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 010/461] mm/damon/sysfs-schemes: call missing mem_cgroup_iter_break()
+Date: Thu, 28 May 2026 21:42:19 +0200
+Message-ID: <20260528194647.145459409@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,143 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 0e59645683b7b6fa20eceb21a6f420e4f7412943 ]
+commit d4e7b5c4cc353f154d5ab8bb2e1ce7714d77a6e9 upstream.
 
-In the current AMD IOMMU debugfs, when multiple processes simultaneously
-access the IOMMU mmio/cap registers using the IOMMU debugfs, illegal
-access issues can occur in the following execution flow:
+damon_sysfs_memcg_path_to_id() breaks mem_cgroup_iter() loop without
+calling mem_cgroup_iter_break().  This leaks the cgroup reference.  Fix
+the issue by calling mem_cgroup_iter_break() before the break.
 
-1. CPU1: Sets a valid access address using iommu_mmio/capability_write,
-and verifies the access address's validity in iommu_mmio/capability_show
+The issue was discovered [1] by Sashiko.
 
-2. CPU2: Sets an invalid address using iommu_mmio/capability_write
-
-3. CPU1: accesses the IOMMU mmio/cap registers based on the invalid
-address, resulting in an illegal access.
-
-This patch modifies the execution process to first verify the address's
-validity and then access it based on the same address, ensuring
-correctness and robustness.
-
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Stable-dep-of: 8dfd3d8d7443 ("iommu/amd: Remove latent out-of-bounds access in IOMMU debugfs")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260426173625.86521-1-sj@kernel.org
+Link: https://lore.kernel.org/20260423004148.74722-1-sj@kernel.org [1]
+Fixes: 29cbb9a13f05 ("mm/damon/sysfs-schemes: implement scheme filters")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.3.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/debugfs.c | 42 +++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ mm/damon/sysfs-schemes.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
-index 20b04996441d6..0584ca2f859d9 100644
---- a/drivers/iommu/amd/debugfs.c
-+++ b/drivers/iommu/amd/debugfs.c
-@@ -26,22 +26,19 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
- {
- 	struct seq_file *m = filp->private_data;
- 	struct amd_iommu *iommu = m->private;
--	int ret;
--
--	iommu->dbg_mmio_offset = -1;
-+	int ret, dbg_mmio_offset = iommu->dbg_mmio_offset = -1;
- 
- 	if (cnt > OFS_IN_SZ)
- 		return -EINVAL;
- 
--	ret = kstrtou32_from_user(ubuf, cnt, 0, &iommu->dbg_mmio_offset);
-+	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
- 	if (ret)
- 		return ret;
- 
--	if (iommu->dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64)) {
--		iommu->dbg_mmio_offset = -1;
--		return  -EINVAL;
--	}
-+	if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
-+		return -EINVAL;
- 
-+	iommu->dbg_mmio_offset = dbg_mmio_offset;
- 	return cnt;
- }
- 
-@@ -49,14 +46,16 @@ static int iommu_mmio_show(struct seq_file *m, void *unused)
- {
- 	struct amd_iommu *iommu = m->private;
- 	u64 value;
-+	int dbg_mmio_offset = iommu->dbg_mmio_offset;
- 
--	if (iommu->dbg_mmio_offset < 0) {
-+	if (dbg_mmio_offset < 0 || dbg_mmio_offset >
-+			iommu->mmio_phys_end - sizeof(u64)) {
- 		seq_puts(m, "Please provide mmio register's offset\n");
- 		return 0;
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2537,6 +2537,7 @@ static int damon_sysfs_memcg_path_to_id(
+ 		if (damon_sysfs_memcg_path_eq(memcg, path, memcg_path)) {
+ 			*id = mem_cgroup_id(memcg);
+ 			found = true;
++			mem_cgroup_iter_break(NULL, memcg);
+ 			break;
+ 		}
  	}
- 
--	value = readq(iommu->mmio_base + iommu->dbg_mmio_offset);
--	seq_printf(m, "Offset:0x%x Value:0x%016llx\n", iommu->dbg_mmio_offset, value);
-+	value = readq(iommu->mmio_base + dbg_mmio_offset);
-+	seq_printf(m, "Offset:0x%x Value:0x%016llx\n", dbg_mmio_offset, value);
- 
- 	return 0;
- }
-@@ -67,23 +66,20 @@ static ssize_t iommu_capability_write(struct file *filp, const char __user *ubuf
- {
- 	struct seq_file *m = filp->private_data;
- 	struct amd_iommu *iommu = m->private;
--	int ret;
--
--	iommu->dbg_cap_offset = -1;
-+	int ret, dbg_cap_offset = iommu->dbg_cap_offset = -1;
- 
- 	if (cnt > OFS_IN_SZ)
- 		return -EINVAL;
- 
--	ret = kstrtou32_from_user(ubuf, cnt, 0, &iommu->dbg_cap_offset);
-+	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
- 	if (ret)
- 		return ret;
- 
- 	/* Capability register at offset 0x14 is the last IOMMU capability register. */
--	if (iommu->dbg_cap_offset > 0x14) {
--		iommu->dbg_cap_offset = -1;
-+	if (dbg_cap_offset > 0x14)
- 		return -EINVAL;
--	}
- 
-+	iommu->dbg_cap_offset = dbg_cap_offset;
- 	return cnt;
- }
- 
-@@ -91,21 +87,21 @@ static int iommu_capability_show(struct seq_file *m, void *unused)
- {
- 	struct amd_iommu *iommu = m->private;
- 	u32 value;
--	int err;
-+	int err, dbg_cap_offset = iommu->dbg_cap_offset;
- 
--	if (iommu->dbg_cap_offset < 0) {
-+	if (dbg_cap_offset < 0 || dbg_cap_offset > 0x14) {
- 		seq_puts(m, "Please provide capability register's offset in the range [0x00 - 0x14]\n");
- 		return 0;
- 	}
- 
--	err = pci_read_config_dword(iommu->dev, iommu->cap_ptr + iommu->dbg_cap_offset, &value);
-+	err = pci_read_config_dword(iommu->dev, iommu->cap_ptr + dbg_cap_offset, &value);
- 	if (err) {
- 		seq_printf(m, "Not able to read capability register at 0x%x\n",
--			   iommu->dbg_cap_offset);
-+			   dbg_cap_offset);
- 		return 0;
- 	}
- 
--	seq_printf(m, "Offset:0x%x Value:0x%08x\n", iommu->dbg_cap_offset, value);
-+	seq_printf(m, "Offset:0x%x Value:0x%08x\n", dbg_cap_offset, value);
- 
- 	return 0;
- }
--- 
-2.53.0
-
 
 
