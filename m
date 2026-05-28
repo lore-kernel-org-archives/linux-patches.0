@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13932E7379;
-	Thu, 28 May 2026 20:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBC82E7379;
+	Thu, 28 May 2026 20:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001076; cv=none; b=qr5n32s3oVMi/seatgVIMUnnL6yKbrBUsmhjgOnrztN+MTi1kBjAArOwoTx9fUTO6mQR+K+WtuG7sIxqlsxuQMByq+zP4WTJ0+WVSIkZNh2LnaFFjcGtvNzKSzZ4NKYcYiLHGgIAjThAFS9VyUoie+L2zPedWJ6Zc/3y7Ocjw5w=
+	t=1780001079; cv=none; b=cPCE9ReVVUSpbJwIQxpbpdmCQDcKAehTHK96c/+6qF74NhCoCJN9H96uO1yG3d1ee09X0kwnI8msP7FyCnc6j+hVnE27uKU1sb62t2UFPV+nTkosXGQwJU9pQAXtUEkKwcD2jHewRT31SjYqUGsOic8gIN5xGiqVpCSGrNXZeLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001076; c=relaxed/simple;
-	bh=oRD/mLUUctFsnSaT/DpHqeyq7YrVZ9Bbo50T6Ad6Ytk=;
+	s=arc-20240116; t=1780001079; c=relaxed/simple;
+	bh=S/XlP6jlJ6R3S/2R5DEmlkEhtYYlYNxLmA71BJU2wOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bn2YrirCJvRlG/Vh5WNW4RXQa75qc8RThErZqDjle2iXOQdfuIWaXwnZ2ZTiW2mBToVpf+e7R6QgAGB6dVtzryCuyOrd2EO0uErGbdU6e0hmqanwcrTh4rw9fbE3p5NE7AQS1AB7RSEcohof/EGwRr7jVQFx/JmbNwsuA+Zqw7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0m8Pa/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hMkFdSdb3RUzh3z2ZmXxCMV3YudyktCwGk5270qTwf/mG9uXnUA1hf2hwEJWZ9Lz2dCWdM+M8I8jEv4B70rGYHzDv7Rm3KoptBA49CyMRFn1c6iJ2NQfnPCme70qqFOjTndGZKLu7J7sG0caTduxMiULFrtkfOIFt0EIBlncfHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We8eWslc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0m8Pa/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5A51F000E9;
-	Thu, 28 May 2026 20:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We8eWslc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD14B1F000E9;
+	Thu, 28 May 2026 20:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001075;
-	bh=xLRKZ1OdY8E6qYljuqbGBlKL4WQKT2wGvTc1xC7ruKg=;
+	s=korg; t=1780001078;
+	bh=Nxxh4D8vjmSWu3okW0LPhvLFpN8SbceM/Pnp6dT/wSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0m8Pa/K7p4bWzYJeTptN5DKKmRw+NapIjeJuplUAlZpw9UAJU65yjTtxgBDr1QX0
-	 gmJ5KKa1fedZ2T/QMDScP3wuWzItbhFZGtJzTfWak31QmMreQnAhhOOhMJbYKG9PQC
-	 D8Zphp4o0j2DE/zLPt44QP4sqBGfUdbIlJONgbzg=
+	b=We8eWslcBg8WHvwu+Kq4SEdikIg8/8Jsk+Xxp8YHdbhSsbPT9gUr/ehexR/74gvMm
+	 ZhRC/6vfhHniBx5SenxzRXKwXpkfw57R/317gzh6rlhnImlRI3O6ywQB4JO+Y7Ljiz
+	 Z912C1tjYZoc6QkVnM2hc9EmhOMTuDapeSImLSWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Matthieu Buffet <matthieu@buffet.re>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Maximilian Heyne <mheyne@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/272] LoongArch: kprobes: Fix handling of fatal unrecoverable recursions
-Date: Thu, 28 May 2026 21:50:45 +0200
-Message-ID: <20260528194636.660925062@linuxfoundation.org>
+Subject: [PATCH 6.12 272/272] landlock: Fix TCP handling of short AF_UNSPEC addresses
+Date: Thu, 28 May 2026 21:50:46 +0200
+Message-ID: <20260528194636.686963779@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -45,80 +46,178 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Matthieu Buffet <matthieu@buffet.re>
 
-[ Upstream commit 1c856e158fd34ef2c4475a81c1dc386329989938 ]
+[ Upstream commit e4d82cbce2258f454634307fdabf33aa46b61ab0 ]
 
-KPROBE_HIT_SS and KPROBE_REENTER are two types of fatal recursions that
-can not be safely recovered in kprobes.
+current_check_access_socket() treats AF_UNSPEC addresses as
+AF_INET ones, and only later adds special case handling to
+allow connect(AF_UNSPEC), and on IPv4 sockets
+bind(AF_UNSPEC+INADDR_ANY).
+This would be fine except AF_UNSPEC addresses can be as
+short as a bare AF_UNSPEC sa_family_t field, and nothing
+more. The AF_INET code path incorrectly enforces a length of
+sizeof(struct sockaddr_in) instead.
 
-KPROBE_HIT_SS means that a kprobe is hit during single-stepping. At
-this point, the architecture-specific single-step context is already
-active. Nested single-stepping would corrupt the state, as the kprobe
-control block (kcb) and hardware registers cannot safely store multiple
-levels of stepping state.
+Move AF_UNSPEC edge case handling up inside the switch-case,
+before the address is (potentially incorrectly) treated as
+AF_INET.
 
-KPROBE_REENTER means that a third-level recursion occurs when a probe
-is hit while the system is already handling a nested probe (second-
-level). The kcb only provides a single slot (prev_kprobe) to backup the
-state. When a third probe is hit, there is no more space to save the
-state without corrupting the first-level backup.
-
-Kprobes work by replacing instructions with breakpoints. In order to
-execute the original instruction and continue, it must be moved to a
-temporary "single-step" slot. Since there is no backup space left to
-set up this slot safely, the CPU would be forced to return to the same
-original breakpoint address, triggering an endless loop.
-
-Currently, the code only prints a warning and returns. This leads to
-an infinite re-entry loop as the CPU repeatedly hits the same trap and
-a "stuck" CPU core because preemption was disabled at the start of the
-handler and never re-enabled in this early return path.
-
-Fix the logic by:
-1. Merging KPROBE_HIT_SS and KPROBE_REENTER cases, as both represent
-   fatal recursions that cannot be safely recovered.
-2. Replacing WARN_ON_ONCE() with BUG() to terminate the system. This
-   aligns LoongArch with other architectures (x86, arm64, riscv) and
-   prevents stack overflow while providing diagnostic information.
-
-Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: fff69fb03dde ("landlock: Support network rules with TCP bind and connect")
+Signed-off-by: Matthieu Buffet <matthieu@buffet.re>
+Link: https://lore.kernel.org/r/20251027190726.626244-4-matthieu@buffet.re
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[ There was a conflict due to missing commit 9f74411a40ce ("landlock:
+  Log TCP bind and connect denials") ]
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/kprobes.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/landlock/net.c | 118 +++++++++++++++++++++++-----------------
+ 1 file changed, 67 insertions(+), 51 deletions(-)
 
-diff --git a/arch/loongarch/kernel/kprobes.c b/arch/loongarch/kernel/kprobes.c
-index 8ba391cfabb00..bd783ebed4cc9 100644
---- a/arch/loongarch/kernel/kprobes.c
-+++ b/arch/loongarch/kernel/kprobes.c
-@@ -184,16 +184,16 @@ static bool reenter_kprobe(struct kprobe *p, struct pt_regs *regs,
- 			   struct kprobe_ctlblk *kcb)
- {
- 	switch (kcb->kprobe_status) {
--	case KPROBE_HIT_SS:
- 	case KPROBE_HIT_SSDONE:
- 	case KPROBE_HIT_ACTIVE:
- 		kprobes_inc_nmissed_count(p);
- 		setup_singlestep(p, regs, kcb, 1);
- 		break;
-+	case KPROBE_HIT_SS:
- 	case KPROBE_REENTER:
- 		pr_warn("Failed to recover from reentered kprobes.\n");
- 		dump_kprobe(p);
--		WARN_ON_ONCE(1);
-+		BUG();
- 		break;
- 	default:
- 		WARN_ON(1);
+diff --git a/security/landlock/net.c b/security/landlock/net.c
+index 104b6c01fe503..53d479893475f 100644
+--- a/security/landlock/net.c
++++ b/security/landlock/net.c
+@@ -72,6 +72,61 @@ static int current_check_access_socket(struct socket *const sock,
+ 
+ 	switch (address->sa_family) {
+ 	case AF_UNSPEC:
++		if (access_request == LANDLOCK_ACCESS_NET_CONNECT_TCP) {
++			/*
++			 * Connecting to an address with AF_UNSPEC dissolves
++			 * the TCP association, which have the same effect as
++			 * closing the connection while retaining the socket
++			 * object (i.e., the file descriptor).  As for dropping
++			 * privileges, closing connections is always allowed.
++			 *
++			 * For a TCP access control system, this request is
++			 * legitimate. Let the network stack handle potential
++			 * inconsistencies and return -EINVAL if needed.
++			 */
++			return 0;
++		} else if (access_request == LANDLOCK_ACCESS_NET_BIND_TCP) {
++			/*
++			 * Binding to an AF_UNSPEC address is treated
++			 * differently by IPv4 and IPv6 sockets. The socket's
++			 * family may change under our feet due to
++			 * setsockopt(IPV6_ADDRFORM), but that's ok: we either
++			 * reject entirely or require
++			 * %LANDLOCK_ACCESS_NET_BIND_TCP for the given port, so
++			 * it cannot be used to bypass the policy.
++			 *
++			 * IPv4 sockets map AF_UNSPEC to AF_INET for
++			 * retrocompatibility for bind accesses, only if the
++			 * address is INADDR_ANY (cf. __inet_bind). IPv6
++			 * sockets always reject it.
++			 *
++			 * Checking the address is required to not wrongfully
++			 * return -EACCES instead of -EAFNOSUPPORT or -EINVAL.
++			 * We could return 0 and let the network stack handle
++			 * these checks, but it is safer to return a proper
++			 * error and test consistency thanks to kselftest.
++			 */
++			if (sock->sk->__sk_common.skc_family == AF_INET) {
++				const struct sockaddr_in *const sockaddr =
++					(struct sockaddr_in *)address;
++
++				if (addrlen < sizeof(struct sockaddr_in))
++					return -EINVAL;
++
++				if (sockaddr->sin_addr.s_addr !=
++				    htonl(INADDR_ANY))
++					return -EAFNOSUPPORT;
++			} else {
++				if (addrlen < SIN6_LEN_RFC2133)
++					return -EINVAL;
++				else
++					return -EAFNOSUPPORT;
++			}
++		} else {
++			WARN_ON_ONCE(1);
++		}
++		/* Only for bind(AF_UNSPEC+INADDR_ANY) on IPv4 socket. */
++		fallthrough;
+ 	case AF_INET:
+ 		if (addrlen < sizeof(struct sockaddr_in))
+ 			return -EINVAL;
+@@ -90,57 +145,18 @@ static int current_check_access_socket(struct socket *const sock,
+ 		return 0;
+ 	}
+ 
+-	/* Specific AF_UNSPEC handling. */
+-	if (address->sa_family == AF_UNSPEC) {
+-		/*
+-		 * Connecting to an address with AF_UNSPEC dissolves the TCP
+-		 * association, which have the same effect as closing the
+-		 * connection while retaining the socket object (i.e., the file
+-		 * descriptor).  As for dropping privileges, closing
+-		 * connections is always allowed.
+-		 *
+-		 * For a TCP access control system, this request is legitimate.
+-		 * Let the network stack handle potential inconsistencies and
+-		 * return -EINVAL if needed.
+-		 */
+-		if (access_request == LANDLOCK_ACCESS_NET_CONNECT_TCP)
+-			return 0;
+-
+-		/*
+-		 * For compatibility reason, accept AF_UNSPEC for bind
+-		 * accesses (mapped to AF_INET) only if the address is
+-		 * INADDR_ANY (cf. __inet_bind).  Checking the address is
+-		 * required to not wrongfully return -EACCES instead of
+-		 * -EAFNOSUPPORT.
+-		 *
+-		 * We could return 0 and let the network stack handle these
+-		 * checks, but it is safer to return a proper error and test
+-		 * consistency thanks to kselftest.
+-		 */
+-		if (access_request == LANDLOCK_ACCESS_NET_BIND_TCP) {
+-			/* addrlen has already been checked for AF_UNSPEC. */
+-			const struct sockaddr_in *const sockaddr =
+-				(struct sockaddr_in *)address;
+-
+-			if (sock->sk->__sk_common.skc_family != AF_INET)
+-				return -EINVAL;
+-
+-			if (sockaddr->sin_addr.s_addr != htonl(INADDR_ANY))
+-				return -EAFNOSUPPORT;
+-		}
+-	} else {
+-		/*
+-		 * Checks sa_family consistency to not wrongfully return
+-		 * -EACCES instead of -EINVAL.  Valid sa_family changes are
+-		 * only (from AF_INET or AF_INET6) to AF_UNSPEC.
+-		 *
+-		 * We could return 0 and let the network stack handle this
+-		 * check, but it is safer to return a proper error and test
+-		 * consistency thanks to kselftest.
+-		 */
+-		if (address->sa_family != sock->sk->__sk_common.skc_family)
+-			return -EINVAL;
+-	}
++	/*
++	 * Checks sa_family consistency to not wrongfully return
++	 * -EACCES instead of -EINVAL.  Valid sa_family changes are
++	 * only (from AF_INET or AF_INET6) to AF_UNSPEC.
++	 *
++	 * We could return 0 and let the network stack handle this
++	 * check, but it is safer to return a proper error and test
++	 * consistency thanks to kselftest.
++	 */
++	if (address->sa_family != sock->sk->__sk_common.skc_family &&
++	    address->sa_family != AF_UNSPEC)
++		return -EINVAL;
+ 
+ 	id.key.data = (__force uintptr_t)port;
+ 	BUILD_BUG_ON(sizeof(port) > sizeof(id.key.data));
 -- 
 2.53.0
 
