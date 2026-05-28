@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04946331A7E;
-	Thu, 28 May 2026 20:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E283016E1;
+	Thu, 28 May 2026 20:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998407; cv=none; b=Ph6aZdTWcTXpXGPlcfysXhqWAfGEShWiZXa6Pt095GRyWr96nNPS8k2nnj1RSEkC2BvY+7HcKtpzPUU1XIkwfHyZWte+dMrcPMWEPBB4kN7fpwVJynd4CJvD1uOuyW97kO9DxpJsdwXt+BNV9o8aP2OWmZ3qLXNsJm2GkoY3sto=
+	t=1779998409; cv=none; b=XapEAz7d8QfG70WbetqWaEC1DklgyNP9GSiBOJztMkf2YLyZA20KgAerYcuPsWqRdL8D3Pm0HpAF+ovROtDz9tGRks/P55V9K6meLHaVIkLyq+AVJnAWvjKm9OJM0fhWlaSjRJPXXHd16kNbjeioCryA305ayYENEHPQ5c2vRpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998407; c=relaxed/simple;
-	bh=DUSpm689IA7GYSXjvNNgx4ME4mDf+e5rek/FemllFBY=;
+	s=arc-20240116; t=1779998409; c=relaxed/simple;
+	bh=udo9/pve3/TtrqxaMMAzzjCMolb4e3CBmO1boH93tDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V32XzF5RSseXyaP0NQ8aiqMLQb1mt/F2vPdyUn+zkUQOwxzGy9/VKb0z2PW9e0NZtpGkCaVf+vCe2bdskoG2buv3Qt2ytFC0JT3h/EcX6AH7f3YosqA67W71aGrfW3g0ceOKOte+aAm4FH1HCpNN7+ymIc869iNqA3m4aOtH2d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPnEdkxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YiC2D436YRMBg7GEheZOkYehpJTBNeMqhWJZ76T36DnQRPocZqySj0As9QujXCDiezD/6Wn04/w++siJdsXYoA7stAvVJ+V4CtO6BI2Xu80ioV+NO6APdDhFkRXuykiSvDq1VwxN7iZs0lbUc7G3TbwnqWad7APQAMPK6OpERME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNKLvhKv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPnEdkxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC711F000E9;
-	Thu, 28 May 2026 20:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNKLvhKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342BD1F000E9;
+	Thu, 28 May 2026 20:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998405;
-	bh=K9X3TCW1LUygXZ6U44kNXWtOhKIGCNK2RGgfiSivLvE=;
+	s=korg; t=1779998408;
+	bh=7BHfdMby+7ZUJqdXCUbOQPJhQkwOHGqVssMRRBuFQY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JPnEdkxKdYjn1Ca1oCZDIDFHN0fhmVltww96ZjZmCXdH/efxHenAQebBJ1ZHaAsRh
-	 g9aIlcDZdFMn3LHvbINJnKr1JZhvlXEwAR2hTXk/R3mngazlEMk0eaJPB9FRQCpOQ9
-	 HyAJ/Z9ErFk4MZc48K/22QMQH3agXJvLd0mcw35I=
+	b=bNKLvhKvw0z8Mhw5wpDoaMRTDO3Fc5BWDzdjnGRl5ZAcrChGGJOApJzf2wTz2a7TF
+	 6MLa0Pv6whao//JWT5sqgVWs15fWzSBrOegZAg3CZqni3ceHI3Xfsla+RiLjdRD9BM
+	 jedx664uqxvX3kq3MmG/OHkZYw1uMbcub+YSzT5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.0 155/461] batman-adv: tp_meter: directly shut down timer on cleanup
-Date: Thu, 28 May 2026 21:44:44 +0200
-Message-ID: <20260528194651.530574785@linuxfoundation.org>
+Subject: [PATCH 7.0 164/461] batman-adv: tt: prevent TVLV entry number overflow
+Date: Thu, 28 May 2026 21:44:53 +0200
+Message-ID: <20260528194651.800387945@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,52 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit d5487249a81ea658717614009c8f46acc5b7101a upstream.
+commit 99d9958fa10fb684b2a8e2c48a8d704122721420 upstream.
 
-batadv_tp_sender_cleanup() was calling timer_delete_sync() followed by
-timer_delete() to guard against the timer handler re-arming itself between
-the two calls. This double-deletion hack relied on the sending status being
-set to 0 to suppress re-arming.
+The helpers to prepare the buffers for the local and global TT based
+replies are trying to sum up all TT entries which can be found for each
+VLAN. In theory, this sum can be too big for an u16 and therefore overflow.
+A too small buffer would then be allocated for the TVLV.
 
-Replace both calls with a single timer_shutdown_sync(). This function both
-waits for any running timer callback to complete (like timer_delete_sync())
-and permanently disarms the timer so it cannot be re-armed afterwards,
-making re-arming prevention unconditional and self-documenting.
-
-The re-arming property is also required because otherwise:
-
-1. context 0 (batadv_tp_recv_ack()) checks in
-   batadv_tp_reset_sender_timer() if sending is still 1 -> it is
-2. context 1 changes in batadv_tp_sender_shutdown() sending to 0 and in
-   this process forces the kthread to stop timer in
-   batadv_tp_sender_cleanup()
-3. context 0 continues in batadv_tp_reset_sender_timer() and rearms the
-   timer -> but the reference for it is already gone
+The too small buffer will be handled gracefully by
+batadv_tt_tvlv_generate() and is not causing a buffer overflow - just a
+truncated reply. But this overflow shouldn't have happened in the first and
+the too small buffer should never have been allocated when an overflow was
+detected.
 
 Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ net/batman-adv/translation-table.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -400,13 +400,7 @@ static void batadv_tp_sender_cleanup(str
- 	batadv_tp_list_detach(tp_vars);
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -804,11 +804,18 @@ batadv_tt_prepare_tvlv_global_data(struc
+ 	u16 total_entries = 0;
+ 	u8 *tt_change_ptr;
+ 	int vlan_entries;
++	u16 sum_entries;
  
- 	/* kill the timer and remove its reference */
--	timer_delete_sync(&tp_vars->timer);
--	/* the worker might have rearmed itself therefore we kill it again. Note
--	 * that if the worker should run again before invoking the following
--	 * timer_delete(), it would not re-arm itself once again because the status
--	 * is OFF now
--	 */
--	timer_delete(&tp_vars->timer);
-+	timer_shutdown_sync(&tp_vars->timer);
- 	batadv_tp_vars_put(tp_vars);
- }
+ 	spin_lock_bh(&orig_node->vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			*tt_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
+ 	}
+ 
+@@ -893,15 +900,22 @@ batadv_tt_prepare_tvlv_local_data(struct
+ 	struct batadv_meshif_vlan *vlan;
+ 	size_t change_offset;
+ 	u16 num_vlan = 0;
+-	u16 vlan_entries = 0;
+ 	u16 total_entries = 0;
+ 	u16 tvlv_len;
+ 	u8 *tt_change_ptr;
++	int vlan_entries;
++	u16 sum_entries;
+ 
+ 	spin_lock_bh(&bat_priv->meshif_vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &bat_priv->meshif_vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			tvlv_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
+ 	}
  
 
 
