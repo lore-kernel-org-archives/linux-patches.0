@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E21922652D;
-	Thu, 28 May 2026 20:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3897722652D;
+	Thu, 28 May 2026 20:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999765; cv=none; b=SFoFvkh5KnWSKJL/8ixq0gfvhT2v68cGJg+e6dcE8E2TF7t6HOFcfVzLC0byFbeYCw48+5OXccCwchSrNwfocJp981Z8gLEXn5f6BBLeo0ipJJ1KxLdBCsErG6lfOqZLcHitb1h9pxPeTEGHBVhDCLiRpINGpsuH5z1JNNq5JFY=
+	t=1779999768; cv=none; b=gOiJzMhBimUoIyO4/hEHy9x8sxhLejL5FAvv60Vq7oYFzbFWfXOolPVe0FSA3Qq77kgl13UpvBnM4GJGoPuv8LoMVG9IWj/sb9lzLgHLDmLR7lAww1ox600VfoU9u5MjMm24FWiroAwV1wnfE2dLxQmpqxPzGK4jfe/8BSxBZLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999765; c=relaxed/simple;
-	bh=47N17AqHMIEbRsi8DDmcQiLpvtwqNSbL++gS3J+Yegw=;
+	s=arc-20240116; t=1779999768; c=relaxed/simple;
+	bh=8+fYDK7acgK7zExyPRwOisiUhbpEZa5+iVOhIUShRng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KehRHpRuy9B+5lBwaB6apqkiAsUV793mg9MjsKJlXyPddXLIMAgHrGJCFKC/2dImHWbQVntTwO1YGDJOq5GCnDShFdwqN5fXfdV44RYLqEq6iDnT8wevVjXomfj+lyUjpgNyap+sn3q16q80nTwpgnRRXBAKk7j+eRCC72nRuOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFjK407Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrkoZB6He6++ud38GzeEyvkDsMhZ9EIlU22qfdlDi4dyr5dOh8kCVock5WuIRuex0Jsq57NHLZyAbGuWqy0wMXZmEyQfaqE4a/HnNsyHPRByInhFsEpL+SeF11lSK1btHGafG+58uEhPpEYc5kuTKgOEF5v2+wj0aPcM8R6YqQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cew2oAOM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFjK407Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA001F000E9;
-	Thu, 28 May 2026 20:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cew2oAOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FAB1F000E9;
+	Thu, 28 May 2026 20:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999764;
-	bh=2W48tyz12Iv91Fy3SnmrcaQ0JbgVfIncJ7YBuGGbbSg=;
+	s=korg; t=1779999767;
+	bh=5bl52h8QW+DSG53G64vO2rXF99zKRKH9NGB57Pha188=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yFjK407QOC5Stu7WQqF9f5CV/wooWFLCKSM+9/cEWHlM0sgdT6n/KVUsBrG/nTytz
-	 1U5D1bn17cTGgQvMec7HrtFSv5W7bDfdREuP6GpK0uYZLx4lgDlhb3EVCiYNnu2/nA
-	 kezhKf4Dl8onDluJZPbGIAOqPtuDEc8oqzVnhebo=
+	b=cew2oAOMyHnGxK2aNx+OfVwSGXaI2rroOyYRzufF648zSv2Lso/pKZk4DW+28gy8h
+	 U74ZBVdFaO0NW/t/+49fWzB1d1Zw7AK8cInEmcSA9TDbwmUze/DmxXTR4bKHQrITXf
+	 tuGddPZ3V0zm9dlWmOg3rGuMzY8vVvJCGq8nortM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Michael Neuling <mikey@neuling.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 182/377] firmware: arm_ffa: Unregister bus notifier on teardown for FF-A v1.0
-Date: Thu, 28 May 2026 21:47:00 +0200
-Message-ID: <20260528194643.692746429@linuxfoundation.org>
+Subject: [PATCH 6.18 183/377] riscv: errata: Fix bitwise vs logical AND in MIPS errata patching
+Date: Thu, 28 May 2026 21:47:01 +0200
+Message-ID: <20260528194643.723700576@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,75 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Michael Neuling <mikey@neuling.org>
 
-[ Upstream commit 6d3daa9b8d313f42d52e75590310f26a29b61b44 ]
+[ Upstream commit 4d2b03699460b8fd5df34408a03a84a1a7ff8aa1 ]
 
-For FF-A v1.0 the driver registers a bus notifier to backfill UUID
-matching, but the notifier was never unregistered on cleanup paths.
-Track the registration state and unregister it during teardown and early
-partition-setup failure.
+The condition checking whether a specific errata needs patching uses
+logical AND (&&) instead of bitwise AND (&). Since logical AND only
+checks that both operands are non-zero, this causes all errata patches
+to be applied whenever any single errata is detected, rather than only
+applying the matching one.
 
-Fixes: 9dd15934f60d ("firmware: arm_ffa: Move the FF-A v1.0 NULL UUID workaround to bus notifier")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-5-8595ae450034@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+The SiFive errata implementation correctly uses bitwise AND for the same
+check.
+
+Fixes: 0b0ca959d206 ("riscv: errata: Fix the PAUSE Opcode for MIPS P8700")
+Signed-off-by: Michael Neuling <mikey@neuling.org>
+Assisted-by: Cursor:claude-4.6-opus-high-thinking
+Link: https://patch.msgid.link/20260409091143.1348853-2-mikey@neuling.org
+[pjw@kernel.org: fixed checkpatch warning]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/riscv/errata/mips/errata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 30f8e0ff694fb..287db85286106 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -100,6 +100,7 @@ struct ffa_drv_info {
- 	bool mem_ops_native;
- 	bool msg_direct_req2_supp;
- 	bool bitmap_created;
-+	bool bus_notifier_registered;
- 	bool notif_enabled;
- 	unsigned int sched_recv_irq;
- 	unsigned int notif_pend_irq;
-@@ -1625,6 +1626,15 @@ static struct notifier_block ffa_bus_nb = {
- 	.notifier_call = ffa_bus_notifier,
- };
+diff --git a/arch/riscv/errata/mips/errata.c b/arch/riscv/errata/mips/errata.c
+index e984a8152208c..2c3dc2259e93e 100644
+--- a/arch/riscv/errata/mips/errata.c
++++ b/arch/riscv/errata/mips/errata.c
+@@ -57,7 +57,7 @@ void mips_errata_patch_func(struct alt_entry *begin, struct alt_entry *end,
+ 		}
  
-+static void ffa_bus_notifier_unregister(void)
-+{
-+	if (!drv_info->bus_notifier_registered)
-+		return;
-+
-+	bus_unregister_notifier(&ffa_bus_type, &ffa_bus_nb);
-+	drv_info->bus_notifier_registered = false;
-+}
-+
- static int ffa_xa_add_partition_info(struct ffa_device *dev)
- {
- 	struct ffa_dev_part_info *info;
-@@ -1708,6 +1718,8 @@ static void ffa_partitions_cleanup(void)
- 	struct list_head *phead;
- 	unsigned long idx;
- 
-+	ffa_bus_notifier_unregister();
-+
- 	/* Clean up/free all registered devices */
- 	ffa_devices_unregister();
- 
-@@ -1735,11 +1747,14 @@ static int ffa_setup_partitions(void)
- 		ret = bus_register_notifier(&ffa_bus_type, &ffa_bus_nb);
- 		if (ret)
- 			pr_err("Failed to register FF-A bus notifiers\n");
-+		else
-+			drv_info->bus_notifier_registered = true;
- 	}
- 
- 	count = ffa_partition_probe(&uuid_null, &pbuf);
- 	if (count <= 0) {
- 		pr_info("%s: No partitions found, error %d\n", __func__, count);
-+		ffa_bus_notifier_unregister();
- 		return -EINVAL;
- 	}
- 
+ 		tmp = (1U << alt->patch_id);
+-		if (cpu_req_errata && tmp) {
++		if (cpu_req_errata & tmp) {
+ 			mutex_lock(&text_mutex);
+ 			patch_text_nosync(ALT_OLD_PTR(alt), ALT_ALT_PTR(alt),
+ 					  alt->alt_len);
 -- 
 2.53.0
 
