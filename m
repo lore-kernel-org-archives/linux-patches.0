@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A9F25F7B9;
-	Thu, 28 May 2026 20:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325F233987F;
+	Thu, 28 May 2026 20:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000364; cv=none; b=DG74ciJ1t+qAvwd+LovY5d+4ipVi/AQv4ivGwbYUopJ1q73No3u8JPZeWGaHr+6IHVS9LDPhGAWv4su235m5hQibXYVFMbddVd89lNy/lo6Y3J4GHFppFSPt/WoQYvtXrKBmoZDT4K7s9LOTFOcJXuDcoxZOKgJLnXA4bQB8B0M=
+	t=1780000367; cv=none; b=EiqPuc+cHjx5ouQEM/YhaGaXh0bcCC4ATKwwmV4v2Mq7wDo7GkQG7UId5DcojFLLzr6b9WVw0gfAUKSAYY89HxfyhGjECG7XrfzPy2HQwyfPBjHR6uH8xCb8KsmwaozXPNLmpwYE8YJihTzAcnnnnyvpvSlgJxr86hBcxaKtqCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000364; c=relaxed/simple;
-	bh=M+ufhVo6aSsOxP8AI4LV88Ac0eiDl/Ug1FNuEaxK+d4=;
+	s=arc-20240116; t=1780000367; c=relaxed/simple;
+	bh=XNJx3QDv4p6lxkTWVQjTF4/ZgD+CV4joTfenuaEX1cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKH3V/ioSdcHq13o4YGlumznGtUiZkZw5FnRj3N2tzu55QPdD0MHTLThoew4/1GpiLcTaub8PeNx9zEs5zqfmXEYlwARuAFBb9OhSGpCC1zABJx6YmKP/1+K+oef2gYcA7aJgux9grhPy7c2nuCWRHoLFr9w5Prp8PBv7dYtDmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loR3yyMr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ur+1e8InU68vzPnJ3d8io+0Mqe+HEilN92q6XUHavjAKWxwY09wMjq1yYPABi0+IwIWaIKKzDECVU+Wz+6aWDoCD+hDG4RVFQKUX0XYH097ADzjHmgc7YwPrvF1xtE6lI1+OKmhl2uuZl0W0CEJ4zKcA2LGmQGubXFo/ZKU1DeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opbH9FH6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loR3yyMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37731F000E9;
-	Thu, 28 May 2026 20:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opbH9FH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E841F000E9;
+	Thu, 28 May 2026 20:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000363;
-	bh=lYzNuu6WepgvM2LrtbD1hTcjAUtwatiUHPf8M3hr8G4=;
+	s=korg; t=1780000366;
+	bh=81Ke31HSxU+PM0tgtwkDaDt3qCKgilkmiOUY1OY7bo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loR3yyMrE0jEff35M5dj4J57puwvmCYVLKgtL6mZ/6zCxyEbZWWCQikJN14homqXg
-	 e7SAyHFjUjutnsUTy4eUF5o9TL/ioI0G/uCYwv1RQqiiUddhIBagz7VccNgOrMQJdh
-	 H5Hg+wdPkno54axlEqUpqXHA3dLC0GeIMuxQbpow=
+	b=opbH9FH6vMtk9wyiK1T2to31S78UpTFaurau1YIsMQFYnUt/LnBqf3EI4Sl0vTiv3
+	 SFDDA6yU1F59vIQSLsJO2s7y87zOgF8Bz094F985tWvmxLFHdtsj9VHVXX2E3Wh5j6
+	 tRphYCtfc9HCM44CTz69BMt8h7dakrHanKGSqohg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Lukas Beckmann <lbckmnn@mailbox.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/272] sched/deadline: Fix dl_server behaviour
-Date: Thu, 28 May 2026 21:46:33 +0200
-Message-ID: <20260528194629.918741234@linuxfoundation.org>
+Subject: [PATCH 6.12 020/272] sched/deadline: Stop dl_server before CPU goes offline
+Date: Thu, 28 May 2026 21:46:34 +0200
+Message-ID: <20260528194629.949050676@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,151 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-commit a3a70caf7906708bf9bbc80018752a6b36543808 upstream.
+[ Upstream commit ee6e44dfe6e50b4a5df853d933a96bdff5309e6e ]
 
-John reported undesirable behaviour with the dl_server since commit:
-cccb45d7c4295 ("sched/deadline: Less agressive dl_server handling").
+IBM CI tool reported kernel warning[1] when running a CPU removal
+operation through drmgr[2]. i.e "drmgr -c cpu -r -q 1"
 
-When starving fair tasks on purpose (starting spinning FIFO tasks),
-his fair workload, which often goes (briefly) idle, would delay fair
-invocations for a second, running one invocation per second was both
-unexpected and terribly slow.
+WARNING: CPU: 0 PID: 0 at kernel/sched/cpudeadline.c:219 cpudl_set+0x58/0x170
+NIP [c0000000002b6ed8] cpudl_set+0x58/0x170
+LR [c0000000002b7cb8] dl_server_timer+0x168/0x2a0
+Call Trace:
+[c000000002c2f8c0] init_stack+0x78c0/0x8000 (unreliable)
+[c0000000002b7cb8] dl_server_timer+0x168/0x2a0
+[c00000000034df84] __hrtimer_run_queues+0x1a4/0x390
+[c00000000034f624] hrtimer_interrupt+0x124/0x300
+[c00000000002a230] timer_interrupt+0x140/0x320
 
-The reason this happens is that when dl_se->server_pick_task() returns
-NULL, indicating no runnable tasks, it would yield, pushing any later
-jobs out a whole period (1 second).
+Git bisects to: commit 4ae8d9aa9f9d ("sched/deadline: Fix dl_server getting stuck")
 
-Instead simply stop the server. This should restore behaviour in that
-a later wakeup (which restarts the server) will be able to continue
-running (subject to the CBS wakeup rules).
+This happens since:
+- dl_server hrtimer gets enqueued close to cpu offline, when
+  kthread_park enqueues a fair task.
+- CPU goes offline and drmgr removes it from cpu_present_mask.
+- hrtimer fires and warning is hit.
 
-Notably, this does not re-introduce the behaviour cccb45d7c4295 set
-out to solve, any start/stop cycle is naturally throttled by the timer
-period (no active cancel).
+Fix it by stopping the dl_server before CPU is marked dead.
 
-Fixes: cccb45d7c4295 ("sched/deadline: Less agressive dl_server handling")
-Reported-by: John Stultz <jstultz@google.com>
+[1]: https://lore.kernel.org/all/8218e149-7718-4432-9312-f97297c352b9@linux.ibm.com/
+[2]: https://github.com/ibm-power-utilities/powerpc-utils/tree/next/src/drmgr
+
+[sshegde: wrote the changelog and tested it]
+Fixes: 4ae8d9aa9f9d ("sched/deadline: Fix dl_server getting stuck")
+Closes: https://lore.kernel.org/all/8218e149-7718-4432-9312-f97297c352b9@linux.ibm.com
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: John Stultz <jstultz@google.com>
-Closes: https://lore.kernel.org/regressions/04657838-46d1-432d-95e1-eb73b930b032@mailbox.org
-Signed-off-by: Lukas Beckmann <lbckmnn@mailbox.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h   |  1 -
- kernel/sched/deadline.c | 23 ++---------------------
- kernel/sched/sched.h    | 33 +++++++++++++++++++++++++++++++--
- 3 files changed, 33 insertions(+), 24 deletions(-)
+ kernel/sched/core.c     | 2 ++
+ kernel/sched/deadline.c | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 464d281aa2e49..f9ffe42cae171 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -674,7 +674,6 @@ struct sched_dl_entity {
- 	unsigned int			dl_defer	  : 1;
- 	unsigned int			dl_defer_armed	  : 1;
- 	unsigned int			dl_defer_running  : 1;
--	unsigned int			dl_server_idle    : 1;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 9b238c9c71c67..1b1ddd24cb227 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8319,10 +8319,12 @@ int sched_cpu_dying(unsigned int cpu)
+ 	sched_tick_stop(cpu);
  
- 	/*
- 	 * Bandwidth enforcement timer. Each -deadline task has its
+ 	rq_lock_irqsave(rq, &rf);
++	update_rq_clock(rq);
+ 	if (rq->nr_running != 1 || rq_has_pinned_tasks(rq)) {
+ 		WARN(true, "Dying CPU not properly vacated!");
+ 		dump_rq_tasks(rq, KERN_WARNING);
+ 	}
++	dl_server_stop(&rq->fair_server);
+ 	rq_unlock_irqrestore(rq, &rf);
+ 
+ 	calc_load_migrate(rq);
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 609783d7de290..a6c699e43111d 100644
+index a6c699e43111d..cb8eff0ebd228 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -1621,10 +1621,8 @@ void dl_server_update_idle_time(struct rq *rq, struct task_struct *p)
- void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
- {
- 	/* 0 runtime = fair server disabled */
--	if (dl_se->dl_runtime) {
--		dl_se->dl_server_idle = 0;
-+	if (dl_se->dl_runtime)
- 		update_curr_dl_se(dl_se->rq, dl_se, delta_exec);
--	}
- }
+@@ -1848,6 +1848,9 @@ void dl_server_start(struct sched_dl_entity *dl_se)
+ 	if (!dl_se->dl_runtime || dl_se->dl_server_active)
+ 		return;
  
- /*
-@@ -1868,20 +1866,6 @@ void dl_server_stop(struct sched_dl_entity *dl_se)
- 	dl_se->dl_server_active = 0;
- }
- 
--static bool dl_server_stopped(struct sched_dl_entity *dl_se)
--{
--	if (!dl_se->dl_server_active)
--		return true;
--
--	if (dl_se->dl_server_idle) {
--		dl_server_stop(dl_se);
--		return true;
--	}
--
--	dl_se->dl_server_idle = 1;
--	return false;
--}
--
- void dl_server_init(struct sched_dl_entity *dl_se, struct rq *rq,
- 		    dl_server_pick_f pick_task)
- {
-@@ -2637,10 +2621,7 @@ static struct task_struct *__pick_task_dl(struct rq *rq)
- 	if (dl_server(dl_se)) {
- 		p = dl_se->server_pick_task(dl_se);
- 		if (!p) {
--			if (!dl_server_stopped(dl_se)) {
--				dl_se->dl_yielded = 1;
--				update_curr_dl_se(rq, dl_se, 0);
--			}
-+			dl_server_stop(dl_se);
- 			goto again;
- 		}
- 		rq->dl_server = dl_se;
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 9391ff62cdaaa..7956abeb9154e 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -377,10 +377,39 @@ extern s64 dl_scaled_delta_exec(struct rq *rq, struct sched_dl_entity *dl_se, s6
-  *   dl_server_update() -- called from update_curr_common(), propagates runtime
-  *                         to the server.
-  *
-- *   dl_server_start()
-- *   dl_server_stop()  -- start/stop the server when it has (no) tasks.
-+ *   dl_server_start() -- start the server when it has tasks; it will stop
-+ *			  automatically when there are no more tasks, per
-+ *			  dl_se::server_pick() returning NULL.
-+ *
-+ *   dl_server_stop() -- (force) stop the server; use when updating
-+ *                       parameters.
-  *
-  *   dl_server_init() -- initializes the server.
-+ *
-+ * When started the dl_server will (per dl_defer) schedule a timer for its
-+ * zero-laxity point -- that is, unlike regular EDF tasks which run ASAP, a
-+ * server will run at the very end of its period.
-+ *
-+ * This is done such that any runtime from the target class can be accounted
-+ * against the server -- through dl_server_update() above -- such that when it
-+ * becomes time to run, it might already be out of runtime and get deferred
-+ * until the next period. In this case dl_server_timer() will alternate
-+ * between defer and replenish but never actually enqueue the server.
-+ *
-+ * Only when the target class does not manage to exhaust the server's runtime
-+ * (there's actualy starvation in the given period), will the dl_server get on
-+ * the runqueue. Once queued it will pick tasks from the target class and run
-+ * them until either its runtime is exhaused, at which point its back to
-+ * dl_server_timer, or until there are no more tasks to run, at which point
-+ * the dl_server stops itself.
-+ *
-+ * By stopping at this point the dl_server retains bandwidth, which, if a new
-+ * task wakes up imminently (starting the server again), can be used --
-+ * subject to CBS wakeup rules -- without having to wait for the next period.
-+ *
-+ * Additionally, because of the dl_defer behaviour the start/stop behaviour is
-+ * naturally thottled to once per period, avoiding high context switch
-+ * workloads from spamming the hrtimer program/cancel paths.
-  */
- extern void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec);
- extern void dl_server_start(struct sched_dl_entity *dl_se);
++	if (WARN_ON_ONCE(!cpu_online(cpu_of(rq))))
++		return;
++
+ 	dl_se->dl_server_active = 1;
+ 	enqueue_dl_entity(dl_se, ENQUEUE_WAKEUP);
+ 	if (!dl_task(dl_se->rq->curr) || dl_entity_preempt(dl_se, &rq->curr->dl))
 -- 
 2.53.0
 
