@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978F02F8E83;
-	Thu, 28 May 2026 20:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D582D9787;
+	Thu, 28 May 2026 20:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999695; cv=none; b=lUFTfR37975znd2u5mQcHwT2/dgTTOMJIb1t7jhDcKpQA94N2qjKg5eaxG/mztNE7KYKC7tVk+k24U/9W8y1RP1OQCqXfWqWW7AMwNzCWyWuMUoH2jg5RUhqd//CBywMUqxx0zhW0kw4tpKtNQtQEJFr4WSBy17182TJelI1lBE=
+	t=1779999698; cv=none; b=l7MHK31CKPM0KwnZ3aczGOKjuZkAR4XEwADECTCTszo4Yq3Gh9H8vJeAUUXS1vBCJUeGiUMQRxW0/YqFir7MVl4icuotJk5U/uGs4SvG38rWN1yMoX8Fg33yjansw3ArSj2pGfQXDunEDVG3Kf5PerG9hO0SY7XDRpbmHKciCYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999695; c=relaxed/simple;
-	bh=zjrGyxyXKr9fkjtekitAglDRAM1Ystas3Pd0XMi0Akc=;
+	s=arc-20240116; t=1779999698; c=relaxed/simple;
+	bh=mrS/lUuHoUb8GCusos5LwUEq1AwhPx4qsc7ketHBpcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MAE6IAKevfLoJd/fZhPH+1D1hVQHxZX/kJFCEaMTzWaTHihXvtampEECPw7yLlU3Hd3nNZmvvdFK9L7nY5EKN/h8lVDNpUN872tt8ScCtUQ8XbhkMv8t3RUjiZeCWZrJ0OXzf3DmPY7yEO9Q+mX0xJDpCPm677iEoqD9rm9lru4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VisxbPoC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GkouoUokS0BnOHV2EgTD3/BwRFK6sfHfyl9GXphpl+XIZy/ZgS1d0nho6V6QZSTM5NniYVIgHGqa5C19fD7PEZOwbZ/H83qZugJMov8CQcZUf2ubZmcSjQZDT364TpgfSGEX/weEayyyyxU0BG6BvdeilFBWlbuDYb1cJ4k+Uoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjIhGcuk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VisxbPoC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018101F000E9;
-	Thu, 28 May 2026 20:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjIhGcuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B061F000E9;
+	Thu, 28 May 2026 20:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999694;
-	bh=gNX2BG/yJXaDIR7lDhgpIozIQ5sAd9S/wLX0aG1NsI0=;
+	s=korg; t=1779999697;
+	bh=+i2iIOnz+bAW/ftLmJW59pCsEgcQKlnF4wlPOudIzL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VisxbPoClaZVukuCqwCo4wgWDBpYw4R9af8/T2dXsgj7DqjyFzykXcbnGjuDNvyUK
-	 sfF7X/FAD43Jk9yPrVKLoLuuhN1xqudCzNXB1YS45PRbez0ZJjT1zm1D30d41kaET4
-	 EfNuXYcfp4uJaMVKqlbfqLsHEol+xPVOVFoVIZ+0=
+	b=CjIhGcuk3GslRiC+eCznZMoqkwfvO1oEp/eakly1mp3bfvm1mPZm6cWc4mz1ADsrN
+	 a7jZSDaxB+978LTdGa41DbnKea3BVV2VXT7Gf4wgCdV+X+0d2+8uTmeOsIYF+5yAap
+	 u3cFVai5DjMpirRLtqMWB5f1Ieev1kYxMDoqokYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.18 112/377] virt: sev-guest: Explicitly leak pages in unknown state
-Date: Thu, 28 May 2026 21:45:50 +0200
-Message-ID: <20260528194641.577495746@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 152/377] batman-adv: tp_meter: fix tp_vars reference leak in receiver shutdown
+Date: Thu, 28 May 2026 21:46:30 +0200
+Message-ID: <20260528194642.793918555@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -45,72 +44,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos López <clopez@suse.de>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit fd948c3f96b18ff9ba7d3e8eae13d196593e1aaf upstream.
+commit 77098e4bea37af51d3962efa88a5af2ea5e1ac57 upstream.
 
-When set_memory_{encrypted,decrypted}() fail, the user cannot know at which
-point the function failed, meaning that the pages are left in an unknown state
-from the point of view of the caller.
+The receiver shutdown timer handler, batadv_tp_receiver_shutdown(), is
+responsible for releasing the tp_vars reference it holds. However, the
+existing logic for coordinating this release with batadv_tp_stop_all() was
+flawed.
 
-Since the pages may be left in an unencrypted state, they are not suitable for
-general use, and cannot be returned safely to the buddy allocator. Avoid the
-issue by never freeing the pages, and then do the proper accounting by calling
-snp_leak_pages().
+timer_shutdown_sync() guarantees the timer will not fire again after it
+returns, but it returns non-zero only when the timer was pending at the
+time of the call. If the timer had already expired (and
+batadv_tp_stop_all() would unsucessfully try to  rearm itself),
+batadv_tp_stop_all() skips its batadv_tp_vars_put(), and
+batadv_tp_receiver_shutdown() fails to put its own reference as well.
 
-Fixes: 3e385c0d6ce8 ("virt: sev-guest: Move SNP Guest Request data pages handling under snp_cmd_mutex")
-Signed-off-by: Carlos López <clopez@suse.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fix this by introducing a new atomic variable receiving that is set to 1
+when the receiver is initialized and cleared atomically with atomic_xchg()
+by whichever side claims it first. Only the side that observes the
+transition from 1 to 0 is responsible for releasing the tp_vars timer
+reference, eliminating the uncertainty.
+
 Cc: stable@kernel.org
+Fixes: 3d3cf6a7314a ("batman-adv: stop tp_meter sessions during mesh teardown")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/batman-adv/tp_meter.c |   13 +++++++++++--
+ net/batman-adv/types.h    |    3 +++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -176,6 +176,7 @@ static int get_ext_report(struct snp_gue
- 	struct snp_guest_req req = {};
- 	int ret, npages = 0, resp_len;
- 	sockptr_t certs_address;
-+	u64 pfn;
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -8,6 +8,7 @@
+ #include "main.h"
  
- 	if (sockptr_is_null(io->req_data) || sockptr_is_null(io->resp_data))
- 		return -EINVAL;
-@@ -215,10 +216,11 @@ static int get_ext_report(struct snp_gue
- 	if (!req.certs_data)
- 		return -ENOMEM;
+ #include <linux/atomic.h>
++#include <linux/bug.h>
+ #include <linux/build_bug.h>
+ #include <linux/byteorder/generic.h>
+ #include <linux/cache.h>
+@@ -1157,6 +1158,9 @@ static void batadv_tp_receiver_shutdown(
+ 	spin_unlock_bh(&tp_vars->unacked_lock);
  
-+	pfn = PHYS_PFN(virt_to_phys(req.certs_data));
- 	ret = set_memory_decrypted((unsigned long)req.certs_data, npages);
- 	if (ret) {
- 		pr_err("failed to mark page shared, ret=%d\n", ret);
--		free_pages_exact(req.certs_data, npages << PAGE_SHIFT);
-+		snp_leak_pages(pfn, npages);
- 		return -EFAULT;
- 	}
- 
-@@ -272,10 +274,12 @@ e_free:
- 	kfree(report_resp);
- e_free_data:
- 	if (npages) {
--		if (set_memory_encrypted((unsigned long)req.certs_data, npages))
-+		if (set_memory_encrypted((unsigned long)req.certs_data, npages)) {
- 			WARN_ONCE(ret, "failed to restore encryption mask (leak it)\n");
--		else
-+			snp_leak_pages(pfn, npages);
-+		} else {
- 			free_pages_exact(req.certs_data, npages << PAGE_SHIFT);
-+		}
- 	}
- 	return ret;
+ 	/* drop reference of timer */
++	if (WARN_ON(atomic_xchg(&tp_vars->receiving, 0) != 1))
++		return;
++
+ 	batadv_tp_vars_put(tp_vars);
  }
+ 
+@@ -1375,6 +1379,7 @@ batadv_tp_init_recv(struct batadv_priv *
+ 
+ 	ether_addr_copy(tp_vars->other_end, icmp->orig);
+ 	tp_vars->role = BATADV_TP_RECEIVER;
++	atomic_set(&tp_vars->receiving, 1);
+ 	memcpy(tp_vars->session, icmp->session, sizeof(tp_vars->session));
+ 	tp_vars->last_recv = BATADV_TP_FIRST_SEQ;
+ 	tp_vars->bat_priv = bat_priv;
+@@ -1547,8 +1552,12 @@ void batadv_tp_stop_all(struct batadv_pr
+ 			break;
+ 		case BATADV_TP_RECEIVER:
+ 			batadv_tp_list_detach(tp_var);
+-			if (timer_shutdown_sync(&tp_var->timer))
+-				batadv_tp_vars_put(tp_var);
++			timer_shutdown_sync(&tp_var->timer);
++
++			if (atomic_xchg(&tp_var->receiving, 0) != 1)
++				break;
++
++			batadv_tp_vars_put(tp_var);
+ 			break;
+ 		}
+ 
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1332,6 +1332,9 @@ struct batadv_tp_vars {
+ 	/** @sending: sending binary semaphore: 1 if sending, 0 is not */
+ 	atomic_t sending;
+ 
++	/** @receiving: receiving binary semaphore: 1 if receiving, 0 is not */
++	atomic_t receiving;
++
+ 	/** @reason: reason for a stopped session */
+ 	enum batadv_tp_meter_reason reason;
+ 
 
 
