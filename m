@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9A02F691F;
-	Thu, 28 May 2026 20:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF4D2FD7C3;
+	Thu, 28 May 2026 20:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998781; cv=none; b=UZ8yElCiBz3xROZZ60R6NaTPolj8MSuXEBc0k1RrXSJ/isnIdxa48cnu5M6xIxwp2up6VlC3sTw9+HDjuYtl2cnqky8uoHnVxg/xAWL5WpHWhiXoDhgXkngVHjSRe4zarvaGFtxzh3YupcD8Kxk34d5XBkWSgoxwv53Ik2Ca6Zw=
+	t=1779998784; cv=none; b=f67LTPqN1HVfY4jUoZqudApkqkbNfh1XJUYs4TM1Tfa0Wvl1QfCwLnDYEUUHJChRcu1TlmSAh/zktDvQajQAmNEruLKGm4OO/L/J4g9UFoTsQF31TtHKf/SLrmEm9ag6FppGWbWFPPz2i+zlhdcu8OoCYsyMWSgmkG0Q47U3y5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998781; c=relaxed/simple;
-	bh=3FwDDwme2MD56HGVV6GS7mMTtKNVZVSRcROXoTdgsFE=;
+	s=arc-20240116; t=1779998784; c=relaxed/simple;
+	bh=AQqPyb8cxQY76SLW5es8wP1A4f03CkA6jz5pd+La2WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYCD9MjPqQAnkWY+3vghSERN2Pste4F0I1VMrLIzWCQj+ecRWGbLxIuvY3dWJnnmINsr0ce2pRA2ObpVANelQaLWiYTy+4nsmXuxFxqXDbeO8d9lJhrhlBMYnLb1S1y41aHn19HasK2RUNCjjI5jik3zQnFFu9pFdpP4FkiZN6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aj2wBlx4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBy9dz2Ny00x+JmzEQoZsh/+1hmnRvHwUOo/sySaJ1pbtI/QmjkzXYRJdpexqhtfm2gavZa+Z9+ew7Xg4pyfE52+cH167BZcXhuuNPcC0GzsnP9znedN+dI391MigNWSB54YL0XtC0rEgkm4/BX1yzFTKf1ofTlW1W+qxqQLvT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzOx6OsV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aj2wBlx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E400E1F000E9;
-	Thu, 28 May 2026 20:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzOx6OsV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B405C1F000E9;
+	Thu, 28 May 2026 20:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998780;
-	bh=I0NfTFJcKtKeWLmyRZgnM3ImFi2tYu0q+XanW37wfDk=;
+	s=korg; t=1779998783;
+	bh=Ja8KNspkCtIuhOl1+NHUsW+vaAPu3TD25x/vaVEqFCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aj2wBlx4U49VYmWiY5nj6nl1NBElH9DmkDGfLeY19uTCJQeq5nhHkNbQoVdxwfBr+
-	 Nx+9liZiUJwsj9tNa3emiT59DfNC1xMOiLtq8GqqFxHmGQk3LVAX+40ej8ois64uPQ
-	 kji+aQVteUW7L8BwBlnsdBcl5BYYFJIa9ctZ0ZS8=
+	b=BzOx6OsVF0p+EBLI6OCaE/cMaf16sZlh4uYVZAYJ9kQiFG7AXCKyIaY3N7LGVtDcG
+	 LNE8GLoJUhyiSwJAsCG/lTDPOdr6rAYTIF94YwvcEibwnymwtfFhQ0XUjwtYDyOwkU
+	 Z2RAqLi+w1Rf4QGJGB5ujtce5N1U2mQMmvRPdOqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahadevan P <mahadevan.p@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 295/461] drm/msm/dpu: Fix Kaanapali CWB register configuration
-Date: Thu, 28 May 2026 21:47:04 +0200
-Message-ID: <20260528194655.756888537@linuxfoundation.org>
+Subject: [PATCH 7.0 296/461] drm/msm/dsi: dont dump registers past the mapped region
+Date: Thu, 28 May 2026 21:47:05 +0200
+Message-ID: <20260528194655.786308690@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit d03279f0d9fdbe6f6761f191a76093c395930018 ]
+[ Upstream commit 5b49a46baa853b26dbefa65c6c75dd9ff69f63d4 ]
 
-The Kaanapali DPU catalog defines kaanapali_cwb[] with the correct
-CWB base addresses for this platform (0x169200, 0x169600, 0x16a200,
-0x16a600), but the dpu_kaanapali_cfg struct was mistakenly pointing
-to sm8650_cwb instead. The SM8650 CWB blocks sit at completely
-different offsets (0x66200, 0x66600, 0x7E200, 0x7E600), so using
-them on Kaanapali would program CWB registers at wrong addresses,
-corrupting unrelated hardware blocks and breaking writeback capture.
+On DSI 6G platforms the IO address space is internally adjusted by
+io_offset. Later this adjusted address might be used for memory dumping.
+However the size that is used for memory dumping isn't adjusted to
+account for the io_offset, leading to the potential access to the
+unmapped region. Lower ctrl_size by the io_offset value to prevent
+access past the mapped area.
 
-Fix this by pointing .cwb to the correct kaanapali_cwb array.
+ msm_disp_snapshot_add_block+0x1d4/0x3c8 [msm] (P)
+ msm_dsi_host_snapshot+0x4c/0x78 [msm]
+ msm_dsi_snapshot+0x28/0x50 [msm]
+ msm_disp_snapshot_capture_state+0x74/0x140 [msm]
+ msm_disp_snapshot_state_sync+0x60/0x90 [msm]
+ _msm_disp_snapshot_work+0x30/0x90 [msm]
+ kthread_worker_fn+0xdc/0x460
+ kthread+0x120/0x140
 
-Fixes: 83fe2cd56b1d ("drm/msm/dpu: Add support for Kaanapali DPU")
-Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/721444/
-Link: https://lore.kernel.org/r/20260428-kaanapali_cwb-v1-1-51fdb2c65498@oss.qualcomm.com
+Fixes: bac2c6a62ed9 ("drm/msm: get rid of msm_iomap_size")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/721747/
+Link: https://lore.kernel.org/r/20260428-msm-fix-dsi-dump-v1-1-5d4cb5ccfac7@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-index 0b20401b04cf0..e3c47b6702f18 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-@@ -481,7 +481,7 @@ const struct dpu_mdss_cfg dpu_kaanapali_cfg = {
- 	.wb_count = ARRAY_SIZE(kaanapali_wb),
- 	.wb = kaanapali_wb,
- 	.cwb_count = ARRAY_SIZE(kaanapali_cwb),
--	.cwb = sm8650_cwb,
-+	.cwb = kaanapali_cwb,
- 	.intf_count = ARRAY_SIZE(kaanapali_intf),
- 	.intf = kaanapali_intf,
- 	.vbif_count = ARRAY_SIZE(sm8650_vbif),
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 1c0841a1c1013..50474c994d473 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -2003,6 +2003,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 
+ 	/* fixup base address by io offset */
+ 	msm_host->ctrl_base += cfg->io_offset;
++	msm_host->ctrl_size -= cfg->io_offset;
+ 
+ 	ret = devm_regulator_bulk_get_const(&pdev->dev, cfg->num_regulators,
+ 					    cfg->regulator_data,
 -- 
 2.53.0
 
