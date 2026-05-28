@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8808E33F5B4;
-	Thu, 28 May 2026 20:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3B233987F;
+	Thu, 28 May 2026 20:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000957; cv=none; b=ZfVmw+Xd5lMwdz40q4rISZ39Am7CgMacLpzZm/Z+ZAPK3ja5jnJ39I8ElhA56JgsL8KD1q68E1OdVq8YXqFtnEpspNqMPuch452n3FoFUraqEwFj8RbhyswwJtDnTWtQmC857iwEQVx6NOiqCEWJEIxGDz84Cz/uiDKF0kMINa4=
+	t=1780000960; cv=none; b=QzMosDVjYC9SIIMerHgqil+iMhqS22O6Qh7jzbTS5uHmptQbL7wgImocgm0N9wFOHqj/nIKiB5puXYkrrL1aLRXZp756tiNAA5Twu9F31mx3aEpmaMP9ZnYZLymuwiVgWkh31b3iawrCHQ5aq20hq0YzVW05u0UuAnPNFtyxaNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000957; c=relaxed/simple;
-	bh=b4iRT5Yd4C9DWPK0kFYKwqggyGBsNIxSLukIvb4URpA=;
+	s=arc-20240116; t=1780000960; c=relaxed/simple;
+	bh=jS3eMqJc+rVibXgBG3cNTj+p+NydtgWyhjyFN7AdQoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHtSwbqY3PCiQmMaRwibPBWE5eHGXQgYtFEvy9pZ8THGYAcq0TPpuISPyYuOlxdUmAcsJ1pvEODBHqCRUo2czVMffeEqd+KZNfi/cXPb1FiQpQ7bHd23t23yBD6mxYVRrpwdOXsT2uH/EeNmliLQ/0m2NT35e4hVXiN4rJJL2U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idqWyEee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NXHCnAkdd35nDy5G3+8F9xsriNLbIUG8LT3XLSpgrFpNCfNODubkBBR+R5ELGRotZv5NddoG9srAgn06TH/9GbTcfCLmAeaxdrF4cL6lknJL/h8cP7ht1puLWRqRLXQB+DIrI15Vm+NaCcl9K635foEb7J5NqQquGCDtnScLguQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4h9qwmP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idqWyEee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C461F000E9;
-	Thu, 28 May 2026 20:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4h9qwmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D931F000E9;
+	Thu, 28 May 2026 20:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000956;
-	bh=z5LFjPvRDnAW4o0JP497YqUgAWFvzfduKFRydWVNyX8=;
+	s=korg; t=1780000959;
+	bh=3oHQxlR0ACzwshkEYblIksWXONRF28RlW5dJtycyHL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idqWyEeew4WEjnywkrHoLmvpVFP9ZkvMti7/0EQKoABmjxfjF3vtF/Q45C2v9OabU
-	 AB1LOapScOhInNzOiwTmyJuW+LaM9P1xfZDwwFhdi+MZ+AgUAy0pEo2yMYedLrawPn
-	 CWoUJ+pNqqP11jc1n/Y0oMQcxiLlosVRkvnRe59k=
+	b=i4h9qwmPBG1a9I3vJ7vwOASKcg1Q49LWTAOwqOsxHZkh2lwpEQqBYk/hOAX0427nT
+	 RR1cF/JuXCrS7vUdbi+3kSvaZIcxVT0eLwIFL4+9lSmUWvpAcmSxDH72vNerx5K8k3
+	 6X9UKGJpV/EZXuJ3LKDXQLLOASMWxvjaiiWGRRoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeroen Massar <jmassar@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/272] tls: Preserve sk_err across recvmsg() when data has been copied
-Date: Thu, 28 May 2026 21:50:03 +0200
-Message-ID: <20260528194635.588397302@linuxfoundation.org>
+Subject: [PATCH 6.12 230/272] net/mlx5: Do not restore destination-less TC rules
+Date: Thu, 28 May 2026 21:50:04 +0200
+Message-ID: <20260528194635.614381403@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,123 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeroen Massar <jmassar@nvidia.com>
 
-[ Upstream commit f508262ae9f21fe0e6c0749948b9dc7dd5a62a70 ]
+[ Upstream commit 8d0a5af8b1ba598e7340761729801624e7a9330e ]
 
-The sk_err check in tls_rx_rec_wait() consumes the error via
-sock_error(), which clears sk_err atomically. When the caller
-(tls_sw_recvmsg, tls_sw_splice_read, or tls_sw_read_sock) already
-has bytes copied to userspace, it returns those bytes and discards
-the error from this call. sk_err is now zero on the socket, so the
-next read syscall observes only RCV_SHUTDOWN and reports a clean
-EOF instead of the actual error (typically -ECONNRESET).
+After IPsec policy/state TX rules are added, any TC flow rule, which
+forwards packets to uplink, is modified to forward to IPsec TX tables.
+As these tables are destroyed dynamically, whenever there is no
+reference to them, the destinations of this kind of rules must be
+restored to uplink, unless there is no destination for that rule.
 
-The race is reachable when tls_read_flush_backlog()'s periodic
-sk_flush_backlog() triggers tcp_reset() in the middle of a
-multi-record read.
+The flow rules FLOW_ACTION_ACCEPT, DROP, TRAP, GOTO and SAMPLE do not
+have a destination port, and thus out_count = 0.
 
-Pass a has_copied flag to tls_rx_rec_wait(). When has_copied is
-false, consume sk_err via sock_error() as before. When has_copied
-is true, report the error from READ_ONCE() but leave sk_err set:
-the caller returns the byte count and discards the err from this
-call, and the next read syscall surfaces the preserved sk_err. This
-mirrors the tcp_recvmsg() preserve-and-surface pattern.
+At cleanup time of the rules in mlx5_esw_ipsec_modify_flow_dests
+we call mlx5_eswitch_restore_ipsec_rule but as the above types
+do not have a destination we get an underflow of out_count, as
+the port is passed, which is esw_attr->out_count - 1.
 
-The decrypt-abort path is unaffected: tls_err_abort() raises
-sk_err to EBADMSG after tls_rx_rec_wait() returns, and nothing
-on the caller's return path consumes it, so the EBADMSG surfaces
-on the next read.
+This change avoids calling mlx5_eswitch_restore_ipsec_rule when
+there are no output destinations and thus avoids the underflow.
 
-tls_sw_splice_read() passes has_copied=false: it processes
-one record per call, so no bytes have been copied within the
-function when tls_rx_rec_wait() runs. A reset that arrives
-between iterations of splice_direct_to_actor() (the sendfile()
-path) is still consumed by sock_error() in the later call, and the
-outer loop returns the prior iterations' byte count and drops the
-error. tcp_splice_read() exhibits the same pattern at the iteration
-boundary; addressing it belongs at the splice_direct_to_actor()
-layer and is out of scope here.
-
-Fixes: c46b01839f7a ("tls: rx: periodically flush socket backlog")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://patch.msgid.link/20260513125825.205189-1-cel@kernel.org
+Fixes: d1569537a837 ("net/mlx5e: Modify and restore TC rules for IPSec TX rules")
+Signed-off-by: Jeroen Massar <jmassar@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260513063302.333761-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 7511cce76fbbf..129a8c778d32d 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1366,9 +1366,14 @@ void tls_sw_splice_eof(struct socket *sock)
- 	mutex_unlock(&tls_ctx->tx_lock);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
+index 4bba2884c1c05..b4fec9d6bff41 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
+@@ -142,7 +142,8 @@ static int mlx5_esw_ipsec_modify_flow_dests(struct mlx5_eswitch *esw,
  
-+/* When has_copied is true the caller has already moved bytes to
-+ * userspace. Report sk_err but leave it set so the next read
-+ * surfaces it instead of a spurious EOF, otherwise sk_err is
-+ * consumed via sock_error().
-+ */
- static int
- tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
--		bool released)
-+		bool released, bool has_copied)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
-@@ -1382,8 +1387,11 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 		if (!sk_psock_queue_empty(psock))
- 			return 0;
+ 	attr = flow->attr;
+ 	esw_attr = attr->esw_attr;
+-	if (esw_attr->out_count - esw_attr->split_count > 1)
++	if (!esw_attr->out_count ||
++	    esw_attr->out_count - esw_attr->split_count > 1)
+ 		return 0;
  
--		if (sk->sk_err)
-+		if (sk->sk_err) {
-+			if (has_copied)
-+				return -READ_ONCE(sk->sk_err);
- 			return sock_error(sk);
-+		}
- 
- 		if (ret < 0)
- 			return ret;
-@@ -1419,7 +1427,7 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 	}
- 
- 	if (unlikely(!tls_strp_msg_load(&ctx->strp, released)))
--		return tls_rx_rec_wait(sk, psock, nonblock, false);
-+		return tls_rx_rec_wait(sk, psock, nonblock, false, has_copied);
- 
- 	return 1;
- }
-@@ -2077,7 +2085,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 		int to_decrypt, chunk;
- 
- 		err = tls_rx_rec_wait(sk, psock, flags & MSG_DONTWAIT,
--				      released);
-+				      released, !!(decrypted + copied));
- 		if (err <= 0) {
- 			if (psock) {
- 				chunk = sk_msg_recvmsg(sk, psock, msg, len,
-@@ -2264,7 +2272,7 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 		struct tls_decrypt_arg darg;
- 
- 		err = tls_rx_rec_wait(sk, NULL, flags & SPLICE_F_NONBLOCK,
--				      true);
-+				      true, false);
- 		if (err <= 0)
- 			goto splice_read_end;
- 
-@@ -2350,7 +2358,7 @@ int tls_sw_read_sock(struct sock *sk, read_descriptor_t *desc,
- 		} else {
- 			struct tls_decrypt_arg darg;
- 
--			err = tls_rx_rec_wait(sk, NULL, true, released);
-+			err = tls_rx_rec_wait(sk, NULL, true, released, !!copied);
- 			if (err <= 0)
- 				goto read_sock_end;
- 
+ 	err = mlx5_eswitch_restore_ipsec_rule(esw, flow->rule[0], esw_attr,
 -- 
 2.53.0
 
