@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F1523394D;
-	Thu, 28 May 2026 20:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEA223394D;
+	Thu, 28 May 2026 20:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001132; cv=none; b=iyfUxRVZRcNBOBhGh0ZYZ2M5md6EccFk8M5O+kFOQTJXONAgBkso5HuOgjXLQxQiJ3AoBa18gZAdV7UoRm8mbHjw4OVIUhehIx0nhjF/98vpDfAIIGaLFS3BVwRZr/CIbh4tXwdATzC9CfczuvqNv8nCqLVD7752OpdI3N1BAwU=
+	t=1780001135; cv=none; b=Kd0tUAtJ6Qg2V85++8ucPffiizo4FqFRjJRadyl0AggnC9HaqsiomwSHWlx14mTwGX56nkVfLiu+iSaT5Nu+Nyd5eNBbfE7EQ8vi3S+FwMGJnpszDKHHFYXOO7qmPpp0WY5VeOMojG5qenjUSMTmyecrZbU5vLeRlZxZ3nwrmAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001132; c=relaxed/simple;
-	bh=udNkUWk06BdbEJcdrmruoew4HWf3SiIfkWBz6oBnECU=;
+	s=arc-20240116; t=1780001135; c=relaxed/simple;
+	bh=GKSntXG+sxmy7K4JwxNArTNNTniH+t4lDiNSChzOj4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMbwnbBnBWmHg2V03imArsYoekbdhfZtTNImA0YZP9l32OBlngVXPumZN61hxlVQK5ZavRN+IyBHSsDkiSSvtiugKxKItsEcA0caFvp5SpHUtGt9GkXD9AChxBsbmO3iMqKHsD1OfqVJNgs4OqOt9DLGfgfNzQmD5fAQcchMqN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGWpibkg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h5BusrcKLhfPdVRhVGGZUW4vR0FLP2tqa5MmkLkea2ztOCfkYvZnst2k+/22s1R3wEoIxz84Dw0pKAXEJTB9yTJAIYLp164YxFzw3YIzN49G2zuU+a6ZNhc/MY+tp17IzTv6IPtXx1bLRebjE62Y+5eUAOgb2XR8tDf5ntMBBtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVWCtmLM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGWpibkg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9B81F000E9;
-	Thu, 28 May 2026 20:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVWCtmLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3CA1F000E9;
+	Thu, 28 May 2026 20:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001131;
-	bh=b5Qkk3N5y520gf526ffn+YEHhvc/71/LgPMw+VbMvW4=;
+	s=korg; t=1780001134;
+	bh=/A2SQ0ew1i6SDiSQ5weoi/YQZuzwgf24YLVQTUGEQVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wGWpibkgDMBTWSpOlXNcFcToAqFYAUWI6O94vexzdKmcKsE8VhWXCvVRwUV1ay/YB
-	 yY6/aXKkOKRUX9Hv+HKECiMbrzQMdl35aFgol/O950PuLOSNu4pEjC61LQOOXnZooq
-	 GWJRO+pXGPir47g67JRMgQUOvRpN1HSeRFyZ+oVk=
+	b=EVWCtmLMo2PkeiYBH4by/Y85wXFVhOH0nTpvPEYfX+CTcI8qU9KtQqmpnKLwDDKUt
+	 JVHHJUtn//FAryI3FRF0ksVG7IJMOume+jAjoS8QTZaJhSa2w2pgVTqz4RqjRqBvQ3
+	 tVxPP+pYMVEXh6GJpfanfUnSUX0ZFvfu90ynA6og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/186] Revert "s390/cio: Update purge function to unregister the unused subchannels"
-Date: Thu, 28 May 2026 21:48:19 +0200
-Message-ID: <20260528194929.474769081@linuxfoundation.org>
+Subject: [PATCH 6.6 002/186] mptcp: pm: ADD_ADDR rtx: allow ID 0
+Date: Thu, 28 May 2026 21:48:02 +0200
+Message-ID: <20260528194929.011514767@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -49,73 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit c34b09cbd6fc06f0f234182e462a1b010d13a5a6.
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
+commit 03f324f3f1f7619a47b9c91282cb12775ab0a2f1 upstream.
+
+ADD_ADDR can be sent for the ID 0, which corresponds to the local
+address and port linked to the initial subflow.
+
+Indeed, this address could be removed, and re-added later on, e.g. what
+is done in the "delete re-add signal" MPTCP Join selftests. So no reason
+to ignore it.
+
+Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-2-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to net/mptcp/pm_netlink.c instead of upstream's pm_kernel.c ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/device.c | 37 +++++++++++++------------------------
- 1 file changed, 13 insertions(+), 24 deletions(-)
+ net/mptcp/pm_netlink.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index 93307ca75c10b..e623359862ea2 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -1318,34 +1318,23 @@ void ccw_device_schedule_recovery(void)
- 	spin_unlock_irqrestore(&recovery_lock, flags);
- }
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 4a5802126c8e4..23aef214f30d8 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -305,9 +305,6 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
+ 	if (inet_sk_state_load(sk) == TCP_CLOSE)
+ 		return;
  
--static int purge_fn(struct subchannel *sch, void *data)
-+static int purge_fn(struct device *dev, void *data)
- {
--	struct ccw_device *cdev;
+-	if (!entry->addr.id)
+-		return;
 -
--	spin_lock_irq(sch->lock);
--	if (sch->st != SUBCHANNEL_TYPE_IO || !sch->schib.pmcw.dnv)
--		goto unlock;
--
--	if (!is_blacklisted(sch->schid.ssid, sch->schib.pmcw.dev))
--		goto unlock;
--
--	cdev = sch_get_cdev(sch);
--	if (cdev) {
--		if (cdev->private->state != DEV_STATE_OFFLINE)
--			goto unlock;
-+	struct ccw_device *cdev = to_ccwdev(dev);
-+	struct ccw_dev_id *id = &cdev->private->dev_id;
-+	struct subchannel *sch = to_subchannel(cdev->dev.parent);
- 
--		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
--			goto unlock;
-+	spin_lock_irq(cdev->ccwlock);
-+	if (is_blacklisted(id->ssid, id->devno) &&
-+	    (cdev->private->state == DEV_STATE_OFFLINE) &&
-+	    (atomic_cmpxchg(&cdev->private->onoff, 0, 1) == 0)) {
-+		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
-+			      id->devno);
- 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
-+		css_sched_sch_todo(sch, SCH_TODO_UNREG);
- 		atomic_set(&cdev->private->onoff, 0);
- 	}
--
--	css_sched_sch_todo(sch, SCH_TODO_UNREG);
--	CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x%s\n", sch->schid.ssid,
--		      sch->schib.pmcw.dev, cdev ? "" : " (no cdev)");
--
--unlock:
--	spin_unlock_irq(sch->lock);
-+	spin_unlock_irq(cdev->ccwlock);
- 	/* Abort loop in case of pending signal. */
- 	if (signal_pending(current))
- 		return -EINTR;
-@@ -1361,7 +1350,7 @@ static int purge_fn(struct subchannel *sch, void *data)
- int ccw_purge_blacklisted(void)
- {
- 	CIO_MSG_EVENT(2, "ccw: purging blacklisted devices\n");
--	for_each_subchannel_staged(purge_fn, NULL, NULL);
-+	bus_for_each_dev(&ccw_bus_type, NULL, NULL, purge_fn);
- 	return 0;
- }
- 
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk)) {
+ 		/* Try again later. */
 -- 
 2.53.0
 
