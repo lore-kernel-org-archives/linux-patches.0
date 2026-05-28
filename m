@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678D72139C9;
-	Thu, 28 May 2026 20:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B21E25F7B9;
+	Thu, 28 May 2026 20:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000815; cv=none; b=nSG8bfktXKXXnBp6KVg8/2lFy43cd9GlccK2qYoEExwDHhuNH6E/2kR6dBWREhd6k//VMSv3RpwctqfJfzeznu3b8+PnX4rJsvPmUzY39wOvIcG4jZyXAFkARLNMtAahz9TRNp/xtwkaJUWistR0vKRXEV5QpGr/bXS+nxV+8+w=
+	t=1780000818; cv=none; b=rERnAOOPfHm4ECHix4zIeyMzfpfnWdzAkTJkefKF5qZJxVLPFq1Y/cUx58GfhEfvl9NR/Sqjy50DPV3tQDcWFnpLcu4pSVtwiaaEw95msuSPQQYX08Ich+yrmntAhYFYPGTmsyQvAwxbTnEak3jRZdZIFD6GkN7pTIcJktU3voY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000815; c=relaxed/simple;
-	bh=qlRt0SOF0X3sYX0SSXWjGSwivq26Mrd+n9E8PSRXkTQ=;
+	s=arc-20240116; t=1780000818; c=relaxed/simple;
+	bh=YHuhc2BXMyeCFmdaLdyF4vb7TOhIieYYBm722JZmvkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cD1DBmRqkUVn6SMSfjAIHrP8KDiMlLLXV1I0N9378DLRqJ0AUR42MQbVWVxR1+mO4p4rpMfmmLZ+vQ8VloKlKj/CplG4aqJjZIJZGG1OjUv1M79pOIgd6uOmw5JI+afrhF7gKsOMdzxYIe7HH/5j/HFPvXCdjLW4bvD6WTnKuAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OlemF32; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YSarHD6zSooVq052bozXr7oekU6NcAtLtg8WJ/uHxJpsQUq96i7DpfAJpc5cuRDG4zYpNEeoA+5zFGhe8rv/+Gf8jX+2YD0Z+HMlNAlGZipEyhxwDa2fNiiTbqbsccZUPopGg+bzGdD+5+IuHC8M2cfAkFqojL9oaDQlIasSiMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ+bzGGP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OlemF32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA831F000E9;
-	Thu, 28 May 2026 20:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ+bzGGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995DF1F000E9;
+	Thu, 28 May 2026 20:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000814;
-	bh=O2y/BkihebkSwMy9E5GPSRBdMdgg2mK8WSoqCiSxKv4=;
+	s=korg; t=1780000817;
+	bh=8BEfq7vjTtkh134D0kUMYNrARcDNBMkH+pDreZ9Y/mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OlemF32fJ5nL3wHJroAYmoyB4KOdxjlOUW07Sjj0eGwfQtQtCzethbpE9PnRi1dY
-	 v3k/3SVQ4boD0mORef+xX5320IycigY1ObT8ugnVKDDmxvO3+CRxpT48KQ2KoHtA30
-	 rIW/fn3pOXSiTg5sf5JH6jv8QwGjgaNhtj91icJg=
+	b=qJ+bzGGPZj8JRYB4GbvNflo0uDQ8k1joQ7hjKEEk7ZnYodm4plfF/oK19zW8xZs51
+	 BzD8WrBIPQWMhDkPGAek4CKU8UmuphOvirqO9zQCo98xSyaZ/0ZNkLyXirGJ6zu6SI
+	 3yHy387vhUsw6P0/OPhmMvBpbq3G7GyPAcz6R9A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	intel-wired-lan@lists.osuosl.org,
-	Bart Van Assche <bvanassche@acm.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Arpana Arland <arpanax.arland@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/272] ice: fix locking in ice_dcb_rebuild()
-Date: Thu, 28 May 2026 21:49:13 +0200
-Message-ID: <20260528194634.313466631@linuxfoundation.org>
+Subject: [PATCH 6.12 180/272] net: lan966x: avoid unregistering netdev on register failure
+Date: Thu, 28 May 2026 21:49:14 +0200
+Message-ID: <20260528194634.338829774@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -56,54 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 0ded1f36ba4021cba50513e80be6b6e173710168 ]
+[ Upstream commit c4f3d6eb1fcf6cd9ce4644f604d5aad1ce594dfc ]
 
-Move the mutex_lock() call up to prevent that DCB settings change after
-the first ice_query_port_ets() call. The second ice_query_port_ets()
-call in ice_dcb_rebuild() is already protected by pf->tc_mutex.
+lan966x_probe_port() stores the newly allocated net_device in the
+port before calling register_netdev(). If register_netdev() fails,
+the probe error path calls lan966x_cleanup_ports(), which sees
+port->dev and calls unregister_netdev() for a device that was never
+registered.
 
-This also fixes a bug in an error path, as before taking the first
-"goto dcb_error" in the function jumped over mutex_lock() to
-mutex_unlock().
+Destroy the phylink instance created for this port and clear port->dev
+before returning the registration error. The common cleanup path now skips
+ports without port->dev before reaching the registered netdev cleanup, so
+it only handles ports that reached the registered-netdev lifetime.
 
-This bug has been detected by the clang thread-safety analyzer.
+This also avoids treating an uninitialized FDMA netdev and the failed port
+as a NULL == NULL match in the common cleanup path.
 
-Cc: intel-wired-lan@lists.osuosl.org
-Fixes: 242b5e068b25 ("ice: Fix DCB rebuild after reset")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-6-a5ea4dc837a9@intel.com
+Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260506124331.31945-1-mhun512@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dcb_lib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-index a7c5108328240..d185b1aba7a47 100644
---- a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-@@ -537,14 +537,14 @@ void ice_dcb_rebuild(struct ice_pf *pf)
- 	struct ice_dcbx_cfg *err_cfg;
- 	int ret;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index b5dc65a4d6403..9acba25a30586 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -749,11 +749,10 @@ static void lan966x_cleanup_ports(struct lan966x *lan966x)
  
-+	mutex_lock(&pf->tc_mutex);
-+
- 	ret = ice_query_port_ets(pf->hw.port_info, &buf, sizeof(buf), NULL);
- 	if (ret) {
- 		dev_err(dev, "Query Port ETS failed\n");
- 		goto dcb_error;
+ 	for (p = 0; p < lan966x->num_phys_ports; p++) {
+ 		port = lan966x->ports[p];
+-		if (!port)
++		if (!port || !port->dev)
+ 			continue;
+ 
+-		if (port->dev)
+-			unregister_netdev(port->dev);
++		unregister_netdev(port->dev);
+ 
+ 		lan966x_xdp_port_deinit(port);
+ 		if (lan966x->fdma && lan966x->fdma_ndev == port->dev)
+@@ -874,6 +873,9 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
+ 	err = register_netdev(dev);
+ 	if (err) {
+ 		dev_err(lan966x->dev, "register_netdev failed\n");
++		phylink_destroy(phylink);
++		port->phylink = NULL;
++		port->dev = NULL;
+ 		return err;
  	}
- 
--	mutex_lock(&pf->tc_mutex);
--
- 	if (!pf->hw.port_info->qos_cfg.is_sw_lldp)
- 		ice_cfg_etsrec_defaults(pf->hw.port_info);
  
 -- 
 2.53.0
