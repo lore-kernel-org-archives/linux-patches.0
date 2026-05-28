@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D7025F7B9;
-	Thu, 28 May 2026 20:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3065025F7B9;
+	Thu, 28 May 2026 20:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000244; cv=none; b=Dp8S0DY5TO+pU1GsC3EAdv8vS9+PZnUj6UsAJtokfv7YQUJFSwN9tVg7VGpTpfWGI5RNjuydZQK/aAYdzguZ2aQDqQf5Vjt/2mSsRXXJ7CDWDbF+/04+hwaxLYSFjZTFvuhslep4fi0b+u+CYxIil8s2lClqyEToTLlyKalILKE=
+	t=1780000247; cv=none; b=tt69/vW4RO6oBITNuFOZ4h6zAIKt9lCH+0VbsjCnSir86uZPz2Agg72xlHFz+YaoWRbDE10vQ9E/TdjMrhSlhtTKUKX7cnntpQSJBZRDxOV/fjAtsDMTY8HhPXtu1VfFW+Y2aYH5scQ1Y2srv/NoElR2nOw3awNLQyemngfqIYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000244; c=relaxed/simple;
-	bh=ibmaIlaCDbL8FRESqkTWUSJp2Sx39U3U/HH/Zyef+aw=;
+	s=arc-20240116; t=1780000247; c=relaxed/simple;
+	bh=aa9acddHkhClbM85ADV08mExrMyTYG7MSTpYcsz/6YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fp8NV5PBFMjPkHXz16WYnAL9dkqN7n4Tn6TOtMVSvIstxVWL9cJ9IldVIyLvyWReclKKg7+WujBgx1Xk1X8ekSF/uTcZrrniHJQLYyiY+M64aNti9o5puXxHzXmLCf6UYOb3wLpoUxsdgjxFncT4cjY3W7R27QEDEPEbcLkHQe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rroxGYAB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U78oOtz6mhFMfsRmUmEXPOkQQ5t/5PZ8iZ/ySj9834o7h9kHXN9daz7j7a9NuXW4BGpQk7q/P/afZsvvGoVAM98kMPYaJpQzPu8/GJvDvIbQM8AtGs6W30YANEG82OEBcuXZBl3gbHiaPW9VCnW8llzUqLtL7texrQqG3pZZ5bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzGMdJxc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rroxGYAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46321F000E9;
-	Thu, 28 May 2026 20:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzGMdJxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDCA1F000E9;
+	Thu, 28 May 2026 20:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000243;
-	bh=LRiHtIn5oKzx1Gw8YoTuQOko6Q/DTaiB2q0qDmANaBk=;
+	s=korg; t=1780000246;
+	bh=MdeNwd+6dxdZg3Il04M8/PJ47vytFdqMujdadJNWmb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rroxGYABFzg0CoUVorrwzJIaeDXewEQ6yDRsDGTO2KT5VWfRaGokRxpqKFmA1/Mz5
-	 ME5SXntIvvlmBhwjd45Ev07o0DjKwcBAWBNRDR0Oc4Y2ZEtrXanpaQekJURDsxiCLC
-	 uXcsREEmRmKEhs9F/9+7EwGrmx98iGtlZ6QsuDLY=
+	b=XzGMdJxc37Fm94L7DD6KuwMbJwo1q2wsdtXu1pCKqqrjsafCafk/Mp3zJgzhvV077
+	 5ixQDPlhdDJYNCtucof5IF3jk6Gism9XRu9d+pq7R4+mxZa7gBcCqZbVO24qOziCaY
+	 PkuClrhbqeYZUHVrBdHtdxK2nAnBPGCxDhdHxnE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 316/377] drm/xe/vf: Fix signature of print functions
-Date: Thu, 28 May 2026 21:49:14 +0200
-Message-ID: <20260528194647.542398166@linuxfoundation.org>
+Subject: [PATCH 6.18 317/377] drm/xe/pf: Fix CFI failure in debugfs access
+Date: Thu, 28 May 2026 21:49:15 +0200
+Message-ID: <20260528194647.571929925@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,119 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
 
-[ Upstream commit 9bb2f1d7e6e58b8e434ddc2048c661bf87ccdf2a ]
+[ Upstream commit 96bf49b526e2d03a2b7f6e861925a08f46ed0d28 ]
 
-We have plugged-in existing VF print functions into our GT debugfs
-show helper as-is, but we missed that the helper expects functions
-to return int, while they were defined as void. This can lead to
-errors being reported when CFI is enabled.
+Reading debugfs file (/sys/kernel/debug/dri/0/gt*/pf/adverse_events)
+with CFI (Control Flow Integrity) enabled, the kernel panics at
+xe_gt_debugfs_simple_show+0x82/0xc0.
 
-Fixes: 63d8cb8fe3dd ("drm/xe/vf: Expose SR-IOV VF attributes to GT debugfs")
+xe_gt_debugfs_simple_show() declare a function pointer expecting int
+return type, but xe_gt_sriov_pf_monitor_print_events() is void return
+type, leading to CFI failure and kernel panic.
+
+[507620.973657] CFI failure at xe_gt_debugfs_simple_show+0x82/0xc0 [xe]
+(target: xe_gt_sriov_pf_monitor_print_events+0x0/0x130 [xe]; expected
+type: 0xd72c7139)
+
+Fix xe_gt_sriov_pf_monitor_print_events() function by updating to return
+an int type.
+
+Fixes: 1c99d3d3edab ("drm/xe/pf: Expose PF monitor details via debugfs")
+Signed-off-by: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
 Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260514155726.7165-1-michal.wajdeczko@intel.com
-(cherry picked from commit 314e31c9a8a1c421ee4f7f755b9348aefbbca090)
+Link: https://patch.msgid.link/20260514174918.1556357-2-mohanram.meenakshisundaram@intel.com
+(cherry picked from commit ff1d386a8359746d9699ac30336e3b0684c68958)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_vf.c | 24 ++++++++++++++++++------
- drivers/gpu/drm/xe/xe_gt_sriov_vf.h |  6 +++---
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c | 6 +++++-
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-index 0461d55134874..ca58ef3f9fd39 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-@@ -1030,13 +1030,15 @@ void xe_gt_sriov_vf_write32(struct xe_gt *gt, struct xe_reg reg, u32 val)
- }
- 
- /**
-- * xe_gt_sriov_vf_print_config - Print VF self config.
-+ * xe_gt_sriov_vf_print_config() - Print VF self config.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
+index 7d532bded02a8..a85ba44353789 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
+@@ -114,8 +114,10 @@ int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32
+  * VFs with no events are not printed.
   *
-  * This function is for VF use only.
+  * This function can only be called on PF.
 + *
-+ * Return: always 0.
++ * Return: always 0
   */
--void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
+-void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
++int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
  {
- 	struct xe_gt_sriov_vf_selfconfig *config = &gt->sriov.vf.self_config;
- 	struct xe_device *xe = gt_to_xe(gt);
-@@ -1060,16 +1062,20 @@ void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
- 
- 	drm_printf(p, "GuC contexts:\t%u\n", config->num_ctxs);
- 	drm_printf(p, "GuC doorbells:\t%u\n", config->num_dbs);
+ 	unsigned int n, total_vfs = xe_gt_sriov_pf_get_totalvfs(gt);
+ 	const struct xe_gt_sriov_monitor *data;
+@@ -144,4 +146,6 @@ void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p
+ #undef __format
+ #undef __value
+ 	}
 +
 +	return 0;
  }
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
+index 7ca9351a271b7..0b8f088d3a16a 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
+@@ -13,7 +13,7 @@ struct drm_printer;
+ struct xe_gt;
  
- /**
-- * xe_gt_sriov_vf_print_runtime - Print VF's runtime regs received from PF.
-+ * xe_gt_sriov_vf_print_runtime() - Print VF's runtime regs received from PF.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
-  *
-  * This function is for VF use only.
-+ *
-+ * Return: always 0.
-  */
--void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
- {
- 	struct vf_runtime_reg *vf_regs = gt->sriov.vf.runtime.regs;
- 	unsigned int size = gt->sriov.vf.runtime.num_regs;
-@@ -1078,16 +1084,20 @@ void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
+ void xe_gt_sriov_pf_monitor_flr(struct xe_gt *gt, u32 vfid);
+-void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
++int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
  
- 	for (; size--; vf_regs++)
- 		drm_printf(p, "%#x = %#x\n", vf_regs->offset, vf_regs->value);
-+
-+	return 0;
- }
- 
- /**
-- * xe_gt_sriov_vf_print_version - Print VF ABI versions.
-+ * xe_gt_sriov_vf_print_version() - Print VF ABI versions.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
-  *
-  * This function is for VF use only.
-+ *
-+ * Return: always 0.
-  */
--void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
- {
- 	struct xe_device *xe = gt_to_xe(gt);
- 	struct xe_uc_fw_version *guc_version = &gt->sriov.vf.guc_version;
-@@ -1117,4 +1127,6 @@ void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
- 		   GUC_RELAY_VERSION_LATEST_MAJOR, GUC_RELAY_VERSION_LATEST_MINOR);
- 	drm_printf(p, "\thandshake:\t%u.%u\n",
- 		   pf_version->major, pf_version->minor);
-+
-+	return 0;
- }
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-index 0af1dc769fe09..7f6c59b1ef7b6 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-@@ -35,8 +35,8 @@ s64 xe_gt_sriov_vf_ggtt_shift(struct xe_gt *gt);
- u32 xe_gt_sriov_vf_read32(struct xe_gt *gt, struct xe_reg reg);
- void xe_gt_sriov_vf_write32(struct xe_gt *gt, struct xe_reg reg, u32 val);
- 
--void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p);
--void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p);
--void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p);
- 
- #endif
+ #ifdef CONFIG_PCI_IOV
+ int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32 len);
 -- 
 2.53.0
 
