@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0752D9787;
-	Thu, 28 May 2026 20:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978F02F8E83;
+	Thu, 28 May 2026 20:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999692; cv=none; b=NZ5WJpBbHKCdgPe+IcDWeAERiYAYuvCnn+QXZk3ui3KbHISKfykqe+aWZIEdNJ4B+dbUKek9FCAWWCG3v83uWmJhf6Q93ywnyzfxN+f7hVoyohmLqY/NnFytVeR12WTuPlTV2GsQnIws9h8xmMZOAo1/Kuelyek3IBfRguZX1bw=
+	t=1779999695; cv=none; b=lUFTfR37975znd2u5mQcHwT2/dgTTOMJIb1t7jhDcKpQA94N2qjKg5eaxG/mztNE7KYKC7tVk+k24U/9W8y1RP1OQCqXfWqWW7AMwNzCWyWuMUoH2jg5RUhqd//CBywMUqxx0zhW0kw4tpKtNQtQEJFr4WSBy17182TJelI1lBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999692; c=relaxed/simple;
-	bh=pkFwuhYbiBh8jel/BissMVn79akhL0O5xqKUmLR+u6E=;
+	s=arc-20240116; t=1779999695; c=relaxed/simple;
+	bh=zjrGyxyXKr9fkjtekitAglDRAM1Ystas3Pd0XMi0Akc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcFHCDTtGJO4KLGkICUOiUZulbIzH7I0UeUK3Xa5Hg4XEVwjHx8YTMTsUH61+t3vC6K9TiZ/lS81hrzJMBzPNB8HhaY6t42iD/JxufCl/CGlpUPqCYlYQuFNzfas3AtoSQ9d7quwCEyRr7kKwBry2ZP6dlphcTQBNCmMqH1ndN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSsw0sfb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MAE6IAKevfLoJd/fZhPH+1D1hVQHxZX/kJFCEaMTzWaTHihXvtampEECPw7yLlU3Hd3nNZmvvdFK9L7nY5EKN/h8lVDNpUN872tt8ScCtUQ8XbhkMv8t3RUjiZeCWZrJ0OXzf3DmPY7yEO9Q+mX0xJDpCPm677iEoqD9rm9lru4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VisxbPoC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSsw0sfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392F11F000E9;
-	Thu, 28 May 2026 20:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VisxbPoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018101F000E9;
+	Thu, 28 May 2026 20:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999691;
-	bh=oOPbVtMzUEfZ1AsyF+5D7ndNsVlQjMRxnngA8CCCDPQ=;
+	s=korg; t=1779999694;
+	bh=gNX2BG/yJXaDIR7lDhgpIozIQ5sAd9S/wLX0aG1NsI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gSsw0sfb2Yzy84AXz8k31NeGmIn6dlvGVght8xXjyXh+HI3R30nFvf2IKLOWzu1YJ
-	 NUnIZFRRCn67evN7r8aEKSiqwdEm1iqvZmIaV2KVQkLuOdrq+2r9g009N7auaLPK5G
-	 Sdlk8hvALmXks0QcmlOQ/A5Oz/4WuLQU0LmEeXsw=
+	b=VisxbPoClaZVukuCqwCo4wgWDBpYw4R9af8/T2dXsgj7DqjyFzykXcbnGjuDNvyUK
+	 sfF7X/FAD43Jk9yPrVKLoLuuhN1xqudCzNXB1YS45PRbez0ZJjT1zm1D30d41kaET4
+	 EfNuXYcfp4uJaMVKqlbfqLsHEol+xPVOVFoVIZ+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh R <vigneshr@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 121/377] spi: ti-qspi: fix use-after-free after DMA setup failure
-Date: Thu, 28 May 2026 21:45:59 +0200
-Message-ID: <20260528194641.844441572@linuxfoundation.org>
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.18 112/377] virt: sev-guest: Explicitly leak pages in unknown state
+Date: Thu, 28 May 2026 21:45:50 +0200
+Message-ID: <20260528194641.577495746@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -45,47 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Carlos López <clopez@suse.de>
 
-commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
+commit fd948c3f96b18ff9ba7d3e8eae13d196593e1aaf upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+When set_memory_{encrypted,decrypted}() fail, the user cannot know at which
+point the function failed, meaning that the pages are left in an unknown state
+from the point of view of the caller.
 
-Make sure to clear the DMA channel pointer also if buffer allocation
-fails to avoid passing a pointer to the released channel to the DMA
-engine (or trying to free the channel a second time on late probe errors
-or driver unbind).
+Since the pages may be left in an unencrypted state, they are not suitable for
+general use, and cannot be returned safely to the buddy allocator. Avoid the
+issue by never freeing the pages, and then do the proper accounting by calling
+snp_leak_pages().
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
-
-Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Vignesh R <vigneshr@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3e385c0d6ce8 ("virt: sev-guest: Move SNP Guest Request data pages handling under snp_cmd_mutex")
+Signed-off-by: Carlos López <clopez@suse.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ti-qspi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/virt/coco/sev-guest/sev-guest.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -868,6 +868,7 @@ static int ti_qspi_probe(struct platform
- 		dev_err(qspi->dev,
- 			"dma_alloc_coherent failed, using PIO mode\n");
- 		dma_release_channel(qspi->rx_chan);
-+		qspi->rx_chan = NULL;
- 		goto no_dma;
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -176,6 +176,7 @@ static int get_ext_report(struct snp_gue
+ 	struct snp_guest_req req = {};
+ 	int ret, npages = 0, resp_len;
+ 	sockptr_t certs_address;
++	u64 pfn;
+ 
+ 	if (sockptr_is_null(io->req_data) || sockptr_is_null(io->resp_data))
+ 		return -EINVAL;
+@@ -215,10 +216,11 @@ static int get_ext_report(struct snp_gue
+ 	if (!req.certs_data)
+ 		return -ENOMEM;
+ 
++	pfn = PHYS_PFN(virt_to_phys(req.certs_data));
+ 	ret = set_memory_decrypted((unsigned long)req.certs_data, npages);
+ 	if (ret) {
+ 		pr_err("failed to mark page shared, ret=%d\n", ret);
+-		free_pages_exact(req.certs_data, npages << PAGE_SHIFT);
++		snp_leak_pages(pfn, npages);
+ 		return -EFAULT;
  	}
- 	host->dma_rx = qspi->rx_chan;
+ 
+@@ -272,10 +274,12 @@ e_free:
+ 	kfree(report_resp);
+ e_free_data:
+ 	if (npages) {
+-		if (set_memory_encrypted((unsigned long)req.certs_data, npages))
++		if (set_memory_encrypted((unsigned long)req.certs_data, npages)) {
+ 			WARN_ONCE(ret, "failed to restore encryption mask (leak it)\n");
+-		else
++			snp_leak_pages(pfn, npages);
++		} else {
+ 			free_pages_exact(req.certs_data, npages << PAGE_SHIFT);
++		}
+ 	}
+ 	return ret;
+ }
 
 
