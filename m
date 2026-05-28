@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154CC304BB3;
-	Thu, 28 May 2026 20:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2867F32ABC0;
+	Thu, 28 May 2026 20:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998815; cv=none; b=M6iZ6e8xfEIvyPvA3M0c0mAUJr7GxwZ8EzyqeQE8Np5RvY1SGg4sJ2ebE7czIGW7PJ4g174D0uZlgou/a3tqKOJyd1mYYFQBiS42FofOh3zpP5VDVJF2fOCpxEog41AmjUXk99Aa5/kgOXHq4JOCGDJS+yPTefMDkSsfZ49vPOw=
+	t=1779998818; cv=none; b=dnc9kny1d2WHayPjTGW/3wQii+XD0F3wHCegF/xsQkeMmh97DkbtV8UbAJ7dsTaQev6y1HzYQXsI0VnoIelit+Rh8bL2cE5Gks+xDFBjHc9DfOvs3FHOwGEVjecUKV0gWDXMNvf1JPVU5oV6JUn/N81wD5QfRjy6nOlH+9QMdBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998815; c=relaxed/simple;
-	bh=3eVBVN5TCxLu4O5MmMB1QXny8+mKj5jMhzsZ/gOze0U=;
+	s=arc-20240116; t=1779998818; c=relaxed/simple;
+	bh=3hSYoKAqMr9KUlxPujgXh1fm8Ea6EkG3GKEkCv1YjTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKLjBfD3uKgXLltKlb1JFafJXuhkQW3gqk41tSCzmvQrXkYpn2Bqf2feMh9BYyVfTSxUk+BqTxaxHqKhygGMAThH5Zsz6xRvngDAW246/uARXN+wDQFu0jx3t7sUfh3YHk6YASmRuOpfq/PWsCka8Jmzjt+PqAATmkbS/FTSA4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cB1BCHvx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDDCxMW2mqUPvk3DJf1bpzyrQsA/HLC55130gGkeoO822ZBzRO42z4ek2TsRVdymHpIQ11UbiQPWsHTtdF95x77WB61HYkfVHzWF/7WE7lZPxcvIq0OgypeUY/IYCAHtoV4WvF+M7Ifd7ds7BTC9gG5igBZnaEIxT4+V3OvjQXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNSUwxQT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB1BCHvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B91F000E9;
-	Thu, 28 May 2026 20:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNSUwxQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0551F000E9;
+	Thu, 28 May 2026 20:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998814;
-	bh=ZffXEbx7USnP9a2pCG5yvbb3/xvqXEXePhEPl8kJBS4=;
+	s=korg; t=1779998816;
+	bh=rU6KA0cwShWjFUQs7p7wUqQM7DGaqlOhu5PN9EregaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cB1BCHvxXaXCpnjdkd3sZWWcrGb1SL2EdzzQslrSztCXMfjABoCCcm1gOn2QJUd9m
-	 v9cFDe06nCQICncqsmxIcgX4cKY/QU8vlRMRdXV3hD+39D7SyhDV6z310omFO2aDuD
-	 M3TYV8neEUPVbW5dGWgCcfi2B927+oMIl8WPxncI=
+	b=PNSUwxQTKAogwHvFE6UJ3iK1edIF60h/SnCZJSFwTYCwePJJoPNOE2kkpGimnuzhW
+	 9ELQ+UAgCQjZ5UCvHCcetlYUk4GvReXTHwM7hMcYGFLZFteiln33MZRNfGARnynmqB
+	 LsV54XkSiDqJaqWZuA526bCC8GTcDxj+ANOGymho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 306/461] drm/msm/adreno: Fix a reference leak in a6xx_gpu_init()
-Date: Thu, 28 May 2026 21:47:15 +0200
-Message-ID: <20260528194656.133330902@linuxfoundation.org>
+Subject: [PATCH 7.0 307/461] drm/msm/adreno: fix userspace-triggered crash on a2xx-a4xx
+Date: Thu, 28 May 2026 21:47:16 +0200
+Message-ID: <20260528194656.162543277@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,57 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit e64bca63647db1d5518198d6c5ca2dbcc66b182b ]
+[ Upstream commit 2b4abf879360ea00a9e2b46d2d15dcdbc0687eed ]
 
-In a6xx_gpu_init(), node is obtained via of_parse_phandle().
-While there was a manual of_node_put() at the end of the
-common path, several early error returns would bypass this call,
-resulting in a reference leak.
-Fix this by using the __free(device_node) cleanup handler to
-release the reference when the variable goes out of scope.
+Before a5xx Adreno driver will not try fetching UBWC params (because
+those generations didn't support UBWC anyway), however it's still
+possible to query UBWC-related params from the userspace, triggering
+possible NULL pointer dereference. Check for UBWC config in
+adreno_get_param() and return sane defaults if there is none.
 
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/700661/
-Message-ID: <20260124-a6xx_gpu-v1-1-fa0c8b2dcfb1@gmail.com>
+Fixes: a452510aad53 ("drm/msm/adreno: Switch to the common UBWC config struct")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/717778/
+Message-ID: <20260411-adreno-fix-ubwc-v3-1-4983156f3f80@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index ae61c204898cd..02a776ac9ab43 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2607,7 +2607,6 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	struct platform_device *pdev = priv->gpu_pdev;
- 	struct adreno_platform_config *config = pdev->dev.platform_data;
- 	const struct adreno_info *info = config->info;
--	struct device_node *node;
- 	struct a6xx_gpu *a6xx_gpu;
- 	struct adreno_gpu *adreno_gpu;
- 	struct msm_gpu *gpu;
-@@ -2629,7 +2628,8 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	adreno_gpu->registers = NULL;
- 
- 	/* Check if there is a GMU phandle and set it up */
--	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
-+	struct device_node *node __free(device_node) =
-+		of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
- 	/* FIXME: How do we gracefully handle this? */
- 	BUG_ON(!node);
- 
-@@ -2676,7 +2676,6 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
- 	else
- 		ret = a6xx_gmu_init(a6xx_gpu, node);
--	of_node_put(node);
- 	if (ret) {
- 		a6xx_destroy(&(a6xx_gpu->base.base));
- 		return ERR_PTR(ret);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 277ef0c5c08d1..682a09a376fbf 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -424,15 +424,21 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
+ 		*value = vm->mm_range;
+ 		return 0;
+ 	case MSM_PARAM_HIGHEST_BANK_BIT:
++		if (!adreno_gpu->ubwc_config)
++			return UERR(ENOENT, drm, "no UBWC on this platform");
+ 		*value = adreno_gpu->ubwc_config->highest_bank_bit;
+ 		return 0;
+ 	case MSM_PARAM_RAYTRACING:
+ 		*value = adreno_gpu->has_ray_tracing;
+ 		return 0;
+ 	case MSM_PARAM_UBWC_SWIZZLE:
++		if (!adreno_gpu->ubwc_config)
++			return UERR(ENOENT, drm, "no UBWC on this platform");
+ 		*value = adreno_gpu->ubwc_config->ubwc_swizzle;
+ 		return 0;
+ 	case MSM_PARAM_MACROTILE_MODE:
++		if (!adreno_gpu->ubwc_config)
++			return UERR(ENOENT, drm, "no UBWC on this platform");
+ 		*value = adreno_gpu->ubwc_config->macrotile_mode;
+ 		return 0;
+ 	case MSM_PARAM_UCHE_TRAP_BASE:
 -- 
 2.53.0
 
