@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D843B2FD7C3;
-	Thu, 28 May 2026 20:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EC62F691F;
+	Thu, 28 May 2026 20:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998660; cv=none; b=uR9AFf/lDU2/871SoIS5lzxPg+OZ56jMrVjIHx2J4H8uOsqKIa8N2RzUrXssTbbApfoUGWQqUgnDK/ZlyyO3yt1FpZH8ZE8W1FqRtCFe/LtrvGdDqaA/k902ph39u9c5yfSYlMdli3SKEZ0KGkbzb04AdJV14erPYBNBFV1p/as=
+	t=1779998663; cv=none; b=qV9Wf80kmwrBRdWJBb0E8+4c5ypAUP/75X8XIQp2DZVTm9qTCytYFORQKcZtPNQnfTxgNMruGpF0EaEG8aA8MX997gRPZzDgWLUe8ljaXRwjSB3+BcOXCe7MqGXZSRZ/f3feGA53Db3s8Er808nq7qXA2wTrcJUaUx73WV2uQ3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998660; c=relaxed/simple;
-	bh=If0CMijFyf77K1iE5mhwTItxyT5QcWW9CAPX9/Ed7ww=;
+	s=arc-20240116; t=1779998663; c=relaxed/simple;
+	bh=115g4O8klZXCeFwlSybz05fGSfKCBkyjTMXSjWzCbwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGsv4+MgobjAMDa3LFwfhUofmYZFS8G6i3cI+DmrVe7fjFt+rt3Or6cT3crNR7vB1E4SFtiIlzuI6ckCf6ZKo3PmGlpt8sHXmVj/ECOhAAtmv/KL6nNZbb6K0qHFWhM0p+LfNgNG+Appsp6xOJHG1s1zv6fXPu3t7OSq8MYwN8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSZnj5sv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKiOqIcf8jIVsx+t7UW9hlEwwNE2yvW5GHx9b2JWXjWxjgkcSiaVNBtzv/B07tnLlq73HuYPsTC9OUVH20YxA5RmOqg6SKmo1n6C0QmFJzkflxdwkUaPBz8C0quY1k2rshXzmbAD4irPALXvBkr8PX9N6NwC88pGjwzSrd0ZQXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHqCzPSg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSZnj5sv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410271F000E9;
-	Thu, 28 May 2026 20:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHqCzPSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B8A1F000E9;
+	Thu, 28 May 2026 20:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998659;
-	bh=OA1DnNxX/hWA8K9M/ELvB4EsvI6V9rNujhtD0q4RlJM=;
+	s=korg; t=1779998662;
+	bh=6mccBHRUsC0aEDaQ+0AKbxndjcnBWbXbqXw+kuExSAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dSZnj5svIPeygaiEKavniuCWR0l2oFeDq+p3aHcBb+scgAR6Vjmv0rQC7/86JeQu9
-	 BsdmJWigVyUo6a53kt6LBY7PN/UCiawALekZsxAW/oVOtq48k7Qu8gIreEmLwYPDaz
-	 IrG9aQj+5H+R7E5EIccRshjiyg8fKNRaKzmWAda4=
+	b=JHqCzPSg0al5qQWfsmqgmri2QEZRzMakLcK3wE1TQXbT38SuXxbepooxs+52iS5aA
+	 hXUNOgPgpfEbwMqWjhikq/MIMVe3Bjuwlw19Ut1149zX00i8lZqSqBKJan+T2DXE2W
+	 7umEs/3WsqPLRHd8Fm+epWSrU1/aIplXAT8uvlZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyoung Jang <graypanda.inzag@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 235/461] fs/statmount: fix slab out-of-bounds write in statmount_mnt_idmap
-Date: Thu, 28 May 2026 21:46:04 +0200
-Message-ID: <20260528194653.942216380@linuxfoundation.org>
+Subject: [PATCH 7.0 253/461] netfs: Fix netfs_read_to_pagecache() to pause on subreq failure
+Date: Thu, 28 May 2026 21:46:22 +0200
+Message-ID: <20260528194654.473633694@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,47 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyoung Jang <graypanda.inzag@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a3bf0f28d4ba16e1f35f8c983bb04426b87e2a78 ]
+[ Upstream commit 8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4 ]
 
-statmount_mnt_idmap() writes one mapping with seq_printf() and then
-manually advances seq->count to include the NUL separator.
+Fix netfs_read_to_pagecache() so that it pauses the generation of new
+subrequests if an already-issued subrequest fails.
 
-If seq_printf() overflows, seq_set_overflow() sets seq->count to
-seq->size. The manual seq->count++ changes this to seq->size + 1.
-seq_has_overflowed() then no longer detects the overflow. The corrupted
-count returns to statmount_string(), which later executes:
-
-    seq->buf[seq->count++] = '\0';
-
-This causes a 1-byte NULL out-of-bounds write on the dynamically
-allocated seq buffer.
-
-Fix this by checking for overflow immediately after seq_printf().
-
-Fixes: 37c4a9590e1e ("statmount: allow to retrieve idmappings")
-Signed-off-by: Junyoung Jang <graypanda.inzag@gmail.com>
-Link: https://patch.msgid.link/20260504112649.1862936-1-graypanda.inzag@gmail.com
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Closes: https://sashiko.dev/#/patchset/20260425125426.3855807-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-5-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mnt_idmapping.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/netfs/buffered_read.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/mnt_idmapping.c b/fs/mnt_idmapping.c
-index 6472c4ea3d1e6..cb61fbdb52e90 100644
---- a/fs/mnt_idmapping.c
-+++ b/fs/mnt_idmapping.c
-@@ -375,6 +375,8 @@ int statmount_mnt_idmap(struct mnt_idmap *idmap, struct seq_file *seq, bool uid_
- 			continue;
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index 15d73026ff643..fee0aebf5a3d6 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -300,6 +300,11 @@ static void netfs_read_to_pagecache(struct netfs_io_request *rreq,
+ 		}
  
- 		seq_printf(seq, "%u %u %u", extent->first, lower, extent->count);
-+		if (seq_has_overflowed(seq))
-+			return -EAGAIN;
+ 		netfs_issue_read(rreq, subreq);
++
++		if (test_bit(NETFS_RREQ_PAUSE, &rreq->flags))
++			netfs_wait_for_paused_read(rreq);
++		if (test_bit(NETFS_RREQ_FAILED, &rreq->flags))
++			break;
+ 		cond_resched();
+ 	} while (size > 0);
  
- 		seq->count++; /* mappings are separated by \0 */
- 		if (seq_has_overflowed(seq))
 -- 
 2.53.0
 
