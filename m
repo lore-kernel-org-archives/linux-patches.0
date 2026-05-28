@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DD11DE4E0;
-	Thu, 28 May 2026 20:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12DD3016E1;
+	Thu, 28 May 2026 20:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000910; cv=none; b=OeygsZ5qssPd1RiLZYZY5Rm1F5OslgwtHIrlyebqbV3/TmFkwMObYB2uuaZcgCm5x0z+qWvjXXoM+83nLHg7fXzLPJIo/PmUaLzjdE0GdgpxnCnhi0FeaVH9XhSfvnY/T6zWyz5MYUl24EKuuByMYsOQtuMxNUplovCipz06plE=
+	t=1780000913; cv=none; b=rR9Byc2Y4m84HM+YPvg6x/UE/ZTFaqe30hDQ9DUPvYFYBNMdKZrIjnJ95WZvn5i8uMCC0wIBCukSNtFyJB9S2Obc2pqbIiDK+F6YVTH5vctrngaofAdv1+8HC24PuElO5uLSbleFMugq5t+zKFKLZCm00mJ9UzZeXS6mcDinv7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000910; c=relaxed/simple;
-	bh=CO6ziZn3MnhDAHQt+NCQ90qNX97m3+oSOWJ1QGTTRaI=;
+	s=arc-20240116; t=1780000913; c=relaxed/simple;
+	bh=qioKSYp+a5cgAR+VtvzKw/Fz7o5x2vtNOHva+dn3JJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWvjModsjj5xwInwwzrG0o9KAcWjVq16pTf5BJqAF53ny78/e+vc/utU4a87nxEvROJEk6gOuhZPDWKa8un2qBMGkWre0CVbAxagC/E+QRFUdriXNlm/4Pg0ocZL5oZgJCI9NZvklgmdjkzOajUZ1iolnZOHRQMkdk5xTJey7i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oqye2c1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uInVv24IMGUS9VkrnvgyMs3qhiopXkWiso8fYYFg9i1iKaU8jSLxWqj3+Ep5dBwY4cvRwRe+LuMZuMpcaRZUPD9Gs+2Pd7sN2tAjSrGW9T2C2puqX+86PA/h1W7Tk+VPxkctRnf/zcUm0oLrzesP3ZBuj3jhzHvEZw04YJeWCWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0s7S4uM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oqye2c1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF611F000E9;
-	Thu, 28 May 2026 20:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0s7S4uM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2FF1F000E9;
+	Thu, 28 May 2026 20:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000909;
-	bh=PTIvU0chbmYM5LEw1domXf9RDcwwt7D5FSZe0UnO08Y=;
+	s=korg; t=1780000911;
+	bh=0ejHhOtW5tu267UASDXYFRKbMnjFuY+WcnSEWpnVAfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oqye2c1oA2v/OHDkPF46B9eaem4JclCO7OWqf3NJuMtmJZ+FKI1N7MdCkREOUC8xy
-	 3I4UUTiwiFIhLY8x+LVxBH+0cg3/yX2fWrFv73RMseXf9DuYVeEraKNAlhPp3cfx5U
-	 7D52VufsFy+x+rF05vpDSJYaAJYJYYICl+rxcX9Y=
+	b=k0s7S4uMosIVBbBFbJNpMp/cdvs14k3GjMXa5GEL/Yoil+hOA8ZbkZaxLFjdBRmUC
+	 Df3GwqJIa0VszG62j+K8TTHQX7KIha8gx2y1vEVbEP51m6qs6E+ppmkb5ijzRgBDDq
+	 EtKNej8Ytyu5IIHGhNYA+6JrCcdlXxD8aKD6037c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 205/272] net: ethernet: cs89x0: remove stale CONFIG_MACH_MX31ADS reference
-Date: Thu, 28 May 2026 21:49:39 +0200
-Message-ID: <20260528194634.979444427@linuxfoundation.org>
+Subject: [PATCH 6.12 214/272] block: drop direction param from bio_integrity_copy_user()
+Date: Thu, 28 May 2026 21:49:48 +0200
+Message-ID: <20260528194635.209643260@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,43 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 36a8d04a8293afcb9304cf0cd3741f67698f2a1a ]
+[ Upstream commit c09a8b00f850d3ca0af998bff1fac4a3f6d11768 ]
 
-The legacy ARM board file for MACH_MX31ADS was removed in commit
-c93197b0041d ("ARM: imx: Remove i.MX31 board files"), but a reference
-to it remained in the cs89x0 driver. Drop this unused code.
+direction is determined from bio, which is already passed in. Compute
+op_is_write(bio_op(bio)) directly instead of converting it to an iter
+direction and back to a bool.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Fixes: c93197b0041d ("ARM: imx: Remove i.MX31 board files")
-Link: https://patch.msgid.link/20260509023732.42256-1-enelsonmoore@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
+Link: https://lore.kernel.org/r/20250603183133.1178062-1-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 8582792cf23b ("block: bio-integrity: Fix null-ptr-deref in bio_integrity_map_user()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cirrus/cs89x0.c | 2 --
- 1 file changed, 2 deletions(-)
+ block/bio-integrity.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/cirrus/cs89x0.c b/drivers/net/ethernet/cirrus/cs89x0.c
-index 0a21a10a791c5..6b01c44a5f728 100644
---- a/drivers/net/ethernet/cirrus/cs89x0.c
-+++ b/drivers/net/ethernet/cirrus/cs89x0.c
-@@ -1271,7 +1271,6 @@ static const struct net_device_ops net_ops = {
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 785adefc5f3c3..6801754838bc1 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -196,10 +196,9 @@ int bio_integrity_add_page(struct bio *bio, struct page *page,
+ EXPORT_SYMBOL(bio_integrity_add_page);
  
- static void __init reset_chip(struct net_device *dev)
+ static int bio_integrity_copy_user(struct bio *bio, struct bio_vec *bvec,
+-				   int nr_vecs, unsigned int len,
+-				   unsigned int direction)
++				   int nr_vecs, unsigned int len)
  {
--#if !defined(CONFIG_MACH_MX31ADS)
- 	struct net_local *lp = netdev_priv(dev);
- 	unsigned long reset_start_time;
+-	bool write = direction == ITER_SOURCE;
++	bool write = op_is_write(bio_op(bio));
+ 	struct bio_integrity_payload *bip;
+ 	struct iov_iter iter;
+ 	void *buf;
+@@ -210,7 +209,7 @@ static int bio_integrity_copy_user(struct bio *bio, struct bio_vec *bvec,
+ 		return -ENOMEM;
  
-@@ -1298,7 +1297,6 @@ static void __init reset_chip(struct net_device *dev)
- 	while ((readreg(dev, PP_SelfST) & INIT_DONE) == 0 &&
- 	       time_before(jiffies, reset_start_time + 2))
- 		;
--#endif /* !CONFIG_MACH_MX31ADS */
- }
+ 	if (write) {
+-		iov_iter_bvec(&iter, direction, bvec, nr_vecs, len);
++		iov_iter_bvec(&iter, ITER_SOURCE, bvec, nr_vecs, len);
+ 		if (!copy_from_iter_full(buf, len, &iter)) {
+ 			ret = -EFAULT;
+ 			goto free_buf;
+@@ -305,7 +304,7 @@ int bio_integrity_map_user(struct bio *bio, struct iov_iter *iter)
+ 	struct page *stack_pages[UIO_FASTIOV], **pages = stack_pages;
+ 	struct bio_vec stack_vec[UIO_FASTIOV], *bvec = stack_vec;
+ 	size_t offset, bytes = iter->count;
+-	unsigned int direction, nr_bvecs;
++	unsigned int nr_bvecs;
+ 	int ret, nr_vecs;
+ 	bool copy;
  
- /* This is the real probe routine.
+@@ -314,11 +313,6 @@ int bio_integrity_map_user(struct bio *bio, struct iov_iter *iter)
+ 	if (bytes >> SECTOR_SHIFT > queue_max_hw_sectors(q))
+ 		return -E2BIG;
+ 
+-	if (bio_data_dir(bio) == READ)
+-		direction = ITER_DEST;
+-	else
+-		direction = ITER_SOURCE;
+-
+ 	nr_vecs = iov_iter_npages(iter, BIO_MAX_VECS + 1);
+ 	if (nr_vecs > BIO_MAX_VECS)
+ 		return -E2BIG;
+@@ -341,8 +335,7 @@ int bio_integrity_map_user(struct bio *bio, struct iov_iter *iter)
+ 		copy = true;
+ 
+ 	if (copy)
+-		ret = bio_integrity_copy_user(bio, bvec, nr_bvecs, bytes,
+-					      direction);
++		ret = bio_integrity_copy_user(bio, bvec, nr_bvecs, bytes);
+ 	else
+ 		ret = bio_integrity_init_user(bio, bvec, nr_bvecs, bytes);
+ 	if (ret)
 -- 
 2.53.0
 
