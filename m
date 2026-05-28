@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7C9313550;
-	Thu, 28 May 2026 20:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8721225F7B9;
+	Thu, 28 May 2026 20:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000373; cv=none; b=giNyBCoq7UsrL66Uu/R6UMKIaamf9lZrC9FQ6fwpU1dThBLNg7guDV+yhzGlumvP+miSPFe+/KisFbPF412ejwXp33cfWOqxAIB0cRV4rGCMhFv6ampvKgcb5nGg92lnl94IiY3bGEOFGoj/7vQQIqbCNwoRAwgrF2T1apIeCcs=
+	t=1780000375; cv=none; b=g6oDE3wZxnP5liVOMH34yICJcTdcDY/BYUaOUouHRzKgq97ahdrKTCpdHsbVn6zU4XdFAeoWKSiXLLW0PidjimYWMiYLZyf3bS4rxw30VpsEhUzvpFl6eARqRRM1KUv1qGJP5g6NHHM//U5JAS7l8M5UROAe3cy+4y1eFbermTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000373; c=relaxed/simple;
-	bh=hDrnCAymPT8Cm8IHv4OZREWdjTkxwJFnqnawzaqvdNE=;
+	s=arc-20240116; t=1780000375; c=relaxed/simple;
+	bh=Pnp4KZBQ367H8T4jrmYZpNAOTwOB09TccUV2MW9lk6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8e4wVfx0vXpXHEkZUnsITTkOlLG+tPrZKfJ9znC4X/kX9mYGqhGC4wS0sHG1ZZurY/xZ2o7ytLE9pH8YkwWkHtG0kALpZPf0qYgrMOeQxFXBq6QA9ZW6DYAm/dz0MWV7AiS2mZrjsZO7w5hJqNwoYaOQF75+AHRvEvoXzWn5R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8DqZkpe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1H/vBYXKgGhae3S5MJdAcFJ0ZWkj0ZbqBcIkKb7+VRPocM3m8hyqifwn+kXyTg8SO3brxnBF7so7MG2sO/hru9NESAgHyxiW8caGS1bTf04SpiFUep2kXab5sMekN1GMTXNBnHqUZPxTnV/TdIgkVk4fFheraO0jPT/oVrqxN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+nDPAj/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8DqZkpe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DD61F000E9;
-	Thu, 28 May 2026 20:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+nDPAj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68241F000E9;
+	Thu, 28 May 2026 20:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000371;
-	bh=TNlBM0L7KM1NdqiC0/OWAgbbhfw05xX0ApT32Vd63+0=;
+	s=korg; t=1780000374;
+	bh=CdesftrJsv/x2IMPjbnyzgDlyBm5r6gC0ue+SlU2fDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8DqZkpepOIyGpxb4lvTDz/MObKvt6VnhcReHfYpsfhDaW+qr/3jGZmkReShdP2XI
-	 FyuhqmEEruaTbRHQIrXbxN+wwy3b1B+Gu0l0/byt0inKkyZJ/hnkmVF1QbkMx3l+hG
-	 l9AUgQW9C1PCpYghRomU1xpAomJSPhsxrjzHhDUA=
+	b=1+nDPAj/Wq3q8Cm5LULtEEJPasMrLvuzovk9KkJ419ouIuY43vGG55kef+rCyi+Kv
+	 CXcMclfBQ8c+MyuKbV5O82j7QGC0LgFrIzk8S8l5kTdgHgoTpI5yGzskbIzpoIEIfJ
+	 Enf+ic/yVqtxXzsPF8pK9dsHncpnKFhbffWbBOZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Ushakov <sysroot314@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Leon Chen <leonchen.oss@139.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/272] af_unix: Give up GC if MSG_PEEK intervened.
-Date: Thu, 28 May 2026 21:46:36 +0200
-Message-ID: <20260528194630.006513711@linuxfoundation.org>
+Subject: [PATCH 6.12 023/272] drm/imagination: Synchronize interrupts before suspending the GPU
+Date: Thu, 28 May 2026 21:46:37 +0200
+Message-ID: <20260528194630.036554823@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,256 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alessio Belle <alessio.belle@imgtec.com>
 
-[ Upstream commit e5b31d988a41549037b8d8721a3c3cae893d8670 ]
+commit 2d7f05cddf4c268cc36256a2476946041dbdd36d upstream.
 
-Igor Ushakov reported that GC purged the receive queue of
-an alive socket due to a race with MSG_PEEK with a nice repro.
+The runtime PM suspend callback doesn't know whether the IRQ handler is
+in progress on a different CPU core and doesn't wait for it to finish.
 
-This is the exact same issue previously fixed by commit
-cbcf01128d0a ("af_unix: fix garbage collect vs MSG_PEEK").
+Depending on timing, the IRQ handler could be running while the GPU is
+suspended, leading to it being killed when trying to access GPU
+registers. See example signature below.
 
-After GC was replaced with the current algorithm, the cited
-commit removed the locking dance in unix_peek_fds() and
-reintroduced the same issue.
+In a power off sequence initiated by the runtime PM suspend callback,
+wait for any IRQ handlers in progress on other CPU cores to finish, by
+calling synchronize_irq().
 
-The problem is that MSG_PEEK bumps a file refcount without
-interacting with GC.
+This version of the patch contains only the part of the upstream commit
+that applies to 6.12; the rest was a revert of code added in 6.16.
+The second paragraph above is different because on 6.12 this kind of bug
+doesn't seem to crash the entire kernel, only the IRQ handler, leaving
+the driver unusable in practice.
 
-Consider an SCC containing sk-A and sk-B, where sk-A is
-close()d but can be recv()ed via sk-B.
+The crash signature below is also different, both because of the above,
+and because there was no support for TI AM68 SK in 6.12.
 
-The bad thing happens if sk-A is recv()ed with MSG_PEEK from
-sk-B and sk-B is close()d while GC is checking unix_vertex_dead()
-for sk-A and sk-B.
+Example signature on a TI AM62 SK platform:
 
-  GC thread                    User thread
-  ---------                    -----------
-  unix_vertex_dead(sk-A)
-  -> true   <------.
-                    \
-                     `------   recv(sk-B, MSG_PEEK)
-              invalidate !!    -> sk-A's file refcount : 1 -> 2
+  [ 7827.189088] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
+  [ 7827.197311] Modules linked in:
+  [ 7827.222015] CPU: 0 UID: 0 PID: 461 Comm: irq/405-gpu Tainted: G   M               6.12.90 #5
+  [ 7827.230461] Tainted: [M]=MACHINE_CHECK
+  [ 7827.234203] Hardware name: Texas Instruments AM625 SK (DT)
+  [ 7827.239682] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  [ 7827.246637] pc : pvr_device_irq_thread_handler+0x64/0x180 [powervr]
+  [ 7827.252941] lr : irq_thread_fn+0x2c/0xa8
+  [ 7827.256872] sp : ffff800082d8bd50
+  [ 7827.260179] x29: ffff800082d8bd70 x28: ffff8000800ce374 x27: ffff800081829cc0
+  [ 7827.267328] x26: ffff000004701e80 x25: ffff000005b884ac x24: ffff000005bd5780
+  [ 7827.274472] x23: ffff00000da40bc0 x22: ffff00000da40ba0 x21: ffff800082d8bd58
+  [ 7827.281614] x20: ffff00000da40000 x19: ffff000004701e80 x18: 08000000c6af9003
+  [ 7827.288750] x17: 0000000000000010 x16: 0000000000000068 x15: 0df234008df66400
+  [ 7827.295886] x14: 0000000000000000 x13: 000005c68f6e7191 x12: 000000000000025e
+  [ 7827.303020] x11: 00000000000000c0 x10: 0000000000000ac0 x9 : ffff800082d8bd00
+  [ 7827.310157] x8 : ffff000005bd62a0 x7 : ffff000077261380 x6 : 00000000000005c6
+  [ 7827.317292] x5 : 000000000000425e x4 : 0000000000000000 x3 : 0000000000000000
+  [ 7827.324428] x2 : 00000000000008a8 x1 : ffff800082d608a8 x0 : ffff000005bd5780
+  [ 7827.331568] Call trace:
+  [ 7827.334011]  pvr_device_irq_thread_handler+0x64/0x180 [powervr]
+  [ 7827.339954]  irq_thread_fn+0x2c/0xa8
+  [ 7827.343530]  irq_thread+0x16c/0x2f4
+  [ 7827.347019]  kthread+0x110/0x114
+  [ 7827.350248]  ret_from_fork+0x10/0x20
+  [ 7827.353834] Code: f9446682 f943c281 b9404442 8b020021 (b9400021)
+  [ 7827.359921] ---[ end trace 0000000000000000 ]---
+  [ 7827.364820] genirq: exiting task "irq/405-gpu" (461) is an active IRQ thread (irq 405)
+  [ 8011.230278] powervr fd00000.gpu: Job timeout
+  [ 8011.230350] powervr fd00000.gpu: Job timeout
+  [ 8011.230426] powervr fd00000.gpu: Job timeout
 
-                               close(sk-B)
-                               -> sk-B's file refcount : 2 -> 1
-  unix_vertex_dead(sk-B)
-  -> true
-
-Initially, sk-A's file refcount is 1 by the inflight fd in sk-B
-recvq.  GC thinks sk-A is dead because the file refcount is the
-same as the number of its inflight fds.
-
-However, sk-A's file refcount is bumped silently by MSG_PEEK,
-which invalidates the previous evaluation.
-
-At this moment, sk-B's file refcount is 2; one by the open fd,
-and one by the inflight fd in sk-A.  The subsequent close()
-releases one refcount by the former.
-
-Finally, GC incorrectly concludes that both sk-A and sk-B are dead.
-
-One option is to restore the locking dance in unix_peek_fds(),
-but we can resolve this more elegantly thanks to the new algorithm.
-
-The point is that the issue does not occur without the subsequent
-close() and we actually do not need to synchronise MSG_PEEK with
-the dead SCC detection.
-
-When the issue occurs, close() and GC touch the same file refcount.
-If GC sees the refcount being decremented by close(), it can just
-give up garbage-collecting the SCC.
-
-Therefore, we only need to signal the race during MSG_PEEK with
-a proper memory barrier to make it visible to the GC.
-
-Let's use seqcount_t to notify GC when MSG_PEEK occurs and let
-it defer the SCC to the next run.
-
-This way no locking is needed on the MSG_PEEK side, and we can
-avoid imposing a penalty on every MSG_PEEK unnecessarily.
-
-Note that we can retry within unix_scc_dead() if MSG_PEEK is
-detected, but we do not do so to avoid hung task splat from
-abusive MSG_PEEK calls.
-
-Fixes: 118f457da9ed ("af_unix: Remove lock dance in unix_peek_fds().")
-Reported-by: Igor Ushakov <sysroot314@gmail.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260311054043.1231316-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Using include/net/af_unix.h instead of net/unix/af_unix.h on 6.12.y ]
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Fixes: 96822d38ff57 ("drm/imagination: Handle Rogue safety event IRQs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260310-drain-irqs-before-suspend-v1-1-bf4f9ed68e75@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/af_unix.h |  1 +
- net/unix/af_unix.c    |  2 ++
- net/unix/garbage.c    | 79 ++++++++++++++++++++++++++++---------------
- 3 files changed, 54 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/imagination/pvr_power.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/af_unix.h b/include/net/af_unix.h
-index 63129c79b8cbc..8cacc5290d8bb 100644
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -23,6 +23,7 @@ void unix_del_edges(struct scm_fp_list *fpl);
- void unix_update_edges(struct unix_sock *receiver);
- int unix_prepare_fpl(struct scm_fp_list *fpl);
- void unix_destroy_fpl(struct scm_fp_list *fpl);
-+void unix_peek_fpl(struct scm_fp_list *fpl);
- void unix_gc(void);
- void wait_for_unix_gc(struct scm_fp_list *fpl);
- 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 77976f36c4aa4..9c5a812bd6813 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1878,6 +1878,8 @@ static void unix_detach_fds(struct scm_cookie *scm, struct sk_buff *skb)
- static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
- {
- 	scm->fp = scm_fp_dup(UNIXCB(skb).fp);
-+
-+	unix_peek_fpl(scm->fp);
+diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
+index bf4cf8426f913..077d2651798c8 100644
+--- a/drivers/gpu/drm/imagination/pvr_power.c
++++ b/drivers/gpu/drm/imagination/pvr_power.c
+@@ -84,7 +84,7 @@ pvr_power_request_pwr_off(struct pvr_device *pvr_dev)
  }
  
- static void unix_destruct_scm(struct sk_buff *skb)
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 66fd606c43f45..1cdb54c61619f 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -306,6 +306,25 @@ void unix_destroy_fpl(struct scm_fp_list *fpl)
- 	unix_free_vertices(fpl);
- }
- 
-+static bool gc_in_progress;
-+static seqcount_t unix_peek_seq = SEQCNT_ZERO(unix_peek_seq);
-+
-+void unix_peek_fpl(struct scm_fp_list *fpl)
-+{
-+	static DEFINE_SPINLOCK(unix_peek_lock);
-+
-+	if (!fpl || !fpl->count_unix)
-+		return;
-+
-+	if (!READ_ONCE(gc_in_progress))
-+		return;
-+
-+	/* Invalidate the final refcnt check in unix_vertex_dead(). */
-+	spin_lock(&unix_peek_lock);
-+	raw_write_seqcount_barrier(&unix_peek_seq);
-+	spin_unlock(&unix_peek_lock);
-+}
-+
- static bool unix_vertex_dead(struct unix_vertex *vertex)
+ static int
+-pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset)
++pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset, bool rpm_suspend)
  {
- 	struct unix_edge *edge;
-@@ -339,6 +358,36 @@ static bool unix_vertex_dead(struct unix_vertex *vertex)
- 	return true;
- }
- 
-+static LIST_HEAD(unix_visited_vertices);
-+static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
-+
-+static bool unix_scc_dead(struct list_head *scc, bool fast)
-+{
-+	struct unix_vertex *vertex;
-+	bool scc_dead = true;
-+	unsigned int seq;
-+
-+	seq = read_seqcount_begin(&unix_peek_seq);
-+
-+	list_for_each_entry_reverse(vertex, scc, scc_entry) {
-+		/* Don't restart DFS from this vertex. */
-+		list_move_tail(&vertex->entry, &unix_visited_vertices);
-+
-+		/* Mark vertex as off-stack for __unix_walk_scc(). */
-+		if (!fast)
-+			vertex->index = unix_vertex_grouped_index;
-+
-+		if (scc_dead)
-+			scc_dead = unix_vertex_dead(vertex);
-+	}
-+
-+	/* If MSG_PEEK intervened, defer this SCC to the next round. */
-+	if (read_seqcount_retry(&unix_peek_seq, seq))
-+		return false;
-+
-+	return scc_dead;
-+}
-+
- static void unix_collect_skb(struct list_head *scc, struct sk_buff_head *hitlist)
- {
- 	struct unix_vertex *vertex;
-@@ -392,9 +441,6 @@ static bool unix_scc_cyclic(struct list_head *scc)
- 	return false;
- }
- 
--static LIST_HEAD(unix_visited_vertices);
--static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
--
- static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index,
- 			    struct sk_buff_head *hitlist)
- {
-@@ -460,9 +506,7 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
+ 	if (!hard_reset) {
+ 		int err;
+@@ -100,6 +100,11 @@ pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset)
+ 			return err;
  	}
  
- 	if (vertex->index == vertex->scc_index) {
--		struct unix_vertex *v;
- 		struct list_head scc;
--		bool scc_dead = true;
- 
- 		/* SCC finalised.
- 		 *
-@@ -471,18 +515,7 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
- 		 */
- 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
- 
--		list_for_each_entry_reverse(v, &scc, scc_entry) {
--			/* Don't restart DFS from this vertex in unix_walk_scc(). */
--			list_move_tail(&v->entry, &unix_visited_vertices);
--
--			/* Mark vertex as off-stack. */
--			v->index = unix_vertex_grouped_index;
--
--			if (scc_dead)
--				scc_dead = unix_vertex_dead(v);
--		}
--
--		if (scc_dead) {
-+		if (unix_scc_dead(&scc, false)) {
- 			unix_collect_skb(&scc, hitlist);
- 		} else {
- 			if (unix_vertex_max_scc_index < vertex->scc_index)
-@@ -530,19 +563,11 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
- 	while (!list_empty(&unix_unvisited_vertices)) {
- 		struct unix_vertex *vertex;
- 		struct list_head scc;
--		bool scc_dead = true;
- 
- 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
- 		list_add(&scc, &vertex->scc_entry);
- 
--		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
--			list_move_tail(&vertex->entry, &unix_visited_vertices);
--
--			if (scc_dead)
--				scc_dead = unix_vertex_dead(vertex);
--		}
--
--		if (scc_dead)
-+		if (unix_scc_dead(&scc, true))
- 			unix_collect_skb(&scc, hitlist);
- 		else if (!unix_graph_maybe_cyclic)
- 			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
-@@ -553,8 +578,6 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
- 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
++	if (rpm_suspend) {
++		/* Wait for late processing of GPU or firmware IRQs in other cores */
++		synchronize_irq(pvr_dev->irq);
++	}
++
+ 	return pvr_fw_stop(pvr_dev);
  }
  
--static bool gc_in_progress;
--
- static void __unix_gc(struct work_struct *work)
- {
- 	struct sk_buff_head hitlist;
+@@ -243,7 +248,7 @@ pvr_power_device_suspend(struct device *dev)
+ 		return -EIO;
+ 
+ 	if (pvr_dev->fw_dev.booted) {
+-		err = pvr_power_fw_disable(pvr_dev, false);
++		err = pvr_power_fw_disable(pvr_dev, false, true);
+ 		if (err)
+ 			goto err_drm_dev_exit;
+ 	}
+@@ -425,7 +430,7 @@ pvr_power_reset(struct pvr_device *pvr_dev, bool hard_reset)
+ 			queues_disabled = true;
+ 		}
+ 
+-		err = pvr_power_fw_disable(pvr_dev, hard_reset);
++		err = pvr_power_fw_disable(pvr_dev, hard_reset, false);
+ 		if (!err) {
+ 			if (hard_reset) {
+ 				pvr_dev->fw_dev.booted = false;
 -- 
 2.53.0
 
