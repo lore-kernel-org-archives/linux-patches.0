@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76AD2FD7C3;
-	Thu, 28 May 2026 20:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8901C3318;
+	Thu, 28 May 2026 20:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000157; cv=none; b=PqAMAhP1+3DqI8hPdiD5kQ3d8CJxunsv8PsBFKGL5TKGIZfmCqxiHhjxzfpIyIH+skLMGnzumYtYbxb+OWhVt5uSUgkyVoHIzODOLDDcRBUDjzpwvTq2TKVXWumIagGfnA5+cks2ZT1vCxw+e/tN32UwrFg7mCokUF4I5mVXUsA=
+	t=1780000160; cv=none; b=UkmzVJOILwqM4QdQbkQuDl1Ribuv0OycwxWyhB+odRrsaeFDFHFJonA8197OBOPPDUj+EQ5/jW4fSKbjsm6mpxv1N3rGRq8gIbHs0/e5YJQZpMcS9CK0ldxqZV0FPE7DbAS/Wa/+xD1lelU6yLKX/MLuarBa5/LNmctvN8rCxoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000157; c=relaxed/simple;
-	bh=HX6HQLhaceHM1mRqUbRAGOLKacEoJfyXzbXD5OGBI5Y=;
+	s=arc-20240116; t=1780000160; c=relaxed/simple;
+	bh=tmB68RTZtPPbE+F5ozsXtx3CxtLTVzVAqJLw41DsGuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HfxZ8X64rUytR3G/rusBIF+j2e+/L5XinewCElwKavFI0EnYv4g7UBi1gGDQ0hs3OwZ9pbE6ca1IyZJXW8n54iLDMrtHyGkY+vJ6Tv3L4YAu1N/4Nl6Pvq9try9vwgbbXZ3KoW4USIODemtXHOccLqXbo8xfXkG612iwrZjDL6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXXLMNGl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OSu8+C0D9tgqwgBTyI9Aj2KiNqDcg1zDegYDfcB8oBwcE9zlpU7BWCeL3TYInNzKd2Ocpp152NIrCQuYlBVE7Q6jITbIzIdrWmmfLQF3aAXrjmEoEIAEVKnHTEdSC4CwxY0+uOjva2ibUmzB4G5UVeu5pCQPZBmH8g1oIu2b978=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbTcwVbx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXXLMNGl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F7E1F000E9;
-	Thu, 28 May 2026 20:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbTcwVbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E375F1F000E9;
+	Thu, 28 May 2026 20:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000156;
-	bh=zHYvlcuMX1m/fbmdJLge+P0R9ZFkm3mH6O/nGfNJSMQ=;
+	s=korg; t=1780000159;
+	bh=d1/DJty51tJxVc7DD6BiRFXbw2jlpI4Pu4kGE2Jp1vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SXXLMNGls0hyJ4CKtInHWoHV3r+bMxR4jvp8Cmnw3O9adWFoVbzYMasDK+fgrGYUT
-	 iFBvnt3zRH+n8dl+kNFhMTZLhNRsvbI7MleAI6AjpRoimbgLWKyPuc15ccjXEDda/U
-	 dqBLG7jMgUhnk4S7+dPfMjPsds5KkdL1RRGrF2po=
+	b=BbTcwVbxloEW6w+qA2qllbtG2ER9MuOQtgLEJPkkc10l6MVaQaFFVCSZHtm8vdgGs
+	 7YXSOTltgsnScHwAublGaluvGXkLLPLDrHXwnmlWTO1lpecg5ETDCqcShRN0deY2jE
+	 nuERYr7J2FOxRbXbTMwXukHyQBTNl/639v18Fp2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Kohei Enju <kohei@enjuk.jp>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 323/377] ice: ptp: use primary NAC semaphore on E825
-Date: Thu, 28 May 2026 21:49:21 +0200
-Message-ID: <20260528194647.757498081@linuxfoundation.org>
+Subject: [PATCH 6.18 324/377] igc: set tx buffer type for SMD frames
+Date: Thu, 28 May 2026 21:49:22 +0200
+Message-ID: <20260528194647.788601828@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -55,67 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit 7b28523546c7e4adbb8436f2986efcfc8382985e ]
+[ Upstream commit 5acc641e590e008caaed480ed9ffae47cf7ecbdf ]
 
-For E825 2xNAC configurations, PTP semaphore operations must hit the
-primary NAC register block so both sides coordinate on the same lock.
+Sashiko pointed out that igc_fpe_init_smd_frame() initializes
+igc_tx_buffer fields for an SMD skb, but does not set the buffer type:
+https://sashiko.dev/#/patchset/20260415025226.114115-1-kohei%40enjuk.jp
 
-Commit e2193f9f9ec9 ("ice: enable timesync operation on 2xNAC E825
-devices") updated other primary-only PTP register accesses to
-use the primary NAC on non-primary functions, but left ice_ptp_lock()
-and ice_ptp_unlock() operating on the local NAC. As a result, secondary
-NAC PTP paths can take a different semaphore than the primary side.
+Since igc_tx_buffer entries are reused, a stale XDP or XSK type can
+remain and make TX completion use the wrong cleanup path.
 
-Select the primary hardware in ice_ptp_lock() and ice_ptp_unlock() when
-the current function is not primary, keeping semaphore operations
-symmetric and consistent with the rest of the 2xNAC PTP register access
-path.
+Set the buffer type to IGC_TX_BUFFER_TYPE_SKB.
 
-Fixes: e2193f9f9ec9 ("ice: enable timesync operation on 2xNAC E825 devices")
-Reviewed-by: Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Fixes: 5422570c0010 ("igc: add support for frame preemption verification")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-6-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20260515182419.1597859-9-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_tsn.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 0f378e68f72f1..99bf38cf352a2 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -5264,9 +5264,13 @@ static void ice_ptp_init_phy_e830(struct ice_ptp_hw *ptp)
-  */
- bool ice_ptp_lock(struct ice_hw *hw)
- {
-+	struct ice_pf *pf = container_of(hw, struct ice_pf, hw);
- 	u32 hw_lock;
- 	int i;
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 02dd9f0290a34..52de2bcbadbec 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -34,6 +34,7 @@ static int igc_fpe_init_smd_frame(struct igc_ring *ring,
+ 		return -ENOMEM;
+ 	}
  
-+	if (!ice_is_primary(hw))
-+		hw = ice_get_primary_hw(pf);
-+
- #define MAX_TRIES 15
- 
- 	for (i = 0; i < MAX_TRIES; i++) {
-@@ -5293,6 +5297,11 @@ bool ice_ptp_lock(struct ice_hw *hw)
-  */
- void ice_ptp_unlock(struct ice_hw *hw)
- {
-+	struct ice_pf *pf = container_of(hw, struct ice_pf, hw);
-+
-+	if (!ice_is_primary(hw))
-+		hw = ice_get_primary_hw(pf);
-+
- 	wr32(hw, PFTSYN_SEM + (PFTSYN_SEM_BYTES * hw->pf_id), 0);
- }
- 
++	buffer->type = IGC_TX_BUFFER_TYPE_SKB;
+ 	buffer->skb = skb;
+ 	buffer->protocol = 0;
+ 	buffer->bytecount = skb->len;
 -- 
 2.53.0
 
