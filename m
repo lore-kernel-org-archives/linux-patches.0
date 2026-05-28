@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD81257854;
-	Thu, 28 May 2026 20:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B62316199;
+	Thu, 28 May 2026 20:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999481; cv=none; b=JMTqQA2Vgiyhyc2HHLMwgNstlhP0E4mGKNqeVaS8zZxADCvVNwJmpUDno30gNcnKANiPrQzrVZ1VG2EPvZ3EPVHFybSsNlmc1MOUZuskFGMrQe1HyFkHIO1jkisxyvx3FgrPnIgtfgRK4xELjgyP/qBITIVb+GMlveF5MRWnv7A=
+	t=1779999484; cv=none; b=bAac26ZdvjTq0K2AqDblpEZhGhcpzpKcIxgS5rnjkMhU6ISTvVy3XDAxUQK/Zx2UA/cA73HUiH5YEW+Jd3TErSokwqNRyeP7dJH8ycHPemg5XaEXiz9OURB4JNYRoBjtYEa1pMcmBnqyLDw5icvlEQ0tUPN66aEP3cQgxLkD1WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999481; c=relaxed/simple;
-	bh=JerZbnRYFg5UmT/o9MXZw0DUwZAHpi8l3XTrpk3AQls=;
+	s=arc-20240116; t=1779999484; c=relaxed/simple;
+	bh=4AfAUaek+D7NHrHBjePUCTFkd3TuFWAeOohpMQoRhwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URPWMNySDQjZJwcqOZzuj/371La+KEVX1SK6tOZCfffqMu9RcV2n5rzsFJ3mWVjSt0TFy3K/HVIZyn6iQJCQMBHm7ZJ5O0klIchOu0cQmXAzpXcOakBKERQ8Cmh5PYMjmtFWTZTNpbbZ1MRKExGr2VTn2H6hIQGoH6dCv+nXpwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nq67Or+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KIU64Rq3e14Rb/Qa+OMKbkcMlmp1hY6udy3ccnA6STd6Om8R/gL7CAyvTVyvczRPbSZHWBVz+a+5goMtuTm6QwqIUns0skCfDddmSxjD+XSqCXycRVeRRQJMuyoZ4JW2p0qIW4vrIKkLI7wV6Hud07E7QJes9E+bYjwKKZZwKHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5Km73mi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nq67Or+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED041F000E9;
-	Thu, 28 May 2026 20:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5Km73mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D121F000E9;
+	Thu, 28 May 2026 20:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999480;
-	bh=D4X3FaFMq8R0bHFzYTZ5tY9fglUwy8Fc9FXhtIi5Jbo=;
+	s=korg; t=1779999483;
+	bh=lTNFCxBQLfF2N6QTx2p+sM2AiTZHtO4k7LOBheAM1aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nq67Or+A+Y8gsO+OpfaMt7GhII8n4/KQqbzQzR3vTP9bYHKGMRJ22mKaucfYFIjwZ
-	 O18SEhcGHznwRnbXc1R7PoOuMGI6qfarP3PCLDv/D/U12eIaiIUnMD60uCRBry1Fj9
-	 /sAfRPYSBTyvnVDNJ4StxKIQfgQJIKRtMi/Px8yQ=
+	b=p5Km73miowMjX5HQ1tkDvsI4VKX8Fq34vC0ArSVu0YSbPJSXkVkUcdZ6H444Dmost
+	 sfwZXEcLs5Jzu5M2kLBPg2u0o/ApwSuTpkE20UlPpy6H0XgK3iamLPAgtF/NRzpUzZ
+	 H/UxHLsnzycVOHDbga5BP8Ki2yhp1G74h7S7CmQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 083/377] ipv6: ioam: add NULL check for idev in ipv6_hop_ioam()
-Date: Thu, 28 May 2026 21:45:21 +0200
-Message-ID: <20260528194640.779926911@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 084/377] mptcp: pm: fix ADD_ADDR timer infinite retry on option space insufficient
+Date: Thu, 28 May 2026 21:45:22 +0200
+Message-ID: <20260528194640.806668511@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,70 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@gmail.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit d4ea0dfd75011b78cebf3808f98ac4c4f51a6fb9 upstream.
+commit 51e398a3b8961b26a8c0a4ba9a777c5339791707 upstream.
 
-Reported by Sashiko:
+When TCP option space is insufficient (e.g., when sending ADD_ADDR with an
+IPv6 address and port while tcp_timestamps is enabled), the original code
+jumped to out_unlock without clearing the addr_signal flag. This caused
+mptcp_pm_add_timer to keep rescheduling indefinitely, not sending ADD_ADDR,
+preventing subsequent addresses in the endpoint list from being announced.
 
-The function ipv6_hop_ioam() accesses
-__in6_dev_get(skb->dev)->cnf.ioam6_enabled without validating the returned
-idev pointer. Because addrconf_ifdown() can concurrently clear dev->ip6_ptr
-via RCU, __in6_dev_get() can return NULL during interface teardown, which
-could cause a NULL pointer dereference when processing an IOAM Hop-by-Hop
-option.
+Handle this case by clearing the ADD_ADDR signal and skipping the matching
+ADD_ADDR retransmission entry. The skip path cancels the matching timer
+(with id check) and advances PM state progression, preserving forward
+progress to subsequent PM work.
 
-Let's add a check and use SKB_DROP_REASON_IPV6DISABLED accordingly.
+This cancellation is inherently best-effort. A concurrent add_timer
+callback may already be running and may acquire pm.lock before the
+cancel path updates entry state. In that case, one final ADD_ADDR
+transmit attempt can still be executed.
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Once the cancel path sets entry->retrans_times to ADD_ADDR_RETRANS_MAX,
+the callback-side retrans_times check suppresses further ADD_ADDR
+retransmissions.
+
+Note that when an ADD_ADDR is being prepared, a pure-ACK is queued. On
+the output side, it means that it is fine to skip non-pure-ACK packets,
+when drop_other_suboptions is set: a pure-ACK will be processed soon
+after.
+
+Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
 Cc: stable@vger.kernel.org
-Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260517183059.29140-1-justin.iurman@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-2-701e96419f2f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/mptcp/pm.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 46 insertions(+), 10 deletions(-)
 
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -910,16 +910,27 @@ static bool ipv6_hop_ra(struct sk_buff *
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -364,7 +364,13 @@ static void mptcp_pm_add_timer(struct ti
  
- static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
+ 	spin_lock_bh(&msk->pm.lock);
+ 
+-	if (!mptcp_pm_should_add_signal_addr(msk)) {
++	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
++	 * callback. Once cancel updates retrans_times to MAX, suppress further
++	 * retransmissions here. If this callback acquires pm.lock first, one
++	 * final transmit attempt is still possible.
++	 */
++	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX &&
++	    !mptcp_pm_should_add_signal_addr(msk)) {
+ 		pr_debug("retransmit ADD_ADDR id=%d\n", entry->addr.id);
+ 		mptcp_pm_announce_addr(msk, &entry->addr, false);
+ 		mptcp_pm_add_addr_send_ack(msk);
+@@ -414,8 +420,12 @@ mptcp_pm_del_add_timer(struct mptcp_sock
+ 	/* Note: entry might have been removed by another thread.
+ 	 * We hold rcu_read_lock() to ensure it is not freed under us.
+ 	 */
+-	if (stop_timer)
+-		sk_stop_timer_sync(sk, &entry->add_timer);
++	if (stop_timer) {
++		if (check_id)
++			sk_stop_timer(sk, &entry->add_timer);
++		else
++			sk_stop_timer_sync(sk, &entry->add_timer);
++	}
+ 
+ 	rcu_read_unlock();
+ 	return entry;
+@@ -880,6 +890,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
+ 			      struct mptcp_addr_info *addr, bool *echo,
+ 			      bool *drop_other_suboptions)
  {
-+	enum skb_drop_reason drop_reason;
- 	struct ioam6_trace_hdr *trace;
- 	struct ioam6_namespace *ns;
-+	struct inet6_dev *idev;
- 	struct ioam6_hdr *hdr;
++	bool skip_add_addr = false;
+ 	int ret = false;
+ 	u8 add_addr;
+ 	u8 family;
+@@ -901,24 +912,49 @@ bool mptcp_pm_add_addr_signal(struct mpt
+ 	}
  
-+	drop_reason = SKB_DROP_REASON_IP_INHDR;
+ 	*echo = mptcp_pm_should_add_signal_echo(msk);
+-	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
+-
+-	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
+-	if (remaining < mptcp_add_addr_len(family, *echo, port))
+-		goto out_unlock;
+-
+ 	if (*echo) {
+ 		*addr = msk->pm.remote;
+ 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_ECHO);
++		port = !!msk->pm.remote.port;
++		family = msk->pm.remote.family;
+ 	} else {
+ 		*addr = msk->pm.local;
+ 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_SIGNAL);
++		port = !!msk->pm.local.port;
++		family = msk->pm.local.family;
+ 	}
+-	WRITE_ONCE(msk->pm.addr_signal, add_addr);
 +
- 	/* Bad alignment (must be 4n-aligned) */
- 	if (optoff & 3)
- 		goto drop;
- 
-+	/* Does the device still have IPv6 configuration? */
-+	idev = __in6_dev_get(skb->dev);
-+	if (!idev) {
-+		drop_reason = SKB_DROP_REASON_IPV6DISABLED;
-+		goto drop;
++	if (remaining < mptcp_add_addr_len(family, *echo, port)) {
++		struct net *net = sock_net((struct sock *)msk);
++
++		if (!*drop_other_suboptions)
++			goto out_unlock;
++
++		if (*echo) {
++			MPTCP_INC_STATS(net, MPTCP_MIB_ECHOADDTXDROP);
++		} else {
++			skip_add_addr = true;
++			MPTCP_INC_STATS(net, MPTCP_MIB_ADDADDRTXDROP);
++		}
++		goto drop_signal_mark;
 +	}
 +
- 	/* Ignore if IOAM is not enabled on ingress */
--	if (!READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_enabled))
-+	if (!READ_ONCE(idev->cnf.ioam6_enabled))
- 		goto ignore;
+ 	ret = true;
  
- 	/* Truncated Option header */
-@@ -972,7 +983,7 @@ ignore:
- 	return true;
- 
- drop:
--	kfree_skb_reason(skb, SKB_DROP_REASON_IP_INHDR);
-+	kfree_skb_reason(skb, drop_reason);
- 	return false;
++drop_signal_mark:
++	WRITE_ONCE(msk->pm.addr_signal, add_addr);
++
+ out_unlock:
+ 	spin_unlock_bh(&msk->pm.lock);
++
++	/* On pure-ACK option-space exhaustion, stop retrying this ADD_ADDR:
++	 * clear the signal bit, cancel the matching retransmission timer, and
++	 * let the PM state machine progress.
++	 */
++	if (skip_add_addr) {
++		mptcp_pm_del_add_timer(msk, addr, true);
++		mptcp_pm_subflow_established(msk);
++	}
+ 	return ret;
  }
  
 
