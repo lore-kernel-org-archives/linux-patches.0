@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32472257854;
-	Thu, 28 May 2026 20:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17B62459D1;
+	Thu, 28 May 2026 20:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999501; cv=none; b=nz6n7qlIrzhVklvw8V1cz7cM0fX3xnPCUgkbdieahPQlr8alFhughK1a2ONKdhRUn0ALXlGFzT9GBlLEs0QSoOF04JJnuFpNnXL7TDudVfAIMpZRbOLKZn6Hle2OKR+zRURTG5DhkUsjvk3GH0O+CbuStLQEd/OXV+M8udDfVI8=
+	t=1779999504; cv=none; b=Og11TStBcBMMdYAOLdjYxOOMbSjdm6lH0fOj0v/yC0EpMBR9F3pWq7yImn9K+nUzDKF7LRyeClTTkmf/ITOewYPUqPWGDRxg4qLZjDejxYRE5rZDAR6fXPIXg4Ok4IpQE3IDL8G3+cLNktAu00MYQe9lWN08ZKJtkWfzxrzXBSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999501; c=relaxed/simple;
-	bh=yTUAlCqrZqiUXDPzHTsHpt4J9QWFA3/FFTq9qCCQg4M=;
+	s=arc-20240116; t=1779999504; c=relaxed/simple;
+	bh=Mdw2JDzIJBEIuQofaR89pHAw9hvx4N0gcjBHsy7nmvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlFUMxeZksuBHd23FdVSj1NGi+YgLiCDqwYHWDfTMFsgqwbkWnQC2tYbAgkebXsAJFlsNz/mQUSWBBfqPEEtLNof8NVWimiLjIua3luYnGKnaHSXIhG/hkTtCTgDVTuCfUVHa1hDRapiK+KBWtQLkHGp0qcizwV55ryEv/pGnkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHX9Ia+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUUJFmOKsWDKXkIselfvOTiFeGYoSoitvAi24tOj6Er6VEz9KkcZhQgHEE9cMwPXT2pRCkaHU0WD7XgWWhBTgFZDK02v/+msVkJtOom5ofz/cvar/8AJL3CS+AQfRn85Pyyge7u4+Qt070/sOspEXSRvIXYHsf34+h10zGnF+Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ddyOfqc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHX9Ia+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908F71F00A3A;
-	Thu, 28 May 2026 20:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ddyOfqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3201F000E9;
+	Thu, 28 May 2026 20:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999500;
-	bh=tVqFxA22r6BDj4EwjMEy4/nxDiNDW7NpecBEMkkKrrc=;
+	s=korg; t=1779999502;
+	bh=zn9GoUcei1BaWS+7aTNW46sMKl5NP3kT6SeaIpnQojo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rHX9Ia+RAuSXy6S9/wolQ4AN3qa/06gqzGs6MCKMlQ+Ll1FZrFAKko3T0WoDFE824
-	 jN16IcqagN00P3E7cnkF+00jMJgUftviFLqtsEFsQsiIfTNQfdHo/5RnQItxD6o/SY
-	 a6TBpDXpVOfgKPpeEoRPpfBocWDvIv8sNZCNQLng=
+	b=2ddyOfqca7w/RsocYio083adG5923OdUHkee2pIlV5BgFaohUPfU0z/YX+ohZQTvA
+	 vcWLhHKSZx+YuHPT+KVOalQOU+Z3rK+XU6SxWSBDrkDp7dWkMFIu0kdMf2CzgnOX+O
+	 yCrU2Y+Id+X0vg4osk7YdP1bRJuBBM2KFcF0cZAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheroz Juraev <goodmartiandev@gmail.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.18 090/377] wifi: iwlwifi: mld: stop TX during firmware restart
-Date: Thu, 28 May 2026 21:45:28 +0200
-Message-ID: <20260528194640.971451761@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 091/377] ipv4: raw: reject IP_HDRINCL packets with ihl < 5
+Date: Thu, 28 May 2026 21:45:29 +0200
+Message-ID: <20260528194640.998769202@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,64 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheroz Juraev <goodmartiandev@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 2becb38a3e217ef2b2f42fddd7db7a25905ec291 upstream.
+commit 915fab69823a14c170dbaa3b41978768e0fe62fc upstream.
 
-When iwlwifi firmware crashes (e.g., NMI_INTERRUPT_UNKNOWN on Intel
-BE201/Wi-Fi 7), iwl_mld_nic_error() sets mld->fw_status.in_hw_restart
-to true. However, iwl_mld_tx_from_txq() does not check this flag before
-dequeuing frames from mac80211 and pushing them to the transport layer.
+raw_send_hdrinc() validates that the caller-supplied IPv4 header
+fits within the message length:
 
-Since the firmware is dead, iwl_trans_tx() returns -EIO for each frame,
-which then gets freed immediately. Under high-throughput conditions
-(e.g., Tailscale UDP traffic or active SSH sessions), this creates a
-tight dequeue-send-fail-free loop that wastes CPU cycles and generates
-rapid skb allocation churn, leading to memory pressure from slab
-fragmentation.
+    iphlen = iph->ihl * 4;
+    err = -EINVAL;
+    if (iphlen > length)
+        goto error_free;
 
-The RX path already has this guard (iwl_mld_rx_mpdu checks
-in_hw_restart at rx.c:1906), and so does the TXQ allocation worker
-(iwl_mld_add_txqs_wk at tx.c:156). Add the same guard to
-iwl_mld_tx_from_txq() to stop all TX during firmware restart.
+    if (iphlen >= sizeof(*iph)) {
+        /* fix up saddr, tot_len, id, csum, transport_header */
+    }
 
-Frames left in mac80211's TXQs are naturally drained after restart
-completes, when queue reallocation triggers iwl_mld_tx_from_txq()
-via iwl_mld_add_txq_list(), or when new upper-layer traffic invokes
-wake_tx_queue.
+It does not, however, reject ihl < 5.  For such a packet the
+"if (iphlen >= sizeof(*iph))" branch is skipped, leaving the
+crafted iphdr untouched, but the packet is still handed to
+__ip_local_out() and onward.  Downstream consumers that read
+iph->ihl assume a sane value: net/ipv4/ah4.c:ah_output() in
+particular subtracts sizeof(struct iphdr) from top_iph->ihl * 4
+and passes the (signed-int-negative, then cast to size_t)
+result to memcpy(), producing an OOB access of length close to
+SIZE_MAX and a host kernel panic.
 
-Tested on ASUS Zenbook 14 UX3405CA with Intel BE201 (Wi-Fi 7) on
-kernel 6.19.5 where the firmware crashes approximately every 10-15
-minutes under Tailscale traffic.
+An IPv4 header with ihl < 5 is malformed by definition (RFC 791:
+"Internet Header Length is the length of the internet header in
+32 bit words ... Note that the minimum value for a correct header
+is 5.").  The kernel should not be willing to inject such a
+packet into its own output path.
 
-Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
+Reject "iphlen < sizeof(*iph)" alongside the existing
+"iphlen > length" check.  This matches the principle that locally
+constructed packets that re-enter the IP stack must pass the same
+basic sanity tests that a foreign packet would be subjected to.
+
+Once this lands, the "if (iphlen >= sizeof(*iph))" wrapper around
+the fixup branch becomes redundant; left in place to keep the
+patch minimal and backport-friendly.  A follow-up can unwrap it.
+
+Note that commit 86f4c90a1c5c ("ipv4, ipv6: ensure raw socket
+message is big enough to hold an IP header") ensures the message
+buffer is large enough to hold an iphdr, but does not constrain
+the self-reported iph->ihl.
+
+Reachability: the malformed packet source is any caller with
+CAP_NET_RAW, including an unprivileged process in a user+net
+namespace on a kernel with CONFIG_USER_NS=y.  The reproduced AH
+crash also requires a matching xfrm AH policy on the outgoing
+route; a container granted CAP_NET_ADMIN can install that state
+and policy in its netns.  Loopback bypasses xfrm_output, so the
+trigger uses a real netdev.
+
+Reproduced on UML + KASAN: kernel-mode fault at addr 0x0 with
+memcpy_orig at the crash site.  Same shape reproduces inside a
+rootless Docker container with --cap-add NET_ADMIN on a stock
+distro kernel.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sheroz Juraev <goodmartiandev@gmail.com>
-Link: https://patch.msgid.link/20260315081221.2678478-1-goodmartiandev@gmail.com
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/77ec2b5e8111961c2c39883c92e8aa2709039c17.1778614451.git.michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/tx.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/ipv4/raw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/tx.c
-@@ -965,6 +965,16 @@ void iwl_mld_tx_from_txq(struct iwl_mld
- 	u8 zero_addr[ETH_ALEN] = {};
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -390,7 +390,7 @@ static int raw_send_hdrinc(struct sock *
+ 	 * in, reject the frame as invalid
+ 	 */
+ 	err = -EINVAL;
+-	if (iphlen > length)
++	if (iphlen > length || iphlen < sizeof(*iph))
+ 		goto error_free;
  
- 	/*
-+	 * Don't transmit during firmware restart. The firmware is dead,
-+	 * so iwl_trans_tx() would return -EIO for each frame. Avoid the
-+	 * overhead of dequeuing from mac80211 only to immediately free
-+	 * the skbs, and the potential memory pressure from rapid skb
-+	 * allocation churn during high-throughput restart scenarios.
-+	 */
-+	if (unlikely(mld->fw_status.in_hw_restart))
-+		return;
-+
-+	/*
- 	 * No need for threads to be pending here, they can leave the first
- 	 * taker all the work.
- 	 *
+ 	if (iphlen >= sizeof(*iph)) {
 
 
