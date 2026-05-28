@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D50D223328;
-	Thu, 28 May 2026 20:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15655223328;
+	Thu, 28 May 2026 20:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000378; cv=none; b=umaEOEsQRSkHeVtkxiIwMOWp6PrIxveXc1BSkoousTzJkAMI0Tj8qN4+1qb2N6EZT1jglPey45mMJDk/FTHC+bZ6YBBPu08lvWYvUL3CBNnoM7VD/zegXLWiYr9TJ3lxeQTQNnwZztOGwXvlcRfeXJ3asQmJo9YaXhAO8bv0VnA=
+	t=1780000381; cv=none; b=Zc0RN0rA73KZdBiq7PH9v0C5b6+cxilm5JFEq+3LdYe4RUnDECCzBBALh0PPvyrSjzZkrOJj60TsmCGWyWlmLHUeqLPWq9qDg+L2gK5wx/iRL7+WEJDsIua/74gzmQE2rpbI6cRobp/HBQQ0d9Vf/jx+NfNLzICeYYGHn1fFM9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000378; c=relaxed/simple;
-	bh=gXZLikwZwCw6iJg5Gm7hi5fQmIZUC85AQn4Z8l+aLTA=;
+	s=arc-20240116; t=1780000381; c=relaxed/simple;
+	bh=H8pvIMVhpf78HAop2kTpG3eUTaK3K7TiYsRLTQFbIw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0douASZkVrN4MBf2Rr005jf1E3dNVRdjOlDfkHfTe89U8Obj2DCDxeKfhzmlvKoODyrPp9+zBX+jZPj7DzKlbAwKR1ptjcF5vqkR2ujJ8AsZDq4zLOegNHw6U323T+c7aueb1eZF/0Fy4YNqTRZowf0g+MwjaVlTaNyM9z7mNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cuc0+Uz/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HMg+za/AuoCKwLrkHWDF74zUm0pdrh6m5pNq4vbv9SesHR7aA3iHMXYmVm0GqBSLbeKYDRvIAGU4VuA/2y7hO73xel+bc3CoQho5TTEoXswnj48p9h3/6bTMkzlbQaUKGxrcKl46Lm5Y7POe6AGyVnN3Z/B0mMI8dg6lMgZ/19g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVifZrL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cuc0+Uz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA5C1F000E9;
-	Thu, 28 May 2026 20:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVifZrL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1D81F000E9;
+	Thu, 28 May 2026 20:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000377;
-	bh=nVw/GAWRPDTpoXqj3ToTPOf1tgLQuw9E99VRKweGWx8=;
+	s=korg; t=1780000380;
+	bh=97bS1vhcgYYWQSFKRjgBQP7nCm6iucmBc8SbFc0UG1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cuc0+Uz/Wc8qv6YrAC+xwCNsfpQGH03OsedsQt0oc47JWwICxrj1Q0osim+yOLC3P
-	 jyB416DA7bm5BeuFVkpYNiZG8BxjXAHgDYuRVwLm+dlTgTaHRp1SeaxsnKmFhJsVi6
-	 aPj3EqmyXBluIQB7G6Ecgb789BNoR3pDRylkPbc8=
+	b=VVifZrL690l2hYDYzWhruCcU4iVPq4FZBXTd3anIfoNKB5HXT4vWZxQgR3oRCIrdw
+	 fQggyyGMz5N+Im1D6KXgiNtJCEQHroAkmQd9Vs53wAYwPfB3NQdmVRtxkwT8zKgVMI
+	 4T0i20vE+YVAWLw1SogUVMUOUJCsbvr7jiaDopUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 024/272] smb: client: reject userspace cifs.spnego descriptions
-Date: Thu, 28 May 2026 21:46:38 +0200
-Message-ID: <20260528194630.063358162@linuxfoundation.org>
+	Tommy Kelly <linux@tkel.ly>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 025/272] ata: libata-scsi: improve readability of ata_scsi_qc_issue()
+Date: Thu, 28 May 2026 21:46:39 +0200
+Message-ID: <20260528194630.091049604@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,66 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 3da1fdf4efbc490041eb4f836bf596201203f8f2 upstream.
+commit 360190bd965f93794d5f5685a6de22ce6da2b672 upstream.
 
-cifs.spnego key descriptions contain authority-bearing fields such as
-pid, uid, creduid, and upcall_target that cifs.upcall treats as
-kernel-originating inputs. However, userspace can also create keys of
-this type through request_key(2) or add_key(2), allowing those fields to
-be supplied without CIFS origin.
+Improve readability of ata_scsi_qc_issue().
 
-Only accept cifs.spnego descriptions while CIFS is using its private
-spnego_cred to request the key.
+No functional changes.
 
-Fixes: f1d662a7d5e5 ("[CIFS] Add upcall files for cifs to use spnego/kerberos")
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Tested-by: Tommy Kelly <linux@tkel.ly>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_spnego.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/ata/libata-scsi.c |   43 +++++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
 
---- a/fs/smb/client/cifs_spnego.c
-+++ b/fs/smb/client/cifs_spnego.c
-@@ -8,6 +8,7 @@
-  */
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1779,7 +1779,7 @@ static int ata_scsi_qc_issue(struct ata_
+ 	int ret;
  
- #include <linux/list.h>
-+#include <linux/cred.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <keys/user-type.h>
-@@ -46,12 +47,27 @@ cifs_spnego_key_destroy(struct key *key)
- 	kfree(key->payload.data[0]);
+ 	if (!ap->ops->qc_defer)
+-		goto issue;
++		goto issue_qc;
+ 
+ 	/*
+ 	 * If we already have a deferred qc, then rely on the SCSI layer to
+@@ -1798,38 +1798,37 @@ static int ata_scsi_qc_issue(struct ata_
+ 		break;
+ 	case ATA_DEFER_LINK:
+ 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
+-		break;
++		goto defer_qc;
+ 	case ATA_DEFER_PORT:
+ 		ret = SCSI_MLQUEUE_HOST_BUSY;
+-		break;
++		goto defer_qc;
+ 	default:
+ 		WARN_ON_ONCE(1);
+ 		ret = SCSI_MLQUEUE_HOST_BUSY;
+-		break;
++		goto defer_qc;
+ 	}
+ 
+-	if (ret) {
+-		/*
+-		 * We must defer this qc: if this is not an NCQ command, keep
+-		 * this qc as a deferred one and report to the SCSI layer that
+-		 * we issued it so that it is not requeued. The deferred qc will
+-		 * be issued with the port deferred_qc_work once all on-going
+-		 * commands complete.
+-		 */
+-		if (!ata_is_ncq(qc->tf.protocol)) {
+-			ap->deferred_qc = qc;
+-			return 0;
+-		}
++issue_qc:
++	ata_qc_issue(qc);
++	return 0;
+ 
+-		/* Force a requeue of the command to defer its execution. */
+-		ata_qc_free(qc);
+-		return ret;
++defer_qc:
++	/*
++	 * We must defer this qc: if this is not an NCQ command, keep
++	 * this qc as a deferred one and report to the SCSI layer that
++	 * we issued it so that it is not requeued. The deferred qc will
++	 * be issued with the port deferred_qc_work once all on-going
++	 * commands complete.
++	 */
++	if (!ata_is_ncq(qc->tf.protocol)) {
++		ap->deferred_qc = qc;
++		return 0;
+ 	}
+ 
+-issue:
+-	ata_qc_issue(qc);
++	/* Force a requeue of the command to defer its execution. */
++	ata_qc_free(qc);
+ 
+-	return 0;
++	return ret;
  }
  
-+static int
-+cifs_spnego_key_vet_description(const char *description)
-+{
-+	/*
-+	 * cifs.spnego descriptions are authority-bearing inputs to cifs.upcall.
-+	 * They are only valid when produced by CIFS while using the private
-+	 * spnego_cred installed below.  Do not let userspace create this type
-+	 * of key through request_key(2)/add_key(2), since the helper treats
-+	 * pid/uid/creduid/upcall_target as kernel-originating fields.
-+	 */
-+	if (current_cred() != spnego_cred)
-+		return -EPERM;
-+	return 0;
-+}
- 
- /*
-  * keytype for CIFS spnego keys
-  */
- struct key_type cifs_spnego_key_type = {
- 	.name		= "cifs.spnego",
-+	.vet_description = cifs_spnego_key_vet_description,
- 	.instantiate	= cifs_spnego_key_instantiate,
- 	.destroy	= cifs_spnego_key_destroy,
- 	.describe	= user_describe,
+ /**
 
 
