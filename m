@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC71344DAC;
-	Thu, 28 May 2026 20:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBE232ABC0;
+	Thu, 28 May 2026 20:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999033; cv=none; b=qrIxszbOvigijqk50vglLLiyzLUyVdhKACqZTNxAG2c6x7RDvD2g4EFed3MpQQWovcW/2iB7V4Jzbl/kqJqpQYRYn1R9oapIVUCA4R+aq4CoaVP33BAvEjYOul7aSVWNg8zxloP/LBhE230ttw3TJo7dS9SvH0UuC97rbTbIwjo=
+	t=1779999035; cv=none; b=KGLRfWT+sq6PovRH26zysrLjBsfaDyDf1DIalE9mpTpZ1ZHbBzxFjhLTcsthF9/FqwNfgbXUkVZIXBbCB+OFZ1ICI9+E/uAmYTYV+v/2niXmLkOD10sDOG3Q2bT+gPSSZJiQ80JsLqg/iSpgE02lxTUJr2pYsOJOPtk+2rgDs0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999033; c=relaxed/simple;
-	bh=N/gxprgtxFCuZqvV7v3B4b3FpxZSYr3ywO4OsHtcmkI=;
+	s=arc-20240116; t=1779999035; c=relaxed/simple;
+	bh=wj7j2x3nX0rSVHwqT5NyqwoiCu0J2TcQ78o8N5qVJ2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kFX0uC598jDaNEFEhsp096J5jlHn2PrJY7+C8I6YFn3E4jhTQDm4LCIctzxn10Y2r5CX3s3RPN0aRiDCROP+3xkSN6YUxJ2k01QItFjsWzs3T/rjxCfxWXiAwUooKtYtaSkKlLxSGqX9ZsxDouAX1MSAI48jJFFKWNM0a9k5UIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1J4Rc8I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O7lL/LtDEhE7VcCfPv9NrJZNc7UA+8wg+3oESfZZ9JnfSZp7+mlhGo3bfrzVrcaxH2LPkGI3yBC6evkl9gNtyNtt4xsJoCDnlf+oEkssWF5WnVBlIp9QCJYliHwl9jjOz23SkXyiSkQM2hRCXjlE9uwLTEnXFTUv2IXl/aIB0RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOl9mAbB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1J4Rc8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0F61F000E9;
-	Thu, 28 May 2026 20:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOl9mAbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372731F000E9;
+	Thu, 28 May 2026 20:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999032;
-	bh=pSg25hCTduxgMzlzTuwhGkqE80MkfIrKIj/Dd8ByjMM=;
+	s=korg; t=1779999034;
+	bh=jDmzKgJ7VuzIc4C7HCzSQxHKUbCo54oI7yJ+A9zsFMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1J4Rc8Ihkxj9CO+I2lBbwRQs2wZLITdh9hkXeSbPgpwD/0TMynwctyUhOkRDsEom
-	 Xi0XJZKSgljiyur7glgJ8Bcc1IZzn3PzEjDJTWWUNyTJw05faB5N1vSYW3v6X55fhj
-	 P60MGd4JSx2p46yOEUB22+sOdWoHE4w8pkYMKsMM=
+	b=nOl9mAbB2AUx9t5pbZa2RgiMU95iQB7fUkAH+3kRpfDr3uyxKaaxAMTw54Reux8Q+
+	 NYglI9q+RwXkJIku+ZRfKaKe67rCD4QtQANk246kC9wF9sYlCZ0l1niv3zxUkyE3cm
+	 dYhu6BP+INRxpKHPOQLFbEsh5bwfpBer/jF/uvJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 383/461] kbuild: pacman-pkg: make "rc" releases adhere to pacman versioning scheme
-Date: Thu, 28 May 2026 21:48:32 +0200
-Message-ID: <20260528194658.542735620@linuxfoundation.org>
+Subject: [PATCH 7.0 384/461] net: dsa: mt7530: fix FDB entries not aging out with short timeout
+Date: Thu, 28 May 2026 21:48:33 +0200
+Message-ID: <20260528194658.573303894@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -47,52 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 202550713128da20d9381d6d2dc0f6b73839f434 ]
+[ Upstream commit e824e40d0e841fab66ab7897d6c7b14dc81c66a7 ]
 
-The package versioning scheme does not enable smooth upgrades from "rc"
-releases to the corresponding stable releases (e.g. 7.0.0-rc7 -> 7.0.0)
-because pacman considers that a downgrade due to the underscore in
-pkgver (e.g. 7.0.0_rc7), see e.g. vercmp(8) for an explanation of the
-package version comparison used by pacman. Package versions which are
-derived from said releases (e.g. built from git revisions) are
-similarly affected. Fix this by modifying pkgver in order to remove the
-hyphen from kernel versions containing "-rcN", where N is a
-non-negative integer.
+The DSA forwarding selftests bridge_vlan_aware.sh and
+bridge_vlan_unaware.sh configure the bridge with ageing_time set to
+LOW_AGEING_TIME (1000 centiseconds, i.e. 10 seconds) and then run
+learning_test() in lib.sh, which expects a learned FDB entry to be
+removed after ageing_time + 10 seconds. On MT7530/MT7531 the entry
+persisted past the deadline and the "Found FDB record when should
+not" assertion failed.
 
-Acked-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260515215913.92481-1-viktor_jaegerskuepper@freenet.de
-Fixes: c8578539deba ("kbuild: add script and target to generate pacman package")
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+With msecs=10000, the algorithm in mt7530_set_ageing_time() finds
+AGE_CNT=0 and AGE_UNIT=9 as the first exact match (starting the
+search from tmp_age_count=0). The per-entry aging counter is
+initialized to AGE_CNT when a MAC address is learned, so with
+AGE_CNT=0 new entries start with a counter value of 0, which the
+hardware treats as "already aged" and never removes, effectively
+disabling aging.
+
+Fix this by starting the search from tmp_age_count=1 to ensure
+entries always have a non-zero initial aging counter. For a
+10-second ageing time this yields AGE_CNT=1 and AGE_UNIT=4 instead:
+the timer ticks every 5 seconds and entries are removed after 2
+ticks.
+
+Starting the search at AGE_CNT=1 raises the minimum representable
+ageing time from 1 to 2 seconds. Without bounds, a stale ageing_time
+of 1 second would now make the loop fall through without setting
+age_count and age_unit, leaving them uninitialized when written to
+the MT7530_AAC hardware register. Set ds->ageing_time_min and
+ds->ageing_time_max so the DSA core validates the range before the
+callback is invoked, and drop the now-redundant range check from
+mt7530_set_ageing_time().
+
+Fixes: ea6d5c924e39 ("net: dsa: mt7530: support setting ageing time")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/7788ded12dc07b1bce329ec35fa70f4b45f3f9b7.1778766629.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/PKGBUILD | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/package/PKGBUILD b/scripts/package/PKGBUILD
-index 452374d63c244..1213c8e04671e 100644
---- a/scripts/package/PKGBUILD
-+++ b/scripts/package/PKGBUILD
-@@ -10,7 +10,7 @@ for pkg in $_extrapackages; do
- 	pkgname+=("${pkgbase}-${pkg}")
- done
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index b9423389c2ef0..f90f9ea515d81 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -973,12 +973,16 @@ mt7530_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
+ 	unsigned int age_count;
+ 	unsigned int age_unit;
  
--pkgver="${KERNELRELEASE//-/_}"
-+pkgver="$(echo "${KERNELRELEASE}" | sed 's/-\(rc[0-9]\+\)/\1/;s/-/_/g')"
- # The PKGBUILD is evaluated multiple times.
- # Running scripts/build-version from here would introduce inconsistencies.
- pkgrel="${KBUILD_REVISION}"
+-	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds */
+-	if (secs < 1 || secs > (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1))
+-		return -ERANGE;
+-
+-	/* iterate through all possible age_count to find the closest pair */
+-	for (tmp_age_count = 0; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
++	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds.
++	 * The DSA core has already validated the range using
++	 * ds->ageing_time_min and ds->ageing_time_max.
++	 *
++	 * Iterate through all possible age_count values to find the closest
++	 * pair. Start from 1 because the per-entry aging counter is
++	 * initialized to AGE_CNT and a value of 0 means the entry will
++	 * never be aged out.
++	 */
++	for (tmp_age_count = 1; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
+ 		unsigned int tmp_age_unit = secs / (tmp_age_count + 1) - 1;
+ 
+ 		if (tmp_age_unit <= AGE_UNIT_MAX) {
+@@ -2378,6 +2382,8 @@ mt7530_setup(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	if (priv->id == ID_MT7530) {
+ 		regulator_set_voltage(priv->core_pwr, 1000000, 1000000);
+@@ -2567,6 +2573,8 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	mt753x_trap_frames(priv);
+ 
 -- 
 2.53.0
 
