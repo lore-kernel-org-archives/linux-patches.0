@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892B13164B7;
-	Thu, 28 May 2026 20:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6220332ABC0;
+	Thu, 28 May 2026 20:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999013; cv=none; b=oc+QKysxbVtWwx9JN4OFa71dlswgOsK+ZAHiIZzMyHrGbFBwxebinSdEYtrs3Nttx5kRHn7bgyUuK729B165WUo1XaWvZr0nkAArdMwQewa4SLnydeoC9o7n1vwKAc0a3psuWehooaNU3MyHlewCc/cKD/PaEwh3734c3HJpgtc=
+	t=1779999016; cv=none; b=V1QJQxVVMVWL/qmoWLOX41SfCkltKREOoZObrOtXNXsk16s5XszX3b77Wf/D46xHYayHCG/h2eM5pg29ngy/2TTWIU7lIrXCQfzvgutnipIZP+5G+N+0r8nZ+L140WskrtqeSp4ozPwWzOyRsZ69X787lcJ7CiJ2tdJl1Jtfjms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999013; c=relaxed/simple;
-	bh=SwhUBopI2lXqvF+V7mmyDuOIgNPdMxv1+uzyfs57tNY=;
+	s=arc-20240116; t=1779999016; c=relaxed/simple;
+	bh=DDpx9ZkZmYsBQxyTlBXZ92J03s6SqJnSNwO6A78azGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odi6j2OZi8RDT/rKoE8cKnYke1jtlZewycUv/LYtKMOdcN93VRc/lzViYzAk2gMZuEiQ60SnjFY+tDM2rNfKX+9wV6MhSrRdwORROUFnmN+HFGZjWnoZMQQwHk0+8jmQ7W0NUmWh0p2jGt2sZQwjEs0X362veQlywYUwXSJdb84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8n5iZf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ql8pJBmjK8Gg8XMwbSXncl67x/mUc4nzuESxyk9vEcBIEasHDSeiCwcza9OAOs+GxwRDdPcwaTKPkZiPwwcZTgdhdBzjCjfhwKyHaXpQCnTpGVJ8V/y2fWeRms0Tb2zsTFr6naUQoNIf21Cih/osKxBHNemx95C2IeWmCI6sOGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjuxWKrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8n5iZf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45441F000E9;
-	Thu, 28 May 2026 20:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjuxWKrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15A31F000E9;
+	Thu, 28 May 2026 20:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999012;
-	bh=GzB/+PDPprjImgng6l/tPsxCXzL0G64HMgBFxRY2kWs=;
+	s=korg; t=1779999015;
+	bh=ruLo1wZFtPXnPabvT2S2p2kM4b/ql96FEETHAKg9D2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8n5iZf9nh0uEvB+fM6yNASXTJTCCPBGcTUcKJ2ezkkzKVVBpFPk8zgQlr/I6Cacb
-	 ltFaUsYQmoR3bRRYdikI6vt/fU0+SO0Xo6g1f1UvNGHyNfQuT5rHIY4kxUnn0tGPrr
-	 pd6h5nQVAithXrI1Azh2jSYmwU9CHHrZCwswC+Q8=
+	b=kjuxWKrPvzGoyTUMXLFXoy+kBVxrvTqrxP0gZYCcETxcweuILQVOPIpQHMen9rEpW
+	 IFT7SF853Q6S2MU+0pnpgjzzrd67YuCOZTY/wfZihdROyHz7LOmXVFHnE2I0iIYXcS
+	 sjAfHdQVYIPlwqiwbbmScG7sNsyo6Q9/pc+UrN9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Christian Brauner <brauner@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 377/461] cifs: Fix undefined variables
-Date: Thu, 28 May 2026 21:48:26 +0200
-Message-ID: <20260528194658.363504094@linuxfoundation.org>
+Subject: [PATCH 7.0 378/461] ice: ptp: serialize E825 PHY timer start with PTP lock
+Date: Thu, 28 May 2026 21:48:27 +0200
+Message-ID: <20260528194658.393946514@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -58,62 +55,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 8cf8b5ae8e093132b0dce0a932af10c9ef077936 ]
+[ Upstream commit 781ff8f2d575a794a2a4f11605288ae06757f5eb ]
 
-Fix a couple of undefined variables introduced by the patch to fix tearing
-on ->remote_i_size and ->zero_point.  For some reason, make W=1 with gcc
-doesn't give undefined variable warnings (but clang does).
+ice_start_phy_timer_eth56g() programs TIMETUS registers and issues
+INIT_INCVAL without holding the global PTP semaphore.
 
-Fixes: 2c8f4742bb76 ("netfs: Fix potential for tearing in ->remote_i_size and ->zero_point")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202605031459.eX5UbO3K-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202605021450.ca5QGqLH-lkp@intel.com/
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: Christian Brauner <brauner@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+This allows concurrent PTP command paths to interleave with PHY timer
+start, which can make the sequence fail and leave timer initialization
+inconsistent.
+
+Take the PTP lock around TIMETUS registers programming and INIT_INCVAL
+command execution, and make sure the lock is released on all error paths.
+
+Keep the subsequent sync step outside of this critical section, since
+ice_sync_phy_timer_eth56g() takes the same semaphore internally.
+
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Reviewed-by: Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-5-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index db6062dcbb3ec..386b0d43f064f 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1339,7 +1339,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	struct cifsFileInfo *smb_file_src = src_file->private_data;
- 	struct cifsFileInfo *smb_file_target = dst_file->private_data;
- 	struct cifs_tcon *target_tcon, *src_tcon;
--	unsigned long long i_size, old_size, new_size, zero_point;
-+	unsigned long long i_size, new_size;
- 	unsigned long long destend, fstart, fend;
- 	unsigned int xid;
- 	int rc;
-@@ -1407,7 +1407,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 		goto unlock;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 672218e5d1f94..8bb94e785f2a8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -2141,16 +2141,23 @@ int ice_start_phy_timer_eth56g(struct ice_hw *hw, u8 port)
+ 	}
+ 	incval = (u64)hi << 32 | lo;
  
- 	spin_lock(&target_inode->i_lock);
--	if (fend > zero_point)
-+	if (fend > target_cifsi->netfs._zero_point)
- 		netfs_write_zero_point(target_inode, fend + 1);
- 	i_size = target_inode->i_size;
- 	spin_unlock(&target_inode->i_lock);
-@@ -1422,7 +1422,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	if (target_tcon->ses->server->ops->duplicate_extents) {
- 		rc = target_tcon->ses->server->ops->duplicate_extents(xid,
- 			smb_file_src, smb_file_target, off, len, destoff);
--		if (rc == 0 && new_size > old_size) {
-+		if (rc == 0 && new_size > i_size) {
- 			truncate_setsize(target_inode, new_size);
- 			fscache_resize_cookie(cifs_inode_cookie(target_inode),
- 					      new_size);
++	if (!ice_ptp_lock(hw)) {
++		dev_err(ice_hw_to_dev(hw), "Failed to acquire PTP semaphore\n");
++		return -EBUSY;
++	}
++
+ 	err = ice_write_40b_ptp_reg_eth56g(hw, port, PHY_REG_TIMETUS_L, incval);
+ 	if (err)
+-		return err;
++		goto err_ptp_unlock;
+ 
+ 	err = ice_ptp_one_port_cmd(hw, port, ICE_PTP_INIT_INCVAL);
+ 	if (err)
+-		return err;
++		goto err_ptp_unlock;
+ 
+ 	ice_ptp_exec_tmr_cmd(hw);
+ 
++	ice_ptp_unlock(hw);
++
+ 	err = ice_sync_phy_timer_eth56g(hw, port);
+ 	if (err)
+ 		return err;
+@@ -2166,6 +2173,10 @@ int ice_start_phy_timer_eth56g(struct ice_hw *hw, u8 port)
+ 	ice_debug(hw, ICE_DBG_PTP, "Enabled clock on PHY port %u\n", port);
+ 
+ 	return 0;
++
++err_ptp_unlock:
++	ice_ptp_unlock(hw);
++	return err;
+ }
+ 
+ /**
 -- 
 2.53.0
 
