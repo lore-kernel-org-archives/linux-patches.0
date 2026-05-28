@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEA223394D;
-	Thu, 28 May 2026 20:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAFA2F1FEF;
+	Thu, 28 May 2026 20:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001135; cv=none; b=Kd0tUAtJ6Qg2V85++8ucPffiizo4FqFRjJRadyl0AggnC9HaqsiomwSHWlx14mTwGX56nkVfLiu+iSaT5Nu+Nyd5eNBbfE7EQ8vi3S+FwMGJnpszDKHHFYXOO7qmPpp0WY5VeOMojG5qenjUSMTmyecrZbU5vLeRlZxZ3nwrmAc=
+	t=1780001138; cv=none; b=fHgJ2Tq//N9DKWsfrsfncCDcuGjzXelWwsgxCyRxZKojxCqxkkYLnzrDXjRUNJe/rWlaMQZSMbNwYHJupTP9fEOzqL3HHjOLskf/zoWVjdao63f07cRcsRT2kkMBFfDzV34luJ7ym6s2DmEcoUqDW9qaWCV8rroH6vrFMyJQiw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001135; c=relaxed/simple;
-	bh=GKSntXG+sxmy7K4JwxNArTNNTniH+t4lDiNSChzOj4A=;
+	s=arc-20240116; t=1780001138; c=relaxed/simple;
+	bh=tC2QxwobzP8Gu0hEaWa8Lqc5y9y7Qgdm4o4iFdbRK0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5BusrcKLhfPdVRhVGGZUW4vR0FLP2tqa5MmkLkea2ztOCfkYvZnst2k+/22s1R3wEoIxz84Dw0pKAXEJTB9yTJAIYLp164YxFzw3YIzN49G2zuU+a6ZNhc/MY+tp17IzTv6IPtXx1bLRebjE62Y+5eUAOgb2XR8tDf5ntMBBtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVWCtmLM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JfXEPHPh9WVdsEoEoe1eVtNW0nDx+8xHMrOoLgzhnVIN3eD6rTg/5AeGQbdFNPhi+ZI8a30p69UuAkUhjQEB/nEQH17w6igDEpHbnS0s1kJBCsEzVzO7fwHNsprniyRN8Y6JFp4OtrNZb9yW9dv8R4I9ksZy5vWx3qQb5LzLhGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXxTwt/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVWCtmLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3CA1F000E9;
-	Thu, 28 May 2026 20:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXxTwt/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAE01F000E9;
+	Thu, 28 May 2026 20:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001134;
-	bh=/A2SQ0ew1i6SDiSQ5weoi/YQZuzwgf24YLVQTUGEQVg=;
+	s=korg; t=1780001136;
+	bh=pNad2m4uOY5wJ40FuF0wGdae5NYAOpBN95V+RPe7tdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EVWCtmLMo2PkeiYBH4by/Y85wXFVhOH0nTpvPEYfX+CTcI8qU9KtQqmpnKLwDDKUt
-	 JVHHJUtn//FAryI3FRF0ksVG7IJMOume+jAjoS8QTZaJhSa2w2pgVTqz4RqjRqBvQ3
-	 tVxPP+pYMVEXh6GJpfanfUnSUX0ZFvfu90ynA6og=
+	b=xXxTwt/x2oAvKSKZHKwfqGpdfy4fbWyI1CbeHzy9ZCRsgVdOsAFCMEaib30tUtHUA
+	 NflHWk8nSKGBC2pDF3jEkOWecsyevNb5AryIExdMW8bat20sRElTpLAKRSkJn/vWNR
+	 Scm+EtC180fFXYCIou1ZJu1uUd1A2b7HYKV1xHlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/186] mptcp: pm: ADD_ADDR rtx: allow ID 0
-Date: Thu, 28 May 2026 21:48:02 +0200
-Message-ID: <20260528194929.011514767@linuxfoundation.org>
+Subject: [PATCH 6.6 020/186] Revert "af_unix: Reject SIOCATMARK on non-stream sockets"
+Date: Thu, 28 May 2026 21:48:20 +0200
+Message-ID: <20260528194929.503185964@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,44 +49,27 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+This reverts commit 0d7e7235bc543c6ed7b873e3015db814d8e8c414.
 
-commit 03f324f3f1f7619a47b9c91282cb12775ab0a2f1 upstream.
-
-ADD_ADDR can be sent for the ID 0, which corresponds to the local
-address and port linked to the initial subflow.
-
-Indeed, this address could be removed, and re-added later on, e.g. what
-is done in the "delete re-add signal" MPTCP Join selftests. So no reason
-to ignore it.
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-2-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied to net/mptcp/pm_netlink.c instead of upstream's pm_kernel.c ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 3 ---
+ net/unix/af_unix.c | 3 ---
  1 file changed, 3 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 4a5802126c8e4..23aef214f30d8 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -305,9 +305,6 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 	if (inet_sk_state_load(sk) == TCP_CLOSE)
- 		return;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index c621f00902752..8f785b2600ae4 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2809,9 +2809,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 				goto out;
+ 			}
  
--	if (!entry->addr.id)
--		return;
+-			if (sk->sk_type != SOCK_STREAM)
+-				return -EOPNOTSUPP;
 -
- 	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk)) {
- 		/* Try again later. */
+ 			mutex_lock(&u->iolock);
+ 			goto redo;
+ unlock:
 -- 
 2.53.0
 
