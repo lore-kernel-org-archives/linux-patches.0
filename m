@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C1B2F691F;
-	Thu, 28 May 2026 20:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFBD2F260C;
+	Thu, 28 May 2026 20:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998773; cv=none; b=GiMye1qNB0L2FRweTyHN6Ivr4BVP57SAWRrGOcrfLY1FuIxWnziJmIFO9Vgiu1bhBMp17zZNYIS9lQGSurQvp5wGUhzOepTjILBh+jR82EWi2205Vxypulv7aQUy1WOUXlynsnjX9hgyrvMRcKpPj/jf1xKD9j9VtfNZFkxYmtE=
+	t=1779998775; cv=none; b=GQpTgzwNQn81l5MmthH7i5ALqBPgX3rjxYeW23noZir5fhsYrjRfHgER26lcsu5+Yb93BVcNYUE4Nnt6IsdkebCxEbq7DudtWY+iMMOKxohqvAS5Y75QStSAn51R3Guzikrupjiy2rJTxvnsiCkq17S739X9pr4qUSicJUtcmv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998773; c=relaxed/simple;
-	bh=Gm2fwoIa8Pj/49YmD9NDaJYDFMhuyMeI7cgTO9rLp3c=;
+	s=arc-20240116; t=1779998775; c=relaxed/simple;
+	bh=38J9KwLMLa4kpmz7D8R+kyahRwDRfo8tnh6osJnLLqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNOyGnrFqDr0ot7FUOvlyntiuvo5Hi+ySGj0KL6p3jbn+0YWxTruwzarGICmoymFaCFY7sC4eaNhydHPYWV/zdo7ce6kb9ZpaI+DWBvax/p3kuamDbLrk7m1k8K6Ypy3X3QY86rHhX4xot3tRtvTEYWbOWyZH4Qc/UKd1iCqY1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZ4gI3Jb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QI+0+uGf/vyFDdWDQrxGJIavkkQTqXlLIV0L5BA1F6lx8ces5cF6j9DJ44lFmhUDU/OT5+UerIpxFje5D8iesaMM1ujV/qTyfrn0zgGmB0jDl0jBXCoBKwluzwMpi5cIXFTnrUa1npNiJfLzs+AtUHVm+CZ97qTEECZ8vdOJ4r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dxa3qPsj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZ4gI3Jb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1241F000E9;
-	Thu, 28 May 2026 20:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dxa3qPsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545B91F000E9;
+	Thu, 28 May 2026 20:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998772;
-	bh=s9T4RPWb2P7+PdX3BDxFOjWbAOBjwEsPqIULdne6Q5M=;
+	s=korg; t=1779998774;
+	bh=XuV8xe7VJAFUPjwzetsfFcDCqJZ1NV4KLNlRux9r/eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZ4gI3JbDnEuMCHADj3hwpaDUYfObsRe2CmVar7EZVkbJLIfOPk65NOKLCe6+yxFJ
-	 bHVLsSNAPNf559gXPOiJ428a5oDzt71MosIoNJ5+THn+YGKKj3RNcMlD9Xo6t3Qf/t
-	 K1kFgr3DZWut2fyzlxWMyNhg2tOHBpEHT9iIgowU=
+	b=Dxa3qPsjjX1X6XUxjISMu+WroQFN9ODuB93Zby6gxCZfbhe4Xdeh8AyF33DVAD/FM
+	 fwzPyLza2mbMVHB/6B+1Mo2QLRybJ6SBLIZ7m2ThkwBMMmD6xvUgAjdR39fIy/XHoo
+	 ND9Gf3LDQypdI0qAHlgDf34jzk16tidZ03ImuLpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 292/461] net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint
-Date: Thu, 28 May 2026 21:47:01 +0200
-Message-ID: <20260528194655.670376975@linuxfoundation.org>
+Subject: [PATCH 7.0 293/461] ethtool: fix ethnl_bitmap32_not_zero() bit interval semantics
+Date: Thu, 28 May 2026 21:47:02 +0200
+Message-ID: <20260528194655.698234638@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -54,63 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 7bf563badd37cb796df5477d2b78bb64148a1268 ]
+[ Upstream commit 3d042592ebd4c7e44974d556de0b727cb7db4dab ]
 
-The smc_msg_event tracepoint class, shared by smc_tx_sendmsg and
-smc_rx_recvmsg, unconditionally dereferences smc->conn.lnk:
+ethnl_bitmap32_not_zero() should return true if some bit in [start, end)
+is set:
 
-	__string(name, smc->conn.lnk->ibname)
+- Fix inverted memchr_inv() sense: return true when the scan finds a
+  non-zero byte, not when the middle words are all zero.
+- Return false for an empty interval (end <= start).
+- When end is 32-bit aligned, indices in [start, end) do not include any
+  bits from map[end_word]; return false after earlier checks found no
+  non-zero data.
 
-conn->lnk is only set for SMC-R; for SMC-D it is NULL. Other code on
-these paths already handles this (e.g. !conn->lnk in
-SMC_STAT_RMB_TX_SIZE_SMALL()). With the tracepoint enabled, the first
-sendmsg()/recvmsg() on an SMC-D socket crashes:
-
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: null-ptr-deref in range [...]
-  RIP: 0010:strlen+0x1e/0xa0
-  Call Trace:
-   trace_event_raw_event_smc_msg_event (net/smc/smc_tracepoint.h:44)
-   smc_rx_recvmsg (net/smc/smc_rx.c:515)
-   smc_recvmsg (net/smc/af_smc.c:2859)
-   __sys_recvfrom (net/socket.c:2315)
-   __x64_sys_recvfrom (net/socket.c:2326)
-   do_syscall_64
-
-The faulting address 0x3e0 is offsetof(struct smc_link, ibname),
-confirming the NULL ->lnk deref. Enabling the tracepoint requires
-root, but the trigger itself is unprivileged: socket(AF_SMC, ...) has
-no capability check, and SMC-D negotiation needs no admin step on
-s390 or on x86 with the loopback ISM device loaded.
-
-Log an empty device name for SMC-D instead of dereferencing NULL.
-
-Fixes: aff3083f10bf ("net/smc: Introduce tracepoints for tx and rx msg")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Fixes: 10b518d4e6dd ("ethtool: netlink bitset handling")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_tracepoint.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/bitset.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_tracepoint.h b/net/smc/smc_tracepoint.h
-index a9a6e3c1113aa..53da84f57fd6f 100644
---- a/net/smc/smc_tracepoint.h
-+++ b/net/smc/smc_tracepoint.h
-@@ -51,7 +51,7 @@ DECLARE_EVENT_CLASS(smc_msg_event,
- 				     __field(const void *, smc)
- 				     __field(u64, net_cookie)
- 				     __field(size_t, len)
--				     __string(name, smc->conn.lnk->ibname)
-+				     __string(name, smc->conn.lnk ? smc->conn.lnk->ibname : "")
- 		    ),
+diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
+index f0883357d12e5..4691d6d0f2b75 100644
+--- a/net/ethtool/bitset.c
++++ b/net/ethtool/bitset.c
+@@ -91,7 +91,7 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
+ 	u32 mask;
  
- 		    TP_fast_assign(
+ 	if (end <= start)
+-		return true;
++		return false;
+ 
+ 	if (start % 32) {
+ 		mask = ethnl_upper_bits(start);
+@@ -104,11 +104,11 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
+ 		start_word++;
+ 	}
+ 
+-	if (!memchr_inv(map + start_word, '\0',
+-			(end_word - start_word) * sizeof(u32)))
++	if (memchr_inv(map + start_word, '\0',
++		       (end_word - start_word) * sizeof(u32)))
+ 		return true;
+ 	if (end % 32 == 0)
+-		return true;
++		return false;
+ 	return map[end_word] & ethnl_lower_bits(end);
+ }
+ 
 -- 
 2.53.0
 
