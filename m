@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E54619A288;
-	Thu, 28 May 2026 20:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8422E7379;
+	Thu, 28 May 2026 20:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000024; cv=none; b=q/KuU4NEjOvIOqN+xqZJoPgL79+KUV0k0wvpkmBVsxH3v3x8ZS9auSlgyIRq1qoYag6PVZOO6NqaGsvZqOh3NWoaYpKef/Nj03iL/SwjAsj7TuCCi+wvl6e8lvUNLTUHUZY3MiaY95FlxYiAAxBfhmbupgg3FpDf23aTaPTfHwo=
+	t=1780000027; cv=none; b=L2GKNBKYRUJkx+7gmLOFs+ds+szdjwi+Dw7J0UPJC/HN9B4DRK66V+p31RNHPq4FbWq5AHz/c2c29H6iZPntWBsV/2WyR0fV+THI17VTdXI8Hv+MBCZXfOokfBH/LKOSjvywmANPd9kVLmVl6kWdWut1CDiSaOzcXmTRB/j49Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000024; c=relaxed/simple;
-	bh=R2HkStIhIXSPdz+KTMU2EuhXO+GSKl1jXQ+mjWDFLd8=;
+	s=arc-20240116; t=1780000027; c=relaxed/simple;
+	bh=rLSfbLG61J4aVjeCHoyxdJGqMoYWnlOrT3t7/BhcEX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXIE52/aR7biMseUjdKekMuf+U9AS89qfzcz5H9VLoSGYyRgNK7GVVBxbwyt7gsxJtPBacvjk0J5jwwOvq2JsXPPRv6f4vW+8IIrTbVAiJkkI/RgYjlSJYxIrOrtGb/vPuags1iJ9Hoka+UhBOex3gODn0MbJZDdsV+l9YdnVXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/Jlw1EQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h0URsSUuUWeP0IyOKfCCLmlcNWHcHc8cTaEul90Ty6NqmXhEOwEnJ5y4Mjj1k3BJLUn+22hMxXa0pKNf5EduqNBQOb6nXRPqKUI49goyC/9VK+Ofvual3PCwfPQDewcBpvplmGYRbL6Q72zt4CFuCLwa2tDZQvsYAjRer7k4xyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBJcITC3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/Jlw1EQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BA31F000E9;
-	Thu, 28 May 2026 20:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBJcITC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3491F000E9;
+	Thu, 28 May 2026 20:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000023;
-	bh=cKJoUgBX77tZnyRKWD9LDtByCdjegYGRBqV+veAuXu0=;
+	s=korg; t=1780000026;
+	bh=B34LusKSQy/NoTamNHwx3Q4yQ3QiQHST+l/b7aaLu/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/Jlw1EQHfIfBLyzDUAKpKsS+gE29PLWYYXd1arFQiS3puOTcRFmyh+Z6JUmACARd
-	 F2gp1LFMNoTX2VfHxGpFpyjQfEfnJuKD1jLR1mE1CEisoS4ng+z/X6EIAdIi2s5B3A
-	 7YbyC/60XZvIt5kC6cQi7Zihlh8jXUA3elJEjX5s=
+	b=WBJcITC37B5OID2PAH4u4CcR6ovvzqJIN5GV+352Z8nesnVrUXfsHl0eiG2/qpWQy
+	 oZGspSfo0z9Ffw+WpwZU15+MkSd7Wna+hn19pEyRTkV4O9W4vKiTgPO93zAYzNkHUK
+	 9A21r+63jhtvttuY/zkfnGN2oHf87SjtJpiBvM5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Damiano Melotti <melotti@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 238/377] netfs: Defer the emission of trace_netfs_folio()
-Date: Thu, 28 May 2026 21:47:56 +0200
-Message-ID: <20260528194645.277593754@linuxfoundation.org>
+Subject: [PATCH 6.18 229/377] tcp: Fix out-of-bounds access for twsk in tcp_ao_established_key().
+Date: Thu, 28 May 2026 21:47:47 +0200
+Message-ID: <20260528194645.023204832@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -55,114 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit daeb443b92817021c1234e8eded219e164b7c35d ]
+[ Upstream commit 03cb001ef87b3f8d859cf7f96329acf3d6235d29 ]
 
-Change netfs_perform_write() to keep the netfs_folio trace value in a
-variable and emit it later to make it easier to choose the value displayed.
-This is a prerequisite for a subsequent patch.
+lockdep_sock_is_held() was added in tcp_ao_established_key()
+by the cited commit.
 
-Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-13-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 7b4dcf1b9455 ("netfs: Fix streaming write being overwritten")
+It can be called from tcp_v[46]_timewait_ack() with twsk.
+
+Since it does not have sk->sk_lock, the lockdep annotation
+results in out-of-bound access.
+
+  $ pahole -C tcp_timewait_sock vmlinux | grep size
+  	/* size: 288, cachelines: 5, members: 8 */
+  $ pahole -C sock vmlinux | grep sk_lock
+  	socket_lock_t              sk_lock;              /*   440   192 */
+
+Let's not use lockdep_sock_is_held() for TCP_TIME_WAIT.
+
+Fixes: 6b2d11e2d8fc ("net/tcp: Add missing lockdep annotations for TCP-AO hlist traversals")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260508120853.4098365-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/ipv4/tcp_ao.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index 09394ac2c180d..1fa13c2629a73 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -150,6 +150,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 	}
+diff --git a/net/ipv4/tcp_ao.c b/net/ipv4/tcp_ao.c
+index 849a69c1f497f..aa624434b5556 100644
+--- a/net/ipv4/tcp_ao.c
++++ b/net/ipv4/tcp_ao.c
+@@ -116,7 +116,8 @@ struct tcp_ao_key *tcp_ao_established_key(const struct sock *sk,
+ {
+ 	struct tcp_ao_key *key;
  
- 	do {
-+		enum netfs_folio_trace trace;
- 		struct netfs_folio *finfo;
- 		struct netfs_group *group;
- 		unsigned long long fpos;
-@@ -223,7 +224,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			if (unlikely(copied == 0))
- 				goto copy_failed;
- 			netfs_set_group(folio, netfs_group);
--			trace_netfs_folio(folio, netfs_folio_is_uptodate);
-+			trace = netfs_folio_is_uptodate;
- 			goto copied;
- 		}
- 
-@@ -239,7 +240,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			folio_zero_segment(folio, offset + copied, flen);
- 			__netfs_set_group(folio, netfs_group);
- 			folio_mark_uptodate(folio);
--			trace_netfs_folio(folio, netfs_modify_and_clear);
-+			trace = netfs_modify_and_clear;
- 			goto copied;
- 		}
- 
-@@ -257,7 +258,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			}
- 			__netfs_set_group(folio, netfs_group);
- 			folio_mark_uptodate(folio);
--			trace_netfs_folio(folio, netfs_whole_folio_modify);
-+			trace = netfs_whole_folio_modify;
- 			goto copied;
- 		}
- 
-@@ -284,7 +285,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			if (unlikely(copied == 0))
- 				goto copy_failed;
- 			netfs_set_group(folio, netfs_group);
--			trace_netfs_folio(folio, netfs_just_prefetch);
-+			trace = netfs_just_prefetch;
- 			goto copied;
- 		}
- 
-@@ -298,7 +299,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			if (offset == 0 && copied == flen) {
- 				__netfs_set_group(folio, netfs_group);
- 				folio_mark_uptodate(folio);
--				trace_netfs_folio(folio, netfs_streaming_filled_page);
-+				trace = netfs_streaming_filled_page;
- 				goto copied;
- 			}
- 
-@@ -313,7 +314,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 			finfo->dirty_len = copied;
- 			folio_attach_private(folio, (void *)((unsigned long)finfo |
- 							     NETFS_FOLIO_INFO));
--			trace_netfs_folio(folio, netfs_streaming_write);
-+			trace = netfs_streaming_write;
- 			goto copied;
- 		}
- 
-@@ -333,9 +334,9 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 					folio_detach_private(folio);
- 				folio_mark_uptodate(folio);
- 				kfree(finfo);
--				trace_netfs_folio(folio, netfs_streaming_cont_filled_page);
-+				trace = netfs_streaming_cont_filled_page;
- 			} else {
--				trace_netfs_folio(folio, netfs_streaming_write_cont);
-+				trace = netfs_streaming_write_cont;
- 			}
- 			goto copied;
- 		}
-@@ -351,6 +352,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 		continue;
- 
- 	copied:
-+		trace_netfs_folio(folio, trace);
- 		flush_dcache_folio(folio);
- 
- 		/* Update the inode size if we moved the EOF marker */
+-	hlist_for_each_entry_rcu(key, &ao->head, node, lockdep_sock_is_held(sk)) {
++	hlist_for_each_entry_rcu(key, &ao->head, node,
++				 sk_fullsock(sk) && lockdep_sock_is_held(sk)) {
+ 		if ((sndid >= 0 && key->sndid != sndid) ||
+ 		    (rcvid >= 0 && key->rcvid != rcvid))
+ 			continue;
 -- 
 2.53.0
 
