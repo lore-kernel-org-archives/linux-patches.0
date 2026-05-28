@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F36409624;
-	Thu, 28 May 2026 20:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D84130E82E;
+	Thu, 28 May 2026 20:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998688; cv=none; b=PGZ6kEt/eI1pWwleCzARVewjolunMLdP4SCze6H3GOUSZAxQpbZ6mC2+lQELX8J/l2Y1AgKfN1KVmBWmpuGnl9UdoxLCVVZXG5f9CHtGEmRlT1QI412FhvEVwPDUD1cLpWINbsQwVorClp1DmnmbmTlfn79+ozxquYaGxKuXTbQ=
+	t=1779998691; cv=none; b=DjtwM2+Ov3nTLutW7d7XzZwnEusOPPdbnXhs7TPho5xZtjKdUQ06LWV7bvt31MWvzY9MGeBX/tN/Ag0OwxpCDp4pnBbhtBhWN9Ccq1h2gjN8rM7huPHXzz7dYSSvtlGhG4trIhcN1zVN3OjNhqDVELMkz1gQoRt1YAvjWwhvXzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998688; c=relaxed/simple;
-	bh=F94I5ORvUvg52PMnoEKyuRqIIypcXTIHFQudUSoaxQk=;
+	s=arc-20240116; t=1779998691; c=relaxed/simple;
+	bh=kLNHvW/pqK5y0KtO8eytU2SlnJNU+HCpFIcEyBm3H/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4+P57rAEdLg3pU2eLEucpXcTH1EF7b4wnIMv/PYflHtRiHC5M+rXTwYEkKUU/pPz8oXN+RC2wud7g1E6tDlYS4R92mq7CgBqGChXv0x51Zdj6MhLQbR3tkAyQdgb0mmeQbq7WfKjxQ87tGGjpuecQaBwK8i22Zr4f1/4btd3DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nB64QCQM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q1X6i93FcxThAoQ1GZR8XPkYqFZ+CAuPmFtx0eq1oCNFmr4gZNzg8w7ayOUqsgK7sr1mxiWmgtEdfR+Vw6K8EwKEQpnNbGAND+F0HsnDf8vItz8Adr/V4vDwI8Dd7J/EDf1CK6kmMwEHSRgsPcXmlqux+Q3Ync/LJO5wfICz/l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmKlfwlf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nB64QCQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5F01F000E9;
-	Thu, 28 May 2026 20:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmKlfwlf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7221F000E9;
+	Thu, 28 May 2026 20:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998687;
-	bh=OdwGxS1J3BDP/Ns+Ht1BFAuxseMuoRFiKpFlqjqvxEk=;
+	s=korg; t=1779998690;
+	bh=kQnrJ+K9hmuMxd2LWd7akFTxVPTWxfOt0ueQBDi+/jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nB64QCQM6FbmWKFwnIUO2mgD4IEgACL62ZhRc2ON/n9vrGdkG9k9rtnn+hYWdILqR
-	 0PvojhJozopagGj4PkICkg139ZYuIdV4/4cryUJQ67jnK4bEIy7mYppGMuHECoWNJd
-	 cvmgY2BcVdmTz8AvBYaYCE9M6pafJIuidwyyvHaw=
+	b=dmKlfwlfkrmSLwTXzWfZ1vaHcs+WVPvR79KRj0KuThaBKC8BL6w01HDC6pMU2s94h
+	 BT+1HtY7d4tuAp69w/NebHQtnFAdTHoRMTC97gArCmbFUymaWcjB2BfGGa1dFmFpW3
+	 dhK5CBQVyxhkhUit7mCDzCFC32Vcjxyb5bvQDX9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 262/461] netfs: Fix read-gaps to remove netfs_folio from filled folio
-Date: Thu, 28 May 2026 21:46:31 +0200
-Message-ID: <20260528194654.745408276@linuxfoundation.org>
+Subject: [PATCH 7.0 236/461] fs: Fix return in jfs_mkdir and orangefs_mkdir
+Date: Thu, 28 May 2026 21:46:05 +0200
+Message-ID: <20260528194653.973597955@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -55,91 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit a41168aef634356a9b87ec44349e3c82835700a5 ]
+[ Upstream commit a7cf1da7ac016490d6a1106f2aa6b602d34e9a12 ]
 
-Fix netfs_read_gaps() to remove the netfs_folio record from the folio
-record before marking the folio uptodate if it successfully fills the gaps
-around the dirty data in a streaming write folio (dirty, but not uptodate).
+Return NULL instead of passing to ERR_PTR while err is zero
+Fixes these smatch warnings:
+  - fs/jfs/namei.c:311 jfs_mkdir() warn: passing zero to 'ERR_PTR'
+  - fs/orangefs/namei.c:369 orangefs_mkdir() warn: passing zero
+    to 'ERR_PTR'
 
-Found with:
-
-    fsx -q -N 1000000 -p 10000 -o 128000 -l 600000 \
-        /xfstest.test/junk --replay-ops=junk.fsxops
-
-using the following as junk.fsxops:
-
-    truncate 0x0 0x138b1 0x8b15d *
-    write 0x507ee 0x10df7 0x927c0
-    write 0x19993 0x10e04 0x927c0 *
-    mapwrite 0x66214 0x1a253 0x927c0
-    copy_range 0xb704 0x89b9 0x24429 0x79380
-    write 0x2402b 0x144a2 0x90660 *
-    mapwrite 0x204d5 0x140a0 0x927c0 *
-    copy_range 0x1f72c 0x137d0 0x7a906 0x927c0 *
-    read 0 0x9157c 0x9157c
-
-on cifs with the default cache option.
-
-It shows folio 0x24 misbehaving if the FMODE_READ check is commented out in
-netfs_perform_write():
-
-                if (//(file->f_mode & FMODE_READ) ||
-                    netfs_is_cache_enabled(ctx)) {
-
-and no fscache.  This was initially found with the generic/522 xfstest.
-
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-16-dhowells@redhat.com
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
+Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Link: https://patch.msgid.link/20260501071058.1243245-1-zenghongling@kylinos.cn
+Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/jfs/namei.c      | 2 +-
+ fs/orangefs/namei.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index ebd84a6cc3f09..51f844bfbdff6 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -395,6 +395,7 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- {
- 	struct netfs_io_request *rreq;
- 	struct address_space *mapping = folio->mapping;
-+	struct netfs_group *group = netfs_folio_group(folio);
- 	struct netfs_folio *finfo = netfs_folio_info(folio);
- 	struct netfs_inode *ctx = netfs_inode(mapping->host);
- 	struct folio *sink = NULL;
-@@ -461,6 +462,12 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 60c4a0e0fca5e..442d626792622 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -309,7 +309,7 @@ static struct dentry *jfs_mkdir(struct mnt_idmap *idmap, struct inode *dip,
+       out1:
  
- 	ret = netfs_wait_for_read(rreq);
- 	if (ret >= 0) {
-+		if (group)
-+			folio_change_private(folio, group);
-+		else
-+			folio_detach_private(folio);
-+		kfree(finfo);
-+		trace_netfs_folio(folio, netfs_folio_trace_filled_gaps);
- 		flush_dcache_folio(folio);
- 		folio_mark_uptodate(folio);
- 	}
-@@ -496,10 +503,8 @@ int netfs_read_folio(struct file *file, struct folio *folio)
- 	struct netfs_inode *ctx = netfs_inode(mapping->host);
- 	int ret;
+ 	jfs_info("jfs_mkdir: rc:%d", rc);
+-	return ERR_PTR(rc);
++	return rc ? ERR_PTR(rc) : NULL;
+ }
  
--	if (folio_test_dirty(folio)) {
--		trace_netfs_folio(folio, netfs_folio_trace_read_gaps);
-+	if (folio_test_dirty(folio))
- 		return netfs_read_gaps(file, folio);
--	}
+ /*
+diff --git a/fs/orangefs/namei.c b/fs/orangefs/namei.c
+index bec5475de094d..75e65e72c2d64 100644
+--- a/fs/orangefs/namei.c
++++ b/fs/orangefs/namei.c
+@@ -362,7 +362,7 @@ static struct dentry *orangefs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	__orangefs_setattr(dir, &iattr);
+ out:
+ 	op_release(new_op);
+-	return ERR_PTR(ret);
++	return ret ? ERR_PTR(ret) : NULL;
+ }
  
- 	_enter("%lx", folio->index);
- 
+ static int orangefs_rename(struct mnt_idmap *idmap,
 -- 
 2.53.0
 
