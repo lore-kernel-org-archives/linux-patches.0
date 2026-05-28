@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F195A338936;
-	Thu, 28 May 2026 19:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFFD3E63AA;
+	Thu, 28 May 2026 19:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998305; cv=none; b=j+KAQnvrdOap3waeVsUCe6BHWprazDSbTI6CiIZ035FwYzm83XdDo+vpU6LR2uIuzVpXhrf8MEec3OXp9XjfoA/ieNKFKFWwg1kWiLMsm/s8dvNDf0SRb+qsAEf7qgJbNKQTyfz6JtBH8iEQwMwy6M5UeUg8CqspK76eSnenjHw=
+	t=1779998308; cv=none; b=r6o7dAjmtczskIis3Tn+BBpQneg1/XXCuFtfk+bTB4AgmldgUPjfK3LJrtTgSI1CS1qIscOvJBlxqu1J+I89vZ4fOO5TmlHIuwpaAYGKmEhIxZc68k2wKVKfEBG06eymjwVT9cUle8U8npvSoOQJ2RUwVAPBCDSxew04Y65JQhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998305; c=relaxed/simple;
-	bh=AdGkPFnwullxNYUh6sDEHosjGwGJsvUxIXpOV5ZwVeA=;
+	s=arc-20240116; t=1779998308; c=relaxed/simple;
+	bh=iZpFOaNfsMOfkJarLL7K4Y8phwtzRQ36FSt/sY5KxO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZYJ3Lnom70+BCH5XG2yKrQD+9QOI4ryRw88h9FEPajxTw8YweraWr7iK0b9PQ1ATHh9JNiyuezxfNjNIkrRWaYmOdV7UNwEcHfMtRvmVY1zcS0iC87EC3ycNnwTntG7yUMkc1jVlwSMfe7L0u1QzSdr8dl3qVt3+LMk0Al8SMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VUSBy92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a0Kcs0y330tjVgc9OycVXHK7eKVseDnNiYLJzAf+NZhpYFu9NZK3SyvOzIlWMVliasVv92Toasc2bf9yqE+Do9xOMunU4aG8wArvNKqNARPKiI7fmAXW8CtRGy/33rWQ1OZ8KtiI8JMiSrvgpfjodDsM3uHu0RwdlG/ulS2AFK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdrsFCpI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VUSBy92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEB21F000E9;
-	Thu, 28 May 2026 19:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdrsFCpI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292FB1F000E9;
+	Thu, 28 May 2026 19:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998304;
-	bh=3BRLXEL8gs5krS1+RsYLG19AHl0fUXKUIvLLCfW7i14=;
+	s=korg; t=1779998307;
+	bh=f5ci2Wf8WDfx70/VvHTpdYA0dKj3F11ZBc2uPJQ57DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1VUSBy92lgjXNoDIVL9PsnkN6h8Yw5R7sSPilpISZ5eQfddQotpILG3S2IXvurD0D
-	 m90OZDgwE+tBEY8Au6GiKlci7J+zw6JY5LakfMclsUeT0pCv/J88YbS3zA/iave0iJ
-	 t6j2zjn6PiTnfzvmTXSRsz1MWdmQOPsl8hmtsqGg=
+	b=tdrsFCpIS1GVMYGOp8T/IHfAlTzHT0rEG+TAdQG5LJQDQWWga9iseTipAYtvVA8IN
+	 ty7R4M2QlqcVlCiqL9oR4XaXTI3QeO8JxUynoXMWXbHKsVmOXaCAq43yGh6/c5Qjsd
+	 mRxuKREp02efmdbrDA20gylItAuUn12M3C5m0q1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Tseng <henrytseng@qnap.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.0 127/461] cpufreq: intel_pstate: Use correct scaling factor on Raptor Lake-E
-Date: Thu, 28 May 2026 21:44:16 +0200
-Message-ID: <20260528194650.662211890@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 7.0 128/461] device property: set fwnode->secondary to NULL in fwnode_init()
+Date: Thu, 28 May 2026 21:44:17 +0200
+Message-ID: <20260528194650.692060658@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,45 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 0e7c710478b3089cdfe8669347f77b163e836c4f upstream.
+commit 215c90ee656114f5e8c32408228d97082f8e0eef upstream.
 
-Raptor Lake-E has the same processor ID as Raptor Lake-S, so there is
-an entry in intel_hybrid_scaling_factor[] for it.  It does not contain
-E-cores though and hybrid_get_cpu_type() returns 0 for its P-cores, so
-they get the default "core" scaling factor.  However, the original
-Raptor Lake scaling factor for P-cores still needs to be used for
-mapping the HWP performance levels of the P-cores in Raptor Lake-E to
-frequency, as though they were part of a real hybrid system.
+If a firmware node is allocated on the stack (for instance: temporary
+software node whose life-time we control) or on the heap - but using a
+non-zeroing allocation function - and initialized using fwnode_init(),
+its secondary pointer will contain uninitalized memory which likely will
+be neither NULL nor IS_ERR() and so may end up being dereferenced (for
+example: in dev_to_swnode()). Set fwnode->secondary to NULL on
+initialization.
 
-To address this, update hwp_get_cpu_scaling() to return
-hybrid_scaling_factor, which is the P-core scaling factor
-retrieved from intel_hybrid_scaling_factor[], for all CPUs
-that are not enumerated as E-cores.
-
-Fixes: 9b18d536b124 ("cpufreq: intel_pstate: Use CPPC to get scaling factors")
-Link: https://lore.kernel.org/all/20260511235328.2018458-1-srinivas.pandruvada@linux.intel.com/
-Reported-by: Henry Tseng <henrytseng@qnap.com>
-Closes: https://lore.kernel.org/linux-pm/20260508063032.3248602-1-henrytseng@qnap.com/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/4523296.ejJDZkT8p0@rafael.j.wysocki
+Cc: stable <stable@kernel.org>
+Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/20260506115701.23035-1-bartosz.golaszewski@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/fwnode.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2279,7 +2279,7 @@ static int hwp_get_cpu_scaling(int cpu)
- 		 * Return the hybrid scaling factor for P-cores and use the
- 		 * default core scaling for E-cores.
- 		 */
--		if (hybrid_get_cpu_type(cpu) == INTEL_CPU_TYPE_CORE)
-+		if (hybrid_get_cpu_type(cpu) != INTEL_CPU_TYPE_ATOM)
- 			return hybrid_scaling_factor;
- 
- 		return core_get_scaling();
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -208,6 +208,7 @@ struct fwnode_operations {
+ static inline void fwnode_init(struct fwnode_handle *fwnode,
+ 			       const struct fwnode_operations *ops)
+ {
++	fwnode->secondary = NULL;
+ 	fwnode->ops = ops;
+ 	INIT_LIST_HEAD(&fwnode->consumers);
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
 
 
