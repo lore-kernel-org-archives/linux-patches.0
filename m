@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFD2318B9D;
-	Thu, 28 May 2026 20:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BFF2459DD;
+	Thu, 28 May 2026 20:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001205; cv=none; b=KIVPkNrgAmCYF99KThCDClpMmDEIm8a/2iHDxvArvjhFX+joOmhcC4kriYKu6sBSQ0QO9ebRzqn/adBTzXTFGtIiVvgodgIkKWVzJAd28xwY1R/X2nILNJSRJ0yn13vWuEaY+nI+Wlzxc9cixB/gbG1QT7CHqeMfNPqY6EMxiTA=
+	t=1780001207; cv=none; b=h14fGRoyZJAviujVYR3GEhYUPNqZBTuUej2aeWChpNJ7UCefBkAKNYYN72bQ76P4zyKFojSsXsJTuRjprrwTdhI8LVbf4ncJ0KhbfJKsOytNWrpBV/TmK5QEAL6qNBtx0XJTCWzCHerZjvPwMO0ji6B1lzWLzAJXgqn2bM144+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001205; c=relaxed/simple;
-	bh=aXKzdbU8IdvmNb0WBJDItqh0LQIAy8Kf11mGgKY3Kr8=;
+	s=arc-20240116; t=1780001207; c=relaxed/simple;
+	bh=0PbYREHYDmshUC/D+nHme0TLSq+keC4ACJ9x9xdnYvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyM9IeI1SR39BQipmmXd5quC23eTd/WcIJZ0TEBnGfP4hr8PWdzANMi5E+lDDcBmMNtSQPsSsqYec5oyT9msXPLeRc/lmcc1hg0gXgrPSiknriyODL1KWrQ1Y6DBZHc8J7sb2IQnwAyQfrcGO6YvkegYMnTLuEF8TSiyLjtY+Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfOnP6PS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NvZHwhc/432DF5T1pcBwQLanU6x2lnngoXTiC1d9n1/wiANlbNhs5XMIjMzCu1g48/6Dv2H1EIZhgh1J5nB3s/alARIvx2I4JNcj+xFEA39k0+xXTQtNRcDSVbN9R4K+mwhvJxQFg3BeQHrG4vMHdAX6/GqDebYAyAhIEqmH20M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRAyPEDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfOnP6PS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619B31F000E9;
-	Thu, 28 May 2026 20:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRAyPEDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249741F000E9;
+	Thu, 28 May 2026 20:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001203;
-	bh=Km9APm/ynSMiqNeUVZGg/q0HcAvnqVjTw8EFy9lX3CI=;
+	s=korg; t=1780001206;
+	bh=p+hqb8iZWGMtlvkFriD61w/w5mn3ya6LkQ16AMxEBTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfOnP6PSyiU8askfjUpRxSCiaN2114iSQsMnFbJhxOE5TOsjPn15en1c3xCFPgYI7
-	 R2Jb3IcyUPHP7Ls5ID0oMNeXX3dOM/qJ6gNRTTFNoFn3kUwWDDNgDEJgvPAAgVOtDk
-	 tJQSp2WRYG7Hm9TIGO0KpBAS891BCAmsFXtyB1I4=
+	b=BRAyPEDjJvAnj+YHvoHpPuNmMEVUyOs0YqRWVsG2M2LdldqpkJeQlSbBWstsV26MU
+	 aLyo8kUDHsiz+fUwFJ+qk3jU6WtlQq2wVblNo0f2Su3CUj5ja/BxwRZyeKIDFRzR9v
+	 ppG8wJtBeaoi3w++XvLE3l1RD1j2goRLp6Ub5x0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Haoze Xie <royenheart@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 044/186] netfilter: ip6t_hbh: reject oversized option lists
-Date: Thu, 28 May 2026 21:48:44 +0200
-Message-ID: <20260528194930.154938696@linuxfoundation.org>
+Subject: [PATCH 6.6 045/186] netfilter: nf_queue: hold bridge skb->dev while queued
+Date: Thu, 28 May 2026 21:48:45 +0200
+Message-ID: <20260528194930.183198855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -56,51 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 4322dcde6b4173c2d8e8e6118ed290794263bcc8 upstream.
+commit e196115ec330a18de415bdb9f5071aa9f08e53ce upstream.
 
-struct ip6t_opts stores at most IP6T_OPTS_OPTSNR option descriptors,
-but hbh_mt6_check() does not reject larger optsnr values supplied from
-userspace.
+br_pass_frame_up() rewrites skb->dev from the ingress port to the bridge
+master before queueing bridge LOCAL_IN packets. NFQUEUE only holds
+references on state.in/out and bridge physdevs, so a queued bridge
+packet can retain a freed bridge master in skb->dev until reinjection.
 
-Validate optsnr in the rule setup path so only match data that fits the
-fixed-size opts array can be installed. This follows the existing xtables
-pattern of rejecting invalid user-provided counts in checkentry() and
-keeps the packet matching path unchanged.
+When the verdict is reinjected later, br_netif_receive_skb() re-enters
+the receive path with skb->dev still pointing at the freed bridge master,
+triggering a use-after-free.
 
-`struct ip6t_opts` has a fixed `opts[IP6T_OPTS_OPTSNR]` array,
-where `IP6T_OPTS_OPTSNR` is 16, then off-by-one array access is possible:
+Store skb->dev in the queue entry, hold a reference on it for the queue
+lifetime, and use the saved device when dropping queued packets during
+NETDEV_DOWN handling.
 
-[  137.924693][ T8692] UBSAN: array-index-out-of-bounds in ../net/ipv6/netfilter/ip6t_hbh.c:110:29
-[  137.926167][ T8692] index 16 is out of range for type '__u16 [16]'
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ac2863445686 ("netfilter: bridge: add nf_afinfo to enable queuing to userspace")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/ip6t_hbh.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/netfilter/nf_queue.h |    1 +
+ net/netfilter/nf_queue.c         |    4 +++-
+ net/netfilter/nfnetlink_queue.c  |    2 ++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/netfilter/ip6t_hbh.c
-+++ b/net/ipv6/netfilter/ip6t_hbh.c
-@@ -168,6 +168,10 @@ static int hbh_mt6_check(const struct xt
- 		pr_debug("unknown flags %X\n", optsinfo->invflags);
- 		return -EINVAL;
- 	}
-+	if (optsinfo->optsnr > IP6T_OPTS_OPTSNR) {
-+		pr_debug("too many supported opts specified\n");
-+		return -EINVAL;
-+	}
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -12,6 +12,7 @@
+ struct nf_queue_entry {
+ 	struct list_head	list;
+ 	struct sk_buff		*skb;
++	struct net_device	*skb_dev;
+ 	unsigned int		id;
+ 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+--- a/net/netfilter/nf_queue.c
++++ b/net/netfilter/nf_queue.c
+@@ -60,6 +60,7 @@ static void nf_queue_entry_release_refs(
+ 	struct nf_hook_state *state = &entry->state;
  
- 	if (optsinfo->flags & IP6T_OPTS_NSTRICT) {
- 		pr_debug("Not strict - not implemented");
+ 	/* Release those devices we held, or Alexey will kill me. */
++	dev_put(entry->skb_dev);
+ 	dev_put(state->in);
+ 	dev_put(state->out);
+ 	if (state->sk)
+@@ -101,6 +102,7 @@ bool nf_queue_entry_get_refs(struct nf_q
+ 	if (state->sk && !refcount_inc_not_zero(&state->sk->sk_refcnt))
+ 		return false;
+ 
++	dev_hold(entry->skb_dev);
+ 	dev_hold(state->in);
+ 	dev_hold(state->out);
+ 
+@@ -201,11 +203,11 @@ static int __nf_queue(struct sk_buff *sk
+ 
+ 	*entry = (struct nf_queue_entry) {
+ 		.skb	= skb,
++		.skb_dev = skb->dev,
+ 		.state	= *state,
+ 		.hook_index = index,
+ 		.size	= sizeof(*entry) + route_key_size,
+ 	};
+-
+ 	__nf_queue_entry_init_physdevs(entry);
+ 
+ 	if (!nf_queue_entry_get_refs(entry)) {
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -972,6 +972,8 @@ dev_cmp(struct nf_queue_entry *entry, un
+ 	if (physinif == ifindex || physoutif == ifindex)
+ 		return 1;
+ #endif
++	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
++		return 1;
+ 	if (entry->state.in)
+ 		if (entry->state.in->ifindex == ifindex)
+ 			return 1;
 
 
