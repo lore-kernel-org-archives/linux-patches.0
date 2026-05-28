@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16D324A047;
-	Thu, 28 May 2026 20:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB2257855;
+	Thu, 28 May 2026 20:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999317; cv=none; b=Gxa3tRB1MfdTw1z9t73oiiTtQgvONkcuitC3V+240KHqXDaw+Hz/nWaE7T3rlQOY/sbuV7f34k/rDYeYM7SEXiuG7dTxpC++KseZQ895U1WW0fq+BqbLqGbjAfvbWuCXhARiJSIA668wd7Nlz/c6kRWlYPPqTyiwm7SYQeuA2+8=
+	t=1779999320; cv=none; b=d9fbaSWOrxUIuIE72et0dqtYsK6PpHUMp/EpuPNhoeLhX0jh78IV4LtRFRxYFJJwhOMOlPN9ypWeDVJhse6U/bxWRCqIV5teIiFZiq0WV6ZLiy1O3kn4v3ku7fInnSe/XV16HjxCUH8oQm0YtXRFbenbqhoXpZr7iaJt3DcrA7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999317; c=relaxed/simple;
-	bh=9fBUKsUKP6oAMFQ34XrmI8ddWhLT9WBarDE1scUL84M=;
+	s=arc-20240116; t=1779999320; c=relaxed/simple;
+	bh=UH4Sz9wdYB6F00kxoyARpf+H9rA5SDx95mniN7MQN4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXrMo9+fUSw9sE+Z5qpR/Zbibs+ZNFbSBtqLzOLwrWVpXt6eV+kjDcM3RBpOTeXDPadv5xyqpazsBNoZyVxWwZYaLCCSTmJvzTmLTazQ7jouPmRKi6Q9lasZRjGCzK25mfDbU066o5brOEjqhcAUCCLjo4vI2qpbUhf1RvanoIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXeyUHvr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NkKvOMiMr/B3MHH7MMWC56XPyNsR7OqqVdvVydMAmPU7B5w28dLJ86M4j7F7Kd7mSQk39unqKR1X97H9225D6UfSq7PhcBjimk5js7osfjr1BX5gERwe1TjAS2hPeUWwczXoJNRrg0URi9+esjvX8JIBKPC6Y2xaA4vAOIO5B5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvFIwnaP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXeyUHvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CD1F000E9;
-	Thu, 28 May 2026 20:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvFIwnaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15931F000E9;
+	Thu, 28 May 2026 20:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999316;
-	bh=9ub8qTyuO1ZglknRrhSCxj3Ttf5IApNx+Ef4aOgZTPI=;
+	s=korg; t=1779999319;
+	bh=L260MgSoE5/qqJ42/caDlKmfNy17EtqFBvvRwSmPsnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VXeyUHvrZbXalrgfTQ6ol6kfCcq1k4ryHd5WDqua3iAw9Zv9cDitZuBYZVMBFRSkj
-	 jhM5yp9uJx/ENcwbce0OLtEa4XfTnuJwDzuG8HUjlshx1rmr2LakPn7Zkr9km/gZ66
-	 T3bqSRmuJaUhYYhxNCvnqibfhpx7igxa5W7DCOUk=
+	b=BvFIwnaPCaPUJkdF4bwcY2kwGqg+fin9NSCQ/YVxUNAR1SXk9Mc/RSap5l68x6tn8
+	 EjNZorR2rh0aP/TzvUpytW5fl1fmJU+gOD93tDJ9bGMp1om9uzb7QDDFU0B5vRD0QK
+	 ytv/etZfndCRenWpAmjuaNa9le4FLaVcsXUlAzww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	syzbot+fcede535e7eb57cf5b43@syzkaller.appspotmail.com,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/377] drm/vkms: Convert to DRMs vblank timer
-Date: Thu, 28 May 2026 21:44:21 +0200
-Message-ID: <20260528194639.057415498@linuxfoundation.org>
+Subject: [PATCH 6.18 024/377] drm/atomic: Increase timeout in drm_atomic_helper_wait_for_vblanks()
+Date: Thu, 28 May 2026 21:44:22 +0200
+Message-ID: <20260528194639.086627873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -47,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -55,172 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 02e2681ffe1addde1fc8c35d05657b16bfa79613 ]
+[ Upstream commit 79ae8510b5b81b9500370f89c619b50ca9c0990f ]
 
-Replace vkms' vblank timer with the DRM implementation. The DRM
-code is identical in concept, but differs in implementation.
+Increase the timeout for vblank events from 100 ms to 1000 ms. This
+is the same fix as in commit f050da08a4ed ("drm/vblank: Increase
+timeout in drm_wait_one_vblank()") for another vblank timeout.
 
-Vblank timers are covered in vblank helpers and initializer macros,
-so remove the corresponding hrtimer in struct vkms_output. The
-vblank timer calls vkms' custom timeout code via handle_vblank_timeout
-in struct drm_crtc_helper_funcs.
+After merging generic DRM vblank timers [1] and converting several
+DRM drivers for virtual hardware, these drivers synchronize their
+vblank events to the display refresh rate. This can trigger timeouts
+within the DRM framework.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20250916083816.30275-4-tzimmermann@suse.de
+Link: https://lore.kernel.org/dri-devel/20250904145806.430568-1-tzimmermann@suse.de/ # [1]
+Reported-by: syzbot+fcede535e7eb57cf5b43@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/dri-devel/69381d6c.050a0220.4004e.0017.GAE@google.com/
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
+Link: https://patch.msgid.link/20251209143325.102056-1-tzimmermann@suse.de
 Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_crtc.c | 83 +++-----------------------------
- drivers/gpu/drm/vkms/vkms_drv.h  |  2 -
- 2 files changed, 7 insertions(+), 78 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms_crtc.c
-index e60573e0f3e95..bd79f24686dce 100644
---- a/drivers/gpu/drm/vkms/vkms_crtc.c
-+++ b/drivers/gpu/drm/vkms/vkms_crtc.c
-@@ -7,25 +7,18 @@
- #include <drm/drm_managed.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_vblank.h>
-+#include <drm/drm_vblank_helper.h>
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index bbec1c184f652..b06a5cba52958 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -1913,7 +1913,7 @@ drm_atomic_helper_wait_for_vblanks(struct drm_device *dev,
+ 		ret = wait_event_timeout(dev->vblank[i].queue,
+ 					 state->crtcs[i].last_vblank_count !=
+ 						drm_crtc_vblank_count(crtc),
+-					 msecs_to_jiffies(100));
++					 msecs_to_jiffies(1000));
  
- #include "vkms_drv.h"
- 
--static enum hrtimer_restart vkms_vblank_simulate(struct hrtimer *timer)
-+static bool vkms_crtc_handle_vblank_timeout(struct drm_crtc *crtc)
- {
--	struct vkms_output *output = container_of(timer, struct vkms_output,
--						  vblank_hrtimer);
--	struct drm_crtc *crtc = &output->crtc;
-+	struct vkms_output *output = drm_crtc_to_vkms_output(crtc);
- 	struct vkms_crtc_state *state;
--	u64 ret_overrun;
- 	bool ret, fence_cookie;
- 
- 	fence_cookie = dma_fence_begin_signalling();
- 
--	ret_overrun = hrtimer_forward_now(&output->vblank_hrtimer,
--					  output->period_ns);
--	if (ret_overrun != 1)
--		pr_warn("%s: vblank timer overrun\n", __func__);
--
- 	spin_lock(&output->lock);
- 	ret = drm_crtc_handle_vblank(crtc);
- 	if (!ret)
-@@ -57,55 +50,6 @@ static enum hrtimer_restart vkms_vblank_simulate(struct hrtimer *timer)
- 
- 	dma_fence_end_signalling(fence_cookie);
- 
--	return HRTIMER_RESTART;
--}
--
--static int vkms_enable_vblank(struct drm_crtc *crtc)
--{
--	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
--	struct vkms_output *out = drm_crtc_to_vkms_output(crtc);
--
--	hrtimer_setup(&out->vblank_hrtimer, &vkms_vblank_simulate, CLOCK_MONOTONIC,
--		      HRTIMER_MODE_REL);
--	out->period_ns = ktime_set(0, vblank->framedur_ns);
--	hrtimer_start(&out->vblank_hrtimer, out->period_ns, HRTIMER_MODE_REL);
--
--	return 0;
--}
--
--static void vkms_disable_vblank(struct drm_crtc *crtc)
--{
--	struct vkms_output *out = drm_crtc_to_vkms_output(crtc);
--
--	hrtimer_cancel(&out->vblank_hrtimer);
--}
--
--static bool vkms_get_vblank_timestamp(struct drm_crtc *crtc,
--				      int *max_error, ktime_t *vblank_time,
--				      bool in_vblank_irq)
--{
--	struct vkms_output *output = drm_crtc_to_vkms_output(crtc);
--	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
--
--	if (!READ_ONCE(vblank->enabled)) {
--		*vblank_time = ktime_get();
--		return true;
--	}
--
--	*vblank_time = READ_ONCE(output->vblank_hrtimer.node.expires);
--
--	if (WARN_ON(*vblank_time == vblank->time))
--		return true;
--
--	/*
--	 * To prevent races we roll the hrtimer forward before we do any
--	 * interrupt processing - this is how real hw works (the interrupt is
--	 * only generated after all the vblank registers are updated) and what
--	 * the vblank core expects. Therefore we need to always correct the
--	 * timestampe by one frame.
--	 */
--	*vblank_time -= output->period_ns;
--
- 	return true;
- }
- 
-@@ -159,9 +103,7 @@ static const struct drm_crtc_funcs vkms_crtc_funcs = {
- 	.reset                  = vkms_atomic_crtc_reset,
- 	.atomic_duplicate_state = vkms_atomic_crtc_duplicate_state,
- 	.atomic_destroy_state   = vkms_atomic_crtc_destroy_state,
--	.enable_vblank		= vkms_enable_vblank,
--	.disable_vblank		= vkms_disable_vblank,
--	.get_vblank_timestamp	= vkms_get_vblank_timestamp,
-+	DRM_CRTC_VBLANK_TIMER_FUNCS,
- 	.get_crc_sources	= vkms_get_crc_sources,
- 	.set_crc_source		= vkms_set_crc_source,
- 	.verify_crc_source	= vkms_verify_crc_source,
-@@ -213,18 +155,6 @@ static int vkms_crtc_atomic_check(struct drm_crtc *crtc,
- 	return 0;
- }
- 
--static void vkms_crtc_atomic_enable(struct drm_crtc *crtc,
--				    struct drm_atomic_state *state)
--{
--	drm_crtc_vblank_on(crtc);
--}
--
--static void vkms_crtc_atomic_disable(struct drm_crtc *crtc,
--				     struct drm_atomic_state *state)
--{
--	drm_crtc_vblank_off(crtc);
--}
--
- static void vkms_crtc_atomic_begin(struct drm_crtc *crtc,
- 				   struct drm_atomic_state *state)
- 	__acquires(&vkms_output->lock)
-@@ -265,8 +195,9 @@ static const struct drm_crtc_helper_funcs vkms_crtc_helper_funcs = {
- 	.atomic_check	= vkms_crtc_atomic_check,
- 	.atomic_begin	= vkms_crtc_atomic_begin,
- 	.atomic_flush	= vkms_crtc_atomic_flush,
--	.atomic_enable	= vkms_crtc_atomic_enable,
--	.atomic_disable	= vkms_crtc_atomic_disable,
-+	.atomic_enable	= drm_crtc_vblank_atomic_enable,
-+	.atomic_disable	= drm_crtc_vblank_atomic_disable,
-+	.handle_vblank_timeout = vkms_crtc_handle_vblank_timeout,
- };
- 
- struct vkms_output *vkms_crtc_init(struct drm_device *dev, struct drm_plane *primary,
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.h b/drivers/gpu/drm/vkms/vkms_drv.h
-index 8013c31efe3b1..fb9711e1c6fbd 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.h
-+++ b/drivers/gpu/drm/vkms/vkms_drv.h
-@@ -215,8 +215,6 @@ struct vkms_output {
- 	struct drm_crtc crtc;
- 	struct drm_writeback_connector wb_connector;
- 	struct drm_encoder wb_encoder;
--	struct hrtimer vblank_hrtimer;
--	ktime_t period_ns;
- 	struct workqueue_struct *composer_workq;
- 	spinlock_t lock;
- 
+ 		WARN(!ret, "[CRTC:%d:%s] vblank wait timed out\n",
+ 		     crtc->base.id, crtc->name);
 -- 
 2.53.0
 
