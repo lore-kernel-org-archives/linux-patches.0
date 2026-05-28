@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13ABB33CE8A;
-	Thu, 28 May 2026 20:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BE23254A8;
+	Thu, 28 May 2026 20:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999242; cv=none; b=t3DJnJ0mKy2Xj14Zmo7TlzK+nQgVxVoiklDXSZ8CQneAOQ+DUWUB+BzkVddRnMGn2NlVB3JnjqYNxTSou3tNdHvYrMkoBqYMonrPIDaMgLWJc3nDUTsAC+g6qKfaJUJvk9QeXFwxk/T4oL+brKrXEckZE7XbWJaGuK1b0FmlyYk=
+	t=1779999244; cv=none; b=YXbMUkk6O2X6NgB4zq+CnG6ANTQnoxw7c6Qd2YcHzWGfFWtjmYnXnLDZp+XhltTrLaSOplHAqYTAPZKS4jNPBF3UO7RmM2BGm5wU0BWX9oKA7k/j0fxSzf8Mz+hxAdevK/g2pLW+xt6p9fW0AustMWi5jTeLWeIDuD7sGL3rTFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999242; c=relaxed/simple;
-	bh=M1YLri2ABMydREqkz8nYd4YNeN+7p0NB3rNrBT62O6U=;
+	s=arc-20240116; t=1779999244; c=relaxed/simple;
+	bh=I80hdjl6n5beXAFJClYf9TXOASO6qduk/xqUlfqKmhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPUHrYmnPhoryD9vp1Yc3PpwDgNKZihQZaiLPNZW6M60DKtVUCT26ZqB5Ubp2gw+uBKwkqqAB3/1iDjj2I96QnJbnWusA48Qzi5dhgEdT7tEYF0iF/Q7OKHundR/kHqNlFRKWfpjFzBa7nvqXrOJD8qG0u3byXn13hUdNlOzIkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5uAy0qf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jH8v4ZtEsQv3IGFWw151Mb3lOyCACnzu0WInsjEtcaAVd7rO9UiPUtrpHualHtzl74yaJNUAOED+ZP3GdjAT7QKAi6nIbZicyDttojDOMtrn+FxQqsN7oRXNgFKODDfnSpMo80/RLY2BSfhMY21mHCaqmG5tSbdmHOcFiiT767A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpxomfFG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5uAy0qf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447801F000E9;
-	Thu, 28 May 2026 20:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpxomfFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BCB1F000E9;
+	Thu, 28 May 2026 20:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999240;
-	bh=tePnbSJKUweS1oLA2XJd86RJBAR0QTI+wMM8rt94Il0=;
+	s=korg; t=1779999243;
+	bh=Ebn2TKDtijNATtSnETxZz2VSpy7BN9O0zpJNQeTqk/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5uAy0qf3YzUchV70OS/97WzUKuK9kH549rmTXD2W+N/7rMfCeH0PB5s7nTMEEINn
-	 EXouUH4RfENFjQhYrkcllz9yBgm7cCHysKZJptXu/i6BUTTp5AbxDxJ2RtOQ+2qQls
-	 /RpJJDhVM4M0LimLZbhC2WhmTJgeIZKv3DYTtl/4=
+	b=vpxomfFGwL4Qsf12bROtehGHB9rSbrhGvWqpD80ggRDqsRnNmn4PTUF/hh5q+HuD8
+	 dAwb9KxTB3bCKJJUPqbWsde5odd4vnKA65TI9KdajVA8XyVsLMJcPr2YHwLvXB0mB9
+	 Am/KEwA4pSopbaZTcw3An/r8XX+rRYe8p4ZLaLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 458/461] LoongArch: kprobes: Fix handling of fatal unrecoverable recursions
-Date: Thu, 28 May 2026 21:49:47 +0200
-Message-ID: <20260528194700.797873021@linuxfoundation.org>
+Subject: [PATCH 7.0 459/461] block: avoid use-after-free in disk_free_zone_resources()
+Date: Thu, 28 May 2026 21:49:48 +0200
+Message-ID: <20260528194700.827257554@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,74 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 1c856e158fd34ef2c4475a81c1dc386329989938 ]
+[ Upstream commit f6982769910ecddabdb5b8b9afdab0bb8b6668ac ]
 
-KPROBE_HIT_SS and KPROBE_REENTER are two types of fatal recursions that
-can not be safely recovered in kprobes.
+The function disk_update_zone_resources() may call
+disk_free_zone_resources() in case of error, and following this,
+blk_revalidate_disk_zones() will again calls disk_free_zone_resources() if
+disk_update_zone_resources() failed. If a zone worker thread is being used
+(which is the default for a rotational media zoned device),
+disk_free_zone_resources() will try to stop the zone worker thread twice
+because disk->zone_wplugs_worker is not reset to NULL when the worker
+thread is stopped the first time.
 
-KPROBE_HIT_SS means that a kprobe is hit during single-stepping. At
-this point, the architecture-specific single-step context is already
-active. Nested single-stepping would corrupt the state, as the kprobe
-control block (kcb) and hardware registers cannot safely store multiple
-levels of stepping state.
+In disk_free_zone_resources(), fix this by correctly clearing
+disk->zone_wplugs_worker to NULL when the worker thread is stopped.
 
-KPROBE_REENTER means that a third-level recursion occurs when a probe
-is hit while the system is already handling a nested probe (second-
-level). The kcb only provides a single slot (prev_kprobe) to backup the
-state. When a third probe is hit, there is no more space to save the
-state without corrupting the first-level backup.
+And while at it, since disk_free_zone_resources() is always called after a
+failed call to disk_update_zone_resources(), remove the unnecessary call
+to disk_free_zone_resources() in disk_update_zone_resources().
 
-Kprobes work by replacing instructions with breakpoints. In order to
-execute the original instruction and continue, it must be moved to a
-temporary "single-step" slot. Since there is no backup space left to
-set up this slot safely, the CPU would be forced to return to the same
-original breakpoint address, triggering an endless loop.
-
-Currently, the code only prints a warning and returns. This leads to
-an infinite re-entry loop as the CPU repeatedly hits the same trap and
-a "stuck" CPU core because preemption was disabled at the start of the
-handler and never re-enabled in this early return path.
-
-Fix the logic by:
-1. Merging KPROBE_HIT_SS and KPROBE_REENTER cases, as both represent
-   fatal recursions that cannot be safely recovered.
-2. Replacing WARN_ON_ONCE() with BUG() to terminate the system. This
-   aligns LoongArch with other architectures (x86, arm64, riscv) and
-   prevents stack overflow while providing diagnostic information.
-
-Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 1365b6904fd0 ("block: allow submitting all zone writes from a single context")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260522115622.588535-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/kprobes.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-zoned.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/loongarch/kernel/kprobes.c b/arch/loongarch/kernel/kprobes.c
-index 04b5b05715cdc..1985ed30dd16f 100644
---- a/arch/loongarch/kernel/kprobes.c
-+++ b/arch/loongarch/kernel/kprobes.c
-@@ -186,16 +186,16 @@ static bool reenter_kprobe(struct kprobe *p, struct pt_regs *regs,
- 			   struct kprobe_ctlblk *kcb)
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index af724ce650801..fe29fe4b6dccc 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -2016,8 +2016,10 @@ static void disk_set_zones_cond_array(struct gendisk *disk, u8 *zones_cond)
+ 
+ void disk_free_zone_resources(struct gendisk *disk)
  {
- 	switch (kcb->kprobe_status) {
--	case KPROBE_HIT_SS:
- 	case KPROBE_HIT_SSDONE:
- 	case KPROBE_HIT_ACTIVE:
- 		kprobes_inc_nmissed_count(p);
- 		setup_singlestep(p, regs, kcb, 1);
- 		break;
-+	case KPROBE_HIT_SS:
- 	case KPROBE_REENTER:
- 		pr_warn("Failed to recover from reentered kprobes.\n");
- 		dump_kprobe(p);
--		WARN_ON_ONCE(1);
-+		BUG();
- 		break;
- 	default:
- 		WARN_ON(1);
+-	if (disk->zone_wplugs_worker)
++	if (disk->zone_wplugs_worker) {
+ 		kthread_stop(disk->zone_wplugs_worker);
++		disk->zone_wplugs_worker = NULL;
++	}
+ 	WARN_ON_ONCE(!list_empty(&disk->zone_wplugs_list));
+ 
+ 	if (disk->zone_wplugs_wq) {
+@@ -2150,9 +2152,6 @@ static int disk_update_zone_resources(struct gendisk *disk,
+ 	ret = queue_limits_commit_update(q, &lim);
+ 
+ unfreeze:
+-	if (ret)
+-		disk_free_zone_resources(disk);
+-
+ 	blk_mq_unfreeze_queue(q, memflags);
+ 
+ 	return ret;
 -- 
 2.53.0
 
