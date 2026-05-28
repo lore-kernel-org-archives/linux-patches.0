@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBDE35C1B2;
-	Thu, 28 May 2026 20:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F060A33B6FC;
+	Thu, 28 May 2026 20:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000766; cv=none; b=k/zew1MqWRoxB4zl4m2ghKClQj6o6nA1RYAQzCf/MfODG+vSKUv7WChpdr8CvXC8TCp8sJ4UjEeZ7FN+WFBXZ0s9cou44nqqyW9LtGn0ZVjxmwBPCk0WH5jKRUH90sV75zZkxzBUoorykE/hcpGf+R0engcSWqrFjlUlXQuhRic=
+	t=1780000767; cv=none; b=SeKOorxCywwXQzlSbN5kJpdNfH4kc6bI3vCpnRb4NB/Uv8Qrlc+cyN2TI0WpuoOV/48ejdt3K2oadOSZ0r0XTM6xyqx9aWY7hvSCMUKJDz5y7yhMdGtitKCr86niM6fhK6AcQ9Gq7mKT7s/Kp07NVSxyEMbkeKQs/zLIuNC+YjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000766; c=relaxed/simple;
-	bh=6NnDDXtCnOD+0wEWBDuH2c3T5ebEIH43OOanoQ+IAtE=;
+	s=arc-20240116; t=1780000767; c=relaxed/simple;
+	bh=ZpV4AJEFFJ9PjlXEsd77UlAE7wt3JoH7yTlqnn12gNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDyX/RcASv1V+ANSrHMubLyxhi/6RvOYS0BA2tC1KgQga/n49fymtI7D2jrndGNCIzMdDKDAMeUcwO4zAuqFB9AtdHcaxWaWDZ1ZJdPgEhVCK3TOlS5PorlHLcrAWr/CquuNYefUfYWuOUamKg8AzHjoAWWZvYsfuVW8qG2LFZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4lH8OZ/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yr5CFfVKu9KM0LC3L00/6Qnj91kiVnjrNqOz0wTuJGyZO2ICIAbthlBw20BlBOs5wGPoZkNM9DqnG0zEyyNQBytketRIYIV8l1j3tkcqjmv+bAM3UPj7NP7jXqCGUt4Sh6273Mw8h224RySBM6IHInxgchDXNesrU/JbmnhU/oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/0AnEL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4lH8OZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7C31F000E9;
-	Thu, 28 May 2026 20:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/0AnEL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0161F00A3A;
+	Thu, 28 May 2026 20:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000764;
-	bh=G0bAvrV5mBP+5tcrvoGfq/T7j/7sQ2ZyD+Vbg3ltN6A=;
+	s=korg; t=1780000766;
+	bh=XHZY6Djb9swetTbAdxQNhzMOL6ol16cyuftgCJghoeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4lH8OZ/742ELgcTsUdAGzzg235SAMkQRV6qjjSBN+otS2lLIOOUaH968cKPRg7mN
-	 Lx8PrpinzSsx4LCQMIfCTnWYHTEUF+K6pz4Yk0lrCYEHyPpm916EXEmQ7MCioHO2VH
-	 JM4SPvdErCHfy5XwFoxGXNK0cB5CwpdwlVc3dQjk=
+	b=X/0AnEL/9QuOLIcsfLJGaFWopEQbAerbWzAL3+zCIHdgDq1wklXj0RZsmbX90CGZV
+	 fy8M4tVomAHQcsm5s8Oz3tZ+mKP2wYLQHyxr0zaQiCEYvcYPU61gDji7B1fDxyqcFz
+	 rsPVc/wzkKdjxgCJy62C+URCg9rOeVL4rT19dxCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sebastian Ene <sebastianene@google.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/272] firmware: arm_ffa: Bound PARTITION_INFO_GET_REGS copies
-Date: Thu, 28 May 2026 21:48:53 +0200
-Message-ID: <20260528194633.799142902@linuxfoundation.org>
+Subject: [PATCH 6.12 160/272] firmware: arm_ffa: Align RxTx buffer size before mapping
+Date: Thu, 28 May 2026 21:48:54 +0200
+Message-ID: <20260528194633.825086635@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,96 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 3974ea1938406f9bfa7c1f48d4e43533f447bb08 ]
+[ Upstream commit 0399e3f872ca3d78044bb715a73ea645806d2c7b ]
 
-The register-based PARTITION_INFO_GET path trusted the firmware-provided
-indices when copying partition descriptors into the caller buffer.
-Reject inconsistent counts or index progressions so the copy loop cannot
-write past the allocated array.
+Commit 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during
+RXTX_MAP") advertises PAGE_ALIGN(rxtx_bufsz) to firmware when mapping the
+buffers but the driver continues to stores the minimum FF-A buffer size
+in drv_info->rxtx_bufsz which is used elsewhere in the driver.
 
-Fixes: ba85c644ac8d ("firmware: arm_ffa: Add support for FFA_PARTITION_INFO_GET_REGS")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-6-8595ae450034@kernel.org
-(fixed cur_idx when exactly one descriptor in the first fragment)
+Align the size before storing it so that the allocation, validation and
+FFA_RXTX_MAP all use the same buffer size.
+
+Fixes: 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during RXTX_MAP")
+Cc: Sebastian Ene <sebastianene@google.com>
+Link: https://sashiko.dev/#/patchset/20260402113939.930221-1-sebastianene@google.com
+Reviewed-by: Sebastian Ene <sebastianene@google.com>
+Link: https://patch.msgid.link/20260428-ffa_fixes-v2-9-8595ae450034@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index f033bd8ee816d..521007bfa35a4 100644
+index 521007bfa35a4..f35c3a56326c7 100644
 --- a/drivers/firmware/arm_ffa/driver.c
 +++ b/drivers/firmware/arm_ffa/driver.c
-@@ -307,6 +307,12 @@ __ffa_partition_info_get(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
- #define PART_INFO_ID_MASK	GENMASK(15, 0)
- #define PART_INFO_EXEC_CXT_MASK	GENMASK(31, 16)
- #define PART_INFO_PROPS_MASK	GENMASK(63, 32)
-+#define FFA_PART_INFO_GET_REGS_FIRST_REG	3
-+#define FFA_PART_INFO_GET_REGS_REGS_PER_DESC	3
-+#define FFA_PART_INFO_GET_REGS_MAX_DESC \
-+	(((sizeof(ffa_value_t) / sizeof_field(ffa_value_t, a0)) - \
-+	  FFA_PART_INFO_GET_REGS_FIRST_REG) / \
-+	 FFA_PART_INFO_GET_REGS_REGS_PER_DESC)
- #define PART_INFO_ID(x)		((u16)(FIELD_GET(PART_INFO_ID_MASK, (x))))
- #define PART_INFO_EXEC_CXT(x)	((u16)(FIELD_GET(PART_INFO_EXEC_CXT_MASK, (x))))
- #define PART_INFO_PROPERTIES(x)	((u32)(FIELD_GET(PART_INFO_PROPS_MASK, (x))))
-@@ -314,15 +320,13 @@ static int
- __ffa_partition_info_get_regs(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
- 			      struct ffa_partition_info *buffer, int num_parts)
- {
--	u16 buf_sz, start_idx, cur_idx, count = 0, prev_idx = 0, tag = 0;
-+	u16 buf_sz, start_idx = 0, cur_idx, count = 0, tag = 0;
- 	struct ffa_partition_info *buf = buffer;
- 	ffa_value_t partition_info;
+@@ -1929,6 +1929,7 @@ static int __init ffa_init(void)
+ 			rxtx_bufsz = SZ_4K;
+ 	}
  
- 	do {
- 		__le64 *regs;
--		int idx;
--
--		start_idx = prev_idx ? prev_idx + 1 : 0;
-+		int idx, nr_desc, buf_idx;
++	rxtx_bufsz = PAGE_ALIGN(rxtx_bufsz);
+ 	drv_info->rxtx_bufsz = rxtx_bufsz;
+ 	drv_info->rx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
+ 	if (!drv_info->rx_buffer) {
+@@ -1944,7 +1945,7 @@ static int __init ffa_init(void)
  
- 		invoke_ffa_fn((ffa_value_t){
- 			      .a0 = FFA_PARTITION_INFO_GET_REGS,
-@@ -338,15 +342,28 @@ __ffa_partition_info_get_regs(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
- 			count = PARTITION_COUNT(partition_info.a2);
- 		if (!buffer || !num_parts) /* count only */
- 			return count;
-+		if (count > num_parts)
-+			return -EINVAL;
- 
- 		cur_idx = CURRENT_INDEX(partition_info.a2);
-+		if (cur_idx < start_idx || cur_idx >= count)
-+			return -EINVAL;
-+
-+		nr_desc = cur_idx - start_idx + 1;
-+		if (nr_desc > FFA_PART_INFO_GET_REGS_MAX_DESC)
-+			return -EINVAL;
-+
-+		buf_idx = buf - buffer;
-+		if (buf_idx + nr_desc > num_parts)
-+			return -EINVAL;
-+
- 		tag = UUID_INFO_TAG(partition_info.a2);
- 		buf_sz = PARTITION_INFO_SZ(partition_info.a2);
- 		if (buf_sz > sizeof(*buffer))
- 			buf_sz = sizeof(*buffer);
- 
- 		regs = (void *)&partition_info.a3;
--		for (idx = 0; idx < cur_idx - start_idx + 1; idx++, buf++) {
-+		for (idx = 0; idx < nr_desc; idx++, buf++) {
- 			union {
- 				uuid_t uuid;
- 				u64 regs[2];
-@@ -364,7 +381,7 @@ __ffa_partition_info_get_regs(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
- 			uuid_copy(&buf->uuid, &uuid_regs.uuid);
- 			regs += 3;
- 		}
--		prev_idx = cur_idx;
-+		start_idx = cur_idx + 1;
- 
- 	} while (cur_idx < (count - 1));
- 
+ 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
+ 			   virt_to_phys(drv_info->rx_buffer),
+-			   PAGE_ALIGN(rxtx_bufsz) / FFA_PAGE_SIZE);
++			   rxtx_bufsz / FFA_PAGE_SIZE);
+ 	if (ret) {
+ 		pr_err("failed to register FFA RxTx buffers\n");
+ 		goto free_pages;
 -- 
 2.53.0
 
