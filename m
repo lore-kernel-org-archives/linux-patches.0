@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF93B34F259;
-	Thu, 28 May 2026 20:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E4535AC0E;
+	Thu, 28 May 2026 20:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999842; cv=none; b=EA3Wi1HE3E/asfIN5huyl9rCrwZ5D9ZvM/OEqT9Yf388BV5Lv1R+5G5XI8BCPLkGsixFJSJedBKgNvAj9wEpnFrz3lGZJW1H4ohEUzcEzsMon8lhvkw1fPqvDpygTYR1Lc6EXXOWR2aiaGQIb8xNlyiF9FHhDl2QowCumxG7M2M=
+	t=1779999846; cv=none; b=lS5bLqAlLrg/02oFw4Odgkog5DKPiek4sDqOlMIgqXX/Y8kKiZ7Am4SAYoYqYjUCUX5GxSVTbkisfo/jowoaPSqVZy74rd5zBo+3XJisl9lTbh3jyriMpHiA1TLoQiw5M9TdCjvOidYvb4ntkHHM0ZF/BQ0DxJFNx+ajhomcGrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999842; c=relaxed/simple;
-	bh=iCYkH0BrKtXP76Zbgk3T18iEaqqCe/hUfDxM27qVGXQ=;
+	s=arc-20240116; t=1779999846; c=relaxed/simple;
+	bh=Bk6Sb8a0NvaoPtQiSs/obN/zkdIkOyiQZ1FTqQzeN5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GPyPTBJOMPGmg4FNQVhsDILmYuUHWj9WqghJotKP5eKnXmcZ8B83420bGLjXHt0R1U8qBezAJWJhTlVRA4Ux7SPFyqZZBHf7H5P/4fa7T1In52vC+zAlDqXzQYX1UzIpOtkzEMb1Ht6xftDN41aAwbuiMBEIRCu3S+MADmE5LY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWGzmdUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5Gp5gnUIStjQoE8U7XiI5q8wyxl792U+esqwr/Vz+1pODOpYVc20J8JGLjHd1Sc64bQzowjGCng/9dlpXY2VWpVo5M7ymDl9tvwb6styFiMN0fBGgxAaJbje7HYqApEBu9+M00ZQpSILRiWIFFBKXReR4/XbN16Hr+NenBkb3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHI+6AJ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWGzmdUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3899C1F00A3D;
-	Thu, 28 May 2026 20:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHI+6AJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070541F000E9;
+	Thu, 28 May 2026 20:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999841;
-	bh=1hXuXaqLn9CGGCJL7vLWbGHMw2LBdUp+c6p2+XS68Lg=;
+	s=korg; t=1779999844;
+	bh=YOpJfzsgKzIa9M4H1eshWXDH4LrQnGLNnTCFMvPI+Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWGzmdUqQIEC/SFToJHeIyKhKqVZbMVRIXPclLui2QgzgNxneaYiE9S38V4VLp6nW
-	 Vux3J+DaXV95AerjvcPttvVQQZZOYDWTYxqf0uCuOYABzhOzU4xcOR1RpAxUQlZDZh
-	 QCYXtEAFA8IaVHP6lQBsXKhqgzhnpKnwAdRBZkmM=
+	b=NHI+6AJ4hXTSOtO74nQJb3mtNEKyB+7TPrUTkAsEfGnGSNlT7ZPlBWY2x7Nsl3m0J
+	 SUmTFZjXarvQR9C7Di/GsQjPafs3jnFHyFwD7Lz66lXc1nKloysSKsh6IpYRdRhBUE
+	 ZwnHlaie51xe5Uy4xPW2n+7VKnk9hMSwDFuJxP/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 210/377] idpf: fix read_dev_clk_lock spinlock init in idpf_ptp_init()
-Date: Thu, 28 May 2026 21:47:28 +0200
-Message-ID: <20260528194644.483306621@linuxfoundation.org>
+Subject: [PATCH 6.18 211/377] ice: fix setting RSS VSI hash for E830
+Date: Thu, 28 May 2026 21:47:29 +0200
+Message-ID: <20260528194644.510356919@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -56,89 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit da4f76b6a84ede14a71282ef841768299ead0221 ]
+[ Upstream commit b3cda96feb60d91fe88d52b974ff110dcfa91239 ]
 
-In idpf_ptp_init(), read_dev_clk_lock is initialized after
-ptp_schedule_worker() had already been called (and after
-idpf_ptp_settime64() could reach the lock). The PTP aux worker
-fires immediately upon scheduling and can call into
-idpf_ptp_read_src_clk_reg_direct(), which takes
-spin_lock(&ptp->read_dev_clk_lock) on an uninitialized lock, triggering
-the lockdep "non-static key" warning:
+ice_set_rss_hfunc() performs a VSI update, in which it sets hashing
+function, leaving other VSI options unchanged. However, ::q_opt_flags is
+mistakenly set to the value of another field, instead of its original
+value, probably due to a typo. What happens next is hardware-dependent:
 
-[12973.796587] idpf 0000:83:00.0: Device HW Reset initiated
-[12974.094507] INFO: trying to register non-static key.
-...
-[12974.097208] Call Trace:
-[12974.097213]  <TASK>
-[12974.097218]  dump_stack_lvl+0x93/0xe0
-[12974.097234]  register_lock_class+0x4c4/0x4e0
-[12974.097249]  ? __lock_acquire+0x427/0x2290
-[12974.097259]  __lock_acquire+0x98/0x2290
-[12974.097272]  lock_acquire+0xc6/0x310
-[12974.097281]  ? idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
-[12974.097311]  ? lockdep_hardirqs_on_prepare+0xde/0x190
-[12974.097318]  ? finish_task_switch.isra.0+0xd2/0x350
-[12974.097330]  ? __pfx_ptp_aux_kworker+0x10/0x10 [ptp]
-[12974.097343]  _raw_spin_lock+0x30/0x40
-[12974.097353]  ? idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
-[12974.097373]  idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
-[12974.097391]  ? kthread_worker_fn+0x88/0x3d0
-[12974.097404]  ? kthread_worker_fn+0x4e/0x3d0
-[12974.097411]  idpf_ptp_update_cached_phctime+0x26/0x120 [idpf]
-[12974.097428]  ? _raw_spin_unlock_irq+0x28/0x50
-[12974.097436]  idpf_ptp_do_aux_work+0x15/0x20 [idpf]
-[12974.097454]  ptp_aux_kworker+0x20/0x40 [ptp]
-[12974.097464]  kthread_worker_fn+0xd5/0x3d0
-[12974.097474]  ? __pfx_kthread_worker_fn+0x10/0x10
-[12974.097482]  kthread+0xf4/0x130
-[12974.097489]  ? __pfx_kthread+0x10/0x10
-[12974.097498]  ret_from_fork+0x32c/0x410
-[12974.097512]  ? __pfx_kthread+0x10/0x10
-[12974.097519]  ret_from_fork_asm+0x1a/0x30
-[12974.097540]  </TASK>
+On E810, only the first bit is meaningful (see
+ICE_AQ_VSI_Q_OPT_PE_FLTR_EN) and can potentially end up in a different
+state than before VSI update.
 
-Move the call to spin_lock_init() up a bit to make sure read_dev_clk_lock
-is not touched before it's been initialized.
+On E830, some of the remaining bits are not reserved. Setting them
+to some unrelated values can cause the firmware to reject the update
+because of invalid settings, or worse - succeed.
 
-Fixes: 5cb8805d2366 ("idpf: negotiate PTP capabilities and get PTP clock")
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Reproducer:
+  sudo ethtool -X $PF1 equal 8
+
+Output in dmesg:
+  Failed to configure RSS hash for VSI 6, error -5
+
+Fixes: 352e9bf23813 ("ice: enable symmetric-xor RSS for Toeplitz hash function")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-3-a5ea4dc837a9@intel.com
+Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-5-a5ea4dc837a9@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_ptp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_ptp.c b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-index 0a8b50350b860..31c5593550e1a 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-@@ -949,6 +949,8 @@ int idpf_ptp_init(struct idpf_adapter *adapter)
- 		goto free_ptp;
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index d42b65e29e485..dc5d821bf3348 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -8075,7 +8075,7 @@ int ice_set_rss_hfunc(struct ice_vsi *vsi, u8 hfunc)
+ 	ctx->info.q_opt_rss |=
+ 		FIELD_PREP(ICE_AQ_VSI_Q_OPT_RSS_HASH_M, hfunc);
+ 	ctx->info.q_opt_tc = vsi->info.q_opt_tc;
+-	ctx->info.q_opt_flags = vsi->info.q_opt_rss;
++	ctx->info.q_opt_flags = vsi->info.q_opt_flags;
  
-+	spin_lock_init(&adapter->ptp->read_dev_clk_lock);
-+
- 	err = idpf_ptp_create_clock(adapter);
- 	if (err)
- 		goto free_ptp;
-@@ -974,8 +976,6 @@ int idpf_ptp_init(struct idpf_adapter *adapter)
- 			goto remove_clock;
- 	}
- 
--	spin_lock_init(&adapter->ptp->read_dev_clk_lock);
--
- 	pci_dbg(adapter->pdev, "PTP init successful\n");
- 
- 	return 0;
+ 	err = ice_update_vsi(hw, vsi->idx, ctx, NULL);
+ 	if (err) {
 -- 
 2.53.0
 
