@@ -1,246 +1,193 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012034.outbound.protection.outlook.com [40.107.209.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F5C330B07
-	for <patches@lists.linux.dev>; Thu, 28 May 2026 18:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779994785; cv=none; b=jGgn2f8pH3KKUN5ZR4Lvp+0LXPOyZcpxtemnHEe47QU6eVqkmIn3t6gQkjgHb1hZqDPGPTg+rIJG2HcnX6+VNUOLWWJnuYZGML4ljp/1LPiltKbcM4x4hzonza1YVnoKLsezspEOSYLyJPzFMHqm19n+B6P/PF2XxyN0So77AVY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779994785; c=relaxed/simple;
-	bh=K+u3BaAhGcvOwP6Hri5H/3Q3PATtfO+X6e86JxPROrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VYSsCTklRtLc9Z0Knc6dtTVw0uUvKeyB/MnhEDNBkGT/Bvp3+ePMk7l+ZYPiM1CKbJaTJjTSY2H1VX6z5E2F4/BZf6HcnNB/xYTjuLZ/xzHsmdksjF+ZKPYXO98dlNB2Iry/obpwOnCSvvKmHqcx60PRLieCoawE5IBugwwYcV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=h0l4mh4F; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3436F314A8E
+	for <patches@lists.linux.dev>; Thu, 28 May 2026 19:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.34
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779995102; cv=fail; b=sJtswqx+NdgJt101bvPIxFJ/V5/vbdqv0sREgXrVSJLEhS+FfGHeLruYMQd2jZds7rawanxzditesHkvUPmdSNULaHcLl8N6CXbdCLftczwEuNZBJZhN0I1QIVBMX3gNtvihpOFipHnn1pnlOcA2iQM4h8FwIuKiGMngp35aIMk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779995102; c=relaxed/simple;
+	bh=o++8busD6MKT8c+RpHftQXL2u+yM/9KP8PC0pAbJocc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=s8/JJsYPlrUSquIoM1bkVaplfVrH/Ba3uJ0TqxMUln/89xBnmu5NFuc946TrgTF7G4TzgmjLvs1B1KSnzglcdfMzt3ZIQ/sX7L7c3Ww4qQXjJTrHVR+RGW/C69q/FmAqY+2JFjRJxNN3eOu6Bh3gEVOV93XJ7qEcVDhXz2qokNo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=mT5oxnWZ; arc=fail smtp.client-ip=40.107.209.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h0l4mh4F"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-83f674f978fso5225276b3a.3
-        for <patches@lists.linux.dev>; Thu, 28 May 2026 11:59:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779994782; x=1780599582; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=C2ZUBuHYLFWaBCKcO06WPiLzxJQqwEviAmU64GiN9ok=;
-        b=h0l4mh4FC8V4HlZ/JNPyzwKhH/DtEJBUixA+abfVMjuw7EI2A18kTgfjAshyO2oIVb
-         Dtd5ycbsUx2rJRrBNYBzTtT56QBYtg5yiFDsJOczgiWt365Ijnd2dLmfnIbequx4OZRZ
-         0NIsCBznzCAluYBQTSOFgi78qugd4wTRLMWyVNGtoIxSMubBz3lsdUX4nw5fcq25Aho5
-         WMVFh4yPKpaN+O3iTh/juLp2gUZXahyiI64LKPH8qj+QPGkueNwLtusLRi+uCMhxrVCj
-         ZUcinOdRCFsxW/Cebvtc+STu3MEWeTRjDBjZ6z1z5/RRur6QCGVsSUfnEhkXCTVnf2VG
-         x2eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779994782; x=1780599582;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C2ZUBuHYLFWaBCKcO06WPiLzxJQqwEviAmU64GiN9ok=;
-        b=iseXyvvA/dBbFdMVCtUco8RgR6vM00oq7a5N1cy2YIaWPXAUPMcA7pWcBBZNQ0O5ft
-         33Ax2HOck2kyOL9VvBsUDkacVKwR9R70qmOcsdZka92KgU8/HEUWPp0vZN/HPVITNlzd
-         oPFUjE5VNZSRJXUxOMmgoJHNplLPAmOIwiQATKzXy4zz5iof8S/y3SFFHWnjON4Myif8
-         ZWqgWs/v7cQ4/T2aT0UF+j+ExtYsmp0p5iarVdK+eOD2h+F/KPSzGd3iSyJJAOuohal0
-         ByDb/In/Z9BKJ5OumhOlvvnfV9twVY/KBWr8QBqUtlhVLfmfROF2Qzsxdpa2jW4LpwLd
-         xH0g==
-X-Forwarded-Encrypted: i=1; AFNElJ94pCDjHcohF1gZqOmEHABwOPKKefO5XIcAeeETc2TLDjIW3Q0CgYqTDdFRKQI6GuBEFqpWZ2aN@lists.linux.dev
-X-Gm-Message-State: AOJu0YyF73yi195XJVza0OGjgzBYVrxclPS++RwSnb772q3s++Ut1LGP
-	cRtkOT/rl4rLYGxcyfsZj2w/N2ayT4jWOFxmB7O+pfwV1P2gpf5Da1jH3v8pwsiP5w==
-X-Gm-Gg: Acq92OGV9fE3dbGA7BPiSrgkxayiUshPSm/+ia/L4DxlgG726V+YZeyFTs2mSCF7Dcj
-	fL8uT4ZMsKKRb3GE01Q/mlvFfQvg6w6TkfKwqgTz6An6tXKhJLZdQ/avYjrbMuo3DoZn7KhPsER
-	A0FLIhOyIMak6ArGvMMpNFL0MxEevOAKcvaTUjBpqrilbAgrljxUw/GlzQ086vfMaDcAZsEftzb
-	N1QsmnImRqce7egxDkDOQ2Ei25UmEWUi3P6+n+lX7IcW2KfZHSGKa3uMwGmHyi4uxNvDS9pzSXB
-	SJQKo1/DkLUW8jy29uX/vBtf5krgzGZBWH5UXlcVjxpgQKwN7jXEflBvka+zRiNK+ivaJ78oCMR
-	unlDX7RgK28X7W17aqWzZ3oLHscozcIbXBGPDHmpt1HuuS17PExRoyVl21rwo/htxg0F0t8pLLe
-	eIjqpF9+9iOHethaubz1KLsmudLxXwIWyPYvx5XNza0g7j70HQP1TbmjBtb+k5RBjI2JBwkEEc
-X-Received: by 2002:a05:6a00:9099:b0:841:dc7d:306a with SMTP id d2e1a72fcca58-8420c4b6859mr239429b3a.25.1779994781790;
-        Thu, 28 May 2026 11:59:41 -0700 (PDT)
-Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-841d70bb654sm7090146b3a.29.2026.05.28.11.59.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 11:59:41 -0700 (PDT)
-Date: Thu, 28 May 2026 18:59:38 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 07/11] vfio: selftests: Allow drivers to specify
- required region size
-Message-ID: <ahiQmnWscsbWPqRo@google.com>
-References: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
- <7-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="mT5oxnWZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NhsK1Qx3ZvFam7Lsa6AlZGthtDfTXYIBeg8/Jo/aftTrY6XJ6x0BXEd4zO2T7kIkj4hC8Rb5XUF9jjqyXcg287bKQDVKG9mpE03p12dGBt324Z5dkSGnBN7Hg5F7Tk4LLvDp9U9AYI1kEnpR3aX+eQ5zYGor3WOmNRgi8PvMzm4Ro90dTGv43rjpJSe0/M13PzQHUjafd9yspmgdv3AHHBTXWOxssG80E24wzxdtnDh7mKhiF6GF2LWplwuaPWE6nCTLnPPORPRPUXSIOaPDc9bqaYo55fGPZaLuhDyiVlVyuSsPOsZrG61Dc4TjExlegiN4PHaI8W+ZsQs7bFKfBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=31kSmwKIRRaiZ2PqiLn3h0TdlwhEjXEe3e/74iTCwE4=;
+ b=NLapmxHS0jPm2sRNb0tGwoQgt3O2og3lwpJ4oKrcWpsU18jQYaUX9vuQMbH2NfrxJKXLUjgQhxnKd7BK7qnEeAj3fht+xNKcWXviXtMrRylGQPn+Z/St17yptyLjop9jHE23Xh+9MCVgsMZ2w+vzfTSizR92wVINwhv0K4LWmkh6fmSA5g6o13VEpPk4IMFh7d3pWHaLBEuFLxVjFzhoBpnlsCAClYJLMrJwqODocxaGXdidi4Bcswxb3E8yN5UxqtYZxQWOumWIdbq6RtUencPw0T93dHpZcYr7fbEVPXQPv1OxC1wEwfz5y0fCiHiGxoVdJMFRIAdgcHVWAfp76w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=31kSmwKIRRaiZ2PqiLn3h0TdlwhEjXEe3e/74iTCwE4=;
+ b=mT5oxnWZ0w5/+cdNOlzRJmq7nRHblfGogfixAFNcmsQcFzBy/8eYn4yLawm316RnPJeSDgOSbPKiIlgdkMG0Pi1D26gQ5wGCKyAk9oB231fCPyoA0UYPphjNNNPvhYcaD/R+pdrxJcwNb+jJ4RP5sOuQQWTn6wiOF7GGDtXDLzY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SN7PR12MB8148.namprd12.prod.outlook.com (2603:10b6:806:351::17)
+ by PH7PR12MB9224.namprd12.prod.outlook.com (2603:10b6:510:2e7::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Thu, 28 May
+ 2026 19:04:56 +0000
+Received: from SN7PR12MB8148.namprd12.prod.outlook.com
+ ([fe80::8262:5400:b63d:c8a2]) by SN7PR12MB8148.namprd12.prod.outlook.com
+ ([fe80::8262:5400:b63d:c8a2%6]) with mapi id 15.21.0071.011; Thu, 28 May 2026
+ 19:04:56 +0000
+Message-ID: <6a0a2f88-c22f-4a08-b3cd-b46e9677caba@amd.com>
+Date: Thu, 28 May 2026 14:04:53 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 8/9] x86/resctrl: Ensure domain fully initialized
+ before placed on RCU list
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, bp@alien8.de, tglx@linutronix.de,
+ dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, ben.horgan@arm.com, fustini@kernel.org,
+ fenghuay@nvidia.com, peternewman@google.com, yu.c.chen@intel.com,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1779476724.git.reinette.chatre@intel.com>
+ <3ba2959b1cd3596e1e340eaee6b43487edaec0a4.1779476724.git.reinette.chatre@intel.com>
+ <4053bd27-bca3-4745-9f34-65843e250f12@intel.com>
+Content-Language: en-US
+From: Babu Moger <babu.moger@amd.com>
+In-Reply-To: <4053bd27-bca3-4745-9f34-65843e250f12@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH0PR04CA0063.namprd04.prod.outlook.com
+ (2603:10b6:610:74::8) To SN7PR12MB8148.namprd12.prod.outlook.com
+ (2603:10b6:806:351::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB8148:EE_|PH7PR12MB9224:EE_
+X-MS-Office365-Filtering-Correlation-Id: e8c52475-84bd-439b-ff34-08debcec01fa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|22082099003|18002099003|6133799003|56012099006|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	Fj8SFZ1/WvjYCCjJZhLcPK5mRLbTJm9Mtrkq07vLc1YOodL79b92pMLaGpzIDTh6Far7eL6J/CwVAU0hJPWWbNvxQUFv8jM/fArYzmOXiDzmLnc1zk09F85Fbv7Xj46InFb6uf42hszQWRfiQRCjV0o/wnV4R89aHGLyz7ZCXveHo9o8lBWxU1d7pvf6XDaec2GqXKNOG4iyvCh3KnIO3NatZOnUGhlJIjdiqr1PttsZhBlC5gHTEQsV/cQ35iGYIVWneJGyDMp6d99gOTATalfP8k/Q5/cawRltCLdlagSCGpCiSPkE2Rzwp1rrGQ2wu6XMXA6IQNGaQhWdNmVbRlDWctf9/iiR8jOOrxxYA5aRaKYJj0RD0dTs9Jqw5tqliNsFvabXA/q4t3TWOMXkSGy+TNnb3K0n4Q6nszGpIa8/RhyCBgXFJM708o9WyogUCJEIijWbHW2M+d3wyw8PTnc0MzlWvtcx0viWKxYIqi3Pm8LwpahHX5PGhoaNwBuq6PmussAVzOMHK7xJ8kv6gwYnjJR/+KFH6ytRKpADra8AuvhvfhQJYMIe7HWsVzIjopoABsJlpXmLrvvRyyGJR6anSgE9nPEjX5Nsr09cuptYcAUiChYbuCIesGUOHz9w9XXlXN7cbkzP7/xLUcxFUWMNMOg797ET73HQ9P+OH77cBLWWGjVMtBjIpiRa6uD+
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR12MB8148.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(22082099003)(18002099003)(6133799003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dmtPYTJhV2psSksvdWlhaS9wWFNldVVkeXRxRExRWEpWd0ZDWkRCdmlOSU1X?=
+ =?utf-8?B?SGVqZVNpaTJuUW0zekZ5ZXNoU2drRHNyQWVLeE54VHY5a3U2djA1c1ZFbkNW?=
+ =?utf-8?B?V216VHhVZGg5b3RIZ21LbjlNaTBXY09GR3NNUnpJb0tWaDVKd0tDSUtKTmZF?=
+ =?utf-8?B?QkNjcUxsdEloU0JCMnNLU3NEaTZCK1JoQzhoVjJTdi9GZWREZ2xaOGF3VGtF?=
+ =?utf-8?B?L04wOVVHVUFGM05oSENoU2t2Sys5N0VkdURNVFZkRGVEY0JHa2xKNDRGcXhN?=
+ =?utf-8?B?VlhnUFo0TkxrRHg2WVRjZUM2WFZScGdLbFQ1djlMWVAvT1prVFlheTUzakxB?=
+ =?utf-8?B?N3pTNGFKbUZUWTBXdE5ZRU9lV1B0M2VTdE55enQwZ0ZwWVZwVzlPSndtY3Jz?=
+ =?utf-8?B?d29uWVluWE5FZ2crWmZuUDM3S1JySmRFTWVCRlZCWjNFdEdhMDh6eDBVdXdB?=
+ =?utf-8?B?YmNNeXFGRjRKcDlzLy9oVW9BanNvbmYxcHlQM3E0N1VaaDd2L1J3VkpYdmdY?=
+ =?utf-8?B?NG5FdSsxaDhSQXBUbVpEWGhzbmM0a25ZV21pRS9rbGNwOGtHQnVUa2F1YU9L?=
+ =?utf-8?B?TTNOTGp1TDJtemRmN3Y0M3FiUTMyemZTTjNHNGdydU4ydGE4eU40UGFmNlNF?=
+ =?utf-8?B?akkwc1RxZENxZ2tBQjFDQUpNL2dRaWVpWkgzUWNHTzRoL2ZCV1NYSkllS29l?=
+ =?utf-8?B?UnlJeWVvbmxJd0M0cGFsRFRQQVo4dFdMWXQwYWhTMEJOaDhKYlpCY1NsWTlI?=
+ =?utf-8?B?WGVlRll5d1hxZW9TUk9TRTNGaHp2UncrSE9KWExGbHFrNGJrOU4wa3QyclNC?=
+ =?utf-8?B?d3F2Z3B3M0FqMkkxcjA2cE45L2k1UGZZay9WZjBKZ2d1YWtwclQxWGVDKzBt?=
+ =?utf-8?B?WW5JWEx0NmVqSk41MFJqd0piUnBSUlVOMmFoWGNQNGhNemxGK2luZGowL015?=
+ =?utf-8?B?em55Yzh4R0xxR285aXpwT3hoWm1wWkk2NkpjT3M0US8ycUJDN29OeE5IRWxL?=
+ =?utf-8?B?ZkZ1emtzVndBbXg3UDZiejh4d29rbHk4SnYrZzJpdUMzOFluMGNmYnlhb0pj?=
+ =?utf-8?B?ei90UDdOZ0FHTmthNkNaZDB5bGxHYW5maXl6MFlLYlFvRm5ZM1hBY0xzcHUz?=
+ =?utf-8?B?YXZDYVNlT2NaV0s1TzdhSkJ0blA3Uk5zLzlrdWZvaUllK0pEWjZoNXZoN1I1?=
+ =?utf-8?B?eWZwN2NhN243WUpWN0F2VThadXlTbTA2ZHg0RURRRmFHSzczcFlXTEExVlFj?=
+ =?utf-8?B?ZTA2VXRaK1NaWDVlbGhPNWVnSy9YMEU2K2ozd3ovV2YwN2Vod2FRTW5ycElm?=
+ =?utf-8?B?ZUpwd1V2dGJOMDN0L204ekhzU2tCSW1oSHY5SnY2K2lIdUpGVEpjZTNjQ2Zi?=
+ =?utf-8?B?WENrUnlNeENITHZkcjIvczR2V1hDVGQrSHExTTZMZHF2bzFjRTV3ZU5ReVdn?=
+ =?utf-8?B?MHJJTUZzY0dKV056Mm1mOE1xLzBGTWNSODVTUmQrbUxrTWtOZHJ6a0VTT3JG?=
+ =?utf-8?B?aFl1djBOTTdURWE4Z2ZLVjl0VzlCSWs4WEUzWnBodlZobTZnZGxCSVB0SmdU?=
+ =?utf-8?B?MVFNMDIvZGJJU3BUc0R4V29Mc1NYT3VmZXVYWVJOZTE5VVR1L0M4dnVPTEZC?=
+ =?utf-8?B?N2xablZZMFlZVU9qbmFLY05JenZScUlXVkV1S0Rzak5UekJZY1lweXAxU05O?=
+ =?utf-8?B?eisxL0lITXp2UmtuNEFzVFpqV3RvOUlmVXBmZStjTDE5N0hsTzFuS05yc2Fp?=
+ =?utf-8?B?c1hkcDNQa01UOGV2UmZzenBFK0tpaHl4aEx3aXRhUWdsdkVKMmg2dEczaFly?=
+ =?utf-8?B?RTBZRWVnMWFLSzhWYjlkNXRwUE5MaWFMQ0FPN2puYzRVQXFpQnFBaXA3WEoz?=
+ =?utf-8?B?cCtZRE5vK2xRejBsMGkwTUtnbVN0dHJQRTlpNGYyS00xUDFGd0N2Qld1emxy?=
+ =?utf-8?B?YnlRM2diSFQ4TmVrSUdnV1ZyOHNXZ2V0T2txYmxUWjhXZ2I2MkpPWWdlVTdG?=
+ =?utf-8?B?R3JuSk95VW9VNXRoSEtlSmUvdWFNRWpRK21zT2d1ZmdkdzU2T05aZTBpeVBh?=
+ =?utf-8?B?cUphWDhEbXN6T0w1aEpwd2ozVDFIUUZwaUQ3aDZ2ZEUrcjI3QVN4SytUWXBq?=
+ =?utf-8?B?Z001b2srTm4yclJ3WE43UzBxTDlkOGlRSW1QY1BweDFpandQcmJQMW8zVWZ5?=
+ =?utf-8?B?Zjc5TW5hOWpuZU9RRjdaOWNjcG9CaHdUWUc1RFkxem10QkptRm9yWXluN0Yv?=
+ =?utf-8?B?K0tPU2hRaVk5VHZmK1RCYnprZVYxd3dRYUVnMkJzU2lVQVlpMGtCc2ZDK2ZC?=
+ =?utf-8?Q?rwQqq3vnb0gqhqDX6x?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8c52475-84bd-439b-ff34-08debcec01fa
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB8148.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2026 19:04:56.6070
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +W3TNeJrqp3+KfjAASM7O0Eu4zP9WROFakvnWrWpx/Rm9Z+1VikfoJb/IiT4pbP/
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9224
 
-On 2026-05-15 02:30 PM, Jason Gunthorpe wrote:
-> Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> declare how much DMA-mapped region they need. The mlx5 driver will need
-> ~18MB for firmware pages. Existing drivers pass in the sizeof their state
-> struct. The core code will round up and minimize it to SZ_2M so as not to
-> change any test behavior.
+Hi Reinette,
+
+On 5/28/26 11:11, Reinette Chatre wrote:
 > 
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c         | 1 +
->  tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c       | 1 +
->  .../selftests/vfio/lib/include/libvfio/vfio_pci_driver.h   | 6 ++++++
->  tools/testing/selftests/vfio/vfio_pci_driver_test.c        | 7 ++++++-
->  4 files changed, 14 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c b/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-> index 19d9630b24c23f..40b8541b588eee 100644
-> --- a/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-> +++ b/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-> @@ -418,6 +418,7 @@ static void dsa_send_msi(struct vfio_pci_device *device)
->  
->  const struct vfio_pci_driver_ops dsa_ops = {
->  	.name = "dsa",
-> +	.region_size = sizeof(struct dsa_state),
->  	.probe = dsa_probe,
->  	.init = dsa_init,
->  	.remove = dsa_remove,
-> diff --git a/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c b/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-> index a871b935542bad..c9b28365c5eb6b 100644
-> --- a/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-> +++ b/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-> @@ -226,6 +226,7 @@ static void ioat_send_msi(struct vfio_pci_device *device)
->  
->  const struct vfio_pci_driver_ops ioat_ops = {
->  	.name = "ioat",
-> +	.region_size = sizeof(struct ioat_state),
->  	.probe = ioat_probe,
->  	.init = ioat_init,
->  	.remove = ioat_remove,
-> diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> index e5ada209b1d102..547369c5cff95a 100644
-> --- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> +++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> @@ -9,6 +9,12 @@ struct vfio_pci_device;
->  struct vfio_pci_driver_ops {
->  	const char *name;
->  
-> +	/*
-> +	 * Size of the driver's state structure overlaid on
-> +	 * device->driver.region.vaddr
-> +	 */
-> +	u64 region_size;
-> +
->  	/**
->  	 * @probe() - Check if the driver supports the given device.
->  	 *
-> diff --git a/tools/testing/selftests/vfio/vfio_pci_driver_test.c b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-> index afa0480ddd9b2a..5a46800cde4c8d 100644
-> --- a/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-> +++ b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-> @@ -2,6 +2,7 @@
->  #include <sys/ioctl.h>
->  #include <sys/mman.h>
->  
-> +#include <linux/log2.h>
->  #include <linux/sizes.h>
->  #include <linux/vfio.h>
->  
-> @@ -80,7 +81,11 @@ FIXTURE_SETUP(vfio_pci_driver_test)
->  	driver = &self->device->driver;
->  
->  	region_setup(self->iommu, self->iova_allocator, &self->memcpy_region, SZ_1G);
-> -	region_setup(self->iommu, self->iova_allocator, &driver->region, SZ_2M);
-> +
-> +	VFIO_ASSERT_NE(driver->ops->region_size, 0);
-> +	region_setup(self->iommu, self->iova_allocator, &driver->region,
-> +		     max_t(u64, roundup_pow_of_two(driver->ops->region_size),
-> +			   SZ_2M));
-
-We have some other upcoming tests that want to set up the driver region, so it
-would be nice to move this into the library.
-
-  * https://lore.kernel.org/kvm/20260511234802.2280368-17-vipinsh@google.com/
-  * https://lore.kernel.org/kvm/20260421231557.1254270-8-jrhilke@google.com/
-
-What about something like this?
-
-diff --git a/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c b/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-index 19d9630b24c2..40b8541b588e 100644
---- a/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-+++ b/tools/testing/selftests/vfio/lib/drivers/dsa/dsa.c
-@@ -418,6 +418,7 @@ static void dsa_send_msi(struct vfio_pci_device *device)
-
- const struct vfio_pci_driver_ops dsa_ops = {
-        .name = "dsa",
-+       .region_size = sizeof(struct dsa_state),
-        .probe = dsa_probe,
-        .init = dsa_init,
-        .remove = dsa_remove,
-diff --git a/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c b/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-index a871b935542b..c9b28365c5eb 100644
---- a/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-+++ b/tools/testing/selftests/vfio/lib/drivers/ioat/ioat.c
-@@ -226,6 +226,7 @@ static void ioat_send_msi(struct vfio_pci_device *device)
-
- const struct vfio_pci_driver_ops ioat_ops = {
-        .name = "ioat",
-+       .region_size = sizeof(struct ioat_state),
-        .probe = ioat_probe,
-        .init = ioat_init,
-        .remove = ioat_remove,
-diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-index e5ada209b1d1..547369c5cff9 100644
---- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-+++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-@@ -9,6 +9,12 @@ struct vfio_pci_device;
- struct vfio_pci_driver_ops {
-        const char *name;
-
-+       /*
-+        * Size of the driver's state structure overlaid on
-+        * device->driver.region.vaddr
-+        */
-+       u64 region_size;
-+
-        /**
-         * @probe() - Check if the driver supports the given device.
-         *
-diff --git a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c b/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-index 6827f4a6febe..c70c22b1a86c 100644
---- a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-+++ b/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-@@ -28,6 +28,9 @@ void vfio_pci_driver_probe(struct vfio_pci_device *device)
-                        continue;
-
-                device->driver.ops = ops;
-+
-+               VFIO_ASSERT_NE(ops->region_size, 0);
-+               device->driver.region.size = roundup(ops->region_size, getpagesize());
-        }
- }
-
-diff --git a/tools/testing/selftests/vfio/vfio_pci_driver_test.c b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-index afa0480ddd9b..36d977542274 100644
---- a/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-+++ b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
-@@ -80,7 +80,7 @@ FIXTURE_SETUP(vfio_pci_driver_test)
-        driver = &self->device->driver;
-
-        region_setup(self->iommu, self->iova_allocator, &self->memcpy_region, SZ_1G);
--       region_setup(self->iommu, self->iova_allocator, &driver->region, SZ_2M);
-+       region_setup(self->iommu, self->iova_allocator, &driver->region, driver->region.size);
-
-        /* Any IOVA that doesn't overlap memcpy_region and driver->region. */
-        self->unmapped_iova = iova_allocator_alloc(self->iova_allocator, SZ_1G);
-
->  
->  	/* Any IOVA that doesn't overlap memcpy_region and driver->region. */
->  	self->unmapped_iova = iova_allocator_alloc(self->iova_allocator, SZ_1G);
-> -- 
-> 2.43.0
+> On 5/22/26 12:15 PM, Reinette Chatre wrote:
+>>   static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct list_head *add_pos)
+>> @@ -556,14 +554,12 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
+>>   		return;
+>>   	}
+>>   
+>> -	list_add_tail_rcu(&d->hdr.list, add_pos);
+>> -
+>>   	err = resctrl_online_mon_domain(r, &d->hdr);
+>>   	if (err) {
+>> -		list_del_rcu(&d->hdr.list);
+>> -		synchronize_rcu();
+>>   		l3_mon_domain_free(hw_dom);
+>> +		return;
+>>   	}
+>> +	list_add_tail_rcu(&d->hdr.list, add_pos);
+>>   }
+>>   
+>>   static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
 > 
+> I resubmitted the last three patches of series to obtain Sashiko review [1] and
+> respond to that feedback here:
+> 
+> a) Sashiko: "Does this reordering expose the monitor directories to userspace before the
+>     domain is actually added to the RCU list?"
+> 
+>     Yes. As pointed out by Sashiko there is a short time where the monitoring data files
+>     may be exposed to user space before the monitoring domain is added to the RCU list.
+>     Also pointed out by Sashiko, if user attempts to read from such file it will return
+>     -ENOENT.
+> 
+>     This behavior looks correct and acceptable to me.
+
+Yes. I agree,
+
+> 
+> b) Sashiko: "This is a pre-existing issue, but does resctrl_find_domain() safely traverse
+>     the RCU list?
+>     Yes, this is safe because resctrl_find_domain() is run with cpus_read_lock() that ensures
+>     the list can be traversed safely because the list can only be modified with
+>     CPU write lock held.
+>     One improvement to resctrl that would help support this is to replace the "list_for_each()"
+>     domain list traversals with something like:
+>     	list_for_each_entry_rcu(pos, head, member, lockdep_is_cpus_held())
+>     Doing something like above would help document why such list traversal outside of
+>     RCU read-side critical section is safe.
+
+Are you planning to make this change at this time? It appears to be a 
+corner case, and we haven’t observed it in real-world scenarios.
+
+Thanks
+Babu
+
