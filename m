@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C7A409607;
-	Thu, 28 May 2026 20:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC4630E82E;
+	Thu, 28 May 2026 20:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998697; cv=none; b=Q7Gt97ll0Hu4PdMPuRK6/nlFGDD2QFIEkfVLnmXNli83qUvHZFL4hriE/hvQ+FLauzthPA4d7PsyZCWmmj0O1kGfgg+RwGqLggjFN/r3ATB9ISuPERoUagEJYKWbR/mFK/yLTPtXMnggDJ+X47UGaL0Rd+oI689POPG2bXRnAB4=
+	t=1779998699; cv=none; b=HzRRxPXSj8K0YkKFgfvAwY9g4z75n0uVp7nGVqq8porPen3uOQXJsLZ+16WssGWYAjDZ/oNXZ52IdE469VHEansI6DAzXTrsA0Ukku9Cx/cJm2JqQTnuiyIqt38/IHebTWvUA9uq7haQTCEbY7krw3MzC+eXt0cEhmnXFWXtF3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998697; c=relaxed/simple;
-	bh=dO9STYC3c+N5mQNYo/y5BGntMK0wVA/pRQV99i035TQ=;
+	s=arc-20240116; t=1779998699; c=relaxed/simple;
+	bh=IM+KN85peL13/2oE+MqsuNXf43qErU9ASxBYt4GliJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTRMdnlOgnAmjYkW0CwuluUnt6JSr0m2mwkC180hFoeEbymRy0AoECJBXB5ex65ZIKaC2l4x6QOgFnI5EPWo6EE0hlXu4/iSrkzLqE6saiAngoAcWMv57x97jX69KE6FekgkeqtMVVPH9GumCq7nJAcwfPMGa5Wb0s8KTXM9R8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaSKOnKk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TjX7Ix0qwah6aVWUz/bdukuDMwCpiffCj0h130CYkKgv4/nz0JvKNb/GD8U9i+qvUSuI94hTu906XlQ6Ssc6hX01OkVW+dPy9C/7AnIeySGxxvSxHm8cpDyVIsjOnxBAsG5X9EI2XoOfQ3A3YgkaqAAHeJM+VvyPM6TLaaW65Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mokFNMzu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaSKOnKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD7A1F000E9;
-	Thu, 28 May 2026 20:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mokFNMzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2A01F000E9;
+	Thu, 28 May 2026 20:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998696;
-	bh=wllOPBWsqsZOLUFlyIuv5REpG6UU5t6y5lkbQjZk5Mw=;
+	s=korg; t=1779998698;
+	bh=90qPoAZYnF7Z7YMpeC/MfSBe1lQ7HJhP7wW6gPoZ2OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oaSKOnKkvWqbNghrepVsw9Tp6RF13dDlT4oqHvM+HoLvaDVjscRuCKVv4thUmCEEf
-	 tDMATcJr/1/yxqWxfEIttfwnYj3otZajA0gWtE3/dYziV2WrglsiD2aB3EZnGvLFsT
-	 F+cnX8hvQZln0WKr9Bkb99R35fJgTSlSrkBh1sPQ=
+	b=mokFNMzusfO2JM2FKOkoQk6NpUsxDWLLMD7m33mM4XRzDC668R7ksS/dsejTnszyr
+	 51Zz6rgeXT65OacwTsJIRWFdZs5SVsEdp5IeeIaN1a4jo+kKI1cqjcHLE3JpEF4vGa
+	 nxbXu5F20GxlJ/6stdOckBuVtZPmiX/6A6n3Lm+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <sfrench@samba.org>,
 	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Matthew Wilcox <willy@infradead.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 264/461] netfs: Fix early put of sink folio in netfs_read_gaps()
-Date: Thu, 28 May 2026 21:46:33 +0200
-Message-ID: <20260528194654.804965712@linuxfoundation.org>
+Subject: [PATCH 7.0 265/461] netfs: Fix leak of request in netfs_write_begin() error handling
+Date: Thu, 28 May 2026 21:46:34 +0200
+Message-ID: <20260528194654.835468684@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -58,44 +57,15 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 3e5dd91b87a8b1450217b56a336bee315f40da7d ]
+[ Upstream commit 5046a34f0643441f05b0253ea64e1a3af87efe14 ]
 
-Fix netfs_read_gaps() to release the sink page it uses after waiting for
-the request to complete.  The way the sink page is used is that an
-ITER_BVEC-class iterator is created that has the gaps from the target folio
-at either end, but has the sink page tiled over the middle so that a single
-read op can fill in both gaps.
+Fix netfs_write_begin() to not leak our ref on the request in the event
+that we get an error from netfs_wait_for_read().
 
-The bug was found by KASAN detecting a UAF on the generic/075 xfstest in
-the cifsd kernel thread that handles reception of data from the TCP socket:
-
- BUG: KASAN: use-after-free in _copy_to_iter+0x48a/0xa20
- Write of size 885 at addr ffff888107f92000 by task cifsd/1285
- CPU: 2 UID: 0 PID: 1285 Comm: cifsd Not tainted 7.0.0 #6 PREEMPT(lazy)
- Call Trace:
-  dump_stack_lvl+0x5d/0x80
-  print_report+0x17f/0x4f1
-  kasan_report+0x100/0x1e0
-  kasan_check_range+0x10f/0x1e0
-  __asan_memcpy+0x3c/0x60
-  _copy_to_iter+0x48a/0xa20
-  __skb_datagram_iter+0x2c9/0x430
-  skb_copy_datagram_iter+0x6e/0x160
-  tcp_recvmsg_locked+0xce0/0x1130
-  tcp_recvmsg+0xeb/0x300
-  inet_recvmsg+0xcf/0x3a0
-  sock_recvmsg+0xea/0x100
-  cifs_readv_from_socket+0x3a6/0x4d0 [cifs]
-  cifs_read_iter_from_socket+0xdd/0x130 [cifs]
-  cifs_readv_receive+0xaad/0xb10 [cifs]
-  cifs_demultiplex_thread+0x1148/0x1740 [cifs]
-  kthread+0x1cf/0x210
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Steve French <sfrench@samba.org>
+Fixes: 4090b31422a6 ("netfs: Add a function to consolidate beginning a read")
+Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-18-dhowells@redhat.com
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Link: https://patch.msgid.link/20260512123404.719402-19-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
 cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
@@ -103,33 +73,24 @@ cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/netfs/buffered_read.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 51f844bfbdff6..e7ad511e494cc 100644
+index e7ad511e494cc..004d426c02b41 100644
 --- a/fs/netfs/buffered_read.c
 +++ b/fs/netfs/buffered_read.c
-@@ -457,9 +457,6 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
+@@ -687,9 +687,9 @@ int netfs_write_begin(struct netfs_inode *ctx,
  
  	netfs_read_to_pagecache(rreq, NULL);
- 
--	if (sink)
--		folio_put(sink);
--
  	ret = netfs_wait_for_read(rreq);
- 	if (ret >= 0) {
- 		if (group)
-@@ -471,6 +468,9 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 		flush_dcache_folio(folio);
- 		folio_mark_uptodate(folio);
- 	}
-+
-+	if (sink)
-+		folio_put(sink);
- 	folio_unlock(folio);
- 	netfs_put_request(rreq, netfs_rreq_trace_put_return);
- 	return ret < 0 ? ret : 0;
++	netfs_put_request(rreq, netfs_rreq_trace_put_return);
+ 	if (ret < 0)
+ 		goto error;
+-	netfs_put_request(rreq, netfs_rreq_trace_put_return);
+ 
+ have_folio:
+ 	ret = folio_wait_private_2_killable(folio);
 -- 
 2.53.0
 
