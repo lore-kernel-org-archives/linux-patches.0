@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F060A33B6FC;
-	Thu, 28 May 2026 20:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D3C2C15AC;
+	Thu, 28 May 2026 20:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000767; cv=none; b=SeKOorxCywwXQzlSbN5kJpdNfH4kc6bI3vCpnRb4NB/Uv8Qrlc+cyN2TI0WpuoOV/48ejdt3K2oadOSZ0r0XTM6xyqx9aWY7hvSCMUKJDz5y7yhMdGtitKCr86niM6fhK6AcQ9Gq7mKT7s/Kp07NVSxyEMbkeKQs/zLIuNC+YjU=
+	t=1780000770; cv=none; b=QUXBhq+bNjOLS+FMwbhCPbdjtg6jq3ZydOrFHusK90WvhXhD3FUsG7BfPO5AsAD0Ie0BhRaihBdLjWz0ACCKYxzIARA8ycwM8yAWkuSc2ELJLGa088ap72JhUBUbxOcUQEskdPCfrLnDwh4gvEwkgGyRIAW27i62qWFNxeB89Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000767; c=relaxed/simple;
-	bh=ZpV4AJEFFJ9PjlXEsd77UlAE7wt3JoH7yTlqnn12gNU=;
+	s=arc-20240116; t=1780000770; c=relaxed/simple;
+	bh=Gbqb7DJVF4zap3nWMYpILFc+Ea6WFHmY+qW3XZD/rnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yr5CFfVKu9KM0LC3L00/6Qnj91kiVnjrNqOz0wTuJGyZO2ICIAbthlBw20BlBOs5wGPoZkNM9DqnG0zEyyNQBytketRIYIV8l1j3tkcqjmv+bAM3UPj7NP7jXqCGUt4Sh6273Mw8h224RySBM6IHInxgchDXNesrU/JbmnhU/oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/0AnEL/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3xBPBRjOmf0tcWgqhMn3tOO7WtQU8TJhVbcfqY3H3CJuqHldzc/qe3Ap8gKMZbi/XIwavDMlYLfbEk0/Zg7RCiWiBrBnlKTzQDeFKz3bM6hOtOTf7qV4OKmcI76AdoOvLRzmpXJUMcFPsBGabbByRCKHDrZZZOYzxl6uA4bOyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iBSAl8c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/0AnEL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0161F00A3A;
-	Thu, 28 May 2026 20:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iBSAl8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A661F000E9;
+	Thu, 28 May 2026 20:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000766;
-	bh=XHZY6Djb9swetTbAdxQNhzMOL6ol16cyuftgCJghoeE=;
+	s=korg; t=1780000769;
+	bh=ZLV7MWzc1jaHO+hQhX9UDcUSaUBvdmQU6w2PcpM2IuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/0AnEL/9QuOLIcsfLJGaFWopEQbAerbWzAL3+zCIHdgDq1wklXj0RZsmbX90CGZV
-	 fy8M4tVomAHQcsm5s8Oz3tZ+mKP2wYLQHyxr0zaQiCEYvcYPU61gDji7B1fDxyqcFz
-	 rsPVc/wzkKdjxgCJy62C+URCg9rOeVL4rT19dxCY=
+	b=1iBSAl8c1VnxAfC3hHmbr+ZaAgUKRjwADHCbGWYzPEj1s9APLZ2XPzkxkH3z3u3OK
+	 DA0eP8BQBOgbvvAAWZFlQ0tyPtIzfn5UyLNsKFqN+eGmelnzITsGjdNgNL2Y5M8tv6
+	 DpE7buu/oYy5JB8cZvywTfm6xqY6gbPxbgL5BF9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ene <sebastianene@google.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/272] firmware: arm_ffa: Align RxTx buffer size before mapping
-Date: Thu, 28 May 2026 21:48:54 +0200
-Message-ID: <20260528194633.825086635@linuxfoundation.org>
+Subject: [PATCH 6.12 161/272] firmware: arm_ffa: Fix sched-recv callback partition lookup
+Date: Thu, 28 May 2026 21:48:55 +0200
+Message-ID: <20260528194633.850214691@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 0399e3f872ca3d78044bb715a73ea645806d2c7b ]
+[ Upstream commit a6848a50404eefb6f0b131c21881a2d8d21b31a9 ]
 
-Commit 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during
-RXTX_MAP") advertises PAGE_ALIGN(rxtx_bufsz) to firmware when mapping the
-buffers but the driver continues to stores the minimum FF-A buffer size
-in drv_info->rxtx_bufsz which is used elsewhere in the driver.
+ffa_sched_recv_cb_update() used list_for_each_entry_safe() to search for
+a matching partition and then tested the iterator against NULL. That is
+not a valid end-of-list check for circular lists and can fall through
+with an invalid pointer. Use a normal iterator and detect the not-found
+case correctly before touching the partition state.
 
-Align the size before storing it so that the allocation, validation and
-FFA_RXTX_MAP all use the same buffer size.
-
-Fixes: 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during RXTX_MAP")
-Cc: Sebastian Ene <sebastianene@google.com>
-Link: https://sashiko.dev/#/patchset/20260402113939.930221-1-sebastianene@google.com
-Reviewed-by: Sebastian Ene <sebastianene@google.com>
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-9-8595ae450034@kernel.org
+Fixes: be61da938576 ("firmware: arm_ffa: Allow multiple UUIDs per partition to register SRI callback")
+Link: https://patch.msgid.link/20260428-ffa_fixes-v2-11-8595ae450034@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 521007bfa35a4..f35c3a56326c7 100644
+index f35c3a56326c7..89474fa3c80e5 100644
 --- a/drivers/firmware/arm_ffa/driver.c
 +++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1929,6 +1929,7 @@ static int __init ffa_init(void)
- 			rxtx_bufsz = SZ_4K;
+@@ -1155,7 +1155,7 @@ static int
+ ffa_sched_recv_cb_update(struct ffa_device *dev, ffa_sched_recv_cb callback,
+ 			 void *cb_data, bool is_registration)
+ {
+-	struct ffa_dev_part_info *partition = NULL, *tmp;
++	struct ffa_dev_part_info *partition = NULL;
+ 	struct list_head *phead;
+ 	bool cb_valid;
+ 
+@@ -1168,11 +1168,11 @@ ffa_sched_recv_cb_update(struct ffa_device *dev, ffa_sched_recv_cb callback,
+ 		return -EINVAL;
  	}
  
-+	rxtx_bufsz = PAGE_ALIGN(rxtx_bufsz);
- 	drv_info->rxtx_bufsz = rxtx_bufsz;
- 	drv_info->rx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
- 	if (!drv_info->rx_buffer) {
-@@ -1944,7 +1945,7 @@ static int __init ffa_init(void)
+-	list_for_each_entry_safe(partition, tmp, phead, node)
++	list_for_each_entry(partition, phead, node)
+ 		if (partition->dev == dev)
+ 			break;
  
- 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
- 			   virt_to_phys(drv_info->rx_buffer),
--			   PAGE_ALIGN(rxtx_bufsz) / FFA_PAGE_SIZE);
-+			   rxtx_bufsz / FFA_PAGE_SIZE);
- 	if (ret) {
- 		pr_err("failed to register FFA RxTx buffers\n");
- 		goto free_pages;
+-	if (!partition) {
++	if (&partition->node == phead) {
+ 		pr_err("%s: No such partition ID 0x%x\n", __func__, dev->vm_id);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
