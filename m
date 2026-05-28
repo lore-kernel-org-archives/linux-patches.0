@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0103223C8C7;
-	Thu, 28 May 2026 20:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1203217F27;
+	Thu, 28 May 2026 20:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001099; cv=none; b=AcLCwTDLsM3c8q34vTCsxwngioSdiYf6MSy8+1ip8GWsCBsxR8GCweLW8Se5nrpxVqCKMx/K/0CuHyx5Ma/hf1GR7n6cd88tM9vyMoSBEqcRNRd0id0lX/iK71ivPnhLciD94Wtjc7ObNsnB/F4VxSdGa6I1TBzbT8aAI0swUmA=
+	t=1780001102; cv=none; b=OOEPzDSUFwdQvu4oloazqUMxG8wVim/HI3lE1J1ifu25OBI6YAAXMqgK0b/CqwEcdI83lkoHjjg6kY+w/LJrVtjfM7Dt7Wh7l2Hse4pQ+TMm+bXVophFKxp+2zYdNyY9E4UNEP5oqnPbfisRE1lqTlQpa+/W8i1QBCmpnaMMqlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001099; c=relaxed/simple;
-	bh=njxvB0QdNzkSNcCUSL6nnTktm2gVIpsIK77SkoaX/Ns=;
+	s=arc-20240116; t=1780001102; c=relaxed/simple;
+	bh=eXQEP6E1kFYzM12y7UkApnM0z5jbw1zGHaOOBIz+OVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WO3lBgxzoryLyd4UVADl+NOxGoddMGEznJZey1CGVTmENkcz5/6NcOxkHRJs/EfKuQA4LE5ST0nCPYtJf2M0ICUUI7Ryf+h+jGJ0kJOHaVvoA1QgyMEt6m/HbDLd1ZPjKdvJ/Y47HnQrbqT/MHhoCOpYFG3UFaLlcE7gtZ1n/Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXtR77KE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YIrIBWxvT1J4EG5q11rO5lrLU3s5W2nQuTV/3PmIOUVq7tBaMe4h0BIr6HiObB0K8nAxk9uwT8VLUUWYNZqoCkb1kQUtCCaUFe/KTCgSOrlPsFklP+2aXL6uhO399TLHfcvRg9V+9QLHBjFn1o3HUAR1zTo5x81chCDFo4Hfaoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/rNTUj3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXtR77KE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA751F000E9;
-	Thu, 28 May 2026 20:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/rNTUj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C651F000E9;
+	Thu, 28 May 2026 20:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001097;
-	bh=0m4/YanCTztW98ammmrrwOcZwPDnoxaUw6R3XJX79WQ=;
+	s=korg; t=1780001100;
+	bh=d6ayyIT0SGqt3EFuoTWAP+CGjhS2cYVUBhV552tChCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DXtR77KEzVfELiKeIrE095Wc49TbtiIPxXxDxrYyRDsmx3bYreUPia0hbQSYtntNU
-	 SXlCUuY0mTC5BHadrkQWY10S3bG0NBmlV9GUBdRpA9TUCMwmgsSTGa0h19VQil2j0m
-	 zOeL/lSS2wBWtGzB2YQc6oyjiee3O5X1UF4GoaOM=
+	b=k/rNTUj3F6oEjjnnVGEOsKfe7bqVZo7rh0jML2FdMimLPxtCsAp7nGA0wAAsqWUes
+	 RC0SYnz8iOmvD/YyhySloa0pWLA4JOAZ+bCX+MrroU1+AO8CF41pLT9A94sNjxi2pY
+	 KUiwlQqlyIbLm4zV3uWCF2HGbMog/pUCI4Zrjs+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 253/272] net: bridge: Flush multicast groups when snooping is disabled
-Date: Thu, 28 May 2026 21:50:27 +0200
-Message-ID: <20260528194636.198051872@linuxfoundation.org>
+Subject: [PATCH 6.12 244/272] net: dsa: mt7530: fix FDB entries not aging out with short timeout
+Date: Thu, 28 May 2026 21:50:18 +0200
+Message-ID: <20260528194635.968967915@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,64 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 68800bbf583f26f71491141e4b3c8582f9cfcbde ]
+[ Upstream commit e824e40d0e841fab66ab7897d6c7b14dc81c66a7 ]
 
-When forwarding multicast packets, the bridge takes MDB into account when
-IGMP / MLD snooping is enabled. Currently, when snooping is disabled, the
-MDB is retained, even though it is not used anymore.
+The DSA forwarding selftests bridge_vlan_aware.sh and
+bridge_vlan_unaware.sh configure the bridge with ageing_time set to
+LOW_AGEING_TIME (1000 centiseconds, i.e. 10 seconds) and then run
+learning_test() in lib.sh, which expects a learned FDB entry to be
+removed after ageing_time + 10 seconds. On MT7530/MT7531 the entry
+persisted past the deadline and the "Found FDB record when should
+not" assertion failed.
 
-At the same time, during the time that snooping is disabled, the IGMP / MLD
-control packets are obviously ignored, and after the snooping is reenabled,
-the administrator has to assume it is out of sync. In particular, missed
-join and leave messages would lead to traffic being forwarded to wrong
-interfaces.
+With msecs=10000, the algorithm in mt7530_set_ageing_time() finds
+AGE_CNT=0 and AGE_UNIT=9 as the first exact match (starting the
+search from tmp_age_count=0). The per-entry aging counter is
+initialized to AGE_CNT when a MAC address is learned, so with
+AGE_CNT=0 new entries start with a counter value of 0, which the
+hardware treats as "already aged" and never removes, effectively
+disabling aging.
 
-Keeping the MDB entries around thus serves no purpose, and just takes
-memory. Note also that disabling per-VLAN snooping does actually flush the
-relevant MDB entries.
+Fix this by starting the search from tmp_age_count=1 to ensure
+entries always have a non-zero initial aging counter. For a
+10-second ageing time this yields AGE_CNT=1 and AGE_UNIT=4 instead:
+the timer ticks every 5 seconds and entries are removed after 2
+ticks.
 
-This patch flushes non-permanent MDB entries as global snooping is
-disabled.
+Starting the search at AGE_CNT=1 raises the minimum representable
+ageing time from 1 to 2 seconds. Without bounds, a stale ageing_time
+of 1 second would now make the loop fall through without setting
+age_count and age_unit, leaving them uninitialized when written to
+the MT7530_AAC hardware register. Set ds->ageing_time_min and
+ds->ageing_time_max so the DSA core validates the range before the
+callback is invoked, and drop the now-redundant range check from
+mt7530_set_ageing_time().
 
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/5e992df1bb93b88e19c0ea5819e23b669e3dde5d.1761228273.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4df78ff02629 ("bridge: mcast: Fix a possible use-after-free when removing a bridge port")
+Fixes: ea6d5c924e39 ("net: dsa: mt7530: support setting ageing time")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/7788ded12dc07b1bce329ec35fa70f4b45f3f9b7.1778766629.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/dsa/mt7530.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index 9bd2914006df7..3d91f5a057509 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4642,6 +4642,14 @@ static void br_multicast_start_querier(struct net_bridge_mcast *brmctx,
- 	rcu_read_unlock();
- }
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 93bf085a61d39..7187efb41dbc8 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -828,12 +828,16 @@ mt7530_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
+ 	unsigned int age_count;
+ 	unsigned int age_unit;
  
-+static void br_multicast_del_grps(struct net_bridge *br)
-+{
-+	struct net_bridge_port *port;
-+
-+	list_for_each_entry(port, &br->port_list, list)
-+		__br_multicast_disable_port_ctx(&port->multicast_ctx);
-+}
-+
- int br_multicast_toggle(struct net_bridge *br, unsigned long val,
- 			struct netlink_ext_ack *extack)
- {
-@@ -4662,6 +4670,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
- 	br_opt_toggle(br, BROPT_MULTICAST_ENABLED, !!val);
- 	if (!br_opt_get(br, BROPT_MULTICAST_ENABLED)) {
- 		change_snoopers = true;
-+		br_multicast_del_grps(br);
- 		goto unlock;
- 	}
+-	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds */
+-	if (secs < 1 || secs > (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1))
+-		return -ERANGE;
+-
+-	/* iterate through all possible age_count to find the closest pair */
+-	for (tmp_age_count = 0; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
++	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds.
++	 * The DSA core has already validated the range using
++	 * ds->ageing_time_min and ds->ageing_time_max.
++	 *
++	 * Iterate through all possible age_count values to find the closest
++	 * pair. Start from 1 because the per-entry aging counter is
++	 * initialized to AGE_CNT and a value of 0 means the entry will
++	 * never be aged out.
++	 */
++	for (tmp_age_count = 1; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
+ 		unsigned int tmp_age_unit = secs / (tmp_age_count + 1) - 1;
+ 
+ 		if (tmp_age_unit <= AGE_UNIT_MAX) {
+@@ -2353,6 +2357,8 @@ mt7530_setup(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	if (priv->id == ID_MT7530) {
+ 		regulator_set_voltage(priv->core_pwr, 1000000, 1000000);
+@@ -2542,6 +2548,8 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	mt753x_trap_frames(priv);
  
 -- 
 2.53.0
