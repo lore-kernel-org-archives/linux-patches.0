@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D6E3290B0;
-	Thu, 28 May 2026 19:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E042F32BF5D;
+	Thu, 28 May 2026 19:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998103; cv=none; b=eB7LmFuGsZwAknllygRlfYrFEF8vc0csxAy3/MYDaUeBFsdBkFugHJE/hQAowjeWtcsiu4X59kkZX8dodMYd5adXJUxnZVq5ewG0exywwko7FsO3KVglZoZJNHsCtq5YmGGXqnqBiODjfAiR/oTBTCIcjrWI9PAPBpZMrzHnkIY=
+	t=1779998105; cv=none; b=ot+xsyIhLaxkuexTyxZSHSk+3V8bX2y0Yvzu5XHT+RhhTOtJSW+S46HtGGp8uO3XcInVhZOUucETWOIGgr/+mjfczGlJsRjewGrUEyvMHP7sFjUmO01/gMNmcKkcrltL01WMibR5FSyzC6e9Tl+yfeipC4GrnJl6HSLMgc67hEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998103; c=relaxed/simple;
-	bh=G3fSPnKk43HJOFieDTXOcVjiN31lIcekdLc9+h7ltrM=;
+	s=arc-20240116; t=1779998105; c=relaxed/simple;
+	bh=h8cqBhw/USkWzqHOfOwBXhZTqQNtkpjqLpvFfzuRasg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTlH7Z11WyH4u6ISLmOX/ojParmm4CoiqMyPemiuIdMlzCtdMSIx5G3kz5N1kMQxfRWqNlBoyGhnDEdCzWhP3SPehm5zUYe/l3AOj0YNOJTrXmq9Tmf73Zc6D3iaEvP9bOwHjmCO9JqbS5UWEdCbpJfxYI7ejZFKoQ+IR6sDr14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHfi9ZwR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YjjgLrd+FIHJrILFm/FFvF95Qw0yEYY7fHDBORUYckcJOMqDL4qZxA/ir/Mq0ngasT63ITqoNrxWkK7ovqBWTMdny0V29eqIp33tR9EfRWxjLe/zQPsGMmXBkH81Z0jEYuX+Gu1+O+ANtKbtFc6JvpHkSTjmS4HAIgnqHntX0LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVwojp7y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHfi9ZwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C98C1F00ADB;
-	Thu, 28 May 2026 19:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVwojp7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D331F000E9;
+	Thu, 28 May 2026 19:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998102;
-	bh=fxiyrGB2ljAxC3mJEnENXNOexBrokPJ/RuaTR/CnUeg=;
+	s=korg; t=1779998104;
+	bh=YfSMMGky1z41ITmj83anOuFOV5fATzRijczZ6pvQcNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dHfi9ZwRLkQl4ADgesua51/laptPGvZa44cZbkOFnfwWERpZmvvMVXRXos3cGt70S
-	 VuTWTETnNLCQEPuzJtGfvOBjuG/fCOOnJIFcnrQvsK0gpnjqJOPZu2Kf8dFA2Wh/ol
-	 WSqo39yl0xav7/nX8DmNClna/w6PNiGBi+0f5xAA=
+	b=PVwojp7yujYtuJ8mpjPE/weLz1nvaJ+4fxZwhtiB07GJxdxMW9v9GQRWYvo2gUnOK
+	 UJL1niKXDMbVF8AefedP/gQjSkDOuA+7Pc6OqSugLTR/DNN/kITlQrZw5T/oU8Shrg
+	 O22dxnxuMUTy7T0t+BNntg2YzDbx71jsFbyGWMCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 055/461] net: ifb: report ethtool stats over num_tx_queues
-Date: Thu, 28 May 2026 21:43:04 +0200
-Message-ID: <20260528194648.503127209@linuxfoundation.org>
+	Luiz Capitulino <luizcap@redhat.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	SeongJae Park <sj@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 038/461] selftests/mm: run_vmtests.sh: fix destructive tests invocation
+Date: Thu, 28 May 2026 21:42:47 +0200
+Message-ID: <20260528194648.000757235@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,101 +59,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Luiz Capitulino <luizcap@redhat.com>
 
-commit 5db89c99566fc4728cc92e941d8e1975711e24b5 upstream.
+commit 3432cbb291aabf85f8af4b9d1ec37179168ff999 upstream.
 
-ifb_dev_init() allocates dp->tx_private to dev->num_tx_queues
-entries via kzalloc_objs(*txp, dev->num_tx_queues). Both IFB
-per-queue RX and TX stats live in those entries: ifb_xmit() updates
-txp->rx_stats using the skb queue mapping, ifb_ri_tasklet() updates
-txp->tx_stats, and ifb_stats64() aggregates both over
-dev->num_tx_queues.
+Destructive tests should be invoked with -d command-line option, but this
+won't work today since 'd' is missing in getopts command-line.  This
+commit fixes it.
 
-The ethtool stats callbacks instead size and walk the per-queue
-stats with dev->real_num_rx_queues and dev->real_num_tx_queues. With
-an asymmetric device where the RX queue count exceeds the TX queue
-count, for example:
-
-    ip link add name ifb10 numtxqueues 1 numrxqueues 8 type ifb
-    ethtool -S ifb10
-
-ifb_get_ethtool_stats() indexes past the tx_private allocation and
-copies adjacent slab data through ETHTOOL_GSTATS.
-
-Use dev->num_tx_queues consistently for the stats strings, the
-stats count, and the stats data walks. This reports one RX stats
-group and one TX stats group for each backing ifb_q_private entry,
-which is the queue set IFB can actually populate.
-
-Reproduced under UML+KASAN at v7.1-rc2:
-
-  BUG: KASAN: slab-out-of-bounds in ifb_fill_stats_data+0x3c/0xae
-  Read of size 8 at addr 0000000062dbd228 by task ethtool/36
-  ifb_fill_stats_data+0x3c/0xae
-  ifb_get_ethtool_stats+0xc0/0x129
-  __dev_ethtool+0x1ca5/0x363c
-  dev_ethtool+0x123/0x1b3
-  dev_ioctl+0x56c/0x744
-  sock_do_ioctl+0x15f/0x1b2
-  sock_ioctl+0x4d5/0x50a
-  sys_ioctl+0xd8b/0xde9
-
-With the patch applied, the same UML+KASAN repro is silent and
-ethtool -S ifb10 reports only the stats backed by the single
-allocated tx_private entry.
-
-Fixes: a21ee5b2fcb8 ("net: ifb: support ethtools stats")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260514013739.3549624-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/214fd9e4-5398-4c26-859e-c982c2e277c3@redhat.com
+Fixes: f16ff3b692ad ("selftests/mm: run_vmtests.sh: add missing tests")
+Signed-off-by: Luiz Capitulino <luizcap@redhat.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ifb.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ tools/testing/selftests/mm/run_vmtests.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ifb.c
-+++ b/drivers/net/ifb.c
-@@ -211,12 +211,12 @@ static void ifb_get_strings(struct net_d
+--- a/tools/testing/selftests/mm/run_vmtests.sh
++++ b/tools/testing/selftests/mm/run_vmtests.sh
+@@ -103,7 +103,7 @@ RUN_ALL=false
+ RUN_DESTRUCTIVE=false
+ TAP_PREFIX="# "
  
- 	switch (stringset) {
- 	case ETH_SS_STATS:
--		for (i = 0; i < dev->real_num_rx_queues; i++)
-+		for (i = 0; i < dev->num_tx_queues; i++)
- 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
- 				ethtool_sprintf(&p, "rx_queue_%u_%.18s",
- 						i, ifb_q_stats_desc[j].desc);
- 
--		for (i = 0; i < dev->real_num_tx_queues; i++)
-+		for (i = 0; i < dev->num_tx_queues; i++)
- 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
- 				ethtool_sprintf(&p, "tx_queue_%u_%.18s",
- 						i, ifb_q_stats_desc[j].desc);
-@@ -229,8 +229,7 @@ static int ifb_get_sset_count(struct net
- {
- 	switch (sset) {
- 	case ETH_SS_STATS:
--		return IFB_Q_STATS_LEN * (dev->real_num_rx_queues +
--					  dev->real_num_tx_queues);
-+		return IFB_Q_STATS_LEN * dev->num_tx_queues * 2;
- 	default:
- 		return -EOPNOTSUPP;
- 	}
-@@ -262,12 +261,12 @@ static void ifb_get_ethtool_stats(struct
- 	struct ifb_q_private *txp;
- 	int i;
- 
--	for (i = 0; i < dev->real_num_rx_queues; i++) {
-+	for (i = 0; i < dev->num_tx_queues; i++) {
- 		txp = dp->tx_private + i;
- 		ifb_fill_stats_data(&data, &txp->rx_stats);
- 	}
- 
--	for (i = 0; i < dev->real_num_tx_queues; i++) {
-+	for (i = 0; i < dev->num_tx_queues; i++) {
- 		txp = dp->tx_private + i;
- 		ifb_fill_stats_data(&data, &txp->tx_stats);
- 	}
+-while getopts "aht:n" OPT; do
++while getopts "aht:nd" OPT; do
+ 	case ${OPT} in
+ 		"a") RUN_ALL=true ;;
+ 		"h") usage ;;
 
 
