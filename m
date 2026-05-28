@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352B225F7B9;
-	Thu, 28 May 2026 20:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ACF2F1FEC;
+	Thu, 28 May 2026 20:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000713; cv=none; b=VkLobF/Vo9glN9SgItSZo4e5QbY8c6nb6FE/9ck6o2lYajvMGnKx1G50zlnS6aGdg8OOlksNtryAW0s5ppuJAb19YYShuqrrcFYG6C3Ch/5fE3grADFEc1VFEzzQVrRQWBd3Xs/+g9dbUIHhZ/PgH5o1rj9tWUDhFutLxxsI9KA=
+	t=1780000715; cv=none; b=EVJZErWpZWJLQ8CrPsFoXsY49B4bCfO9AlQdJ0SWvkYJKiO/SGMSukMAGkEKN9tfrTeOQYIUNJqzV3QKJQDztFtaraBVp/63MXsPhG44ZQNVea2B7ABiRU9HWh0U+kcUqc7LWHf2h5Jq9aq+UW05/j20KLrS5Qo6IUlzTyDzMaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000713; c=relaxed/simple;
-	bh=ygwnuTFAwK86YZ0soBxER8akbGHxK2c9i7v9ZWPnt2o=;
+	s=arc-20240116; t=1780000715; c=relaxed/simple;
+	bh=g6w5WzS87WlvmlM4ne2KIgzBa71w7AWwfOW/TotMLzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBrTpRHSNDSRk+lmAV9cdRJaFVgNBlBKmnCXw2XENueh89wEyF3VlY00p8nDJEFd4QieY1+t90+tYxU9UNTG0IG1yJBlzHxgDGXfGnEall56831utbWu7zrK/s/Xpl5KoUpwg8NdqDdMg6yPI1ZXEuDDdw+BeF8vlm5gvK52Q78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KelXILnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g0R+C2GrNdkgqPN/lbxDkjQTL5uX2JmpmOBlxWvKfCkMZQ86rvLRWt5+NQqupG8cXydqF72Ggr+qI7gk2pc7HEFJzjuupMG4uQBxZ3She8+aSlBskHzffRtt8nIy9FGDmDE7pUmtIeCsaozIVLPV4qPAMjUhKHf+bKaTPRYI9kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yetDjByc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KelXILnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404421F000E9;
-	Thu, 28 May 2026 20:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yetDjByc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA481F000E9;
+	Thu, 28 May 2026 20:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000711;
-	bh=fLP54U2p2YJYSt69k0+PIzEkNEVWG1vczANAieSEObQ=;
+	s=korg; t=1780000714;
+	bh=t7jL5mPFkCyjdWXGKbCzjSS+uKrbiZHwZoPrkmPrEdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KelXILnjF30XIhLc0ajU/bDOHkT68ZhMDpXOvdFQEIOMQPxn+W4Up6BP5mY/s5V2M
-	 NGQnhEgscMPLgXe/d+ZFnEdutCCopmmv4Xkwornc2wzrxpB+Riz0oAmtRSkGL+hNfh
-	 DeHUDC00UPBuh1Ruo+3zz1zPnzbytzDFUBCzO8H4=
+	b=yetDjBycLEaqMZOiVFVuDFA1vClvjr+TEpy4H2lHVVPF3uM4hrDdSSB2xt2FNzHAN
+	 Lh9Mc0VZcVujjhwBC63DzzTICCSjs8Q3OmrMI09AYYYEM/P7L0MSzGXe3rsugLA5/Z
+	 GKgrzrnlq1g23IwQvfJC4n35hyqDfeCbY0PAjhac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/272] ARM: dts: renesas: rskrza1: Drop superfluous cells
-Date: Thu, 28 May 2026 21:48:37 +0200
-Message-ID: <20260528194633.375362812@linuxfoundation.org>
+Subject: [PATCH 6.12 144/272] pinctrl: renesas: rzg2l: Fix incorrect PUPD register offset for high pins during suspend/resume
+Date: Thu, 28 May 2026 21:48:38 +0200
+Message-ID: <20260528194633.403824812@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -45,43 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit ab83176d3cf1cf1c1f6e604432905bda4515d17f ]
+[ Upstream commit 6dba9b7268cc50166bce47608670192fd874e363 ]
 
-Drop superfluous address-cells and size-cells to fix DTC W=1 warning:
+When saving/restoring pull-up/down register state during suspend/resume,
+the second PUPD register access was incorrectly using the same base offset
+as the first, effectively reading/writing the same register twice instead
+of the adjacent one.
 
-    arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts:32.17-72.4: Warning (avoid_unnecessary_addr_size): /flash@18000000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
+Add the correct + 4 byte offset to the second RZG2L_PCTRL_REG_ACCESS32
+call so that pupd[1][port] is properly saved and restored from the next
+32-bit register in the PUPD register pair, covering pins 4–7 of ports
+with 4 or more pins.
 
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Fixes: 98537eb77d3ef185 ("ARM: dts: renesas: rskrza1: Add FLASH nodes")
+Fixes: b2bd65fbb617 ("pinctrl: renesas: rzg2l: Add suspend/resume support for pull up/down")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260327234244.91707-7-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20260328090548.84124-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts b/arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts
-index b547216d48014..416c741034482 100644
---- a/arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts
-+++ b/arch/arm/boot/dts/renesas/r7s72100-rskrza1.dts
-@@ -36,8 +36,6 @@ flash@18000000 {
- 		power-domains = <&cpg_clocks>;
- 		bank-width = <4>;
- 		device-width = <1>;
--		#address-cells = <1>;
--		#size-cells = <1>;
- 
- 		partitions {
- 			compatible = "fixed-partitions";
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index bcb0c39369e05..17e27879fd623 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -2849,7 +2849,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
+ 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off),
+ 						 cache->pupd[0][port]);
+ 			if (pincnt >= 4) {
+-				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off),
++				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off) + 4,
+ 							 cache->pupd[1][port]);
+ 			}
+ 		}
 -- 
 2.53.0
 
