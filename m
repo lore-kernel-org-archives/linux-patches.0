@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5D2317164;
-	Thu, 28 May 2026 20:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE8F317164;
+	Thu, 28 May 2026 20:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000863; cv=none; b=CKpieIIR2AWtz4BatkjDMfzvMQd+8CEwMJtYJhihMlZ33ZBazkrVIn4BgfeU3uYY1wumTmNks1ePAUAMmjmW36ip9affQ33w+D75wWUNqKC6M9bnsO9u2AFgPDSNJxC+WOqEq5gS+/3I0KJ05qtmY+M4+BijKg6oV7dhvglxFv8=
+	t=1780000865; cv=none; b=IvqrJWNcyIYFaxYx5UG51xqIdJrXLgIJGa3uor5qCbLIBkgV1A2EzeKOTJwAZ3lsm3j5EQ4SQns057CTs2NoLBRy/neRF9L1ddmDHUFVtYCeG9j65lTxtIyLqPsKKedHvRYe8qCggTz9Jfwf8j9x5kN6PCkWuR5u/tYBT7gZc18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000863; c=relaxed/simple;
-	bh=gjZnIRGZ3i9RV/DdA3h7m7wOUTeCmEW4SOTZnTShLn8=;
+	s=arc-20240116; t=1780000865; c=relaxed/simple;
+	bh=6sVpRQM9aSPOk06g88Rsdc6IIm5+gK+M5GXf67An98M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHQdAWcrl9J1pRXZJ5/7TnlV8sCbmDkz4XwHjfQOuO6IsgA2Zl/PKDh3Phkf9WrzCrAtppJ3XwRzp/XIVlNijY/oGJ8Ln+PbbzABrXUWVBSEvOCNF/E88fr3+UxBhV454nfOnt97DQOmXsqN7zSbfJN5vjrKM/GtzEnzPG5MJgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXNTseNL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IR9LjrI9t1n/iCWj+oEY3F7oOmBzJKmi2t5S7DcSSfHis34CX4WDqrbIHU7tYoUb23r97U8sg24io9Q117QYfpOFqOdQxbZva7eB8rajQu7SlY28A7z/qfkAh/r3261QgJFxitCO8ZiLRhKZPSDsTUSAWE11JD+C+E9JPTC85Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJrO2+fW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXNTseNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360471F000E9;
-	Thu, 28 May 2026 20:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJrO2+fW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CD41F000E9;
+	Thu, 28 May 2026 20:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000861;
-	bh=ze5r4KnetrPq1Rjb89AbnWWMfyqo4Z/ZKd7dfWOF4aw=;
+	s=korg; t=1780000864;
+	bh=IX2q0qrSwvAEa40ASLPP30xUDswqRzd3rkHposRlPvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXNTseNLkK8eNDrXJGe7eb06iRMFQf8BJH4K/zBT0nNkn61D5DkpAVwEYN5HOQaZF
-	 q+7rO1r7MnrkiCn79NPQINS7kd+DCxPXO13P8Lz3ufO7B1jqYKLEXEwzXa5vZBsTRk
-	 e1/xXyor6fYuWXI6pc9TRBwmVXzl+6bsPBJPZPQo=
+	b=mJrO2+fWXgDpgH+Wuyobe6G3x2Ww7/bMy4RrbpBtyV7Mqee3V1cFnsU2QI+ZCDq4h
+	 +PqN6Usx+yHj11TeROiV1Uw7NGJUc59TnlIyKudfqYt030NWmsplUWXelA2+DsMF/h
+	 BumAY+t0ohz8mTNCr1pnQl5LZCrUL0MrALzCDL/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.12 168/272] netfilter: Exclude LEGACY TABLES on PREEMPT_RT.
-Date: Thu, 28 May 2026 21:49:02 +0200
-Message-ID: <20260528194634.029618376@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 195/272] netfs: Fix potential deadlock in write-through mode
+Date: Thu, 28 May 2026 21:49:29 +0200
+Message-ID: <20260528194634.724053423@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,333 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9fce66583f06c212e95e4b76dd61d8432ffa56b6 ]
+[ Upstream commit b6a4ae1634b3ad2aaa05222e53d36da532852faf ]
 
-The seqcount xt_recseq is used to synchronize the replacement of
-xt_table::private in xt_replace_table() against all readers such as
-ipt_do_table()
+Fix netfs_advance_writethrough() to always unlock the supplied folio and to
+mark it dirty if it isn't yet written to the end.  Unfortunately, it can't
+be marked for writeback until the folio is done with as that may cause a
+deadlock against mmapped reads and writes.
 
-To ensure that there is only one writer, the writing side disables
-bottom halves. The sequence counter can be acquired recursively. Only the
-first invocation modifies the sequence counter (signaling that a writer
-is in progress) while the following (recursive) writer does not modify
-the counter.
-The lack of a proper locking mechanism for the sequence counter can lead
-to live lock on PREEMPT_RT if the high prior reader preempts the
-writer. Additionally if the per-CPU lock on PREEMPT_RT is removed from
-local_bh_disable() then there is no synchronisation for the per-CPU
-sequence counter.
+Even though it has been marked dirty, premature writeback can't occur as
+the caller is holding both inode->i_rwsem (which will prevent concurrent
+truncation, fallocation, DIO and other writes) and ictx->wb_lock (which
+will cause flushing to wait and writeback to skip or wait).
 
-The affected code is "just" the legacy netfilter code which is replaced
-by "netfilter tables". That code can be disabled without sacrificing
-functionality because everything is provided by the newer
-implementation. This will only requires the usage of the "-nft" tools
-instead of the "-legacy" ones.
-The long term plan is to remove the legacy code so lets accelerate the
-progress.
+Note that this may be easier to deal with once the queuing of folios is
+split from the generation of subrequests.
 
-Relax dependencies on iptables legacy, replace select with depends on,
-this should cause no harm to existing kernel configs and users can still
-toggle IP{6}_NF_IPTABLES_LEGACY in any case.
-Make EBTABLES_LEGACY, IPTABLES_LEGACY and ARPTABLES depend on
-NETFILTER_XTABLES_LEGACY. Hide xt_recseq and its users,
-xt_register_table() and xt_percpu_counter_alloc() behind
-NETFILTER_XTABLES_LEGACY. Let NETFILTER_XTABLES_LEGACY depend on
-!PREEMPT_RT.
-
-This will break selftest expecing the legacy options enabled and will be
-addressed in a following patch.
-
-Co-developed-by: Florian Westphal <fw@strlen.de>
-Co-developed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Closes: https://sashiko.dev/#/patchset/20260427154639.180684-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-15-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/Kconfig | 10 +++++-----
- net/ipv4/netfilter/Kconfig   | 24 ++++++++++++------------
- net/ipv6/netfilter/Kconfig   | 19 +++++++++----------
- net/netfilter/Kconfig        | 10 ++++++++++
- net/netfilter/x_tables.c     | 16 +++++++++++-----
- 5 files changed, 47 insertions(+), 32 deletions(-)
+ fs/netfs/write_issue.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
-index f16bbbbb94817..60f28e4fb5c0a 100644
---- a/net/bridge/netfilter/Kconfig
-+++ b/net/bridge/netfilter/Kconfig
-@@ -42,8 +42,8 @@ config NF_CONNTRACK_BRIDGE
- # old sockopt interface and eval loop
- config BRIDGE_NF_EBTABLES_LEGACY
- 	tristate "Legacy EBTABLES support"
--	depends on BRIDGE && NETFILTER_XTABLES
--	default n
-+	depends on BRIDGE && NETFILTER_XTABLES_LEGACY
-+	default	n
- 	help
- 	 Legacy ebtables packet/frame classifier.
- 	 This is not needed if you are using ebtables over nftables
-@@ -65,7 +65,7 @@ if BRIDGE_NF_EBTABLES
- #
- config BRIDGE_EBT_BROUTE
- 	tristate "ebt: broute table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables broute table is used to define rules that decide between
- 	  bridging and routing frames, giving Linux the functionality of a
-@@ -76,7 +76,7 @@ config BRIDGE_EBT_BROUTE
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index b7830a15ae40f..2789ac4c80272 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -402,12 +402,7 @@ static int netfs_write_folio(struct netfs_io_request *wreq,
+ 	if (streamw)
+ 		netfs_issue_write(wreq, cache);
  
- config BRIDGE_EBT_T_FILTER
- 	tristate "ebt: filter table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables filter table is used to define frame filtering rules at
- 	  local input, forwarding and local output. See the man page for
-@@ -86,7 +86,7 @@ config BRIDGE_EBT_T_FILTER
+-	/* Flip the page to the writeback state and unlock.  If we're called
+-	 * from write-through, then the page has already been put into the wb
+-	 * state.
+-	 */
+-	if (wreq->origin == NETFS_WRITEBACK)
+-		folio_start_writeback(folio);
++	folio_start_writeback(folio);
+ 	folio_unlock(folio);
  
- config BRIDGE_EBT_T_NAT
- 	tristate "ebt: nat table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables nat table is used to define rules that alter the MAC
- 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
-diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
-index ef8009281da5c..2c438b140e88f 100644
---- a/net/ipv4/netfilter/Kconfig
-+++ b/net/ipv4/netfilter/Kconfig
-@@ -13,8 +13,8 @@ config NF_DEFRAG_IPV4
- # old sockopt interface and eval loop
- config IP_NF_IPTABLES_LEGACY
- 	tristate "Legacy IP tables support"
--	default	n
--	select NETFILTER_XTABLES
-+	depends on NETFILTER_XTABLES_LEGACY
-+	default	m if NETFILTER_XTABLES_LEGACY
- 	help
- 	  iptables is a legacy packet classifier.
- 	  This is not needed if you are using iptables over nftables
-@@ -182,8 +182,8 @@ config IP_NF_MATCH_TTL
- # `filter', generic and specific targets
- config IP_NF_FILTER
- 	tristate "Packet filtering"
--	default m if NETFILTER_ADVANCED=n
--	select IP_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  Packet filtering defines a table `filter', which has a series of
- 	  rules for simple packet filtering at local input, forwarding and
-@@ -220,10 +220,10 @@ config IP_NF_TARGET_SYNPROXY
- config IP_NF_NAT
- 	tristate "iptables NAT support"
- 	depends on NF_CONNTRACK
-+	depends on IP_NF_IPTABLES_LEGACY
- 	default m if NETFILTER_ADVANCED=n
- 	select NF_NAT
- 	select NETFILTER_XT_NAT
--	select IP_NF_IPTABLES_LEGACY
- 	help
- 	  This enables the `nat' table in iptables. This allows masquerading,
- 	  port forwarding and other forms of full Network Address Port
-@@ -263,8 +263,8 @@ endif # IP_NF_NAT
- # mangle + specific targets
- config IP_NF_MANGLE
- 	tristate "Packet mangling"
--	default m if NETFILTER_ADVANCED=n
--	select IP_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `mangle' table to iptables: see the man page for
- 	  iptables(8).  This table is used for various packet alterations
-@@ -299,7 +299,7 @@ config IP_NF_TARGET_TTL
- # raw + specific targets
- config IP_NF_RAW
- 	tristate  'raw table support (required for NOTRACK/TRACE)'
--	select IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `raw' table to iptables. This table is the very
- 	  first in the netfilter framework and hooks in at the PREROUTING
-@@ -313,7 +313,7 @@ config IP_NF_SECURITY
- 	tristate "Security table"
- 	depends on SECURITY
- 	depends on NETFILTER_ADVANCED
--	select IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `security' table to iptables, for use
- 	  with Mandatory Access Control (MAC) policy.
-@@ -325,8 +325,8 @@ endif # IP_NF_IPTABLES
- # ARP tables
- config IP_NF_ARPTABLES
- 	tristate "Legacy ARPTABLES support"
--	depends on NETFILTER_XTABLES
--	default n
-+	depends on NETFILTER_XTABLES_LEGACY
-+	default	n
- 	help
- 	  arptables is a legacy packet classifier.
- 	  This is not needed if you are using arptables over nftables
-@@ -342,7 +342,7 @@ config IP_NF_ARPFILTER
- 	tristate "arptables-legacy packet filtering support"
- 	select IP_NF_ARPTABLES
- 	select NETFILTER_FAMILY_ARP
--	depends on NETFILTER_XTABLES
-+	depends on NETFILTER_XTABLES_LEGACY
- 	help
- 	  ARP packet filtering defines a table `filter', which has a series of
- 	  rules for simple ARP packet filtering at local input and
-diff --git a/net/ipv6/netfilter/Kconfig b/net/ipv6/netfilter/Kconfig
-index e087a8e97ba78..276860f65baae 100644
---- a/net/ipv6/netfilter/Kconfig
-+++ b/net/ipv6/netfilter/Kconfig
-@@ -9,9 +9,8 @@ menu "IPv6: Netfilter Configuration"
- # old sockopt interface and eval loop
- config IP6_NF_IPTABLES_LEGACY
- 	tristate "Legacy IP6 tables support"
--	depends on INET && IPV6
--	select NETFILTER_XTABLES
--	default n
-+	depends on INET && IPV6 && NETFILTER_XTABLES_LEGACY
-+	default	m if NETFILTER_XTABLES_LEGACY
- 	help
- 	  ip6tables is a legacy packet classifier.
- 	  This is not needed if you are using iptables over nftables
-@@ -196,8 +195,8 @@ config IP6_NF_TARGET_HL
- 
- config IP6_NF_FILTER
- 	tristate "Packet filtering"
--	default m if NETFILTER_ADVANCED=n
--	select IP6_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	tristate
- 	help
- 	  Packet filtering defines a table `filter', which has a series of
-@@ -233,8 +232,8 @@ config IP6_NF_TARGET_SYNPROXY
- 
- config IP6_NF_MANGLE
- 	tristate "Packet mangling"
--	default m if NETFILTER_ADVANCED=n
--	select IP6_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `mangle' table to iptables: see the man page for
- 	  iptables(8).  This table is used for various packet alterations
-@@ -244,7 +243,7 @@ config IP6_NF_MANGLE
- 
- config IP6_NF_RAW
- 	tristate  'raw table support (required for TRACE)'
--	select IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `raw' table to ip6tables. This table is the very
- 	  first in the netfilter framework and hooks in at the PREROUTING
-@@ -258,7 +257,7 @@ config IP6_NF_SECURITY
- 	tristate "Security table"
- 	depends on SECURITY
- 	depends on NETFILTER_ADVANCED
--	select IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `security' table to iptables, for use
- 	  with Mandatory Access Control (MAC) policy.
-@@ -269,8 +268,8 @@ config IP6_NF_NAT
- 	tristate "ip6tables NAT support"
- 	depends on NF_CONNTRACK
- 	depends on NETFILTER_ADVANCED
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	select NF_NAT
--	select IP6_NF_IPTABLES_LEGACY
- 	select NETFILTER_XT_NAT
- 	help
- 	  This enables the `nat' table in ip6tables. This allows masquerading,
-diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index df2dc21304efb..0d1d997abe191 100644
---- a/net/netfilter/Kconfig
-+++ b/net/netfilter/Kconfig
-@@ -762,6 +762,16 @@ config NETFILTER_XTABLES_COMPAT
- 
- 	   If unsure, say N.
- 
-+config NETFILTER_XTABLES_LEGACY
-+	bool "Netfilter legacy tables support"
-+	depends on !PREEMPT_RT
-+	help
-+	  Say Y here if you still require support for legacy tables. This is
-+	  required by the legacy tools (iptables-legacy) and is not needed if
-+	  you use iptables over nftables (iptables-nft).
-+	  Legacy support is not limited to IP, it also includes EBTABLES and
-+	  ARPTABLES.
-+
- comment "Xtables combined modules"
- 
- config NETFILTER_XT_MARK
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index efe7b7d71e7f7..1ca4fa9d249b8 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -1340,12 +1340,13 @@ void xt_compat_unlock(u_int8_t af)
- EXPORT_SYMBOL_GPL(xt_compat_unlock);
- #endif
- 
--DEFINE_PER_CPU(seqcount_t, xt_recseq);
--EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
--
- struct static_key xt_tee_enabled __read_mostly;
- EXPORT_SYMBOL_GPL(xt_tee_enabled);
- 
-+#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
-+DEFINE_PER_CPU(seqcount_t, xt_recseq);
-+EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
-+
- static int xt_jumpstack_alloc(struct xt_table_info *i)
+ 	if (fgroup == NETFS_FOLIO_COPY_TO_CACHE) {
+@@ -632,29 +627,41 @@ int netfs_advance_writethrough(struct netfs_io_request *wreq, struct writeback_c
+ 			       struct folio *folio, size_t copied, bool to_page_end,
+ 			       struct folio **writethrough_cache)
  {
- 	unsigned int size;
-@@ -1537,6 +1538,7 @@ void *xt_unregister_table(struct xt_table *table)
- 	return private;
- }
- EXPORT_SYMBOL_GPL(xt_unregister_table);
-+#endif
++	int ret;
++
+ 	_enter("R=%x ic=%zu ws=%u cp=%zu tp=%u",
+ 	       wreq->debug_id, wreq->iter.count, wreq->wsize, copied, to_page_end);
  
- #ifdef CONFIG_PROC_FS
- static void *xt_table_seq_start(struct seq_file *seq, loff_t *pos)
-@@ -1920,6 +1922,7 @@ void xt_proto_fini(struct net *net, u_int8_t af)
- }
- EXPORT_SYMBOL_GPL(xt_proto_fini);
+-	if (!*writethrough_cache) {
+-		if (folio_test_dirty(folio))
+-			/* Sigh.  mmap. */
+-			folio_clear_dirty_for_io(folio);
++	/* The folio is locked. */
  
-+#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
- /**
-  * xt_percpu_counter_alloc - allocate x_tables rule counter
-  *
-@@ -1974,6 +1977,7 @@ void xt_percpu_counter_free(struct xt_counters *counters)
- 		free_percpu((void __percpu *)pcnt);
- }
- EXPORT_SYMBOL_GPL(xt_percpu_counter_free);
-+#endif
- 
- static int __net_init xt_net_init(struct net *net)
- {
-@@ -2006,8 +2010,10 @@ static int __init xt_init(void)
- 	unsigned int i;
- 	int rv;
- 
--	for_each_possible_cpu(i) {
--		seqcount_init(&per_cpu(xt_recseq, i));
-+	if (IS_ENABLED(CONFIG_NETFILTER_XTABLES_LEGACY)) {
-+		for_each_possible_cpu(i) {
-+			seqcount_init(&per_cpu(xt_recseq, i));
++	if (*writethrough_cache != folio) {
++		if (*writethrough_cache) {
++			/* Did the folio get moved? */
++			folio_put(*writethrough_cache);
++			*writethrough_cache = NULL;
 +		}
+ 		/* We can make multiple writes to the folio... */
+-		folio_start_writeback(folio);
+ 		if (wreq->len == 0)
+ 			trace_netfs_folio(folio, netfs_folio_trace_wthru);
+ 		else
+ 			trace_netfs_folio(folio, netfs_folio_trace_wthru_plus);
+ 		*writethrough_cache = folio;
++		folio_get(folio);
  	}
  
- 	xt = kcalloc(NFPROTO_NUMPROTO, sizeof(struct xt_af), GFP_KERNEL);
+ 	wreq->len += copied;
+-	if (!to_page_end)
++
++	if (!to_page_end) {
++		folio_mark_dirty(folio);
++		folio_unlock(folio);
+ 		return 0;
++	}
+ 
++	ret = netfs_write_folio(wreq, wbc, folio);
++	folio_put(*writethrough_cache);
+ 	*writethrough_cache = NULL;
+-	return netfs_write_folio(wreq, wbc, folio);
++	wreq->submitted = wreq->len;
++	return ret;
+ }
+ 
+ /*
+@@ -668,8 +675,12 @@ int netfs_end_writethrough(struct netfs_io_request *wreq, struct writeback_contr
+ 
+ 	_enter("R=%x", wreq->debug_id);
+ 
+-	if (writethrough_cache)
++	if (writethrough_cache) {
++		folio_lock(writethrough_cache);
+ 		netfs_write_folio(wreq, wbc, writethrough_cache);
++		folio_put(writethrough_cache);
++		wreq->submitted = wreq->len;
++	}
+ 
+ 	netfs_end_issue_write(wreq);
+ 
 -- 
 2.53.0
 
