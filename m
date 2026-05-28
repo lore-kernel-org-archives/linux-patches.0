@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B03340409;
-	Thu, 28 May 2026 19:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBD43290B0;
+	Thu, 28 May 2026 19:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998212; cv=none; b=o4oCm5PMEeZtwnreblMCv+xublXNBeteDG4O9Ey4zj7Df9ciHgq4HAQUJR8tAn94vyS1Xyk092nwfj1ydao1RX761hxAnYReI8x4VB4rNhK0c8fAJk/3J+cUTDwv2vQMUb4oCz8wC91ytQW0Pg1NeRcCp6P9mvYY9qDtMrBfqiA=
+	t=1779998216; cv=none; b=uu6iLJhdVtI+3cCWqFsZMQ1IH8UVpNDaEspqfGq3lCXltctedW6iJMNdGNYfUHsAehzP+721g0rNCDD7fU0XicHvdThjx3aFo/MvFoATj9RwTUJ3UMul8L/6RZeJRV+p7vazMzJtBLD7EQGOicM7tnTIpNPLA0pj63t5Q4JH7ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998212; c=relaxed/simple;
-	bh=eL/XaZH4Bsnw621E/BbSvOAJTVD9EKpKf/7hTtdUwmE=;
+	s=arc-20240116; t=1779998216; c=relaxed/simple;
+	bh=Erq+Aq3qyICQp6FYFbZpE+zPJePcN8KBf4nGoeDGC6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ka22Y2oU2L3awNExqwMYCkonDX/J5EGr+QI/YXkxRW5wEqQFSP28kG8JG91+H/288TcLjaHxRLgBO8JpejfCWWHFwTuYP7LTTrHCnoMJ7wIb2sSl/0TU6TwG9EqwW0k/EzaQDyv7INo6Fwl11PScEvIRMOTFSaxKQFNaygDeEFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLZEaPNI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iYqvraCyEec5SNLFDCf5AO/CEuGfoXRCBW/1SzAB6LhraG3jd9NR3nzfcxgd4vOCFwgkJAXAq6PBEwQRUbf10hUmngx0a/+LE0yRroIWTliyQxm0LQiXCqVswfMP4zxS8mOWgyVemnQt/gaNxeknJZU/s/6hLysqFugOjPNuTyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fM+C15J7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLZEaPNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7638B1F000E9;
-	Thu, 28 May 2026 19:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM+C15J7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C291F00A3E;
+	Thu, 28 May 2026 19:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998211;
-	bh=dlPuiXr62WniOdF6e10fLwiJ0NQij8roTooivzi7nXY=;
+	s=korg; t=1779998213;
+	bh=1xiTrsnHQSRCcJQXAYDWDEgCb7LSlqlrVfoxxG/g7YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLZEaPNIDS98MX2N3LDSFZJkcyMdNfl957HGske5cETtbGWUJBcyG9RPKDHfiXmeJ
-	 6T3DMJWFIxjMP5XW25eOhOZhzyEkcDgpghghcmCp0djX+BnyVrdLdnKMfKTBmuc3Ji
-	 oRx0BPVjtvUm37CbN+JN5UGLYtrnkDKBBKfaiO9o=
+	b=fM+C15J7ml3d+Iy73kP9N3nxQQB5vpb3Lgc4Wma03BmMWO45IbE03SQsESTkrgzwA
+	 s/nj8eco57H/B/rxR0P+dONLNM1npSxIQhguV6mi7ei1Rd61KAYKN6P5ZJ4dB4iJs+
+	 XJzrgoURPms7jzV7z6/K0uV9DiiYNhfJ+s6Jc884=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.0 094/461] wifi: mac80211: consume only present negotiated TTLM maps
-Date: Thu, 28 May 2026 21:43:43 +0200
-Message-ID: <20260528194649.660302469@linuxfoundation.org>
+	Kyle Farnung <kfarnung@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 7.0 077/461] wifi: ath11k: clear shared SRNG pointer state on restart
+Date: Thu, 28 May 2026 21:43:26 +0200
+Message-ID: <20260528194649.147484238@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,56 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Kyle Farnung <kfarnung@gmail.com>
 
-commit a6e6ccd5bd07155c2add6c74ce1a5e68ad3b95ea upstream.
+commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
 
-ieee80211_tid_to_link_map_size_ok() validates negotiated TTLM elements
-against the number of link-map entries indicated by link_map_presence.
-ieee80211_parse_neg_ttlm() must consume the same layout.
+LMAC rings reuse the shared rdp/wrp pointer buffers without going
+through the normal SRNG hw-init path that zeros non-LMAC ring
+pointers. After restart, ath11k_hal_srng_clear() can therefore hand
+stale hp/tp state from the previous firmware instance back to the new
+one.
 
-The parser advanced its cursor for every TID, including TIDs whose
-presence bit is clear and therefore have no map bytes in the element.
-A sparse map can then make a later present TID read past the validated
-element.
+Clear the shared pointer buffers while keeping the allocations in
+place so restart still avoids reallocating SRNG DMA memory, but starts
+with fresh ring-pointer state.
 
-The bad bytes land in neg_ttlm->{up,down}link[tid] but are gated by
-valid_links before being applied to driver state, so a peer cannot
-turn the read into a policy change.  Under KUnit + KASAN with an
-exact-sized element allocation the OOB read is reported as a
-slab-out-of-bounds; whether the same trigger fires under the
-production RX path depends on surrounding allocator state.
-
-Advance the cursor only when the current TID has a map present.
-
-Fixes: 8f500fbc6c65 ("wifi: mac80211: process and save negotiated TID to Link mapping request")
+Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260515151719.1317659-2-michael.bommarito@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
+Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -8070,6 +8070,7 @@ ieee80211_parse_neg_ttlm(struct ieee8021
- 					 "No active links for TID %d", tid);
- 				return -EINVAL;
- 			}
-+			pos += map_size;
- 		} else {
- 			map = 0;
- 		}
-@@ -8088,7 +8089,6 @@ ieee80211_parse_neg_ttlm(struct ieee8021
- 		default:
- 			return -EINVAL;
- 		}
--		pos += map_size;
- 	}
- 	return 0;
- }
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1387,14 +1387,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
+ 
+ void ath11k_hal_srng_clear(struct ath11k_base *ab)
+ {
+-	/* No need to memset rdp and wrp memory since each individual
+-	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
+-	 * and ath11k_hal_srng_dst_hw_init().
++	/*
++	 * Preserve the shared pointer buffers, but clear the previous
++	 * firmware instance's hp/tp state before handing them back to FW.
++	 * LMAC rings reuse this shared memory without going through the
++	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
+ 	 */
+ 	memset(ab->hal.srng_list, 0,
+ 	       sizeof(ab->hal.srng_list));
+ 	memset(ab->hal.shadow_reg_addr, 0,
+ 	       sizeof(ab->hal.shadow_reg_addr));
++	if (ab->hal.rdp.vaddr)
++		memset(ab->hal.rdp.vaddr, 0,
++		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
++	if (ab->hal.wrp.vaddr)
++		memset(ab->hal.wrp.vaddr, 0,
++		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
+ 	ab->hal.avail_blk_resource = 0;
+ 	ab->hal.current_blk_index = 0;
+ 	ab->hal.num_shadow_reg_configured = 0;
 
 
