@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8901C3318;
-	Thu, 28 May 2026 20:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498CC1EA65;
+	Thu, 28 May 2026 20:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000160; cv=none; b=UkmzVJOILwqM4QdQbkQuDl1Ribuv0OycwxWyhB+odRrsaeFDFHFJonA8197OBOPPDUj+EQ5/jW4fSKbjsm6mpxv1N3rGRq8gIbHs0/e5YJQZpMcS9CK0ldxqZV0FPE7DbAS/Wa/+xD1lelU6yLKX/MLuarBa5/LNmctvN8rCxoI=
+	t=1780000163; cv=none; b=tM9EpgWq3FubqrwTgOErLnwgHX687zA6YCcT/2go2JVBn6FJpqYqZVvi7KUclVuBEdRvwRRqH2ZpeWM9bZXNX9Z+xqRb2x5DUTD4NrMnH8vIv6hH+5WF4etjkHnnIeIjbsSoy8lyOxJgM9XBAMLWcpG9NV/981ApP2pRBdgwrSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000160; c=relaxed/simple;
-	bh=tmB68RTZtPPbE+F5ozsXtx3CxtLTVzVAqJLw41DsGuI=;
+	s=arc-20240116; t=1780000163; c=relaxed/simple;
+	bh=5OGdFqo2oWZ5l713qJMvkpU0PWQmv9u8eYDs6x+3UDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSu8+C0D9tgqwgBTyI9Aj2KiNqDcg1zDegYDfcB8oBwcE9zlpU7BWCeL3TYInNzKd2Ocpp152NIrCQuYlBVE7Q6jITbIzIdrWmmfLQF3aAXrjmEoEIAEVKnHTEdSC4CwxY0+uOjva2ibUmzB4G5UVeu5pCQPZBmH8g1oIu2b978=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbTcwVbx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IkxBn4icO7NfKZEPlOfvF3EXTjhnpzsNtLXp0ptH3DSgU4qj3GSw1sRvcgFhQw1RpSnTFP9mfpnXlJUyyf+m3Vr5fzO/Z8oNEliArGShSstPAseJ4rlpNvLvmlGr3sy9mPIHftl4NhMl4DvZzj6ErWMeRzQ+cfkADVxDBYFTw7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dc86kzx+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbTcwVbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E375F1F000E9;
-	Thu, 28 May 2026 20:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dc86kzx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84141F000E9;
+	Thu, 28 May 2026 20:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000159;
-	bh=d1/DJty51tJxVc7DD6BiRFXbw2jlpI4Pu4kGE2Jp1vI=;
+	s=korg; t=1780000162;
+	bh=uPCsTjpYo7jKb+NffYUyZegteReDiKpe2qVl9PI2lX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BbTcwVbxloEW6w+qA2qllbtG2ER9MuOQtgLEJPkkc10l6MVaQaFFVCSZHtm8vdgGs
-	 7YXSOTltgsnScHwAublGaluvGXkLLPLDrHXwnmlWTO1lpecg5ETDCqcShRN0deY2jE
-	 nuERYr7J2FOxRbXbTMwXukHyQBTNl/639v18Fp2Y=
+	b=Dc86kzx+fNx/phWqyikWwxPxr5HJ81T8ILCvCNv9hxs4AZ41/fblM8O4NzOXuA9pd
+	 Szc02Rtx6K83kLL5tpmEYshRIbBWrL5EszbwkXzpyYru/oJ3yz9DzxAwKPsHyySHIt
+	 Zne9s47oJVPH/sq3CyVrBWDWf8cDFRN9rIvysjww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 324/377] igc: set tx buffer type for SMD frames
-Date: Thu, 28 May 2026 21:49:22 +0200
-Message-ID: <20260528194647.788601828@linuxfoundation.org>
+Subject: [PATCH 6.18 325/377] drm/i915/dp: Fix readback for target_rr in Adaptive Sync SDP
+Date: Thu, 28 May 2026 21:49:23 +0200
+Message-ID: <20260528194647.817068577@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -49,50 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-[ Upstream commit 5acc641e590e008caaed480ed9ffae47cf7ecbdf ]
+[ Upstream commit f87abd0c6604fb6cc31cc86fc7ccc6a576924352 ]
 
-Sashiko pointed out that igc_fpe_init_smd_frame() initializes
-igc_tx_buffer fields for an SMD skb, but does not set the buffer type:
-https://sashiko.dev/#/patchset/20260415025226.114115-1-kohei%40enjuk.jp
+Correct the bit-shift logic to properly readback the 10 bit target_rr from
+DB3 and DB4.
 
-Since igc_tx_buffer entries are reused, a stale XDP or XSK type can
-remain and make TX completion use the wrong cleanup path.
+v2: Align the style with readback for vtotal. (Ville)
 
-Set the buffer type to IGC_TX_BUFFER_TYPE_SKB.
-
-Fixes: 5422570c0010 ("igc: add support for frame preemption verification")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-9-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12ea89291603 ("drm/i915/dp: Add Read/Write support for Adaptive Sync SDP")
+Cc: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260511123218.1589830-2-ankit.k.nautiyal@intel.com
+(cherry picked from commit f7abc4af2b19240a145a221461dfe756cc01d74a)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_dp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 02dd9f0290a34..52de2bcbadbec 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -34,6 +34,7 @@ static int igc_fpe_init_smd_frame(struct igc_ring *ring,
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 61f22275403bf..a44fbac1e5e27 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4899,7 +4899,7 @@ int intel_dp_as_sdp_unpack(struct drm_dp_as_sdp *as_sdp,
+ 	as_sdp->length = sdp->sdp_header.HB3 & DP_ADAPTIVE_SYNC_SDP_LENGTH;
+ 	as_sdp->mode = sdp->db[0] & DP_ADAPTIVE_SYNC_SDP_OPERATION_MODE;
+ 	as_sdp->vtotal = (sdp->db[2] << 8) | sdp->db[1];
+-	as_sdp->target_rr = (u64)sdp->db[3] | ((u64)sdp->db[4] & 0x3);
++	as_sdp->target_rr = ((sdp->db[4] & 0x3) << 8) | sdp->db[3];
+ 	as_sdp->target_rr_divider = sdp->db[4] & 0x20 ? true : false;
  
-+	buffer->type = IGC_TX_BUFFER_TYPE_SKB;
- 	buffer->skb = skb;
- 	buffer->protocol = 0;
- 	buffer->bytecount = skb->len;
+ 	return 0;
 -- 
 2.53.0
 
