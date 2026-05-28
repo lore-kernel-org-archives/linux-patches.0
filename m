@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46882F260C;
-	Thu, 28 May 2026 20:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A4332ABC0;
+	Thu, 28 May 2026 20:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998646; cv=none; b=FdqLISzWOncDzmINxSJr1Bm/QIUHzf0pYaxRionXymbGJ7Q54PgmbAgnGN6DEdLiXlQ9QAVf3dykKZNE0T/xzY0KeIWpqq1eBJdvPU5rgWba9NVXb2//xwLdcFbrOQFEtH5809cgR5PlBaXfmuS1xTErHShE9IQBXwndNFJJgMI=
+	t=1779998650; cv=none; b=W6vY6t524SxfA9NzC4TQLUH2N71Tzcb3MPVPInrThelfL0p20yXykvoYftnRY44smNRjdFIE+wU05nSnfixxkN0tGujWqXKvqB/k4PtatFLY+zZJ0Fgak2IMiYh2p8MVmINaOYJEmPtRx7Z8/Uct8lSIlsVOJtyL/MD8COQKSAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998646; c=relaxed/simple;
-	bh=atSQsk2i2kFhM8BGnWMNj7NEJJFpw+UGwj0gigSpKus=;
+	s=arc-20240116; t=1779998650; c=relaxed/simple;
+	bh=aFexBEeo0427hcr/N/mxn155/sFiiNfiUJhtl/iJjls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBuTuUfPSNjxuuGclxgnCUzbcEhvlIrav9iQK8Jd/WkeO0GH+NHuh5ij/fbBsqWniHiaidHwMMlA1IYtaoGKDKgGKh4vVOdfkW6X+4eMocNVK6jR8liKOkAlEjMFwgEJEGerhwfXRFbj/7qYHMy4y3AOlmY8H54jQCd5fE0ZkpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjIsZKp+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oB/vt/PQo7VWySESvBqaQlxlkcaZXh9altf15SQrNS7QIDgQJeKHU4R1dXXEmQAd2PKkmGnasp5zQUaimd7LLVgmB9V/pbVFhwSAzx2Q8CqiRspKjQaM1ipS040yfj3U35oJw/f+/L+4lWxKIRJ6scacTcoSm6C86pcfszt/jZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsIX3mHW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjIsZKp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563791F000E9;
-	Thu, 28 May 2026 20:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsIX3mHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBE91F000E9;
+	Thu, 28 May 2026 20:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998645;
-	bh=o/Alw1AcOvkwoYb/OGjjUKEZ36ZWM630e9V9dWUwkDg=;
+	s=korg; t=1779998648;
+	bh=9pjw479zl/RQH7DVA26aQ0LgN0w8DboCKkrHm0J16uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HjIsZKp+8yihn29Ov/285tLqZzquVY9LJ8LcRduA0dPUuJLL8smx22uGUjsZRE/Ub
-	 SLIRqk6rSfUaj3leFsRvqY/hzBqI/N0BUAtig9+9b9GgXSJFGjXuRY+/QZIchxG0xO
-	 WjcWTJbwCmR1tNCBgwCLfxmJYvt4poJzwIdLsx4c=
+	b=SsIX3mHWQ/+qeD+fi7jU7JJ0av7PO4MpfCLBP7Wmh+aASWk7+GYNL7zYfqQKcbBU1
+	 rYF7ovcMplVlaldlVB2dy0ADzBBLBpz98EQSGODw7gGguCnasVDX80Qn2d8vLwRyih
+	 B52+Y+CKAi3LxHuUyK8Xne+pmyNmBt5uZ8E6gOUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Harsh Prateek Bora <harshpb@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 248/461] powerpc: fix dead default for GUEST_STATE_BUFFER_TEST
-Date: Thu, 28 May 2026 21:46:17 +0200
-Message-ID: <20260528194654.328115604@linuxfoundation.org>
+Subject: [PATCH 7.0 249/461] powerpc/hv-gpci: fix preempt count leak in sysfs show paths
+Date: Thu, 28 May 2026 21:46:18 +0200
+Message-ID: <20260528194654.357420588@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -54,52 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit aef656a0e6c01796190bb5bd2bdba1c644ed7811 ]
+[ Upstream commit dbc30a57bd8e026995e9fa8e8c31cffd18542c01 ]
 
-The GUEST_STATE_BUFFER_TEST config option should default
-to KUNIT_ALL_TESTS so that if all tests are enabled then
-it is included, but currently the 'default KUNIT_ALL_TESTS'
-statement is shadowed by 'def_tristate n',
-meaning that this second default statement is currently dead code.
+Four sysfs show() callbacks in hv-gpci take get_cpu_var(hv_gpci_reqb)
+(which calls preempt_disable()) but only call the matching put_cpu_var()
+on the error path under the 'out:' label. Every successful read leaks
+one preempt_disable():
 
-It looks to me like the commit
-6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
-intended to set the default to KUNIT_ALL_TESTS, but mistakenly
-missed the def_tristate.
+  processor_bus_topology_show()
+  processor_config_show()
+  affinity_domain_via_virtual_processor_show()
+  affinity_domain_via_domain_show()
 
-This dead code was found by kconfirm, a static analysis tool for Kconfig.
+(affinity_domain_via_partition_show() was already correct.)
 
-Fixes: 6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On a CONFIG_PREEMPT=y kernel, repeated reads raise preempt_count and
+eventually return to userspace with preemption still disabled. The
+next user-mode page fault then hits faulthandler_disabled() == 1,
+gets forced to SIGSEGV, and the resulting coredump trips
+'BUG: scheduling while atomic' in call_usermodehelper_exec ->
+wait_for_completion_state -> schedule:
+
+  BUG: scheduling while atomic: <task>/<pid>/0x00000004
+  ...
+  __schedule_bug+0x6c/0x90
+  __schedule+0x58c/0x13a0
+  schedule+0x48/0x1a0
+  schedule_timeout+0x104/0x170
+  wait_for_completion_state+0x16c/0x330
+  call_usermodehelper_exec+0x254/0x2d0
+  vfs_coredump+0x1050/0x2590
+  get_signal+0xb9c/0xc80
+  do_notify_resume+0xf8/0x470
+
+Add an out_success label that calls put_cpu_var() before returning
+the byte count, mirroring affinity_domain_via_partition_show().
+
+Fixes: 71f1c39647d8 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor bus topology information")
+Fixes: 1a160c2a13c6 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor config information")
+Fixes: 71a7ccb478fc ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via virtual processor information")
+Fixes: a69a57cac1ec ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via domain information")
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260405161545.161006-1-julianbraha@gmail.com
+Link: https://patch.msgid.link/20260508041256.3447113-1-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Kconfig.debug | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/perf/hv-gpci.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
-index f15e5920080ba..e8718bc13eeb1 100644
---- a/arch/powerpc/Kconfig.debug
-+++ b/arch/powerpc/Kconfig.debug
-@@ -83,11 +83,10 @@ config MSI_BITMAP_SELFTEST
- 	depends on DEBUG_KERNEL
+diff --git a/arch/powerpc/perf/hv-gpci.c b/arch/powerpc/perf/hv-gpci.c
+index 5cac2cf3bd1e5..10c82cf8f5b39 100644
+--- a/arch/powerpc/perf/hv-gpci.c
++++ b/arch/powerpc/perf/hv-gpci.c
+@@ -210,7 +210,7 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 			0, 0, buf, &n, arg);
  
- config GUEST_STATE_BUFFER_TEST
--	def_tristate n
-+	def_tristate KUNIT_ALL_TESTS
- 	prompt "Enable Guest State Buffer unit tests"
- 	depends on KUNIT
- 	depends on KVM_BOOK3S_HV_POSSIBLE
--	default KUNIT_ALL_TESTS
- 	help
- 	  The Guest State Buffer is a data format specified in the PAPR.
- 	  It is by hcalls to communicate the state of L2 guests between
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -244,12 +244,14 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 				starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -278,7 +280,7 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -312,12 +314,14 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 				starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -346,7 +350,7 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -382,12 +386,14 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 				starting_index, secondary_index, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -416,7 +422,7 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -448,12 +454,14 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 					starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
 -- 
 2.53.0
 
