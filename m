@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7033F5BE;
-	Thu, 28 May 2026 20:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849B833372A;
+	Thu, 28 May 2026 20:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000214; cv=none; b=f9+yY5htrudR/sO3pPwNk2/zccDnIDp9qhckorTfgTrLzCozqoeB8z5/f+vJvb23G45SCg2cZqIHn7HYMzlCJ+Yud4fmS3CAApCMLztFZFlc1f/+BIH/BoPDhK5PaTj6BLBpzOnYZJc0TPw/ktMm/U0IOD7QmtQ5VyG9yZrxRo0=
+	t=1780000216; cv=none; b=o8gBt3CPmR+fShR7DfeczCfyJvxX7E0V4oJeDk4xK0qclkAsnIuYfLRh6MjPAX+GwD8uvnH4OD1dKmwG1QdvuUi1YWU2AgJgCH+o+sE+9cysl0/b1yAxaLPkVWsTAoczm+mAOO4hxHwC1I9vZeQipGPEBoLY2n893pz7SiPMx68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000214; c=relaxed/simple;
-	bh=/bVpzCJw+JHJNaHTUlmmZMv6bXF+/ErMkd0eVymDi4c=;
+	s=arc-20240116; t=1780000216; c=relaxed/simple;
+	bh=PMT+Agqkhxop+zq/avYzvxnOyMd/pCm7Qcl34l3twi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWk+BwpyKy5XirwR1Tsuqrjbav3f60JW57gkWzZ0y3TDO21sA7eEM5ASwiD3uP0Qqdr82uhqLX9IUD3dNUGi1fm4JJjj1Unr+05E7PP/LTKk6ggiKYJNahehoIGuRidu9ORMIA30c83xXGSd+XghkscF1rer4wojsCe+MleDNYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4KEWggv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qLR/zY71ZPxGH542gn2QGCLtKpD1VOWXeGDmOww89JkzVuFLR7OXUQINZ2nyK2pExASvlB4Ju4KOhw2Ls6c/aDf7RDCvYcmPHwo46DRBwX+59BWKohb5LtFQbfzrM1luAR50+EK6z4ykA6wkDLWJSsoruqVApk3jlZHe7r1Xtzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZZHWN2H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4KEWggv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BF31F000E9;
-	Thu, 28 May 2026 20:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZZHWN2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43351F000E9;
+	Thu, 28 May 2026 20:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000212;
-	bh=+7gXhbbZPtd2VdbbUmb3YsKNUxAB1Ofq49gScUBOtk0=;
+	s=korg; t=1780000215;
+	bh=rd7VFU90bWA7Fsk0JzHxbs29V09opO489ZAgZztRaHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4KEWggv11cknsccutd+aRkSsgrGwrcWzA303nofseAXBA/jQGhjq10pdyJiRTph7
-	 JoZgbxyXX7jfYNf19L2mK6Mu00tMlsoygKIfxLIDv4zM0Y12Fs+Lid2gUYcPDMnva+
-	 UqEQn82+tGXkffqAtzimZPaH0BsZgkq3JBn1QdBk=
+	b=FZZHWN2HcavYlb67LlDwV43MbH2msLEwpZ+GpgONcHnXZ300xD4DFhKKMREpDRfxE
+	 +cM7JE/StP77SaKcKeDofKXMxp6Hgk7c3AfHyg2NwveYA3CMsC4t78h58xPr7ABYWJ
+	 kcIyi+snIhT/5ZOIlFtdNyuZ4Qmx8WvXkKGk0RUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 341/377] net: phy: honor eee_disabled_modes in phy_advertise_eee_all()
-Date: Thu, 28 May 2026 21:49:39 +0200
-Message-ID: <20260528194648.295951346@linuxfoundation.org>
+Subject: [PATCH 6.18 342/377] net: airoha: Fix NPU RX DMA descriptor bits
+Date: Thu, 28 May 2026 21:49:40 +0200
+Message-ID: <20260528194648.323467067@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 8baa7506d793f0636e3f6f01b01ef7be19674d06 ]
+[ Upstream commit 0cb5a74faa3bdcfa3b18735d554e12c0f615e35d ]
 
-phy_advertise_eee_all() copies supported_eee into advertising_eee
-unconditionally, overwriting any filtering applied during phy_probe()
-based on DT eee-broken-* properties or driver-populated
-eee_disabled_modes. genphy_c45_ethtool_set_eee() calls this helper
-when user space passes an empty advertisement, undoing the filtering.
+In an internal review from Airoha, it was notice that the RX DMA descriptor
+bits and mask are wrong. These values probably refer to an old NPU firmware
+never published. The previous value works correctly but it was reported
+that in some specific condition in mixed scenario with both Ethernet and
+WiFi offload it's possible that RX DMA descriptor signal wrong value with
+the problem to the RX ring or packets getting dropped.
 
-Apply the same eee_disabled_modes mask in phy_advertise_eee_all() so
-the filtering survives the copy, matching the pattern in phy_probe()
-and phy_support_eee().
+To handle these specific scenario, apply the new suggested bits mask from
+Airoha.
 
-Fixes: b64691274f5d ("net: phy: add helper phy_advertise_eee_all")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260518-devel-phy-support-eee-fix-v2-2-05b52626fa68@tipi-net.de
+Correct functionality of both AN7581 NPU and MT7996 variant were verified
+and confirmed working.
+
+Fixes: a7fc8c641cab ("net: airoha: Fix npu rx DMA definitions")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260518134530.3683-1-ansuelsmth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/soc/airoha/airoha_offload.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 5d76bd1ffe279..78cf05a17f8ff 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -2792,7 +2792,8 @@ EXPORT_SYMBOL(phy_advertise_supported);
-  */
- void phy_advertise_eee_all(struct phy_device *phydev)
- {
--	linkmode_copy(phydev->advertising_eee, phydev->supported_eee);
-+	linkmode_andnot(phydev->advertising_eee, phydev->supported_eee,
-+			phydev->eee_disabled_modes);
- }
- EXPORT_SYMBOL_GPL(phy_advertise_eee_all);
+diff --git a/include/linux/soc/airoha/airoha_offload.h b/include/linux/soc/airoha/airoha_offload.h
+index 0e82f1f4d36c4..d4f6e8124a493 100644
+--- a/include/linux/soc/airoha/airoha_offload.h
++++ b/include/linux/soc/airoha/airoha_offload.h
+@@ -70,9 +70,9 @@ static inline void airoha_ppe_dev_check_skb(struct airoha_ppe_dev *dev,
+ #define NPU_RX1_DESC_NUM	512
  
+ /* CTRL */
+-#define NPU_RX_DMA_DESC_LAST_MASK	BIT(27)
+-#define NPU_RX_DMA_DESC_LEN_MASK	GENMASK(26, 14)
+-#define NPU_RX_DMA_DESC_CUR_LEN_MASK	GENMASK(13, 1)
++#define NPU_RX_DMA_DESC_LAST_MASK	BIT(29)
++#define NPU_RX_DMA_DESC_LEN_MASK	GENMASK(28, 15)
++#define NPU_RX_DMA_DESC_CUR_LEN_MASK	GENMASK(14, 1)
+ #define NPU_RX_DMA_DESC_DONE_MASK	BIT(0)
+ /* INFO */
+ #define NPU_RX_DMA_PKT_COUNT_MASK	GENMASK(31, 29)
 -- 
 2.53.0
 
