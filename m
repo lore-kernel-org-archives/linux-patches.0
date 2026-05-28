@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085E232ABC0;
-	Thu, 28 May 2026 20:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D728335566;
+	Thu, 28 May 2026 20:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999100; cv=none; b=YLFlRDZprBdslTOxztKlrah6X7ar9VvBAwhoAtCYCFYnl7EQhMmcaeKLdlgZTZzZaRgRy9fiiwWmZAlEfV7ACVoVIYS34oCJCzz1cki58kqsXlzEsZXfTz7TW7TlOe2fw873bhHl0fGC4y+hZBlNgP1hYHioeLMcCUEEZihJSz0=
+	t=1779999103; cv=none; b=N8tC5embb/LDDxE4tbCapJLjafeGA4nC4fn3c7FbQsof5KbLxjazJYO+weAJkk4PaaJpLk9hsu5sI+8SGHWQQwgmdYXyAj2D0i8L8VCknbUfXDIauc4DoAAx4ZUaApFHgc6cGLu77GjCtbcg12iCaf0V8kerBAZuqHVOYwCgXBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999100; c=relaxed/simple;
-	bh=nhdItg5uEHHj84//Ot4jGDLHeOe7Tp/DKFYC2/qjaoM=;
+	s=arc-20240116; t=1779999103; c=relaxed/simple;
+	bh=V92dPWHQuZxMsqoriJDdu6cbNW+2wP89rgjJZahK/FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iN3OEgH6fiCxfegpzaUzFTz1+G+ZEeaI1A4I1Sy/6Q3YpKtgKycFbBaWwxwlzuyPtBAJcyZ0Chz53qY3WodbcyrHv2229AKX+ZTpUM0wYpU9jRwMrlwE45CipmQHcJmpEDNKWwVyq3JDQA0J6zq6XPU8HwruiUVsgC3i5VH/yKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWyxYvfB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Dy7tpqUQxLU2DZTE1SI6s3ACBUvTqmDB6I9hYe8LAfprvl9yvU9waZoBnQFAx6bz9URwBBLKxstSSYy1LO4MIN8gNCi2dcfwmy1Hw0VzMeV84dF4uB1YHJqUX9ytelQFXIMYmVRIXFkyPnwA2Mm1HZK2ElThSRfLZVmDMsOA84I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGUncy9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWyxYvfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6702F1F000E9;
-	Thu, 28 May 2026 20:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGUncy9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315371F000E9;
+	Thu, 28 May 2026 20:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999098;
-	bh=8SHVmjlda9JpSZAytGm3ATR/brqp3GosRJEUACpzjso=;
+	s=korg; t=1779999101;
+	bh=KZoLrTvFrkaqlSrPaG76O9XnPRzjUEanUksKK3agcJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWyxYvfB2d55Q6rAdBmc1E+W58PSUUfr0a/PB1hTG9O39zFqKdNMAlBjNur8b1n90
-	 QEeyML8yS1cflfgAOCkImjynJoPnpyi57gQkfb3TFBeyv/RbKj3duepTk+WwYvXi/e
-	 O012mMi5jX26z89k4TYOM1isqdIpptDUdvgp8Pqg=
+	b=NGUncy9bR6y7XVjH31lgde4Cy7mJDzicj6S8v2mNBnzFotAw6IzOnMlGNRigi3uvX
+	 gCLCc+YsryGOAWdRkR02iA5vnDOiglrRtX4iIWUQKlCbqwnzIIqGUXGNhlTnTGVBEV
+	 yiU+iT1OxS4WzkTkg0Zt3YLP4mElXGn51z66GYok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 409/461] erofs: fix managed cache race for unaligned extents
-Date: Thu, 28 May 2026 21:48:58 +0200
-Message-ID: <20260528194659.323876947@linuxfoundation.org>
+Subject: [PATCH 7.0 392/461] platform/x86: intel-vbtn: Check ACPI_HANDLE() against NULL
+Date: Thu, 28 May 2026 21:48:41 +0200
+Message-ID: <20260528194658.811405408@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,93 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 649932fc3815eda2f24eb4de4b3a5e94886ee0b9 ]
+[ Upstream commit a9f305c5a355efeb240d406d378491d9eec02d07 ]
 
-After unaligned compressed extents were introduced, the following race
-could occur:
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-[Thread 1]                                   [Thread 2]
-(z_erofs_fill_bio_vec)
-<handle a Z_EROFS_PREALLOCATED_FOLIO folio>
-...
-filemap_add_folio (1)
-                                             (z_erofs_bind_cache)
-                                             <the same folio is found..>
-                                             ..
-                                             ..
-folio_attach_private (2)
-                                             filemap_add_folio (3) again
+Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
+platform/x86 intel-vbtn driver.
 
-Since (1) is executed but (2) hasn't been executed yet, it's possible
-that another thread finds the same managed folio in z_erofs_bind_cache()
-for a different pcluster and calls filemap_add_folio() again since
-folio->private is still Z_EROFS_PREALLOCATED_FOLIO.
-
-Fix this by explicitly clearing folio->private before making the folio
-visible in the managed cache so that another pcluster can simply wait
-on the locked managed folio as what we did for other shared cases [1].
-
-This only impacts unaligned data compression (`-E48bit` with zstd,
-for example).
-
-[1] Commit 9e2f9d34dd12 ("erofs: handle overlapped pclusters out of
- crafted images properly") was originally introduced to handle crafted
- overlapped extents, but it addresses unaligned extents as well.
-
-Fixes: 7361d1e3763b ("erofs: support unaligned encoded data")
-Reported-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Closes: https://lore.kernel.org/r/4a2f3801-fac1-42fe-ae75-da315822e088@salutedevices.com
-Tested-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 26173179fae1 ("platform/x86: intel-vbtn: Eval VBDL after registering our notifier")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/3426431.aeNJFYEL58@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/platform/x86/intel/vbtn.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index fe8121df9ef2f..d7445e98312d8 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1511,8 +1511,15 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 	DBG_BUGON(z_erofs_is_shortlived_page(bvec->bv_page));
+diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
+index 9ca87e7075822..874023c38fd15 100644
+--- a/drivers/platform/x86/intel/vbtn.c
++++ b/drivers/platform/x86/intel/vbtn.c
+@@ -275,12 +275,16 @@ static bool intel_vbtn_has_switches(acpi_handle handle, bool dual_accel)
  
- 	folio = page_folio(zbv.page);
--	/* For preallocated managed folios, add them to page cache here */
-+	/*
-+	 * Preallocated folios are added to the managed cache here rather than
-+	 * in z_erofs_bind_cache() in order to keep these folios locked in
-+	 * increasing (physical) address order.
-+	 * Clear folio->private before these folios become visible to others in
-+	 * the managed cache to avoid duplicate additions for unaligned extents.
-+	 */
- 	if (folio->private == Z_EROFS_PREALLOCATED_FOLIO) {
-+		folio->private = NULL;
- 		tocache = true;
- 		goto out_tocache;
- 	}
-@@ -1548,14 +1555,8 @@ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
- 			}
- 			return;
- 		}
--		/*
--		 * Already linked with another pcluster, which only appears in
--		 * crafted images by fuzzers for now.  But handle this anyway.
--		 */
--		tocache = false;	/* use temporary short-lived pages */
- 	} else {
- 		DBG_BUGON(1); /* referenced managed folios can't be truncated */
--		tocache = true;
- 	}
- 	folio_unlock(folio);
- 	folio_put(folio);
+ static int intel_vbtn_probe(struct platform_device *device)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&device->dev);
+ 	bool dual_accel, has_buttons, has_switches;
+ 	struct intel_vbtn_priv *priv;
++	acpi_handle handle;
+ 	acpi_status status;
+ 	int err;
+ 
++	handle = ACPI_HANDLE(&device->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	dual_accel = dual_accel_detect();
+ 	has_buttons = acpi_has_method(handle, "VBDL");
+ 	has_switches = intel_vbtn_has_switches(handle, dual_accel);
 -- 
 2.53.0
 
