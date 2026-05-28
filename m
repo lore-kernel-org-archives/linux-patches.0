@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD680304BB3;
-	Thu, 28 May 2026 20:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FC22F1FEF;
+	Thu, 28 May 2026 20:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001510; cv=none; b=cS0CwbcL+wNLNtp4ZXtvxz3CMmpgQ/lBJAx2CJcLdCm2qXlvCbj65eABnKAHZ/u40H3/4gGpqdElqI3HZe9NvYARLSGVtsPpfc8XfhOt9r4gD3GIGk5DgzgU5WVs4ExA+57j47cofOA7XUO3eB/9qAlOXo6DwqplhqFd0A/qsTU=
+	t=1780001513; cv=none; b=IvvsU0pncyCQAx2EAqk85EN5aYqPkyYZsKRF9MEoUsGbN0F1TpzTLckF50MjfmTxCYysY9wEwXkYDGvKRfS36VvyLFHGkR92sZkAgrn7YhAn/Nw4ZndW9l6KDJDA8Ja8jBxCtMjA2EMRcvvhCB3RRiNVPWkdTELE2QvLj9DSe5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001510; c=relaxed/simple;
-	bh=EFw1Jhrgqx/Jl1WuqFtNE8QfEe9ogsjCpWZlfImz6Z8=;
+	s=arc-20240116; t=1780001513; c=relaxed/simple;
+	bh=HgRN3aYwQZPiqNau82kWSNLNg0APPmXfoyzIps7PQfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWhoePuDdDCGxj0WuUfyhLA99W5Lm+Xm4F+7E1HFkYmFEMDn/p6T7QCd6Nhqy4TSRXOIWLaZErQcvf12ldBe9jSjxUU9ppleIoPXeok7mj5ZDEXT08FZBNNulZnZG/+XiVW8ZBwQw0Sh3xjePtt1ePDRtIe9mIIJXAFiwd6dypI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=essYm59i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ne8JsW35tFV78ftd9JnUL5uBtbYOnjwDjwDq39e6V5V+kGLdV7UgQ+KnFjLxyaVP58NOSQw+ZEWkZaBhpTspOiQ+FocjbpVyNgzkuly+Vur0b8pJVS6et/eZUINB+E1DK0O3ldX7PZjOI1K6uw2mc3XUg74UCORsKakpb9Z96ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5NzTydA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="essYm59i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270891F000E9;
-	Thu, 28 May 2026 20:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5NzTydA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D7C1F000E9;
+	Thu, 28 May 2026 20:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001509;
-	bh=j71Xmk5JDXEc/r+I+PBCdg/dN9KLvZYMEbTdvecHTlY=;
+	s=korg; t=1780001512;
+	bh=1r3ql2PjYWrQrPVU+IOHQ9h9gFOO7+Ocblmk7Tja+44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=essYm59i7VJel9Ud6Xk98TKsxgaQAZd2ql7Vq038GRAxSg1LnUDl8i4AJgAFZ/vCC
-	 4QJTMJbq/tlZckbMdTuUcXo7LNfH3bvQ67uJhxfiFf4/gYgwEBgWm8mjZ8v2lnN4sI
-	 PQ2TLDbHLKtmB+MAG+o3ibsQYwf8mMWwEoQuT5FI=
+	b=l5NzTydAMNMuLGw4TCVrMNqVD+e0OFcjgsWOnpv3xB4CGz2/ElcHMOdhBz+Q0P1f2
+	 kNSenCRL7U0X+yYBJEvTLxxPW6XjhCENBisUAtE8V5tnkcPXBmxaeInOe/kaNCoBHf
+	 t/dAizyryeJWzRWFlSksYEsl0L+qqZZC0DGLvGlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/186] net: dsa: mt7530: fix FDB entries not aging out with short timeout
-Date: Thu, 28 May 2026 21:50:34 +0200
-Message-ID: <20260528194933.112571735@linuxfoundation.org>
+Subject: [PATCH 6.6 155/186] net: dsa: mt7530: rename mt753x_bpdu_port_fw enum to mt753x_to_cpu_fw
+Date: Thu, 28 May 2026 21:50:35 +0200
+Message-ID: <20260528194933.139420192@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -45,101 +45,187 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit e824e40d0e841fab66ab7897d6c7b14dc81c66a7 ]
+[ Upstream commit 7603a0c7d2210a253265394b50567c64fbb977e4 ]
 
-The DSA forwarding selftests bridge_vlan_aware.sh and
-bridge_vlan_unaware.sh configure the bridge with ageing_time set to
-LOW_AGEING_TIME (1000 centiseconds, i.e. 10 seconds) and then run
-learning_test() in lib.sh, which expects a learned FDB entry to be
-removed after ageing_time + 10 seconds. On MT7530/MT7531 the entry
-persisted past the deadline and the "Found FDB record when should
-not" assertion failed.
+The mt753x_bpdu_port_fw enum is globally used for manipulating the process
+of deciding the forwardable ports, specifically concerning the CPU port(s).
+Therefore, rename it and the values in it to mt753x_to_cpu_fw.
 
-With msecs=10000, the algorithm in mt7530_set_ageing_time() finds
-AGE_CNT=0 and AGE_UNIT=9 as the first exact match (starting the
-search from tmp_age_count=0). The per-entry aging counter is
-initialized to AGE_CNT when a MAC address is learned, so with
-AGE_CNT=0 new entries start with a counter value of 0, which the
-hardware treats as "already aged" and never removes, effectively
-disabling aging.
+Change FOLLOW_MFC to SYSTEM_DEFAULT to be on par with the switch documents.
 
-Fix this by starting the search from tmp_age_count=1 to ensure
-entries always have a non-zero initial aging counter. For a
-10-second ageing time this yields AGE_CNT=1 and AGE_UNIT=4 instead:
-the timer ticks every 5 seconds and entries are removed after 2
-ticks.
-
-Starting the search at AGE_CNT=1 raises the minimum representable
-ageing time from 1 to 2 seconds. Without bounds, a stale ageing_time
-of 1 second would now make the loop fall through without setting
-age_count and age_unit, leaving them uninitialized when written to
-the MT7530_AAC hardware register. Set ds->ageing_time_min and
-ds->ageing_time_max so the DSA core validates the range before the
-callback is invoked, and drop the now-redundant range check from
-mt7530_set_ageing_time().
-
-Fixes: ea6d5c924e39 ("net: dsa: mt7530: support setting ageing time")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/7788ded12dc07b1bce329ec35fa70f4b45f3f9b7.1778766629.git.daniel@makrotopia.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3ac85bcfd404 ("net: dsa: mt7530: preserve VLAN tags on trapped link-local frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/dsa/mt7530.c | 44 ++++++++++-------------
+ drivers/net/dsa/mt7530.h | 76 ++++++++++++++++++++--------------------
+ 2 files changed, 56 insertions(+), 64 deletions(-)
 
 diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 2d18a03d92742..ada56e432dd7a 100644
+index ada56e432dd7a..ed783943c73c7 100644
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -880,12 +880,16 @@ mt7530_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
- 	unsigned int age_count;
- 	unsigned int age_unit;
+@@ -1178,42 +1178,34 @@ mt753x_trap_frames(struct mt7530_priv *priv)
+ 	 * VLAN-untagged.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_BPC,
+-		   MT753X_PAE_BPDU_FR | MT753X_PAE_EG_TAG_MASK |
+-			   MT753X_PAE_PORT_FW_MASK | MT753X_BPDU_EG_TAG_MASK |
+-			   MT753X_BPDU_PORT_FW_MASK,
+-		   MT753X_PAE_BPDU_FR |
+-			   MT753X_PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_PAE_PORT_FW(MT753X_BPDU_CPU_ONLY) |
+-			   MT753X_BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_BPDU_CPU_ONLY);
++		   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
++			   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
++		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
++			   BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   TO_CPU_FW_CPU_ONLY);
  
--	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds */
--	if (secs < 1 || secs > (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1))
--		return -ERANGE;
+ 	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and egress
+ 	 * them VLAN-untagged.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_RGAC1,
+-		   MT753X_R02_BPDU_FR | MT753X_R02_EG_TAG_MASK |
+-			   MT753X_R02_PORT_FW_MASK | MT753X_R01_BPDU_FR |
+-			   MT753X_R01_EG_TAG_MASK | MT753X_R01_PORT_FW_MASK,
+-		   MT753X_R02_BPDU_FR |
+-			   MT753X_R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_R02_PORT_FW(MT753X_BPDU_CPU_ONLY) |
+-			   MT753X_R01_BPDU_FR |
+-			   MT753X_R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_BPDU_CPU_ONLY);
++		   R02_BPDU_FR | R02_EG_TAG_MASK | R02_PORT_FW_MASK |
++			   R01_BPDU_FR | R01_EG_TAG_MASK | R01_PORT_FW_MASK,
++		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R02_PORT_FW(TO_CPU_FW_CPU_ONLY) | R01_BPDU_FR |
++			   R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   TO_CPU_FW_CPU_ONLY);
+ 
+ 	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and egress
+ 	 * them VLAN-untagged.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_RGAC2,
+-		   MT753X_R0E_BPDU_FR | MT753X_R0E_EG_TAG_MASK |
+-			   MT753X_R0E_PORT_FW_MASK | MT753X_R03_BPDU_FR |
+-			   MT753X_R03_EG_TAG_MASK | MT753X_R03_PORT_FW_MASK,
+-		   MT753X_R0E_BPDU_FR |
+-			   MT753X_R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY) |
+-			   MT753X_R03_BPDU_FR |
+-			   MT753X_R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
+-			   MT753X_BPDU_CPU_ONLY);
++		   R0E_BPDU_FR | R0E_EG_TAG_MASK | R0E_PORT_FW_MASK |
++			   R03_BPDU_FR | R03_EG_TAG_MASK | R03_PORT_FW_MASK,
++		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R0E_PORT_FW(TO_CPU_FW_CPU_ONLY) | R03_BPDU_FR |
++			   R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   TO_CPU_FW_CPU_ONLY);
+ }
+ 
+ static int
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index 0ad52d3cbfebb..393a7cb03a432 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -67,47 +67,47 @@ enum mt753x_id {
+ #define MT753X_MIRROR_MASK(id)		((((id) == ID_MT7531) || ((id) == ID_MT7988)) ?	\
+ 					 MT7531_MIRROR_MASK : MIRROR_MASK)
+ 
+-/* Registers for BPDU and PAE frame control*/
++/* Register for BPDU and PAE frame control */
+ #define MT753X_BPC			0x24
+-#define  MT753X_PAE_BPDU_FR		BIT(25)
+-#define  MT753X_PAE_EG_TAG_MASK		GENMASK(24, 22)
+-#define  MT753X_PAE_EG_TAG(x)		FIELD_PREP(MT753X_PAE_EG_TAG_MASK, x)
+-#define  MT753X_PAE_PORT_FW_MASK	GENMASK(18, 16)
+-#define  MT753X_PAE_PORT_FW(x)		FIELD_PREP(MT753X_PAE_PORT_FW_MASK, x)
+-#define  MT753X_BPDU_EG_TAG_MASK	GENMASK(8, 6)
+-#define  MT753X_BPDU_EG_TAG(x)		FIELD_PREP(MT753X_BPDU_EG_TAG_MASK, x)
+-#define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
 -
--	/* iterate through all possible age_count to find the closest pair */
--	for (tmp_age_count = 0; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
-+	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds.
-+	 * The DSA core has already validated the range using
-+	 * ds->ageing_time_min and ds->ageing_time_max.
-+	 *
-+	 * Iterate through all possible age_count values to find the closest
-+	 * pair. Start from 1 because the per-entry aging counter is
-+	 * initialized to AGE_CNT and a value of 0 means the entry will
-+	 * never be aged out.
-+	 */
-+	for (tmp_age_count = 1; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
- 		unsigned int tmp_age_unit = secs / (tmp_age_count + 1) - 1;
+-/* Register for :01 and :02 MAC DA frame control */
++#define  PAE_BPDU_FR			BIT(25)
++#define  PAE_EG_TAG_MASK		GENMASK(24, 22)
++#define  PAE_EG_TAG(x)			FIELD_PREP(PAE_EG_TAG_MASK, x)
++#define  PAE_PORT_FW_MASK		GENMASK(18, 16)
++#define  PAE_PORT_FW(x)			FIELD_PREP(PAE_PORT_FW_MASK, x)
++#define  BPDU_EG_TAG_MASK		GENMASK(8, 6)
++#define  BPDU_EG_TAG(x)			FIELD_PREP(BPDU_EG_TAG_MASK, x)
++#define  BPDU_PORT_FW_MASK		GENMASK(2, 0)
++
++/* Register for 01-80-C2-00-00-[01,02] MAC DA frame control */
+ #define MT753X_RGAC1			0x28
+-#define  MT753X_R02_BPDU_FR		BIT(25)
+-#define  MT753X_R02_EG_TAG_MASK		GENMASK(24, 22)
+-#define  MT753X_R02_EG_TAG(x)		FIELD_PREP(MT753X_R02_EG_TAG_MASK, x)
+-#define  MT753X_R02_PORT_FW_MASK	GENMASK(18, 16)
+-#define  MT753X_R02_PORT_FW(x)		FIELD_PREP(MT753X_R02_PORT_FW_MASK, x)
+-#define  MT753X_R01_BPDU_FR		BIT(9)
+-#define  MT753X_R01_EG_TAG_MASK		GENMASK(8, 6)
+-#define  MT753X_R01_EG_TAG(x)		FIELD_PREP(MT753X_R01_EG_TAG_MASK, x)
+-#define  MT753X_R01_PORT_FW_MASK	GENMASK(2, 0)
+-
+-/* Register for :03 and :0E MAC DA frame control */
++#define  R02_BPDU_FR			BIT(25)
++#define  R02_EG_TAG_MASK		GENMASK(24, 22)
++#define  R02_EG_TAG(x)			FIELD_PREP(R02_EG_TAG_MASK, x)
++#define  R02_PORT_FW_MASK		GENMASK(18, 16)
++#define  R02_PORT_FW(x)			FIELD_PREP(R02_PORT_FW_MASK, x)
++#define  R01_BPDU_FR			BIT(9)
++#define  R01_EG_TAG_MASK		GENMASK(8, 6)
++#define  R01_EG_TAG(x)			FIELD_PREP(R01_EG_TAG_MASK, x)
++#define  R01_PORT_FW_MASK		GENMASK(2, 0)
++
++/* Register for 01-80-C2-00-00-[03,0E] MAC DA frame control */
+ #define MT753X_RGAC2			0x2c
+-#define  MT753X_R0E_BPDU_FR		BIT(25)
+-#define  MT753X_R0E_EG_TAG_MASK		GENMASK(24, 22)
+-#define  MT753X_R0E_EG_TAG(x)		FIELD_PREP(MT753X_R0E_EG_TAG_MASK, x)
+-#define  MT753X_R0E_PORT_FW_MASK	GENMASK(18, 16)
+-#define  MT753X_R0E_PORT_FW(x)		FIELD_PREP(MT753X_R0E_PORT_FW_MASK, x)
+-#define  MT753X_R03_BPDU_FR		BIT(9)
+-#define  MT753X_R03_EG_TAG_MASK		GENMASK(8, 6)
+-#define  MT753X_R03_EG_TAG(x)		FIELD_PREP(MT753X_R03_EG_TAG_MASK, x)
+-#define  MT753X_R03_PORT_FW_MASK	GENMASK(2, 0)
+-
+-enum mt753x_bpdu_port_fw {
+-	MT753X_BPDU_FOLLOW_MFC,
+-	MT753X_BPDU_CPU_EXCLUDE = 4,
+-	MT753X_BPDU_CPU_INCLUDE = 5,
+-	MT753X_BPDU_CPU_ONLY = 6,
+-	MT753X_BPDU_DROP = 7,
++#define  R0E_BPDU_FR			BIT(25)
++#define  R0E_EG_TAG_MASK		GENMASK(24, 22)
++#define  R0E_EG_TAG(x)			FIELD_PREP(R0E_EG_TAG_MASK, x)
++#define  R0E_PORT_FW_MASK		GENMASK(18, 16)
++#define  R0E_PORT_FW(x)			FIELD_PREP(R0E_PORT_FW_MASK, x)
++#define  R03_BPDU_FR			BIT(9)
++#define  R03_EG_TAG_MASK		GENMASK(8, 6)
++#define  R03_EG_TAG(x)			FIELD_PREP(R03_EG_TAG_MASK, x)
++#define  R03_PORT_FW_MASK		GENMASK(2, 0)
++
++enum mt753x_to_cpu_fw {
++	TO_CPU_FW_SYSTEM_DEFAULT,
++	TO_CPU_FW_CPU_EXCLUDE = 4,
++	TO_CPU_FW_CPU_INCLUDE = 5,
++	TO_CPU_FW_CPU_ONLY = 6,
++	TO_CPU_FW_DROP = 7,
+ };
  
- 		if (tmp_age_unit <= AGE_UNIT_MAX) {
-@@ -2419,6 +2423,8 @@ mt7530_setup(struct dsa_switch *ds)
- 
- 	ds->assisted_learning_on_cpu_port = true;
- 	ds->mtu_enforcement_ingress = true;
-+	ds->ageing_time_min = 2 * 1000;
-+	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
- 
- 	if (priv->id == ID_MT7530) {
- 		regulator_set_voltage(priv->core_pwr, 1000000, 1000000);
-@@ -2598,6 +2604,8 @@ mt7531_setup_common(struct dsa_switch *ds)
- 
- 	ds->assisted_learning_on_cpu_port = true;
- 	ds->mtu_enforcement_ingress = true;
-+	ds->ageing_time_min = 2 * 1000;
-+	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
- 
- 	mt753x_trap_frames(priv);
- 
+ /* Registers for address table access */
 -- 
 2.53.0
 
