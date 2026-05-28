@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F53B33A9FC;
-	Thu, 28 May 2026 20:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA425317164;
+	Thu, 28 May 2026 20:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000935; cv=none; b=CHkFsjltc+cWISv9hGI9IZ8eEGn5nAZ/JnO/BgEakfwtnsHN6fKl+3Pd60ahCaoxh4AJRtlsXEARFXKJF8yD8uZdgp0D/cyFwwhLLmjkr+5+y6bwDrfYULkhsdAdsLU7tp5lyW9bHVmuzZVWH9BlV5mdSEvgEdHZOxRZOp2VYyA=
+	t=1780000938; cv=none; b=atU8EmvXHsmOBAV7RSkD9IUW6SzOLcE5A+cpScx2BK8MvzJvi0i94oNvI8omfJzWJDECiKVQx2SSNN/LE0XpudtHBn9dBOkT1AffE+u8t8o/uO15OZxsxLAKeCdtpGDThXwtt/F/5B1lNtDYm151IHFMdwbXhG6QVHZmmoli5Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000935; c=relaxed/simple;
-	bh=3vug1REUfHAkQVtTA8EAjhEL6wp7ELSiEupLoj282x4=;
+	s=arc-20240116; t=1780000938; c=relaxed/simple;
+	bh=76ZT5+w3SXUwrGrUhJ2O+J8Q2QEH81PRCPwmEiAYp44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jruzOE/AkgDfQ4Zd69L6V9oiUyePdZVL7Dm+hE9unTz+E6dMLIDfShGhBwWIcaQjDUt1Q+Nf0CuSMV0Pn8ZAXL71WyWPO6qD9WHde0wzEeupgZkGd8phBOs+zT3KnPQpYXw6qUV8hDI2Ev7Jclx/Yej8Uh0GAzcBpPi37/LqHKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrsWbKOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fpDGuthZJw1gtk8vV26fO2j73ucSSY8PO6Y2eHsPq2w96Ywo7RJ3mOsMjsaazW/XaIme2OwXjyUJgdXqxxUvWuZzv5OU+3/s+eHWhJ9289ZN2xK3ub8fgfxuY+wT19xqdKBct9R5rkJ3qTVteJzC+XkpK+E8tQH3kXxv2AMcbJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eol1Iub6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrsWbKOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E87A1F000E9;
-	Thu, 28 May 2026 20:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eol1Iub6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2591F000E9;
+	Thu, 28 May 2026 20:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000934;
-	bh=6GRB7uJiVSfDuq63Ou99RReOF+FG5vRwh821P1PZySw=;
+	s=korg; t=1780000936;
+	bh=LX9fVVmTmh6ueoYn1XHl2xy3zISBBYq+K3sbJt8HtYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XrsWbKOB7Bws1AsXUnQza6vDhdlVSMk5tQWBZEhubR4+nMtnXgFIq6zMNYFhEM+xI
-	 P02lXwZbM/j+I9gqFmTYweqNYYClRmiLFMewTS96mgOVFaF8LpJH+sVsxVIDdlKTzU
-	 BA68KvQAr0SG24krmlFqwvHtB3aw4pWYxFNM1a3o=
+	b=Eol1Iub6FMgYB1qTGD9fsgM3SG80+OOpc94n4++fYZedeCm2blDN+3Uvyg6rF0hFd
+	 TKieytAaPhQ28m7J1SLkY6PpG3DOWZ6QtQmdRlGbjNiClSWB/wQrtrDD1mZLsCu7E5
+	 87t9PD3dQ4JEJOePiharUqEbT+Mjv2OcvDA+rDl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/272] drm/msm: Fix iommu_map_sgtable() return value check and avoid WARN
-Date: Thu, 28 May 2026 21:49:56 +0200
-Message-ID: <20260528194635.412934271@linuxfoundation.org>
+Subject: [PATCH 6.12 223/272] powerpc/time: Remove redundant preempt_disable|enable() calls from arch_irq_work_raise()
+Date: Thu, 28 May 2026 21:49:57 +0200
+Message-ID: <20260528194635.438515877@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,49 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit 55e0f0d1c1a4ee1e46da7da4d443eb3044fb3851 ]
+[ Upstream commit 31467b23823ffec1f6fff407f8e3ca9af8b7491a ]
 
-Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
-changed iommu_map_sgtable() to return an ssize_t and negative values
-in error cases, rather than a size_t and a zero.
+A kernel panic is observed when handling machine check exceptions from
+real mode.
 
-Store the return value in the appropriate type and in case of error,
-return it rather than WARNing.
+  BUG: Unable to handle kernel data access on read at 0xc00000006be21300
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  MSR:  8000000000001003 <SF,ME,RI,LE>  CR: 88222248  XER: 00000005
+  CFAR: c00000000003ffc4 DAR: c00000006be21300 DSISR: 40000000 IRQMASK: 0
+  NIP [c000000000029e40] arch_irq_work_raise+0x10/0x70
+  LR [c00000000003ffc8] machine_check_queue_event+0xa8/0x150
+  Call Trace:
+  [c0000000179d3c70] [c00000000003ff64] machine_check_queue_event+0x44/0x150
+  [c0000000179d3d30] [c0000000000084e0] machine_check_early_common+0x1f0/0x2c0
 
-Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/719685/
-Message-ID: <20260421-iommu_map_sgtable-return-v1-3-fb484c07d2a1@nvidia.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+The crash occurs because arch_irq_work_raise() calls preempt_disable()
+from machine check exception (MCE) handlers running in real mode. In
+this context, accessing the preempt_count can fault, leading to the panic.
+
+The preempt_disable()/preempt_enable() pair in arch_irq_work_raise()
+was originally added by commit 0fe1ac48bef0 ("powerpc/perf_event: Fix
+oops due to perf_event_do_pending call") to avoid races while raising
+irq work from exception context.
+
+Later, commit 471ba0e686cb ("irq_work: Do not raise an IPI when
+queueing work on the local CPU") added preemption protection in
+irq_work_queue() path, while commit 20b876918c06 ("irq_work: Use per
+cpu atomics instead of regular atomics") added equivalent
+protection in irq_work_queue_on() before reaching arch_irq_work_raise():
+
+  irq_work_queue() / irq_work_queue_on()
+    -> preempt_disable()
+      -> __irq_work_queue_local()
+        -> irq_work_raise()
+          -> arch_irq_work_raise()
+
+As a result, callers other than mce_irq_work_raise() already execute
+with preemption disabled, making the additional
+preempt_disable()/preempt_enable() pair in arch_irq_work_raise()
+redundant.
+
+The arch_irq_work_raise() function executes in NMI context when called
+from MCE handler. Hence we will not be preempted or scheduled out since
+we are in NMI context with MSR[EE]=0. Therefore, it is safe to remove
+the preempt_disable()/preempt_enable() calls from here.
+
+Remove it to avoid accessing preempt_count from real mode context.
+
+Fixes: cc15ff327569 ("powerpc/mce: Avoid using irq_work_queue() in realmode")
+Suggested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Acked-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+[Maddy: Fixed the commit title]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260513081413.222490-1-sayalip@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/time.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index 2a94e82316f95..8231488577f4d 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -362,14 +362,15 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
- 		struct sg_table *sgt, size_t len, int prot)
+diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
+index 0ff9f038e800d..ce7f91172ec2b 100644
+--- a/arch/powerpc/kernel/time.c
++++ b/arch/powerpc/kernel/time.c
+@@ -458,6 +458,10 @@ DEFINE_PER_CPU(u8, irq_work_pending);
+ 
+ #endif /* 32 vs 64 bit */
+ 
++/*
++ * Must be called with preemption disabled since it updates
++ * per-CPU irq_work state and programs the local CPU decrementer.
++ */
+ void arch_irq_work_raise(void)
  {
- 	struct msm_iommu *iommu = to_msm_iommu(mmu);
--	size_t ret;
-+	ssize_t ret;
- 
- 	/* The arm-smmu driver expects the addresses to be sign extended */
- 	if (iova & BIT_ULL(48))
- 		iova |= GENMASK_ULL(63, 49);
- 
- 	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
--	WARN_ON(!ret);
-+	if (ret < 0)
-+		return ret;
- 
- 	return (ret == len) ? 0 : -EINVAL;
+ 	/*
+@@ -471,10 +475,8 @@ void arch_irq_work_raise(void)
+ 	 * which could get tangled up if we're messing with the same state
+ 	 * here.
+ 	 */
+-	preempt_disable();
+ 	set_irq_work_pending_flag();
+ 	set_dec(1);
+-	preempt_enable();
  }
+ 
+ static void set_dec_or_work(u64 val)
 -- 
 2.53.0
 
