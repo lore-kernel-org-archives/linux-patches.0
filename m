@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A08B1DE4E0;
-	Thu, 28 May 2026 20:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4E1313539;
+	Thu, 28 May 2026 20:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000671; cv=none; b=bhCBnHkz+v6whRIc+W07uGHTYO7/y3o4rE73lxKYZ5b0x+JgLumDlBEo1Jj7WdXYOiAf1XRqKXZZVUYDBu4fXCkz7kAvKF/0M/1vnzR5tPCrA9KknNjklzAHCwrJ42UD6U4y3XmZWkAkXLCjthxPRVqih6OcPDuDEhur1g5wJBo=
+	t=1780000673; cv=none; b=EDAod0lDZGPHTCCYeeNYuQ4bNNQWMLnts2tg9cPbxD3G8IIWWswDaTRNWAqdnZyqoxi2Q2/F9fhqAN9uA6jATlfZEMJiYW2hoiCK1/0EBxQwqX0z09+suKkr84l3XcGNN3vfpLVHv0D9YXJF32WRQILxn2YQtUadQTuQrVikzKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000671; c=relaxed/simple;
-	bh=8y7J5z5OxEQMrGpsbuFmkPyHIf+QwuThtjJpoJV36ak=;
+	s=arc-20240116; t=1780000673; c=relaxed/simple;
+	bh=DV6b5AKaIpCzbdN/HalwiuWPRYkH6JyZVKgihIRRHKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aY6fkH5TNAj+kWmnrEFg3Kdr9DgEPSuUicd8cwqWbYvfyKLhWxy8NlJ25MqL0uPFPs1FfuDx/EXOOm+N3JM6z25hsUUpt4Cr3MnWjr52gxwNRC1YqXxcB5eDUORowCxRcbMxPaDp0a42iMn0NvKgvHQPmN+mZUuvcnnUE384I2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzDAjrHB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YwnbeSBYSljU89pXjCYKM4jSbtf6XumTqZsmm3wu2HHz4ySDRq8c2QBlrg1N+sGHkyE2PiMCNoOpr8zIiqLDXX6PMYsMhQD52BN2Cn3huj/84yv4CoPpFyH77sJ7+1XxWYFkAz6ca3If5FoWxTErabe/idTHkldwnIciS6GwHCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPOXg0xM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzDAjrHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789FB1F000E9;
-	Thu, 28 May 2026 20:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPOXg0xM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9CB1F000E9;
+	Thu, 28 May 2026 20:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000670;
-	bh=V/zHQE0AfILfVllMaKfr8XZH62l6ixjvqNR+RPrgaXc=;
+	s=korg; t=1780000672;
+	bh=Lv0M0TzP4KI0gpm4PI7tsq2H2QZFnewMnNRiASsvOUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzDAjrHBCtMjEFwn6Es7vn9y5i2iMjYLcUC0oMtJmOyba/uPYs4Qc8T+Vx6Vc+2gx
-	 zLQoNrNOvmWhH3wlCqjmndVsPwI1wMSgPx9NloPu/xCksiNFp1wcGNBHDmCuo6iM+Z
-	 KD5jzNLlvBXfsf8QlI31pRnJwSoZQBKNk9Df14QQ=
+	b=MPOXg0xMDLAJpoaO1EfWHejUxgFyT7TUKVdN/h1MDWjJh+KTktP9ZHAU7JkcKkQeq
+	 QPBhnfXXPRYCTlHWeKb+wvDkJ60Jc1x16i0iBNUj2uuMO+uo+xvSgpaNIJV1wpUvoL
+	 m70z7w0Rj9m5/rvpb6u8QB2CM6ELXUziSrBtfJYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 091/272] lsm: hold cred_guard_mutex for lsm_set_self_attr()
-Date: Thu, 28 May 2026 21:47:45 +0200
-Message-ID: <20260528194631.928724547@linuxfoundation.org>
+	Sunil Goutham <sgoutham@marvell.com>,
+	Linu Cherian <lcherian@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	hariprasad <hkelam@marvell.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	stable <stable@kernel.org>,
+	Sam Daly <sam@samdaly.ie>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 092/272] octeontx2-af: CGX: add bounds check to cgx_speed_mbps index
+Date: Thu, 28 May 2026 21:47:46 +0200
+Message-ID: <20260528194631.955873392@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -45,47 +51,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Sam Daly <sam@samdaly.ie>
 
-commit 4a9b16541ad3faf8bccb398532bf3f8b6bbf1188 upstream.
+commit c0bf0a4f3f1f5f57aa83e1400ba4f56f0abfd542 upstream.
 
-Just as proc_pid_attr_write() already does before calling the LSM
-hook. This only matters for SELinux and AppArmor which check
-whether the process is being ptraced and if so, whether to
-allow the transition.
+cgx_speed_mbps has 13 elements but RESP_LINKSTAT_SPEED can yield values
+0-15. If it returns a value >= 13, this causes an out-of-bounds array
+access. Add a bounds check and default to speed 0 if the index is out of
+range.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Acked-by: Casey Schaufler <casey@schaufler-ca.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 61071a871ea6 ("octeontx2-af: Forward CGX link notifications to PFs")
+Cc: Sunil Goutham <sgoutham@marvell.com>
+Cc: Linu Cherian <lcherian@marvell.com>
+Cc: Geetha sowjanya <gakula@marvell.com>
+Cc: hariprasad <hkelam@marvell.com>
+Cc: Subbaraya Sundeep <sbhatta@marvell.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sam Daly <sam@samdaly.ie>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026051352-refined-demise-e88d@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/lsm_syscalls.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/security/lsm_syscalls.c
-+++ b/security/lsm_syscalls.c
-@@ -55,7 +55,14 @@ u64 lsm_name_to_attr(const char *name)
- SYSCALL_DEFINE4(lsm_set_self_attr, unsigned int, attr, struct lsm_ctx __user *,
- 		ctx, u32, size, u32, flags)
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -1286,13 +1286,18 @@ static inline void link_status_user_form
+ 					   struct cgx_link_user_info *linfo,
+ 					   struct cgx *cgx, u8 lmac_id)
  {
--	return security_setselfattr(attr, ctx, size, flags);
-+	int rc;
++	unsigned int speed;
 +
-+	rc = mutex_lock_interruptible(&current->signal->cred_guard_mutex);
-+	if (rc < 0)
-+		return rc;
-+	rc = security_setselfattr(attr, ctx, size, flags);
-+	mutex_unlock(&current->signal->cred_guard_mutex);
-+	return rc;
- }
+ 	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
+ 	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
+-	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
+ 	linfo->an = FIELD_GET(RESP_LINKSTAT_AN, lstat);
+ 	linfo->fec = FIELD_GET(RESP_LINKSTAT_FEC, lstat);
+ 	linfo->lmac_type_id = FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, lstat);
  
- /**
++	speed = FIELD_GET(RESP_LINKSTAT_SPEED, lstat);
++	linfo->speed = speed < ARRAY_SIZE(cgx_speed_mbps) ?
++		       cgx_speed_mbps[speed] : 0;
++
+ 	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
+ 		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
+ 			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
 
 
