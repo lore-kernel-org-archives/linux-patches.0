@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F8F32ED5C;
-	Thu, 28 May 2026 20:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B551DE4E0;
+	Thu, 28 May 2026 20:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000979; cv=none; b=XDspcQ0hD00t4IhiKxAYPKlsV5RK8VsCPbv23K9n6HORd03b8/OmUL5LVqXRoIsI+MDbQYQ3tZKhkVNNzDmQGjiuKZ+Yf1QCSAnTK/rVr1IB2hoDJtta0Iu5BB++zKTYG+O5CiXLWjN975ncFHsURPMsaOclLfzOAqRr/IM+bAQ=
+	t=1780000982; cv=none; b=JIzrf3eo5XAm+ydNid/PX0A405GbKmtbe2CVZZhNkN7VQxlFkIuR3Hj0sH9vPVwKJS5AT4qMcJNfjiHbhn9LzdodFtihzqp6LJ3VWGeHa4ynp0VjbdNUsdSkoF8bl315JWrkapmlx/h0V38TGg+aJFVwgncMjCwNTPTz+FlAtnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000979; c=relaxed/simple;
-	bh=RAx5G+L/0j+qOJcrbZ0pL2nnzJG0LdDUrL4G9Tv0Dqc=;
+	s=arc-20240116; t=1780000982; c=relaxed/simple;
+	bh=6ROdIiU8peJVpg/L6V85dhK2sAx0q/lKq1PAR842S0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAH5tBDlOsuiNDeio+ngpHq9QotKBZIYImcJ9/Z0HNOwK80Qgu3IEmtDWUpLwIPWYmga+QKx4IyJ+a+Q3E/J/sREh4Ib92YhY0VMIhKy1KIsRdyuwJuHn5WSfUND49jTsXp7e8m6HGyP5It36DBjNhJv4puOpfqoruwrOa0kdo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0IdwJqZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mbgOxH6OyT6PU1mgtLaSWGv26gEG9DeAmBmm3+ICYvr8+rdozx7um2Ssz7ChV1aV249VlNhGG93+4C60+Ri6dz8Fer+M5VyUYsIjRY2N7ReeSo2LYxgyyhOFGCUfY9XoXUczUl5NezRRn4bOREtvByKLjgJ5B2dtwAKYvpxu/0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwOYQ30l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0IdwJqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B44D1F000E9;
-	Thu, 28 May 2026 20:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwOYQ30l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B64A1F000E9;
+	Thu, 28 May 2026 20:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000978;
-	bh=ZsAeCAWAM4ah0f0zpnfQ9m7+7+uFBvLUZk6ubBrm8Vg=;
+	s=korg; t=1780000981;
+	bh=IAWzvrkGZKUabMl0ShZt+KIJ2MzjtA1DG/YkVHlrl6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0IdwJqZ/VkGb3nOE12Z60ton/vZZOvc/dQJdkrIWSYPW5JnJVApG7lZk28EEJptE
-	 Zp7n3cac+WchaExc+rG4c2wv4o/jumFPfn6jh5zBrOEWufF4KXEh+AYHl9F4qQL2Sr
-	 EQQK+JAEMITSLGPMAWGR18ZqtwOboBpHYy6ffTas=
+	b=OwOYQ30lX/DsIlyQUBv+0LIomkxmyS9HamJQIEufe/aA9fgDHacCsrQ0K+Bl0JhFA
+	 rZhZaN53e/6D5SVntXcnG2dA1blaKbNlHEyi5PhPbbuFP/2JwGgxTsMA9YZoUXRR4b
+	 oHWxKKyaoWs7bBZXV7hrHaMig0SlJo+baGwNuO3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salendarsingh Gaud <sgaud@qti.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 236/272] drm/msm/snapshot: fix dumping of the unaligned regions
-Date: Thu, 28 May 2026 21:50:10 +0200
-Message-ID: <20260528194635.769502390@linuxfoundation.org>
+Subject: [PATCH 6.12 237/272] drm/xe/gsc: Fix double-free of managed BO in error path
+Date: Thu, 28 May 2026 21:50:11 +0200
+Message-ID: <20260528194635.793906193@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,102 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 76824d2467feb1828b745d6add2541918d7be3da ]
+[ Upstream commit d3ded53fab90996e7d94a39049e11962dd066725 ]
 
-The snapshotting code internally aligns data segment to 16 bytes. This
-works fine for DPU code (where most of the regions are aligned), but
-fails for snapshotting of the DSI data (because DSI data region is
-shifted by 4 bytes). Fix the code by removing length alignment and by
-accurately printing last registers in the region. While reworking the
-code also fix the 16x memory overallocation in
-msm_disp_state_dump_regs().
+The error path in xe_gsc_init_post_hwconfig() explicitly frees a BO
+allocated with xe_managed_bo_create_pin_map() via
+xe_bo_unpin_map_no_vm(). Since the managed BO already has a devm
+cleanup action registered, this causes a double-free when devm
+unwinds during probe failure.
 
-Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
-Reported-by: Salendarsingh Gaud <sgaud@qti.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/725449/
-Message-ID: <20260516-msm-fix-dsi-dump-2-v2-1-9e49fb2d240e@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Remove the explicit free and let devm handle it, consistent with
+all other xe_managed_bo_create_pin_map() callers.
+
+Fixes: 2e5d47fe7839 ("drm/xe/uc: Use managed bo for HuC and GSC objects")
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Link: https://patch.msgid.link/20260511154134.223696-1-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit 71d61e3e299a17139e47f980a4d6f425b2c59bf7)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 24 ++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_gsc.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index 4d55e3cf570f0..a966a03167cc0 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -9,7 +9,7 @@
- 
- #include "msm_disp_snapshot.h"
- 
--static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *base_addr)
-+static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr)
- {
- 	u32 len_padded;
- 	u32 num_rows;
-@@ -19,11 +19,11 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- 	void __iomem *end_addr;
- 	int i;
- 
--	len_padded = aligned_len * REG_DUMP_ALIGN;
--	num_rows = aligned_len / REG_DUMP_ALIGN;
-+	len_padded = round_up(len, REG_DUMP_ALIGN);
-+	num_rows = DIV_ROUND_UP(len, REG_DUMP_ALIGN);
- 
- 	addr = base_addr;
--	end_addr = base_addr + aligned_len;
-+	end_addr = base_addr + len;
- 
- 	if (!(*reg))
- 		*reg = kvzalloc(len_padded, GFP_KERNEL);
-@@ -51,8 +51,8 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 		void __iomem *base_addr, struct drm_printer *p)
- {
-+	void __iomem *addr, *end_addr;
- 	int i;
--	void __iomem *addr;
- 	u32 num_rows;
- 
- 	if (!dump_addr) {
-@@ -61,6 +61,7 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+diff --git a/drivers/gpu/drm/xe/xe_gsc.c b/drivers/gpu/drm/xe/xe_gsc.c
+index efc480d34c9dd..6786773f4560b 100644
+--- a/drivers/gpu/drm/xe/xe_gsc.c
++++ b/drivers/gpu/drm/xe/xe_gsc.c
+@@ -485,8 +485,7 @@ int xe_gsc_init_post_hwconfig(struct xe_gsc *gsc)
+ 				 EXEC_QUEUE_FLAG_PERMANENT, 0);
+ 	if (IS_ERR(q)) {
+ 		xe_gt_err(gt, "Failed to create queue for GSC submission\n");
+-		err = PTR_ERR(q);
+-		goto out_bo;
++		return PTR_ERR(q);
  	}
  
- 	addr = base_addr;
-+	end_addr = base_addr + len;
- 	num_rows = len / REG_DUMP_ALIGN;
+ 	wq = alloc_ordered_workqueue("gsc-ordered-wq", 0);
+@@ -509,8 +508,6 @@ int xe_gsc_init_post_hwconfig(struct xe_gsc *gsc)
  
- 	for (i = 0; i < num_rows; i++) {
-@@ -70,6 +71,17 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 				dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
- 		addr += REG_DUMP_ALIGN;
- 	}
-+
-+	if (addr != end_addr) {
-+		drm_printf(p, "0x%lx : %08x",
-+			   (unsigned long)(addr - base_addr),
-+			   dump_addr[i * 4]);
-+		if (addr + 0x4 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 1]);
-+		if (addr + 0x8 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 2]);
-+		drm_printf(p, "\n");
-+	}
+ out_q:
+ 	xe_exec_queue_put(q);
+-out_bo:
+-	xe_bo_unpin_map_no_vm(bo);
+ 	return err;
  }
  
- void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
-@@ -189,7 +201,7 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
- 	va_end(va);
- 
- 	INIT_LIST_HEAD(&new_blk->node);
--	new_blk->size = ALIGN(len, REG_DUMP_ALIGN);
-+	new_blk->size = len;
- 	new_blk->base_addr = base_addr;
- 
- 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
 -- 
 2.53.0
 
