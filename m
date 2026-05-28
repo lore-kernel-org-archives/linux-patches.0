@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A8325485;
-	Thu, 28 May 2026 20:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE3D254B1F;
+	Thu, 28 May 2026 20:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999946; cv=none; b=ruId1NsDolnpdxFviNmBdyen+x43ijQP49Fv024/J2oAMPkPV+1DhpxkX49gwFVc4kr2XWm7lEtWgvYmsAhT/jYtVa9r5XZB8LvwFny6dqXtzKhoiw3BxS+1Fl/pGaASRRnoIxhGpMvzx2kkx4Ac+vEUKI/g1/evBUHHaSGCxoQ=
+	t=1779999949; cv=none; b=kB5trrOZO4uR2EtVxJOw6gWUonci09Cbk4KxGyvizymY4xu/v/FaTjeGPH3/OtTiIT4Twg9E5tD/jIVfYqBzirv/cRyw94zeo4+bwnHGs1jBWpvGe25OzwjX+fXw09w/O6aqrXTggL2uKzU3rrpti+DC+p4LxKROI5pl0g1kzxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999946; c=relaxed/simple;
-	bh=keZR4lXsKQh15f5qetncjToT63x0lIfoynGRfo4T+fw=;
+	s=arc-20240116; t=1779999949; c=relaxed/simple;
+	bh=qa3tyGT31UgcuszDjWliat8w9rZ4nB0W/yzglsq3buw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyHJg0yLP6M53pGXaNxdK3NUpZBmvDBybTPLPv0S7oKBQUgHqDF/5FL5Oim7At19KWDnGyHnhifV2pqSWq2SBkCARb+dxQ2FeembPY+NeQWC+SVgiSrqeBgM12JBXKS15i+/U1TBMFHb2vHWhKZMqR1gfGFO0e/Jgy6OevDwBMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhQYhPf7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ci0QSB6LQWwjuwvY7vSbvZLpKcMbc5KQWBVp0ifJdgL47GKfeuTWIAIeT4gr8ESpL5gecu4k+4S8JVGf8npokFSccxL9gtqCSBkhG+QqHdo1KsNsJPunQt6KPtedkjpSCmzeKm7t1nPCIB4zUEdqd0CNiRzqP+sm+0O9+fVH5NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oW4WsVK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhQYhPf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BEA1F000E9;
-	Thu, 28 May 2026 20:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oW4WsVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFF01F000E9;
+	Thu, 28 May 2026 20:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999945;
-	bh=JzYYJ1KkqC2Xr6zXZu2TcxZct6YOA40ZCoLyVWNIoCc=;
+	s=korg; t=1779999947;
+	bh=Y94UQT5006FhmnHXd+eaqhPKdJ0zWVvtdQa2t0Lt2a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhQYhPf7H1kPBVQkCtC5frPSSttNOwRLAJMRZE8slrGc3McPpY9vzkUET5rKCdNdM
-	 cVPbbqSR2ae8Dik9dRhiiDauz9TZ0B8ObYOmVPrNMw+KcbzDSvblSrpXry54F7Jx5M
-	 m3wy8lBirr8ERQxGAOVOABhFG7Bxpvk7ta9nSB50=
+	b=0oW4WsVKGKQrvPEMhfv5cnBSu5G1pVFHuOOJPYokPCjiRgA41hwWvBOHPLnE+4lhi
+	 cgAIWsmCp5m7dFxTTNBXMjF22cWqrHKgYjev53B37x/Sc8Lr91xkGlL+Az4IYlDZNP
+	 T3CZzDSmca8AtgVBwJ+blR2sQ4bx6eE60F4cr3PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ally Heev <allyheev@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 248/377] netfs: Fix netfs_read_folio() to wait on writeback
-Date: Thu, 28 May 2026 21:48:06 +0200
-Message-ID: <20260528194645.559604065@linuxfoundation.org>
+Subject: [PATCH 6.18 231/377] powerpc: 82xx: fix uninitialized pointers with free attribute
+Date: Thu, 28 May 2026 21:47:49 +0200
+Message-ID: <20260528194645.079075696@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -55,42 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Ally Heev <allyheev@gmail.com>
 
-[ Upstream commit ded0c6f1606061148c202825f7e53d711f9f84cf ]
+[ Upstream commit acd1e47db03d4b528fd5efb8565dd0de1c79f62a ]
 
-Fix netfs_read_folio() to wait for an ongoing writeback to complete so that
-it can trust the dirty flag and whatever is attached to folio->private
-(folio->private may get cleaned up by the collector before it clears the
-writeback flag).
+Uninitialized pointers with `__free` attribute can cause undefined
+behavior as the memory allocated to the pointer is freed automatically
+when the pointer goes out of scope.
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-23-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+powerpc/km82xx doesn't have any bugs related to this as of now, but,
+it is better to initialize and assign pointers with `__free` attribute
+in one statement to ensure proper scope-based cleanup
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/aPiG_F5EBQUjZqsl@stanley.mountain/
+Signed-off-by: Ally Heev <allyheev@gmail.com>
+Fixes: 4aa5cc1e0012 ("powerpc-km82xx.c: replace of_node_put() with __free")
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116-aheev-uninitialized-free-attr-km82xx-v2-1-4307e2b5300d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/platforms/82xx/km82xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index ebaabec376326..fab3181c7f869 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -502,6 +502,8 @@ int netfs_read_folio(struct file *file, struct folio *folio)
- 	struct netfs_inode *ctx = netfs_inode(mapping->host);
- 	int ret;
+diff --git a/arch/powerpc/platforms/82xx/km82xx.c b/arch/powerpc/platforms/82xx/km82xx.c
+index 99f0f0f418767..4ad223525e893 100644
+--- a/arch/powerpc/platforms/82xx/km82xx.c
++++ b/arch/powerpc/platforms/82xx/km82xx.c
+@@ -27,8 +27,8 @@
  
-+	folio_wait_writeback(folio);
-+
- 	if (folio_test_dirty(folio))
- 		return netfs_read_gaps(file, folio);
+ static void __init km82xx_pic_init(void)
+ {
+-	struct device_node *np __free(device_node);
+-	np = of_find_compatible_node(NULL, NULL, "fsl,pq2-pic");
++	struct device_node *np __free(device_node) = of_find_compatible_node(NULL,
++		NULL, "fsl,pq2-pic");
  
+ 	if (!np) {
+ 		pr_err("PIC init: can not find cpm-pic node\n");
 -- 
 2.53.0
 
