@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E01C2459DD;
-	Thu, 28 May 2026 20:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6369318B9D;
+	Thu, 28 May 2026 20:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001244; cv=none; b=ecyo7kxSkm0cn5O5jDqMPkmGi7VvRNL3/J0/nnq1q4uLuL5KJfySgWTTKVZT0NQz4xukeYeDPAii1F24MMQp8Jy4CcMsqeAcSpn6NH5Shg8jW2APOTAYqw/0RGX3WLxRgg9UqGDtstL5y3bE4/m9NknQrte7JobJBVHKsPz/m9I=
+	t=1780001246; cv=none; b=toDakkHwIJMLOX6hQYMY+36ia4KlBvi6xoppTuMe7MMuRBRkOb0Q+IAJT7sVAiYou8cmdUcBU12GR5RwIu/cZSczTat/RBDMRJFLRKuc7BjvkR7/MOsJVdQmnFpn3n1HEScnFkcrYkm89vH3j0YxbobHm8Pqyxz5pME4dJ4u5xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001244; c=relaxed/simple;
-	bh=GmZ1kpHo1b38vSlXJypGmDqf4lN92UnNqwhfwcxfzec=;
+	s=arc-20240116; t=1780001246; c=relaxed/simple;
+	bh=XtBBNnt0hiBDIStzUdy93ihg+kRzFMx8hcRY9BO1Q4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DelK287xVKZDyH+qo5u7BAYDR1ggINxFprgZm1XbaT9yx/tA/YuJJ3HnakGhFRg77ygOpVD8sqh/uubrvLq7CA6KpgFutGWr7enWcwkfvhyH/jcyW89YVbhMYu3b0suu7di3x8odgeqHGWzDQTOx1zMa5JOA4pQjgXTSDuNin4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvYisIat; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtAk62RTmy3E0hkDHF/bxNfdlpn1kyFk2SfZqh+mH/Fbt67Y5jrVoDWiFKPwcRAlkHzPmUXlds+64aEBpPX+CjcgL7UN0tJPf2xlwoe44mRmc405hlN5HztdgxZuEUSOABcMj36RnDlUdoU1jKaN961QRsLABGZPjVXlYdr4Z2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/4pvZ7G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvYisIat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0701F000E9;
-	Thu, 28 May 2026 20:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/4pvZ7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259AC1F000E9;
+	Thu, 28 May 2026 20:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001242;
-	bh=AnMVhRpEpbpz8W99MSL/HTIJlwn04Vzh6rUE3e2wjxU=;
+	s=korg; t=1780001245;
+	bh=RmSsBavROsWtTVldpaj81Tq1+OJBtWywDQHGbyZ/gBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvYisIatTFfuyMDSkaSCfnhVPnzVc9wfrlgpo/dlMbbJTWXrp7ICtdD8bUQWk5abd
-	 dVaxqRcgF+9/YR8CZO1gqAz4FbGPTuIgIVnldJz+lcMKGpQR74oyBmJ4JbgeD2swA6
-	 8rBX/3D2z3VITlDOFWafpopmd3J7tl7e/JDhtHZ0=
+	b=n/4pvZ7G1WYXKd68G6SnCaFpqX19awdraG7TeEPNQ6H9/w+nVA6QLIbItE1Aq/xjs
+	 JcgPm94rjRxwi8ywLJoAotK98tSGuWomVT5G8ZxBOow9/qxuvjqNTjaqzsd9oXaDst
+	 fRoNjUdOt+onEWH/l+NBdWLHdH+BAWorKIuXk3Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 057/186] cifs: Fix busy dentry used after unmounting
-Date: Thu, 28 May 2026 21:48:57 +0200
-Message-ID: <20260528194930.513887355@linuxfoundation.org>
+	Tom Zanussi <tom.zanussi@linux.intel.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.6 058/186] tracing: Do not call map->ops->elt_free() if elt_alloc() fails
+Date: Thu, 28 May 2026 21:48:58 +0200
+Message-ID: <20260528194930.540238333@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,73 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c68337442f03953237a94577beb468ab2662a851 upstream.
+commit 8f0f5c4fb9df0e19a341e0c6ed8dc4fda9124f03 upstream.
 
-Since commit 340cea84f691c ("cifs: open files should not hold ref on
-superblock"), cifs file only holds the dentry ref_cnt, the cifs file
-close work(cfile->deferred) could be executed after unmounting, which
-will trigger a warning in generic_shutdown_super:
- BUG: Dentry 00000000a14a6845{i=c,n=file}  still in use (1) [unmount of
- cifs cifs]
+In paths where tracing_map_elt_alloc() failed to allocate objects,
+the map->ops->elt_alloc() call was never successful. In this case,
+map->ops->elt_free() should not be called.
 
-The detailed processs is:
-   process A           process B           kworker
- fd = open(PATH)
-  vfs_open
-   file->__f_path = *path // dentry->d_lockref.count = 1
-   cifs_open
-    cifs_new_fileinfo
-     cfile->dentry = dget(dentry) // dentry->d_lockref.count = 2
- close(fd)
-  __fput
-  cifs_close
-   queue_delayed_work(deferredclose_wq, cfile->deferred)
-  dput(dentry) // dentry->d_lockref.count = 1
-			                 smb2_deferred_work_close
-					  _cifsFileInfo_put
-					   list_del(&cifs_file->flist)
-                    umount
-		     cleanup_mnt
-		      deactivate_super
-		       cifs_kill_sb
-		        cifs_close_all_deferred_files_sb
-			 cifs_close_all_deferred_files
-			  // cannot find cfile, skip _cifsFileInfo_put
-			kill_anon_super
-			 generic_shutdown_super
-			  shrink_dcache_for_umount
-			   umount_check
-			    WARN ! // dentry->d_lockref.count = 1
-					   cifsFileInfo_put_final
-					    dput(cifs_file->dentry)
-		                            // dentry->d_lockref.count = 0
+Link: https://sashiko.dev/#/patchset/20260520223101.34710-1-rosenp%40gmail.com
 
-Fix it by flushing 'deferredclose_wq' before calling kill_anon_super.
-
-Fetch a reproducer in https://bugzilla.kernel.org/show_bug.cgi?id=221548.
-
-Fixes: 340cea84f691c ("cifs: open files should not hold ref on superblock")
 Cc: stable@vger.kernel.org
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Rosen Penev <rosenp@gmail.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2734b629525a ("tracing: Add per-element variable support to tracing_map")
+Link: https://patch.msgid.link/177933895460.108746.5396070821443932634.stgit@devnote2
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/tracing_map.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -298,6 +298,8 @@ static void cifs_kill_sb(struct super_bl
+--- a/kernel/trace/tracing_map.c
++++ b/kernel/trace/tracing_map.c
+@@ -386,13 +386,11 @@ static void tracing_map_elt_init_fields(
+ 	}
+ }
  
- 		/* Wait for all pending oplock breaks to complete */
- 		flush_workqueue(cifsoplockd_wq);
-+		/* Wait for all opened files to release */
-+		flush_workqueue(deferredclose_wq);
+-static void tracing_map_elt_free(struct tracing_map_elt *elt)
++static void __tracing_map_elt_free(struct tracing_map_elt *elt)
+ {
+ 	if (!elt)
+ 		return;
  
- 		/* finally release root dentry */
- 		dput(cifs_sb->root);
+-	if (elt->map->ops && elt->map->ops->elt_free)
+-		elt->map->ops->elt_free(elt);
+ 	kfree(elt->fields);
+ 	kfree(elt->vars);
+ 	kfree(elt->var_set);
+@@ -400,6 +398,17 @@ static void tracing_map_elt_free(struct
+ 	kfree(elt);
+ }
+ 
++static void tracing_map_elt_free(struct tracing_map_elt *elt)
++{
++	if (!elt)
++		return;
++
++	/* Only objects initialized with alloc_elt() should be passed to free_elt().*/
++	if (elt->map->ops && elt->map->ops->elt_free)
++		elt->map->ops->elt_free(elt);
++	__tracing_map_elt_free(elt);
++}
++
+ static struct tracing_map_elt *tracing_map_elt_alloc(struct tracing_map *map)
+ {
+ 	struct tracing_map_elt *elt;
+@@ -444,7 +453,7 @@ static struct tracing_map_elt *tracing_m
+ 	}
+ 	return elt;
+  free:
+-	tracing_map_elt_free(elt);
++	__tracing_map_elt_free(elt);
+ 
+ 	return ERR_PTR(err);
+ }
 
 
