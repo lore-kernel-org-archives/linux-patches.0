@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5844E335566;
-	Thu, 28 May 2026 20:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D606A32ABC0;
+	Thu, 28 May 2026 20:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999086; cv=none; b=RhyoGG1X9iuuPAW0VDPccSwdWg0O/Dv+IALDzsO5X2DGBoFeXx9iJAwxKNuH963RD0A+9MkxYxk/KG8XkWhKXNXYFqRZ7pq1CzrRbMf399+IQ/WWkFfRDbHBMIn3pB1HuZ7lB+zU85Zmpikbk8JTPYiq9zh67E7mgj6FmifoHZM=
+	t=1779999088; cv=none; b=oxnVBJBYh8/IHwEvHt6rEq9kM65zigUZxYvRQGxCU6Mr4sgsLkwClTbgv4IG/dzXDW0UWvP1ImflnicxK/KEp6zY8Y8q1dPMyzZdeABnp8MCSb8ydVAMEawqZE59T9M1gOMnuArgkmU7+j0VQcmCe/sKPyq40qLglglAbvFjdzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999086; c=relaxed/simple;
-	bh=J88ToUdF91FodsOr7tCtxMLns72ZvTA7QdIA13L0Dd8=;
+	s=arc-20240116; t=1779999088; c=relaxed/simple;
+	bh=ihMUVCt8oHku85OIsY9+sy7Ltxx2i1uDR+ob1bwH2rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORSbCXKhP8Hzp4CZO9n6YDpIyzl4Od2tIkv0mP3k2WEDftyrBc79ifhBabOn1OivAXJdYSr/Z+0FnZWbLm5VUuj2x58lKjlBMf7pnz9V9R9LwW53zFKyMj69iyU4l5I4itdSk16Tmy/hizeTpDa4FOD91hwG6bOHpZytyiZXogI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMQmsIIT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KS4hWJFHlhNnwsLjvRMzVkkm79dU5DfA7lpvA4Wc6oeCkacEPA4pC19L8hNTXoDUiPpQhZQiomEWWab2L+M1EzbGRaDn/NRp846uaBp5U5QZRxpRDqbsLHVcN2ykUOL0myhRuc8lzaxs+qoyccZU2z8gDixyHRLqKMGvZxCk7GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J80G/+ZN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMQmsIIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7456C1F000E9;
-	Thu, 28 May 2026 20:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J80G/+ZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DB11F000E9;
+	Thu, 28 May 2026 20:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999085;
-	bh=wzFU8F7/+pKv3PD+o+HqmEnsH5Hm612RG7XcgDKcG9g=;
+	s=korg; t=1779999087;
+	bh=Mnhzn6HuikMftxAqmRw1M/HXfzF2JZu7nj/00UDfHgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMQmsIITYeowI3YldOXL+bu9E6UsK0oDbG4SgyEVsUk1kES+wxVbF3mfx6cP8XCF6
-	 FUMx6NCH6fBlALyH9aupO3GWqmld5D6PgaLRgWOWg50DKKcFVbXZ0ZRuggZQU9CQ5y
-	 Qad05iOBuVhk7Vk3Ddo0RtlQKoO7QChFOWqHLQSI=
+	b=J80G/+ZN7TsywsUGA6HfM8l/2nAFqnXj6fH5Xv3HQ/d79bopmskCMP5i3ONcfXsLo
+	 hsr/ZCvcE0GNGqaNN3oXtX5ObJbvMZF21U740oPym9TYJydV3YUJyV8nCIyAYsRohu
+	 YmvPAKrI8KgeUjRvdQqIN3AKZX2csIhFx8v2ZOWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 404/461] net: phy: honor eee_disabled_modes in phy_support_eee()
-Date: Thu, 28 May 2026 21:48:53 +0200
-Message-ID: <20260528194659.173337757@linuxfoundation.org>
+Subject: [PATCH 7.0 405/461] net: phy: honor eee_disabled_modes in phy_advertise_eee_all()
+Date: Thu, 28 May 2026 21:48:54 +0200
+Message-ID: <20260528194659.205378285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -54,27 +54,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 3655063e083889ed4b79b7dda9cec65478dce09a ]
+[ Upstream commit 8baa7506d793f0636e3f6f01b01ef7be19674d06 ]
 
-phy_support_eee() copies supported_eee into advertising_eee
+phy_advertise_eee_all() copies supported_eee into advertising_eee
 unconditionally, overwriting any filtering applied during phy_probe()
 based on DT eee-broken-* properties or driver-populated
-eee_disabled_modes. MAC drivers that call phy_support_eee() after
-probe (e.g. bcmgenet, fec, lan743x, lan78xx, r8169) then cause the PHY
-to advertise EEE for modes the user marked as broken.
+eee_disabled_modes. genphy_c45_ethtool_set_eee() calls this helper
+when user space passes an empty advertisement, undoing the filtering.
 
-The symptom is that ethtool --show-eee on the local interface reports
-"not supported" (supported & ~eee_disabled_modes is empty) while the
-link partner sees EEE negotiated and active.
+Apply the same eee_disabled_modes mask in phy_advertise_eee_all() so
+the filtering survives the copy, matching the pattern in phy_probe()
+and phy_support_eee().
 
-phy_probe() already filters advertising_eee via eee_disabled_modes
-after calling of_set_phy_eee_broken(). Apply the same mask in
-phy_support_eee() so the filtering survives the copy.
-
-Fixes: 49168d1980e2 ("net: phy: Add phy_support_eee() indicating MAC support EEE")
+Fixes: b64691274f5d ("net: phy: add helper phy_advertise_eee_all")
 Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260518-devel-phy-support-eee-fix-v2-1-05b52626fa68@tipi-net.de
+Link: https://patch.msgid.link/20260518-devel-phy-support-eee-fix-v2-2-05b52626fa68@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -82,19 +77,19 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index f3696d9819d35..893ad97fc60c3 100644
+index 893ad97fc60c3..cfb505ed9a3a0 100644
 --- a/drivers/net/phy/phy_device.c
 +++ b/drivers/net/phy/phy_device.c
-@@ -2933,7 +2933,8 @@ EXPORT_SYMBOL_GPL(phy_advertise_eee_all);
+@@ -2907,7 +2907,8 @@ EXPORT_SYMBOL(phy_advertise_supported);
   */
- void phy_support_eee(struct phy_device *phydev)
+ void phy_advertise_eee_all(struct phy_device *phydev)
  {
 -	linkmode_copy(phydev->advertising_eee, phydev->supported_eee);
 +	linkmode_andnot(phydev->advertising_eee, phydev->supported_eee,
 +			phydev->eee_disabled_modes);
- 	phydev->eee_cfg.tx_lpi_enabled = true;
- 	phydev->eee_cfg.eee_enabled = true;
  }
+ EXPORT_SYMBOL_GPL(phy_advertise_eee_all);
+ 
 -- 
 2.53.0
 
