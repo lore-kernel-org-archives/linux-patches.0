@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073DE2D1303;
-	Thu, 28 May 2026 20:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31872F8E83;
+	Thu, 28 May 2026 20:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999612; cv=none; b=qAcRVMU5m4HUfm3u2tjKtapAfCWLJuEOlNv4H8pUgV6Rv3eSzCr3iz7hL2nneajxU6DBsqtazAYflwUc1d9u8CjW4q7+7ShgqU9ZGLnIxKmsLmVcMUs9053sVtTjIWc0vNmFicQzqFkNgIjm/UVFv6MALXmpPCOsFAxezU0O1gs=
+	t=1779999614; cv=none; b=bd4QxIFInSQEDP4uTpxYRANR9kRgU4lsSgFe8S2HTZ5qV5wj2VxO8qv8QA57Ekieh22IaXdR+ppQJ6UDFwNd7p4RCU0zZ6TcToGZBwmV1+zO2yQxZlS9UpHn3x3inGuF4TV+n5n0Lo+eh72ZXnMC2Uv6od/z4iKK6pCwzeTWcZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999612; c=relaxed/simple;
-	bh=ZMhG8O/Ao+f0gW+nD7f1TmZyYt1WCTq6TFm8jCSJXsU=;
+	s=arc-20240116; t=1779999614; c=relaxed/simple;
+	bh=PiLPx5CJWSRegHN6PhBguQ/wRfUWVv6k4l41JkgZjL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eJzZEMPrO4Q5Hzqoav/g5NQwVGTB3O7QSHWE0Pa0n8i2vBTucoDjEUP7Nt/R3SKpJznc2yl5v9N8YqfIWkvEqgKpL9mkK5Gpnod24n/OUZUhTH2vyBFdeNXy3LlNIQb+7OYu4DPTB6Nnn4r+aYj2Q/FqIdlR6dqqGO0glZ1v8wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/AyuHos; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CmdAIWDhHdcAndc1Wkkh3YYypiGPh2tbAck0RCjtGlKcSK63oAlkVMQI1bXE5VejDABkFfI7MWI3UOUsUSJplLqPJLR7pynswmCENDeU/n6II8FU65qR1PIoCfTJTC7QKoGh9m7A+sX5l+yRe5LfT35bEOjsPptHM7a5VwNWPgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o34SEp1w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/AyuHos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AA21F000E9;
-	Thu, 28 May 2026 20:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o34SEp1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF821F000E9;
+	Thu, 28 May 2026 20:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999610;
-	bh=Lz96mrW2DkfkHL9NtDr/F7DoBS2ObBKypMbcgRxsCmg=;
+	s=korg; t=1779999613;
+	bh=HPWxo1CKfBLKK1lBQuyeSW02ekc4xRsQRupey3dJJVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/AyuHos9Kr9Gqp6KoNkxQRCsIoxPiHyQzUZvi06Z+32LMLDCfkPqrT54RsZLfVaT
-	 MeEb0A/DJKjNYn8q72fRTTsn2voIAfIw4UO/zWIYCTi5crlG8qO+LpHj6M1qi0p88n
-	 GO383rEl8Pzq2vppdUiY2rAsqqYoQG4n+RgV6AT8=
+	b=o34SEp1wgJLkPcoLnflEG+Kc7shvVpvQz1c6mash+/mvWzXF2GmVgjdMHHopN0LKc
+	 LRzUwqz2W1c5IdWVGTI9P7nlPzNiJSyE42fLbj7Xy/JPJ5uEMro1kfa4Fvwn0PINDd
+	 HlhoMw5OLqaHocUfpa1y4Ns4o5hqS0zdWA/BUVA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.18 129/377] drm/v3d: Release indirect CSD GEM reference on CPU job free
-Date: Thu, 28 May 2026 21:46:07 +0200
-Message-ID: <20260528194642.097083972@linuxfoundation.org>
+	syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.18 130/377] drm/virtio: use uninterruptible resv lock for plane updates
+Date: Thu, 28 May 2026 21:46:08 +0200
+Message-ID: <20260528194642.126043451@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -44,47 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 6eb6e5acafa46854d4363e6c34981289995f3ace upstream.
+commit 9af1b6e175c82daf4b423da339a722d8e67a735a upstream.
 
-v3d_get_cpu_indirect_csd_params() takes a reference to the indirect BO via
-drm_gem_object_lookup() and stashes it in cpu_job->indirect_csd.indirect,
-but nothing on the CPU job teardown path ever drops that reference.
+virtio_gpu_cursor_plane_update() and virtio_gpu_resource_flush() lock
+the framebuffer BO's dma_resv via virtio_gpu_array_lock_resv() and
+ignore its return value. The function can fail with -EINTR from
+dma_resv_lock_interruptible() (signal during lock wait) or with
+-ENOMEM from dma_resv_reserve_fences() (fence slot allocation),
+leaving the resv lock not held. The queue path then walks the object
+array and calls dma_resv_add_fence(), which requires the lock held;
+with lockdep enabled this trips dma_resv_assert_held():
 
-Drop the extra reference in v3d_cpu_job_free(). The NULL check covers ioctl
-errors before the lookup ran and CPU job types other than
-V3D_CPU_JOB_TYPE_INDIRECT_CSD, which leave the field zero-initialised.
+  WARNING: drivers/dma-buf/dma-resv.c:296 at dma_resv_add_fence+0x71e/0x840
+  Call Trace:
+   virtio_gpu_array_add_fence
+   virtio_gpu_queue_ctrl_sgs
+   virtio_gpu_queue_fenced_ctrl_buffer
+   virtio_gpu_cursor_plane_update
+   drm_atomic_helper_commit_planes
+   drm_atomic_helper_commit_tail
+   commit_tail
+   drm_atomic_helper_commit
+   drm_atomic_commit
+   drm_atomic_helper_update_plane
+   __setplane_atomic
+   drm_mode_cursor_universal
+   drm_mode_cursor_common
+   drm_mode_cursor_ioctl
+   drm_ioctl
+   __x64_sys_ioctl
 
+Beyond the WARN, mutating the dma_resv fence list without the lock
+races with concurrent readers/writers and can corrupt the list.
+
+Both call sites run inside the .atomic_update plane callback, which
+DRM atomic helpers do not allow to fail (by the time it runs, the
+commit has been signed off to userspace and there is no clean
+rollback path). Moving the lock acquisition to .prepare_fb was
+rejected because the broader lock scope deadlocks against other BO
+locking paths in the same atomic commit.
+
+Introduce virtio_gpu_lock_one_resv_uninterruptible() that uses
+dma_resv_lock() instead of dma_resv_lock_interruptible(). This
+eliminates the -EINTR failure mode -- the realistic syzbot trigger
+-- without extending the lock hold across the commit. The helper
+locks a single BO and rejects nents > 1 with -EINVAL; both fix
+sites lock exactly one BO.
+
+Use it from virtio_gpu_cursor_plane_update() and
+virtio_gpu_resource_flush(); check the return value to handle the
+remaining -ENOMEM case from dma_resv_reserve_fences() by freeing
+the objs and skipping the plane update for that frame. The
+framebuffer BOs touched here are not shared with other contexts
+and lock contention is expected to be brief, so the loss of
+signal-interruptibility is acceptable.
+
+Other callers of virtio_gpu_array_lock_resv() (the ioctl paths)
+continue to use the interruptible variant.
+
+The bug was reported by syzbot, triggered via fault injection
+(fail_nth) on the DRM_IOCTL_MODE_CURSOR path, which forces the
+-ENOMEM branch in dma_resv_reserve_fences().
+
+Reported-by: syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72bd3dd3a5d5f39a0271
+Fixes: 5cfd31c5b3a3 ("drm/virtio: fix virtio_gpu_cursor_plane_update().")
 Cc: stable@vger.kernel.org
-Fixes: 18b8413b25b7 ("drm/v3d: Create a CPU job extension for a indirect CSD job")
-Assisted-by: Claude:claude-opus-4.7
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260515-v3d-cpu-job-leaks-v1-2-7f147cbbf935@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260519082247.34470-1-kartikey406@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_submit.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/virtio/virtgpu_drv.h   |    1 +
+ drivers/gpu/drm/virtio/virtgpu_gem.c   |   17 +++++++++++++++++
+ drivers/gpu/drm/virtio/virtgpu_plane.c |   10 ++++++++--
+ 3 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_submit.c
-+++ b/drivers/gpu/drm/v3d/v3d_submit.c
-@@ -131,6 +131,9 @@ v3d_cpu_job_free(struct kref *ref)
- 	v3d_performance_query_info_free(&job->performance_query,
- 					job->performance_query.count);
- 
-+	if (job->indirect_csd.indirect)
-+		drm_gem_object_put(job->indirect_csd.indirect);
-+
- 	v3d_job_free(ref);
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -317,6 +317,7 @@ virtio_gpu_array_from_handles(struct drm
+ void virtio_gpu_array_add_obj(struct virtio_gpu_object_array *objs,
+ 			      struct drm_gem_object *obj);
+ int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs);
++int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs);
+ void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs);
+ void virtio_gpu_array_add_fence(struct virtio_gpu_object_array *objs,
+ 				struct dma_fence *fence);
+--- a/drivers/gpu/drm/virtio/virtgpu_gem.c
++++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
+@@ -238,6 +238,23 @@ int virtio_gpu_array_lock_resv(struct vi
+ 	return ret;
  }
  
++int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs)
++{
++	int ret;
++
++	if (objs->nents != 1)
++		return -EINVAL;
++
++	dma_resv_lock(objs->objs[0]->resv, NULL);
++
++	ret = dma_resv_reserve_fences(objs->objs[0]->resv, 1);
++	if (ret) {
++		virtio_gpu_array_unlock_resv(objs);
++		return ret;
++	}
++	return 0;
++}
++
+ void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs)
+ {
+ 	if (objs->nents == 1) {
+--- a/drivers/gpu/drm/virtio/virtgpu_plane.c
++++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
+@@ -214,7 +214,10 @@ static void virtio_gpu_resource_flush(st
+ 		if (!objs)
+ 			return;
+ 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
+-		virtio_gpu_array_lock_resv(objs);
++		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
++			virtio_gpu_array_put_free(objs);
++			return;
++		}
+ 		virtio_gpu_cmd_resource_flush(vgdev, bo->hw_res_handle, x, y,
+ 					      width, height, objs,
+ 					      vgplane_st->fence);
+@@ -458,7 +461,10 @@ static void virtio_gpu_cursor_plane_upda
+ 		if (!objs)
+ 			return;
+ 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
+-		virtio_gpu_array_lock_resv(objs);
++		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
++			virtio_gpu_array_put_free(objs);
++			return;
++		}
+ 		virtio_gpu_cmd_transfer_to_host_2d
+ 			(vgdev, 0,
+ 			 plane->state->crtc_w,
 
 
