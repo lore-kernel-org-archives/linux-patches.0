@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4121330D35;
-	Thu, 28 May 2026 20:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9662733439A;
+	Thu, 28 May 2026 20:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000594; cv=none; b=gKMgCPukdNn5KMYrt6zMJ2UgAm7bfVIeJzUzzQcnvm/JvUPz8CibjZghQDA2Mc+ygERgS/XgdDucFq0MUE3hUccUsMGhvwCU+rQVSiP2czuQFNWv8Hzdo3XJw09zv5rSDPZuAbdsepVNY4WhU4XrDtkWJ9Ci1Tz+KDW/8KGgQT4=
+	t=1780000597; cv=none; b=Lb3o9mo3NWs0IDbBjyuqZeumDqveB0O7zWqd1+BPoP1B9eLqNv3prmJSgcoy2oGqqe8nc09D7fsXi3O5tE3i/2W3DnUSKCnFEth6xj85RMmFr0N4kdLqdbuGNx/Hd1ZiL6i0NwXE+fFnSDkHI79wnH+fu77ZNG4+tYuNwbrGDes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000594; c=relaxed/simple;
-	bh=SdlhmTu7PwBsrDcZeoT7VM00TQG0+0zZXWvnZVUSCBc=;
+	s=arc-20240116; t=1780000597; c=relaxed/simple;
+	bh=lkmlxuu0/qZqf1RmieX3w4h0bLnIkcnWUzRid41jZ0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tP59+G3fW4aU27O4gWqRBcevXN5w5g71bUsiJxRW+RvSvJOdQ82dnUtnrN4NlxSckLyKb5MkDsF9rO6zXgpzI6jblBuH+N13rJu7EaRSalutnzeJMKWN3gRnfrEuu5QZIldF3yT1RBfM4eeOcJ2pgnAx0mgqjdOl1oZHufDR344=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUO/emTo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qRcwIXhOhW5k5y9Ji4gOmTwVyYIlgjbhj/TOeH5tjGCFLlLUs7sPK8kIb5Lg6srvvC3nWTvDkZcUQhIn9OXyamu9OFV55HI8x/JOhwC5stBcOa9Q536IrvmLhvTqGz8oVzD68MH5cs05NdbZQKYqnR2AUjKcsrjou8TghiQwSnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8HdOCJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUO/emTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDEE1F00A3A;
-	Thu, 28 May 2026 20:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8HdOCJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33B01F000E9;
+	Thu, 28 May 2026 20:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000593;
-	bh=N48ItBK6ma3yKhY6X4w4OEWPgGbL61ajmsnDKZl/SRw=;
+	s=korg; t=1780000596;
+	bh=oBlDUq2ZA4N6nSN2wdUnzVejv4ZO5cXwkDkenV3Z/qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUO/emTo/zJPuycAXyoDgBsXsn2b5aD+jSSEx9dcYAbn1FF5RTN82b2QUBEFu5HQv
-	 m+DfNbkksuYVw/r1ncBwSPDZAscg1m3QoPSQNH8soNz4CTUWZldhz46zi5+AkIjoxa
-	 X+7uxDttmYw91Gtbr3lZUMP22g0Tat6zQp4Qmvks=
+	b=J8HdOCJaRvLUWpWCXttgQKSotBK8kjiXGLgFjMomRfP8L6Q6I9V7wVCxUnT+nOspK
+	 We1dVa0K/3vgqGVPW8Td9PeanxqAgBj7IEzPgau7Ah/JhK6YczuoZTFD5xJ2XRWG5O
+	 ge6cp7mRMOzkZplIB9nDY8x04dgQUhEp6ErJ7+Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Will Deacon <will@kernel.org>,
+	Yuan Yao <yaoyuan@linux.alibaba.com>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 101/272] KVM: arm64: vgic-its: Reject restored DTE with out-of-range num_eventid_bits
-Date: Thu, 28 May 2026 21:47:55 +0200
-Message-ID: <20260528194632.208970528@linuxfoundation.org>
+Subject: [PATCH 6.12 102/272] KVM: arm64: vgic: Free private_irqs when init fails after allocation
+Date: Thu, 28 May 2026 21:47:56 +0200
+Message-ID: <20260528194632.237111957@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,41 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9ce754ed8e7ab4e3999767ce1505f85c449ccb07 upstream.
+commit f19c354dbd457759dfcf1195ab4bdba2bb568323 upstream.
 
-Userspace can restore an ITS Device Table Entry whose Size field encodes
-more EventID bits than the virtual ITS supports.  The live MAPD path
-rejects that state, but vgic_its_restore_dte() accepts it and stores the
-out-of-range value in dev->num_eventid_bits.
+Companion to commit 250f25367b58 ("KVM: arm64: Tear down vGIC on
+failed vCPU creation"), which added the missing kvm_vgic_vcpu_destroy()
+call to the kvm_share_hyp() failure path in kvm_arch_vcpu_create(). The
+kvm_vgic_vcpu_init() failure path immediately above it has the same
+shape and still needs the same cleanup.
 
-Reject restored DTEs with num_eventid_bits > VITS_TYPER_IDBITS before
-allocating the device.  This mirrors the MAPD check and prevents the
-restored state from reaching vgic_its_restore_itt(), where the unchecked
-value can be converted into an oversized scan_its_table() range.
+Call kvm_vgic_vcpu_destroy() when kvm_vgic_vcpu_init() fails so private
+IRQs allocated before a redistributor iodev registration failure are
+released before the failed vCPU is freed.
 
-Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
+Fixes: 03b3d00a70b5 ("KVM: arm64: vgic: Allocate private interrupts on demand")
+Cc: stable@vger.kernel.org
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/r/20260519132519.2142458-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260519135042.2219239-1-michael.bommarito@gmail.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/kvm/arm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2295,6 +2295,10 @@ static int vgic_its_restore_dte(struct v
- 	/* dte entry is valid */
- 	offset = (entry & KVM_ITS_DTE_NEXT_MASK) >> KVM_ITS_DTE_NEXT_SHIFT;
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -490,8 +490,10 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+ 	kvm_destroy_mpidr_data(vcpu->kvm);
  
-+	/* Mimic the MAPD behaviour and reject invalid EID bits. */
-+	if (num_eventid_bits > VITS_TYPER_IDBITS)
-+		return -EINVAL;
-+
- 	if (!vgic_its_check_id(its, baser, id, NULL))
- 		return -EINVAL;
+ 	err = kvm_vgic_vcpu_init(vcpu);
+-	if (err)
++	if (err) {
++		kvm_vgic_vcpu_destroy(vcpu);
+ 		return err;
++	}
  
+ 	err = kvm_share_hyp(vcpu, vcpu + 1);
+ 	if (err)
 
 
