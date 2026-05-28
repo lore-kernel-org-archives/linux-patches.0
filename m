@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FA61EA65;
-	Thu, 28 May 2026 20:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8BBDDC5;
+	Thu, 28 May 2026 20:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999901; cv=none; b=godkYe7ef/PYJPnKQtOD207uOK9bHqtCcliDDzXpEROxiSE1ny4qyeYqrdXhCtlDID2tgZklNqHct72t3xkfqdqppWNchmIf6p92bx9AzU+Q2H2u7ItPoXDkR7sF3vYrcT3D2WgzWpWIBjmuzoKgKpSjmQ/CVJ7t/Pje6Sdau4k=
+	t=1779999904; cv=none; b=MbPf3VrNMRLqnuAUZ77To+Z53KUAfcbrhKBONzuAz0X8YW0f/4flBR9GGVQMyfAe+FkUEKk2ir5ooyfBYwdH+rqc1zZqc8HBtSOHOzn+NcubtySYQTKP6O0CK+VqO1tHgscKuDA+R7YL2BToQMYj/Wf0o7lOML0UsFhK8X9tb5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999901; c=relaxed/simple;
-	bh=1v7gNnnibdPWWFkc5jag4dDk6qjbcDu1/NsCSCX9ukc=;
+	s=arc-20240116; t=1779999904; c=relaxed/simple;
+	bh=9qEwe7LoafPNCbjuJDrLPUMDk/2iWbdSAKD6gTlJlI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oo9eJCDaqqELpVMfFP+IiMT1R6eCWx16DLtweoAbOVvYHQORgF1p8fI/QSjIK1iMK1pPjsIPLeHEciznfGcomTVQyxoCU6pcyZ4lcnTygvDgIC35AY5oVToq79vklAU4dRYYav3kul5HaRoPW7On2BLQJtsjgSNlSBdKTFEouqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvMrRpeK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eH5SPp+X9HbhNz+YsHIvBYsA8vZscJzKUa2a5rMNv02EDhRk0oaSlYly3N8Isttc97iyZ9V3c7UDXF9Q2C4Edi+JWXjFnu0vd2f9PCD9kBbEdEydmovpo17bLkNGwcyhWCxYHiEFO2EY/ydr0lRsCwEVhhYUfEzvrwt+wSNtA/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLuZI+aR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvMrRpeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D201F000E9;
-	Thu, 28 May 2026 20:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLuZI+aR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC071F000E9;
+	Thu, 28 May 2026 20:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999900;
-	bh=RPwSSTvnO5l1/zOkNLw+K7w/5++2RUGHICRau4u+d6M=;
+	s=korg; t=1779999903;
+	bh=8RsKRY9SEiFTs4pVVCVy23hNLzPnZNXsEDDrSc4yCl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvMrRpeKjxCLW5ZgpEr5t5yfrcaZlqI14ymvzLlE418oIobBjIBIKHXSGj+k0FwzG
-	 KvpatDs01V9P7s7raJRY0GyB8b1BjMueL4dqNxHiUigB48NGdYt5dckDsXql5rVkp+
-	 PdnQalCm8qE+J/OHU3eYlTHxQOPQZv1ibsfbeBGg=
+	b=XLuZI+aRz5h7g8x9HM3ugovsu8IOzHVrJm2OYeVwXFfP5JmviLIp3YruJlUvtcBP/
+	 ZAl1hCA1ftK8W+pbO2ROorDOgLMjdwyllZSbcOAlxYOTBwFyv+dy/6MLxE5/vlI5Rs
+	 QHxCoDDRuoJVBZn0VxLsSvviITe/gGB3ZI8fVvWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Trimmer <simont@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/377] ALSA: hda: cs35l56: Put ACPI device after setting companion
-Date: Thu, 28 May 2026 21:47:13 +0200
-Message-ID: <20260528194644.054855686@linuxfoundation.org>
+Subject: [PATCH 6.18 196/377] ALSA: hda: cs35l41: Put ACPI device on missing physical node
+Date: Thu, 28 May 2026 21:47:14 +0200
+Message-ID: <20260528194644.082968619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,40 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit aa2fbece1b07954ef26488c800d126a36a8ab93e ]
+[ Upstream commit fca7401fe37f7abc6e54147ea560f37279231137 ]
 
 acpi_dev_get_first_match_dev() returns a refcounted ACPI device and
-callers are expected to balance it with acpi_dev_put().
+callers must balance it with acpi_dev_put().
 
-When no companion is already attached, cs35l56_hda_read_acpi() looks
-up an ACPI device and sets it with ACPI_COMPANION_SET(), but leaves
-the lookup reference held.
+cs35l41_hda_read_acpi() stores the returned ACPI device in
+cs35l41->dacpi. That reference is normally released by the later
+probe cleanup or the remove path, but the NULL-check on
+physdev exits before either of those paths can run.
 
-ACPI_COMPANION_SET() does not take ownership of that reference, so
-drop it with acpi_dev_put() after attaching the companion.
+Drop the lookup reference before returning -ENODEV.
 
-Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Fixes: c34b04cc6178 ("ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()")
 Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
 Tested-by: Simon Trimmer <simont@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260428080139.GA1649104@chcpu16
+Link: https://patch.msgid.link/20260428081238.GA1659932@chcpu16
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cs35l56_hda.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/side-codecs/cs35l41_hda.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-index 79c15e21d4bcb..1d25fe01066ee 100644
---- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-@@ -949,6 +949,7 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
- 			return -ENODEV;
- 		}
- 		ACPI_COMPANION_SET(cs35l56->base.dev, adev);
-+		acpi_dev_put(adev);
- 	}
+diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda.c b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+index 21e00055c0c44..47263c5a021cb 100644
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+@@ -1901,8 +1901,10 @@ static int cs35l41_hda_read_acpi(struct cs35l41_hda *cs35l41, const char *hid, i
  
- 	/* Initialize things that could be overwritten by a fixup */
+ 	cs35l41->dacpi = adev;
+ 	physdev = get_device(acpi_get_first_physical_node(adev));
+-	if (!physdev)
++	if (!physdev) {
++		acpi_dev_put(adev);
+ 		return -ENODEV;
++	}
+ 
+ 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
+ 	if (IS_ERR(sub))
 -- 
 2.53.0
 
