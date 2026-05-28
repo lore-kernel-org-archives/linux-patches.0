@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7A734B19F;
-	Thu, 28 May 2026 20:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8808E33F5B4;
+	Thu, 28 May 2026 20:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000954; cv=none; b=GTa0012hwJCqYkVWRUXFBms5TbFU4Mhxu1VU+tTxZHUtIE0k+N6VtgSQ1LZjx7rJ85zDeyunAdtDuwMpMZjSYjQkfmO2+4WdDCL95hW5VdX8X+iAI03IXGCgIDU9MaGCyHH4dcHKRiLthOfIBQuRCAJMrWFfRvmL5aoB3ZQFHaU=
+	t=1780000957; cv=none; b=ZfVmw+Xd5lMwdz40q4rISZ39Am7CgMacLpzZm/Z+ZAPK3ja5jnJ39I8ElhA56JgsL8KD1q68E1OdVq8YXqFtnEpspNqMPuch452n3FoFUraqEwFj8RbhyswwJtDnTWtQmC857iwEQVx6NOiqCEWJEIxGDz84Cz/uiDKF0kMINa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000954; c=relaxed/simple;
-	bh=fVlyhHG4APa8xWMTEvhdEeomJnClwHOSNxEf/9FeHx4=;
+	s=arc-20240116; t=1780000957; c=relaxed/simple;
+	bh=b4iRT5Yd4C9DWPK0kFYKwqggyGBsNIxSLukIvb4URpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbtyh9g7FbUhnr+u13tZHYBFH32E0atTisTMMlXCGIzQgMcEgsjwTapzS4kt/ku6sN/FVdiu4UgZBSfU5HskwNFadKFA+RL+O5skA4tSTaIOsjlWwnQcmzBD57zVqv00gxi1Q6rY65CTk19Rn7+Z5JiGn3oBC48csS2Aa9xMlp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elPHLHcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lHtSwbqY3PCiQmMaRwibPBWE5eHGXQgYtFEvy9pZ8THGYAcq0TPpuISPyYuOlxdUmAcsJ1pvEODBHqCRUo2czVMffeEqd+KZNfi/cXPb1FiQpQ7bHd23t23yBD6mxYVRrpwdOXsT2uH/EeNmliLQ/0m2NT35e4hVXiN4rJJL2U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idqWyEee; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elPHLHcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2185D1F000E9;
-	Thu, 28 May 2026 20:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idqWyEee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C461F000E9;
+	Thu, 28 May 2026 20:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000953;
-	bh=Lop5hSru7TA5xScFzmU6wRW/Y4F8HqfN9aTwE6yl6+I=;
+	s=korg; t=1780000956;
+	bh=z5LFjPvRDnAW4o0JP497YqUgAWFvzfduKFRydWVNyX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=elPHLHcjizVvFMRt9VniPGLJLakPphkZhNoA+t0gfeYsRVLxVptinQAliEgtJGXnt
-	 tp8ynQx8luVmgVwebx3fWG/662nz4AlxVEs+dr1yQbdC/h4mSURxPbx5PzSXredeQk
-	 Qug9HYgVWZONPcJgNivS3dyYrsU5EkUtqkz1EDCM=
+	b=idqWyEeew4WEjnywkrHoLmvpVFP9ZkvMti7/0EQKoABmjxfjF3vtF/Q45C2v9OabU
+	 AB1LOapScOhInNzOiwTmyJuW+LaM9P1xfZDwwFhdi+MZ+AgUAy0pEo2yMYedLrawPn
+	 CWoUJ+pNqqP11jc1n/Y0oMQcxiLlosVRkvnRe59k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/272] x86/xen: Fix xen_e820_swap_entry_with_ram()
-Date: Thu, 28 May 2026 21:50:02 +0200
-Message-ID: <20260528194635.563740604@linuxfoundation.org>
+Subject: [PATCH 6.12 229/272] tls: Preserve sk_err across recvmsg() when data has been copied
+Date: Thu, 28 May 2026 21:50:03 +0200
+Message-ID: <20260528194635.588397302@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,37 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 28e03f78e69cf6628b81f24777799778528a84c1 ]
+[ Upstream commit f508262ae9f21fe0e6c0749948b9dc7dd5a62a70 ]
 
-When swapping a not page-aligned E820 map entry with RAM, the start
-address of the modified entry is calculated wrong (the offset into the
-page is subtracted instead of being added to the page address).
+The sk_err check in tls_rx_rec_wait() consumes the error via
+sock_error(), which clears sk_err atomically. When the caller
+(tls_sw_recvmsg, tls_sw_splice_read, or tls_sw_read_sock) already
+has bytes copied to userspace, it returns those bytes and discards
+the error from this call. sk_err is now zero on the socket, so the
+next read syscall observes only RCV_SHUTDOWN and reports a clean
+EOF instead of the actual error (typically -ECONNRESET).
 
-Fixes: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260505102417.208138-1-jgross@suse.com>
+The race is reachable when tls_read_flush_backlog()'s periodic
+sk_flush_backlog() triggers tcp_reset() in the middle of a
+multi-record read.
+
+Pass a has_copied flag to tls_rx_rec_wait(). When has_copied is
+false, consume sk_err via sock_error() as before. When has_copied
+is true, report the error from READ_ONCE() but leave sk_err set:
+the caller returns the byte count and discards the err from this
+call, and the next read syscall surfaces the preserved sk_err. This
+mirrors the tcp_recvmsg() preserve-and-surface pattern.
+
+The decrypt-abort path is unaffected: tls_err_abort() raises
+sk_err to EBADMSG after tls_rx_rec_wait() returns, and nothing
+on the caller's return path consumes it, so the EBADMSG surfaces
+on the next read.
+
+tls_sw_splice_read() passes has_copied=false: it processes
+one record per call, so no bytes have been copied within the
+function when tls_rx_rec_wait() runs. A reset that arrives
+between iterations of splice_direct_to_actor() (the sendfile()
+path) is still consumed by sock_error() in the later call, and the
+outer loop returns the prior iterations' byte count and drops the
+error. tcp_splice_read() exhibits the same pattern at the iteration
+boundary; addressing it belongs at the splice_direct_to_actor()
+layer and is out of scope here.
+
+Fixes: c46b01839f7a ("tls: rx: periodically flush socket backlog")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260513125825.205189-1-cel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_sw.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index 3823e52aef523..6260f65a78c5e 100644
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -655,7 +655,7 @@ static void __init xen_e820_swap_entry_with_ram(struct e820_entry *swap_entry)
- 			/* Fill new entry (keep size and page offset). */
- 			entry->type = swap_entry->type;
- 			entry->addr = entry_end - swap_size +
--				      swap_addr - swap_entry->addr;
-+				      swap_entry->addr - swap_addr;
- 			entry->size = swap_entry->size;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 7511cce76fbbf..129a8c778d32d 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1366,9 +1366,14 @@ void tls_sw_splice_eof(struct socket *sock)
+ 	mutex_unlock(&tls_ctx->tx_lock);
+ }
  
- 			/* Convert old entry to RAM, align to pages. */
++/* When has_copied is true the caller has already moved bytes to
++ * userspace. Report sk_err but leave it set so the next read
++ * surfaces it instead of a spurious EOF, otherwise sk_err is
++ * consumed via sock_error().
++ */
+ static int
+ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
+-		bool released)
++		bool released, bool has_copied)
+ {
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+ 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
+@@ -1382,8 +1387,11 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
+ 		if (!sk_psock_queue_empty(psock))
+ 			return 0;
+ 
+-		if (sk->sk_err)
++		if (sk->sk_err) {
++			if (has_copied)
++				return -READ_ONCE(sk->sk_err);
+ 			return sock_error(sk);
++		}
+ 
+ 		if (ret < 0)
+ 			return ret;
+@@ -1419,7 +1427,7 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
+ 	}
+ 
+ 	if (unlikely(!tls_strp_msg_load(&ctx->strp, released)))
+-		return tls_rx_rec_wait(sk, psock, nonblock, false);
++		return tls_rx_rec_wait(sk, psock, nonblock, false, has_copied);
+ 
+ 	return 1;
+ }
+@@ -2077,7 +2085,7 @@ int tls_sw_recvmsg(struct sock *sk,
+ 		int to_decrypt, chunk;
+ 
+ 		err = tls_rx_rec_wait(sk, psock, flags & MSG_DONTWAIT,
+-				      released);
++				      released, !!(decrypted + copied));
+ 		if (err <= 0) {
+ 			if (psock) {
+ 				chunk = sk_msg_recvmsg(sk, psock, msg, len,
+@@ -2264,7 +2272,7 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 		struct tls_decrypt_arg darg;
+ 
+ 		err = tls_rx_rec_wait(sk, NULL, flags & SPLICE_F_NONBLOCK,
+-				      true);
++				      true, false);
+ 		if (err <= 0)
+ 			goto splice_read_end;
+ 
+@@ -2350,7 +2358,7 @@ int tls_sw_read_sock(struct sock *sk, read_descriptor_t *desc,
+ 		} else {
+ 			struct tls_decrypt_arg darg;
+ 
+-			err = tls_rx_rec_wait(sk, NULL, true, released);
++			err = tls_rx_rec_wait(sk, NULL, true, released, !!copied);
+ 			if (err <= 0)
+ 				goto read_sock_end;
+ 
 -- 
 2.53.0
 
