@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E7E32A3FF;
-	Thu, 28 May 2026 20:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F18E351C02;
+	Thu, 28 May 2026 20:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000052; cv=none; b=jIu4Et+ZwwAmTcr/cE8Km/jegngOkahyPiHj9ub5QfWUrGUJkW8lS8T+A37Bkqn9omTy/vPeUbkFVaQAGsSESdRnAJOpnGMZvh326e3ZQqsN16BfRKWRHn6cNaP/Vioqra9CVJWSz4BpFXMhi+Ngfx9yylTwunzccp6BM+qOBIU=
+	t=1780000055; cv=none; b=V4nrZpuMl3qmpZ03vkBqf0bJR78ghO95DIjUwFr8qxVQyzjYiKdoUWaemYmgCN1KL34D7AjJfdfngHmDCvhIt98yi97OYqR/zhbLwzZzfH8dPsSudUsl+Z0MXRqMulrpqmVQBWChVbTpK4Q4LF6eBOJfafFXnMa2PuiFTgqeZ2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000052; c=relaxed/simple;
-	bh=6oC/0yoCxSFpl0jG8K94hzwuW1u2xJf+7QCe9kWEkx4=;
+	s=arc-20240116; t=1780000055; c=relaxed/simple;
+	bh=LnEUFyEzaas6t7VHii+1rz9z+KLaql5AIo9+/OGtMiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liP48h+rQThPyxmn01PK5yazIXaqsG/Kvucv2NHwkuV9sLgaUclDn+NKceKmxVrrOVeY+UQgaCFgu9pgv6RILnM9q+BtlDdUKlw/TLtujFJJw0l/lcP+PLB2mFW3O70qcyAsBtg8EpSKLmSB/jivXctGwUYmLZH4fSWU87ZkPIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDfrRKZf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DIdQ0KBFz/fJcDnRCufsmuu7EbqLmbiC8nSRMPC+qRGwcYCi5niq5slIzVr87dxbOKfSi9cObu4WkoLUykHuEqCqT8XcO28InyRBV1a1Ad8/f61RrsV9ieZ7o5u0eYMXDkIKL/ddEe/ZOwbwLRNi77bTJU/8k0vC0s5f6lg+ILc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewZoo+B7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDfrRKZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9291F00ADE;
-	Thu, 28 May 2026 20:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewZoo+B7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1761F00A3C;
+	Thu, 28 May 2026 20:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000051;
-	bh=vueji10p+Up9QLbNCYafMpKKO3EVdwfk9OF8yzuw13A=;
+	s=korg; t=1780000054;
+	bh=u4WG8KQdW+ERQZl5CaIq7cndRHaTR1zz1ZimrSkdKq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDfrRKZfp9nAD1SwqIQx2WhBR1XzsNytOUq6MOFyOHJQcOhoQVDJ9PHJDAl0C/V1s
-	 L22GYMtsHgMwxY5GYytQMzfniYpSN4gipmUrjnlKfXkwvkJB1RXMBU/PinRbCfV2Xh
-	 4b22zmWSVyuYLhDKeRTXy83KRoMkauThQtCGDHqE=
+	b=ewZoo+B7+HOCRh7FmUnOR82YMYEuT1TuzZjZoz0xT4oJR47wU5X3KXPp7mrNlt9LY
+	 ZKMFuR5LPkxYbVBcF4WgoMVeFx8OtQSj1PENwsTRhjzVImlIWtEUN7MRTMqgoYTIqd
+	 J4j31MQObDa5jNA7Qszh7DOLeMTHATAjvDgw01nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Ivan Bulatovic <combuster@archlinux.us>,
+	Christopher Cradock <christopher@cradock.myzen.co.uk>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 286/377] ovpn: fix race between deleting interface and adding new peer
-Date: Thu, 28 May 2026 21:48:44 +0200
-Message-ID: <20260528194646.633525718@linuxfoundation.org>
+Subject: [PATCH 6.18 287/377] gcc-plugins: Always define CONST_CAST_GIMPLE and CONST_CAST_TREE
+Date: Thu, 28 May 2026 21:48:45 +0200
+Message-ID: <20260528194646.661787065@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,122 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@openvpn.net>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 982422b11e6f95f766a8cd2c2b1cbdb77e234a61 ]
+[ Upstream commit 905c559e51497b8bfdbb68df8be56d2f70f0de8e ]
 
-While deleting an existing ovpn interface, there is a very
-narrow window where adding a new peer via netlink may cause
-the netdevice to hang and prevent its unregistration.
+For gcc-16, the CONST_CAST macro family was removed. Add back what
+we were using in gcc-common.h, as they are simple wrappers.
 
-It may happen during ovpn_dellink(), when all existing peers are
-freed and the device is queued for deregistration, but a
-CMD_PEER_NEW message comes in adding a new peer that takes again
-a reference to the netdev.
+See GCC commits:
+  c3d96ff9e916c02584aa081f03ab999292efbb50
+  458c7926d48959abcb2c1adaa22458e27459a551
 
-At this point there is no way to release the device because we are
-under the assumption that all peers were already released.
-
-Fix the race condition by releasing all peers in ndo_uninit(),
-when the netdevice has already been removed from the netdev
-list.
-
-Also ovpn_peer_add() has now an extra check that forces the
-function to bail out if the device reg_state is not REGISTERED.
-This way any incoming CMD_PEER_NEW racing with the interface
-deletion routine will simply stop before adding the peer.
-
-Note that the above check happens while holding the netdev_lock
-to prevent racing netdev state changes.
-
-ovpn_dellink() is now empty and can be removed.
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Closes: https://lore.kernel.org/netdev/aaVgJ16edTfQkYbx@v4bel/
-Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
-Fixes: 80747caef33d ("ovpn: introduce the ovpn_peer object")
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Suggested-by: Ingo Saitz <ingo@hannover.ccc.de>
+Link: https://lore.kernel.org/lkml/ab6OKoay0OWkywjK@spatz.zoo
+Fixes: 6b90bd4ba40b ("GCC plugin infrastructure")
+Tested-by: Ivan Bulatovic <combuster@archlinux.us>
+Tested-by: Christopher Cradock <christopher@cradock.myzen.co.uk>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c | 12 ++----------
- drivers/net/ovpn/peer.c | 21 ++++++++++++++++++---
- 2 files changed, 20 insertions(+), 13 deletions(-)
+ scripts/gcc-plugins/gcc-common.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 1bb1afe766a41..3f76b1b0e5f60 100644
---- a/drivers/net/ovpn/main.c
-+++ b/drivers/net/ovpn/main.c
-@@ -92,6 +92,8 @@ static void ovpn_net_uninit(struct net_device *dev)
- {
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index 8f1b3500f8e2d..abb1964c44d4e 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -309,7 +309,9 @@ typedef const gimple *const_gimple_ptr;
+ #define gimple gimple_ptr
+ #define const_gimple const_gimple_ptr
+ #undef CONST_CAST_GIMPLE
+-#define CONST_CAST_GIMPLE(X) CONST_CAST(gimple, (X))
++#define CONST_CAST_GIMPLE(X) const_cast<gimple>((X))
++#undef CONST_CAST_TREE
++#define CONST_CAST_TREE(X) const_cast<tree>((X))
  
-+	disable_delayed_work_sync(&ovpn->keepalive_work);
-+	ovpn_peers_free(ovpn, NULL, OVPN_DEL_PEER_REASON_TEARDOWN);
- 	gro_cells_destroy(&ovpn->gro_cells);
- }
- 
-@@ -208,15 +210,6 @@ static int ovpn_newlink(struct net_device *dev,
- 	return register_netdevice(dev);
- }
- 
--static void ovpn_dellink(struct net_device *dev, struct list_head *head)
--{
--	struct ovpn_priv *ovpn = netdev_priv(dev);
--
--	cancel_delayed_work_sync(&ovpn->keepalive_work);
--	ovpn_peers_free(ovpn, NULL, OVPN_DEL_PEER_REASON_TEARDOWN);
--	unregister_netdevice_queue(dev, head);
--}
--
- static int ovpn_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
-@@ -235,7 +228,6 @@ static struct rtnl_link_ops ovpn_link_ops = {
- 	.policy = ovpn_policy,
- 	.maxtype = IFLA_OVPN_MAX,
- 	.newlink = ovpn_newlink,
--	.dellink = ovpn_dellink,
- 	.fill_info = ovpn_fill_info,
- };
- 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index a3d856724b84a..87a83321f1dd5 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -1029,14 +1029,29 @@ static int ovpn_peer_add_p2p(struct ovpn_priv *ovpn, struct ovpn_peer *peer)
-  */
- int ovpn_peer_add(struct ovpn_priv *ovpn, struct ovpn_peer *peer)
- {
-+	int ret = -ENODEV;
-+
-+	/* Prevent adding new peers while destroying the ovpn interface.
-+	 * Failing to do so would end up holding the device reference
-+	 * endlessly hostage of the new peer object with no chance of
-+	 * release..
-+	 */
-+	netdev_lock(ovpn->dev);
-+	if (ovpn->dev->reg_state != NETREG_REGISTERED)
-+		goto out;
-+
- 	switch (ovpn->mode) {
- 	case OVPN_MODE_MP:
--		return ovpn_peer_add_mp(ovpn, peer);
-+		ret = ovpn_peer_add_mp(ovpn, peer);
-+		break;
- 	case OVPN_MODE_P2P:
--		return ovpn_peer_add_p2p(ovpn, peer);
-+		ret = ovpn_peer_add_p2p(ovpn, peer);
-+		break;
- 	}
-+out:
-+	netdev_unlock(ovpn->dev);
- 
--	return -EOPNOTSUPP;
-+	return ret;
- }
- 
- /**
+ /* gimple related */
+ static inline gimple gimple_build_assign_with_ops(enum tree_code subcode, tree lhs, tree op1, tree op2 MEM_STAT_DECL)
 -- 
 2.53.0
 
