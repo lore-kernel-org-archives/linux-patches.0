@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529C52F691F;
-	Thu, 28 May 2026 20:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282812F260C;
+	Thu, 28 May 2026 20:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998868; cv=none; b=axwBIP6mypPxtFxryLrytCnH8tzSI85ZLm8DOwdRo+crM77adhC/DFMI5ldj4pRTJoO3FENHO22mRImE8KurTswCWLhPbGLLV79RT2lrBIMWbU5rRFmNQvtRFZbn4DzUoqTVpEbpDl4+QDl9tgxtwOvPEUqEVRlkkufrrq1xPqo=
+	t=1779998871; cv=none; b=p1w98rKPIxKZAJdPzrCU1AWudYUmU4Euj93DBKVj0G61z5dimZxnRTBnT+0s+e0eUJ2PaWtcu8zaOLw9YT9k4ABdlJ7A16qcaM9IZaZo0XMDKmahI5ZEMcN+uxvanLLCK+qxKkbhcoBH4PJj4TC4ULtpNrXTDC3/TVXk50W3+3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998868; c=relaxed/simple;
-	bh=X0CECoGtcAUEQj7SPkdqTQV5z7nY8FBh5Lu+iWuRnfE=;
+	s=arc-20240116; t=1779998871; c=relaxed/simple;
+	bh=sWu0gP55uNrUSylBn2ohzMgrTYihCUMn02VXcNz03xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWdjsMmgBwRRQNabk4KybLaDrjo9uciAnB+RPdy+40DaRiV3poiHatDMDmwGO+7KBSeAQ62jXFS0CLEmF2PgYSTO4U5zWJzQVvezICXCgMOyt6M8JhZ8bu0FLwDfPJFRk0VT9hSM4tx/dTpL3osTQiXZTsrA5/5Vu+tiFjnF/dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vthTvg2Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sf225V+i2vQ7qVidjP81CN0dB9CWSKthbZ7Mun1+H5kMKqvkl84F6JEPZXu/X9p+LRME5n33tpXY9aP5SR7XqGZ1CHQ91HY+crvrgBNU6LZtwu4cGff6KEvpyIvb6zoHHB19+QptvrxtsIOsW7LMUAkGV3zMpxTlBnwNZX+aug4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+YlmLAK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vthTvg2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90E1F000E9;
-	Thu, 28 May 2026 20:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+YlmLAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859791F000E9;
+	Thu, 28 May 2026 20:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998867;
-	bh=soc7RQZRCO8uvdrCwM/FoRsIHGMrOuBsl73UC7cItq0=;
+	s=korg; t=1779998870;
+	bh=9pyQtCheqhnXREmSETEqMK51BfBv+zQ5ye5wYzQy2sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vthTvg2YkNENBLcxiYTY7TiBJWq1lQiXrUYRLOF6gHjBzZjj68uzYpImlsja585jT
-	 EegUK09bXRe3FaQreOhDKjNcDOACpMcjqp2ImFusXrSmKPB8hkIL93ASw/SCrbt0Do
-	 5Kj41x1lA3P4KRp4XXGS7REdX0BlQ1QXCGVPrpgM=
+	b=n+YlmLAKoTbh3oRsDmq7+r7Kj/oZAEGR2ChCYud6Rjoe27r4l7uOKJIL0Xgm62EH/
+	 XpGpWCar5qnp2AK7BMlMUSuC3c94vZO24rEVRZKeH2D8/9pnB44+tcNiJr2O3UI7k2
+	 MIue5grwrjeKAlR6bT5AE/X2vMbrhxdd4c/eIdpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Evans <mattev@meta.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 327/461] vfio/pci: Check BAR resources before exporting a DMABUF
-Date: Thu, 28 May 2026 21:47:36 +0200
-Message-ID: <20260528194656.813361603@linuxfoundation.org>
+Subject: [PATCH 7.0 328/461] ovpn: disable BHs when updating device stats
+Date: Thu, 28 May 2026 21:47:37 +0200
+Message-ID: <20260528194656.843054835@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,44 +51,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Evans <mattev@meta.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 702809dabdecca807bdd50cfdcc1c980feb2ba62 ]
+[ Upstream commit 0c0dddc07d272a8d25922e48041e8e4d2434df7e ]
 
-A DMABUF exports access to BAR resources and, although they are
-requested at startup time, we need to ensure they really were reserved
-before exporting.  Otherwise, it's possible to access unreserved
-resources through the export.
+ovpn updates dev->dstats from both process and softirq contexts. In
+particular, TCP paths may run from socket callbacks, workqueues or
+strparser work, while UDP receive and ovpn's ndo_start_xmit path may
+update the same per-device dstats from BH context.
 
-Add a check to the DMABUF-creation path.
+Add ovpn device drop-stat helpers that disable BHs around
+dev_dstats_rx_dropped() and dev_dstats_tx_dropped(), and use them for
+drop accounting.
 
-Fixes: 5d74781ebc86c ("vfio/pci: Add dma-buf export support for MMIO regions")
-Signed-off-by: Matt Evans <mattev@meta.com>
-Link: https://lore.kernel.org/r/20260511145829.2993601-3-mattev@meta.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+The successful RX dev_dstats_rx_add() update is already covered by the
+BH-disabled section around gro_cells_receive(). For the successful TCP
+TX dev_dstats_tx_add() update, replace the existing preempt-disabled
+section with a BH-disabled one.
+
+Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_dmabuf.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ovpn/io.c    | 12 ++++++------
+ drivers/net/ovpn/stats.h | 16 ++++++++++++++++
+ drivers/net/ovpn/tcp.c   | 10 +++++-----
+ drivers/net/ovpn/udp.c   |  2 +-
+ 4 files changed, 28 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_dmabuf.c b/drivers/vfio/pci/vfio_pci_dmabuf.c
-index b1d658b8f7b51..05385b63e2baf 100644
---- a/drivers/vfio/pci/vfio_pci_dmabuf.c
-+++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
-@@ -232,9 +232,11 @@ int vfio_pci_core_feature_dma_buf(struct vfio_pci_core_device *vdev, u32 flags,
- 		return -EINVAL;
- 
- 	/*
--	 * For PCI the region_index is the BAR number like everything else.
-+	 * For PCI the region_index is the BAR number like everything
-+	 * else.  Check that PCI resources have been claimed for it.
+diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
+index 955c9a37e1f8d..c03e58e28a860 100644
+--- a/drivers/net/ovpn/io.c
++++ b/drivers/net/ovpn/io.c
+@@ -196,7 +196,7 @@ void ovpn_decrypt_post(void *data, int ret)
+ 	skb = NULL;
+ drop:
+ 	if (unlikely(skb))
+-		dev_dstats_rx_dropped(peer->ovpn->dev);
++		ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ 	kfree_skb(skb);
+ drop_nocount:
+ 	if (likely(peer))
+@@ -220,7 +220,7 @@ void ovpn_recv(struct ovpn_peer *peer, struct sk_buff *skb)
+ 		net_info_ratelimited("%s: no available key for peer %u, key-id: %u\n",
+ 				     netdev_name(peer->ovpn->dev), peer->id,
+ 				     key_id);
+-		dev_dstats_rx_dropped(peer->ovpn->dev);
++		ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ 		kfree_skb(skb);
+ 		ovpn_peer_put(peer);
+ 		return;
+@@ -298,7 +298,7 @@ void ovpn_encrypt_post(void *data, int ret)
+ 	rcu_read_unlock();
+ err:
+ 	if (unlikely(skb))
+-		dev_dstats_tx_dropped(peer->ovpn->dev);
++		ovpn_dev_dstats_tx_dropped(peer->ovpn->dev);
+ 	if (likely(peer))
+ 		ovpn_peer_put(peer);
+ 	if (likely(ks))
+@@ -340,7 +340,7 @@ static void ovpn_send(struct ovpn_priv *ovpn, struct sk_buff *skb,
  	 */
--	if (get_dma_buf.region_index >= VFIO_PCI_ROM_REGION_INDEX)
-+	if (get_dma_buf.region_index >= VFIO_PCI_ROM_REGION_INDEX ||
-+	    vfio_pci_core_setup_barmap(vdev, get_dma_buf.region_index))
- 		return -ENODEV;
+ 	skb_list_walk_safe(skb, curr, next) {
+ 		if (unlikely(!ovpn_encrypt_one(peer, curr))) {
+-			dev_dstats_tx_dropped(ovpn->dev);
++			ovpn_dev_dstats_tx_dropped(ovpn->dev);
+ 			kfree_skb(curr);
+ 		}
+ 	}
+@@ -411,7 +411,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		if (unlikely(!curr)) {
+ 			net_err_ratelimited("%s: skb_share_check failed for payload packet\n",
+ 					    netdev_name(dev));
+-			dev_dstats_tx_dropped(ovpn->dev);
++			ovpn_dev_dstats_tx_dropped(ovpn->dev);
+ 			continue;
+ 		}
  
- 	dma_ranges = memdup_array_user(&arg->dma_ranges, get_dma_buf.nr_ranges,
+@@ -437,7 +437,7 @@ netdev_tx_t ovpn_net_xmit(struct sk_buff *skb, struct net_device *dev)
+ drop:
+ 	ovpn_peer_put(peer);
+ drop_no_peer:
+-	dev_dstats_tx_dropped(ovpn->dev);
++	ovpn_dev_dstats_tx_dropped(ovpn->dev);
+ 	skb_tx_error(skb);
+ 	kfree_skb_list(skb);
+ 	return NETDEV_TX_OK;
+diff --git a/drivers/net/ovpn/stats.h b/drivers/net/ovpn/stats.h
+index 53433d8b6c331..3a45b97c00568 100644
+--- a/drivers/net/ovpn/stats.h
++++ b/drivers/net/ovpn/stats.h
+@@ -11,6 +11,8 @@
+ #ifndef _NET_OVPN_OVPNSTATS_H_
+ #define _NET_OVPN_OVPNSTATS_H_
+ 
++#include <linux/netdevice.h>
++
+ /* one stat */
+ struct ovpn_peer_stat {
+ 	atomic64_t bytes;
+@@ -44,4 +46,18 @@ static inline void ovpn_peer_stats_increment_tx(struct ovpn_peer_stats *stats,
+ 	ovpn_peer_stats_increment(&stats->tx, n);
+ }
+ 
++static inline void ovpn_dev_dstats_tx_dropped(struct net_device *dev)
++{
++	local_bh_disable();
++	dev_dstats_tx_dropped(dev);
++	local_bh_enable();
++}
++
++static inline void ovpn_dev_dstats_rx_dropped(struct net_device *dev)
++{
++	local_bh_disable();
++	dev_dstats_rx_dropped(dev);
++	local_bh_enable();
++}
++
+ #endif /* _NET_OVPN_OVPNSTATS_H_ */
+diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
+index 5f345ae7d59d2..505c2f214c9f1 100644
+--- a/drivers/net/ovpn/tcp.c
++++ b/drivers/net/ovpn/tcp.c
+@@ -152,7 +152,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
+ 	if (WARN_ON(!ovpn_peer_hold(peer)))
+ 		goto err_nopeer;
+ 	schedule_work(&peer->tcp.defer_del_work);
+-	dev_dstats_rx_dropped(peer->ovpn->dev);
++	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ err_nopeer:
+ 	kfree_skb(skb);
+ }
+@@ -298,9 +298,9 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
+ 	} while (peer->tcp.out_msg.len > 0);
+ 
+ 	if (!peer->tcp.out_msg.len) {
+-		preempt_disable();
++		local_bh_disable();
+ 		dev_dstats_tx_add(peer->ovpn->dev, skb->len);
+-		preempt_enable();
++		local_bh_enable();
+ 	}
+ 
+ 	kfree_skb(peer->tcp.out_msg.skb);
+@@ -331,7 +331,7 @@ static void ovpn_tcp_send_sock_skb(struct ovpn_peer *peer, struct sock *sk,
+ 		ovpn_tcp_send_sock(peer, sk);
+ 
+ 	if (peer->tcp.out_msg.skb) {
+-		dev_dstats_tx_dropped(peer->ovpn->dev);
++		ovpn_dev_dstats_tx_dropped(peer->ovpn->dev);
+ 		kfree_skb(skb);
+ 		return;
+ 	}
+@@ -353,7 +353,7 @@ void ovpn_tcp_send_skb(struct ovpn_peer *peer, struct sock *sk,
+ 	if (sock_owned_by_user(sk)) {
+ 		if (skb_queue_len(&peer->tcp.out_queue) >=
+ 		    READ_ONCE(net_hotdata.max_backlog)) {
+-			dev_dstats_tx_dropped(peer->ovpn->dev);
++			ovpn_dev_dstats_tx_dropped(peer->ovpn->dev);
+ 			kfree_skb(skb);
+ 			goto unlock;
+ 		}
+diff --git a/drivers/net/ovpn/udp.c b/drivers/net/ovpn/udp.c
+index 272b535ecaad4..367563d84472f 100644
+--- a/drivers/net/ovpn/udp.c
++++ b/drivers/net/ovpn/udp.c
+@@ -126,7 +126,7 @@ static int ovpn_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 	return 0;
+ 
+ drop:
+-	dev_dstats_rx_dropped(ovpn->dev);
++	ovpn_dev_dstats_rx_dropped(ovpn->dev);
+ drop_noovpn:
+ 	kfree_skb(skb);
+ 	return 0;
 -- 
 2.53.0
 
