@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD3C23394D;
-	Thu, 28 May 2026 20:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4268A2F9D85;
+	Thu, 28 May 2026 20:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001224; cv=none; b=fvPrjYjIu8AJkHff5bk5w1zd1fHi27kU4stR/sWl1M2r3DivU09kgm057HTolGvdOucvKKDj2kVY7TaUE+CcfiGLMBWaF7J6nKH3fv72GDC9CNAeJdBf19+7IfRYfNO7mFFM8mhDb18yvsMWjIfq2ZtyAxDZQj5Iuly4b/zIduI=
+	t=1780001227; cv=none; b=bu8zWY0qbCCNsfvheTTlVxN0qyUKJRZu1nsMAEKRV8g41hq+XcXuU3/sjswS1NAo6UTz90X5IpWPche/V71DOsaanHcUKX1nuC5Jx9xfgxUJ3/7LhGte/LMnZej3YVauXwqjrXiM21sCYcrN0v37CDFQUnKX23PtbLBetCRCaMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001224; c=relaxed/simple;
-	bh=C36wharRITK6Mg3JRurh64IqKCic+mcVCH+3e1RdUPc=;
+	s=arc-20240116; t=1780001227; c=relaxed/simple;
+	bh=HhN0CnQKMiCp3QmzMlva2SwhUFy4gI+gDnzS5OdoQzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6+3aJTnhY0BT6Y0w7Ha/EfvnCM2TOAKElV/8rBrW9VNU0tYBa9RB0akud47vMi6qdQIy4VAAW511A5cOfRKamImBmez5XDPn7t6RmGgqZPPOWw7hxpuv+gE9A4g7fSNjIVRZx3Iqxv9rzTxRM+BO1i2VJLk50dmy+JaPswG/SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6iD2QJZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rckUMw2bzhloC0yLQmcFE6xYgmP5uaPos/Y2TzkaNgWa6ZMmvicdRCocZVyOll+cs/Fe8AszV5jRbgujtFgM89noGXZhumybXc9TkP+DFG8SlGBXkHRAT6VEn++NITXVhkfD+Loys7xZhE4LFN8b/4QA08YaJpd7vTRZs8unglE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTQHd9ti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6iD2QJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB67D1F000E9;
-	Thu, 28 May 2026 20:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTQHd9ti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BB41F000E9;
+	Thu, 28 May 2026 20:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001223;
-	bh=whf4JNz8hwNJD+WKu6SOsQjvvYd6Dh9d2IKXKVFcFKQ=;
+	s=korg; t=1780001226;
+	bh=ifVaSC3aOZWa+uhxN2KJykgLnOVoM57fkmMTx/yaoC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6iD2QJZd27EkRoUwc1L7wXQ7muOCjOkM7i6xmtt/lawEDF78sqQ/FdlcRFH8f4/M
-	 ntF9mfOFCK2J79QfUS2Fk5QO3GjwrnGbWb0uHsHj+JIiX+ZVXYR+BM68Eo0keAvEB5
-	 IIQ9d4jdJXLDMOnuVi31ml54GKW5YNgoO6XRWA24=
+	b=WTQHd9tiuz4KCV3HQzbM8EL8Luy6ZW014zi1Az5xrbEQHbThRT3u4/7/PNIoWP0a/
+	 6UFSnnr5JaJbXygm939C6wbdAqNGD/obBxtWQszRkV5G9z7J6FqLS/8QEDQ3sXtwhY
+	 VRGq9y7G2rNmRUt4CJMw1MBPmSAmuM+yQP7X9ZZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 051/186] vsock/virtio: reset connection on receiving queue overflow
-Date: Thu, 28 May 2026 21:48:51 +0200
-Message-ID: <20260528194930.349239457@linuxfoundation.org>
+	Kyle Farnung <kfarnung@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 052/186] wifi: ath11k: clear shared SRNG pointer state on restart
+Date: Thu, 28 May 2026 21:48:52 +0200
+Message-ID: <20260528194930.377084061@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -50,85 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Kyle Farnung <kfarnung@gmail.com>
 
-commit a4f0b001782b21663d10df983b4b208195bec66c upstream.
+commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
 
-When there is no more space to queue an incoming packet, the packet is
-silently dropped. This causes data loss without any notification to
-either peer, since there is no retransmission.
+LMAC rings reuse the shared rdp/wrp pointer buffers without going
+through the normal SRNG hw-init path that zeros non-LMAC ring
+pointers. After restart, ath11k_hal_srng_clear() can therefore hand
+stale hp/tp state from the previous firmware instance back to the new
+one.
 
-Under normal circumstances, this should never happen. However, it could
-happen if the other peer doesn't respect the credit, or if the skb
-overhead, which we recently began to take into account with commit
-059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue"),
-is too high.
+Clear the shared pointer buffers while keeping the allocations in
+place so restart still avoids reallocating SRNG DMA memory, but starts
+with fresh ring-pointer state.
 
-Fix this by resetting the connection and setting the local socket error
-to ENOBUFS when virtio_transport_recv_enqueue() can no longer queue a
-packet, so both peers are explicitly notified of the failure rather than
-silently losing data.
-
-Fixes: ae6fcfbf5f03 ("vsock/virtio: discard packets if credit is not respected")
+Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-2-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
+Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1157,7 +1157,7 @@ destroy:
- 	return err;
- }
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1372,14 +1372,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
  
--static void
-+static bool
- virtio_transport_recv_enqueue(struct vsock_sock *vsk,
- 			      struct sk_buff *skb)
+ void ath11k_hal_srng_clear(struct ath11k_base *ab)
  {
-@@ -1172,10 +1172,8 @@ virtio_transport_recv_enqueue(struct vso
- 	spin_lock_bh(&vvs->rx_lock);
- 
- 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
--	if (!can_enqueue) {
--		free_pkt = true;
-+	if (!can_enqueue)
- 		goto out;
--	}
- 
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count++;
-@@ -1213,6 +1211,8 @@ out:
- 	spin_unlock_bh(&vvs->rx_lock);
- 	if (free_pkt)
- 		kfree_skb(skb);
-+
-+	return can_enqueue;
- }
- 
- static int
-@@ -1225,7 +1225,17 @@ virtio_transport_recv_connected(struct s
- 
- 	switch (le16_to_cpu(hdr->op)) {
- 	case VIRTIO_VSOCK_OP_RW:
--		virtio_transport_recv_enqueue(vsk, skb);
-+		if (!virtio_transport_recv_enqueue(vsk, skb)) {
-+			/* There is no more space to queue the packet, so let's
-+			 * close the connection; otherwise, we'll lose data.
-+			 */
-+			(void)virtio_transport_reset(vsk, skb);
-+			virtio_transport_do_close(vsk, true);
-+			sk->sk_err = ENOBUFS;
-+			sk_error_report(sk);
-+			vsock_remove_sock(vsk);
-+			break;
-+		}
- 		vsock_data_ready(sk);
- 		return err;
- 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
+-	/* No need to memset rdp and wrp memory since each individual
+-	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
+-	 * and ath11k_hal_srng_dst_hw_init().
++	/*
++	 * Preserve the shared pointer buffers, but clear the previous
++	 * firmware instance's hp/tp state before handing them back to FW.
++	 * LMAC rings reuse this shared memory without going through the
++	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
+ 	 */
+ 	memset(ab->hal.srng_list, 0,
+ 	       sizeof(ab->hal.srng_list));
+ 	memset(ab->hal.shadow_reg_addr, 0,
+ 	       sizeof(ab->hal.shadow_reg_addr));
++	if (ab->hal.rdp.vaddr)
++		memset(ab->hal.rdp.vaddr, 0,
++		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
++	if (ab->hal.wrp.vaddr)
++		memset(ab->hal.wrp.vaddr, 0,
++		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
+ 	ab->hal.avail_blk_resource = 0;
+ 	ab->hal.current_blk_index = 0;
+ 	ab->hal.num_shadow_reg_configured = 0;
 
 
