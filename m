@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FAC330D35;
-	Thu, 28 May 2026 20:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E4D3446C5;
+	Thu, 28 May 2026 20:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000573; cv=none; b=M/tZ+fGS0DDqjipo43RkakyHDTZU2KxexqSHXyR9h1EQWQ8fteUvEbOGP/2eD/TvRH/RFHfjdt24fnLki3ejUjJGku8G1lfiVKQ5dPH8GHCAk5Khl1wjLE6aASa8VGGpxqlwVQ29xQzVlpErzgi1bnMUqhvudrvhuyRNR7FD9bw=
+	t=1780000575; cv=none; b=r17X8b5xH8MHEl02fbQhPMCSZar6v2nWiGMn9p4kPzuAZKYDw317kF+a/N+IalRQEntm2UHR7oGt8krZVUxbX8xXC4f8wRc3K3lzoJqQMBlxcRfNwBCwjfaPKJrHQpe4aPTa3oNUF0zILOVBZ9LF/HWef4h7kbsA/oXhaZu9MnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000573; c=relaxed/simple;
-	bh=r3vF5nrMzvN75/G5jhP7Rh1OiLyaKTyOjMgt4TCO41s=;
+	s=arc-20240116; t=1780000575; c=relaxed/simple;
+	bh=8M7Dy4bzk9g3H1o+agmdyXaPM8tc+9TiAsVf0IlKhy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ttawo5k/TDhW0jv+SoPbsY6HHt0Idwjwv/bFAN/ViVAV77zrwFvzAx5qtTM41QI/VRO2xPLHB2ew+rgpbFtrpfTBja9B5o+THSaUI1EczpsghDie63EyVylQB0fajCXSQGr2iEHPjfNIeTovDhEadHCkHnms2j3NuQnslwnlt6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh+2WnVJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KqfjTWB1PwpHc2uUGHk9qqj+8jFylgW9dxkVvOLXWhWCHQtcDFg86BcTeSlzVB8wkVzPkFuCUayiGKVIArHGAllW2Co/hxSL3c/VZ6pXqQsrFyX3srdgXfyBTlSnuLTSxEcvcupo+eVrX/ZqoAJzRDnOSchGsrlsCY3ACPhEEvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKD9IMpQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh+2WnVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B561F00A3D;
-	Thu, 28 May 2026 20:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKD9IMpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DB61F000E9;
+	Thu, 28 May 2026 20:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000571;
-	bh=lmClig8AN+REzadste5oyL0Lp9YeKsc95ognavV2sJw=;
+	s=korg; t=1780000574;
+	bh=NOTwMwfu5Dx0U+NaP4SVmN8SVwc5A7bVXKdQItLT1Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wh+2WnVJK0a2sfYyNfA0lvsHzXl7nA1dG6GyHv+R6Xqd5X5FkxeQBW5gGDEWUtzKd
-	 e+XfJTCzNosbi+yXdFZvL55duyrTmEwN9ZgNbGYxP70SZkLTYurohAPtlFzEOVi8av
-	 ln7L3dUj9rV99RE6vIGEZPAr2I61Qy04wyGgwmB0=
+	b=XKD9IMpQSk071F5bpbJE6x6UyjV/LVN2mcT19wMptCPA9C6jpIZn7wZTGJpGbTwVB
+	 uZt7qUeaMZYN+UVXBv5kZQkZSdixzfVMMhSfE8AhrTjM08ZmGIt57kTsO5bDoVj6Qe
+	 9k4PjkakDZhcFX+5JY8JEHSVgy39WEZ4OJ9EbOzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.12 055/272] efi: Allocate runtime workqueue before ACPI init
-Date: Thu, 28 May 2026 21:47:09 +0200
-Message-ID: <20260528194630.923351767@linuxfoundation.org>
+	Junyi Liu <moss80199@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 046/272] ksmbd: validate SID in parent security descriptor during ACL inheritance
+Date: Thu, 28 May 2026 21:47:00 +0200
+Message-ID: <20260528194630.668032001@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,88 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Junyi Liu <moss80199@gmail.com>
 
-commit 13c6da02e767152c9ac4330962247a5e47011035 upstream.
+commit 69f030cf95488ae1186c72ac8c66fd279664ea7f upstream.
 
-Since commit
+Introduce smb_validate_ntsd_sid() helper to safely validate Owner SID
+and Group SID inside the NT Security Descriptor (smb_ntsd) retrieved
+from the parent directory.
 
-  5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
-
-ACPI PRM calls are delegated to a workqueue which runs in a kernel
-thread, making it easier to detect and mitigate faulting memory accesses
-performed by the firmware.
-
-Rafael reports that such PRM accesses may occur before efisubsys_init()
-executes, which is where the workqueue is allocated, leading to NULL
-pointer dereferences. Since acpi_init() [which triggers the early PRM
-accesses] executes as a subsys_initcall() as well, and has its own
-dependencies that may be sensitive to initcall ordering, deferring
-acpi_init() is not an option.
-
-So instead, split off the workqueue allocation into its own postcore
-initcall, as this is the only missing piece to allow EFI runtime calls
-to be made. This ensures that EFI runtime call (including PRM calls) are
-accessible to all code running at subsys_initcall() level.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junyi Liu <moss80199@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/efi.c |   28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ fs/smb/server/smbacl.c |   66 +++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 16 deletions(-)
 
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -387,21 +387,11 @@ static void __init efi_debugfs_init(void
- static inline void efi_debugfs_init(void) {}
- #endif
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1096,6 +1096,40 @@ static int smb_append_inherited_ace(stru
+ 	return 0;
+ }
  
--/*
-- * We register the efi subsystem with the firmware subsystem and the
-- * efivars subsystem with the efi subsystem, if the system was booted with
-- * EFI.
-- */
--static int __init efisubsys_init(void)
-+static int __init efipostcore_init(void)
- {
--	int error;
--
- 	if (!efi_enabled(EFI_RUNTIME_SERVICES))
- 		efi.runtime_supported_mask = 0;
- 
--	if (!efi_enabled(EFI_BOOT))
--		return 0;
--
- 	if (efi.runtime_supported_mask) {
- 		/*
- 		 * Since we process only one efi_runtime_service() at a time, an
-@@ -413,9 +403,23 @@ static int __init efisubsys_init(void)
- 			pr_err("Creating efi_rts_wq failed, EFI runtime services disabled.\n");
- 			clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
- 			efi.runtime_supported_mask = 0;
--			return 0;
- 		}
- 	}
++static int smb_validate_ntsd_sid(struct smb_ntsd *pntsd, size_t pntsd_size,
++				  unsigned int sid_offset, struct smb_sid **sid,
++				  size_t *sid_size)
++{
++	size_t sid_end;
++
++	*sid = NULL;
++	*sid_size = 0;
++
++	if (!sid_offset)
++		return 0;
++
++	if (sid_offset < sizeof(struct smb_ntsd) ||
++	    check_add_overflow(sid_offset, (size_t)CIFS_SID_BASE_SIZE,
++			       &sid_end) ||
++	    sid_end > pntsd_size)
++		return -EINVAL;
++
++	*sid = (struct smb_sid *)((char *)pntsd + sid_offset);
++	if ((*sid)->num_subauth > SID_MAX_SUB_AUTHORITIES)
++		return -EINVAL;
++
++	if (check_add_overflow((size_t)CIFS_SID_BASE_SIZE,
++			       sizeof(__le32) * (size_t)(*sid)->num_subauth,
++			       &sid_end))
++		return -EINVAL;
++
++	if (sid_offset > pntsd_size || sid_end > pntsd_size - sid_offset)
++		return -EINVAL;
++
++	*sid_size = sid_end;
 +	return 0;
 +}
-+postcore_initcall(efipostcore_init);
 +
-+/*
-+ * We register the efi subsystem with the firmware subsystem and the
-+ * efivars subsystem with the efi subsystem, if the system was booted with
-+ * EFI.
-+ */
-+static int __init efisubsys_init(void)
-+{
-+	int error;
-+
-+	if (!efi_enabled(EFI_BOOT))
-+		return 0;
+ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 		     const struct path *path,
+ 		     unsigned int uid, unsigned int gid)
+@@ -1108,28 +1142,28 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	struct dentry *parent = path->dentry->d_parent;
+ 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
+ 	int inherited_flags = 0, flags = 0, i, nt_size = 0, pdacl_size;
+-	int rc = 0, pntsd_type, pntsd_size, acl_len, aces_size;
++	int rc = 0, pntsd_type, ppntsd_size, acl_len, aces_size;
+ 	unsigned int dacloffset;
+ 	size_t dacl_struct_end;
+ 	u16 num_aces, ace_cnt = 0;
+ 	char *aces_base;
+ 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
  
- 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_TIME_SERVICES))
- 		platform_device_register_simple("rtc-efi", 0, NULL, 0);
+-	pntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
++	ppntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
+ 					    parent, &parent_pntsd);
+-	if (pntsd_size <= 0)
++	if (ppntsd_size <= 0)
+ 		return -ENOENT;
+ 
+ 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
+ 	if (!dacloffset ||
+ 	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
+-	    dacl_struct_end > (size_t)pntsd_size) {
++	    dacl_struct_end > (size_t)ppntsd_size) {
+ 		rc = -EINVAL;
+ 		goto free_parent_pntsd;
+ 	}
+ 
+ 	parent_pdacl = (struct smb_acl *)((char *)parent_pntsd + dacloffset);
+-	acl_len = pntsd_size - dacloffset;
++	acl_len = ppntsd_size - dacloffset;
+ 	num_aces = le16_to_cpu(parent_pdacl->num_aces);
+ 	pntsd_type = le16_to_cpu(parent_pntsd->type);
+ 	pdacl_size = le16_to_cpu(parent_pdacl->size);
+@@ -1243,19 +1277,19 @@ pass:
+ 		struct smb_ntsd *pntsd;
+ 		struct smb_acl *pdacl;
+ 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
+-		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
++		size_t powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
+ 		size_t pntsd_alloc_size;
+ 
+-		if (parent_pntsd->osidoffset) {
+-			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
+-					le32_to_cpu(parent_pntsd->osidoffset));
+-			powner_sid_size = 1 + 1 + 6 + (powner_sid->num_subauth * 4);
+-		}
+-		if (parent_pntsd->gsidoffset) {
+-			pgroup_sid = (struct smb_sid *)((char *)parent_pntsd +
+-					le32_to_cpu(parent_pntsd->gsidoffset));
+-			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
+-		}
++		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
++					   le32_to_cpu(parent_pntsd->osidoffset),
++					   &powner_sid, &powner_sid_size);
++		if (rc)
++			goto free_aces_base;
++		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
++					   le32_to_cpu(parent_pntsd->gsidoffset),
++					   &pgroup_sid, &pgroup_sid_size);
++		if (rc)
++			goto free_aces_base;
+ 
+ 		if (check_add_overflow(sizeof(struct smb_ntsd),
+ 				       (size_t)powner_sid_size,
 
 
