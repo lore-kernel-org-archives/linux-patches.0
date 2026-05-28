@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1A432AAA0;
-	Thu, 28 May 2026 20:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35D7330D35;
+	Thu, 28 May 2026 20:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000431; cv=none; b=NYQmTIHXtB7nV2BPuYGOd2gzLNUFSs9E/2gJNv/NdbzMRuzHkYDE05OMufFxWX3JfwGEMrbKtli/lOv31CybzmXyiwGahNgvqROamDrF9TwYBG13KSeo3wDF22oSgrMTUYEX33ag44hX7N5wvzRWLtkdzDFLIxissGJw27fZTA0=
+	t=1780000433; cv=none; b=PwBK+oPu+kC+Sy6TGDI5fLdde9FDZPfykycoWwpMoBXJ5P3l/3uIMSSFwnO/x9ypKKcv2FXgkJ8vjEAribAfefZRv9mxa0dAkXZUcaHwh5IJxpp8v9SfaVRvs/xYwSLoUkAWtADaQrqtKzjA9QDooftJQ+iXZR25DJVi4YFwdRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000431; c=relaxed/simple;
-	bh=FK7mQ/cU5knBX2ylkjkLJqYzVEOxXeZ7C2uan5ttUYM=;
+	s=arc-20240116; t=1780000433; c=relaxed/simple;
+	bh=FlLGHm7fDJ7vJodmLvo4aQe6sMl0yG1Y0zj3D9YLWAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWoT6HgjW/jSE1Uwsi4eKUNjQmGvXeDHRJfcTLMlF9Jw9f7fy1U+yj+Do/PvIjIcCAwrH1FubDBt5SnmK6QAda63GwpVelUQB/P/MWmFV3s1kfJO3UAC04sguDMj8OEEmObP8BJQdqOMzJRI+R4fM/fIKaDq1l4nOMhkVXr7g0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRF4FygM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XfCMoX38aPzd+fksH8VC5/0SHhNQB74NudSPYe064qOgWklABj0eFZfEsdZWHofnSN7Q4gFpuHoqQIp9sG/uHMbUlTCwoMlIktXCxBfFo+IAJuH3BnJNLa0WjRGqrKdMWRJ7djGLkxPZ6dGCe8KLqogSSnZTVxxEQtxmrzMy0Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3/27LZ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRF4FygM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842681F000E9;
-	Thu, 28 May 2026 20:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3/27LZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED311F000E9;
+	Thu, 28 May 2026 20:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000430;
-	bh=IKSSV1VpqvD0LQvXRo5+0aKXEQKP8B77FlGm8MKcs1E=;
+	s=korg; t=1780000432;
+	bh=qwTK5T+urildgEwb5k3lj6JnrOpAYLfnYk1MO+6K+28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRF4FygM9cfIDaIA0gI8zp2Zo23uN1RMTiaNQyQsjwRX3A1rur3ukkrE4kMY5jI3L
-	 3ECYiX9SNSTxITd5dDKfZc9uKVNTIV3y+unFTeXpNEiRsEm0i6mJkHbrLeHdBvhK/K
-	 uwXTUh89AQDXE9px4EgGkoO/rUWGq8usAGq2dXv4=
+	b=U3/27LZ9g86m52xW7XcotsoYx1vzVcUwvStcCVJZpfmA53o1SF7ABZIVWPpd5DpAx
+	 sCe0BSD4iMQUms11arOU5aKVTSlFK8brpNUSgqd6uWeunyP+1YzXplmYXlMgPtd/s3
+	 R2UMKYsceCn5FF27TOWgBT7HZGZYeVAm5cEfhcEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Jianqiang kang <jianqkang@sina.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/272] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
-Date: Thu, 28 May 2026 21:46:55 +0200
-Message-ID: <20260528194630.531977894@linuxfoundation.org>
+	Rajat Jain <rajatja@google.com>,
+	stable <stable@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 042/272] sysfs: dont remove existing directory on update failure
+Date: Thu, 28 May 2026 21:46:56 +0200
+Message-ID: <20260528194630.558451164@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,78 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 ]
+commit 237557b8a81ab948e8332f7c0058e758f081c0a3 upstream.
 
-The logic used to abort the DMA ring contains several flaws:
+When sysfs_update_group() is called for a named group and create_files()
+fails (e.g. -ENOMEM), internal_create_group() calls kernfs_remove(kn) on
+the group directory.  In the update path, kn was obtained via
+kernfs_find_and_get() and refers to a directory that already existed
+before this call.  Removing it silently destroys a sysfs group that the
+caller did not create.
 
- 1. The driver unconditionally issues a ring abort even when the ring has
-    already stopped.
- 2. The completion used to wait for abort completion is never
-    re-initialized, resulting in incorrect wait behavior.
- 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
-    resets hardware ring pointers and disrupts the controller state.
- 4. If the ring is already stopped, the abort operation should be
-    considered successful without attempting further action.
+Only remove the directory if we created it ourselves.  On update failure
+the directory remains as it is left empty by remove_files() inside
+create_files(), but can be repopulated by a retry.
 
-Fix the abort handling by checking whether the ring is running before
-issuing an abort, re-initializing the completion when needed, ensuring that
-RING_CTRL_ENABLE remains asserted during abort, and treating an already
-stopped ring as a successful condition.
-
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Rajat Jain <rajatja@google.com>
+Fixes: c855cf2759d2 ("sysfs: Fix internal_create_group() for named group updates")
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/2026052003-uniquely-hastily-c093@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ fs/sysfs/group.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index b9496e8c4784d..44461f13b54cd 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -457,16 +457,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
- 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
- 	unsigned int i;
- 	bool did_unqueue = false;
--
--	/* stop the ring */
--	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
--	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
--		/*
--		 * We're deep in it if ever this condition is ever met.
--		 * Hardware might still be writing to memory, etc.
--		 */
--		dev_crit(&hci->master.dev, "unable to abort the ring\n");
--		WARN_ON(1);
-+	u32 ring_status;
-+
-+	ring_status = rh_reg_read(RING_STATUS);
-+	if (ring_status & RING_STATUS_RUNNING) {
-+		/* stop the ring */
-+		reinit_completion(&rh->op_done);
-+		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
-+		wait_for_completion_timeout(&rh->op_done, HZ);
-+		ring_status = rh_reg_read(RING_STATUS);
-+		if (ring_status & RING_STATUS_RUNNING) {
-+			/*
-+			 * We're deep in it if ever this condition is ever met.
-+			 * Hardware might still be writing to memory, etc.
-+			 */
-+			dev_crit(&hci->master.dev, "unable to abort the ring\n");
-+			WARN_ON(1);
-+		}
+--- a/fs/sysfs/group.c
++++ b/fs/sysfs/group.c
+@@ -179,7 +179,7 @@ static int internal_create_group(struct
+ 	kernfs_get(kn);
+ 	error = create_files(kn, kobj, uid, gid, grp, update);
+ 	if (error) {
+-		if (grp->name)
++		if (grp->name && !update)
+ 			kernfs_remove(kn);
  	}
- 
- 	for (i = 0; i < n; i++) {
--- 
-2.53.0
-
+ 	kernfs_put(kn);
 
 
