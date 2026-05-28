@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DFD2F1FEF;
-	Thu, 28 May 2026 20:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50EB318B96;
+	Thu, 28 May 2026 20:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001469; cv=none; b=uufPI6tbIJ05xrhg9fl4BtWArrhOMMgTZ0NlUyM/MSlm/qBKCzU1bL00lJNliCWJX4D2fTnYwJ3woi2MpaJk+81opngoFOQJuTc4C6oH44NA20uQhwP36DB5CZO7Mqqw85WnYuPH/WVz1s36YUuIcP+3yhkypWxrJq4n2fV3ans=
+	t=1780001471; cv=none; b=kBgZ621zlBZBvstx/ReEojhT4mnuCxpqQ/rJ4IRLscxxu078z4nGfO7TdFn97rnhQFWGdzKZFh2kD+NCsjxGHsFVqp6V23HzfZ9MQsyQUaHpofjPIMfS3zDcHGzkL2z5/mNmht4erk5bprQ+RGs9vN6ksn/lFfN71EUyAph43Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001469; c=relaxed/simple;
-	bh=lfdU/oCoHklpxgcL6j2mRbxILEurCUYdqQIzTvyCkMk=;
+	s=arc-20240116; t=1780001471; c=relaxed/simple;
+	bh=I1GcGmZGH2AERGxFstdO/MuLIF6fPdput2Zq5N+gU9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/ujR2DLbETkjsepTUi5PjxbkX/a2saunPvWY0VI/vIEA1D0GItfQR1bOfhUJkkF/jHwdUxpzJQ00IESkhoCdqGwXxHYLGB0DPcP91kmTA8qF6+u5SIiSLOhOCk4HWmBFDNydrnwkCNaLHsRgZ42BU6DysN9q0Hex3be9Thr/l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKK2FyNI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y3jRSEFqVKICRNgRNRVHAF7I/2vsZwWqveyl0hwli2ljNsuO9T5Fl4kRsWjZxTy8HN0Ow0NK31IaSHcccco/l+Y3+2tWb+lsAqO5wqDTnD7FfJ3xyCSUrP7S6RgPNf5y8cQKpPnsrugAzvY4D5NwAlNGP96R5zIPwhBwHCZopBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/Kt3Cqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKK2FyNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4E21F000E9;
-	Thu, 28 May 2026 20:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/Kt3Cqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238591F000E9;
+	Thu, 28 May 2026 20:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001467;
-	bh=hrBXteUUA+vHxNxO6TbSctu3j85RcDuMsaoEq4SJWDQ=;
+	s=korg; t=1780001470;
+	bh=NfoDfHaWRFOtKM+Dml/6xCbPuUMfg6I3eau8CnNUkhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKK2FyNI3y1sC6EDpPbCwJPxQj9dCJHbfUgeBxuuf+T244+Geq7EuHlCsaJos3dT3
-	 6ga+VdhRD8/7ZaXbtbICUSPp10jUb4kn5qUm3hKxTC4MLzlrE5IpbSZ73z6vS8/ZeG
-	 Eex7iGswpiMDxGZDmJloBYUCiRuikZG716LGaLhg=
+	b=G/Kt3CqvN2FnsO+CH23hqxWfD8M851xudELSWr1JTogJrRWYZoEAzEiVB9byAkrqf
+	 InMi4r7V9ly2wgqp+FfXgWTG9vX9OCpvKqTLjSwU0ig7GAlesnksKk7CywkMpXHnNo
+	 wjPJ/WLEEDca/EKL9pLGSq6HXm8LW3raEYZ1kgko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Maar <lukas.maar@tugraz.at>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
-	Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/186] accel/qaic: Add overflow check to remap_pfn_range during mmap
-Date: Thu, 28 May 2026 21:50:17 +0200
-Message-ID: <20260528194932.651346519@linuxfoundation.org>
+Subject: [PATCH 6.6 138/186] net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint
+Date: Thu, 28 May 2026 21:50:18 +0200
+Message-ID: <20260528194932.677162024@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -53,76 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit aa16b2bc0f02709919e2435f531406531e5bcc69 ]
+[ Upstream commit 7bf563badd37cb796df5477d2b78bb64148a1268 ]
 
-The call to remap_pfn_range in qaic_gem_object_mmap is susceptible to
-(re)mapping beyond the VMA if the BO is too large. This can cause use
-after free issues when munmap() unmaps only the VMA region and not the
-additional mappings. To prevent this, check the remaining size of the
-VMA before remapping and truncate the remapped length if sg->length is
-too large.
+The smc_msg_event tracepoint class, shared by smc_tx_sendmsg and
+smc_rx_recvmsg, unconditionally dereferences smc->conn.lnk:
 
-Reported-by: Lukas Maar <lukas.maar@tugraz.at>
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-[jhugo: fix braces from checkpatch --strict]
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260430193858.1178641-1-zachary.mckevitt@oss.qualcomm.com
+	__string(name, smc->conn.lnk->ibname)
+
+conn->lnk is only set for SMC-R; for SMC-D it is NULL. Other code on
+these paths already handles this (e.g. !conn->lnk in
+SMC_STAT_RMB_TX_SIZE_SMALL()). With the tracepoint enabled, the first
+sendmsg()/recvmsg() on an SMC-D socket crashes:
+
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [...]
+  RIP: 0010:strlen+0x1e/0xa0
+  Call Trace:
+   trace_event_raw_event_smc_msg_event (net/smc/smc_tracepoint.h:44)
+   smc_rx_recvmsg (net/smc/smc_rx.c:515)
+   smc_recvmsg (net/smc/af_smc.c:2859)
+   __sys_recvfrom (net/socket.c:2315)
+   __x64_sys_recvfrom (net/socket.c:2326)
+   do_syscall_64
+
+The faulting address 0x3e0 is offsetof(struct smc_link, ibname),
+confirming the NULL ->lnk deref. Enabling the tracepoint requires
+root, but the trigger itself is unprivileged: socket(AF_SMC, ...) has
+no capability check, and SMC-D negotiation needs no admin step on
+s390 or on x86 with the loopback ISM device loaded.
+
+Log an empty device name for SMC-D instead of dereferencing NULL.
+
+Fixes: aff3083f10bf ("net/smc: Introduce tracepoints for tx and rx msg")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_data.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ net/smc/smc_tracepoint.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index d00068987d9bd..7beab1309e369 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -595,8 +595,11 @@ static const struct vm_operations_struct drm_vm_ops = {
- static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
- {
- 	struct qaic_bo *bo = to_qaic_bo(obj);
-+	unsigned long remap_start;
- 	unsigned long offset = 0;
-+	unsigned long remap_end;
- 	struct scatterlist *sg;
-+	unsigned long length;
- 	int ret = 0;
+diff --git a/net/smc/smc_tracepoint.h b/net/smc/smc_tracepoint.h
+index 9fc5e586d24ab..380451912c4f1 100644
+--- a/net/smc/smc_tracepoint.h
++++ b/net/smc/smc_tracepoint.h
+@@ -51,7 +51,7 @@ DECLARE_EVENT_CLASS(smc_msg_event,
+ 				     __field(const void *, smc)
+ 				     __field(u64, net_cookie)
+ 				     __field(size_t, len)
+-				     __string(name, smc->conn.lnk->ibname)
++				     __string(name, smc->conn.lnk ? smc->conn.lnk->ibname : "")
+ 		    ),
  
- 	if (obj->import_attach)
-@@ -604,11 +607,27 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
- 
- 	for (sg = bo->sgt->sgl; sg; sg = sg_next(sg)) {
- 		if (sg_page(sg)) {
-+			/* if sg is too large for the VMA, so truncate it to fit */
-+			if (check_add_overflow(vma->vm_start, offset, &remap_start))
-+				return -EINVAL;
-+			if (check_add_overflow(remap_start, sg->length, &remap_end))
-+				return -EINVAL;
-+
-+			if (remap_end > vma->vm_end) {
-+				if (check_sub_overflow(vma->vm_end, remap_start, &length))
-+					return -EINVAL;
-+			} else {
-+				length = sg->length;
-+			}
-+
-+			if (length == 0)
-+				goto out;
-+
- 			ret = remap_pfn_range(vma, vma->vm_start + offset, page_to_pfn(sg_page(sg)),
--					      sg->length, vma->vm_page_prot);
-+					      length, vma->vm_page_prot);
- 			if (ret)
- 				goto out;
--			offset += sg->length;
-+			offset += length;
- 		}
- 	}
- 
+ 		    TP_fast_assign(
 -- 
 2.53.0
 
