@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2C924677F;
-	Thu, 28 May 2026 20:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A20324677F;
+	Thu, 28 May 2026 20:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998635; cv=none; b=W+FGuVvUHYu+AqnTCLmhuLMb3aAATVR/6+BbiVTGJXxa42CCUqp2BDpV18IGnGejVhpgZ1FsSytbMLZZI+a8YaqIPaASSmE1AmiWxJb5gUsVthhLTgjeya2lqt5SPmHFfnk29S3x/4dXmBJ/r2bmuTR75qQ1/bsHz4WnhxGA0gU=
+	t=1779998638; cv=none; b=XgYuUmfv2aSMyHniGr1rFKaZZFR5eBk3bJdROVrXl2bfayUvuAx1vDt/kPiw6jlrf0Vyu7UXe78M2yVcUbS2U1tEiimquoo/GE4gsU/8tyo+Qgi7FsYvDvWazvxFD8SMGAVXeWR/OEP/TTEIrgoBLDrGT7ATZQwCiqmpZyeq8Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998635; c=relaxed/simple;
-	bh=SOI5kw2xMsX1VZ12/HEz5yXzcWKqjgmmidy7+GJk/Dc=;
+	s=arc-20240116; t=1779998638; c=relaxed/simple;
+	bh=/6wJ8jSJbX9ZWMIL5vPuHagKVimGTdh2LgsJWsdkDf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEa4yIchTYAY52TrLBDg5V+VNLOYCbrdfhJuHodXWQIyaAXoGXYxL4hya32nI7TyOVBo0nTl5qMwNM4V641uEgC9jCtXrNuopZEHxw5kety7jZSIQJqnx4OSJk2C9RcmsMeAZYsSJVYa+T81F4haHdrLWG7neyeN4ROI5kffln0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzwSgehT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IUT9FbykTZRU7ce+ndSpZlzkeXdOOHVYwiilbXdNCgILF2QUAiaEGibFWsKpezfIUVM5k4A3hJ2/fe5pZAncGwRGVtkjREtPw6N6Jp54LGmJ8DLE3M+9I3sgJ0jJ/RESOCIZaWby25ktoxWHef5pbVkfOjUoIB+XzeiAdLR2aAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0f46G4d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzwSgehT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242D41F000E9;
-	Thu, 28 May 2026 20:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0f46G4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85D51F000E9;
+	Thu, 28 May 2026 20:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998634;
-	bh=+yewiXP6n/3j2sTyoaD93kjwMCr4yShRlxGV4IYHuRU=;
+	s=korg; t=1779998637;
+	bh=pdUmSY8ylrGkuH2LUsfkh95RWr6YdxOm8n99W58tjU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzwSgehTkiBWFC446nEDbdtt68ArXTEeO92Wlt56tqJivMWzmbrFwteAExboCBZSc
-	 ga7+sFNrFodEA6REKnBCiK93gV7xGFmtk1fHCCTktWK3cvHAW4QKnz2fzuur+vi9+N
-	 dCH6Dun8480sMcGsAt/ZeQ7PfmZE/owwO1kuSAsc=
+	b=f0f46G4db+ubyfNbHPP3VT0XyrbJ0xrX5qSegmmmiuIjVl4LvYxxC8ONzFesOJI27
+	 MVS7JtKVEGAOOhaJyHYG39mAqPvq0Nu1lmPv0bCXj5LFNROglydd/sRRr079b1pdV+
+	 If2Jpfk+qHNC5RkgFIT3Mx+lwWjT0mjMuhoMQI08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Damiano Melotti <melotti@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 244/461] zonefs: handle integer overflow in zonefs_fname_to_fno
-Date: Thu, 28 May 2026 21:46:13 +0200
-Message-ID: <20260528194654.208498504@linuxfoundation.org>
+Subject: [PATCH 7.0 245/461] tcp: Fix out-of-bounds access for twsk in tcp_ao_established_key().
+Date: Thu, 28 May 2026 21:46:14 +0200
+Message-ID: <20260528194654.238375768@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,49 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 3a8389d42bdf4213730f4067f8bfa78bae6564ef ]
+[ Upstream commit 03cb001ef87b3f8d859cf7f96329acf3d6235d29 ]
 
-In zonefs the file name in one of the two directories corresponds to the
-zone number.
+lockdep_sock_is_held() was added in tcp_ao_established_key()
+by the cited commit.
 
-Here Alexey reported a possible integer overflow in zonefs_fname_to_fno(),
-where the parsing of the zone number from the file name can overflow the
-'long' data type.
+It can be called from tcp_v[46]_timewait_ack() with twsk.
 
-Add a check for integer overflows and if the fno 'long' did overflow
-return -ENOENT.
+Since it does not have sk->sk_lock, the lockdep annotation
+results in out-of-bound access.
 
-Reported-by: Alexey Dobriyan <adobriyan@gmail.com>
-Fixes: d207794ababe ("zonefs: Dynamically create file inodes when needed")
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+  $ pahole -C tcp_timewait_sock vmlinux | grep size
+  	/* size: 288, cachelines: 5, members: 8 */
+  $ pahole -C sock vmlinux | grep sk_lock
+  	socket_lock_t              sk_lock;              /*   440   192 */
+
+Let's not use lockdep_sock_is_held() for TCP_TIME_WAIT.
+
+Fixes: 6b2d11e2d8fc ("net/tcp: Add missing lockdep annotations for TCP-AO hlist traversals")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260508120853.4098365-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/zonefs/super.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_ao.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/zonefs/super.c b/fs/zonefs/super.c
-index e83b2ec5e49f8..d0976c874b74b 100644
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -610,10 +610,14 @@ static long zonefs_fname_to_fno(const struct qstr *fname)
- 		return c - '0';
+diff --git a/net/ipv4/tcp_ao.c b/net/ipv4/tcp_ao.c
+index a97cdf3e6af4c..0a4b38b315fed 100644
+--- a/net/ipv4/tcp_ao.c
++++ b/net/ipv4/tcp_ao.c
+@@ -116,7 +116,8 @@ struct tcp_ao_key *tcp_ao_established_key(const struct sock *sk,
+ {
+ 	struct tcp_ao_key *key;
  
- 	for (i = 0, rname = name + len - 1; i < len; i++, rname--) {
-+		long digit;
-+
- 		c = *rname;
- 		if (!isdigit(c))
- 			return -ENOENT;
--		fno += (c - '0') * shift;
-+		digit = (c - '0') * shift;
-+		if (check_add_overflow(fno, digit, &fno))
-+			return -ENOENT;
- 		shift *= 10;
- 	}
- 
+-	hlist_for_each_entry_rcu(key, &ao->head, node, lockdep_sock_is_held(sk)) {
++	hlist_for_each_entry_rcu(key, &ao->head, node,
++				 sk_fullsock(sk) && lockdep_sock_is_held(sk)) {
+ 		if ((sndid >= 0 && key->sndid != sndid) ||
+ 		    (rcvid >= 0 && key->rcvid != rcvid))
+ 			continue;
 -- 
 2.53.0
 
