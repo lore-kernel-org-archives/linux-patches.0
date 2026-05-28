@@ -1,37 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC64F318EE1;
-	Thu, 28 May 2026 19:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F8D3290B0;
+	Thu, 28 May 2026 19:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998178; cv=none; b=TjISokeP5mcNhtbA+qcjrbIWRTULBPMkZK8J3+2w0v77DtrUnJJLNC2XAUpSdD4hCfTzbagYkO1+hO3MOHfxQZLZNv6aQdnZByjC1q2DFjpbRKpHT40lwN90J7mMirR3yhuAClTGDMj9QBrWJnqvLvmpxYAdB7/iaUHJNv16LWk=
+	t=1779998181; cv=none; b=p6XFJtmLOryXBCaRTO/7mtiyUF+0TG16aBs+wHShcReUQ8dh+xPBDSYZ4bWTv5nDuNFrR3FPnsXuSiBnsBRDgLVskiXeDrVqZ3DMU8Zhpc1zeTtdBOmx9fS7KQnAud3FXlM8cHZYgMnlxp+VxKM0VK+bYgu5rcRCJdV0v613sy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998178; c=relaxed/simple;
-	bh=qImTs1Xud1Pi8iE+DI2gcFhyvcCyJQDK2HggmvyZSys=;
+	s=arc-20240116; t=1779998181; c=relaxed/simple;
+	bh=aatjUozTIQhTIdjATrXGaMleZP2Y5tj3RJ4FNMz6eq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpDgXP4Tt4YUuR2hAzCFq8QWrzI+3i01vKFeGk8rqoa6mi0rEbtavikQ0rI+OTB7WUTRfRlAregPQGypP/O9iyx0z6+RO5zi2FsVmKK1OKUVLjl3mov0YxjpPy4jFcOFrQlIL2wzcgk3OAHwP7ROtalxM8xJuHPFY2Q7QdvLo3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRL3z/LV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jo7Bi/6qeDbXsv8/1MpujdZzggUddZ7U5YAqudVRBrRYcsXEt+RbeaG2xV2BVGW/Z7Div97FPnJAXCkfEGtda1zC5qCAj0uvrmtz34BsWSEXkMM4jziO2T2ty2vtu9vzyU6YG3Eu9WQK3TRTu5u8mXd/BOQLEc1iFmkIo5GRF+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxSqdDYH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRL3z/LV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267251F000E9;
-	Thu, 28 May 2026 19:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxSqdDYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15611F000E9;
+	Thu, 28 May 2026 19:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998177;
-	bh=CCRExuK9U1tyni1izaiJXPpT6TUFnm1ZCzGhWDjWTIY=;
+	s=korg; t=1779998180;
+	bh=oiUqjZVeJZf9mC02uZIZUba9DDg8b64FF22lBkGN6H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zRL3z/LV8CkYS3OJURbX3CqsG5a1mYNLPc10OdjSQaVvM632e1u+0LEA3moQqbslc
-	 7+/dptP971HbuBzQHxymVHzmJCXMRJgMu8BGsDS1wX6Ta9R8yaXOmBHsaGsRBrUmKm
-	 3Pd4dGJ9PZsRl3hkra16jtHP0oiTcgOApyH4SRN8=
+	b=lxSqdDYHXnJeph+6S/4SqLDZOaalWx1cjPDecKairIqkCwDZMJ2qBmO/R25aeE/kS
+	 jkHTD0dl9uB29lDhPbE0RPVhPqqTvnxWtGv/dgCFXsfQ/chi5Ie78Shz6DczJkl72l
+	 xBzEqF7q7nQrvgz2Z63ztadHDYvWTayM261xt/f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.0 045/461] Bluetooth: L2CAP: ecred_reconfigure: send packed pdu, not stack pointer
-Date: Thu, 28 May 2026 21:42:54 +0200
-Message-ID: <20260528194648.210623524@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Brendan Jackman <jackmanb@google.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Liam Howlett <liam@infradead.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Will Deacon <will@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 036/461] mm/page_alloc: fix initialization of tags of the huge zero folio with init_on_free
+Date: Thu, 28 May 2026 21:42:45 +0200
+Message-ID: <20260528194647.941016955@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,84 +64,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit 3374ef8cf99368a40f7efd51a2a375a4c5dc6f0d upstream.
+commit 6a288a4ddb4a994490505ab5f41c445f8e6b6467 upstream.
 
-Commit 1c08108f3014 ("Bluetooth: L2CAP: Avoid -Wflex-array-member-not-at-end
-warnings") converted the on-stack request PDU in l2cap_ecred_reconfigure()
-from an explicit packed struct to DEFINE_RAW_FLEX(), but did not adjust the
-size and source-pointer arguments to l2cap_send_cmd():
+__GFP_ZEROTAGS semantics are currently a bit weird, but effectively this
+flag is only ever set alongside __GFP_ZERO and __GFP_SKIP_KASAN.
 
-  -    struct {
-  -            struct l2cap_ecred_reconf_req req;
-  -            __le16 scid;
-  -    } pdu;
-  +    DEFINE_RAW_FLEX(struct l2cap_ecred_reconf_req, pdu, scid, 1);
-       ...
-       l2cap_send_cmd(conn, chan->ident, L2CAP_ECRED_RECONF_REQ,
-                      sizeof(pdu), &pdu);
+If we run with init_on_free, we will zero out pages during
+__free_pages_prepare(), to skip zeroing on the allocation path.
 
-After the conversion, DEFINE_RAW_FLEX() expands to declare an anonymous
-union pdu_u plus a local pointer "pdu" pointing at it. Therefore:
+However, when allocating with __GFP_ZEROTAG set, post_alloc_hook() will
+consequently not only skip clearing page content, but also skip clearing
+tag memory.
 
-  - sizeof(pdu) is now sizeof(struct l2cap_ecred_reconf_req *) = 8 on
-    64-bit (4 on 32-bit), not the 6 bytes of (mtu, mps, scid[1]).
-  - &pdu is the address of the local pointer's stack storage, not the
-    address of the request payload.
+Not clearing tags through __GFP_ZEROTAGS is irrelevant for most pages that
+will get mapped to user space through set_pte_at() later: set_pte_at() and
+friends will detect that the tags have not been initialized yet
+(PG_mte_tagged not set), and initialize them.
 
-l2cap_send_cmd() forwards (data, count) to l2cap_build_cmd(), which calls
-skb_put_data(skb, data, count). The L2CAP_ECRED_RECONFIGURE_REQ packet
-body therefore contains 8 bytes copied from the kernel stack starting at
-&pdu -- the 8 bytes overlap the pdu pointer's value, leaking a kernel
-stack address to the paired Bluetooth peer. The intended (mtu, mps, scid)
-fields are not transmitted at all, so the peer rejects the request as
-malformed and the L2CAP_ECRED_RECONFIGURE feature itself has been broken
-for the local-side initiator since the introducing commit landed.
+However, for the huge zero folio, which will be mapped through a PMD
+marked as special, this initialization will not be performed, ending up
+exposing whatever tags were still set for the pages.
 
-The sibling site l2cap_ecred_conn_req() in the same commit was converted
-correctly (sizeof(*pdu) + len, pdu); only this site was missed.
+The docs (Documentation/arch/arm64/memory-tagging-extension.rst) state
+that allocation tags are set to 0 when a page is first mapped to user
+space.  That no longer holds with the huge zero folio when init_on_free is
+enabled.
 
-Restore the original semantics: pass the full flex-struct size via
-struct_size(pdu, scid, 1) and the pdu pointer (the struct address) as
-the source.
+Fix it by decoupling __GFP_ZEROTAGS from __GFP_ZERO, passing to
+tag_clear_highpages() whether we want to also clear page content.
 
-Validated on a stock 7.0-based host kernel via the real call path:
-setsockopt(SOL_BLUETOOTH, BT_RCVMTU, ...) on a BT_CONNECTED
-L2CAP_MODE_EXT_FLOWCTL socket emits an L2CAP_ECRED_RECONFIGURE_REQ
-whose body is 8 bytes (the on-stack pdu local's value) rather than
-the expected 6. Three captures from fresh socket / fresh hciemu peer
-on the same host -- low bytes vary per call, high 0xffff confirms a
-kernel virtual address (KASLR-randomised stack slot, not a fixed
-string):
+Invert the meaning of the tag_clear_highpages() return value to have
+clearer semantics.
 
-  RECONF_REQ body (ident=0x02 len=8): 42 fb 54 af 0e ca ff ff
-  RECONF_REQ body (ident=0x02 len=8): 52 3d 2e af 0e ca ff ff
-  RECONF_REQ body (ident=0x02 len=8): b2 fc 5b af 0e ca ff ff
+Reproduced with the huge zero folio by modifying the check_buffer_fill
+arm64/mte selftest to use a 2 MiB area, after making sure that pages have
+a non-0 tag set when freeing (note that, during boot, we will not actually
+initialize tags, but only set KASAN_TAG_KERNEL in the page flags).
 
-After this patch the body is 6 bytes carrying the expected
-little-endian (mtu, mps, scid).
+	$ ./check_buffer_fill
+	1..20
+	...
+	not ok 17 Check initial tags with private mapping, sync error mode and mmap memory
+	not ok 18 Check initial tags with private mapping, sync error mode and mmap/mprotect memory
+	...
 
-Cc: stable@vger.kernel.org
-Fixes: 1c08108f3014 ("Bluetooth: L2CAP: Avoid -Wflex-array-member-not-at-end warnings")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This code needs more cleanups; we'll tackle that next, like
+decoupling __GFP_ZEROTAGS from __GFP_SKIP_KASAN.
+
+[akpm@linux-foundation.org: s/__GPF_ZERO/__GFP_ZERO/, per David]
+Link: https://lore.kernel.org/20260421-zerotags-v2-1-05cb1035482e@kernel.org
+Fixes: adfb6609c680 ("mm/huge_memory: initialise the tags of the huge zero folio")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/page.h |    2 +-
+ arch/arm64/mm/fault.c         |   11 +++++++----
+ include/linux/gfp_types.h     |   10 +++++-----
+ include/linux/highmem.h       |    7 ++++---
+ mm/page_alloc.c               |    8 ++++----
+ 5 files changed, 21 insertions(+), 17 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7275,7 +7275,7 @@ static void l2cap_ecred_reconfigure(stru
- 	chan->ident = l2cap_get_ident(conn);
+--- a/arch/arm64/include/asm/page.h
++++ b/arch/arm64/include/asm/page.h
+@@ -33,7 +33,7 @@ struct folio *vma_alloc_zeroed_movable_f
+ 						unsigned long vaddr);
+ #define vma_alloc_zeroed_movable_folio vma_alloc_zeroed_movable_folio
  
- 	l2cap_send_cmd(conn, chan->ident, L2CAP_ECRED_RECONF_REQ,
--		       sizeof(pdu), &pdu);
-+		       struct_size(pdu, scid, 1), pdu);
+-bool tag_clear_highpages(struct page *to, int numpages);
++bool tag_clear_highpages(struct page *to, int numpages, bool clear_pages);
+ #define __HAVE_ARCH_TAG_CLEAR_HIGHPAGES
+ 
+ #define copy_user_page(to, from, vaddr, pg)	copy_page(to, from)
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -971,7 +971,7 @@ struct folio *vma_alloc_zeroed_movable_f
+ 	return vma_alloc_folio(flags, 0, vma, vaddr);
  }
  
- int l2cap_chan_reconfigure(struct l2cap_chan *chan, __u16 mtu)
+-bool tag_clear_highpages(struct page *page, int numpages)
++bool tag_clear_highpages(struct page *page, int numpages, bool clear_pages)
+ {
+ 	/*
+ 	 * Check if MTE is supported and fall back to clear_highpage().
+@@ -979,13 +979,16 @@ bool tag_clear_highpages(struct page *pa
+ 	 * post_alloc_hook() will invoke tag_clear_highpages().
+ 	 */
+ 	if (!system_supports_mte())
+-		return false;
++		return clear_pages;
+ 
+ 	/* Newly allocated pages, shouldn't have been tagged yet */
+ 	for (int i = 0; i < numpages; i++, page++) {
+ 		WARN_ON_ONCE(!try_page_mte_tagging(page));
+-		mte_zero_clear_page_tags(page_address(page));
++		if (clear_pages)
++			mte_zero_clear_page_tags(page_address(page));
++		else
++			mte_clear_page_tags(page_address(page));
+ 		set_page_mte_tagged(page);
+ 	}
+-	return true;
++	return false;
+ }
+--- a/include/linux/gfp_types.h
++++ b/include/linux/gfp_types.h
+@@ -273,11 +273,11 @@ enum {
+  *
+  * %__GFP_ZERO returns a zeroed page on success.
+  *
+- * %__GFP_ZEROTAGS zeroes memory tags at allocation time if the memory itself
+- * is being zeroed (either via __GFP_ZERO or via init_on_alloc, provided that
+- * __GFP_SKIP_ZERO is not set). This flag is intended for optimization: setting
+- * memory tags at the same time as zeroing memory has minimal additional
+- * performance impact.
++ * %__GFP_ZEROTAGS zeroes memory tags at allocation time. Setting memory tags at
++ * the same time as zeroing memory (e.g., with __GFP_ZERO) has minimal
++ * additional performance impact. However, __GFP_ZEROTAGS also zeroes the tags
++ * even if memory is not getting zeroed at allocation time (e.g.,
++ * with init_on_free).
+  *
+  * %__GFP_SKIP_KASAN makes KASAN skip unpoisoning on page allocation.
+  * Used for userspace and vmalloc pages; the latter are unpoisoned by
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -347,10 +347,11 @@ static inline void clear_highpage_kasan_
+ 
+ #ifndef __HAVE_ARCH_TAG_CLEAR_HIGHPAGES
+ 
+-/* Return false to let people know we did not initialize the pages */
+-static inline bool tag_clear_highpages(struct page *page, int numpages)
++/* Returns true if the caller has to initialize the pages */
++static inline bool tag_clear_highpages(struct page *page, int numpages,
++		bool clear_pages)
+ {
+-	return false;
++	return clear_pages;
+ }
+ 
+ #endif
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1847,9 +1847,9 @@ static inline bool should_skip_init(gfp_
+ inline void post_alloc_hook(struct page *page, unsigned int order,
+ 				gfp_t gfp_flags)
+ {
++	const bool zero_tags = gfp_flags & __GFP_ZEROTAGS;
+ 	bool init = !want_init_on_free() && want_init_on_alloc(gfp_flags) &&
+ 			!should_skip_init(gfp_flags);
+-	bool zero_tags = init && (gfp_flags & __GFP_ZEROTAGS);
+ 	int i;
+ 
+ 	set_page_private(page, 0);
+@@ -1871,11 +1871,11 @@ inline void post_alloc_hook(struct page
+ 	 */
+ 
+ 	/*
+-	 * If memory tags should be zeroed
+-	 * (which happens only when memory should be initialized as well).
++	 * Clearing tags can efficiently clear the memory for us as well, if
++	 * required.
+ 	 */
+ 	if (zero_tags)
+-		init = !tag_clear_highpages(page, 1 << order);
++		init = tag_clear_highpages(page, 1 << order, /* clear_pages= */init);
+ 
+ 	if (!should_skip_kasan_unpoison(gfp_flags) &&
+ 	    kasan_unpoison_pages(page, order, init)) {
 
 
