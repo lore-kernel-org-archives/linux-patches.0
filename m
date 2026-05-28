@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACE319A288;
-	Thu, 28 May 2026 20:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20012DDC5;
+	Thu, 28 May 2026 20:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999977; cv=none; b=dd9VWCvRZe3m/S0ianqUZUUNvFTWPBDYgIpnPcppo2prN9a5rgPTZNuqQSEv7c2QDx9xFL9RXGJn8xVGP2ZUJlfd9/V3dKWWZgspvy/TyMjeoB7iX+jtZzygOTfLSyNz7C8a9CgNjfV7uIeW4+btY7g8mHgr/I7atmNcqyPVTbo=
+	t=1779999980; cv=none; b=M/lU8Llj7R7hSrBL6/iuZyvBV4xBK4vqTHfI9YKMFl/2EVrSOxHbAcqoAitWd+65OtW6vRuSydEyuRtprKmBCk1hgba7Ufq5i/Qmr40+N3PQJFbLNXVQLRWnkQCWfxoERxdNliyB4c2gmdGTfK9ZTRH6YObdbAorZaXv84mKNqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999977; c=relaxed/simple;
-	bh=hCpMTLzflAopy5RihgzazVQzGI/GrN+DgNol+HAcQ5E=;
+	s=arc-20240116; t=1779999980; c=relaxed/simple;
+	bh=IH018Zf9+t5uVXQhNgMPcQ7uhSa6VrMNWJ9pbDGe6QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvv7pMgKIlRhMikzeLNk+gmzC5lkyD3GZwswBEQr2962zCZnnHEefOlsFmvieYgG3TzR5n2XdSxuTg5mHh9uRNEmwg+1pgWxS+IuY0Kb7Fu6nqRm3v7yZ/WjIsJFmuSr61y2udxpYq0geE0TugvnYf4vi2gUrLuvjqZjcmj9vF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfweW+02; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vGQxGQ/HIi6fFZrGzoplAWQrLG+4T47Wdv+ZR5QSlC6lNhNrtZ3lChYRg9d62OazH40hNJW0DY3LGhFMx1+IfEV1CsA03U7W/Nvn96c2WGMi2aNw8UMKKHQuKljXADfBGBR4iGYJJP0UA8JO5svldF1J2s24sftiLcyGurft47s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpRQeLxU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfweW+02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BDF1F000E9;
-	Thu, 28 May 2026 20:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpRQeLxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C541F000E9;
+	Thu, 28 May 2026 20:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999976;
-	bh=3n/iy4hFIM89lS9EiG/mV0OtAmS8WkULHRKgOVKmGyI=;
+	s=korg; t=1779999978;
+	bh=NVuj5DvsOX+gHc29pbRqDjbdll80JbzKfg7248DblaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CfweW+02uFElEGud1S70Re6Sm8TRXm/fzxrr1j9vH6KqY9nUMqxr/xUySYF5NT6gn
-	 LokS1EDRd3I6OFNQIJkdvSl3NBmqFhZYP6fRH1gZPNAewOlFtirjeUchyCr41qBYTx
-	 yTOAPwXKfGBfQheuDzFtv/pGDO6eTCrUX+iOJ9nQ=
+	b=IpRQeLxUfFoJpwP4sVzgjMG5EcfhgB1LFvdi43D5PuhgWTAIjZYGAKUaCdOfbtv9Y
+	 M6Z0oIvE09HKeJUiJAHK/3QnAYviim8cRDmte0fI71TbdOFra3a4z4LpU+ii0422j/
+	 me++1J6aHDHURvNhpv1vpZLXK3LGRn4/vayj2nh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Harsh Prateek Bora <harshpb@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 258/377] net: shaper: fix trivial ordering issue in net_shaper_commit()
-Date: Thu, 28 May 2026 21:48:16 +0200
-Message-ID: <20260528194645.841125209@linuxfoundation.org>
+Subject: [PATCH 6.18 232/377] powerpc: fix dead default for GUEST_STATE_BUFFER_TEST
+Date: Thu, 28 May 2026 21:47:50 +0200
+Message-ID: <20260528194645.107074648@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,58 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 235fb5376139c3419f2218349f1fa2f06f24f7ad ]
+[ Upstream commit aef656a0e6c01796190bb5bd2bdba1c644ed7811 ]
 
-We should update the entry before we mark it as valid.
+The GUEST_STATE_BUFFER_TEST config option should default
+to KUNIT_ALL_TESTS so that if all tests are enabled then
+it is included, but currently the 'default KUNIT_ALL_TESTS'
+statement is shadowed by 'def_tristate n',
+meaning that this second default statement is currently dead code.
 
-Fixes: 93954b40f6a4 ("net-shapers: implement NL set and delete operations")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260510192904.3987113-3-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+It looks to me like the commit
+6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
+intended to set the default to KUNIT_ALL_TESTS, but mistakenly
+missed the def_tristate.
+
+This dead code was found by kconfirm, a static analysis tool for Kconfig.
+
+Fixes: 6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260405161545.161006-1-julianbraha@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/powerpc/Kconfig.debug | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index 64c9d6cf6756c..92ca3b4c7925d 100644
---- a/net/shaper/shaper.c
-+++ b/net/shaper/shaper.c
-@@ -295,6 +295,10 @@ net_shaper_lookup(struct net_shaper_binding *binding,
- 				       NET_SHAPER_VALID))
- 		return NULL;
+diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
+index f15e5920080ba..e8718bc13eeb1 100644
+--- a/arch/powerpc/Kconfig.debug
++++ b/arch/powerpc/Kconfig.debug
+@@ -83,11 +83,10 @@ config MSI_BITMAP_SELFTEST
+ 	depends on DEBUG_KERNEL
  
-+	/* Pairs with smp_wmb() in net_shaper_commit(): if the entry is
-+	 * valid, its contents must be visible too.
-+	 */
-+	smp_rmb();
- 	return xa_load(&hierarchy->shapers, index);
- }
- 
-@@ -412,8 +416,9 @@ static void net_shaper_commit(struct net_shaper_binding *binding,
- 		/* Successful update: drop the tentative mark
- 		 * and update the hierarchy container.
- 		 */
--		__xa_set_mark(&hierarchy->shapers, index, NET_SHAPER_VALID);
- 		*cur = shapers[i];
-+		smp_wmb();
-+		__xa_set_mark(&hierarchy->shapers, index, NET_SHAPER_VALID);
- 	}
- 	xa_unlock(&hierarchy->shapers);
- }
-@@ -837,6 +842,10 @@ int net_shaper_nl_get_dumpit(struct sk_buff *skb,
- 	for (; (shaper = xa_find(&hierarchy->shapers, &ctx->start_index,
- 				 U32_MAX, NET_SHAPER_VALID));
- 	     ctx->start_index++) {
-+		/* Pairs with smp_wmb() in net_shaper_commit(): the entry
-+		 * is marked VALID, so its contents must be visible too.
-+		 */
-+		smp_rmb();
- 		ret = net_shaper_fill_one(skb, binding, shaper, info);
- 		if (ret)
- 			break;
+ config GUEST_STATE_BUFFER_TEST
+-	def_tristate n
++	def_tristate KUNIT_ALL_TESTS
+ 	prompt "Enable Guest State Buffer unit tests"
+ 	depends on KUNIT
+ 	depends on KVM_BOOK3S_HV_POSSIBLE
+-	default KUNIT_ALL_TESTS
+ 	help
+ 	  The Guest State Buffer is a data format specified in the PAPR.
+ 	  It is by hcalls to communicate the state of L2 guests between
 -- 
 2.53.0
 
