@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F34282F17;
-	Thu, 28 May 2026 20:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2622B2F8E83;
+	Thu, 28 May 2026 20:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999550; cv=none; b=AKgJzADqzn/DytfY+p29yCsX7nW2D6tPNA5MGHHpoJZDFiL510iZEqqW5XHIxD5MzIUQ0wM+nxYOEratXF5V3tzihZuIjXk8zP2uXaINmcP5I/ILdWmQqi7GqJ6Yv+fg2kjkPzJf+uwVB2Fyuav1NUeic3lLMwJ39TKQI/1ONbg=
+	t=1779999553; cv=none; b=CEWZnAlpx5tbUF+9/4wTd9eNFcInA20JDYi/M6+4QVKmcNDIovZqAfY1G5i+Ps5TjWDtI2gvDRTHfGNiE5GYUzE96uGmJfAVGY45Vw9jWqgiEqN0/Es/Mvthcke4thAB3AeaKAFWsmONBdeDMRQUN4mIQPHEtr6Y0uKVi8gwOXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999550; c=relaxed/simple;
-	bh=j9zGxHpf2Lbb+vFhO7zLoowT8a5MyTkn0CVnNJeHwB4=;
+	s=arc-20240116; t=1779999553; c=relaxed/simple;
+	bh=/NknHXXIMsUk5p6XNBz/q2Y4RZhzVnGtwagdOiHw6CY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhosuHrV9YHwPMLVkWx2IMxzbTKfdh9bXlu0nr0HWuLN+ncnwqdMAyhwwIp9ELRn7k2mpVbhN0esCxR5ab6A4O5N+dZb8goi1hLNqLBkk5hn0KUT584K2Z8k0In32sAYt0weOgjYrWCxUyJDni3JJe+yY+4cZXZnGqkntu2ZphM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRoWRiwm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jHayc/bS25AqbueHoDG3TwWp9/mu0yfC576ATfd0pa9eu0/DZFOj2Z1i+2p2zqlgRuOtWYGpVo5a1cVrvp+31YHmkdfFM5T+46+TL6E3Yy9SV35RxAdhPAY1OVlkEGEN9q2XspkS8sE5dlUI87OcA84EClJYL1TQcHb36NuQLF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S55vp4Ba; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRoWRiwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE9161F000E9;
-	Thu, 28 May 2026 20:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S55vp4Ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844271F00A3A;
+	Thu, 28 May 2026 20:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999549;
-	bh=dnIO8SMtyU3P4I5juSy3sSI85ELXWSahkxybQCFhOL4=;
+	s=korg; t=1779999552;
+	bh=/tz5S4EouP4gHcgp+68w7l9Ex8bUekrD1nDXKDJ8hrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRoWRiwmmGEWrGC7Unq0FSqoVpiMkgsA6XWO2a/4q/oOimHPkhvmGe8PgT50mtQt3
-	 FjtYVMdpI5gchWp8Fu9ZTz0wAkOu3yngluas/FjT64qjXzMeHejfu+bwfU+YKuMcuR
-	 QXE4WmlYj8LQteU8UGFLR9XJUhBsjaQyNmxhcSiM=
+	b=S55vp4Bam7lcl4QWODoGOyT8ROrdhv2R60hoZ+WadqNcP5cSAxxFIbIvkBsm6UroA
+	 ZO4F3RPVBp0CZQ+4W0aJv63XQl+sjLBP5regaG+SXZwx3TsTjeiaJ4/Tu8gzTePdzE
+	 0N+le4aj8aT+V/VAKhX0LFNRonrt1ee6CbeNWoaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 105/377] tracing: Do not call map->ops->elt_free() if elt_alloc() fails
-Date: Thu, 28 May 2026 21:45:43 +0200
-Message-ID: <20260528194641.384083086@linuxfoundation.org>
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.18 106/377] arm64: probes: Handle probes on hinted conditional branch instructions
+Date: Thu, 28 May 2026 21:45:44 +0200
+Message-ID: <20260528194641.411152381@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,73 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-commit 8f0f5c4fb9df0e19a341e0c6ed8dc4fda9124f03 upstream.
+commit 2ccd8ff980b50e842481bae71102fa3883fc4377 upstream.
 
-In paths where tracing_map_elt_alloc() failed to allocate objects,
-the map->ops->elt_alloc() call was never successful. In this case,
-map->ops->elt_free() should not be called.
+BC.cond instructions introduced by FEAT_HBC cannot be executed
+out-of-line, like other branch instructions. However, they can be
+simulated in the same way as B.cond instructions.
 
-Link: https://sashiko.dev/#/patchset/20260520223101.34710-1-rosenp%40gmail.com
+Extend the B.cond decoder mask to match BC.cond instructions as well,
+and handle them using the existing B.cond simulation path.
 
-Cc: stable@vger.kernel.org
-Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Rosen Penev <rosenp@gmail.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 2734b629525a ("tracing: Add per-element variable support to tracing_map")
-Link: https://patch.msgid.link/177933895460.108746.5396070821443932634.stgit@devnote2
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 7f86d128e437 ("arm64: add HWCAP for FEAT_HBC (hinted conditional branches)")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/insn.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -386,13 +386,11 @@ static void tracing_map_elt_init_fields(
- 	}
- }
- 
--static void tracing_map_elt_free(struct tracing_map_elt *elt)
-+static void __tracing_map_elt_free(struct tracing_map_elt *elt)
- {
- 	if (!elt)
- 		return;
- 
--	if (elt->map->ops && elt->map->ops->elt_free)
--		elt->map->ops->elt_free(elt);
- 	kfree(elt->fields);
- 	kfree(elt->vars);
- 	kfree(elt->var_set);
-@@ -400,6 +398,17 @@ static void tracing_map_elt_free(struct
- 	kfree(elt);
- }
- 
-+static void tracing_map_elt_free(struct tracing_map_elt *elt)
-+{
-+	if (!elt)
-+		return;
-+
-+	/* Only objects initialized with alloc_elt() should be passed to free_elt().*/
-+	if (elt->map->ops && elt->map->ops->elt_free)
-+		elt->map->ops->elt_free(elt);
-+	__tracing_map_elt_free(elt);
-+}
-+
- static struct tracing_map_elt *tracing_map_elt_alloc(struct tracing_map *map)
- {
- 	struct tracing_map_elt *elt;
-@@ -444,7 +453,7 @@ static struct tracing_map_elt *tracing_m
- 	}
- 	return elt;
-  free:
--	tracing_map_elt_free(elt);
-+	__tracing_map_elt_free(elt);
- 
- 	return ERR_PTR(err);
- }
+--- a/arch/arm64/include/asm/insn.h
++++ b/arch/arm64/include/asm/insn.h
+@@ -409,7 +409,7 @@ __AARCH64_INSN_FUNCS(cbz,	0x7F000000, 0x
+ __AARCH64_INSN_FUNCS(cbnz,	0x7F000000, 0x35000000)
+ __AARCH64_INSN_FUNCS(tbz,	0x7F000000, 0x36000000)
+ __AARCH64_INSN_FUNCS(tbnz,	0x7F000000, 0x37000000)
+-__AARCH64_INSN_FUNCS(bcond,	0xFF000010, 0x54000000)
++__AARCH64_INSN_FUNCS(bcond,	0xFF000000, 0x54000000)
+ __AARCH64_INSN_FUNCS(svc,	0xFFE0001F, 0xD4000001)
+ __AARCH64_INSN_FUNCS(hvc,	0xFFE0001F, 0xD4000002)
+ __AARCH64_INSN_FUNCS(smc,	0xFFE0001F, 0xD4000003)
 
 
