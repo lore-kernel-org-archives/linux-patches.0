@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D84130E82E;
-	Thu, 28 May 2026 20:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6741B30E82E;
+	Thu, 28 May 2026 20:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998691; cv=none; b=DjtwM2+Ov3nTLutW7d7XzZwnEusOPPdbnXhs7TPho5xZtjKdUQ06LWV7bvt31MWvzY9MGeBX/tN/Ag0OwxpCDp4pnBbhtBhWN9Ccq1h2gjN8rM7huPHXzz7dYSSvtlGhG4trIhcN1zVN3OjNhqDVELMkz1gQoRt1YAvjWwhvXzI=
+	t=1779998694; cv=none; b=JJygmsgjFwKhDNgMMeLPBbK+IWPQe5vcNWDsRin2io9AYgAYzpFuTr6nrbaxXVk08uGSeFzsMix1OOiD6s79sYayShsWrwlszeovB2bdClUdijmTspFb/1xUG/9it4zATPuovfX1aPMcgGZz2xPoeECm590hMF5GuqFUq0R2eBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998691; c=relaxed/simple;
-	bh=kLNHvW/pqK5y0KtO8eytU2SlnJNU+HCpFIcEyBm3H/A=;
+	s=arc-20240116; t=1779998694; c=relaxed/simple;
+	bh=LwPQEB6xmgciLemfoL75DL54QgHqo4kTfw3bMbCdriU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1X6i93FcxThAoQ1GZR8XPkYqFZ+CAuPmFtx0eq1oCNFmr4gZNzg8w7ayOUqsgK7sr1mxiWmgtEdfR+Vw6K8EwKEQpnNbGAND+F0HsnDf8vItz8Adr/V4vDwI8Dd7J/EDf1CK6kmMwEHSRgsPcXmlqux+Q3Ync/LJO5wfICz/l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmKlfwlf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFft1SAw09zKtjR2IrE1sV75S4tC+F036XDFJQ3V18XhNZfQ0w+3W8d6lQY8Ve8ivIqOHnQkYA1nJf9TbRmTs9q9ooJvouUeXzltv6VYXbGFLpZbq+HW6aUo+6bhgsjgoXQnfCnoWvfzIyAvKsHzl1gb/uJ14hKwSiHmwGX4Vcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0TIh+gN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmKlfwlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7221F000E9;
-	Thu, 28 May 2026 20:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0TIh+gN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B5C1F000E9;
+	Thu, 28 May 2026 20:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998690;
-	bh=kQnrJ+K9hmuMxd2LWd7akFTxVPTWxfOt0ueQBDi+/jA=;
+	s=korg; t=1779998693;
+	bh=D2g3v7t1xUR3+9glFuDOnBloeR3B9ItH/CSluPI5+9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dmKlfwlfkrmSLwTXzWfZ1vaHcs+WVPvR79KRj0KuThaBKC8BL6w01HDC6pMU2s94h
-	 BT+1HtY7d4tuAp69w/NebHQtnFAdTHoRMTC97gArCmbFUymaWcjB2BfGGa1dFmFpW3
-	 dhK5CBQVyxhkhUit7mCDzCFC32Vcjxyb5bvQDX9M=
+	b=X0TIh+gNuwFc9Rz4yONXxBTbXHmE8tcfEHvud4OHVdtV5Wdh/lj7VlU+OYrn3/dej
+	 1R2Y3aNO+m14UjDFL+lVqxuHe4WKIagOMl0lSxyRtOSOvwvHYo+cqgF7lk1t1dapL/
+	 8kaVIsvTrXRM+zfxxQoU593a2MGzgxXHk+2BXsYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jori Koolstra <jkoolstra@xs4all.nl>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 236/461] fs: Fix return in jfs_mkdir and orangefs_mkdir
-Date: Thu, 28 May 2026 21:46:05 +0200
-Message-ID: <20260528194653.973597955@linuxfoundation.org>
+Subject: [PATCH 7.0 263/461] netfs: Fix write streaming disablement if fd open O_RDWR
+Date: Thu, 28 May 2026 21:46:32 +0200
+Message-ID: <20260528194654.774664581@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,53 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a7cf1da7ac016490d6a1106f2aa6b602d34e9a12 ]
+[ Upstream commit 70a7b9193bbbfceaab5974de66834c64ccc875dd ]
 
-Return NULL instead of passing to ERR_PTR while err is zero
-Fixes these smatch warnings:
-  - fs/jfs/namei.c:311 jfs_mkdir() warn: passing zero to 'ERR_PTR'
-  - fs/orangefs/namei.c:369 orangefs_mkdir() warn: passing zero
-    to 'ERR_PTR'
+In netfs_perform_write(), "write streaming" (the caching of dirty data in
+dirty but !uptodate folios) is performed to avoid the need to read data
+that is just going to get immediately overwritten.  However, this is/will
+be disabled in three circumstances: if the fd is open O_RDWR, if fscache is
+in use (as we need to round out the blocks for DIO) or if content
+encryption is enabled (again for rounding out purposes).
 
-Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Link: https://patch.msgid.link/20260501071058.1243245-1-zenghongling@kylinos.cn
-Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
+The idea behind disabling it if the fd is open O_RDWR is that we'd need to
+flush the write-streaming page before we could read the data, particularly
+through mmap.  But netfs now fills in the gaps if ->read_folio() is called
+on the page, so that is unnecessary.  Further, this doesn't actually work
+if a separate fd is open for reading.
+
+Fix this by removing the check for O_RDWR, thereby allowing streaming
+writes even when we might read.
+
+This caused a number of problems with the generic/522 xfstest, but those
+are now fixed.
+
+Fixes: c38f4e96e605 ("netfs: Provide func to copy data to pagecache for buffered write")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-17-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/namei.c      | 2 +-
- fs/orangefs/namei.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/netfs/buffered_write.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
-index 60c4a0e0fca5e..442d626792622 100644
---- a/fs/jfs/namei.c
-+++ b/fs/jfs/namei.c
-@@ -309,7 +309,7 @@ static struct dentry *jfs_mkdir(struct mnt_idmap *idmap, struct inode *dip,
-       out1:
+diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
+index 0ff4c790ae263..b606c3bd84bcd 100644
+--- a/fs/netfs/buffered_write.c
++++ b/fs/netfs/buffered_write.c
+@@ -204,11 +204,11 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 		}
  
- 	jfs_info("jfs_mkdir: rc:%d", rc);
--	return ERR_PTR(rc);
-+	return rc ? ERR_PTR(rc) : NULL;
- }
+ 		/* Decide how we should modify a folio.  We might be attempting
+-		 * to do write-streaming, in which case we don't want to a
+-		 * local RMW cycle if we can avoid it.  If we're doing local
+-		 * caching or content crypto, we award that priority over
+-		 * avoiding RMW.  If the file is open readably, then we also
+-		 * assume that we may want to read what we wrote.
++		 * to do write-streaming, as we don't want to a local RMW cycle
++		 * if we can avoid it.  If we're doing local caching or content
++		 * crypto, we award that priority over avoiding RMW.  If the
++		 * file is open readably, then we let ->read_folio() fill in
++		 * the gaps.
+ 		 */
+ 		finfo = netfs_folio_info(folio);
+ 		group = netfs_folio_group(folio);
+@@ -284,12 +284,9 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
  
- /*
-diff --git a/fs/orangefs/namei.c b/fs/orangefs/namei.c
-index bec5475de094d..75e65e72c2d64 100644
---- a/fs/orangefs/namei.c
-+++ b/fs/orangefs/namei.c
-@@ -362,7 +362,7 @@ static struct dentry *orangefs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 	__orangefs_setattr(dir, &iattr);
- out:
- 	op_release(new_op);
--	return ERR_PTR(ret);
-+	return ret ? ERR_PTR(ret) : NULL;
- }
- 
- static int orangefs_rename(struct mnt_idmap *idmap,
+ 		/* We don't want to do a streaming write on a file that loses
+ 		 * caching service temporarily because the backing store got
+-		 * culled and we don't really want to get a streaming write on
+-		 * a file that's open for reading as ->read_folio() then has to
+-		 * be able to flush it.
++		 * culled.
+ 		 */
+-		if ((file->f_mode & FMODE_READ) ||
+-		    netfs_is_cache_enabled(ctx)) {
++		if (netfs_is_cache_enabled(ctx)) {
+ 			if (finfo) {
+ 				netfs_stat(&netfs_n_wh_wstream_conflict);
+ 				goto flush_content;
 -- 
 2.53.0
 
