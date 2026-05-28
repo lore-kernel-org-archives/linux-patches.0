@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BC432ABC0;
-	Thu, 28 May 2026 20:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A6B32ABC0;
+	Thu, 28 May 2026 20:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999150; cv=none; b=JOi+cvm7llaC5O4qmTpakgh96f3OtqfIU2J36Uk5XrNTNLGsJkefFEwk9rS+Jyv1N+PCqNrIAalQICX/oqVxq6c5E0rpGXWFdCy3LB2ezst1ZpT7i29sHWEi82QrL/UN1KMO++1g/3EkFkR1Ukapv5X9fsXHVYmWt9E9LTeJS8E=
+	t=1779999153; cv=none; b=T9/ssu5wuos4gaLhZtZp9+ZNS0sfi4q5ZtqZSdZb5/X1jx7sXOJ/KlkEkPUGCrukJSDxdvoJ/nMT0r8AtiGE/YIpOvVolntn+PDDN8T93CcUMlBEJCPxogmtXgVFS7QrfaWfwMm3X6+xE4+0y5cCwYSr7VtKgc4oColCCkZwO3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999150; c=relaxed/simple;
-	bh=qYWM7s86Hwm0+aNDPm+8IdmpL8oVjpsTGFLlCVPQP8I=;
+	s=arc-20240116; t=1779999153; c=relaxed/simple;
+	bh=+Q3zBdC8lrOXsyo4Bom+QHVSmoEo6CngYO3HPJjNJWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUuVo4sG8NG+nJH6CNBDKd2YBhR9lY8IeqMjzt56SLOwIii+rJCC/hxHOb0Zt3zGQxY39+1n/4dw4sE1pQPmQaYxiszWB1B6yFjdw4jYEpQpYyMf/52c8t7kyUe1HuplYje1i0Z8s/SGKnlNB7K/HXjsGEX2SOp+6eHyKPw6bhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzEjjz36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hzZ+pZzQKZMU2oW4noTEOwuJ9A/sEbByBJXLNl3To87nYKxF2Jt8DMEfJ1Orm9R5Iwns5074tAeiOO6UglerhMwGGLpKb++5CTd3IXAKSDD1M1t/4+wjDYvGn09I9MNyrFOrIkHeiBTYe79L2FnBfn/kGM1jy+hqhypODvdKiqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsS/53hF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzEjjz36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0187E1F000E9;
-	Thu, 28 May 2026 20:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsS/53hF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10BF1F000E9;
+	Thu, 28 May 2026 20:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999149;
-	bh=YrXTuG+1kDhwWli3Te6rUlEGO7gW/sxYxWkqhHcQ82o=;
+	s=korg; t=1779999152;
+	bh=wwg5Cjga/IPbBpVz/JZqaQV6rSBpvigdKhfziTDpueU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzEjjz36aWnSm0/tIYwwRM0iixWDLBubUqJDBihrpA/GrMRs17L28bHbPojzyza63
-	 RXL/8eNO3t/wn4+w5r3x9lpg7xsgDBC85aU1pcxRnDHtK7HsplZuVIPhz20VXHDgdR
-	 LIk1SBplhEjyjJvv9V49QhGjrFvMwWzhyKmbBM68=
+	b=YsS/53hFI1gVIuQZrn2jJm9X7+vxqCeXsziXpUrsvPkkM11pEda8RfVa1NX1HP20e
+	 a5pYr0yV1bGZtVVOyg95+RYWi3K/MWTNW5JKNB6dtA83DfAWwDtUsO057YbXCvi9U6
+	 dHqAE1QYbXdQ1BwvmNcVaVnMD2GtDLuhUz6OCiFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 425/461] net: shaper: annotate the data races
-Date: Thu, 28 May 2026 21:49:14 +0200
-Message-ID: <20260528194659.810270587@linuxfoundation.org>
+Subject: [PATCH 7.0 426/461] net: shaper: rework the VALID marking (again)
+Date: Thu, 28 May 2026 21:49:15 +0200
+Message-ID: <20260528194659.841569051@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,112 +54,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit a3442936dd0523277e20aaf86207c574e755c634 ]
+[ Upstream commit b8d7519352ba8c6df83259295d4a3bad093cae90 ]
 
-As previously discussed we don't care about making the shaper
-state fully RCU-compliant because the hierarchy itself can't
-be dumped in one go over Netlink. Let's annotate the reads
-and writes to make that clear.
+Recent commit changed the semantics from NOT_VALID to VALID.
+I didn't realize that the flags are not stored atomically
+with the entry in XArray. There's still a race of reader
+observing a VALID mark for a slot, getting interrupted,
+writer replacing the entry with a different one, reader
+continuing, fetching the entry which is now a different
+pointer than the pointer for which VALID was meant.
 
-The field-by-field assignments will also be useful for the
-next commit which adds explicit "valid" field (which we don't
-want to override with the current full struct assignment).
+The biggest consequence of this is that we may see a UAF
+since net_shaper_rollback() assumed that entries without
+VALID can be freed without observing RCU.
 
+Looks like the XArray marks are buying us nothing at this
+point. Let's convert the code to an explicit valid field.
+The smp_load_acquire() / smp_store_release() barriers are
+marginally cleaner.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 93954b40f6a4 ("net-shapers: implement NL set and delete operations")
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260515221325.1685455-2-kuba@kernel.org
+Link: https://patch.msgid.link/20260515221325.1685455-3-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b8d7519352ba ("net: shaper: rework the VALID marking (again)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 53 ++++++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ include/net/net_shaper.h |  1 +
+ net/shaper/shaper.c      | 45 ++++++++++++++++------------------------
+ 2 files changed, 19 insertions(+), 27 deletions(-)
 
+diff --git a/include/net/net_shaper.h b/include/net/net_shaper.h
+index 5c3f49b52fe96..3939b816b0011 100644
+--- a/include/net/net_shaper.h
++++ b/include/net/net_shaper.h
+@@ -53,6 +53,7 @@ struct net_shaper {
+ 
+ 	/* private: */
+ 	u32 leaves; /* accounted only for NODE scope */
++	bool valid;
+ 	struct rcu_head rcu;
+ };
+ 
 diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index b1c65110f04d3..520cefdc3d908 100644
+index 520cefdc3d908..dea9270f3e57d 100644
 --- a/net/shaper/shaper.c
 +++ b/net/shaper/shaper.c
-@@ -138,35 +138,58 @@ static int net_shaper_fill_handle(struct sk_buff *msg,
- 	return -EMSGSIZE;
+@@ -306,31 +306,24 @@ static void net_shaper_default_parent(const struct net_shaper_handle *handle,
+ 	parent->id = 0;
  }
  
-+static void net_shaper_copy(struct net_shaper *dst,
-+			    const struct net_shaper *src)
-+{
-+	WRITE_ONCE(dst->parent.scope, READ_ONCE(src->parent.scope));
-+	WRITE_ONCE(dst->parent.id, READ_ONCE(src->parent.id));
-+	WRITE_ONCE(dst->handle.scope, READ_ONCE(src->handle.scope));
-+	WRITE_ONCE(dst->handle.id, READ_ONCE(src->handle.id));
-+
-+	WRITE_ONCE(dst->metric, READ_ONCE(src->metric));
-+	WRITE_ONCE(dst->bw_min, READ_ONCE(src->bw_min));
-+	WRITE_ONCE(dst->bw_max, READ_ONCE(src->bw_max));
-+	WRITE_ONCE(dst->burst, READ_ONCE(src->burst));
-+	WRITE_ONCE(dst->priority, READ_ONCE(src->priority));
-+	WRITE_ONCE(dst->weight, READ_ONCE(src->weight));
-+
-+	/* private fields are only used on the write path under the lock */
-+	data_race(dst->leaves = src->leaves);
-+}
-+
- static int
- net_shaper_fill_one(struct sk_buff *msg,
- 		    const struct net_shaper_binding *binding,
- 		    const struct net_shaper *shaper,
- 		    const struct genl_info *info)
+-/* MARK_0 is already in use due to XA_FLAGS_ALLOC. The VALID mark is set on
+- * an entry only after the device-side configuration has completed
+- * successfully (see net_shaper_commit()). Lookups and dumps must filter on
+- * this mark to avoid exposing tentative entries inserted by
+- * net_shaper_pre_insert() while the driver call is still in flight.
+- */
+-#define NET_SHAPER_VALID	XA_MARK_1
+-
+ static struct net_shaper *
+ net_shaper_lookup(struct net_shaper_binding *binding,
+ 		  const struct net_shaper_handle *handle)
  {
-+	struct net_shaper cur;
- 	void *hdr;
+ 	u32 index = net_shaper_handle_to_index(handle);
+ 	struct net_shaper_hierarchy *hierarchy;
++	struct net_shaper *cur;
  
- 	hdr = genlmsg_iput(msg, info);
- 	if (!hdr)
- 		return -EMSGSIZE;
+ 	hierarchy = net_shaper_hierarchy_rcu(binding);
+-	if (!hierarchy || !xa_get_mark(&hierarchy->shapers, index,
+-				       NET_SHAPER_VALID))
++	if (!hierarchy)
+ 		return NULL;
  
-+	/* Make a copy to avoid data races */
-+	net_shaper_copy(&cur, shaper);
+-	/* Pairs with smp_wmb() in net_shaper_commit(): if the entry is
+-	 * valid, its contents must be visible too.
+-	 */
+-	smp_rmb();
+-	return xa_load(&hierarchy->shapers, index);
++	cur = xa_load(&hierarchy->shapers, index);
++	/* Check valid before reading fields */
++	if (!cur || !smp_load_acquire(&cur->valid))
++		return NULL;
 +
- 	if (net_shaper_fill_binding(msg, binding, NET_SHAPER_A_IFINDEX) ||
--	    net_shaper_fill_handle(msg, &shaper->parent,
-+	    net_shaper_fill_handle(msg, &cur.parent,
- 				   NET_SHAPER_A_PARENT) ||
--	    net_shaper_fill_handle(msg, &shaper->handle,
-+	    net_shaper_fill_handle(msg, &cur.handle,
- 				   NET_SHAPER_A_HANDLE) ||
--	    ((shaper->bw_min || shaper->bw_max || shaper->burst) &&
--	     nla_put_u32(msg, NET_SHAPER_A_METRIC, shaper->metric)) ||
--	    (shaper->bw_min &&
--	     nla_put_uint(msg, NET_SHAPER_A_BW_MIN, shaper->bw_min)) ||
--	    (shaper->bw_max &&
--	     nla_put_uint(msg, NET_SHAPER_A_BW_MAX, shaper->bw_max)) ||
--	    (shaper->burst &&
--	     nla_put_uint(msg, NET_SHAPER_A_BURST, shaper->burst)) ||
--	    (shaper->priority &&
--	     nla_put_u32(msg, NET_SHAPER_A_PRIORITY, shaper->priority)) ||
--	    (shaper->weight &&
--	     nla_put_u32(msg, NET_SHAPER_A_WEIGHT, shaper->weight)))
-+	    ((cur.bw_min || cur.bw_max || cur.burst) &&
-+	     nla_put_u32(msg, NET_SHAPER_A_METRIC, cur.metric)) ||
-+	    (cur.bw_min &&
-+	     nla_put_uint(msg, NET_SHAPER_A_BW_MIN, cur.bw_min)) ||
-+	    (cur.bw_max &&
-+	     nla_put_uint(msg, NET_SHAPER_A_BW_MAX, cur.bw_max)) ||
-+	    (cur.burst &&
-+	     nla_put_uint(msg, NET_SHAPER_A_BURST, cur.burst)) ||
-+	    (cur.priority &&
-+	     nla_put_u32(msg, NET_SHAPER_A_PRIORITY, cur.priority)) ||
-+	    (cur.weight &&
-+	     nla_put_u32(msg, NET_SHAPER_A_WEIGHT, cur.weight)))
- 		goto nla_put_failure;
++	return cur;
+ }
  
- 	genlmsg_end(msg, hdr);
-@@ -424,7 +447,7 @@ static void net_shaper_commit(struct net_shaper_binding *binding,
- 		/* Successful update: drop the tentative mark
- 		 * and update the hierarchy container.
- 		 */
--		*cur = shapers[i];
-+		net_shaper_copy(cur, &shapers[i]);
- 		smp_wmb();
- 		__xa_set_mark(&hierarchy->shapers, index, NET_SHAPER_VALID);
+ /* Allocate on demand the per device shaper's hierarchy container.
+@@ -444,12 +437,10 @@ static void net_shaper_commit(struct net_shaper_binding *binding,
+ 		if (WARN_ON_ONCE(!cur))
+ 			continue;
+ 
+-		/* Successful update: drop the tentative mark
+-		 * and update the hierarchy container.
+-		 */
++		/* Successful update: update the hierarchy container... */
+ 		net_shaper_copy(cur, &shapers[i]);
+-		smp_wmb();
+-		__xa_set_mark(&hierarchy->shapers, index, NET_SHAPER_VALID);
++		/* ... publish to lockless readers. */
++		smp_store_release(&cur->valid, true);
  	}
+ 	xa_unlock(&hierarchy->shapers);
+ }
+@@ -466,10 +457,10 @@ static void net_shaper_rollback(struct net_shaper_binding *binding)
+ 
+ 	xa_lock(&hierarchy->shapers);
+ 	xa_for_each(&hierarchy->shapers, index, cur) {
+-		if (xa_get_mark(&hierarchy->shapers, index, NET_SHAPER_VALID))
++		if (cur->valid)
+ 			continue;
+ 		__xa_erase(&hierarchy->shapers, index);
+-		kfree(cur);
++		kfree_rcu(cur, rcu);
+ 	}
+ 	xa_unlock(&hierarchy->shapers);
+ }
+@@ -882,12 +873,12 @@ int net_shaper_nl_get_dumpit(struct sk_buff *skb,
+ 		goto out_unlock;
+ 
+ 	for (; (shaper = xa_find(&hierarchy->shapers, &ctx->start_index,
+-				 U32_MAX, NET_SHAPER_VALID));
++				 U32_MAX, XA_PRESENT));
+ 	     ctx->start_index++) {
+-		/* Pairs with smp_wmb() in net_shaper_commit(): the entry
+-		 * is marked VALID, so its contents must be visible too.
+-		 */
+-		smp_rmb();
++		/* Check valid before reading fields */
++		if (!smp_load_acquire(&shaper->valid))
++			continue;
++
+ 		ret = net_shaper_fill_one(skb, binding, shaper, info);
+ 		if (ret)
+ 			break;
 -- 
 2.53.0
 
