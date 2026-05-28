@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F0339866;
-	Thu, 28 May 2026 20:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB8C402B8F;
+	Thu, 28 May 2026 20:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999230; cv=none; b=HWoJHHXFjuWCGk6hPiCKnsc/jS6zXXl3PAiVYLpzd6nfrNWmyeO4S2K4s4e4lI516kDhC2VFv2YKre7PDQ3wNXaTb9Qh7WjPso0nDjQWcslwxRntkFMhxvTbqfGmBFk+YfP/sk+YxQLEOnLhErsKNgxKPcc7gCHlF8eHjbTvsJA=
+	t=1779999233; cv=none; b=HSzqhX6frD2h2pGvLuvBynVR8KbSH7dfZi4z5xzlrBKAOOW+Vbd/G8dcNwLnwsJ2n+oBGp8zfwsae0G9s4b9GS93S1du49p24my19WHEUSl4ukuJLVgbAztND7dvQyafquQs7NHXMt+kiCXb6KnUgqej75zSTqlXK94x9Xb+nnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999230; c=relaxed/simple;
-	bh=cKY0Y10qbdltheZsr4rygYrv0kC7IYPD94xxca5+J10=;
+	s=arc-20240116; t=1779999233; c=relaxed/simple;
+	bh=jYIUvwx7QWAgxzX6mGKuMZDbQMGImy91rJaKDluFf7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyTLhhcefFPhrP6F97Ahp8ztrjkMal7W+2/gYSFbDA3rHxfAZTL3VFMK3WgPIo4FA2qSq4MRS31IdlowL/R3SRo+RuQJN14KQ0JvE4nbYLGkqBa2Gh2yqV04UMu+yfQdj8f2FPFrqdmzvkRT7A79s1xZw8IG+7o9H1qviAR+waA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XahS/+V+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRcuJ373gEc7lwuN/vtHJ1qu82WApTMsDO81DftzSVhdIA6lpvSt6rkeuZtwjjQRf9nATcaNsXHSYcdDADkbwUUA6K+ryN16O1isQL6b48AH0RMaLZyX++RBo9R3TNS47qqiLJsROI49fBCzM/HLkrcY2cQRym7rLzSp/m7wAIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZzNjh0W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XahS/+V+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136FD1F000E9;
-	Thu, 28 May 2026 20:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZzNjh0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D571F000E9;
+	Thu, 28 May 2026 20:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999229;
-	bh=Izo4Hj4C5TJmMs3ZqDIuU2lIDEMotRXawrqj5SgfMps=;
+	s=korg; t=1779999232;
+	bh=8EizOH48mP3bi3mwhITLbwOF+n4ve5OaKe5J5V3XEKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XahS/+V+amo0EJRdpk2VxZN/psl+CU/TIPs1DJ2hdsuPqKwkmObZ8RIahdCOw0Byi
-	 F0f3SBiIsTL8WcxpQnozidf4FR+AV3qPHBsKNE/71ZGyZZO1IEsHUEUYow6IVAJcK4
-	 bbmba3MoYn86lxJIPBEwTESlzn/sllw4rOfH9CZs=
+	b=BZzNjh0WYmBcdhIeyagOcN1r5r0nS3K/anN/H/r0fwPvAlnj4W1lxgTdGbpNbQ3OH
+	 YftQruZzu7G8Dg11WHNIZBXIijjBXuOAVA2ESHU6wlWaffrlyjavq4R7b79iDN0aU1
+	 4tWDcFF+WLzztdc9s6P6WDHncf047S1oted0GuoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 454/461] net: enetc: fix missing error code when pf->vf_state allocation fails
-Date: Thu, 28 May 2026 21:49:43 +0200
-Message-ID: <20260528194700.681960302@linuxfoundation.org>
+Subject: [PATCH 7.0 455/461] io_uring/nop: pass all errors to userspace
+Date: Thu, 28 May 2026 21:49:44 +0200
+Message-ID: <20260528194700.709940258@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,44 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 5027266dea471e140f93dd534845c9c4f43219a3 ]
+[ Upstream commit e97ff8b62d4690c69297f0f6de874f0564cc01a4 ]
 
-In enetc_pf_probe(), when the memory allocation for pf->vf_state fails,
-the code jumps to the error handling label but the variable 'err' is not
-assigned an appropriate error code beforehand. This causes the function
-to return 0 (success) on an allocation failure path, misleading the
-caller into thinking the probe succeeded. So set err to -ENOMEM before
-jumping to the error handling label when the allocation for pf->vf_state
-returns NULL.
+This fixes an inconsistency where io_nop() called req_set_fail()
+based on ret, but passed just nop->result to userspace.
+Originally, ret is a even copy of nop->result, but is set to an error
+when such happens subsequently. Now that's also passed to userspace.
 
-Fixes: e15c5506dd39 ("net: enetc: allocate vf_state during PF probes")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260520064421.91569-3-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a85f31052bce ("io_uring/nop: add support for testing registered files and buffers")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Link: https://patch.msgid.link/20260520180045.538533-1-grandmaster@al2klimov.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_pf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/nop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-index a12fd54a475f6..ed8f7b3dc5260 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-@@ -960,8 +960,10 @@ static int enetc_pf_probe(struct pci_dev *pdev,
- 	if (pf->total_vfs) {
- 		pf->vf_state = kzalloc_objs(struct enetc_vf_state,
- 					    pf->total_vfs);
--		if (!pf->vf_state)
-+		if (!pf->vf_state) {
-+			err = -ENOMEM;
- 			goto err_alloc_vf_state;
-+		}
- 	}
- 
- 	err = enetc_setup_mac_addresses(node, pf);
+diff --git a/io_uring/nop.c b/io_uring/nop.c
+index 3caf07878f8ac..f5c9969e7f64a 100644
+--- a/io_uring/nop.c
++++ b/io_uring/nop.c
+@@ -79,9 +79,9 @@ int io_nop(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	if (nop->flags & IORING_NOP_CQE32)
+-		io_req_set_res32(req, nop->result, 0, nop->extra1, nop->extra2);
++		io_req_set_res32(req, ret, 0, nop->extra1, nop->extra2);
+ 	else
+-		io_req_set_res(req, nop->result, 0);
++		io_req_set_res(req, ret, 0);
+ 	if (nop->flags & IORING_NOP_TW) {
+ 		req->io_task_work.func = io_req_task_complete;
+ 		io_req_task_work_add(req);
 -- 
 2.53.0
 
