@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7FC2E7379;
-	Thu, 28 May 2026 20:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9AA1DE4E0;
+	Thu, 28 May 2026 20:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001062; cv=none; b=AOfLc0a9SHxchEMQiG9T1aHqn40CLURbb3YrHQiyFF4IudZJUaxxnbUV4VNsALH4aHyJgtjgprkbL7bk1A5Qn7f9lEDgPIK8yyVVwuUeozzg8xBWwZPKTqyV9qlpLNKRpRBaFFOLqJEeO5dxIOzW5FEunzNsIndcK4eQWEayJCM=
+	t=1780001065; cv=none; b=e3BrSEnivHhgi3e0OKFuTAjV074pFxEjamP4D5Pcj28kG5rQY8hLh3XR+8QxSlVDK8+83YJtVEZDAk/XSfkP5rlMok3h6QKOQ84VopQkjeOJ24edJmX6EOx9aBjrJibR1jyJe2nj2+6ckeK3Be4rr9Usjc+pUzzNmDhM/+ULiWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001062; c=relaxed/simple;
-	bh=XWWWDbc90aLtqSVcYcIUhjsfK/ZrWvffyYap3GsYO44=;
+	s=arc-20240116; t=1780001065; c=relaxed/simple;
+	bh=xX2c/XqcmCYN+sIlNesdYb2SjaBv53A4jQhwOPMYunI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xq5hyv8lrHBacY8i6cCV+I+XAxqo9RUmowG2xdWIg91VS/nxA14moJhQSyBMQ4c+Jv/jocnqh1/Q3LQVjiROm9QcfLMtvt83iKENdWj0dqTQH6STLUHlQpnn6dHmiyKvFKD2zV0QC1w5T5e38Fa657xGA0aIocusMo7dT84xQzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiXq53zz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pki5ehX65Sh9d9XmwQsUZW+EOd8YK+atdPrVe9F+ePSyawW82pvkhmDQ231cgyqkk9Cc4oxWyo+3Pabg5nwAgDvLmkIGha8OSTv3u11gbd1iqbeWyNfOls6oplNkTPuTYygA1tz43a9VftSxntrsQCisXydcjBpIwMS5aGBclis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVyXPWSM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiXq53zz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CAD1F000E9;
-	Thu, 28 May 2026 20:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVyXPWSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D431F000E9;
+	Thu, 28 May 2026 20:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001061;
-	bh=92kDdwGyRhrrjn3YpJY2tEwqhq3sdXjPN+G5ZJvlbYc=;
+	s=korg; t=1780001064;
+	bh=L/FRYdUEFgmEZYvc6a5TR7sddMaBXIZr8Q6lp+UyyII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qiXq53zzOsp03DNf3VpfUV2A32ijUyyEGf9S2rmsCx/hgVvFYBPBO/ZdXKrx5w2XJ
-	 WPqP/guWDfpHGCN37zz1wrHuY9jIuyl6gQ3dCPg4Vyxa+rlBFLnnIY2llxXHKLPWto
-	 c4jH28fcb/qRUx6N/rsXypnZ7XJ6sl63DqpFs0A4=
+	b=iVyXPWSMjOA07yjOBNq1xY3soQMsfb/4vcenjRKfxfcJF+36UzHk69RGWhLVyI6Y7
+	 cRumJUe90OP9Mq2IHBa/6y2j87GrHlh66rNdw07Cn5eDR2ftrwHYzgjv8ITbKBL1Cm
+	 jsJ7VBKqFy4qeVf4kG5VErEEM2xAYpDKAs6l+hEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 266/272] drm/xe/oa: Fix exec_queue leak on width check in stream open
-Date: Thu, 28 May 2026 21:50:40 +0200
-Message-ID: <20260528194636.531053236@linuxfoundation.org>
+Subject: [PATCH 6.12 267/272] octeontx2-af: npc: Fix allmulticast skip logic for LBK and SDP VFs
+Date: Thu, 28 May 2026 21:50:41 +0200
+Message-ID: <20260528194636.556429439@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,53 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 4d25342543c01310fc4e0cba7cb17c775e2421e2 ]
+[ Upstream commit 9eddc819f00b5b74bb4ac91396f80bd35f5f3561 ]
 
-In xe_oa_stream_open_ioctl(), when param.exec_q->width > 1 the
-function returns -EOPNOTSUPP directly, skipping the existing
-err_exec_q cleanup path. The exec_queue reference obtained by
-xe_exec_queue_lookup() is leaked.
+When installing the allmulticast NPC rule, rvu_npc_install_allmulti_entry()
+should skip LBK and SDP VFs (only CGX PF/VF may add the entry).  The
+code combined is_lbk_vf() and is_sdp_vf() with logical AND, which is
+never true for a single pcifunc, so the intended early return never ran.
 
-The exec queue holds a reference on the xe_file, which is only
-dropped during queue teardown. The leaked lookup ref is not on
-the file's exec_queue xarray, so file close cannot release it.
-This keeps both the exec queue and the file private state pinned
-indefinitely.
+Use logical OR instead.
 
-Jump to err_exec_q instead of returning directly so the reference
-is released.
-
-Fixes: f0ed39830e60 ("xe/oa: Fix query mode of operation for OAR/OAC")
-Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patch.msgid.link/20260514203210.593488-1-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 339fa0be9e4a5d69fa47e91f4a36574224fb478f)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Geetha sowjanya <gakula@marvell.com>
+Fixes: ae703539f49d2 ("octeontx2-af: Cleanup loopback device checks")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260520043036.1523798-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index fe997494a6f99..5e38afc46e20e 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -2019,8 +2019,10 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
- 		if (XE_IOCTL_DBG(oa->xe, !param.exec_q))
- 			return -ENOENT;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index a78923d7811dc..e3038a912a580 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -853,7 +853,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 	u16 vf_func;
  
--		if (XE_IOCTL_DBG(oa->xe, param.exec_q->width > 1))
--			return -EOPNOTSUPP;
-+		if (XE_IOCTL_DBG(oa->xe, param.exec_q->width > 1)) {
-+			ret = -EOPNOTSUPP;
-+			goto err_exec_q;
-+		}
- 	}
+ 	/* Only CGX PF/VF can add allmulticast entry */
+-	if (is_lbk_vf(rvu, pcifunc) && is_sdp_vf(rvu, pcifunc))
++	if (is_lbk_vf(rvu, pcifunc) || is_sdp_vf(rvu, pcifunc))
+ 		return;
  
- 	/*
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
 -- 
 2.53.0
 
