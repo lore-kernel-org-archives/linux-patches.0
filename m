@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98041413D8E;
-	Thu, 28 May 2026 20:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9732341B37D;
+	Thu, 28 May 2026 20:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998702; cv=none; b=H2Avvlzzm4J+Scxx5QdiGfThwV4CcGdFyU0cWxEM2MFpPNA12dUCcM5edsHsCUY242o0PqmG/Fz6xJD2f9oOBNgsH9RbDW1h9vRM34R1PRmcqz2NB7fNNoa/8Oeu66KviIP/ncUPB/AX42iTZYNlG7EMVfEn16Fq2zWyvkMeXYI=
+	t=1779998705; cv=none; b=NZL8ky9TmN9FNgXz3cLusjK/4Kb1LZ+RdTunlICAZtbavrg3NmtRbgG8Biran3tpR3ZYGpI8Ng40tA84hYJS1fqWm/Sk5J72BouiPJIWVq/AZhAlNod40cgFTKNIMzcvAPCeADBmTGCoUUAjoxRr0l4bzZb8twIw91v34sKIWpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998702; c=relaxed/simple;
-	bh=H65xPM3+itimHWW6W/s9dBynZu10LWgKV4mp5j6Mdp8=;
+	s=arc-20240116; t=1779998705; c=relaxed/simple;
+	bh=WCfEPlAWoK9oGl6XvTVxFb3a0qBYDWN23lnBBxK7uXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpoL/LC6qUTulNpsOQmBIkCZwV9PIgeSsiFLERQg08s72ONiZnU8vqq/M0CLjk9YEc54xXfCd5VqVbsxdN2RWzyF3AWUfQZHVO2MWJUXiRLkTKy/GozB7N/Eqqqy9QE0LbswQmFcTTbSQjWWz6oEInVp83K+4rVVxuWrhJDFvgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iADPqcT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnAw1Ykpyl/pDf6qotus6MEVBBGjmzY1LlIR1f1ISgeIkYzc5RwIu1YrkdEUD8Tyo4tjp3C7V9Q0omCA5LAwMAsH6L2sixnfeH6MHcOQEfZv+R6QVlJNn2yg8PQpDp2UrUfiUbE0HInG5bSPfshAFAvWk8paIN+pacuVOotAoW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmKcmQkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iADPqcT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A9B1F000E9;
-	Thu, 28 May 2026 20:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmKcmQkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05981F00A3A;
+	Thu, 28 May 2026 20:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998701;
-	bh=oOauYayf3SuJzh9wziOySAiZg54G3Ibtp02jYXklF7M=;
+	s=korg; t=1779998704;
+	bh=yFHvJvqKVXUFbIbGCSgli6wPNxhhQUdkUH9xIuc6+dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iADPqcT5J28OPsV0dG5lmiOKovnzeZ18VDQf7bQ0mhDPMbOAChKBdRgqh3smRgGsC
-	 k8nB6/hZRD8W8dheewjrHLKychFtMXlFW/e0j+S0QbAH+VYDzz2ajLb4X13lBFYOLW
-	 QIp/EIQk+jr0KnPn6mq+IFNp5OQlfbSnv/QgjsxA=
+	b=AmKcmQkAEGNBdIBqp7E4LcO5Ag+DhbXfJL/1/omODKkR2s39nG+PwaAalNlb/auGx
+	 g0Aw777Aj5z9dNVR2pem9niiHCRXYrqMJ1+P2JOR+/cYlXIsQ2bZjN0CIPHKUiJZS6
+	 x9tmz19Vk+HJV99VysntZIP2qObGOv+ECJlsYP8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Matthew Wilcox <willy@infradead.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 266/461] netfs: Fix potential UAF in netfs_unlock_abandoned_read_pages()
-Date: Thu, 28 May 2026 21:46:35 +0200
-Message-ID: <20260528194654.866476259@linuxfoundation.org>
+Subject: [PATCH 7.0 267/461] netfs: Fix partial invalidation of streaming-write folio
+Date: Thu, 28 May 2026 21:46:36 +0200
+Message-ID: <20260528194654.895369250@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -58,100 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit dbe556972100fabb8e5a1b3d2163831ff07b1e8e ]
+[ Upstream commit 6d91acc7fb85d33ea58fca9b964a32a453937f4b ]
 
-netfs_unlock_abandoned_read_pages(rreq) accesses the index of the folios it
-is wanting to unlock and compares that to rreq->no_unlock_folio so that it
-doesn't unlock a folio being read for netfs_perform_write() or
-netfs_write_begin().
+In netfs_invalidate_folio(), if the region of a partial invalidation
+overlaps the front (but not all) of a dirty write cached in a streaming
+write page (dirty, but not uptodate, with the dirty region tracked by a
+netfs_folio struct), the function modifies the dirty region - but
+incorrectly as it moves the region forward by setting the start to the
+start, not the end, of the invalidation region.
 
-However, given that netfs_unlock_abandoned_read_pages() is called _after_
-NETFS_RREQ_IN_PROGRESS is cleared, the one folio that it's not allowed to
-dereference is the one specified by ->no_unlock_folio as ownership
-immediately reverts to the caller.
+Fix this by setting finfo->dirty_offset to the end of the invalidation
+region (iend).
 
-Fix this by storing the folio pointer instead and using that rather than
-the index.  Also fix netfs_unlock_read_folio() where the same applies.
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Fixes: cce6bfa6ca0e ("netfs: Fix trimming of streaming-write folios in netfs_inval_folio()")
 Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-20-dhowells@redhat.com
+Link: https://patch.msgid.link/20260512123404.719402-21-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
-cc: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 4 ++--
- fs/netfs/read_collect.c  | 2 +-
- fs/netfs/read_retry.c    | 2 +-
- include/linux/netfs.h    | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ fs/netfs/misc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 004d426c02b41..83d0b8153e96e 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -670,7 +670,7 @@ int netfs_write_begin(struct netfs_inode *ctx,
- 		ret = PTR_ERR(rreq);
- 		goto error;
- 	}
--	rreq->no_unlock_folio	= folio->index;
-+	rreq->no_unlock_folio	= folio;
- 	__set_bit(NETFS_RREQ_NO_UNLOCK_FOLIO, &rreq->flags);
- 
- 	ret = netfs_begin_cache_read(rreq, ctx);
-@@ -736,7 +736,7 @@ int netfs_prefetch_for_write(struct file *file, struct folio *folio,
- 		goto error;
- 	}
- 
--	rreq->no_unlock_folio = folio->index;
-+	rreq->no_unlock_folio = folio;
- 	__set_bit(NETFS_RREQ_NO_UNLOCK_FOLIO, &rreq->flags);
- 	ret = netfs_begin_cache_read(rreq, ctx);
- 	if (ret == -ENOMEM || ret == -EINTR || ret == -ERESTARTSYS)
-diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
-index 3c9b847885c2a..23660a5901246 100644
---- a/fs/netfs/read_collect.c
-+++ b/fs/netfs/read_collect.c
-@@ -83,7 +83,7 @@ static void netfs_unlock_read_folio(struct netfs_io_request *rreq,
- 	}
- 
- just_unlock:
--	if (folio->index == rreq->no_unlock_folio &&
-+	if (folio == rreq->no_unlock_folio &&
- 	    test_bit(NETFS_RREQ_NO_UNLOCK_FOLIO, &rreq->flags)) {
- 		_debug("no unlock");
- 	} else {
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index e10eb5a073326..f59a70f3a086b 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -292,7 +292,7 @@ void netfs_unlock_abandoned_read_pages(struct netfs_io_request *rreq)
- 			struct folio *folio = folioq_folio(p, slot);
- 
- 			if (folio && !folioq_is_marked2(p, slot)) {
--				if (folio->index == rreq->no_unlock_folio &&
-+				if (folio == rreq->no_unlock_folio &&
- 				    test_bit(NETFS_RREQ_NO_UNLOCK_FOLIO,
- 					     &rreq->flags)) {
- 					_debug("no unlock");
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index 4fd1d796ad73b..243c0f7379388 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -252,7 +252,7 @@ struct netfs_io_request {
- 	unsigned long long	collected_to;	/* Point we've collected to */
- 	unsigned long long	cleaned_to;	/* Position we've cleaned folios to */
- 	unsigned long long	abandon_to;	/* Position to abandon folios to */
--	pgoff_t			no_unlock_folio; /* Don't unlock this folio after read */
-+	const struct folio	*no_unlock_folio; /* Don't unlock this folio after read */
- 	unsigned int		direct_bv_count; /* Number of elements in direct_bv[] */
- 	unsigned int		debug_id;
- 	unsigned int		rsize;		/* Maximum read size (0 for none) */
+diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
+index 24b20e80e9a8a..5d554512ed23a 100644
+--- a/fs/netfs/misc.c
++++ b/fs/netfs/misc.c
+@@ -262,7 +262,7 @@ void netfs_invalidate_folio(struct folio *folio, size_t offset, size_t length)
+ 				goto erase_completely;
+ 			/* Move the start of the data. */
+ 			finfo->dirty_len = fend - iend;
+-			finfo->dirty_offset = offset;
++			finfo->dirty_offset = iend;
+ 			trace_netfs_folio(folio, netfs_folio_trace_invalidate_front);
+ 			return;
+ 		}
 -- 
 2.53.0
 
