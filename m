@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBD43290B0;
-	Thu, 28 May 2026 19:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8C140910C;
+	Thu, 28 May 2026 19:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998216; cv=none; b=uu6iLJhdVtI+3cCWqFsZMQ1IH8UVpNDaEspqfGq3lCXltctedW6iJMNdGNYfUHsAehzP+721g0rNCDD7fU0XicHvdThjx3aFo/MvFoATj9RwTUJ3UMul8L/6RZeJRV+p7vazMzJtBLD7EQGOicM7tnTIpNPLA0pj63t5Q4JH7ek=
+	t=1779998217; cv=none; b=j2GlAhs+e3JSjc3lLVI8kVN0kG9aZw1HIATEzjEkEPdC2zSt/k/YkRuqZ+DAMG+oc5XAJ4w+aU8vGfuuXxpCpAHF7U3RWqUNuFeQjL1rn82Ae0pfHty0fPkns6LZI9pWuB5KzjXBrwsxQXfPmrjnjW5LN1W5TOEh/3M4PfRn+BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998216; c=relaxed/simple;
-	bh=Erq+Aq3qyICQp6FYFbZpE+zPJePcN8KBf4nGoeDGC6U=;
+	s=arc-20240116; t=1779998217; c=relaxed/simple;
+	bh=9g1GpN7QWQPR/x5YFVUsoXIwzLg9Rwp6wHUFWkiCpTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYqvraCyEec5SNLFDCf5AO/CEuGfoXRCBW/1SzAB6LhraG3jd9NR3nzfcxgd4vOCFwgkJAXAq6PBEwQRUbf10hUmngx0a/+LE0yRroIWTliyQxm0LQiXCqVswfMP4zxS8mOWgyVemnQt/gaNxeknJZU/s/6hLysqFugOjPNuTyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fM+C15J7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U6R1vwJ5SQQolI/X9IyWqqvrfv1S5azvuXmO+DnR7L46NeQx45KUoRT8F+JrxbY4+YaHMH6QHBq9RPxA+yjj8vSDISyOzOKWxk3hVaXNA1T6lgFBrjxGzEKyHkHsRcVnEj5uGrEDPfutSIaZf8+aSndIC4zsWgh8aL9gRwcHvNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/Iu3ZVL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM+C15J7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C291F00A3E;
-	Thu, 28 May 2026 19:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/Iu3ZVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185841F000E9;
+	Thu, 28 May 2026 19:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998213;
-	bh=1xiTrsnHQSRCcJQXAYDWDEgCb7LSlqlrVfoxxG/g7YA=;
+	s=korg; t=1779998216;
+	bh=GFH/yTB8xIwRbZE3wlBhAfkezu9eW0tweOpqIflQ8i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fM+C15J7ml3d+Iy73kP9N3nxQQB5vpb3Lgc4Wma03BmMWO45IbE03SQsESTkrgzwA
-	 s/nj8eco57H/B/rxR0P+dONLNM1npSxIQhguV6mi7ei1Rd61KAYKN6P5ZJ4dB4iJs+
-	 XJzrgoURPms7jzV7z6/K0uV9DiiYNhfJ+s6Jc884=
+	b=M/Iu3ZVLex45/GxQdst8sIh7Ly7Fd2so/m+U58q7m4xOZHn550P3fB0gN0uUgmxa+
+	 nLBUJ3PfNCEaAxmj8j55yQEHEqQzaHgXoE2bln4ukoJKSsX34DUBoH9H4uhNeq+G6x
+	 +tCmAhwmPJYoSt6TNCS5mkdkF6DO5do/pKL/K620=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Farnung <kfarnung@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 7.0 077/461] wifi: ath11k: clear shared SRNG pointer state on restart
-Date: Thu, 28 May 2026 21:43:26 +0200
-Message-ID: <20260528194649.147484238@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 095/461] octeontx2-pf: avoid double free of pool->stack on AQ init failure
+Date: Thu, 28 May 2026 21:43:44 +0200
+Message-ID: <20260528194649.693475683@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,60 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Farnung <kfarnung@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
+commit 9b244c242bec48b37e82b89787afd6a4c43457e1 upstream.
 
-LMAC rings reuse the shared rdp/wrp pointer buffers without going
-through the normal SRNG hw-init path that zeros non-LMAC ring
-pointers. After restart, ath11k_hal_srng_clear() can therefore hand
-stale hp/tp state from the previous firmware instance back to the new
-one.
+otx2_pool_aq_init() frees pool->stack when mailbox sync or retry
+allocation fails, but leaves the pointer unchanged. Later,
+otx2_sq_aura_pool_init() unwinds the partial setup through
+otx2_aura_pool_free(), which frees pool->stack again. The CN20K-specific
+cn20k_pool_aq_init() implementation has the same bug in
+its corresponding error path.
 
-Clear the shared pointer buffers while keeping the allocations in
-place so restart still avoids reallocating SRNG DMA memory, but starts
-with fresh ring-pointer state.
+Set pool->stack to NULL immediately after the local free so the shared
+cleanup path does not free the same stack again while cleaning up
+partially initialized pool state.
 
-Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc3.
+
+Runtime validation was not performed because reproducing this path
+requires OcteonTX2/CN20K hardware.
+
+Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
+Fixes: d322fbd17203 ("octeontx2-pf: Initialize cn20k specific aura and pool contexts")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
-Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260515151826.1005397-1-dawei.feng@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/cn20k.c       |    2 ++
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1387,14 +1387,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
- 
- void ath11k_hal_srng_clear(struct ath11k_base *ab)
- {
--	/* No need to memset rdp and wrp memory since each individual
--	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
--	 * and ath11k_hal_srng_dst_hw_init().
-+	/*
-+	 * Preserve the shared pointer buffers, but clear the previous
-+	 * firmware instance's hp/tp state before handing them back to FW.
-+	 * LMAC rings reuse this shared memory without going through the
-+	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
- 	 */
- 	memset(ab->hal.srng_list, 0,
- 	       sizeof(ab->hal.srng_list));
- 	memset(ab->hal.shadow_reg_addr, 0,
- 	       sizeof(ab->hal.shadow_reg_addr));
-+	if (ab->hal.rdp.vaddr)
-+		memset(ab->hal.rdp.vaddr, 0,
-+		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
-+	if (ab->hal.wrp.vaddr)
-+		memset(ab->hal.wrp.vaddr, 0,
-+		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
- 	ab->hal.avail_blk_resource = 0;
- 	ab->hal.current_blk_index = 0;
- 	ab->hal.num_shadow_reg_configured = 0;
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn20k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn20k.c
+@@ -353,11 +353,13 @@ static int cn20k_pool_aq_init(struct otx
+ 		err = otx2_sync_mbox_msg(&pfvf->mbox);
+ 		if (err) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return err;
+ 		}
+ 		aq = otx2_mbox_alloc_msg_npa_cn20k_aq_enq(&pfvf->mbox);
+ 		if (!aq) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return -ENOMEM;
+ 		}
+ 	}
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1482,11 +1482,13 @@ int otx2_pool_aq_init(struct otx2_nic *p
+ 		err = otx2_sync_mbox_msg(&pfvf->mbox);
+ 		if (err) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return err;
+ 		}
+ 		aq = otx2_mbox_alloc_msg_npa_aq_enq(&pfvf->mbox);
+ 		if (!aq) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return -ENOMEM;
+ 		}
+ 	}
 
 
