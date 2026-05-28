@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903E832ABC0;
-	Thu, 28 May 2026 20:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6585833F5BE;
+	Thu, 28 May 2026 20:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999206; cv=none; b=EFBuxMVRard93L0JZBrcZmmFmo0eR43aeE7b7SfeDKtXOksuGjjGXLqXOD0AQRwtKjd2pVpsNRG9atzBuuhRucLn3SYxHQ2l1PYrGCfdSMxIUxw9dIXIRTAxoIBeXP9UwmrW7VZa3kUy4OIOb41nCO/CAEuQXvKaltpWRmxOl7U=
+	t=1779999209; cv=none; b=cJ5GQsSSR8CNRA9NZjULTxEl7XecUZzHD++GjgV4nufQJg5kP3kY3ctXgDhtqZ+ZZc2lfAZEWC0mJhOIcH7NIrIXJZuVxH/gpZFMDF7Q+CEQaLZLI3/lVkPbcmcd1Udkq12r9BcKkyHkJqJeecQniwaJbaQG/cNFIdLiw5MuoOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999206; c=relaxed/simple;
-	bh=eHdlIqDj4pAemVMaLxX5kCBB1m5ThRXJK11PJuRzNT0=;
+	s=arc-20240116; t=1779999209; c=relaxed/simple;
+	bh=b0n7O6Ey3xlpJkw+FA+TxroFyp+VjoWHAiPnXIdsCgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpTeNzLP9Ep0WuMgG8KrWocTfcZkKB5xaSpHR6MoWUTbjanmrhND7fnLR6l427m12THD/ZcSHUwsUGtCriYrj9wAg9lrJ5LCqaFLrPSsugUZOtPH5E72MTgw+yeRqWZF/tS8SBj/ok+2H33lYF0zoQPtT70dvUy3OHuRlJFlsIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmwwlcd5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nsMMAKPnAgAaNKGoBznx1q6bmYEiG0j6D0qErkkLLsbZaFDI3EzxmSvktFJ3km/KGoyU4Zq78uvHSmnvB9GlRivWMlVfzL9+ZLQJ/VAHLTsdRfvQ1KGJtYp7o3kE1PT5+8FUSrGfACo+3LWJ8rb4hTHoHEyZ9vJMMrDM10EZ4O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVCELfp1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmwwlcd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6301F000E9;
-	Thu, 28 May 2026 20:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVCELfp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AE21F000E9;
+	Thu, 28 May 2026 20:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999205;
-	bh=8q26XA0fye5jf4ML5p7lDGvz3TZWDMDbFdypYjbIYlk=;
+	s=korg; t=1779999208;
+	bh=EBhqrIahQAfWA8wUIeIo4JXJpiS2y5OFwCitB5GFrI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fmwwlcd5EGX/+w+0Zs1PtRVTUUCegSk7RP6dlsdoytMCpVT70c7Sd5ql8RyprfJ+t
-	 JIpIki8Bh1+pIsKCwJOSglD4AZSYx31sForAmmovfes1ZshLp5E3DVFcPdCc8pzI3f
-	 F2BSHPEsJTXmVomXiW//707cY1L01IYBLNcq14Q0=
+	b=QVCELfp1h7+xEvFEo800DkljFp5F4BcEtGLoUiVLFT2nkB4ENDQN4Ti8JyJThyB/9
+	 LCWZOnH5583AcGXWh6e6ZkX7FappHqENSwi99U7e7q6O0CuzG/z/GTYhQtbZ/Ai4OI
+	 uJLpV/U/tW/Rh3DiCT2JhnyXcAb3c/4Vv/cyg1FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 447/461] nvme-pci: fix dma mapping leak on data setup error
-Date: Thu, 28 May 2026 21:49:36 +0200
-Message-ID: <20260528194700.474408065@linuxfoundation.org>
+Subject: [PATCH 7.0 448/461] octeontx2-af: npc: Fix allmulticast skip logic for LBK and SDP VFs
+Date: Thu, 28 May 2026 21:49:37 +0200
+Message-ID: <20260528194700.505359837@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,101 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 1bf86336e4b6cf40873fda47a7fe191446864937 ]
+[ Upstream commit 9eddc819f00b5b74bb4ac91396f80bd35f5f3561 ]
 
-We're leaking the initial DMA mapping during iteration if we fail to
-allocate the tracking descriptor for both PRP and SGL. Unmap the
-iterator directly; we can't use the existing unmap helper because it
-depends on the tracking descriptor being successfully allocated, so a
-new one for an in-use iterator is provided.
+When installing the allmulticast NPC rule, rvu_npc_install_allmulti_entry()
+should skip LBK and SDP VFs (only CGX PF/VF may add the entry).  The
+code combined is_lbk_vf() and is_sdp_vf() with logical AND, which is
+never true for a single pcifunc, so the intended early return never ran.
 
-The mappings were also leaking when the driver detects an invalid
-bio_vec when mapping PRPs, so fix that too.
+Use logical OR instead.
 
-Fixes: b8b7570a7ec87 ("nvme-pci: fix dma unmapping when using PRPs and not using the IOVA mapping")
-Fixes: 7ce3c1dd78fca ("nvme-pci: convert the data mapping to blk_rq_dma_map")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: Geetha sowjanya <gakula@marvell.com>
+Fixes: ae703539f49d2 ("octeontx2-af: Cleanup loopback device checks")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260520043036.1523798-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 5b998db940bd6..a0e9767bc21e6 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -997,6 +997,23 @@ static bool nvme_pci_prp_iter_next(struct request *req, struct device *dma_dev,
- 	return nvme_pci_prp_save_mapping(req, dma_dev, iter);
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 8658cb2143dfc..e28675fe18907 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -837,7 +837,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 	u16 vf_func;
  
-+static void nvme_unmap_iter(struct request *req, struct blk_dma_iter *iter,
-+			    struct dma_iova_state *state)
-+{
-+	struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
-+	struct device *dev = nvmeq->dev->dev;
-+
-+	if (!blk_rq_dma_unmap(req, dev, state, iter->len, iter->p2pdma.map)) {
-+		unsigned int attrs = 0;
-+
-+		if (iter->p2pdma.map == PCI_P2PDMA_MAP_THRU_HOST_BRIDGE)
-+			attrs |= DMA_ATTR_MMIO;
-+
-+		dma_unmap_phys(dev, iter->addr, iter->len, rq_dma_dir(req),
-+			       attrs);
-+	}
-+}
-+
- static blk_status_t nvme_pci_setup_data_prp(struct request *req,
- 		struct blk_dma_iter *iter)
- {
-@@ -1007,8 +1024,10 @@ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
- 	unsigned int prp_len, i;
- 	__le64 *prp_list;
+ 	/* Only CGX PF/VF can add allmulticast entry */
+-	if (is_lbk_vf(rvu, pcifunc) && is_sdp_vf(rvu, pcifunc))
++	if (is_lbk_vf(rvu, pcifunc) || is_sdp_vf(rvu, pcifunc))
+ 		return;
  
--	if (!nvme_pci_prp_save_mapping(req, nvmeq->dev->dev, iter))
-+	if (!nvme_pci_prp_save_mapping(req, nvmeq->dev->dev, iter)) {
-+		nvme_unmap_iter(req, iter, &iod->dma_state);
- 		return iter->status;
-+	}
- 
- 	/*
- 	 * PRP1 always points to the start of the DMA transfers.
-@@ -1113,6 +1132,7 @@ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
- 	dev_err_once(nvmeq->dev->dev,
- 		"Incorrectly formed request for payload:%d nents:%d\n",
- 		blk_rq_payload_bytes(req), blk_rq_nr_phys_segments(req));
-+	nvme_unmap_data(req);
- 	return BLK_STS_IOERR;
- }
- 
-@@ -1156,8 +1176,11 @@ static blk_status_t nvme_pci_setup_data_sgl(struct request *req,
- 
- 	sg_list = dma_pool_alloc(nvme_dma_pool(nvmeq, iod), GFP_ATOMIC,
- 			&sgl_dma);
--	if (!sg_list)
-+	if (!sg_list) {
-+		nvme_unmap_iter(req, iter, &iod->dma_state);
- 		return BLK_STS_RESOURCE;
-+	}
-+
- 	iod->descriptors[iod->nr_descriptors++] = sg_list;
- 
- 	do {
-@@ -1314,8 +1337,10 @@ static blk_status_t nvme_pci_setup_meta_iter(struct request *req)
- 
- 	sg_list = dma_pool_alloc(nvmeq->descriptor_pools.small, GFP_ATOMIC,
- 			&sgl_dma);
--	if (!sg_list)
-+	if (!sg_list) {
-+		nvme_unmap_iter(req, &iter, &iod->meta_dma_state);
- 		return BLK_STS_RESOURCE;
-+	}
- 
- 	iod->meta_descriptor = sg_list;
- 	iod->meta_dma = sgl_dma;
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
 -- 
 2.53.0
 
