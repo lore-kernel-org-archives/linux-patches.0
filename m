@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B7F2DF6E6;
-	Thu, 28 May 2026 20:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69A62580D7;
+	Thu, 28 May 2026 20:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999451; cv=none; b=GV2UX7uPZH3GHEE02Aaz/UeR5AtcyCRo298+7vG+kZm2GByKVMhPXrtbqYi1R+9ALkL+/JfzP4FMHtFb23SQXhtaRW+rgPWLr07Rser6FIkWYxlubiy/1XSm8TRS4a9eJ0NA/4kWseBD2SEJBe8/Egh+o2vsvrwSne8LVT5e2eU=
+	t=1779999453; cv=none; b=LOd1Y6z97De/2yjKr6sGjd5fP4b2DvFOtpBTqn1u11N8PlLDhaI0D7HgP+zaeIC83eYEh5G34wg9FEcfmaVI+qfKZmiS9+WeYuyqJtz2d07EGGfyMQN40epz6D5AqGcyO0Q+SHMG9vbgChAFxxWabNyZBf3g934msZ7+eUdCYOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999451; c=relaxed/simple;
-	bh=GTvXziHn7GWFnrRS9IIKCMZyep2WBaLrtxNyCnd3/ns=;
+	s=arc-20240116; t=1779999453; c=relaxed/simple;
+	bh=gIa7C5Qm0dgoLrltdCkgnk5HwDPkWf4efn58BngbTBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCipc/SmJ3X4SX09yfXCLdTKKoxpoJvqT2H/Rpp4iUHiRQ/oOijOBarB7Pa/iXREBYoS56Jhs9XN0I8eJc5eLpzO5RwtbO5REHpZ1LGmaCgkj7W6/reKVVkS70fvIJ4I6rjuvawumz0R0qe7yFsKGW2cwt4WZZ1VCihJL8AnckM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJfaGy2k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tm0oLb+trI1Yr/+yTGYCoHIEWbWltuREzrGqMrdFVQwImcwoBNyDwc2DuRgyWYGC/ylgSJORfd11+AuxYa7LlZFQVkQyss4FAG54QhgKj38c8VXgA2u9cAkugkgqK3U3+zyTJvQu7hDOvRS3a2/wgMPe4VqkNRpoc0jMzXLy2ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJEHVXHd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJfaGy2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E061F000E9;
-	Thu, 28 May 2026 20:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJEHVXHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C3C1F000E9;
+	Thu, 28 May 2026 20:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999449;
-	bh=QpN0EazruR0hf7+/TtUBGwZBopMmWYb9iAjdMpYIa/w=;
+	s=korg; t=1779999452;
+	bh=YiZ40Dx7Bgg1hMOR4Xj0eAXAX/oYQhRyXIHeoDiBtqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJfaGy2kAvelA4JdP/p4BRPenUv/+U86GwejDp40QFUzNGNOw8yUe7QrOUYXrPaNe
-	 VgCrHHOOUpeN0xGVZh0lZV1jSnwWtLFxxTTLzeu4vlTYQ8xkoXqDLmJrYn2ZoDHFKV
-	 1f5+Mh7GK9LfLDAenuAA8gm3oMl6DlHRdFDBkPFA=
+	b=gJEHVXHd8FH2SrdPndB/PrftHepJKmVVgeSN3pUdqznbtU126DyLXtruiG4EbMNmm
+	 K0kjcx0KnUary234tVxpJQjGS8t5v5wQklBgjU7PhTvJaTD1eYDbDvmHztI4AeuZAk
+	 4TunMqlpHy7XRILUYN6XrawUaWBWsgOOOpd+d0MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Menglong Dong <menglong8.dong@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/377] sched_ext: Avoid UAF in scx_root_enable_workfn() init failure path
-Date: Thu, 28 May 2026 21:45:08 +0200
-Message-ID: <20260528194640.390215261@linuxfoundation.org>
+Subject: [PATCH 6.18 071/377] tracing: fprobe: Remove unused local variable
+Date: Thu, 28 May 2026 21:45:09 +0200
+Message-ID: <20260528194640.421605147@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,41 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 9a415cc53711f2238e0f0ca8a6bcc796c003b127 ]
+[ Upstream commit 90e69d291d195d35215b578d210fd3ce0e5a3f42 ]
 
-In scx_root_enable_workfn(), put_task_struct(p) is called before scx_error()
-dereferences p->comm and p->pid. If the iterator's reference is the last
-drop, the task is freed synchronously and the deref becomes a UAF.
+The 'ret' local variable in fprobe_remove_node_in_module() was used
+for checking the error state in the loop, but commit dfe0d675df82
+("tracing: fprobe: use rhltable for fprobe_ip_table") removed the loop.
+So we don't need it anymore.
 
-Move put_task_struct() past scx_error().
+Link: https://lore.kernel.org/all/175867358989.600222.6175459620045800878.stgit@devnote2/
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260511214031.AF5E9C2BCB0@smtp.kernel.org/
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ kept `scx_init_task()` call site instead of `__scx_init_task()`/`task_rq_lock` ]
+Fixes: e5a4cc28a052 ("tracing: fprobe: use rhltable for fprobe_ip_table")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Menglong Dong <menglong8.dong@gmail.com>
+Stable-dep-of: 0ac0058a74ac ("tracing/fprobe: Check the same type fprobe on table as the unregistered one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/fprobe.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4812,10 +4812,10 @@ static void scx_enable_workfn(struct kth
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -561,8 +561,6 @@ static int fprobe_addr_list_add(struct f
+ static void fprobe_remove_node_in_module(struct module *mod, struct fprobe_hlist_node *node,
+ 					 struct fprobe_addr_list *alist)
+ {
+-	int ret = 0;
+-
+ 	if (!within_module(node->addr, mod))
+ 		return;
+ 	if (delete_fprobe_node(node))
+@@ -571,8 +569,7 @@ static void fprobe_remove_node_in_module
+ 	 * If failed to update alist, just continue to update hlist.
+ 	 * Therefore, at list user handler will not hit anymore.
+ 	 */
+-	if (!ret)
+-		ret = fprobe_addr_list_add(alist, node->addr);
++	fprobe_addr_list_add(alist, node->addr);
+ }
  
- 		ret = scx_init_task(p, task_group(p), false);
- 		if (ret) {
--			put_task_struct(p);
- 			scx_task_iter_stop(&sti);
- 			scx_error(sch, "ops.init_task() failed (%d) for %s[%d]",
- 				  ret, p->comm, p->pid);
-+			put_task_struct(p);
- 			goto err_disable_unlock_all;
- 		}
- 
+ /* Handle module unloading to manage fprobe_ip_table. */
 
 
