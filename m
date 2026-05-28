@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB4E35E1CC;
-	Thu, 28 May 2026 20:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8525535F8AB;
+	Thu, 28 May 2026 20:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001577; cv=none; b=ueES0YKXNuJk35BzwcVNc3DVJO4mxptuol0XYeGYOgxq+uCcMIBrqvZEROpEJLH3r7+swmOvhVZAMx5A2aygTw1dRtksA0pKJTK6FjZtXxuMXZ63El8X+CF6txyA50hlY+KEYzjdqCDp8hWv9Bt5ZDME6dGiB6jlL3vaZm9urDY=
+	t=1780001581; cv=none; b=kL/AQOaQEj5W2GxA7ZOurCYEiPdVxsmpEUZs6ld2nP9rbFFPv9Vn2dLFKmBf/YD9G8Prht+q1MzgxczKaTju+kE5+j0b3wtifY/pbUEZphAiindoMzrDWIfoNnfCJ9Ac7hGlZxqFyoM4vY7+URujUAi1G+2OlWbdvok6Bf1JL18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001577; c=relaxed/simple;
-	bh=eqgpqE+nWB8SLSENvayDgEJ9VWWEnoEKFp3WlF6dpog=;
+	s=arc-20240116; t=1780001581; c=relaxed/simple;
+	bh=2FCTSYuKG67yxpy2IEkzs66aW6i8wlXdGdOAh6JbVLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m60/LYI3a1IksdptyxLLfaxRhQiiSYlA2/8rzygqchVaf3QB9AA8TPtxtfjyOggcYfIsIL7QJGV/KEvKxWQF2JjP61bH0RyP+7ixByk7LKut1DfIN1tGXar1SFlVUlVZ9er9DocNI8czk4/mEP1EEyOjXDHgmvu/moeyLjsp0sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TukwXtOT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C6HMIrQgTu148r1NOtfkXtOmMmKcqgA7rhsAe9hmn+DOGdutrtH0Nf2Ma+v6ZW1WB2BLIHB8fBM/W0eW7S6YbzSIlRlZiqus5Vsj5Ip7JlXILsMxVlt2SWvzXIfh3QwWpzNpWxbLbEH+YfVZXQYC0j2nMFB0QkuFHslt9TZtBFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OolRCEvn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TukwXtOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167641F000E9;
-	Thu, 28 May 2026 20:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OolRCEvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01021F000E9;
+	Thu, 28 May 2026 20:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001576;
-	bh=EKbPZhgujRUkTiRmEXyoyiGVz2iaxvkRwBUTvVqmKOM=;
+	s=korg; t=1780001579;
+	bh=YiqxKztPeZpPcHtKdTLiQwFan3ksAxDL9zIwrxXxoxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TukwXtOTjeT0Z13D2IhQZJV4iQMRHmjnygaIH4GY9GM+YlZiCESA5DxCcqFAhcDkP
-	 nFjEakj9nIwPTDaR2tEbL+iXsIjZ1Ra/HedUtMW0KVLqKYfDe5YPvqT//3MJ4i08y3
-	 SbqtWGfSg3E7cd8je/wL6TvaPvq7udSH7LvGpdhk=
+	b=OolRCEvnV4+/axI9WXOZeRsH4ypEFB5rfOzbKKhyElz7TarTca2aBBzo15mwFFgoR
+	 sb/237lhNIpvn2ANYgZvojTV7HdlKlTA3LIUlWfDJOGELt5UzJq/fnJC1GeWzuPAvy
+	 CG+owQKzz7ZxQKW+F2bd4wffecaqSHfNH5oTyACY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Xingwang Xiang <v3rdant.xiang@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/186] net: ag71xx: check error for platform_get_irq
-Date: Thu, 28 May 2026 21:50:56 +0200
-Message-ID: <20260528194933.738875839@linuxfoundation.org>
+Subject: [PATCH 6.6 177/186] bpf, skmsg: fix verdict sk_data_ready racing with ktls rx
+Date: Thu, 28 May 2026 21:50:57 +0200
+Message-ID: <20260528194933.766739439@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,36 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Xingwang Xiang <v3rdant.xiang@gmail.com>
 
-[ Upstream commit e7c70bf97e90d974cd575e4c90f8f9b07d056da3 ]
+[ Upstream commit ddf8029623a1af20e984c040e89ff918158397ab ]
 
-Complete error handling for a failed platform_get_irq() call
+sk_psock_strp_data_ready() already checks tls_sw_has_ctx_rx() and
+defers to psock->saved_data_ready when a TLS RX context is present,
+avoiding a conflict with the TLS strparser's ownership of the receive
+queue (commit e91de6afa81c, "bpf: Fix running sk_skb program types
+with ktls").
 
-Fixes: d51b6ce441d3 ("net: ethernet: add ag71xx driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260516212616.11758-1-rosenp@gmail.com
+sk_psock_verdict_data_ready() has no equivalent guard.  When a socket
+is inserted into a sockmap (BPF_SK_SKB_VERDICT) before TLS RX is
+configured, tls_sw_strparser_arm() saves sk_psock_verdict_data_ready
+as rx_ctx->saved_data_ready.  On data arrival:
+
+  tls_data_ready -> tls_strp_data_ready -> tls_rx_msg_ready
+    -> saved_data_ready() = sk_psock_verdict_data_ready()
+      -> tcp_read_skb() drains sk_receive_queue via __skb_unlink()
+         without calling tcp_eat_skb(), so copied_seq is not advanced.
+
+tls_strp_msg_load() then finds tcp_inq() >= full_len (stale), calls
+tcp_recv_skb() on the now-empty queue, hits WARN_ON_ONCE(!first), and
+returns with rx_ctx->strp.anchor.frag_list pointing at a psock-owned
+(potentially freed) skb.  tls_decrypt_sg() subsequently walks that
+frag_list: use-after-free.
+
+Apply the same fix as sk_psock_strp_data_ready(): if a TLS RX context
+is present, call psock->saved_data_ready (sock_def_readable) to wake
+recv() waiters and return immediately, leaving the receive queue
+untouched.  TLS retains sole ownership of the queue and decrypts the
+record normally through tls_sw_recvmsg().
+
+Fixes: ef5659280eb1 ("bpf, sockmap: Allow skipping sk_skb parser program")
+Signed-off-by: Xingwang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260517145630.20521-2-v3rdant.xiang@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/ag71xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/skmsg.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/ag71xx.c b/drivers/net/ethernet/atheros/ag71xx.c
-index baf12ae0b8c4c..576e75b5168e8 100644
---- a/drivers/net/ethernet/atheros/ag71xx.c
-+++ b/drivers/net/ethernet/atheros/ag71xx.c
-@@ -1880,6 +1880,9 @@ static int ag71xx_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 14208d32eeaf3..403ad91c5c74c 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1267,12 +1267,19 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+ 	const struct proto_ops *ops = NULL;
++	struct sk_psock *psock;
+ 	struct socket *sock;
+ 	int copied;
  
- 	ndev->irq = platform_get_irq(pdev, 0);
-+	if (ndev->irq < 0)
-+		return ndev->irq;
-+
- 	err = devm_request_irq(&pdev->dev, ndev->irq, ag71xx_interrupt,
- 			       0x0, dev_name(&pdev->dev), ndev);
- 	if (err) {
+ 	trace_sk_data_ready(sk);
+ 
+ 	rcu_read_lock();
++	psock = sk_psock(sk);
++	if (psock && tls_sw_has_ctx_rx(sk)) {
++		psock->saved_data_ready(sk);
++		rcu_read_unlock();
++		return;
++	}
+ 	sock = READ_ONCE(sk->sk_socket);
+ 	if (likely(sock))
+ 		ops = READ_ONCE(sock->ops);
+@@ -1282,8 +1289,6 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
+ 
+ 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
+ 	if (copied >= 0) {
+-		struct sk_psock *psock;
+-
+ 		rcu_read_lock();
+ 		psock = sk_psock(sk);
+ 		if (psock)
 -- 
 2.53.0
 
