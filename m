@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614991DE4E0;
-	Thu, 28 May 2026 20:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7CB2139C9;
+	Thu, 28 May 2026 20:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000843; cv=none; b=XH6P9qzQOdrnNaQm3Iak9lAx6Po1wRkVT3fIaW9TpRDoEqhydPurIy3uA/lsMFYmd8cbjLtH8gtHokFL0sSFLPBMJ+MZfCNikdHAxzi0txDBdoEW7eWynrN+p/hvS4MrPrEjXqEZE99NkztPjDakW5qVa49f60EFMVybFLy6DUo=
+	t=1780000846; cv=none; b=rau2Tku9MyZkKRUPn6o6T4O1w5H6e2oDA3+712gXJ6JWmBhIYx/QAkg7ZjHDke3J4gUoOyODCq/WdOnMqB+Gh6hgAJDS5BEH0uBBnzPUYfwBx5nX1Nr56ph/PGj0Yu5bNv/jGAA8KyqcPQERKhl1Jt9En9UM0xBaAhU2pfZ18pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000843; c=relaxed/simple;
-	bh=Op846GiqiE6h2wX26EbZDp4eWUtWuydbmJsxQSCJ6t4=;
+	s=arc-20240116; t=1780000846; c=relaxed/simple;
+	bh=dMFi9yfCkeQPTcNDMLVHS8oo/Tq5y/AXBdV8Z7IcA68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXaNtOBWpw2dJXlqonzGx0cA2Jq+Mr/3o0Bu0qn0iCukw8Q+SuHguB02CzR8M+wo+vnxHPov3Dit2nf5gT3KJVXRLqhsXXpPxuyr9eT3RDRFcK2tErqKk7utfOCrpqYUB2mZPrRPXqho++pUGrDHj6grCfJsVNVroUNPhoolMFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NG979PZQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTaMqnrkcqd1PQ+3EEXUslBJ4aO32Ykjzx9oajSi2cgVuKbcZj3sDdkCLjtB/ogbTwVefBuj9rv48alZwSSMZCFIbbxMSnX/zUAcDruabl95SXcewIWdlGf8wyWldW/3anjW09ewQdn/OWAhKcGSMdekJ/gh6XKkl285xreqxoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPZhVcJ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NG979PZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBFB1F000E9;
-	Thu, 28 May 2026 20:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPZhVcJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920131F000E9;
+	Thu, 28 May 2026 20:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000842;
-	bh=5nnBAIfmIo8de7OS+y1H7Fuu8GNhGkba4Erm4Mp5L2M=;
+	s=korg; t=1780000845;
+	bh=hB+HF7biLeQXMxgUsr79vuiKZ1z57fexK3IdZNhhEB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NG979PZQE69kGidfnVkNJ1rjXs67+nDVnq6UdIf3P67Cy1BbKdyd8a6hDWl3KiZI2
-	 r+YHPb6DhLH/Rfxk6daq7F53iuOqrtJYt9CQUSqXDgIhodCXIH10Yv2Eh8zn1nGq6v
-	 hDXVj2ILQPV7+Y1G4KoPz9VSNFkBWyWJpYtkEY/M=
+	b=HPZhVcJ0fJU8LUYR06T9y5NGCU4AS/YNAVDXOJ9wCrcrLIUmlgZWnOuRLT1lrOoPp
+	 eOh7T8pakCZpWkrmN0G6roltgrHiqoudHzb9B0k9w6bahhBHh7ddAtC1Dz0usV0/J8
+	 YYKdLwb+RiE5M3+lx6kOAbuEIBPubJOSddH9Rs84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Julian Braha <julianbraha@gmail.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Harsh Prateek Bora <harshpb@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/272] tcp: Fix out-of-bounds access for twsk in tcp_ao_established_key().
-Date: Thu, 28 May 2026 21:49:22 +0200
-Message-ID: <20260528194634.540350518@linuxfoundation.org>
+Subject: [PATCH 6.12 189/272] powerpc: fix dead default for GUEST_STATE_BUFFER_TEST
+Date: Thu, 28 May 2026 21:49:23 +0200
+Message-ID: <20260528194634.565584244@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,50 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 03cb001ef87b3f8d859cf7f96329acf3d6235d29 ]
+[ Upstream commit aef656a0e6c01796190bb5bd2bdba1c644ed7811 ]
 
-lockdep_sock_is_held() was added in tcp_ao_established_key()
-by the cited commit.
+The GUEST_STATE_BUFFER_TEST config option should default
+to KUNIT_ALL_TESTS so that if all tests are enabled then
+it is included, but currently the 'default KUNIT_ALL_TESTS'
+statement is shadowed by 'def_tristate n',
+meaning that this second default statement is currently dead code.
 
-It can be called from tcp_v[46]_timewait_ack() with twsk.
+It looks to me like the commit
+6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
+intended to set the default to KUNIT_ALL_TESTS, but mistakenly
+missed the def_tristate.
 
-Since it does not have sk->sk_lock, the lockdep annotation
-results in out-of-bound access.
+This dead code was found by kconfirm, a static analysis tool for Kconfig.
 
-  $ pahole -C tcp_timewait_sock vmlinux | grep size
-  	/* size: 288, cachelines: 5, members: 8 */
-  $ pahole -C sock vmlinux | grep sk_lock
-  	socket_lock_t              sk_lock;              /*   440   192 */
-
-Let's not use lockdep_sock_is_held() for TCP_TIME_WAIT.
-
-Fixes: 6b2d11e2d8fc ("net/tcp: Add missing lockdep annotations for TCP-AO hlist traversals")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260508120853.4098365-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260405161545.161006-1-julianbraha@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ao.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/Kconfig.debug | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_ao.c b/net/ipv4/tcp_ao.c
-index 72957523c2eca..be38712265c37 100644
---- a/net/ipv4/tcp_ao.c
-+++ b/net/ipv4/tcp_ao.c
-@@ -116,7 +116,8 @@ struct tcp_ao_key *tcp_ao_established_key(const struct sock *sk,
- {
- 	struct tcp_ao_key *key;
+diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
+index 0bbec4afc0d59..1e2b51280e602 100644
+--- a/arch/powerpc/Kconfig.debug
++++ b/arch/powerpc/Kconfig.debug
+@@ -83,11 +83,10 @@ config MSI_BITMAP_SELFTEST
+ 	depends on DEBUG_KERNEL
  
--	hlist_for_each_entry_rcu(key, &ao->head, node, lockdep_sock_is_held(sk)) {
-+	hlist_for_each_entry_rcu(key, &ao->head, node,
-+				 sk_fullsock(sk) && lockdep_sock_is_held(sk)) {
- 		if ((sndid >= 0 && key->sndid != sndid) ||
- 		    (rcvid >= 0 && key->rcvid != rcvid))
- 			continue;
+ config GUEST_STATE_BUFFER_TEST
+-	def_tristate n
++	def_tristate KUNIT_ALL_TESTS
+ 	prompt "Enable Guest State Buffer unit tests"
+ 	depends on KUNIT
+ 	depends on KVM_BOOK3S_HV_POSSIBLE
+-	default KUNIT_ALL_TESTS
+ 	help
+ 	  The Guest State Buffer is a data format specified in the PAPR.
+ 	  It is by hcalls to communicate the state of L2 guests between
 -- 
 2.53.0
 
