@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0584C35DA65;
-	Thu, 28 May 2026 20:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4121330D35;
+	Thu, 28 May 2026 20:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000592; cv=none; b=tuJurmnD7CJEHksMLeQO0Zxl+NtEaSRCulH0TLruUn+922gzdIqovFG4OBjd+56KH4dlB3hv8CDP7ENBz19DtpPwYcTk6zu6gIcLrA0oPuY+fzKjWSGgNR2qsF/yDj0RBF4gP8och62KvBhCoj24C1YjzEawrdsjIO4srws2O7Q=
+	t=1780000594; cv=none; b=gKMgCPukdNn5KMYrt6zMJ2UgAm7bfVIeJzUzzQcnvm/JvUPz8CibjZghQDA2Mc+ygERgS/XgdDucFq0MUE3hUccUsMGhvwCU+rQVSiP2czuQFNWv8Hzdo3XJw09zv5rSDPZuAbdsepVNY4WhU4XrDtkWJ9Ci1Tz+KDW/8KGgQT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000592; c=relaxed/simple;
-	bh=e1ylb7LGsB8mAanEubvfzi8U1F6XcHO/3tQrPlLfaM4=;
+	s=arc-20240116; t=1780000594; c=relaxed/simple;
+	bh=SdlhmTu7PwBsrDcZeoT7VM00TQG0+0zZXWvnZVUSCBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cp57qrJldQyIyhQGOw6NCREMlZrnEbox7JF1aLgA3NHAMkTIpVG5a7sqwuogNCJl/bEaWQRPKO27O3PLqaEwSieBINHcyA0XROCKUXncDOmOb8x1yEv5eLUI8Wad+L5EQxyddnF6qz1b7CDnXAxgrDb5W6AOb/YvC5JQ3Gh8w9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gx4+l3ey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tP59+G3fW4aU27O4gWqRBcevXN5w5g71bUsiJxRW+RvSvJOdQ82dnUtnrN4NlxSckLyKb5MkDsF9rO6zXgpzI6jblBuH+N13rJu7EaRSalutnzeJMKWN3gRnfrEuu5QZIldF3yT1RBfM4eeOcJ2pgnAx0mgqjdOl1oZHufDR344=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUO/emTo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gx4+l3ey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638921F000E9;
-	Thu, 28 May 2026 20:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUO/emTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDEE1F00A3A;
+	Thu, 28 May 2026 20:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000590;
-	bh=xMYCQib99tmPsFfrBMXr73aYiNb3TyA5MZgt2phTriI=;
+	s=korg; t=1780000593;
+	bh=N48ItBK6ma3yKhY6X4w4OEWPgGbL61ajmsnDKZl/SRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gx4+l3eyR9WA4id7frKASLbZLqL8PxgNzEzUewlhxt5fXJMOjFj7+qWrHmSTfSvWC
-	 FPOR2VovxBdCcw3GfUxbrxkNRf/cbp+dsffcqnTY5XebSrK2iGIQFMIo/E4UaVNrHX
-	 nLXPz95cPiHCJlt8mK2jbqBAw9CtIlSy/oIPYaR4=
+	b=pUO/emTo/zJPuycAXyoDgBsXsn2b5aD+jSSEx9dcYAbn1FF5RTN82b2QUBEFu5HQv
+	 m+DfNbkksuYVw/r1ncBwSPDZAscg1m3QoPSQNH8soNz4CTUWZldhz46zi5+AkIjoxa
+	 X+7uxDttmYw91Gtbr3lZUMP22g0Tat6zQp4Qmvks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 100/272] arm64: probes: Handle probes on hinted conditional branch instructions
-Date: Thu, 28 May 2026 21:47:54 +0200
-Message-ID: <20260528194632.181882237@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 101/272] KVM: arm64: vgic-its: Reject restored DTE with out-of-range num_eventid_bits
+Date: Thu, 28 May 2026 21:47:55 +0200
+Message-ID: <20260528194632.208970528@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Murzin <vladimir.murzin@arm.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 2ccd8ff980b50e842481bae71102fa3883fc4377 upstream.
+commit 9ce754ed8e7ab4e3999767ce1505f85c449ccb07 upstream.
 
-BC.cond instructions introduced by FEAT_HBC cannot be executed
-out-of-line, like other branch instructions. However, they can be
-simulated in the same way as B.cond instructions.
+Userspace can restore an ITS Device Table Entry whose Size field encodes
+more EventID bits than the virtual ITS supports.  The live MAPD path
+rejects that state, but vgic_its_restore_dte() accepts it and stores the
+out-of-range value in dev->num_eventid_bits.
 
-Extend the B.cond decoder mask to match BC.cond instructions as well,
-and handle them using the existing B.cond simulation path.
+Reject restored DTEs with num_eventid_bits > VITS_TYPER_IDBITS before
+allocating the device.  This mirrors the MAPD check and prevents the
+restored state from reaching vgic_its_restore_itt(), where the unchecked
+value can be converted into an oversized scan_its_table() range.
 
-Fixes: 7f86d128e437 ("arm64: add HWCAP for FEAT_HBC (hinted conditional branches)")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/r/20260519132519.2142458-1-michael.bommarito@gmail.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/insn.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/include/asm/insn.h
-+++ b/arch/arm64/include/asm/insn.h
-@@ -405,7 +405,7 @@ __AARCH64_INSN_FUNCS(cbz,	0x7F000000, 0x
- __AARCH64_INSN_FUNCS(cbnz,	0x7F000000, 0x35000000)
- __AARCH64_INSN_FUNCS(tbz,	0x7F000000, 0x36000000)
- __AARCH64_INSN_FUNCS(tbnz,	0x7F000000, 0x37000000)
--__AARCH64_INSN_FUNCS(bcond,	0xFF000010, 0x54000000)
-+__AARCH64_INSN_FUNCS(bcond,	0xFF000000, 0x54000000)
- __AARCH64_INSN_FUNCS(svc,	0xFFE0001F, 0xD4000001)
- __AARCH64_INSN_FUNCS(hvc,	0xFFE0001F, 0xD4000002)
- __AARCH64_INSN_FUNCS(smc,	0xFFE0001F, 0xD4000003)
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -2295,6 +2295,10 @@ static int vgic_its_restore_dte(struct v
+ 	/* dte entry is valid */
+ 	offset = (entry & KVM_ITS_DTE_NEXT_MASK) >> KVM_ITS_DTE_NEXT_SHIFT;
+ 
++	/* Mimic the MAPD behaviour and reject invalid EID bits. */
++	if (num_eventid_bits > VITS_TYPER_IDBITS)
++		return -EINVAL;
++
+ 	if (!vgic_its_check_id(its, baser, id, NULL))
+ 		return -EINVAL;
+ 
 
 
