@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5637C309F1D;
-	Thu, 28 May 2026 20:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F031A9B46;
+	Thu, 28 May 2026 20:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001555; cv=none; b=fqNwhnPWLJlzrfsFI/UDgBPwyQZc2bGd81NiOzlpEcWsvdsVaQ17BeNvGjhMrCHHVTiQc2KU0oXah9va/UbFwrn1JoZ2dpdUG3oaPjfO7hnYN/UQlC5ytjECkNGcMaqcJ1Vhw0dMrxk6yzOUaZUI4sY3EkL1TReEebVWV4f+EwM=
+	t=1780001558; cv=none; b=ugmzzVCCkdm3YFPyo3TRMbzsFY3sl0JuABdNO3EC1IMeovfbuM+TQ19VDLRH+R0QhBVdxl+mjDlvQw5ey6lDVey81hG6x5/8tBkLLVd95wRNVjbQirDudqQRrFtLlLemkAq919bKbhFUWmoop82DRNPWGqmhT4q9O9z0aTY81ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001555; c=relaxed/simple;
-	bh=XV8vLXJAx8RCj+t72yAtPt1QNeWCPd95LSKa0ovaa0k=;
+	s=arc-20240116; t=1780001558; c=relaxed/simple;
+	bh=J3xvSYRBnWNxM4AG5Ho81dNPa0N6ra72l+BYX/S9pM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQoTe9A4xLb6gR7XhLPx3+gXQHJHTinQzM+01irSuqprhPwWSGGo4zgN+SqNcnuAjXyh/l34rwAHh6niBMjowGhUx3v6oKmHKfPF6A/YbvTKUZZ3cpFbpVncpOS9Y3+kG9guA7oHP4oQ3j4n5tI9goN2xvTr+KPJP5kUQLMFZ0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLrrZ9Y9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fh1vCoO+o+MgJ/C22p3D+2BDBSdY53n8e0dBla4RHqMtIk8mC/Cqs6KTx8bPNeIMYRUcTINeUlm7bBZmDBZbldKxCBLx+8V514HrKJb8bKC9PpAn3d/dtTBj9Ru2UD9VByUExTE56q7ODIUP3bDuNEnmIfPYWbfYCFqSVvGTndo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDLO+g6v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLrrZ9Y9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F731F000E9;
-	Thu, 28 May 2026 20:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDLO+g6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C011F000E9;
+	Thu, 28 May 2026 20:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001554;
-	bh=OOB7R8gMMPh7AHMkeC1M8pJfMKN1TeOawAdJZ2Sf7Wc=;
+	s=korg; t=1780001557;
+	bh=iv5PFxoYEjljJfCcsx/Xv7rE8HsVpASZFCSL0eeo3+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLrrZ9Y9NFBRUOU4pwDwWz44ZKF6+JK5EnUfFYhpY8W2MPjlMMtzOMMfhJFrOQx3+
-	 95vbUb46oL5mhj4HeJcWPPnDpJgbgN7jT9oQW8PNxE5ZsCC6eKeCnw/IiAZALNJjSL
-	 rzeJ4EuTNaumfQmCNO1GJQD2OG/0cLN39ulG6mTE=
+	b=KDLO+g6vHs7XLsEH3XaMVoff+BZKMUlKMIUauZsvx8Ix7rCyJEWYtMLR7Qj77B2s5
+	 9Y0QtmSpAuoXR0MldoKmVtr2ctuWEuniNAmgUTAI13fj/mnaE6achqJ6HeiLUtDYDN
+	 5WmbJsJCl3a8IYf3Lobh4uXKGIHc//z5RYYmsug8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Zhang Cen <rollkingzzc@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/186] ALSA: seq: Serialize UMP output teardown with event_input
-Date: Thu, 28 May 2026 21:50:49 +0200
-Message-ID: <20260528194933.527823436@linuxfoundation.org>
+Subject: [PATCH 6.6 170/186] tracing: Avoid NULL return from hist_field_name() on truncation
+Date: Thu, 28 May 2026 21:50:50 +0200
+Message-ID: <20260528194933.557720884@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,172 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 60a1969fae6209644698fca91c185d153674f631 ]
+[ Upstream commit 576ec047d20b368b43c4d5db98c4f2e0f3c101ec ]
 
-seq_ump_process_event() borrows client->out_rfile.output without
-synchronizing with the first-open and last-close transition in
-seq_ump_client_open() and seq_ump_client_close().
+hist_field_name() returns "" everywhere except the fully-qualified
+VAR_REF/EXPR case, where snprintf() truncation returns NULL early
+and bypasses the bottom NULL->"" guard. Callers don't expect NULL:
+strcat(expr, hist_field_name(field, 0)) at trace_events_hist.c:1758
+and the strcmp() in the sort-key match loop at :4804 both deref it.
 
-The last output unuse can therefore drop opened[STR_OUT] to zero and
-release the rawmidi file while an in-flight event_input callback is still
-inside snd_rawmidi_kernel_write(). That leaves the rawmidi substream
-runtime exposed to teardown before the write path has taken its own
-buffer reference.
+system and event_name are bounded by MAX_EVENT_NAME_LEN, but the
+field name on a VAR_REF is kstrdup'd from a histogram variable
+name parsed out of the trigger string and has no length cap, so
+a long enough var name in a fully qualified reference can reach
+the truncation path.
 
-Add a per-client rwlock for the event_input-visible output file. Publish
-a newly opened output file under the write side, and hold the read side
-from the output lookup through snd_rawmidi_kernel_write(). The last
-output close copies and clears the visible output file under the write
-side, then drops the lock and releases the saved rawmidi file. Use
-IRQ-safe rwlock guards because event_input can also be reached from
-atomic sequencer delivery.
+Keep the length check but leave field_name as "" on overflow.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
-
-path A label: event_input path         path B label: last unuse path
-1. seq_ump_process_event() reads       1. seq_ump_client_close()
-   client->out_rfile.output.              drops opened[STR_OUT] to zero.
-2. snd_rawmidi_kernel_write1()         2. snd_rawmidi_kernel_release()
-   has not yet pinned runtime.            closes the output file.
-3. The writer continues using          3. close_substream() frees
-   the borrowed substream.                substream->runtime.
-
-This keeps the output substream and runtime alive for the full
-event_input write while keeping rawmidi release outside the rwlock.
-
-KASAN reproduced this as a slab-use-after-free in
-snd_rawmidi_kernel_write1(), with allocation through
-seq_ump_use()/snd_seq_port_connect() and free through
-seq_ump_unuse()/snd_seq_port_disconnect().
-
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in snd_rawmidi_kernel_write1+0x9d/0x400
-RIP: 0033:0x7f5528af837f
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x73/0xb0 (?:?)
-  print_report+0xd1/0x650 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x1a7/0x340 (?:?)
-  kasan_complete_mode_report_info+0x64/0x200 (?:?)
-  kasan_report+0xf7/0x130 (?:?)
-  snd_rawmidi_kernel_write1+0x9d/0x400 (?:?)
-  __asan_load8+0x82/0xb0 (?:?)
-  update_stack_state+0x1ef/0x2d0 (?:?)
-  snd_rawmidi_kernel_write+0x1a/0x20 (?:?)
-  seq_ump_process_event+0xd4/0x120 (sound/core/seq/seq_ump_client.c:82)
-  __snd_seq_deliver_single_event+0x8a/0xe0 (?:?)
-  snd_seq_deliver_from_ump+0x2b2/0xd60 (?:?)
-  lock_acquire+0x14e/0x2e0 (?:?)
-  find_held_lock+0x31/0x90 (?:?)
-  snd_seq_port_use_ptr+0xa6/0xe0 (?:?)
-  __kasan_check_write+0x18/0x20 (?:?)
-  do_raw_read_unlock+0x32/0xa0 (?:?)
-  _raw_read_unlock+0x26/0x50 (?:?)
-  snd_seq_deliver_single_event+0x45c/0x4b0 (?:?)
-  snd_seq_deliver_event+0x10d/0x1b0 (?:?)
-  snd_seq_client_enqueue_event+0x192/0x240 (?:?)
-  snd_seq_write+0x2cd/0x450 (?:?)
-  apparmor_file_permission+0x20/0x30 (?:?)
-  security_file_permission+0x51/0x60 (?:?)
-  vfs_write+0x1ce/0x850 (?:?)
-  __fget_files+0x12b/0x220 (?:?)
-  lock_release+0xc8/0x2a0 (?:?)
-  __rcu_read_unlock+0x74/0x2d0 (?:?)
-  __fget_files+0x135/0x220 (?:?)
-  ksys_write+0x15a/0x180 (?:?)
-  rcu_is_watching+0x24/0x60 (?:?)
-  __x64_sys_write+0x46/0x60 (?:?)
-  x64_sys_call+0x7d/0x20d0 (?:?)
-  do_syscall_64+0xc1/0x360 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-
-Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Link: https://patch.msgid.link/20260520103249.3048345-1-rollkingzzc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260508195747.25492-1-devnexen@gmail.com
+Fixes: 5ec1d1e97de1 ("tracing: Rebuild full_name on each hist_field_name() call")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_client.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ kernel/trace/trace_events_hist.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index 389516f09f099..914837929686f 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -37,6 +37,7 @@ struct seq_ump_client {
- 	struct snd_ump_endpoint *ump;	/* assigned endpoint */
- 	int seq_client;			/* sequencer client id */
- 	int opened[2];			/* current opens for each direction */
-+	rwlock_t output_lock;		/* protects out_rfile output access */
- 	struct snd_rawmidi_file out_rfile; /* rawmidi for output */
- 	struct seq_ump_input_buffer input; /* input parser context */
- 	void *ump_info[SNDRV_UMP_MAX_BLOCKS + 1]; /* shadow of seq client ump_info */
-@@ -88,6 +89,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- 	unsigned char type;
- 	int len;
- 
-+	guard(read_lock_irqsave)(&client->output_lock);
- 	substream = client->out_rfile.output;
- 	if (!substream)
- 		return -ENODEV;
-@@ -106,6 +108,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 	int err;
- 
- 	guard(mutex)(&ump->open_mutex);
-@@ -113,9 +116,11 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- 		err = snd_rawmidi_kernel_open(&ump->core, 0,
- 					      SNDRV_RAWMIDI_LFLG_OUTPUT |
- 					      SNDRV_RAWMIDI_LFLG_APPEND,
--					      &client->out_rfile);
-+					      &rfile);
- 		if (err < 0)
- 			return err;
-+		scoped_guard(write_lock_irqsave, &client->output_lock)
-+			client->out_rfile = rfile;
- 	}
- 	client->opened[dir]++;
- 	return 0;
-@@ -125,11 +130,19 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- static int seq_ump_client_close(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 
- 	guard(mutex)(&ump->open_mutex);
--	if (!--client->opened[dir])
--		if (dir == STR_OUT)
--			snd_rawmidi_kernel_release(&client->out_rfile);
-+	if (!--client->opened[dir]) {
-+		if (dir == STR_OUT) {
-+			scoped_guard(write_lock_irqsave, &client->output_lock) {
-+				rfile = client->out_rfile;
-+				client->out_rfile = (struct snd_rawmidi_file){};
-+			}
-+			if (rfile.rmidi)
-+				snd_rawmidi_kernel_release(&rfile);
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -430,6 +443,7 @@ static int snd_seq_ump_probe(struct device *_dev)
- 
- 	INIT_WORK(&client->group_notify_work, handle_group_notify);
- 	client->ump = ump;
-+	rwlock_init(&client->output_lock);
- 
- 	client->seq_client =
- 		snd_seq_create_kernel_client(card, ump->core.device,
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 597f47397c726..59115079c7982 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1354,10 +1354,8 @@ static const char *hist_field_name(struct hist_field *field,
+ 			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
+ 				       field->system, field->event_name,
+ 				       field->name);
+-			if (len >= sizeof(full_name))
+-				return NULL;
+-
+-			field_name = full_name;
++			if (len < sizeof(full_name))
++				field_name = full_name;
+ 		} else
+ 			field_name = field->name;
+ 	} else if (field->flags & HIST_FIELD_FL_TIMESTAMP)
 -- 
 2.53.0
 
