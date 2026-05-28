@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8029233120C;
-	Thu, 28 May 2026 19:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA5D330B2D;
+	Thu, 28 May 2026 19:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998206; cv=none; b=LKnh4rdHcef4kx5xwEQuM51KfeASjLTbxgxqo8eYr0X9SlV0ShWnBOHnpr4SzGerW2harz2j6rxJ3zSyC7jvN2UHhHIA075cTBXa8d+NEcoe3frRw4FHQ64BVjCOWzJ6gYfkYHPVKC+JqDWQUFqp0zS4PgR2D/fvJwpV5cmcjgM=
+	t=1779998209; cv=none; b=S1EeP8yIeZA5fm4HaGy9Md4AXEFHZN+9u4U6KXSAoq3ykzyeSLD/fWVl8g03rp/n9MrJgPSOYg6enrM1dgzFtUcwSTnxzEu0lJPuXYEP4LKNOGuGBxtD2B789LIudU2ofr59wko5j6O5zpmx/LlJo1jbOfEJYnLLTUzo6w2EJVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998206; c=relaxed/simple;
-	bh=4f7qVbNgjLIJ+rFnCVknHwKxk4CPmqSd6TWFNi2LwnU=;
+	s=arc-20240116; t=1779998209; c=relaxed/simple;
+	bh=Q/S4QSGQkboIaYgP/Nw5r+9KdyL8hiqGP+fbwlgJ+7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rei5mtOHMW8WBzgzdcXooDNF8NIMQKQbUZPnfDR3zuzGNNmu3LV4veCXnIN7VtKLFB/qrHsIjim1sfgzHNv9A5prXcdUSO3Mbd+R6EQ/ns555Ls7KviWZUfjx9NvdPUUeBtsMv9guAuAjY1FUlwzOkPArnMDQiRXv98kNO1Vq7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXtTzQ0u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HmXCcsA4ka/XnrHS+qmqxkgtmjyRvYfiF47VaBTtTKLYPhrlRT1bvgTnQdywarnqJgJ8h419MF3S3fbkQGmlL90k8cyjFMFQj6nNEzYnS9QNxFMg3XRYiL4Cr4aZO3w3Ko+93HeUqGryd+dH9suK9+EK4IZZ8ba4bjbDGZB9SbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLaY7j4g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXtTzQ0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE94D1F000E9;
-	Thu, 28 May 2026 19:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLaY7j4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD961F000E9;
+	Thu, 28 May 2026 19:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998205;
-	bh=VUDqmI0KI7mfhZuvAAfPkdM+uAFKQlNRAwvMp6/s7NY=;
+	s=korg; t=1779998208;
+	bh=n6e2uB2pRHHKqCMuEZ01I+ZSnLB4zIrXUuUgX56DFS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VXtTzQ0uUhLrtZAEbQKU8Ml0XswrcGKSQfHgMG8M3+x14M22aZ5z+GHcSQFJUJ2HZ
-	 dre4XydJ5Wgjeg4Cy+FuOwqvMeOimhQkNs37kkg8TpaZEC1d+9yOAXclQiD+Jy0ARS
-	 uc7K8Hr7Zt4nfOGdgAbfXMExHyzJ5AY5mMH7lj5A=
+	b=CLaY7j4giC1Yd0Wh8yoqopa/jzvwH1cVX1f7otfBPrZWLyi5+amJG9Ty1zKpIekBf
+	 Atc5ssyrnOM6Jsp6j4ywFgtWOtz0YOcFOUtEpJk1MlFvZ4XwmExTR9vR7SYeiMCvNb
+	 5GCO3w2bYRDNSUJMmB+leInKqMihndUuU7u7fRAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Walker <johnwalker0@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.0 092/461] wifi: cfg80211: advance loop vars in cfg80211_merge_profile()
-Date: Thu, 28 May 2026 21:43:41 +0200
-Message-ID: <20260528194649.596612035@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 093/461] af_unix: Fix UAF read of tail->len in unix_stream_data_wait()
+Date: Thu, 28 May 2026 21:43:42 +0200
+Message-ID: <20260528194649.629424309@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,52 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Walker <johnwalker0@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit 7666dbb1bacc4ba522b96740cba7283d243d16e1 upstream.
+commit be309f8eae8b474a4a617eaae01324da996fc719 upstream.
 
-cfg80211_merge_profile() reassembles a Multi-BSSID non-transmitted BSS
-profile that has been split across multiple consecutive MBSSID elements.
-Its while-loop calls
+unix_stream_data_wait() does skb_peek_tail(&sk->sk_receive_queue) without
+holding any lock that prevents SKBs on that queue from being dequeued and
+freed.
+This has been the case since commit 79f632c71bea ("unix/stream: fix
+peeking with an offset larger than data in queue").
+The first consequence of this is that the pointer comparison
+`tail != last` can be false even if `last` semantically refers to an
+already-freed SKB while `tail` is a new SKB allocated at the same address;
+which can cause unix_stream_data_wait() to wrongly keep blocking after new
+data has arrived, but only in a weird scenario where a peeking recv() and
+a normal recv() on the same socket are racing, which is probably not a
+real problem.
 
-	cfg80211_get_profile_continuation(ie, ielen, mbssid_elem, sub_elem)
+But since commit 2b514574f7e8 ("net: af_unix: implement splice for stream
+af_unix sockets"), `tail` is actually dereferenced, which can cause UAF in
+the following race scenario (where test_setup() runs single-threaded,
+and afterwards, test_thread1() and test_thread2() run concurrently in
+two threads:
+```
+static int socks[2];
+void test_setup(void) {
+  socketpair(AF_UNIX, SOCK_STREAM, 0, socks);
+  send(socks[1], "A", 1, 0);
+  int peekoff = 1;
+  setsockopt(socks[0], SOL_SOCKET, SO_PEEK_OFF, &peekoff, sizeof(peekoff));
+}
+void test_thread1(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, MSG_PEEK);
+}
+void test_thread2(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, 0);
+  shutdown(socks[1], SHUT_WR);
+}
+```
 
-but never advances mbssid_elem or sub_elem inside the body.  Each
-iteration therefore searches for a continuation that follows the same
-fixed pair; the helper returns the same next_mbssid; and the same
-next_sub bytes are memcpy()'d into merged_ie at a growing offset until
-the buffer fills.
+when racing like this:
+```
+thread1                       thread2
+unix_stream_read_generic
+  mutex_lock(&u->iolock)
+  skb_peek(&sk->sk_receive_queue)
+  skb_peek_next(skb, &sk->sk_receive_queue)
+  mutex_unlock(&u->iolock)
+                              unix_stream_read_generic
+                                unix_state_lock(sk)
+                                skb_peek(&sk->sk_receive_queue)
+                                unix_state_unlock(sk)
+  unix_stream_data_wait
+    unix_state_lock(sk)
+    tail = skb_peek_tail(&sk->sk_receive_queue)
+                                spin_lock(&sk->sk_receive_queue.lock)
+                                __skb_unlink(skb, &sk->sk_receive_queue)
+                                spin_unlock(&sk->sk_receive_queue.lock)
+                                consume_skb(skb) [frees the SKB]
+    `tail != last`: false
+    `tail`: true
+    `tail->len != last_len` ***UAF***
+```
 
-Advance both mbssid_elem and sub_elem to the just-consumed continuation
-so the next call to cfg80211_get_profile_continuation() searches for a
-further continuation beyond it (or returns NULL when none exists).
+Fix the UAF by removing the read of tail->len; checking tail->len would
+only make sense if SKBs in the receive queue of a UNIX socket could grow,
+which can no longer happen.
 
-A specially-crafted malicious beacon can take advantage of this bug
-to cause the kernel to spend an excessive amount of time in
-cfg80211_merge_profile (up to as much as 2ms per beacon received),
-which could theoretically be abused in some way.
+Kuniyuki explained:
 
-Cc: stable@vger.kernel.org
-Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
-Signed-off-by: John Walker <johnwalker0@gmail.com>
-Link: https://patch.msgid.link/20260507230720.64783-1-johnwalker0@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> When commit 869e7c62486e ("net: af_unix: implement stream sendpage
+> support") added sendpage() support, data could be appended to the last
+> skb in the receiver's queue.
+>
+> That's why we needed to check if the length of the last skb was changed
+> while waiting for new data in unix_stream_data_wait().
+>
+> However, commit a0dbf5f818f9 ("af_unix: Support MSG_SPLICE_PAGES") and
+> commit 57d44a354a43 ("unix: Convert unix_stream_sendpage() to use
+> MSG_SPLICE_PAGES") refactored sendmsg(), and now data is always added
+> to a new skb.
+
+That means this fix is not suitable for kernels before 6.5.
+
+Fixes: 2b514574f7e8 ("net: af_unix: implement splice for stream af_unix sockets")
+Cc: stable@vger.kernel.org # 6.5.x
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260518-b4-unix-recv-wait-hotfix-v2-1-83e29ce8ad31@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/unix/af_unix.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2462,6 +2462,9 @@ size_t cfg80211_merge_profile(const u8 *
- 		memcpy(merged_ie + copied_len, next_sub->data,
- 		       next_sub->datalen);
- 		copied_len += next_sub->datalen;
-+
-+		mbssid_elem = next_mbssid;
-+		sub_elem = next_sub;
- 	}
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2707,8 +2707,7 @@ static int unix_read_skb(struct sock *sk
+  *	Sleep until more data has arrived. But check for races..
+  */
+ static long unix_stream_data_wait(struct sock *sk, long timeo,
+-				  struct sk_buff *last, unsigned int last_len,
+-				  bool freezable)
++				  struct sk_buff *last, bool freezable)
+ {
+ 	unsigned int state = TASK_INTERRUPTIBLE | freezable * TASK_FREEZABLE;
+ 	struct sk_buff *tail;
+@@ -2721,7 +2720,6 @@ static long unix_stream_data_wait(struct
  
- 	return copied_len;
+ 		tail = skb_peek_tail(&sk->sk_receive_queue);
+ 		if (tail != last ||
+-		    (tail && tail->len != last_len) ||
+ 		    sk->sk_err ||
+ 		    (sk->sk_shutdown & RCV_SHUTDOWN) ||
+ 		    signal_pending(current) ||
+@@ -2917,7 +2915,6 @@ static int unix_stream_read_generic(stru
+ 	int flags = state->flags;
+ 	bool check_creds = false;
+ 	struct scm_cookie scm;
+-	unsigned int last_len;
+ 	struct unix_sock *u;
+ 	int copied = 0;
+ 	int err = 0;
+@@ -2963,7 +2960,6 @@ redo:
+ 			goto unlock;
+ 		}
+ 		last = skb = skb_peek(&sk->sk_receive_queue);
+-		last_len = last ? last->len : 0;
+ 
+ again:
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+@@ -2997,8 +2993,7 @@ again:
+ 
+ 			mutex_unlock(&u->iolock);
+ 
+-			timeo = unix_stream_data_wait(sk, timeo, last,
+-						      last_len, freezable);
++			timeo = unix_stream_data_wait(sk, timeo, last, freezable);
+ 
+ 			if (signal_pending(current)) {
+ 				err = sock_intr_errno(timeo);
+@@ -3015,7 +3010,6 @@ unlock:
+ 		while (skip >= unix_skb_len(skb)) {
+ 			skip -= unix_skb_len(skb);
+ 			last = skb;
+-			last_len = skb->len;
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (!skb)
+ 				goto again;
+@@ -3090,7 +3084,6 @@ unlock:
+ 
+ 			skip = 0;
+ 			last = skb;
+-			last_len = skb->len;
+ 			unix_state_lock(sk);
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (skb)
 
 
