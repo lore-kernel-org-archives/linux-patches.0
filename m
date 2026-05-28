@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3772223394D;
-	Thu, 28 May 2026 20:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFD2318B9D;
+	Thu, 28 May 2026 20:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001202; cv=none; b=U+Xg6SIcsJY/VfdDFcN+m3GTLUN1ZUvXhZfqzSYP9Jg+UmZ2TqQk739JonyrfqlbqC8Il9pVZM6JRqKih8SW+A34/O18PeU2W46wx4WZoH09u+30xwDawuKo87X0XFVHhGq5+jDMcejehSaJ5iOtVThrK3u/7ajtovHYeV4WaB4=
+	t=1780001205; cv=none; b=KIVPkNrgAmCYF99KThCDClpMmDEIm8a/2iHDxvArvjhFX+joOmhcC4kriYKu6sBSQ0QO9ebRzqn/adBTzXTFGtIiVvgodgIkKWVzJAd28xwY1R/X2nILNJSRJ0yn13vWuEaY+nI+Wlzxc9cixB/gbG1QT7CHqeMfNPqY6EMxiTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001202; c=relaxed/simple;
-	bh=Y+qpE7GFRiiAFsZHAq0MEfSktZMTwjUg8+PrxwW0XJA=;
+	s=arc-20240116; t=1780001205; c=relaxed/simple;
+	bh=aXKzdbU8IdvmNb0WBJDItqh0LQIAy8Kf11mGgKY3Kr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QK9Eu0tI9rm+sRktEsWm9dhsyjgLp+avBnle5d8obZjl2BMqf1UcfBAInVtFNunPmVOPVp/t51pTmvxdW4PBEie29T8xi2bCk1DFwHb2Pxwy5GQGN1G2MA20PyDAokHqin5Wy1M3CWn7kg8pKRLLxL5Yd2Honx7DwDnvFNdE32E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUncckZ2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PyM9IeI1SR39BQipmmXd5quC23eTd/WcIJZ0TEBnGfP4hr8PWdzANMi5E+lDDcBmMNtSQPsSsqYec5oyT9msXPLeRc/lmcc1hg0gXgrPSiknriyODL1KWrQ1Y6DBZHc8J7sb2IQnwAyQfrcGO6YvkegYMnTLuEF8TSiyLjtY+Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfOnP6PS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUncckZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E151F000E9;
-	Thu, 28 May 2026 20:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfOnP6PS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619B31F000E9;
+	Thu, 28 May 2026 20:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001201;
-	bh=CmloMVb5rAgJ+EDWOU5/x7CeUXPIFqWFxp4T36watAk=;
+	s=korg; t=1780001203;
+	bh=Km9APm/ynSMiqNeUVZGg/q0HcAvnqVjTw8EFy9lX3CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fUncckZ21dYTTRNkXTTE95pWZieiVdRFdC/pAzHx91IdAliq2pKTH15bU63FQzI+r
-	 7eZe1aOk9NA43WC6L55LN5+0c8jrdTrtlwT2sNVA/iE+rglFuVdWPS0TUvA1NXJUIw
-	 3gTW4niS+OzNhSGCQUdU9l1tsa+lERlbm/1MKXRc=
+	b=qfOnP6PSyiU8askfjUpRxSCiaN2114iSQsMnFbJhxOE5TOsjPn15en1c3xCFPgYI7
+	 R2Jb3IcyUPHP7Ls5ID0oMNeXX3dOM/qJ6gNRTTFNoFn3kUwWDDNgDEJgvPAAgVOtDk
+	 tJQSp2WRYG7Hm9TIGO0KpBAS891BCAmsFXtyB1I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 043/186] net: ifb: report ethtool stats over num_tx_queues
-Date: Thu, 28 May 2026 21:48:43 +0200
-Message-ID: <20260528194930.128113985@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 044/186] netfilter: ip6t_hbh: reject oversized option lists
+Date: Thu, 28 May 2026 21:48:44 +0200
+Message-ID: <20260528194930.154938696@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -50,101 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit 5db89c99566fc4728cc92e941d8e1975711e24b5 upstream.
+commit 4322dcde6b4173c2d8e8e6118ed290794263bcc8 upstream.
 
-ifb_dev_init() allocates dp->tx_private to dev->num_tx_queues
-entries via kzalloc_objs(*txp, dev->num_tx_queues). Both IFB
-per-queue RX and TX stats live in those entries: ifb_xmit() updates
-txp->rx_stats using the skb queue mapping, ifb_ri_tasklet() updates
-txp->tx_stats, and ifb_stats64() aggregates both over
-dev->num_tx_queues.
+struct ip6t_opts stores at most IP6T_OPTS_OPTSNR option descriptors,
+but hbh_mt6_check() does not reject larger optsnr values supplied from
+userspace.
 
-The ethtool stats callbacks instead size and walk the per-queue
-stats with dev->real_num_rx_queues and dev->real_num_tx_queues. With
-an asymmetric device where the RX queue count exceeds the TX queue
-count, for example:
+Validate optsnr in the rule setup path so only match data that fits the
+fixed-size opts array can be installed. This follows the existing xtables
+pattern of rejecting invalid user-provided counts in checkentry() and
+keeps the packet matching path unchanged.
 
-    ip link add name ifb10 numtxqueues 1 numrxqueues 8 type ifb
-    ethtool -S ifb10
+`struct ip6t_opts` has a fixed `opts[IP6T_OPTS_OPTSNR]` array,
+where `IP6T_OPTS_OPTSNR` is 16, then off-by-one array access is possible:
 
-ifb_get_ethtool_stats() indexes past the tx_private allocation and
-copies adjacent slab data through ETHTOOL_GSTATS.
+[  137.924693][ T8692] UBSAN: array-index-out-of-bounds in ../net/ipv6/netfilter/ip6t_hbh.c:110:29
+[  137.926167][ T8692] index 16 is out of range for type '__u16 [16]'
 
-Use dev->num_tx_queues consistently for the stats strings, the
-stats count, and the stats data walks. This reports one RX stats
-group and one TX stats group for each backing ifb_q_private entry,
-which is the queue set IFB can actually populate.
-
-Reproduced under UML+KASAN at v7.1-rc2:
-
-  BUG: KASAN: slab-out-of-bounds in ifb_fill_stats_data+0x3c/0xae
-  Read of size 8 at addr 0000000062dbd228 by task ethtool/36
-  ifb_fill_stats_data+0x3c/0xae
-  ifb_get_ethtool_stats+0xc0/0x129
-  __dev_ethtool+0x1ca5/0x363c
-  dev_ethtool+0x123/0x1b3
-  dev_ioctl+0x56c/0x744
-  sock_do_ioctl+0x15f/0x1b2
-  sock_ioctl+0x4d5/0x50a
-  sys_ioctl+0xd8b/0xde9
-
-With the patch applied, the same UML+KASAN repro is silent and
-ethtool -S ifb10 reports only the stats backed by the single
-allocated tx_private entry.
-
-Fixes: a21ee5b2fcb8 ("net: ifb: support ethtools stats")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260514013739.3549624-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ifb.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/ipv6/netfilter/ip6t_hbh.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ifb.c
-+++ b/drivers/net/ifb.c
-@@ -211,12 +211,12 @@ static void ifb_get_strings(struct net_d
- 
- 	switch (stringset) {
- 	case ETH_SS_STATS:
--		for (i = 0; i < dev->real_num_rx_queues; i++)
-+		for (i = 0; i < dev->num_tx_queues; i++)
- 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
- 				ethtool_sprintf(&p, "rx_queue_%u_%.18s",
- 						i, ifb_q_stats_desc[j].desc);
- 
--		for (i = 0; i < dev->real_num_tx_queues; i++)
-+		for (i = 0; i < dev->num_tx_queues; i++)
- 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
- 				ethtool_sprintf(&p, "tx_queue_%u_%.18s",
- 						i, ifb_q_stats_desc[j].desc);
-@@ -229,8 +229,7 @@ static int ifb_get_sset_count(struct net
- {
- 	switch (sset) {
- 	case ETH_SS_STATS:
--		return IFB_Q_STATS_LEN * (dev->real_num_rx_queues +
--					  dev->real_num_tx_queues);
-+		return IFB_Q_STATS_LEN * dev->num_tx_queues * 2;
- 	default:
- 		return -EOPNOTSUPP;
+--- a/net/ipv6/netfilter/ip6t_hbh.c
++++ b/net/ipv6/netfilter/ip6t_hbh.c
+@@ -168,6 +168,10 @@ static int hbh_mt6_check(const struct xt
+ 		pr_debug("unknown flags %X\n", optsinfo->invflags);
+ 		return -EINVAL;
  	}
-@@ -262,12 +261,12 @@ static void ifb_get_ethtool_stats(struct
- 	struct ifb_q_private *txp;
- 	int i;
++	if (optsinfo->optsnr > IP6T_OPTS_OPTSNR) {
++		pr_debug("too many supported opts specified\n");
++		return -EINVAL;
++	}
  
--	for (i = 0; i < dev->real_num_rx_queues; i++) {
-+	for (i = 0; i < dev->num_tx_queues; i++) {
- 		txp = dp->tx_private + i;
- 		ifb_fill_stats_data(&data, &txp->rx_stats);
- 	}
- 
--	for (i = 0; i < dev->real_num_tx_queues; i++) {
-+	for (i = 0; i < dev->num_tx_queues; i++) {
- 		txp = dp->tx_private + i;
- 		ifb_fill_stats_data(&data, &txp->tx_stats);
- 	}
+ 	if (optsinfo->flags & IP6T_OPTS_NSTRICT) {
+ 		pr_debug("Not strict - not implemented");
 
 
