@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573D32459D1;
-	Thu, 28 May 2026 20:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE44F2459D1;
+	Thu, 28 May 2026 20:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999531; cv=none; b=jN+eK5ilaDJCZMQlgmrcThUDQA4vQjL3+ufZBdog0Jy6pgM7VFtEe6bNQ2bbH/WL+v3e+J6Yv1rlsdfLyzWmGb/B/vt+p04aY+FOs2A7WIEL1gsc81XhApNAb1ECIXciZs4/7kNx/vknqZo607Jp05EdYsvMmPCGIkDwTzO+XSQ=
+	t=1779999533; cv=none; b=iPtAO0d057+EDZOLZsIWoiBXFbN5Nku0RtERp4uQqt27LG5OVL+qSsti0Kv8hjoQg4v41SgNb5823ZC68EE9dGcESUqAoWjNxgXegyPLpmELi372JOszslRq1oGg74W7mkwmlTzbZFOSqGGRdAcid68n4OszQ2APKrAgshuANcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999531; c=relaxed/simple;
-	bh=dCAMf+HTaq6fGApItkgXKNw98b7odY8ROuFoXSNofj0=;
+	s=arc-20240116; t=1779999533; c=relaxed/simple;
+	bh=rMCgTLMozYGRWoKxpvc3SiY0SqU2DTdCPk9gJKYg1uA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQ8QV/Xylzfle6N49PycXwFJqFEVCPp6Yz8KuF6cEsHgIrEdks14GeXAc+Qp2KOuWbV3UHrmReqf3yREFLz4SH0Tj+adr8tz1VO2C2/sK+YD/aFiKW6LFYvfd+4tuTewLjOOtTXCNTB3y9apM0IS43gFWKKbnNygNK6TDoLFLAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEKb6unW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=soRhNEldDCiKG29aX+YG84zyes1c2/xiOVubn9rr7F+pe1kxxzDa1I27FW6IwpoTcX0A0LOZB8lXIj1v2MyBBK0XzaOG1YLWLidfWhJXXjxu7pAqaLLisbiNEagE6oYRrrSHTLNxLH4DexRqVOjhP16kPgzUGriakZ3SrXbnwVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lv7RPhx5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEKb6unW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE1C1F000E9;
-	Thu, 28 May 2026 20:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lv7RPhx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F801F000E9;
+	Thu, 28 May 2026 20:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999529;
-	bh=Y1QEkjInVzOjMg2lJSyuOsZAkihGXd3UbYy4xWWDQAs=;
+	s=korg; t=1779999532;
+	bh=Rmt7jKDFZdyQ+CyMm7Su2X5n8EyaCp4j75jD1rVO5gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dEKb6unW+7rrG3lA1JPpBUCpH35ZmAdkuGebueLBjqze6xTpjLvx7mv7dsnmEBVSJ
-	 S3RvjAtMmasJ0X//SbZaAsvxY+sGkvHYkaVUe49fWDy5yhB+e+VgDrk+M1+KZ2G/fl
-	 BzG1zoQPhoojiQgt/OtUkSp8ybkgvb7pTMQbZQ70=
+	b=lv7RPhx55LlA7ToLyQtbiVM0xU+T+6uGbBLgneMT6jenq8vep+jF+FWLc4lcB7l/9
+	 XaRWdvj6cMxMxICMSF+kufXsq54RXzm+PUd3nPDSIhnmYPwgTWcgyxNGy+DMFS5X8E
+	 lerXOkyfPSikESs/IBCYeHgRmhZPYV2rUMwn+qSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin Szycik <marcin.szycik@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
 	Simon Horman <horms@kernel.org>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 099/377] ice: fix setting promisc mode while adding VID filter
-Date: Thu, 28 May 2026 21:45:37 +0200
-Message-ID: <20260528194641.217655423@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 100/377] ice: restore PTP Rx timestamp config after ethtool set-channels
+Date: Thu, 28 May 2026 21:45:38 +0200
+Message-ID: <20260528194641.246536541@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,56 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@intel.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-commit ebc8de716c9ec2be384abdc2dd866da26c6580d1 upstream.
+commit 975b564d195b13ca6ee1ef5e6a9561734898eb17 upstream.
 
-There are at least two paths through which VSI promiscuous mode can be
-independently configured via ice_fltr_set_vsi_promisc():
-- ice_vlan_rx_add_vid() (netdev op)
-- ice_service_task() -> ... -> ice_set_promisc()
+When ethtool -L changes queue counts, ice_vsi_recfg_qs() closes and
+rebuilds the VSI, reallocating Rx rings. The newly allocated rings have
+ptp_rx cleared, so RX hardware timestamps are no longer attached to skb
+until hwtstamp configuration is applied again.
 
-Both paths may try to program promiscuous mode concurrently. One such
-scenario is:
+Restore timestamp mode after ice_vsi_open() in the queue reconfiguration
+path, matching reset/rebuild behavior and ensuring newly rebuilt Rx rings
+have PTP RX timestamping re-enabled.
 
-1. Add ice netdev to bond
-2. Add the bond netdev to bridge
-3. ice netdev enters allmulticast mode (IFF_ALLMULTI)
-4. Service task programs promisc mode filter
-5. Bridge -> bond calls ice_vlan_rx_add_vid()
+Testing hints:
+- run ptp4l application in client synchronization mode:
+	 ptp4l -i ethX -m -s
+- run PTP traffic
+- change queue number on ethX netdev interface:
+	ethtool -L ethX combined new_queue_size
+- observe ptp4l output
+- expected result: no "received DELAY_REQ without timestamp" messages
 
-Crucially, ice_vlan_rx_add_vid() fails if ice_fltr_set_vsi_promisc()
-returns any error, including -EEXIST. This causes VLAN filtering setup
-to fail on the bond interface. ice_set_promisc() already handles -EEXIST
-correctly.
-
-Fix by adding the same -EEXIST check to ice_vlan_rx_add_vid(): if the
-promisc filter is already programmed, continue without returning error.
-
-Fixes: 1273f89578f2 ("ice: Fix broken IFF_ALLMULTI handling")
+Fixes: 77a781155a65 ("ice: enable receive hardware timestamping")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marcin Szycik <marcin.szycik@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-4-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20260515182419.1597859-7-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -3764,7 +3764,7 @@ int ice_vlan_rx_add_vid(struct net_devic
- 		ret = ice_fltr_set_vsi_promisc(&vsi->back->hw, vsi->idx,
- 					       ICE_MCAST_VLAN_PROMISC_BITS,
- 					       vid);
--		if (ret)
-+		if (ret && ret != -EEXIST)
- 			goto finish;
+@@ -4186,6 +4186,12 @@ int ice_vsi_recfg_qs(struct ice_vsi *vsi
  	}
+ 	ice_pf_dcb_recfg(pf, locked);
+ 	ice_vsi_open(vsi);
++	/* Rx rings are reallocated during VSI rebuild and lose their ptp_rx
++	 * flag. Restore timestamp mode so newly allocated rings are set up
++	 * for hardware Rx timestamping.
++	 */
++	if (test_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags))
++		ice_ptp_restore_timestamp_mode(pf);
+ 	goto done;
  
+ rebuild_err:
 
 
