@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5A42580D7;
-	Thu, 28 May 2026 20:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB22C11F9;
+	Thu, 28 May 2026 20:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999587; cv=none; b=s9j58fT5RrEeTU/nt6lcm2ZPxGIPf5dAhdcqekSY5BbNAhOKkSr8g8vF5pmfyliiKXNiToX3lj0RHc/tHS/mGKEGqhIl1CTgAn7WJITx6nMWX7VLnyftkXTSlhAt5n3+CP8pe1ICOBwn9GHnn7/1swaNYHdME9RMrLxB15dPc8k=
+	t=1779999589; cv=none; b=jdMT/4SI6siNtBcjfwm5y6TfRHaNWHfex7iKlliWZBLgW5einjVu4OZCkMYK8213w48qLQnnh+681WYjMQXnyccsNf6d9oqzqjZ/71VTuL+uBvKCX/WBA4WIqS1nSwXMcMGZPNrvHgEdli1TxV2iVp7TMHg4/clXO5oY9dkbThY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999587; c=relaxed/simple;
-	bh=61W0ZDQ71nTCSd3rpeRzcLrv1Xo0pvnpENYUyx+nBfI=;
+	s=arc-20240116; t=1779999589; c=relaxed/simple;
+	bh=98/esds2eCQwjli5sZS64tLPmVyWBdDGXoYr9BP7Jns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZgSxG7AIirjScrsFpWPdq9RV6kGX9LY0SmrTL2UoGzRWih4bpOC2QGyivroadFRYpFdBBiQITfV91Da3qCWGU+827z0ZeqmgpPlPrzScb0GeVlu8FkvQb6MVKeYyP/JVT9a4F95iuTcI7iYhJDI+XfRZSuDxeUx66eOYTzUq7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL2RAFkR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Elpbl1QrtY9jxbkLE4mTRQJIo35Ho1UaP9T9x3S4vurrXbHk4fSxF4y9wXf+BiM1rmaNPUZnJIOiQs30rnG15De7IuQZMOQgIEk3R92Fuu7e+tcE6i0QfoS07evvROGTN4vzP6BnB7/isFe798qkoCxyf9YRHd5ocwMoQnLsnCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr1NWwzN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL2RAFkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C531F000E9;
-	Thu, 28 May 2026 20:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr1NWwzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077BC1F000E9;
+	Thu, 28 May 2026 20:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999585;
-	bh=PnKVXu+bnSRPpug/wMwLt5zvkZQzhXIRytqsO1SGVy8=;
+	s=korg; t=1779999588;
+	bh=igEdafO1BvdeykcyTin45WOLs5NIMIii0ScH9j24Dx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jL2RAFkRfYZQ/vjM9gs2U0t9g6M+9DIw2tlFtOzFT1RxJwO79EF3XMzrG8CsZcRss
-	 Wej/c+rwfUsW6h32yoqOMTWce8AM3pUjbKwksUn9AZs1VR2jXRil5KAfpOT05epZKe
-	 A8m79hfQcRRm619UcIyFzxqsRzPQ2pXAxEUJmMgg=
+	b=Yr1NWwzNLcX2aWAXOXJeppEFx8fqBjtoKifKACS86XNZ/IRgwcTDYxEQECGJj68Ms
+	 QWq4WS/50eapwEQAINCjUI5TKPuXHvMY8Hnfv+B3SJ75l+Fo+Y1r20z41U48w0cuqU
+	 K6bcPFTsqRZAPPsKdvvgaQOYQOPaNwVEKZzy1Z7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 072/377] tracing: fprobe: use ftrace if CONFIG_DYNAMIC_FTRACE_WITH_ARGS
-Date: Thu, 28 May 2026 21:45:10 +0200
-Message-ID: <20260528194640.449942481@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.18 113/377] drm/bridge: chipone-icn6211: use devm_drm_bridge_add in i2c probe
+Date: Thu, 28 May 2026 21:45:51 +0200
+Message-ID: <20260528194641.604719390@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,107 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-[ Upstream commit cd06078a38aaedfebbf8fa0c009da0f99f4473fb ]
+commit 73d01051e8040c0b1de7fd26b3b8d0c2ffa6895c upstream.
 
-For now, we will use ftrace for the fprobe if fp->exit_handler not exists
-and CONFIG_DYNAMIC_FTRACE_WITH_REGS is enabled.
+Use devm_drm_bridge_add() so the bridge is released if probe
+fails after registration, and drop drm_bridge_remove() in chipone_i2c_probe.
 
-However, CONFIG_DYNAMIC_FTRACE_WITH_REGS is not supported by some arch,
-such as arm. What we need in the fprobe is the function arguments, so we
-can use ftrace for fprobe if CONFIG_DYNAMIC_FTRACE_WITH_ARGS is enabled.
-
-Therefore, use ftrace if CONFIG_DYNAMIC_FTRACE_WITH_REGS or
-CONFIG_DYNAMIC_FTRACE_WITH_ARGS enabled.
-
-Link: https://lore.kernel.org/all/20251103063434.47388-1-dongml2@chinatelecom.cn/
-
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Stable-dep-of: 0ac0058a74ac ("tracing/fprobe: Check the same type fprobe on table as the unregistered one")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Fixes: 8dde6f7452a1 ("drm: bridge: icn6211: Add I2C configuration support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260430194944.78119-1-osama.abdelkader@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/bridge/chipone-icn6211.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -45,6 +45,7 @@
- static struct hlist_head fprobe_table[FPROBE_TABLE_SIZE];
- static struct rhltable fprobe_ip_table;
- static DEFINE_MUTEX(fprobe_mutex);
-+static struct fgraph_ops fprobe_graph_ops;
+--- a/drivers/gpu/drm/bridge/chipone-icn6211.c
++++ b/drivers/gpu/drm/bridge/chipone-icn6211.c
+@@ -758,7 +758,9 @@ static int chipone_i2c_probe(struct i2c_
+ 	dev_set_drvdata(dev, icn);
+ 	i2c_set_clientdata(client, icn);
  
- static u32 fprobe_node_hashfn(const void *data, u32 len, u32 seed)
- {
-@@ -259,7 +260,7 @@ static inline int __fprobe_kprobe_handle
- 	return ret;
+-	drm_bridge_add(&icn->bridge);
++	ret = devm_drm_bridge_add(dev, &icn->bridge);
++	if (ret)
++		return ret;
+ 
+ 	return chipone_dsi_host_attach(icn);
  }
- 
--#ifdef CONFIG_DYNAMIC_FTRACE_WITH_REGS
-+#if defined(CONFIG_DYNAMIC_FTRACE_WITH_ARGS) || defined(CONFIG_DYNAMIC_FTRACE_WITH_REGS)
- /* ftrace_ops callback, this processes fprobes which have only entry_handler. */
- static void fprobe_ftrace_entry(unsigned long ip, unsigned long parent_ip,
- 	struct ftrace_ops *ops, struct ftrace_regs *fregs)
-@@ -300,7 +301,7 @@ NOKPROBE_SYMBOL(fprobe_ftrace_entry);
- 
- static struct ftrace_ops fprobe_ftrace_ops = {
- 	.func	= fprobe_ftrace_entry,
--	.flags	= FTRACE_OPS_FL_SAVE_REGS,
-+	.flags	= FTRACE_OPS_FL_SAVE_ARGS,
- };
- static int fprobe_ftrace_active;
- 
-@@ -341,6 +342,15 @@ static bool fprobe_is_ftrace(struct fpro
- {
- 	return !fp->exit_handler;
- }
-+
-+#ifdef CONFIG_MODULES
-+static void fprobe_set_ips(unsigned long *ips, unsigned int cnt, int remove,
-+			   int reset)
-+{
-+	ftrace_set_filter_ips(&fprobe_graph_ops.ops, ips, cnt, remove, reset);
-+	ftrace_set_filter_ips(&fprobe_ftrace_ops, ips, cnt, remove, reset);
-+}
-+#endif
- #else
- static int fprobe_ftrace_add_ips(unsigned long *addrs, int num)
- {
-@@ -355,7 +365,15 @@ static bool fprobe_is_ftrace(struct fpro
- {
- 	return false;
- }
-+
-+#ifdef CONFIG_MODULES
-+static void fprobe_set_ips(unsigned long *ips, unsigned int cnt, int remove,
-+			   int reset)
-+{
-+	ftrace_set_filter_ips(&fprobe_graph_ops.ops, ips, cnt, remove, reset);
-+}
- #endif
-+#endif /* !CONFIG_DYNAMIC_FTRACE_WITH_ARGS && !CONFIG_DYNAMIC_FTRACE_WITH_REGS */
- 
- /* fgraph_ops callback, this processes fprobes which have exit_handler. */
- static int fprobe_fgraph_entry(struct ftrace_graph_ent *trace, struct fgraph_ops *gops,
-@@ -601,14 +619,8 @@ static int fprobe_module_callback(struct
- 	} while (node == ERR_PTR(-EAGAIN));
- 	rhashtable_walk_exit(&iter);
- 
--	if (alist.index > 0) {
--		ftrace_set_filter_ips(&fprobe_graph_ops.ops,
--				      alist.addrs, alist.index, 1, 0);
--#ifdef CONFIG_DYNAMIC_FTRACE_WITH_REGS
--		ftrace_set_filter_ips(&fprobe_ftrace_ops,
--				      alist.addrs, alist.index, 1, 0);
--#endif
--	}
-+	if (alist.index > 0)
-+		fprobe_set_ips(alist.addrs, alist.index, 1, 0);
- 	mutex_unlock(&fprobe_mutex);
- 
- 	kfree(alist.addrs);
 
 
