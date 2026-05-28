@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1615A2E7F25;
-	Thu, 28 May 2026 20:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8FE1DE4E0;
+	Thu, 28 May 2026 20:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000871; cv=none; b=OxMnC5CBSenFQTwXCiNo8CNMkthhzXH/l6RSFwg/Fk1YjeX/eMsq44Qh2yHTwryCNJIdsSlG3/eydhq0GMZNjiFKw/sE9Mx7eoa0nfxPU63KlV7YT8BRHGd+EJVOC/3Y62/JUbH1Xqbgb5o3+ho1GK2rN0Ff0W6hJmArLzJLVK4=
+	t=1780000873; cv=none; b=j37Ud3Llc3rr1rSGP4jew5q3sJkRLcDokOkz3G6RIUyzjHcIgYaXQYl9kxWZhxsCPWTA2PiZIWa9KbVQX37Rrh0rnJFMtSw3moUu2+iW7iq2nNHIkbrK4B5hcN0o5wx+tH0FcbzLLNwjvYxw292KbUUzNiykniPdM161SGzgbKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000871; c=relaxed/simple;
-	bh=4FXsmHgIoevlN42nyRD5C/Fyc5uMenT6fj+TXTLKCro=;
+	s=arc-20240116; t=1780000873; c=relaxed/simple;
+	bh=eXP/LnqQkNCnPB+YiDHdd9JCYxpMJWl6Y0AfPN/xlEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCCZVnZL4MXiUa8fgC5nWYw8JSEDZJG1yzQKGIdwt294PqKWJ0+LpvKAdj3l1y267R+nca3QUUALjU2c2xdQ0m7s1uQYM9cXcc1lZkO7W6VR1vp/1QSZElwM8TG8tqwWtVUTsLQjxQ1woLM3Woexz+0ASCL882uSM9n/TztcvRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uch5u3Z5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G8TPrOGUymBHjb0ZblIC5i1eJaiEYwU7seAshaK9wFO5hkNAchWOAtrYU8N6fohdQ5PeIUk5rIqL6xjkIQOHtS4A4fa38hIL3/cd939ZrB8PUndTgHICO6dxXFSrm8Sm2BM2e4NwIXEi1zu+KoyqEgUacR2167//eWtldLMxJbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aG1SiSY0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uch5u3Z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3781F00A3A;
-	Thu, 28 May 2026 20:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aG1SiSY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7CB1F000E9;
+	Thu, 28 May 2026 20:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000870;
-	bh=E0z8vpZBAkikLUK7D8Amg49hNOwYTLBOeTpTNWxiFVQ=;
+	s=korg; t=1780000872;
+	bh=y9UPzARbhc+9F/7kqQPQWD5rrX/9aUbr/2H9SbAdXY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uch5u3Z5XVV+GnilQ9r34+EL/S5EX8PMHzTO7V8q4h1mI2d3cnv2BXwMSlV0aKV38
-	 gT8ydjdL7Mhm0qNiYdEUr8vhjHgwHOhldYDtNGEL+kdrxX8KlWOZmMZvb5Szt9PUp6
-	 cCvjogXw9taJc41hAESnFk9kzZVutrQ9hD9/25Q0=
+	b=aG1SiSY09YWdPzMFHtaF/rh4wApjE+wfqNF7DO9EtjKpg0jxEzu8hfTsOy5yKL0Cc
+	 BWGei1vgse3pV9ZCeovOEwGah9h4Wv7lxLSEgdtMMe3HmCIB9Noo1FDDJgizYxgce7
+	 emQNZV7ZdCMnIm6CJ7EGgrNXDSowftamG0sKTUnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <sfrench@samba.org>,
 	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Matthew Wilcox <willy@infradead.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/272] netfs: Fix early put of sink folio in netfs_read_gaps()
-Date: Thu, 28 May 2026 21:49:31 +0200
-Message-ID: <20260528194634.776862235@linuxfoundation.org>
+Subject: [PATCH 6.12 198/272] netfs: Fix partial invalidation of streaming-write folio
+Date: Thu, 28 May 2026 21:49:32 +0200
+Message-ID: <20260528194634.802483022@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -58,44 +57,22 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 3e5dd91b87a8b1450217b56a336bee315f40da7d ]
+[ Upstream commit 6d91acc7fb85d33ea58fca9b964a32a453937f4b ]
 
-Fix netfs_read_gaps() to release the sink page it uses after waiting for
-the request to complete.  The way the sink page is used is that an
-ITER_BVEC-class iterator is created that has the gaps from the target folio
-at either end, but has the sink page tiled over the middle so that a single
-read op can fill in both gaps.
+In netfs_invalidate_folio(), if the region of a partial invalidation
+overlaps the front (but not all) of a dirty write cached in a streaming
+write page (dirty, but not uptodate, with the dirty region tracked by a
+netfs_folio struct), the function modifies the dirty region - but
+incorrectly as it moves the region forward by setting the start to the
+start, not the end, of the invalidation region.
 
-The bug was found by KASAN detecting a UAF on the generic/075 xfstest in
-the cifsd kernel thread that handles reception of data from the TCP socket:
+Fix this by setting finfo->dirty_offset to the end of the invalidation
+region (iend).
 
- BUG: KASAN: use-after-free in _copy_to_iter+0x48a/0xa20
- Write of size 885 at addr ffff888107f92000 by task cifsd/1285
- CPU: 2 UID: 0 PID: 1285 Comm: cifsd Not tainted 7.0.0 #6 PREEMPT(lazy)
- Call Trace:
-  dump_stack_lvl+0x5d/0x80
-  print_report+0x17f/0x4f1
-  kasan_report+0x100/0x1e0
-  kasan_check_range+0x10f/0x1e0
-  __asan_memcpy+0x3c/0x60
-  _copy_to_iter+0x48a/0xa20
-  __skb_datagram_iter+0x2c9/0x430
-  skb_copy_datagram_iter+0x6e/0x160
-  tcp_recvmsg_locked+0xce0/0x1130
-  tcp_recvmsg+0xeb/0x300
-  inet_recvmsg+0xcf/0x3a0
-  sock_recvmsg+0xea/0x100
-  cifs_readv_from_socket+0x3a6/0x4d0 [cifs]
-  cifs_read_iter_from_socket+0xdd/0x130 [cifs]
-  cifs_readv_receive+0xaad/0xb10 [cifs]
-  cifs_demultiplex_thread+0x1148/0x1740 [cifs]
-  kthread+0x1cf/0x210
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Steve French <sfrench@samba.org>
+Fixes: cce6bfa6ca0e ("netfs: Fix trimming of streaming-write folios in netfs_inval_folio()")
+Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-18-dhowells@redhat.com
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Link: https://patch.msgid.link/20260512123404.719402-21-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
 cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
@@ -103,31 +80,22 @@ cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/netfs/misc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 2dd2260352dbf..1c906035fef02 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -525,14 +525,14 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 
- 	netfs_read_to_pagecache(rreq);
- 
--	if (sink)
--		folio_put(sink);
--
- 	ret = netfs_wait_for_read(rreq);
- 	if (ret == 0) {
- 		flush_dcache_folio(folio);
- 		folio_mark_uptodate(folio);
- 	}
-+
-+	if (sink)
-+		folio_put(sink);
- 	folio_unlock(folio);
- 	netfs_put_request(rreq, false, netfs_rreq_trace_put_return);
- 	return ret < 0 ? ret : 0;
+diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
+index 488a4b1914300..9672904232ad5 100644
+--- a/fs/netfs/misc.c
++++ b/fs/netfs/misc.c
+@@ -267,7 +267,7 @@ void netfs_invalidate_folio(struct folio *folio, size_t offset, size_t length)
+ 				goto erase_completely;
+ 			/* Move the start of the data. */
+ 			finfo->dirty_len = fend - iend;
+-			finfo->dirty_offset = offset;
++			finfo->dirty_offset = iend;
+ 			trace_netfs_folio(folio, netfs_folio_trace_invalidate_front);
+ 			return;
+ 		}
 -- 
 2.53.0
 
