@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EDA2F260C;
-	Thu, 28 May 2026 20:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78362304BB3;
+	Thu, 28 May 2026 20:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998806; cv=none; b=rUaQYiCP9P7Hzrkqb9cz1aaYNrA5puA8xZWJlXV6aKYmm06Vj8yuPLxK4EVbnx5O2gx+kR7D5qv/1ttn82iEWpJMBXoz687GWtD72xjW9/vutoBW6NZkNIhT0XY2sZVw9e76F/PtfRcvkKwz1hEr7anD/PSLmqwjzD4XXLsyyqA=
+	t=1779998809; cv=none; b=TcEATk1sK+rnwYnxICajJW1Knot2/JHSc3xpG6UGwbfZf0fNZGgsgqULtFG2xdFNjl/R2dYGgVif9JMKIQb1lTn79yB7FpWfYwEogbz2XELJVoq0FzZeTvYxiUxdsP9CQvIHf2Ovko5++lDdl2HDUWQ0hCxrZthpka07aVpj5Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998806; c=relaxed/simple;
-	bh=l0384P8aD67LKl0hFKVLZZBk3BWeC6CaoiWnec3R7eM=;
+	s=arc-20240116; t=1779998809; c=relaxed/simple;
+	bh=gci3qXWfMs1+w4Y9smnPvbkKyqekafd1WyYWHPThfyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJMVbGkZCHpPW0ZJlbdXPrBLspu1TacIu0FZuZAssfcj9VC4xxVka6D0Kt1SXQMVCDC2nu11ZQXSh1IPOJOmbODCwaFMbFq6d9Vj6Z/SFzVJBKY/lXERFJxrxIP0yPPlYvgeai9ty0fff5vo+v4O7r9H8e1Q+58zhJMbZxEPfRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJNbtx6B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uoP7SMkCcDYlgEqTLwFR2j3uDUiRwg4zCyAr+IHbQIELQfSs3BKftxgx0QLQTuBqjDUCXEK9n218liBpEUEfQbAsojCVHdRtDrI9C7tRQjX/mxKjCWaztt37mxzYT0oUE9kA02126MCn4jhudsKw780oamqi5b9PQiNxDm0olD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWLQCojx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJNbtx6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF351F000E9;
-	Thu, 28 May 2026 20:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWLQCojx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE60E1F000E9;
+	Thu, 28 May 2026 20:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998805;
-	bh=x7StZ03QLOVV5kI2NWVJV+/e5VhWiJ6FfTUdeZRNz0o=;
+	s=korg; t=1779998808;
+	bh=R7gXULahR6PWrK1h3elYDumNVPPblUsp702TsV1wM4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJNbtx6B0ZXHIUT3qm0um7leY2ojS58CWMH7ItLYQiEC9UG6zWvMAIb8XlG5a7WIS
-	 tDs/QXOC5EEcLicK8xcA+KZl2Pn5uEa0fJsFuHSeCbHxTH8Oi4NQc6P3OUcPIjT1o+
-	 UUNtQQSdUcS2VueZz9k4JLQZqGqS1hyiHpcDgTYU=
+	b=wWLQCojxhPxCU80u7QYXiI5wWTyIEYKHKoqLI36ZdycDdvR/BYOYpPoUUqZGBDLbA
+	 K9DXKPsXzxVWHXc+B6Rb0LOR+H+Juel20loTGqUmjX+jUI8S3NaG4ThiLZqEnLVdgK
+	 eWioBEXV9BSr8yq6qF/Z1CGg3wg0lxBsCfs2muFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 303/461] Documentation: intel_pstate: Fix description of asymmetric packing with SMT
-Date: Thu, 28 May 2026 21:47:12 +0200
-Message-ID: <20260528194656.020748566@linuxfoundation.org>
+Subject: [PATCH 7.0 304/461] drm/msm: Fix GMEM_BASE for A650
+Date: Thu, 28 May 2026 21:47:13 +0200
+Message-ID: <20260528194656.066646093@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,57 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-[ Upstream commit ee047fc7a2da90554410128195058c409a391d43 ]
+[ Upstream commit 46e351e84853dda726072bb3d38ba7bd63e7532b ]
 
-Patchset [1], including commits
+Commit dc220915ddb2 ("drm/msm: Fix GMEM_BASE for gen8") changed the
+GMEM_BASE check from adreno_is_a650_family() & adreno_is_a740_family()
+to family >= ADRENO_6XX_GEN4.
 
- 046a5a95c3b0 ("x86/sched/itmt: Give all SMT siblings of a core the same priority")
- 995998ebdebd ("x86/sched: Remove SD_ASYM_PACKING from the SMT domain flags")
+This inadvertently excluded A650 (ADRENO_6XX_GEN3), causing it to report
+an incorrect GMEM_BASE which results in severe rendering corruption.
 
-overhauled asym_packing handling in the scheduler on x86 hybrid
-processors with SMT. It removed SD_ASYM_PACKING from the x86 SMT
-scheduling domain and made all SMT siblings of a core share the same
-priority. As a result, asym_packing operates only across physical
-cores, spreading tasks among them and only using idle SMT siblings
-once all physical cores are busy.
+Update check to also include ADRENO_6XX_GEN3 to fix A650.
 
-Fix the documentation to reflect this behavior.
-
-Fixes: f20af84c29b2 ("cpufreq: intel_pstate: Document hybrid processor support")
-Link: https://lore.kernel.org/r/20230406203148.19182-1-ricardo.neri-calderon@linux.intel.com [1]
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20260424-rneri-fix-intel-pstate-doc-smt-asym-packing-v1-1-317bf7d5c362@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: dc220915ddb2 ("drm/msm: Fix GMEM_BASE for gen8")
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/711880/
+Message-ID: <20260314-fix-gmem-base-a650-v1-1-3308f60cf74c@pm.me>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/intel_pstate.rst | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/pm/intel_pstate.rst b/Documentation/admin-guide/pm/intel_pstate.rst
-index fde967b0c2e0e..25fe5d88fea6c 100644
---- a/Documentation/admin-guide/pm/intel_pstate.rst
-+++ b/Documentation/admin-guide/pm/intel_pstate.rst
-@@ -355,11 +355,12 @@ HyperThreading (HT) in the context of Intel processors, is enabled on at least
- one core, ``intel_pstate`` assigns performance-based priorities to CPUs.  Namely,
- the priority of a given CPU reflects its highest HWP performance level which
- causes the CPU scheduler to generally prefer more performant CPUs, so the less
--performant CPUs are used when the other ones are fully loaded.  However, SMT
--siblings (that is, logical CPUs sharing one physical core) are treated in a
--special way such that if one of them is in use, the effective priority of the
--other ones is lowered below the priorities of the CPUs located in the other
--physical cores.
-+performant CPUs are used when the other ones are fully loaded.  SMT siblings
-+(that is, logical CPUs sharing one physical core) are given the same priority.
-+The scheduler can pull tasks from lower-priority cores and place them on any
-+sibling.  Since the scheduler spreads tasks among physical cores, tasks will be
-+placed on the SMT siblings of physical cores only after all physical cores are
-+busy.
- 
- This approach maximizes performance in the majority of cases, but unfortunately
- it also leads to excessive energy usage in some important scenarios, like video
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 785e99fb5bd5d..8bf19e72e5bcd 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -376,7 +376,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
+ 		*value = adreno_gpu->info->gmem;
+ 		return 0;
+ 	case MSM_PARAM_GMEM_BASE:
+-		if (adreno_gpu->info->family >= ADRENO_6XX_GEN4)
++		if (adreno_gpu->info->family >= ADRENO_6XX_GEN3)
+ 			*value = 0;
+ 		else
+ 			*value = 0x100000;
 -- 
 2.53.0
 
