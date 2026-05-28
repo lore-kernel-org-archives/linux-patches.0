@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566031AA1D2;
-	Thu, 28 May 2026 20:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246EC3BD649;
+	Thu, 28 May 2026 20:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998438; cv=none; b=qRgJU1nRbe7/DEiwheVn1ACVXivxAbod15Jcsi5D7WzNj6QU9+2eI8oQ/Vd6dV91DpMG4LYdHQ+hCvuzEtuVzPZcZ8OjaJvgxFoNv8Kj8yP+H3KE8jqKMytZkZkrRuLPTARqZPhm81KGe7FAsX+sq9F6gq7VP6U2SpsUWkcVbnw=
+	t=1779998441; cv=none; b=qjsQn8W+baqDAZ77pDdlNlFuChPh/Xy/PfNxDpxb5eb2fXp2p2611tqUfShQjf6WlhLXQELf+HrsuW70fOXqc0hHP+z/iRR8xNntLjSn+WilIGGpst5FEpHCq6eolup6o7niSl8i6Y51frjywkm3JqsrdkgRbpZr4ozs66Mppzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998438; c=relaxed/simple;
-	bh=OwKA5iB6VoCHpVK+46zWWT9eqdhyQJY/1UnSJ4BflnM=;
+	s=arc-20240116; t=1779998441; c=relaxed/simple;
+	bh=/SajcqbNve5NDe4Cs9o5MoQSh2HLAJdDD2wxJRoo7lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j51G4KOYRLmaAcVR4UjsoAl8/HaI8eB2vyQktl4r2YGzUKNCMDu4x4aMbKClMlfFIfXcNim1WMa3zteo6VBdDOIAN9dVwDWycnXGNCHTlHJ4kdU1IaOeLwfZfZeJkRkN5ZYdA2nj28Mqh05n8Q+W3rVK3Dkavu8ai03C4rWk+Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvxLvYUx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hSw/GtmJtCXxZ/ETDBQBY1E0KH8W9GvwD0+RxkwOgbhJExzBtAmbjuk0kG8UQ+Kb8Ey1BggdIG2q7V60eWhjE32lW3kPSpxk/57q0a1Ek3n40kOye2eEtsBtuFinjPE6Onl7CwxDvA7CAJk1Q3Xy9sZ9IK1DeEgaKsxe/vENW1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnq+/+HY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvxLvYUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B533C1F000E9;
-	Thu, 28 May 2026 20:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnq+/+HY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832F01F000E9;
+	Thu, 28 May 2026 20:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998437;
-	bh=nytlFnP19TJ3myw3pmDQDiJjo5xJycbGdbTLAebq2xA=;
+	s=korg; t=1779998440;
+	bh=kqV0QQ3rKHmdh0KZwnWELpei+q5sOxcz1eW5obyZsDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RvxLvYUx6TAIR4sSlm3vpaDvCxrdP2oEU62RuEW1M72nxhpGRkNks+cAyGH9R+F0+
-	 C+MIA7zgnGchaplX1c5Aq0akGl2034WGYN57KT9Q6jHGmprTyAJrS2TJT7Dh5J2arn
-	 Z4HfAWKia4W+WqJl+wFDGX9B8ux43NsTRAWnA3MU=
+	b=wnq+/+HYqDSoM+HyRNqF09FgJImDJFn9GRaTjtMj+shCuZFVzoOOJHVEGb2qslW+L
+	 oqFojxOgdRc0hPxB5grx9Jaxhx1DYr92j2giSw2ET5YYnzpIGz48oHMJr18lzbqA4Z
+	 QU51hyKw5+KLqS17qonPa4Mz28MRlGKVgWjdRdkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.0 156/461] batman-adv: tp_meter: fix tp_vars reference leak in receiver shutdown
-Date: Thu, 28 May 2026 21:44:45 +0200
-Message-ID: <20260528194651.560601649@linuxfoundation.org>
+	Frank Wunderlich <frank-w@public-files.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 174/461] pinctrl: mediatek: moore: implement gpio_chip::get_direction()
+Date: Thu, 28 May 2026 21:45:03 +0200
+Message-ID: <20260528194652.107376713@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,91 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 77098e4bea37af51d3962efa88a5af2ea5e1ac57 upstream.
+[ Upstream commit b560d414239232c6ed7205d3795d3f588034d69b ]
 
-The receiver shutdown timer handler, batadv_tp_receiver_shutdown(), is
-responsible for releasing the tp_vars reference it holds. However, the
-existing logic for coordinating this release with batadv_tp_stop_all() was
-flawed.
+If the gpio_chip::get_direction() callback is not implemented by the GPIO
+controller driver, GPIOLIB emits a warning.
 
-timer_shutdown_sync() guarantees the timer will not fire again after it
-returns, but it returns non-zero only when the timer was pending at the
-time of the call. If the timer had already expired (and
-batadv_tp_stop_all() would unsucessfully try to  rearm itself),
-batadv_tp_stop_all() skips its batadv_tp_vars_put(), and
-batadv_tp_receiver_shutdown() fails to put its own reference as well.
+Implement get_direction() for the GPIO part of pinctrl-moore.
 
-Fix this by introducing a new atomic variable receiving that is set to 1
-when the receiver is initialized and cleared atomically with atomic_xchg()
-by whichever side claims it first. Only the side that observes the
-transition from 1 to 0 is responsible for releasing the tp_vars timer
-reference, eliminating the uncertainty.
-
-Cc: stable@kernel.org
-Fixes: 3d3cf6a7314a ("batman-adv: stop tp_meter sessions during mesh teardown")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 471e998c0e31 ("gpiolib: remove redundant callback check")
+Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
+Reported-by: Frank Wunderlich <frank-w@public-files.de>
+Closes: https://lore.kernel.org/all/20260409132724.126258-1-linux@fw-web.de/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Tested-By: Frank Wunderlich <frank-w@public-files.de>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c |   13 +++++++++++--
- net/batman-adv/types.h    |    3 +++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-moore.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -8,6 +8,7 @@
- #include "main.h"
- 
- #include <linux/atomic.h>
-+#include <linux/bug.h>
- #include <linux/build_bug.h>
- #include <linux/byteorder/generic.h>
- #include <linux/cache.h>
-@@ -1157,6 +1158,9 @@ static void batadv_tp_receiver_shutdown(
- 	spin_unlock_bh(&tp_vars->unacked_lock);
- 
- 	/* drop reference of timer */
-+	if (WARN_ON(atomic_xchg(&tp_vars->receiving, 0) != 1))
-+		return;
-+
- 	batadv_tp_vars_put(tp_vars);
+diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.c b/drivers/pinctrl/mediatek/pinctrl-moore.c
+index 70f608347a5f6..071ba849e5322 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-moore.c
++++ b/drivers/pinctrl/mediatek/pinctrl-moore.c
+@@ -520,6 +520,23 @@ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+ 	return pinctrl_gpio_direction_output(chip, gpio);
  }
  
-@@ -1375,6 +1379,7 @@ batadv_tp_init_recv(struct batadv_priv *
- 
- 	ether_addr_copy(tp_vars->other_end, icmp->orig);
- 	tp_vars->role = BATADV_TP_RECEIVER;
-+	atomic_set(&tp_vars->receiving, 1);
- 	memcpy(tp_vars->session, icmp->session, sizeof(tp_vars->session));
- 	tp_vars->last_recv = BATADV_TP_FIRST_SEQ;
- 	tp_vars->bat_priv = bat_priv;
-@@ -1547,8 +1552,12 @@ void batadv_tp_stop_all(struct batadv_pr
- 			break;
- 		case BATADV_TP_RECEIVER:
- 			batadv_tp_list_detach(tp_var);
--			if (timer_shutdown_sync(&tp_var->timer))
--				batadv_tp_vars_put(tp_var);
-+			timer_shutdown_sync(&tp_var->timer);
++static int mtk_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
++{
++	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
++	const struct mtk_pin_desc *desc;
++	int ret, dir;
 +
-+			if (atomic_xchg(&tp_var->receiving, 0) != 1)
-+				break;
++	desc = (const struct mtk_pin_desc *)&hw->soc->pins[offset];
++	if (!desc->name)
++		return -ENOTSUPP;
 +
-+			batadv_tp_vars_put(tp_var);
- 			break;
- 		}
- 
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -1332,6 +1332,9 @@ struct batadv_tp_vars {
- 	/** @sending: sending binary semaphore: 1 if sending, 0 is not */
- 	atomic_t sending;
- 
-+	/** @receiving: receiving binary semaphore: 1 if receiving, 0 is not */
-+	atomic_t receiving;
++	ret = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_DIR, &dir);
++	if (ret)
++		return ret;
 +
- 	/** @reason: reason for a stopped session */
- 	enum batadv_tp_meter_reason reason;
- 
++	return dir ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
+ {
+ 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+@@ -566,6 +583,7 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
+ 	chip->parent		= hw->dev;
+ 	chip->request		= gpiochip_generic_request;
+ 	chip->free		= gpiochip_generic_free;
++	chip->get_direction	= mtk_gpio_get_direction;
+ 	chip->direction_input	= pinctrl_gpio_direction_input;
+ 	chip->direction_output	= mtk_gpio_direction_output;
+ 	chip->get		= mtk_gpio_get;
+-- 
+2.53.0
+
 
 
