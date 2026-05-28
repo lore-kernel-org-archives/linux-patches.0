@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8668301472;
-	Thu, 28 May 2026 20:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C00301472;
+	Thu, 28 May 2026 20:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999681; cv=none; b=j00RomIEwrEDue5B3t2P5tjk/D/b8S6EVFQvd1ACWtPbQ4PeAG/o0xqQD9+7hAiKwGtX8YQ8TffaZAcpooR2a6GMi+wvtwim+D7s3Idt8s2lN+oSsCuUFh8eXji+WVTeFxgpzQgMwiUCRSUwXFuAvf8UwZr4kkckV0QbzxHTXzU=
+	t=1779999684; cv=none; b=CdFs/KCceGVVx/4RIFJGuqPp86wCu47jKciS2q5VfS3H9Fy4T5owafSYvklOi1AfbMeZL1/BzxmZ2DKz3JmhLuUJvJ9RW4XItZx2+nN9V/x4D+MOyP1CI3gAojm8aDvjE3SuBzaIvdp3die25T7LE3kcjirLNc18ip5J3anw7og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999681; c=relaxed/simple;
-	bh=m+fWbOtD9JgUr7a7pjxSZv4KcSalQoQhh7cQiJ3Tqkg=;
+	s=arc-20240116; t=1779999684; c=relaxed/simple;
+	bh=vGCWAeU2KR/SuGKx4BlNfTsCN5VWb69ZMp30u6HbzEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO/qEYYpXgfXZO/4d//VDva96+KojIvAvIS1/Gza4k2jCvGxBVFmm3vLqaSH3utT7mDIUX0zlAsfHjqvNPxwrmuDBqmjDw+7FWAwO28SQsghSuwwTrGI4eE9PcYTPVM717EHVAET9pNX+bMWqfBChRg3QEYiO0dz6RLhEJcjk7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzruY+Ix; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GdUBbLin+jMAZEv/jM//Zm3xHaLyBVszK+M6kt8m1cuus0NUqKZ6jdtKkxMpJHAxBdfn6x+3wPgWdgsl5Qw0h5ZYJIPhApKCaxkJ0BbVMb17OuxvXYla8/r5Ue7LynDihQc9a+tVPlVhSvpMlpHQW0sfVTipDVEadkCzFiM4gns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb60VvxU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzruY+Ix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB881F000E9;
-	Thu, 28 May 2026 20:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb60VvxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09481F000E9;
+	Thu, 28 May 2026 20:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999680;
-	bh=T4XMCcEBBBOx2NC/RTISFOW1KZDnTC/Y3ozC5vfbPj0=;
+	s=korg; t=1779999683;
+	bh=lNPyp9ivq8RdbZlVSSwt7mzhrn+WAWp0CKP+OJc/+eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gzruY+Ix2faleIb3a/0Q40hXEPqd3e8xjoL4vdho+pBiQw6wYJe/i3zJ1pcFIj39+
-	 zIcWdJjeSkEiN6+cb0fFKYpP/CHrlifNh99ORaNeybOnB/ZWnPRcKGHiQhOAk3TXl9
-	 chpTSL9OmK8ZKIExc/HZUftfTu7JhLBJRqhRcnkY=
+	b=tb60VvxUGjAQQMRP4gP+zNg8jiL+wXIChR1BbUyVizDMIuaJd0saRD5178VtEgJwf
+	 6HNquOaZcxjH9FrIA4ing74pPM2U7dQyyUlUnI7p3pwT2iQlVdlZiluQDAhwShj8v3
+	 fNzn8VqledDU8ZHbNtjwzP2VAK9YBGUfwcRKHnxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 117/377] phy: qcom-qmp-ufs: Fix kaanapali PHY PLL lock failure after SM8650 G4 fix
-Date: Thu, 28 May 2026 21:45:55 +0200
-Message-ID: <20260528194641.723658541@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.18 118/377] scsi: isci: Fix use-after-free in device removal path
+Date: Thu, 28 May 2026 21:45:56 +0200
+Message-ID: <20260528194641.755329818@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,48 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 80305760d7a55b884fb9023c490b75568d1ea0b1 upstream.
+commit b52a8d52c3125ec9a93106ed816582368de34426 upstream.
 
-Commit 81af9e40e2e4 ("phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4")
-moved QPHY_V6_PCS_UFS_PLL_CNTL register configuration from the shared
-sm8650_ufsphy_g5_pcs table to the SM8650-specific sm8650_ufsphy_pcs base
-table to fix Gear 4 operation on SM8650.
+The ISCI completion tasklet is initialized in isci_host_alloc()
+(drivers/scsi/isci/init.c:496) and scheduled from both MSI-X and legacy
+interrupt handlers (drivers/scsi/isci/host.c:223,613).
 
-However, this change inadvertently broke kaanapali and SM8750 SoCs
-which also rely on the shared sm8650_ufsphy_g5_pcs table for Gear 5
-configuration but use their own sm8750_ufsphy_pcs base table. After the
-change, kaanapali PHYs are left without the required PLL_CNTL = 0x33
-setting, causing the PHY PLL to remain at its hardware reset default
-value, preventing PLL lock and resulting in DME_LINKSTARTUP timeouts.
+isci_host_deinit() stops the controller and waits for stop completion,
+but it never kills completion_tasklet before teardown continues. A
+top-of-function tasklet_kill() is not sufficient here: interrupts are
+only disabled when isci_host_stop_complete() runs, so until
+wait_for_stop() returns the IRQ handlers can still requeue the
+tasklet. The tasklet callback also re-enables interrupts after draining
+completions, so killing the tasklet before the source is quiesced leaves
+the same race open.
 
-Fix this by adding the missing QPHY_V6_PCS_UFS_PLL_CNTL = 0x33 entry
-to the sm8750_ufsphy_pcs table, mirroring what the original commit
-already did for sm8650_ufsphy_pcs.
+Once wait_for_stop() returns, no further IRQ-driven scheduling can
+occur. Kill completion_tasklet there so teardown cannot race a queued
+tasklet running on a dead ihost. On remove or unload, the stale callback
+can otherwise dereference ihost and touch ihost->smu_registers after the
+host lifetime ends.
 
-Cc: stable@vger.kernel.org # v6.19.12
-Fixes: 81af9e40e2e4 ("phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4")
-Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260415104851.2763238-1-nitin.rawat@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+A UML + KASAN analogue reproduced the failure class both with no
+tasklet_kill() and with tasklet_kill() placed before source quiesce, and
+stayed clean once the kill happened after quiescing the scheduling
+source.
+
+This mirrors commit f6ab594672d4 ("scsi: aic94xx: fix use-after-free in
+device removal path"), but ISCI needs the kill after wait_for_stop().
+
+Fixes: 6f231dda6808 ("isci: Intel(R) C600 Series Chipset Storage Control Unit Driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260419210420.2134639-1-michael.bommarito@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/isci/host.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -1050,6 +1050,7 @@ static const struct qmp_phy_init_tbl sm8
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PCS_CTRL1, 0x40),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_POST_EMP_LVL_S4, 0x0e),
+--- a/drivers/scsi/isci/host.c
++++ b/drivers/scsi/isci/host.c
+@@ -1252,6 +1252,9 @@ void isci_host_deinit(struct isci_host *
+ 
+ 	wait_for_stop(ihost);
+ 
++	/* No further IRQ-driven scheduling can happen past wait_for_stop(). */
++	tasklet_kill(&ihost->completion_tasklet);
++
+ 	/* phy stop is after controller stop to allow port and device to
+ 	 * go idle before shutting down the phys, but the expectation is
+ 	 * that i/o has been shut off well before we reach this
 
 
