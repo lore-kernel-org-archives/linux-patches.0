@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461F4339866;
-	Thu, 28 May 2026 20:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A3C32ABC0;
+	Thu, 28 May 2026 20:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998960; cv=none; b=BMSyrlfc54C0EE9IBkR/m6y7/PA/OH1D2Bu4OYjgBtdAvC51Aal1Nj3h7Kw2XfOArG5bEAXE/zTpW1BUd3svvfh+SYmBpLXRXq3eWnJNPc+v6eT1BhM5HBABu8g45RLS1AtgTwfmgKQECc8YAsVUKLPXp2g5ZQL7ElJCS2xEg7A=
+	t=1779998963; cv=none; b=l3E/RZHqdMz/m6mSHsod4dAq4pOctq4CeaKoqGPvgG/vLx408UEH8yg85Mu98AQoBgtgAu58/fi1ahxr14cHzF5j8pHfDNQfafpHpGjmz+MZfMVllaGe4ul+KxXouzhyUXE39yYaobIrQ7LWAajcUiXQlrVE68xO/fF0n+dloho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998960; c=relaxed/simple;
-	bh=rxt14rpBNI3oh0K90w/idAjb8oIGGFNbADRdzAc/CU8=;
+	s=arc-20240116; t=1779998963; c=relaxed/simple;
+	bh=ZUIeXDfovQaTY/1rVsW5E1Lwdbevr1ET+Mc9U4k++z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4Eiz4xu+lasIAalzyQrD/w36h+oRxogfrDZY1iK8BU0gytFv/5OnSRq8oZThkeNO6cs/cpTgs7huTFsrj9a1hrtqiBrQ/njmiex470OvMTTOeVVwD3DQlKPgbNsAbRPt0ou7tnoEO5nFehL9ZPANd6gDJWSs3eI3wc2vzLAXKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eviIgvwu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHfsF0xNuAxSnDYGDTcwi5TDCXvbDJpIQR44B3uyIYK9uk0zNqqevZU3ymwL6JQeEFGtcVBnjKB65CJd3K7K3rXqJblFNJq5XL/GraSqzydZ8HxaHLDPdP0NOzpCD1fKfJeoF2iPFKFfMFFqoeO4hILcyNLPytYIRkbPMxRWDEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFota0lJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eviIgvwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17B21F000E9;
-	Thu, 28 May 2026 20:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFota0lJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F771F000E9;
+	Thu, 28 May 2026 20:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998959;
-	bh=7V2aICeyqdwYPi3mrju7GFi+Kpb3yY1UjQlS3nORNTY=;
+	s=korg; t=1779998962;
+	bh=3DSPni7VBq6XjQC/eTzOGaZK8+rO9rj/xEurSRFp4Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eviIgvwunurIXilBhzf0za2L0/QQlJ5AjPfWCNPTL3uNBZbSLdILB+92Bxdu61pJf
-	 TqYouCe9W2Ehp2wCn2caa1mdmeUC+XwMBNx0OHka9ktYDknHNVJIDXpS4jzU5tacEs
-	 etGnwVw12rcwWYhvOyf88s9jgI6FbEXiuYleY1PI=
+	b=LFota0lJbuZIgzf3vzaB8GimFV/V2e0cbw6s4EHfPswB+Xt03oh+D0FnFhdbEATO7
+	 dbLGtbUVv0tb2i9zPytO0Oqb9ulHu36LCJzsFH/pniVQ2mAz1XjZgoE8XH+/mrFD5n
+	 coZjX28fG+373kqN9wlPYCjCQuPB2a2ba+WbLXhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Strozek <mstrozek@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Salendarsingh Gaud <sgaud@qti.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 311/461] ASoC: intel: sof_sdw: Prepare for configuration without a jack
-Date: Thu, 28 May 2026 21:47:20 +0200
-Message-ID: <20260528194656.289638004@linuxfoundation.org>
+Subject: [PATCH 7.0 352/461] drm/msm/snapshot: fix dumping of the unaligned regions
+Date: Thu, 28 May 2026 21:48:01 +0200
+Message-ID: <20260528194657.597846371@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,52 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Strozek <mstrozek@opensource.cirrus.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit d733fb463834cf97a0c667681e236fea0e833a05 ]
+[ Upstream commit 76824d2467feb1828b745d6add2541918d7be3da ]
 
-In certain setups of cs42l43 UAJ function may be removed from ACPI and
-physically unconnected. Prepare a driver for that configuration by
-setting a system clock in the speaker path too.
+The snapshotting code internally aligns data segment to 16 bytes. This
+works fine for DPU code (where most of the regions are aligned), but
+fails for snapshotting of the DSI data (because DSI data region is
+shifted by 4 bytes). Fix the code by removing length alignment and by
+accurately printing last registers in the region. While reworking the
+code also fix the 16x memory overallocation in
+msm_disp_state_dump_regs().
 
-Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260403082335.40798-1-mstrozek@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 5a30862dec5a ("ASoC: sdw_utils: Check speaker component string allocation")
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Reported-by: Salendarsingh Gaud <sgaud@qti.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/725449/
+Message-ID: <20260516-msm-fix-dsi-dump-2-v2-1-9e49fb2d240e@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdw_utils/soc_sdw_cs42l43.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 24 ++++++++++++++-----
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_cs42l43.c b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
-index 2685ff4f09320..4a451b9d4f137 100644
---- a/sound/soc/sdw_utils/soc_sdw_cs42l43.c
-+++ b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
-@@ -107,6 +107,7 @@ EXPORT_SYMBOL_NS(asoc_sdw_cs42l43_hs_rtd_init, "SND_SOC_SDW_UTILS");
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+index 427d3ee2b8337..6e0f8671bfb46 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+@@ -9,7 +9,7 @@
  
- int asoc_sdw_cs42l43_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc_dai *dai)
+ #include "msm_disp_snapshot.h"
+ 
+-static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *base_addr)
++static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr)
  {
-+	struct snd_soc_component *component = snd_soc_rtd_to_codec(rtd, 0)->component;
- 	struct snd_soc_card *card = rtd->card;
- 	struct snd_soc_dapm_context *dapm = snd_soc_card_to_dapm(card);
- 	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
-@@ -131,8 +132,15 @@ int asoc_sdw_cs42l43_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_so
+ 	u32 len_padded;
+ 	u32 num_rows;
+@@ -19,11 +19,11 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ 	void __iomem *end_addr;
+ 	int i;
  
- 	ret = snd_soc_dapm_add_routes(dapm, cs42l43_spk_map,
- 				      ARRAY_SIZE(cs42l43_spk_map));
--	if (ret)
-+	if (ret) {
- 		dev_err(card->dev, "cs42l43 speaker map addition failed: %d\n", ret);
-+		return ret;
-+	}
+-	len_padded = aligned_len * REG_DUMP_ALIGN;
+-	num_rows = aligned_len / REG_DUMP_ALIGN;
++	len_padded = round_up(len, REG_DUMP_ALIGN);
++	num_rows = DIV_ROUND_UP(len, REG_DUMP_ALIGN);
+ 
+ 	addr = base_addr;
+-	end_addr = base_addr + aligned_len;
++	end_addr = base_addr + len;
+ 
+ 	*reg = kvzalloc(len_padded, GFP_KERNEL);
+ 	if (!*reg)
+@@ -48,8 +48,8 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+ 		void __iomem *base_addr, struct drm_printer *p)
+ {
++	void __iomem *addr, *end_addr;
+ 	int i;
+-	void __iomem *addr;
+ 	u32 num_rows;
+ 
+ 	if (!dump_addr) {
+@@ -58,6 +58,7 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+ 	}
+ 
+ 	addr = base_addr;
++	end_addr = base_addr + len;
+ 	num_rows = len / REG_DUMP_ALIGN;
+ 
+ 	for (i = 0; i < num_rows; i++) {
+@@ -67,6 +68,17 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+ 				dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
+ 		addr += REG_DUMP_ALIGN;
+ 	}
 +
-+	ret = snd_soc_component_set_sysclk(component, CS42L43_SYSCLK, CS42L43_SYSCLK_SDW,
-+					   0, SND_SOC_CLOCK_IN);
-+	if (ret)
-+		dev_err(card->dev, "Failed to set sysclk: %d\n", ret);
- 
- 	return ret;
++	if (addr != end_addr) {
++		drm_printf(p, "0x%lx : %08x",
++			   (unsigned long)(addr - base_addr),
++			   dump_addr[i * 4]);
++		if (addr + 0x4 < end_addr)
++			drm_printf(p, " %08x", dump_addr[i * 4 + 1]);
++		if (addr + 0x8 < end_addr)
++			drm_printf(p, " %08x", dump_addr[i * 4 + 2]);
++		drm_printf(p, "\n");
++	}
  }
+ 
+ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
+@@ -185,7 +197,7 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
+ 	va_end(va);
+ 
+ 	INIT_LIST_HEAD(&new_blk->node);
+-	new_blk->size = ALIGN(len, REG_DUMP_ALIGN);
++	new_blk->size = len;
+ 	new_blk->base_addr = base_addr;
+ 
+ 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
 -- 
 2.53.0
 
