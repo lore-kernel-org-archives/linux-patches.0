@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B184DDC5;
-	Thu, 28 May 2026 20:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A890301472;
+	Thu, 28 May 2026 20:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000133; cv=none; b=LnKOipJuF3EK35BjIV/UrE2m9/X/+BTVznH7Ej8doaf85W67bK4ZplP5EP/q8YJqeCSx6wHaaZUCqcrO+3vW9gz7+96NhL2dHZJtIexxPALxLX3/0blgKD9Z/j1Gizt6mSCMHGjdSPRwkRCpuQlXzQwXLd80fU18KeAzFLaaN/s=
+	t=1780000136; cv=none; b=OPSoGCDiPX2rXjaQDJuWV9pkHHpcET2Pnwz7e9+Hn6et5QcO/Cec5dman158pQCUBHCBeHtcwEB3TqpE2zbQXvf0V7VsqdJwyl8P52Pn8rvixI2hhSF5EcDUcZf8EnhHfXwk0lRcWipBUsgf0a0bxhvXljjwPEXwwrRaWXf16Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000133; c=relaxed/simple;
-	bh=MqxQ6LSGpmvDMfMvUh8jNembAMIhfBV3+X8qj2+wh2Y=;
+	s=arc-20240116; t=1780000136; c=relaxed/simple;
+	bh=IqOeDBAuKERLiQ4YLNci/oYeJVUsQ8Ik8tEJ0FrF7fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ro9xhY5qUJN8SbU/Moym4Lr/Xnr6huHoR1y/Q8rttmU6KkaAJJ1Kfof/pTw0Gmu8s1MQqirribEmJ0ZZn3vdbVrN11QU5DDdmLdD49YAa3v8L4ZSUcTbX5yO3yBjgbG6tK2IhS1f68uwVtOzNBbvak6xYaxfnOI10eUyeUZqyds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UY3dxjCu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnJ8zCfsQfrLJYc4sWPtVNeEBSHL6fhvHj+XO14VIrPBxkNKoKalwWiJLw0LA0Zi+T1w5GU5XBhkn+w1b74t7gxDjXbZBOCiX+W+v7abNI/wMbyfKVQmVfloedBOO4cEc9UiKIfEAOcZ32E4cxyrR9wmGI1L6aplqT2Ljr6uMHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8Q5XBFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UY3dxjCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DAD1F00A3A;
-	Thu, 28 May 2026 20:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8Q5XBFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40F41F000E9;
+	Thu, 28 May 2026 20:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000132;
-	bh=X23AgQYENaJD5I6xsX1rYMhczbIcMJx+aM148GkW/MY=;
+	s=korg; t=1780000135;
+	bh=sU1gpgELlApdovt07wRDP/vav2hJEbZCcdbzzVNtqrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UY3dxjCud68DtAD9PwJvoG2IcK3gkb7+K6Ev+wQpblMCsW1RQz3v1fLo0HWKO6n7t
-	 IdENuT9HGsU7yF0MtSP9uAnFpdfIHU769cXj4ra17D8/ZXZt8/XOIDuuK5LggX/1Vj
-	 oRMOjKQ2LEbBp7EN02UVs1hJYv/TpVdTrmF/0IbI=
+	b=e8Q5XBFz43UXaqUJxhe2etUAgCd3lg8tRPyZ44lNPJnTt0xcK3bRHHMTuukoHUdd5
+	 OD4ytyZIHdhsWnciHSe7ZBXB2gxx3/oOzaaSZXbRNfF7UQ6OjqxF+ErbOX0fQokwtK
+	 WiSjTHNfVfWzowvf+OjNDYN4tJ4ToB240lnhFiZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 277/377] drm/msm/adreno: fix userspace-triggered crash on a2xx-a4xx
-Date: Thu, 28 May 2026 21:48:35 +0200
-Message-ID: <20260528194646.378652378@linuxfoundation.org>
+Subject: [PATCH 6.18 278/377] drm/msm: Fix iommu_map_sgtable() return value check and avoid WARN
+Date: Thu, 28 May 2026 21:48:36 +0200
+Message-ID: <20260528194646.407037204@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,53 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 2b4abf879360ea00a9e2b46d2d15dcdbc0687eed ]
+[ Upstream commit 55e0f0d1c1a4ee1e46da7da4d443eb3044fb3851 ]
 
-Before a5xx Adreno driver will not try fetching UBWC params (because
-those generations didn't support UBWC anyway), however it's still
-possible to query UBWC-related params from the userspace, triggering
-possible NULL pointer dereference. Check for UBWC config in
-adreno_get_param() and return sane defaults if there is none.
+Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
+changed iommu_map_sgtable() to return an ssize_t and negative values
+in error cases, rather than a size_t and a zero.
 
-Fixes: a452510aad53 ("drm/msm/adreno: Switch to the common UBWC config struct")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/717778/
-Message-ID: <20260411-adreno-fix-ubwc-v3-1-4983156f3f80@oss.qualcomm.com>
+Store the return value in the appropriate type and in case of error,
+return it rather than WARNing.
+
+Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Patchwork: https://patchwork.freedesktop.org/patch/719685/
+Message-ID: <20260421-iommu_map_sgtable-return-v1-3-fb484c07d2a1@nvidia.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/msm_iommu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 4b5a4edd07028..056a9e18cd4ac 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -419,15 +419,21 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		*value = vm->mm_range;
- 		return 0;
- 	case MSM_PARAM_HIGHEST_BANK_BIT:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->highest_bank_bit;
- 		return 0;
- 	case MSM_PARAM_RAYTRACING:
- 		*value = adreno_gpu->has_ray_tracing;
- 		return 0;
- 	case MSM_PARAM_UBWC_SWIZZLE:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->ubwc_swizzle;
- 		return 0;
- 	case MSM_PARAM_MACROTILE_MODE:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->macrotile_mode;
- 		return 0;
- 	case MSM_PARAM_UCHE_TRAP_BASE:
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index a188617653e85..82a172f21a3ec 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -677,7 +677,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+ 			 int prot)
+ {
+ 	struct msm_iommu *iommu = to_msm_iommu(mmu);
+-	size_t ret;
++	ssize_t ret;
+ 
+ 	WARN_ON(off != 0);
+ 
+@@ -686,7 +686,8 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+ 		iova |= GENMASK_ULL(63, 49);
+ 
+ 	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
+-	WARN_ON(!ret);
++	if (ret < 0)
++		return ret;
+ 
+ 	return (ret == len) ? 0 : -EINVAL;
+ }
 -- 
 2.53.0
 
