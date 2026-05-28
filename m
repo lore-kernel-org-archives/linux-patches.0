@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDA4349B1C;
-	Thu, 28 May 2026 20:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F348733291F;
+	Thu, 28 May 2026 20:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001614; cv=none; b=ORP790IbDF76GtDgLm+OdB8dTYOZS6aJ7Q8828i06Ab4UMPnCNshWldcgImIQCnfdqClrmMXaOm7Qt4eaKH2a+c4NMjDTTxedG/VCITGxTb7w//qGwgtYWG7cC4WVmwPrLzhbo2YsQcVLZELYDApzd/MzmOzOOdQwlYhh1bQrIg=
+	t=1780001617; cv=none; b=sZoPmQq53tM9EcahA5AYCH8vRYjXkACa9MEQ9+kQmmkG4AXIasFCTZ6/UgXM9BX9R8C+tZEvVYAWkVtQKSSNXbQXGG/ZdtHt1BGmPHRcnfUd2ddroRSksWM4XCrl09KbQzp8NsZU99vk0MBgs5pUxOOIhkYdNKNXSEGlM1PLmn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001614; c=relaxed/simple;
-	bh=lO15BSnoqPMp21/LuRS+2zNDF7kyYwU345wVIPToJOY=;
+	s=arc-20240116; t=1780001617; c=relaxed/simple;
+	bh=DdpuxpjuqH7MXT7lLGcCUmqHxuNnVBQ6nUN7pwgmvFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0yDaTy6xMQgVepqn/dG+lSMTMlbE/dPT8v3nXmI+FDPtAAsmY/Rum+5GRImRZZ1CzoNu3T2feBiH1rCFalmQn8zQZcyCOftblTaG/MZ0Bb/Z72r3E0ih5zHs12QK8aHkedI9iS9AzbgKVo13+S7g3xJGq971Tva6GoZmLtOS6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNreAiJO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bUpJ8nXm/967Mr3PtbY84RpRoSn1tjL98pAVhgCIPaLmgVxHr8h4Tg+ATfLd8d0fRyDZGQwu4UW9IIgihEL3IwikPXOsS3IKCCsttvZoSsFIbF13AGWV4j16QsbXcS4r+smtPqToel1AWbuNRhH7FMxN5SduMf8Yh0xxX45gLck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyoEGuZt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNreAiJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905521F000E9;
-	Thu, 28 May 2026 20:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyoEGuZt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0B41F000E9;
+	Thu, 28 May 2026 20:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001613;
-	bh=57KwTjjM/29bAVX+iHpeDwlzPUAT4VQIthQyBBujyAo=;
+	s=korg; t=1780001615;
+	bh=VvfHc6cqqQeuYCBoihXWWSc5PhoKUetLTxliskvL17c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oNreAiJOJhIAFdllG+XUAUSSMNgGIVkwQdap30JBINYBtd+bsSMzybKf8LfTJ/wDT
-	 Yx5G8eC1TsICYaM0XESdK/ZcDJn+Sx9N5isggQLeBgR2DDV8ULVLz9uE418wRbQjuZ
-	 Y0jM7XGxeN+LLvhTb6uP/8zcuWhC0uLfHHGPRn8w=
+	b=dyoEGuZtMiwDxmqWOpznlCFZSmpyr2j/ipulEm4FJdBEYtsfWCpXVkNfKetwNni/Z
+	 6zkFQRMLawua1CpjssFp8yJcQpzOGG73ZWpyrBwJMndIfBzXalU8MvcGbquN2FQZZS
+	 G77GL7YbBu4zg+n6xtZnQ6mrwAe8GW7mkZ+O1P9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Matthew Leach <matthew.leach@collabora.com>,
-	P Praneesh <praneesh.p@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	=?UTF-8?q?=E9=92=B1=E4=B8=80=E9=93=AD?= <yimingqian591@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/186] wifi: ath11k: fix peer resolution on rx path when peer_id=0
-Date: Thu, 28 May 2026 21:50:33 +0200
-Message-ID: <20260528194933.085737526@linuxfoundation.org>
+Subject: [PATCH 6.6 144/186] net: tls: fix off-by-one in sg_chain entry count for wrapped sk_msg ring
+Date: Thu, 28 May 2026 21:50:24 +0200
+Message-ID: <20260528194932.839888867@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -47,77 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Leach <matthew.leach@collabora.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2a2451a34afdf563b3102d36a4b6cf335cf813e2 ]
+[ Upstream commit 285943c6e7ca309bbea84b253745154241d9788a ]
 
-It has been observed that on certain chipsets a peer can be assigned
-peer_id=0. For reception of non-aggregated MPDUs this is fine as
-ath11k_dp_rx_h_find_peer() has a fallback case where it locates the peer
-based upon the source MAC address. On an aggregated link, the mpdu_start
-header is only populated by hardware on the first sub-MSDU. This causes
-the peer resolution to be skipped for the subsequent MSDUs and the
-encryption type of these frames to be set to an incorrect value,
-resulting in these MSDUs being dropped by ieee80211.
+When an sk_msg scatterlist ring wraps (sg.end < sg.start),
+tls_push_record() chains the tail portion of the ring to the head
+using sg_chain(). An extra entry in the sg array is reserved for
+this:
 
-ath11k_pci 0000:03:00.0: data rx skb 000000002f4b704d len 1534 peer xx:xx:xx:xx:xx:xx 0 ucast sn 3063 he160 rate_idx 9 vht_nss 2 freq 5240 band 1 flag 0x40d1a fcs-err 0 mic-err 0 amsdu-more 0 peer_id 0 first_msdu 1 last_msdu 0
-ath11k_pci 0000:03:00.0: data rx skb 0000000038acd580 len 1534 peer (null) 0 ucast sn 3063 he160 rate_idx 9 vht_nss 2 freq 5240 band 1 flag 0x40d00 fcs-err 0 mic-err 0 amsdu-more 0 peer_id 0 first_msdu 0 last_msdu 1
+  struct sk_msg_sg {
+        [...]
+        /* The extra two elements:
+         * 1) used for chaining the front and sections when the list becomes
+         *    partitioned (e.g. end < start). The crypto APIs require the
+         *    chaining;
+         * 2) to chain tailer SG entries after the message.
+         */
+        struct scatterlist              data[MAX_MSG_FRAGS + 2];
 
-Remove the null peer_id checks in ath11k_dp_rx_h_find_peer() and
-ath11k_hal_rx_parse_mon_status_tlv(), allowing peers with an assigned ID
-of 0 to be resolved.
+The current code uses MAX_SKB_FRAGS + 1 as the ring size:
 
-Tested-on: QCA2066 hw2.1 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.9
+    sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+             MAX_SKB_FRAGS - msg_pl->sg.start + 1,
+             msg_pl->sg.data);
 
-Fixes: 2167fa606c0f ("ath11k: Add support for RX decapsulation offload")
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Matthew Leach <matthew.leach@collabora.com>
-Reviewed-by: P Praneesh <praneesh.p@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260424-ath11k-null-peerid-workaround-v4-1-252b224d3cf6@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+This places the chain pointer at
+
+  sg_chain(data[start], (MAX_SKB_FRAGS - msg_start + 1) .. =
+  &data[start] + (MAX_SKB_FRAGS - msg_start + 1) - 1 =
+  data[start + (MAX_SKB_FRAGS - start + 1) - 1] =
+  data[MAX_SKB_FRAGS]
+
+instead of the true last entry. This is likely due to a "race" of
+the commit under Fixes landing close to
+commit 031097d9e079 ("bpf: sk_msg, zap ingress queue on psock down")
+
+Convert to ARRAY_SIZE and drop the data[start] / - start (as suggested
+by Sabrina).
+
+Reported-by: 钱一铭 <yimingqian591@gmail.com>
+Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260511174920.433155-2-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c  | 3 +--
- drivers/net/wireless/ath/ath11k/hal_rx.c | 5 +----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ net/tls/tls_sw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index d2d994e094809..31fd92bd9efe8 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2217,8 +2217,7 @@ ath11k_dp_rx_h_find_peer(struct ath11k_base *ab, struct sk_buff *msdu)
- 
- 	lockdep_assert_held(&ab->base_lock);
- 
--	if (rxcb->peer_id)
--		peer = ath11k_peer_find_by_id(ab, rxcb->peer_id);
-+	peer = ath11k_peer_find_by_id(ab, rxcb->peer_id);
- 
- 	if (peer)
- 		return peer;
-diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.c b/drivers/net/wireless/ath/ath11k/hal_rx.c
-index 2bc95026335e3..8cb212449da77 100644
---- a/drivers/net/wireless/ath/ath11k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/hal_rx.c
-@@ -1469,11 +1469,8 @@ ath11k_hal_rx_parse_mon_status_tlv(struct ath11k_base *ab,
- 	case HAL_RX_MPDU_START: {
- 		struct hal_rx_mpdu_info *mpdu_info =
- 				(struct hal_rx_mpdu_info *)tlv_data;
--		u16 peer_id;
- 
--		peer_id = ath11k_hal_rx_mpduinfo_get_peerid(ab, mpdu_info);
--		if (peer_id)
--			ppdu_info->peer_id = peer_id;
-+		ppdu_info->peer_id = ath11k_hal_rx_mpduinfo_get_peerid(ab, mpdu_info);
- 		break;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 937aa78eed0e4..5ada6e54fb328 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -800,11 +800,9 @@ static int tls_push_record(struct sock *sk, int flags,
+ 		sg_mark_end(sk_msg_elem(msg_pl, i));
  	}
- 	case HAL_RXPCU_PPDU_END_INFO: {
+ 
+-	if (msg_pl->sg.end < msg_pl->sg.start) {
+-		sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+-			 MAX_SKB_FRAGS - msg_pl->sg.start + 1,
++	if (msg_pl->sg.end < msg_pl->sg.start)
++		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
+ 			 msg_pl->sg.data);
+-	}
+ 
+ 	i = msg_pl->sg.start;
+ 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
 -- 
 2.53.0
 
