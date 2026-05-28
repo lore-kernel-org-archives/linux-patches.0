@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34172D1303;
-	Thu, 28 May 2026 20:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038FB2580D7;
+	Thu, 28 May 2026 20:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999336; cv=none; b=LDQ2TutlIRQm5IA858W/Yeu9C0VZkAO9VyF2NvSjUFJUpzFjELIbAst0lkKQEaLwmN7eUgrfwCjnALdPhs4AHTT+CbkLJ1y+eF2DPkbAkNceZBpJtvCx5kKg8aXjlMEGF/DmddhWWBaxvVnSLr7rauzZ2qtlpZ9B9AbIFlereU4=
+	t=1779999340; cv=none; b=Mj4l7Ha3m4Br9DdLd34X9DjT8MTzkFhjmpV05Xo0B9TfXyxXYDaKCCcAUVGR6L4BgE3SkKNCLiyei7D3o0ARV/kPqYvCb3+/zp2gmE841bLe/d8TRVI3h1N5+S2OEGaZGP1sIWPhS6vu3wZg4+KdkdIa6bXRpljllRK2CjiybYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999336; c=relaxed/simple;
-	bh=+tA/g8Dk/YQLNS6Up9U6+Wrx0IrdbJDljERzNNgmyU4=;
+	s=arc-20240116; t=1779999340; c=relaxed/simple;
+	bh=g/zIEJnWl4A3sUL4oSRxNjBIe9v09UHQJDySjfS4zPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SovApl04nfoAMWXOlJZ21f3vzNa+QWTVvpUhLIRyC7uz48CHVtA2lUUy3Tvo8EqX+T2rAs0WbQCrqCvu2gdFYvmfT3my7TLnkxX7Ddascuih6ephc/Qesotxh224jEd1wnf4zy2oCyrY8ZciLr5T/2mWvteJO2oVGLhQZXBsWl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maZT/Kf4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V+4jz8UNsnPx8eC3Dfy0szDTbq0E5gMxnoJaeA9f8GWg+ZGDqlV3t8t8Eaj+2HUhFgKxFYWsmuLHIFvwcer5x/MvSlhPgtdkyBofChY65LKqPN/ShZSXl9LEOi46FiiMD1bj3YVG1rCet0HDQdVD715QrZWk0Isb9C1/DvfXYyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPqB66ix; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maZT/Kf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4061F000E9;
-	Thu, 28 May 2026 20:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPqB66ix"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0551F000E9;
+	Thu, 28 May 2026 20:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999335;
-	bh=IlsyPIPOhoXlTC/7CR318X34AKuWKbBVVc+D5LIGVjw=;
+	s=korg; t=1779999338;
+	bh=GlMpQhWK+hncDbzZQsbXX5SeCQ0jf8dqg+Q9K53VIus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maZT/Kf4CJXlRm/gS6z6vx17C5BOYTVCYoyANtrJwr/yl7twyhE3PA6ah1A5ozI6C
-	 sEOtLGEh75Bo2MnMy8vyzFLOYqFwOFDypnbtOy8vRkAld1MUlsvy6Odgw6PJpQb4cd
-	 2+kS+HymxkjvlhlusDu719utGDy4BLiC/gprK9PA=
+	b=EPqB66ixobIfKRijER2bY03KkUTLOyZ4NBRjq0qEj2ir6Tkz3e2l+Iwt+piXAa/B4
+	 dawi/G6Tt9vZpaKNOO9hG44Cm6yE/3kCKFxrn5RjIGlbq3PKUHxCesy6f2ne9066Fd
+	 XpT9/AJGhBXQI+IEdpXEzbVPYp1hzEOzqBLnJxVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eder Zulian <ezulian@redhat.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/377] iommu/amd: Remove latent out-of-bounds access in IOMMU debugfs
-Date: Thu, 28 May 2026 21:44:01 +0200
-Message-ID: <20260528194638.480808288@linuxfoundation.org>
+	Junyi Liu <moss80199@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 030/377] ksmbd: validate SID in parent security descriptor during ACL inheritance
+Date: Thu, 28 May 2026 21:44:28 +0200
+Message-ID: <20260528194639.257974528@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,83 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eder Zulian <ezulian@redhat.com>
+From: Junyi Liu <moss80199@gmail.com>
 
-[ Upstream commit 8dfd3d8d74435344ee8dc9237596959c8b2a6cbe ]
+commit 69f030cf95488ae1186c72ac8c66fd279664ea7f upstream.
 
-In iommu_mmio_write() and iommu_capability_write(), the variables
-dbg_mmio_offset and dbg_cap_offset are declared as int. However, they
-are populated using kstrtou32_from_user(). If a user provides a
-sufficiently large value, it can become a negative integer.
+Introduce smb_validate_ntsd_sid() helper to safely validate Owner SID
+and Group SID inside the NT Security Descriptor (smb_ntsd) retrieved
+from the parent directory.
 
-Prior to this patch, the AMD IOMMU debugfs implementation was already
-protected by different mechanisms.
-
-1. #define OFS_IN_SZ 8 ensures the user string <= 8 bytes, so
-   e.g. 0xffffffff isn't a valid input.
-
-  if (cnt > OFS_IN_SZ)
-     return -EINVAL;
-
-2. Implicit type promotion in iommu_mmio_write(), dbg_mmio_offset is int
-   and iommu->mmio_phys_end is u64
-
-  if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
-      return -EINVAL;
-
-3. The show handlers would currently catch the negative number and
-   refuse to perform the read.
-
-Replace kstrtou32_from_user() with kstrtos32_from_user() to parse the
-input, and check for negative values to explicitly prevent out-of-bounds
-memory accesses directly in iommu_mmio_write() and
-iommu_capability_write().
-
-Signed-off-by: Eder Zulian <ezulian@redhat.com>
-Fixes: 7a4ee419e8c1 ("iommu/amd: Add debugfs support to dump IOMMU MMIO registers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Junyi Liu <moss80199@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/debugfs.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/smb/server/smbacl.c |   66 +++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
-index 0584ca2f859d9..3909a1fb218e9 100644
---- a/drivers/iommu/amd/debugfs.c
-+++ b/drivers/iommu/amd/debugfs.c
-@@ -31,11 +31,12 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
- 	if (cnt > OFS_IN_SZ)
- 		return -EINVAL;
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1096,6 +1096,40 @@ static int smb_append_inherited_ace(stru
+ 	return 0;
+ }
  
--	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
-+	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
- 	if (ret)
- 		return ret;
++static int smb_validate_ntsd_sid(struct smb_ntsd *pntsd, size_t pntsd_size,
++				  unsigned int sid_offset, struct smb_sid **sid,
++				  size_t *sid_size)
++{
++	size_t sid_end;
++
++	*sid = NULL;
++	*sid_size = 0;
++
++	if (!sid_offset)
++		return 0;
++
++	if (sid_offset < sizeof(struct smb_ntsd) ||
++	    check_add_overflow(sid_offset, (size_t)CIFS_SID_BASE_SIZE,
++			       &sid_end) ||
++	    sid_end > pntsd_size)
++		return -EINVAL;
++
++	*sid = (struct smb_sid *)((char *)pntsd + sid_offset);
++	if ((*sid)->num_subauth > SID_MAX_SUB_AUTHORITIES)
++		return -EINVAL;
++
++	if (check_add_overflow((size_t)CIFS_SID_BASE_SIZE,
++			       sizeof(__le32) * (size_t)(*sid)->num_subauth,
++			       &sid_end))
++		return -EINVAL;
++
++	if (sid_offset > pntsd_size || sid_end > pntsd_size - sid_offset)
++		return -EINVAL;
++
++	*sid_size = sid_end;
++	return 0;
++}
++
+ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 		     const struct path *path,
+ 		     unsigned int uid, unsigned int gid)
+@@ -1108,28 +1142,28 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	struct dentry *parent = path->dentry->d_parent;
+ 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
+ 	int inherited_flags = 0, flags = 0, i, nt_size = 0, pdacl_size;
+-	int rc = 0, pntsd_type, pntsd_size, acl_len, aces_size;
++	int rc = 0, pntsd_type, ppntsd_size, acl_len, aces_size;
+ 	unsigned int dacloffset;
+ 	size_t dacl_struct_end;
+ 	u16 num_aces, ace_cnt = 0;
+ 	char *aces_base;
+ 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
  
--	if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
-+	if (dbg_mmio_offset < 0 || dbg_mmio_offset >
-+			iommu->mmio_phys_end - sizeof(u64))
- 		return -EINVAL;
+-	pntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
++	ppntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
+ 					    parent, &parent_pntsd);
+-	if (pntsd_size <= 0)
++	if (ppntsd_size <= 0)
+ 		return -ENOENT;
  
- 	iommu->dbg_mmio_offset = dbg_mmio_offset;
-@@ -71,12 +72,12 @@ static ssize_t iommu_capability_write(struct file *filp, const char __user *ubuf
- 	if (cnt > OFS_IN_SZ)
- 		return -EINVAL;
+ 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
+ 	if (!dacloffset ||
+ 	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
+-	    dacl_struct_end > (size_t)pntsd_size) {
++	    dacl_struct_end > (size_t)ppntsd_size) {
+ 		rc = -EINVAL;
+ 		goto free_parent_pntsd;
+ 	}
  
--	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
-+	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
- 	if (ret)
- 		return ret;
+ 	parent_pdacl = (struct smb_acl *)((char *)parent_pntsd + dacloffset);
+-	acl_len = pntsd_size - dacloffset;
++	acl_len = ppntsd_size - dacloffset;
+ 	num_aces = le16_to_cpu(parent_pdacl->num_aces);
+ 	pntsd_type = le16_to_cpu(parent_pntsd->type);
+ 	pdacl_size = le16_to_cpu(parent_pdacl->size);
+@@ -1243,19 +1277,19 @@ pass:
+ 		struct smb_ntsd *pntsd;
+ 		struct smb_acl *pdacl;
+ 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
+-		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
++		size_t powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
+ 		size_t pntsd_alloc_size;
  
- 	/* Capability register at offset 0x14 is the last IOMMU capability register. */
--	if (dbg_cap_offset > 0x14)
-+	if (dbg_cap_offset < 0 || dbg_cap_offset > 0x14)
- 		return -EINVAL;
+-		if (parent_pntsd->osidoffset) {
+-			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
+-					le32_to_cpu(parent_pntsd->osidoffset));
+-			powner_sid_size = 1 + 1 + 6 + (powner_sid->num_subauth * 4);
+-		}
+-		if (parent_pntsd->gsidoffset) {
+-			pgroup_sid = (struct smb_sid *)((char *)parent_pntsd +
+-					le32_to_cpu(parent_pntsd->gsidoffset));
+-			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
+-		}
++		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
++					   le32_to_cpu(parent_pntsd->osidoffset),
++					   &powner_sid, &powner_sid_size);
++		if (rc)
++			goto free_aces_base;
++		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
++					   le32_to_cpu(parent_pntsd->gsidoffset),
++					   &pgroup_sid, &pgroup_sid_size);
++		if (rc)
++			goto free_aces_base;
  
- 	iommu->dbg_cap_offset = dbg_cap_offset;
--- 
-2.53.0
-
+ 		if (check_add_overflow(sizeof(struct smb_ntsd),
+ 				       (size_t)powner_sid_size,
 
 
