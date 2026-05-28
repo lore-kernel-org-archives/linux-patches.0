@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2875318B9D;
-	Thu, 28 May 2026 20:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358732459DD;
+	Thu, 28 May 2026 20:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001305; cv=none; b=dC6BIpBJdhEuR15tFxKtDGUHhL39VHepqKbF3SI5CJiC9uhLun4+cDqFmJlGXyUPElkb+OPd7IFuj41MMjwt8b+7faG/dbGahBW1MAzEC3Gtw6BHBojK2gTTr4XPOQmGqEQXVbYQetQv9pJMCP2vhHIKrnkrAQ8WM5Xky6rxmJA=
+	t=1780001308; cv=none; b=a+t7jqqRHLUHhmpvCtI/0QPMsGV1e0LqbMxGBTiUsXw3vtTqYxYry8blhA1wU/XtT/OQgdO34cSuS2oCK+QzQZgWeDg8mb5l0/bMhFSvRjAEWiZ/FOi90ppfbHHGYGYjqlhR2l23S8O86cyvtLri2tpA/cC0wzyH9QQKRfpebiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001305; c=relaxed/simple;
-	bh=dEssjDNbkCeRm/B3EyukvGqDXRmWw5t359IMcPIEzWY=;
+	s=arc-20240116; t=1780001308; c=relaxed/simple;
+	bh=VVC81APN95QrrVEG7tb6gF44zFwNx5b9PdZct2nDSdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFaLcUurLedzNxhYagvcaAdyfVb3GXyC/9I/eG4kJpCpez2fb1kxipTg5BRxv4pVyHOxvPOcHnVZ6rB8TKeD+cUUzSiKPpCvF/w0RG4QLTXi6KwgIwjEG55/P3lRGNR/49Z/oxWuATFgA0pv6MEA9NfniICBVOcEnkke2ZtEt9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNiRrJq+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uea5WhfgjLWr+oOhhnsOhGTyvR2ipruGC2AOJNhpJ75wSwU2IHkjMgrtzRhm7hK8XM+mraEB50bTrk3spmPTuSaDcEdB8JW1ukPf57am5ZB56bqi6Lr3ZydlV+WiYta1g8wA2zzDVuGYw7/CE/49HWnEys2zxyXTwKp61cVoj/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzAUw+nE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNiRrJq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1CA1F00A3A;
-	Thu, 28 May 2026 20:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzAUw+nE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929F91F000E9;
+	Thu, 28 May 2026 20:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001304;
-	bh=pEzYoGEbi/6z9rrsm1ER/oaOuu1Pwd/vUYv+WDwvM/M=;
+	s=korg; t=1780001307;
+	bh=8Px9PNyWmN294dREOytVc1DN8ZlaIfAmC1GluRfdQqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNiRrJq+ZsRzu+exc4MjXab+iIexKMyzkgsgiDPBx0YyeX3uZyWW6TKIlvlvl2VVn
-	 8VGgk3M6D+AvEh4MyupBoVZ2XsHIt97o1oHPYuLRIsgVWfZ4f4GiGkZOn7xBfSIiKH
-	 PsmcODxhpDQ9Q65J28cLm6Lw6eCACDgC7DxqZMNY=
+	b=OzAUw+nELGRt60qcB/hoHxzbCnVb4Y1B/9kW/RJa7PdpAAOYpujOx9Z832m/oZi78
+	 2kSL9rglBKSX/BtCJIdeQqgLczrrwK3VaY9OsRf2fOlZu889mR8ZWBkkiu+2GfxERZ
+	 9LT5pjNO+oww7pqo4Saoq+x701M4iJJ37EhT9aao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.6 081/186] batman-adv: frag: disallow unicast fragment in fragment
-Date: Thu, 28 May 2026 21:49:21 +0200
-Message-ID: <20260528194931.123663030@linuxfoundation.org>
+Subject: [PATCH 6.6 082/186] batman-adv: bla: fix report_work leak on backbone_gw purge
+Date: Thu, 28 May 2026 21:49:22 +0200
+Message-ID: <20260528194931.150557792@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -56,85 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit bc62216dc8e221e3781afa14430f45208bfa9af9 upstream.
+commit 0459430add32ea41f3e2ef9351610e6d33627a6b upstream.
 
-batadv_frag_skb_buffer() is called by batadv_batman_skb_recv() when a
-BATADV_UNICAST_FRAG packet is received. Once all fragments are collected
-and the packet is reassembled, batadv_recv_frag_packet() calls
-batadv_batman_skb_recv() again to process the defragmented payload.
+batadv_bla_purge_backbone_gw() removes stale backbone gateway entries,
+but fails to properly handle their associated report_work:
 
-A malicious sender can craft a BATADV_UNICAST_FRAG packet whose reassembled
-payload is itself a BATADV_UNICAST_FRAG packet (matryoshka-style nesting).
-Each nesting level recurses through batadv_batman_skb_recv() without bound,
-growing the kernel stack until it is exhausted.
+- If report_work is running, the purge must wait for it to finish before
+  freeing the backbone_gw, otherwise the worker may access freed memory
+  (e.g. bat_priv).
+- If report_work is pending, the purge must cancel it and release the
+  reference held for that pending work item.
 
-Since refragmentation or fragments in fragments are not actually allowed,
-discard all packets which are still BATADV_UNICAST_FRAG packets after the
-defragmentation process.
+The previous implementation called hlist_for_each_entry_safe() inside a
+spin_lock_bh() section, but cancel_work_sync() may sleep and therefore
+cannot be called from within a spinlock-protected region.
+
+Restructure the loop to handle one entry per spinlock critical section:
+acquire the lock, find the next entry to purge, remove it from the hash
+list, then release the lock before calling cancel_work_sync() and
+dropping the hash_entry reference. Repeat until no more entries require
+purging.
 
 Cc: stable@kernel.org
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Reviewed-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |   35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ net/batman-adv/bridge_loop_avoidance.c |   60 ++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 22 deletions(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -306,6 +306,31 @@ free:
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -1224,6 +1224,7 @@ static void batadv_bla_purge_backbone_gw
+ 	struct hlist_head *head;
+ 	struct batadv_hashtable *hash;
+ 	spinlock_t *list_lock;	/* protects write access to the hash lists */
++	bool purged;
+ 	int i;
+ 
+ 	hash = bat_priv->bla.backbone_hash;
+@@ -1234,30 +1235,45 @@ static void batadv_bla_purge_backbone_gw
+ 		head = &hash->table[i];
+ 		list_lock = &hash->list_locks[i];
+ 
+-		spin_lock_bh(list_lock);
+-		hlist_for_each_entry_safe(backbone_gw, node_tmp,
+-					  head, hash_entry) {
+-			if (now)
+-				goto purge_now;
+-			if (!batadv_has_timed_out(backbone_gw->lasttime,
+-						  BATADV_BLA_BACKBONE_TIMEOUT))
+-				continue;
+-
+-			batadv_dbg(BATADV_DBG_BLA, backbone_gw->bat_priv,
+-				   "%s(): backbone gw %pM timed out\n",
+-				   __func__, backbone_gw->orig);
++		do {
++			purged = false;
++
++			spin_lock_bh(list_lock);
++			hlist_for_each_entry_safe(backbone_gw, node_tmp,
++						  head, hash_entry) {
++				if (now)
++					goto purge_now;
++				if (!batadv_has_timed_out(backbone_gw->lasttime,
++							  BATADV_BLA_BACKBONE_TIMEOUT))
++					continue;
++
++				batadv_dbg(BATADV_DBG_BLA, backbone_gw->bat_priv,
++					   "%s(): backbone gw %pM timed out\n",
++					   __func__, backbone_gw->orig);
+ 
+ purge_now:
+-			/* don't wait for the pending request anymore */
+-			if (atomic_read(&backbone_gw->request_sent))
+-				atomic_dec(&bat_priv->bla.num_requests);
+-
+-			batadv_bla_del_backbone_claims(backbone_gw);
+-
+-			hlist_del_rcu(&backbone_gw->hash_entry);
+-			batadv_backbone_gw_put(backbone_gw);
+-		}
+-		spin_unlock_bh(list_lock);
++				purged = true;
++
++				/* don't wait for the pending request anymore */
++				if (atomic_read(&backbone_gw->request_sent))
++					atomic_dec(&bat_priv->bla.num_requests);
++
++				batadv_bla_del_backbone_claims(backbone_gw);
++
++				hlist_del_rcu(&backbone_gw->hash_entry);
++				break;
++			}
++			spin_unlock_bh(list_lock);
++
++			if (purged) {
++				/* reference for pending report_work */
++				if (cancel_work_sync(&backbone_gw->report_work))
++					batadv_backbone_gw_put(backbone_gw);
++
++				/* reference for hash_entry */
++				batadv_backbone_gw_put(backbone_gw);
++			}
++		} while (purged);
+ 	}
  }
  
- /**
-+ * batadv_skb_is_frag() - check if newly merged skb is gain a unicast packet
-+ * @skb: newly merged skb
-+ *
-+ * Return: if newly skb is of type BATADV_UNICAST_FRAG
-+ */
-+static bool batadv_skb_is_frag(struct sk_buff *skb)
-+{
-+	struct batadv_ogm_packet *batadv_ogm_packet;
-+
-+	/* packet should hold at least type and version */
-+	if (unlikely(!pskb_may_pull(skb, 2)))
-+		return false;
-+
-+	batadv_ogm_packet = (struct batadv_ogm_packet *)skb->data;
-+
-+	if (batadv_ogm_packet->version != BATADV_COMPAT_VERSION)
-+		return false;
-+
-+	if (batadv_ogm_packet->packet_type != BATADV_UNICAST_FRAG)
-+		return false;
-+
-+	return true;
-+}
-+
-+/**
-  * batadv_frag_skb_buffer() - buffer fragment for later merge
-  * @skb: skb to buffer
-  * @orig_node_src: originator that the skb is received from
-@@ -338,6 +363,16 @@ bool batadv_frag_skb_buffer(struct sk_bu
- 	if (!skb_out)
- 		goto out_err;
- 
-+	/* fragment in fragment is not allowed. otherwise it is possible
-+	 * to exhaust the stack when receiving a matryoshka-style
-+	 * "fragments in a fragment packet"
-+	 */
-+	if (batadv_skb_is_frag(skb_out)) {
-+		kfree_skb(skb_out);
-+		skb_out = NULL;
-+		goto out_err;
-+	}
-+
- out:
- 	ret = true;
- out_err:
 
 
