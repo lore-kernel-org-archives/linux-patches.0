@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434102F549F;
-	Thu, 28 May 2026 20:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CAB2F1FEF;
+	Thu, 28 May 2026 20:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001347; cv=none; b=lsKGZGTiCJf+lFkS78wtFZ6C4IC3GgRabvI40tLoYg/O/kWXeHJbZjiteQZ5JneEEp/pMBUWUL5sixAeHVblIcjI3ekVk672Bq9CWnoNl9cZehy8eLqH0iE1iECSIiGj7V5knIQ7vLABNUhkJ50W4Idf9t9NIGRqmMzYlzNwfd0=
+	t=1780001350; cv=none; b=rcVON/DLXL0HgxQxA4FcGu+8JLgsgPr1QOYX/BwHQV27IWLs0OzabbSjE3OPDT8DxaJsh0yTOg7ZbC4B0smdl7p1GcoqGW3MWk301aV1Lg70nY1DA/hvBg9I9skvnPNVKjqeg3zO8bezFfgr1aJi6h+by5P3e5uQEBwB+/Ys8Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001347; c=relaxed/simple;
-	bh=QOHG5oYegDifLdw4U11jmubiXazp1BEHXOo4J1kZJUg=;
+	s=arc-20240116; t=1780001350; c=relaxed/simple;
+	bh=13gS5XO39afbhEZ0UCyI7HXgq9ssU+eLCxWENBv4ce4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhMCMiyV1T+8WtQORC3ZR+1upKLWUcpbgR4i9hLnNihdH2A6gtYfLTPyhKDoqUx+2kCWZSeJ/ks/NsZpZOp2yh6m4Zx2VLmkRNfvzmkqpumAR7iTNGdNtIIinaggjvFBON4Tf9vQtAt9RwqMnAEjmeVVErm6zVw4Cad4mWZzRw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6F270U4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iqpjc5Og2yIZVmpP5mhMJZOQcBTboQKNPIDE26454zU+/bjYdk3fJId2yIaCzoI68DVLybskEaQHOYkfgf26xGt4eoYM4pH1FnLD2okhFdLOcXU+KWlyalQGPR8at6bmiDZOsAowM4rFDoA1vmRF6bMtq7Ij2ktclcwUHSXYCiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BagJQP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6F270U4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13161F00A3A;
-	Thu, 28 May 2026 20:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BagJQP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708CE1F000E9;
+	Thu, 28 May 2026 20:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001346;
-	bh=xkCf01CKnhw1dNxS9C43kCx3bmazgtRH6rK1SUo8UlQ=;
+	s=korg; t=1780001349;
+	bh=HSbv5ZVQ/sCZsOWepYDI79Z3ASqKp6+GE8XuVfBedKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6F270U4eNMWgmB90Q6QvicOVplHY2V2baW8QDhJANJmhyfttKn8W0RhHH/nsMi8u
-	 LJXFY2r1MALGXs6WwG7xCEZjHhXLXedaDm05ahK2aUylJ1yFmBxo6BFwMJvQI0eBwj
-	 GkrtUtR1FyuNBiUQ1zCzTeo0kuzvM8LfIHTMV+IQ=
+	b=2BagJQP9xVgJkltBBizdLS00rYrltMZbrHw4gnYI41jdvD1EFQH1R82D52Z3QA0gs
+	 ahP8EbR9km15loY7VtCtxQ7MnYiXqR3P4JLSbd3BRcrJiFEHDUIyYIj2xse7zkF3pQ
+	 DPvsK+OWKjjnaNlx5aGrJ/2Viofn+wSd663UyGaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 068/186] LoongArch: Remove unused code to avoid build warning
-Date: Thu, 28 May 2026 21:49:08 +0200
-Message-ID: <20260528194930.783146045@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 095/186] hwmon: (pmbus/adm1266) register the nvmem device after pmbus_do_probe()
+Date: Thu, 28 May 2026 21:49:35 +0200
+Message-ID: <20260528194931.500865268@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -50,40 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 0ccc9d47cf020994097ff51827cebd04aa2b0bf4 upstream.
+commit 6af713af91d5c34ec049eb3cc2c5b3f5eba953b8 upstream.
 
-After commit feee6b2989165631b1 ("mm/memory_hotplug: shrink zones when
-offlining memory"), __remove_pages() doesn't need the "zone" parameter
-so the "page" variable is also unused. Remove the unused code to avoid
-such build warning:
+adm1266_probe() calls adm1266_config_nvmem() -- which goes on to
+devm_nvmem_register() and exposes adm1266_nvmem_read() to userspace --
+before pmbus_do_probe() has initialised the per-client PMBus state.
 
-arch/loongarch/mm/init.c: In function 'arch_remove_memory':
-arch/loongarch/mm/init.c:134:22: warning: variable 'page' set but not used [-Wunused-but-set-variable=]
-  134 |         struct page *page = pfn_to_page(start_pfn);
+Same latent hazard as the gpio_chip one fixed in the previous patch:
+once the nvmem device is registered, gpiolib's nvmem char-dev / sysfs
+interface is reachable, and any concurrent read triggers
+adm1266_nvmem_read() -> adm1266_nvmem_read_blackbox(), which issues
+PMBus traffic that races pmbus_do_probe()'s own device accesses with
+no serialisation.
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Move adm1266_config_nvmem() down past pmbus_do_probe() so the nvmem
+device isn't reachable from userspace until the PMBus state the
+nvmem accessors depend on is fully initialised.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-5-e425e4f88139@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/init.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -106,11 +106,7 @@ void arch_remove_memory(u64 start, u64 s
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
--	struct page *page = pfn_to_page(start_pfn);
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -470,14 +470,14 @@ static int adm1266_probe(struct i2c_clie
+ 	if (ret < 0)
+ 		return ret;
  
--	/* With altmap the first mapped page is offset from @start */
--	if (altmap)
--		page += vmem_altmap_offset(altmap);
- 	__remove_pages(start_pfn, nr_pages, altmap);
- }
+-	ret = adm1266_config_nvmem(data);
+-	if (ret < 0)
+-		return ret;
+-
+ 	ret = pmbus_do_probe(client, &data->info);
+ 	if (ret)
+ 		return ret;
  
++	ret = adm1266_config_nvmem(data);
++	if (ret < 0)
++		return ret;
++
+ 	ret = adm1266_config_gpio(data);
+ 	if (ret < 0)
+ 		return ret;
 
 
