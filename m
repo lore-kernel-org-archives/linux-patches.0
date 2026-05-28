@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E632F691F;
-	Thu, 28 May 2026 20:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529C52F691F;
+	Thu, 28 May 2026 20:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998865; cv=none; b=k+xjfneP39TrF38N3UHowooOZ1u5l7Dgn+S8ePT2BVscY8H5SOoiaocgZu0hoB19v0xaVvDgddGZqUIU4Paks7GPZzFeD2xYWcya3RLE50kNqfzysuPRRnxT3NTGh+TMjacDMxUHzacKy5m2hryI2zu4CgZAesQE6iKyEdg/TJw=
+	t=1779998868; cv=none; b=axwBIP6mypPxtFxryLrytCnH8tzSI85ZLm8DOwdRo+crM77adhC/DFMI5ldj4pRTJoO3FENHO22mRImE8KurTswCWLhPbGLLV79RT2lrBIMWbU5rRFmNQvtRFZbn4DzUoqTVpEbpDl4+QDl9tgxtwOvPEUqEVRlkkufrrq1xPqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998865; c=relaxed/simple;
-	bh=fI/NOrxAssAHQyV9Pv91m6l5/UctrScZdPwKx1WjYGM=;
+	s=arc-20240116; t=1779998868; c=relaxed/simple;
+	bh=X0CECoGtcAUEQj7SPkdqTQV5z7nY8FBh5Lu+iWuRnfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvguBgTe6sRlfDA0ZnvyA0q4HI7nsbyKTj/pYs+Xy8zAKLkzp4RBesGYw9eLVTQkFBjvRD6SQQSsEDO4iT3bkScjhauvbmEpGlah7EzeRCJ7j1gTwUQWUx6jP+S7TRyaRMF8WnF9sbpXLGCM3aNkzrUgVJ5IThG51LkMDjpH3Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWTHBMoz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWdjsMmgBwRRQNabk4KybLaDrjo9uciAnB+RPdy+40DaRiV3poiHatDMDmwGO+7KBSeAQ62jXFS0CLEmF2PgYSTO4U5zWJzQVvezICXCgMOyt6M8JhZ8bu0FLwDfPJFRk0VT9hSM4tx/dTpL3osTQiXZTsrA5/5Vu+tiFjnF/dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vthTvg2Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWTHBMoz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D041F000E9;
-	Thu, 28 May 2026 20:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vthTvg2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90E1F000E9;
+	Thu, 28 May 2026 20:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998864;
-	bh=laRKNTFrgoG4lYd3L4LsSQuiyySx0OJJq4GrfIe7Fxg=;
+	s=korg; t=1779998867;
+	bh=soc7RQZRCO8uvdrCwM/FoRsIHGMrOuBsl73UC7cItq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TWTHBMozFZoejL6h/zjDnHX67AeeSYwFQCrbbkhlpZjxQx8FY0XSKxK6BN5yWnlry
-	 vNbt/IbBTQ+lVZsCh2t7i9SSISsGu5ASwSfIBYSMM9Awi2O5zrixDzBMFToBWcI5r8
-	 ZEX6JPoPoUgr5z+ZYzqMct2IeOLV4weVTqlaJ6XI=
+	b=vthTvg2YkNENBLcxiYTY7TiBJWq1lQiXrUYRLOF6gHjBzZjj68uzYpImlsja585jT
+	 EegUK09bXRe3FaQreOhDKjNcDOACpMcjqp2ImFusXrSmKPB8hkIL93ASw/SCrbt0Do
+	 5Kj41x1lA3P4KRp4XXGS7REdX0BlQ1QXCGVPrpgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
+	Matt Evans <mattev@meta.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 326/461] x86/xen: Fix xen_e820_swap_entry_with_ram()
-Date: Thu, 28 May 2026 21:47:35 +0200
-Message-ID: <20260528194656.780896021@linuxfoundation.org>
+Subject: [PATCH 7.0 327/461] vfio/pci: Check BAR resources before exporting a DMABUF
+Date: Thu, 28 May 2026 21:47:36 +0200
+Message-ID: <20260528194656.813361603@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Matt Evans <mattev@meta.com>
 
-[ Upstream commit 28e03f78e69cf6628b81f24777799778528a84c1 ]
+[ Upstream commit 702809dabdecca807bdd50cfdcc1c980feb2ba62 ]
 
-When swapping a not page-aligned E820 map entry with RAM, the start
-address of the modified entry is calculated wrong (the offset into the
-page is subtracted instead of being added to the page address).
+A DMABUF exports access to BAR resources and, although they are
+requested at startup time, we need to ensure they really were reserved
+before exporting.  Otherwise, it's possible to access unreserved
+resources through the export.
 
-Fixes: be35d91c8880 ("xen: tolerate ACPI NVS memory overlapping with Xen allocated memory")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260505102417.208138-1-jgross@suse.com>
+Add a check to the DMABUF-creation path.
+
+Fixes: 5d74781ebc86c ("vfio/pci: Add dma-buf export support for MMIO regions")
+Signed-off-by: Matt Evans <mattev@meta.com>
+Link: https://lore.kernel.org/r/20260511145829.2993601-3-mattev@meta.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_dmabuf.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index ac8021c3a997e..d4738e03a63a4 100644
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -655,7 +655,7 @@ static void __init xen_e820_swap_entry_with_ram(struct e820_entry *swap_entry)
- 			/* Fill new entry (keep size and page offset). */
- 			entry->type = swap_entry->type;
- 			entry->addr = entry_end - swap_size +
--				      swap_addr - swap_entry->addr;
-+				      swap_entry->addr - swap_addr;
- 			entry->size = swap_entry->size;
+diff --git a/drivers/vfio/pci/vfio_pci_dmabuf.c b/drivers/vfio/pci/vfio_pci_dmabuf.c
+index b1d658b8f7b51..05385b63e2baf 100644
+--- a/drivers/vfio/pci/vfio_pci_dmabuf.c
++++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
+@@ -232,9 +232,11 @@ int vfio_pci_core_feature_dma_buf(struct vfio_pci_core_device *vdev, u32 flags,
+ 		return -EINVAL;
  
- 			/* Convert old entry to RAM, align to pages. */
+ 	/*
+-	 * For PCI the region_index is the BAR number like everything else.
++	 * For PCI the region_index is the BAR number like everything
++	 * else.  Check that PCI resources have been claimed for it.
+ 	 */
+-	if (get_dma_buf.region_index >= VFIO_PCI_ROM_REGION_INDEX)
++	if (get_dma_buf.region_index >= VFIO_PCI_ROM_REGION_INDEX ||
++	    vfio_pci_core_setup_barmap(vdev, get_dma_buf.region_index))
+ 		return -ENODEV;
+ 
+ 	dma_ranges = memdup_array_user(&arg->dma_ranges, get_dma_buf.nr_ranges,
 -- 
 2.53.0
 
