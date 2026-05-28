@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC113F870F;
-	Thu, 28 May 2026 20:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461F4339866;
+	Thu, 28 May 2026 20:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998957; cv=none; b=MCP5m87IxVfb6sFP4vrGgCYiDLs0c87ln//ps3edLuPMZ8ShNVjYVzC7v9SAuao7yVGrvkIxaBNzvXwYV2hK+Hht2ktBFngJvCB1cceCnOmDrNI6iay8lyS5XoTVBWEHNmTXo8SxeBtQ+Sm1El49Yto5Hpf9Vet9jN8VBegoKes=
+	t=1779998960; cv=none; b=BMSyrlfc54C0EE9IBkR/m6y7/PA/OH1D2Bu4OYjgBtdAvC51Aal1Nj3h7Kw2XfOArG5bEAXE/zTpW1BUd3svvfh+SYmBpLXRXq3eWnJNPc+v6eT1BhM5HBABu8g45RLS1AtgTwfmgKQECc8YAsVUKLPXp2g5ZQL7ElJCS2xEg7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998957; c=relaxed/simple;
-	bh=PWyuU7CgHsq2aibvIK1WDRxyoE0LVrs+9YBQ3sZ9C0Q=;
+	s=arc-20240116; t=1779998960; c=relaxed/simple;
+	bh=rxt14rpBNI3oh0K90w/idAjb8oIGGFNbADRdzAc/CU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HsN3dujBVgRVBXs99BVPMH3XXNxdyJQuovct2dgPYOjq/LwMhg4U/0PnaPnnywkpMcWiC7k9DiFgrYsHehCaGDMo3fgbU6DtHJ6pyVdBpgsNxvhtEWl4JV7xO1RAvxp+aCWrA2KA4u/H8T9Nm4bCNmENeNmbj38t04bUkKT8OzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0bbAsL5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o4Eiz4xu+lasIAalzyQrD/w36h+oRxogfrDZY1iK8BU0gytFv/5OnSRq8oZThkeNO6cs/cpTgs7huTFsrj9a1hrtqiBrQ/njmiex470OvMTTOeVVwD3DQlKPgbNsAbRPt0ou7tnoEO5nFehL9ZPANd6gDJWSs3eI3wc2vzLAXKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eviIgvwu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0bbAsL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6281F00A3C;
-	Thu, 28 May 2026 20:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eviIgvwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17B21F000E9;
+	Thu, 28 May 2026 20:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998956;
-	bh=k0bZMjp0tqhLu98Kj3pCW4zYyP918N8O2/iSE94XtNs=;
+	s=korg; t=1779998959;
+	bh=7V2aICeyqdwYPi3mrju7GFi+Kpb3yY1UjQlS3nORNTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0bbAsL5ka06unA/3NIHEHhcmATonmbJrWLdecQcajOac9Mt0fTnNWkvYqWAli6+L
-	 5M0l4FFk+a7mrlm5WnYdR9kfigWGMw+QjeKEegw2gy7ZWblF8ehRI6qNXcVV7lqrGS
-	 Ol7smFOcOxlNmrLjm6TcZ0KibAN+46RQjsDqRKZo=
+	b=eviIgvwunurIXilBhzf0za2L0/QQlJ5AjPfWCNPTL3uNBZbSLdILB+92Bxdu61pJf
+	 TqYouCe9W2Ehp2wCn2caa1mdmeUC+XwMBNx0OHka9ktYDknHNVJIDXpS4jzU5tacEs
+	 etGnwVw12rcwWYhvOyf88s9jgI6FbEXiuYleY1PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Carlier <devnexen@gmail.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 320/461] ovpn: tcp - use cached peer pointer in ovpn_tcp_close()
-Date: Thu, 28 May 2026 21:47:29 +0200
-Message-ID: <20260528194656.576088825@linuxfoundation.org>
+Subject: [PATCH 7.0 311/461] ASoC: intel: sof_sdw: Prepare for configuration without a jack
+Date: Thu, 28 May 2026 21:47:20 +0200
+Message-ID: <20260528194656.289638004@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,81 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 775d8d7ad02aa345e1588424a6a8b9ae49fb9012 ]
+[ Upstream commit d733fb463834cf97a0c667681e236fea0e833a05 ]
 
-ovpn_tcp_close() loads the ovpn_socket via rcu_dereference_sk_user_data()
-under rcu_read_lock(), takes a reference on sock->peer, caches the peer
-pointer in a local, and drops the read lock. It then passes sock->peer
-(rather than the cached local) to ovpn_peer_del(), re-dereferencing the
-ovpn_socket after the RCU read section has ended.
+In certain setups of cs42l43 UAJ function may be removed from ACPI and
+physically unconnected. Prepare a driver for that configuration by
+setting a system clock in the speaker path too.
 
-Unlike ovpn_tcp_sendmsg(), which uses the same "load under RCU, use
-after unlock" pattern but is protected by lock_sock() held across the
-function, ovpn_tcp_close() runs without the socket lock: inet_release()
-invokes sk_prot->close() without taking lock_sock first.
-
-ovpn_socket_release() can therefore complete its kref_put -> detach ->
-synchronize_rcu -> kfree(sock) sequence concurrently, in the window
-after ovpn_tcp_close() drops rcu_read_lock() but before it dereferences
-sock->peer. The synchronize_rcu() in ovpn_socket_release() protects
-readers that use the dereferenced pointer inside the RCU read section,
-not those that escape the pointer to a local and use it afterwards.
-
-A reproducer follows the pattern of commit 94560267d6c4 ("ovpn: tcp -
-don't deref NULL sk_socket member after tcp_close()"): trigger a peer
-removal (keepalive expiration or netlink OVPN_CMD_DEL_PEER) at the same
-moment userspace closes the TCP fd. That commit fixed the detach-side
-of the same race window; this one fixes the close-side at a different
-victim.
-
-Tighten the entry block to read sock->peer exactly once into the cached
-peer local, and route all subsequent uses (the hold check, the
-ovpn_peer_del() call, and the prot->close() invocation) through that
-local. sock->peer is only ever written once in ovpn_socket_new() under
-lock_sock(), before rcu_assign_sk_user_data() publishes the ovpn_socket,
-and is never reassigned afterwards - but the previous multi-read pattern
-made that invariant implicit rather than explicit. The same multi-read
-shape exists in ovpn_tcp_recvmsg(), ovpn_tcp_sendmsg(),
-ovpn_tcp_data_ready() and ovpn_tcp_write_space(); those will be cleaned
-up via a dedicated helper in a follow-up net-next series.
-
-Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260403082335.40798-1-mstrozek@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 5a30862dec5a ("ASoC: sdw_utils: Check speaker component string allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/tcp.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_cs42l43.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 5499c1572f3e2..5f345ae7d59d2 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -581,14 +581,19 @@ static void ovpn_tcp_close(struct sock *sk, long timeout)
+diff --git a/sound/soc/sdw_utils/soc_sdw_cs42l43.c b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
+index 2685ff4f09320..4a451b9d4f137 100644
+--- a/sound/soc/sdw_utils/soc_sdw_cs42l43.c
++++ b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
+@@ -107,6 +107,7 @@ EXPORT_SYMBOL_NS(asoc_sdw_cs42l43_hs_rtd_init, "SND_SOC_SDW_UTILS");
  
- 	rcu_read_lock();
- 	sock = rcu_dereference_sk_user_data(sk);
--	if (!sock || !sock->peer || !ovpn_peer_hold(sock->peer)) {
-+	if (!sock) {
- 		rcu_read_unlock();
- 		return;
- 	}
-+
- 	peer = sock->peer;
-+	if (!peer || !ovpn_peer_hold(peer)) {
-+		rcu_read_unlock();
-+		return;
+ int asoc_sdw_cs42l43_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc_dai *dai)
+ {
++	struct snd_soc_component *component = snd_soc_rtd_to_codec(rtd, 0)->component;
+ 	struct snd_soc_card *card = rtd->card;
+ 	struct snd_soc_dapm_context *dapm = snd_soc_card_to_dapm(card);
+ 	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
+@@ -131,8 +132,15 @@ int asoc_sdw_cs42l43_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_so
+ 
+ 	ret = snd_soc_dapm_add_routes(dapm, cs42l43_spk_map,
+ 				      ARRAY_SIZE(cs42l43_spk_map));
+-	if (ret)
++	if (ret) {
+ 		dev_err(card->dev, "cs42l43 speaker map addition failed: %d\n", ret);
++		return ret;
 +	}
- 	rcu_read_unlock();
++
++	ret = snd_soc_component_set_sysclk(component, CS42L43_SYSCLK, CS42L43_SYSCLK_SDW,
++					   0, SND_SOC_CLOCK_IN);
++	if (ret)
++		dev_err(card->dev, "Failed to set sysclk: %d\n", ret);
  
--	ovpn_peer_del(sock->peer, OVPN_DEL_PEER_REASON_TRANSPORT_DISCONNECT);
-+	ovpn_peer_del(peer, OVPN_DEL_PEER_REASON_TRANSPORT_DISCONNECT);
- 	peer->tcp.sk_cb.prot->close(sk, timeout);
- 	ovpn_peer_put(peer);
+ 	return ret;
  }
 -- 
 2.53.0
