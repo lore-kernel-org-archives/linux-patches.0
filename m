@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154642459DD;
-	Thu, 28 May 2026 20:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0C52459DD;
+	Thu, 28 May 2026 20:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001283; cv=none; b=FI4wEW4EG59ydRqYYt6SKiLADzvST7sIdZZkf2G+jvreQhNJO8iTWPx3RB2c+o6ltFpDyPy6t/57m7VCq6bzPkta7IONZ9enzXpKKDjvhxJRyWybErw4UhgPwMj+6IxYLBkFcCy5KdilFeHGv6OZIhMSRCrE42afPmviDenNGUE=
+	t=1780001285; cv=none; b=X0UlN3ACgZjykOKZYpduei4kGCOdfyee+XjofH96oBppRCzgC1iw2oaaH9PEiJRVwRrYqhyz8DEq3TyUpH0fxh0ZR1HLAAVjWGj1aK5uMO3zJ4+Z2+nf/byfxnNZapSHqK2B6kHZvVXc81IxEkcimQJxSXgJs+LfpyjZkNZJooY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001283; c=relaxed/simple;
-	bh=JQqi8Jnl+N1W22Lml3lXdAtZ4buh9d/vogIMkb6Erno=;
+	s=arc-20240116; t=1780001285; c=relaxed/simple;
+	bh=uwl8cutzgof3rffvwJipYlMT+wJEq1WJWFTrFz6eF34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrYOzk2ANuHhD6MnpaZmixnd3SlRqfCNxY8r7i7iiJJh4Kk1iAn085N8lO6C/6QrFUwzIKbLn7vk6urUBbK/paLmcG3LCOiGxzYDXrW3vrg0gio42cPSzIBOcHlZBfuqMubUxcleirOCS/lDV4TkNMm6HIgGvkuzzRApzy5eI0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfLNWhHa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bL/ONw9RWsOLBr+wiF7bjz/bPM8JqarO3bg5SbP+poORhiHWqbV/MA+TpFy1nFqjPkDYnqWL2fC5NYEyFGjGuqEH0NjOGHGwVckUPHHJSFh/3t/ChGN6zU6+sKKApCbBf0DcZ1PCd9zpf+wWX/uyeTC2bQd08dcFQAxXzqDYeiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFYjyTdD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfLNWhHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738611F000E9;
-	Thu, 28 May 2026 20:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFYjyTdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4488F1F000E9;
+	Thu, 28 May 2026 20:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001282;
-	bh=Ax4ZOXIoqDcuGlh1XqfLNnj1vLK0oe1nmx3OF3m5KHs=;
+	s=korg; t=1780001284;
+	bh=vOTzVQrZYLzYNPYb8jODORuNHLD4H8SlSHGU4zdBwA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfLNWhHahkAacNqCjRKZ60pRLZjJyIumXJq2hGS/OayrLFJjmQABzL0aXgAcxfw5P
-	 wAb1Vxn632mGF7Hg3p3gOrLidPTtYcn3zw36W2nRKsukGFaUxYx96yG6nYjgXzZ7HV
-	 W8ZRSXNQ8AMx3ht3MSx3OPEvIvEbUaavjP5akKRE=
+	b=jFYjyTdDpNyNrBDF0cjbRmkLCGnVut4BVdaOyodR2NE7O/d732shQir8H7fya9CR0
+	 K5RpLlFQCkY1r771/rOtd/1MnDYXZWYpRcvW0dSKmCQCB0562qMtDU8dqgaaosksLQ
+	 0uWcZI73ypalHLf426TZxMhs3EWs/ZImST+ZxaBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 023/186] mm/damon/sysfs-schemes: call missing mem_cgroup_iter_break()
-Date: Thu, 28 May 2026 21:48:23 +0200
-Message-ID: <20260528194929.587467774@linuxfoundation.org>
+	Vignesh R <vigneshr@ti.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 066/186] spi: ti-qspi: fix use-after-free after DMA setup failure
+Date: Thu, 28 May 2026 21:49:06 +0200
+Message-ID: <20260528194930.735404637@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -50,36 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit d4e7b5c4cc353f154d5ab8bb2e1ce7714d77a6e9 upstream.
+commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
 
-damon_sysfs_memcg_path_to_id() breaks mem_cgroup_iter() loop without
-calling mem_cgroup_iter_break().  This leaks the cgroup reference.  Fix
-the issue by calling mem_cgroup_iter_break() before the break.
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-The issue was discovered [1] by Sashiko.
+Make sure to clear the DMA channel pointer also if buffer allocation
+fails to avoid passing a pointer to the released channel to the DMA
+engine (or trying to free the channel a second time on late probe errors
+or driver unbind).
 
-Link: https://lore.kernel.org/20260426173625.86521-1-sj@kernel.org
-Link: https://lore.kernel.org/20260423004148.74722-1-sj@kernel.org [1]
-Fixes: 29cbb9a13f05 ("mm/damon/sysfs-schemes: implement scheme filters")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.3.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
+
+Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
+Cc: stable@vger.kernel.org	# 4.12
+Cc: Vignesh R <vigneshr@ti.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    1 +
+ drivers/spi/spi-ti-qspi.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1539,6 +1539,7 @@ static int damon_sysfs_memcg_path_to_id(
- 		if (damon_sysfs_memcg_path_eq(memcg, path, memcg_path)) {
- 			*id = mem_cgroup_id(memcg);
- 			found = true;
-+			mem_cgroup_iter_break(NULL, memcg);
- 			break;
- 		}
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -874,6 +874,7 @@ static int ti_qspi_probe(struct platform
+ 		dev_err(qspi->dev,
+ 			"dma_alloc_coherent failed, using PIO mode\n");
+ 		dma_release_channel(qspi->rx_chan);
++		qspi->rx_chan = NULL;
+ 		goto no_dma;
  	}
+ 	host->dma_rx = qspi->rx_chan;
 
 
