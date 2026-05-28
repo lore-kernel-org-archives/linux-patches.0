@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A979348C45;
-	Thu, 28 May 2026 19:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC40338936;
+	Thu, 28 May 2026 19:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998314; cv=none; b=e2sXmC4EFY2KIJxYTv/eqcCN8tdALWPJxWKijmu9tT3cd7JFP4HjNSxmYokn9rg3HqKyaNLRXOwM1sFr8+w79OnCMy1QPnmfHOoAFGkg/mxu/K91/w91IqwuuDqWiPSyDuoGYsIJhS41UJc0vWMYUJcRiFi4pa7gQT8fWjHbfCQ=
+	t=1779998317; cv=none; b=iatYpHqlE2lC6ZvNlo8ZJG+EQ4i1q7T+/0he3U2Nr5XbSDJtpQF8wncO9XD6hSe+dXM+vAqGahKPxyzSNbP5KlZXaXZ1aIZ98SxZLg+z7WBMibe1EYQp17eGUV6YGZ06OCFeFL7KOsrOMY1zANNQL49LAhw6pOPgv7tKUawNtOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998314; c=relaxed/simple;
-	bh=2c+hCjpTWf6KzLYchRKpkD5ChFgmJxtqmsQOC8MwN3o=;
+	s=arc-20240116; t=1779998317; c=relaxed/simple;
+	bh=kMMya3VAO09hXj085Ii9QvbKmwYUQT/o/mAOSfgDq3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAOtBWMAXi31D62KBo4J1yY3Bg4ttJNh/5yj+oKEAL9B5Zpn2Z54vgy4F38hnHYu9LfnpkCfBXzGxJA1H6yxPKpFeCcOwXq4mXtQRvvBGBbD1/a819ET9yIHej+T+6GTDJlOAGMLxeQErsJabTmzMD5ma0WIA7jtY11gxjgtn4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy42xM5Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eJfgXUSVPDH7NugUEAkfzNakhtAl/lRd1bcXHlCXD+skKDuU+JuXLaNMD/7qU86WRls8/tKTdG3QdBBJz1fvFRMPYvxq4DEyixINYhvocEHGHkEYIZgo0/iszdjplfUsG0S63loR+Ea6nqSDjaiCkVmPtaPv5/35woAe+USe5Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXIZ29q7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy42xM5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9071F00A3A;
-	Thu, 28 May 2026 19:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXIZ29q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD131F000E9;
+	Thu, 28 May 2026 19:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998313;
-	bh=jm8l8uEuHNlEmDQatzAKoaq3rwMO6AF0H+0Hb8+SjjM=;
+	s=korg; t=1779998316;
+	bh=bVHYygcMSImefVrntiD/rhhIompvaxXu3h/0N+88trw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xy42xM5YmrxY+RnfMv/gLe83HAb0UYbsuI/rnnJAg2uN0U6pRqldMSY2NZCy4/YcS
-	 FKDT6pquBBV2sbvWQ/MEzJtATijXKr6n7LYoRAZkwKsdwg2ejpNRSn9PTkx4D/A7Xu
-	 8rLC2E6CK4kH3C+TCacDC6IadpciVimk+SCg23uo=
+	b=AXIZ29q7lisHASnjrN9rmgc13tWJm6JbGNjvH3mUi3n2WeHxlE3c+lrNwTcXMcDp8
+	 naNu+wdmFJO4vK9TT8LvBc9JhSus8zv79y8Xzt86cQ9e25mTOjhG9LUXBGHFwAvcux
+	 /6e0n4yApYmlINVrmgXCT3hmYtcgIQY4uy5wVcwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 7.0 130/461] drm/msm: Fix shrinker deadlock
-Date: Thu, 28 May 2026 21:44:19 +0200
-Message-ID: <20260528194650.753461974@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 7.0 131/461] drm/v3d: Fix use-after-free of CPU job query arrays on error path
+Date: Thu, 28 May 2026 21:44:20 +0200
+Message-ID: <20260528194650.781446679@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -44,243 +44,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 3392291fc509d8ad6e4ad90f15b0a193f721cbc9 upstream.
+commit b0fe80c0b9250b35e2211bf3117e7aca814a21b0 upstream.
 
-With PROVE_LOCKING on an Snapdragon X1 and VM reclaim pressure, we see:
+The CPU job ioctl's fail label calls kvfree() on cpu_job's timestamp and
+performance query arrays after v3d_job_cleanup(), which drops the job's
+last reference and frees cpu_job. Reading cpu_job at that point is a
+use-after-free. Also, on the early v3d_job_init() failure path, it is a
+NULL dereference, since v3d_job_deallocate() zeroes the local pointer.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   7.0.0-debug+ #43 Tainted: G        W
-   ------------------------------------------------------
-   kswapd0/82 is trying to acquire lock:
-   ffff800080ec3870 (reservation_ww_class_acquire){+.+.}-{0:0}, at: msm_gem_shrinker_scan+0x17c/0x400 [msm]
+In the success path, the arrays are released from the scheduler's
+.free_job callback, but on the error path, they are freed manually, as
+the job was never pushed to the scheduler. While the success path deals
+with this correctly, the fail path doesn't.
 
-   but task is already holding lock:
-   ffffc31709b263b8 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x88/0x988
+On top of that, the manual kvfree() calls only free the array storage;
+they don't drm_syncobj_put() the per-query syncobjs that
+v3d_timestamp_query_info_free() and v3d_performance_query_info_free()
+release on the success path. So the same fail path that triggers the
+use-after-free also leaks one syncobj reference per query.
 
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #2 (fs_reclaim){+.+.}-{0:0}:
-          __lock_acquire+0x4d0/0xad0
-          lock_acquire.part.0+0xc4/0x248
-          lock_acquire+0x8c/0x248
-          fs_reclaim_acquire+0xd0/0xf0
-          dma_resv_lockdep+0x224/0x348
-          do_one_initcall+0x84/0x5d0
-          do_initcalls+0x194/0x1d8
-          kernel_init_freeable+0x128/0x180
-          kernel_init+0x2c/0x160
-          ret_from_fork+0x10/0x20
-
-   -> #1 (reservation_ww_class_mutex){+.+.}-{4:4}:
-          __lock_acquire+0x4d0/0xad0
-          lock_acquire.part.0+0xc4/0x248
-          lock_acquire+0x8c/0x248
-          dma_resv_lockdep+0x1a8/0x348
-          do_one_initcall+0x84/0x5d0
-          do_initcalls+0x194/0x1d8
-          kernel_init_freeable+0x128/0x180
-          kernel_init+0x2c/0x160
-          ret_from_fork+0x10/0x20
-
-   -> #0 (reservation_ww_class_acquire){+.+.}-{0:0}:
-          check_prev_add+0x114/0x790
-          validate_chain+0x594/0x6f0
-          __lock_acquire+0x4d0/0xad0
-          lock_acquire.part.0+0xc4/0x248
-          lock_acquire+0x8c/0x248
-          drm_gem_lru_scan+0x1ac/0x440
-          msm_gem_shrinker_scan+0x17c/0x400 [msm]
-          do_shrink_slab+0x150/0x4a0
-          shrink_slab+0x144/0x460
-          shrink_one+0x9c/0x1b0
-          shrink_many+0x27c/0x5c0
-          shrink_node+0x344/0x550
-          balance_pgdat+0x2c0/0x988
-          kswapd+0x11c/0x318
-          kthread+0x10c/0x128
-          ret_from_fork+0x10/0x20
-
-   other info that might help us debug this:
-   Chain exists of:
-     reservation_ww_class_acquire --> reservation_ww_class_mutex --> fs_reclaim
-    Possible unsafe locking scenario:
-          CPU0                    CPU1
-          ----                    ----
-     lock(fs_reclaim);
-                                  lock(reservation_ww_class_mutex);
-                                  lock(fs_reclaim);
-     lock(reservation_ww_class_acquire);
-
-    *** DEADLOCK ***
-   1 lock held by kswapd0/82:
-    #0: ffffc31709b263b8 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x88/0x988
-
-   stack backtrace:
-   CPU: 4 UID: 0 PID: 82 Comm: kswapd0 Tainted: G        W           7.0.0-debug+ #43 PREEMPT(full)
-   Tainted: [W]=WARN
-   Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET94W (1.66 ) 09/15/2025
-   Call trace:
-    show_stack+0x20/0x40 (C)
-    dump_stack_lvl+0x9c/0xd0
-    dump_stack+0x18/0x30
-    print_circular_bug+0x114/0x120
-    check_noncircular+0x178/0x198
-    check_prev_add+0x114/0x790
-    validate_chain+0x594/0x6f0
-    __lock_acquire+0x4d0/0xad0
-    lock_acquire.part.0+0xc4/0x248
-    lock_acquire+0x8c/0x248
-    drm_gem_lru_scan+0x1ac/0x440
-    msm_gem_shrinker_scan+0x17c/0x400 [msm]
-    do_shrink_slab+0x150/0x4a0
-    shrink_slab+0x144/0x460
-    shrink_one+0x9c/0x1b0
-    shrink_many+0x27c/0x5c0
-    shrink_node+0x344/0x550
-    balance_pgdat+0x2c0/0x988
-    kswapd+0x11c/0x318
-    kthread+0x10c/0x128
-    ret_from_fork+0x10/0x20
-
-kswapd0 holding fs_reclaim calls the MSM shrinker, which calls
-dma_resv_lock. This in turn acquires fs_reclaim.
-
-Fix this deadlock by using dma_resv_trylock() instead, dropping the
-subsequently unused passed wait-wound lock 'ticket'.
+Unify the CPU job teardown into the CPU job's kref destructor, mirroring
+v3d_render_job_free(). The scheduler's .free_job slot reverts to the
+generic v3d_sched_job_free() and the fail label drops the manual
+kvfree() calls, leaving a single teardown path that is reached from both
+the scheduler and the ioctl error path. That removes the use-after-free,
+the NULL dereference, and the syncobj leak by construction.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
-Fixes: fe4952b5f27c ("drm/msm: Convert vm locking")
-Patchwork: https://patchwork.freedesktop.org/patch/723564/
-Message-ID: <20260508065722.18785-1-daniel@quora.org>
-[rob: fixup compile errors, replace lockdep splat with something legible]
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 9ba0ff3e083f ("drm/v3d: Create a CPU job extension for the timestamp query job")
+Assisted-by: Claude:claude-opus-4.7
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260515-v3d-cpu-job-leaks-v1-1-7f147cbbf935@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c |   40 +++++++++++++--------------------
- 1 file changed, 16 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c  |   16 +---------------
+ drivers/gpu/drm/v3d/v3d_submit.c |   19 ++++++++++++++++---
+ 2 files changed, 17 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -43,8 +43,7 @@ msm_gem_shrinker_count(struct shrinker *
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -105,20 +105,6 @@ v3d_performance_query_info_free(struct v
  }
  
- static bool
--with_vm_locks(struct ww_acquire_ctx *ticket,
--	      void (*fn)(struct drm_gem_object *obj),
-+with_vm_locks(void (*fn)(struct drm_gem_object *obj),
- 	      struct drm_gem_object *obj)
- {
- 	/*
-@@ -52,7 +51,7 @@ with_vm_locks(struct ww_acquire_ctx *tic
- 	 * success paths
- 	 */
- 	struct drm_gpuvm_bo *vm_bo, *last_locked = NULL;
--	int ret = 0;
-+	bool locked = true;
- 
- 	drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
- 		struct dma_resv *resv = drm_gpuvm_resv(vm_bo->vm);
-@@ -60,23 +59,14 @@ with_vm_locks(struct ww_acquire_ctx *tic
- 		if (resv == obj->resv)
- 			continue;
- 
--		ret = dma_resv_lock(resv, ticket);
+ static void
+-v3d_cpu_job_free(struct drm_sched_job *sched_job)
+-{
+-	struct v3d_cpu_job *job = to_cpu_job(sched_job);
 -
--		/*
--		 * Since we already skip the case when the VM and obj
--		 * share a resv (ie. _NO_SHARE objs), we don't expect
--		 * to hit a double-locking scenario... which the lock
--		 * unwinding cannot really cope with.
--		 */
--		WARN_ON(ret == -EALREADY);
+-	v3d_timestamp_query_info_free(&job->timestamp_query,
+-				      job->timestamp_query.count);
 -
- 		/*
--		 * Don't bother with slow-lock / backoff / retry sequence,
--		 * if we can't get the lock just give up and move on to
--		 * the next object.
-+		 * dma_resv_lock can't be used due to acquiring 'ticket' before the
-+		 * fs_reclaim lock, which is held in shrinker context
- 		 */
--		if (ret)
-+		if (!dma_resv_trylock(resv)) {
-+			locked = false;
- 			goto out_unlock;
-+		}
+-	v3d_performance_query_info_free(&job->performance_query,
+-					job->performance_query.count);
+-
+-	v3d_job_cleanup(&job->base);
+-}
+-
+-static void
+ v3d_switch_perfmon(struct v3d_dev *v3d, struct v3d_job *job)
+ {
+ 	struct v3d_perfmon *perfmon = v3d->global_perfmon;
+@@ -861,7 +847,7 @@ static const struct drm_sched_backend_op
  
- 		/*
- 		 * Hold a ref to prevent the vm_bo from being freed
-@@ -108,11 +98,11 @@ out_unlock:
- 		}
- 	}
+ static const struct drm_sched_backend_ops v3d_cpu_sched_ops = {
+ 	.run_job = v3d_cpu_job_run,
+-	.free_job = v3d_cpu_job_free
++	.free_job = v3d_sched_job_free
+ };
  
--	return ret == 0;
-+	return locked;
+ static int
+--- a/drivers/gpu/drm/v3d/v3d_submit.c
++++ b/drivers/gpu/drm/v3d/v3d_submit.c
+@@ -120,6 +120,21 @@ v3d_render_job_free(struct kref *ref)
+ 	v3d_job_free(ref);
  }
  
- static bool
--purge(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
-+purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
++static void
++v3d_cpu_job_free(struct kref *ref)
++{
++	struct v3d_cpu_job *job = container_of(ref, struct v3d_cpu_job,
++					       base.refcount);
++
++	v3d_timestamp_query_info_free(&job->timestamp_query,
++				      job->timestamp_query.count);
++
++	v3d_performance_query_info_free(&job->performance_query,
++					job->performance_query.count);
++
++	v3d_job_free(ref);
++}
++
+ void v3d_job_cleanup(struct v3d_job *job)
  {
- 	if (!is_purgeable(to_msm_bo(obj)))
- 		return false;
-@@ -120,11 +110,11 @@ purge(struct drm_gem_object *obj, struct
- 	if (msm_gem_active(obj))
- 		return false;
+ 	if (!job)
+@@ -1296,7 +1311,7 @@ v3d_submit_cpu_ioctl(struct drm_device *
+ 	trace_v3d_submit_cpu_ioctl(&v3d->drm, cpu_job->job_type);
  
--	return with_vm_locks(ticket, msm_gem_purge, obj);
-+	return with_vm_locks(msm_gem_purge, obj);
+ 	ret = v3d_job_init(v3d, file_priv, &cpu_job->base,
+-			   v3d_job_free, 0, &se, V3D_CPU);
++			   v3d_cpu_job_free, 0, &se, V3D_CPU);
+ 	if (ret) {
+ 		v3d_job_deallocate((void *)&cpu_job);
+ 		goto fail;
+@@ -1379,8 +1394,6 @@ fail:
+ 	v3d_job_cleanup((void *)csd_job);
+ 	v3d_job_cleanup(clean_job);
+ 	v3d_put_multisync_post_deps(&se);
+-	kvfree(cpu_job->timestamp_query.queries);
+-	kvfree(cpu_job->performance_query.queries);
+ 
+ 	return ret;
  }
- 
- static bool
--evict(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
-+evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
- {
- 	if (is_unevictable(to_msm_bo(obj)))
- 		return false;
-@@ -132,7 +122,7 @@ evict(struct drm_gem_object *obj, struct
- 	if (msm_gem_active(obj))
- 		return false;
- 
--	return with_vm_locks(ticket, msm_gem_evict, obj);
-+	return with_vm_locks(msm_gem_evict, obj);
- }
- 
- static bool
-@@ -164,7 +154,6 @@ static unsigned long
- msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- {
- 	struct msm_drm_private *priv = shrinker->private_data;
--	struct ww_acquire_ctx ticket;
- 	struct {
- 		struct drm_gem_lru *lru;
- 		bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket);
-@@ -185,11 +174,14 @@ msm_gem_shrinker_scan(struct shrinker *s
- 	for (unsigned i = 0; (nr > 0) && (i < ARRAY_SIZE(stages)); i++) {
- 		if (!stages[i].cond)
- 			continue;
-+		/*
-+		 * 'ticket' not needed on trylock paths
-+		 */
- 		stages[i].freed =
- 			drm_gem_lru_scan(stages[i].lru, nr,
- 					 &stages[i].remaining,
- 					 stages[i].shrink,
--					 &ticket);
-+					 NULL);
- 		nr -= stages[i].freed;
- 		freed += stages[i].freed;
- 		remaining += stages[i].remaining;
 
 
