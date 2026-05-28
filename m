@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F01B33CE8A;
-	Thu, 28 May 2026 20:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6627632ABC0;
+	Thu, 28 May 2026 20:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999069; cv=none; b=nGm6MijrLnCSspATpYubfbrysLgKxgTl956CQAQSGjlQ9wTCdURgFiioVc/C/je60oYn5KidYgl/c58zsmYUNi0hlMtlYgjmDPT/25QOvNylHy0S45wBRY39mU4ZU5G4mfQJ8u22PU0KoObZ20tX9SgQ2KOXlEboEUM54O8XwCI=
+	t=1779999072; cv=none; b=olKzCksDGFLZ1OjbcwMYH8bt5ewDTktZKOHpm5xPv6Cp6CTtcI7y1g3rgW5Bx4/ai6XrAviD+qvAopbR59MREHuEVXkyobnfHVZXJDYNTd883kj3nf5BUtdiPIB3Fl2AmOWH3TIZvQ6jJlyqstyEpfoX/7Xf6kxS0xDgzmZg+c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999069; c=relaxed/simple;
-	bh=seCGoeq7wGTRUVnKbUHl6JlJ1o++wz2KL8vwhFl1F7s=;
+	s=arc-20240116; t=1779999072; c=relaxed/simple;
+	bh=glnJy5qG8ATBCHHszGK5pN3wUxT7Uq+RhCbJHZO15eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDd+hIZQWOUhRYDO5qHKOjsmZBRjvShZ/Ta2/QqagUs8y59exKpASCrGHmtw0SnvzSaXRC4BHpGP/zMupb4GtHw8E1WsOUvdPA9M0GewtUYXZUGlbS+4fy88I0fy8RZmoJ+XK80mnfx/FBGdhSXgf0q05tz1o05QbaU7TKzwHB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyRe1e//; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Zysw70PuGBQJvuCQr787zC3pFk+/l+bLeLnqZfQ7nRTmvlJH4yee1F4+lPTn2yUpIUM30dofLNxKq4Vhanp0lEvEM4uH+uly/jFnfwzpIP3DY9kH5vSD9THjJAjcIdKdAkxEaYGpyRrUbYe16csaYEeW/13NhOVgcrVgJeazzNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Njw0SLDG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyRe1e//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD83F1F000E9;
-	Thu, 28 May 2026 20:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Njw0SLDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889A31F000E9;
+	Thu, 28 May 2026 20:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999068;
-	bh=1q1ukYRxmid3845YpivWCuaUKcA4Yy88mbMvBn4/v+Q=;
+	s=korg; t=1779999071;
+	bh=tPKPoXaGwo5lfbfs3CBnviK9XZ+m6rJ5AOZjiadR13I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyRe1e//n5UR4HKV8XmVSXvNQOtFlU8qD3a9Y3wWo7AGm/LEPSq24cBASt18te4QF
-	 n36DWAiQen63kGy5jIvQNo5+cJ+vCBqnkUCUdV7VDfH6jzn9Ovz9LaBGyeaxR6u7GW
-	 LIueV6+lHIr4Vb5A7f9kM5UVbl12T0dYZKamAH9Y=
+	b=Njw0SLDGk0OFkATLZWm3fpU4qiXyn1PpINLkmBEe0LNpxkN2q8jFa12rD05Cv+l5T
+	 +r5wfkwiSjD/4RFZZawtd06TIfPLU1xVP6YFze7XB98V+Vbkdt+ud20G36cpbyWee0
+	 PiNCeALqq0gu64zBP5RNhDf/b71md8ecorQ+21Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Naim <dnaim@cachyos.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 351/461] ALSA: hda/realtek: Use ALC287_FIXUP_TXNW2781_I2C for ASUS Strix Gxx5
-Date: Thu, 28 May 2026 21:48:00 +0200
-Message-ID: <20260528194657.560408369@linuxfoundation.org>
+Subject: [PATCH 7.0 391/461] platform/x86: intel_sar: Check ACPI_HANDLE() against NULL
+Date: Thu, 28 May 2026 21:48:40 +0200
+Message-ID: <20260528194658.779875420@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,61 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Naim <dnaim@cachyos.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 4372286ac774536e8e68bc6dfa0f0b0152b31fce ]
+[ Upstream commit 2765f16c12af7c2533763e46b8113b727354012d ]
 
-These devices were incorrectly using the ALC287_FIXUP_TAS2781_I2C quirk
-leading to errors:
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-[ 18.765990] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
-[ 18.768153] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
-[ 18.768476] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
-[ 18.768899] Serial bus multi instantiate pseudo device driver TXNW2781:00: Instantiated 3 I2C devices.
+Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
+platform/x86 intel_sar driver.
 
-Use the ALC287_FIXUP_TXNW2781_I2C quirk instead to fix this and restore
-speaker audio on affected devices.
-
-Fixes: 1e9c708dc3ae ("ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects")
-Link: https://lore.kernel.org/59fd4aa4-76b9-4984-8db9-a60e55ec6e80@losource.net/
-Closes: https://lore.kernel.org/CACB9z7kjs8rhLstEc8fV29BCTb5dd881JwGozoKdO5cwCb=YwQ@mail.gmail.com
-Signed-off-by: Eric Naim <dnaim@cachyos.org>
-Link: https://patch.msgid.link/20260516111532.111463-1-dnaim@cachyos.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: dcfbd31ef4bc ("platform/x86: BIOS SAR driver for Intel M.2 Modem")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/14023870.uLZWGnKmhe@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/platform/x86/intel/int1092/intel_sar.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8f7d8337b4bc6..c59021c15d66c 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7389,12 +7389,12 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x3e00, "ASUS G814FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3e20, "ASUS G814PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3e30, "ASUS TP3607SA", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3ee0, "ASUS Strix G815_JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3ee0, "ASUS Strix G815_JHR_JMR_JPR", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x3fd0, "ASUS B3605CVA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x3ff0, "ASUS B5405CVA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
+diff --git a/drivers/platform/x86/intel/int1092/intel_sar.c b/drivers/platform/x86/intel/int1092/intel_sar.c
+index 88822023a1490..849f7b415c1e5 100644
+--- a/drivers/platform/x86/intel/int1092/intel_sar.c
++++ b/drivers/platform/x86/intel/int1092/intel_sar.c
+@@ -245,15 +245,20 @@ static void sar_get_data(int reg, struct wwan_sar_context *context)
+ static int sar_probe(struct platform_device *device)
+ {
+ 	struct wwan_sar_context *context;
++	acpi_handle handle;
+ 	int reg;
+ 	int result;
+ 
++	handle = ACPI_HANDLE(&device->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	context = kzalloc_obj(*context);
+ 	if (!context)
+ 		return -ENOMEM;
+ 
+ 	context->sar_device = device;
+-	context->handle = ACPI_HANDLE(&device->dev);
++	context->handle = handle;
+ 	dev_set_drvdata(&device->dev, context);
+ 
+ 	result = guid_parse(SAR_DSM_UUID, &context->guid);
 -- 
 2.53.0
 
