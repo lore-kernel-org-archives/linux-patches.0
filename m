@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39BA318EE1;
-	Thu, 28 May 2026 19:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BC1330B2D;
+	Thu, 28 May 2026 19:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998133; cv=none; b=g5+PBiVTnrACql4HKK7eZxC2bJPVCubEHe9Y92bhv2s1uELLuQX3B7WZL1/FH+fSAyMHvxV/CVacxZX7kaYX58JSCDc9Db7YJ2lnQ5TjDmeQBmZyWsAjwrWlAEI6i4liZjFQRgIv7FsAhoF8odofblekwFNYM/UjOYjcqynvk68=
+	t=1779998136; cv=none; b=UAAm3ilhXFxmV//3wXRR/ZNZKBBOfymxGWNgqjGBJTFTQQ8ueQCRyOT1EZeSc78hsUV4kl9K150FtwgeaNexJaSOc6SYtK+9DbqVuminSQXUtjQ1v5rRLi4cg1tTj4S8HxcAgTrVJSkAAvQbfTOUcZSZ4ONCP/pIIy5YR8ZCZsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998133; c=relaxed/simple;
-	bh=ubhZR56gQAXsRsJDgGFv48CMtSOzK9qr7XN7NZGToLo=;
+	s=arc-20240116; t=1779998136; c=relaxed/simple;
+	bh=+wUaEtR6IF9/wX7f0ARCTjQOI2/mo+Yj112pydTXUAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ci71yXcNFxQRPCk0P285y1z1cORwIuJH21mrRFmGgUIJhk6HMZ6cDAb8EEuf1jki4zUxjcO98ZGldG5nNwWaxFzRoS8LaIpwpksyGG8e/MLOgDuKw9aqSSyG65qRLN63kQXzUIQngCOpTmPoBa9sHoUNJgGc5ZYcMBd/sslKndI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9nH1Lxa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L5aZpJ+CNm6yo9CcIQ5kf8O9knTi4WdRq1yylHxWC0i7Qp3HdZJnmG7gnBVGjKj3w+Lo4VfKDznVMqV3R3ybdbQyT/qzAWDoXnrVo0CMjqnUjyN7/ttX/Gbwg+S2iJ7VbUpQFQrFuAGTfAZHAWib3xrWsvYWV8YECsRVPDc+GEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kj7zVUF3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9nH1Lxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA461F000E9;
-	Thu, 28 May 2026 19:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kj7zVUF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C80A1F000E9;
+	Thu, 28 May 2026 19:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998132;
-	bh=45kog5K8idUhlWGcKHnk9Uvplbg2IYHTdldZt7efYpM=;
+	s=korg; t=1779998135;
+	bh=lFRqGSverpPqzzhutw9TU0GJ0FuDAWIjVC1LC8DeHAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9nH1Lxasx405grsCpLj5bP+1H90fNA6jdPDwDBxSDyy/jhir/z8rQqACbX7gAIKX
-	 T8f3amdK8bZO9IJ+ccd5iaCP3N7yuyVPYq5MAQIr7ar9p7kF2pbyGSWqmqqAX2uU8L
-	 7LO+CnSjVVkLFi+83zbl1RvbqTSiuoU3mz6J2KYI=
+	b=kj7zVUF3bWwqzb/HKLciB80Tk4NPjqyOpgE8s8kO8TrUdXF/dEJRx3Mv/DgJB69Gb
+	 iIEJCPp93r74xxxef6VMfmcQVQ+HcaEamq64Kxvk0Qkw2iOxqCBmtamwRLouCaHAtO
+	 dWjdRC2MbuSFZdBIJkDK/4KmJtKhEhpEJno1JgiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 065/461] sched_ext: Avoid UAF in scx_root_enable_workfn() init failure path
-Date: Thu, 28 May 2026 21:43:14 +0200
-Message-ID: <20260528194648.800197258@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 039/461] mm/damon: fix damos_stat tracepoint format for sz_applied
+Date: Thu, 28 May 2026 21:42:48 +0200
+Message-ID: <20260528194648.028751438@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,41 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 9a415cc53711f2238e0f0ca8a6bcc796c003b127 ]
+commit 620072fd783290ad92c2d445a47b0a61b161f352 upstream.
 
-In scx_root_enable_workfn(), put_task_struct(p) is called before scx_error()
-dereferences p->comm and p->pid. If the iterator's reference is the last
-drop, the task is freed synchronously and the deref becomes a UAF.
+The print format is wrongly marking sz_applied as sz_tried.  Fix it.
 
-Move put_task_struct() past scx_error().
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260511214031.AF5E9C2BCB0@smtp.kernel.org/
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ kept `scx_init_task()` call site instead of `__scx_init_task()`/`task_rq_lock` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260426193119.88095-1-sj@kernel.org
+Fixes: 804c26b961da ("mm/damon/core: add trace point for damos stat per apply interval")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org> # 7.0.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
+ include/trace/events/damon.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5239,10 +5239,10 @@ static void scx_enable_workfn(struct kth
+--- a/include/trace/events/damon.h
++++ b/include/trace/events/damon.h
+@@ -41,7 +41,7 @@ TRACE_EVENT(damos_stat_after_apply_inter
+ 	),
  
- 		ret = scx_init_task(p, task_group(p), false);
- 		if (ret) {
--			put_task_struct(p);
- 			scx_task_iter_stop(&sti);
- 			scx_error(sch, "ops.init_task() failed (%d) for %s[%d]",
- 				  ret, p->comm, p->pid);
-+			put_task_struct(p);
- 			goto err_disable_unlock_all;
- 		}
- 
+ 	TP_printk("ctx_idx=%u scheme_idx=%u nr_tried=%lu sz_tried=%lu "
+-			"nr_applied=%lu sz_tried=%lu sz_ops_filter_passed=%lu "
++			"nr_applied=%lu sz_applied=%lu sz_ops_filter_passed=%lu "
+ 			"qt_exceeds=%lu nr_snapshots=%lu",
+ 			__entry->context_idx, __entry->scheme_idx,
+ 			__entry->nr_tried, __entry->sz_tried,
 
 
