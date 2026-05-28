@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38EA298CB2;
-	Thu, 28 May 2026 20:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710862BF3E2;
+	Thu, 28 May 2026 20:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000743; cv=none; b=sD3nkrUSH+4r4DWuD9rynjmbPMBzEGZB18NIkMPGffB8dFGWhjglynSwJJqxmxC0sufVriO/oFoYQSY/ZAWO5p+41pMePAWo12x36oKxFVxYBvaW1kdYZFKBe+Ri9RI9XGk60RBXUrMEy9ZDWA/K6mrAIQ9g7IhyIXDaUEzc06c=
+	t=1780000746; cv=none; b=S08CYpjuyaCvpUymvvej4G6gRb/qvj50TGtl56imOC9lfuAMq8Z1jAuRt6RKpCAZXhCfOafcSFHYmCy4R6QTEDxFPnRChblmh4JP93hQYoH0+YEp+hKmkKoR7rtWvVIY4mis8MA2qbVOr3KOImk1Ezg1QZoYOBjBJoPEYramvR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000743; c=relaxed/simple;
-	bh=tb+/7UeosWQwPkNiu3OqjylUB9SYoEEF62OjUCm9fi0=;
+	s=arc-20240116; t=1780000746; c=relaxed/simple;
+	bh=xKhChc27Br+7gomp/gmHqZwiGP+IjTZOPZNIetCRmos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iz2hshUjNd/ObtXVlikXWmmVvhW6xsfOyETbtgrsgf+O/hKCRDNHWoLkrLqvctYit7Vr0MA9au0hEV9lXrPte/Ujf+dep1qO9I8kQ0WLnDNrHKWvbar+W0cW2jgmPejN/U3WfBBkmOnM/+phChVtrW2tByLmgvBiB76UbO0WI48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0jHA6pB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jF4nWFKG2JKDnJNVbBDkV6QwWPsCg64KsgVsoF+DVdbz1SDeoHqELUu2nPs7879NsSDlXcp5q8SENIvISB651q7BAuEcO8+4Sghfg1y3CrYgnwAZvYZUoCOOstYQiqDSIniGmIzWc01eewVfeyrXOKzNtnAVDjzjsyx39O1Sens=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeTkz5Bc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0jHA6pB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9B51F000E9;
-	Thu, 28 May 2026 20:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeTkz5Bc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26641F000E9;
+	Thu, 28 May 2026 20:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000742;
-	bh=7hkriVZD9Rrw1kotkyIwKjUBQ02YdDC9svs7kwPzAT4=;
+	s=korg; t=1780000745;
+	bh=n4De4b7CpclY9KhR+4xa3GGtXtwoPUav4Nywpdqibmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0jHA6pBqa22iJdzzs+54qH3CB3LVeFYbdU3I8Uc4uiGKW+ij2aak9MStZIqtiI/y
-	 BLk8UnhdU63mYZvrVLm/Q6HYXeui6YZE/r1zH5Vmu6XLwzgrrB/iDRZSA9oO6itgV5
-	 PCSO8e+50YcchhC+J8Pqbn3ByYsOTpJWk9bdnkH0=
+	b=TeTkz5Bc6Y9WSaI9NPXyucVFQ6fAaQ8IcRny4p5VSYy/TrtprHyLy4p0AdLIsOEZH
+	 2RL/3xP/ALEV4EcoJRHdMmk2Cf7KtstbLSd0GiXFtiIdp67gJKA7emCtDjeKXuWz/E
+	 /YQhkoYRI7yl5hXwOqmDfDW/VvR0wFp7kiUe2fKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/272] firmware: arm_ffa: Unregister bus notifier on teardown for FF-A v1.0
-Date: Thu, 28 May 2026 21:48:47 +0200
-Message-ID: <20260528194633.645686512@linuxfoundation.org>
+Subject: [PATCH 6.12 154/272] riscv: mm: Fixup no5lvl failure when vaddr is invalid
+Date: Thu, 28 May 2026 21:48:48 +0200
+Message-ID: <20260528194633.672206086@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -44,81 +48,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
 
-[ Upstream commit 6d3daa9b8d313f42d52e75590310f26a29b61b44 ]
+[ Upstream commit db909bd7986c10da074917af3dae83a60fa65093 ]
 
-For FF-A v1.0 the driver registers a bus notifier to backfill UUID
-matching, but the notifier was never unregistered on cleanup paths.
-Track the registration state and unregister it during teardown and early
-partition-setup failure.
+Unlike no4lvl, no5lvl still continues to detect satp, which
+requires va=pa mapping. When pa=0x800000000000, no5lvl
+would fail in Sv48 mode due to an illegal VA value of
+0x800000000000.
 
-Fixes: 9dd15934f60d ("firmware: arm_ffa: Move the FF-A v1.0 NULL UUID workaround to bus notifier")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-5-8595ae450034@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+So, prevent detecting the satp flow for no5lvl, when
+vaddr is invalid. Add the is_vaddr_valid() function for
+checking.
+
+Fixes: 26e7aacb83df ("riscv: Allow to downgrade paging mode from the command line")
+Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
+Cc: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+Tested-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Link: https://patch.msgid.link/20260125055212.433163-1-guoren@kernel.org
+[pjw@kernel.org: cleaned up commit message]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/riscv/mm/init.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 6961cb44194a1..a6c5f89476c06 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -100,6 +100,7 @@ struct ffa_drv_info {
- 	bool mem_ops_native;
- 	bool msg_direct_req2_supp;
- 	bool bitmap_created;
-+	bool bus_notifier_registered;
- 	bool notif_enabled;
- 	unsigned int sched_recv_irq;
- 	unsigned int notif_pend_irq;
-@@ -1436,6 +1437,15 @@ static struct notifier_block ffa_bus_nb = {
- 	.notifier_call = ffa_bus_notifier,
- };
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 8d167e09f1fea..8cd8bc9b82cb2 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -807,6 +807,27 @@ static void __init set_mmap_rnd_bits_max(void)
+ 	mmap_rnd_bits_max = MMAP_VA_BITS - PAGE_SHIFT - 3;
+ }
  
-+static void ffa_bus_notifier_unregister(void)
++static bool __init is_vaddr_valid(unsigned long va)
 +{
-+	if (!drv_info->bus_notifier_registered)
-+		return;
++	unsigned long up = 0;
 +
-+	bus_unregister_notifier(&ffa_bus_type, &ffa_bus_nb);
-+	drv_info->bus_notifier_registered = false;
++	switch (satp_mode) {
++	case SATP_MODE_39:
++		up = 1UL << 38;
++		break;
++	case SATP_MODE_48:
++		up = 1UL << 47;
++		break;
++	case SATP_MODE_57:
++		up = 1UL << 56;
++		break;
++	default:
++		return false;
++	}
++
++	return (va < up) || (va >= (ULONG_MAX - up + 1));
 +}
 +
- static int ffa_xa_add_partition_info(struct ffa_device *dev)
- {
- 	struct ffa_dev_part_info *info;
-@@ -1519,6 +1529,8 @@ static void ffa_partitions_cleanup(void)
- 	struct list_head *phead;
- 	unsigned long idx;
- 
-+	ffa_bus_notifier_unregister();
+ /*
+  * There is a simple way to determine if 4-level is supported by the
+  * underlying hardware: establish 1:1 mapping in 4-level page table mode
+@@ -842,6 +863,9 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
+ 			   set_satp_mode_pmd + PMD_SIZE,
+ 			   PMD_SIZE, PAGE_KERNEL_EXEC);
+ retry:
++	if (!is_vaddr_valid(set_satp_mode_pmd))
++		goto out;
 +
- 	/* Clean up/free all registered devices */
- 	ffa_devices_unregister();
- 
-@@ -1546,11 +1558,14 @@ static int ffa_setup_partitions(void)
- 		ret = bus_register_notifier(&ffa_bus_type, &ffa_bus_nb);
- 		if (ret)
- 			pr_err("Failed to register FF-A bus notifiers\n");
-+		else
-+			drv_info->bus_notifier_registered = true;
+ 	create_pgd_mapping(early_pg_dir,
+ 			   set_satp_mode_pmd,
+ 			   pgtable_l5_enabled ?
+@@ -864,6 +888,7 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
+ 		disable_pgtable_l4();
  	}
  
- 	count = ffa_partition_probe(&uuid_null, &pbuf);
- 	if (count <= 0) {
- 		pr_info("%s: No partitions found, error %d\n", __func__, count);
-+		ffa_bus_notifier_unregister();
- 		return -EINVAL;
- 	}
- 
++out:
+ 	memset(early_pg_dir, 0, PAGE_SIZE);
+ 	memset(early_p4d, 0, PAGE_SIZE);
+ 	memset(early_pud, 0, PAGE_SIZE);
 -- 
 2.53.0
 
