@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFB233A702;
-	Thu, 28 May 2026 20:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AF433F5B4;
+	Thu, 28 May 2026 20:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999047; cv=none; b=Xu7aW9nPMXdKmyQVMS2ynx8S6yqyl5HNxriwXN8lTN2O2ffsa+FwClHDbiANIf4DGQM+ytFkiNytB7ZrOldNwK1SNAXE+j+dPenvna3g4+LtYczUqokm+qZU5tQxbsKQdeB20FDPzD6UXwJi78/Xsolwez5Ulm0nUQj18Z/hyIM=
+	t=1779999049; cv=none; b=ZXPQuhSEQSAPETu/9S4qpkKcB7+rLCaFVnoQ0lxbgBm+YlMos+HA/dXd2RMW4NSLlG092otkCq97kXsjBTAxO06Ivv9ohIo6whfc5ZclulZBbXJcv/gA9XCjDqFb61bZsYKyvEs1h+X60k9kK0Pm5pnisqZwqywwpSzv/npRvcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999047; c=relaxed/simple;
-	bh=F+mgMFJk2L9ah9qI27gFlytFVHb6E+MLqhLKAMIwpvs=;
+	s=arc-20240116; t=1779999049; c=relaxed/simple;
+	bh=m0aek1j3oxfpGS1WfWT3bLg68x9do9ibq72znJK7G4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nH5Ie3HEEINce8QNEnW6kByYkKQgjWOUkFbKT6HRwLMlMhKv7D4gqZXp0OXNvwl92vqGGXRAjoWx7Pj3lg2ToPP1TntOJfkCvesa4wENJSw531WCngF4ELRwYRdSgcYnHsai4CTtSpSDxy0Wff+yKI5cG0CEcbd00VO383qHrpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Psvmwr1D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KtLssFA2ARcNqXC93w1LhLSj0VUpzeJTfkHUjzIz/JPwnA7cFUfj/0xtTOAndWnU9GE9x7/E8ZBY8l+wRt9nEC4O0wTUDjHtzqhLoLloMF1IWx/BeI8BOVzGgS5FteFcP1BN3EwcmOP9m6YqB2nmJPOzCPh3mqRGvvEvgx2+ofw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+3FqP+2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Psvmwr1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595951F000E9;
-	Thu, 28 May 2026 20:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+3FqP+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293881F000E9;
+	Thu, 28 May 2026 20:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999045;
-	bh=GW7e2Li8kRb+l8NsuVKFQfOMXpTODQ11MGf2/dLDlDo=;
+	s=korg; t=1779999048;
+	bh=k+j+CFXFavEbbNcPEHRMPzPy82wPPLYDJD1i4SVg/UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Psvmwr1D2o9ZpbdYEloCbiSMIAVvV2Ji11dkmRnKrAhME0hnZNmYlk2nZYz8I2qIz
-	 hdO8siNTwirzOZfL0GR7jawKxuRCkcZVFBWEY62S7j7oG3pXyrkYWEaDBiMMGVaF7e
-	 f7oUCV5TU49Ngp1I/suha3wu3GiXmtTPOYSI9F24=
+	b=Z+3FqP+2DNAKsp6daDFmLtJXkWLwWQR3ZiuKesBMqYQsenZsvx72kMYp97CuLdU7j
+	 KccskwPkn6SFYsndwBG5GafzKcJSmD9+Kw86j1Uxr8WO4bue4kxPgXXzQddnFiKi3o
+	 6pmyizjxuiyXd1V0IuMBiIUlry1mD8d2fjA8NvwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 388/461] platform/x86: adv_swbutton: Check ACPI_HANDLE() against NULL
-Date: Thu, 28 May 2026 21:48:37 +0200
-Message-ID: <20260528194658.692970861@linuxfoundation.org>
+Subject: [PATCH 7.0 389/461] platform/x86: hp_accel: Check ACPI_COMPANION() against NULL
+Date: Thu, 28 May 2026 21:48:38 +0200
+Message-ID: <20260528194658.721749870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -55,47 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e7a9a6ea40e352cd7977f6a8c80bdeadf65ad838 ]
+[ Upstream commit abfbe5ee8ae89f1f5449790423d5dd3e423545bd ]
 
 Every platform driver can be forced to match a device that doesn't match
 its list of device IDs because of device_match_driver_override(), so
 platform drivers that rely on the existence of a device's ACPI companion
 object need to verify its presence.
 
-Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
-platform/x86 adv_swbutton driver.
+Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
+platform/x86 hp_accel driver.
 
-Fixes: 3d904005f686 ("platform/x86: add support for Advantech software defined button")
+Fixes: 8ebcb6c94c71 ("platform/x86: hp_accel: Convert to be a platform driver")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/5115425.31r3eYUQgx@rafael.j.wysocki
+Link: https://patch.msgid.link/2425918.ElGaqSPkdT@rafael.j.wysocki
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/adv_swbutton.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp_accel.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/adv_swbutton.c b/drivers/platform/x86/adv_swbutton.c
-index 6fa60f3fc53c0..8f7a26e6de81d 100644
---- a/drivers/platform/x86/adv_swbutton.c
-+++ b/drivers/platform/x86/adv_swbutton.c
-@@ -48,10 +48,14 @@ static int adv_swbutton_probe(struct platform_device *device)
- {
- 	struct adv_swbutton *button;
- 	struct input_dev *input;
--	acpi_handle handle = ACPI_HANDLE(&device->dev);
-+	acpi_handle handle;
- 	acpi_status status;
- 	int error;
+diff --git a/drivers/platform/x86/hp/hp_accel.c b/drivers/platform/x86/hp/hp_accel.c
+index 10d5af18d6398..39b73dc473f1c 100644
+--- a/drivers/platform/x86/hp/hp_accel.c
++++ b/drivers/platform/x86/hp/hp_accel.c
+@@ -300,6 +300,9 @@ static int lis3lv02d_probe(struct platform_device *device)
+ 	int ret;
  
-+	handle = ACPI_HANDLE(&device->dev);
-+	if (!handle)
+ 	lis3_dev.bus_priv = ACPI_COMPANION(&device->dev);
++	if (!lis3_dev.bus_priv)
 +		return -ENODEV;
 +
- 	button = devm_kzalloc(&device->dev, sizeof(*button), GFP_KERNEL);
- 	if (!button)
- 		return -ENOMEM;
+ 	lis3_dev.init = lis3lv02d_acpi_init;
+ 	lis3_dev.read = lis3lv02d_acpi_read;
+ 	lis3_dev.write = lis3lv02d_acpi_write;
 -- 
 2.53.0
 
