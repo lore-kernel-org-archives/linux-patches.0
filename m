@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3037D2F1FEF;
-	Thu, 28 May 2026 20:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E01C2459DD;
+	Thu, 28 May 2026 20:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001241; cv=none; b=SVhlWblBD+luRZchs4/8BqT9kp5CHDyUZEQfcjSGrT8tvGqrz2ZHUuWkjKNc0IC+cUOQJtnHMhdo0wQLHdkSa5Bt+k/W+i3OEfcNbzr4X+4Ayw4ZANcjYhoUGgXZbgnoLF8J+QRxqCrpx8XDbKh2B47eyG0Cs/3Vyj+1ARtOy7E=
+	t=1780001244; cv=none; b=ecyo7kxSkm0cn5O5jDqMPkmGi7VvRNL3/J0/nnq1q4uLuL5KJfySgWTTKVZT0NQz4xukeYeDPAii1F24MMQp8Jy4CcMsqeAcSpn6NH5Shg8jW2APOTAYqw/0RGX3WLxRgg9UqGDtstL5y3bE4/m9NknQrte7JobJBVHKsPz/m9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001241; c=relaxed/simple;
-	bh=LSeEvYmCEt/IBm91JRxb6NR/UGr/NCTZ2Qk3oTtY8yw=;
+	s=arc-20240116; t=1780001244; c=relaxed/simple;
+	bh=GmZ1kpHo1b38vSlXJypGmDqf4lN92UnNqwhfwcxfzec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYXJEbmPhWRL+PVmY6t1rEzHom9aPB3ahm4ydbTzjIY8kZYeaLpBzr+ftH0Xn2VgWQ4GxVXll0Huv/7uJgcvbSq8M+pW9Vr4W4jo5Mlmh/oGQDekimaghKhKU0N3xtsqoS8U5Y6rfWm/g4sdFgNzLL/blzWvEdCKb9fSRg31dck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgfkGdtf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DelK287xVKZDyH+qo5u7BAYDR1ggINxFprgZm1XbaT9yx/tA/YuJJ3HnakGhFRg77ygOpVD8sqh/uubrvLq7CA6KpgFutGWr7enWcwkfvhyH/jcyW89YVbhMYu3b0suu7di3x8odgeqHGWzDQTOx1zMa5JOA4pQjgXTSDuNin4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvYisIat; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgfkGdtf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8161F000E9;
-	Thu, 28 May 2026 20:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvYisIat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0701F000E9;
+	Thu, 28 May 2026 20:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001240;
-	bh=oDSDITTE6Tw0zvOcl9op7q/H5Y3txdX08denqo8yN4w=;
+	s=korg; t=1780001242;
+	bh=AnMVhRpEpbpz8W99MSL/HTIJlwn04Vzh6rUE3e2wjxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgfkGdtfhfru1K67toiAAMKwZQ7LaoZuGz87/sEKqhdOJXhGFH5oHUbL0BrF0wXEg
-	 VH+1mBecERq8/Myzue0OI0rZ8LzFDAyYEIitbtBbCARstkP7OuMwDP1p02Xm2oEtAt
-	 ZcGZBxzvfMXSGLpTPXyJyZsx03/lZjTPPLM+dW3I=
+	b=WvYisIatTFfuyMDSkaSCfnhVPnzVc9wfrlgpo/dlMbbJTWXrp7ICtdD8bUQWk5abd
+	 dVaxqRcgF+9/YR8CZO1gqAz4FbGPTuIgIVnldJz+lcMKGpQR74oyBmJ4JbgeD2swA6
+	 8rBX/3D2z3VITlDOFWafpopmd3J7tl7e/JDhtHZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Walker <johnwalker0@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 056/186] wifi: cfg80211: advance loop vars in cfg80211_merge_profile()
-Date: Thu, 28 May 2026 21:48:56 +0200
-Message-ID: <20260528194930.486423876@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 057/186] cifs: Fix busy dentry used after unmounting
+Date: Thu, 28 May 2026 21:48:57 +0200
+Message-ID: <20260528194930.513887355@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -50,52 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Walker <johnwalker0@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 7666dbb1bacc4ba522b96740cba7283d243d16e1 upstream.
+commit c68337442f03953237a94577beb468ab2662a851 upstream.
 
-cfg80211_merge_profile() reassembles a Multi-BSSID non-transmitted BSS
-profile that has been split across multiple consecutive MBSSID elements.
-Its while-loop calls
+Since commit 340cea84f691c ("cifs: open files should not hold ref on
+superblock"), cifs file only holds the dentry ref_cnt, the cifs file
+close work(cfile->deferred) could be executed after unmounting, which
+will trigger a warning in generic_shutdown_super:
+ BUG: Dentry 00000000a14a6845{i=c,n=file}  still in use (1) [unmount of
+ cifs cifs]
 
-	cfg80211_get_profile_continuation(ie, ielen, mbssid_elem, sub_elem)
+The detailed processs is:
+   process A           process B           kworker
+ fd = open(PATH)
+  vfs_open
+   file->__f_path = *path // dentry->d_lockref.count = 1
+   cifs_open
+    cifs_new_fileinfo
+     cfile->dentry = dget(dentry) // dentry->d_lockref.count = 2
+ close(fd)
+  __fput
+  cifs_close
+   queue_delayed_work(deferredclose_wq, cfile->deferred)
+  dput(dentry) // dentry->d_lockref.count = 1
+			                 smb2_deferred_work_close
+					  _cifsFileInfo_put
+					   list_del(&cifs_file->flist)
+                    umount
+		     cleanup_mnt
+		      deactivate_super
+		       cifs_kill_sb
+		        cifs_close_all_deferred_files_sb
+			 cifs_close_all_deferred_files
+			  // cannot find cfile, skip _cifsFileInfo_put
+			kill_anon_super
+			 generic_shutdown_super
+			  shrink_dcache_for_umount
+			   umount_check
+			    WARN ! // dentry->d_lockref.count = 1
+					   cifsFileInfo_put_final
+					    dput(cifs_file->dentry)
+		                            // dentry->d_lockref.count = 0
 
-but never advances mbssid_elem or sub_elem inside the body.  Each
-iteration therefore searches for a continuation that follows the same
-fixed pair; the helper returns the same next_mbssid; and the same
-next_sub bytes are memcpy()'d into merged_ie at a growing offset until
-the buffer fills.
+Fix it by flushing 'deferredclose_wq' before calling kill_anon_super.
 
-Advance both mbssid_elem and sub_elem to the just-consumed continuation
-so the next call to cfg80211_get_profile_continuation() searches for a
-further continuation beyond it (or returns NULL when none exists).
+Fetch a reproducer in https://bugzilla.kernel.org/show_bug.cgi?id=221548.
 
-A specially-crafted malicious beacon can take advantage of this bug
-to cause the kernel to spend an excessive amount of time in
-cfg80211_merge_profile (up to as much as 2ms per beacon received),
-which could theoretically be abused in some way.
-
+Fixes: 340cea84f691c ("cifs: open files should not hold ref on superblock")
 Cc: stable@vger.kernel.org
-Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
-Signed-off-by: John Walker <johnwalker0@gmail.com>
-Link: https://patch.msgid.link/20260507230720.64783-1-johnwalker0@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/client/cifsfs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2300,6 +2300,9 @@ size_t cfg80211_merge_profile(const u8 *
- 		memcpy(merged_ie + copied_len, next_sub->data,
- 		       next_sub->datalen);
- 		copied_len += next_sub->datalen;
-+
-+		mbssid_elem = next_mbssid;
-+		sub_elem = next_sub;
- 	}
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -298,6 +298,8 @@ static void cifs_kill_sb(struct super_bl
  
- 	return copied_len;
+ 		/* Wait for all pending oplock breaks to complete */
+ 		flush_workqueue(cifsoplockd_wq);
++		/* Wait for all opened files to release */
++		flush_workqueue(deferredclose_wq);
+ 
+ 		/* finally release root dentry */
+ 		dput(cifs_sb->root);
 
 
