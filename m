@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B7732ABC0;
-	Thu, 28 May 2026 20:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0342132ABC0;
+	Thu, 28 May 2026 20:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999212; cv=none; b=S6Z5TvkXj9f8ZeGpCiaEjNhCzLhtBWNiuatgWH9FHQi8A441xYWK9JDdMrAvfS9x3wd+RgKcOqw02HjnLCXMShppufLu34jdfImJ6Q5DgFmkkgCigDQMuSME3ZDMlsi1z5Lpb0a3uy7wI4gr6+/7RQr/mVWFor2WXZfMUPukJWI=
+	t=1779999215; cv=none; b=b2BCgbXwkkHFRRzVOqnhqs/gC0ONtjTEHDsHnJrJXVRpnp+IkRIMngAd0+U0C3Hm4b1tC/F298Dhz0jqxh4DV8cQI35un19YEFyh2I3UVigbys9fyI9XpnjYEJNnr2h1sibuop0QtbM0W84EcEVF4dxDkO8sFphWTX7hzq5MEX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999212; c=relaxed/simple;
-	bh=wh7AIXiDb5622f4gfAgwQamYbt52JfoklRfCMZWVCg0=;
+	s=arc-20240116; t=1779999215; c=relaxed/simple;
+	bh=kiBwi/pZehvHzfCB5B00W5BIQsntLdhbj+oQuks8n6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtBb18H4gAULMpMhLYI/4UKQyWSF/qpzB8JoaacwQkPGtr1bajO0XDh9HnR7oN/ZFQySo0BXLHezkIO7/hiQwwrlbwIEBMdVb6eQ+Its7jzrDbK1uiETyMLb9ITpDXtTfkmAtaYz72olIjQmOMs9MX2pqhijR4D3VZ6H2j/HJus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFJNc2NW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rFxeKagO6Gb43SJ6ZvSF+slxwR3IwLusv8H3iXQhfMC2tHHnzcKJ3z0BnWozita7KDmRY2uDfMfHIFjN7g0Q4JOCBv1emkEF3euCaJTYdwCMC+KlctLOjdM+tXcwb9fyPsusZmdjt8F/vGccQsi4pfPJo5MLNI9sjghGl6RBNvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq4+0Pel; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFJNc2NW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B9E1F000E9;
-	Thu, 28 May 2026 20:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq4+0Pel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606001F00A3D;
+	Thu, 28 May 2026 20:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999211;
-	bh=CW4CdnV/9tCSSu5DT1NWE5lHAlcQSkBK8Vu1fsbNiyU=;
+	s=korg; t=1779999213;
+	bh=OxxKu9IpZ4NzhVbRgXJd+NJ8mI02jrfp5rCmOnBY82M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFJNc2NW0YsyANmTDuecTwegAgBmcQB7Xr41Y1/4TOokkbRYWYQubhFG6Yt+EeyNV
-	 WzYkdbLHGSNRLBCXXCr/DqOQkI1XH1gHAbzoaTLphllhmetfj0MW0EMQPUiqSXCTsU
-	 tQgHLgSm/gnUdqRM9HRBNDthxjPQTCJr9OOCggoA=
+	b=Wq4+0Pelj9r/KEcVyj5WY2JpO00Pwh11lwXhYpUPCGuEr170mDUYpedA7vdpRnfnj
+	 aHMxEp4ci2j/HjZ7OKOWIcrcmT35E4fZxnYH9knrY+1pZb17VzB8EXvNxqeG9JlSlT
+	 vNVh51EcN9fonp9UbMsT+tlizLn94sSZSRrhPruc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhi Li <lizhi2@eswincomputing.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 449/461] net: mana: validate rx_req_idx to prevent out-of-bounds array access
-Date: Thu, 28 May 2026 21:49:38 +0200
-Message-ID: <20260528194700.533979748@linuxfoundation.org>
+Subject: [PATCH 7.0 432/461] net: stmmac: eswin: fix HSP CSR init ordering after clock enable
+Date: Thu, 28 May 2026 21:49:21 +0200
+Message-ID: <20260528194700.031889977@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,46 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Garg <gargaditya@linux.microsoft.com>
+From: Zhi Li <lizhi2@eswincomputing.com>
 
-[ Upstream commit b809d0409991b75a6cff846a5ac27c3062953f84 ]
+[ Upstream commit 23386defe949c0db4f746bed7098fc5e06746083 ]
 
-In mana_hwc_rx_event_handler(), rx_req_idx is derived from
-sge->address in DMA-coherent memory. In Confidential VMs
-(SEV-SNP/TDX), this memory is shared unencrypted and HW can modify
-WQE contents at any time. No bounds check exists on rx_req_idx,
-which can lead to an out-of-bounds access into reqs[].
+Fix the initialization ordering of the HSP CSR configuration in the
+EIC7700 DWMAC glue driver.
 
-Add bounds check on rx_req_idx in mana_hwc_rx_event_handler() before
-using it to index the reqs[] array.
+The HSP CSR registers control MAC-side RGMII delay behavior and must
+only be accessed after the corresponding clocks are enabled. The
+previous implementation could trigger register access before clock
+enablement, leading to undefined behavior depending on boot state.
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/20260520051553.857120-1-gargaditya@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move the HSP CSR configuration into the post-clock-enable initialization
+path to ensure all register accesses occur under valid clock domains.
+
+This change ensures deterministic initialization and prevents
+clock-dependent register access failures during probe or resume.
+
+Fixes: ea77dbbdbc4e ("net: stmmac: add Eswin EIC7700 glue driver")
+Signed-off-by: Zhi Li <lizhi2@eswincomputing.com>
+Link: https://patch.msgid.link/20260518022055.444-1-lizhi2@eswincomputing.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/hw_channel.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../ethernet/stmicro/stmmac/dwmac-eic7700.c   | 73 +++++++++++--------
+ 1 file changed, 41 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index 12d73470fd6bb..dbaeedb6e7b1a 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -265,6 +265,12 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
- 	rq_base_addr = hwc_rxq->msg_buf->mem_info.dma_handle;
- 	rx_req_idx = (sge->address - rq_base_addr) / hwc->max_req_msg_size;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
+index bcb8e000e720b..63001c4acdb7a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
+@@ -42,6 +42,11 @@ static const char * const eic7700_clk_names[] = {
  
-+	if (rx_req_idx >= hwc_rxq->msg_buf->num_reqs) {
-+		dev_err(hwc->dev, "HWC RX: wrong rx_req_idx=%llu, num_reqs=%u\n",
-+			rx_req_idx, hwc_rxq->msg_buf->num_reqs);
-+		return;
+ struct eic7700_qos_priv {
+ 	struct plat_stmmacenet_data *plat_dat;
++	struct regmap *eic7700_hsp_regmap;
++	u32 eth_axi_lp_ctrl_offset;
++	u32 eth_phy_ctrl_offset;
++	u32 eth_clk_offset;
++	u32 eth_clk_dly_param;
+ };
+ 
+ static int eic7700_clks_config(void *priv, bool enabled)
+@@ -61,8 +66,28 @@ static int eic7700_clks_config(void *priv, bool enabled)
+ static int eic7700_dwmac_init(struct device *dev, void *priv)
+ {
+ 	struct eic7700_qos_priv *dwc = priv;
++	int ret;
++
++	ret = eic7700_clks_config(dwc, true);
++	if (ret)
++		return ret;
++
++	ret = regmap_set_bits(dwc->eic7700_hsp_regmap,
++			      dwc->eth_phy_ctrl_offset,
++			      EIC7700_ETH_TX_CLK_SEL |
++			      EIC7700_ETH_PHY_INTF_SELI);
++	if (ret) {
++		eic7700_clks_config(dwc, false);
++		return ret;
 +	}
 +
- 	rx_req = &hwc_rxq->msg_buf->reqs[rx_req_idx];
- 	resp = (struct gdma_resp_hdr *)rx_req->buf_va;
++	regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_axi_lp_ctrl_offset,
++		     EIC7700_ETH_CSYSREQ_VAL);
  
+-	return eic7700_clks_config(dwc, true);
++	regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_clk_offset,
++		     dwc->eth_clk_dly_param);
++
++	return 0;
+ }
+ 
+ static void eic7700_dwmac_exit(struct device *dev, void *priv)
+@@ -93,12 +118,6 @@ static int eic7700_dwmac_probe(struct platform_device *pdev)
+ 	struct plat_stmmacenet_data *plat_dat;
+ 	struct stmmac_resources stmmac_res;
+ 	struct eic7700_qos_priv *dwc_priv;
+-	struct regmap *eic7700_hsp_regmap;
+-	u32 eth_axi_lp_ctrl_offset;
+-	u32 eth_phy_ctrl_offset;
+-	u32 eth_phy_ctrl_regset;
+-	u32 eth_rxd_dly_offset;
+-	u32 eth_dly_param = 0;
+ 	u32 delay_ps;
+ 	int i, ret;
+ 
+@@ -121,8 +140,9 @@ static int eic7700_dwmac_probe(struct platform_device *pdev)
+ 				  "rx-internal-delay-ps", &delay_ps)) {
+ 		u32 val = min(delay_ps / 100, EIC7700_MAX_DELAY_UNIT);
+ 
+-		eth_dly_param &= ~EIC7700_ETH_RX_ADJ_DELAY;
+-		eth_dly_param |= FIELD_PREP(EIC7700_ETH_RX_ADJ_DELAY, val);
++		dwc_priv->eth_clk_dly_param &= ~EIC7700_ETH_RX_ADJ_DELAY;
++		dwc_priv->eth_clk_dly_param |=
++				 FIELD_PREP(EIC7700_ETH_RX_ADJ_DELAY, val);
+ 	} else {
+ 		return dev_err_probe(&pdev->dev, -EINVAL,
+ 			"missing required property rx-internal-delay-ps\n");
+@@ -133,53 +153,42 @@ static int eic7700_dwmac_probe(struct platform_device *pdev)
+ 				  "tx-internal-delay-ps", &delay_ps)) {
+ 		u32 val = min(delay_ps / 100, EIC7700_MAX_DELAY_UNIT);
+ 
+-		eth_dly_param &= ~EIC7700_ETH_TX_ADJ_DELAY;
+-		eth_dly_param |= FIELD_PREP(EIC7700_ETH_TX_ADJ_DELAY, val);
++		dwc_priv->eth_clk_dly_param &= ~EIC7700_ETH_TX_ADJ_DELAY;
++		dwc_priv->eth_clk_dly_param |=
++				 FIELD_PREP(EIC7700_ETH_TX_ADJ_DELAY, val);
+ 	} else {
+ 		return dev_err_probe(&pdev->dev, -EINVAL,
+ 			"missing required property tx-internal-delay-ps\n");
+ 	}
+ 
+-	eic7700_hsp_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
+-							     "eswin,hsp-sp-csr");
+-	if (IS_ERR(eic7700_hsp_regmap))
++	dwc_priv->eic7700_hsp_regmap =
++			syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
++							"eswin,hsp-sp-csr");
++	if (IS_ERR(dwc_priv->eic7700_hsp_regmap))
+ 		return dev_err_probe(&pdev->dev,
+-				PTR_ERR(eic7700_hsp_regmap),
++				PTR_ERR(dwc_priv->eic7700_hsp_regmap),
+ 				"Failed to get hsp-sp-csr regmap\n");
+ 
+ 	ret = of_property_read_u32_index(pdev->dev.of_node,
+ 					 "eswin,hsp-sp-csr",
+-					 1, &eth_phy_ctrl_offset);
++					 1, &dwc_priv->eth_phy_ctrl_offset);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "can't get eth_phy_ctrl_offset\n");
+ 
+-	regmap_read(eic7700_hsp_regmap, eth_phy_ctrl_offset,
+-		    &eth_phy_ctrl_regset);
+-	eth_phy_ctrl_regset |=
+-		(EIC7700_ETH_TX_CLK_SEL | EIC7700_ETH_PHY_INTF_SELI);
+-	regmap_write(eic7700_hsp_regmap, eth_phy_ctrl_offset,
+-		     eth_phy_ctrl_regset);
+-
+ 	ret = of_property_read_u32_index(pdev->dev.of_node,
+ 					 "eswin,hsp-sp-csr",
+-					 2, &eth_axi_lp_ctrl_offset);
++					 2, &dwc_priv->eth_axi_lp_ctrl_offset);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "can't get eth_axi_lp_ctrl_offset\n");
+ 
+-	regmap_write(eic7700_hsp_regmap, eth_axi_lp_ctrl_offset,
+-		     EIC7700_ETH_CSYSREQ_VAL);
+-
+ 	ret = of_property_read_u32_index(pdev->dev.of_node,
+ 					 "eswin,hsp-sp-csr",
+-					 3, &eth_rxd_dly_offset);
++					 3, &dwc_priv->eth_clk_offset);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+-				     "can't get eth_rxd_dly_offset\n");
+-
+-	regmap_write(eic7700_hsp_regmap, eth_rxd_dly_offset,
+-		     eth_dly_param);
++				     "can't get eth_clk_offset\n");
+ 
+ 	plat_dat->num_clks = ARRAY_SIZE(eic7700_clk_names);
+ 	plat_dat->clks = devm_kcalloc(&pdev->dev,
 -- 
 2.53.0
 
