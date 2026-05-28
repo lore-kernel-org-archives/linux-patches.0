@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1781F259CBD;
-	Thu, 28 May 2026 20:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5E7259CBD;
+	Thu, 28 May 2026 20:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000564; cv=none; b=aMd79KYVfajN/kS2ooz2fK/fJLBI8AxwdQOlB8dRJBULtwE9BoOlyfM/nSQA4Z9DZsiSHwBqZr1x794u5w6CnRukOhENpHL4X83rDd6tylXvPYz174Ky0zWg96cfkMBBJMnhiQlq4ljpvbgX4BSvnknpFTxJFOF470a7mJ9IyqE=
+	t=1780000566; cv=none; b=M3v/JTb+yGlVaRgKN8Rvs86q68LO9SeeK3MHU+JDA7X0M8oiKBwtxsoZ/ZDD4KxQS3OmInJgngFldVC9sNEh2bPrAJBNr7zvHgQTtsa07Su+bCCpOPY7kD8wvCcSfaVj3tYfGnnKLfFxjn8I264BihVAipYYnRo4bt5HZpJIz6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000564; c=relaxed/simple;
-	bh=sTelWjp1wmr/HbYFq308F9Tdw6poBIBO75Ykz7uWKG4=;
+	s=arc-20240116; t=1780000566; c=relaxed/simple;
+	bh=XaT+dhzWZh2gwHV0npTx6Po/V55a4Je3ZjkDn9Tzm8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BNxmBXcc/ICspMPFiYz74ry9LiMAi0TsJJgRRLI9TWPW0jm8kZgRqRQKzLJLCQPZeR+YE+4k17w72dKXQAn+KdZMqseQZwHL3T4NM9HWQKysDAFiGmWs1wv3n42W0m+IpCZI1so8zeVYPGk7Z+Tx2sBtHlrUXzwXPiq47OvFM44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRRQ8GAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F3VxOxHf53GjG3cWmkOjaNJlZnD2pmzYrjOyjH9rZ6craJsDGmod76A8yhP267fXaBFthfEoQU4ciLvIQFsrHOMtEOTazXH0XE316XjkNqhN76xslAD3VYor7wrrB+9wVJQ78ut6CdpQiZOHjyFWK/tFfcao7kjqQ2Eq4pNylCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK00JEzd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRRQ8GAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BC91F000E9;
-	Thu, 28 May 2026 20:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK00JEzd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462121F000E9;
+	Thu, 28 May 2026 20:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000563;
-	bh=7EAmWStN/wsimZL0kA2bVDxu2rlgA99K8HH8jPsPDpY=;
+	s=korg; t=1780000565;
+	bh=erEd+LQmUhezxPXbEGTTm506Kv0nMxtue+cp5ZzAVuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRRQ8GADh6dQpJYu+hfiMh7EnWDD32X8h6xHXRjuZmBt68PRe6njjO6cmVUKkWP6L
-	 sXkVr5t7QciGbWiSL0yQhO6OMGJ1bL6FfcCA8J8mj+rjC7H0wSvmO0hvKIoLMZZ8SL
-	 QFAjoOUuFSsT8y9clRxe8wrUfP546O20d7BH9X7k=
+	b=PK00JEzdVtOaFq7/MXcdI7TnubBQy7xWOrCq5Lyp0c3uhQ7JsagyhtxlYlGSR84PB
+	 tk32CoLZhMV/znyWoBim8S0Y8fvHPu02VwDK2EJ4pcHQynh31NIExlvMVs6p4A8u31
+	 rmHNaEuMk5yldIeHLGgUSSp3u0DKFm4ehDcAeY0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 052/272] ALSA: ua101: Reject too-short USB descriptors
-Date: Thu, 28 May 2026 21:47:06 +0200
-Message-ID: <20260528194630.842462079@linuxfoundation.org>
+Subject: [PATCH 6.12 053/272] ALSA: pcm: Dont setup bogus iov_iter for silencing
+Date: Thu, 28 May 2026 21:47:07 +0200
+Message-ID: <20260528194630.869352091@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -44,49 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit b59d5c51bb328a60749b4dd5fe7e649bfb4089b4 upstream.
+commit e4d3386b74fba8e01280484b67ee481ece00201e upstream.
 
-find_format_descriptor() walks the class-specific interface extras by
-advancing with bLength. It rejects descriptors that extend past the
-remaining buffer, but it does not reject descriptor lengths smaller than
-a USB descriptor header.
+At transition to the iov_iter for PCM data transfer, we blindly
+applied the iov_iter setup also for silencing (i.e. data = NULL), and
+it leads to a calculation of bogus iov_iter.  Fortunately this didn't
+cause troubles on most of architectures but it goes wrong on RISC-V
+now, causing a NULL dereference.
 
-Reject too-short descriptors before using bLength to advance the local
-scan. This keeps the UA-101 parser robust against malformed descriptor
-data and matches the usual USB descriptor walking rules.
+Handle the NULL data case to treat the silencing in interleaved_copy()
+for addressing the bug above.  noninterleaved_copy() has already the
+NULL data handling, so it doesn't need changes.
 
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260519-alsa-ua101-desc-len-v1-1-4307d1a5e054@gmail.com
+Reported-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
+Closes: https://lore.kernel.org/20260515051516.3103036-1-xujiakai24@mails.ucas.ac.cn
+Fixes: cf393babb37a ("ALSA: pcm: Add copy ops with iov_iter")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260517165121.31399-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/core/pcm_lib.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -914,8 +914,9 @@ find_format_descriptor(struct usb_interf
- 		struct uac_format_type_i_discrete_descriptor *desc;
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -2138,6 +2138,9 @@ static int interleaved_copy(struct snd_p
+ 	off = frames_to_bytes(runtime, off);
+ 	frames = frames_to_bytes(runtime, frames);
  
- 		desc = (struct uac_format_type_i_discrete_descriptor *)extra;
--		if (desc->bLength > extralen) {
--			dev_err(&interface->dev, "descriptor overflow\n");
-+		if (desc->bLength < sizeof(struct usb_descriptor_header) ||
-+		    desc->bLength > extralen) {
-+			dev_err(&interface->dev, "invalid descriptor length\n");
- 			return NULL;
- 		}
- 		if (desc->bLength == UAC_FORMAT_TYPE_I_DISCRETE_DESC_SIZE(1) &&
++	if (!data)
++		return fill_silence(substream, 0, hwoff, NULL, frames);
++
+ 	return do_transfer(substream, 0, hwoff, data + off, frames, transfer,
+ 			   in_kernel);
+ }
 
 
