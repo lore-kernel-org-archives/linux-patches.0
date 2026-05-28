@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710862BF3E2;
-	Thu, 28 May 2026 20:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCA72E7F25;
+	Thu, 28 May 2026 20:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000746; cv=none; b=S08CYpjuyaCvpUymvvej4G6gRb/qvj50TGtl56imOC9lfuAMq8Z1jAuRt6RKpCAZXhCfOafcSFHYmCy4R6QTEDxFPnRChblmh4JP93hQYoH0+YEp+hKmkKoR7rtWvVIY4mis8MA2qbVOr3KOImk1Ezg1QZoYOBjBJoPEYramvR4=
+	t=1780000749; cv=none; b=J1Lgf4Xf1kZ/nn4dkLRO2ExREgGjzjvHf54DYngJyiV+8YZKxSb4iZraV5YT1beX4mJ7JSAOK55ksVJeBAhu2jBvn4lxVR9kuF1StKVDoU4CDpzAJf3mQdLtDEfAzBsqaCcDcdZryHy+xl/y/sSUNrraBYhQoQCMP+6Bvjr8o0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000746; c=relaxed/simple;
-	bh=xKhChc27Br+7gomp/gmHqZwiGP+IjTZOPZNIetCRmos=;
+	s=arc-20240116; t=1780000749; c=relaxed/simple;
+	bh=yNA7SebAY+f78m43jb8HV7jecazc5e/mZFkK0jPjsYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jF4nWFKG2JKDnJNVbBDkV6QwWPsCg64KsgVsoF+DVdbz1SDeoHqELUu2nPs7879NsSDlXcp5q8SENIvISB651q7BAuEcO8+4Sghfg1y3CrYgnwAZvYZUoCOOstYQiqDSIniGmIzWc01eewVfeyrXOKzNtnAVDjzjsyx39O1Sens=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeTkz5Bc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fItkNt7VILfxQjD9XTPkks4TtzkX1vqM2MU8D6mIauBRc1HAI0q/28OMzlmInnTVxMwKURbxH+PlP7ry6QBdI5ANvsgRfz7DHTvR4CVga0K+xtHe0SYuebLDYvI1OKwNgW7u4cO95pcvZZYt6eX/nn6hfimdGHW84fHYLDIySh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUyD8cSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeTkz5Bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26641F000E9;
-	Thu, 28 May 2026 20:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUyD8cSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AF71F000E9;
+	Thu, 28 May 2026 20:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000745;
-	bh=n4De4b7CpclY9KhR+4xa3GGtXtwoPUav4Nywpdqibmk=;
+	s=korg; t=1780000748;
+	bh=WuUGkvch+V9UHm/CmRIlON0HMrDYHkl8YIwq04kfHGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TeTkz5Bc6Y9WSaI9NPXyucVFQ6fAaQ8IcRny4p5VSYy/TrtprHyLy4p0AdLIsOEZH
-	 2RL/3xP/ALEV4EcoJRHdMmk2Cf7KtstbLSd0GiXFtiIdp67gJKA7emCtDjeKXuWz/E
-	 /YQhkoYRI7yl5hXwOqmDfDW/VvR0wFp7kiUe2fKk=
+	b=MUyD8cSVhJIipF76o2SPUhih7Wh4QIgiBKnj02ZufiGHk02eXAGhwgbVkMNZ4sPiN
+	 Yb1Om1IG5QqeInMMOtnEKIh9/fvpyaiThOaN+yQOsuTB5nNi2+7THiHcr29GeBAl5m
+	 4XCeUs82T9uCrCAX1yy2Hlfhc5i86/uo0gqsHLv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
-	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/272] riscv: mm: Fixup no5lvl failure when vaddr is invalid
-Date: Thu, 28 May 2026 21:48:48 +0200
-Message-ID: <20260528194633.672206086@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.12 128/272] batman-adv: tp_meter: avoid use of uninit sender vars
+Date: Thu, 28 May 2026 21:48:22 +0200
+Message-ID: <20260528194632.963687265@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -48,91 +48,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit db909bd7986c10da074917af3dae83a60fa65093 ]
+commit 6c65cf23d4c6170fcf5714c32aa64689718cb142 upstream.
 
-Unlike no4lvl, no5lvl still continues to detect satp, which
-requires va=pa mapping. When pa=0x800000000000, no5lvl
-would fail in Sv48 mode due to an illegal VA value of
-0x800000000000.
+batadv_tp_recv_ack() and batadv_tp_stop() are only valid for tp_vars in the
+BATADV_TP_SENDER role. When called with a BATADV_TP_RECEIVER role, it
+proceeds to read sender-only members that were never initialized, leading
+to undefined behavior.
 
-So, prevent detecting the satp flow for no5lvl, when
-vaddr is invalid. Add the is_vaddr_valid() function for
-checking.
+This can be triggered when a node that is currently acting as a receiver in
+an ongoing tp_meter session receives a malicious ACK packet.
 
-Fixes: 26e7aacb83df ("riscv: Allow to downgrade paging mode from the command line")
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
-Tested-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Link: https://patch.msgid.link/20260125055212.433163-1-guoren@kernel.org
-[pjw@kernel.org: cleaned up commit message]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Guard against this by checking tp_vars->role immediately after the
+lookup and bailing out if it is not BATADV_TP_SENDER, before any of
+those members are accessed.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/init.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/batman-adv/tp_meter.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 8d167e09f1fea..8cd8bc9b82cb2 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -807,6 +807,27 @@ static void __init set_mmap_rnd_bits_max(void)
- 	mmap_rnd_bits_max = MMAP_VA_BITS - PAGE_SHIFT - 3;
- }
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -663,6 +663,9 @@ static void batadv_tp_recv_ack(struct ba
+ 	if (unlikely(!tp_vars))
+ 		return;
  
-+static bool __init is_vaddr_valid(unsigned long va)
-+{
-+	unsigned long up = 0;
-+
-+	switch (satp_mode) {
-+	case SATP_MODE_39:
-+		up = 1UL << 38;
-+		break;
-+	case SATP_MODE_48:
-+		up = 1UL << 47;
-+		break;
-+	case SATP_MODE_57:
-+		up = 1UL << 56;
-+		break;
-+	default:
-+		return false;
-+	}
-+
-+	return (va < up) || (va >= (ULONG_MAX - up + 1));
-+}
-+
- /*
-  * There is a simple way to determine if 4-level is supported by the
-  * underlying hardware: establish 1:1 mapping in 4-level page table mode
-@@ -842,6 +863,9 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
- 			   set_satp_mode_pmd + PMD_SIZE,
- 			   PMD_SIZE, PAGE_KERNEL_EXEC);
- retry:
-+	if (!is_vaddr_valid(set_satp_mode_pmd))
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
 +		goto out;
 +
- 	create_pgd_mapping(early_pg_dir,
- 			   set_satp_mode_pmd,
- 			   pgtable_l5_enabled ?
-@@ -864,6 +888,7 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
- 		disable_pgtable_l4();
+ 	if (unlikely(atomic_read(&tp_vars->sending) == 0))
+ 		goto out;
+ 
+@@ -1100,12 +1103,16 @@ void batadv_tp_stop(struct batadv_priv *
+ 	if (!tp_vars) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: trying to interrupt an already over connection\n");
+-		goto out;
++		goto out_put_orig_node;
  	}
  
-+out:
- 	memset(early_pg_dir, 0, PAGE_SIZE);
- 	memset(early_p4d, 0, PAGE_SIZE);
- 	memset(early_pud, 0, PAGE_SIZE);
--- 
-2.53.0
-
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
++		goto out_put_tp_vars;
++
+ 	batadv_tp_sender_shutdown(tp_vars, return_value);
++out_put_tp_vars:
+ 	batadv_tp_vars_put(tp_vars);
+-out:
++out_put_orig_node:
+ 	batadv_orig_node_put(orig_node);
+ }
+ 
 
 
