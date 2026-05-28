@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46902FD7C3;
-	Thu, 28 May 2026 20:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E54619A288;
+	Thu, 28 May 2026 20:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000021; cv=none; b=AjUcDqsJ2gmyzliQP2p7v0ET2/mZbKZcvQFftRJ44HolC5Je2H7Jzc4ybAmhXmmYjCjvoy2UItQDteHZAIeV5p7YwXGgXxkK4E0LJgNZKNlX14J/4eNxDuM5zrt4nCV2ePmML5MALluMhxxIWIBEsC5L9yr93XLezdBDa96JWyM=
+	t=1780000024; cv=none; b=q/KuU4NEjOvIOqN+xqZJoPgL79+KUV0k0wvpkmBVsxH3v3x8ZS9auSlgyIRq1qoYag6PVZOO6NqaGsvZqOh3NWoaYpKef/Nj03iL/SwjAsj7TuCCi+wvl6e8lvUNLTUHUZY3MiaY95FlxYiAAxBfhmbupgg3FpDf23aTaPTfHwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000021; c=relaxed/simple;
-	bh=t1TnJqGzC/YKvoeGTTW06bKCxmTkODmtOuFOUTDprQU=;
+	s=arc-20240116; t=1780000024; c=relaxed/simple;
+	bh=R2HkStIhIXSPdz+KTMU2EuhXO+GSKl1jXQ+mjWDFLd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2neNoblSqVIXJ/kOVV+uZ5roYKZuUyNEyDC1t3M8iyoLrPVbhMgZ7sTgOpP2+yY3zZKYX2Z99VWvKdBoSzkCniq/OJ0KeF0fYXa09UIH0zzj3231ETv0jdHCzDvfqSPoIOxzQZ3ErrvAi2ellaSk/g5CXER7vlA0Ejj0w6IhZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vglUzocF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kXIE52/aR7biMseUjdKekMuf+U9AS89qfzcz5H9VLoSGYyRgNK7GVVBxbwyt7gsxJtPBacvjk0J5jwwOvq2JsXPPRv6f4vW+8IIrTbVAiJkkI/RgYjlSJYxIrOrtGb/vPuags1iJ9Hoka+UhBOex3gODn0MbJZDdsV+l9YdnVXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/Jlw1EQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vglUzocF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25DC1F000E9;
-	Thu, 28 May 2026 20:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/Jlw1EQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BA31F000E9;
+	Thu, 28 May 2026 20:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000020;
-	bh=8CfPpK1iXiMlYnfGL+BbnWu92LwjMyo6ZLXsxzvataU=;
+	s=korg; t=1780000023;
+	bh=cKJoUgBX77tZnyRKWD9LDtByCdjegYGRBqV+veAuXu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vglUzocF45bs4KI22/Ex/tRkyw2Sux+T9AqCKMPII31Cn7mFmv+6LCjxPbD9nQ8rC
-	 do9jG/wF1iC78cTMuNwoLgTmgcdYOkkD/G/AQ/M/VfSJbsl9v2W4IjTp1XaZWUY6y9
-	 yurTdZ1Y5RUjrQr62vrI6WRuOapkaVP07DgH0oug=
+	b=B/Jlw1EQHfIfBLyzDUAKpKsS+gE29PLWYYXd1arFQiS3puOTcRFmyh+Z6JUmACARd
+	 F2gp1LFMNoTX2VfHxGpFpyjQfEfnJuKD1jLR1mE1CEisoS4ng+z/X6EIAdIi2s5B3A
+	 7YbyC/60XZvIt5kC6cQi7Zihlh8jXUA3elJEjX5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Matthew Wilcox <willy@infradead.org>,
@@ -35,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 237/377] netfs: Fix netfs_invalidate_folio() to clear dirty bit if all changes gone
-Date: Thu, 28 May 2026 21:47:55 +0200
-Message-ID: <20260528194645.249823951@linuxfoundation.org>
+Subject: [PATCH 6.18 238/377] netfs: Defer the emission of trace_netfs_folio()
+Date: Thu, 28 May 2026 21:47:56 +0200
+Message-ID: <20260528194645.277593754@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -58,123 +57,112 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 156ac2ec2ee77c44c4eb7439d6d165247ba12247 ]
+[ Upstream commit daeb443b92817021c1234e8eded219e164b7c35d ]
 
-If a streaming write is made, this will leave the relevant modified folio
-in a not-uptodate, but dirty state with a netfs_folio struct hung off of
-folio->private indicating the dirty range.  Subsequently truncating the
-file such that the dirty data in the folio is removed, but the first part
-of the folio theoretically remains will cause the netfs_folio struct to be
-discarded... but will leave the dirty flag set.
+Change netfs_perform_write() to keep the netfs_folio trace value in a
+variable and emit it later to make it easier to choose the value displayed.
+This is a prerequisite for a subsequent patch.
 
-If the folio is then read via mmap(), netfs_read_folio() will see that the
-page is dirty and jump to netfs_read_gaps() to fill in the missing bits.
-netfs_read_gaps(), however, expects there to be a netfs_folio struct
-present and can oops because truncate removed it.
-
-Fix this by calling folio_cancel_dirty() in netfs_invalidate_folio() in the
-event that all the dirty data in the folio is erased (as nfs does).
-
-Also add some tracepoints to log modifications to a dirty page.
-
-This can be reproduced with something like:
-
-    dd if=/dev/zero of=/xfstest.test/foo bs=1M count=1
-    umount /xfstest.test
-    mount /xfstest.test
-    xfs_io -c "w 0xbbbf 0xf96c" \
-           -c "truncate 0xbbbf" \
-           -c "mmap -r 0xb000 0x11000" \
-           -c "mr 0xb000 0x11000" \
-           /xfstest.test/foo
-
-with fscaching disabled (otherwise streaming writes are suppressed) and a
-change to netfs_perform_write() to disallow streaming writes if the fd is
-open O_RDWR:
-
-	if (//(file->f_mode & FMODE_READ) || <--- comment this out
-	    netfs_is_cache_enabled(ctx)) {
-
-It should be reproducible even without this change, but if prevents the
-above trivial xfs_io command from reproducing it.
-
-Note that the initial dd is important: the file must start out sufficiently
-large that the zero-point logic doesn't just clear the gaps because it
-knows there's nothing in the file to read yet.  Unmounting and mounting is
-needed to clear the pagecache (there are other ways to do that that may
-also work).
-
-This was initially reproduced with the generic/522 xfstest on some patches
-that remove the FMODE_READ restriction.
-
-Fixes: 9ebff83e6481 ("netfs: Prep to use folio->private for write grouping and streaming write")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-12-dhowells@redhat.com
+Link: https://patch.msgid.link/20260512123404.719402-13-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
 cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 7b4dcf1b9455 ("netfs: Fix streaming write being overwritten")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/misc.c              | 6 +++++-
- include/trace/events/netfs.h | 4 ++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/netfs/buffered_write.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 486166460e177..eb309bef72608 100644
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -256,6 +256,7 @@ void netfs_invalidate_folio(struct folio *folio, size_t offset, size_t length)
- 			/* Move the start of the data. */
- 			finfo->dirty_len = fend - iend;
- 			finfo->dirty_offset = offset;
-+			trace_netfs_folio(folio, netfs_folio_trace_invalidate_front);
- 			return;
- 		}
- 
-@@ -264,12 +265,14 @@ void netfs_invalidate_folio(struct folio *folio, size_t offset, size_t length)
- 		 */
- 		if (iend >= fend) {
- 			finfo->dirty_len = offset - fstart;
-+			trace_netfs_folio(folio, netfs_folio_trace_invalidate_tail);
- 			return;
- 		}
- 
- 		/* A partial write was split.  The caller has already zeroed
- 		 * it, so just absorb the hole.
- 		 */
-+		trace_netfs_folio(folio, netfs_folio_trace_invalidate_middle);
+diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
+index 09394ac2c180d..1fa13c2629a73 100644
+--- a/fs/netfs/buffered_write.c
++++ b/fs/netfs/buffered_write.c
+@@ -150,6 +150,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
  	}
- 	return;
  
-@@ -277,8 +280,9 @@ void netfs_invalidate_folio(struct folio *folio, size_t offset, size_t length)
- 	netfs_put_group(netfs_folio_group(folio));
- 	folio_detach_private(folio);
- 	folio_clear_uptodate(folio);
-+	folio_cancel_dirty(folio);
- 	kfree(finfo);
--	return;
-+	trace_netfs_folio(folio, netfs_folio_trace_invalidate_all);
- }
- EXPORT_SYMBOL(netfs_invalidate_folio);
+ 	do {
++		enum netfs_folio_trace trace;
+ 		struct netfs_folio *finfo;
+ 		struct netfs_group *group;
+ 		unsigned long long fpos;
+@@ -223,7 +224,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			if (unlikely(copied == 0))
+ 				goto copy_failed;
+ 			netfs_set_group(folio, netfs_group);
+-			trace_netfs_folio(folio, netfs_folio_is_uptodate);
++			trace = netfs_folio_is_uptodate;
+ 			goto copied;
+ 		}
  
-diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
-index cbe28211106c5..88d814ba1e697 100644
---- a/include/trace/events/netfs.h
-+++ b/include/trace/events/netfs.h
-@@ -194,6 +194,10 @@
- 	EM(netfs_folio_trace_copy_to_cache,	"mark-copy")	\
- 	EM(netfs_folio_trace_end_copy,		"end-copy")	\
- 	EM(netfs_folio_trace_filled_gaps,	"filled-gaps")	\
-+	EM(netfs_folio_trace_invalidate_all,	"inval-all")	\
-+	EM(netfs_folio_trace_invalidate_front,	"inval-front")	\
-+	EM(netfs_folio_trace_invalidate_middle,	"inval-mid")	\
-+	EM(netfs_folio_trace_invalidate_tail,	"inval-tail")	\
- 	EM(netfs_folio_trace_kill,		"kill")		\
- 	EM(netfs_folio_trace_kill_cc,		"kill-cc")	\
- 	EM(netfs_folio_trace_kill_g,		"kill-g")	\
+@@ -239,7 +240,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			folio_zero_segment(folio, offset + copied, flen);
+ 			__netfs_set_group(folio, netfs_group);
+ 			folio_mark_uptodate(folio);
+-			trace_netfs_folio(folio, netfs_modify_and_clear);
++			trace = netfs_modify_and_clear;
+ 			goto copied;
+ 		}
+ 
+@@ -257,7 +258,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			}
+ 			__netfs_set_group(folio, netfs_group);
+ 			folio_mark_uptodate(folio);
+-			trace_netfs_folio(folio, netfs_whole_folio_modify);
++			trace = netfs_whole_folio_modify;
+ 			goto copied;
+ 		}
+ 
+@@ -284,7 +285,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			if (unlikely(copied == 0))
+ 				goto copy_failed;
+ 			netfs_set_group(folio, netfs_group);
+-			trace_netfs_folio(folio, netfs_just_prefetch);
++			trace = netfs_just_prefetch;
+ 			goto copied;
+ 		}
+ 
+@@ -298,7 +299,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			if (offset == 0 && copied == flen) {
+ 				__netfs_set_group(folio, netfs_group);
+ 				folio_mark_uptodate(folio);
+-				trace_netfs_folio(folio, netfs_streaming_filled_page);
++				trace = netfs_streaming_filled_page;
+ 				goto copied;
+ 			}
+ 
+@@ -313,7 +314,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			finfo->dirty_len = copied;
+ 			folio_attach_private(folio, (void *)((unsigned long)finfo |
+ 							     NETFS_FOLIO_INFO));
+-			trace_netfs_folio(folio, netfs_streaming_write);
++			trace = netfs_streaming_write;
+ 			goto copied;
+ 		}
+ 
+@@ -333,9 +334,9 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 					folio_detach_private(folio);
+ 				folio_mark_uptodate(folio);
+ 				kfree(finfo);
+-				trace_netfs_folio(folio, netfs_streaming_cont_filled_page);
++				trace = netfs_streaming_cont_filled_page;
+ 			} else {
+-				trace_netfs_folio(folio, netfs_streaming_write_cont);
++				trace = netfs_streaming_write_cont;
+ 			}
+ 			goto copied;
+ 		}
+@@ -351,6 +352,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 		continue;
+ 
+ 	copied:
++		trace_netfs_folio(folio, trace);
+ 		flush_dcache_folio(folio);
+ 
+ 		/* Update the inode size if we moved the EOF marker */
 -- 
 2.53.0
 
