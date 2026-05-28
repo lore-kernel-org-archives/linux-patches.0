@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B427C3164B7;
-	Thu, 28 May 2026 20:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABC232B13B;
+	Thu, 28 May 2026 20:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998971; cv=none; b=cKIvMYxR/FcPVU1WP0kEZ+NJWMkKIdlFTBxdFcLPerTx3FIV5qplgkKRP/+p5szs8+WozxjmUSvA/B1mxCqdlv1Gfnvh4C/Tj0f87QO/XnpRNMRB3LL1EnFaNVYKSsIekdGgZZgqv6743hVgi2adh7x80F8uvzCGz/jbKsXXfZg=
+	t=1779998974; cv=none; b=PcbnB31jCh+o3AX67/KVLVJQ/O3NORuYem6l3v/IK3dbqLCM/I2rRdovafpZYQCbf3I3u6jlZZjpCzbpAWIOKkd3OiD/ReOU8BrsKfdQis4/REc52FRQdEeBD6Mo/AbsZwAc8uppHNMtURCqeENFO1WFicm9G4Q8rg5MK/Igy4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998971; c=relaxed/simple;
-	bh=gNEH8lP9jnj9cVULMpXpoxf1MUAY70Q5ZuFLaE+zUVM=;
+	s=arc-20240116; t=1779998974; c=relaxed/simple;
+	bh=v7LQEY8s7T2+xC/a63RFkw7WMTSASLqDIEcIEhOrJ1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YusYybSbUf9zM8PRgm03mJSJ1LKO0xgTg+2jFPxdKqyCGL8HVIgpxuK4aY6rtdZZ6KLCeLm7dAVU6ClAF1ysLFq85rOB1gYo8pfmPn+rQorLYV6p6T/3S9obM4mTugy0Duon944Kv8StVggw+w9hMVULSJ6Yoji7uxafDPeWp5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p51lI88N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pSBZZtz2x+oUMakzarBiLA3U2JkEPshHxcJXJH7k329iAltrdnM+JK/KciXPaj9TKQFRhTnCqZXYI8ja00s6K13hydxP/LQU3SbnrnNg6DO3CPdvLv9kN7V/hw2FGe3aEal2XbljvOJnQ5yz22LA3uO+5BLMsG37jsI2euhv6IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c38uKtyy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p51lI88N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01BC1F000E9;
-	Thu, 28 May 2026 20:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c38uKtyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55101F000E9;
+	Thu, 28 May 2026 20:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998970;
-	bh=neOxN2tUnYaKj51SKDSIs1Z0KiUF/22LO3tqOlWKmI8=;
+	s=korg; t=1779998973;
+	bh=5OjBI2BbedxGxnf7eYJPd/x5BtHx+G/81g2M+MBJmDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p51lI88NjZdjby5qCJxK9NpxmNQm38BI6i0cb78S/JuMJRUx9VpSvRBb6ZQyW8ZvT
-	 A6b3BOTlDcoO9mmiBGAxRJU/Y2YPAkKtHWapYjVQvaR8o3mHFpfYLwb0y/iofa1yvE
-	 RK5+HFN56kipgGBepAJ8qG1xs9N8s6dUvk0foNac=
+	b=c38uKtyy25P5ITp8FeLPcualEaXEQo6D59/GBHNIFy9GzDwMjYht4kTGIczWzgSN/
+	 nbV4Q8eoRXOcT3VF1Wmt+ynSOQh9UbbPeB8+IKPxFu31IVcA7Q97DeO9u55E5o2Nyr
+	 BPmT6h8mpD77t4/ZNuhx3IIxK/pUaWDugCRwH5Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 363/461] drm/xe: Consolidate workaround entries for Wa_18033852989
-Date: Thu, 28 May 2026 21:48:12 +0200
-Message-ID: <20260528194657.943189738@linuxfoundation.org>
+Subject: [PATCH 7.0 364/461] drm/xe: Define and use MCR version of COMMON_SLICE_CHICKEN1
+Date: Thu, 28 May 2026 21:48:13 +0200
+Message-ID: <20260528194657.974965498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,59 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Gustavo Sousa <gustavo.sousa@intel.com>
 
-[ Upstream commit fe681e7b44d78fd77d79de21eca58c3b6bdcda0e ]
+[ Upstream commit a4660bd949733fd6ea621fdb50fabac2608155e9 ]
 
-Wa_18033852989 applies to all graphics versions from 20.01 through 20.04
-(inclusive).  Consolidate the RTP entries into a single range-based entry.
+The register COMMON_SLICE_CHICKEN1 is a MCR register on Xe2.
+Let's make sure to define a MCR version of it and use it for the
+relevant IP versions.
 
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260220-forupstream-wa_cleanup-v2-19-b12005a05af6@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Stable-dep-of: a4660bd94973 ("drm/xe: Define and use MCR version of COMMON_SLICE_CHICKEN1")
+Use XEHP_ as prefix for the register name, since it is MCR as of Xe_HP.
+
+Fixes: a5d221924e13 ("drm/xe/xe2_hpg: Add set of workarounds")
+Fixes: 9f18b55b6d3f ("drm/xe/xe2: Add workaround 18033852989")
+Bspec: 66534, 71185
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patch.msgid.link/20260514-rtp-mcr-check-v3-2-30dd47855fee@intel.com
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+(cherry picked from commit a672725fdbfc3ea430130039d677c7dc98d59df8)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
+ drivers/gpu/drm/xe/xe_wa.c           | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+index 9d66f168ab8a7..dd06487c87edc 100644
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -145,6 +145,7 @@
+ #define   MSAA_OPTIMIZATION_REDUC_DISABLE	REG_BIT(11)
+ 
+ #define COMMON_SLICE_CHICKEN1			XE_REG(0x7010, XE_REG_OPTION_MASKED)
++#define XEHP_COMMON_SLICE_CHICKEN1		XE_REG_MCR(0x7010, XE_REG_OPTION_MASKED)
+ #define   DISABLE_BOTTOM_CLIP_RECTANGLE_TEST	REG_BIT(14)
+ 
+ #define HIZ_CHICKEN					XE_REG(0x7018, XE_REG_OPTION_MASKED)
 diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index c436d0ad51e77..6e3c44bc69daf 100644
+index 6e3c44bc69daf..4ecf96fb40846 100644
 --- a/drivers/gpu/drm/xe/xe_wa.c
 +++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -720,6 +720,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2004), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+@@ -722,7 +722,7 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
  	},
-+	{ XE_RTP_NAME("18033852989"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2004), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
-+	},
+ 	{ XE_RTP_NAME("18033852989"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2004), ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
++	  XE_RTP_ACTIONS(SET(XEHP_COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
+ 	},
  
  	/* DG1 */
- 
-@@ -776,10 +780,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 
- 	/* Xe2_LPG */
- 
--	{ XE_RTP_NAME("18033852989"),
--	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
--	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
--	},
- 	{ XE_RTP_NAME("14021567978"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, XE_RTP_END_VERSION_UNDEFINED),
- 		       ENGINE_CLASS(RENDER)),
-@@ -827,10 +827,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE))
- 	},
--	{ XE_RTP_NAME("18033852989"),
--	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
--	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN1, DISABLE_BOTTOM_CLIP_RECTANGLE_TEST))
--	},
- 
- 	/* Xe3_LPG */
- 	{ XE_RTP_NAME("14021490052"),
 -- 
 2.53.0
 
