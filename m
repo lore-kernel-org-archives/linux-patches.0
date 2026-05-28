@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86FA2C11F9;
-	Thu, 28 May 2026 20:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32EF2C11F9;
+	Thu, 28 May 2026 20:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999466; cv=none; b=MdMjr0zKSb23y1D8N6rjRvPf4mozAGUFtTvcyVrVKCJqeovmqCy0X/vueDfgEGskd2xc2hEM6SbG+oBL33SPEPvm+kEmCLtIyjUIGqKFxLMW/EtUxi9BlFkxn5afWxQ7uZWjISs56KNSdF4oDnNVlrFQtdXPhSNuXgHU2fCayZs=
+	t=1779999468; cv=none; b=nqruk9m6gSPjnO5TjFW0JT3t637FLODt5wKB78LSyb2lsFVetYi2OnMIDkEia8ngvhRn3he+4ZYF3ihD8dtIjXaON0mCljmRs+B6pLvvdjl/8I93dvkNNKaf0ulPkIYo9IxYRG1sM0+s6QGO71v56QPYx+akF2GcWXcAYnVmo9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999466; c=relaxed/simple;
-	bh=bl5dl3ySKTY/8okafL9XCzcDHFVs0xbVacWyVn6AYH8=;
+	s=arc-20240116; t=1779999468; c=relaxed/simple;
+	bh=VQh9KFS0+Kjc8hNV2Rd6lHrvD7sXk9vlrn1izcjdSXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mfqPiFcPvTbCfGnM8Qr60nYUpGDuuST35Art5CHvm/I72wrSyJXoTGxCHQQ71g+0rgE4H9n4M+Eu9Fp3FvfbutorbBo4fS9F8j7KslYI8qGY6ToldG9z9GaxMqPcpFa3rYCq6kccO3bTa9SbkhGCpTMiEvFfUJvlabTgMJRm0RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBV4b+NU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L70h+t+moFJisnUtd2M+sSPL1lpQnA5AXU4yqV33FlCTcIWusslvrpo7syDs68xd0abEfOmQiH5ULKkVRey/aHo26Jdw82ImjO2PFHqDAJwmwVaYt9AT+aDCpvHO1xDKDCB3Bo56e6HSXyou904D4sg5u0C6hGLYF70qmI+I2aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTnf+NRT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBV4b+NU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534731F000E9;
-	Thu, 28 May 2026 20:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTnf+NRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171071F00A3A;
+	Thu, 28 May 2026 20:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999463;
-	bh=Sqmq148e/DIapP/G7x5ZLiGDdXL6FVLcRjiRF5m1G/E=;
+	s=korg; t=1779999466;
+	bh=+bu1BSt3RStSE6CtEkdLhQhyQitz4eTbLqCi71lMbfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CBV4b+NUtDDt4QIKCCTDYaufWo2iXsvf1GLDHRbHvpd/Dqi1vrmHX+vbrtV/vAjwk
-	 H/5B0itRM8QlY08VQhRIAZYRJ+FCkw/PvxSLzv4vO7xmcY6zrKOiF/XFXe2ddVsD8r
-	 UfQ8v29ExkMtFEzJRaapr6QXxzaXpjyy/3LU+o1g=
+	b=cTnf+NRTd/4WFwXv98qLI6dblq9Qkrmz5ChbuVtRAEjFXABGxDIPNBmBqrUxfouL3
+	 1vp37EE6RlDzsMP57p96OX4WcEdXO8fHvpv2jzW8DGP83BrAkW2oZK1VE26xQTwXH3
+	 zpDaFxpkg3nGnL82ZScwIVStjB4ukHm5ktDTRZVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 040/377] ALSA: scarlett2: Allow flash writes ending at segment boundary
-Date: Thu, 28 May 2026 21:44:38 +0200
-Message-ID: <20260528194639.536887169@linuxfoundation.org>
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.18 041/377] efi: Allocate runtime workqueue before ACPI init
+Date: Thu, 28 May 2026 21:44:39 +0200
+Message-ID: <20260528194639.564845753@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -44,56 +44,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit a69b677e47a80319ce148d61cc29a2b57006e78d upstream.
+commit 13c6da02e767152c9ac4330962247a5e47011035 upstream.
 
-scarlett2_hwdep_write() rejects writes when offset + count is greater than
-or equal to the selected flash segment size. That incorrectly treats a
-write ending exactly at the end of the segment as out of space, although
-the last byte written is still within the segment.
+Since commit
 
-Split invalid argument checks from the segment-space check, keep
-zero-length writes as no-ops, and compare count against the remaining
-segment size. This permits exact-end writes and avoids relying on
-offset + count before deciding whether the request is in bounds.
+  5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
 
-Fixes: 1abfbd3c9527 ("ALSA: scarlett2: Add support for uploading new firmware")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260519-alsa-scarlett2-flash-write-boundary-v1-1-b550480e92da@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ACPI PRM calls are delegated to a workqueue which runs in a kernel
+thread, making it easier to detect and mitigate faulting memory accesses
+performed by the firmware.
+
+Rafael reports that such PRM accesses may occur before efisubsys_init()
+executes, which is where the workqueue is allocated, leading to NULL
+pointer dereferences. Since acpi_init() [which triggers the early PRM
+accesses] executes as a subsys_initcall() as well, and has its own
+dependencies that may be sensitive to initcall ordering, deferring
+acpi_init() is not an option.
+
+So instead, split off the workqueue allocation into its own postcore
+initcall, as this is the only missing piece to allow EFI runtime calls
+to be made. This ensures that EFI runtime call (including PRM calls) are
+accessible to all code running at subsys_initcall() level.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/efi.c |   28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -9186,12 +9186,15 @@ static long scarlett2_hwdep_write(struct
- 	flash_size = private->flash_segment_blocks[segment_id] *
- 		     SCARLETT2_FLASH_BLOCK_SIZE;
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -401,21 +401,11 @@ static void __init efi_debugfs_init(void
+ static inline void efi_debugfs_init(void) {}
+ #endif
  
--	if (count < 0 || *offset < 0 || *offset + count >= flash_size)
--		return -ENOSPC;
-+	if (count < 0 || *offset < 0)
-+		return -EINVAL;
+-/*
+- * We register the efi subsystem with the firmware subsystem and the
+- * efivars subsystem with the efi subsystem, if the system was booted with
+- * EFI.
+- */
+-static int __init efisubsys_init(void)
++static int __init efipostcore_init(void)
+ {
+-	int error;
+-
+ 	if (!efi_enabled(EFI_RUNTIME_SERVICES))
+ 		efi.runtime_supported_mask = 0;
  
- 	if (!count)
- 		return 0;
- 
-+	if (*offset >= flash_size || count > flash_size - *offset)
-+		return -ENOSPC;
+-	if (!efi_enabled(EFI_BOOT))
+-		return 0;
+-
+ 	if (efi.runtime_supported_mask) {
+ 		/*
+ 		 * Since we process only one efi_runtime_service() at a time, an
+@@ -427,9 +417,23 @@ static int __init efisubsys_init(void)
+ 			pr_err("Creating efi_rts_wq failed, EFI runtime services disabled.\n");
+ 			clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
+ 			efi.runtime_supported_mask = 0;
+-			return 0;
+ 		}
+ 	}
++	return 0;
++}
++postcore_initcall(efipostcore_init);
 +
- 	/* Limit the *req size to SCARLETT2_FLASH_RW_MAX */
- 	if (count > max_data_size)
- 		count = max_data_size;
++/*
++ * We register the efi subsystem with the firmware subsystem and the
++ * efivars subsystem with the efi subsystem, if the system was booted with
++ * EFI.
++ */
++static int __init efisubsys_init(void)
++{
++	int error;
++
++	if (!efi_enabled(EFI_BOOT))
++		return 0;
+ 
+ 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_TIME_SERVICES))
+ 		platform_device_register_simple("rtc-efi", 0, NULL, 0);
 
 
