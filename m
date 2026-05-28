@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC13DDC5;
-	Thu, 28 May 2026 20:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BAE260580;
+	Thu, 28 May 2026 20:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000196; cv=none; b=J/UAJcqBB0nvL7xFeuYHwYLlgcdca2SB2PRzv0JCauCHoOnZ6K9PeK1K2XjT1uXxEzotMDjmgpblkuFslcpdOPicpd8NExyvlOhIsUrvvWoTcI2SujchW+5TUpv6G4lLJT+sKPL7Wlf5MiDarN2wpxvhl9U0X6NXIjLmdR6Tnak=
+	t=1780000199; cv=none; b=Eom8pdtdf5yY83m8OsrFI9lfxati6LstIKyoTNDb4KrbMiOHRpCsWvfzo2enCPre3fF2l2oTapcsJEYMXllgRCU4eXK73APziejo3Glv2I8XnPwTM3dp3c2qRIT/JNFsh4SaTc1+sRRBzLvSjv4hPpDcN2fZWC+4WFIKsF+MUig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000196; c=relaxed/simple;
-	bh=SNGeyUku1yR0M+j4bDuQtfiOogVvdMEfujIb8vTnVZc=;
+	s=arc-20240116; t=1780000199; c=relaxed/simple;
+	bh=GtdV/AczT68QLI0xQXkbh1iRDevdPUSEn5ykSwBY36E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ir9Nz1wkcjWbARg8AqLgHA8yaHdNSh5OZS4SP6EXHnBDf/Z5chKi7oyjrBY6HgkzRj0HTyeStZsSxDBVC1xkrw/N6DfuccRltx2quu3hTIg80x2Bzk5aRDSfpPKxcN+nhxNWf+cTHe+JTpatcIm7JOtBJp/xWb+UrIAdwW9TtXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfwHEFi6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MPHUZfvBRIQAd+xMjbjFrK6jbg1DPpWP6Kw1BRgtyXTTBglnR1qvU5fqZi30+8yVwXWESEgyuWJjoxjdULVROy9GpQDMN8G8h2fZ8jHjYNc8b/C3MN1rc5n6NUw0PT9lx7jDgaToCavmrvBGAOytGwKM6iw4/FomZ31oajzZuio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msiBhR58; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfwHEFi6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2890A1F000E9;
-	Thu, 28 May 2026 20:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msiBhR58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECA11F000E9;
+	Thu, 28 May 2026 20:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000195;
-	bh=hLJ6hCJLFeivxUTIFNIOi7OzlakrUG1dHcB4eor9J4E=;
+	s=korg; t=1780000198;
+	bh=InUCaieJlUg7Qoq8aY5P/RL08fAhVESKBHB6S+RP+2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfwHEFi6qZgy43BPO3VaYlyHGUDOxp6EY6pfTmIxanaWAdN36uTwXEhDA888178Tm
-	 xhFb09iyJUFnUlQ0TsoN09d6Z2fqxSOSSiN779ADVW5Iv+Ji28jLgXYbICrQWo/Fli
-	 aGo51iPy+Kbq9YTsFw6FjL54vNEuGBYw2VUD7Rh4=
+	b=msiBhR5834pXKg/BtrdvW7qUOzS13e1aZ9tpMN9JLT7P8SnxHpB7aMrg2LQNNxDxn
+	 jX0wkBySRsl5E0lRHIC5Qfp/m6knVyv3K1qAHOI7ubRgMqsZ4+6+DXRlV8HUqJAEky
+	 QV9cv8KpOkILFQqbTxpOglCu8UFl468mBqNxh6Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiraz Saleem <shirazsaleem@microsoft.com>,
-	Konstantin Taranov <kotaranov@microsoft.com>,
-	Long Li <longli@microsoft.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 336/377] RDMA/mana_ib: Report max_msg_sz in mana_ib_query_port
-Date: Thu, 28 May 2026 21:49:34 +0200
-Message-ID: <20260528194648.145467960@linuxfoundation.org>
+Subject: [PATCH 6.18 337/377] RDMA/rtrs: Fix use-after-free in path file creation cleanup
+Date: Thu, 28 May 2026 21:49:35 +0200
+Message-ID: <20260528194648.175851014@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,35 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiraz Saleem <shirazsaleem@microsoft.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c9a40f6531b81baa9619bcc2697ff86896afcce7 ]
+[ Upstream commit 5b74373390113fba798a76b483837029ab010fef ]
 
-Report max_msg_sz for mana_ib, which is 16MB.
+In the error path of rtrs_srv_create_path_files(), the sysfs root folders
+may already have been created and srv_path->kobj may already have been
+initialized. If a later step fails, the cleanup currently calls
+kobject_put(&srv_path->kobj) before
+rtrs_srv_destroy_once_sysfs_root_folders(srv_path).
 
-Fixes: 4bda1d5332ec ("RDMA/mana_ib: Implement port parameters")
-Signed-off-by: Shiraz Saleem <shirazsaleem@microsoft.com>
-Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
-Link: https://patch.msgid.link/20260512094209.264955-1-kotaranov@linux.microsoft.com
-Reviewed-by: Long Li <longli@microsoft.com>
+kobject_put() may drop the last reference to srv_path->kobj and invoke the
+release callback, rtrs_srv_release(), which frees srv_path. The following
+call to rtrs_srv_destroy_once_sysfs_root_folders(srv_path) then
+dereferences srv_path internally to access srv_path->srv, resulting in a
+use-after-free.
+
+This failure path is reached before rtrs_srv_create_path_files() returns
+success, so the successful-path lifetime handling is not involved.
+
+Fix this by destroying the sysfs root folders before calling
+kobject_put(&srv_path->kobj), so srv_path is still valid while the helper
+accesses it.
+
+This issue was found by a static analysis tool I am developing.
+
+Fixes: ae4c81644e91 ("RDMA/rtrs-srv: Rename rtrs_srv_sess to rtrs_srv_path")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260514113834.865530-1-lgs201920130244@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mana/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
-index fac159f7128d9..4143be70eea20 100644
---- a/drivers/infiniband/hw/mana/main.c
-+++ b/drivers/infiniband/hw/mana/main.c
-@@ -639,6 +639,7 @@ int mana_ib_query_port(struct ib_device *ibdev, u32 port,
- 	if (mana_ib_is_rnic(dev)) {
- 		props->gid_tbl_len = 16;
- 		props->ip_gids = true;
-+		props->max_msg_sz = SZ_16M;
- 		if (port == 1)
- 			props->port_cap_flags = IB_PORT_CM_SUP;
- 	}
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
+index 3f305e694fe8c..1b1c6ea4ee5a4 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
+@@ -295,8 +295,8 @@ int rtrs_srv_create_path_files(struct rtrs_srv_path *srv_path)
+ put_kobj:
+ 	kobject_del(&srv_path->kobj);
+ destroy_root:
+-	kobject_put(&srv_path->kobj);
+ 	rtrs_srv_destroy_once_sysfs_root_folders(srv_path);
++	kobject_put(&srv_path->kobj);
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
