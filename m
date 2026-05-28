@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5372580D7;
-	Thu, 28 May 2026 20:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A06257854;
+	Thu, 28 May 2026 20:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999426; cv=none; b=maT9jwVu58aM3wamkxsPItc85Ap5tNWnloHAY/GSmcouBEcsO+aWjEHqwS90M5C2D5IZQTkm2Ui+jwJiw8Z0uFQHtaTiUHbu2z2OFp3Ubkt8s+ZsQtkvxGL7FlyMywKsJnOHmhx9BKZCwA/wnEUhPSkFDXwcdI9H0cXL4GeAz74=
+	t=1779999428; cv=none; b=EPyVpA5I2zjPFoKj/9+Y+AtgghfW/A9iH2gWL7P++TIEUaoGGjPDvEtAHMrCAyC6G5pvHJEAKQDyHbiMPbHhcnc75S0Tx6mVtrKy02RRbDumtcmVtjZV4hZG/MAoBI2LTxOBpOWnmBMpoYkQfbQs0n88IrqzlCUJPry3eqdjpiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999426; c=relaxed/simple;
-	bh=qdoQ8ADjy0T062E3NK1+DR1sVwtZ2uVaWLdOHlI/pzI=;
+	s=arc-20240116; t=1779999428; c=relaxed/simple;
+	bh=PfKNpuaIah1q+VK/uu0wDgt1IQuJnNaul5t5fbzcNe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E3bWgcD1DZPqc4QvjXQ/qP8Qsr68Ocg1HKi0q+jvVoRuPDa+jDXMpsk3u/WPe/zECFuvlKgvFG8NSdl8xSMbML2JtH6VW84u3ktEIoYY5d7TL6IvlECMaXtoT95tcR/W65Egf9uoE23BHKrC5pPoWFsxtoGc1x9p6XhYCSospDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9QWnCoM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dwg2Vxh/MLVNp6Y088irED66kvjbKAv6ncDbmkvFN3uKJHufE4XoRXgZ5PnEcVmwgDGEnFcz80AIWsJo9wb1DWlsIQmfAAyzFKYULO16g6MUcrBkGfbfO8Wa1mT4e/ieqPfXtmYbHOOgGdWwdwuDpbBIRu0q02Hn8a6QZRP4B0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYn3mzMl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9QWnCoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558831F000E9;
-	Thu, 28 May 2026 20:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYn3mzMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232CD1F000E9;
+	Thu, 28 May 2026 20:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999424;
-	bh=OdzgbvpG+BCWCDzIo1qokojNeqHzsyWUOTCK/gr5tOQ=;
+	s=korg; t=1779999427;
+	bh=hPvn0rproW0fxP20lkrsgT32XQFcOdzLg2VAt1z+XRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I9QWnCoMAriHsOKGus10bY9xvwpgBvGyyAmllMRVFZWoUn7j6gDS9ycf6K3Onm3RX
-	 JOHWqt5SrCs+rNNT6mGCUleRBD6Vbx4hJQbG8QQ7mhFEgrZbs70AZ/PUDAXo6oj1h5
-	 r8BM4zvpsTdHqbW1VZMj8zx3JpLFO0k6JqkUtiH0=
+	b=uYn3mzMlFlQy7GWA4Hx6mKNMS7IiiHJgoOk54ZKB+6B8Ai2Zbr9/VRhLbuFZCdE6b
+	 Jyv8+Jaoos0FOoZk8d7yKhaWly/772ud+Mp7zIJfVZb2IHYZ0uFppS2T1mNNemGEDK
+	 PUujw/JWwEia5kzksXSVqHCHIroAg1zQSdEtkFJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 062/377] net/mlx5e: Fix use-after-free in mlx5e_tx_reporter_timeout_recover
-Date: Thu, 28 May 2026 21:45:00 +0200
-Message-ID: <20260528194640.163812232@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 036/377] hwmon: (pmbus/adm1266) widen blackbox-info buffer to I2C_SMBUS_BLOCK_MAX
+Date: Thu, 28 May 2026 21:44:34 +0200
+Message-ID: <20260528194639.424595721@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,73 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 7d260c5d2d89eb2c8c528d54b576b3aae3e20231 upstream.
+commit eee213daa1e1b402eb631bcd1b8c5aa340a6b081 upstream.
 
-mlx5e_tx_reporter_timeout_recover() accesses sq->netdev after
-mlx5e_safe_reopen_channels() has torn down and freed the channel (and
-its embedded SQs). Replace the three sq->netdev references with
-priv->netdev which is safe because priv outlives channel teardown.
+adm1266_nvmem_read_blackbox() declares a 5-byte stack buffer and
+passes it to i2c_smbus_read_block_data() to retrieve the 4-byte
+BLACKBOX_INFO response.  i2c_smbus_read_block_data() does not honour
+caller buffer sizes -- it memcpy()s data.block[0] bytes from the
+SMBus transaction (where data.block[0] is the length byte returned by
+the slave device, up to I2C_SMBUS_BLOCK_MAX = 32):
 
-The netdev_err() call already used priv->netdev for this reason; make
-the trylock/unlock and health_channel_eq_recover calls consistent.
+	memcpy(values, &data.block[1], data.block[0]);
 
-This fixes the following KASAN splat:
+If the device returns any block length above 5, the call overflows
+the caller's 5-byte stack buffer before the post-call
 
-  BUG: KASAN: use-after-free in mlx5e_tx_reporter_timeout_recover+0x1dd/0x360 [mlx5_core]
-  Read of size 8 at addr ffff889860ed0b28 by task kworker/u113:2/5277
+	if (ret != 4)
+		return -EIO;
 
-  Call Trace:
-   mlx5e_tx_reporter_timeout_recover+0x1dd/0x360 [mlx5_core]
-   devlink_health_reporter_recover+0xa2/0x150
-   devlink_health_report+0x254/0x7c0
-   mlx5e_reporter_tx_timeout+0x297/0x380 [mlx5_core]
-   mlx5e_tx_timeout_work+0x109/0x170 [mlx5_core]
-   process_one_work+0x677/0xf20
-   worker_thread+0x51f/0xd90
-   kthread+0x3a5/0x810
-   ret_from_fork+0x208/0x400
-   ret_from_fork_asm+0x1a/0x30
+check has a chance to reject the response.
 
-Fixes: 83ac0304a2d7 ("net/mlx5e: Fix deadlocks between devlink and netdev instance locks")
+Widen the local buffer to I2C_SMBUS_BLOCK_MAX so the helper has room
+for any well-formed SMBus block response, matching the convention used
+by the other i2c_smbus_read_block_data() callers in this driver.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Link: https://patch.msgid.link/20260513112226.140512-1-matt@readmodwrite.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-2-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-@@ -159,13 +159,13 @@ static int mlx5e_tx_reporter_timeout_rec
- 	 * channels are being closed for other reason and this work is not
- 	 * relevant anymore.
- 	 */
--	while (!netdev_trylock(sq->netdev)) {
-+	while (!netdev_trylock(priv->netdev)) {
- 		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state))
- 			return 0;
- 		msleep(20);
- 	}
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -349,7 +349,7 @@ static int adm1266_nvmem_read_blackbox(s
+ {
+ 	int record_count;
+ 	char index;
+-	u8 buf[5];
++	u8 buf[I2C_SMBUS_BLOCK_MAX];
+ 	int ret;
  
--	err = mlx5e_health_channel_eq_recover(sq->netdev, eq, sq->cq.ch_stats);
-+	err = mlx5e_health_channel_eq_recover(priv->netdev, eq, sq->cq.ch_stats);
- 	if (!err) {
- 		to_ctx->status = 0; /* this sq recovered */
- 		goto out;
-@@ -185,7 +185,7 @@ static int mlx5e_tx_reporter_timeout_rec
- 		   "mlx5e_safe_reopen_channels failed recovering from a tx_timeout, err(%d).\n",
- 		   err);
- out:
--	netdev_unlock(sq->netdev);
-+	netdev_unlock(priv->netdev);
- 	return err;
- }
- 
+ 	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
 
 
