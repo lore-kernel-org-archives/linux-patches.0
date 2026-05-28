@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F561DE4E0;
-	Thu, 28 May 2026 20:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454261FC0EA;
+	Thu, 28 May 2026 20:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000643; cv=none; b=Ek0HjUEtF1Zi1suB3B3mXCKft/fNQdj3jktiwEyQ193iZF8fOWyumh5GXNey6VzQvPD7hsZofdk3RAUHpj+f5BPx9A7j4cjYFUCjQ35umvuC1B5YGYBrVofxbZF+U3q6gh1xSY7kP2jhI8SbT4DNoNs8C9DkpV9rQjTlNmAMexw=
+	t=1780000646; cv=none; b=Mu08nSqeK5775NCPobUjxG7xkzV/jxmXbUrno1Wf//9Du5sx/QEUko2evOUsnb5kHWsrcImh0zQ3mTEu9OW/aLyPaXk0txPVNRlhIDkWe04iTiDd2fzrkmFcL3lGQLWEaThC7goscFkINo+6NsX4mD1mG3my7gO3CdPcK5JH4VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000643; c=relaxed/simple;
-	bh=3t/Okzrr7T3pLlwClNsbhl6M5oYljRP6QYI6qaaYqG0=;
+	s=arc-20240116; t=1780000646; c=relaxed/simple;
+	bh=Oe5bmwPqPdW+9H3QHfxyltPiJ91Ys+493MFBCjzcWn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZ3be96RpfIhwC1VFJl6sGhgr/ix1MYpryh5P8YVPRP97e6OLTYAHy9hzL7WeN6tsEyzK7N8zPP5+vVHVG3ZklfQgQ+2PAlUKyyH++DQu1M24/scvhiHwf5IkgojLeEzV7WSsQafx6x0WJlODJg+xBhoTMu8bYCstNy9V7vHIJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLKyUvkr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kEvQyKJnOtrMlefahe2MciS+ifuRU7kQToVhqRMGbxuMDeNL8DtXMjmhPmed7Kp3UQ/6ME2FzcvZN6PvbqRn6N+3hnmLIX1h66FHYzbOFS7ZNVkLvjXdCn16+crN08FEKTM2/ibxqdBnySbaf1Snu/ViAJYOBmhfTKBwA5bpG5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFXlf1jY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLKyUvkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CB91F000E9;
-	Thu, 28 May 2026 20:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFXlf1jY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6342E1F000E9;
+	Thu, 28 May 2026 20:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000642;
-	bh=LqKS/z+ffFCG3CEVF94uVjwvRfCTLtiKGthLVtjJN7M=;
+	s=korg; t=1780000644;
+	bh=vAWfyeSAutK1YfKvxv7Im9IqzOzYYWXWk7DGaZZlBGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nLKyUvkreBi/GnNb3xArp6JTeQwEYDvAcqJDoOr6mnTcQDJ3JIuoXA2m44sT/Y50n
-	 cRdv2rE5CZaHVbIu15wsw/CXMlCvMws+ez099+PMJxXCgSUL2iT6CcrLxtvf63ueOS
-	 nJ8A1+aiwAEumdjFPFjoXYAqQ9it3H+jja1PH6jo=
+	b=zFXlf1jYt+bJMcsaaGnWFfFcTR7t6A+4jGuObZo9dycnFjIKZo/pgK57S7TIeQe0V
+	 MhPzxvze0zV9Dq/NlmzcoFVwPJo/k78IDmOUui5i/cefdP+stk0xlhtz1Z59WAuXDx
+	 4P16ztJd8GzcCd/upyeScGyeQdGAhC/hXyEjYINA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien Chauveau <chauveau.julien@gmail.com>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 6.12 116/272] drm/bridge: it66121: acquire reset GPIO in probe
-Date: Thu, 28 May 2026 21:48:10 +0200
-Message-ID: <20260528194632.629257576@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Ian Ray <ian.ray@gehealthcare.com>
+Subject: [PATCH 6.12 117/272] drm/bridge: megachips: remove bridge when irq request fails
+Date: Thu, 28 May 2026 21:48:11 +0200
+Message-ID: <20260528194632.656932395@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,50 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julien Chauveau <chauveau.julien@gmail.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit e02b5262fd288cc235f14e12233ea54e78c04611 upstream.
+commit d45d5c819f2cd0b6b5d76a194a537a5f4aeefecb upstream.
 
-The it66121_ctx structure has a gpio_reset field, and it66121_hw_reset()
-calls gpiod_set_value() on it. However, the GPIO descriptor is never
-acquired via devm_gpiod_get(), leaving gpio_reset as NULL throughout
-the driver lifetime.
+If devm_request_threaded_irq() fails after drm_bridge_add(), remove the
+bridge before returning.
 
-gpiod_set_value() silently returns when passed a NULL descriptor, so
-the hardware reset sequence in it66121_hw_reset() is a no-op. This
-leaves the chip in an undefined state at probe time, which can prevent
-it from responding on the I2C bus.
+Keep drm_bridge_add() rather than devm_drm_bridge_add(): registration is
+tied to the STDP4028 device while ge_b850v3_register() may complete from
+either I2C probe; devm would not unwind the bridge if the other client's
+probe fails.
 
-The DT binding marks reset-gpios as a required property, so all
-compliant device trees provide this GPIO. Add the missing
-devm_gpiod_get() call after enabling power supplies and before the
-hardware reset, so the chip is properly reset with power applied.
-
-Fixes: 988156dc2fc9 ("drm: bridge: add it66121 driver")
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Julien Chauveau <chauveau.julien@gmail.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Tested-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20260324193011.16583-1-chauveau.julien@gmail.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260430195700.80317-1-osama.abdelkader@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ite-it66121.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |   16 +++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ite-it66121.c
-+++ b/drivers/gpu/drm/bridge/ite-it66121.c
-@@ -1559,6 +1559,11 @@ static int it66121_probe(struct i2c_clie
- 		return ret;
- 	}
+--- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
++++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
+@@ -258,7 +258,6 @@ static void ge_b850v3_lvds_remove(void)
+ 		goto out;
  
-+	ctx->gpio_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->gpio_reset))
-+		return dev_err_probe(dev, PTR_ERR(ctx->gpio_reset),
-+				     "Failed to get reset GPIO\n");
+ 	drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
+-
+ 	ge_b850v3_lvds_ptr = NULL;
+ out:
+ 	mutex_unlock(&ge_b850v3_lvds_dev_mutex);
+@@ -268,6 +267,7 @@ static int ge_b850v3_register(void)
+ {
+ 	struct i2c_client *stdp4028_i2c = ge_b850v3_lvds_ptr->stdp4028_i2c;
+ 	struct device *dev = &stdp4028_i2c->dev;
++	int ret;
+ 
+ 	/* drm bridge initialization */
+ 	ge_b850v3_lvds_ptr->bridge.funcs = &ge_b850v3_lvds_funcs;
+@@ -285,11 +285,15 @@ static int ge_b850v3_register(void)
+ 	if (!stdp4028_i2c->irq)
+ 		return 0;
+ 
+-	return devm_request_threaded_irq(&stdp4028_i2c->dev,
+-			stdp4028_i2c->irq, NULL,
+-			ge_b850v3_lvds_irq_handler,
+-			IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+-			"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
++	ret = devm_request_threaded_irq(&stdp4028_i2c->dev,
++					stdp4028_i2c->irq, NULL,
++					ge_b850v3_lvds_irq_handler,
++					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
++	if (ret)
++		drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
 +
- 	it66121_hw_reset(ctx);
++	return ret;
+ }
  
- 	ctx->regmap = devm_regmap_init_i2c(client, &it66121_regmap_config);
+ static int stdp4028_ge_b850v3_fw_probe(struct i2c_client *stdp4028_i2c)
 
 
