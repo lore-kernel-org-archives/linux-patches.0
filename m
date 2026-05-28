@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD471339866;
-	Thu, 28 May 2026 20:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A12339866;
+	Thu, 28 May 2026 20:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000581; cv=none; b=M+8fBMObctCuXGQR6z4010ZeIgy5tkRO0JKaT9dduoo9aewEqhQmJB3KL2FPhAdXtIgZRQpLYssOPocExJ97rbE9Mr4crFFmQbIPpm5/f4mPtPyNuV9JyUikPGNZvrTWwWhyaG/sb1dfvp8/5K8Sd4ykHb7RyGd+OEaH0+kUFp8=
+	t=1780000583; cv=none; b=fu++fUDfnNq+E7pzmL1B87s8u8Tn347ndpQHKG1jOUVQs+VQ7ObWt4LDD7y1+FIIyykW+WULMqvYpdmetlvna4GEWugEO2jl9ZZtBYbTVaEjwxpvycrQO6OD/FX7J0K/nLfqvupKFjhtnWAKgdkZ7SMekOse6iIa3npfk/xVpAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000581; c=relaxed/simple;
-	bh=ZB2V8FBqYdPuqyYOG8CB7Rrqb19V5f+LBseirG1AhEs=;
+	s=arc-20240116; t=1780000583; c=relaxed/simple;
+	bh=ZAzKe5IftU4JGfhH/l+vc8SM6kfN/hZNYDGDC9IKBL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVs2T0M1QwSJeAUCQT7mNIi9mG/ZLlh8KpPDToxS3LKsmH12jMY6wGwSNUSShqAZfNeEMQx3tKYEirG3pMVNISeB2r1pefDdSaZmkb5J5BMttTUWizesmV/uCwkZ1m0jLIC6Tgl2jsnXjhY19dEnQRiKpeQIeJ6HtyIelN8qfhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj6lLht1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YOMg4mf+GIluvuyxWqZQ50q/iel4BespzXO/s6LDNvZyjn7ZmsaheqzN37iwtGFdVW4FqhkCBRXM2F6b7f3/Uu8DDYKfHO4JCLmKQvbA8ui/mhNgmWVPQWmdhsY20JItyzwy0iGnZgGHg0iHjuLTu9m63qg+4ZqQ92F4uZNhii8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGb3Uf/6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj6lLht1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4775D1F000E9;
-	Thu, 28 May 2026 20:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGb3Uf/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1169F1F000E9;
+	Thu, 28 May 2026 20:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000579;
-	bh=VtseP8hiz/zwcntRi/uO3UlQlkYvX5uMkdv9EPD53Fk=;
+	s=korg; t=1780000582;
+	bh=EohF4MSGGjY6jaxao7xAkKdM1W3bNtLjX5pM9MJaQwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gj6lLht1dqjSM+LLIsjZVsbrITgKZ25fssveWHFFA8o44hodfT5kIl9dZMNXwiwsM
-	 s5L4BTyZyibIZGuB0FD8FGZjex9xFqqPSldgpHdo0CmmbprwZnUDyGVFozOLgqsR0H
-	 RFBtZyAjeFYYrwJcS0d8vX5mjSGDlaKx57ENe0eo=
+	b=ZGb3Uf/6LZh5qEgDv7y2eHeOI3wWiWHtTsiqA/yiJ5o9hoVOif8kUqZiWY0p/vezb
+	 EzJg/P59Gpopk6xfJ1+8u2DK2inPIJLGdcRwCFDz+JMpVa4EIVrXZ1GV28URfHUtyE
+	 Daw9iQzPQZ/rcHE/VV8Cogp4uwqCo4jGN6PNa4JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 096/272] af_unix: Fix UAF read of tail->len in unix_stream_data_wait()
-Date: Thu, 28 May 2026 21:47:50 +0200
-Message-ID: <20260528194632.067001284@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 097/272] wifi: mac80211: consume only present negotiated TTLM maps
+Date: Thu, 28 May 2026 21:47:51 +0200
+Message-ID: <20260528194632.095433601@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,163 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit be309f8eae8b474a4a617eaae01324da996fc719 upstream.
+commit a6e6ccd5bd07155c2add6c74ce1a5e68ad3b95ea upstream.
 
-unix_stream_data_wait() does skb_peek_tail(&sk->sk_receive_queue) without
-holding any lock that prevents SKBs on that queue from being dequeued and
-freed.
-This has been the case since commit 79f632c71bea ("unix/stream: fix
-peeking with an offset larger than data in queue").
-The first consequence of this is that the pointer comparison
-`tail != last` can be false even if `last` semantically refers to an
-already-freed SKB while `tail` is a new SKB allocated at the same address;
-which can cause unix_stream_data_wait() to wrongly keep blocking after new
-data has arrived, but only in a weird scenario where a peeking recv() and
-a normal recv() on the same socket are racing, which is probably not a
-real problem.
+ieee80211_tid_to_link_map_size_ok() validates negotiated TTLM elements
+against the number of link-map entries indicated by link_map_presence.
+ieee80211_parse_neg_ttlm() must consume the same layout.
 
-But since commit 2b514574f7e8 ("net: af_unix: implement splice for stream
-af_unix sockets"), `tail` is actually dereferenced, which can cause UAF in
-the following race scenario (where test_setup() runs single-threaded,
-and afterwards, test_thread1() and test_thread2() run concurrently in
-two threads:
-```
-static int socks[2];
-void test_setup(void) {
-  socketpair(AF_UNIX, SOCK_STREAM, 0, socks);
-  send(socks[1], "A", 1, 0);
-  int peekoff = 1;
-  setsockopt(socks[0], SOL_SOCKET, SO_PEEK_OFF, &peekoff, sizeof(peekoff));
-}
-void test_thread1(void) {
-  char dummy;
-  recv(socks[0], &dummy, 1, MSG_PEEK);
-}
-void test_thread2(void) {
-  char dummy;
-  recv(socks[0], &dummy, 1, 0);
-  shutdown(socks[1], SHUT_WR);
-}
-```
+The parser advanced its cursor for every TID, including TIDs whose
+presence bit is clear and therefore have no map bytes in the element.
+A sparse map can then make a later present TID read past the validated
+element.
 
-when racing like this:
-```
-thread1                       thread2
-unix_stream_read_generic
-  mutex_lock(&u->iolock)
-  skb_peek(&sk->sk_receive_queue)
-  skb_peek_next(skb, &sk->sk_receive_queue)
-  mutex_unlock(&u->iolock)
-                              unix_stream_read_generic
-                                unix_state_lock(sk)
-                                skb_peek(&sk->sk_receive_queue)
-                                unix_state_unlock(sk)
-  unix_stream_data_wait
-    unix_state_lock(sk)
-    tail = skb_peek_tail(&sk->sk_receive_queue)
-                                spin_lock(&sk->sk_receive_queue.lock)
-                                __skb_unlink(skb, &sk->sk_receive_queue)
-                                spin_unlock(&sk->sk_receive_queue.lock)
-                                consume_skb(skb) [frees the SKB]
-    `tail != last`: false
-    `tail`: true
-    `tail->len != last_len` ***UAF***
-```
+The bad bytes land in neg_ttlm->{up,down}link[tid] but are gated by
+valid_links before being applied to driver state, so a peer cannot
+turn the read into a policy change.  Under KUnit + KASAN with an
+exact-sized element allocation the OOB read is reported as a
+slab-out-of-bounds; whether the same trigger fires under the
+production RX path depends on surrounding allocator state.
 
-Fix the UAF by removing the read of tail->len; checking tail->len would
-only make sense if SKBs in the receive queue of a UNIX socket could grow,
-which can no longer happen.
+Advance the cursor only when the current TID has a map present.
 
-Kuniyuki explained:
-
-> When commit 869e7c62486e ("net: af_unix: implement stream sendpage
-> support") added sendpage() support, data could be appended to the last
-> skb in the receiver's queue.
->
-> That's why we needed to check if the length of the last skb was changed
-> while waiting for new data in unix_stream_data_wait().
->
-> However, commit a0dbf5f818f9 ("af_unix: Support MSG_SPLICE_PAGES") and
-> commit 57d44a354a43 ("unix: Convert unix_stream_sendpage() to use
-> MSG_SPLICE_PAGES") refactored sendmsg(), and now data is always added
-> to a new skb.
-
-That means this fix is not suitable for kernels before 6.5.
-
-Fixes: 2b514574f7e8 ("net: af_unix: implement splice for stream af_unix sockets")
-Cc: stable@vger.kernel.org # 6.5.x
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260518-b4-unix-recv-wait-hotfix-v2-1-83e29ce8ad31@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8f500fbc6c65 ("wifi: mac80211: process and save negotiated TID to Link mapping request")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260515151719.1317659-2-michael.bommarito@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ net/mac80211/mlme.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2570,8 +2570,7 @@ static int unix_read_skb(struct sock *sk
-  *	Sleep until more data has arrived. But check for races..
-  */
- static long unix_stream_data_wait(struct sock *sk, long timeo,
--				  struct sk_buff *last, unsigned int last_len,
--				  bool freezable)
-+				  struct sk_buff *last, bool freezable)
- {
- 	unsigned int state = TASK_INTERRUPTIBLE | freezable * TASK_FREEZABLE;
- 	struct sk_buff *tail;
-@@ -2584,7 +2583,6 @@ static long unix_stream_data_wait(struct
- 
- 		tail = skb_peek_tail(&sk->sk_receive_queue);
- 		if (tail != last ||
--		    (tail && tail->len != last_len) ||
- 		    sk->sk_err ||
- 		    (sk->sk_shutdown & RCV_SHUTDOWN) ||
- 		    signal_pending(current) ||
-@@ -2779,7 +2777,6 @@ static int unix_stream_read_generic(stru
- 	int flags = state->flags;
- 	bool check_creds = false;
- 	struct scm_cookie scm;
--	unsigned int last_len;
- 	struct unix_sock *u;
- 	int copied = 0;
- 	int err = 0;
-@@ -2825,7 +2822,6 @@ redo:
- 			goto unlock;
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7290,6 +7290,7 @@ ieee80211_parse_neg_ttlm(struct ieee8021
+ 					 "No active links for TID %d", tid);
+ 				return -EINVAL;
+ 			}
++			pos += map_size;
+ 		} else {
+ 			map = 0;
  		}
- 		last = skb = skb_peek(&sk->sk_receive_queue);
--		last_len = last ? last->len : 0;
- 
- again:
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
-@@ -2859,8 +2855,7 @@ again:
- 
- 			mutex_unlock(&u->iolock);
- 
--			timeo = unix_stream_data_wait(sk, timeo, last,
--						      last_len, freezable);
-+			timeo = unix_stream_data_wait(sk, timeo, last, freezable);
- 
- 			if (signal_pending(current)) {
- 				err = sock_intr_errno(timeo);
-@@ -2877,7 +2872,6 @@ unlock:
- 		while (skip >= unix_skb_len(skb)) {
- 			skip -= unix_skb_len(skb);
- 			last = skb;
--			last_len = skb->len;
- 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 			if (!skb)
- 				goto again;
-@@ -2950,7 +2944,6 @@ unlock:
- 
- 			skip = 0;
- 			last = skb;
--			last_len = skb->len;
- 			unix_state_lock(sk);
- 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 			if (skb)
+@@ -7308,7 +7309,6 @@ ieee80211_parse_neg_ttlm(struct ieee8021
+ 		default:
+ 			return -EINVAL;
+ 		}
+-		pos += map_size;
+ 	}
+ 	return 0;
+ }
 
 
