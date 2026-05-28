@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76FC409624;
-	Thu, 28 May 2026 20:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67C0339866;
+	Thu, 28 May 2026 20:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999192; cv=none; b=diK4a0XgtZk+DYiJo1EyvdmFGWo+jdVbutas8i6FmXi5Mo5bmKGSG7k8vBRPOMcDssd0vCswbKR2vo+K4DFSxDNcA9eK6H4pdVaBTj1BswtlUlJnqvhVF1aV/zaJGsCxltKxQJV9A9XgjBE8k/cE4iBqUxb8KeoExCP5Lw444Jo=
+	t=1779999195; cv=none; b=m3zltzh2gMUrJeoW+zeZ62pIKWIMtiaMj/Ty004hdQ2k+or4n5T5btWG83YdHWhyVp9staE0znA2rKMlNhVJAY67KQppaqD46KhFckzqfiQtLBhGkr9xWxoWsWzrAK3+G1gcJiHr6sZN0ZWggodMTRGGIyWAA7Ng6OLJ5rs4Z/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999192; c=relaxed/simple;
-	bh=HFpXvFF/LVlN+SOPtYlW1cYktliAofmtUL0kCuTbDOI=;
+	s=arc-20240116; t=1779999195; c=relaxed/simple;
+	bh=6l05XjKACCtPeF+tnEC3WEp///8bwF+G3JZVpBzrcYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O92c/OE0vCcXimVwSghau6AB7iwihLEzI9JAMh94Htoww+23IypqyTQyl/ux3O2vymwUY9gimpNojJEdRyd+f9mSspoRWq0WD7JzGHMwVanTBKkVYPpVcac0su1rC/sQuMaRxSnKEwBFyayPrs4n8A1PXTExVoiNiUI+907hLRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fy0wVGzE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LUxs+Vtgha5hi3P0cCfjmKYpMnu73qh2YiJjavxJVXJ57jZsBLhrwv7INRadBqEhc8JB1lwhwNzlpAk6Jqlu/seYHHSQxXTuXGI+wp17qSxyi9ika/JRj4uIx/8DLbJE2+xXVJ9e6vRfXqpvHUl1vx/SlHay0XjgcEF4dsQuvHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2/DFmk0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fy0wVGzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF88A1F000E9;
-	Thu, 28 May 2026 20:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2/DFmk0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3351F000E9;
+	Thu, 28 May 2026 20:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999191;
-	bh=Sc+FJcmu/v2KQ/HQcBPQEb5xA/Z9dK9iHD+HZSjWdCM=;
+	s=korg; t=1779999194;
+	bh=oEMYZprbj/WtWnmKgbd4SiH+wjemdWYY/HD9uGrlfT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fy0wVGzEOsDS4SE91XPygGtcQw8m+Ca3hxmObr2UMTFuzfmazIkGDBfG0eLrlY3OL
-	 Ko/Zm2IXKgUmY5leMDD0Y7MCabURcQGjO0gutCK9NzVpSXvyxXWkPTqpBCUbn/uLXC
-	 8CaRbF0GLCxJVxas8r0EgvNqCDZyUQRqr7lh80Hw=
+	b=b2/DFmk0B2yo0Ry8pkOHwnxLnKNoD4iHkxTw92rALo75Xn/7FdHV2iC7SN3bhzZ6u
+	 q5lXxyW9W+VIrZTOr2iV9xLp55tDcqeCX9dC6nUDXu7hwYHopDkdbNoKFVpXI+5W4x
+	 1D7A4s3oZ8krJ/83ou41SiU6ikfc0WEJ7hwCBeZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 442/461] drm/xe/oa: Fix exec_queue leak on width check in stream open
-Date: Thu, 28 May 2026 21:49:31 +0200
-Message-ID: <20260528194700.324594317@linuxfoundation.org>
+Subject: [PATCH 7.0 443/461] ASoC: cs-amp-lib: Fix wrong sizeof() in _cs_amp_set_efi_calibration_data()
+Date: Thu, 28 May 2026 21:49:32 +0200
+Message-ID: <20260528194700.354430025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 4d25342543c01310fc4e0cba7cb17c775e2421e2 ]
+[ Upstream commit 67a52d3ebb5a0ae0c0e23ffa99470d9463179c9f ]
 
-In xe_oa_stream_open_ioctl(), when param.exec_q->width > 1 the
-function returns -EOPNOTSUPP directly, skipping the existing
-err_exec_q cleanup path. The exec_queue reference obtained by
-xe_exec_queue_lookup() is leaked.
+When calculating data->count replace the incorrect sizeof(data) with use
+of struct_offset().
 
-The exec queue holds a reference on the xe_file, which is only
-dropped during queue teardown. The leaked lookup ref is not on
-the file's exec_queue xarray, so file close cannot release it.
-This keeps both the exec queue and the file private state pinned
-indefinitely.
+The faulty sizeof(data) was incorrectly calculating the size of the
+pointer instead of the size of the struct pointed to. As it happens, both
+values are 8 on a 64-bit CPU. In the unlikely event of using this code on
+a 32-bit CPU the number of available bytes would be calculated 4 larger
+than is actually available.
 
-Jump to err_exec_q instead of returning directly so the reference
-is released.
+Instead of changing to sizeof(*data) it has been replaced by
+struct_offset() because it has better chance of detecting these sorts of
+typos. Also the offset of the data[] array is actually what we want to know
+here anyway.
 
-Fixes: f0ed39830e60 ("xe/oa: Fix query mode of operation for OAR/OAC")
-Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patch.msgid.link/20260514203210.593488-1-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 339fa0be9e4a5d69fa47e91f4a36574224fb478f)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 2b62e66626f0 ("ASoC: cs-amp-lib: Add function to write calibration to UEFI")
+Link: https://patch.msgid.link/20260521122511.987322-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs-amp-lib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index fa90441d30529..449a431ec1d4e 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -2048,8 +2048,10 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
- 		if (XE_IOCTL_DBG(oa->xe, !param.exec_q))
- 			return -ENOENT;
+diff --git a/sound/soc/codecs/cs-amp-lib.c b/sound/soc/codecs/cs-amp-lib.c
+index 8b131975143d1..75baeaf64afd0 100644
+--- a/sound/soc/codecs/cs-amp-lib.c
++++ b/sound/soc/codecs/cs-amp-lib.c
+@@ -500,7 +500,7 @@ static int _cs_amp_set_efi_calibration_data(struct device *dev, int amp_index, i
+ 	 * must be set.
+ 	 */
+ 	if (data->count == 0)
+-		data->count = (data->size - sizeof(data)) / sizeof(data->data[0]);
++		data->count = (data->size - struct_offset(data, data)) / sizeof(data->data[0]);
  
--		if (XE_IOCTL_DBG(oa->xe, param.exec_q->width > 1))
--			return -EOPNOTSUPP;
-+		if (XE_IOCTL_DBG(oa->xe, param.exec_q->width > 1)) {
-+			ret = -EOPNOTSUPP;
-+			goto err_exec_q;
-+		}
- 	}
- 
- 	/*
+ 	if (amp_index < 0) {
+ 		/* Is there already a slot for this target? */
 -- 
 2.53.0
 
