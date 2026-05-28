@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37A7257854;
-	Thu, 28 May 2026 20:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB432459D1;
+	Thu, 28 May 2026 20:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999354; cv=none; b=bkb+RXqLW9NkTNqBZfQ2YC8NTkQi3eMWCy1IeHU3Gz/bu+xmH5G2i1WPvl2kV7uRihsvBE5FL4QWoDhD16nxtyILMB/U/tov4fWTbGKSuHxPL8AU85BzdzXqYbH0uq1LXQTgjUr/xg5EvI4uA8j3E6fM/ZONh74R3QySOHEeDGA=
+	t=1779999356; cv=none; b=KslEJhuVJ7oI6rBn5S6u7OLIm1OeflqSgWZJBFQ+ggYhyjaLunSoLJmpU3RrGkTmQZc3NLDPfGxnjCr23fHxEpr/gCXWfWtHgbeYFhQJPSRv9ALoL1TC7bq/Lh52HrX37PPCtaR66AKBMYcZ1jYsko4xnIIr9SUG85ZPf1iqkBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999354; c=relaxed/simple;
-	bh=yG4sALSubs+S4BSpIx9bkgdGeJDnKxpiKXinou/S+1Q=;
+	s=arc-20240116; t=1779999356; c=relaxed/simple;
+	bh=6StoS9tEkMGdRMIj4TGtU6kINVdgM6Mv5PqHwr5zsmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoNQj94L0F4Jold9I7u/aSbDGXHBjqf9tAxkFG+VEwaHLRN6WcVSTDdMbKmK8hwMU48EoY/0+dg72AeCyTLIpOv0XWBtlwWNKmF+ZSx+VPlszkkXJb0xAvkX1Ok/oUfCNwzqp+TDEVr/y5g94RQG+UpT58hq74y6p7/0fBXk2wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1TlaDE1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qM8udl4oNAeTBJp3bsYXZPus3qwGwESJGcMVV3ed3P4GxlDfdb9RxLahAat7oDB5FFcNRw+QNLLx65NYzGKVeXTdYCqZ+5WwJ3rCDTAH41i1kxNOgCY2IOs6qZZhCio6/D6fY1+iYTviGvCMe3w2zwu+4hsG535+9iHxRgaBK6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rC9wwi3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1TlaDE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBE81F000E9;
-	Thu, 28 May 2026 20:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rC9wwi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7E21F000E9;
+	Thu, 28 May 2026 20:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999352;
-	bh=uSIWMVmwhpifFzLl2V7vFh2Sh1QxziGo9JILigz+pyw=;
+	s=korg; t=1779999355;
+	bh=NuIW7DmizVeOmwJUANzM8/K0H9yh+RAWsja2tnDF4DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L1TlaDE1vdfOpjDm/Tna2csZ0xNMBZeLr84AonAfy+NGo57iULRXfREP+dZFSpwpp
-	 s10BUjWQmJBjopV5QiqClNdrzB4+vvxk9EuJEMt4Hj08mMnGS+JyLuNKe4vkBP/19B
-	 HWt+M8cX7ej22p8h4BkraWX4OUXfMSTd5HN17J+s=
+	b=1rC9wwi3xKNUPFJgrixmLcHSfT5ybso5dN04cctD3fmMhNJWf0adwV5TQupAlkrGx
+	 3r2cLwzrL2DnGl+HuQmnQGr6lEpjOeUs1qv8HTEemHj/ogRRUescjlSVozIla0tRGu
+	 n8F95K5tOr14o3vumJToboonG5dTHFQb1oADdu3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Bruno Goncalves <bgoncalv@redhat.com>,
 	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/377] sched: Employ sched_change guards
-Date: Thu, 28 May 2026 21:44:04 +0200
-Message-ID: <20260528194638.568079724@linuxfoundation.org>
+Subject: [PATCH 6.18 007/377] sched/deadline: Fix missing ENQUEUE_REPLENISH during PI de-boosting
+Date: Thu, 28 May 2026 21:44:05 +0200
+Message-ID: <20260528194638.598682429@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,499 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit e9139f765ac7048cadc9981e962acdf8b08eabf3 ]
+[ Upstream commit d658686a1331db3bb108ca079d76deb3208ed949 ]
 
-As proposed a long while ago -- and half done by scx -- wrap the
-scheduler's 'change' pattern in a guard helper.
+Running stress-ng --schedpolicy 0 on an RT kernel on a big machine
+might lead to the following WARNINGs (edited).
 
+ sched: DL de-boosted task PID 22725: REPLENISH flag missing
+
+ WARNING: CPU: 93 PID: 0 at kernel/sched/deadline.c:239 dequeue_task_dl+0x15c/0x1f8
+ ... (running_bw underflow)
+ Call trace:
+  dequeue_task_dl+0x15c/0x1f8 (P)
+  dequeue_task+0x80/0x168
+  deactivate_task+0x24/0x50
+  push_dl_task+0x264/0x2e0
+  dl_task_timer+0x1b0/0x228
+  __hrtimer_run_queues+0x188/0x378
+  hrtimer_interrupt+0xfc/0x260
+  ...
+
+The problem is that when a SCHED_DEADLINE task (lock holder) is
+changed to a lower priority class via sched_setscheduler(), it may
+fail to properly inherit the parameters of potential DEADLINE donors
+if it didn't already inherit them in the past (shorter deadline than
+donor's at that time). This might lead to bandwidth accounting
+corruption, as enqueue_task_dl() won't recognize the lock holder as
+boosted.
+
+The scenario occurs when:
+1. A DEADLINE task (donor) blocks on a PI mutex held by another
+   DEADLINE task (holder), but the holder doesn't inherit parameters
+   (e.g., it already has a shorter deadline)
+2. sched_setscheduler() changes the holder from DEADLINE to a lower
+   class while still holding the mutex
+3. The holder should now inherit DEADLINE parameters from the donor
+   and be enqueued with ENQUEUE_REPLENISH, but this doesn't happen
+
+Fix the issue by introducing __setscheduler_dl_pi(), which detects when
+a DEADLINE (proper or boosted) task gets setscheduled to a lower
+priority class. In case, the function makes the task inherit DEADLINE
+parameters of the donoer (pi_se) and sets ENQUEUE_REPLENISH flag to
+ensure proper bandwidth accounting during the next enqueue operation.
+
+Fixes: 2279f540ea7d ("sched/deadline: Fix priority inheritance with multiple scheduling classes")
+Reported-by: Bruno Goncalves <bgoncalv@redhat.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
-Stable-dep-of: d658686a1331 ("sched/deadline: Fix missing ENQUEUE_REPLENISH during PI de-boosting")
+Link: https://patch.msgid.link/20260302-upstream-fix-deadline-piboost-b4-v3-1-6ba32184a9e0@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cleanup.h |   5 ++
- kernel/sched/core.c     | 159 +++++++++++++++-------------------------
- kernel/sched/ext.c      |  39 +++++-----
- kernel/sched/sched.h    |  33 ++++++---
- kernel/sched/syscalls.c |  65 ++++++----------
- 5 files changed, 131 insertions(+), 170 deletions(-)
+ kernel/sched/syscalls.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
-index 19c7e475d3a4d..a1194e44b5276 100644
---- a/include/linux/cleanup.h
-+++ b/include/linux/cleanup.h
-@@ -341,6 +341,11 @@ _label:                                                    \
- #define __DEFINE_CLASS_IS_CONDITIONAL(_name, _is_cond)	\
- static __maybe_unused const bool class_##_name##_is_conditional = _is_cond
- 
-+#define DEFINE_CLASS_IS_UNCONDITIONAL(_name)		\
-+	__DEFINE_CLASS_IS_CONDITIONAL(_name, false);	\
-+	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
-+	{ return (void *)1; }
-+
- #define __GUARD_IS_ERR(_ptr)                                       \
- 	({                                                         \
- 		unsigned long _rc = (__force unsigned long)(_ptr); \
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 0d93f60fed20a..46fc94f2338e8 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7332,7 +7332,7 @@ void rt_mutex_post_schedule(void)
-  */
- void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- {
--	int prio, oldprio, queued, running, queue_flag =
-+	int prio, oldprio, queue_flag =
- 		DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
- 	const struct sched_class *prev_class, *next_class;
- 	struct rq_flags rf;
-@@ -7397,52 +7397,42 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- 	if (prev_class != next_class && p->se.sched_delayed)
- 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--	queued = task_on_rq_queued(p);
--	running = task_current_donor(rq, p);
--	if (queued)
--		dequeue_task(rq, p, queue_flag);
--	if (running)
--		put_prev_task(rq, p);
--
--	/*
--	 * Boosting condition are:
--	 * 1. -rt task is running and holds mutex A
--	 *      --> -dl task blocks on mutex A
--	 *
--	 * 2. -dl task is running and holds mutex A
--	 *      --> -dl task blocks on mutex A and could preempt the
--	 *          running task
--	 */
--	if (dl_prio(prio)) {
--		if (!dl_prio(p->normal_prio) ||
--		    (pi_task && dl_prio(pi_task->prio) &&
--		     dl_entity_preempt(&pi_task->dl, &p->dl))) {
--			p->dl.pi_se = pi_task->dl.pi_se;
--			queue_flag |= ENQUEUE_REPLENISH;
-+	scoped_guard (sched_change, p, queue_flag) {
-+		/*
-+		 * Boosting condition are:
-+		 * 1. -rt task is running and holds mutex A
-+		 *      --> -dl task blocks on mutex A
-+		 *
-+		 * 2. -dl task is running and holds mutex A
-+		 *      --> -dl task blocks on mutex A and could preempt the
-+		 *          running task
-+		 */
-+		if (dl_prio(prio)) {
-+			if (!dl_prio(p->normal_prio) ||
-+			    (pi_task && dl_prio(pi_task->prio) &&
-+			     dl_entity_preempt(&pi_task->dl, &p->dl))) {
-+				p->dl.pi_se = pi_task->dl.pi_se;
-+				scope->flags |= ENQUEUE_REPLENISH;
-+			} else {
-+				p->dl.pi_se = &p->dl;
-+			}
-+		} else if (rt_prio(prio)) {
-+			if (dl_prio(oldprio))
-+				p->dl.pi_se = &p->dl;
-+			if (oldprio < prio)
-+				scope->flags |= ENQUEUE_HEAD;
- 		} else {
--			p->dl.pi_se = &p->dl;
-+			if (dl_prio(oldprio))
-+				p->dl.pi_se = &p->dl;
-+			if (rt_prio(oldprio))
-+				p->rt.timeout = 0;
- 		}
--	} else if (rt_prio(prio)) {
--		if (dl_prio(oldprio))
--			p->dl.pi_se = &p->dl;
--		if (oldprio < prio)
--			queue_flag |= ENQUEUE_HEAD;
--	} else {
--		if (dl_prio(oldprio))
--			p->dl.pi_se = &p->dl;
--		if (rt_prio(oldprio))
--			p->rt.timeout = 0;
--	}
- 
--	p->sched_class = next_class;
--	p->prio = prio;
-+		p->sched_class = next_class;
-+		p->prio = prio;
- 
--	check_class_changing(rq, p, prev_class);
--
--	if (queued)
--		enqueue_task(rq, p, queue_flag);
--	if (running)
--		set_next_task(rq, p);
-+		check_class_changing(rq, p, prev_class);
-+	}
- 
- 	check_class_changed(rq, p, prev_class, oldprio);
- out_unlock:
-@@ -8090,26 +8080,9 @@ int migrate_task_to(struct task_struct *p, int target_cpu)
-  */
- void sched_setnuma(struct task_struct *p, int nid)
- {
--	bool queued, running;
--	struct rq_flags rf;
--	struct rq *rq;
--
--	rq = task_rq_lock(p, &rf);
--	queued = task_on_rq_queued(p);
--	running = task_current_donor(rq, p);
--
--	if (queued)
--		dequeue_task(rq, p, DEQUEUE_SAVE);
--	if (running)
--		put_prev_task(rq, p);
--
--	p->numa_preferred_nid = nid;
--
--	if (queued)
--		enqueue_task(rq, p, ENQUEUE_RESTORE | ENQUEUE_NOCLOCK);
--	if (running)
--		set_next_task(rq, p);
--	task_rq_unlock(rq, p, &rf);
-+	guard(task_rq_lock)(p);
-+	scoped_guard (sched_change, p, DEQUEUE_SAVE)
-+		p->numa_preferred_nid = nid;
- }
- #endif /* CONFIG_NUMA_BALANCING */
- 
-@@ -9215,8 +9188,9 @@ static void sched_change_group(struct task_struct *tsk)
-  */
- void sched_move_task(struct task_struct *tsk, bool for_autogroup)
- {
--	int queued, running, queue_flags =
-+	unsigned int queue_flags =
- 		DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
-+	bool resched = false;
- 	struct rq *rq;
- 
- 	CLASS(task_rq_lock, rq_guard)(tsk);
-@@ -9224,29 +9198,16 @@ void sched_move_task(struct task_struct *tsk, bool for_autogroup)
- 
- 	update_rq_clock(rq);
- 
--	running = task_current_donor(rq, tsk);
--	queued = task_on_rq_queued(tsk);
--
--	if (queued)
--		dequeue_task(rq, tsk, queue_flags);
--	if (running)
--		put_prev_task(rq, tsk);
--
--	sched_change_group(tsk);
--	if (!for_autogroup)
--		scx_cgroup_move_task(tsk);
-+	scoped_guard (sched_change, tsk, queue_flags) {
-+		sched_change_group(tsk);
-+		if (!for_autogroup)
-+			scx_cgroup_move_task(tsk);
-+		if (scope->running)
-+			resched = true;
-+	}
- 
--	if (queued)
--		enqueue_task(rq, tsk, queue_flags);
--	if (running) {
--		set_next_task(rq, tsk);
--		/*
--		 * After changing group, the running task may have joined a
--		 * throttled one but it's still the running task. Trigger a
--		 * resched to make sure that task can still run.
--		 */
-+	if (resched)
- 		resched_curr(rq);
--	}
- }
- 
- static struct cgroup_subsys_state *
-@@ -10902,37 +10863,39 @@ void sched_mm_cid_fork(struct task_struct *t)
- }
- #endif /* CONFIG_SCHED_MM_CID */
- 
--#ifdef CONFIG_SCHED_CLASS_EXT
--void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
--			    struct sched_enq_and_set_ctx *ctx)
-+static DEFINE_PER_CPU(struct sched_change_ctx, sched_change_ctx);
-+
-+struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags)
- {
-+	struct sched_change_ctx *ctx = this_cpu_ptr(&sched_change_ctx);
- 	struct rq *rq = task_rq(p);
- 
- 	lockdep_assert_rq_held(rq);
- 
--	*ctx = (struct sched_enq_and_set_ctx){
-+	*ctx = (struct sched_change_ctx){
- 		.p = p,
--		.queue_flags = queue_flags,
-+		.flags = flags,
- 		.queued = task_on_rq_queued(p),
--		.running = task_current(rq, p),
-+		.running = task_current_donor(rq, p),
- 	};
- 
--	update_rq_clock(rq);
- 	if (ctx->queued)
--		dequeue_task(rq, p, queue_flags | DEQUEUE_NOCLOCK);
-+		dequeue_task(rq, p, flags);
- 	if (ctx->running)
- 		put_prev_task(rq, p);
-+
-+	return ctx;
- }
- 
--void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx)
-+void sched_change_end(struct sched_change_ctx *ctx)
- {
--	struct rq *rq = task_rq(ctx->p);
-+	struct task_struct *p = ctx->p;
-+	struct rq *rq = task_rq(p);
- 
- 	lockdep_assert_rq_held(rq);
- 
- 	if (ctx->queued)
--		enqueue_task(rq, ctx->p, ctx->queue_flags | ENQUEUE_NOCLOCK);
-+		enqueue_task(rq, p, ctx->flags | ENQUEUE_NOCLOCK);
- 	if (ctx->running)
--		set_next_task(rq, ctx->p);
-+		set_next_task(rq, p);
- }
--#endif /* CONFIG_SCHED_CLASS_EXT */
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 35c0b31924d37..3029e5b8f9a57 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3866,11 +3866,10 @@ static void scx_bypass(bool bypass)
- 		 */
- 		list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list,
- 						 scx.runnable_node) {
--			struct sched_enq_and_set_ctx ctx;
--
- 			/* cycling deq/enq is enough, see the function comment */
--			sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
--			sched_enq_and_set_task(&ctx);
-+			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
-+				/* nothing */ ;
-+			}
- 		}
- 
- 		/* resched to restore ticks and idle state */
-@@ -4021,17 +4020,16 @@ static void scx_disable_workfn(struct kthread_work *work)
- 	while ((p = scx_task_iter_next_locked(&sti))) {
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class = scx_setscheduler_class(p);
--		struct sched_enq_and_set_ctx ctx;
- 
--		if (old_class != new_class && p->se.sched_delayed)
--			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
-+		update_rq_clock(task_rq(p));
- 
--		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
--
--		p->sched_class = new_class;
--		check_class_changing(task_rq(p), p, old_class);
-+		if (old_class != new_class && p->se.sched_delayed)
-+			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--		sched_enq_and_set_task(&ctx);
-+		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
-+			p->sched_class = new_class;
-+			check_class_changing(task_rq(p), p, old_class);
-+		}
- 
- 		check_class_changed(task_rq(p), p, old_class, p->prio);
- 		scx_exit_task(p);
-@@ -4845,21 +4843,20 @@ static void scx_enable_workfn(struct kthread_work *work)
- 	while ((p = scx_task_iter_next_locked(&sti))) {
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class = scx_setscheduler_class(p);
--		struct sched_enq_and_set_ctx ctx;
- 
- 		if (!tryget_task_struct(p))
- 			continue;
- 
--		if (old_class != new_class && p->se.sched_delayed)
--			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
--
--		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
-+		update_rq_clock(task_rq(p));
- 
--		p->scx.slice = SCX_SLICE_DFL;
--		p->sched_class = new_class;
--		check_class_changing(task_rq(p), p, old_class);
-+		if (old_class != new_class && p->se.sched_delayed)
-+			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--		sched_enq_and_set_task(&ctx);
-+		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
-+			p->scx.slice = SCX_SLICE_DFL;
-+			p->sched_class = new_class;
-+			check_class_changing(task_rq(p), p, old_class);
-+		}
- 
- 		check_class_changed(task_rq(p), p, old_class, p->prio);
- 		put_task_struct(p);
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index f750dea7b7876..668841022dbf2 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -3891,23 +3891,38 @@ extern void check_class_changed(struct rq *rq, struct task_struct *p,
- extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
- extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
- 
--#ifdef CONFIG_SCHED_CLASS_EXT
- /*
-- * Used by SCX in the enable/disable paths to move tasks between sched_classes
-- * and establish invariants.
-+ * The 'sched_change' pattern is the safe, easy and slow way of changing a
-+ * task's scheduling properties. It dequeues a task, such that the scheduler
-+ * is fully unaware of it; at which point its properties can be modified;
-+ * after which it is enqueued again.
-+ *
-+ * Typically this must be called while holding task_rq_lock, since most/all
-+ * properties are serialized under those locks. There is currently one
-+ * exception to this rule in sched/ext which only holds rq->lock.
-+ */
-+
-+/*
-+ * This structure is a temporary, used to preserve/convey the queueing state
-+ * of the task between sched_change_begin() and sched_change_end(). Ensuring
-+ * the task's queueing state is idempotent across the operation.
-  */
--struct sched_enq_and_set_ctx {
-+struct sched_change_ctx {
- 	struct task_struct	*p;
--	int			queue_flags;
-+	int			flags;
- 	bool			queued;
- 	bool			running;
- };
- 
--void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
--			    struct sched_enq_and_set_ctx *ctx);
--void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
-+struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
-+void sched_change_end(struct sched_change_ctx *ctx);
- 
--#endif /* CONFIG_SCHED_CLASS_EXT */
-+DEFINE_CLASS(sched_change, struct sched_change_ctx *,
-+	     sched_change_end(_T),
-+	     sched_change_begin(p, flags),
-+	     struct task_struct *p, unsigned int flags)
-+
-+DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
- 
- #include "ext.h"
- 
 diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
-index 6805a63d47af7..d2bcedc10152f 100644
+index d2bcedc10152f..77b663a5dfb2b 100644
 --- a/kernel/sched/syscalls.c
 +++ b/kernel/sched/syscalls.c
-@@ -64,7 +64,6 @@ static int effective_prio(struct task_struct *p)
+@@ -322,6 +322,35 @@ static bool check_same_owner(struct task_struct *p)
+ 		uid_eq(cred->euid, pcred->uid));
+ }
  
- void set_user_nice(struct task_struct *p, long nice)
- {
--	bool queued, running;
- 	struct rq *rq;
- 	int old_prio;
- 
-@@ -90,22 +89,12 @@ void set_user_nice(struct task_struct *p, long nice)
- 		return;
- 	}
- 
--	queued = task_on_rq_queued(p);
--	running = task_current_donor(rq, p);
--	if (queued)
--		dequeue_task(rq, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK);
--	if (running)
--		put_prev_task(rq, p);
--
--	p->static_prio = NICE_TO_PRIO(nice);
--	set_load_weight(p, true);
--	old_prio = p->prio;
--	p->prio = effective_prio(p);
--
--	if (queued)
--		enqueue_task(rq, p, ENQUEUE_RESTORE | ENQUEUE_NOCLOCK);
--	if (running)
--		set_next_task(rq, p);
-+	scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK) {
-+		p->static_prio = NICE_TO_PRIO(nice);
-+		set_load_weight(p, true);
-+		old_prio = p->prio;
-+		p->prio = effective_prio(p);
++#ifdef CONFIG_RT_MUTEXES
++static inline void __setscheduler_dl_pi(int newprio, int policy,
++			      struct task_struct *p,
++			      struct sched_change_ctx *scope)
++{
++	/*
++	 * In case a DEADLINE task (either proper or boosted) gets
++	 * setscheduled to a lower priority class, check if it neeeds to
++	 * inherit parameters from a potential pi_task. In that case make
++	 * sure replenishment happens with the next enqueue.
++	 */
++
++	if (dl_prio(newprio) && !dl_policy(policy)) {
++		struct task_struct *pi_task = rt_mutex_get_top_task(p);
++
++		if (pi_task) {
++			p->dl.pi_se = pi_task->dl.pi_se;
++			scope->flags |= ENQUEUE_REPLENISH;
++		}
 +	}
++}
++#else /* !CONFIG_RT_MUTEXES */
++static inline void __setscheduler_dl_pi(int newprio, int policy,
++			      struct task_struct *p,
++			      struct sched_change_ctx *scope)
++{
++}
++#endif /* !CONFIG_RT_MUTEXES */
++
+ #ifdef CONFIG_UCLAMP_TASK
  
- 	/*
- 	 * If the task increased its priority or is running and
-@@ -515,7 +504,7 @@ int __sched_setscheduler(struct task_struct *p,
- 			 bool user, bool pi)
- {
- 	int oldpolicy = -1, policy = attr->sched_policy;
--	int retval, oldprio, newprio, queued, running;
-+	int retval, oldprio, newprio;
- 	const struct sched_class *prev_class, *next_class;
- 	struct balance_callback *head;
- 	struct rq_flags rf;
-@@ -698,33 +687,25 @@ int __sched_setscheduler(struct task_struct *p,
- 	if (prev_class != next_class && p->se.sched_delayed)
- 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
- 
--	queued = task_on_rq_queued(p);
--	running = task_current_donor(rq, p);
--	if (queued)
--		dequeue_task(rq, p, queue_flags);
--	if (running)
--		put_prev_task(rq, p);
--
--	if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
--		__setscheduler_params(p, attr);
--		p->sched_class = next_class;
--		p->prio = newprio;
--	}
--	__setscheduler_uclamp(p, attr);
--	check_class_changing(rq, p, prev_class);
-+	scoped_guard (sched_change, p, queue_flags) {
- 
--	if (queued) {
--		/*
--		 * We enqueue to tail when the priority of a task is
--		 * increased (user space view).
--		 */
--		if (oldprio < p->prio)
--			queue_flags |= ENQUEUE_HEAD;
-+		if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
-+			__setscheduler_params(p, attr);
-+			p->sched_class = next_class;
-+			p->prio = newprio;
-+		}
-+		__setscheduler_uclamp(p, attr);
-+		check_class_changing(rq, p, prev_class);
- 
--		enqueue_task(rq, p, queue_flags);
-+		if (scope->queued) {
-+			/*
-+			 * We enqueue to tail when the priority of a task is
-+			 * increased (user space view).
-+			 */
-+			if (oldprio < p->prio)
-+				scope->flags |= ENQUEUE_HEAD;
-+		}
- 	}
--	if (running)
--		set_next_task(rq, p);
- 
- 	check_class_changed(rq, p, prev_class, oldprio);
- 
+ static int uclamp_validate(struct task_struct *p,
+@@ -693,6 +722,7 @@ int __sched_setscheduler(struct task_struct *p,
+ 			__setscheduler_params(p, attr);
+ 			p->sched_class = next_class;
+ 			p->prio = newprio;
++			__setscheduler_dl_pi(newprio, policy, p, scope);
+ 		}
+ 		__setscheduler_uclamp(p, attr);
+ 		check_class_changing(rq, p, prev_class);
 -- 
 2.53.0
 
