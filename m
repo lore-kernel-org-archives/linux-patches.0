@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2A8313550;
-	Thu, 28 May 2026 20:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA98313550;
+	Thu, 28 May 2026 20:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000469; cv=none; b=sOwxEZ6c21f95WIoKpGQFexzv8uQMWS3ZpAi59EFGR4EM+bqXwFXQrzJk+5rizH0Ra5YHmuPN2z1KH0Yqf1Sp1aRd6HLujGKPo4tnnvMW9c+f/HLW7SZfQWvFl5MYd961QIidcmGPDRSLTWQ1WXKHyhAb4/WGh0Wcz5GlBf+myA=
+	t=1780000472; cv=none; b=XypQk2ompvU0gIz8SLZqBmxbFxz/+UV3MKn6Pi/zoP+sT0U0dKPAiHOUaPR8ZBkuqAaNPsS+3Lkf7xEGC2q9K44LLySFGf6+hHNM+2H29RvNlceb2o1sWd0PC/+6PZJvpiqkWP9ntgqVmT6O6yGE6zPhnzX1SVt4FCGt3a/n6M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000469; c=relaxed/simple;
-	bh=D1JtSh+K1ktRa7P8fnyjIoLtZxhvff/XKXY4ob//lCY=;
+	s=arc-20240116; t=1780000472; c=relaxed/simple;
+	bh=hJr75ULpAys4DFgFEsEyiRy4C1YXKYzILDpLzc5YZSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvwvdPOpi7InKuvgR9akvBsXON0ImghBECnc+sxuANk2rPk0KHmcKECdHdQG9vNmFmgVIn6oxjw5Gk4Xm5iJkHds0ruJhUjCeGcwoqhPQG79ED3jKqAKwmk/OGOZ8frqD4o02alOMuYgMh/AQ17kiG2ZEKQtj1r6lWJTlk0fJoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGQ7asPy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DCRXx7XsVXH+ks+D/oqnAQaS/kplbISHFzU63gRYsZLVBphoOcnXo/3f+3z/YzyV9EDS4BDzfOkfjzKczaHyAaJX7ahFoxaJrNdifxXQC+JDeIlF/OqBaeFhMtKkW7kWhY+3ahutqiPmbSRKpW26BeK4Hx3WHnYelMzxccK/8os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kj8ne0RW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGQ7asPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082661F000E9;
-	Thu, 28 May 2026 20:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kj8ne0RW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A283F1F000E9;
+	Thu, 28 May 2026 20:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000468;
-	bh=QZ4i1P3YFUa+C6RVAEqB9ECtQCFkx4V2uWyZjdqYpuc=;
+	s=korg; t=1780000471;
+	bh=2SCSaFDQEDPXI7mbzv9bM8aFmpNuab15SH2woeozAEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGQ7asPyxw458+7wWBl+q+zNnwNkqk9F8Ly3YSf+6lW0/on88scz9WK0jwEXaadvn
-	 146XTp1a0ysA0hQMozyqSanA5H0RYtWGfOF98g9rW2JLHZQeLFgo0wkhAjyilgz1m+
-	 Pl6pq1XQK+aaltAuJmM0EooFaEA5QbfePw0i4o6I=
+	b=kj8ne0RWW/l5bTUIwjmDPz6kMYwjuoyPXAtUaOmH6PeIIViCdPg1iaCKbv21wWAAb
+	 /8A5KQQjbi4rWkMyFQUW3MeDjiniHHF590JBq2ZVw8JXB1z2mq/pnCsCp/bnmzcug8
+	 lgAvyyZia4i8cdhhc5OMBQjwOHmGlFs+stYY1hpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heechan Kang <gganji11@naver.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 056/272] io_uring/waitid: clear waitid info before copying it to userspace
-Date: Thu, 28 May 2026 21:47:10 +0200
-Message-ID: <20260528194630.950082681@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	"Huang, Ying" <huang.ying.caritas@gmail.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 057/272] drivers/base/memory: fix memory block reference leak in poison accounting
+Date: Thu, 28 May 2026 21:47:11 +0200
+Message-ID: <20260528194630.978652726@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,41 +58,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heechan Kang <gganji11@naver.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 93d93f5f8da791e98159795c6ef683f45bd95d13 upstream.
+commit 03a2cc1756a0570f887d624cd6c535ea0cbd4951 upstream.
 
-IORING_OP_WAITID stores its result fields in struct io_waitid::info and
-later copies them to userspace siginfo. The prep path initializes the
-request arguments, but it does not initialize info itself.
+memblk_nr_poison_inc() and memblk_nr_poison_sub() look up a memory block
+via find_memory_block_by_id(), which acquires a reference to the memory
+block device.
 
-If the wait operation completes without reporting a child event, the common
-wait code can return without writing wo_info. In that case io_waitid_finish()
-still copies iw->info to userspace, exposing stale bytes from the reused
-io_kiocb command storage.
+Both helpers use the returned memory block without dropping that
+reference, leaking the device reference on each successful lookup.  Drop
+the reference after updating nr_hwpoison.
 
-Clear the result storage during prep so the io_uring path matches the
-regular waitid syscall, which uses a zero-initialized struct waitid_info.
-
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
-Cc: stable@vger.kernel.org # 6.7+
-Signed-off-by: Heechan Kang <gganji11@naver.com>
-Link: https://patch.msgid.link/20260516184709.852814-1-gganji11@naver.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/20260428085219.1316047-3-songmuchun@bytedance.com
+Fixes: 5033091de814 ("mm/hwpoison: introduce per-memory_block hwpoison counter")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/memory.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -294,6 +294,7 @@ int io_waitid_prep(struct io_kiocb *req,
- 	iw->upid = READ_ONCE(sqe->fd);
- 	iw->options = READ_ONCE(sqe->file_index);
- 	iw->infop = u64_to_user_ptr(READ_ONCE(sqe->addr2));
-+	memset(&iw->info, 0, sizeof(iw->info));
- 	return 0;
+--- a/drivers/base/memory.c
++++ b/drivers/base/memory.c
+@@ -1232,8 +1232,10 @@ void memblk_nr_poison_inc(unsigned long
+ 	const unsigned long block_id = pfn_to_block_id(pfn);
+ 	struct memory_block *mem = find_memory_block_by_id(block_id);
+ 
+-	if (mem)
++	if (mem) {
+ 		atomic_long_inc(&mem->nr_hwpoison);
++		put_device(&mem->dev);
++	}
  }
  
+ void memblk_nr_poison_sub(unsigned long pfn, long i)
+@@ -1241,8 +1243,10 @@ void memblk_nr_poison_sub(unsigned long
+ 	const unsigned long block_id = pfn_to_block_id(pfn);
+ 	struct memory_block *mem = find_memory_block_by_id(block_id);
+ 
+-	if (mem)
++	if (mem) {
+ 		atomic_long_sub(i, &mem->nr_hwpoison);
++		put_device(&mem->dev);
++	}
+ }
+ 
+ static unsigned long memblk_nr_poison(struct memory_block *mem)
 
 
