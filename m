@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C409434D4D6;
-	Thu, 28 May 2026 19:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB0E344DAC;
+	Thu, 28 May 2026 19:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998325; cv=none; b=PMyhy4T/todCFiMndeDjDHmUgbktgR29htIclEctwY6JagWmJvyLHVO0Xmx6kukbW8ZJsS4F+IElWlXIinomcGFJlHDMsE+92xhs8AKdcpKA5uq/z7ZLze+9+VZXktJKQdBcSyoVm/qOADSlzEBMCerkwIzO4vkGlQ2k1gesmUo=
+	t=1779998328; cv=none; b=SuAPPfLdkWlRaM2iyVaIujVRBKBu+7x/tWMCLtC5zBWq2TD/IRQqex52QM8CIPkKE+vfowUf2ca4OpJTbYsTjcqggoggS29hADQvvSXR6YYbPw47VIAJMjx/u/0II3rpu6vM2omNFlTsNFZQJxySHkHTaq6Cfm+/nAGg8ciKCes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998325; c=relaxed/simple;
-	bh=YaXljnKGxDgnjt4ijwjcp/6VdsmnBJClLqW/Gxxn0f4=;
+	s=arc-20240116; t=1779998328; c=relaxed/simple;
+	bh=CNqupDFpDpQSy84+KNpf6U8zwMbG6ko/c0+rGMOthhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAbsYRifzBq/4CyPm5K+HWiLhNSQMt3B+v8VgWYXuCundgFhuxR3Wx0xqGh92zcyOEonvCG8CQD7DR0CjVzD+1c6h86xOKN5FITKEJwNds0woVNr5aMCMDiunaIzZJkkdZP6neKZcgx3ZeZiGYu8yVUs5xkOhG8b1qmAT42TMpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z91IWlSw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jXzOjBMJu671YNmvnJfN8p0to8ggE/mi/6iqmpGfGrt2uK8YG/aAUu5SPItN0zzUl1+MsrKmL0AwAe4BkW7QMcfAH4DQVRD8iXMa2J9woA0UDsziAdcnl0IzxvdW6KXcMnyrsyBvvSp63upVHpaO/DZtNZEiTxf3HUQhn6JJ2ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcxbI8Xl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z91IWlSw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF891F000E9;
-	Thu, 28 May 2026 19:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcxbI8Xl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD531F000E9;
+	Thu, 28 May 2026 19:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998324;
-	bh=XWlKuugbd0GZQy+9LPFL+8kGbluPebuKshdKd0YFaM4=;
+	s=korg; t=1779998327;
+	bh=HwL1ELeiniv8eitXsLSw/EtRVUCLQzMqDmvjZ6xBPtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z91IWlSwk9hYqL1zsf9fPVj4mcHOGLDnInBupuu/G5o27pEt3RvvifoPJirzjA1N4
-	 bccsusX3QvZKsDtbSfbh6a6HSmoCi07Qzc2OymIGxkN2q9+DkRJA5a6UobRaKW5iXl
-	 JCjyArVciLh0oF75ZlMcIOapG3wpMiD4uNbTp+xM=
+	b=FcxbI8Xl5lKhz6QQap/mvo60oNny69TmeQoJGOblI/y7QMWiKK1HSeoneCBLuoMw1
+	 r6ijnl5w5Q6HyFr28JRLuuieKIJjz42pFkh+3iWFnBuZusIEEqst+cf6Deot2pFMNA
+	 AMSQ0IFe9i/OD4YEi5w2s6zfsGFz9CbNgxTU1yxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 116/461] spi: ep93xx: fix error pointer deref after DMA setup failure
-Date: Thu, 28 May 2026 21:44:05 +0200
-Message-ID: <20260528194650.331099522@linuxfoundation.org>
+	=?UTF-8?q?Sebastian=20=C3=96sterlund?= <sebastian.osterlund@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 7.0 134/461] drm/xe/multi_queue: Fix secondary queue error case
+Date: Thu, 28 May 2026 21:44:23 +0200
+Message-ID: <20260528194650.869761753@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,54 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-commit 5e121a81667a83e9a01d62b429e340f5a4a84abc upstream.
+commit 00907da2126ed785451b2a2f0fef282246dad104 upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+If xe_lrc_create() fails, the secondary queue added to the
+multi-queue group list is not removed before freeing the
+queue. Fix error path handling for secondary queues by
+removing it from the multi-queue group list at the right
+place.
 
-Make sure to the clear the DMA channel pointers on setup failure to
-avoid dereferencing an error pointer on later probe errors or driver
-unbind.
-
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
-
-Fixes: e79e7c2df627 ("spi: ep93xx: add DT support for Cirrus EP93xx")
-Link: https://sashiko.dev/#/patchset/20260429091333.165363-1-johan%40kernel.org?part=10
-Cc: stable@vger.kernel.org	# 6.12
-Cc: Nikita Shubin <nikita.shubin@maquefel.me>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Link: https://patch.msgid.link/20260512074849.915143-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Sebastian Österlund <sebastian.osterlund@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7979
+Fixes: d716a5088c88 ("drm/xe/multi_queue: Handle tearing down of a multi queue")
+Cc: stable@vger.kernel.org # v7.0+
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260518191639.320890-2-niranjana.vishwanathapura@intel.com
+(cherry picked from commit d2d23c12789cf69eddc35b8d38cd8eaabd0168f1)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ep93xx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_submit.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/spi/spi-ep93xx.c
-+++ b/drivers/spi/spi-ep93xx.c
-@@ -582,12 +582,14 @@ static int ep93xx_spi_setup_dma(struct d
- 	espi->dma_rx = dma_request_chan(dev, "rx");
- 	if (IS_ERR(espi->dma_rx)) {
- 		ret = dev_err_probe(dev, PTR_ERR(espi->dma_rx), "rx DMA setup failed");
-+		espi->dma_rx = NULL;
- 		goto fail_free_page;
- 	}
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1623,6 +1623,14 @@ static void guc_exec_queue_fini(struct x
+ 	struct xe_guc_exec_queue *ge = q->guc;
+ 	struct xe_guc *guc = exec_queue_to_guc(q);
  
- 	espi->dma_tx = dma_request_chan(dev, "tx");
- 	if (IS_ERR(espi->dma_tx)) {
- 		ret = dev_err_probe(dev, PTR_ERR(espi->dma_tx), "tx DMA setup failed");
-+		espi->dma_tx = NULL;
- 		goto fail_release_rx;
- 	}
++	if (xe_exec_queue_is_multi_queue_secondary(q)) {
++		struct xe_exec_queue_group *group = q->multi_queue.group;
++
++		mutex_lock(&group->list_lock);
++		list_del(&q->multi_queue.link);
++		mutex_unlock(&group->list_lock);
++	}
++
+ 	release_guc_id(guc, q);
+ 	xe_sched_entity_fini(&ge->entity);
+ 	xe_sched_fini(&ge->sched);
+@@ -1644,14 +1652,6 @@ static void __guc_exec_queue_destroy_asy
+ 	guard(xe_pm_runtime)(guc_to_xe(guc));
+ 	trace_xe_exec_queue_destroy(q);
+ 
+-	if (xe_exec_queue_is_multi_queue_secondary(q)) {
+-		struct xe_exec_queue_group *group = q->multi_queue.group;
+-
+-		mutex_lock(&group->list_lock);
+-		list_del(&q->multi_queue.link);
+-		mutex_unlock(&group->list_lock);
+-	}
+-
+ 	/* Confirm no work left behind accessing device structures */
+ 	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
  
 
 
