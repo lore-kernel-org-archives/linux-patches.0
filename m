@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C897C31159C;
-	Thu, 28 May 2026 20:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C47E318B96;
+	Thu, 28 May 2026 20:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001421; cv=none; b=Mi+2HR890GBzRNebm9dZlKhjr0FOOMzeKl1BDO9rs0djbQD+s/9O0//caePLZdvq1MYj0MnFwJI/tp7p9G9Z5z4zfIz5GZZ+/RS/LQO40X39XONBwNWeG6lrvm2dXWznKemQZthZDrgJVJ4BatwwFosPEivu8d5R4PfvX/uPXUg=
+	t=1780001424; cv=none; b=TtA+nwR71OqMnTvsBGK6bp3H0FIr178NiHkZ0w50SOW1cUD2Lw750ob4mb4517zjE2nzkoqe1f6mwosxiamd2+J0SS9VyHDlAQLb7vz83eb18PPoMM+lMvMYFQKJWt+LRYJ3DvAgCmwoBM3ctVigH0OLujN735SX3b+rpGX6VQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001421; c=relaxed/simple;
-	bh=TTtrM22bNDWHrcvDZ7zr3H2I2AauPNzWxJ/b+rifeVY=;
+	s=arc-20240116; t=1780001424; c=relaxed/simple;
+	bh=MWAfV7a/LD9BFDdVQ5wjeo9kgEnoQIyaoCGEMcYkEzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZacDc79riWfxjiS2p/8ePA8/bUNE0wCNA5DzyXyy6JQU/ci2Lu9o3VxZZ/iL+cUoXlZcbtCT9hp3E39BxZZYAbEHRSxIaiaaAG0FTa7fikTymqJQShW81X7QGTVcYFZxn2u1A6ubRKzpNqTgNPcmdqT67VbNFhelf3XRsCOfWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+Cbi5dZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i+a/wHFlpi8uRBY943U2IdHYku35pLDXhPg06lLw3lIvuKXgzZE3kJQopKf24LGEt0cg31R+tMG2Oc35Z+OrjkOEj4iNoBDRX6KaO7jvdl6Il3JbA/mEZOgUGg5ay7LRY36EXk2fN+he2u5OOVK4LyH71ccHY1s92YHFOuA6pNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaSajF78; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+Cbi5dZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D781F000E9;
-	Thu, 28 May 2026 20:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaSajF78"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07AF1F000E9;
+	Thu, 28 May 2026 20:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001420;
-	bh=Ti+6pWcdoQMB0M8XS7wD5W3cZrgeb/805yljlJb97Xk=;
+	s=korg; t=1780001423;
+	bh=q/3il1RqNKB4uh4QuANobvTKXSXIhudpRaKR3S+3l7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+Cbi5dZ2DwgSZmQ3bJ9vB3bXzbhyZIKKgBrZzFfd4fWaPWsIatA5htsSlOq59HEB
-	 VCMSlfbwATCgfX5D0goeznNs/KOYYmsE8Tmx4xN2wRhEH5A8uIS6IrPRZNOySgmLe5
-	 X9e/UeYyzVUB8t9+TR0UpazUH/zX6SbblwNZNTV0=
+	b=LaSajF78o5YxIcIBATVOwtqOLCoF8F/mMlzLSyWOu1SY9Rv73N5mncyDxdG513jtW
+	 TCmNw7MWCK8jsehV959V6ba6ZvN2deO4iTFTfSixhPO1Padxon8RB9FvI3wkHxVaTm
+	 cmrJLvsmyZgDn2O4jTl0sOpt84HxWG/jwKCxeXe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	intel-wired-lan@lists.osuosl.org,
+	Bart Van Assche <bvanassche@acm.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Arpana Arland <arpanax.arland@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/186] tcp: Fix imbalanced icsk_accept_queue count.
-Date: Thu, 28 May 2026 21:50:02 +0200
-Message-ID: <20260528194932.237701238@linuxfoundation.org>
+Subject: [PATCH 6.6 123/186] ice: fix locking in ice_dcb_rebuild()
+Date: Thu, 28 May 2026 21:50:03 +0200
+Message-ID: <20260528194932.264844146@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,43 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 7eca3292cac7c26dad4c236f51ba225c39a0523f ]
+[ Upstream commit 0ded1f36ba4021cba50513e80be6b6e173710168 ]
 
-When TCP socket migration happens in reqsk_timer_handler(),
-@sk_listener will be updated with the new listener.
+Move the mutex_lock() call up to prevent that DCB settings change after
+the first ice_query_port_ets() call. The second ice_query_port_ets()
+call in ice_dcb_rebuild() is already protected by pf->tc_mutex.
 
-When we call __inet_csk_reqsk_queue_drop(), the listener must
-be the one stored in req->rsk_listener.
+This also fixes a bug in an error path, as before taking the first
+"goto dcb_error" in the function jumped over mutex_lock() to
+mutex_unlock().
 
-The cited commit accidentally replaced oreq->rsk_listener with
-sk_listener, leading to imbalanced icsk_accept_queue count.
+This bug has been detected by the clang thread-safety analyzer.
 
-Let's pass the correct listener to __inet_csk_reqsk_queue_drop().
-
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260506035954.1563147-3-kuniyu@google.com
+Cc: intel-wired-lan@lists.osuosl.org
+Fixes: 242b5e068b25 ("ice: Fix DCB rebuild after reset")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Arpana Arland <arpanax.arland@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-6-a5ea4dc837a9@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_dcb_lib.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index a6f9192b4e53c..c7a1f763e464e 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1115,7 +1115,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+diff --git a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
+index 850db8e0e6b00..14d765247d73c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
+@@ -537,14 +537,14 @@ void ice_dcb_rebuild(struct ice_pf *pf)
+ 	struct ice_dcbx_cfg *err_cfg;
+ 	int ret;
+ 
++	mutex_lock(&pf->tc_mutex);
++
+ 	ret = ice_query_port_ets(pf->hw.port_info, &buf, sizeof(buf), NULL);
+ 	if (ret) {
+ 		dev_err(dev, "Query Port ETS failed\n");
+ 		goto dcb_error;
  	}
  
- drop:
--	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
-+	__inet_csk_reqsk_queue_drop(oreq->rsk_listener, oreq, true);
- 	reqsk_put(oreq);
- }
+-	mutex_lock(&pf->tc_mutex);
+-
+ 	if (!pf->hw.port_info->qos_cfg.is_sw_lldp)
+ 		ice_cfg_etsrec_defaults(pf->hw.port_info);
  
 -- 
 2.53.0
