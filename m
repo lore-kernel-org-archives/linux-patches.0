@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE82313550;
-	Thu, 28 May 2026 20:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA667330D35;
+	Thu, 28 May 2026 20:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000316; cv=none; b=hxijYJDNx/Oz1IRHFldVht7OiFEnjc7VdhapmODa9bQIQxIxoR9Wp9SRD25Whuzta0oZjmVNdZyDPOgOkQntIP+8o00rbTrIMY5DmoFcCbkPBRYfKmM+i7MnVKKcvBTqJ6Tc+z9oYmmC4osAdCxir3HDWcLjfazdbCXEl3omqek=
+	t=1780000320; cv=none; b=oY2TaaHVQzT+c+qgfdQ5fgsyzCJ1S1Bb9IIlCFCGIb9jZiZPtEL2uuZUHFSSkJiCxCegx0xpPnnskKxPbq896sEEg6yarrLVjVg6Z5eFjootZELTF15cnB+Unagrt0yRg6KcVpS/NUcCY/qPD74KyiB/tJmscc8Ws6syaYraZ6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000316; c=relaxed/simple;
-	bh=G4Ojz9deQ72q9wQyrSj7KhZoL8PfZY0aolNIMG5NlYQ=;
+	s=arc-20240116; t=1780000320; c=relaxed/simple;
+	bh=oWzkhxp/signNZ3PQDduhRRGLf7BJ7e2AFGVP7toqUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hu7MwEHbOXxbH5GTPE1Tbsp6xf7CtH7R2/65U/Rt2y8cKdSZ75wSKo8dYY8AYiLhgLoUm597dOWoayLqnKo092zqnAC+unYbx98+QCUqRo9be0eHaUi/w2es6VrtzgVYa2EVDkhtYfZ+KSH6yd33wTVqOgcKcBDOmXXu/At+alQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAHgUQ1N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ng8yoO1vYXhiVCPZ3WEjjgAACRWygx7MkVUV5NFikIG+xHvO++VNCwjNY1zNsfPL0YtTITAvISKTxVM4/L7CXBB9fzJf/WAC8Fljv7W1v6NcpRQlS/9WTMWnhi3l4CRwtklHc1778qWBRooG9yWYK/+PhV7Wdh+Y2Ww5yg0aMWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i05X7d0E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAHgUQ1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493EF1F000E9;
-	Thu, 28 May 2026 20:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i05X7d0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158681F000E9;
+	Thu, 28 May 2026 20:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000315;
-	bh=8w/mJSoMtTLC/CdPMnm0GN8j8M0IGgcOoM+c+Grap4U=;
+	s=korg; t=1780000318;
+	bh=sK4kkghKaevlxJRW18pY+oXTyer+VVuHxzlodnPJij0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAHgUQ1N6we1poMJTg5Dl9eVdTV/G4lwGQ82WZl4xjXB435FTPXNvBB7439BMK3yA
-	 DYO1pVlZZMofDuURWxWP3F5789LR91ZVWvHuR8hr4sYMKHds7/K0SlR1UY8Oy7MQUK
-	 7cm3hmqXx0Xrc+8DUAD0hJUo9X6Inui6exNdcdZU=
+	b=i05X7d0Et9uxMZxwx1a5+kQt46e7Uw5f2Jn39uhRtyMxD2Jgz/m+Mb3Xh3RJzeZiZ
+	 a9riXQ6nLEM+MnOsmDQ6zdSRbzy3KuFgbwJhhWbYAl5lhOCv8nV8VaEpzUaNUZiEdJ
+	 wcwafOyrrPtDo4adiOQZp6D0l49Kp9+QvqQ29GhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 353/377] Bluetooth: btmtk: fix urb->setup_packet leak in error paths
-Date: Thu, 28 May 2026 21:49:51 +0200
-Message-ID: <20260528194648.646129407@linuxfoundation.org>
+Subject: [PATCH 6.18 354/377] net/mlx5e: Fix eswitch mode block underflow on IPsec acquire SA
+Date: Thu, 28 May 2026 21:49:52 +0200
+Message-ID: <20260528194648.676904271@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,41 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit dd1dda6b8d6e1f4376a5b3055a04f0ecbdb4d6bd ]
+[ Upstream commit abe003b33223ff33552f291644bf35d9c2f992fb ]
 
-The setup_packet of control urb is not freed if usb_submit_urb fails or
-the submitted urb is killed. Add free in these two paths.
+mlx5e_xfrm_add_state() handles acquire-flow temporary SAs by allocating
+software state and skipping hardware offload setup.
 
-Fixes: a1c49c434e150 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+That path jumps to the common success label before taking the eswitch mode
+block. After tunnel-mode validation was moved earlier, the common success
+label unconditionally calls mlx5_eswitch_unblock_mode(). For acquire SAs,
+this decrements esw->offloads.num_block_mode without a matching increment.
+
+Return directly after installing the acquire SA offload handle, so only the
+paths that successfully called mlx5_eswitch_block_mode() call the matching
+unblock.
+
+Fixes: 22239eb258bc ("net/mlx5e: Prevent tunnel reformat when tunnel mode not allowed")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260510225903.13184-1-prathameshdeshpande7@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index cf05746e9db5a..38ba8f2bd2f96 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -496,6 +496,7 @@ static void btmtk_usb_wmt_recv(struct urb *urb)
- 		return;
- 	} else if (urb->status == -ENOENT) {
- 		/* Avoid suspend failed when usb_kill_urb */
-+		kfree(urb->setup_packet);
- 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index f03507a522b4f..51fb857a27665 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -794,8 +794,10 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 	sa_entry->dev = dev;
+ 	sa_entry->ipsec = ipsec;
+ 	/* Check if this SA is originated from acquire flow temporary SA */
+-	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ)
+-		goto out;
++	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ) {
++		x->xso.offload_handle = (unsigned long)sa_entry;
++		return 0;
++	}
+ 
+ 	err = mlx5e_xfrm_validate_state(priv->mdev, x, extack);
+ 	if (err)
+@@ -872,7 +874,6 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 		xa_unlock_bh(&ipsec->sadb);
  	}
  
-@@ -569,6 +570,7 @@ static int btmtk_usb_submit_wmt_recv_urb(struct hci_dev *hdev)
- 		if (err != -EPERM && err != -ENODEV)
- 			bt_dev_err(hdev, "urb %p submission failed (%d)",
- 				   urb, -err);
-+		kfree(dr);
- 		usb_unanchor_urb(urb);
- 	}
- 
+-out:
+ 	x->xso.offload_handle = (unsigned long)sa_entry;
+ 	if (allow_tunnel_mode)
+ 		mlx5_eswitch_unblock_encap(priv->mdev);
 -- 
 2.53.0
 
