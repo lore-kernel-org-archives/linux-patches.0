@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9BE254B1F;
-	Thu, 28 May 2026 20:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA62A32A3FF;
+	Thu, 28 May 2026 20:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000016; cv=none; b=sq+llc+9fubqskBPQT6ydFGEw5ftuA5uClfhLjgiMzf3hxVcRGkF6qGd5qUAeJeZdL+wtF8Xc2wJgA+jVyrCikbmi7XCF1nA1BSqZHuLI4JjkKO6V7seStKPAnqrJthe5oppUg9JFodpGPMG7QpnZBZy8gtIqUE9EZXdGF1OEJw=
+	t=1780000018; cv=none; b=FMQE5pd20JiFMXM35ce53hwChNhCV7Pgxh8wBezSbSP24ywDTzWCmvMKUwxBWqAXZpJuz8ClJTtPwn268F3jz/z0yt8HY8PuB9/15bTx5q0tKJS0V4lRS/2Vy2hNvEdVAz+BxdiqKP14M8zgWuBUy5loVXO1BN0zZk0q/4hjsDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000016; c=relaxed/simple;
-	bh=RXtoEfrJWU2mA4nbEW50/kIGRg7UTH0nvB06f7k2KHU=;
+	s=arc-20240116; t=1780000018; c=relaxed/simple;
+	bh=NEUV/d0TJe7/+MdjUXKMTYFQj+t/Q0SWkEzP43GDjTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbNEBwu5OMlfcVCuuZE3gI7hXxrybLQuZJFc3zxmrZ8vwOzSfq6EE/gv8zXddS1W7wLJFZnyAmXXvzyvQwrvmUvpAWcdmqtzg2XClNftYAGvS4LSjXXPNGRpHoAEh+ZKOOzeOOvBxwLTCN4Fnow6xRnlTp/HGG1qmRW4tmawsHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE0dzYh8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dYJCT+brPQk4sPov5Gap7Dm9jq9IkvgErlnHta3+JFKox9XpHmttJEF3hPoBjsFAxtA/EXLVmxxph7K4QpiZRhP845IC1TL4hSN5o8clYymUlu/2XMt1TXt2pDMzi5SOhbnWi6p6zVSiL60rP2G/budSVss2CB6UiyS0axwqwCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GehrZ58j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE0dzYh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736571F000E9;
-	Thu, 28 May 2026 20:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GehrZ58j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0381F000E9;
+	Thu, 28 May 2026 20:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000014;
-	bh=6vy1EekCKk4hAT33qc9uLIQxbPhwhq/TYRwjWyIx0Ww=;
+	s=korg; t=1780000017;
+	bh=CCB1QA4JI/BThIw+gSgMlC6bv4qWbC6vi46d4VxsqkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AE0dzYh8qOO/uEDDuYMxpMSop3QbvrCAbW7FFLrdtkqF1eF9Oxw0D7u4y0mhWDRej
-	 9dDljaA0rQZ+Cd4gjLDn7VG8SWXHxRNsZ33Idunn4cY2iBNngwp02+OCGN8g26gIPw
-	 dB7qI9OZWhUmLdMGX7dBYJ/EI/I9FNfLZDPgbD+s=
+	b=GehrZ58jn73pnXXTny6Eg6FeWk3197F/sbm1D8MnlLu62CXowz4Mv0iw8XYCsrIs6
+	 ziw2n1GbPtLkb/fx4ibUnS1NlORTmaH6Rue6PFxBslizAAryb/X9Llfn6YgFNw9l2+
+	 I+mvJpipO+jGv3my+u5NFcjzLseXH6Sf5Gv0coqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
-	Ceph Development <ceph-devel@vger.kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 235/377] netfs: fix VM_BUG_ON_FOLIO() issue in netfs_write_begin() call
-Date: Thu, 28 May 2026 21:47:53 +0200
-Message-ID: <20260528194645.195418218@linuxfoundation.org>
+Subject: [PATCH 6.18 236/377] netfs: Fix overrun check in netfs_extract_user_iter()
+Date: Thu, 28 May 2026 21:47:54 +0200
+Message-ID: <20260528194645.222309417@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -56,167 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit dc7832d05deb4d632e8035e3299e31a3528fa0d0 ]
+[ Upstream commit 0ef37eef83fad3542ee06db2940433ae1a92b39d ]
 
-The multiple runs of generic/013 test-case is capable
-to reproduce a kernel BUG at mm/filemap.c:1504 with
-probability of 30%.
+Fix netfs_extract_user_iter() so that if iov_iter_extract_pages() overfills
+pages[], then those pages don't get included in the iterator constructed at
+the end of the function.  If there was an overfill, memory corruption has
+already happened.
 
-while true; do
-  sudo ./check generic/013
-done
-
-[ 9849.452376] page: refcount:3 mapcount:0 mapping:00000000e58ff252 index:0x10781 pfn:0x1c322
-[ 9849.452412] memcg:ffff8881a1915800
-[ 9849.452417] aops:ceph_aops ino:1000058db9e dentry name(?):"f9XXXXXX"
-[ 9849.452432] flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
-[ 9849.452441] raw: 0017ffffc0000000 0000000000000000 dead000000000122 ffff88816110d248
-[ 9849.452445] raw: 0000000000010781 0000000000000000 00000003ffffffff ffff8881a1915800
-[ 9849.452447] page dumped because: VM_BUG_ON_FOLIO(!folio_test_locked(folio))
-[ 9849.452474] ------------[ cut here ]------------
-[ 9849.452476] kernel BUG at mm/filemap.c:1504!
-[ 9849.478635] Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-[ 9849.481772] CPU: 2 UID: 0 PID: 84223 Comm: fsstress Not tainted 7.0.0-rc1+ #18 PREEMPT(full)
-[ 9849.482881] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-9.fc43 06/1
-0/2025
-[ 9849.484539] RIP: 0010:folio_unlock+0x85/0xa0
-[ 9849.485076] Code: 89 df 31 f6 e8 1c f3 ff ff 48 8b 5d f8 c9 31 c0 31 d2 31 f6 31 ff c3 cc
-cc cc cc 48 c7 c6 80 6c d9 a7 48 89 df e8 4b b3 10 00 <0f> 0b 48 89 df e8 21 e6 2c 00 eb 9d 0f 1f 40 00 66 66 2e 0f 1f 84
-[ 9849.493818] RSP: 0018:ffff8881bb8076b0 EFLAGS: 00010246
-[ 9849.495740] RAX: 0000000000000000 RBX: ffffea00070c8980 RCX: 0000000000000000
-[ 9849.498678] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-[ 9849.500559] RBP: ffff8881bb8076b8 R08: 0000000000000000 R09: 0000000000000000
-[ 9849.501097] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000010782000
-[ 9849.502108] R13: ffff8881935de738 R14: ffff88816110d010 R15: 0000000000001000
-[ 9849.502516] FS:  00007e36cbe94740(0000) GS:ffff88824a899000(0000) knlGS:0000000000000000
-[ 9849.502996] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 9849.503810] CR2: 000000c0002b0000 CR3: 000000011bbf6004 CR4: 0000000000772ef0
-[ 9849.504459] PKRU: 55555554
-[ 9849.504626] Call Trace:
-[ 9849.505242]  <TASK>
-[ 9849.505379]  netfs_write_begin+0x7c8/0x10a0
-[ 9849.505877]  ? __kasan_check_read+0x11/0x20
-[ 9849.506384]  ? __pfx_netfs_write_begin+0x10/0x10
-[ 9849.507178]  ceph_write_begin+0x8c/0x1c0
-[ 9849.507934]  generic_perform_write+0x391/0x8f0
-[ 9849.508503]  ? __pfx_generic_perform_write+0x10/0x10
-[ 9849.509062]  ? file_update_time_flags+0x19a/0x4b0
-[ 9849.509581]  ? ceph_get_caps+0x63/0xf0
-[ 9849.510259]  ? ceph_get_caps+0x63/0xf0
-[ 9849.510530]  ceph_write_iter+0xe79/0x1ae0
-[ 9849.511282]  ? __pfx_ceph_write_iter+0x10/0x10
-[ 9849.511839]  ? lock_acquire+0x1ad/0x310
-[ 9849.512334]  ? ksys_write+0xf9/0x230
-[ 9849.512582]  ? lock_is_held_type+0xaa/0x140
-[ 9849.513128]  vfs_write+0x512/0x1110
-[ 9849.513634]  ? __fget_files+0x33/0x350
-[ 9849.513893]  ? __pfx_vfs_write+0x10/0x10
-[ 9849.514143]  ? mutex_lock_nested+0x1b/0x30
-[ 9849.514394]  ksys_write+0xf9/0x230
-[ 9849.514621]  ? __pfx_ksys_write+0x10/0x10
-[ 9849.514887]  ? do_syscall_64+0x25e/0x1520
-[ 9849.515122]  ? __kasan_check_read+0x11/0x20
-[ 9849.515366]  ? trace_hardirqs_on_prepare+0x178/0x1c0
-[ 9849.515655]  __x64_sys_write+0x72/0xd0
-[ 9849.515885]  ? trace_hardirqs_on+0x24/0x1c0
-[ 9849.516130]  x64_sys_call+0x22f/0x2390
-[ 9849.516341]  do_syscall_64+0x12b/0x1520
-[ 9849.516545]  ? do_syscall_64+0x27c/0x1520
-[ 9849.516783]  ? do_syscall_64+0x27c/0x1520
-[ 9849.517003]  ? lock_release+0x318/0x480
-[ 9849.517220]  ? __x64_sys_io_getevents+0x143/0x2d0
-[ 9849.517479]  ? percpu_ref_put_many.constprop.0+0x8f/0x210
-[ 9849.517779]  ? entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[ 9849.518073]  ? do_syscall_64+0x25e/0x1520
-[ 9849.518291]  ? __kasan_check_read+0x11/0x20
-[ 9849.518519]  ? trace_hardirqs_on_prepare+0x178/0x1c0
-[ 9849.518799]  ? do_syscall_64+0x27c/0x1520
-[ 9849.519024]  ? local_clock_noinstr+0xf/0x120
-[ 9849.519262]  ? entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[ 9849.519544]  ? do_syscall_64+0x25e/0x1520
-[ 9849.519781]  ? __kasan_check_read+0x11/0x20
-[ 9849.520008]  ? trace_hardirqs_on_prepare+0x178/0x1c0
-[ 9849.520273]  ? do_syscall_64+0x27c/0x1520
-[ 9849.520491]  ? trace_hardirqs_on_prepare+0x178/0x1c0
-[ 9849.520767]  ? irqentry_exit+0x10c/0x6c0
-[ 9849.520984]  ? trace_hardirqs_off+0x86/0x1b0
-[ 9849.521224]  ? exc_page_fault+0xab/0x130
-[ 9849.521472]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[ 9849.521766] RIP: 0033:0x7e36cbd14907
-[ 9849.521989] Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-[ 9849.523057] RSP: 002b:00007ffff2d2a968 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[ 9849.523484] RAX: ffffffffffffffda RBX: 000000000000e549 RCX: 00007e36cbd14907
-[ 9849.523885] RDX: 000000000000e549 RSI: 00005bd797ec6370 RDI: 0000000000000004
-[ 9849.524277] RBP: 0000000000000004 R08: 0000000000000047 R09: 00005bd797ec6370
-[ 9849.524652] R10: 0000000000000078 R11: 0000000000000246 R12: 0000000000000049
-[ 9849.525062] R13: 0000000010781a37 R14: 00005bd797ec6370 R15: 0000000000000000
-[ 9849.525447]  </TASK>
-[ 9849.525574] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec kvm_intel joydev kvm irqbypass ghash_clmulni_intel aesni_intel input_leds rapl mac_hid psmouse vga16fb serio_raw vgastate floppy i2c_piix4 bochs qemu_fw_cfg i2c_smbus pata_acpi sch_fq_codel rbd msr parport_pc ppdev lp parport efi_pstore
-[ 9849.529150] ---[ end trace 0000000000000000 ]---
-[ 9849.529502] RIP: 0010:folio_unlock+0x85/0xa0
-[ 9849.530813] Code: 89 df 31 f6 e8 1c f3 ff ff 48 8b 5d f8 c9 31 c0 31 d2 31 f6 31 ff c3 cc cc cc cc 48 c7 c6 80 6c d9 a7 48 89 df e8 4b b3 10 00 <0f> 0b 48 89 df e8 21 e6 2c 00 eb 9d 0f 1f 40 00 66 66 2e 0f 1f 84
-[ 9849.534986] RSP: 0018:ffff8881bb8076b0 EFLAGS: 00010246
-[ 9849.536198] RAX: 0000000000000000 RBX: ffffea00070c8980 RCX: 0000000000000000
-[ 9849.537718] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-[ 9849.539321] RBP: ffff8881bb8076b8 R08: 0000000000000000 R09: 0000000000000000
-[ 9849.540862] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000010782000
-[ 9849.542438] R13: ffff8881935de738 R14: ffff88816110d010 R15: 0000000000001000
-[ 9849.543996] FS:  00007e36cbe94740(0000) GS:ffff88824b899000(0000) knlGS:0000000000000000
-[ 9849.545854] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 9849.547092] CR2: 00007e36cb3ff000 CR3: 000000011bbf6006 CR4: 0000000000772ef0
-[ 9849.548679] PKRU: 55555554
-
-The race sequence:
-1. Read completes -> netfs_read_collection() runs
-2. netfs_wake_rreq_flag(rreq, NETFS_RREQ_IN_PROGRESS, ...)
-3. netfs_wait_for_read() returns -EFAULT to netfs_write_begin()
-4. The netfs_unlock_abandoned_read_pages() unlocks the folio
-5. netfs_write_begin() calls folio_unlock(folio) -> VM_BUG_ON_FOLIO()
-
-The key reason of the issue that netfs_unlock_abandoned_read_pages()
-doesn't check the flag NETFS_RREQ_NO_UNLOCK_FOLIO and executes
-folio_unlock() unconditionally. This patch implements in
-netfs_unlock_abandoned_read_pages() logic similar to
-netfs_unlock_read_folio().
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
+Closes: https://sashiko.dev/#/patchset/20260427154639.180684-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-8-dhowells@redhat.com
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Link: https://patch.msgid.link/20260512123404.719402-11-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
-cc: Ceph Development <ceph-devel@vger.kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/read_retry.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/netfs/iterator.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index cca9ac43c0773..68fc869513ef1 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -288,8 +288,15 @@ void netfs_unlock_abandoned_read_pages(struct netfs_io_request *rreq)
- 			struct folio *folio = folioq_folio(p, slot);
- 
- 			if (folio && !folioq_is_marked2(p, slot)) {
--				trace_netfs_folio(folio, netfs_folio_trace_abandon);
--				folio_unlock(folio);
-+				if (folio->index == rreq->no_unlock_folio &&
-+				    test_bit(NETFS_RREQ_NO_UNLOCK_FOLIO,
-+					     &rreq->flags)) {
-+					_debug("no unlock");
-+				} else {
-+					trace_netfs_folio(folio,
-+						netfs_folio_trace_abandon);
-+					folio_unlock(folio);
-+				}
- 			}
+diff --git a/fs/netfs/iterator.c b/fs/netfs/iterator.c
+index 429e4396e1b00..b375567e0520e 100644
+--- a/fs/netfs/iterator.c
++++ b/fs/netfs/iterator.c
+@@ -72,21 +72,24 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
+ 			break;
  		}
+ 
+-		if (ret > count) {
+-			pr_err("get_pages rc=%zd more than %zu\n", ret, count);
++		if (WARN(ret > count,
++			 "%s: extract_pages overrun %zd > %zu bytes\n",
++			 __func__, ret, count)) {
++			ret = -EIO;
+ 			break;
+ 		}
+ 
+-		count -= ret;
+-		ret += offset;
+-		cur_npages = DIV_ROUND_UP(ret, PAGE_SIZE);
+-
+-		if (npages + cur_npages > max_pages) {
+-			pr_err("Out of bvec array capacity (%u vs %u)\n",
+-			       npages + cur_npages, max_pages);
++		cur_npages = DIV_ROUND_UP(offset + ret, PAGE_SIZE);
++		if (WARN(cur_npages > max_pages - npages,
++			 "%s: extract_pages overrun %u > %u pages\n",
++			 __func__, npages + cur_npages, max_pages)) {
++			ret = -EIO;
+ 			break;
+ 		}
+ 
++		count -= ret;
++		ret += offset;
++
+ 		for (i = 0; i < cur_npages; i++) {
+ 			len = ret > PAGE_SIZE ? PAGE_SIZE : ret;
+ 			bvec_set_page(bv + npages + i, *pages++, len - offset, offset);
+@@ -97,6 +100,11 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
+ 		npages += cur_npages;
  	}
+ 
++	/* Note: Don't try to clean up after EIO.  Either we got no pages, so
++	 * nothing to clean up, or we got a buffer overrun, memory corruption
++	 * and can't trust the stuff in the buffer (a WARN was emitted).
++	 */
++
+ 	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
+ 		for (i = 0; i < npages; i++)
+ 			unpin_user_page(bv[i].bv_page);
 -- 
 2.53.0
 
