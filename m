@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49716330B2D;
-	Thu, 28 May 2026 19:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6E5338936;
+	Thu, 28 May 2026 19:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998184; cv=none; b=pVgrIcP/zWLMYHRweqD7UX0FwY85gCcl82iW97WOdTovGVk7EZ6KHh6QGaOQ+cucrzYBDRZihLPXnWau1ijlCR8PiyHTE/JK+XRbHCzBS7rjiQmd050b/kS2yeUE+MVFHgXUcLjTFYA1ERSlNI8br9aFlhngfgmuSGyWKqxdY+M=
+	t=1779998187; cv=none; b=fk3T850h83qolW3aYmsoRAOCmGPp+3wVDc52rM0irGAgguqsEor6QaqpIqq7TWrpxJj/UhR9G1IfeUDsNK4QtBp4AwWWl6x7G5nYMI0CdMjjW8CEjdMILD/2W9311wKcFwsw1GOQCKn1cY2SHReBsB2U6E1TyPOrkKzG1+hxZr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998184; c=relaxed/simple;
-	bh=AhgjTAiltEgaspXPlrcPw9U51M0bQKST8d7udR1qnmw=;
+	s=arc-20240116; t=1779998187; c=relaxed/simple;
+	bh=Rx7auoKn0TrDLs7WRgMNGzdM2wS8QxnVJkpPrN3AWxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtiVlWS5BxmryNM7XBCQdeFQHN9nsGm4WGf1EVIzIHUPMRZiHIPRZzOhj9DgYoYM9wZ4igK3Z0IUR/KGrfgg7A2k7T13NScgmx5wV3v8DAJQ2kuFIAbTuYXpMPQGsssuze/M9+BOaaJeeSJ7vDnBPZGhCOEuBGZ9eeUCwxX0s6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB9rUovx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LdVqo3Ej0l8Zbz2NB7klNS5tp5Blpn0mDkqo9CikJaSnYNXwueLdzb6XiZuJjbOaxHLgsTSBD/YbU9CINWgp1YYgyY10jVb/ixg9JAnHaqVf7vcYlj0N9fxBdPy+q4kgNB6Amgbv3DrFJ/ZshqSjiFe/VNlwjocFRrmnpasfyEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yARVaoGz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB9rUovx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD141F000E9;
-	Thu, 28 May 2026 19:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yARVaoGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C091F000E9;
+	Thu, 28 May 2026 19:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998183;
-	bh=/elto59Q/AbKXgzboFjhYRMTxMNfxbb5IbyJgdo+DpA=;
+	s=korg; t=1779998186;
+	bh=c277MKnbbq9BfgOXBrS7kDRqwa6gsI4NfOyjPcDIElk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JB9rUovxFivmylF4PHAkzQUIivgZz+bvI7Evb1XuBas3I5Hf0XEY6jSn3QQWVgFqX
-	 SJgGATiO69mzf7y90knkgLVL3xyI1pgPbP2TrAR/rfo6ziXVK6st36xINNskemvlRj
-	 Nsul5Fdj51qqvLR4jaeiXBmRVAvJ7uCw9yBVWfYs=
+	b=yARVaoGzwbzL6mvy2C1zoF4mRq+Ml2pVyZoaGRolcktxuBVbdyR5QGQOraKpIaz5f
+	 iuqfRJQPjoOfcBKYaAF5lLCjnj3r5E5HN2nKvLO8zx7FDeRX+/F8/sdy9TGiG6gRiT
+	 u1tR+WklY4PVymwc+MRfHin1BiKp+iRoEVFG2j3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 076/461] ice: fix VF queue configuration with low MTU values
-Date: Thu, 28 May 2026 21:43:25 +0200
-Message-ID: <20260528194649.119088727@linuxfoundation.org>
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 7.0 085/461] lsm: hold cred_guard_mutex for lsm_set_self_attr()
+Date: Thu, 28 May 2026 21:43:34 +0200
+Message-ID: <20260528194649.382794406@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -55,58 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 3ba4dd024d26372733d1c02e13e076c6016e3320 upstream.
+commit 4a9b16541ad3faf8bccb398532bf3f8b6bbf1188 upstream.
 
-The ice driver's VF queue configuration validation rejects
-databuffer_size values below 1024 bytes, which prevents VFs from
-using MTU values below 871 bytes.
+Just as proc_pid_attr_write() already does before calling the LSM
+hook. This only matters for SELinux and AppArmor which check
+whether the process is being ptraced and if so, whether to
+allow the transition.
 
-The iavf driver calculates databuffer_size based on the MTU using:
-  databuffer_size = ALIGN(MTU + LIBETH_RX_LL_LEN, 128)
-
-where LIBETH_RX_LL_LEN = 26 (ETH_HLEN + 2*VLAN_HLEN + ETH_FCS_LEN).
-
-For MTU values below 871:
-  MTU 870: 870 + 26 = 896, aligned to 128 = 896 (< 1024, rejected)
-  MTU 871: 871 + 26 = 897, aligned to 128 = 1024 (>= 1024, accepted)
-
-The 1024-byte minimum seems unnecessarily restrictive, because the hardware
-supports databuffer_size as low as 128 bytes (the alignment boundary),
-which should allow MTU values down to the standard minimum of 68 bytes.
-
-I haven't found the reason why the limit was configured in the commit
-9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message"), so
-with no more information and since it is working, change the minimum
-databuffer_size validation from 1024 to 128 bytes to allow standard low
-MTU values while still preventing invalid configurations.
-
-Fixes: 9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message")
-cc: stable@vger.kernel.org
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-3-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Acked-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/virt/queues.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/lsm_syscalls.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ice/virt/queues.c
-+++ b/drivers/net/ethernet/intel/ice/virt/queues.c
-@@ -840,7 +840,7 @@ int ice_vc_cfg_qs_msg(struct ice_vf *vf,
+--- a/security/lsm_syscalls.c
++++ b/security/lsm_syscalls.c
+@@ -57,7 +57,14 @@ u64 lsm_name_to_attr(const char *name)
+ SYSCALL_DEFINE4(lsm_set_self_attr, unsigned int, attr, struct lsm_ctx __user *,
+ 		ctx, u32, size, u32, flags)
+ {
+-	return security_setselfattr(attr, ctx, size, flags);
++	int rc;
++
++	rc = mutex_lock_interruptible(&current->signal->cred_guard_mutex);
++	if (rc < 0)
++		return rc;
++	rc = security_setselfattr(attr, ctx, size, flags);
++	mutex_unlock(&current->signal->cred_guard_mutex);
++	return rc;
+ }
  
- 			if (qpi->rxq.databuffer_size != 0 &&
- 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
--			     qpi->rxq.databuffer_size < 1024))
-+			     qpi->rxq.databuffer_size < 128))
- 				goto error_param;
- 
- 			ring->rx_buf_len = qpi->rxq.databuffer_size;
+ /**
 
 
