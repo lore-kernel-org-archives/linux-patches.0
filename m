@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE80A23C8C7;
-	Thu, 28 May 2026 20:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13932E7379;
+	Thu, 28 May 2026 20:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001073; cv=none; b=qLiEJxPDowRZx8N3cBltOYKc7mUgWQDqwkdkOGnBwczNUjqce3/EDW1sXwemLLJSeEKq537cRuJMsQdQISe6UXo6KJF5b9E4etM6EltueM8j2OF5pCwIncB/qi+P0hx+EvggUbQggQVmugp/+MP7aK1ZAGCaY4vCCVMMzjxDJj4=
+	t=1780001076; cv=none; b=qr5n32s3oVMi/seatgVIMUnnL6yKbrBUsmhjgOnrztN+MTi1kBjAArOwoTx9fUTO6mQR+K+WtuG7sIxqlsxuQMByq+zP4WTJ0+WVSIkZNh2LnaFFjcGtvNzKSzZ4NKYcYiLHGgIAjThAFS9VyUoie+L2zPedWJ6Zc/3y7Ocjw5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001073; c=relaxed/simple;
-	bh=S0zbH37Z2KKxql1HAjQqY/KNpC/cUPlkUyoJF6j9Cqg=;
+	s=arc-20240116; t=1780001076; c=relaxed/simple;
+	bh=oRD/mLUUctFsnSaT/DpHqeyq7YrVZ9Bbo50T6Ad6Ytk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqJDw7GOh1EPKp0b8oAziW28AW2XFCmvSrU+XR6bG05sJMRIaCwrJ680ZyU3j5jKgcgwpJjPbPsDryEvzpkmQYF1riBrIOYyAnur/2l5vdeApJdYqZnQxQnQaYyzswfQaQv4wske7Su1URfvOacnXey+i+cCZEshBnP4FtAaQLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhL0NpJZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bn2YrirCJvRlG/Vh5WNW4RXQa75qc8RThErZqDjle2iXOQdfuIWaXwnZ2ZTiW2mBToVpf+e7R6QgAGB6dVtzryCuyOrd2EO0uErGbdU6e0hmqanwcrTh4rw9fbE3p5NE7AQS1AB7RSEcohof/EGwRr7jVQFx/JmbNwsuA+Zqw7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0m8Pa/K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhL0NpJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CB01F000E9;
-	Thu, 28 May 2026 20:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0m8Pa/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5A51F000E9;
+	Thu, 28 May 2026 20:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001072;
-	bh=WpPt+IdzIscQmk6Axb38YAmMzxLklFQA/unMHR/CM8Q=;
+	s=korg; t=1780001075;
+	bh=xLRKZ1OdY8E6qYljuqbGBlKL4WQKT2wGvTc1xC7ruKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhL0NpJZR+iUB7ZPo8csyo9Bl784pAePMSmLKpW4sC19IpDJD/f1UAMvP1aYHslxc
-	 h0HgYDWGuG0aXsPuq9Dkj4z3QU+BAqYnJdypfRRMdhlDVPdIVTNE1PdlrDC9isnjP+
-	 EGt/ZB4/Ln/p/XDi1KjqJGqGWNiXiG+/7K6WS1QA=
+	b=d0m8Pa/K7p4bWzYJeTptN5DKKmRw+NapIjeJuplUAlZpw9UAJU65yjTtxgBDr1QX0
+	 gmJ5KKa1fedZ2T/QMDScP3wuWzItbhFZGtJzTfWak31QmMreQnAhhOOhMJbYKG9PQC
+	 D8Zphp4o0j2DE/zLPt44QP4sqBGfUdbIlJONgbzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huzaifa Sidhpurwala <huzaifas@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 270/272] net: gro: dont merge zcopy skbs
-Date: Thu, 28 May 2026 21:50:44 +0200
-Message-ID: <20260528194636.633950751@linuxfoundation.org>
+Subject: [PATCH 6.12 271/272] LoongArch: kprobes: Fix handling of fatal unrecoverable recursions
+Date: Thu, 28 May 2026 21:50:45 +0200
+Message-ID: <20260528194636.660925062@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,46 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 4db79a322db8c97f7b73b8a347395ef4d685eb40 ]
+[ Upstream commit 1c856e158fd34ef2c4475a81c1dc386329989938 ]
 
-skb_gro_receive() can currently copy frags between the source and GRO
-skb, without checking the zerocopy status, and in particular the
-SKBFL_MANAGED_FRAG_REFS flag.
+KPROBE_HIT_SS and KPROBE_REENTER are two types of fatal recursions that
+can not be safely recovered in kprobes.
 
-When SKBFL_MANAGED_FRAG_REFS is set, the skb doesn't hold a reference
-on the pages in shinfo->frags. Appending those frags to another skb's
-frags without fixing up the page refcount can lead to UAF.
+KPROBE_HIT_SS means that a kprobe is hit during single-stepping. At
+this point, the architecture-specific single-step context is already
+active. Nested single-stepping would corrupt the state, as the kprobe
+control block (kcb) and hardware registers cannot safely store multiple
+levels of stepping state.
 
-When either the last skb in the GRO chain (the one we would append
-frags to) or the source skb is zerocopy, don't merge the skbs.
+KPROBE_REENTER means that a third-level recursion occurs when a probe
+is hit while the system is already handling a nested probe (second-
+level). The kcb only provides a single slot (prev_kprobe) to backup the
+state. When a third probe is hit, there is no more space to save the
+state without corrupting the first-level backup.
 
-Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
-Reported-by: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/c3b7f906bbfcbdfd7b4fa9d6c18a438870df85be.1779307748.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Kprobes work by replacing instructions with breakpoints. In order to
+execute the original instruction and continue, it must be moved to a
+temporary "single-step" slot. Since there is no backup space left to
+set up this slot safely, the CPU would be forced to return to the same
+original breakpoint address, triggering an endless loop.
+
+Currently, the code only prints a warning and returns. This leads to
+an infinite re-entry loop as the CPU repeatedly hits the same trap and
+a "stuck" CPU core because preemption was disabled at the start of the
+handler and never re-enabled in this early return path.
+
+Fix the logic by:
+1. Merging KPROBE_HIT_SS and KPROBE_REENTER cases, as both represent
+   fatal recursions that cannot be safely recovered.
+2. Replacing WARN_ON_ONCE() with BUG() to terminate the system. This
+   aligns LoongArch with other architectures (x86, arm64, riscv) and
+   prevents stack overflow while providing diagnostic information.
+
+Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/kernel/kprobes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index f5c80c2f69df7..e4cebf162efb7 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -108,6 +108,9 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
- 	if (p->pp_recycle != skb->pp_recycle)
- 		return -ETOOMANYREFS;
- 
-+	if (skb_zcopy(p) || skb_zcopy(skb))
-+		return -ETOOMANYREFS;
-+
- 	if (unlikely(p->len + len >= netif_get_gro_max_size(p->dev, p) ||
- 		     NAPI_GRO_CB(skb)->flush))
- 		return -E2BIG;
+diff --git a/arch/loongarch/kernel/kprobes.c b/arch/loongarch/kernel/kprobes.c
+index 8ba391cfabb00..bd783ebed4cc9 100644
+--- a/arch/loongarch/kernel/kprobes.c
++++ b/arch/loongarch/kernel/kprobes.c
+@@ -184,16 +184,16 @@ static bool reenter_kprobe(struct kprobe *p, struct pt_regs *regs,
+ 			   struct kprobe_ctlblk *kcb)
+ {
+ 	switch (kcb->kprobe_status) {
+-	case KPROBE_HIT_SS:
+ 	case KPROBE_HIT_SSDONE:
+ 	case KPROBE_HIT_ACTIVE:
+ 		kprobes_inc_nmissed_count(p);
+ 		setup_singlestep(p, regs, kcb, 1);
+ 		break;
++	case KPROBE_HIT_SS:
+ 	case KPROBE_REENTER:
+ 		pr_warn("Failed to recover from reentered kprobes.\n");
+ 		dump_kprobe(p);
+-		WARN_ON_ONCE(1);
++		BUG();
+ 		break;
+ 	default:
+ 		WARN_ON(1);
 -- 
 2.53.0
 
