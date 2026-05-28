@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8698318B9D;
-	Thu, 28 May 2026 20:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B894F317142;
+	Thu, 28 May 2026 20:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001152; cv=none; b=OyhtFOGs5mwnXMbaBqSQI8wiWFjY/6b0jcMQIfWA3dtCdaVrjo2OCvO6rDo3Cjto1xWZAPihR3bkXp4sXEI+ujmaqcwtWmviaB27lgfNRfWgK5umrmOb0PVqJfk4mvKO3Mv9X46EYpNgTHenOm9EnUo7ukUiAksK/Q/pi12fpzM=
+	t=1780001155; cv=none; b=U4XbQuHQycQWLGJLHJkJIZoumsPxD8/D+Rk2odGHbh+Eit/52POLV6KB56PBCypVuVa9uxXaQ8sMX+sRhYOm5rHfs3W/h5jXwPTnzrfWtFOoxpb1AWEEuXUv0pnixOmhO3Dof0lILfqhYo8KUIYVSBnTiUVB04sxgIQQ9bV7b94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001152; c=relaxed/simple;
-	bh=DQzYTUqKSp5KC6tXxY/5UMEA8ubGgp3QdI0rzAiof0o=;
+	s=arc-20240116; t=1780001155; c=relaxed/simple;
+	bh=NO7zvjOEQCkJNwo9E+78FrP3WPaI42Msv63Ro+gFPc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/3tyFodSJ5eDaxmbud3XehsY86m7aPZNnrsmqJzHV53UmOHx35yYAqCqD4cySfCx+WMBA9EDK6tDvzNN/tVgWPBLGBbefQvj7RzEvKh7q6q4MnBnLGPKj5wslqN9ELk1my1oA85lW2vpsue1zSfXuxlgo9HK861bmLHakI78LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFxIEnyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=isAKS6OQk3hrnr4r5RY4USdReAj1ixWGxHyHKMAB+r6KCnJp6P/tae9TT2XiKVB7jwK8C2lBvrymyom4JEEcXE2lGIVIb9AOJlAggv3t8lcaozheYkLxnG08b2VKAH/b847+6y9akgbsEl12UnDDtC7DNNpoqx+pVWuCHSH4C98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3cnJJUF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFxIEnyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523921F000E9;
-	Thu, 28 May 2026 20:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3cnJJUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207BB1F000E9;
+	Thu, 28 May 2026 20:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001150;
-	bh=3dglbacoThz2ufQzfu3Tr7osOxpOgjx7ZjQMl4V9bJ4=;
+	s=korg; t=1780001153;
+	bh=ZL8v3pLsOu9XbrLwZUjGseQGYWKBIk/Csm7h20cUYzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFxIEnyUflZPga/n4gWe8u6riL51+WejTnhrTPH4wxslDY+d7ncS7KBKxE7w20uXq
-	 hfhotcPBieSvCvMnsw3L999U0HV0k6lhI8ZU0XSOTIQbvug3DonhMJ/UDWer6E/ezr
-	 0iM30A2K1WZdf8N9MulUt4C4ZNqzmkxlieJcJsAA=
+	b=o3cnJJUFRq4h+03Zr3ZfTvNSoBhVHSc8vcs3b3IfQ4GZEHvV5/4n8HZL6/woe1xZv
+	 lLM4vyPJigE/CPDzG9lssPyzLAdRWzmzU//3REfLpgU8Xe1N5D4zPlsMtK4pMr0AOy
+	 uNsu7OxUlv/7L+lnuGidvJHwXjQYYgUZnzVOat94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabian Godehardt <fg@emlix.com>,
-	Mark Brown <broonie@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/186] spi: spidev: fix lock inversion between spi_lock and buf_lock
-Date: Thu, 28 May 2026 21:48:05 +0200
-Message-ID: <20260528194929.093640436@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	David Sauerwein <dssauerw@amazon.de>
+Subject: [PATCH 6.6 006/186] driver core: generalize driver_override in struct device
+Date: Thu, 28 May 2026 21:48:06 +0200
+Message-ID: <20260528194929.120982811@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,217 +52,321 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabian Godehardt <fg@emlix.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 40534d19ed2afb880ecf202dab26a8e7a5808d16 ]
+[ Upstream commit cb3d1049f4ea77d5ad93f17d8ac1f2ed4da70501 ]
 
-The spidev driver previously used two mutexes, spi_lock and buf_lock,
-but acquired them in different orders depending on the code path:
+Currently, there are 12 busses (including platform and PCI) that
+duplicate the driver_override logic for their individual devices.
 
-  write()/read(): buf_lock -> spi_lock
-  ioctl():       spi_lock -> buf_lock
+All of them seem to be prone to the bug described in [1].
 
-This AB-BA locking pattern triggers lockdep warnings and can
-cause real deadlocks:
+While this could be solved for every bus individually using a separate
+lock, solving this in the driver-core generically results in less (and
+cleaner) changes overall.
 
-  WARNING: possible circular locking dependency detected
-  spidev_ioctl() -> mutex_lock(&spidev->buf_lock)
-  spidev_sync_write() -> mutex_lock(&spidev->spi_lock)
-  *** DEADLOCK ***
+Thus, move driver_override to struct device, provide corresponding
+accessors for busses and handle locking with a separate lock internally.
 
-The issue is reproducible with a simple userspace program that
-performs write() and SPI_IOC_WR_MAX_SPEED_HZ ioctl() calls from
-separate threads on the same spidev file descriptor.
+In particular, add device_set_driver_override(),
+device_has_driver_override(), device_match_driver_override() and
+generalize the sysfs store() and show() callbacks via a driver_override
+feature flag in struct bus_type.
 
-Fix this by simplifying the locking model and removing the lock
-inversion entirely. spidev_sync() no longer performs any locking,
-and all callers serialize access using spi_lock.
+Until all busses have migrated, keep driver_set_override() in place.
 
-buf_lock is removed since its functionality is fully covered by
-spi_lock, eliminating the possibility of lock ordering issues.
+Note that we can't use the device lock for the reasons described in [2].
 
-This removes the lock inversion and prevents deadlocks without
-changing userspace ABI or behaviour.
-
-Signed-off-by: Fabian Godehardt <fg@emlix.com>
-Link: https://patch.msgid.link/20260211072616.489522-1-fg@emlix.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Minor context conflict resolved. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220789 [1]
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [2]
+Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
+Co-developed-by: Gui-Dong Han <hanguidong02@gmail.com>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260303115720.48783-2-dakr@kernel.org
+[ Use dev->bus instead of sp->bus for consistency; fix commit message to
+  refer to the struct bus_type's driver_override feature flag. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Stable-dep-of: 2b38efc05bf7 ("driver core: platform: use generic driver_override infrastructure")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Sauerwein <dssauerw@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 63 ++++++++++++++++----------------------------
- 1 file changed, 22 insertions(+), 41 deletions(-)
+ drivers/base/bus.c         | 43 ++++++++++++++++++++++++++-
+ drivers/base/core.c        |  2 ++
+ drivers/base/dd.c          | 60 ++++++++++++++++++++++++++++++++++++++
+ include/linux/device.h     | 54 ++++++++++++++++++++++++++++++++++
+ include/linux/device/bus.h |  4 +++
+ 5 files changed, 162 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 16bb4fc3a4ba9..2024532dfc447 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -74,7 +74,6 @@ struct spidev_data {
- 	struct list_head	device_entry;
- 
- 	/* TX/RX buffers are NULL unless this device is open (users > 0) */
--	struct mutex		buf_lock;
- 	unsigned		users;
- 	u8			*tx_buffer;
- 	u8			*rx_buffer;
-@@ -102,24 +101,6 @@ spidev_sync_unlocked(struct spi_device *spi, struct spi_message *message)
- 	return status;
+diff --git a/drivers/base/bus.c b/drivers/base/bus.c
+index b97e13a52c330..ae57df879bca2 100644
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -463,6 +463,36 @@ int bus_for_each_drv(const struct bus_type *bus, struct device_driver *start,
  }
+ EXPORT_SYMBOL_GPL(bus_for_each_drv);
  
--static ssize_t
--spidev_sync(struct spidev_data *spidev, struct spi_message *message)
--{
--	ssize_t status;
--	struct spi_device *spi;
--
--	mutex_lock(&spidev->spi_lock);
--	spi = spidev->spi;
--
--	if (spi == NULL)
--		status = -ESHUTDOWN;
--	else
--		status = spidev_sync_unlocked(spi, message);
--
--	mutex_unlock(&spidev->spi_lock);
--	return status;
--}
--
- static inline ssize_t
- spidev_sync_write(struct spidev_data *spidev, size_t len)
- {
-@@ -132,7 +113,8 @@ spidev_sync_write(struct spidev_data *spidev, size_t len)
- 
- 	spi_message_init(&m);
- 	spi_message_add_tail(&t, &m);
--	return spidev_sync(spidev, &m);
++static ssize_t driver_override_store(struct device *dev,
++				     struct device_attribute *attr,
++				     const char *buf, size_t count)
++{
++	int ret;
 +
-+	return spidev_sync_unlocked(spidev->spi, &m);
++	ret = __device_set_driver_override(dev, buf, count);
++	if (ret)
++		return ret;
++
++	return count;
++}
++
++static ssize_t driver_override_show(struct device *dev,
++				    struct device_attribute *attr, char *buf)
++{
++	guard(spinlock)(&dev->driver_override.lock);
++	return sysfs_emit(buf, "%s\n", dev->driver_override.name);
++}
++static DEVICE_ATTR_RW(driver_override);
++
++static struct attribute *driver_override_dev_attrs[] = {
++	&dev_attr_driver_override.attr,
++	NULL,
++};
++
++static const struct attribute_group driver_override_dev_group = {
++	.attrs = driver_override_dev_attrs,
++};
++
+ /**
+  * bus_add_device - add device to bus
+  * @dev: device being added
+@@ -496,9 +526,15 @@ int bus_add_device(struct device *dev)
+ 	if (error)
+ 		goto out_put;
+ 
++	if (dev->bus->driver_override) {
++		error = device_add_group(dev, &driver_override_dev_group);
++		if (error)
++			goto out_groups;
++	}
++
+ 	error = sysfs_create_link(&sp->devices_kset->kobj, &dev->kobj, dev_name(dev));
+ 	if (error)
+-		goto out_groups;
++		goto out_override;
+ 
+ 	error = sysfs_create_link(&dev->kobj, &sp->subsys.kobj, "subsystem");
+ 	if (error)
+@@ -509,6 +545,9 @@ int bus_add_device(struct device *dev)
+ 
+ out_subsys:
+ 	sysfs_remove_link(&sp->devices_kset->kobj, dev_name(dev));
++out_override:
++	if (dev->bus->driver_override)
++		device_remove_group(dev, &driver_override_dev_group);
+ out_groups:
+ 	device_remove_groups(dev, sp->bus->dev_groups);
+ out_put:
+@@ -567,6 +606,8 @@ void bus_remove_device(struct device *dev)
+ 
+ 	sysfs_remove_link(&dev->kobj, "subsystem");
+ 	sysfs_remove_link(&sp->devices_kset->kobj, dev_name(dev));
++	if (dev->bus->driver_override)
++		device_remove_group(dev, &driver_override_dev_group);
+ 	device_remove_groups(dev, dev->bus->dev_groups);
+ 	if (klist_node_attached(&dev->p->knode_bus))
+ 		klist_del(&dev->p->knode_bus);
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 3c172e6d3fe0d..5048849cb97a9 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2505,6 +2505,7 @@ static void device_release(struct kobject *kobj)
+ 	devres_release_all(dev);
+ 
+ 	kfree(dev->dma_range_map);
++	kfree(dev->driver_override.name);
+ 
+ 	if (dev->release)
+ 		dev->release(dev);
+@@ -3153,6 +3154,7 @@ void device_initialize(struct device *dev)
+ 	kobject_init(&dev->kobj, &device_ktype);
+ 	INIT_LIST_HEAD(&dev->dma_pools);
+ 	mutex_init(&dev->mutex);
++	spin_lock_init(&dev->driver_override.lock);
+ 	lockdep_set_novalidate_class(&dev->mutex);
+ 	spin_lock_init(&dev->devres_lock);
+ 	INIT_LIST_HEAD(&dev->devres_head);
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index d371c3437dc6b..44f9d0a06d5b7 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -380,6 +380,66 @@ static void __exit deferred_probe_exit(void)
  }
+ __exitcall(deferred_probe_exit);
  
- static inline ssize_t
-@@ -147,7 +129,8 @@ spidev_sync_read(struct spidev_data *spidev, size_t len)
- 
- 	spi_message_init(&m);
- 	spi_message_add_tail(&t, &m);
--	return spidev_sync(spidev, &m);
++int __device_set_driver_override(struct device *dev, const char *s, size_t len)
++{
++	const char *new, *old;
++	char *cp;
 +
-+	return spidev_sync_unlocked(spidev->spi, &m);
- }
- 
- /*-------------------------------------------------------------------------*/
-@@ -157,7 +140,7 @@ static ssize_t
- spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
- {
- 	struct spidev_data	*spidev;
--	ssize_t			status;
-+	ssize_t			status = -ESHUTDOWN;
- 
- 	/* chipselect only toggles at start or end of operation */
- 	if (count > bufsiz)
-@@ -165,7 +148,11 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
- 
- 	spidev = filp->private_data;
- 
--	mutex_lock(&spidev->buf_lock);
-+	mutex_lock(&spidev->spi_lock);
++	if (!s)
++		return -EINVAL;
 +
-+	if (spidev->spi == NULL)
-+		goto err_spi_removed;
++	/*
++	 * The stored value will be used in sysfs show callback (sysfs_emit()),
++	 * which has a length limit of PAGE_SIZE and adds a trailing newline.
++	 * Thus we can store one character less to avoid truncation during sysfs
++	 * show.
++	 */
++	if (len >= (PAGE_SIZE - 1))
++		return -EINVAL;
 +
- 	status = spidev_sync_read(spidev, count);
- 	if (status > 0) {
- 		unsigned long	missing;
-@@ -176,7 +163,9 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
- 		else
- 			status = status - missing;
- 	}
--	mutex_unlock(&spidev->buf_lock);
++	/*
++	 * Compute the real length of the string in case userspace sends us a
++	 * bunch of \0 characters like python likes to do.
++	 */
++	len = strlen(s);
 +
-+err_spi_removed:
-+	mutex_unlock(&spidev->spi_lock);
- 
- 	return status;
- }
-@@ -187,7 +176,7 @@ spidev_write(struct file *filp, const char __user *buf,
- 		size_t count, loff_t *f_pos)
- {
- 	struct spidev_data	*spidev;
--	ssize_t			status;
-+	ssize_t			status = -ESHUTDOWN;
- 	unsigned long		missing;
- 
- 	/* chipselect only toggles at start or end of operation */
-@@ -196,13 +185,19 @@ spidev_write(struct file *filp, const char __user *buf,
- 
- 	spidev = filp->private_data;
- 
--	mutex_lock(&spidev->buf_lock);
-+	mutex_lock(&spidev->spi_lock);
++	if (!len) {
++		/* Empty string passed - clear override */
++		spin_lock(&dev->driver_override.lock);
++		old = dev->driver_override.name;
++		dev->driver_override.name = NULL;
++		spin_unlock(&dev->driver_override.lock);
++		kfree(old);
 +
-+	if (spidev->spi == NULL)
-+		goto err_spi_removed;
++		return 0;
++	}
 +
- 	missing = copy_from_user(spidev->tx_buffer, buf, count);
- 	if (missing == 0)
- 		status = spidev_sync_write(spidev, count);
- 	else
- 		status = -EFAULT;
--	mutex_unlock(&spidev->buf_lock);
++	cp = strnchr(s, len, '\n');
++	if (cp)
++		len = cp - s;
 +
-+err_spi_removed:
-+	mutex_unlock(&spidev->spi_lock);
++	new = kstrndup(s, len, GFP_KERNEL);
++	if (!new)
++		return -ENOMEM;
++
++	spin_lock(&dev->driver_override.lock);
++	old = dev->driver_override.name;
++	if (cp != s) {
++		dev->driver_override.name = new;
++		spin_unlock(&dev->driver_override.lock);
++	} else {
++		/* "\n" passed - clear override */
++		dev->driver_override.name = NULL;
++		spin_unlock(&dev->driver_override.lock);
++
++		kfree(new);
++	}
++	kfree(old);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(__device_set_driver_override);
++
+ /**
+  * device_is_bound() - Check if device is bound to a driver
+  * @dev: device to check
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 8fb9bd71fcd0b..2a9017eec15c2 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -643,6 +643,8 @@ enum struct_device_flags {
+  * 		on.  This shrinks the "Board Support Packages" (BSPs) and
+  * 		minimizes board-specific #ifdefs in drivers.
+  * @driver_data: Private pointer for driver specific info.
++ * @driver_override: Driver name to force a match.  Do not touch directly; use
++ *		     device_set_driver_override() instead.
+  * @links:	Links to suppliers and consumers of this device.
+  * @power:	For device power management.
+  *		See Documentation/driver-api/pm/devices.rst for details.
+@@ -735,6 +737,10 @@ struct device {
+ 					   core doesn't touch it */
+ 	void		*driver_data;	/* Driver data, set and get with
+ 					   dev_set_drvdata/dev_get_drvdata */
++	struct {
++		const char	*name;
++		spinlock_t	lock;
++	} driver_override;
+ 	struct mutex		mutex;	/* mutex to synchronize calls to
+ 					 * its driver.
+ 					 */
+@@ -882,6 +888,54 @@ struct device_link {
  
- 	return status;
- }
-@@ -376,14 +371,6 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 		return -ESHUTDOWN;
- 	}
+ #define kobj_to_dev(__kobj)	container_of_const(__kobj, struct device, kobj)
  
--	/* use the buffer lock here for triple duty:
--	 *  - prevent I/O (from us) so calling spi_setup() is safe;
--	 *  - prevent concurrent SPI_IOC_WR_* from morphing
--	 *    data fields while SPI_IOC_RD_* reads them;
--	 *  - SPI_IOC_MESSAGE needs the buffer locked "normally".
--	 */
--	mutex_lock(&spidev->buf_lock);
--
- 	switch (cmd) {
- 	/* read requests */
- 	case SPI_IOC_RD_MODE:
-@@ -516,7 +503,6 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 		break;
- 	}
++int __device_set_driver_override(struct device *dev, const char *s, size_t len);
++
++/**
++ * device_set_driver_override() - Helper to set or clear driver override.
++ * @dev: Device to change
++ * @s: NUL-terminated string, new driver name to force a match, pass empty
++ *     string to clear it ("" or "\n", where the latter is only for sysfs
++ *     interface).
++ *
++ * Helper to set or clear driver override of a device.
++ *
++ * Returns: 0 on success or a negative error code on failure.
++ */
++static inline int device_set_driver_override(struct device *dev, const char *s)
++{
++	return __device_set_driver_override(dev, s, s ? strlen(s) : 0);
++}
++
++/**
++ * device_has_driver_override() - Check if a driver override has been set.
++ * @dev: device to check
++ *
++ * Returns true if a driver override has been set for this device.
++ */
++static inline bool device_has_driver_override(struct device *dev)
++{
++	guard(spinlock)(&dev->driver_override.lock);
++	return !!dev->driver_override.name;
++}
++
++/**
++ * device_match_driver_override() - Match a driver against the device's driver_override.
++ * @dev: device to check
++ * @drv: driver to match against
++ *
++ * Returns > 0 if a driver override is set and matches the given driver, 0 if a
++ * driver override is set but does not match, or < 0 if a driver override is not
++ * set at all.
++ */
++static inline int device_match_driver_override(struct device *dev,
++					       const struct device_driver *drv)
++{
++	guard(spinlock)(&dev->driver_override.lock);
++	if (dev->driver_override.name)
++		return !strcmp(dev->driver_override.name, drv->name);
++	return -1;
++}
++
+ /**
+  * device_iommu_mapped - Returns true when the device DMA is translated
+  *			 by an IOMMU
+diff --git a/include/linux/device/bus.h b/include/linux/device/bus.h
+index ae10c43227543..d43ce072d747e 100644
+--- a/include/linux/device/bus.h
++++ b/include/linux/device/bus.h
+@@ -65,6 +65,9 @@ struct fwnode_handle;
+  * @iommu_ops:  IOMMU specific operations for this bus, used to attach IOMMU
+  *              driver implementations to a bus and allow the driver to do
+  *              bus-specific setup
++ * @driver_override:	Set to true if this bus supports the driver_override
++ *			mechanism, which allows userspace to force a specific
++ *			driver to bind to a device via a sysfs attribute.
+  * @need_parent_lock:	When probing or removing a device on this bus, the
+  *			device core should lock the device's parent.
+  *
+@@ -106,6 +109,7 @@ struct bus_type {
  
--	mutex_unlock(&spidev->buf_lock);
- 	spi_dev_put(spi);
- 	mutex_unlock(&spidev->spi_lock);
- 	return retval;
-@@ -547,9 +533,6 @@ spidev_compat_ioc_message(struct file *filp, unsigned int cmd,
- 		return -ESHUTDOWN;
- 	}
+ 	const struct iommu_ops *iommu_ops;
  
--	/* SPI_IOC_MESSAGE needs the buffer locked "normally" */
--	mutex_lock(&spidev->buf_lock);
--
- 	/* Check message and copy into scratch area */
- 	ioc = spidev_get_ioc_message(cmd, u_ioc, &n_ioc);
- 	if (IS_ERR(ioc)) {
-@@ -570,7 +553,6 @@ spidev_compat_ioc_message(struct file *filp, unsigned int cmd,
- 	kfree(ioc);
- 
- done:
--	mutex_unlock(&spidev->buf_lock);
- 	spi_dev_put(spi);
- 	mutex_unlock(&spidev->spi_lock);
- 	return retval;
-@@ -795,7 +777,6 @@ static int spidev_probe(struct spi_device *spi)
- 	/* Initialize the driver data */
- 	spidev->spi = spi;
- 	mutex_init(&spidev->spi_lock);
--	mutex_init(&spidev->buf_lock);
- 
- 	INIT_LIST_HEAD(&spidev->device_entry);
++	bool driver_override;
+ 	bool need_parent_lock;
+ };
  
 -- 
 2.53.0
