@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A3C32ABC0;
-	Thu, 28 May 2026 20:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E204D3164B7;
+	Thu, 28 May 2026 20:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998963; cv=none; b=l3E/RZHqdMz/m6mSHsod4dAq4pOctq4CeaKoqGPvgG/vLx408UEH8yg85Mu98AQoBgtgAu58/fi1ahxr14cHzF5j8pHfDNQfafpHpGjmz+MZfMVllaGe4ul+KxXouzhyUXE39yYaobIrQ7LWAajcUiXQlrVE68xO/fF0n+dloho=
+	t=1779998965; cv=none; b=nSI/U4aH4oUsPApsq8UTdrzYCaqAcGY5oUxxH89uhfDnElBKEdMNwWHpibL/nxG3JjfawWeIUofMOqH6S1aETvf+/PtnCeuZoxqQLMoygTJjHVpUzz/aRgTcptufSAf7QNbB8IMssj3Pu5BN6QPLKY3ZLMhd2gcN0WXbWuugnf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998963; c=relaxed/simple;
-	bh=ZUIeXDfovQaTY/1rVsW5E1Lwdbevr1ET+Mc9U4k++z4=;
+	s=arc-20240116; t=1779998965; c=relaxed/simple;
+	bh=5kTryJXGD3w1uRRdPWnQ7UkkfQK+Ic135cQxhuTIJs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHfsF0xNuAxSnDYGDTcwi5TDCXvbDJpIQR44B3uyIYK9uk0zNqqevZU3ymwL6JQeEFGtcVBnjKB65CJd3K7K3rXqJblFNJq5XL/GraSqzydZ8HxaHLDPdP0NOzpCD1fKfJeoF2iPFKFfMFFqoeO4hILcyNLPytYIRkbPMxRWDEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFota0lJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RCfQoGj/glbIpIZ9Kide8kB2owEIawKjHlEq309TU8SruCtqwmdF/xrp2Wt9HPLqAc+VsMpeXZSWmPi5FQkqmo3NlU5vuzVaiu7clzlqx9JLkk8F5siWdi9p6qagtGNAfzQUl5fXDoqFXErG4GrjAFlppuKGZMDxQhq4xDUWtyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GP+g+3pu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFota0lJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F771F000E9;
-	Thu, 28 May 2026 20:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GP+g+3pu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C05D1F000E9;
+	Thu, 28 May 2026 20:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998962;
-	bh=3DSPni7VBq6XjQC/eTzOGaZK8+rO9rj/xEurSRFp4Uo=;
+	s=korg; t=1779998964;
+	bh=HQSffuFsqSakRlONyeXfmGleLbiPgHwFKgZzDPoCh8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LFota0lJbuZIgzf3vzaB8GimFV/V2e0cbw6s4EHfPswB+Xt03oh+D0FnFhdbEATO7
-	 dbLGtbUVv0tb2i9zPytO0Oqb9ulHu36LCJzsFH/pniVQ2mAz1XjZgoE8XH+/mrFD5n
-	 coZjX28fG+373kqN9wlPYCjCQuPB2a2ba+WbLXhM=
+	b=GP+g+3puUaS2TOXxmebbi0RVigbcWDZ+S2NoDMRHmDvFoXXlmQUHGJuAbixpTW/hf
+	 u2WgWUv/DfdU4rvWCwBrvAGg0q4UsXR6z5KcBzlA1kdHDJYP/LoDgvHrPTXmECBg2T
+	 KxsuG8wJYSjf4TuslJWw5FNEM/Y15oZ1qeZ5xPsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salendarsingh Gaud <sgaud@qti.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 352/461] drm/msm/snapshot: fix dumping of the unaligned regions
-Date: Thu, 28 May 2026 21:48:01 +0200
-Message-ID: <20260528194657.597846371@linuxfoundation.org>
+Subject: [PATCH 7.0 361/461] drm/xe/pf: Fix CFI failure in debugfs access
+Date: Thu, 28 May 2026 21:48:10 +0200
+Message-ID: <20260528194657.881971267@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,102 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
 
-[ Upstream commit 76824d2467feb1828b745d6add2541918d7be3da ]
+[ Upstream commit 96bf49b526e2d03a2b7f6e861925a08f46ed0d28 ]
 
-The snapshotting code internally aligns data segment to 16 bytes. This
-works fine for DPU code (where most of the regions are aligned), but
-fails for snapshotting of the DSI data (because DSI data region is
-shifted by 4 bytes). Fix the code by removing length alignment and by
-accurately printing last registers in the region. While reworking the
-code also fix the 16x memory overallocation in
-msm_disp_state_dump_regs().
+Reading debugfs file (/sys/kernel/debug/dri/0/gt*/pf/adverse_events)
+with CFI (Control Flow Integrity) enabled, the kernel panics at
+xe_gt_debugfs_simple_show+0x82/0xc0.
 
-Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
-Reported-by: Salendarsingh Gaud <sgaud@qti.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/725449/
-Message-ID: <20260516-msm-fix-dsi-dump-2-v2-1-9e49fb2d240e@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+xe_gt_debugfs_simple_show() declare a function pointer expecting int
+return type, but xe_gt_sriov_pf_monitor_print_events() is void return
+type, leading to CFI failure and kernel panic.
+
+[507620.973657] CFI failure at xe_gt_debugfs_simple_show+0x82/0xc0 [xe]
+(target: xe_gt_sriov_pf_monitor_print_events+0x0/0x130 [xe]; expected
+type: 0xd72c7139)
+
+Fix xe_gt_sriov_pf_monitor_print_events() function by updating to return
+an int type.
+
+Fixes: 1c99d3d3edab ("drm/xe/pf: Expose PF monitor details via debugfs")
+Signed-off-by: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://patch.msgid.link/20260514174918.1556357-2-mohanram.meenakshisundaram@intel.com
+(cherry picked from commit ff1d386a8359746d9699ac30336e3b0684c68958)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 24 ++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c | 6 +++++-
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index 427d3ee2b8337..6e0f8671bfb46 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -9,7 +9,7 @@
- 
- #include "msm_disp_snapshot.h"
- 
--static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *base_addr)
-+static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr)
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
+index 7d532bded02a8..a85ba44353789 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.c
+@@ -114,8 +114,10 @@ int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32
+  * VFs with no events are not printed.
+  *
+  * This function can only be called on PF.
++ *
++ * Return: always 0
+  */
+-void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
++int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p)
  {
- 	u32 len_padded;
- 	u32 num_rows;
-@@ -19,11 +19,11 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- 	void __iomem *end_addr;
- 	int i;
- 
--	len_padded = aligned_len * REG_DUMP_ALIGN;
--	num_rows = aligned_len / REG_DUMP_ALIGN;
-+	len_padded = round_up(len, REG_DUMP_ALIGN);
-+	num_rows = DIV_ROUND_UP(len, REG_DUMP_ALIGN);
- 
- 	addr = base_addr;
--	end_addr = base_addr + aligned_len;
-+	end_addr = base_addr + len;
- 
- 	*reg = kvzalloc(len_padded, GFP_KERNEL);
- 	if (!*reg)
-@@ -48,8 +48,8 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 		void __iomem *base_addr, struct drm_printer *p)
- {
-+	void __iomem *addr, *end_addr;
- 	int i;
--	void __iomem *addr;
- 	u32 num_rows;
- 
- 	if (!dump_addr) {
-@@ -58,6 +58,7 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 	}
- 
- 	addr = base_addr;
-+	end_addr = base_addr + len;
- 	num_rows = len / REG_DUMP_ALIGN;
- 
- 	for (i = 0; i < num_rows; i++) {
-@@ -67,6 +68,17 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 				dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
- 		addr += REG_DUMP_ALIGN;
+ 	unsigned int n, total_vfs = xe_gt_sriov_pf_get_totalvfs(gt);
+ 	const struct xe_gt_sriov_monitor *data;
+@@ -144,4 +146,6 @@ void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p
+ #undef __format
+ #undef __value
  	}
 +
-+	if (addr != end_addr) {
-+		drm_printf(p, "0x%lx : %08x",
-+			   (unsigned long)(addr - base_addr),
-+			   dump_addr[i * 4]);
-+		if (addr + 0x4 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 1]);
-+		if (addr + 0x8 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 2]);
-+		drm_printf(p, "\n");
-+	}
++	return 0;
  }
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
+index 7ca9351a271b7..0b8f088d3a16a 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_monitor.h
+@@ -13,7 +13,7 @@ struct drm_printer;
+ struct xe_gt;
  
- void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
-@@ -185,7 +197,7 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
- 	va_end(va);
+ void xe_gt_sriov_pf_monitor_flr(struct xe_gt *gt, u32 vfid);
+-void xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
++int xe_gt_sriov_pf_monitor_print_events(struct xe_gt *gt, struct drm_printer *p);
  
- 	INIT_LIST_HEAD(&new_blk->node);
--	new_blk->size = ALIGN(len, REG_DUMP_ALIGN);
-+	new_blk->size = len;
- 	new_blk->base_addr = base_addr;
- 
- 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
+ #ifdef CONFIG_PCI_IOV
+ int xe_gt_sriov_pf_monitor_process_guc2pf(struct xe_gt *gt, const u32 *msg, u32 len);
 -- 
 2.53.0
 
