@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3D8223328;
-	Thu, 28 May 2026 20:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5E332AAD6;
+	Thu, 28 May 2026 20:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000450; cv=none; b=jPNbYkVKh3K2KME+GwJgLDTIy3BRCW44lFIVQ0OVrqtFhNXLFyZfiRNX4pk7tdmD5NqBBsLQmHXcC+tlM83rvjpgbq92aCOaEtTwE0jXY/TsnZl0M8fM4FyKiuQ2ffZ4160XZMzDMBxEdIpIS4tI0P44EbvoH8vkKEr+Mh9mYyg=
+	t=1780000452; cv=none; b=YkdjXZnr5Wpu0WZ9Hpjmc+MZUx7dprc6q4KNFpnQ03xb85uF2dVwiLSUZImbCcJ3XOacCQvAxohqDspZPzrbUhZK+Jb8XYSeMEG9M14Gy3C8FEsPZPHQShk9qIAIDHSVPCpOTRlNNgIwgfn3vYmUqVNYVT9kd/7pSGonjg0Y9w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000450; c=relaxed/simple;
-	bh=v2g1ijX880Tam8QnnKsIba6tef/XMSE9txT0kB3QGz4=;
+	s=arc-20240116; t=1780000452; c=relaxed/simple;
+	bh=fKGpts3bGJbx7BEYB4oWmI2xfIj0RjsRwzfmWSSJuO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfj0mZmUWi1uo7/g/ekoUeVvOtyDIhLSplwt02xaCu45Aro5DcCTDq6h3akxQgLqhFuWud3E2LJ1qudlYlH6OJsgrvS92MY1X6Suazgbv9UFY9pF3154CVjUry7MafiiCrnO0RDir0yvZpnT/Exv4lIEjjwNohu2ltzaDUwUjD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMx4KjBt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CBFSeHMeoX42gqsmkCLJ1hpYE0fFglySg8LWLY8P4WbVH0adhI/HxcTx76qbp83MKBuFKTdg68xXsb/bQ/yvdGgIsEM+y2IyxpgLh0brnXDEQKXiEJM37cROUcApEGwioBPcMdd9WK0pDCUH793tf9ZtSDv19sW7A/HOqeVI5Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdw7bLwA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMx4KjBt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5001F000E9;
-	Thu, 28 May 2026 20:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdw7bLwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241F91F000E9;
+	Thu, 28 May 2026 20:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000448;
-	bh=K+q5FKI0jPTXBbaoMIm4OYtkCcIV677K9gmqaoDWi7Y=;
+	s=korg; t=1780000451;
+	bh=jdW7OET1IRwrWAJqWRBZYX5qNY819bjFIw8x2s2kbIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMx4KjBtTlFv475O4hgSXiJlWrcWjIFbuMN8YQdHJE1P1bzskqtV0Hx21VJadC5HT
-	 1her+cKQJ4yD8ZTaOOZvICgXg2L5biOvjPRzZfrUE0F3TD4FXlUecbuIse9uh9hAzI
-	 G6+MF0bRuG78c1hTWNw3paL2Mle/xSDEJNFzj9H8=
+	b=fdw7bLwAZZAxG1DbQXMuf0PHTmOXjmAfOQuOqCiQIeDa0JO+A1Xb9MZ3fMoQmXXyl
+	 JWQIWdz5hxz4+S78/qSN18+tywwjWBktkHtj8ZSro3HueXZ/G0seY7O+9MYZWSNZW5
+	 g6zki9C2Ver2JjTrTHsYIVeqXl2z3N3F/9MPw8lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vladimir Yakovlev <vovchkir@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/272] bridge: mrp: reject zero test interval to avoid OOM panic
-Date: Thu, 28 May 2026 21:46:26 +0200
-Message-ID: <20260528194629.727403978@linuxfoundation.org>
+Subject: [PATCH 6.12 013/272] spi: spi-dw-dma: fix print error log when wait finish transaction
+Date: Thu, 28 May 2026 21:46:27 +0200
+Message-ID: <20260528194629.755526410@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -54,64 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Vladimir Yakovlev <vovchkir@gmail.com>
 
-[ Upstream commit fa6e24963342de4370e3a3c9af41e38277b74cf3 ]
+[ Upstream commit 3b46d61890632c8f8b117147b6923bff4b42ccb7 ]
 
-br_mrp_start_test() and br_mrp_start_in_test() accept the user-supplied
-interval value from netlink without validation. When interval is 0,
-usecs_to_jiffies(0) yields 0, causing the delayed work
-(br_mrp_test_work_expired / br_mrp_in_test_work_expired) to reschedule
-itself with zero delay. This creates a tight loop on system_percpu_wq
-that allocates and transmits MRP test frames at maximum rate, exhausting
-all system memory and causing a kernel panic via OOM deadlock.
+If an error occurs, the device may not have a current message. In this
+case, the system will crash.
 
-The same zero-interval issue applies to br_mrp_start_in_test_parse()
-for interconnect test frames.
+In this case, it's better to use dev from the struct ctlr (struct spi_controller*).
 
-Use NLA_POLICY_MIN(NLA_U32, 1) in the nla_policy tables for both
-IFLA_BRIDGE_MRP_START_TEST_INTERVAL and
-IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL, so zero is rejected at the
-netlink attribute parsing layer before the value ever reaches the
-workqueue scheduling code. This is consistent with how other bridge
-subsystems (br_fdb, br_mst) enforce range constraints on netlink
-attributes.
-
-Fixes: 20f6a05ef635 ("bridge: mrp: Rework the MRP netlink interface")
-Fixes: 7ab1748e4ce6 ("bridge: mrp: Extend MRP netlink interface for configuring MRP interconnect")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260328063000.1845376-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Vladimir Yakovlev <vovchkir@gmail.com>
+Link: https://patch.msgid.link/20260302222017.992228-2-vovchkir@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mrp_netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-dw-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_mrp_netlink.c b/net/bridge/br_mrp_netlink.c
-index ce6f63c77cc0a..86f0e75d6e345 100644
---- a/net/bridge/br_mrp_netlink.c
-+++ b/net/bridge/br_mrp_netlink.c
-@@ -196,7 +196,7 @@ static const struct nla_policy
- br_mrp_start_test_policy[IFLA_BRIDGE_MRP_START_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_TEST_RING_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_PERIOD]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_MONITOR]	= { .type = NLA_U32 },
-@@ -316,7 +316,7 @@ static const struct nla_policy
- br_mrp_start_in_test_policy[IFLA_BRIDGE_MRP_START_IN_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_IN_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_PERIOD]	= { .type = NLA_U32 },
- };
+diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
+index f4c209e5f52ba..4104e1bc2d5bd 100644
+--- a/drivers/spi/spi-dw-dma.c
++++ b/drivers/spi/spi-dw-dma.c
+@@ -271,7 +271,7 @@ static int dw_spi_dma_wait(struct dw_spi *dws, unsigned int len, u32 speed)
+ 					 msecs_to_jiffies(ms));
+ 
+ 	if (ms == 0) {
+-		dev_err(&dws->host->cur_msg->spi->dev,
++		dev_err(&dws->host->dev,
+ 			"DMA transaction timed out\n");
+ 		return -ETIMEDOUT;
+ 	}
 -- 
 2.53.0
 
