@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534DC24A047;
-	Thu, 28 May 2026 20:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A56257854;
+	Thu, 28 May 2026 20:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999434; cv=none; b=XSR4EJeW7xm4ekh30ubfIC4D8ouuPaJYnrrKdnoF6DCa2Dlz49CwkuJJ+xkQ0PNvineMsW509wD49yaBeEa+E1BwqzijI2JlBs3Pmk2oXS9RPqyVfa4idJTrO03PY698erAFiNWygKWc+7Ja/g1YNggwalFxvs58DqopZDqc1fg=
+	t=1779999437; cv=none; b=uCvzlEPvLl3zJ5jDE/9Rs6lod/Cvnr1YAYVrZV1UqtFcLFrP2WRxzr59MgB6e6d++1gCjZtghWWj6StH46qqxXzQrBfsnrO3e4Oc4lEYwqLVxoiwdTuKY2Gfm/VmmFA0O4gZ39e3MHfiYoQ3dZkdBdCEZEjwpRF8AQ85ka9N29k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999434; c=relaxed/simple;
-	bh=s+X75Aku/hlmv3/bAZLp9cqrlzoWEFm4fbqde+iXGfE=;
+	s=arc-20240116; t=1779999437; c=relaxed/simple;
+	bh=nVmv+1NWud19GX+UqlJMgjdOdp6IbQLYmebUPyhFQfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nu8wQp23K96of5VAGyPvMLuB2Mbqf4cTBpJHLLXzQIyJrE20/Ycq6hbbA/nD8RB6lqGzhX4i52hQXcJlKO6UM5PDZkBXzfbVziVd5NtIQMkhb6HbgcdslcEK9qlCTukGg0jFOVLMyWnPdsRs9wQgv2Dg0+reVCL8KtYTQvXRwpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/km+8er; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GndtEGu406XnZ/XXvfP3kG+O7vgeCfwYNxkDZZMSkFi8LGOFTrLudsahd6if9I2CVXSI1g25Gns9nUczqhX4eK5z8+Dt1I9a7iBtiqVpB0dDzOQLfpBfCtAOHo6uYskojcYKt9LXnlXAjx98GcLb9jcrwjPlwJf9dChTG2+YRMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkVKhhxS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/km+8er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16FD1F000E9;
-	Thu, 28 May 2026 20:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkVKhhxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863671F000E9;
+	Thu, 28 May 2026 20:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999433;
-	bh=90SYLBPWQXIoRMsfGOuAhFitMjm96cwr6nrG0uMUeEQ=;
+	s=korg; t=1779999436;
+	bh=qx5QfhBrGA/6y3x0XlRluEg1NEVXewVCPh+riD9DqjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0/km+8er1g58JPfU5Pqd2Paw6MPD5FremSs1PtISGxYc5Xa3o+1rvDCq6X6ZaBAsC
-	 hA0yah7Pd4MO8JFwRfwawhGUp6rs7aoXD/OTShSSUHhyRhcVfS/Sdco4TMhv2g9Zk6
-	 smmeUQ1YjzOHly57iOvklNeiH038rREEGICI1L/c=
+	b=wkVKhhxSMUEJagkauZmC/VGUZMQkfCoKS2iZ7X4XdH22x6/FbgJZSirszp03dzsnn
+	 mEoASh1dMcTJD6vyfBCzxikI+npppg/MSElyj5hdaMsrEBXRiiBwn290V5Qoy4FeoE
+	 RxagcYI7SIHLDgkbqkMrrnXahD5944KpxIzTb/8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 064/377] net: pse-pd: fix sign on -ENOENT check in of_load_pse_pis()
-Date: Thu, 28 May 2026 21:45:02 +0200
-Message-ID: <20260528194640.218715444@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 065/377] netfilter: ip6t_hbh: reject oversized option lists
+Date: Thu, 28 May 2026 21:45:03 +0200
+Message-ID: <20260528194640.247067025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,41 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit 33d35975cbead3fa6b738ee57e5e45e14fbe0886 upstream.
+commit 4322dcde6b4173c2d8e8e6118ed290794263bcc8 upstream.
 
-of_count_phandle_with_args() returns the count on success and a negative
-errno on failure, including -ENOENT when the "pairsets" property is
-absent. The existing comparison in of_load_pse_pis() checks against
-ENOENT (positive 2) instead of -ENOENT, so the branch is taken for any
-error return: legitimate DTs that omit "pairsets" trigger a spurious
-"wrong number of pairsets" error and probe fails with -EINVAL.
+struct ip6t_opts stores at most IP6T_OPTS_OPTSNR option descriptors,
+but hbh_mt6_check() does not reject larger optsnr values supplied from
+userspace.
 
-Compare against -ENOENT so a missing "pairsets" property is correctly
-treated as "this PI has no pairsets, continue".
+Validate optsnr in the rule setup path so only match data that fits the
+fixed-size opts array can be installed. This follows the existing xtables
+pattern of rejecting invalid user-provided counts in checkentry() and
+keeps the packet matching path unchanged.
 
-Fixes: 9be9567a7c59 ("net: pse-pd: Add support for PSE PIs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260515143103.1721888-1-jelonek.jonas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+`struct ip6t_opts` has a fixed `opts[IP6T_OPTS_OPTSNR]` array,
+where `IP6T_OPTS_OPTSNR` is 16, then off-by-one array access is possible:
+
+[  137.924693][ T8692] UBSAN: array-index-out-of-bounds in ../net/ipv6/netfilter/ip6t_hbh.c:110:29
+[  137.926167][ T8692] index 16 is out of range for type '__u16 [16]'
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pse-pd/pse_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/ip6t_hbh.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/pse-pd/pse_core.c
-+++ b/drivers/net/pse-pd/pse_core.c
-@@ -210,7 +210,7 @@ static int of_load_pse_pis(struct pse_co
- 			ret = of_load_pse_pi_pairsets(node, &pi, ret);
- 			if (ret)
- 				goto out;
--		} else if (ret != ENOENT) {
-+		} else if (ret != -ENOENT) {
- 			dev_err(pcdev->dev,
- 				"error: wrong number of pairsets. Should be 1 or 2, got %d (%pOF)\n",
- 				ret, node);
+--- a/net/ipv6/netfilter/ip6t_hbh.c
++++ b/net/ipv6/netfilter/ip6t_hbh.c
+@@ -168,6 +168,10 @@ static int hbh_mt6_check(const struct xt
+ 		pr_debug("unknown flags %X\n", optsinfo->invflags);
+ 		return -EINVAL;
+ 	}
++	if (optsinfo->optsnr > IP6T_OPTS_OPTSNR) {
++		pr_debug("too many supported opts specified\n");
++		return -EINVAL;
++	}
+ 
+ 	if (optsinfo->flags & IP6T_OPTS_NSTRICT) {
+ 		pr_debug("Not strict - not implemented");
 
 
