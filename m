@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313C0335566;
-	Thu, 28 May 2026 20:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFB233A702;
+	Thu, 28 May 2026 20:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999044; cv=none; b=P+wBNS2ZlnkRG8YYodnSujTFDOaIdbhQtqb/9Azvi79Ibuaq2/1jMysHHIFWe6bkkZBIb/0ZeBDByRc9UPOGn3T7ZQWJ29E2d3deK5b9B0t20g/FX4PQY+5RtJ2d5s0gxHaCytm9yjlCm2UF6DBIc1rNhs/BEQLZ57h0brcO/a0=
+	t=1779999047; cv=none; b=Xu7aW9nPMXdKmyQVMS2ynx8S6yqyl5HNxriwXN8lTN2O2ffsa+FwClHDbiANIf4DGQM+ytFkiNytB7ZrOldNwK1SNAXE+j+dPenvna3g4+LtYczUqokm+qZU5tQxbsKQdeB20FDPzD6UXwJi78/Xsolwez5Ulm0nUQj18Z/hyIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999044; c=relaxed/simple;
-	bh=MlFdA/fs0YrVE7q1/Wv+4KzsRByWZYyKapsr8GAeZi8=;
+	s=arc-20240116; t=1779999047; c=relaxed/simple;
+	bh=F+mgMFJk2L9ah9qI27gFlytFVHb6E+MLqhLKAMIwpvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KLxVSQ/zNX0yn5wJUeNfGqbakf0/+oHdv6rYmV/hm2bSM5Scsxxzn4vzJl809qVHOnUFkkypW99OyGZ6F7WfjcMrlzNXrohYPqVTh9JgH08hLKkwvOqDF2YtrwjRWD683VW+P8IQbO+GFCOTKVMDMxT+KiSHxGpxQteE1TKJcPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXxiIPiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nH5Ie3HEEINce8QNEnW6kByYkKQgjWOUkFbKT6HRwLMlMhKv7D4gqZXp0OXNvwl92vqGGXRAjoWx7Pj3lg2ToPP1TntOJfkCvesa4wENJSw531WCngF4ELRwYRdSgcYnHsai4CTtSpSDxy0Wff+yKI5cG0CEcbd00VO383qHrpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Psvmwr1D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXxiIPiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E63D1F000E9;
-	Thu, 28 May 2026 20:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Psvmwr1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595951F000E9;
+	Thu, 28 May 2026 20:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999043;
-	bh=qTCF7karRfEKCkBcL1RBq/ZxlDqNb8TQPWq01KVefkU=;
+	s=korg; t=1779999045;
+	bh=GW7e2Li8kRb+l8NsuVKFQfOMXpTODQ11MGf2/dLDlDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXxiIPiMjO2fbh6KRnFexqVPMrRH5ugDVNXKK4AztgJEAOkiqpkZdNSvcoHPzqhu1
-	 gI8i5pIJ1+JBvB7NVOP/G44apQRhipz4aAQ6D4NXsuAjntPQyb5CpZ298poPQBSw9l
-	 NA7nEFy5Xfnb3Ntz/hkACsVti0TFBUS/Hv5WP6Qc=
+	b=Psvmwr1D2o9ZpbdYEloCbiSMIAVvV2Ji11dkmRnKrAhME0hnZNmYlk2nZYz8I2qIz
+	 hdO8siNTwirzOZfL0GR7jawKxuRCkcZVFBWEY62S7j7oG3pXyrkYWEaDBiMMGVaF7e
+	 f7oUCV5TU49Ngp1I/suha3wu3GiXmtTPOYSI9F24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver White <oliverjwhite07@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 387/461] platform/surface: aggregator_registry: omit battery & AC nodes on Surface Laptop 7
-Date: Thu, 28 May 2026 21:48:36 +0200
-Message-ID: <20260528194658.662457203@linuxfoundation.org>
+Subject: [PATCH 7.0 388/461] platform/x86: adv_swbutton: Check ACPI_HANDLE() against NULL
+Date: Thu, 28 May 2026 21:48:37 +0200
+Message-ID: <20260528194658.692970861@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,41 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver White <oliverjwhite07@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 0488073a6c84571dd3cffe581a4a73a5fceb099d ]
+[ Upstream commit e7a9a6ea40e352cd7977f6a8c80bdeadf65ad838 ]
 
-Surface Laptop 7 exposes battery and AC status via Qualcomm PMIC GLINK
-qcom_battmgr. Registering the standard SSAM battery and AC client
-devices on this platform causes duplicate power-supply devices to
-appear.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-Drop the SSAM battery and AC nodes from the Surface Laptop 7 registry
-group so that only the qcom_battmgr power supplies are instantiated.
+Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
+platform/x86 adv_swbutton driver.
 
-Fixes: b27622f13172 ("platform/surface: Add OF support")
-Signed-off-by: Oliver White <oliverjwhite07@gmail.com>
-Link: https://patch.msgid.link/20260409034347.17381-1-oliverjwhite07@gmail.com
+Fixes: 3d904005f686 ("platform/x86: add support for Advantech software defined button")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/5115425.31r3eYUQgx@rafael.j.wysocki
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/surface_aggregator_registry.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/platform/x86/adv_swbutton.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
-index 0599d5adf02e6..f0881edfb6161 100644
---- a/drivers/platform/surface/surface_aggregator_registry.c
-+++ b/drivers/platform/surface/surface_aggregator_registry.c
-@@ -295,8 +295,6 @@ static const struct software_node *ssam_node_group_sl6[] = {
- /* Devices for Surface Laptop 7. */
- static const struct software_node *ssam_node_group_sl7[] = {
- 	&ssam_node_root,
--	&ssam_node_bat_ac,
--	&ssam_node_bat_main,
- 	&ssam_node_tmp_perf_profile_with_fan,
- 	&ssam_node_fan_speed,
- 	&ssam_node_hid_sam_keyboard,
+diff --git a/drivers/platform/x86/adv_swbutton.c b/drivers/platform/x86/adv_swbutton.c
+index 6fa60f3fc53c0..8f7a26e6de81d 100644
+--- a/drivers/platform/x86/adv_swbutton.c
++++ b/drivers/platform/x86/adv_swbutton.c
+@@ -48,10 +48,14 @@ static int adv_swbutton_probe(struct platform_device *device)
+ {
+ 	struct adv_swbutton *button;
+ 	struct input_dev *input;
+-	acpi_handle handle = ACPI_HANDLE(&device->dev);
++	acpi_handle handle;
+ 	acpi_status status;
+ 	int error;
+ 
++	handle = ACPI_HANDLE(&device->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	button = devm_kzalloc(&device->dev, sizeof(*button), GFP_KERNEL);
+ 	if (!button)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
