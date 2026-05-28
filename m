@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F433F5B4;
-	Thu, 28 May 2026 19:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC48318EE1;
+	Thu, 28 May 2026 19:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998150; cv=none; b=hHSRIlw71tZKTkYnsz8Dvto14+zd3YPOzzCurj5izvwcaaXVzTN+FqP5bkfs8OnnDDsj/7f1DeQZp5Vj1tqvI03axoRdyl7sNO5HmH5IB1mVKA2zwSZFMB6HI8KpBVvvB0tuNe5/St2x3NBnA+Oz6lmBMgc8vSlotomPx7FGYOA=
+	t=1779998153; cv=none; b=j2A8b1DtUbYxvRJz2A7uEJA9y4Ummyz3Ch9v6wDACKWx0inx+r8sdCIs0ZKum1wA+K23M0h+JQkaBJ5I6g7v0bLEO4Xa5bmDtr8TpI+yF7Ves6uGXMrqaf9YEm+8r9EYZXw6+qHI/aAWojWsFG5n5Oni+gUd5b0/OUutbIWboTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998150; c=relaxed/simple;
-	bh=Cbm3I8KvxEN7BCkN4x1HeGVBdLC9uXaE2yl6vz4L/II=;
+	s=arc-20240116; t=1779998153; c=relaxed/simple;
+	bh=yngv0EpPZqJ2/bi5n3KzmS1j0R41zyuqoikJX7yjfWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9y4zX6aJX7s2HcWyKtcxYfYqoHjSiU3Yw9lr4gVl85meDH3gplbAFi+ozYThZMoHRQWy2BxJvQkEwzNm1lsdhCWIpZVR/yyu6Klaz4DoOo4Zd+heA9PMNdVYCFhd1J+mYOcgINftHfU/fX+MrQ3I3naS6IxWPFw2/a1q/f6pYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ou0atcL4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qK83z+hbbXZ45/ZT4JWPSpIL8wFHLNvSjdWsYVxZX/T+vPtts3EdctT143gIOFqx5ZUWyP7rjAQIgEFypNuXvO9EKUdM8AjtUWhl2dqqy9uLJmNSjqqVppx+/upYXGW7azQeUaGK/jZ9m/WFuRQBi79yvTAvkIEIs8VMLs3vRq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNpo5meh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou0atcL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F281D1F000E9;
-	Thu, 28 May 2026 19:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNpo5meh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87F01F00A3A;
+	Thu, 28 May 2026 19:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998149;
-	bh=3lAy0neJGuWxMiknJX3L5O/dZ3xcHpqlXa8jrj/scEA=;
+	s=korg; t=1779998152;
+	bh=HN0kDXP4395nnuUm4FQ25HnMF6f9PkVXDf05irDQbPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ou0atcL4mkRiFphPSFCwZ1UTjfb+5bBoHrZu4VClg+Rx4S0I/NJ3lIbZZzC0YgTOF
-	 bwoNmdFvyZEtfAfcuyPzx+rQyNbyPqu2HwHAetknSzGWTujGY9rOFhxcWJ0ypJeC7L
-	 KkKOAawbk38bezFb+3ZGjf9Q2qN64/nxa9H8B4hI=
+	b=tNpo5mehSIxeuNzVypTzyuFPXOdNrlYYgpkEj7hZTz0RnGEoXLHsyg1e9sLZQojgT
+	 87JzMXUMY58H84D+MmEK/Mx6XfhxNmiEQ/keaUvL6KeltLLXu87F1I693qnWj46E3z
+	 WYBgSpaGY9u3zGgvqm3yQ/QDilod7IVVT7Ezhf3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.0 070/461] wifi: mac80211: capture fast-RX rate before mesh reuses skb->cb
-Date: Thu, 28 May 2026 21:43:19 +0200
-Message-ID: <20260528194648.950451495@linuxfoundation.org>
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 071/461] ipv6: ioam: add NULL check for idev in ipv6_hop_ioam()
+Date: Thu, 28 May 2026 21:43:20 +0200
+Message-ID: <20260528194648.977764187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,64 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-commit d71c841be5d9e586ee7f36c0dc8ed4db0d9a1349 upstream.
+commit d4ea0dfd75011b78cebf3808f98ac4c4f51a6fb9 upstream.
 
-ieee80211_invoke_fast_rx() reads RX status through
-IEEE80211_SKB_RXCB(skb), which aliases the same skb->cb storage
-that ieee80211_rx_mesh_data() reuses as IEEE80211_TX_INFO.  In the
-unicast forward path, mesh_data does:
+Reported by Sashiko:
 
-	info = IEEE80211_SKB_CB(fwd_skb);
-	memset(info, 0, sizeof(*info));
+The function ipv6_hop_ioam() accesses
+__in6_dev_get(skb->dev)->cnf.ioam6_enabled without validating the returned
+idev pointer. Because addrconf_ifdown() can concurrently clear dev->ip6_ptr
+via RCU, __in6_dev_get() can return NULL during interface teardown, which
+could cause a NULL pointer dereference when processing an IOAM Hop-by-Hop
+option.
 
-on the same skb the caller still names via rx->skb, then either
-queues the skb for TX (success) or kfree_skb()'s it (no-route)
-before returning RX_QUEUED.  The caller's RX_QUEUED arm then
-calls sta_stats_encode_rate(status) on memory that is either
-zeroed (success path) or freed (no-route path).  The latter is
-KASAN slab-use-after-free in ieee80211_prepare_and_rx_handle.
+Let's add a check and use SKB_DROP_REASON_IPV6DISABLED accordingly.
 
-Fix by encoding the rate from status before invoking
-ieee80211_rx_mesh_data(), so the RX_QUEUED arm consumes a value
-captured while status was still backed by valid memory.
-
-Fixes: 3468e1e0c639 ("wifi: mac80211: add mesh fast-rx support")
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260509043427.60322-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260517183059.29140-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/exthdrs.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4941,6 +4941,7 @@ static bool ieee80211_invoke_fast_rx(str
- 		u8 sa[ETH_ALEN];
- 	} addrs __aligned(2);
- 	struct ieee80211_sta_rx_stats *stats;
-+	u32 encoded_rate;
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -910,16 +910,27 @@ static bool ipv6_hop_ra(struct sk_buff *
  
- 	/* for parallel-rx, we need to have DUP_VALIDATED, otherwise we write
- 	 * to a common data structure; drivers can implement that per queue
-@@ -5048,11 +5049,14 @@ static bool ieee80211_invoke_fast_rx(str
- 	/* push the addresses in front */
- 	memcpy(skb_push(skb, sizeof(addrs)), &addrs, sizeof(addrs));
+ static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
+ {
++	enum skb_drop_reason drop_reason;
+ 	struct ioam6_trace_hdr *trace;
+ 	struct ioam6_namespace *ns;
++	struct inet6_dev *idev;
+ 	struct ioam6_hdr *hdr;
  
-+	/* capture before mesh forward may memset or free skb->cb */
-+	encoded_rate = sta_stats_encode_rate(status);
++	drop_reason = SKB_DROP_REASON_IP_INHDR;
 +
- 	res = ieee80211_rx_mesh_data(rx->sdata, rx->sta, rx->skb);
- 	switch (res) {
- 	case RX_QUEUED:
- 		stats->last_rx = jiffies;
--		stats->last_rate = sta_stats_encode_rate(status);
-+		stats->last_rate = encoded_rate;
- 		return true;
- 	case RX_CONTINUE:
- 		break;
+ 	/* Bad alignment (must be 4n-aligned) */
+ 	if (optoff & 3)
+ 		goto drop;
+ 
++	/* Does the device still have IPv6 configuration? */
++	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		drop_reason = SKB_DROP_REASON_IPV6DISABLED;
++		goto drop;
++	}
++
+ 	/* Ignore if IOAM is not enabled on ingress */
+-	if (!READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_enabled))
++	if (!READ_ONCE(idev->cnf.ioam6_enabled))
+ 		goto ignore;
+ 
+ 	/* Truncated Option header */
+@@ -972,7 +983,7 @@ ignore:
+ 	return true;
+ 
+ drop:
+-	kfree_skb_reason(skb, SKB_DROP_REASON_IP_INHDR);
++	kfree_skb_reason(skb, drop_reason);
+ 	return false;
+ }
+ 
 
 
