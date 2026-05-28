@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0763232BF5D;
-	Thu, 28 May 2026 19:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AC02F8EA1;
+	Thu, 28 May 2026 19:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998003; cv=none; b=b7m/DCtawuf5KauZX3aBWmMexnS+oZl1adifCCEmaYLLwUO22gEkJgEUB6o27xotTouOg8tFA0JK2u1ksAFMwmph4Pvqb0s5+J6wRvxgVuqhinyrUkHbnV0gAR8hazqL/eqIkIj0YOSrWc89aySjuLaCogzI+A+P+wz9ZNVR1ts=
+	t=1779998005; cv=none; b=GVQvaHFXyFAD+zQiDhl8pobMJqXCg4HGIvBJEdfp3myUS0bFNTw4oERs8luLut9SAjSJI6b6ECWLOL1AfoDTmwjwL2Np7MToi1ZGGl7uc/8Fbbjq5vPfHndxuDjhX6cooq6CCQKPGWQdFG6OKfVT58BoSyt2hKiuk79jbCHrKH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998003; c=relaxed/simple;
-	bh=/H8qXWBeENcX4NgnB7RWprirZBNqfT8rcycYnFkRhRg=;
+	s=arc-20240116; t=1779998005; c=relaxed/simple;
+	bh=ExOlQasaG7FdVr5oHbebpisVxRUuJ4AMkNJqdAnw1Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lys9b6s99InUspi6wP3abWen3stW2pN3+cj+I0ithBy7HuAEGmPS7pThcotE2s/y+tKGuIcKMgCKiT1Asz/jhjig0V/0AF0GGayAWcp3+/g3GWq/XzVrt2U8FpfZ0Po27I+fuelTONu5ARoAOyXSGTMUwlHbdyRxh8W8nNBZ6/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkAwDUSa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IeE1qx7WRdhYw3Axg+RON5oexviRpVEPY9ONGM5iJSTkFr9Nfgk/QGdCuQPvmXgU6pY7l+QK4bNco+IO6Xfj3cOsaS5nNndV1cySYWfKt7SwlDWiaDfpbJFSbzlWQVQfFTp/AGpz0+t+12lEtdgjbe9A+EXd3yplleh2SRO7JQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ga3nhuGM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkAwDUSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F3E1F000E9;
-	Thu, 28 May 2026 19:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ga3nhuGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB761F000E9;
+	Thu, 28 May 2026 19:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998001;
-	bh=6k8WsUTwv0OBff59aJ3weRTzznd4NQ1JwIfvmYm+LjA=;
+	s=korg; t=1779998004;
+	bh=+TkWg1W6Ae1ajOm9Krf74RFLBidY4gAPdv4AaYNOHGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rkAwDUSaGYBpBTIMEgYCRD/2jFC2+h2h2qUgwafOjNU9PUUSZTpUjc+g/4Lkmtx9t
-	 1z9bNN4wyPNmF4O5/qyS72RdqkeffcozSdTOoeASgwOd1lgMgZqQZlc4VuoEblRH0v
-	 suJM/LsUVH7w9Oqb9h0M6dJAQM3cbIInjYyMiSfU=
+	b=Ga3nhuGMMGAZD+L6672N54B2jsbuBOFzs4I5uZA/s9oGPMREgPPkyPKWdPAlEBLHk
+	 L6TdfR6zHIPe70x8rkTny0UTFJvkXxwbqd0HDVOoQTF3sexWA7npFAXHyax9aGvx7I
+	 Ahf+NSfS73u1IVwTPHgjjq7cysVX9DL72bVAi4VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 019/461] smb: client: protect tc_count increment in smb2_find_smb_sess_tcon_unlocked()
-Date: Thu, 28 May 2026 21:42:28 +0200
-Message-ID: <20260528194647.431882922@linuxfoundation.org>
+	Eder Zulian <ezulian@redhat.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 002/461] iommu/amd: Remove latent out-of-bounds access in IOMMU debugfs
+Date: Thu, 28 May 2026 21:42:11 +0200
+Message-ID: <20260528194646.897240896@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,38 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Eder Zulian <ezulian@redhat.com>
 
-commit 4d8690dace005a38e6dbde9ecce2da3ad85c7c41 upstream.
+[ Upstream commit 8dfd3d8d74435344ee8dc9237596959c8b2a6cbe ]
 
-Commit 96c4af418586 ("cifs: Fix locking usage for tcon fields")
-refactored cifs code to change cifs_tcp_ses_lock for tc_lock around
-tc_count changes.
+In iommu_mmio_write() and iommu_capability_write(), the variables
+dbg_mmio_offset and dbg_cap_offset are declared as int. However, they
+are populated using kstrtou32_from_user(). If a user provides a
+sufficiently large value, it can become a negative integer.
 
-There was missing lock around tc_count increment inside
-smb2_find_smb_sess_tcon_unlocked().
+Prior to this patch, the AMD IOMMU debugfs implementation was already
+protected by different mechanisms.
 
+1. #define OFS_IN_SZ 8 ensures the user string <= 8 bytes, so
+   e.g. 0xffffffff isn't a valid input.
+
+  if (cnt > OFS_IN_SZ)
+     return -EINVAL;
+
+2. Implicit type promotion in iommu_mmio_write(), dbg_mmio_offset is int
+   and iommu->mmio_phys_end is u64
+
+  if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
+      return -EINVAL;
+
+3. The show handlers would currently catch the negative number and
+   refuse to perform the read.
+
+Replace kstrtou32_from_user() with kstrtos32_from_user() to parse the
+input, and check for negative values to explicitly prevent out-of-bounds
+memory accesses directly in iommu_mmio_write() and
+iommu_capability_write().
+
+Signed-off-by: Eder Zulian <ezulian@redhat.com>
+Fixes: 7a4ee419e8c1 ("iommu/amd: Add debugfs support to dump IOMMU MMIO registers")
 Cc: stable@vger.kernel.org
-Fixes: 96c4af418586 ("cifs: Fix locking usage for tcon fields")
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2transport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/amd/debugfs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -176,7 +176,9 @@ smb2_find_smb_sess_tcon_unlocked(struct
- 	list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 		if (tcon->tid != tid)
- 			continue;
-+		spin_lock(&tcon->tc_lock);
- 		++tcon->tc_count;
-+		spin_unlock(&tcon->tc_lock);
- 		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 				    netfs_trace_tcon_ref_get_find_sess_tcon);
- 		return tcon;
+diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
+index 0584ca2f859d9..3909a1fb218e9 100644
+--- a/drivers/iommu/amd/debugfs.c
++++ b/drivers/iommu/amd/debugfs.c
+@@ -31,11 +31,12 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
++	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
++	if (dbg_mmio_offset < 0 || dbg_mmio_offset >
++			iommu->mmio_phys_end - sizeof(u64))
+ 		return -EINVAL;
+ 
+ 	iommu->dbg_mmio_offset = dbg_mmio_offset;
+@@ -71,12 +72,12 @@ static ssize_t iommu_capability_write(struct file *filp, const char __user *ubuf
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
++	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Capability register at offset 0x14 is the last IOMMU capability register. */
+-	if (dbg_cap_offset > 0x14)
++	if (dbg_cap_offset < 0 || dbg_cap_offset > 0x14)
+ 		return -EINVAL;
+ 
+ 	iommu->dbg_cap_offset = dbg_cap_offset;
+-- 
+2.53.0
+
 
 
