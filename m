@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AF9282F17;
-	Thu, 28 May 2026 20:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9632580D7;
+	Thu, 28 May 2026 20:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999595; cv=none; b=ZTiDp03/DsbWUO5TsJivFt99DbpF/JMTiljCp4mC5D7dukFq983wDXj3O6zRYywDUtvfTWuUHI7LGomS3/eu4P2TkRjBL0E+93VBrWagehV6DKaOYKynOlmQikjHN1kp9vlSH2YqSrzfZubzrX9jT2fYRIML4n8oE9BYsuondGA=
+	t=1779999598; cv=none; b=npTjm0BupOfAtrrGUPUrC2JXPOKX4Qzvg5yCRQviZRYntLgsmcRD+FI+Mr3+b+Wygxp4QWPRyy/AzqBdCDgqZCrW9n5WoD3IgYb6W8HrHZQreGSGyN0joGifyZXYh8HR0NmiN8VaJe/n9VVs0bv32oF19WBbS8f8/vKcLI66pZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999595; c=relaxed/simple;
-	bh=X6OESti9zL5yK6oBm8j+t+R0Rre0Y1Bzp0TVfz2t8eQ=;
+	s=arc-20240116; t=1779999598; c=relaxed/simple;
+	bh=OtPvXg4jrgmxaiZ/BnQ98iJRwUdY4oayOwnXSdCpQv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kwlqq1w5zsRIpQ6QET7kcMUqHCUt9opBXK5DvFLBIwIBSnNo2CoTna+13MxRHidaSLpB52Q4G2oabHGp6LggvvBG4emgxR9heBZ8p7USu5CNrQNssWRFmtSyf0p9PAViWP4cYRm12g53oSX8q+WG1hC43bbowIutrLeOqiQa/S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14AJLWBF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QSvE1tLlalUAKyy4sMJvGJrV2qxQbTYR8iJ4u+CVfkzKzPO4wdkvtjpte80yHyvTK32HQgoOIcWuhXV6Pq9y2RSNgwLJHbPdpppeqyZDDjd91DTgMb01Hgb/aI3EsrPE7RMvq+6m1K6D5W5aPDQPBx4NYIFG8rX6Ez/iSsvstQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPGOo64F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14AJLWBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971CE1F000E9;
-	Thu, 28 May 2026 20:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPGOo64F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA8C1F000E9;
+	Thu, 28 May 2026 20:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999594;
-	bh=MR++RK1ghOyr8eGJW/DjraIMsejNYB2ezXLc/kO7AHo=;
+	s=korg; t=1779999597;
+	bh=DbdtBs3jP0BPLH/Kic1Gdin5KCSkUdWfqZYdJ3qXb54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14AJLWBFx/d0HTsHz2kR5BfV+kkWGfLYCjkzlKX34JQxWWc9//sIXdlXrAxtn7V5X
-	 ToxnwgqJ3OJCzn4UN/OwF9hxzWOc1onmKLXgcAN7F4j2BACbPrgnnKWCSWrgKnxVum
-	 A3JOS5wA73J3pwh8y1JWZwmMuK1q9uWzOfcoGQwU=
+	b=zPGOo64Flcvc8ElAqSsPkwhwfCp9J4vw1S79iqncFsHvQ5ZWOkxUJMk46GlRG9vNx
+	 4CASgC20ctp9GDqHVK1hhUjOc1UpEaZCTUte/Bvc+8pQK83KuLVx7O8xhZhB8AuJCt
+	 hRcOFHk4aEJIsuelSBz1BT08WMdXKc059uPxg6Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heechan Kang <gganji11@naver.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 123/377] fwctl: pds: Validate RPC input size before parsing
-Date: Thu, 28 May 2026 21:46:01 +0200
-Message-ID: <20260528194641.905690913@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 124/377] LoongArch: kprobes: Use larch_insn_text_copy() to patch instructions
+Date: Thu, 28 May 2026 21:46:02 +0200
+Message-ID: <20260528194641.935235732@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,48 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heechan Kang <gganji11@naver.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit e7537735028c3ad4b0bfc02ff8fa2a1a28aa04fe upstream.
+commit e3ef9a28f558d1cbf0b42d6dcd16c60da557562b upstream.
 
-The fwctl core allocates the device-specific RPC input buffer with
-fwctl_rpc.in_len and passes that buffer to the driver callback.
+On SMP systems, kprobe handlers would occasionally fail to execute on
+certain CPU cores. The issue is hard to reproduce and typically occurs
+randomly under high system load.
 
-pdsfc_fw_rpc() casts the buffer to struct fwctl_rpc_pds and then calls
-pdsfc_validate_rpc(), which reads fields from that structure before
-checking that the input buffer is large enough to contain it. A short
-in_len can make pds_fwctl read beyond the allocation.
+The root cause is a software-side instruction hazard. According to the
+LoongArch Reference Manual, while the cache coherency is maintained by
+hardware, software must explicitly use the "IBAR" instruction to ensure
+the instruction fetch unit (IFU) observes the effects of recent stores.
 
-Reject pds RPC buffers that are smaller than struct fwctl_rpc_pds before
-parsing any pds-specific fields.
+The current arch_arm_kprobe() and arch_disarm_kprobe() only execute the
+"IBAR" barrier (via flush_insn_slot -> local_flush_icache_range) on the
+local CPU. This leaves a vulnerable window where remote CPU cores may
+continue executing stale instructions from their pipelines or prefetch
+buffers, as they have not executed an "IBAR" since the code modification.
 
-Fixes: 92c66ee829b9 ("pds_fwctl: add rpc and query support")
-Link: https://patch.msgid.link/r/20260517062232.1858747-1-gganji11@naver.com
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Heechan Kang <gganji11@naver.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Switch to larch_insn_text_copy() to fix this:
+1. Synchronization: It uses stop_machine_cpuslocked() to synchronize all
+   online CPUs, ensuring no CPU is executing the target code area during
+   modification.
+2. Visibility: By passing cpu_online_mask to stop_machine_cpuslocked(),
+   the callback text_copy_cb() is executed on all online cores. Each CPU
+   core invokes local_flush_icache_range() to execute "IBAR", clearing
+   instruction hazards system-wide and ensuring the "break" instruction
+   is visible to the fetch units of all cores.
+3. Robustness: It properly manages memory write permissions (ROX/RW) for
+   the kernel text segment during patching, ensuring compatibility with
+   CONFIG_STRICT_KERNEL_RWX.
+
+Cc: <stable@vger.kernel.org>  # 6.18+
+Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fwctl/pds/main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/kernel/kprobes.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/fwctl/pds/main.c b/drivers/fwctl/pds/main.c
-index 08872ee8422f..68fe254dd10a 100644
---- a/drivers/fwctl/pds/main.c
-+++ b/drivers/fwctl/pds/main.c
-@@ -362,6 +362,9 @@ static void *pdsfc_fw_rpc(struct fwctl_uctx *uctx, enum fwctl_rpc_scope scope,
- 	void *out = NULL;
- 	int err;
- 
-+	if (in_len < sizeof(*rpc))
-+		return ERR_PTR(-EINVAL);
+--- a/arch/loongarch/kernel/kprobes.c
++++ b/arch/loongarch/kernel/kprobes.c
+@@ -60,16 +60,18 @@ NOKPROBE_SYMBOL(arch_prepare_kprobe);
+ /* Install breakpoint in text */
+ void arch_arm_kprobe(struct kprobe *p)
+ {
+-	*p->addr = KPROBE_BP_INSN;
+-	flush_insn_slot(p);
++	u32 insn = KPROBE_BP_INSN;
 +
- 	err = pdsfc_validate_rpc(pdsfc, rpc, scope);
- 	if (err)
- 		return ERR_PTR(err);
--- 
-2.54.0
-
++	larch_insn_text_copy(p->addr, &insn, LOONGARCH_INSN_SIZE);
+ }
+ NOKPROBE_SYMBOL(arch_arm_kprobe);
+ 
+ /* Remove breakpoint from text */
+ void arch_disarm_kprobe(struct kprobe *p)
+ {
+-	*p->addr = p->opcode;
+-	flush_insn_slot(p);
++	u32 insn = p->opcode;
++
++	larch_insn_text_copy(p->addr, &insn, LOONGARCH_INSN_SIZE);
+ }
+ NOKPROBE_SYMBOL(arch_disarm_kprobe);
+ 
 
 
