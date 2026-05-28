@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC1F298CB2;
-	Thu, 28 May 2026 20:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D311DE4E0;
+	Thu, 28 May 2026 20:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001033; cv=none; b=IB8mMHuveU4Ti8waHno2ouyMiP1vG+pyzPkhvrRG1zJH7rbbgVFCtAtDbB8UKO+CZ4uOVnn3Uho+hyZ6EsvI0pjFDDNG+7tE+pqrtP23UgVintenSDP49M2MyfNRI80oSCAyS+6N86jUg/naYHhybD45DKeNKviyNibmWsY+pBk=
+	t=1780001036; cv=none; b=GJKNCH9CTLtzF8cuzt7PkwobkgFYFEGiT9xqcyebFJFLqBbfPC3PPomM6wX/cGuvDKTziwq/d50opo0D8c513js9L7x/HF6l7gZ1zkOOXPfPL4ZYTN2d9x08GLMnEvVcCCuxe3ZWCGFIaI7cTz5wAIIcDFGn7IWc0VYxYrvf3lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001033; c=relaxed/simple;
-	bh=1lN5BeaTrHGraADESByk+8c1Kx67XJgTgZBUNa8G6lo=;
+	s=arc-20240116; t=1780001036; c=relaxed/simple;
+	bh=uZZEpqf/gaShIWyfJ6ejoHJPOHtDik3BycNZG4y1CkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipM0LSRMHl1D+s7pEc2HWRBJZ9FPjLdGbAgHxYaKKzxTuQVyE2AI+doOFW+b3nUH8nD+v89R14nVMMV4VUF8b5Qo6aSgG6m/8Z0vZR6eESU1XxEPZktNkdN2zqAhVpponqSTi1ZzsgyZop5l+x+XTc/Z457WByQwG6M1E2OQY74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCbOq7Nh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pFZbiwgqlLLYcNRIxaxRrzYKNN3sb7qZffXHKJck3SKUStdzb/v+513ZvhbpyPpeidSoAKeogDG8rGeDaKWxHbEMMCtxhek/fAoZkpIv+i7T1I5KYQB9sjmNy39avOkSl/tKTUsM44VpJkmUC7GR/J3zVSQwdvOeX+7rzajkMPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixqUg3fm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCbOq7Nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4061F000E9;
-	Thu, 28 May 2026 20:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixqUg3fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F2A1F000E9;
+	Thu, 28 May 2026 20:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001031;
-	bh=jPoexo3GgnRBqQqlaBvY5DhBN6FL0q/fjVFe/YQjxMM=;
+	s=korg; t=1780001034;
+	bh=FD6fLg63nWwNU/w4RMRSfIyibe35GnKce30mRK/xfyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCbOq7NhEr+Q8Pp4AqIMZHLyPOPg5PTL8xZcGL6d3/vvL5WtyYuQF13ybSDG7yv26
-	 AMB6UEF7gmQXImxEMGBHXgQCbYiMyUm48ip5sUquS0/gBwKnxz3eAZzDCPfUXchYfF
-	 Z3rxty5Xs1Jfb/jE+pXMVkV1IGz6Od7BmgBWvV1c=
+	b=ixqUg3fmd7L5nETDseUijbtz6RO7bi1wt7eXqDWjHvDI7oORSk+p7NeYax9J9UvAV
+	 FXMhYSIbD759DNKprO8RZoDv3H8RLOy7tLAv+mQcwmRZu0q3z5ydXm3zDetTlBJv6m
+	 BgnZYCKji7f8OEH6DYMMAhj83F4eNUyuc/XvZHeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 257/272] wifi: mac80211: fix MLE defragmentation
-Date: Thu, 28 May 2026 21:50:31 +0200
-Message-ID: <20260528194636.301195158@linuxfoundation.org>
+Subject: [PATCH 6.12 258/272] ALSA: seq: Serialize UMP output teardown with event_input
+Date: Thu, 28 May 2026 21:50:32 +0200
+Message-ID: <20260528194636.325824548@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,158 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit a74e893f30db64cdce0fc7a96d3baa417bcd55f5 ]
+[ Upstream commit 60a1969fae6209644698fca91c185d153674f631 ]
 
-If either reconf or EPCS multi-link element (MLE) is contained in
-a non-transmitted profile, the defragmentation routine is called
-with a pointer to the defragmented copy, but the original elements.
+seq_ump_process_event() borrows client->out_rfile.output without
+synchronizing with the first-open and last-close transition in
+seq_ump_client_open() and seq_ump_client_close().
 
-This is incorrect for two reasons:
- - if the original defragmentation was needed, it will not find the
-   correct data
- - if the original frame is at a higher address, the parsing will
-   potentially overrun the heap data (though given the layout of
-   the buffers, only into the new defragmentation buffer, and then
-   it has to stop and fail once that's filled with copied data.
+The last output unuse can therefore drop opened[STR_OUT] to zero and
+release the rawmidi file while an in-flight event_input callback is still
+inside snd_rawmidi_kernel_write(). That leaves the rawmidi substream
+runtime exposed to teardown before the write path has taken its own
+buffer reference.
 
-Fix it by tracking the container along with the pointer and in
-doing so also unify the two almost identical defragmentation
-routines.
+Add a per-client rwlock for the event_input-visible output file. Publish
+a newly opened output file under the write side, and hold the read side
+from the output lookup through snd_rawmidi_kernel_write(). The last
+output close copies and clears the visible output file under the write
+side, then drops the lock and releases the saved rawmidi file. Use
+IRQ-safe rwlock guards because event_input can also be reached from
+atomic sequencer delivery.
 
-Fixes: 4d70e9c5488d ("wifi: mac80211: defragment reconfiguration MLE when parsing")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260508091031.8a6c34613178.I4de16ebbce2d27f2f8f98fc49949c7a376c2fe8d@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+path A label: event_input path         path B label: last unuse path
+1. seq_ump_process_event() reads       1. seq_ump_client_close()
+   client->out_rfile.output.              drops opened[STR_OUT] to zero.
+2. snd_rawmidi_kernel_write1()         2. snd_rawmidi_kernel_release()
+   has not yet pinned runtime.            closes the output file.
+3. The writer continues using          3. close_substream() frees
+   the borrowed substream.                substream->runtime.
+
+This keeps the output substream and runtime alive for the full
+event_input write while keeping rawmidi release outside the rwlock.
+
+KASAN reproduced this as a slab-use-after-free in
+snd_rawmidi_kernel_write1(), with allocation through
+seq_ump_use()/snd_seq_port_connect() and free through
+seq_ump_unuse()/snd_seq_port_disconnect().
+
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in snd_rawmidi_kernel_write1+0x9d/0x400
+RIP: 0033:0x7f5528af837f
+Read of size 8
+Call trace:
+  dump_stack_lvl+0x73/0xb0 (?:?)
+  print_report+0xd1/0x650 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x1a7/0x340 (?:?)
+  kasan_complete_mode_report_info+0x64/0x200 (?:?)
+  kasan_report+0xf7/0x130 (?:?)
+  snd_rawmidi_kernel_write1+0x9d/0x400 (?:?)
+  __asan_load8+0x82/0xb0 (?:?)
+  update_stack_state+0x1ef/0x2d0 (?:?)
+  snd_rawmidi_kernel_write+0x1a/0x20 (?:?)
+  seq_ump_process_event+0xd4/0x120 (sound/core/seq/seq_ump_client.c:82)
+  __snd_seq_deliver_single_event+0x8a/0xe0 (?:?)
+  snd_seq_deliver_from_ump+0x2b2/0xd60 (?:?)
+  lock_acquire+0x14e/0x2e0 (?:?)
+  find_held_lock+0x31/0x90 (?:?)
+  snd_seq_port_use_ptr+0xa6/0xe0 (?:?)
+  __kasan_check_write+0x18/0x20 (?:?)
+  do_raw_read_unlock+0x32/0xa0 (?:?)
+  _raw_read_unlock+0x26/0x50 (?:?)
+  snd_seq_deliver_single_event+0x45c/0x4b0 (?:?)
+  snd_seq_deliver_event+0x10d/0x1b0 (?:?)
+  snd_seq_client_enqueue_event+0x192/0x240 (?:?)
+  snd_seq_write+0x2cd/0x450 (?:?)
+  apparmor_file_permission+0x20/0x30 (?:?)
+  security_file_permission+0x51/0x60 (?:?)
+  vfs_write+0x1ce/0x850 (?:?)
+  __fget_files+0x12b/0x220 (?:?)
+  lock_release+0xc8/0x2a0 (?:?)
+  __rcu_read_unlock+0x74/0x2d0 (?:?)
+  __fget_files+0x135/0x220 (?:?)
+  ksys_write+0x15a/0x180 (?:?)
+  rcu_is_watching+0x24/0x60 (?:?)
+  __x64_sys_write+0x46/0x60 (?:?)
+  x64_sys_call+0x7d/0x20d0 (?:?)
+  do_syscall_64+0xc1/0x360 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
+
+Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Link: https://patch.msgid.link/20260520103249.3048345-1-rollkingzzc@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 71 +++++++++++++++++++-------------------------
- 1 file changed, 31 insertions(+), 40 deletions(-)
+ sound/core/seq/seq_ump_client.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index 922ea9a6e2412..530f01575bc17 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -34,6 +34,13 @@
- #include "led.h"
- #include "wep.h"
+diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
+index d39cea7f341d4..0d5d5ade87e68 100644
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -37,6 +37,7 @@ struct seq_ump_client {
+ 	struct snd_ump_endpoint *ump;	/* assigned endpoint */
+ 	int seq_client;			/* sequencer client id */
+ 	int opened[2];			/* current opens for each direction */
++	rwlock_t output_lock;		/* protects out_rfile output access */
+ 	struct snd_rawmidi_file out_rfile; /* rawmidi for output */
+ 	struct seq_ump_input_buffer input; /* input parser context */
+ 	void *ump_info[SNDRV_UMP_MAX_BLOCKS + 1]; /* shadow of seq client ump_info */
+@@ -88,6 +89,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
+ 	unsigned char type;
+ 	int len;
  
-+struct ieee80211_elem_defrag {
-+	const struct element *elem;
-+	/* container start/len */
-+	const u8 *start;
-+	size_t len;
-+};
-+
- struct ieee80211_elems_parse {
- 	/* must be first for kfree to work */
- 	struct ieee802_11_elems elems;
-@@ -41,11 +48,7 @@ struct ieee80211_elems_parse {
- 	/* The basic Multi-Link element in the original elements */
- 	const struct element *ml_basic_elem;
- 
--	/* The reconfiguration Multi-Link element in the original elements */
--	const struct element *ml_reconf_elem;
--
--	/* The EPCS Multi-Link element in the original elements */
--	const struct element *ml_epcs_elem;
-+	struct ieee80211_elem_defrag ml_reconf, ml_epcs;
- 
- 	bool multi_link_inner;
- 	bool skip_vendor;
-@@ -162,10 +165,14 @@ ieee80211_parse_extension_element(u32 *crc,
- 				}
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_RECONF:
--				elems_parse->ml_reconf_elem = elem;
-+				elems_parse->ml_reconf.elem = elem;
-+				elems_parse->ml_reconf.start = params->start;
-+				elems_parse->ml_reconf.len = params->len;
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
--				elems_parse->ml_epcs_elem = elem;
-+				elems_parse->ml_epcs.elem = elem;
-+				elems_parse->ml_epcs.start = params->start;
-+				elems_parse->ml_epcs.len = params->len;
- 				break;
- 			default:
- 				break;
-@@ -950,46 +957,27 @@ ieee80211_prep_mle_link_parse(struct ieee80211_elems_parse *elems_parse,
- 				      sub->start, sub->len);
- }
- 
--static void
--ieee80211_mle_defrag_reconf(struct ieee80211_elems_parse *elems_parse)
--{
--	struct ieee802_11_elems *elems = &elems_parse->elems;
--	ssize_t ml_len;
--
--	ml_len = cfg80211_defragment_element(elems_parse->ml_reconf_elem,
--					     elems->ie_start,
--					     elems->total_len,
--					     elems_parse->scratch_pos,
--					     elems_parse->scratch +
--						elems_parse->scratch_len -
--						elems_parse->scratch_pos,
--					     WLAN_EID_FRAGMENT);
--	if (ml_len < 0)
--		return;
--	elems->ml_reconf = (void *)elems_parse->scratch_pos;
--	elems->ml_reconf_len = ml_len;
--	elems_parse->scratch_pos += ml_len;
--}
--
--static void
--ieee80211_mle_defrag_epcs(struct ieee80211_elems_parse *elems_parse)
-+static const void *
-+ieee80211_mle_defrag(struct ieee80211_elems_parse *elems_parse,
-+		     struct ieee80211_elem_defrag *defrag,
-+		     size_t *out_len)
++	guard(read_lock_irqsave)(&client->output_lock);
+ 	substream = client->out_rfile.output;
+ 	if (!substream)
+ 		return -ENODEV;
+@@ -106,6 +108,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
+ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
  {
--	struct ieee802_11_elems *elems = &elems_parse->elems;
-+	const void *ret;
- 	ssize_t ml_len;
+ 	struct snd_ump_endpoint *ump = client->ump;
++	struct snd_rawmidi_file rfile = {};
+ 	int err;
  
--	ml_len = cfg80211_defragment_element(elems_parse->ml_epcs_elem,
--					     elems->ie_start,
--					     elems->total_len,
-+	ml_len = cfg80211_defragment_element(defrag->elem,
-+					     defrag->start, defrag->len,
- 					     elems_parse->scratch_pos,
- 					     elems_parse->scratch +
- 						elems_parse->scratch_len -
- 						elems_parse->scratch_pos,
- 					     WLAN_EID_FRAGMENT);
- 	if (ml_len < 0)
--		return;
--	elems->ml_epcs = (void *)elems_parse->scratch_pos;
--	elems->ml_epcs_len = ml_len;
-+		return NULL;
-+	ret = elems_parse->scratch_pos;
-+	*out_len = ml_len;
- 	elems_parse->scratch_pos += ml_len;
-+	return ret;
+ 	guard(mutex)(&ump->open_mutex);
+@@ -113,9 +116,11 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
+ 		err = snd_rawmidi_kernel_open(&ump->core, 0,
+ 					      SNDRV_RAWMIDI_LFLG_OUTPUT |
+ 					      SNDRV_RAWMIDI_LFLG_APPEND,
+-					      &client->out_rfile);
++					      &rfile);
+ 		if (err < 0)
+ 			return err;
++		scoped_guard(write_lock_irqsave, &client->output_lock)
++			client->out_rfile = rfile;
+ 	}
+ 	client->opened[dir]++;
+ 	return 0;
+@@ -125,11 +130,19 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
+ static int seq_ump_client_close(struct seq_ump_client *client, int dir)
+ {
+ 	struct snd_ump_endpoint *ump = client->ump;
++	struct snd_rawmidi_file rfile = {};
+ 
+ 	guard(mutex)(&ump->open_mutex);
+-	if (!--client->opened[dir])
+-		if (dir == STR_OUT)
+-			snd_rawmidi_kernel_release(&client->out_rfile);
++	if (!--client->opened[dir]) {
++		if (dir == STR_OUT) {
++			scoped_guard(write_lock_irqsave, &client->output_lock) {
++				rfile = client->out_rfile;
++				client->out_rfile = (struct snd_rawmidi_file){};
++			}
++			if (rfile.rmidi)
++				snd_rawmidi_kernel_release(&rfile);
++		}
++	}
+ 	return 0;
  }
  
- struct ieee802_11_elems *
-@@ -1069,9 +1057,12 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
- 		_ieee802_11_parse_elems_full(&sub, elems_parse, NULL);
- 	}
+@@ -432,6 +445,7 @@ static int snd_seq_ump_probe(struct device *_dev)
  
--	ieee80211_mle_defrag_reconf(elems_parse);
--
--	ieee80211_mle_defrag_epcs(elems_parse);
-+	elems->ml_reconf = ieee80211_mle_defrag(elems_parse,
-+						&elems_parse->ml_reconf,
-+						&elems->ml_reconf_len);
-+	elems->ml_epcs = ieee80211_mle_defrag(elems_parse,
-+					      &elems_parse->ml_epcs,
-+					      &elems->ml_epcs_len);
+ 	INIT_WORK(&client->group_notify_work, handle_group_notify);
+ 	client->ump = ump;
++	rwlock_init(&client->output_lock);
  
- 	if (elems->tim && !elems->parse_error) {
- 		const struct ieee80211_tim_ie *tim_ie = elems->tim;
+ 	client->seq_client =
+ 		snd_seq_create_kernel_client(card, ump->core.device,
 -- 
 2.53.0
 
