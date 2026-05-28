@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5832F691F;
-	Thu, 28 May 2026 20:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CD7318EE1;
+	Thu, 28 May 2026 20:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998851; cv=none; b=BzJ7vHVCA7UI8iED2JQsbH3KCKCnXGbPe7nFOTC0y8bP20ujPwsi06Bk976HllNh3kdDTDQ2nfcuANWgCY7BXI/TBE7ct9DoBjs7hk7T3m0ucTw7Rn6moMhH5T/iirPPmZ5iG4Wex4NtuL/n4wVEka7uMZeXTBgXu6cwM4adR1A=
+	t=1779998854; cv=none; b=dVfKt1Z6wCFjpi5t5KVXAOUYgBfWi6OMutbvPjotAgLtf8XSFl3Wa/Eb4CUZ5mYq5IpxqkfezqmzDPyQxF6/SgbBD4JYPogWCRlgPNHwiJzx2MTKwfIeU/SMvgtlw2wou7Hiu0qemau5cJbPZQJhh3vohav5idqHG2Qq3/42DEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998851; c=relaxed/simple;
-	bh=+hXViPB1ExhMbgcYoQ09sUZmMadu2XiVbEQbfbF/GPU=;
+	s=arc-20240116; t=1779998854; c=relaxed/simple;
+	bh=FTjOvDUCWxj9cUswYIzb9HPoRYRMvvdTZqSCCfinUWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkjdV3rP8l1EHmOiczdPvPL7OpZjxVid9fM7xHFnqkFzGU1XGLBAF96Ubpfc3Kxp/iG240YsCaqhzG5jb08caDYLeD0S4rYfyZhRmrvPhwubr85NmBZvZGQdtNIDjBlwEEcNwOUwj9zyNDWkhbWRajQbRDoQSXy7+TKV9tH5TzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gut+cRoq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dWnmBxW0QNDVokPelAL+8KlsSblPy+Y8sz6fft6BJLYeLR8XBJCXeiPeHb0mjfIDbQSCoU4QbeN0+n6r84qRCatdJyag8/HXQDeAueazDHVw8nSXSw9cLhNSJDnuD0auX8v/NzFPl675Yst7v0A45t70Vr5/efjgUjCsCQHi6po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMwosPFR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gut+cRoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E979A1F000E9;
-	Thu, 28 May 2026 20:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMwosPFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9ADE1F000E9;
+	Thu, 28 May 2026 20:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998850;
-	bh=nryaaaIxmy5xZWccqneL6+Rqfkanl6K2sjN9hxM6qJk=;
+	s=korg; t=1779998853;
+	bh=363iPmT55Ejj1LgU7MYmHfR1v2oOpvvSjKpWJwN4zC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gut+cRoq/g9b3GyJb9K6AKKycR1tk2SbNSqYs9zxxm5tCODp3k/IS5K3jfkk45PGL
-	 KnBj2xXX8xrz8B6CaIBuvUnlVgwKEzBlHi6GkYFftI7uEvxQG449LBC58nQAZKyrz8
-	 KJB4MXxmLeuuibk+qmLTrDephG2QB4UeTnfV4Whk=
+	b=UMwosPFRrX1TXFV0QenA5g2JM0lBjP9NM2TCzXxxvnazG/Vy6u14CdpasbXXhmDAo
+	 f90q3wzc0V+ZSzQ3T94tZXmZaq20KEtfASxYy20aHkfImb5EZ/Haj+m3nUx6QXgqPi
+	 i2+aD0A/q+va7eBEmlhjMGPtNMYiODbM2NAB3HVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
-	David Carlier <devnexen@gmail.com>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 321/461] ovpn: respect peer refcount in CMD_NEW_PEER error path
-Date: Thu, 28 May 2026 21:47:30 +0200
-Message-ID: <20260528194656.607506019@linuxfoundation.org>
+Subject: [PATCH 7.0 322/461] ovpn: fix race between deleting interface and adding new peer
+Date: Thu, 28 May 2026 21:47:31 +0200
+Message-ID: <20260528194656.640105766@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,104 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Antonio Quartulli <antonio@openvpn.net>
 
-[ Upstream commit 1fef6614673ff0846d30acdeeaf3cf98bb5f6116 ]
+[ Upstream commit 982422b11e6f95f766a8cd2c2b1cbdb77e234a61 ]
 
-ovpn_nl_peer_new_doit()'s error path calls ovpn_peer_release() directly
-rather than ovpn_peer_put(), bypassing the kref. The accompanying
-comment ("peer was not yet hashed, thus it is not used in any context")
-holds for UDP but not for TCP.
+While deleting an existing ovpn interface, there is a very
+narrow window where adding a new peer via netlink may cause
+the netdevice to hang and prevent its unregistration.
 
-For UDP, the ovpn_socket union uses the .ovpn arm and never points back
-at a peer; UDP encap_recv looks up peers via the not-yet-populated
-hashtables, so the new peer is unreachable until ovpn_peer_add()
-publishes it.
+It may happen during ovpn_dellink(), when all existing peers are
+freed and the device is queued for deregistration, but a
+CMD_PEER_NEW message comes in adding a new peer that takes again
+a reference to the netdev.
 
-For TCP, ovpn_socket_new() sets ovpn_sock->peer and
-ovpn_tcp_socket_attach() publishes ovpn_sock via rcu_assign_sk_user_data().
->From that moment until ovpn_socket_release() detaches in the error path,
-the TCP fd is fully wired: userspace recvmsg / sendmsg / close / poll
-on the fd, as well as the strparser-driven ovpn_tcp_rcv() path, can
-reach the peer through sk_user_data -> ovpn_sock->peer and bump its
-refcount via ovpn_peer_hold().
+At this point there is no way to release the device because we are
+under the assumption that all peers were already released.
 
-ovpn_tcp_socket_wait_finish() (called inside ovpn_socket_release())
-drains strparser and the tx work, but does not synchronize with
-userspace syscall callers that already hold a peer reference. If
-ovpn_nl_peer_modify() or ovpn_peer_add() returns an error while such
-a caller is in flight - notably an ovpn_tcp_recvmsg() blocked in
-__skb_recv_datagram() on peer->tcp.user_queue - the direct
-ovpn_peer_release() destroys the peer while the caller still holds
-the reference, and the eventual ovpn_peer_put() from that caller
-operates on freed memory.
+Fix the race condition by releasing all peers in ndo_uninit(),
+when the netdevice has already been removed from the netdev
+list.
 
-Replace the direct destructor call with ovpn_peer_put() so the kref
-correctly defers destruction until the last reference is dropped.
-In the common case where no concurrent user is present, behaviour is
-unchanged: the kref hits zero immediately and ovpn_peer_release_kref()
-runs the same destructor.
+Also ovpn_peer_add() has now an extra check that forces the
+function to bail out if the device reg_state is not REGISTERED.
+This way any incoming CMD_PEER_NEW racing with the interface
+deletion routine will simply stop before adding the peer.
 
-With this conversion ovpn_peer_release() has no callers outside peer.c
-- ovpn_peer_release_kref() in the same translation unit is the only
-remaining user - so make it static and drop its declaration from
-peer.h.
+Note that the above check happens while holding the netdev_lock
+to prevent racing netdev state changes.
 
-Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+ovpn_dellink() is now empty and can be removed.
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Closes: https://lore.kernel.org/netdev/aaVgJ16edTfQkYbx@v4bel/
+Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
+Fixes: 80747caef33d ("ovpn: introduce the ovpn_peer object")
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/netlink.c | 8 +++++---
- drivers/net/ovpn/peer.c    | 2 +-
- drivers/net/ovpn/peer.h    | 1 -
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ovpn/main.c | 12 ++----------
+ drivers/net/ovpn/peer.c | 21 ++++++++++++++++++---
+ 2 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ovpn/netlink.c b/drivers/net/ovpn/netlink.c
-index c7f3824376302..bdb56ef0c9040 100644
---- a/drivers/net/ovpn/netlink.c
-+++ b/drivers/net/ovpn/netlink.c
-@@ -455,10 +455,12 @@ int ovpn_nl_peer_new_doit(struct sk_buff *skb, struct genl_info *info)
- sock_release:
- 	ovpn_socket_release(peer);
- peer_release:
--	/* release right away because peer was not yet hashed, thus it is not
--	 * used in any context
-+	/* For UDP, the peer is unreachable until added to the hashtables, so
-+	 * dropping the initial reference is enough. For TCP, the peer may be
-+	 * concurrently reachable via sk_user_data->peer until
-+	 * ovpn_socket_release() detaches; rely on the refcount.
- 	 */
--	ovpn_peer_release(peer);
-+	ovpn_peer_put(peer);
+diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
+index 2e0420febda05..9993c1dfe471d 100644
+--- a/drivers/net/ovpn/main.c
++++ b/drivers/net/ovpn/main.c
+@@ -92,6 +92,8 @@ static void ovpn_net_uninit(struct net_device *dev)
+ {
+ 	struct ovpn_priv *ovpn = netdev_priv(dev);
  
- 	return ret;
++	disable_delayed_work_sync(&ovpn->keepalive_work);
++	ovpn_peers_free(ovpn, NULL, OVPN_DEL_PEER_REASON_TEARDOWN);
+ 	gro_cells_destroy(&ovpn->gro_cells);
  }
+ 
+@@ -208,15 +210,6 @@ static int ovpn_newlink(struct net_device *dev,
+ 	return register_netdevice(dev);
+ }
+ 
+-static void ovpn_dellink(struct net_device *dev, struct list_head *head)
+-{
+-	struct ovpn_priv *ovpn = netdev_priv(dev);
+-
+-	cancel_delayed_work_sync(&ovpn->keepalive_work);
+-	ovpn_peers_free(ovpn, NULL, OVPN_DEL_PEER_REASON_TEARDOWN);
+-	unregister_netdevice_queue(dev, head);
+-}
+-
+ static int ovpn_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ {
+ 	struct ovpn_priv *ovpn = netdev_priv(dev);
+@@ -235,7 +228,6 @@ static struct rtnl_link_ops ovpn_link_ops = {
+ 	.policy = ovpn_policy,
+ 	.maxtype = IFLA_OVPN_MAX,
+ 	.newlink = ovpn_newlink,
+-	.dellink = ovpn_dellink,
+ 	.fill_info = ovpn_fill_info,
+ };
+ 
 diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 3716a1d828015..f69694e00dcee 100644
+index f69694e00dcee..8cd129cc2142d 100644
 --- a/drivers/net/ovpn/peer.c
 +++ b/drivers/net/ovpn/peer.c
-@@ -348,7 +348,7 @@ static void ovpn_peer_release_rcu(struct rcu_head *head)
-  * ovpn_peer_release - release peer private members
-  * @peer: the peer to release
+@@ -1029,14 +1029,29 @@ static int ovpn_peer_add_p2p(struct ovpn_priv *ovpn, struct ovpn_peer *peer)
   */
--void ovpn_peer_release(struct ovpn_peer *peer)
-+static void ovpn_peer_release(struct ovpn_peer *peer)
+ int ovpn_peer_add(struct ovpn_priv *ovpn, struct ovpn_peer *peer)
  {
- 	ovpn_crypto_state_release(&peer->crypto);
- 	spin_lock_bh(&peer->lock);
-diff --git a/drivers/net/ovpn/peer.h b/drivers/net/ovpn/peer.h
-index a1423f2b09e06..4de5aeae33f7d 100644
---- a/drivers/net/ovpn/peer.h
-+++ b/drivers/net/ovpn/peer.h
-@@ -125,7 +125,6 @@ static inline bool ovpn_peer_hold(struct ovpn_peer *peer)
- 	return kref_get_unless_zero(&peer->refcount);
- }
++	int ret = -ENODEV;
++
++	/* Prevent adding new peers while destroying the ovpn interface.
++	 * Failing to do so would end up holding the device reference
++	 * endlessly hostage of the new peer object with no chance of
++	 * release..
++	 */
++	netdev_lock(ovpn->dev);
++	if (ovpn->dev->reg_state != NETREG_REGISTERED)
++		goto out;
++
+ 	switch (ovpn->mode) {
+ 	case OVPN_MODE_MP:
+-		return ovpn_peer_add_mp(ovpn, peer);
++		ret = ovpn_peer_add_mp(ovpn, peer);
++		break;
+ 	case OVPN_MODE_P2P:
+-		return ovpn_peer_add_p2p(ovpn, peer);
++		ret = ovpn_peer_add_p2p(ovpn, peer);
++		break;
+ 	}
++out:
++	netdev_unlock(ovpn->dev);
  
--void ovpn_peer_release(struct ovpn_peer *peer);
- void ovpn_peer_release_kref(struct kref *kref);
+-	return -EOPNOTSUPP;
++	return ret;
+ }
  
  /**
 -- 
