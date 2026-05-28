@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E55F2FD7C3;
-	Thu, 28 May 2026 20:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212E22F260C;
+	Thu, 28 May 2026 20:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998798; cv=none; b=G4iw/r8zlwVQmH+jLJTuBQfu8SRkywoZPW2EyI+sO57BgVrxr5pG7/VsVWS/mEYZ9d8vkr7V/nYNNaR6+0cZi6UIVb+ZbJDSAAmUqTRw/RFgRKV6QuSY2iwu0TthcofUCrTguzpBRMdsfk2Zz84GrhSJiZAwnsBnXVhbk82BFtI=
+	t=1779998801; cv=none; b=EJRs3Z2Sv3QA5z+deRWWtK8tnu4s8MLuWUur1PFizgRRRSmpObwDgcm8ritppze7K6/mOiPEGzvmb4LuaqbKd5bCjIek6CzPE9d0Z6f10SwXtUyai/R55P+Kv+RW4jlsGF1gtdZpJIBuEI80N6TpOdMP+HW1/TkW5FTU1jAhrj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998798; c=relaxed/simple;
-	bh=iGyIURfyaH9qxXj5O1v//iRch5TzoezyhDuE6aR+J0U=;
+	s=arc-20240116; t=1779998801; c=relaxed/simple;
+	bh=XwlLY8g5xZMv1VhaeuPgs2e/zznzzdd1ilOyDs3svnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aso1dpcHNNPgcbQzvDCw7q37THrV7uHGJCzd7k6AZSd9goqhyw9r9qTA4gs97K4vyn9b6ojvzTe/IpRuX4ru3nHB+6+IpF6BrLSlR1+MAh2ChZYeQyybNtlgCBUtbVDNcQQTzQ6kMih0lhPIPVhWL4bIxJf0NygdKT5jKnozy6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoyQO6D0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uISZhNDqYXlJ5EC00pF+RQRpPsiYmerx4jc7wJQ/z1i4YvmlC6EJomnNABf0w+vwiTUqqJt1IZEM6Z+SZjadUW1rIh2cgYoe6kLr2UcrfB52Xvl2I9E7rZZ88/M+YXNQ2RBMC/dDAz3mzbX+BpnW8S2F9e6XDjUOFa+ns8L6AqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWThGVYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoyQO6D0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD80D1F000E9;
-	Thu, 28 May 2026 20:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWThGVYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0B01F000E9;
+	Thu, 28 May 2026 20:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998797;
-	bh=ocqTR9qWe9KHnNCacGkBaZgDSs3MicoDHrAq7gzc6+E=;
+	s=korg; t=1779998800;
+	bh=scGJSXPNljCOpwv71QOzrVSaQ1oJMby+M++txFyXSMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BoyQO6D0wzW8ItlqAZWa/bB3iPEQBR+SE3hGNzb/SNv9aWh7JOVJmMFEBzyYmSlZ/
-	 fMNgesn4FXVJVlLjxK1Al8vg5Vf9T3Bj/OMFblr+kEDRB8adXmRWxIMjNyioVZ+MdE
-	 xh3j8ksFBQkrHiYmIIYKJz1Nt7oWZ+7NryymY4xo=
+	b=gWThGVYkU0x4USlBBZ8KLnhRuwLLZxYEMq3vUJPcBeMm4ym3H/hdd98LXWPp0bs1w
+	 Fv+IvZC8SNTYKQUJeEpoNOKpqWojFJLuHi1CJuStVpOFqBSyHLc6IQFfCgiB9VABjZ
+	 Y5sVdEwwdx3R7ww5pW6KgEEHKfCJZvCDdu6UhIeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 301/461] selftests: ublk: cap nthreads to kernels actual nr_hw_queues
-Date: Thu, 28 May 2026 21:47:10 +0200
-Message-ID: <20260528194655.954945922@linuxfoundation.org>
+Subject: [PATCH 7.0 275/461] net: ethernet: cs89x0: remove stale CONFIG_MACH_MX31ADS reference
+Date: Thu, 28 May 2026 21:46:44 +0200
+Message-ID: <20260528194655.133001780@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,59 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit 87d0740b7c4cc847be1b6f307ab6d8547cb1a726 ]
+[ Upstream commit 36a8d04a8293afcb9304cf0cd3741f67698f2a1a ]
 
-dev->nthreads is derived from the user-requested queue count before the
-ADD command, but the kernel may reduce nr_hw_queues (capped to
-nr_cpu_ids). When the VM has fewer CPUs than requested queues, the
-daemon creates more handler threads than there are kernel queues.
+The legacy ARM board file for MACH_MX31ADS was removed in commit
+c93197b0041d ("ARM: imx: Remove i.MX31 board files"), but a reference
+to it remained in the cs89x0 driver. Drop this unused code.
 
-In non-batch mode, the extra threads access uninitialized queues
-(q_depth=0), submit zero io_uring SQEs, and block forever in
-io_cqring_wait. In batch mode, the extra threads cause similar hangs
-during device removal.
-
-In both cases, the stuck threads prevent the daemon from closing the
-char device, holding the last ublk_device reference and causing
-ublk_ctrl_del_dev() to hang in wait_event_interruptible().
-
-Fix by capping dev->nthreads to the kernel-returned nr_hw_queues after
-the ADD command completes. per_io_tasks mode is excluded because threads
-interleave across all queues, so nthreads > nr_hw_queues is valid.
-
-Fixes: abe54c160346 ("selftests: ublk: kublk: decouple ublk_queues from ublk server threads")
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260513101941.1373998-1-tom.leiming@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Fixes: c93197b0041d ("ARM: imx: Remove i.MX31 board files")
+Link: https://patch.msgid.link/20260509023732.42256-1-enelsonmoore@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ublk/kublk.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/cirrus/cs89x0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/ublk/kublk.c b/tools/testing/selftests/ublk/kublk.c
-index e1c3b3c55e565..c40aa7952b6eb 100644
---- a/tools/testing/selftests/ublk/kublk.c
-+++ b/tools/testing/selftests/ublk/kublk.c
-@@ -1395,6 +1395,17 @@ static int __cmd_dev_add(const struct dev_ctx *ctx)
- 		goto fail;
- 	}
+diff --git a/drivers/net/ethernet/cirrus/cs89x0.c b/drivers/net/ethernet/cirrus/cs89x0.c
+index fa5857923db4c..b4bfd6c174e78 100644
+--- a/drivers/net/ethernet/cirrus/cs89x0.c
++++ b/drivers/net/ethernet/cirrus/cs89x0.c
+@@ -1271,7 +1271,6 @@ static const struct net_device_ops net_ops = {
  
-+	/*
-+	 * The kernel may reduce nr_hw_queues (e.g. capped to nr_cpu_ids).
-+	 * Cap nthreads to the actual queue count to avoid creating extra
-+	 * handler threads that will hang during device removal.
-+	 *
-+	 * per_io_tasks mode is excluded: threads interleave across all
-+	 * queues so nthreads > nr_hw_queues is valid and intentional.
-+	 */
-+	if (!ctx->per_io_tasks && dev->nthreads > info->nr_hw_queues)
-+		dev->nthreads = info->nr_hw_queues;
-+
- 	ret = ublk_start_daemon(ctx, dev);
- 	ublk_dbg(UBLK_DBG_DEV, "%s: daemon exit %d\n", __func__, ret);
- 	if (ret < 0)
+ static void __init reset_chip(struct net_device *dev)
+ {
+-#if !defined(CONFIG_MACH_MX31ADS)
+ 	struct net_local *lp = netdev_priv(dev);
+ 	unsigned long reset_start_time;
+ 
+@@ -1298,7 +1297,6 @@ static void __init reset_chip(struct net_device *dev)
+ 	while ((readreg(dev, PP_SelfST) & INIT_DONE) == 0 &&
+ 	       time_before(jiffies, reset_start_time + 2))
+ 		;
+-#endif /* !CONFIG_MACH_MX31ADS */
+ }
+ 
+ /* This is the real probe routine.
 -- 
 2.53.0
 
