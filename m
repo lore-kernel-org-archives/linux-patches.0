@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9BF328B7B;
-	Thu, 28 May 2026 20:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E11310620;
+	Thu, 28 May 2026 20:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001394; cv=none; b=SG0GLumIWs3lsURjhAkf0ILwI8wMpuCcsdoR0qHtT39t6/542K959zOL8ylS2DuiXC0WPc/WReIsu3VWp+i6uzyjLuWvBjLvrOz1Y9cuXg5EeqBrMCHwY1kOyoHGl3ias9VTf1W3m1SoZ+t1OfA9IwAo8jUsJJCz7vXmr0Nr0Ok=
+	t=1780001396; cv=none; b=sNHP26SrMpLZugFgezIcCr8ysoAsvqxQhi8s0onSw8w4dZNWfvXHs3PTs2C/DPJUSs1Z2vzBnOUI27G34rwRFC2SfL9SLWnAsWeix2ddJWBTw9ZLG1ITM63H25pdzmou9fmnRdbGBD5jyTeeEhzoQfE5nMvp+mOgKRbNmtgzzNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001394; c=relaxed/simple;
-	bh=GhO339xVaNlXsy0cnxKlu/GzADeKmkymFjL2bXIvTi8=;
+	s=arc-20240116; t=1780001396; c=relaxed/simple;
+	bh=f6b2Aqvmy2klYx6zSMFGVW/5AV9e9fmoAWKWWOEZwH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zat82tc5NPLtDJc/Ju+YqwUfpep7Csh75r5fpjSBiv6uROAr551BdP32SBxoiC7/Vj7gDeGVzo8V6v22ZkveXoxUh1X5omsLZ3PFC3dOThtMfIEkAVftNzIPXtAvMYahouRe5wX/Dwa0hKWfBSFUj2wgaWnu2rp/rhA/bda+ekQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vw5C5cKf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kXQaDFfFeNCf7ekOVWxZrTcbPGM1UUCa7mEfk84ioFqOJYqcmiXiG2g2qBDg6kIJH9EkaVj2KvDl9LQsUG+XSzBSNlLYko7MvwrLdZhKrmCQJu+mbLt6CAoteK9gJmhwey58r2k03gSpYX6UYjodu5R2zND0GmfjlVhANmz+8S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMPxX6rT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vw5C5cKf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1161B1F00A3A;
-	Thu, 28 May 2026 20:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMPxX6rT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CD01F000E9;
+	Thu, 28 May 2026 20:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001392;
-	bh=HTvqsQEVDETLFu7jjdfAHxkvs0TnJKBZh//8F8uTcvo=;
+	s=korg; t=1780001395;
+	bh=kcmC3Pjt2rXwAlMa2JFkJzDs6vO3zOhhgW+UVAKP4fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vw5C5cKf/Hu70FdZ2Hqv3Ly/pxpjBTLQ+HZz3tS1IWt7o4918wnxELNqzVjh6Xs17
-	 C0pradOEa++23TJ3HKRmyQjQzQoNG2s1ezPPFl0Hcc9FCi7QZ9fjAsP7SCm8sFMEsk
-	 jBQrY1cr27fluK+1AQzvidaND4746l0L1fcylYkg=
+	b=IMPxX6rT9/823xOlZAS4wynJ1d7IAL2mjU7D4l3p2XapOUd3k/nWq3kw1cMN5Kxan
+	 v50+bZoCOKcdc2g6Gq7IL9SYzEqyVYqHVsJz7OzwbsCf3O54Oz2CY/XryOMrkTZ1x3
+	 VuqD1W7pwcbfeoZEDdVgPnBjhQqeJxX3F9UbRNuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 074/186] drm/amd/display: Validate GPIO pin LUT table size before iterating
-Date: Thu, 28 May 2026 21:49:14 +0200
-Message-ID: <20260528194930.937479851@linuxfoundation.org>
+	Lanqing Liu <lanqing.liu@unisoc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 065/186] spi: sprd: fix error pointer deref after DMA setup failure
+Date: Thu, 28 May 2026 21:49:05 +0200
+Message-ID: <20260528194930.710202968@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -53,60 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 86d2b20644b11d21fe52c596e6e922b4590a3e3f upstream.
+commit 3d67fffb74267772d461c02c67f1eff893ad547d upstream.
 
-[Why&How]
-The GPIO pin table parsers in get_gpio_i2c_info() and
-bios_parser_get_gpio_pin_info() derive an element count from the VBIOS
-table_header.structuresize field, then iterate over gpio_pin[] entries.
-However, GET_IMAGE() only validates that the table header itself fits
-within the BIOS image. If the VBIOS reports a structuresize larger than
-the actual mapped data, the loop reads past the end of the BIOS image,
-causing an out-of-bounds read.
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-Fix this by calling bios_get_image() to validate that the full claimed
-structuresize is accessible within the BIOS image before entering the
-loop in both functions.
+Make sure to check the dma.enabled flag before trying to release the DMA
+channels also on late probe errors to avoid dereferencing an error
+pointer (or attempting to release a channel a second time).
 
-Assisted-by: GitHub Copilot:claude-opus-4-6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ba5e95b43b773ae1bf1f66ee6b31eb774e65afe3)
-Cc: stable@vger.kernel.org
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
+
+Fixes: 386119bc7be9 ("spi: sprd: spi: sprd: Add DMA mode support")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=10
+Cc: stable@vger.kernel.org	# 5.1
+Cc: Lanqing Liu <lanqing.liu@unisoc.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074733.915029-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/spi/spi-sprd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -488,6 +488,10 @@ static enum bp_result get_gpio_i2c_info(
- 			- sizeof(struct atom_common_table_header))
- 				/ sizeof(struct atom_gpio_pin_assignment);
+--- a/drivers/spi/spi-sprd.c
++++ b/drivers/spi/spi-sprd.c
+@@ -993,7 +993,8 @@ err_rpm_put:
+ disable_clk:
+ 	clk_disable_unprepare(ss->clk);
+ release_dma:
+-	sprd_spi_dma_release(ss);
++	if (ss->dma.enable)
++		sprd_spi_dma_release(ss);
+ free_controller:
+ 	spi_controller_put(sctlr);
  
-+	if (!bios_get_image(&bp->base, DATA_TABLES(gpio_pin_lut),
-+			    le16_to_cpu(header->table_header.structuresize)))
-+		return BP_RESULT_BADBIOSTABLE;
-+
- 	pin = (struct atom_gpio_pin_assignment *) header->gpio_pin;
- 
- 	for (table_index = 0; table_index < count; table_index++) {
-@@ -677,6 +681,11 @@ static enum bp_result bios_parser_get_gp
- 	count = (le16_to_cpu(header->table_header.structuresize)
- 			- sizeof(struct atom_common_table_header))
- 				/ sizeof(struct atom_gpio_pin_assignment);
-+
-+	if (!bios_get_image(&bp->base, DATA_TABLES(gpio_pin_lut),
-+			    le16_to_cpu(header->table_header.structuresize)))
-+		return BP_RESULT_BADBIOSTABLE;
-+
- 	for (i = 0; i < count; ++i) {
- 		if (header->gpio_pin[i].gpio_id != gpio_id)
- 			continue;
 
 
