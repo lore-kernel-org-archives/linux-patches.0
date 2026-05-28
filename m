@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1AD2EF652;
-	Thu, 28 May 2026 20:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C801DE4E0;
+	Thu, 28 May 2026 20:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000999; cv=none; b=eN4W2JaXGYZdjMfYgMfyyhM+erU2rDJ6ogjxXGZuOkPQXxh7s7vfh4VhB1NwCXoM/EQ8PPdVIkgMv8AF4SbAPTmBleEY/o0jbBSp5PHc+yJRaQ6JGwRr7BsulvbHdwdtIERfa3GbF+39ReQcgogDATMSJ7gTAa4THLaVmAZdRUw=
+	t=1780001002; cv=none; b=Xqufb/uPvnzT1O7I4R+vrg83d7ozB+E60humnMuelYeye/ih/KIh6RRbmq6fd3GaOD0J7HsZgijuL/Q+xYoxST3LXta/3Wyt3F4n8mBWE4V5XiDfzkIyznq3pITq+k5fq4uv8zOTs1vysvp0Sx01NtEhhdmCnnCBJ/mmdwWtgK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000999; c=relaxed/simple;
-	bh=fvBpg8xixQ84CnGiCGbLobzDjrvCob0JF+GealTZvQo=;
+	s=arc-20240116; t=1780001002; c=relaxed/simple;
+	bh=YFBD36gT0+rFy1m5CHIQg4RBD4ajWlpY6inFsD6XnIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JmGz/8kHCXTV06tbOpCH9L5CB8WbMflzbfjIV3gvXg60w8iftN1WyrVf61Q98QQkunoswqXcZzjO9YfjPlghR70dMLQjsjZP002OT7D2eSaheNjTYRoxkA+NznlFgdzor61RIn/mKTkhzNhVKqdHg2khNqMThonhZtYW8zaBP+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGDpR4g4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NL390oIs9p9Igdsmq6dUZiVQOdIhTJvSKjwfA/3ke0N/P9X7T9DAQlpKwI3PMy4m8OXoRnxpO9RoL9zw1jZfrAxOyUh4lf9PJ/kuO0tZYma6ICL+zCA8/danLz9jRv4bISN7XHyvJO9KDSHsPvmEDV7FSH+M2hUgz+8Fz/y4eTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUWx1RlV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGDpR4g4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD0D1F000E9;
-	Thu, 28 May 2026 20:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUWx1RlV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BACC1F000E9;
+	Thu, 28 May 2026 20:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000998;
-	bh=+Y9dByTESdEjxcC/2J991HzJp+siXogqO0at63APwOE=;
+	s=korg; t=1780001001;
+	bh=1Dypxq+kSlUI7in4I89ssLtvz5ZFn6VXC1zOIGbDe3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FGDpR4g4cSU3gtoYQEr/Ui2fI6X3VwEk7HWWGZEpYYPt9k58q0l3VcpW5UhrTEqWQ
-	 3gDXya++HDT3eE/LVOB8fwDnF4udDs7hUFPzkPjprtYigVqLvWsui/Qw8bI8W5N8rz
-	 aoEPFg34IY/zjPiv4I21uK12E24t2qVb9mUTjJMQ=
+	b=vUWx1RlV4Pdhi/+BBhyo+O6l5pZR+eddVpEUVZ8A/rgjljBCvFBRz/3RjB6U3cr/b
+	 iVBp+bxtOKNAs23/Q+fU3QJYCEo2Wd68zi/vjaFKhoDxh0vdPKFo8MC4JFTnyX+/do
+	 Wn3nUD/DiBdQf8h4wjbkv/aRjeY5+Dn5C8WAIWQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/272] kbuild: pacman-pkg: make "rc" releases adhere to pacman versioning scheme
-Date: Thu, 28 May 2026 21:50:17 +0200
-Message-ID: <20260528194635.944232855@linuxfoundation.org>
+Subject: [PATCH 6.12 208/272] wifi: ath10k: skip WMI and beacon transmission when device is wedged
+Date: Thu, 28 May 2026 21:49:42 +0200
+Message-ID: <20260528194635.056902813@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -47,52 +47,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 202550713128da20d9381d6d2dc0f6b73839f434 ]
+[ Upstream commit 54a5b38e4396530e5b2f12b54d3844e860ab6784 ]
 
-The package versioning scheme does not enable smooth upgrades from "rc"
-releases to the corresponding stable releases (e.g. 7.0.0-rc7 -> 7.0.0)
-because pacman considers that a downgrade due to the underscore in
-pkgver (e.g. 7.0.0_rc7), see e.g. vercmp(8) for an explanation of the
-package version comparison used by pacman. Package versions which are
-derived from said releases (e.g. built from git revisions) are
-similarly affected. Fix this by modifying pkgver in order to remove the
-hyphen from kernel versions containing "-rcN", where N is a
-non-negative integer.
+In ath10k_wmi_cmd_send(), the current code detects ATH10K_STATE_WEDGED
+and sets ret to -ESHUTDOWN, but still proceeds to transmit pending
+beacons and calls ath10k_wmi_cmd_send_nowait().
 
-Acked-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260515215913.92481-1-viktor_jaegerskuepper@freenet.de
-Fixes: c8578539deba ("kbuild: add script and target to generate pacman package")
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+This can lead to incorrect behavior, as WMI commands and beacons are
+still sent after the device has been marked as wedged, and the original
+-ESHUTDOWN return value may be overwritten by the result of the send
+path.
+
+The wedged state indicates the hardware is already unreliable, and no
+further interaction with firmware is expected or meaningful in this
+state.
+
+Fix this by skipping beacon transmission and the WMI send path entirely
+once ATH10K_STATE_WEDGED is detected, ensuring consistent return values
+and avoiding unnecessary firmware interaction.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00189
+
+Fixes: c256a94d1b1b ("wifi: ath10k: shutdown driver when hardware is unreliable")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260428061737.37-1-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/PKGBUILD | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/wmi.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/scripts/package/PKGBUILD b/scripts/package/PKGBUILD
-index dca706617adc7..e7a077d483347 100644
---- a/scripts/package/PKGBUILD
-+++ b/scripts/package/PKGBUILD
-@@ -10,7 +10,7 @@ for pkg in $_extrapackages; do
- 	pkgname+=("${pkgbase}-${pkg}")
- done
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index 408f062a4306f..c9f41309d18d4 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -3,7 +3,6 @@
+  * Copyright (c) 2005-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
--pkgver="${KERNELRELEASE//-/_}"
-+pkgver="$(echo "${KERNELRELEASE}" | sed 's/-\(rc[0-9]\+\)/\1/;s/-/_/g')"
- # The PKGBUILD is evaluated multiple times.
- # Running scripts/build-version from here would introduce inconsistencies.
- pkgrel="${KBUILD_REVISION}"
+@@ -1947,15 +1946,15 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
+ 			ret = -ESHUTDOWN;
+ 			ath10k_dbg(ar, ATH10K_DBG_WMI,
+ 				   "drop wmi command %d, hardware is wedged\n", cmd_id);
+-		}
+-		/* try to send pending beacons first. they take priority */
+-		ath10k_wmi_tx_beacons_nowait(ar);
++		} else {
++			/* try to send pending beacons first. they take priority */
++			ath10k_wmi_tx_beacons_nowait(ar);
+ 
+-		ret = ath10k_wmi_cmd_send_nowait(ar, skb, cmd_id);
+-
+-		if (ret && test_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags))
+-			ret = -ESHUTDOWN;
++			ret = ath10k_wmi_cmd_send_nowait(ar, skb, cmd_id);
+ 
++			if (ret && test_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags))
++				ret = -ESHUTDOWN;
++		}
+ 		(ret != -EAGAIN);
+ 	}), 3 * HZ);
+ 
 -- 
 2.53.0
 
