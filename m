@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91C2FD7C3;
-	Thu, 28 May 2026 20:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9A02F691F;
+	Thu, 28 May 2026 20:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998778; cv=none; b=jqNCqZk9A0RBxH0Vj8M3MBlseG9eKWBpsO4ORzxlJ+8c06Z0pRws1PobAsjuTOeltO+WS7PfMzY1zo2VDxF+6+8dDqrSj2WmDrgK+kl9qdOmI08DDyJcShAJtRwAOx6PpYQUc2x5pjT74Hj8GTnwHh7386CTvYjCPQ8puyLAEo0=
+	t=1779998781; cv=none; b=UZ8yElCiBz3xROZZ60R6NaTPolj8MSuXEBc0k1RrXSJ/isnIdxa48cnu5M6xIxwp2up6VlC3sTw9+HDjuYtl2cnqky8uoHnVxg/xAWL5WpHWhiXoDhgXkngVHjSRe4zarvaGFtxzh3YupcD8Kxk34d5XBkWSgoxwv53Ik2Ca6Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998778; c=relaxed/simple;
-	bh=Yl/diFDeOqC9hERiPHE85n5lZphmcp0V1RqWfbhcchA=;
+	s=arc-20240116; t=1779998781; c=relaxed/simple;
+	bh=3FwDDwme2MD56HGVV6GS7mMTtKNVZVSRcROXoTdgsFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBPOK4jspSrstjF7UyYGp0tudJu4tEKvb7d/hSlvX51yu74BFBpzCA1h6YSJEm/vHqAKA9wmRDcAYjYRxqnmO5GkQJWrVQNNobobR1HOL3+tv0wHjC36gdbrYcK8O12ukqvpCMimmh1jLob1lbglgKAiQtMhKWNFvwjmveoP+5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kE6lKUw8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QYCD9MjPqQAnkWY+3vghSERN2Pste4F0I1VMrLIzWCQj+ecRWGbLxIuvY3dWJnnmINsr0ce2pRA2ObpVANelQaLWiYTy+4nsmXuxFxqXDbeO8d9lJhrhlBMYnLb1S1y41aHn19HasK2RUNCjjI5jik3zQnFFu9pFdpP4FkiZN6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aj2wBlx4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kE6lKUw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242BE1F000E9;
-	Thu, 28 May 2026 20:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aj2wBlx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E400E1F000E9;
+	Thu, 28 May 2026 20:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998777;
-	bh=JrgeJwQvfwWwTJbNPyR+DeddSJ5NH9RzL7oeLVX2iWA=;
+	s=korg; t=1779998780;
+	bh=I0NfTFJcKtKeWLmyRZgnM3ImFi2tYu0q+XanW37wfDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kE6lKUw8ZW5vSyg6gypW6sskw8KG9HMHfdlLge2ypASahIkVSrc9X41I8zn/ytwJo
-	 3Xl0P1T/H33PEvtGmD4bwJrk5tk1QHDkfFnnRkXDnx9rhZsmSzYae2YBwXLB4X7tt2
-	 F0b5HyTjVUUPPMcGHzpJG7UE34jFCizPGaFgOPB8=
+	b=aj2wBlx4U49VYmWiY5nj6nl1NBElH9DmkDGfLeY19uTCJQeq5nhHkNbQoVdxwfBr+
+	 Nx+9liZiUJwsj9tNa3emiT59DfNC1xMOiLtq8GqqFxHmGQk3LVAX+40ej8ois64uPQ
+	 kji+aQVteUW7L8BwBlnsdBcl5BYYFJIa9ctZ0ZS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 294/461] drm/msm/dpu: fix UV scanlines calculation for YUV UBWC formats
-Date: Thu, 28 May 2026 21:47:03 +0200
-Message-ID: <20260528194655.727931432@linuxfoundation.org>
+Subject: [PATCH 7.0 295/461] drm/msm/dpu: Fix Kaanapali CWB register configuration
+Date: Thu, 28 May 2026 21:47:04 +0200
+Message-ID: <20260528194655.756888537@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,69 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Mahadevan P <mahadevan.p@oss.qualcomm.com>
 
-[ Upstream commit 933430f1709b089a0bf0b23ef0f047014ef899e7 ]
+[ Upstream commit d03279f0d9fdbe6f6761f191a76093c395930018 ]
 
-The UV scanlines is calculated with (height + 1) / 2 unlike
-the Y scanlines, add back the correct scanlines calculation
-for UBWC YUV formats.
+The Kaanapali DPU catalog defines kaanapali_cwb[] with the correct
+CWB base addresses for this platform (0x169200, 0x169600, 0x16a200,
+0x16a600), but the dpu_kaanapali_cfg struct was mistakenly pointing
+to sm8650_cwb instead. The SM8650 CWB blocks sit at completely
+different offsets (0x66200, 0x66600, 0x7E200, 0x7E600), so using
+them on Kaanapali would program CWB registers at wrong addresses,
+corrupting unrelated hardware blocks and breaking writeback capture.
 
-Fixes: 2f3ff6ab8f5c ("drm/msm/dpu: use standard functions in _dpu_format_populate_plane_sizes_ubwc()")
-Fixes: ada4a19ed21c ("drm/msm/dpu: rewrite _dpu_format_populate_plane_sizes_ubwc()")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fix this by pointing .cwb to the correct kaanapali_cwb array.
+
+Fixes: 83fe2cd56b1d ("drm/msm/dpu: Add support for Kaanapali DPU")
+Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/718309/
-Link: https://lore.kernel.org/r/20260414-topic-sm8x50-msm-dpu1-formats-qc10c-v1-1-0b62325b9030@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/721444/
+Link: https://lore.kernel.org/r/20260428-kaanapali_cwb-v1-1-51fdb2c65498@oss.qualcomm.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-index 6e8883dbfad43..590922c4f69bf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-@@ -61,7 +61,7 @@ static int _dpu_format_populate_plane_sizes_ubwc(
- 	bool meta = MSM_FORMAT_IS_UBWC(fmt);
- 
- 	if (MSM_FORMAT_IS_YUV(fmt)) {
--		unsigned int stride, sclines;
-+		unsigned int stride, y_sclines, uv_sclines;
- 		unsigned int y_tile_width, y_tile_height;
- 		unsigned int y_meta_stride, y_meta_scanlines;
- 		unsigned int uv_meta_stride, uv_meta_scanlines;
-@@ -77,23 +77,25 @@ static int _dpu_format_populate_plane_sizes_ubwc(
- 				y_tile_width = 32;
- 			}
- 
--			sclines = round_up(fb->height, 16);
-+			y_sclines = round_up(fb->height, 16);
-+			uv_sclines = round_up((fb->height+1)>>1, 16);
- 			y_tile_height = 4;
- 		} else {
- 			stride = round_up(fb->width, 128);
- 			y_tile_width = 32;
- 
--			sclines = round_up(fb->height, 32);
-+			y_sclines = round_up(fb->height, 32);
-+			uv_sclines = round_up((fb->height+1)>>1, 32);
- 			y_tile_height = 8;
- 		}
- 
- 		layout->plane_pitch[0] = stride;
- 		layout->plane_size[0] = round_up(layout->plane_pitch[0] *
--			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-+			y_sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
- 
- 		layout->plane_pitch[1] = stride;
- 		layout->plane_size[1] = round_up(layout->plane_pitch[1] *
--			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-+			uv_sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
- 
- 		if (!meta)
- 			return 0;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
+index 0b20401b04cf0..e3c47b6702f18 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
+@@ -481,7 +481,7 @@ const struct dpu_mdss_cfg dpu_kaanapali_cfg = {
+ 	.wb_count = ARRAY_SIZE(kaanapali_wb),
+ 	.wb = kaanapali_wb,
+ 	.cwb_count = ARRAY_SIZE(kaanapali_cwb),
+-	.cwb = sm8650_cwb,
++	.cwb = kaanapali_cwb,
+ 	.intf_count = ARRAY_SIZE(kaanapali_intf),
+ 	.intf = kaanapali_intf,
+ 	.vbif_count = ARRAY_SIZE(sm8650_vbif),
 -- 
 2.53.0
 
