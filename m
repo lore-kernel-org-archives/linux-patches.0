@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00F72459D1;
-	Thu, 28 May 2026 20:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D388260580;
+	Thu, 28 May 2026 20:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999325; cv=none; b=SeGsC5Ilmz3zI24LIVQ7bMqOVHAQa5ykFlWyfH080J1XyfNh2g1IM3nbVAYydBvKXwouPhhuvN3Y4cfWuSY/N+TrEIolP01qdtnzvjoEtHbaKwZ2H7iDhoXmhxjmc4f+X2KiiVVthE0FVykLSyrzTxTqd/5V5CUguIxsA3lgnuI=
+	t=1779999328; cv=none; b=kAIfeAo+ijXXjgdGN/FIVkA6u2JT1pvB18H+F6j6q45yoeJgDTOfsRbVD2fpnJXeaaRoVv6LEZU2cjOiiemkdFtW7sK1cCdwbSmBT4cYKcdL4+S32dRql03V8IjCxGAYq7hhcljADtAMud/h7ksjsbmpAdvLmf55NwMspKWC3Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999325; c=relaxed/simple;
-	bh=v9lJMt9WX7zrb6Ru/l4W/IkLlTB3mRRYfRDIRXAxExk=;
+	s=arc-20240116; t=1779999328; c=relaxed/simple;
+	bh=BCDqs1RoUYTF2kfBoAv92ElTtmWtZnkTuCZhVj50ezA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZ1E7DQd1GIVEPwv0kt77tl8deH34bfyPdes/DbhyeAUOOG4rLAhWx2StTMINDg4WRhiPrx36ciiVsD3oUKR+dw44FD14tFdRAkqIVLa8grpiMa4wQGHY+UrJgbSICnKVA9yECa+IZ3b9ezEKUR1rdeuhGACpj8bW+0Sd7HdTTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdwzsBzM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uT9WCu0o6sYf3XxslMX9KhxL67SpcH+Rf5S+erArWHxWohQddZyBNhGOqfZJOkL431hVPOAnZeFzi5jau9OP+SV8OuRQf5q+wOJ53Wuy6BomYF1+8vT+gphv31MoDybAqMh2mPRFzT9og1moTXYIOn8T4nBQyA3kgYoQYpdtTlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLLb6PDl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdwzsBzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB9A1F000E9;
-	Thu, 28 May 2026 20:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLLb6PDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5441F000E9;
+	Thu, 28 May 2026 20:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999324;
-	bh=bnZOcSkXCkUF1oZmAbKZO+dp+nvFBheH8V6599YfMm8=;
+	s=korg; t=1779999327;
+	bh=YC3sJvWfNUKkSPkzgB++DceERzvMS6CUSNmJGrtJfwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdwzsBzMPn3XPu7zqylz8TKgMi41DM6dy+cOzfYNEqDTuBg6urUsIfw3cLfF+6gyk
-	 BqVdKDofgRveQdiEMQ2p01nPu72fvxT/Jcy1aj7buvchLOplZvNFI/X4oOLz2+wCXI
-	 4qXLb0Ie9dgVOBhJg6+ikpvjnK/jgmNgCKObRGFw=
+	b=DLLb6PDlLTpO7AXSyGKLP0LVzTqnGDIy8/1HkzHT9HwwZKbgdkfPrsd1VTaGtLuxY
+	 rkEl9gR1ws+aBP6etZ/gi80EdQJP1qwoIcGTuXl9vlRt3U+np5Z5T9soC1Bhw4Ln3w
+	 ysEsyp/xH9P/h3ou40eo1DcdA25Oh4PAWY7MspY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	stable <stable@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 026/377] sysfs: dont remove existing directory on update failure
-Date: Thu, 28 May 2026 21:44:24 +0200
-Message-ID: <20260528194639.142626965@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 027/377] mm/damon/sysfs-schemes: call missing mem_cgroup_iter_break()
+Date: Thu, 28 May 2026 21:44:25 +0200
+Message-ID: <20260528194639.173506312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,43 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit 237557b8a81ab948e8332f7c0058e758f081c0a3 upstream.
+commit d4e7b5c4cc353f154d5ab8bb2e1ce7714d77a6e9 upstream.
 
-When sysfs_update_group() is called for a named group and create_files()
-fails (e.g. -ENOMEM), internal_create_group() calls kernfs_remove(kn) on
-the group directory.  In the update path, kn was obtained via
-kernfs_find_and_get() and refers to a directory that already existed
-before this call.  Removing it silently destroys a sysfs group that the
-caller did not create.
+damon_sysfs_memcg_path_to_id() breaks mem_cgroup_iter() loop without
+calling mem_cgroup_iter_break().  This leaks the cgroup reference.  Fix
+the issue by calling mem_cgroup_iter_break() before the break.
 
-Only remove the directory if we created it ourselves.  On update failure
-the directory remains as it is left empty by remove_files() inside
-create_files(), but can be repopulated by a retry.
+The issue was discovered [1] by Sashiko.
 
-Cc: Rajat Jain <rajatja@google.com>
-Fixes: c855cf2759d2 ("sysfs: Fix internal_create_group() for named group updates")
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/2026052003-uniquely-hastily-c093@gregkh
+Link: https://lore.kernel.org/20260426173625.86521-1-sj@kernel.org
+Link: https://lore.kernel.org/20260423004148.74722-1-sj@kernel.org [1]
+Fixes: 29cbb9a13f05 ("mm/damon/sysfs-schemes: implement scheme filters")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.3.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/sysfs/group.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/sysfs/group.c
-+++ b/fs/sysfs/group.c
-@@ -182,7 +182,7 @@ static int internal_create_group(struct
- 	kernfs_get(kn);
- 	error = create_files(kn, kobj, uid, gid, grp, update);
- 	if (error) {
--		if (grp->name)
-+		if (grp->name && !update)
- 			kernfs_remove(kn);
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2444,6 +2444,7 @@ static int damon_sysfs_memcg_path_to_id(
+ 		if (damon_sysfs_memcg_path_eq(memcg, path, memcg_path)) {
+ 			*id = mem_cgroup_id(memcg);
+ 			found = true;
++			mem_cgroup_iter_break(NULL, memcg);
+ 			break;
+ 		}
  	}
- 	kernfs_put(kn);
 
 
