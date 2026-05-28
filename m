@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1094FDDC5;
-	Thu, 28 May 2026 20:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40FF33372A;
+	Thu, 28 May 2026 20:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000083; cv=none; b=QCjjt9Ak21pZbPSMKNhIx8AHkz0HZW0KPuK9Ta1Qygu9PAm8jIjryiInwrFWZtLPunsFbSKWeg3kCXDf6/xIo8z9ubzrCQdKgqxJwpTas9W/tcYd/QUMkHb6ZK9ZXSmCUDi2IhVhzZuPKwYM7WGYIcjQnwX+ffrh0V5Y9E1wDpo=
+	t=1780000085; cv=none; b=a9MymUzr0f2MzwpYghSdpXdBr5QFG/ZPidaq8mOuTdC5ekXBtsJT+e6AVE3TWT4sudw7q2FyUvYd1LP7dTBuPFIa27LSO9DkuwgrX7H0nODyh/UGVwNbRkLwmDiX1vBfPsz53axf3dlDOqj5BGqxUXlGLuvKxMyJbXTcnPMBnOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000083; c=relaxed/simple;
-	bh=NI/TuPzzhnNE6q6R/GI/OLZLnLiYYIfMsh2Qf54Z9e0=;
+	s=arc-20240116; t=1780000085; c=relaxed/simple;
+	bh=alyutVkJSOC7Ja05iw9WcwiJTi3m7Xj600gNdZA8l3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dV8wODyDHBp77Nywdq0gbjvr1D7UFGp7tvLOJJ70arZHhfVGyv7I+m3stIn4K4PANXh7A34JtlQ6TZ9UgaaNQ0F1qqSxiG8WmbyjMFvzCe1xLudF/GacoQZSRtAHeWsI2+R25CWbo4ctU9C+QZsjDgpdQLVxmCZWu6L0165FRzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAqUHtad; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bIUSWbQDgWAosUHCKLW/J4WaSQFugLugkmJXDUOtMCuughBcLLHpplEcCMgHQvJ06sUQZfTVpR/z4O8QpzFbKJryC+z40ZM6IizNIEI5yR5PSQf/vv5tQ9nW0DklBk+B9KTTPerH/x8O6HZ2vtA/7+cWABhVqfm01TujodDdXL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVuekXn/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAqUHtad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7506F1F00A3A;
-	Thu, 28 May 2026 20:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVuekXn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDE91F000E9;
+	Thu, 28 May 2026 20:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000082;
-	bh=PYTR/gXKhhuItNTRB256tHAR1k3ZRdmRwlbs9mWg9mo=;
+	s=korg; t=1780000084;
+	bh=FB31kwr92R6JcK3Va6SPxJFNcOum3DEYciOCmmhRsoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAqUHtadXsevFD+aZoygZdJjv8d6dzFM8EXgH3QVRHk4Mscs+ibHk9RXAz92vqxw4
-	 YjarT+Eyv4CCGpFpmQYTJ75lVnn0diQ3o9Yi9PUx9HK+HqD1852KwYbpo8mDk7leI1
-	 qg0DxZkEnkurNyFsh1+kFgUnIPvsbnq61pBERCds=
+	b=bVuekXn/n1hBvzhLgjChvnkRR6XeLm8tZrk8e0EBM7LSijpsZVbG6vMi49enSSqZP
+	 QOf7f3GZLdmVBfr4R6CuKuvTTeNCeyKfNoYvk8lKhbcQHsdPzqJ4wTpP2bA0Mey81p
+	 yzG706K5Pajs2ulWciyqEB1XyL7SawelMNTGQ7nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 296/377] vsock/virtio: fix zerocopy completion for multi-skb sends
-Date: Thu, 28 May 2026 21:48:54 +0200
-Message-ID: <20260528194646.923171568@linuxfoundation.org>
+Subject: [PATCH 6.18 297/377] btrfs: add macros to facilitate printing of keys
+Date: Thu, 28 May 2026 21:48:55 +0200
+Message-ID: <20260528194646.952366134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,166 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ae38d9179190a956e2a87a69ef1dd6f451b51c4d ]
+[ Upstream commit 95de4b097e25225d4deb5a33a4bfc27bb441f2d8 ]
 
-When a large message is fragmented into multiple skbs, the zerocopy
-uarg is only allocated and attached to the last skb in the loop.
-Non-final skbs carry pinned user pages with no completion tracking,
-so the kernel has no way to notify userspace when those pages are safe
-to reuse. If the loop breaks early the uarg is never allocated at all,
-leaking pinned pages with no completion notification.
+There's a lot of places where we need to print a key, and it's tiresome
+to type the format specifier, typically "(%llu %u %llu)", as well as
+passing 3 arguments to a prink family function (key->objectid, key->type,
+key->offset).
 
-Fix this by following the approach used by TCP: allocate the zerocopy
-uarg (if not provided by the caller) before the send loop and attach
-it to every skb via skb_zcopy_set(), which takes a reference per skb.
-Each skb's completion properly decrements the refcount, and the
-notification only fires after the last skb is freed.
-On failure, if no data was sent, the uarg is cleanly aborted via
-net_zcopy_put_abort().
+So add a couple macros for this just like we have for csum values in
+btrfs_inode.h (CSUM_FMT and CSUM_FMT_VALUE).
 
-This issue was initially discovered by sashiko while reviewing commit
-1cb36e252211 ("vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting")
-but was pre-existing.
+This also ensures that we consistently print a key in the same format,
+always as "(%llu %llu %llu)", which is the most common format we use, but
+we have a few variations such as "[%llu %llu %llu]" for no good reason.
 
-Fixes: 581512a6dc93 ("vsock/virtio: MSG_ZEROCOPY flag support")
-Closes: https://sashiko.dev/#/patchset/20260420132051.217589-1-sgarzare%40redhat.com
-Reported-by: Maher Azzouzi <maherazz04@gmail.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Link: https://patch.msgid.link/20260514092948.268720-1-sgarzare@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch introduces the macros while the next one makes use of it.
+This is to ease backports of future patches, since then we can backport
+this patch which is simple and short and then backport those future
+patches, as the next patch in the series that makes use of these new
+macros is quite large and may have some dependencies.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 1e92637722ae ("btrfs: check for subvolume before deleting squota qgroup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 83 ++++++++++---------------
- 1 file changed, 34 insertions(+), 49 deletions(-)
+ fs/btrfs/fs.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 65e2b24892346..ed42e08798a96 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -72,34 +72,6 @@ static bool virtio_transport_can_zcopy(const struct virtio_transport *t_ops,
- 	return true;
- }
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index 37aa8d141a83d..acdb9e52f6fd7 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -73,6 +73,9 @@ struct btrfs_space_info;
+ #define BTRFS_SUPER_INFO_SIZE			4096
+ static_assert(sizeof(struct btrfs_super_block) == BTRFS_SUPER_INFO_SIZE);
  
--static int virtio_transport_init_zcopy_skb(struct vsock_sock *vsk,
--					   struct sk_buff *skb,
--					   struct msghdr *msg,
--					   size_t pkt_len,
--					   bool zerocopy)
--{
--	struct ubuf_info *uarg;
--
--	if (msg->msg_ubuf) {
--		uarg = msg->msg_ubuf;
--		net_zcopy_get(uarg);
--	} else {
--		struct ubuf_info_msgzc *uarg_zc;
--
--		uarg = msg_zerocopy_realloc(sk_vsock(vsk),
--					    pkt_len, NULL, false);
--		if (!uarg)
--			return -1;
--
--		uarg_zc = uarg_to_msgzc(uarg);
--		uarg_zc->zerocopy = zerocopy ? 1 : 0;
--	}
--
--	skb_zcopy_init(skb, uarg);
--
--	return 0;
--}
--
- static int virtio_transport_fill_skb(struct sk_buff *skb,
- 				     struct virtio_vsock_pkt_info *info,
- 				     size_t len,
-@@ -319,8 +291,10 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 	u32 src_cid, src_port, dst_cid, dst_port;
- 	const struct virtio_transport *t_ops;
- 	struct virtio_vsock_sock *vvs;
-+	struct ubuf_info *uarg = NULL;
- 	u32 pkt_len = info->pkt_len;
- 	bool can_zcopy = false;
-+	bool have_uref = false;
- 	u32 rest_len;
- 	int ret;
- 
-@@ -362,6 +336,25 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 		if (can_zcopy)
- 			max_skb_len = min_t(u32, VIRTIO_VSOCK_MAX_PKT_BUF_SIZE,
- 					    (MAX_SKB_FRAGS * PAGE_SIZE));
++#define BTRFS_KEY_FMT			"(%llu %u %llu)"
++#define BTRFS_KEY_FMT_VALUE(key)	(key)->objectid, (key)->type, (key)->offset
 +
-+		if (info->msg->msg_flags & MSG_ZEROCOPY &&
-+		    info->op == VIRTIO_VSOCK_OP_RW) {
-+			uarg = info->msg->msg_ubuf;
-+
-+			if (!uarg) {
-+				uarg = msg_zerocopy_realloc(sk_vsock(vsk),
-+							    pkt_len, NULL, false);
-+				if (!uarg) {
-+					virtio_transport_put_credit(vvs, pkt_len);
-+					return -ENOMEM;
-+				}
-+
-+				if (!can_zcopy)
-+					uarg_to_msgzc(uarg)->zerocopy = 0;
-+
-+				have_uref = true;
-+			}
-+		}
- 	}
- 
- 	rest_len = pkt_len;
-@@ -380,27 +373,7 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 			break;
- 		}
- 
--		/* We process buffer part by part, allocating skb on
--		 * each iteration. If this is last skb for this buffer
--		 * and MSG_ZEROCOPY mode is in use - we must allocate
--		 * completion for the current syscall.
--		 *
--		 * Pass pkt_len because msg iter is already consumed
--		 * by virtio_transport_fill_skb(), so iter->count
--		 * can not be used for RLIMIT_MEMLOCK pinned-pages
--		 * accounting done by msg_zerocopy_realloc().
--		 */
--		if (info->msg && info->msg->msg_flags & MSG_ZEROCOPY &&
--		    skb_len == rest_len && info->op == VIRTIO_VSOCK_OP_RW) {
--			if (virtio_transport_init_zcopy_skb(vsk, skb,
--							    info->msg,
--							    pkt_len,
--							    can_zcopy)) {
--				kfree_skb(skb);
--				ret = -ENOMEM;
--				break;
--			}
--		}
-+		skb_zcopy_set(skb, uarg, NULL);
- 
- 		virtio_transport_inc_tx_pkt(vvs, skb);
- 
-@@ -424,6 +397,18 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- 
- 	virtio_transport_put_credit(vvs, rest_len);
- 
-+	/* msg_zerocopy_realloc() initializes the ubuf_info refcnt to 1.
-+	 * skb_zcopy_set() increases it for each skb, so we can drop that
-+	 * initial reference to keep it balanced.
-+	 */
-+	if (have_uref) {
-+		if (rest_len == pkt_len)
-+			/* No data sent, abort the notification. */
-+			net_zcopy_put_abort(uarg, true);
-+		else
-+			net_zcopy_put(uarg);
-+	}
-+
- 	/* Return number of bytes, if any data has been sent. */
- 	if (rest_len != pkt_len)
- 		ret = pkt_len - rest_len;
+ /*
+  * Number of metadata items necessary for an unlink operation:
+  *
 -- 
 2.53.0
 
