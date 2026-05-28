@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8BBDDC5;
-	Thu, 28 May 2026 20:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE3E317163;
+	Thu, 28 May 2026 20:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999904; cv=none; b=MbPf3VrNMRLqnuAUZ77To+Z53KUAfcbrhKBONzuAz0X8YW0f/4flBR9GGVQMyfAe+FkUEKk2ir5ooyfBYwdH+rqc1zZqc8HBtSOHOzn+NcubtySYQTKP6O0CK+VqO1tHgscKuDA+R7YL2BToQMYj/Wf0o7lOML0UsFhK8X9tb5g=
+	t=1779999907; cv=none; b=nlxoAbN1VHa2svrdElIh083oKbmgkfxiQZ4myTGiGSAAbKYxgawFZ0L99oMmhDER0VMlWHb1+QWG3yB/esvHqvrWxFj9eJp7r8kHChaI5lBMv54OEmEIuxK4S3bj8sHIe5s6f2YkuomFtaKq822ZbHLeoa18afKIC7vqSYVIwDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999904; c=relaxed/simple;
-	bh=9qEwe7LoafPNCbjuJDrLPUMDk/2iWbdSAKD6gTlJlI4=;
+	s=arc-20240116; t=1779999907; c=relaxed/simple;
+	bh=xbEFcRxjvANkkqGJKF55vDB1KI683VgX+k253uFBsko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eH5SPp+X9HbhNz+YsHIvBYsA8vZscJzKUa2a5rMNv02EDhRk0oaSlYly3N8Isttc97iyZ9V3c7UDXF9Q2C4Edi+JWXjFnu0vd2f9PCD9kBbEdEydmovpo17bLkNGwcyhWCxYHiEFO2EY/ydr0lRsCwEVhhYUfEzvrwt+wSNtA/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLuZI+aR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E9RHwNAcCmJwlviPqGkEyCeycoaf6xZe/zc1o5WrSAmHqFrJfZO3PCE/nglcehcaWFnGCR9MiJ/EOoqPnNd+93OsV242sBcbT0u0D5Ho5TDeNmHUCwmjOSk2x4hXd41jgkeLILNka5HPd2xAKf64pKIVgL1dbKUbW8rX74ChLss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWJwnbnF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLuZI+aR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC071F000E9;
-	Thu, 28 May 2026 20:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWJwnbnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA59C1F00A3E;
+	Thu, 28 May 2026 20:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999903;
-	bh=8RsKRY9SEiFTs4pVVCVy23hNLzPnZNXsEDDrSc4yCl0=;
+	s=korg; t=1779999906;
+	bh=ufMsBYODA3dw/WXVH2VDVxgnNIhCk1eKuDLOHfVVu0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLuZI+aRz5h7g8x9HM3ugovsu8IOzHVrJm2OYeVwXFfP5JmviLIp3YruJlUvtcBP/
-	 ZAl1hCA1ftK8W+pbO2ROorDOgLMjdwyllZSbcOAlxYOTBwFyv+dy/6MLxE5/vlI5Rs
-	 QHxCoDDRuoJVBZn0VxLsSvviITe/gGB3ZI8fVvWg=
+	b=qWJwnbnF4NysCHQlLI97VIHT1AoyasEETecleciAfuO5/30W3evXxh0AgHHHIxeXe
+	 OecE2cTTj+4JvoNTcYcblLVX9t+Tyh0M9hIc3Y87U+XfISPPQlpVzR86Rbw2QjdpYn
+	 eVUtDsceBUoNvkHiik+fpkjT4ReSBB/CgphcElEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhao Fu <sfual@cse.ust.hk>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/377] ALSA: hda: cs35l41: Put ACPI device on missing physical node
-Date: Thu, 28 May 2026 21:47:14 +0200
-Message-ID: <20260528194644.082968619@linuxfoundation.org>
+Subject: [PATCH 6.18 197/377] btrfs: tracepoints: fix sleep while in atomic context in btrfs_sync_file()
+Date: Thu, 28 May 2026 21:47:15 +0200
+Message-ID: <20260528194644.110591197@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,46 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit fca7401fe37f7abc6e54147ea560f37279231137 ]
+[ Upstream commit c73370c677646e86fc4b1780fb07027bdf847375 ]
 
-acpi_dev_get_first_match_dev() returns a refcounted ACPI device and
-callers must balance it with acpi_dev_put().
+The trace event btrfs_sync_file() is called in an atomic context (all trace
+events are) and its call to dput(), which is needed due to the call to
+dget_parent(), can sleep, triggering a kernel splat.
 
-cs35l41_hda_read_acpi() stores the returned ACPI device in
-cs35l41->dacpi. That reference is normally released by the later
-probe cleanup or the remove path, but the NULL-check on
-physdev exits before either of those paths can run.
+This can be reproduced by enabling the trace event and running btrfs/056
+from fstests for example. The splat shown in dmesg is the following:
 
-Drop the lookup reference before returning -ENODEV.
+  [53.919] BUG: sleeping function called from invalid context at fs/dcache.c:970
+  [53.947] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 32773, name: xfs_io
+  [53.988] preempt_count: 2, expected: 0
+  [53.967] RCU nest depth: 0, expected: 0
+  [53.943] Preemption disabled at:
+  [53.944] [<0000000000000000>] 0x0
+  [54.078] CPU: 0 UID: 0 PID: 32773 Comm: xfs_io Tainted: G        W           7.1.0-rc1-btrfs-next-232+ #1 PREEMPT(full)
+  [54.070] Tainted: [W]=WARN
+  [54.071] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [54.072] Call Trace:
+  [54.074]  <TASK>
+  [54.076]  dump_stack_lvl+0x56/0x80
+  [54.079]  __might_resched.cold+0xd6/0x10f
+  [54.072]  dput.part.0+0x24/0x110
+  [54.078]  trace_event_raw_event_btrfs_sync_file+0x75/0x140 [btrfs]
+  [54.089]  btrfs_sync_file+0x1ed/0x530 [btrfs]
+  [54.087]  ? __handle_mm_fault+0x8ae/0xed0
+  [54.089]  btrfs_do_write_iter+0x172/0x210 [btrfs]
+  [54.091]  vfs_write+0x21f/0x450
+  [54.094]  __x64_sys_pwrite64+0x8d/0xc0
+  [54.096]  ? do_user_addr_fault+0x20c/0x670
+  [54.099]  do_syscall_64+0x60/0xf20
+  [54.092]  ? clear_bhb_loop+0x60/0xb0
+  [54.094]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: c34b04cc6178 ("ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_hda_read_acpi()")
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Tested-by: Simon Trimmer <simont@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260428081238.GA1659932@chcpu16
+So stop using dget_parent() and dput() and access the parent dentry
+directly as dentry->d_parent. This is also what ext4 is doing in
+its equivalent trace event ext4_sync_file_enter().
+
+Fixes: a85b46db143f ("btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cs35l41_hda.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/trace/events/btrfs.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda.c b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-index 21e00055c0c44..47263c5a021cb 100644
---- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-@@ -1901,8 +1901,10 @@ static int cs35l41_hda_read_acpi(struct cs35l41_hda *cs35l41, const char *hid, i
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 0864700f76e0a..fa090a455037a 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -771,10 +771,8 @@ TRACE_EVENT(btrfs_sync_file,
+ 	TP_fast_assign(
+ 		struct dentry *dentry = file_dentry(file);
+ 		struct inode *inode = file_inode(file);
+-		struct dentry *parent = dget_parent(dentry);
+-		struct inode *parent_inode = d_inode(parent);
++		struct inode *parent_inode = d_inode(dentry->d_parent);
  
- 	cs35l41->dacpi = adev;
- 	physdev = get_device(acpi_get_first_physical_node(adev));
--	if (!physdev)
-+	if (!physdev) {
-+		acpi_dev_put(adev);
- 		return -ENODEV;
-+	}
- 
- 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
- 	if (IS_ERR(sub))
+-		dput(parent);
+ 		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+ 		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
 -- 
 2.53.0
 
