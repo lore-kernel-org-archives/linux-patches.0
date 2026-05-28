@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE5C2E7379;
-	Thu, 28 May 2026 20:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113DF1EA65;
+	Thu, 28 May 2026 20:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999988; cv=none; b=NNepGgVVzTA/8dpp7av5NLICwJAxDlFQTxoREqqjm7TAvbFRuvXtQkGQiCHcf3UPS9U+sRwv1i5C51cmWIEE3DeL0H2gy+SJp2O59RKMMLvgF//oPerRAP3nCUCzyNoF1YiwsdYQuv4k0gvPrC7U8Yw7PlxqUD683V9C2czvQrM=
+	t=1779999992; cv=none; b=ZpoMeFgaqhIizs/XgXUHWW0KqtPlWcVapWW8lXqHTsvImxvogwCh6hzAMIOzVV+kNCt1NIR0P661h84v1i3XjbZKVRfjCi3B487QUHyWoKJ57YrHUvKx8sSPOx9UgM4SmHT+CSoykNoQwAoNI01vS4qetj4rvwG90DtHE9d6ZPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999988; c=relaxed/simple;
-	bh=N6kki3N0OrmkmWBvoSKkPkyMy+oJM7brlkM8uo2meDY=;
+	s=arc-20240116; t=1779999992; c=relaxed/simple;
+	bh=TbRVQiH2AiUbR0aqdDk0B+Ir6ltRo3nxUKDHbyGdz0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ie+oBhtPzotVqhfItL9rRbRCx7K93kw3DxJHW9WS7zT3Jv1SFzZhG0OumWO7ilcvcgaHHDNUC3MOgQgYXWgCFCX+CKA79wyI2H31IfOgWBgS8G2qOp0prpMcm2O8eeVqSBH76Ho9FwrafZ367DIRnb97OlHwARIahTE4zEDghPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZdpQxZJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZEYdu4xeLMVkRUDDG1ZWehKZU8iCIRkLlBJTTPc/49y6XDBybL7vTu7zvQdwoiZpTpAdn99hTFJwW27hK8JLncAFE0KT3v6heAKgLDtHcdk7LB3jAw/WZtLnNOwXTLCp7T0aPO5YcTXGp11krBOvxtzScDp2OwpGFFWWLg2JWAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqAECwTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZdpQxZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC5D1F000E9;
-	Thu, 28 May 2026 20:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqAECwTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0B61F000E9;
+	Thu, 28 May 2026 20:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999987;
-	bh=cmKy8iJMptucssGxpFNd58fGGR+sdgSigUXMSEPfZTA=;
+	s=korg; t=1779999990;
+	bh=t7RHw49AWXEn2GGoTxjG+ibOwK36pPc3pGuIo4A3Loo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZdpQxZJp+1bXA4d2h4lWNyxqTIZ7JJr0G9yhBbagg1ac0kvHEvsokQhWXWmdOVt2
-	 mi9iOlFwEcyNtATfhJ3QiPNDkA8lr5d3h7ordJysAHXHsZX1DGc70sSeAxn6Dpn399
-	 BY0n/5nVu2jQYpdoxkaZkSqhvfbwQZDde/BYdWdg=
+	b=dqAECwTtEFOvClDUKMJ403xuKaDf+zpNobehSYnI/hAR5zOieXnSfStkaaOBfgJC7
+	 kZOQ/oT9vzuwMlvwe2NjvdxLO4hjaIkR+jwsIAXvZdnHW754h0pTgdemWkxN3GrcGo
+	 uNfpdO+9X+NDNhDyTbWmqqEvwakCfnA9CcM3pFgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 261/377] net: shaper: fix undersized reply skb allocation in GROUP command
-Date: Thu, 28 May 2026 21:48:19 +0200
-Message-ID: <20260528194645.927861171@linuxfoundation.org>
+Subject: [PATCH 6.18 262/377] net: shaper: reject handle IDs exceeding internal bit-width
+Date: Thu, 28 May 2026 21:48:20 +0200
+Message-ID: <20260528194645.955822130@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,68 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0f9a857e34d0f8c018a3e4435c6f0e92e8d2f38c ]
+[ Upstream commit 8d5806c600fddb907ebe378f9c366d4b52ac3a39 ]
 
-net_shaper_group_send_reply() writes both the NET_SHAPER_A_IFINDEX
-attribute (via net_shaper_fill_binding()) and the nested
-NET_SHAPER_A_HANDLE attribute (via net_shaper_fill_handle()), but
-the reply skb at the call site in net_shaper_nl_group_doit() is
-allocated using net_shaper_handle_size(), which only accounts for
-the nested handle.
+net_shaper_parse_handle() reads the user-supplied handle ID via
+nla_get_u32(), accepting the full u32 range. However, the xarray key
+is built by net_shaper_handle_to_index() using
+FIELD_PREP(NET_SHAPER_ID_MASK, handle->id), where NET_SHAPER_ID_MASK
+is GENMASK(25, 0) - only 26 bits wide. FIELD_PREP silently masks off
+the upper bits at runtime. A user-supplied NODE id like 0x04000123
+becomes id 0x123.
 
-The allocation is therefore short by nla_total_size(sizeof(u32))
-(8 bytes) for the IFINDEX attribute.  In practice the slab allocator
-rounds up the small allocation so the bug is latent, but the size
-accounting is wrong and could bite if the reply grew further.
+Additionally, a user-supplied id equal to NET_SHAPER_ID_UNSPEC
+(0x03FFFFFF, which is NET_SHAPER_ID_MASK itself) would collide with
+the sentinel used internally by the group operation to signal
+"allocate a new NODE id".
 
-Introduce net_shaper_group_reply_size() that accounts for the full
-reply payload and use it both at the genlmsg_new() call site and in
-the defensive WARN_ONCE message.
+Reject user-supplied IDs >= NET_SHAPER_ID_MASK (i.e., >= 0x03FFFFFF)
+in the policy.
 
-Fixes: 5d5d4700e75d ("net-shapers: implement NL group operation")
+Fixes: 4b623f9f0f59 ("net-shapers: implement NL get operation")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260510192904.3987113-7-kuba@kernel.org
+Link: https://patch.msgid.link/20260510192904.3987113-9-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ Documentation/netlink/specs/net_shaper.yaml | 7 +++++++
+ net/shaper/shaper.c                         | 4 +++-
+ net/shaper/shaper_nl_gen.c                  | 7 ++++++-
+ net/shaper/shaper_nl_gen.h                  | 2 ++
+ 4 files changed, 18 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/netlink/specs/net_shaper.yaml b/Documentation/netlink/specs/net_shaper.yaml
+index 3f2ad772b64b1..de01f922040a5 100644
+--- a/Documentation/netlink/specs/net_shaper.yaml
++++ b/Documentation/netlink/specs/net_shaper.yaml
+@@ -33,6 +33,11 @@ doc: |
+   @cap-get operation.
+ 
+ definitions:
++  -
++    type: const
++    name: max-handle-id
++    value: 0x3fffffe
++    scope: kernel
+   -
+     type: enum
+     name: scope
+@@ -140,6 +145,8 @@ attribute-sets:
+       -
+         name: id
+         type: u32
++        checks:
++          max: max-handle-id
+         doc: |
+           Numeric identifier of a shaper. The id semantic depends on
+           the scope. For @queue scope it's the queue id and for @node
 diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index ee0d1f0613430..5338842122a2a 100644
+index 5338842122a2a..b2d85963243fa 100644
 --- a/net/shaper/shaper.c
 +++ b/net/shaper/shaper.c
-@@ -90,6 +90,12 @@ static int net_shaper_handle_size(void)
- 			      nla_total_size(sizeof(u32)));
- }
+@@ -21,6 +21,8 @@
  
-+static int net_shaper_group_reply_size(void)
-+{
-+	return nla_total_size(sizeof(u32)) +	/* NET_SHAPER_A_IFINDEX */
-+	       net_shaper_handle_size();	/* NET_SHAPER_A_HANDLE */
-+}
+ #define NET_SHAPER_ID_UNSPEC NET_SHAPER_ID_MASK
+ 
++static_assert(NET_SHAPER_ID_UNSPEC == NET_SHAPER_MAX_HANDLE_ID + 1);
 +
- static int net_shaper_fill_binding(struct sk_buff *msg,
- 				   const struct net_shaper_binding *binding,
- 				   u32 type)
-@@ -1228,7 +1234,7 @@ static int net_shaper_group_send_reply(struct net_shaper_binding *binding,
- free_msg:
- 	/* Should never happen as msg is pre-allocated with enough space. */
- 	WARN_ONCE(true, "calculated message payload length (%d)",
--		  net_shaper_handle_size());
-+		  net_shaper_group_reply_size());
- 	nlmsg_free(msg);
- 	return -EMSGSIZE;
- }
-@@ -1276,7 +1282,7 @@ int net_shaper_nl_group_doit(struct sk_buff *skb, struct genl_info *info)
- 	/* Prepare the msg reply in advance, to avoid device operation
- 	 * rollback on allocation failure.
- 	 */
--	msg = genlmsg_new(net_shaper_handle_size(), GFP_KERNEL);
-+	msg = genlmsg_new(net_shaper_group_reply_size(), GFP_KERNEL);
- 	if (!msg) {
- 		ret = -ENOMEM;
- 		goto free_leaves;
+ struct net_shaper_hierarchy {
+ 	struct xarray shapers;
+ };
+@@ -360,7 +362,7 @@ static int net_shaper_pre_insert(struct net_shaper_binding *binding,
+ 	    handle->id == NET_SHAPER_ID_UNSPEC) {
+ 		u32 min, max;
+ 
+-		handle->id = NET_SHAPER_ID_MASK - 1;
++		handle->id = NET_SHAPER_MAX_HANDLE_ID;
+ 		max = net_shaper_handle_to_index(handle);
+ 		handle->id = 0;
+ 		min = net_shaper_handle_to_index(handle);
+diff --git a/net/shaper/shaper_nl_gen.c b/net/shaper/shaper_nl_gen.c
+index c52abf13ff0c9..16ab88f5eb7b4 100644
+--- a/net/shaper/shaper_nl_gen.c
++++ b/net/shaper/shaper_nl_gen.c
+@@ -10,10 +10,15 @@
+ 
+ #include <uapi/linux/net_shaper.h>
+ 
++/* Integer value ranges */
++static const struct netlink_range_validation net_shaper_a_handle_id_range = {
++	.max	= NET_SHAPER_MAX_HANDLE_ID,
++};
++
+ /* Common nested types */
+ const struct nla_policy net_shaper_handle_nl_policy[NET_SHAPER_A_HANDLE_ID + 1] = {
+ 	[NET_SHAPER_A_HANDLE_SCOPE] = NLA_POLICY_MAX(NLA_U32, 3),
+-	[NET_SHAPER_A_HANDLE_ID] = { .type = NLA_U32, },
++	[NET_SHAPER_A_HANDLE_ID] = NLA_POLICY_FULL_RANGE(NLA_U32, &net_shaper_a_handle_id_range),
+ };
+ 
+ const struct nla_policy net_shaper_leaf_info_nl_policy[NET_SHAPER_A_WEIGHT + 1] = {
+diff --git a/net/shaper/shaper_nl_gen.h b/net/shaper/shaper_nl_gen.h
+index 1e20eebdedd71..3e5e7342ffbbc 100644
+--- a/net/shaper/shaper_nl_gen.h
++++ b/net/shaper/shaper_nl_gen.h
+@@ -11,6 +11,8 @@
+ 
+ #include <uapi/linux/net_shaper.h>
+ 
++#define NET_SHAPER_MAX_HANDLE_ID	67108862
++
+ /* Common nested types */
+ extern const struct nla_policy net_shaper_handle_nl_policy[NET_SHAPER_A_HANDLE_ID + 1];
+ extern const struct nla_policy net_shaper_leaf_info_nl_policy[NET_SHAPER_A_WEIGHT + 1];
 -- 
 2.53.0
 
