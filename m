@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FD12E7379;
-	Thu, 28 May 2026 20:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5F2DDC5;
+	Thu, 28 May 2026 20:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000035; cv=none; b=mp0p25diQO/WIQtSlokAdb53DYrcOQfmWvxZv1iuT8B26b/hgO55wXHW3aXzcEjPQmh0vv/FHf/Bt6FKxf/aGyvUTrIQO83hkFJrZ1GEn1B0gcAyCAVVodSyy8vgLuG8PnKEbui78Xsm+HxGFghB+0nfAWVXMazaWbluTYz8IcI=
+	t=1780000038; cv=none; b=XykF1FAN78poRO04Lf/JU6EsowsrUJyxn66Ur3qC3HT9ZJLrhx5oHIfs/X6TutJ+2Kj5xJ6x8hkgAnzTorlzhFVLjgo+mNypJo1adFjc4IjKbW7fo9WLZZTH0kXBQNhMaelZzZHx0H6YxOwIhr0cqMeHWZ9OS2igS8tia6pd9Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000035; c=relaxed/simple;
-	bh=JJvOLt47s883xP3jKJS4Pkf9sHPWvgl+QvZpn9ljvmM=;
+	s=arc-20240116; t=1780000038; c=relaxed/simple;
+	bh=qBumcJqSkj3vqfNxb41qNI+TejzYzEoGH66UzfSY/VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P38V8hJ2tgJ3RdyceP4GAq2614/ERB+61haLGXR03vAaHbJEmejiaAtJqGSF4y6NmnlSxnUCsdJ/3xm5HNgLgvKI+Cn33IEAWMxjkbSV6pA+Ku1BjNn2nTMcCtNBoFrEr1EEl+qU5mU3tWQxfF3R02nxXmDFybKg5rvenr/mIOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVUR8yXB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g24QSnxSGOPtfNtuay6ODxjH40IZmw3Geq4qJC3Vgvl3A3uUJKMrFBxefICGYC3KT97QI5umRVFDNP9tgnm1Z0gr/CTQGeAu0hrOsW//3VFlfEesDx6L/KqcJt3961TtmT65e00uny6/5/UpNNsyr6FNEQh74RiY1dsk6SjJ3cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7BkS/uy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVUR8yXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36481F000E9;
-	Thu, 28 May 2026 20:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7BkS/uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4E21F000E9;
+	Thu, 28 May 2026 20:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000034;
-	bh=NDUIFfJ2dlj9L7Eq7T72zx/QpquKXMtAeYpHUvpjv3M=;
+	s=korg; t=1780000037;
+	bh=/r3sNyl9ZZJ04FAzVcAkHBxYW/16Y4jEFB80Kszkgfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MVUR8yXBWmMdHX5j7fvPO8uC9zh8d7f33tMAq/yzYxD3Rxq/5cGHv4muUBn1nmwJS
-	 6HPpylvsezkq/d1VWe/fCtVzu1x1hQ6xZrCnI155ywEnK/0sBn29CRVu9pFbn0VTMl
-	 RXDiBbwH0zswPj5fRJ6es1IZedT8Ici2KC9OgICs=
+	b=C7BkS/uycMXLTA9rRZSVSlg95JG8zxfo1oF42YKcXDQkIWatvCN7qIM0EDZ69vW5w
+	 NsraqVULBrwIampNbWTgSGimbFdO/2bhoUF66dNs5gkxubSn3mMqYG3IctTwIEIjr1
+	 jNBs9HJzCRDuw76iYxbAkbOZYOFgayRz1e7jO3rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	=?UTF-8?q?=E9=92=B1=E4=B8=80=E9=93=AD?= <yimingqian591@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 280/377] net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot
-Date: Thu, 28 May 2026 21:48:38 +0200
-Message-ID: <20260528194646.463967140@linuxfoundation.org>
+Subject: [PATCH 6.18 281/377] net: tls: fix off-by-one in sg_chain entry count for wrapped sk_msg ring
+Date: Thu, 28 May 2026 21:48:39 +0200
+Message-ID: <20260528194646.491094613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -46,67 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 277740023def559a4a2ddc3e8e784ee37a0f16a9 ]
+[ Upstream commit 285943c6e7ca309bbea84b253745154241d9788a ]
 
-On the SMC-D client, slot 0 of ini->ism_dev[]/ini->ism_chid[] is
-reserved for an SMC-Dv1 device. smc_find_ism_v2_device_clnt()
-populates V2 entries starting at index 1, so when no V1 device is
-selected slot 0 is left in its kzalloc()'ed state with ism_dev[0] ==
-NULL and ism_chid[0] == 0.
+When an sk_msg scatterlist ring wraps (sg.end < sg.start),
+tls_push_record() chains the tail portion of the ring to the head
+using sg_chain(). An extra entry in the sg array is reserved for
+this:
 
-smc_v2_determine_accepted_chid() then matches the peer's CHID against
-the array starting from index 0 using the CHID alone. A malicious
-peer replying to a SMC-Dv2-only proposal with d1.chid == 0 matches
-the empty slot, ini->ism_selected becomes 0, and the subsequent
-ism_dev[0]->lgr_lock dereference in smc_conn_create() faults at
-offsetof(struct smcd_dev, lgr_lock) == 0x68:
+  struct sk_msg_sg {
+        [...]
+        /* The extra two elements:
+         * 1) used for chaining the front and sections when the list becomes
+         *    partitioned (e.g. end < start). The crypto APIs require the
+         *    chaining;
+         * 2) to chain tailer SG entries after the message.
+         */
+        struct scatterlist              data[MAX_MSG_FRAGS + 2];
 
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock_bh+0x79/0xe0
-  Write of size 4 at addr 0000000000000068 by task exploit/144
-  Call Trace:
-   _raw_spin_lock_bh
-   smc_conn_create (net/smc/smc_core.c:1997)
-   __smc_connect (net/smc/af_smc.c:1447)
-   smc_connect (net/smc/af_smc.c:1720)
-   __sys_connect
-   __x64_sys_connect
-   do_syscall_64
+The current code uses MAX_SKB_FRAGS + 1 as the ring size:
 
-Require ism_dev[i] to be non-NULL before accepting a CHID match.
+    sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+             MAX_SKB_FRAGS - msg_pl->sg.start + 1,
+             msg_pl->sg.data);
 
-Fixes: a7c9c5f4af7f ("net/smc: CLC accept / confirm V2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260511062138.2839584-1-xmei5@asu.edu
+This places the chain pointer at
+
+  sg_chain(data[start], (MAX_SKB_FRAGS - msg_start + 1) .. =
+  &data[start] + (MAX_SKB_FRAGS - msg_start + 1) - 1 =
+  data[start + (MAX_SKB_FRAGS - start + 1) - 1] =
+  data[MAX_SKB_FRAGS]
+
+instead of the true last entry. This is likely due to a "race" of
+the commit under Fixes landing close to
+commit 031097d9e079 ("bpf: sk_msg, zap ingress queue on psock down")
+
+Convert to ARRAY_SIZE and drop the data[start] / - start (as suggested
+by Sabrina).
+
+Reported-by: 钱一铭 <yimingqian591@gmail.com>
+Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260511174920.433155-2-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 6421c2e1c84de..5915fcdef743d 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1400,7 +1400,8 @@ smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm *aclc,
- 	int i;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index f2ea190777f0b..1ad5d0e7ae27f 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -800,11 +800,9 @@ static int tls_push_record(struct sock *sk, int flags,
+ 		sg_mark_end(sk_msg_elem(msg_pl, i));
+ 	}
  
- 	for (i = 0; i < ini->ism_offered_cnt + 1; i++) {
--		if (ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
-+		if (ini->ism_dev[i] &&
-+		    ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
- 			ini->ism_selected = i;
- 			return 0;
- 		}
+-	if (msg_pl->sg.end < msg_pl->sg.start) {
+-		sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+-			 MAX_SKB_FRAGS - msg_pl->sg.start + 1,
++	if (msg_pl->sg.end < msg_pl->sg.start)
++		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
+ 			 msg_pl->sg.data);
+-	}
+ 
+ 	i = msg_pl->sg.start;
+ 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
 -- 
 2.53.0
 
