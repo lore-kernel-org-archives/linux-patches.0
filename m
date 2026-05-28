@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0A0313550;
-	Thu, 28 May 2026 20:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9F13438AE;
+	Thu, 28 May 2026 20:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000233; cv=none; b=aLSGAmszP3RgiOwLS9skDkqqL3ls13LROKyEGIIhifb8JT5jEtc92IIvVimjy7ln+SaI1OT+rxCUPqE83NujJeiHHeSZUEdXKnzTKSHO0RoX7k0xNNZn0FYs0RIwCcOfPOGivkWfP7wq35ZsjNLwkpH1RyB3TqWsza2TVi37WOI=
+	t=1780000236; cv=none; b=ZXCR9nX7m4N1Y6A97wKZCwsGanBi4ctelWcDj9DlcQmeP6vIXXAgrbR5VQ+3O1rKX/F9hH9xEgzC256F5bmaQ3R6Y3nhGNsW+qy1SOP2VBroUoZWTjkBb9+th7OSlxpjsRIg+E4sKhRa6xols2qHcjVyMGZoheEtQidM8M/uByE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000233; c=relaxed/simple;
-	bh=HaWm83QVNkKiL2JFk+KY5QafciSBpEdWAOt9TUsJaFE=;
+	s=arc-20240116; t=1780000236; c=relaxed/simple;
+	bh=XKmhKgA0T55tkwkfXPiLB4Wr3D1y45Ws19Ra22ZzRcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2+i6TEXV5MMlnApyCJeZUxxloLjETBrnZS+VECJ0zVdcDT9owinblMs/LFj1IRqWemluopp68RuikwxJushVj1FPXP6SsJwNr7nRY7wZCRaf3UvPCAI+275Idc8Ay0iV4NjvIGAJUi/au27vFscbGSA2wcqBIYA5b9U6t0gk1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybXF1BXr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+HZo7Is7CkkZXN4I+hyxY/kVLkAdi6vWePyDyFZ7aDy/5bQHXDmmvbW3N50NoGa5TCNea59qBqDEnmowwhvrZZ3zjRrQ5dd7+LRVlclKtrbmvdLF4VfJYA1fS1zT2w8kU15+EegVjvt0iJvPzBinKNJgkCHArDQCHguJXwUI5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpxHtFCt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybXF1BXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB061F000E9;
-	Thu, 28 May 2026 20:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpxHtFCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD421F00A3A;
+	Thu, 28 May 2026 20:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000232;
-	bh=RYT5ndn/RsDveTmsK88sj0fdhrILiBY/BceaPOW9umM=;
+	s=korg; t=1780000234;
+	bh=ds9vYao8UuiO9cC116yQURws9I+d3pEk6ZvZkthcvSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybXF1BXr+ctxGnQSxTwmiQRrSkEgOWe1jf9QunIHW+g68qG5ZtX/I4fnMP/Lk8Z10
-	 b50oChQsxiRF4UtsBKPbdOEDAM3ApXXMNEzBjogR/raeT3fMyFML8kytJ1pZGW5Svo
-	 6qU6YrFPH+3R9rcBuroTAh0A6wiNKM3CvvDHI10Q=
+	b=GpxHtFCtrKz5vrabOZi8J2SBveVCUSxqnFm+7Y/c5PG7/eCw16H4o9jeWrnAdKogV
+	 DLyO3lfhne+9m3JZrSCrsrezG+EhyEWPW6U3JI5cmZQTdBO2NKIYDXy/pwICm2sSrH
+	 aPgTF3mi6CW1jTfZvP0mNqNbPqHy0HoJLSru5D9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Simon Horman <horms@kernel.org>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/377] wifi: wilc1000: fix dma_buffer leak on bus acquire failure
-Date: Thu, 28 May 2026 21:49:46 +0200
-Message-ID: <20260528194648.499008459@linuxfoundation.org>
+Subject: [PATCH 6.18 313/377] wifi: iwlwifi: mld: dont dereference a pointer before NULL checking it
+Date: Thu, 28 May 2026 21:49:11 +0200
+Message-ID: <20260528194647.447715592@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,49 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit dd7b6a8671939708cc4b7a46786d8c11297e8f69 ]
+[ Upstream commit d733ed481fd20a8e7bfe5119c4e77761ba3f87ee ]
 
-wilc_wlan_firmware_download() allocates dma_buffer with kmalloc() at
-the top of the function and uses a 'fail:' label to free it via
-kfree(dma_buffer) on error.
+In iwl_mld_remove_link, the link->fw_id is saved at the beginning of the
+function so we have it after we freed the link.
 
-All later error paths correctly use 'goto fail' to route through this
-cleanup. However, the early failure path after the first acquire_bus()
-call uses a bare 'return ret;', which leaks dma_buffer whenever the bus
-acquire fails.
+But the link pointer can be NULL, and is not checked when the fw_id is
+stored.
 
-Replace the early return with goto fail so the existing cleanup path
-runs.
+Fix it by simply freeing the link at the end of the function.
 
-Found via a custom Coccinelle semantic patch hunting for kmalloc'd
-locals leaked on early-return error paths in driver firmware-download
-code.
-
-Fixes: 1241c5650ff7 ("wifi: wilc1000: Fill in missing error handling")
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260511042732.998311-1-shitalkumar.gandhi@cambiumnetworks.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+fFixes: 0e66a39f4f0e ("wifi: iwlwifi: fix potential use after free in iwl_mld_remove_link()")
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260515151351.371f40fc6711.I6a82cfe9655564e9c5731af91c36493b26b1208e@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/wlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/link.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/wlan.c b/drivers/net/wireless/microchip/wilc1000/wlan.c
-index fedc7d59216ad..1cc4ee62987d4 100644
---- a/drivers/net/wireless/microchip/wilc1000/wlan.c
-+++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
-@@ -1265,7 +1265,7 @@ int wilc_wlan_firmware_download(struct wilc *wilc, const u8 *buffer,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
+index f6f52d297a72c..e67ba3a24d025 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2024-2025 Intel Corporation
++ * Copyright (C) 2024-2026 Intel Corporation
+  */
  
- 	ret = acquire_bus(wilc, WILC_BUS_ACQUIRE_AND_WAKEUP);
- 	if (ret)
--		return ret;
-+		goto fail;
+ #include "constants.h"
+@@ -501,7 +501,6 @@ void iwl_mld_remove_link(struct iwl_mld *mld,
+ 	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(bss_conf->vif);
+ 	struct iwl_mld_link *link = iwl_mld_link_from_mac80211(bss_conf);
+ 	bool is_deflink = link == &mld_vif->deflink;
+-	u8 fw_id = link->fw_id;
  
- 	wilc->hif_func->hif_read_reg(wilc, WILC_GLB_RESET_0, &reg);
- 	reg &= ~BIT(10);
+ 	if (WARN_ON(!link || link->active))
+ 		return;
+@@ -509,15 +508,15 @@ void iwl_mld_remove_link(struct iwl_mld *mld,
+ 	iwl_mld_rm_link_from_fw(mld, bss_conf);
+ 	/* Continue cleanup on failure */
+ 
+-	if (!is_deflink)
+-		kfree_rcu(link, rcu_head);
+-
+ 	RCU_INIT_POINTER(mld_vif->link[bss_conf->link_id], NULL);
+ 
+-	if (WARN_ON(fw_id >= mld->fw->ucode_capa.num_links))
++	if (WARN_ON(link->fw_id >= mld->fw->ucode_capa.num_links))
+ 		return;
+ 
+-	RCU_INIT_POINTER(mld->fw_id_to_bss_conf[fw_id], NULL);
++	RCU_INIT_POINTER(mld->fw_id_to_bss_conf[link->fw_id], NULL);
++
++	if (!is_deflink)
++		kfree_rcu(link, rcu_head);
+ }
+ 
+ void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
 -- 
 2.53.0
 
