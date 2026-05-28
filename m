@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23933313550;
-	Thu, 28 May 2026 20:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E136B2E92BA;
+	Thu, 28 May 2026 20:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000536; cv=none; b=tqHgYSMYzVUIhogStMRSOCGZewFf0sjd7bsgMKCLgY7p0SbY5J62kb8+nACr8Uyx281QPkZwApKUoHV5DieaddsOzVPEQopHD1lBHK0MJgyWPQABv50VykoYT2gk+V8HqvA1kqfvZbk97pLjBtIbBuvwQ8vYB//+wGROnvYU95k=
+	t=1780000538; cv=none; b=qUHdYfKxxsyvmcsdHWSLplmVm7xyzfb4vgDIZH/aFFPmLkNxgqW86kHZNpNRhpgJEHna1AEXT03otz7KFcgE9oL7kWzc53ABG/0U4P6LTbf/S18rqZkBN1GIh9CLnPzEvhvptWhzp9Dilh0/8jgeRkpB4LSLdrqUksOWKCNQ1CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000536; c=relaxed/simple;
-	bh=GVE30jh0XZ9SIaNosqfb0SU82KC1ikhIULUvla3D1hE=;
+	s=arc-20240116; t=1780000538; c=relaxed/simple;
+	bh=iL00tCKP9Pnbi9lMgkZ3oNNOU6KiHqgfZivT8MPf3mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQn5UfLyOHjZcFOur7env0hwCArEQhxaLvqYOMFwn8H3V7uI3EQkFV8quIp237NYXZ7Cfr8k68UCtgeGE8iJ4hT/GFnzrE9E0kR6KvCkgedJtCdLkVyYX1BPVMOCKyc5WYxedrE7hiKuYYs2vnTuZUSKes1SQIWRN+00we5Wjlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DspYie8S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gC3qm6Cc+rmgK9zoU1MZsa8m0PlaCY1dVIAkWnNiBP9ATx3jiHyvNkbLCr1busgHGH7YIluIyMvznkQyI86VXQdTA9wYVPEnCXXCZJ1rxjl4k2EePPA9uWFel2ZjQoRt4IoFyKdhkqnoGPMdmVaY6T2xJMv4fKuPvr5aHgFuxOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q33i/Ey9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DspYie8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AC91F000E9;
-	Thu, 28 May 2026 20:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q33i/Ey9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA2E1F000E9;
+	Thu, 28 May 2026 20:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000535;
-	bh=yUKJ8xO7rzFyyRwbxcv2RbGO+IX/OyoYHvmQbcxH2ZI=;
+	s=korg; t=1780000537;
+	bh=19qqbegkgKcjYimwAdMcQnXvzl4jbP/M1QF3DGvw7AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DspYie8Sz7ZE3SsRJnryaFrtEGHCiaEcH77gfuxtSV6XIwTsEOLuM7PeOXI7VzGTL
-	 qGY52sGNn/Nn3OoRc2WOsH4GzmRpBgCRwy5HrC9QcE8s1pSbYeINswVfmypPKK61zi
-	 jfjfPiK8M3PyZNWzehVE8PAt6cs4Zxw0LrlriVcQ=
+	b=Q33i/Ey95PV1peH5JyUhn3eNznr/lObGbpEVDuxuX7c0PE1lhuojZ9A9MKVXhDc/1
+	 Wi0tKDyMHbm+r4k9fB+RfIdx0TDUQotvsjim4Z07Vtc/a49+7dF/qu8MDQuwzZ2n6l
+	 h8dl+etkICnTWlbJh3akl7UJDvAH2W6auPhDzRe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
 	Tejun Heo <tj@kernel.org>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/272] sched_ext: Avoid UAF in scx_root_enable_workfn() init failure path
-Date: Thu, 28 May 2026 21:47:32 +0200
-Message-ID: <20260528194631.560372458@linuxfoundation.org>
+Subject: [PATCH 6.12 079/272] cgroup/cpuset: Reset DL migration state on can_attach() failure
+Date: Thu, 28 May 2026 21:47:33 +0200
+Message-ID: <20260528194631.587657841@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,42 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit 9a415cc53711f2238e0f0ca8a6bcc796c003b127 ]
+[ Upstream commit 4a39eda5fdd867fc39f3c039714dd432cee00268 ]
 
-In scx_root_enable_workfn(), put_task_struct(p) is called before scx_error()
-dereferences p->comm and p->pid. If the iterator's reference is the last
-drop, the task is freed synchronously and the deref becomes a UAF.
+cpuset_can_attach() accumulates temporary SCHED_DEADLINE migration
+state in the destination cpuset while walking the taskset.
 
-Move put_task_struct() past scx_error().
+If a later task_can_attach() or security_task_setscheduler() check
+fails, cgroup_migrate_execute() treats cpuset as the failing subsystem
+and does not call cpuset_cancel_attach() for it. The partially
+accumulated state is then left behind and can be consumed by a later
+attach, corrupting cpuset DL task accounting and pending DL bandwidth
+accounting.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260511214031.AF5E9C2BCB0@smtp.kernel.org/
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
+Reset the pending DL migration state from the common error exit when
+ret is non-zero. Successful can_attach() keeps the state for
+cpuset_attach() or cpuset_cancel_attach().
+
+Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
+Cc: stable@vger.kernel.org # v6.10+
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-[ adapted fix to pre-refactor scx_ops_enable_workfn() with scx_task_iter_relock() instead of upstream scx_root_enable_workfn() ]
+Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+[ omitted upstream context line `cs->dl_bw_cpu = cpu;` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5406,11 +5406,11 @@ static void scx_ops_enable_workfn(struct
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2996,16 +2996,13 @@ static int cpuset_can_attach(struct cgro
+ 		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
  
- 		ret = scx_ops_init_task(p, task_group(p), false);
- 		if (ret) {
--			put_task_struct(p);
- 			scx_task_iter_relock(&sti);
- 			scx_task_iter_stop(&sti);
- 			scx_ops_error("ops.init_task() failed (%d) for %s[%d]",
- 				      ret, p->comm, p->pid);
-+			put_task_struct(p);
- 			goto err_disable_unlock_all;
+ 		if (unlikely(cpu >= nr_cpu_ids)) {
+-			reset_migrate_dl_data(cs);
+ 			ret = -EINVAL;
+ 			goto out_unlock;
  		}
  
+ 		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
+-		if (ret) {
+-			reset_migrate_dl_data(cs);
++		if (ret)
+ 			goto out_unlock;
+-		}
+ 	}
+ 
+ out_success:
+@@ -3014,7 +3011,10 @@ out_success:
+ 	 * changes which zero cpus/mems_allowed.
+ 	 */
+ 	cs->attach_in_progress++;
++
+ out_unlock:
++	if (ret)
++		reset_migrate_dl_data(cs);
+ 	mutex_unlock(&cpuset_mutex);
+ 	return ret;
+ }
 
 
