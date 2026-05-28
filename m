@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE8F317164;
-	Thu, 28 May 2026 20:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522263264DF;
+	Thu, 28 May 2026 20:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000865; cv=none; b=IvqrJWNcyIYFaxYx5UG51xqIdJrXLgIJGa3uor5qCbLIBkgV1A2EzeKOTJwAZ3lsm3j5EQ4SQns057CTs2NoLBRy/neRF9L1ddmDHUFVtYCeG9j65lTxtIyLqPsKKedHvRYe8qCggTz9Jfwf8j9x5kN6PCkWuR5u/tYBT7gZc18=
+	t=1780000868; cv=none; b=R/4ZSm+7CnY2RdRcfsC7MpisqnlevTQBmeBkl1ZaS9b4Gx2s0Me26QmcSYbRxu6QYxdiSTtgfanBlNtCqoZFj2HMhDYUKslxm+kpfyeV8iqGYSpU+9z5Fx3tvdmVUhrjUFx27bhwc4fcAyc5/ylrIa393CWQ7jamAabQBtnHsvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000865; c=relaxed/simple;
-	bh=6sVpRQM9aSPOk06g88Rsdc6IIm5+gK+M5GXf67An98M=;
+	s=arc-20240116; t=1780000868; c=relaxed/simple;
+	bh=dFhziIfUUikztmYV0xUYCWN9K6XiaINtLdK4J9O6Ejg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IR9LjrI9t1n/iCWj+oEY3F7oOmBzJKmi2t5S7DcSSfHis34CX4WDqrbIHU7tYoUb23r97U8sg24io9Q117QYfpOFqOdQxbZva7eB8rajQu7SlY28A7z/qfkAh/r3261QgJFxitCO8ZiLRhKZPSDsTUSAWE11JD+C+E9JPTC85Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJrO2+fW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PKCmwT1rim5g7n5jbAu2KXQ6kcdgrIqsOEsRJ+etKRCLfFl/J2umT3pF5Xb8NtE7QXRWL2O8ZjSRroyOZC2ol1uqHt2o7UjVQAAt/4KDpt4S6nwMM/VmWZp1uF5IDZ8sqWDc6K7iw8gLrLBDZWGCkvGzv3g4wKtBwn3P+QqJ9wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUedzAit; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJrO2+fW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CD41F000E9;
-	Thu, 28 May 2026 20:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUedzAit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63191F000E9;
+	Thu, 28 May 2026 20:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000864;
-	bh=IX2q0qrSwvAEa40ASLPP30xUDswqRzd3rkHposRlPvQ=;
+	s=korg; t=1780000867;
+	bh=qrvXayF4IaxGodJi6AxeaJh/iM9PmNsZ/Lb3i+drndE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJrO2+fWXgDpgH+Wuyobe6G3x2Ww7/bMy4RrbpBtyV7Mqee3V1cFnsU2QI+ZCDq4h
-	 +PqN6Usx+yHj11TeROiV1Uw7NGJUc59TnlIyKudfqYt030NWmsplUWXelA2+DsMF/h
-	 BumAY+t0ohz8mTNCr1pnQl5LZCrUL0MrALzCDL/I=
+	b=DUedzAitd3yDGELC4YFbGGeFW+FomGxmR3RfdQ7RmvZot+ju0QfTyy5SVriiPgCGJ
+	 6d0KR3RZtjNGKD1qCA2/HVNs+Hp1s8wvoL4nJ6L11FGDs1obx6voHVjQ0cmgsqLzfv
+	 5uS4UFEsKKLXrPqIof1npTY6yrLlnVWwk5+m5/C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
+	Matthew Wilcox <willy@infradead.org>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 195/272] netfs: Fix potential deadlock in write-through mode
-Date: Thu, 28 May 2026 21:49:29 +0200
-Message-ID: <20260528194634.724053423@linuxfoundation.org>
+Subject: [PATCH 6.12 196/272] netfs: Fix write streaming disablement if fd open O_RDWR
+Date: Thu, 28 May 2026 21:49:30 +0200
+Message-ID: <20260528194634.750235803@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -56,115 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b6a4ae1634b3ad2aaa05222e53d36da532852faf ]
+[ Upstream commit 70a7b9193bbbfceaab5974de66834c64ccc875dd ]
 
-Fix netfs_advance_writethrough() to always unlock the supplied folio and to
-mark it dirty if it isn't yet written to the end.  Unfortunately, it can't
-be marked for writeback until the folio is done with as that may cause a
-deadlock against mmapped reads and writes.
+In netfs_perform_write(), "write streaming" (the caching of dirty data in
+dirty but !uptodate folios) is performed to avoid the need to read data
+that is just going to get immediately overwritten.  However, this is/will
+be disabled in three circumstances: if the fd is open O_RDWR, if fscache is
+in use (as we need to round out the blocks for DIO) or if content
+encryption is enabled (again for rounding out purposes).
 
-Even though it has been marked dirty, premature writeback can't occur as
-the caller is holding both inode->i_rwsem (which will prevent concurrent
-truncation, fallocation, DIO and other writes) and ictx->wb_lock (which
-will cause flushing to wait and writeback to skip or wait).
+The idea behind disabling it if the fd is open O_RDWR is that we'd need to
+flush the write-streaming page before we could read the data, particularly
+through mmap.  But netfs now fills in the gaps if ->read_folio() is called
+on the page, so that is unnecessary.  Further, this doesn't actually work
+if a separate fd is open for reading.
 
-Note that this may be easier to deal with once the queuing of folios is
-split from the generation of subrequests.
+Fix this by removing the check for O_RDWR, thereby allowing streaming
+writes even when we might read.
 
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Closes: https://sashiko.dev/#/patchset/20260427154639.180684-1-dhowells%40redhat.com
+This caused a number of problems with the generic/522 xfstest, but those
+are now fixed.
+
+Fixes: c38f4e96e605 ("netfs: Provide func to copy data to pagecache for buffered write")
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-15-dhowells@redhat.com
+Link: https://patch.msgid.link/20260512123404.719402-17-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
+cc: Matthew Wilcox <willy@infradead.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ fs/netfs/buffered_write.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index b7830a15ae40f..2789ac4c80272 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -402,12 +402,7 @@ static int netfs_write_folio(struct netfs_io_request *wreq,
- 	if (streamw)
- 		netfs_issue_write(wreq, cache);
+diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
+index 19a58aea670cb..08da4c2512f52 100644
+--- a/fs/netfs/buffered_write.c
++++ b/fs/netfs/buffered_write.c
+@@ -197,11 +197,11 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
+ 		}
  
--	/* Flip the page to the writeback state and unlock.  If we're called
--	 * from write-through, then the page has already been put into the wb
--	 * state.
--	 */
--	if (wreq->origin == NETFS_WRITEBACK)
--		folio_start_writeback(folio);
-+	folio_start_writeback(folio);
- 	folio_unlock(folio);
+ 		/* Decide how we should modify a folio.  We might be attempting
+-		 * to do write-streaming, in which case we don't want to a
+-		 * local RMW cycle if we can avoid it.  If we're doing local
+-		 * caching or content crypto, we award that priority over
+-		 * avoiding RMW.  If the file is open readably, then we also
+-		 * assume that we may want to read what we wrote.
++		 * to do write-streaming, as we don't want to a local RMW cycle
++		 * if we can avoid it.  If we're doing local caching or content
++		 * crypto, we award that priority over avoiding RMW.  If the
++		 * file is open readably, then we let ->read_folio() fill in
++		 * the gaps.
+ 		 */
+ 		finfo = netfs_folio_info(folio);
+ 		group = netfs_folio_group(folio);
+@@ -277,12 +277,9 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
  
- 	if (fgroup == NETFS_FOLIO_COPY_TO_CACHE) {
-@@ -632,29 +627,41 @@ int netfs_advance_writethrough(struct netfs_io_request *wreq, struct writeback_c
- 			       struct folio *folio, size_t copied, bool to_page_end,
- 			       struct folio **writethrough_cache)
- {
-+	int ret;
-+
- 	_enter("R=%x ic=%zu ws=%u cp=%zu tp=%u",
- 	       wreq->debug_id, wreq->iter.count, wreq->wsize, copied, to_page_end);
- 
--	if (!*writethrough_cache) {
--		if (folio_test_dirty(folio))
--			/* Sigh.  mmap. */
--			folio_clear_dirty_for_io(folio);
-+	/* The folio is locked. */
- 
-+	if (*writethrough_cache != folio) {
-+		if (*writethrough_cache) {
-+			/* Did the folio get moved? */
-+			folio_put(*writethrough_cache);
-+			*writethrough_cache = NULL;
-+		}
- 		/* We can make multiple writes to the folio... */
--		folio_start_writeback(folio);
- 		if (wreq->len == 0)
- 			trace_netfs_folio(folio, netfs_folio_trace_wthru);
- 		else
- 			trace_netfs_folio(folio, netfs_folio_trace_wthru_plus);
- 		*writethrough_cache = folio;
-+		folio_get(folio);
- 	}
- 
- 	wreq->len += copied;
--	if (!to_page_end)
-+
-+	if (!to_page_end) {
-+		folio_mark_dirty(folio);
-+		folio_unlock(folio);
- 		return 0;
-+	}
- 
-+	ret = netfs_write_folio(wreq, wbc, folio);
-+	folio_put(*writethrough_cache);
- 	*writethrough_cache = NULL;
--	return netfs_write_folio(wreq, wbc, folio);
-+	wreq->submitted = wreq->len;
-+	return ret;
- }
- 
- /*
-@@ -668,8 +675,12 @@ int netfs_end_writethrough(struct netfs_io_request *wreq, struct writeback_contr
- 
- 	_enter("R=%x", wreq->debug_id);
- 
--	if (writethrough_cache)
-+	if (writethrough_cache) {
-+		folio_lock(writethrough_cache);
- 		netfs_write_folio(wreq, wbc, writethrough_cache);
-+		folio_put(writethrough_cache);
-+		wreq->submitted = wreq->len;
-+	}
- 
- 	netfs_end_issue_write(wreq);
- 
+ 		/* We don't want to do a streaming write on a file that loses
+ 		 * caching service temporarily because the backing store got
+-		 * culled and we don't really want to get a streaming write on
+-		 * a file that's open for reading as ->read_folio() then has to
+-		 * be able to flush it.
++		 * culled.
+ 		 */
+-		if ((file->f_mode & FMODE_READ) ||
+-		    netfs_is_cache_enabled(ctx)) {
++		if (netfs_is_cache_enabled(ctx)) {
+ 			if (finfo) {
+ 				netfs_stat(&netfs_n_wh_wstream_conflict);
+ 				goto flush_content;
 -- 
 2.53.0
 
