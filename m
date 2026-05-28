@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CE0339866;
-	Thu, 28 May 2026 20:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6617B33F5BE;
+	Thu, 28 May 2026 20:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999136; cv=none; b=A+ypWEtOEg5sZg2tGx/vQz1egfsDDmNj3gqgRb1mgJPGfR25CO5lPla3G214ugpFROYvgOlgsl27gHurHmBs4e9z94pAq/9x2MEh2CH2kT4XtGmVkbg2dAa7SFgmUE4EzS/z4ELcGjC0HSy/F/RUunuWboeVsyD9ut60rC59mJ8=
+	t=1779999139; cv=none; b=UsBAQAFZIXO0B7yyl2hUpPi8qVhGo9TfhMkZlDlqFTSLtMlS86JfTuSu2TcysFSFlSL9ExCkQ3E07wMORtNp8uLso8MKaWXgR/dTVU/+omwcQpUtTtlIDle7x3aZxUjzIH8nUi2zxWhEYng4sQDGQC4NW/1NlJwNutCZgnqVKcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999136; c=relaxed/simple;
-	bh=ZHdqtb0oq+d2PYkArJ++Q1upEUSFgwNXkOzzC1s0/Yo=;
+	s=arc-20240116; t=1779999139; c=relaxed/simple;
+	bh=su9kyS9IxBjbuqeYc6oOGAgWij7QWSebx9B8JCejxtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etUVLIw0vU3hXg9XStUnuGDqChFFGXNQDSt9nn3bfjuFX5GZlVKmCh7ELRhj2D1NZ/Q/TmF24v/ugY7kVgO59XQzx3i507NDmbBYwRSBoZvFlA4vzHbGSlVS4cIuHg8L+p36MrRzjrMjM2loPhzvZ8rc8uwwf62wbzrlgE8vUkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOFDsaDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sGFttQAfXAWgvRQw9b79wXbrRQnzZtetb7CnuOCMT9ayD9vX6RloXUszoAfiwFO8h4SHHZdE6GuQUxhjyxzaSlGyZyydD8ylyoUuamjcBNKUTfCju9mIyWOL7alZhtFU3EM7JFforB26kwd8gqtom5wjt+6FTrZrpO6PPmOSGps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWnl/0b0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOFDsaDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021871F000E9;
-	Thu, 28 May 2026 20:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWnl/0b0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40BA1F000E9;
+	Thu, 28 May 2026 20:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999135;
-	bh=dlg5Mepgd2r7EKSvDedEk3RNkuKOoFFu6Jg/3+tCVsM=;
+	s=korg; t=1779999138;
+	bh=aPizUL4q0x+opUbvmhat3nyxjvXgwsMt+eXRnF8CTcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOFDsaDCfZI0m6cXZTS50TmSajbM5/Vidagokk+3pIWkTGdnZD4DgargHT4od9Wro
-	 0ldZ4q8DZ3+EX7BP3kjAAwu5IoVRCQK2rRH8kgzUEYvExvESpJPYoym/47aHFakAaw
-	 VYQd9zrid4kTvRehvIcT/pRpHf062Slwvc1PCtmA=
+	b=QWnl/0b0b2nfTnfoqvXQ0Wg8+yOY8OXfdmg5kctfrNdycbuXlm0KgE8qaPxEpE+lf
+	 fRhYNTlXNq17zGJBzsI1mFKPJBeI0kBQkcS6ipZ5sCR+H+HEmTNz/Hj2V4mxYrYk8J
+	 kzoB9GIc1GUUuyurw5WA7LpYueQzU4HU0CjKtFvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 420/461] Bluetooth: btintel_pcie: Fix incorrect MAC access programming
-Date: Thu, 28 May 2026 21:49:09 +0200
-Message-ID: <20260528194659.657575257@linuxfoundation.org>
+Subject: [PATCH 7.0 421/461] Bluetooth: btmtk: fix urb->setup_packet leak in error paths
+Date: Thu, 28 May 2026 21:49:10 +0200
+Message-ID: <20260528194659.688421360@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,80 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit 88365d04fdc821dc4e9eb0cc00fdf6905430d172 ]
+[ Upstream commit dd1dda6b8d6e1f4376a5b3055a04f0ecbdb4d6bd ]
 
-btintel_pcie_get_mac_access() and btintel_pcie_release_mac_access()
-were programming STOP_MAC_ACCESS_DIS and XTAL_CLK_REQ in addition to
-the MAC_ACCESS_REQ handshake. These bits are not part of the host
-MAC-access handshake on the supported parts; the driver was
-programming them incorrectly. Drop the writes so the register update
-contains only the bits the controller actually consumes.
+The setup_packet of control urb is not freed if usb_submit_urb fails or
+the submitted urb is killed. Add free in these two paths.
 
-Fixes: b9465e6670a2 ("Bluetooth: btintel_pcie: Read hardware exception data")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Fixes: a1c49c434e150 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 20 ++++++--------------
- drivers/bluetooth/btintel_pcie.h |  3 ---
- 2 files changed, 6 insertions(+), 17 deletions(-)
+ drivers/bluetooth/btmtk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 37b744e35bc45..8dbd72895cb23 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -568,12 +568,10 @@ static int btintel_pcie_get_mac_access(struct btintel_pcie_data *data)
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index a4b4dacfd2ad3..04f183fd3d12b 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -496,6 +496,7 @@ static void btmtk_usb_wmt_recv(struct urb *urb)
+ 		return;
+ 	} else if (urb->status == -ENOENT) {
+ 		/* Avoid suspend failed when usb_kill_urb */
++		kfree(urb->setup_packet);
+ 		return;
+ 	}
  
- 	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
+@@ -569,6 +570,7 @@ static int btmtk_usb_submit_wmt_recv_urb(struct hci_dev *hdev)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p submission failed (%d)",
+ 				   urb, -err);
++		kfree(dr);
+ 		usb_unanchor_urb(urb);
+ 	}
  
--	reg |= BTINTEL_PCIE_CSR_FUNC_CTRL_STOP_MAC_ACCESS_DIS;
--	reg |= BTINTEL_PCIE_CSR_FUNC_CTRL_XTAL_CLK_REQ;
--	if ((reg & BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_STS) == 0)
-+	if (!(reg & BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ)) {
- 		reg |= BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ;
--
--	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
-+		btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
-+	}
- 
- 	do {
- 		reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
-@@ -593,16 +591,10 @@ static void btintel_pcie_release_mac_access(struct btintel_pcie_data *data)
- 
- 	reg = btintel_pcie_rd_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG);
- 
--	if (reg & BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ)
-+	if (reg & BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ) {
- 		reg &= ~BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ;
--
--	if (reg & BTINTEL_PCIE_CSR_FUNC_CTRL_STOP_MAC_ACCESS_DIS)
--		reg &= ~BTINTEL_PCIE_CSR_FUNC_CTRL_STOP_MAC_ACCESS_DIS;
--
--	if (reg & BTINTEL_PCIE_CSR_FUNC_CTRL_XTAL_CLK_REQ)
--		reg &= ~BTINTEL_PCIE_CSR_FUNC_CTRL_XTAL_CLK_REQ;
--
--	btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
-+		btintel_pcie_wr_reg32(data, BTINTEL_PCIE_CSR_FUNC_CTRL_REG, reg);
-+	}
- }
- 
- static void *btintel_pcie_copy_tlv(void *dest, enum btintel_pcie_tlv_type type,
-diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
-index e3d941ffef4aa..34aa092bfbe33 100644
---- a/drivers/bluetooth/btintel_pcie.h
-+++ b/drivers/bluetooth/btintel_pcie.h
-@@ -34,9 +34,6 @@
- #define BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_STS	(BIT(20))
- 
- #define BTINTEL_PCIE_CSR_FUNC_CTRL_MAC_ACCESS_REQ	(BIT(21))
--/* Stop MAC Access disconnection request */
--#define BTINTEL_PCIE_CSR_FUNC_CTRL_STOP_MAC_ACCESS_DIS	(BIT(22))
--#define BTINTEL_PCIE_CSR_FUNC_CTRL_XTAL_CLK_REQ		(BIT(23))
- 
- #define BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_STS	(BIT(28))
- #define BTINTEL_PCIE_CSR_FUNC_CTRL_BUS_MASTER_DISCON	(BIT(29))
 -- 
 2.53.0
 
