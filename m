@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A12339866;
-	Thu, 28 May 2026 20:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC0C34D397;
+	Thu, 28 May 2026 20:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000583; cv=none; b=fu++fUDfnNq+E7pzmL1B87s8u8Tn347ndpQHKG1jOUVQs+VQ7ObWt4LDD7y1+FIIyykW+WULMqvYpdmetlvna4GEWugEO2jl9ZZtBYbTVaEjwxpvycrQO6OD/FX7J0K/nLfqvupKFjhtnWAKgdkZ7SMekOse6iIa3npfk/xVpAc=
+	t=1780000586; cv=none; b=CQXJI/seZWIUUcAfu6MdEQLml7ie7SWg+LMVIbsKK5saEHfFycuGmmAeUhO72pTaPHhRjZiD3qG8Mmlf3zangmmn7d4Hg7EeNGPE1eWjUj+C+dJ0Gp2qDvfI2o2KIYcmZi6tuLwsdRgUSOh0bH/kCZ6xRQ1jRK96fbefKaa+u4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000583; c=relaxed/simple;
-	bh=ZAzKe5IftU4JGfhH/l+vc8SM6kfN/hZNYDGDC9IKBL0=;
+	s=arc-20240116; t=1780000586; c=relaxed/simple;
+	bh=p3v+4JArcN2xLLqLj4Cy22WBN5UnkMkHo4R8VepTe48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOMg4mf+GIluvuyxWqZQ50q/iel4BespzXO/s6LDNvZyjn7ZmsaheqzN37iwtGFdVW4FqhkCBRXM2F6b7f3/Uu8DDYKfHO4JCLmKQvbA8ui/mhNgmWVPQWmdhsY20JItyzwy0iGnZgGHg0iHjuLTu9m63qg+4ZqQ92F4uZNhii8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGb3Uf/6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ay7xHxNJUseF5C+8kliOpVEflHWkEZ979i1QDsiYOpmeUhUZORVr8xRLZffA+nkNAq1K47vbOXwx6zYl5/7zG+hBr6sDaX2arGxyAgGv3a585E8IT56raBrWmfweeAj5rqXvYyXSMEuWR8vRVvuXYBFwmZhNY7ikcXqjYTYHoJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYLyZeBN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGb3Uf/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1169F1F000E9;
-	Thu, 28 May 2026 20:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYLyZeBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF111F00A3A;
+	Thu, 28 May 2026 20:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000582;
-	bh=EohF4MSGGjY6jaxao7xAkKdM1W3bNtLjX5pM9MJaQwM=;
+	s=korg; t=1780000585;
+	bh=hSyXBhNDRYcJJxzawFXTubFlKdgGEGu4ze/GXfXfpy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGb3Uf/6LZh5qEgDv7y2eHeOI3wWiWHtTsiqA/yiJ5o9hoVOif8kUqZiWY0p/vezb
-	 EzJg/P59Gpopk6xfJ1+8u2DK2inPIJLGdcRwCFDz+JMpVa4EIVrXZ1GV28URfHUtyE
-	 Daw9iQzPQZ/rcHE/VV8Cogp4uwqCo4jGN6PNa4JY=
+	b=WYLyZeBNu11jxUO3adDsSSNWIR3PxXVCtMMOJqfNALRr8xme+SYts/GgKFGQwOYI9
+	 DrMdCcmBlUohQ2Bjsho6O5TUqzikpzh4AUiYsFwCbRFOoH1O8QrUSsfZjYjI01LkIc
+	 fdbeBDTQZr70kzkAjud6HCSxFjbldsLGnbB54ylY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 097/272] wifi: mac80211: consume only present negotiated TTLM maps
-Date: Thu, 28 May 2026 21:47:51 +0200
-Message-ID: <20260528194632.095433601@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 098/272] cifs: Fix busy dentry used after unmounting
+Date: Thu, 28 May 2026 21:47:52 +0200
+Message-ID: <20260528194632.124497563@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,56 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit a6e6ccd5bd07155c2add6c74ce1a5e68ad3b95ea upstream.
+commit c68337442f03953237a94577beb468ab2662a851 upstream.
 
-ieee80211_tid_to_link_map_size_ok() validates negotiated TTLM elements
-against the number of link-map entries indicated by link_map_presence.
-ieee80211_parse_neg_ttlm() must consume the same layout.
+Since commit 340cea84f691c ("cifs: open files should not hold ref on
+superblock"), cifs file only holds the dentry ref_cnt, the cifs file
+close work(cfile->deferred) could be executed after unmounting, which
+will trigger a warning in generic_shutdown_super:
+ BUG: Dentry 00000000a14a6845{i=c,n=file}  still in use (1) [unmount of
+ cifs cifs]
 
-The parser advanced its cursor for every TID, including TIDs whose
-presence bit is clear and therefore have no map bytes in the element.
-A sparse map can then make a later present TID read past the validated
-element.
+The detailed processs is:
+   process A           process B           kworker
+ fd = open(PATH)
+  vfs_open
+   file->__f_path = *path // dentry->d_lockref.count = 1
+   cifs_open
+    cifs_new_fileinfo
+     cfile->dentry = dget(dentry) // dentry->d_lockref.count = 2
+ close(fd)
+  __fput
+  cifs_close
+   queue_delayed_work(deferredclose_wq, cfile->deferred)
+  dput(dentry) // dentry->d_lockref.count = 1
+			                 smb2_deferred_work_close
+					  _cifsFileInfo_put
+					   list_del(&cifs_file->flist)
+                    umount
+		     cleanup_mnt
+		      deactivate_super
+		       cifs_kill_sb
+		        cifs_close_all_deferred_files_sb
+			 cifs_close_all_deferred_files
+			  // cannot find cfile, skip _cifsFileInfo_put
+			kill_anon_super
+			 generic_shutdown_super
+			  shrink_dcache_for_umount
+			   umount_check
+			    WARN ! // dentry->d_lockref.count = 1
+					   cifsFileInfo_put_final
+					    dput(cifs_file->dentry)
+		                            // dentry->d_lockref.count = 0
 
-The bad bytes land in neg_ttlm->{up,down}link[tid] but are gated by
-valid_links before being applied to driver state, so a peer cannot
-turn the read into a policy change.  Under KUnit + KASAN with an
-exact-sized element allocation the OOB read is reported as a
-slab-out-of-bounds; whether the same trigger fires under the
-production RX path depends on surrounding allocator state.
+Fix it by flushing 'deferredclose_wq' before calling kill_anon_super.
 
-Advance the cursor only when the current TID has a map present.
+Fetch a reproducer in https://bugzilla.kernel.org/show_bug.cgi?id=221548.
 
-Fixes: 8f500fbc6c65 ("wifi: mac80211: process and save negotiated TID to Link mapping request")
+Fixes: 340cea84f691c ("cifs: open files should not hold ref on superblock")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260515151719.1317659-2-michael.bommarito@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsfs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7290,6 +7290,7 @@ ieee80211_parse_neg_ttlm(struct ieee8021
- 					 "No active links for TID %d", tid);
- 				return -EINVAL;
- 			}
-+			pos += map_size;
- 		} else {
- 			map = 0;
- 		}
-@@ -7308,7 +7309,6 @@ ieee80211_parse_neg_ttlm(struct ieee8021
- 		default:
- 			return -EINVAL;
- 		}
--		pos += map_size;
- 	}
- 	return 0;
- }
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -299,6 +299,8 @@ static void cifs_kill_sb(struct super_bl
+ 
+ 		/* Wait for all pending oplock breaks to complete */
+ 		flush_workqueue(cifsoplockd_wq);
++		/* Wait for all opened files to release */
++		flush_workqueue(deferredclose_wq);
+ 
+ 		/* finally release root dentry */
+ 		dput(cifs_sb->root);
 
 
