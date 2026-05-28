@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA0033372A;
-	Thu, 28 May 2026 20:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6BA35201B;
+	Thu, 28 May 2026 20:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001588; cv=none; b=e21LFaHzE4VHr/AsmGQ2iQcQn8yRlGGzUrfx93NwHz7p/Kxs/OLTY2Us2HKIZ/tfBadH3bhbxerWvAxyCGcuY83/0uUn9mvxDpHbFefJcaNN9FzdO+F1q7ijPGVY8+Hm68/o78MnjFiRy2OINVuPfPo6Nop7CUuCPLI+UT15mnQ=
+	t=1780001591; cv=none; b=E58dAdtNc8zy5BnHXJ7DxfWW3+c21hpwXiuN3SG3+xBwYpISe0lxd6Laz1VV14njQmzt/mKAR0xk/8+of85TrJJtPTBj0wsup9C7HWkyJFizqP5mseoR3a4EkKQPGsRuW68glt0Eep9J/GxJK3fnCIybJuboudkIF5wti0NuwS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001588; c=relaxed/simple;
-	bh=K8aIVGMMtYgIiWiEZp1HpO6+UQwdf+ba956BCX1XEBU=;
+	s=arc-20240116; t=1780001591; c=relaxed/simple;
+	bh=b38oJjd0WrK8IkEA12J2sGvbz3tDCT5EJWp2M0m5kTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exooupnAwEKQv7ZuSZEo84agNPokKCzVsejF8G6GbvhlzlUywo0m16riGvVMPqAdLEU5UZSrEpahuOUdm4gC2eW1wA99M38krWpoLTUovf1L+fGeAA4lEFiZaPGAbbvZXYyb8EcO2A/PEriKQE9k4sflloY5AcV9fCVXGO9V4tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WI9cpAB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ug7adHseOisOcFf5gAbyscm0CA+2CNp7rq/Fys0uzxbxzngr35KvLzPg80Ey+6hRHuouyHeKdIgCjytUuvfOFQCra8UkQ3ey9SOIc2oq22AaBgXiEIaO69zZkKHs7ZAHAlhqVL2YceLj3TogAuLkqqoaRll5Fr8ZkGrVCI7iz9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6zFfUhq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WI9cpAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EB71F000E9;
-	Thu, 28 May 2026 20:53:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6zFfUhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260951F000E9;
+	Thu, 28 May 2026 20:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001587;
-	bh=JJJPKjDYZYE7//R1zxV4HLEP94ilpVrqQEN9g72WcI8=;
+	s=korg; t=1780001590;
+	bh=v8id/pfZQcecFVdCzizFV8cCR7yRlbJMuMt5GgU4LxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WI9cpABG67nmGjAiQs9y+BDYI6+5/Ym5AEG1i7PNl1gCgzVJBR6Peeuj3ARWO1t5
-	 fJxpK/exi820oZy/Gmh0OF84g7hBeWe3nVNukFBS4Ia4ARveoQHQwDesAGfK404vQL
-	 eLsiZouzyVZqYXvzbjqmirMrzb+6giY2Kf3SdXBM=
+	b=x6zFfUhq+U99GjpkIeL2CR9RO2tUlhEeTh8+94TsFqKAYh2vDb+cLmejhkKxSHsp8
+	 Y03OV2lfD/M0nj2+sMJrQtv5R4n1YtQ577xsh/+jZ9owkQ70jFJv8Wa5Ab8ZqsyD+l
+	 y7mvXRaFqmZ5UpzPV+pDfH/3VngX6mHwIqmMMfgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/186] gpio: cdev: check if uAPI v2 config attributes are correctly zeroed
-Date: Thu, 28 May 2026 21:51:00 +0200
-Message-ID: <20260528194933.849432639@linuxfoundation.org>
+Subject: [PATCH 6.6 181/186] ASoC: cs35l56: Fix flushing of IRQ work in cs35l56_sdw_remove()
+Date: Thu, 28 May 2026 21:51:01 +0200
+Message-ID: <20260528194933.876301280@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,57 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 3e6ccd790ed69bedd3d9626d01dd35cf9821c121 ]
+[ Upstream commit 18e7bd9f2446664053f8c34b72abd4606d22d858 ]
 
-We check the padding of other uAPI v2 structures but not that of line
-config attributes. For used attributes: check if their padding is
-zeroed, for unused: check if the entire structure is zeroed.
+Use flush_work() instead of cancel_work_sync() to terminate pending IRQ
+work in cs35l56_sdw_remove(). And flush_work() again after masking the
+interrupts to flush any queueing that was racing with the masking. This is
+the same sequence as cs35l56_sdw_system_suspend().
 
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20260521-gpio-cdev-attr-padding-check-v3-1-ec3bcbe2e358@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+cs35l56_sdw_interrupt() takes the pm_runtime to prevent the bus powering-
+down before the interrupt status can be read and handled. The work releases
+this pm_runtime. So cancelling it, instead of flushing, could leave an
+unbalanced pm_runtime.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Link: https://patch.msgid.link/20260521123057.988732-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ sound/soc/codecs/cs35l56-sdw.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index f9a88b239301e..c6689f66a2d29 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1374,6 +1374,7 @@ static int gpio_v2_line_flags_validate(u64 flags)
- static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 					unsigned int num_lines)
- {
-+	size_t unused_attrs;
- 	unsigned int i;
- 	u64 flags;
- 	int ret;
-@@ -1381,9 +1382,21 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 	if (lc->num_attrs > GPIO_V2_LINE_NUM_ATTRS_MAX)
- 		return -EINVAL;
+diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
+index b433266b78446..7d893d1243a2a 100644
+--- a/sound/soc/codecs/cs35l56-sdw.c
++++ b/sound/soc/codecs/cs35l56-sdw.c
+@@ -524,10 +524,11 @@ static int cs35l56_sdw_remove(struct sdw_slave *peripheral)
  
-+	unused_attrs = GPIO_V2_LINE_NUM_ATTRS_MAX - lc->num_attrs;
-+
- 	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
- 		return -EINVAL;
+ 	/* Disable SoundWire interrupts */
+ 	cs35l56->sdw_irq_no_unmask = true;
+-	cancel_work_sync(&cs35l56->sdw_irq_work);
++	flush_work(&cs35l56->sdw_irq_work);
+ 	sdw_write_no_pm(peripheral, CS35L56_SDW_GEN_INT_MASK_1, 0);
+ 	sdw_read_no_pm(peripheral, CS35L56_SDW_GEN_INT_STAT_1);
+ 	sdw_write_no_pm(peripheral, CS35L56_SDW_GEN_INT_STAT_1, 0xFF);
++	flush_work(&cs35l56->sdw_irq_work);
  
-+	for (i = 0; i < lc->num_attrs; i++) {
-+		if (lc->attrs[i].attr.padding != 0)
-+			return -EINVAL;
-+	}
-+
-+	if (unused_attrs) {
-+		if (!mem_is_zero(&lc->attrs[lc->num_attrs], unused_attrs * sizeof(*lc->attrs)))
-+			return -EINVAL;
-+	}
-+
- 	for (i = 0; i < num_lines; i++) {
- 		flags = gpio_v2_line_config_flags(lc, i);
- 		ret = gpio_v2_line_flags_validate(flags);
+ 	cs35l56_remove(cs35l56);
+ 
 -- 
 2.53.0
 
