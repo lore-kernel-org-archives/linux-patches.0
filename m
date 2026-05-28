@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CD62139C9;
-	Thu, 28 May 2026 20:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8152EF652;
+	Thu, 28 May 2026 20:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000801; cv=none; b=rHXyD6PoQnEAE97nBfbWX22c3S2jGbqrQ0h9336ObSpcb7zmTaREIk1YHM9DrhgaSTjozlFj/wpwwP54LWmo1Cn68fct6OIrZyHgwCb14BM380S8Ry7d6BwL3nYQFPGRSmgmOt8zo06RYTr/PkzfEZYC9We4xED4divrMxwuoio=
+	t=1780000804; cv=none; b=Cd/urGUSgUqh+nOuqJofxh8WyKyqk6CSn6aiJVs8OvXTLbfMs6HJ7N3q7BDstHuHADL2UBpXbZRvXgcuW/hmkrQqgHO2USPDQ2oQrSPZ83cWEf0IeBY7Bu/2Ney1nK45r5G5dvIQkrZm0zF2l0dwO/66DjhZMG+HsmknhpDc880=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000801; c=relaxed/simple;
-	bh=QME2yA/AsDVM2vtPtyNPcNmG/BJxjw5uHfOoyw7uioY=;
+	s=arc-20240116; t=1780000804; c=relaxed/simple;
+	bh=OOlKoc+dCBFK3fSoae5+RbsDYlis46HIMjl303NO1ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bke3Iayz3V0/IuPV43Euy4IjFATZEnC6+BRaYd8XV6rpD3lupUhnkPOqQOJlc0OrUmQw2EQPCkEyizHv16FVOXP+mgyqgLhop5bh269R/Zw2v0QlLpQIV2ceq7wRmrrP/c1EdYPb1xiWG0HaDA81dOCIs0GVyetylE3QF9/wb8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HVrO3jM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HKLNTQQ88TgfT5I3F0ee3htH8vVRgyQmNdYxEAcYIXWkvjLBZAlgil5Jofa6s3x8NrbpdIt2HTPf7HuGPCxFcXJ8UzmlgW5kzEK5+nqm1N5iRIRtO7hUZxNXhrMF1rLZJv1V+FhbbIw7tyeChsDsJYaPPikKhcQuSaAQuZMUzZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axMHvVIq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HVrO3jM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D191C1F00A3A;
-	Thu, 28 May 2026 20:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axMHvVIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F021F000E9;
+	Thu, 28 May 2026 20:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000800;
-	bh=tFo6e8LinZa7dlvaosiUF5Oi7neDUAMf/jwtBmm/TZI=;
+	s=korg; t=1780000803;
+	bh=54HNfa/Vmp9312iqr2RKsf03cFbLKJKIAXwEaN8AlSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1HVrO3jMG61ISN41DUMLbqYay6LTFIfGJUm0IpJpcJ5R3UTysN5f8LjZ+qakP/v4/
-	 C+SP4wNzRwG47u3qKki4jwowDr1mTbPmQAgBQt9I4tisfNSXVD11sHFwmutoUhjDl1
-	 MfCqXcsPImVR+OaheDsY6KtaNHoP2E6WHw+W/d4I=
+	b=axMHvVIqQMbUEK0EG5A84ZFXDKIB4h+n9asmaJk+OgykrnpVjKkUovTClRoXuSb0o
+	 6S6X2gWJ6PBLzl3+PpfMP6HDRy/yk5Nh6Nax/0NAr3pM8pWBPwx8MiQXLNoQ9A3Q0R
+	 2YGeqTUV3ipxS8BvHuqLtqYsU+y35D08db0k75WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/272] netfilter: x_tables: unregister the templates first
-Date: Thu, 28 May 2026 21:49:00 +0200
-Message-ID: <20260528194633.979486930@linuxfoundation.org>
+Subject: [PATCH 6.12 175/272] kprobes: skip non-symbol addresses in kprobe_add_ksym_blacklist()
+Date: Thu, 28 May 2026 21:49:09 +0200
+Message-ID: <20260528194634.211273186@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,162 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
 
-[ Upstream commit d338693d778579b676a61346849bebd892427158 ]
+[ Upstream commit 307abfac04a254c09c5705d816b33354acee97a0 ]
 
-When the module is going away we need to zap the template
-first.  Else there is a small race window where userspace
-could instantiate a new table after the pernet exit function
-has removed the current table.
+When kprobe_add_area_blacklist() iterates through a section like
+.kprobes.text, the start address may not correspond to a named symbol.
+On ARM64 with CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y (introduced by
+commit baaf553d3bc3 ("arm64: Implement
+HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS")), the compiler flag
+-fpatchable-function-entry=4,2 inserts 2 NOPs before each function entry
+point for ftrace call_ops. These pre-function NOPs sit at the section base
+address, before the first named function symbol. The compiler emits a $x
+mapping symbol at offset 0x00 to mark the start of code, but
+find_kallsyms_symbol() ignores mapping symbols.
 
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Tristan Madani <tristan@talencesecurity.com>
-Closes: https://lore.kernel.org/netfilter-devel/20260429175613.1459342-1-tristmd@gmail.com/
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Without CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS (e.g. defconfig), no
+pre-function NOPs are inserted, the first function starts at offset
+0x00, and the bug does not trigger.
+
+This only affects modules that have a .kprobes.text section (i.e. those
+using the __kprobes annotation). Modules using NOKPROBE_SYMBOL() instead
+(like kretprobe_example.ko) blacklist exact function addresses via the
+_kprobe_blacklist section and are not affected.
+
+For kprobe_example.ko on ARM64 with -fpatchable-function-entry=4,2,
+the .kprobes.text section layout is:
+
+  offset 0x00: $x + 2 NOPs    (mapping symbol + ftrace preamble)
+  offset 0x08: handler_post   (64 bytes)
+  offset 0x50: handler_pre    (68 bytes)
+
+kprobe_add_area_blacklist() starts iterating from the section base
+address (offset 0x00), which only has the $x mapping symbol.
+kprobe_add_ksym_blacklist() then calls kallsyms_lookup_size_offset()
+for this address, which goes through:
+
+  kallsyms_lookup_size_offset()
+    -> module_address_lookup()
+      -> find_kallsyms_symbol()
+
+find_kallsyms_symbol() scans all module symbols to find the closest
+preceding symbol.
+
+Since no named text symbol exists at offset 0x00,
+find_kallsyms_symbol() picks __UNIQUE_ID_vermagic (a .modinfo symbol
+whose address is in the temporary image) as the "best" match. The
+computed "size" = next_text_symbol - modinfo_symbol spans across
+these two unrelated memory regions, creating a blacklist entry with
+a bogus range of tens of terabytes.
+
+Whether this causes a visible failure depends on address randomization,
+here is what happens on Raspberry Pi 4/5:
+
+  - On RPi5, the bogus size was ~35 TB. start + size stayed within
+    64-bit range, so the blacklist entry covered the entire kernel
+    text. register_kprobe() in the module's own init function failed
+    with -EINVAL.
+
+  - On RPi4, the bogus size was ~75 TB. start + size overflowed
+    64 bits and wrapped to a small address near zero. The range
+    check (addr >= start && addr < end) then failed because end
+    wrapped around, so the bogus entry was accidentally harmless
+    and kprobes worked by luck.
+
+The same bug exists on both machines, but randomization determines whether
+the integer overflow masks it or not.
+
+Fix this by adding notrace to the __kprobes macro. Functions in
+.kprobes.text are kprobe infrastructure handlers that should never be
+traced by ftrace. With notrace, the compiler stops inserting them and the
+non-symbol gap at the section start disappears entirely.
+
+Link: https://lore.kernel.org/all/20260506012706.2785785-1-jianpeng.chang.cn@windriver.com/
+
+Fixes: baaf553d3bc3 ("arm64: Implement HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS")
+Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arptable_filter.c   | 2 +-
- net/ipv4/netfilter/iptable_filter.c    | 2 +-
- net/ipv4/netfilter/iptable_mangle.c    | 2 +-
- net/ipv4/netfilter/iptable_raw.c       | 2 +-
- net/ipv4/netfilter/iptable_security.c  | 2 +-
- net/ipv6/netfilter/ip6table_filter.c   | 2 +-
- net/ipv6/netfilter/ip6table_mangle.c   | 2 +-
- net/ipv6/netfilter/ip6table_raw.c      | 2 +-
- net/ipv6/netfilter/ip6table_security.c | 2 +-
- 9 files changed, 9 insertions(+), 9 deletions(-)
+ include/asm-generic/kprobes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/netfilter/arptable_filter.c b/net/ipv4/netfilter/arptable_filter.c
-index 78cd5ee24448f..359d00d74095b 100644
---- a/net/ipv4/netfilter/arptable_filter.c
-+++ b/net/ipv4/netfilter/arptable_filter.c
-@@ -82,8 +82,8 @@ static int __init arptable_filter_init(void)
- 
- static void __exit arptable_filter_fini(void)
- {
--	unregister_pernet_subsys(&arptable_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&arptable_filter_net_ops);
- 	kfree(arpfilter_ops);
- }
- 
-diff --git a/net/ipv4/netfilter/iptable_filter.c b/net/ipv4/netfilter/iptable_filter.c
-index 3ab908b747951..595bfb492b1c1 100644
---- a/net/ipv4/netfilter/iptable_filter.c
-+++ b/net/ipv4/netfilter/iptable_filter.c
-@@ -101,8 +101,8 @@ static int __init iptable_filter_init(void)
- 
- static void __exit iptable_filter_fini(void)
- {
--	unregister_pernet_subsys(&iptable_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&iptable_filter_net_ops);
- 	kfree(filter_ops);
- }
- 
-diff --git a/net/ipv4/netfilter/iptable_mangle.c b/net/ipv4/netfilter/iptable_mangle.c
-index 385d945d8ebea..db90db7057cc4 100644
---- a/net/ipv4/netfilter/iptable_mangle.c
-+++ b/net/ipv4/netfilter/iptable_mangle.c
-@@ -135,8 +135,8 @@ static int __init iptable_mangle_init(void)
- 
- static void __exit iptable_mangle_fini(void)
- {
--	unregister_pernet_subsys(&iptable_mangle_net_ops);
- 	xt_unregister_template(&packet_mangler);
-+	unregister_pernet_subsys(&iptable_mangle_net_ops);
- 	kfree(mangle_ops);
- }
- 
-diff --git a/net/ipv4/netfilter/iptable_raw.c b/net/ipv4/netfilter/iptable_raw.c
-index 0e7f53964d0af..b46a790917306 100644
---- a/net/ipv4/netfilter/iptable_raw.c
-+++ b/net/ipv4/netfilter/iptable_raw.c
-@@ -100,9 +100,9 @@ static int __init iptable_raw_init(void)
- 
- static void __exit iptable_raw_fini(void)
- {
-+	xt_unregister_template(&packet_raw);
- 	unregister_pernet_subsys(&iptable_raw_net_ops);
- 	kfree(rawtable_ops);
--	xt_unregister_template(&packet_raw);
- }
- 
- module_init(iptable_raw_init);
-diff --git a/net/ipv4/netfilter/iptable_security.c b/net/ipv4/netfilter/iptable_security.c
-index d885443cb2679..2b89adc1e5751 100644
---- a/net/ipv4/netfilter/iptable_security.c
-+++ b/net/ipv4/netfilter/iptable_security.c
-@@ -89,9 +89,9 @@ static int __init iptable_security_init(void)
- 
- static void __exit iptable_security_fini(void)
- {
-+	xt_unregister_template(&security_table);
- 	unregister_pernet_subsys(&iptable_security_net_ops);
- 	kfree(sectbl_ops);
--	xt_unregister_template(&security_table);
- }
- 
- module_init(iptable_security_init);
-diff --git a/net/ipv6/netfilter/ip6table_filter.c b/net/ipv6/netfilter/ip6table_filter.c
-index e8992693e14a0..9dcd4501fe800 100644
---- a/net/ipv6/netfilter/ip6table_filter.c
-+++ b/net/ipv6/netfilter/ip6table_filter.c
-@@ -100,8 +100,8 @@ static int __init ip6table_filter_init(void)
- 
- static void __exit ip6table_filter_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&ip6table_filter_net_ops);
- 	kfree(filter_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_mangle.c b/net/ipv6/netfilter/ip6table_mangle.c
-index 8dd4cd0c47bd4..ce2cbce9e3ed3 100644
---- a/net/ipv6/netfilter/ip6table_mangle.c
-+++ b/net/ipv6/netfilter/ip6table_mangle.c
-@@ -128,8 +128,8 @@ static int __init ip6table_mangle_init(void)
- 
- static void __exit ip6table_mangle_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_mangle_net_ops);
- 	xt_unregister_template(&packet_mangler);
-+	unregister_pernet_subsys(&ip6table_mangle_net_ops);
- 	kfree(mangle_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_raw.c b/net/ipv6/netfilter/ip6table_raw.c
-index fc9f6754028f2..8af0f8bd036dc 100644
---- a/net/ipv6/netfilter/ip6table_raw.c
-+++ b/net/ipv6/netfilter/ip6table_raw.c
-@@ -98,8 +98,8 @@ static int __init ip6table_raw_init(void)
- 
- static void __exit ip6table_raw_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_raw_net_ops);
- 	xt_unregister_template(&packet_raw);
-+	unregister_pernet_subsys(&ip6table_raw_net_ops);
- 	kfree(rawtable_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_security.c b/net/ipv6/netfilter/ip6table_security.c
-index 4df14a9bae782..66018b169b010 100644
---- a/net/ipv6/netfilter/ip6table_security.c
-+++ b/net/ipv6/netfilter/ip6table_security.c
-@@ -88,8 +88,8 @@ static int __init ip6table_security_init(void)
- 
- static void __exit ip6table_security_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_security_net_ops);
- 	xt_unregister_template(&security_table);
-+	unregister_pernet_subsys(&ip6table_security_net_ops);
- 	kfree(sectbl_ops);
- }
- 
+diff --git a/include/asm-generic/kprobes.h b/include/asm-generic/kprobes.h
+index 060eab094e5a2..5290a2b2e15a0 100644
+--- a/include/asm-generic/kprobes.h
++++ b/include/asm-generic/kprobes.h
+@@ -14,7 +14,7 @@ static unsigned long __used					\
+ 	_kbl_addr_##fname = (unsigned long)fname;
+ # define NOKPROBE_SYMBOL(fname)	__NOKPROBE_SYMBOL(fname)
+ /* Use this to forbid a kprobes attach on very low level functions */
+-# define __kprobes	__section(".kprobes.text")
++# define __kprobes	notrace __section(".kprobes.text")
+ # define nokprobe_inline	__always_inline
+ #else
+ # define NOKPROBE_SYMBOL(fname)
 -- 
 2.53.0
 
