@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC06314A95;
-	Thu, 28 May 2026 19:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F082F8EA1;
+	Thu, 28 May 2026 19:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998011; cv=none; b=XfgplQheyCY4qt2sWEUNIYjcxYkjQi6NS6SXQritWO6pqy35xjTvAxIYjMXOnn1qAyYa8oAmUyJ975+dcB9HtLnjpovDwOWLEA77OmaZCu+3QZjMmG8x5Jjz+3044MCbLRi+wBsqs7EEeQNymArBKb2qrG9Wbn0BrdHh1rBHLhs=
+	t=1779998014; cv=none; b=a9q8WI6j81SGucAXJwz2aqrMkontcGMZt3dbTHeTJMWQpwhTnHnvtZgzEWHnLQPyYHtI+KPPPF+RtwUTvQMrScQ+LXal8lWoUHYdrhYLTjGCzlAn4kORmKaiJQAQYGwz3O4LQgmU4pDXshTMajGl28f8ERDxa4QRSl+Ou35KDos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998011; c=relaxed/simple;
-	bh=tJ4y3EN3iSJTr3ZHZw4femsksOmrsY8mVwp1Dh+gALI=;
+	s=arc-20240116; t=1779998014; c=relaxed/simple;
+	bh=mGiK2Hl+Ds3J8bf80CfYGDVCL/xD9XCXKCp4IC1hBmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4vy1UTAcJtF75eEvFxHP5eLaXdPmqJH5Vxnzt9SlWYdmnfL5cMAL8licDnUML9MJxD7vRvA53/mr0HBieeNhGXDJhSjwB0njr1yzuDW1LO95kZEVvFlmsiPN+a8Wmssbvc0P2AME1x8T7ZqENvHlPKRpkLZCOvSFJWb5Z4LzoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qag8LnPz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QhLP8VTBDfBsFG/6sIIiHIzCGO7/XpbEmxm8oDc/F9kTahgEaC4qBocWYKgfpd7VCSQTUS3ZdzIg1P4Dk2PPp0oMLz87SnpvdHjjuBlkAJH+HMCKlox0sLrbK/i7Gaw/dUQbK4UxOLAW1QKtmKNZvbz4MMi6+U8NGUnN+2qRT+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUunUhYI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qag8LnPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951151F000E9;
-	Thu, 28 May 2026 19:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUunUhYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631911F000E9;
+	Thu, 28 May 2026 19:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998010;
-	bh=NAt8rjmorP0yTKVgb6wr2eSj+KTuIyILfzjxdf8C7as=;
+	s=korg; t=1779998012;
+	bh=pDzAZpu4q6/8KSfp5/mhB4JYeDVXGm69Z0qy2c2POcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qag8LnPzLjHLG2D3qIkSeUeZuOpMAyQHlmg1HUl01jFXXV3IUmXqIi4NQWsBzUWpE
-	 a89fPBBMyGu3rQdI6VJSeO5PbSwbgm1KHdZag1gPZFbJIhmM6SNL8UFPUtUtC+6U0L
-	 v/oj0TkujL65slMy9nF5jKALXYEIKS7G26Q+oRm8=
+	b=KUunUhYI1lrlmRC/nAK9rxyCkTClSj/614jE0MXcNon6eJcCED8UKvNvaMinjlsAk
+	 DG70A41jxKmkJRF2phDiI0qAwk3mPMSxXb7ZuqbJhCFPyc2M10Kkp+t0YyhQ+UBDaR
+	 kLM4ZVyNy/gSUgb/vkYTalBigHmT7G8iiMnJexJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.0 021/461] smb/server: promote S_DEL_ON_CLS to S_DEL_PENDING when close
-Date: Thu, 28 May 2026 21:42:30 +0200
-Message-ID: <20260528194647.495395260@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.0 022/461] hwmon: (pmbus/adm1266) widen blackbox-info buffer to I2C_SMBUS_BLOCK_MAX
+Date: Thu, 28 May 2026 21:42:31 +0200
+Message-ID: <20260528194647.525067121@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,76 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 4ec9c8e023c79f613fe4d5ad8cc737112efb2e44 upstream.
+commit eee213daa1e1b402eb631bcd1b8c5aa340a6b081 upstream.
 
-Reproducer:
+adm1266_nvmem_read_blackbox() declares a 5-byte stack buffer and
+passes it to i2c_smbus_read_block_data() to retrieve the 4-byte
+BLACKBOX_INFO response.  i2c_smbus_read_block_data() does not honour
+caller buffer sizes -- it memcpy()s data.block[0] bytes from the
+SMBus transaction (where data.block[0] is the length byte returned by
+the slave device, up to I2C_SMBUS_BLOCK_MAX = 32):
 
-  1. server: systemctl start ksmbd
-  2. client: mount -t cifs //${server_ip}/export /mnt
-  3. client: C program: openat(AT_FDCWD, "/mnt", O_RDWR | O_TMPFILE, 0600)
+	memcpy(values, &data.block[1], data.block[0]);
 
-Do not treat `FILE_DELETE_ON_CLOSE_LE` as delete pending while files
-remain open.
+If the device returns any block length above 5, the call overflows
+the caller's 5-byte stack buffer before the post-call
 
-This patch fixes xfstests generic/004.
+	if (ret != 4)
+		return -EIO;
 
+check has a chance to reject the response.
+
+Widen the local buffer to I2C_SMBUS_BLOCK_MAX so the helper has room
+for any well-formed SMBus block response, matching the convention used
+by the other i2c_smbus_read_block_data() callers in this driver.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
-Link: https://chenxiaosong.com/en/smb-xfstests-generic-004.html
-Co-developed-by: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Tested-by: Steve French <stfrench@microsoft.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-2-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -211,7 +211,7 @@ int ksmbd_query_inode_status(struct dent
- 		return ret;
- 
- 	down_read(&ci->m_lock);
--	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
-+	if (ci->m_flags & S_DEL_PENDING)
- 		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
- 	else
- 		ret = KSMBD_INODE_STATUS_OK;
-@@ -227,7 +227,7 @@ bool ksmbd_inode_pending_delete(struct k
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -349,7 +349,7 @@ static int adm1266_nvmem_read_blackbox(s
+ {
+ 	int record_count;
+ 	char index;
+-	u8 buf[5];
++	u8 buf[I2C_SMBUS_BLOCK_MAX];
  	int ret;
  
- 	down_read(&ci->m_lock);
--	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
-+	ret = (ci->m_flags & S_DEL_PENDING);
- 	up_read(&ci->m_lock);
- 
- 	return ret;
-@@ -395,12 +395,20 @@ static void __ksmbd_inode_close(struct k
- 		}
- 	}
- 
-+	down_write(&ci->m_lock);
-+	/* Promote S_DEL_ON_CLS to S_DEL_PENDING when close */
-+	if (ci->m_flags & S_DEL_ON_CLS) {
-+		ci->m_flags &= ~S_DEL_ON_CLS;
-+		ci->m_flags |= S_DEL_PENDING;
-+	}
-+	up_write(&ci->m_lock);
-+
- 	if (atomic_dec_and_test(&ci->m_count)) {
- 		bool do_unlink = false;
- 
- 		down_write(&ci->m_lock);
--		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
--			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
-+		if (ci->m_flags & S_DEL_PENDING) {
-+			ci->m_flags &= ~S_DEL_PENDING;
- 			do_unlink = true;
- 		}
- 		up_write(&ci->m_lock);
+ 	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
 
 
