@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B30A409630;
-	Thu, 28 May 2026 19:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C409434D4D6;
+	Thu, 28 May 2026 19:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998324; cv=none; b=SaKKLhPu56qGrmq8vnT3J+qWHCi/Iles7mnvO2FSkyaan9m/3QTFBVQZe33noInqfBTZAJKjzzt1eUOkqK6JqrC+UzT8jHeviOKykNo6GnH1/Km1uBL4rqOjKBouv3hDD8/NGnaX2n6luCPzKXFgKpH7Kgy0cboiapgb9c0Ui1Q=
+	t=1779998325; cv=none; b=PMyhy4T/todCFiMndeDjDHmUgbktgR29htIclEctwY6JagWmJvyLHVO0Xmx6kukbW8ZJsS4F+IElWlXIinomcGFJlHDMsE+92xhs8AKdcpKA5uq/z7ZLze+9+VZXktJKQdBcSyoVm/qOADSlzEBMCerkwIzO4vkGlQ2k1gesmUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998324; c=relaxed/simple;
-	bh=q5frrO7IMcqUuZu5QWMtW6MBDTX+Rd8lRV/s7rIr6Xw=;
+	s=arc-20240116; t=1779998325; c=relaxed/simple;
+	bh=YaXljnKGxDgnjt4ijwjcp/6VdsmnBJClLqW/Gxxn0f4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bT+aGUUf/11I7FUWGIDhMdC/9PyZssLYDiNjYB/P2XYEE23TusphFZyea0ZcNhHh6EsmhKNNEKBT/aqL3IqY9G7XmbV4YD7uVa578/NvBQ2AP3Vik7+dthZ3f3Tv7p8uCilGCIXsPTWgLJOyxtoAcR3NY2xoe0F4t2GL3KFxSbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSAopxKQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vAbsYRifzBq/4CyPm5K+HWiLhNSQMt3B+v8VgWYXuCundgFhuxR3Wx0xqGh92zcyOEonvCG8CQD7DR0CjVzD+1c6h86xOKN5FITKEJwNds0woVNr5aMCMDiunaIzZJkkdZP6neKZcgx3ZeZiGYu8yVUs5xkOhG8b1qmAT42TMpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z91IWlSw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSAopxKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F081F00A3A;
-	Thu, 28 May 2026 19:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z91IWlSw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF891F000E9;
+	Thu, 28 May 2026 19:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998321;
-	bh=rEnvAtkB7hdjVfYvTJPIDsR1fFaP5TRwRaSinTZjuy0=;
+	s=korg; t=1779998324;
+	bh=XWlKuugbd0GZQy+9LPFL+8kGbluPebuKshdKd0YFaM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSAopxKQgNO6UxnFZKKDBOnS1/ZSJAdkch+Cde/mLmtLc58luNz4Hjxk6CF8tCQgs
-	 dooAQuuiijS/ED3wLWnthxdOSxuCz0cgI8D8yZcoz5Pl90LA4P690dn6NoI/k+LbrE
-	 n8A+lFsZ7JH0dycyymrQ0DRdlYUiiP/0RKJnSoA0=
+	b=z91IWlSwk9hYqL1zsf9fPVj4mcHOGLDnInBupuu/G5o27pEt3RvvifoPJirzjA1N4
+	 bccsusX3QvZKsDtbSfbh6a6HSmoCi07Qzc2OymIGxkN2q9+DkRJA5a6UobRaKW5iXl
+	 JCjyArVciLh0oF75ZlMcIOapG3wpMiD4uNbTp+xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 7.0 133/461] drm/virtio: use uninterruptible resv lock for plane updates
-Date: Thu, 28 May 2026 21:44:22 +0200
-Message-ID: <20260528194650.840256114@linuxfoundation.org>
+	Nikita Shubin <nikita.shubin@maquefel.me>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 116/461] spi: ep93xx: fix error pointer deref after DMA setup failure
+Date: Thu, 28 May 2026 21:44:05 +0200
+Message-ID: <20260528194650.331099522@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,145 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9af1b6e175c82daf4b423da339a722d8e67a735a upstream.
+commit 5e121a81667a83e9a01d62b429e340f5a4a84abc upstream.
 
-virtio_gpu_cursor_plane_update() and virtio_gpu_resource_flush() lock
-the framebuffer BO's dma_resv via virtio_gpu_array_lock_resv() and
-ignore its return value. The function can fail with -EINTR from
-dma_resv_lock_interruptible() (signal during lock wait) or with
--ENOMEM from dma_resv_reserve_fences() (fence slot allocation),
-leaving the resv lock not held. The queue path then walks the object
-array and calls dma_resv_add_fence(), which requires the lock held;
-with lockdep enabled this trips dma_resv_assert_held():
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-  WARNING: drivers/dma-buf/dma-resv.c:296 at dma_resv_add_fence+0x71e/0x840
-  Call Trace:
-   virtio_gpu_array_add_fence
-   virtio_gpu_queue_ctrl_sgs
-   virtio_gpu_queue_fenced_ctrl_buffer
-   virtio_gpu_cursor_plane_update
-   drm_atomic_helper_commit_planes
-   drm_atomic_helper_commit_tail
-   commit_tail
-   drm_atomic_helper_commit
-   drm_atomic_commit
-   drm_atomic_helper_update_plane
-   __setplane_atomic
-   drm_mode_cursor_universal
-   drm_mode_cursor_common
-   drm_mode_cursor_ioctl
-   drm_ioctl
-   __x64_sys_ioctl
+Make sure to the clear the DMA channel pointers on setup failure to
+avoid dereferencing an error pointer on later probe errors or driver
+unbind.
 
-Beyond the WARN, mutating the dma_resv fence list without the lock
-races with concurrent readers/writers and can corrupt the list.
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
 
-Both call sites run inside the .atomic_update plane callback, which
-DRM atomic helpers do not allow to fail (by the time it runs, the
-commit has been signed off to userspace and there is no clean
-rollback path). Moving the lock acquisition to .prepare_fb was
-rejected because the broader lock scope deadlocks against other BO
-locking paths in the same atomic commit.
-
-Introduce virtio_gpu_lock_one_resv_uninterruptible() that uses
-dma_resv_lock() instead of dma_resv_lock_interruptible(). This
-eliminates the -EINTR failure mode -- the realistic syzbot trigger
--- without extending the lock hold across the commit. The helper
-locks a single BO and rejects nents > 1 with -EINVAL; both fix
-sites lock exactly one BO.
-
-Use it from virtio_gpu_cursor_plane_update() and
-virtio_gpu_resource_flush(); check the return value to handle the
-remaining -ENOMEM case from dma_resv_reserve_fences() by freeing
-the objs and skipping the plane update for that frame. The
-framebuffer BOs touched here are not shared with other contexts
-and lock contention is expected to be brief, so the loss of
-signal-interruptibility is acceptable.
-
-Other callers of virtio_gpu_array_lock_resv() (the ioctl paths)
-continue to use the interruptible variant.
-
-The bug was reported by syzbot, triggered via fault injection
-(fail_nth) on the DRM_IOCTL_MODE_CURSOR path, which forces the
--ENOMEM branch in dma_resv_reserve_fences().
-
-Reported-by: syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72bd3dd3a5d5f39a0271
-Fixes: 5cfd31c5b3a3 ("drm/virtio: fix virtio_gpu_cursor_plane_update().")
-Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260519082247.34470-1-kartikey406@gmail.com
+Fixes: e79e7c2df627 ("spi: ep93xx: add DT support for Cirrus EP93xx")
+Link: https://sashiko.dev/#/patchset/20260429091333.165363-1-johan%40kernel.org?part=10
+Cc: stable@vger.kernel.org	# 6.12
+Cc: Nikita Shubin <nikita.shubin@maquefel.me>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Nikita Shubin <nikita.shubin@maquefel.me>
+Link: https://patch.msgid.link/20260512074849.915143-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h   |    1 +
- drivers/gpu/drm/virtio/virtgpu_gem.c   |   17 +++++++++++++++++
- drivers/gpu/drm/virtio/virtgpu_plane.c |   10 ++++++++--
- 3 files changed, 26 insertions(+), 2 deletions(-)
+ drivers/spi/spi-ep93xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -317,6 +317,7 @@ virtio_gpu_array_from_handles(struct drm
- void virtio_gpu_array_add_obj(struct virtio_gpu_object_array *objs,
- 			      struct drm_gem_object *obj);
- int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs);
-+int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs);
- void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs);
- void virtio_gpu_array_add_fence(struct virtio_gpu_object_array *objs,
- 				struct dma_fence *fence);
---- a/drivers/gpu/drm/virtio/virtgpu_gem.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
-@@ -238,6 +238,23 @@ int virtio_gpu_array_lock_resv(struct vi
- 	return ret;
- }
+--- a/drivers/spi/spi-ep93xx.c
++++ b/drivers/spi/spi-ep93xx.c
+@@ -582,12 +582,14 @@ static int ep93xx_spi_setup_dma(struct d
+ 	espi->dma_rx = dma_request_chan(dev, "rx");
+ 	if (IS_ERR(espi->dma_rx)) {
+ 		ret = dev_err_probe(dev, PTR_ERR(espi->dma_rx), "rx DMA setup failed");
++		espi->dma_rx = NULL;
+ 		goto fail_free_page;
+ 	}
  
-+int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs)
-+{
-+	int ret;
-+
-+	if (objs->nents != 1)
-+		return -EINVAL;
-+
-+	dma_resv_lock(objs->objs[0]->resv, NULL);
-+
-+	ret = dma_resv_reserve_fences(objs->objs[0]->resv, 1);
-+	if (ret) {
-+		virtio_gpu_array_unlock_resv(objs);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
- void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs)
- {
- 	if (objs->nents == 1) {
---- a/drivers/gpu/drm/virtio/virtgpu_plane.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
-@@ -215,7 +215,10 @@ static void virtio_gpu_resource_flush(st
- 		if (!objs)
- 			return;
- 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
--		virtio_gpu_array_lock_resv(objs);
-+		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
-+			virtio_gpu_array_put_free(objs);
-+			return;
-+		}
- 		virtio_gpu_cmd_resource_flush(vgdev, bo->hw_res_handle, x, y,
- 					      width, height, objs,
- 					      vgplane_st->fence);
-@@ -459,7 +462,10 @@ static void virtio_gpu_cursor_plane_upda
- 		if (!objs)
- 			return;
- 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
--		virtio_gpu_array_lock_resv(objs);
-+		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
-+			virtio_gpu_array_put_free(objs);
-+			return;
-+		}
- 		virtio_gpu_cmd_transfer_to_host_2d
- 			(vgdev, 0,
- 			 plane->state->crtc_w,
+ 	espi->dma_tx = dma_request_chan(dev, "tx");
+ 	if (IS_ERR(espi->dma_tx)) {
+ 		ret = dev_err_probe(dev, PTR_ERR(espi->dma_tx), "tx DMA setup failed");
++		espi->dma_tx = NULL;
+ 		goto fail_release_rx;
+ 	}
+ 
 
 
