@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BAE260580;
-	Thu, 28 May 2026 20:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4B3260580;
+	Thu, 28 May 2026 20:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000199; cv=none; b=Eom8pdtdf5yY83m8OsrFI9lfxati6LstIKyoTNDb4KrbMiOHRpCsWvfzo2enCPre3fF2l2oTapcsJEYMXllgRCU4eXK73APziejo3Glv2I8XnPwTM3dp3c2qRIT/JNFsh4SaTc1+sRRBzLvSjv4hPpDcN2fZWC+4WFIKsF+MUig=
+	t=1780000202; cv=none; b=ogEn1ulJbGzCwNfsvrsM0iRAfckk81YGmYyVb5liWadHIyQoujW4oUoAJV9JpUZaCafJ8/7muU2NN4mOV0dF0+MoIvRCK+6uTwbSISpFjb/viOFQZjN14N9KwkdfHuLGn7KgpFWRbgm9ajXMRPUXQCKJ20WV5mG9ufa6T7TMG34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000199; c=relaxed/simple;
-	bh=GtdV/AczT68QLI0xQXkbh1iRDevdPUSEn5ykSwBY36E=;
+	s=arc-20240116; t=1780000202; c=relaxed/simple;
+	bh=llNowHmG8mqylK6s3utacPQEHVWaoL9oOIs6pJMg6I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPHUZfvBRIQAd+xMjbjFrK6jbg1DPpWP6Kw1BRgtyXTTBglnR1qvU5fqZi30+8yVwXWESEgyuWJjoxjdULVROy9GpQDMN8G8h2fZ8jHjYNc8b/C3MN1rc5n6NUw0PT9lx7jDgaToCavmrvBGAOytGwKM6iw4/FomZ31oajzZuio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msiBhR58; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WRu8cIuGbACiKfSfOBixn/q8PT4Ly+8tUxgbm8gzG4FcKPhfR//RGEoXE2QuE1pr1294Pf9uawzqANNzvQWIomJcJjmWrR2lAO0iyLb+g/xPbQzrGHPYjlhNpvqDoF0tpgB+SNNkAkC3oD6MLzAe1GaZteEwBIYOCiG0oAf8oSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmHVSbvd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msiBhR58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECA11F000E9;
-	Thu, 28 May 2026 20:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmHVSbvd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96A31F000E9;
+	Thu, 28 May 2026 20:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000198;
-	bh=InUCaieJlUg7Qoq8aY5P/RL08fAhVESKBHB6S+RP+2U=;
+	s=korg; t=1780000201;
+	bh=pUzyZg1K+5mjTf0XI1S133dy9jx98j5PE+NSuaVDz3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msiBhR5834pXKg/BtrdvW7qUOzS13e1aZ9tpMN9JLT7P8SnxHpB7aMrg2LQNNxDxn
-	 jX0wkBySRsl5E0lRHIC5Qfp/m6knVyv3K1qAHOI7ubRgMqsZ4+6+DXRlV8HUqJAEky
-	 QV9cv8KpOkILFQqbTxpOglCu8UFl468mBqNxh6Ig=
+	b=JmHVSbvdSGw7ctDRHiITWNEEpMr21aMJXrKTiYC3R0FwXGnvB/fsoc9SMFgx0bYBR
+	 k/dCtZLQZD9CU/UsRSjcAJlDWTiE/lb6l16cEkYlukyS/3LzNOa7qTGrIdUcsfaCEv
+	 XryAPS7jFYq4x/PCfCJDnx8kzjWLt3MVL0Qo0fWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 337/377] RDMA/rtrs: Fix use-after-free in path file creation cleanup
-Date: Thu, 28 May 2026 21:49:35 +0200
-Message-ID: <20260528194648.175851014@linuxfoundation.org>
+Subject: [PATCH 6.18 338/377] net: bridge: Flush multicast groups when snooping is disabled
+Date: Thu, 28 May 2026 21:49:36 +0200
+Message-ID: <20260528194648.207082990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,54 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 5b74373390113fba798a76b483837029ab010fef ]
+[ Upstream commit 68800bbf583f26f71491141e4b3c8582f9cfcbde ]
 
-In the error path of rtrs_srv_create_path_files(), the sysfs root folders
-may already have been created and srv_path->kobj may already have been
-initialized. If a later step fails, the cleanup currently calls
-kobject_put(&srv_path->kobj) before
-rtrs_srv_destroy_once_sysfs_root_folders(srv_path).
+When forwarding multicast packets, the bridge takes MDB into account when
+IGMP / MLD snooping is enabled. Currently, when snooping is disabled, the
+MDB is retained, even though it is not used anymore.
 
-kobject_put() may drop the last reference to srv_path->kobj and invoke the
-release callback, rtrs_srv_release(), which frees srv_path. The following
-call to rtrs_srv_destroy_once_sysfs_root_folders(srv_path) then
-dereferences srv_path internally to access srv_path->srv, resulting in a
-use-after-free.
+At the same time, during the time that snooping is disabled, the IGMP / MLD
+control packets are obviously ignored, and after the snooping is reenabled,
+the administrator has to assume it is out of sync. In particular, missed
+join and leave messages would lead to traffic being forwarded to wrong
+interfaces.
 
-This failure path is reached before rtrs_srv_create_path_files() returns
-success, so the successful-path lifetime handling is not involved.
+Keeping the MDB entries around thus serves no purpose, and just takes
+memory. Note also that disabling per-VLAN snooping does actually flush the
+relevant MDB entries.
 
-Fix this by destroying the sysfs root folders before calling
-kobject_put(&srv_path->kobj), so srv_path is still valid while the helper
-accesses it.
+This patch flushes non-permanent MDB entries as global snooping is
+disabled.
 
-This issue was found by a static analysis tool I am developing.
-
-Fixes: ae4c81644e91 ("RDMA/rtrs-srv: Rename rtrs_srv_sess to rtrs_srv_path")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260514113834.865530-1-lgs201920130244@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/5e992df1bb93b88e19c0ea5819e23b669e3dde5d.1761228273.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4df78ff02629 ("bridge: mcast: Fix a possible use-after-free when removing a bridge port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_multicast.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
-index 3f305e694fe8c..1b1c6ea4ee5a4 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
-@@ -295,8 +295,8 @@ int rtrs_srv_create_path_files(struct rtrs_srv_path *srv_path)
- put_kobj:
- 	kobject_del(&srv_path->kobj);
- destroy_root:
--	kobject_put(&srv_path->kobj);
- 	rtrs_srv_destroy_once_sysfs_root_folders(srv_path);
-+	kobject_put(&srv_path->kobj);
- 
- 	return err;
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 5855eb0502085..e9a7e65304017 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -4640,6 +4640,14 @@ static void br_multicast_start_querier(struct net_bridge_mcast *brmctx,
+ 	rcu_read_unlock();
  }
+ 
++static void br_multicast_del_grps(struct net_bridge *br)
++{
++	struct net_bridge_port *port;
++
++	list_for_each_entry(port, &br->port_list, list)
++		__br_multicast_disable_port_ctx(&port->multicast_ctx);
++}
++
+ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 			struct netlink_ext_ack *extack)
+ {
+@@ -4660,6 +4668,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 	br_opt_toggle(br, BROPT_MULTICAST_ENABLED, !!val);
+ 	if (!br_opt_get(br, BROPT_MULTICAST_ENABLED)) {
+ 		change_snoopers = true;
++		br_multicast_del_grps(br);
+ 		goto unlock;
+ 	}
+ 
 -- 
 2.53.0
 
