@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B62316199;
-	Thu, 28 May 2026 20:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970323438AE;
+	Thu, 28 May 2026 20:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999484; cv=none; b=bAac26ZdvjTq0K2AqDblpEZhGhcpzpKcIxgS5rnjkMhU6ISTvVy3XDAxUQK/Zx2UA/cA73HUiH5YEW+Jd3TErSokwqNRyeP7dJH8ycHPemg5XaEXiz9OURB4JNYRoBjtYEa1pMcmBnqyLDw5icvlEQ0tUPN66aEP3cQgxLkD1WI=
+	t=1779999489; cv=none; b=fah0IuLP3j9WPiq+w/QAXfl9Ocyw6BAHSmp2gyZK5SqVK8n8tXZNBY2ZwMLvOzfH7S0VyvqBGLEjyWbZHHFyNiKXaoFc5r2WWyNxF19GnOd1+lm+3dVxu4M0eH0QZYt9aQXNK7uub0olzaf2B+4pOQbCN2ZiEy6llJfSWL0Rz8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999484; c=relaxed/simple;
-	bh=4AfAUaek+D7NHrHBjePUCTFkd3TuFWAeOohpMQoRhwY=;
+	s=arc-20240116; t=1779999489; c=relaxed/simple;
+	bh=3cWcwTV9A5WNz2kn/WvPk4HMvgkRG62HzXmsx/FPA3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIU64Rq3e14Rb/Qa+OMKbkcMlmp1hY6udy3ccnA6STd6Om8R/gL7CAyvTVyvczRPbSZHWBVz+a+5goMtuTm6QwqIUns0skCfDddmSxjD+XSqCXycRVeRRQJMuyoZ4JW2p0qIW4vrIKkLI7wV6Hud07E7QJes9E+bYjwKKZZwKHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5Km73mi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxMX85ZGkBi1X7ncrVWqPApWOgUnBzopRDOjqF9maBArli949YkHp1UPIo9HCawOVkPCnBUs3frsZmnWBWfhmZNrFl2SN6j3jBEjJGJFKc3nFBkbHhNIZnbvIWWhzpvQsXcIhYiX2rY3yUB+7iXs1AEJrJE6/tkWHC13cyiobM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrRIE5J4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5Km73mi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D121F000E9;
-	Thu, 28 May 2026 20:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrRIE5J4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D4B1F000E9;
+	Thu, 28 May 2026 20:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999483;
-	bh=lTNFCxBQLfF2N6QTx2p+sM2AiTZHtO4k7LOBheAM1aI=;
+	s=korg; t=1779999486;
+	bh=xsTO5bH/r9ojWT42HwyU03Y3O9a8vaJPW7vawQswXAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p5Km73miowMjX5HQ1tkDvsI4VKX8Fq34vC0ArSVu0YSbPJSXkVkUcdZ6H444Dmost
-	 sfwZXEcLs5Jzu5M2kLBPg2u0o/ApwSuTpkE20UlPpy6H0XgK3iamLPAgtF/NRzpUzZ
-	 H/UxHLsnzycVOHDbga5BP8Ki2yhp1G74h7S7CmQ4=
+	b=KrRIE5J4xP+jLeXgrKQ43h9lLu1j61ivrwRM17umEuxIBZIM/ov7fdUIWkXoEgpnq
+	 n+yARwSeQjSmnx3weIzg6lxTJgScfv6nFRRJKqUl3wWrhTRBIoRqmq722MJUZdcKRY
+	 XEGay6suVepj/E9ZlgFu3iS/+QJ2Vio5mzAhUqEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 084/377] mptcp: pm: fix ADD_ADDR timer infinite retry on option space insufficient
-Date: Thu, 28 May 2026 21:45:22 +0200
-Message-ID: <20260528194640.806668511@linuxfoundation.org>
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 085/377] vsock/vmci: fix UAF when peer resets connection during handshake
+Date: Thu, 28 May 2026 21:45:23 +0200
+Message-ID: <20260528194640.832818834@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,143 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Minh Nguyen <minhnguyen.080505@gmail.com>
 
-commit 51e398a3b8961b26a8c0a4ba9a777c5339791707 upstream.
+commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
 
-When TCP option space is insufficient (e.g., when sending ADD_ADDR with an
-IPv6 address and port while tcp_timestamps is enabled), the original code
-jumped to out_unlock without clearing the addr_signal flag. This caused
-mptcp_pm_add_timer to keep rescheduling indefinitely, not sending ADD_ADDR,
-preventing subsequent addresses in the endpoint list from being announced.
+vmci_transport_recv_connecting_server() returned err = 0 for a peer
+RST in its default switch arm:
 
-Handle this case by clearing the ADD_ADDR signal and skipping the matching
-ADD_ADDR retransmission entry. The skip path cancels the matching timer
-(with id check) and advances PM state progression, preserving forward
-progress to subsequent PM work.
+	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
 
-This cancellation is inherently best-effort. A concurrent add_timer
-callback may already be running and may acquire pm.lock before the
-cancel path updates entry state. In that case, one final ADD_ADDR
-transmit attempt can still be executed.
+That made vmci_transport_recv_listen() skip vsock_remove_pending(),
+leaving the pending socket on the listener's pending_links with
+sk_state = TCP_CLOSE while destroy: still dropped the explicit
+reference taken before schedule_delayed_work().
 
-Once the cancel path sets entry->retrans_times to ADD_ADDR_RETRANS_MAX,
-the callback-side retrans_times check suppresses further ADD_ADDR
-retransmissions.
+One second later vsock_pending_work() observed is_pending=true and
+performed full cleanup: vsock_remove_pending() then the two trailing
+sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
+the socket, and the second wrote into the freed object:
 
-Note that when an ADD_ADDR is being prepared, a pure-ACK is queued. On
-the output side, it means that it is fine to skip non-pure-ACK packets,
-when drop_other_suboptions is set: a pure-ACK will be processed soon
-after.
+  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
+  Write of size 4 at addr ffff88800b1cac80 by task kworker
+  Workqueue: events vsock_pending_work
 
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Treat peer RST like any other unexpected packet type (err = -EINVAL).
+All destroy: arms now return err < 0, so vmci_transport_recv_listen()
+removes pending from pending_links synchronously and
+vsock_pending_work() takes the is_pending=false / !rejected branch,
+dropping only its own work reference.  This also closes the
+multi-packet race Sashiko reported on v2: pending is removed from
+the list before any subsequent packet can find it.
+
+The pre-existing sk_acceptq_removed() gap on the err < 0 path of
+vmci_transport_recv_listen() that Sashiko also noted is not
+introduced or changed by this patch.
+
+Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-2-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
+Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 46 insertions(+), 10 deletions(-)
+ net/vmw_vsock/vmci_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -364,7 +364,13 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	spin_lock_bh(&msk->pm.lock);
- 
--	if (!mptcp_pm_should_add_signal_addr(msk)) {
-+	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
-+	 * callback. Once cancel updates retrans_times to MAX, suppress further
-+	 * retransmissions here. If this callback acquires pm.lock first, one
-+	 * final transmit attempt is still possible.
-+	 */
-+	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX &&
-+	    !mptcp_pm_should_add_signal_addr(msk)) {
- 		pr_debug("retransmit ADD_ADDR id=%d\n", entry->addr.id);
- 		mptcp_pm_announce_addr(msk, &entry->addr, false);
- 		mptcp_pm_add_addr_send_ack(msk);
-@@ -414,8 +420,12 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	/* Note: entry might have been removed by another thread.
- 	 * We hold rcu_read_lock() to ensure it is not freed under us.
- 	 */
--	if (stop_timer)
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	if (stop_timer) {
-+		if (check_id)
-+			sk_stop_timer(sk, &entry->add_timer);
-+		else
-+			sk_stop_timer_sync(sk, &entry->add_timer);
-+	}
- 
- 	rcu_read_unlock();
- 	return entry;
-@@ -880,6 +890,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 			      struct mptcp_addr_info *addr, bool *echo,
- 			      bool *drop_other_suboptions)
- {
-+	bool skip_add_addr = false;
- 	int ret = false;
- 	u8 add_addr;
- 	u8 family;
-@@ -901,24 +912,49 @@ bool mptcp_pm_add_addr_signal(struct mpt
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1156,7 +1156,7 @@ vmci_transport_recv_connecting_server(st
+ 		/* Close and cleanup the connection. */
+ 		vmci_transport_send_reset(pending, pkt);
+ 		skerr = EPROTO;
+-		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
++		err = -EINVAL;
+ 		goto destroy;
  	}
- 
- 	*echo = mptcp_pm_should_add_signal_echo(msk);
--	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
--
--	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
--	if (remaining < mptcp_add_addr_len(family, *echo, port))
--		goto out_unlock;
--
- 	if (*echo) {
- 		*addr = msk->pm.remote;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_ECHO);
-+		port = !!msk->pm.remote.port;
-+		family = msk->pm.remote.family;
- 	} else {
- 		*addr = msk->pm.local;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_SIGNAL);
-+		port = !!msk->pm.local.port;
-+		family = msk->pm.local.family;
- 	}
--	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
-+	if (remaining < mptcp_add_addr_len(family, *echo, port)) {
-+		struct net *net = sock_net((struct sock *)msk);
-+
-+		if (!*drop_other_suboptions)
-+			goto out_unlock;
-+
-+		if (*echo) {
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ECHOADDTXDROP);
-+		} else {
-+			skip_add_addr = true;
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ADDADDRTXDROP);
-+		}
-+		goto drop_signal_mark;
-+	}
-+
- 	ret = true;
- 
-+drop_signal_mark:
-+	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
- out_unlock:
- 	spin_unlock_bh(&msk->pm.lock);
-+
-+	/* On pure-ACK option-space exhaustion, stop retrying this ADD_ADDR:
-+	 * clear the signal bit, cancel the matching retransmission timer, and
-+	 * let the PM state machine progress.
-+	 */
-+	if (skip_add_addr) {
-+		mptcp_pm_del_add_timer(msk, addr, true);
-+		mptcp_pm_subflow_established(msk);
-+	}
- 	return ret;
- }
  
 
 
