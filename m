@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9A233F5BE;
-	Thu, 28 May 2026 20:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920FADDC5;
+	Thu, 28 May 2026 20:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999873; cv=none; b=nlc+PZe7xK6dBduZt8W/erh6VbLnLx2J9JFp3/+888TbYamFzU2Yrz4jKrcHj5+uZtcH4n3WC5ewzHVhucV4xDQwWMg+om72D/ndszaKrBJ0cJLpe7fW21owIJfrjQhltfKung2n0QiTeqAxCLe7g5VrcJevGbpxWFyXSgLUi1A=
+	t=1779999876; cv=none; b=brinCDoa6WO7OZf3NyH+kULqBkO42snlOsU7ErjW06y4P6mB2E9RwtgSMvu+u1uX+s5BWp3DC+6zxUDmQaqJYJzLhvrHd+hq1/xYG2rzXEIDSjI5X6F9h7Y29WSlekHmObRI9CRvqkfSWODJ46c6skWnFPkGJ9XeE/rIr2faBPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999873; c=relaxed/simple;
-	bh=zKfmAQMqZbX19PpShB27uX0FnzWfpLufeDbckc/a1vw=;
+	s=arc-20240116; t=1779999876; c=relaxed/simple;
+	bh=6l3upiWf02MWaN63ijG7fhUdyYRrVWhnfv4jN73+FuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R51WShiuvw8N1CpGsyabXYUUMOrM7kzxwo1gsy04Eik3U8MjL6Sa9PxlE/XqzNNF+yrYfBYQ/IT3oKknsEx/XgIIU3bXeA40tcdOl9p1SciH44+QrAOaj8NvbwW6BUUx6EaCsekxjyr1yfOrXyr0m1ncZbpTTBFEuonJWAV2oFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKBzUb2F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DwvbG1shrjgRe4wmNxMri8+DHyfbZAfh12KGDYH9LTSgCRqyYtxkavLYdBEeHMKR+0ElpJCgzvcKfrbuF0qWf2X6yTBMYjcXXWvX2hj8vRMzTI2y7TwJvacCd8j3ND8EIlZqsWlt0voTerecC/LyZa8jx+J5TX8Kf167DGwfTYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsvP9TX0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKBzUb2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23AD1F000E9;
-	Thu, 28 May 2026 20:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsvP9TX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30221F000E9;
+	Thu, 28 May 2026 20:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999872;
-	bh=O43rqhar/ADmg1TYHh90jdRXrlzkvavKeUZV/1/GI00=;
+	s=korg; t=1779999875;
+	bh=+Hw+xHuxXyczqzT/BwZRmMS7ZX47yOgtPvDtjkZeUqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKBzUb2F0aASf9j261Mnjm1nwAIwGNoWDMbetCArHXXBnbVTKMme84vd6a2xnEVKY
-	 MoUrFyMmbnr7s8YT3W+Sd6Ko5OUyCtQgFDkHsW8xyNvTnBXVC9r2WTSNLi9W/vqihX
-	 nkASXDp41HL3anSdgoDvQHs0IfulaMUR3STJTID4=
+	b=MsvP9TX0lhDlvOIJRqeUUwvApE4BUI11CGFTnXxI24/43LKW1G2eLgsrF2FDEzjka
+	 AiXmC3ER5rEpjnPfzcOOTyF3S/v3PRl9qIaf9LjJaJ6hb4yD/6LvY2l/UZXqaHJpf6
+	 yXvarxurVbrZXjEYGc3NFp5wkdnbwkQw/Ygh6Tlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyoung Jang <graypanda.inzag@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 220/377] fs/statmount: fix slab out-of-bounds write in statmount_mnt_idmap
-Date: Thu, 28 May 2026 21:47:38 +0200
-Message-ID: <20260528194644.764001402@linuxfoundation.org>
+Subject: [PATCH 6.18 221/377] fs: Fix return in jfs_mkdir and orangefs_mkdir
+Date: Thu, 28 May 2026 21:47:39 +0200
+Message-ID: <20260528194644.793643580@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,47 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyoung Jang <graypanda.inzag@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit a3bf0f28d4ba16e1f35f8c983bb04426b87e2a78 ]
+[ Upstream commit a7cf1da7ac016490d6a1106f2aa6b602d34e9a12 ]
 
-statmount_mnt_idmap() writes one mapping with seq_printf() and then
-manually advances seq->count to include the NUL separator.
+Return NULL instead of passing to ERR_PTR while err is zero
+Fixes these smatch warnings:
+  - fs/jfs/namei.c:311 jfs_mkdir() warn: passing zero to 'ERR_PTR'
+  - fs/orangefs/namei.c:369 orangefs_mkdir() warn: passing zero
+    to 'ERR_PTR'
 
-If seq_printf() overflows, seq_set_overflow() sets seq->count to
-seq->size. The manual seq->count++ changes this to seq->size + 1.
-seq_has_overflowed() then no longer detects the overflow. The corrupted
-count returns to statmount_string(), which later executes:
-
-    seq->buf[seq->count++] = '\0';
-
-This causes a 1-byte NULL out-of-bounds write on the dynamically
-allocated seq buffer.
-
-Fix this by checking for overflow immediately after seq_printf().
-
-Fixes: 37c4a9590e1e ("statmount: allow to retrieve idmappings")
-Signed-off-by: Junyoung Jang <graypanda.inzag@gmail.com>
-Link: https://patch.msgid.link/20260504112649.1862936-1-graypanda.inzag@gmail.com
+Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Link: https://patch.msgid.link/20260501071058.1243245-1-zenghongling@kylinos.cn
+Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mnt_idmapping.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/jfs/namei.c      | 2 +-
+ fs/orangefs/namei.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/mnt_idmapping.c b/fs/mnt_idmapping.c
-index a37991fdb194d..3640230a4d43b 100644
---- a/fs/mnt_idmapping.c
-+++ b/fs/mnt_idmapping.c
-@@ -375,6 +375,8 @@ int statmount_mnt_idmap(struct mnt_idmap *idmap, struct seq_file *seq, bool uid_
- 			continue;
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 7879c049632b3..553fca69cf425 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -308,7 +308,7 @@ static struct dentry *jfs_mkdir(struct mnt_idmap *idmap, struct inode *dip,
+       out1:
  
- 		seq_printf(seq, "%u %u %u", extent->first, lower, extent->count);
-+		if (seq_has_overflowed(seq))
-+			return -EAGAIN;
+ 	jfs_info("jfs_mkdir: rc:%d", rc);
+-	return ERR_PTR(rc);
++	return rc ? ERR_PTR(rc) : NULL;
+ }
  
- 		seq->count++; /* mappings are separated by \0 */
- 		if (seq_has_overflowed(seq))
+ /*
+diff --git a/fs/orangefs/namei.c b/fs/orangefs/namei.c
+index bec5475de094d..75e65e72c2d64 100644
+--- a/fs/orangefs/namei.c
++++ b/fs/orangefs/namei.c
+@@ -362,7 +362,7 @@ static struct dentry *orangefs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	__orangefs_setattr(dir, &iattr);
+ out:
+ 	op_release(new_op);
+-	return ERR_PTR(ret);
++	return ret ? ERR_PTR(ret) : NULL;
+ }
+ 
+ static int orangefs_rename(struct mnt_idmap *idmap,
 -- 
 2.53.0
 
