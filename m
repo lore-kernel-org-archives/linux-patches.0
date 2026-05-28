@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7DF348C45;
-	Thu, 28 May 2026 19:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A979348C45;
+	Thu, 28 May 2026 19:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998312; cv=none; b=mujUu52vh7t2YYUVgpNcCEYkWjs/nBVZcRyquNio34DDzyDppuBtTR59WJrA6GbW2gdhoYB7DxUZPpKuY46H3rMblwQ2IUkDLFLBhTL9du71d6aDtZdeksrcnTFJ8AcBiEcosV3suaklu4kewi0IyDbyiQKtJqczEg8j6Nbnpaw=
+	t=1779998314; cv=none; b=e2sXmC4EFY2KIJxYTv/eqcCN8tdALWPJxWKijmu9tT3cd7JFP4HjNSxmYokn9rg3HqKyaNLRXOwM1sFr8+w79OnCMy1QPnmfHOoAFGkg/mxu/K91/w91IqwuuDqWiPSyDuoGYsIJhS41UJc0vWMYUJcRiFi4pa7gQT8fWjHbfCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998312; c=relaxed/simple;
-	bh=pmUKQ/J5WGw2YOvwhG9akNR/YqUzIFvHje7pwERnw8g=;
+	s=arc-20240116; t=1779998314; c=relaxed/simple;
+	bh=2c+hCjpTWf6KzLYchRKpkD5ChFgmJxtqmsQOC8MwN3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GH6h1nsSEjF0zRIBnOUOfBsSy6hWu40k4UjCezIhrbIk7Q8HnYuLtBdiR0vo8Yr1aMGuzCKSxyKXPGrSXagCcsh7xRHMWDvJ7wQdHgnJiaCTyZvWibjA8wPQ1ESBhk/KRM6tmbL92RktELda1XtqK5LsIsc4KnEsndN5V0O/hYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8zeFEZw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vAOtBWMAXi31D62KBo4J1yY3Bg4ttJNh/5yj+oKEAL9B5Zpn2Z54vgy4F38hnHYu9LfnpkCfBXzGxJA1H6yxPKpFeCcOwXq4mXtQRvvBGBbD1/a819ET9yIHej+T+6GTDJlOAGMLxeQErsJabTmzMD5ma0WIA7jtY11gxjgtn4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy42xM5Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8zeFEZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC5E1F000E9;
-	Thu, 28 May 2026 19:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy42xM5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9071F00A3A;
+	Thu, 28 May 2026 19:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998310;
-	bh=oN6m6TBfyxgXeu+bWprnViahLUrsEW0BK35ExmbeUpk=;
+	s=korg; t=1779998313;
+	bh=jm8l8uEuHNlEmDQatzAKoaq3rwMO6AF0H+0Hb8+SjjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8zeFEZwEdiapZWztOi8WW4oeDGyu1mLUmZxSuyMaS9c6i8tcRLSIIXRtuKvpWY4p
-	 1QVAUF2O0N5DcWaBqIZA+5hQm1KdZE5YZn2aeOGe7uAos3fGaJX/0bH5SWKrLX0r/S
-	 QR6fOoWiJP5QNFahTHFLX2UHc5YO759Ff4wu2aac=
+	b=Xy42xM5YmrxY+RnfMv/gLe83HAb0UYbsuI/rnnJAg2uN0U6pRqldMSY2NZCy4/YcS
+	 FKDT6pquBBV2sbvWQ/MEzJtATijXKr6n7LYoRAZkwKsdwg2ejpNRSn9PTkx4D/A7Xu
+	 8rLC2E6CK4kH3C+TCacDC6IadpciVimk+SCg23uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 7.0 129/461] drm/i915/display: Copy color pipeline from plane in the primary joiner pipe
-Date: Thu, 28 May 2026 21:44:18 +0200
-Message-ID: <20260528194650.722145700@linuxfoundation.org>
+	Daniel J Blueman <daniel@quora.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 7.0 130/461] drm/msm: Fix shrinker deadlock
+Date: Thu, 28 May 2026 21:44:19 +0200
+Message-ID: <20260528194650.753461974@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,46 +50,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Daniel J Blueman <daniel@quora.org>
 
-commit 86ed2d96db1965e9008e919b1936145ae66540e3 upstream.
+commit 3392291fc509d8ad6e4ad90f15b0a193f721cbc9 upstream.
 
-When copying plane color state in a joiner configuration, use the plane in
-the primary joiner pipe since it carries the pipeline number selected by
-the user-space.
+With PROVE_LOCKING on an Snapdragon X1 and VM reclaim pressure, we see:
 
-This assumes that all pipes in the joiner are symmetric in their plane
-color capabilities.
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   7.0.0-debug+ #43 Tainted: G        W
+   ------------------------------------------------------
+   kswapd0/82 is trying to acquire lock:
+   ffff800080ec3870 (reservation_ww_class_acquire){+.+.}-{0:0}, at: msm_gem_shrinker_scan+0x17c/0x400 [msm]
 
-Cc: stable@vger.kernel.org # v6.19+
-Fixes: a78f1b6baf4d ("drm/i915/color: Add framework to program CSC")
-Tested-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260511053213.3122314-2-chaitanya.kumar.borah@intel.com
-(cherry picked from commit e8308fb5e05ca08ddfb8b46f6d947a6e3fd80cd7)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+   but task is already holding lock:
+   ffffc31709b263b8 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x88/0x988
+
+   which lock already depends on the new lock.
+
+   the existing dependency chain (in reverse order) is:
+
+   -> #2 (fs_reclaim){+.+.}-{0:0}:
+          __lock_acquire+0x4d0/0xad0
+          lock_acquire.part.0+0xc4/0x248
+          lock_acquire+0x8c/0x248
+          fs_reclaim_acquire+0xd0/0xf0
+          dma_resv_lockdep+0x224/0x348
+          do_one_initcall+0x84/0x5d0
+          do_initcalls+0x194/0x1d8
+          kernel_init_freeable+0x128/0x180
+          kernel_init+0x2c/0x160
+          ret_from_fork+0x10/0x20
+
+   -> #1 (reservation_ww_class_mutex){+.+.}-{4:4}:
+          __lock_acquire+0x4d0/0xad0
+          lock_acquire.part.0+0xc4/0x248
+          lock_acquire+0x8c/0x248
+          dma_resv_lockdep+0x1a8/0x348
+          do_one_initcall+0x84/0x5d0
+          do_initcalls+0x194/0x1d8
+          kernel_init_freeable+0x128/0x180
+          kernel_init+0x2c/0x160
+          ret_from_fork+0x10/0x20
+
+   -> #0 (reservation_ww_class_acquire){+.+.}-{0:0}:
+          check_prev_add+0x114/0x790
+          validate_chain+0x594/0x6f0
+          __lock_acquire+0x4d0/0xad0
+          lock_acquire.part.0+0xc4/0x248
+          lock_acquire+0x8c/0x248
+          drm_gem_lru_scan+0x1ac/0x440
+          msm_gem_shrinker_scan+0x17c/0x400 [msm]
+          do_shrink_slab+0x150/0x4a0
+          shrink_slab+0x144/0x460
+          shrink_one+0x9c/0x1b0
+          shrink_many+0x27c/0x5c0
+          shrink_node+0x344/0x550
+          balance_pgdat+0x2c0/0x988
+          kswapd+0x11c/0x318
+          kthread+0x10c/0x128
+          ret_from_fork+0x10/0x20
+
+   other info that might help us debug this:
+   Chain exists of:
+     reservation_ww_class_acquire --> reservation_ww_class_mutex --> fs_reclaim
+    Possible unsafe locking scenario:
+          CPU0                    CPU1
+          ----                    ----
+     lock(fs_reclaim);
+                                  lock(reservation_ww_class_mutex);
+                                  lock(fs_reclaim);
+     lock(reservation_ww_class_acquire);
+
+    *** DEADLOCK ***
+   1 lock held by kswapd0/82:
+    #0: ffffc31709b263b8 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x88/0x988
+
+   stack backtrace:
+   CPU: 4 UID: 0 PID: 82 Comm: kswapd0 Tainted: G        W           7.0.0-debug+ #43 PREEMPT(full)
+   Tainted: [W]=WARN
+   Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET94W (1.66 ) 09/15/2025
+   Call trace:
+    show_stack+0x20/0x40 (C)
+    dump_stack_lvl+0x9c/0xd0
+    dump_stack+0x18/0x30
+    print_circular_bug+0x114/0x120
+    check_noncircular+0x178/0x198
+    check_prev_add+0x114/0x790
+    validate_chain+0x594/0x6f0
+    __lock_acquire+0x4d0/0xad0
+    lock_acquire.part.0+0xc4/0x248
+    lock_acquire+0x8c/0x248
+    drm_gem_lru_scan+0x1ac/0x440
+    msm_gem_shrinker_scan+0x17c/0x400 [msm]
+    do_shrink_slab+0x150/0x4a0
+    shrink_slab+0x144/0x460
+    shrink_one+0x9c/0x1b0
+    shrink_many+0x27c/0x5c0
+    shrink_node+0x344/0x550
+    balance_pgdat+0x2c0/0x988
+    kswapd+0x11c/0x318
+    kthread+0x10c/0x128
+    ret_from_fork+0x10/0x20
+
+kswapd0 holding fs_reclaim calls the MSM shrinker, which calls
+dma_resv_lock. This in turn acquires fs_reclaim.
+
+Fix this deadlock by using dma_resv_trylock() instead, dropping the
+subsequently unused passed wait-wound lock 'ticket'.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Fixes: fe4952b5f27c ("drm/msm: Convert vm locking")
+Patchwork: https://patchwork.freedesktop.org/patch/723564/
+Message-ID: <20260508065722.18785-1-daniel@quora.org>
+[rob: fixup compile errors, replace lockdep splat with something legible]
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_plane.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem_shrinker.c |   40 +++++++++++++--------------------
+ 1 file changed, 16 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_plane.c b/drivers/gpu/drm/i915/display/intel_plane.c
-index 5390ceb21ca4..82f445c83158 100644
---- a/drivers/gpu/drm/i915/display/intel_plane.c
-+++ b/drivers/gpu/drm/i915/display/intel_plane.c
-@@ -373,7 +373,7 @@ intel_plane_color_copy_uapi_to_hw_state(struct intel_plane_state *plane_state,
- 	bool changed = false;
- 	int i = 0;
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -43,8 +43,7 @@ msm_gem_shrinker_count(struct shrinker *
+ }
  
--	iter_colorop = plane_state->uapi.color_pipeline;
-+	iter_colorop = from_plane_state->uapi.color_pipeline;
+ static bool
+-with_vm_locks(struct ww_acquire_ctx *ticket,
+-	      void (*fn)(struct drm_gem_object *obj),
++with_vm_locks(void (*fn)(struct drm_gem_object *obj),
+ 	      struct drm_gem_object *obj)
+ {
+ 	/*
+@@ -52,7 +51,7 @@ with_vm_locks(struct ww_acquire_ctx *tic
+ 	 * success paths
+ 	 */
+ 	struct drm_gpuvm_bo *vm_bo, *last_locked = NULL;
+-	int ret = 0;
++	bool locked = true;
  
- 	while (iter_colorop) {
- 		for_each_new_colorop_in_state(state, colorop, new_colorop_state, i) {
--- 
-2.54.0
-
+ 	drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
+ 		struct dma_resv *resv = drm_gpuvm_resv(vm_bo->vm);
+@@ -60,23 +59,14 @@ with_vm_locks(struct ww_acquire_ctx *tic
+ 		if (resv == obj->resv)
+ 			continue;
+ 
+-		ret = dma_resv_lock(resv, ticket);
+-
+-		/*
+-		 * Since we already skip the case when the VM and obj
+-		 * share a resv (ie. _NO_SHARE objs), we don't expect
+-		 * to hit a double-locking scenario... which the lock
+-		 * unwinding cannot really cope with.
+-		 */
+-		WARN_ON(ret == -EALREADY);
+-
+ 		/*
+-		 * Don't bother with slow-lock / backoff / retry sequence,
+-		 * if we can't get the lock just give up and move on to
+-		 * the next object.
++		 * dma_resv_lock can't be used due to acquiring 'ticket' before the
++		 * fs_reclaim lock, which is held in shrinker context
+ 		 */
+-		if (ret)
++		if (!dma_resv_trylock(resv)) {
++			locked = false;
+ 			goto out_unlock;
++		}
+ 
+ 		/*
+ 		 * Hold a ref to prevent the vm_bo from being freed
+@@ -108,11 +98,11 @@ out_unlock:
+ 		}
+ 	}
+ 
+-	return ret == 0;
++	return locked;
+ }
+ 
+ static bool
+-purge(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
++purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+ {
+ 	if (!is_purgeable(to_msm_bo(obj)))
+ 		return false;
+@@ -120,11 +110,11 @@ purge(struct drm_gem_object *obj, struct
+ 	if (msm_gem_active(obj))
+ 		return false;
+ 
+-	return with_vm_locks(ticket, msm_gem_purge, obj);
++	return with_vm_locks(msm_gem_purge, obj);
+ }
+ 
+ static bool
+-evict(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
++evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+ {
+ 	if (is_unevictable(to_msm_bo(obj)))
+ 		return false;
+@@ -132,7 +122,7 @@ evict(struct drm_gem_object *obj, struct
+ 	if (msm_gem_active(obj))
+ 		return false;
+ 
+-	return with_vm_locks(ticket, msm_gem_evict, obj);
++	return with_vm_locks(msm_gem_evict, obj);
+ }
+ 
+ static bool
+@@ -164,7 +154,6 @@ static unsigned long
+ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ {
+ 	struct msm_drm_private *priv = shrinker->private_data;
+-	struct ww_acquire_ctx ticket;
+ 	struct {
+ 		struct drm_gem_lru *lru;
+ 		bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket);
+@@ -185,11 +174,14 @@ msm_gem_shrinker_scan(struct shrinker *s
+ 	for (unsigned i = 0; (nr > 0) && (i < ARRAY_SIZE(stages)); i++) {
+ 		if (!stages[i].cond)
+ 			continue;
++		/*
++		 * 'ticket' not needed on trylock paths
++		 */
+ 		stages[i].freed =
+ 			drm_gem_lru_scan(stages[i].lru, nr,
+ 					 &stages[i].remaining,
+ 					 stages[i].shrink,
+-					 &ticket);
++					 NULL);
+ 		nr -= stages[i].freed;
+ 		freed += stages[i].freed;
+ 		remaining += stages[i].remaining;
 
 
