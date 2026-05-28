@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A06257854;
-	Thu, 28 May 2026 20:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8475724A047;
+	Thu, 28 May 2026 20:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999428; cv=none; b=EPyVpA5I2zjPFoKj/9+Y+AtgghfW/A9iH2gWL7P++TIEUaoGGjPDvEtAHMrCAyC6G5pvHJEAKQDyHbiMPbHhcnc75S0Tx6mVtrKy02RRbDumtcmVtjZV4hZG/MAoBI2LTxOBpOWnmBMpoYkQfbQs0n88IrqzlCUJPry3eqdjpiU=
+	t=1779999431; cv=none; b=Ch5lfVE8brgyOvKGtTLqMpyxgi5IFK3nrR1bizzO9XDrsXCvLJBTOUm45RB4LDY/dqqnEVHBm1H74nrIb+ZgxeyW3K/I1RYWsuzh9lvqSmbc2yO4ua7Co5XBdOroAcVb2Q9P9P1Vw9pqvcimmkKs+7ydOFwP7RYBuRmEglnW7i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999428; c=relaxed/simple;
-	bh=PfKNpuaIah1q+VK/uu0wDgt1IQuJnNaul5t5fbzcNe0=;
+	s=arc-20240116; t=1779999431; c=relaxed/simple;
+	bh=Er2ysA9DhZcooId0IAyJBbQKqPXa0DAJ5nXdZGLdCxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwg2Vxh/MLVNp6Y088irED66kvjbKAv6ncDbmkvFN3uKJHufE4XoRXgZ5PnEcVmwgDGEnFcz80AIWsJo9wb1DWlsIQmfAAyzFKYULO16g6MUcrBkGfbfO8Wa1mT4e/ieqPfXtmYbHOOgGdWwdwuDpbBIRu0q02Hn8a6QZRP4B0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYn3mzMl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mi7x5pWHflr3TrToFsdkqOwCg3xwwkLcW12XYn9rT/3QF4StuY6kJ5kTCcaTzoh0x8B5QDASXgUB+kPruodvj2T4L9NJEXaWDZL01Dcg3FmKhGu133AryGmRo8evrzMirbJ5/YDaRTSPxiTVg2BEkD8davOZ4JZqu2zXnqT36Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZIq/rh+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYn3mzMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232CD1F000E9;
-	Thu, 28 May 2026 20:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZIq/rh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B171F000E9;
+	Thu, 28 May 2026 20:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999427;
-	bh=hPvn0rproW0fxP20lkrsgT32XQFcOdzLg2VAt1z+XRQ=;
+	s=korg; t=1779999430;
+	bh=cB15w25rdSlKbSX5/SOVABrr93t+C4xOJ/LAp6PzIdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYn3mzMlFlQy7GWA4Hx6mKNMS7IiiHJgoOk54ZKB+6B8Ai2Zbr9/VRhLbuFZCdE6b
-	 Jyv8+Jaoos0FOoZk8d7yKhaWly/772ud+Mp7zIJfVZb2IHYZ0uFppS2T1mNNemGEDK
-	 PUujw/JWwEia5kzksXSVqHCHIroAg1zQSdEtkFJQ=
+	b=AZIq/rh+DaMIrXpxmDJfs9ettF5V1PXi+c4ssp8D+yrNz8f59vrXWprgZNeeypPhB
+	 c1Abap5UZC++Jh+ud/gat1VRTw/oHjehqagJDIht2U4knr+bwZ8xAXZ2aNAwlqVqSu
+	 DIbGaLZtu5trnihV72Y6qD8MFqUbNJTq1wfM3ti4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 036/377] hwmon: (pmbus/adm1266) widen blackbox-info buffer to I2C_SMBUS_BLOCK_MAX
-Date: Thu, 28 May 2026 21:44:34 +0200
-Message-ID: <20260528194639.424595721@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 063/377] net: ifb: report ethtool stats over num_tx_queues
+Date: Thu, 28 May 2026 21:45:01 +0200
+Message-ID: <20260528194640.190596574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,51 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit eee213daa1e1b402eb631bcd1b8c5aa340a6b081 upstream.
+commit 5db89c99566fc4728cc92e941d8e1975711e24b5 upstream.
 
-adm1266_nvmem_read_blackbox() declares a 5-byte stack buffer and
-passes it to i2c_smbus_read_block_data() to retrieve the 4-byte
-BLACKBOX_INFO response.  i2c_smbus_read_block_data() does not honour
-caller buffer sizes -- it memcpy()s data.block[0] bytes from the
-SMBus transaction (where data.block[0] is the length byte returned by
-the slave device, up to I2C_SMBUS_BLOCK_MAX = 32):
+ifb_dev_init() allocates dp->tx_private to dev->num_tx_queues
+entries via kzalloc_objs(*txp, dev->num_tx_queues). Both IFB
+per-queue RX and TX stats live in those entries: ifb_xmit() updates
+txp->rx_stats using the skb queue mapping, ifb_ri_tasklet() updates
+txp->tx_stats, and ifb_stats64() aggregates both over
+dev->num_tx_queues.
 
-	memcpy(values, &data.block[1], data.block[0]);
+The ethtool stats callbacks instead size and walk the per-queue
+stats with dev->real_num_rx_queues and dev->real_num_tx_queues. With
+an asymmetric device where the RX queue count exceeds the TX queue
+count, for example:
 
-If the device returns any block length above 5, the call overflows
-the caller's 5-byte stack buffer before the post-call
+    ip link add name ifb10 numtxqueues 1 numrxqueues 8 type ifb
+    ethtool -S ifb10
 
-	if (ret != 4)
-		return -EIO;
+ifb_get_ethtool_stats() indexes past the tx_private allocation and
+copies adjacent slab data through ETHTOOL_GSTATS.
 
-check has a chance to reject the response.
+Use dev->num_tx_queues consistently for the stats strings, the
+stats count, and the stats data walks. This reports one RX stats
+group and one TX stats group for each backing ifb_q_private entry,
+which is the queue set IFB can actually populate.
 
-Widen the local buffer to I2C_SMBUS_BLOCK_MAX so the helper has room
-for any well-formed SMBus block response, matching the convention used
-by the other i2c_smbus_read_block_data() callers in this driver.
+Reproduced under UML+KASAN at v7.1-rc2:
 
-Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+  BUG: KASAN: slab-out-of-bounds in ifb_fill_stats_data+0x3c/0xae
+  Read of size 8 at addr 0000000062dbd228 by task ethtool/36
+  ifb_fill_stats_data+0x3c/0xae
+  ifb_get_ethtool_stats+0xc0/0x129
+  __dev_ethtool+0x1ca5/0x363c
+  dev_ethtool+0x123/0x1b3
+  dev_ioctl+0x56c/0x744
+  sock_do_ioctl+0x15f/0x1b2
+  sock_ioctl+0x4d5/0x50a
+  sys_ioctl+0xd8b/0xde9
+
+With the patch applied, the same UML+KASAN repro is silent and
+ethtool -S ifb10 reports only the stats backed by the single
+allocated tx_private entry.
+
+Fixes: a21ee5b2fcb8 ("net: ifb: support ethtools stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-2-1c1ea1349cfe@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260514013739.3549624-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ifb.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -349,7 +349,7 @@ static int adm1266_nvmem_read_blackbox(s
- {
- 	int record_count;
- 	char index;
--	u8 buf[5];
-+	u8 buf[I2C_SMBUS_BLOCK_MAX];
- 	int ret;
+--- a/drivers/net/ifb.c
++++ b/drivers/net/ifb.c
+@@ -211,12 +211,12 @@ static void ifb_get_strings(struct net_d
  
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
+ 	switch (stringset) {
+ 	case ETH_SS_STATS:
+-		for (i = 0; i < dev->real_num_rx_queues; i++)
++		for (i = 0; i < dev->num_tx_queues; i++)
+ 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
+ 				ethtool_sprintf(&p, "rx_queue_%u_%.18s",
+ 						i, ifb_q_stats_desc[j].desc);
+ 
+-		for (i = 0; i < dev->real_num_tx_queues; i++)
++		for (i = 0; i < dev->num_tx_queues; i++)
+ 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
+ 				ethtool_sprintf(&p, "tx_queue_%u_%.18s",
+ 						i, ifb_q_stats_desc[j].desc);
+@@ -229,8 +229,7 @@ static int ifb_get_sset_count(struct net
+ {
+ 	switch (sset) {
+ 	case ETH_SS_STATS:
+-		return IFB_Q_STATS_LEN * (dev->real_num_rx_queues +
+-					  dev->real_num_tx_queues);
++		return IFB_Q_STATS_LEN * dev->num_tx_queues * 2;
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -262,12 +261,12 @@ static void ifb_get_ethtool_stats(struct
+ 	struct ifb_q_private *txp;
+ 	int i;
+ 
+-	for (i = 0; i < dev->real_num_rx_queues; i++) {
++	for (i = 0; i < dev->num_tx_queues; i++) {
+ 		txp = dp->tx_private + i;
+ 		ifb_fill_stats_data(&data, &txp->rx_stats);
+ 	}
+ 
+-	for (i = 0; i < dev->real_num_tx_queues; i++) {
++	for (i = 0; i < dev->num_tx_queues; i++) {
+ 		txp = dp->tx_private + i;
+ 		ifb_fill_stats_data(&data, &txp->tx_stats);
+ 	}
 
 
