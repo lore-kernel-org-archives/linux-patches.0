@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4596279903;
-	Thu, 28 May 2026 20:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2482580D7;
+	Thu, 28 May 2026 20:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999389; cv=none; b=gH1DFyUf3cVjqBhTA2Hi4d4nlLil9olUFETsyvkr10ai/ljEG33QvqPj6lM8KuqTi1gMMi42hiUc9tbCVKtxy3dsTGNdoZjkdgI7R+QNQy1YgzAKJt1ibCcQpSm5A0wpb1hm8H2fHoy/ajSdODIodAaBUEmxx2O+Zdazh1f8ybo=
+	t=1779999392; cv=none; b=Eyy93o6alnAn+zUmKi4RGPeJolbvarSxOHh0UQdIUqZuT/oXSFcIgQ+DW0i5vIfNsh27r47W8jvhIp4CNiRWtAwy4e+HTBXxy9Ywdv66mX4XI3kSn0TIEebmqiiGQbO/P7c1vnaM1dvC4SBkxRZesnCXCN9zzbDoaEW7Y8fLCRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999389; c=relaxed/simple;
-	bh=CSg09EeiJu/k2zzvI+Poxi5jDtjggROWt30hiz6vh7A=;
+	s=arc-20240116; t=1779999392; c=relaxed/simple;
+	bh=xLyHM478zoics7hb2EhZEOGW2QHiFUt3OTlNZOzrbYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTx72lu05aK0PwUonJeqoQcHYYiyZQEgJHyXh7xX1R8+jTtKowwkf7kR+c+gXstctvcIU7ynYU5JJvawgepw43rXCdTdv26+V5K9c604ghrCwSLlueJn/xTW5ga5n9v1IQuoPurM7BEJFtIGSa/KnFefgO3pwxMkEFvWTcMhKbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5TIZ35T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fl0KrxY6i/txFTgBjk8BpwNmEwV3vtA0TsT0eekx4km1jmSSaE3eytz7Wo6+4i7ZY+BWUYbpea9EuoJ/aB2gd78/D8A7zqTU8SbXKuWnd42w7HT6PIN33XfOs3nK18sDwP0KIQJ0GW5ro5CXfw2RgucQzF0QhFnVH5HAfPInIkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TBu4uo6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5TIZ35T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068131F000E9;
-	Thu, 28 May 2026 20:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TBu4uo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAD51F000E9;
+	Thu, 28 May 2026 20:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999388;
-	bh=aSDX+O3kkra7rniKlTxki90D6/JnsdGxckJ8pOEzgCM=;
+	s=korg; t=1779999391;
+	bh=yFy4yReBx/tbjQtvNB7kvfYe7d7mCMd7Z4lhjs0NbNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5TIZ35TIPZaEh/EFX1DcqE/0GzHayRfqzevd4gocXutKLCppvMX11zNaOV5J5R0N
-	 oqzMnui37Kbt15CXoCGuQj6GsDmnwyk31bzmXAIZPlSaPmkH0oeorUKI0Y16+XffGO
-	 qCMbtcjpgyNCw+U+gGW6g46r5HMh4p+VZsREddnM=
+	b=1TBu4uo6iwl7oWTCw9gd4O09R5E+uuL7fFQqxPKe2lwDvX6ip8F+lQI7QVQLXj+vH
+	 FBP1Zup1cg92u7VX2vSLsJ6iDke2G4YqCZYh2oT0zylWLvfEAvD346qxyy1gdkdfcf
+	 zcfuVKAXoShkkgkxxzcvLFWHFGX7bd3cz9rLxhJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Capitulino <luizcap@redhat.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	SeongJae Park <sj@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 050/377] selftests/mm: run_vmtests.sh: fix destructive tests invocation
-Date: Thu, 28 May 2026 21:44:48 +0200
-Message-ID: <20260528194639.823398542@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 051/377] net: wwan: iosm: fix potential memory leaks in ipc_imem_init()
+Date: Thu, 28 May 2026 21:44:49 +0200
+Message-ID: <20260528194639.851396307@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -59,43 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Capitulino <luizcap@redhat.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 3432cbb291aabf85f8af4b9d1ec37179168ff999 upstream.
+commit c5d93b2c40355e999715262a824965aac025a427 upstream.
 
-Destructive tests should be invoked with -d command-line option, but this
-won't work today since 'd' is missing in getopts command-line.  This
-commit fixes it.
+The memory allocated in ipc_protocol_init() is not freed on the error
+paths that follow in ipc_imem_init(). Fix that by calling the
+corresponding release function ipc_protocol_deinit() in the error path.
 
-Link: https://lore.kernel.org/214fd9e4-5398-4c26-859e-c982c2e277c3@redhat.com
-Fixes: f16ff3b692ad ("selftests/mm: run_vmtests.sh: add missing tests")
-Signed-off-by: Luiz Capitulino <luizcap@redhat.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3670970dd8c6 ("net: iosm: shared memory IPC interface")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260519062815.55545-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/run_vmtests.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_imem.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/mm/run_vmtests.sh
-+++ b/tools/testing/selftests/mm/run_vmtests.sh
-@@ -97,7 +97,7 @@ RUN_ALL=false
- RUN_DESTRUCTIVE=false
- TAP_PREFIX="# "
- 
--while getopts "aht:n" OPT; do
-+while getopts "aht:nd" OPT; do
- 	case ${OPT} in
- 		"a") RUN_ALL=true ;;
- 		"h") usage ;;
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+@@ -1426,6 +1426,8 @@ imem_config_fail:
+ protocol_init_fail:
+ 	cancel_work_sync(&ipc_imem->run_state_worker);
+ 	ipc_task_deinit(ipc_imem->ipc_task);
++	if (ipc_imem->ipc_protocol)
++		ipc_protocol_deinit(ipc_imem->ipc_protocol);
+ ipc_task_init_fail:
+ 	kfree(ipc_imem->ipc_task);
+ ipc_task_fail:
 
 
