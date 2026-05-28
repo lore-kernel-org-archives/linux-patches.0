@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C77F2F260C;
-	Thu, 28 May 2026 20:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EC62F260C;
+	Thu, 28 May 2026 20:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001441; cv=none; b=a3Zwx4SztSEK7kcbn1uOxsIAaynP/KcxCV4/0/S4/vbqmU7XIjIOh1fVURwnIAvZfiKeZyxTeeeFDUlJYU1jxRKuJdNn6/crdqQbygephaBM4oLMHwFQJtTyiN5ROjnVGT8xOaaHCfTkRJbHP5xOhjdnrUXW9bnb5X6EocxKNVs=
+	t=1780001443; cv=none; b=u0gncGZdSdRGsnyFpN5xpxRAZU8VHL88c74aQFLvjsiHPVSZmNNCNBhM1Y+SiS8xwKhVlwKXn5e4fCjz6gkVLELo8hi+pBc0QRCN+YQoU+3H10FUrjLwZbf2+hhvnkekZjC3b3kjpPW8E+F13j0dDvFOeqPsmQWh/kwqdNbpBkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001441; c=relaxed/simple;
-	bh=RTw6pl2CJ01NI/B/tY/YCZHxY6Qpv5zfJOnfucmfcAk=;
+	s=arc-20240116; t=1780001443; c=relaxed/simple;
+	bh=c2s9C7fFIjCLrT1J9io7XPAmudybiBjiGrOTDAp0Sik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEsYqbxvqDTrFM2UD7yW6ncIC97Q1uQb+jhlw8mq+37ZJOamk362DksWxSNVC4P8nivr39EjKtq0tCHk95XfpjGgpL7kpDs3/2MEO3OK+UjA3Dbc2oHGC+5i7yN4Dgdns0CeNNDvXPiL8PnVnRSp/jtWk9kuK/IoWEObGqv3QuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKTBQEBE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T0ng3BeFJgpr0jgbu3KeEioxP5nzsLf/9aBdQ9AQJml7YeMGwGCsaWlFsr6avdNJPFWZUGC9e4iwTYYjPOsUrQNM1eq5rIYdIlOvkCtJF+J9LyVw5E9gjfB/uuia5vs2+TNKQC4eiU9LtjhceGAynPK6DXyQzep5OxCTLfHT6WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV/AvmJy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKTBQEBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD541F000E9;
-	Thu, 28 May 2026 20:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV/AvmJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487261F000E9;
+	Thu, 28 May 2026 20:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001440;
-	bh=lGZ6DBuF+h1QloFf4Z/cBRMlz58wtYWZ8n9hToX4D8Y=;
+	s=korg; t=1780001442;
+	bh=hwhll6+e4HxK3uDHzkT0jqhU4qh1r65Y+yzYwruPhOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fKTBQEBEt1Ql5CsvrShMlfV29Klm5V7nXCty8AykQcY522MUymACh/jwKkNwr527C
-	 CDE2D4UC7w4+ulZMHIt0y1IH6+ZXKVwA6IfURF0t0Uj5cI9mggnyRmbX1TKo6XmEXu
-	 F3bbxaWe6pNt8O7ZfS+SSVPJ4WqNzI5VoPLy/wto=
+	b=OV/AvmJyULLCNjP814wKFytLRGg7lpU3+bdQ7W0kr0XPxO0VvpKKviiMpHykZYXXF
+	 vSz9Px7xDyu1KeFdwsIHZYc5hojiI/lt4beaCnXzgjBced80e0BSlGPVxv0jtnv0xQ
+	 FBEh9aKBXaOoCMK/cTl2QJsAEO6qidJDIPlY0eaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/186] zonefs: handle integer overflow in zonefs_fname_to_fno
-Date: Thu, 28 May 2026 21:50:08 +0200
-Message-ID: <20260528194932.401908647@linuxfoundation.org>
+Subject: [PATCH 6.6 129/186] netfs: Fix overrun check in netfs_extract_user_iter()
+Date: Thu, 28 May 2026 21:50:09 +0200
+Message-ID: <20260528194932.428454342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,49 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 3a8389d42bdf4213730f4067f8bfa78bae6564ef ]
+[ Upstream commit 0ef37eef83fad3542ee06db2940433ae1a92b39d ]
 
-In zonefs the file name in one of the two directories corresponds to the
-zone number.
+Fix netfs_extract_user_iter() so that if iov_iter_extract_pages() overfills
+pages[], then those pages don't get included in the iterator constructed at
+the end of the function.  If there was an overfill, memory corruption has
+already happened.
 
-Here Alexey reported a possible integer overflow in zonefs_fname_to_fno(),
-where the parsing of the zone number from the file name can overflow the
-'long' data type.
-
-Add a check for integer overflows and if the fno 'long' did overflow
-return -ENOENT.
-
-Reported-by: Alexey Dobriyan <adobriyan@gmail.com>
-Fixes: d207794ababe ("zonefs: Dynamically create file inodes when needed")
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
+Closes: https://sashiko.dev/#/patchset/20260427154639.180684-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-11-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/zonefs/super.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/netfs/iterator.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/fs/zonefs/super.c b/fs/zonefs/super.c
-index cc364669d723d..f1ebe46084570 100644
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -627,10 +627,14 @@ static long zonefs_fname_to_fno(const struct qstr *fname)
- 		return c - '0';
+diff --git a/fs/netfs/iterator.c b/fs/netfs/iterator.c
+index 781ea403498e3..9a047ca863fe5 100644
+--- a/fs/netfs/iterator.c
++++ b/fs/netfs/iterator.c
+@@ -72,21 +72,24 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
+ 			break;
+ 		}
  
- 	for (i = 0, rname = name + len - 1; i < len; i++, rname--) {
-+		long digit;
+-		if (ret > count) {
+-			pr_err("get_pages rc=%zd more than %zu\n", ret, count);
++		if (WARN(ret > count,
++			 "%s: extract_pages overrun %zd > %zu bytes\n",
++			 __func__, ret, count)) {
++			ret = -EIO;
+ 			break;
+ 		}
+ 
+-		count -= ret;
+-		ret += offset;
+-		cur_npages = DIV_ROUND_UP(ret, PAGE_SIZE);
+-
+-		if (npages + cur_npages > max_pages) {
+-			pr_err("Out of bvec array capacity (%u vs %u)\n",
+-			       npages + cur_npages, max_pages);
++		cur_npages = DIV_ROUND_UP(offset + ret, PAGE_SIZE);
++		if (WARN(cur_npages > max_pages - npages,
++			 "%s: extract_pages overrun %u > %u pages\n",
++			 __func__, npages + cur_npages, max_pages)) {
++			ret = -EIO;
+ 			break;
+ 		}
+ 
++		count -= ret;
++		ret += offset;
 +
- 		c = *rname;
- 		if (!isdigit(c))
- 			return -ENOENT;
--		fno += (c - '0') * shift;
-+		digit = (c - '0') * shift;
-+		if (check_add_overflow(fno, digit, &fno))
-+			return -ENOENT;
- 		shift *= 10;
+ 		for (i = 0; i < cur_npages; i++) {
+ 			len = ret > PAGE_SIZE ? PAGE_SIZE : ret;
+ 			bvec_set_page(bv + npages + i, *pages++, len - offset, offset);
+@@ -97,6 +100,11 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
+ 		npages += cur_npages;
  	}
  
++	/* Note: Don't try to clean up after EIO.  Either we got no pages, so
++	 * nothing to clean up, or we got a buffer overrun, memory corruption
++	 * and can't trust the stuff in the buffer (a WARN was emitted).
++	 */
++
+ 	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
+ 		for (i = 0; i < npages; i++)
+ 			unpin_user_page(bv[i].bv_page);
 -- 
 2.53.0
 
