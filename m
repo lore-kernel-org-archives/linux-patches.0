@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F77E2F9D85;
-	Thu, 28 May 2026 20:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4A72F9D85;
+	Thu, 28 May 2026 20:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999509; cv=none; b=KH8SrxjkrlsELc3e+T4PFnNotyYVzsaydR/DmQurDszNLNqem0uuReXAd+8XumC2m6qOPuSvXHO6OTr6wkYg7qfU8mVRaxdyI8ETLVLoPsxEomX9tOuwvu3JONnZk2w/oGRKegbRStmYcwtcyBf2O1EQzp/5jqMluOSL/GbMXG8=
+	t=1779999512; cv=none; b=ReOGhOmMIw4pQyWdRtm9wKi6IQWTV/sQoDv9DykM8vEhUbA+NUrPG7zH7O92ufSl6jSik0BffDdPqdzklt6kVVDC3UVCDYd6eFjl3wA8s7T9wKXIFRY10tTjofF2W9amyshOBK1wLI7gVxSuo+u+vqNiIwASOunwLIvI3hC1B/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999509; c=relaxed/simple;
-	bh=Nw8nIELmusYWx+cZosncjCXMEVDU4a+PpfcpDCGxlJQ=;
+	s=arc-20240116; t=1779999512; c=relaxed/simple;
+	bh=5gidi08P8WYAinSR+e8rda7e80dcMEv/bWVtx2J/xg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5dFt6tfE/7OnltnngpMzPKQfr8CAwGDBMPSIRWtPqofSnGt4Fkqc1het42TgKHRDt0PJED41gpSk/MBNsqtNuZG2dwfs9RvTJARWTIfnsjaONK02p6wBSy1S/+k+RaSiWdDCqL1wI1cotFH31LldiJmCjtV8hDnL134chOaGRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g71CGSdL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iRYHhTK4y+RmyRcDQPNv1kZiq32/mxaDLg3LmIEz2wq4Mr3/BWybXEc9/UUdb/mZaN3EkU9Akg2dP8fxOFgX70dDx2trd66UyEf7QdBiYV3l4/tV+45DrxFNlOXDGFAe24C5c5WbuYsSqC43EHnec0u0dyMvaNiGTKN8/xgYPBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns3OiHlk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g71CGSdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6E91F000E9;
-	Thu, 28 May 2026 20:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns3OiHlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B728C1F000E9;
+	Thu, 28 May 2026 20:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999508;
-	bh=ILrZVhQcNvUnfMUKlUg3Ypiqh8ZQrefW/1jjw7DQzPU=;
+	s=korg; t=1779999511;
+	bh=0ug17m3FCVthyTyyK1Ekyw2gX0PCNCtmWj9531cNki4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g71CGSdLtz8V36M3WY/7O+tQL1PZWkdBRxY1ns+uf3I7egrt+2uS3vDYcVtcgKzwE
-	 jTEGIenLYl3huTDuUGDP9GFBRchiCEX7I/hSmNh+SH7Q6Fbd6pGw+BbeuqwLJaRYO2
-	 Ut6/Y2ogMDBT8bAeCdOvX9DRgnU8TkZ27XgVbRHc=
+	b=ns3OiHlkVwVzy7ybTltAGdAv6HrrrpNnJlo7h9IrEvQ836c8EpiAy4vKbDZF8zj0d
+	 wBapaYNMZ6RZ/r+gE7EYUAgLdWOe05I2IzvQmRI9t5QEKsEL5x4YF/TeQ3oXbqO8US
+	 feLAF3kkNUjXTRXe6bZpc8938DyMuvsaX6iZ7ugY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 092/377] ixgbevf: fix use-after-free in VEPA multicast source pruning
-Date: Thu, 28 May 2026 21:45:30 +0200
-Message-ID: <20260528194641.024951583@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.18 093/377] rbd: eliminate a race in lock_dwork draining on unmap
+Date: Thu, 28 May 2026 21:45:31 +0200
+Message-ID: <20260528194641.051592262@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,62 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 5d49b568c188dc77199d8d2b959c91da8cc27cf1 upstream.
+commit 9fc75b71fdd38465c76c6f6a884cdd4ae3c72d90 upstream.
 
-ixgbevf_clean_rx_irq() prunes frames whose source MAC matches the VF's
-own address (VEPA multicast workaround) by freeing the skb and
-continuing to the next descriptor:
+Given how rbd_lock_add_request() and rbd_img_exclusive_lock() are
+written, lock_dwork may be (re)queued more than it's actually needed:
+for example in case a new I/O request comes in while we are in the
+middle of rbd_acquire_lock() on behalf of another I/O request.  This is
+expected and with rbd_release_lock() preemptively canceling lock_dwork
+is benign under normal operation.
 
-    dev_kfree_skb_irq(skb);
-    continue;
+A more problematic example is maybe_kick_acquire():
 
-The skb pointer is declared outside the while loop and persists across
-iterations.  Because the continue skips the "skb = NULL" reset at the
-bottom of the loop, the next iteration enters the "else if (skb)" path
-and calls ixgbevf_add_rx_frag() on the freed skb, dereferencing
-skb_shinfo(skb)->nr_frags - a use-after-free in NAPI softirq context.
+    if (have_requests || delayed_work_pending(&rbd_dev->lock_dwork)) {
+            dout("%s rbd_dev %p kicking lock_dwork\n", __func__, rbd_dev);
+            mod_delayed_work(rbd_dev->task_wq, &rbd_dev->lock_dwork, 0);
+    }
 
-The sibling driver iavf already handles this correctly by nulling the
-pointer before continuing.  Apply the same pattern here.
+It's not unrealistic for lock_dwork to get canceled right after
+delayed_work_pending() returns true and for mod_delayed_work() to
+requeue it right there anyway.  This is a classic TOCTOU race.
 
-I do not have ixgbevf hardware; the bug was found by static analysis
-(scan_drop_continue_loops.py + semgrep drop_continue_in_loop, multi-tool
-corroboration with the highest score in the scan).  The UAF was confirmed
-under KASAN by loading a test module that reproduces the exact code
-pattern (alloc skb, kfree_skb, then read skb_shinfo(skb)->nr_frags):
+When it comes to unmapping the image, there is an implicit assumption
+of no self-initiated exclusive lock activity past the point of return
+from rbd_dev_image_unlock() which unlocks the lock if it happens to be
+held.  This unlock is assumed to be final and lock_dwork (as well as
+all other exclusive lock tasks, really) isn't expected to get queued
+again.  However, lock_dwork is canceled only in cancel_tasks_sync()
+(i.e. later in the unmap sequence) and on top of that the cancellation
+can get in effect nullified by maybe_kick_acquire().  This may result
+in rbd_acquire_lock() executing after rbd_dev_device_release() and
+rbd_dev_image_release() run and free and/or reset a bunch of things.
+One of the possible failure modes then is a violated
 
-  BUG: KASAN: slab-use-after-free in ixgbevf_uaf_test_init+0x100/0x1000
-  Read of size 8 at addr 000000006163ae78 by task insmod/30
-  freed 208-byte region [000000006163adc0, 000000006163ae90)
+    rbd_assert(rbd_image_format_valid(rbd_dev->image_format));
 
-QEMU emulates igb (82576) but not ixgbe (82599), and the igbvf VF
-driver does not include the VEPA source pruning path, so a full
-end-to-end reproduction with emulated hardware was not possible.
+in rbd_dev_header_info() which is called via rbd_dev_refresh() from
+rbd_post_acquire_action().
 
-Fixes: bad17234ba70 ("ixgbevf: Change receive model to use double buffered page based receives")
+Redo exclusive lock task draining to provide saner semantics and try
+to meet the assumptions around rbd_dev_image_unlock().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-8-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/rbd.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -1221,6 +1221,7 @@ static int ixgbevf_clean_rx_irq(struct i
- 		    ether_addr_equal(rx_ring->netdev->dev_addr,
- 				     eth_hdr(skb)->h_source)) {
- 			dev_kfree_skb_irq(skb);
-+			skb = NULL;
- 			continue;
- 		}
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -4565,24 +4565,12 @@ out:
+ 	return ret;
+ }
  
+-static void cancel_tasks_sync(struct rbd_device *rbd_dev)
+-{
+-	dout("%s rbd_dev %p\n", __func__, rbd_dev);
+-
+-	cancel_work_sync(&rbd_dev->acquired_lock_work);
+-	cancel_work_sync(&rbd_dev->released_lock_work);
+-	cancel_delayed_work_sync(&rbd_dev->lock_dwork);
+-	cancel_work_sync(&rbd_dev->unlock_work);
+-}
+-
+ /*
+  * header_rwsem must not be held to avoid a deadlock with
+  * rbd_dev_refresh() when flushing notifies.
+  */
+ static void rbd_unregister_watch(struct rbd_device *rbd_dev)
+ {
+-	cancel_tasks_sync(rbd_dev);
+-
+ 	mutex_lock(&rbd_dev->watch_mutex);
+ 	if (rbd_dev->watch_state == RBD_WATCH_STATE_REGISTERED)
+ 		__rbd_unregister_watch(rbd_dev);
+@@ -6548,10 +6536,18 @@ out_err:
+ 
+ static void rbd_dev_image_unlock(struct rbd_device *rbd_dev)
+ {
++	dout("%s rbd_dev %p\n", __func__, rbd_dev);
++
++	disable_delayed_work_sync(&rbd_dev->lock_dwork);
++	disable_work_sync(&rbd_dev->unlock_work);
++
+ 	down_write(&rbd_dev->lock_rwsem);
+ 	if (__rbd_is_lock_owner(rbd_dev))
+ 		__rbd_release_lock(rbd_dev);
+ 	up_write(&rbd_dev->lock_rwsem);
++
++	flush_work(&rbd_dev->acquired_lock_work);
++	flush_work(&rbd_dev->released_lock_work);
+ }
+ 
+ /*
 
 
