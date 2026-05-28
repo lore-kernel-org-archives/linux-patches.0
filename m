@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AB425F7B9;
-	Thu, 28 May 2026 20:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAC032AAD6;
+	Thu, 28 May 2026 20:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000294; cv=none; b=GmuzCa+ZFs8ZjT2c/rYOhZE5GrR1tOqxhhh0ZiPV+ty742g7KtdzuWeIINohotoNoAbXev0nWEvX74bEJDWnoiBLtjXIEDigxbLoN04nvJTZsLcKgXpRU1afwGqM1qxrhN4MWaw+MU1z27p0Htx8tNQ6FjSXt3Np7RA3AW4PDnY=
+	t=1780000297; cv=none; b=KUCTUjjYWF8Oznsw5oz5r3m7UjjBMbxBhFSSq0KV5nHU8ycRQi56IaGywanumHfUbe7I8klNAq9tv98bnbv0aoFJr3hGnZqOUeKyUFvulf+pWU/7n14eDzX5VcaBXzdHgohOSF5ADT4LNipf5CEd5S/0ZqHEobcO8ClPG3Dgwnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000294; c=relaxed/simple;
-	bh=7FGRltKymDszJgbwb8leSzAFWdXeA/IeLWGWJXOqrr8=;
+	s=arc-20240116; t=1780000297; c=relaxed/simple;
+	bh=M2ML9S74JgNzlb39RaaAnjvrHqhq0SSz4e22BAPfdO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCJLclKuSHfowfP5SEMiT8IqLZItToi+kX6HwV8mBDPE7W0HODXxo00fO9NG7ipwvGa/CcqEjeQVQBWpshfmuOpqor+KXZmVRKe4PJRVPSuFEULvbKPIruOk+iWeahB3gu29QzJDxnpjRX9YvfOfEy5hwT+Ap8HAD8Q2YjYyOxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2SE64VL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gVaTqS+iJrcXVUpo9kEVA8Z6qTdQxW0hedH8VtQS4fx9wAJ6+I4NkSrG7RStIFLKNetwOh1ipfG1OmlpEKA51O7+DYDW2kSSziISr6AUqpLgNUMmc3SfeL1AppUsDZs1uSj0w0a1+2gCMj0QGQIirk+j5ZXk3SyhJaj0hV5WYb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHdtQc1t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2SE64VL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7D11F000E9;
-	Thu, 28 May 2026 20:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHdtQc1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA0F1F000E9;
+	Thu, 28 May 2026 20:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000293;
-	bh=Capd6fK6zvGRNGrHX7SOUJN56MGZ+9F0qwn/JKZLYbw=;
+	s=korg; t=1780000296;
+	bh=s9zo3cgK5Incumbiw0h9BMBLtXjbuojWyQr7zDfVWl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r2SE64VLMidTnJxBd26GuLb+jlAM2dmW4REfDOToN7xsv1JcwjPlJfIvUcTgfPAok
-	 KE6oAk4g2OvwKDTBKF1gMooD7UMDYehtSO+Do//72xsuEdR0Mo5x6dNNXuYb/5AquF
-	 xCbWaW2J8kunwgVUyGejMa6/Aw4orTsIsjSyrKB8=
+	b=FHdtQc1tHUG1aAEH3x6AghDbaVkrzFGhY+AittZSwSqzmYz4qoHmKHaWZH+Y7n1nB
+	 kKRdC22aNXbAYh4ISbousy1+af1zCraMHtBKW1MJyuVXYXdeA2VpSzpSfUuY6Ptcc8
+	 J6Z0UljCv223/ZvczWuOLa2NAS0DuIUhWrrpJTfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Madhur Agrawal <madhur.agrawal@airoha.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 371/377] tap: fix stack info leak in tap_ioctl() SIOCGIFHWADDR
-Date: Thu, 28 May 2026 21:50:09 +0200
-Message-ID: <20260528194649.171916536@linuxfoundation.org>
+Subject: [PATCH 6.18 372/377] net: airoha: Disable GDM2 forwarding before configuring GDM2 loopback
+Date: Thu, 28 May 2026 21:50:10 +0200
+Message-ID: <20260528194649.200057964@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,49 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit bddc09212c24934643bd44fc794748d2bbb3b6cd ]
+[ Upstream commit 985d4a55e64e43bd86eeb896b81ceba453301989 ]
 
-In the SIOCGIFHWADDR path, tap_ioctl() copies 16 bytes of an
-uninitialised on-stack struct sockaddr_storage to userspace via
-ifr_hwaddr, but netif_get_mac_address() only writes sa_family and
-dev->addr_len (6 for Ethernet) bytes, leaving sa_data[6..13] uninitialised.
+Hw design requires to disable GDM2 forwarding before configuring GDM2
+loopback in airoha_set_gdm2_loopback routine.
 
-Those 8 trailing bytes leak kernel stack contents; SIOCGIFHWADDR on a
-macvtap chardev returns kernel .text and direct-map pointers, defeating
-KASLR.
-
-Initialise ss at declaration.
-
-Fixes: 3b23a32a6321 ("net: fix dev_ifsioc_locked() race condition")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260520075736.3415676-3-bestswngs@gmail.com
+Fixes: 9cd451d414f6e ("net: airoha: Add loopback support for GDM2")
+Tested-by: Madhur Agrawal <madhur.agrawal@airoha.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260520-airoha-disable-gdm2-fwd-v1-1-1eeea5dffc2f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 1197f245e8737..6fd3b14273b37 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -919,11 +919,11 @@ static long tap_ioctl(struct file *file, unsigned int cmd,
- 	struct tap_queue *q = file->private_data;
- 	struct tap_dev *tap;
- 	void __user *argp = (void __user *)arg;
-+	struct sockaddr_storage ss = {};
- 	struct ifreq __user *ifr = argp;
- 	unsigned int __user *up = argp;
- 	unsigned short u;
- 	int __user *sp = argp;
--	struct sockaddr_storage ss;
- 	int s;
- 	int ret;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 27d62acfcc39c..9781a6fc9bf9a 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -1800,11 +1800,8 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
+ 	u32 val, pse_port, chan;
+ 	int src_port;
  
+-	/* Forward the traffic to the proper GDM port */
+-	pse_port = port->id == AIROHA_GDM3_IDX ? FE_PSE_PORT_GDM3
+-					       : FE_PSE_PORT_GDM4;
+ 	airoha_set_gdm_port_fwd_cfg(eth, REG_GDM_FWD_CFG(AIROHA_GDM2_IDX),
+-				    pse_port);
++				    FE_PSE_PORT_DROP);
+ 	airoha_fe_clear(eth, REG_GDM_FWD_CFG(AIROHA_GDM2_IDX),
+ 			GDM_STRIP_CRC_MASK);
+ 
+@@ -1822,6 +1819,11 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
+ 		      GDM_SHORT_LEN_MASK | GDM_LONG_LEN_MASK,
+ 		      FIELD_PREP(GDM_SHORT_LEN_MASK, 60) |
+ 		      FIELD_PREP(GDM_LONG_LEN_MASK, AIROHA_MAX_MTU));
++	/* Forward the traffic to the proper GDM port */
++	pse_port = port->id == AIROHA_GDM3_IDX ? FE_PSE_PORT_GDM3
++					       : FE_PSE_PORT_GDM4;
++	airoha_set_gdm_port_fwd_cfg(eth, REG_GDM_FWD_CFG(AIROHA_GDM2_IDX),
++				    pse_port);
+ 
+ 	/* Disable VIP and IFC for GDM2 */
+ 	airoha_fe_clear(eth, REG_FE_VIP_PORT_EN, BIT(AIROHA_GDM2_IDX));
 -- 
 2.53.0
 
