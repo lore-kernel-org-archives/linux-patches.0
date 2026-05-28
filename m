@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F1F24677F;
-	Thu, 28 May 2026 20:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1464A27A476;
+	Thu, 28 May 2026 20:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998589; cv=none; b=riCu/FNRan/UD/O3puYhBuXIEhvCKpAzxUTcA/1kC2FZBsMYDs00f/egtfQ+jlpKYfrhOSiYTPdzZOAWsPhhFmLp/8IZQksGLkDiKkeRDjNt05onsiTMI7fdGU8s8n33JFEHzdPzUdywJ/0reN9AiGL2ju7OINUBwCzhCmGUj9I=
+	t=1779998592; cv=none; b=uItqWv8tjKJ3PQfFDoTcwJRWrnHRX/uoDphgF0l6+UuCrQPmpbKEiMJOfpIk7D3saPnbDUm0u1yOnpG4C0TOlT3acw3+a0N3RlPCEKvcmd++f97RnvYVw8VaXEfyd+VOqk7iilVWhw9UlgDeMoErh6Gy/jxdzYfRkiDgZf3eY3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998589; c=relaxed/simple;
-	bh=p4Z8x1V3w0VYPW3xRIuPaPBtwxqIfOqkoQFYBOYmQ2g=;
+	s=arc-20240116; t=1779998592; c=relaxed/simple;
+	bh=5i+FbwxI+qS9D+Z6E8eDkveiwNkOyGvuJIXQ/0cQdwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciXN6OUo/95sYFj4wCqWMvdxUX8+pz/i98wupVC4QPZvb591zGBO0Kxu0e5qM4N7wrJmHcw6yXuege9YeqA/63ka3ajzNQQjoB1eXK+oN9G6a/VNN9uozfj6fV/cvkeZ7JG/e19SpRpcyu4Kmlx5HDaQO8DkTmNRj/e6s+Ve88Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M33mqp3z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CvvQxgBym0exKMyrjSzwDE2CuUleYuGroAOr64aGJMj/TKvrmlK+jsmNpXJXSVd+yCO+2QuQVLj0AXVTbxj1kVXu+eSHwuLjz9rcXQ+ICBCy1Xt2cozQtQLae7YcvMjpml06cBdaMEpbN1puR6MgNEyWXc/E/6kVIyFSNNl6YLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jb6jtdW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M33mqp3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D461F000E9;
-	Thu, 28 May 2026 20:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jb6jtdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736A71F000E9;
+	Thu, 28 May 2026 20:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998588;
-	bh=AdBjpBubMgFSeLqpXZsxsxtUtJewMoGkjBxSXp9w2kM=;
+	s=korg; t=1779998591;
+	bh=itneieVpOdVCIPbpNet71UrGwa3Ujmd6Nym9SwTdnpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M33mqp3zp/DCDSAOb0/kXoRxn5lO/9Rn8fw/eoDBzWaQHd7LdgKUtzGhj4vEM9qQw
-	 iv2e6Eiy8yOWxCTRLIj5OGlbaiUGOouXEQAnxtUJgqR2RC9RbmPeoEXjBVq2UpxuIx
-	 bUNvyi/c5Jft2+nz6nxyu8rbEit3QTHILenBFS9k=
+	b=2jb6jtdWQKjkt1LKYcGenDNRolwJ49oAVyN4UAPI6DpV3/VAW3BH+nC3xMaMLnnHE
+	 Ue/lHp3UeRso7mHYKq3Deqo1rCfSOO2L+IYV4O4VtQ6UEC1LK8pH3qDFo1CVPVO1KD
+	 GX5xV/RCXe+ZVPxPg+26olWH/B5RhhahvhRHydgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 226/461] ice: dpll: fix misplaced header macros
-Date: Thu, 28 May 2026 21:45:55 +0200
-Message-ID: <20260528194653.674657906@linuxfoundation.org>
+Subject: [PATCH 7.0 227/461] net: lan966x: avoid unregistering netdev on register failure
+Date: Thu, 28 May 2026 21:45:56 +0200
+Message-ID: <20260528194653.704524485@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,72 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 30f1658fc5387384c7a60b9d15c79cb959512c1a ]
+[ Upstream commit c4f3d6eb1fcf6cd9ce4644f604d5aad1ce594dfc ]
 
-The CGU register definitions (ICE_CGU_R10, ICE_CGU_R11 and related field
-masks) were placed after the #endif of the _ICE_DPLL_H_ include guard,
-leaving them unprotected. Move them inside the guard.
+lan966x_probe_port() stores the newly allocated net_device in the
+port before calling register_netdev(). If register_netdev() fails,
+the probe error path calls lan966x_cleanup_ports(), which sees
+port->dev and calls unregister_netdev() for a device that was never
+registered.
 
-Fixes: ad1df4f2d591 ("ice: dpll: Support E825-C SyncE and dynamic pin discovery")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-8-a5ea4dc837a9@intel.com
+Destroy the phylink instance created for this port and clear port->dev
+before returning the registration error. The common cleanup path now skips
+ports without port->dev before reaching the registered netdev cleanup, so
+it only handles ports that reached the registered-netdev lifetime.
+
+This also avoids treating an uninitialized FDMA netdev and the failed port
+as a NULL == NULL match in the common cleanup path.
+
+Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260506124331.31945-1-mhun512@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.h | 32 +++++++++++------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.h b/drivers/net/ethernet/intel/ice/ice_dpll.h
-index ae42cdea0ee14..8678575359b92 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.h
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.h
-@@ -8,6 +8,22 @@
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 47752d3fde0b1..1179a6e127c52 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -749,11 +749,10 @@ static void lan966x_cleanup_ports(struct lan966x *lan966x)
  
- #define ICE_DPLL_RCLK_NUM_MAX	4
+ 	for (p = 0; p < lan966x->num_phys_ports; p++) {
+ 		port = lan966x->ports[p];
+-		if (!port)
++		if (!port || !port->dev)
+ 			continue;
  
-+#define ICE_CGU_R10			0x28
-+#define ICE_CGU_R10_SYNCE_CLKO_SEL	GENMASK(8, 5)
-+#define ICE_CGU_R10_SYNCE_CLKODIV_M1	GENMASK(13, 9)
-+#define ICE_CGU_R10_SYNCE_CLKODIV_LOAD	BIT(14)
-+#define ICE_CGU_R10_SYNCE_DCK_RST	BIT(15)
-+#define ICE_CGU_R10_SYNCE_ETHCLKO_SEL	GENMASK(18, 16)
-+#define ICE_CGU_R10_SYNCE_ETHDIV_M1	GENMASK(23, 19)
-+#define ICE_CGU_R10_SYNCE_ETHDIV_LOAD	BIT(24)
-+#define ICE_CGU_R10_SYNCE_DCK2_RST	BIT(25)
-+#define ICE_CGU_R10_SYNCE_S_REF_CLK	GENMASK(31, 27)
-+
-+#define ICE_CGU_R11			0x2C
-+#define ICE_CGU_R11_SYNCE_S_BYP_CLK	GENMASK(6, 1)
-+
-+#define ICE_CGU_BYPASS_MUX_OFFSET_E825C	3
-+
- /**
-  * enum ice_dpll_pin_sw - enumerate ice software pin indices:
-  * @ICE_DPLL_PIN_SW_1_IDX: index of first SW pin
-@@ -157,19 +173,3 @@ static inline void ice_dpll_deinit(struct ice_pf *pf) { }
- #endif
+-		if (port->dev)
+-			unregister_netdev(port->dev);
++		unregister_netdev(port->dev);
  
- #endif
--
--#define ICE_CGU_R10				0x28
--#define ICE_CGU_R10_SYNCE_CLKO_SEL		GENMASK(8, 5)
--#define ICE_CGU_R10_SYNCE_CLKODIV_M1		GENMASK(13, 9)
--#define ICE_CGU_R10_SYNCE_CLKODIV_LOAD		BIT(14)
--#define ICE_CGU_R10_SYNCE_DCK_RST		BIT(15)
--#define ICE_CGU_R10_SYNCE_ETHCLKO_SEL		GENMASK(18, 16)
--#define ICE_CGU_R10_SYNCE_ETHDIV_M1		GENMASK(23, 19)
--#define ICE_CGU_R10_SYNCE_ETHDIV_LOAD		BIT(24)
--#define ICE_CGU_R10_SYNCE_DCK2_RST		BIT(25)
--#define ICE_CGU_R10_SYNCE_S_REF_CLK		GENMASK(31, 27)
--
--#define ICE_CGU_R11				0x2C
--#define ICE_CGU_R11_SYNCE_S_BYP_CLK		GENMASK(6, 1)
--
--#define ICE_CGU_BYPASS_MUX_OFFSET_E825C		3
+ 		lan966x_xdp_port_deinit(port);
+ 		if (lan966x->fdma && lan966x->fdma_ndev == port->dev)
+@@ -873,6 +872,9 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
+ 	err = register_netdev(dev);
+ 	if (err) {
+ 		dev_err(lan966x->dev, "register_netdev failed\n");
++		phylink_destroy(phylink);
++		port->phylink = NULL;
++		port->dev = NULL;
+ 		return err;
+ 	}
+ 
 -- 
 2.53.0
 
