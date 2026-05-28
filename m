@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAF12E7377;
-	Thu, 28 May 2026 20:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD02E7379;
+	Thu, 28 May 2026 20:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999830; cv=none; b=Dm2eoDFwixNu4BTEEPiRu5WFTpTy3ETc+iVkIRGpy44OEY75usUQ7CzNLm3KEGd4XIlAczk7DQuegRY7hzsXYIn4vc1WcTJLi70c6d7Mjaois5BF1I4vtRs++Aab6AHadhMYIJEx9UVrIt9kq+3Af1REVgltSQzrffWcKkodYRs=
+	t=1779999834; cv=none; b=AneUC0uWGJvfHCEdKK9VqTGChzZeAfp4UY5wFulcadtqiYsaIPUJlxVCKgsfiUq6SsHultm5gVXC+RumxaItRtmmfQ1Z2petET5j45VBp1DLgNcv36R8KGL1/8t8/C5ZaN6Q4vJe7p5AdmMxY7IvqeV0z3E878HxufU+pHsJx5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999830; c=relaxed/simple;
-	bh=sRHshJaA5UK62r7MdnbcGnoecpjJUeYXRKRjFda5Imk=;
+	s=arc-20240116; t=1779999834; c=relaxed/simple;
+	bh=YYEl8zMouIrCcx/WgwPK8VXLG2LO25RzXOTat06lbbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXYNG4GBjurFLIr4ImGjcCSjVWZhRo6PTngj8CGI7dGAZEa/vR3OMrkub0v2BWTUrMpz3aeEtDN5C3EnHQwiFA6k5sfvkRusToD1ENVYOXYAA6cJ/HUpcv4aRmjNKRe3dRgzGf91jWqvVMpWFU0lIGnf+gsltqMn9+vftcChAwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8tTKdhP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9VO/94sM2Ae+rNRKYfazXPmFrjIGpxdGz5SMGpqTB1uKC+pY7EBhvcwHT5OC3dLa2KVnoVf9jMjsbXdPVe+Zvvq89SFJW3sT6B7EFO7J0Yy2kOwdk70HcXlvSQlFWs2PIPeVtLk8qxWT+SYEW89Df9F3FXYww7zys4xiE/NJow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5/12ro2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8tTKdhP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2201F000E9;
-	Thu, 28 May 2026 20:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5/12ro2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2537A1F000E9;
+	Thu, 28 May 2026 20:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999829;
-	bh=osruNj5KGW7GNfb4QiMfLXpQ0UUkFWo+Zr7tmj0nLaY=;
+	s=korg; t=1779999832;
+	bh=1jAWuROhiz9WGpmvsQrlUuLASlwwTHCFr9kUioGdfQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8tTKdhPMKLKeodNZzv8XXeo/GtPSCaTucegkPCZyWmMfrW6lGYqei8aeSUtyxR6g
-	 69wX4/99JhynldA8OOdRWoPd11vAe+vj8mMnBXUmL8l30XIcxhglqhpQBxQ5InZtkp
-	 yAaOZJUz4ufzxSdxkwyZ5lSyl6+eo36NWR7mO7lA=
+	b=Z5/12ro27H8WMgpbcjAUho1OL7Tu9DPL3Ttx4BRdV1aHLeiFNnXvcX+NtsSD5Kr5M
+	 CSuXWleknUIbUnQPEZB/0557Z+tOFlkazuqowHl27culnb40P/fh8j0WstduReST7D
+	 ledRaY7buZxnvDZYYh9ijPkQbD2vdgoUFx7gf1Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Martin Karsten <mkarsten@uwaterloo.ca>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 207/377] tcp: Fix imbalanced icsk_accept_queue count.
-Date: Thu, 28 May 2026 21:47:25 +0200
-Message-ID: <20260528194644.397197554@linuxfoundation.org>
+Subject: [PATCH 6.18 208/377] net: napi: Avoid gro timer misfiring at end of busypoll
+Date: Thu, 28 May 2026 21:47:26 +0200
+Message-ID: <20260528194644.427140119@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,44 +55,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 7eca3292cac7c26dad4c236f51ba225c39a0523f ]
+[ Upstream commit 58e2330bd45572a6e3d46ea94cf7a9641f43591a ]
 
-When TCP socket migration happens in reqsk_timer_handler(),
-@sk_listener will be updated with the new listener.
+When in irq deferral mode (defer-hard-irqs > 0), a short enough
+gro-flush timeout can trigger before NAPI_STATE_SCHED is cleared if the
+last poll in busy_poll_stop() takes too long. This can have the effect
+of leaving the queue stuck with interrupts disabled and no timer armed
+which results in a tx timeout if there is no subsequent busypoll cycle.
 
-When we call __inet_csk_reqsk_queue_drop(), the listener must
-be the one stored in req->rsk_listener.
+To prevent this, defer the gro-flush timer arm after the last poll.
 
-The cited commit accidentally replaced oreq->rsk_listener with
-sk_listener, leading to imbalanced icsk_accept_queue count.
-
-Let's pass the correct listener to __inet_csk_reqsk_queue_drop().
-
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260506035954.1563147-3-kuniyu@google.com
+Fixes: 7fd3253a7de6 ("net: Introduce preferred busy-polling")
+Co-developed-by: Martin Karsten <mkarsten@uwaterloo.ca>
+Signed-off-by: Martin Karsten <mkarsten@uwaterloo.ca>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260506090808.820559-2-dtatulea@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index ed773cd488769..c777895a720ee 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1149,7 +1149,7 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	}
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 29f2f35ae5ebe..681d7de89c505 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6777,9 +6777,9 @@ static void skb_defer_free_flush(void)
  
- drop:
--	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
-+	__inet_csk_reqsk_queue_drop(oreq->rsk_listener, oreq, true);
- 	reqsk_put(oreq);
+ #if defined(CONFIG_NET_RX_BUSY_POLL)
+ 
+-static void __busy_poll_stop(struct napi_struct *napi, bool skip_schedule)
++static void __busy_poll_stop(struct napi_struct *napi, unsigned long timeout)
+ {
+-	if (!skip_schedule) {
++	if (!timeout) {
+ 		gro_normal_list(&napi->gro);
+ 		__napi_schedule(napi);
+ 		return;
+@@ -6789,6 +6789,8 @@ static void __busy_poll_stop(struct napi_struct *napi, bool skip_schedule)
+ 	gro_flush_normal(&napi->gro, HZ >= 1000);
+ 
+ 	clear_bit(NAPI_STATE_SCHED, &napi->state);
++	hrtimer_start(&napi->timer, ns_to_ktime(timeout),
++		      HRTIMER_MODE_REL_PINNED);
  }
  
+ enum {
+@@ -6800,8 +6802,7 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
+ 			   unsigned flags, u16 budget)
+ {
+ 	struct bpf_net_context __bpf_net_ctx, *bpf_net_ctx;
+-	bool skip_schedule = false;
+-	unsigned long timeout;
++	unsigned long timeout = 0;
+ 	int rc;
+ 
+ 	/* Busy polling means there is a high chance device driver hard irq
+@@ -6821,10 +6822,12 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
+ 
+ 	if (flags & NAPI_F_PREFER_BUSY_POLL) {
+ 		napi->defer_hard_irqs_count = napi_get_defer_hard_irqs(napi);
+-		timeout = napi_get_gro_flush_timeout(napi);
+-		if (napi->defer_hard_irqs_count && timeout) {
+-			hrtimer_start(&napi->timer, ns_to_ktime(timeout), HRTIMER_MODE_REL_PINNED);
+-			skip_schedule = true;
++		if (napi->defer_hard_irqs_count) {
++			/* A short enough gro flush timeout and long enough
++			 * poll can result in timer firing too early.
++			 * Timer will be armed later if necessary.
++			 */
++			timeout = napi_get_gro_flush_timeout(napi);
+ 		}
+ 	}
+ 
+@@ -6839,7 +6842,7 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
+ 	trace_napi_poll(napi, rc, budget);
+ 	netpoll_poll_unlock(have_poll_lock);
+ 	if (rc == budget)
+-		__busy_poll_stop(napi, skip_schedule);
++		__busy_poll_stop(napi, timeout);
+ 	bpf_net_ctx_clear(bpf_net_ctx);
+ 	local_bh_enable();
+ }
 -- 
 2.53.0
 
