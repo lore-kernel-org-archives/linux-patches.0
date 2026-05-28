@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976751FC0EA;
-	Thu, 28 May 2026 20:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB7130C343;
+	Thu, 28 May 2026 20:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000637; cv=none; b=enWt9TEFgqBsyLvwuSSp/9k2XA5T2TR05W+gGOQw1HX1cPQLZI0LX1T08k+mayNFlDuwAU/9XTrwwcta9ClN70hXg24VoVOO0GC59qBo+HGbuAKddFvbiA3GVw39dtksVfm8JoWsug3MMdBnccJusyFSfAvVEuULaiX7DW8fFbQ=
+	t=1780000640; cv=none; b=Ea6rQlQa8/54Afh6ZgAGtB71wosva6Oy+knsg5qGs5LyBYFzAwLiqlWAN85X9i5aMOAQ5EaJkTJL6G0tO9hh8cphrzdKdl4DFsehdNkJ7l8zuJhoCxFb1kayAt2vQbnpADv0Yj63prNpm/b40CTjv74mJSKjTkMpNgd05b3fea8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000637; c=relaxed/simple;
-	bh=CPAMpQr6Mf1tjjGSYoMiR3b5tcqIRS06Wki2iTfq+p0=;
+	s=arc-20240116; t=1780000640; c=relaxed/simple;
+	bh=f9Ua00AYRq1C+T5EwhJdmaDNC4vyX63uEjuF5PLxHww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXCqhrcR51OtXMR6JkCco2Dh9++CPwsCrIKltTbgH/Y9LqByJFWZ/5R8uEeJFA52Dri1uZxSxwIhEZUFnk3suXS6lJ+hWsR/M9z2ofs0QXF6nMe/IX6JHBVh75Foof5ITHrv5XjVQ6+A71WVk5Pe9ZC3O8aHwh4r861fZZkkd3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsstqGbB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ocNFt/rZRxoPKSehOOId3aqxAlO4ueDeDlJkNNyxjUHb2NxCfLSb2zoL65HuLcwhY6FGDkSLzaUmzcVpCcV7Uqf8QxsPiAdWbjZ1pQ+9d+hG2ZSchFkb99WUbYEs0GpacCH07PsZCpo/r2TDCNgkCpUbi+ZnN/sVk/uN2355izo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HT5pwHNU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsstqGbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007561F000E9;
-	Thu, 28 May 2026 20:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HT5pwHNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EB21F000E9;
+	Thu, 28 May 2026 20:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000636;
-	bh=0gFMIAKUdApU564feko7cVXlewaWO/yCsyNxEPxHIHA=;
+	s=korg; t=1780000639;
+	bh=S0Q5l8NzfOozXxJ+tXT5vQ3J9U5ZPtJCT44BvzVrkxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsstqGbBVJLwP3LDVHIMPiUp/IJXao/qT3a3Pxh4zj13rGxV3dmvuvDKqi/PriHnT
-	 i1PlmR+5Q7GiSbGWhLoLWRAHXz/lJtnGnFXU1hWZ9voZ+QU/O4T3Q5+Aj1hRsmfvFs
-	 jv+335eZtRDsAJQLbMPle1PG3G/WrdtywOViU81Q=
+	b=HT5pwHNUnngPV53Gprxdi58gwqyF0jaIR1vEYasWQWjsaOPAy0FssTbaMBjgFzfIU
+	 QRg9GhGRmN/gxu0/6GkdavDn8Gt+1Th3EFN6ixMmEb2hBBwemnUr8uwUhUFALJTWE5
+	 HIzc36SZUgTecQBKay7xrcpE3Bd4HkXDeAzdj9Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alan liu <haoping.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 115/272] drm/amdgpu/vpe: Force collaborate sync after TRAP
-Date: Thu, 28 May 2026 21:48:09 +0200
-Message-ID: <20260528194632.601345297@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 089/272] ixgbevf: fix use-after-free in VEPA multicast source pruning
+Date: Thu, 28 May 2026 21:47:43 +0200
+Message-ID: <20260528194631.870590687@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,47 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Liu <haoping.liu@amd.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit b6074630a461b1322a814988779005cbc43612ea upstream.
+commit 5d49b568c188dc77199d8d2b959c91da8cc27cf1 upstream.
 
-VPE1 could possibly hang and fail to power off at the end of commands in
-collaboration mode. This workaround adds a COLLAB_SYNC after TRAP to
-force instances synchronized to avoid VPE1 fail to power off.
+ixgbevf_clean_rx_irq() prunes frames whose source MAC matches the VF's
+own address (VEPA multicast workaround) by freeing the skb and
+continuing to the next descriptor:
 
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alan liu <haoping.liu@amd.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5171
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a8b749c5c5afb7e5daa2bfb95d958fb3c6b8f055)
+    dev_kfree_skb_irq(skb);
+    continue;
+
+The skb pointer is declared outside the while loop and persists across
+iterations.  Because the continue skips the "skb = NULL" reset at the
+bottom of the loop, the next iteration enters the "else if (skb)" path
+and calls ixgbevf_add_rx_frag() on the freed skb, dereferencing
+skb_shinfo(skb)->nr_frags - a use-after-free in NAPI softirq context.
+
+The sibling driver iavf already handles this correctly by nulling the
+pointer before continuing.  Apply the same pattern here.
+
+I do not have ixgbevf hardware; the bug was found by static analysis
+(scan_drop_continue_loops.py + semgrep drop_continue_in_loop, multi-tool
+corroboration with the highest score in the scan).  The UAF was confirmed
+under KASAN by loading a test module that reproduces the exact code
+pattern (alloc skb, kfree_skb, then read skb_shinfo(skb)->nr_frags):
+
+  BUG: KASAN: slab-use-after-free in ixgbevf_uaf_test_init+0x100/0x1000
+  Read of size 8 at addr 000000006163ae78 by task insmod/30
+  freed 208-byte region [000000006163adc0, 000000006163ae90)
+
+QEMU emulates igb (82576) but not ixgbe (82599), and the igbvf VF
+driver does not include the VEPA source pruning path, so a full
+end-to-end reproduction with emulated hardware was not possible.
+
+Fixes: bad17234ba70 ("ixgbevf: Change receive model to use double buffered page based receives")
 Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-8-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-@@ -556,6 +556,11 @@ static void vpe_ring_emit_fence(struct a
- 		amdgpu_ring_write(ring, 0);
- 	}
+--- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
++++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
+@@ -1224,6 +1224,7 @@ static int ixgbevf_clean_rx_irq(struct i
+ 		    ether_addr_equal(rx_ring->netdev->dev_addr,
+ 				     eth_hdr(skb)->h_source)) {
+ 			dev_kfree_skb_irq(skb);
++			skb = NULL;
+ 			continue;
+ 		}
  
-+	/* WA: Force sync after TRAP to avoid VPE1 fail to power off */
-+	if (ring->adev->vpe.collaborate_mode) {
-+		amdgpu_ring_write(ring, VPE_CMD_HEADER(VPE_CMD_OPCODE_COLLAB_SYNC, 0));
-+		amdgpu_ring_write(ring, 0xabcd);
-+	}
- }
- 
- static void vpe_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
-@@ -904,7 +909,7 @@ static const struct amdgpu_ring_funcs vp
- 	.emit_frame_size =
- 		5 + /* vpe_ring_init_cond_exec */
- 		6 + /* vpe_ring_emit_pipeline_sync */
--		10 + 10 + 10 + /* vpe_ring_emit_fence */
-+		12 + 12 + 12 + /* vpe_ring_emit_fence */
- 		/* vpe_ring_emit_vm_flush */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 3 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 6,
 
 
