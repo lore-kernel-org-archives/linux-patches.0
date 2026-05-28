@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BB93368B5;
-	Thu, 28 May 2026 20:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899A92E92BA;
+	Thu, 28 May 2026 20:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000527; cv=none; b=sJWKxBlQ06hcM/OjjEvOFQ46+KgkFjooquURs26Q/FM5bn+sbzCz4zz6FrEq71t0Mmn2a1GMH8eMOU53xJ5VdEps7Txs5O7yzK9Ok2h1cD1/5cv/yjL0RMADBPbPHR3qFDpLa/ikV3TdN5ciVqqYbN7rjo1fv4KcdRntE7Rc+bk=
+	t=1780000530; cv=none; b=RZllsBI/aIaNhasQ/xEY21cn+M8237ZsHrescKyUfOoxWc06f3ptIUI+iWz6zSAMYLGFioPcQKkVP8vFBLxPbUCsL9Q1HTz9QlxE2J1rFoH0gFQxCzLTOcYrShopT3D9L2jeHdmJt5PBw49lqjzmQ1Zcba71LJCB5eBlq2i0CIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000527; c=relaxed/simple;
-	bh=FAg3RgOvKm8isZRhgI8Ac5xFCO9OaUI036uLentQC6Y=;
+	s=arc-20240116; t=1780000530; c=relaxed/simple;
+	bh=BC+TUa8BdMvceaocy+Y0/Xh5+t9d7g8GK4TGb9+DOKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAcnfMhnS+qRwWp/yOr0DFyPL9WGjWdbwEbaVdAEYqxg2ur1cQPs9tLpSAHvFuQGlzvAX9EJds01tOAILj23s4lO70iPuuzeef9anGQPXP723LGZmru3s5cY+BcWC2NkgLNLrS2WeXQrQLaAb85jJ9jLI5bs5KoWJaqtXFLez90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSmSHora; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i6/kb5iDAAw2mqePdjETrUmwiy+cc4IskSCdV1teL2CJ2EUjYvINZKeYRJ2p3jKFB49jrrDRpMMGpWHKvwLg82BWSb40ogX9y82gB2bR1TfNOXZMR7PWJUB+D1L6zlSaGpYAUhwaWIuS2yZlOjyEl1gpCGyE6BsPz7Jv8A1DYvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2uDD0hm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSmSHora"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2381F000E9;
-	Thu, 28 May 2026 20:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2uDD0hm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12D51F000E9;
+	Thu, 28 May 2026 20:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000526;
-	bh=WRnt2BtcMIqPSNj62HfSgjePJneXPLqM3g27suBZBq0=;
+	s=korg; t=1780000529;
+	bh=1y3MqMDtsLVrV/Vi7zISgcun5tceEnGsQOBaahJNkUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uSmSHorawXnUNTXNRXcx9+whTFrOmrXbr0yocov1B+QV3cWmx83JTs93mYaIche5n
-	 QM/XstzJCzkEKic4X5TMSQQL2KRfDMzFPSU/ZYVgy9aN4rHnZ1WbHv8OKLdCy49Tzf
-	 7a5A2lCdyfa505QIuWIjlcQoXX1e+FiPKtMavtzc=
+	b=A2uDD0hmHNclDjG9S4DEazhgr5J5go+2VelJ6qorMUYgF0/a7v4nz+5IRSxW0c1iM
+	 agFu83e5nrgaptPNG9bIxztbmrgCg3LWcLppZJG7L+5vZB1H9jrxleWl7V0g1m5E3r
+	 PJ994xMXgYNU+pjmphpsR3fvs4zjc168rslv0OyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Erazo <mendozayt13@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 049/272] smb: client: use data_len for SMB2 READ encrypted folioq copy
-Date: Thu, 28 May 2026 21:47:03 +0200
-Message-ID: <20260528194630.755607386@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 076/272] netfilter: nft_inner: Fix IPv6 inner_thoff desync
+Date: Thu, 28 May 2026 21:47:30 +0200
+Message-ID: <20260528194631.503309543@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -45,85 +49,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeremy Erazo <mendozayt13@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit d4d76c9ee1997cc8c977a63f6c43551c253c1066 upstream.
+commit b6a91f68ebfed9c38e0e9150f58a9b85da07181c upstream.
 
-In handle_read_data() the encrypted/folioq branch
-(buf_len <= data_offset, reached via receive_encrypted_read for
-transform PDUs > CIFSMaxBufSize + MAX_HEADER_SIZE) copies the READ
-payload using buffer_len rather than data_len:
+In nft_inner_parse_l2l3(), when processing inner IPv6 packets,
+ipv6_find_hdr() correctly computes the transport header offset
+traversing all extension headers, but the result is immediately
+overwritten with nhoff + sizeof(_ip6h) (40 bytes), which only
+accounts for the IPv6 base header. This creates a desync between
+inner_thoff (wrong — points to extension header start) and l4proto
+(correct — e.g., IPPROTO_TCP), enabling transport header forgery
+and potential firewall bypass. This issue affects stable versions
+from Linux 6.2.
 
-	rdata->result = cifs_copy_folioq_to_iter(buffer, buffer_len,
-						 cur_off,
-						 &rdata->subreq.io_iter);
-	...
-	rdata->got_bytes = buffer_len;
+For comparison, the normal (non-inner) IPv6 path correctly
+preserves ipv6_find_hdr()'s result. Removing the incorrect overwrite
+ensures that ipv6_find_hdr()'s calculated transport header offset is
+preserved, thereby fixing the desynchronization.
 
-buffer_len comes from the SMB3 transform header OriginalMessageSize
-field (OriginalMessageSize - read_rsp_size); it represents the size
-of the decrypted message after the SMB2 header.  data_len comes from
-the SMB2 READ response DataLength field; it represents the actual
-READ payload size and may be smaller than buffer_len when the
-decrypted message contains padding or other trailing bytes after the
-READ payload.  The existing check `data_len > buffer_len - pad_len`
-only enforces an upper bound, so a server that emits
-OriginalMessageSize larger than read_rsp_size + pad_len + data_len
-passes the check and the kernel copies buffer_len bytes per response,
-ignoring the server-asserted DataLength.
-
-Two observable failures with a crafted server (DataLength=4,
-buffer_len=20000):
-
-  - the kernel returns 20000 bytes per sub-request to userspace and
-    sets got_bytes = buffer_len, even though the response claimed
-    only 4 bytes of payload;
-
-  - on a partial netfs sub-request whose iterator is sized to
-    data_len, the over-large copy_folio_to_iter() short-reads,
-    cifs_copy_folioq_to_iter() returns -EIO via the n != len path,
-    and the entire netfs read collapses to -EIO even though the
-    leading sub-requests succeeded.
-
-Use data_len for the copy length and for got_bytes so the kernel
-honours the server-asserted READ payload size.  For well-formed
-servers (where buffer_len == pad_len + data_len) the change is
-behaviour-equivalent.
-
+Fixes: 3a07327d10a0 ("netfilter: nft_inner: support for inner tunnel header matching")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:5.1 Z.ai
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_inner.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4781,7 +4781,7 @@ handle_read_data(struct TCP_Server_Info
- 		}
+--- a/net/netfilter/nft_inner.c
++++ b/net/netfilter/nft_inner.c
+@@ -156,7 +156,6 @@ static int nft_inner_parse_l2l3(const st
+ 			return -1;
  
- 		/* Copy the data to the output I/O iterator. */
--		rdata->result = cifs_copy_folioq_to_iter(buffer, buffer_len,
-+		rdata->result = cifs_copy_folioq_to_iter(buffer, data_len,
- 							 cur_off, &rdata->subreq.io_iter);
- 		if (rdata->result != 0) {
- 			if (is_offloaded)
-@@ -4790,7 +4790,7 @@ handle_read_data(struct TCP_Server_Info
- 				dequeue_mid(mid, rdata->result);
- 			return 0;
- 		}
--		rdata->got_bytes = buffer_len;
-+		rdata->got_bytes = data_len;
- 
- 	} else if (buf_len >= data_offset + data_len) {
- 		/* read response payload is in buf */
+ 		if (fragoff == 0) {
+-			thoff = nhoff + sizeof(_ip6h);
+ 			ctx->flags |= NFT_PAYLOAD_CTX_INNER_TH;
+ 			ctx->inner_thoff = thoff;
+ 			ctx->l4proto = l4proto;
 
 
