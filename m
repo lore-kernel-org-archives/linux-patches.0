@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EC62F260C;
-	Thu, 28 May 2026 20:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2202F260C;
+	Thu, 28 May 2026 20:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001443; cv=none; b=u0gncGZdSdRGsnyFpN5xpxRAZU8VHL88c74aQFLvjsiHPVSZmNNCNBhM1Y+SiS8xwKhVlwKXn5e4fCjz6gkVLELo8hi+pBc0QRCN+YQoU+3H10FUrjLwZbf2+hhvnkekZjC3b3kjpPW8E+F13j0dDvFOeqPsmQWh/kwqdNbpBkI=
+	t=1780001446; cv=none; b=aEmk17J+RqCqICrsNo4SoLdNFWdylVH52BB0fonKeKSIQpcrqdWMbsY0N0r23QbTFPTM2uACYnlfShGje4iqYK0Z5rs65pYUjhtWSPl4z6KDHpdd3tocd34BSumrMowuZEoVHW38K2SRv5YcgXETSLaHZJXgrW9sP7JALt6ZEf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001443; c=relaxed/simple;
-	bh=c2s9C7fFIjCLrT1J9io7XPAmudybiBjiGrOTDAp0Sik=;
+	s=arc-20240116; t=1780001446; c=relaxed/simple;
+	bh=reZ0QMQQ0XJLFpOvYMrhuFM8WcG0VJue+FFTRyCr26A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0ng3BeFJgpr0jgbu3KeEioxP5nzsLf/9aBdQ9AQJml7YeMGwGCsaWlFsr6avdNJPFWZUGC9e4iwTYYjPOsUrQNM1eq5rIYdIlOvkCtJF+J9LyVw5E9gjfB/uuia5vs2+TNKQC4eiU9LtjhceGAynPK6DXyQzep5OxCTLfHT6WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV/AvmJy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+vTDGvQYcFLKP2vpEz1Dc5g7nfrB/yBKzyVg8CMvUszSOHhBDHJfv1MZvV9ikQ05SfmuSbNK+AYGpuMq/OekIfohy4BZrELuI9A8MP9bB1G5xWXXXnwHHxyPiH6cWMqJsmnAlYbRv/EQRciqbPWnmIaQZSj0SoYCtcfsuR2cyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wur/8r4l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV/AvmJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487261F000E9;
-	Thu, 28 May 2026 20:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wur/8r4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8CA1F000E9;
+	Thu, 28 May 2026 20:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001442;
-	bh=hwhll6+e4HxK3uDHzkT0jqhU4qh1r65Y+yzYwruPhOQ=;
+	s=korg; t=1780001445;
+	bh=fUlTLci5djFoCh6lb9Hjgxxpn0FIy5intrHzvRFb/8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OV/AvmJyULLCNjP814wKFytLRGg7lpU3+bdQ7W0kr0XPxO0VvpKKviiMpHykZYXXF
-	 vSz9Px7xDyu1KeFdwsIHZYc5hojiI/lt4beaCnXzgjBced80e0BSlGPVxv0jtnv0xQ
-	 FBEh9aKBXaOoCMK/cTl2QJsAEO6qidJDIPlY0eaQ=
+	b=Wur/8r4ljBk+PP9GTRr0YdnfJvP96nOd5OvJXhaxnH+211qXxzQfYGkyCzH+v/Td+
+	 9NmHZ+x8bdwSIhZuOAb1FFHOJoesf2qw9pzIa4wTwgsVcG72DPp/SRe2zLio6lJ56m
+	 mxIaO1Z+dNViKESe+cJRUlHtMcvqB5CfsiDlzYM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/186] netfs: Fix overrun check in netfs_extract_user_iter()
-Date: Thu, 28 May 2026 21:50:09 +0200
-Message-ID: <20260528194932.428454342@linuxfoundation.org>
+Subject: [PATCH 6.6 130/186] net: ethernet: cortina: Make RX SKB per-port
+Date: Thu, 28 May 2026 21:50:10 +0200
+Message-ID: <20260528194932.457012513@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -54,78 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 0ef37eef83fad3542ee06db2940433ae1a92b39d ]
+[ Upstream commit 06937db21ee311ed07eba47954447245041a982d ]
 
-Fix netfs_extract_user_iter() so that if iov_iter_extract_pages() overfills
-pages[], then those pages don't get included in the iterator constructed at
-the end of the function.  If there was an overfill, memory corruption has
-already happened.
+The SKB used to assemble packets from fragments in gmac_rx()
+is static local, but the Gemini has two ethernet ports, meaning
+there can be races between the ports on a bad day if a device
+is using both.
 
-Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-Closes: https://sashiko.dev/#/patchset/20260427154639.180684-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-11-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Make the RX SKB a per-port variable and carry it over between
+invocations in the port struct instead.
+
+Zero the pointer once we call napi_gro_frags(), on error (after
+calling napi_free_frags()) or if the port is stopped.
+
+Zero it in some place where not strictly necessary just to
+emphasize what is going on.
+
+This was found by Sashiko during normal patch review.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-2-6c5d20ddc35b@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/iterator.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/iterator.c b/fs/netfs/iterator.c
-index 781ea403498e3..9a047ca863fe5 100644
---- a/fs/netfs/iterator.c
-+++ b/fs/netfs/iterator.c
-@@ -72,21 +72,24 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
- 			break;
- 		}
- 
--		if (ret > count) {
--			pr_err("get_pages rc=%zd more than %zu\n", ret, count);
-+		if (WARN(ret > count,
-+			 "%s: extract_pages overrun %zd > %zu bytes\n",
-+			 __func__, ret, count)) {
-+			ret = -EIO;
- 			break;
- 		}
- 
--		count -= ret;
--		ret += offset;
--		cur_npages = DIV_ROUND_UP(ret, PAGE_SIZE);
--
--		if (npages + cur_npages > max_pages) {
--			pr_err("Out of bvec array capacity (%u vs %u)\n",
--			       npages + cur_npages, max_pages);
-+		cur_npages = DIV_ROUND_UP(offset + ret, PAGE_SIZE);
-+		if (WARN(cur_npages > max_pages - npages,
-+			 "%s: extract_pages overrun %u > %u pages\n",
-+			 __func__, npages + cur_npages, max_pages)) {
-+			ret = -EIO;
- 			break;
- 		}
- 
-+		count -= ret;
-+		ret += offset;
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index fce2ff1e1d834..02beed666fa63 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -121,6 +121,8 @@ struct gemini_ethernet_port {
+ 	struct napi_struct	napi;
+ 	struct hrtimer		rx_coalesce_timer;
+ 	unsigned int		rx_coalesce_nsecs;
++	struct sk_buff		*rx_skb;
 +
- 		for (i = 0; i < cur_npages; i++) {
- 			len = ret > PAGE_SIZE ? PAGE_SIZE : ret;
- 			bvec_set_page(bv + npages + i, *pages++, len - offset, offset);
-@@ -97,6 +100,11 @@ ssize_t netfs_extract_user_iter(struct iov_iter *orig, size_t orig_len,
- 		npages += cur_npages;
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+ 	unsigned int		txq_order;
+@@ -1447,10 +1449,10 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+ 	struct gemini_ethernet *geth = port->geth;
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
++	struct sk_buff *skb = port->rx_skb;
+ 	unsigned int frame_len, frag_len;
+ 	struct gmac_rxdesc *rx = NULL;
+ 	struct gmac_queue_page *gpage;
+-	static struct sk_buff *skb;
+ 	union gmac_rxdesc_0 word0;
+ 	union gmac_rxdesc_1 word1;
+ 	union gmac_rxdesc_3 word3;
+@@ -1504,6 +1506,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 			if (skb) {
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
++				skb = NULL;
+ 			}
+ 
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+@@ -1554,6 +1557,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		port->stats.rx_dropped++;
  	}
  
-+	/* Note: Don't try to clean up after EIO.  Either we got no pages, so
-+	 * nothing to clean up, or we got a buffer overrun, memory corruption
-+	 * and can't trust the stuff in the buffer (a WARN was emitted).
-+	 */
-+
- 	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
- 		for (i = 0; i < npages; i++)
- 			unpin_user_page(bv[i].bv_page);
++	port->rx_skb = skb;
+ 	writew(r, ptr_reg);
+ 	return budget;
+ }
+@@ -1882,6 +1886,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	gmac_disable_tx_rx(netdev);
+ 	gmac_stop_dma(port);
+ 	napi_disable(&port->napi);
++	port->rx_skb = NULL;
+ 
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
