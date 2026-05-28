@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F2F25F7B9;
-	Thu, 28 May 2026 20:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AAA298CB2;
+	Thu, 28 May 2026 20:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000823; cv=none; b=TRQMTA9zWRJuZZpuNYqZuoyVDlvHSxPfjTKEa+icdTXHDIf5GGjHJ9R8h81l8aLr8Art1AlYsGtAILB+IoQq+Srcy7Xgr8RZFhXdddtG1ejHK+SBIJKHhUz8SkxKQG68Mdu0t0BE5lm7UcbFwDcvFTWwz0He/vFT5T3sVTZYsfg=
+	t=1780000826; cv=none; b=PK4jGyFo1c1ojLq6DokaIAMME2zoBVn57hALQ6XA5SF6sa0Dqw+/zC++ytpFRPa+cr0tHMtqyI5J/EsUk8jflsxT4c1T2Lq79uv5FQfRgWnXDirS1BEFqmuWcTJfEwnvTuU2gpcJPG9W/zfjZeBEjKNz5oNVMra58uUDAzodUxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000823; c=relaxed/simple;
-	bh=oRdy5y1V8tp10vp6+HxPBdexrB+Mr4594gcCNnBEDO4=;
+	s=arc-20240116; t=1780000826; c=relaxed/simple;
+	bh=CvxQNvTPTC9jpO6/a/HJr+qL0QJFtVDiM7yqBpcGPTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zg/nQYfhd2MqTNLimfkVRVoo3A2y03PnY0e/ZCb9ro3x4KjKBkthG8AYQM1C6r4KgEa30UQPKS+kPgzT6/tEoMzgqjNzG4C2IR1rViaSkw6bfqXMgpjr8vPjHx2jRamcE4/suRfTNlY14FO5xHUibgKbIVQS30hHfZj50RXUT5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRs6jknf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0FJnZ2vgjRgdM/oH535BCV9tDM6wg74T7AJztuyukModIwuFMQvOLdx4ttagem5TlkZp/wpioa58CEg7d8Hh4KrnmKNZO1CKe+Lik1DuJelT/ZzZnXlmidN3GBn3K3LZt/kxwEqrWcxB0LpirVxabiQvjpq8oqdb9m+N+f6Fu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apRiaTed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRs6jknf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A691F000E9;
-	Thu, 28 May 2026 20:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apRiaTed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EC01F000E9;
+	Thu, 28 May 2026 20:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000822;
-	bh=AB9unhkrxcOF51KWsUSFOiZf9I7u3gXTiaeL5gzmm+k=;
+	s=korg; t=1780000825;
+	bh=3FyGHeSOOm4z9ht8MLtgfRapW9eaz9sHm7/34jQUNoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mRs6jknfz8kOcPi9HIu4oazLpccoxI7vD64mm9ezS3e2Mxh/XvYXfwe8STxIl3UcL
-	 vNT5rpow1+niIFW8O1YVP1TjuaOuCIfTmAyRA1/SyIs/TE1JkjYGb6eUURduZ0ZFEa
-	 XDhruNBqAV7rO9d6m5uWhctG3UDWYiJaQzIs1kUk=
+	b=apRiaTedkP8dgnU/+GiOODCTL8RSycp+FnZf9d20bbRHaWtTXWVuH/9SScTgp8tcu
+	 2dX6wOGSPKIKlcwmq6GzLJzIA0M3vQaZn7MYrGZik1MXc/fGxnI3M8Fg/vY2wPgvnY
+	 gJ9R18Fgth7UkjovLz1gnegNN48Mix1GGGJ7g5d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/272] NFSD: Fix infinite loop in layout state revocation
-Date: Thu, 28 May 2026 21:49:16 +0200
-Message-ID: <20260528194634.389290102@linuxfoundation.org>
+Subject: [PATCH 6.12 183/272] irqchip/ath79-cpu: Remove unused function
+Date: Thu, 28 May 2026 21:49:17 +0200
+Message-ID: <20260528194634.415003499@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4f8ef58c10bfe5f86a643c7c8331b37e69e3dae1 ]
+[ Upstream commit 0fa10fb77069fb67aa51384868ef3702b7791465 ]
 
-find_one_sb_stid() skips stids whose sc_status is non-zero, but the
-SC_TYPE_LAYOUT case in nfsd4_revoke_states() never sets sc_status
-before calling nfsd4_close_layout(). The retry loop therefore finds
-the same layout stid on every iteration, hanging the revoker
-indefinitely.
+ath79_cpu_irq_init() was part of the legacy pre-OF code that got removed a
+while back.
 
-Fixes: 1e33e1414bec ("nfsd: allow layout state to be admin-revoked.")
-Reported-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Remove it to get rid of a missing prototype warning, reported by the kernel test
+robot.
+
+[ tglx: Fix the subject prefix. Sigh ... ]
+
+Fixes: 51fa4f8912c0 ("MIPS: ath79: drop legacy IRQ code")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260506085522.1210143-1-rosenp@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202412011509.kGQkDr1y-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/irqchip/irq-ath79-cpu.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 1a15e458b178a..2d91747297820 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1832,6 +1832,13 @@ void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
- 					break;
- 				case SC_TYPE_LAYOUT:
- 					ls = layoutstateid(stid);
-+					spin_lock(&clp->cl_lock);
-+					if (stid->sc_status == 0) {
-+						stid->sc_status |=
-+							SC_STATUS_ADMIN_REVOKED;
-+						atomic_inc(&clp->cl_admin_revoked);
-+					}
-+					spin_unlock(&clp->cl_lock);
- 					nfsd4_close_layout(ls);
- 					break;
- 				}
+diff --git a/drivers/irqchip/irq-ath79-cpu.c b/drivers/irqchip/irq-ath79-cpu.c
+index 923e4bba37767..9b7273a7f8ced 100644
+--- a/drivers/irqchip/irq-ath79-cpu.c
++++ b/drivers/irqchip/irq-ath79-cpu.c
+@@ -85,10 +85,3 @@ static int __init ar79_cpu_intc_of_init(
+ }
+ IRQCHIP_DECLARE(ar79_cpu_intc, "qca,ar7100-cpu-intc",
+ 		ar79_cpu_intc_of_init);
+-
+-void __init ath79_cpu_irq_init(unsigned irq_wb_chan2, unsigned irq_wb_chan3)
+-{
+-	irq_wb_chan[2] = irq_wb_chan2;
+-	irq_wb_chan[3] = irq_wb_chan3;
+-	mips_cpu_irq_init();
+-}
 -- 
 2.53.0
 
