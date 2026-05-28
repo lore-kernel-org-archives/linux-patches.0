@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489DD317164;
-	Thu, 28 May 2026 20:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F7E2EF652;
+	Thu, 28 May 2026 20:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001019; cv=none; b=J9QO/ubUxdq+B5eitDHfBCRu1UUjO7r3a/rKzwYhi21LoH8IHLYUB0Pi6uonX5AmN0KgG13GAC+oeDhhPZougGFPTh9KV9euTz1x7+J05R+9oA+H5dAiBZXoNi/Jbb4qE3O2fxEej7mzsHhpXaUUqSM65n8by1NtiOvlhqFckZI=
+	t=1780001022; cv=none; b=pluVyZEIEHRfpoRH3l4l5BmDqUrJQy6LShr+DgCnv9IaiLr39mqqE7gG5zoBONTmhxqaaiPMcIx767CZZYgFuhpfXN1DyiGRLEyOpLfEWDksafoCdtqV5lAiNOqQb2tpO0fuL0DomhXpgp8A7g2caB2MP8BjyNQV5TDbAgDgz10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001019; c=relaxed/simple;
-	bh=e+eEr9MaJZwzYq4ApfWLzQud6lctDZmJOU69l8TDGt0=;
+	s=arc-20240116; t=1780001022; c=relaxed/simple;
+	bh=KcN+a3Py+z9ES8r146yoH4Hp0N8Sv2tiNn2RH9uHRqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyyG6ugWS222Yg4D5AW0XbgUyNHGOVlpR078wMhFrGXS9BRW/Q3TJdmI77GCiyBldPAqEHFhoIjY13oOWyJ4PdlNLE5Aw/XV0i9olH4tO5JTCz7bzBrSHpVuRkgYBZa8J77avS7jhctlta6ouAXgNGriwAQ8JhM1daDJ8Om15rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBuPA4oD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MEm4q3upz1ZksaJFDUOG+Cl1jZpx6CtobObL9C8U6xp89vvwmFAlYnyf50VBc7szO8TsxutXRoOPFjaGojV5MedhBCyQp/HxnXo/QB7wMSQ89/0cgtPay96LanevMVH/dVNRSCWYHjHeuYUbmigs3KTPGqeMPN/rKV2+TiDjfmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UifF2yGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBuPA4oD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579FC1F000E9;
-	Thu, 28 May 2026 20:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UifF2yGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FBA1F000E9;
+	Thu, 28 May 2026 20:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001017;
-	bh=HQ+pwfgioWd2oFnqmAwP0MZpwuOOnw0kOLgvVkoFWMA=;
+	s=korg; t=1780001020;
+	bh=uStbnJucuEhR5fSTWqpu392TWt5W0rR6qiPoQ4Y6hmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBuPA4oDmnfkTg4ELyVXxAYy0hVdpRKHf8QMQk1/6Q+r3bwsKjAOUZaDlaCzGvQt0
-	 16KsB/nbwnt1H08mJxba9hPLq6DFRxoQ3N2DHoJLDaMAeOozpxRNs+bxgQ2Zg8EFOA
-	 Q/8Wn4QC2LkbmQ5XQGYQ+GHX40fjNfHf/Us2VlrY=
+	b=UifF2yGYGz2HhUVbfyjpBq9Yf69xMHavUN+BTlwbXWFxG0Ka6M5bi7GrRRwjdLV/z
+	 ywG+eshL8jcVkRK8nae3XQzEQZb0MiCn1XhW+4+/uFwC2wmOqbMbf2b7nXVfGy/AYY
+	 Tz3l2lZm6eZ8/UO34wUOSu3qwUsqLKAHTgHn2d5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/272] net: ethernet: cortina: Carry over frag counter
-Date: Thu, 28 May 2026 21:49:38 +0200
-Message-ID: <20260528194634.954794853@linuxfoundation.org>
+Subject: [PATCH 6.12 245/272] net: dsa: mt7530: preserve VLAN tags on trapped link-local frames
+Date: Thu, 28 May 2026 21:50:19 +0200
+Message-ID: <20260528194635.994665876@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,116 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit ebd8ec2b309e3a447851b456ccaf8fb39f3661e7 ]
+[ Upstream commit 3ac85bcfd404b588298c95c6fba8aad4ad334f57 ]
 
-The gmac_rx() NAPI poll function assembles packets in an
-SKB from a ring buffer.
+The BPC, RGAC1 and RGAC2 registers control the handling of link-local
+frames with reserved MAC DAs (01:80:C2:00:00:0x). These frames are
+correctly trapped to the CPU port, but the egress VLAN tag attribute was
+set to MT7530_VLAN_EG_UNTAGGED which causes the switch to strip any
+VLAN tags from trapped frames before they reach the CPU.
 
-If the ring buffer gets completely emptied during a poll cycle,
-we exit gmac_rx(), but the packet is not yet completely
-assembled in the SKB, yet the fragment counter frag_nr is
-reset to zero on the next invocation.
+This causes VLAN-tagged link-local frames (STP BPDUs, LLDP, PTP Peer
+Delay Requests) to arrive at the CPU without their VLAN tag, so they
+are delivered to the base network interface instead of the VLAN
+sub-interface. The DSA local_termination selftest confirms this: all
+link-local protocol tests on VLAN upper interfaces fail.
 
-Solve this by making the RX fragment counter a part of the
-port struct, and carry it over between invocations.
+Set the EG_TAG attribute to MT7530_VLAN_EG_DISABLED (system default)
+so that the switch does not modify VLAN tags in trapped frames. This
+way VLAN-tagged frames retain their original tag and are delivered to
+the correct VLAN sub-interface, matching the behavior of non-trapped
+frames which pass through without VLAN tag modification.
 
-Reset the fragment counter only right after calling
-napi_gro_frags(), on error (after calling napi_free_frags())
-or if stopping the port.
-
-Reset it in some place where not strictly necessary just to
-emphasize what is going on.
-
-This was found by Sashiko during normal patch review.
-
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-3-6c5d20ddc35b@kernel.org
+Fixes: 69ddba9d170b ("net: dsa: mt7530: fix handling of all link-local frames")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Link: https://patch.msgid.link/891e0cd34db2a5fe20ceb73283a81fb5f71427ca.1778766629.git.daniel@makrotopia.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 8fee13bd056ad..2ce8191ad5007 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -122,6 +122,7 @@ struct gemini_ethernet_port {
- 	struct hrtimer		rx_coalesce_timer;
- 	unsigned int		rx_coalesce_nsecs;
- 	struct sk_buff		*rx_skb;
-+	unsigned int		rx_frag_nr;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 7187efb41dbc8..21437ce57b64f 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1105,37 +1105,40 @@ static void mt7530_setup_port5(struct dsa_switch *ds, phy_interface_t interface)
+ static void
+ mt753x_trap_frames(struct mt7530_priv *priv)
+ {
+-	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress them
+-	 * VLAN-untagged.
++	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress
++	 * them with the EG_TAG attribute set to disabled (system default)
++	 * so that any VLAN tags in the frame are not modified by the
++	 * switch egress VLAN tag processing. This preserves VLAN tags
++	 * for reception on VLAN sub-interfaces.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_BPC,
+ 		   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
+ 			   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
+-		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
+-			   BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   BPDU_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  
- 	unsigned int		freeq_refill;
- 	struct gmac_txq		txq[TX_QUEUE_NUM];
-@@ -1444,6 +1445,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short m = (1 << port->rxq_order) - 1;
- 	struct gemini_ethernet *geth = port->geth;
- 	void __iomem *ptr_reg = port->rxq_rwptr;
-+	unsigned int frag_nr = port->rx_frag_nr;
- 	struct sk_buff *skb = port->rx_skb;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
-@@ -1457,7 +1459,6 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short r, w;
- 	union dma_rwptr rw;
- 	dma_addr_t mapping;
--	int frag_nr = 0;
+-	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and egress
+-	 * them VLAN-untagged.
++	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and
++	 * egress them with EG_TAG disabled.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_RGAC1,
+ 		   R02_BPDU_FR | R02_EG_TAG_MASK | R02_PORT_FW_MASK |
+ 			   R01_BPDU_FR | R01_EG_TAG_MASK | R01_PORT_FW_MASK,
+-		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   R02_PORT_FW(TO_CPU_FW_CPU_ONLY) | R01_BPDU_FR |
+-			   R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R01_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  
- 	spin_lock_irqsave(&geth->irq_lock, flags);
- 	rw.bits32 = readl(ptr_reg);
-@@ -1497,6 +1498,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 			continue;
- 		}
-@@ -1507,6 +1509,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 
- 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
-@@ -1541,6 +1544,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (word3.bits32 & EOF_BIT) {
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 			--budget;
- 		}
- 		continue;
-@@ -1549,6 +1553,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (skb) {
- 			napi_free_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 		}
- 
- 		if (mapping)
-@@ -1558,6 +1563,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	}
- 
- 	port->rx_skb = skb;
-+	port->rx_frag_nr = frag_nr;
- 	writew(r, ptr_reg);
- 	return budget;
+-	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and egress
+-	 * them VLAN-untagged.
++	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and
++	 * egress them with EG_TAG disabled.
+ 	 */
+ 	mt7530_rmw(priv, MT753X_RGAC2,
+ 		   R0E_BPDU_FR | R0E_EG_TAG_MASK | R0E_PORT_FW_MASK |
+ 			   R03_BPDU_FR | R03_EG_TAG_MASK | R03_PORT_FW_MASK,
+-		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   R0E_PORT_FW(TO_CPU_FW_CPU_ONLY) | R03_BPDU_FR |
+-			   R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R03_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  }
-@@ -1887,6 +1893,7 @@ static int gmac_stop(struct net_device *netdev)
- 	gmac_stop_dma(port);
- 	napi_disable(&port->napi);
- 	port->rx_skb = NULL;
-+	port->rx_frag_nr = 0;
  
- 	gmac_enable_irq(netdev, 0);
- 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
