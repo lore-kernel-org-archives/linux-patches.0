@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70B61FC0EA;
-	Thu, 28 May 2026 20:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8009F339866;
+	Thu, 28 May 2026 20:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000608; cv=none; b=WRZA/Q5hErkIe0RWjT+DCR7M3oA+8bJhykUHdmz+VfGEUUpE3HVC5WfcOILOkdA654Cb3PABQNFT5j0BbNYpt5au42Fw+0OCep7S5pVuVfyZxPGjEqDO6BwunsufRT1pNTEh5ugVtYmoxHM6tEUinDMkshSElb+5YYgiL9iHFus=
+	t=1780000611; cv=none; b=SJz8tbZPDPnULSq7sJcwY3PJjj0hSvsSU5F1mDCGA+yNlSM3kMMIBTjHodJMSQy0sXT3YTSceIV4BwB4vdwneyymyw9I+MXNYYm0VIWiYplxH72Tajq2VwX4n/XtKNhYPjtmiZliMB53A/KTQgHCMnxz6ForFl/4O/38VvlFJFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000608; c=relaxed/simple;
-	bh=NUEnIOlL80sgwYutfhOJ2Vra+2cMQQiTpcRsUd7+P6k=;
+	s=arc-20240116; t=1780000611; c=relaxed/simple;
+	bh=tOmwcrxl1U5G4/1YTSXMKDFVT4+aYEX6mlTxqpySpcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abFMsEQM+tC+pUO9qSavXojDkoFBCHiQp78/vpgK7chOCit2Cc9Iq4hi4fKhBTh+iTx9ujcN5nMo1i7o5rXxTE8pjWU0KhXEnZRcZxe+CWBjQZG+FGy84qld75r4NdR97WpOnEfVMRGkSwBV6vomIj6pLWRzpuB+nbJfa1eaRu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05+H7Yfe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GbI8TtxMaSSzjTd/R9H0ol7rSmTj//yvDjb2k+tYWJlPdlJ0UGP68cpNWnw5DjxCJzMyqzkcBOwIjZAkmELJtOnJCxy3KMWdCfMkBQ+frA000GTt8sc3a5Ou/QFBxOmPLCkVvo8Xa+7wXZHaedgNl7TifkiIbz5LgqdgsG2iJJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rc6NpSVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05+H7Yfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A7A1F000E9;
-	Thu, 28 May 2026 20:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rc6NpSVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4311F000E9;
+	Thu, 28 May 2026 20:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000607;
-	bh=xPaTOWlEpOkbG3rkt4p6EqTgPwJbYu70Outl9Y1BrUk=;
+	s=korg; t=1780000610;
+	bh=81Ktos5aZzZQ9bo2LP8NR9YzHRW3iRmzkA80XZHJOME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=05+H7Yfex58sxas04+31yV3ciDjmObO4HsmqLRgSDjmViOOc5GAPcNn+wgb+RALzQ
-	 rZo9QBbW7+NhCLVx7/wa/LZNL52linqBcMCIUwaKG106pj2wyqCXjoLbQP+ULGX+vN
-	 vNQcBtAod9XEMlM7NbTQ2jlq67Sj5Uint2rfYdpU=
+	b=Rc6NpSVY4DxVpY2j5vNFKjoN05HAQlD8RlFWPxvXXm7mYoE1NaQhuquj1r4K51QY+
+	 0cD8Hhaeb4/cQVhmQS9YjNp7QmrDuVFvjSwWTdrANdckYvIx4B0r7NIEdVvZEa7fTd
+	 aGxYM2in7YyK4MqL6vbipS6zFgmJAJfgiyrJtuQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 088/272] ipv4: raw: reject IP_HDRINCL packets with ihl < 5
-Date: Thu, 28 May 2026 21:47:42 +0200
-Message-ID: <20260528194631.842473004@linuxfoundation.org>
+	Wayne Chang <waynec@nvidia.com>,
+	Wei-Cheng Chen <weichengc@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 106/272] phy: tegra: xusb: Fix per-pad high-speed termination calibration
+Date: Thu, 28 May 2026 21:48:00 +0200
+Message-ID: <20260528194632.346477893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,86 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Wayne Chang <waynec@nvidia.com>
 
-commit 915fab69823a14c170dbaa3b41978768e0fe62fc upstream.
+commit da110228b54f2e2143d97ea7151e0dc22e539d67 upstream.
 
-raw_send_hdrinc() validates that the caller-supplied IPv4 header
-fits within the message length:
+The existing code reads a single hs_term_range_adj value from bit field
+[10:7] of FUSE_SKU_CALIB_0 and applies it to all USB2 pads uniformly.
+However, on SoCs that support per-pad termination, each pad has its own
+hs_term_range_adj field: pad 0 in FUSE_SKU_CALIB_0[10:7], and pads 1-3
+in FUSE_USB_CALIB_EXT_0 at bit offsets [8:5], [12:9], and [16:13]
+respectively.
 
-    iphlen = iph->ihl * 4;
-    err = -EINVAL;
-    if (iphlen > length)
-        goto error_free;
+Fix the calibration by reading per-pad values from the appropriate fuse
+registers. For SoCs that do not support per-pad termination, replicate
+pad 0's value to all pads to maintain existing behavior.
 
-    if (iphlen >= sizeof(*iph)) {
-        /* fix up saddr, tot_len, id, csum, transport_header */
-    }
+Add a has_per_pad_term flag to the SoC data to indicate whether per-pad
+termination values are available in FUSE_USB_CALIB_EXT_0.
 
-It does not, however, reject ihl < 5.  For such a packet the
-"if (iphlen >= sizeof(*iph))" branch is skipped, leaving the
-crafted iphdr untouched, but the packet is still handed to
-__ip_local_out() and onward.  Downstream consumers that read
-iph->ihl assume a sane value: net/ipv4/ah4.c:ah_output() in
-particular subtracts sizeof(struct iphdr) from top_iph->ihl * 4
-and passes the (signed-int-negative, then cast to size_t)
-result to memcpy(), producing an OOB access of length close to
-SIZE_MAX and a host kernel panic.
-
-An IPv4 header with ihl < 5 is malformed by definition (RFC 791:
-"Internet Header Length is the length of the internet header in
-32 bit words ... Note that the minimum value for a correct header
-is 5.").  The kernel should not be willing to inject such a
-packet into its own output path.
-
-Reject "iphlen < sizeof(*iph)" alongside the existing
-"iphlen > length" check.  This matches the principle that locally
-constructed packets that re-enter the IP stack must pass the same
-basic sanity tests that a foreign packet would be subjected to.
-
-Once this lands, the "if (iphlen >= sizeof(*iph))" wrapper around
-the fixup branch becomes redundant; left in place to keep the
-patch minimal and backport-friendly.  A follow-up can unwrap it.
-
-Note that commit 86f4c90a1c5c ("ipv4, ipv6: ensure raw socket
-message is big enough to hold an IP header") ensures the message
-buffer is large enough to hold an iphdr, but does not constrain
-the self-reported iph->ihl.
-
-Reachability: the malformed packet source is any caller with
-CAP_NET_RAW, including an unprivileged process in a user+net
-namespace on a kernel with CONFIG_USER_NS=y.  The reproduced AH
-crash also requires a matching xfrm AH policy on the outgoing
-route; a container granted CAP_NET_ADMIN can install that state
-and policy in its netns.  Loopback bypasses xfrm_output, so the
-trigger uses a real netdev.
-
-Reproduced on UML + KASAN: kernel-mode fault at addr 0x0 with
-memcpy_orig at the crash site.  Same shape reproduces inside a
-rootless Docker container with --cap-add NET_ADMIN on a stock
-distro kernel.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 1ef535c6ba8e ("phy: tegra: xusb: Add Tegra194 support")
 Cc: stable@vger.kernel.org
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/77ec2b5e8111961c2c39883c92e8aa2709039c17.1778614451.git.michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260504033305.2283145-1-weichengc@nvidia.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/raw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/tegra/xusb-tegra186.c |   33 ++++++++++++++++++++++++++-------
+ drivers/phy/tegra/xusb.h          |    1 +
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -390,7 +390,7 @@ static int raw_send_hdrinc(struct sock *
- 	 * in, reject the frame as invalid
- 	 */
- 	err = -EINVAL;
--	if (iphlen > length)
-+	if (iphlen > length || iphlen < sizeof(*iph))
- 		goto error_free;
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -20,8 +20,8 @@
+ /* FUSE USB_CALIB registers */
+ #define HS_CURR_LEVEL_PADX_SHIFT(x)	((x) ? (11 + (x - 1) * 6) : 0)
+ #define HS_CURR_LEVEL_PAD_MASK		0x3f
+-#define HS_TERM_RANGE_ADJ_SHIFT		7
+-#define HS_TERM_RANGE_ADJ_MASK		0xf
++#define HS_TERM_RANGE_ADJ_PADX_SHIFT(x)	((x) ? (5 + (x - 1) * 4) : 7)
++#define HS_TERM_RANGE_ADJ_PAD_MASK	0xf
+ #define HS_SQUELCH_SHIFT		29
+ #define HS_SQUELCH_MASK			0x7
  
- 	if (iphlen >= sizeof(*iph)) {
+@@ -253,7 +253,7 @@
+ struct tegra_xusb_fuse_calibration {
+ 	u32 *hs_curr_level;
+ 	u32 hs_squelch;
+-	u32 hs_term_range_adj;
++	u32 *hs_term_range_adj;
+ 	u32 rpd_ctrl;
+ };
+ 
+@@ -930,7 +930,7 @@ static int tegra186_utmi_phy_power_on(st
+ 
+ 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
+ 	value &= ~TERM_RANGE_ADJ(~0);
+-	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj);
++	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj[index]);
+ 	value &= ~RPD_CTRL(~0);
+ 	value |= RPD_CTRL(priv->calib.rpd_ctrl);
+ 	padctl_writel(padctl, value, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
+@@ -1464,17 +1464,23 @@ static const char * const tegra186_usb3_
+ static int
+ tegra186_xusb_read_fuse_calibration(struct tegra186_xusb_padctl *padctl)
+ {
++	const struct tegra_xusb_padctl_soc *soc = padctl->base.soc;
+ 	struct device *dev = padctl->base.dev;
+ 	unsigned int i, count;
+ 	u32 value, *level;
++	u32 *hs_term_range_adj;
+ 	int err;
+ 
+-	count = padctl->base.soc->ports.usb2.count;
++	count = soc->ports.usb2.count;
+ 
+ 	level = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
+ 	if (!level)
+ 		return -ENOMEM;
+ 
++	hs_term_range_adj = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
++	if (!hs_term_range_adj)
++		return -ENOMEM;
++
+ 	err = tegra_fuse_readl(TEGRA_FUSE_SKU_CALIB_0, &value);
+ 	if (err)
+ 		return dev_err_probe(dev, err,
+@@ -1490,8 +1496,8 @@ tegra186_xusb_read_fuse_calibration(stru
+ 
+ 	padctl->calib.hs_squelch = (value >> HS_SQUELCH_SHIFT) &
+ 					HS_SQUELCH_MASK;
+-	padctl->calib.hs_term_range_adj = (value >> HS_TERM_RANGE_ADJ_SHIFT) &
+-						HS_TERM_RANGE_ADJ_MASK;
++	hs_term_range_adj[0] = (value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(0)) &
++				HS_TERM_RANGE_ADJ_PAD_MASK;
+ 
+ 	err = tegra_fuse_readl(TEGRA_FUSE_USB_CALIB_EXT_0, &value);
+ 	if (err) {
+@@ -1503,6 +1509,17 @@ tegra186_xusb_read_fuse_calibration(stru
+ 
+ 	padctl->calib.rpd_ctrl = (value >> RPD_CTRL_SHIFT) & RPD_CTRL_MASK;
+ 
++	for (i = 1; i < count; i++) {
++		if (soc->has_per_pad_term)
++			hs_term_range_adj[i] =
++				(value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(i)) &
++				HS_TERM_RANGE_ADJ_PAD_MASK;
++		else
++			hs_term_range_adj[i] = hs_term_range_adj[0];
++	}
++
++	padctl->calib.hs_term_range_adj = hs_term_range_adj;
++
+ 	return 0;
+ }
+ 
+@@ -1708,6 +1725,7 @@ const struct tegra_xusb_padctl_soc tegra
+ 	.num_supplies = ARRAY_SIZE(tegra194_xusb_padctl_supply_names),
+ 	.supports_gen2 = true,
+ 	.poll_trk_completed = true,
++	.has_per_pad_term = true,
+ };
+ EXPORT_SYMBOL_GPL(tegra194_xusb_padctl_soc);
+ 
+@@ -1732,6 +1750,7 @@ const struct tegra_xusb_padctl_soc tegra
+ 	.trk_hw_mode = false,
+ 	.trk_update_on_idle = true,
+ 	.supports_lp_cfg_en = true,
++	.has_per_pad_term = true,
+ };
+ EXPORT_SYMBOL_GPL(tegra234_xusb_padctl_soc);
+ #endif
+--- a/drivers/phy/tegra/xusb.h
++++ b/drivers/phy/tegra/xusb.h
+@@ -436,6 +436,7 @@ struct tegra_xusb_padctl_soc {
+ 	bool trk_hw_mode;
+ 	bool trk_update_on_idle;
+ 	bool supports_lp_cfg_en;
++	bool has_per_pad_term;
+ };
+ 
+ struct tegra_xusb_padctl {
 
 
