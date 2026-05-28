@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E663E1AA1D2;
-	Thu, 28 May 2026 20:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19BB24677F;
+	Thu, 28 May 2026 20:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998444; cv=none; b=XqY9OqbtpeiUI/5fWAD63pBlfvHYsq6+HJWA3P4UDcVJrRSbDugVkDC1QxGlU66xRMQcoXdE1JadS2ACW0Z73G1B8VIUh+jy7RWC/aBDKpYwk7j76WXQmdtBthoHM4aemhSa+kkanx/R+ALqW/aOP85DRJTZWy37LOz+mj2LiLU=
+	t=1779998446; cv=none; b=HB0AP0QgihfUJaApgmtuo6EsVG0Fh52yc7CvbP+zxYfKQ7qZs8Q/Xz7f78vZ73v052v0rTmCZ5VO8YF8y9mvO7l7QPEsENz2nMH0roQtB7iYWJjOALpTQbpya++n+zJd9WA1ei0AHFy0kBeRaB5eC2YcGEDTTEsncQREJ+T8fws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998444; c=relaxed/simple;
-	bh=sEfST1AVBUhaAy43ezAfOaL3UQ1jGajjdAD9kBCKteM=;
+	s=arc-20240116; t=1779998446; c=relaxed/simple;
+	bh=16uMLhtzrbTspXWtbnX8fnfeJAt1pHknw5IlWE5UZRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RImWKNnt9M1AK5uAcbHqmsnWc2byVJHfYyY2CzbWQQDrM0yItkOLHz81Y+8Q85uXj2nm1jhxBvP8eL3+EHKyt7e3V9zIDdEpG5xLPJwKpqXbuzlz+u17ZY2zjx6u/2Qn/9V2+Y34zhyk4Dz6eXnk8Rg9WrbyrU6DGko1LLji31M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUeFy+cy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PYHRvfXXAlBS4cloy//6fkIpNWTsdHA82otnEcCoQJ+9aHpd6frqtbut9uLI5IF6uMcA5slBONhLpcLjNxUJG18zbjct4ja+O3Yh69PEv4NXhDch3nkz92AjpAFXFLPAa2BoJwUXGcVvTlHI45M+63XwoILuDe9KkxzP8f07sYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhNFQjhM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUeFy+cy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511D91F000E9;
-	Thu, 28 May 2026 20:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhNFQjhM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE8B1F000E9;
+	Thu, 28 May 2026 20:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998442;
-	bh=F/8I7RS9OyfKT1dHCAplJXrStvUM6uSE8ielEEktq/8=;
+	s=korg; t=1779998445;
+	bh=xXgU5yBj5eV4D1zwtN5d6JBHYAeLmC21O/xM617i/kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUeFy+cyJySf5SZSEpSvhKxTvJO0a4RwAvvUSUUhiBk2T3H7ovfapDIscIj4NwRck
-	 9Jhddk8MRimmZ/+7gQ2vYBfHci05KfwRx1w4UKndn9NoOsxbuFtYvizKG8rpfSBZi9
-	 ZINFkEEItw1ydwiLNV73XftQP+hRvhMsjTiAWyro=
+	b=hhNFQjhMAZLAXMmm+1+xkd7tv5mVv29QR3Dtjaapib1WGGOPHw4QrIrZXZM0dbOid
+	 4kie3o/ZwKWPZLA+nnSNW2BAVwzDJziQyy7kkItPyBYnxiiBbJQLME+6O69H2dxHui
+	 KNTormFL9+9ODneiourKEkk+JdnwqRxgLqf0Psd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 175/461] pinctrl: qcom: ipq4019: mark gpio as a GPIO pin function
-Date: Thu, 28 May 2026 21:45:04 +0200
-Message-ID: <20260528194652.137153056@linuxfoundation.org>
+Subject: [PATCH 7.0 176/461] arm64: dts: renesas: r8a78000: Fix SCIF brg_int clocks
+Date: Thu, 28 May 2026 21:45:05 +0200
+Message-ID: <20260528194652.166091164@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -46,69 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b51d33ea8a164bb5f0eec8ad817fa9730ac2b577 ]
+[ Upstream commit 86637727c11a105499e9faa38f3422dfcf4d211d ]
 
-The qcom pinctrl core supports marking functions that represent GPIO mode
-via PINCTRL_GPIO_PINFUNCTION(), so that strict pinmuxing does not reject
-GPIO requests for pins that are muxed to the GPIO function.
+According to the documentation, the internal clock input for the BRG is
+SGASYNCD4_PERW_BUSφ.
 
-ipq4019 still describes its gpio function with QCA_PIN_FUNCTION(gpio),
-so it is not treated as a GPIO pin function. As a result, GPIO consumers
-can still conflict with pinctrl states that select the "gpio" function.
-
-Add a QCA_GPIO_PIN_FUNCTION() helper and use it for the ipq4019 gpio
-function, matching how the msm-based qcom drivers handle this.
-
-This allows ipq4019 to keep the GPIO-related pin configuration in DTS
-without tripping over strict pinmux ownership checks.
-
-Fixes: cc85cb96e2e4 ("pinctrl: qcom: make the pinmuxing strict")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: c13a643e2c491f5b ("arm64: dts: renesas: Add R8A78000 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/459d360a8332f92b3766b30814e7e1c76169aaf7.1767719254.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-ipq4019.c | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm.h     | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a78000.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq4019.c b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-index 6ede3149b6e17..07df812fb7282 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-@@ -480,7 +480,7 @@ static const struct pinfunction ipq4019_functions[] = {
- 	QCA_PIN_FUNCTION(blsp_uart0),
- 	QCA_PIN_FUNCTION(blsp_uart1),
- 	QCA_PIN_FUNCTION(chip_rst),
--	QCA_PIN_FUNCTION(gpio),
-+	QCA_GPIO_PIN_FUNCTION(gpio),
- 	QCA_PIN_FUNCTION(i2s_rx),
- 	QCA_PIN_FUNCTION(i2s_spdif_in),
- 	QCA_PIN_FUNCTION(i2s_spdif_out),
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-index 4625fa5320a95..120217012a9f6 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.h
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-@@ -39,6 +39,11 @@ struct pinctrl_pin_desc;
- 					fname##_groups,		\
- 					ARRAY_SIZE(fname##_groups))
- 
-+#define QCA_GPIO_PIN_FUNCTION(fname)				\
-+	[qca_mux_##fname] = PINCTRL_GPIO_PINFUNCTION(#fname,	\
-+					fname##_groups,		\
-+					ARRAY_SIZE(fname##_groups))
-+
- /**
-  * struct msm_pingroup - Qualcomm pingroup definition
-  * @grp:                  Generic data of the pin group (name and pins)
+diff --git a/arch/arm64/boot/dts/renesas/r8a78000.dtsi b/arch/arm64/boot/dts/renesas/r8a78000.dtsi
+index 3e1c98903cea0..3ec1b53d27828 100644
+--- a/arch/arm64/boot/dts/renesas/r8a78000.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a78000.dtsi
+@@ -699,7 +699,7 @@ scif0: serial@c0700000 {
+ 				     "renesas,rcar-gen5-scif", "renesas,scif";
+ 			reg = <0 0xc0700000 0 0x40>;
+ 			interrupts = <GIC_ESPI 10 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd16>, <&scif_clk>;
++			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd4>, <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			status = "disabled";
+ 		};
+@@ -709,7 +709,7 @@ scif1: serial@c0704000 {
+ 				     "renesas,rcar-gen5-scif", "renesas,scif";
+ 			reg = <0 0xc0704000 0 0x40>;
+ 			interrupts = <GIC_ESPI 11 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd16>, <&scif_clk>;
++			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd4>, <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			status = "disabled";
+ 		};
+@@ -719,7 +719,7 @@ scif3: serial@c0708000 {
+ 				     "renesas,rcar-gen5-scif", "renesas,scif";
+ 			reg = <0 0xc0708000 0 0x40>;
+ 			interrupts = <GIC_ESPI 12 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd16>, <&scif_clk>;
++			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd4>, <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			status = "disabled";
+ 		};
+@@ -729,7 +729,7 @@ scif4: serial@c070c000 {
+ 				     "renesas,rcar-gen5-scif", "renesas,scif";
+ 			reg = <0 0xc070c000 0 0x40>;
+ 			interrupts = <GIC_ESPI 13 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd16>, <&scif_clk>;
++			clocks = <&dummy_clk_sgasyncd16>, <&dummy_clk_sgasyncd4>, <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			status = "disabled";
+ 		};
 -- 
 2.53.0
 
