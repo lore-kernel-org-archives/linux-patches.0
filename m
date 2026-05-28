@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97B530C343;
-	Thu, 28 May 2026 20:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70B61FC0EA;
+	Thu, 28 May 2026 20:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000605; cv=none; b=WvhoFSnXiPPpGO0aA0DfAnjBe1EhIFdheNcBn5kWfIiIraDNAnK5/92uMPeFdOq0KNuCNbX5tbCG8trE8J5+9y2YPKSmu1afUpJ4H6D7R8bsFza4lgsLaXuikiX1/ftIth1f35K/h+CqdF7Exj5l0itUOWFmguEZ92MxAH/Srlo=
+	t=1780000608; cv=none; b=WRZA/Q5hErkIe0RWjT+DCR7M3oA+8bJhykUHdmz+VfGEUUpE3HVC5WfcOILOkdA654Cb3PABQNFT5j0BbNYpt5au42Fw+0OCep7S5pVuVfyZxPGjEqDO6BwunsufRT1pNTEh5ugVtYmoxHM6tEUinDMkshSElb+5YYgiL9iHFus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000605; c=relaxed/simple;
-	bh=UtWMY9Y3TiaJZG4cvTed8RScCUmgxsVJHDWLeaX4KtE=;
+	s=arc-20240116; t=1780000608; c=relaxed/simple;
+	bh=NUEnIOlL80sgwYutfhOJ2Vra+2cMQQiTpcRsUd7+P6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KS/9nCmXxyuUM0hmg11yDEZwNpqmVoI+48uit9yjkZC7e96+XvZR2yUtayYsypkC2eRZGUiqFdVw+aaO5SezFwpTDV345pc1x9koZvvzQjHwIwoWvRQHPlxQtNrTuaeDlx4mWQvYuNXSzrWBTUg00ZFFWNJqcB3ScIKXuHDbb24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABYXNKha; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=abFMsEQM+tC+pUO9qSavXojDkoFBCHiQp78/vpgK7chOCit2Cc9Iq4hi4fKhBTh+iTx9ujcN5nMo1i7o5rXxTE8pjWU0KhXEnZRcZxe+CWBjQZG+FGy84qld75r4NdR97WpOnEfVMRGkSwBV6vomIj6pLWRzpuB+nbJfa1eaRu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05+H7Yfe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABYXNKha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541B01F000E9;
-	Thu, 28 May 2026 20:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05+H7Yfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A7A1F000E9;
+	Thu, 28 May 2026 20:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000604;
-	bh=0ekUPvpnHCr0GavI2YMII+waK59n3Q436HmkR+uybGA=;
+	s=korg; t=1780000607;
+	bh=xPaTOWlEpOkbG3rkt4p6EqTgPwJbYu70Outl9Y1BrUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABYXNKhassPhank4l+jEt66rXWRlBj+y5vH7StjzWjRpw438Xs2kXrJVnL0rdPl/x
-	 qCAwD8OEltvPX4YSKP4wzVr4bCSHKTONXk1WR+axB55bNo3ZL4UtsggnlskAvxc2p8
-	 PeK/xO/W3dPvwpkmYCumsbYFpyy+x8H3IfHvb6Qg=
+	b=05+H7Yfex58sxas04+31yV3ciDjmObO4HsmqLRgSDjmViOOc5GAPcNn+wgb+RALzQ
+	 rZo9QBbW7+NhCLVx7/wa/LZNL52linqBcMCIUwaKG106pj2wyqCXjoLbQP+ULGX+vN
+	 vNQcBtAod9XEMlM7NbTQ2jlq67Sj5Uint2rfYdpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 105/272] spi: qup: fix error pointer deref after DMA setup failure
-Date: Thu, 28 May 2026 21:47:59 +0200
-Message-ID: <20260528194632.317745188@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 088/272] ipv4: raw: reject IP_HDRINCL packets with ihl < 5
+Date: Thu, 28 May 2026 21:47:42 +0200
+Message-ID: <20260528194631.842473004@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,43 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a7e8f3efd50a165ba0189f6dc57f7e51a7d149db upstream.
+commit 915fab69823a14c170dbaa3b41978768e0fe62fc upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+raw_send_hdrinc() validates that the caller-supplied IPv4 header
+fits within the message length:
 
-Make sure to the clear the DMA channel pointers on setup failure to
-avoid dereferencing an error pointer (or attempting to release a channel
-a second time) on later probe errors or driver unbind.
+    iphlen = iph->ihl * 4;
+    err = -EINVAL;
+    if (iphlen > length)
+        goto error_free;
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
+    if (iphlen >= sizeof(*iph)) {
+        /* fix up saddr, tot_len, id, csum, transport_header */
+    }
 
-Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=4
-Cc: stable@vger.kernel.org	# 4.1
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074334.914735-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It does not, however, reject ihl < 5.  For such a packet the
+"if (iphlen >= sizeof(*iph))" branch is skipped, leaving the
+crafted iphdr untouched, but the packet is still handed to
+__ip_local_out() and onward.  Downstream consumers that read
+iph->ihl assume a sane value: net/ipv4/ah4.c:ah_output() in
+particular subtracts sizeof(struct iphdr) from top_iph->ihl * 4
+and passes the (signed-int-negative, then cast to size_t)
+result to memcpy(), producing an OOB access of length close to
+SIZE_MAX and a host kernel panic.
+
+An IPv4 header with ihl < 5 is malformed by definition (RFC 791:
+"Internet Header Length is the length of the internet header in
+32 bit words ... Note that the minimum value for a correct header
+is 5.").  The kernel should not be willing to inject such a
+packet into its own output path.
+
+Reject "iphlen < sizeof(*iph)" alongside the existing
+"iphlen > length" check.  This matches the principle that locally
+constructed packets that re-enter the IP stack must pass the same
+basic sanity tests that a foreign packet would be subjected to.
+
+Once this lands, the "if (iphlen >= sizeof(*iph))" wrapper around
+the fixup branch becomes redundant; left in place to keep the
+patch minimal and backport-friendly.  A follow-up can unwrap it.
+
+Note that commit 86f4c90a1c5c ("ipv4, ipv6: ensure raw socket
+message is big enough to hold an IP header") ensures the message
+buffer is large enough to hold an iphdr, but does not constrain
+the self-reported iph->ihl.
+
+Reachability: the malformed packet source is any caller with
+CAP_NET_RAW, including an unprivileged process in a user+net
+namespace on a kernel with CONFIG_USER_NS=y.  The reproduced AH
+crash also requires a matching xfrm AH policy on the outgoing
+route; a container granted CAP_NET_ADMIN can install that state
+and policy in its netns.  Loopback bypasses xfrm_output, so the
+trigger uses a real netdev.
+
+Reproduced on UML + KASAN: kernel-mode fault at addr 0x0 with
+memcpy_orig at the crash site.  Same shape reproduces inside a
+rootless Docker container with --cap-add NET_ADMIN on a stock
+distro kernel.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/77ec2b5e8111961c2c39883c92e8aa2709039c17.1778614451.git.michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qup.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/raw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -996,8 +996,11 @@ static int spi_qup_init_dma(struct spi_c
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -390,7 +390,7 @@ static int raw_send_hdrinc(struct sock *
+ 	 * in, reject the frame as invalid
+ 	 */
+ 	err = -EINVAL;
+-	if (iphlen > length)
++	if (iphlen > length || iphlen < sizeof(*iph))
+ 		goto error_free;
  
- err:
- 	dma_release_channel(host->dma_tx);
-+	host->dma_tx = NULL;
- err_tx:
- 	dma_release_channel(host->dma_rx);
-+	host->dma_rx = NULL;
-+
- 	return ret;
- }
- 
+ 	if (iphlen >= sizeof(*iph)) {
 
 
