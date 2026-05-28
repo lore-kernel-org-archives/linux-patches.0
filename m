@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A9B2F260C;
-	Thu, 28 May 2026 20:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F377940962D;
+	Thu, 28 May 2026 20:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998843; cv=none; b=fvFV2A86cICNrrSD/ZUkL1oXZG0ijIEYGEtOxw80eix+bBQONhhMtpL9If2Tf47pSBuW9yN8+GS0YEFqJXSQsxw7XP5tg64+IpPYKbrqWLm/s5zx66C/XZZGniuzs8ULhhQojE+3O4esTsb5h2o1FjSRCbJdAb1u7XOx8PUjhZE=
+	t=1779998846; cv=none; b=cGJ7/9WuKTRJECnqo8rXrPuTJF31FWHKrMvHnjAFTHJbXCcn53dvmhpL3l0knHcH6MTFEqGj93pG5OpOJBNkgtGg4OM6AeZL+qyHXmkDpsTvjMSDm0AJA4ArQ4MmAGH0ZlB9+dZAmEu4G02Y6d31FX4O16kq3WZ39oQgAuah/4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998843; c=relaxed/simple;
-	bh=HzOYl2i3qavhChhJcbt66Q6nIh5LVwHTdoxQ+S+87zo=;
+	s=arc-20240116; t=1779998846; c=relaxed/simple;
+	bh=Ooh8GJ9/VGmWbeiK1mL0fxm8RVDKYWMnzo8q+3FtmbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PG9/mtZ35NmrE2GUh3bzsrrEsWNny5dP/c2g5yezHHQTMkg0Aju1qXEuez0CyHN/y1XJQjbaDn4bCagC/KrjgWAxKvNqe7DGikrszXn9oeaA1OUejbIxg2KRGZMPIlwyPGCjtAnfCu77YFeu0APjlMWrTCRBfVHZkv3L735lD6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDzoxI5V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHHhRWDqsL7opBX+v9lmyoZOGqkh7vNgX/IZnC0cfzXro3HxA+RZueeUJecmTM+qPjaKD8kbJZmOCkRe+3gzD/KBwyQTyzjxduH6bKuRkCbcpFh1Qor44701ZI4LAJ+eMgyhF4DUL9ji2m+pG+tj/aBrs1B6UYiJ4uxsCvZVCKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhDwpWcL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDzoxI5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922B01F00A3A;
-	Thu, 28 May 2026 20:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhDwpWcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF251F000E9;
+	Thu, 28 May 2026 20:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998842;
-	bh=uAbcs1SKuWqGEm6U0FlSCKn4DeYt8piHErwgnz6C6VY=;
+	s=korg; t=1779998844;
+	bh=WLwEUubC5DsN9uJtasF6f7lm+MHZWSuHH6nmRWdTX88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDzoxI5VxW6vWfFhgv4lPwUGqMGi08EJBVtdhaWkx3G7BvmrUgV+Fw1v4qdSIZYAO
-	 cJPOKCg0TjWLkQyCQ2U/7ggKO0bKWglKkN0q09HLmGR1aiyKZzSgWfmMOGVAArrxgt
-	 FfAIdDJGzRn3UJqlKyj7NLBAHZZ/2fpIDOqbdb0s=
+	b=BhDwpWcL/NuoXWrSc7ej2H2jdr/XwOSK11MJH6LVVyc4WQj0NrLkAkL85VkYz0f37
+	 QWeJ6Oo2z3nRm4MF7eKiYFW6IRO6ULt25EGmY9QVLvcLAbU26W6CjBCfjAnPYw5Axz
+	 dcKympyOjCwIfquhcRkpknLOZ33pHq1W9scgywRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 281/461] net: shaper: reject duplicate leaves in GROUP request
-Date: Thu, 28 May 2026 21:46:50 +0200
-Message-ID: <20260528194655.325166586@linuxfoundation.org>
+Subject: [PATCH 7.0 272/461] net: ethernet: cortina: Make RX SKB per-port
+Date: Thu, 28 May 2026 21:46:41 +0200
+Message-ID: <20260528194655.043208515@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,115 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit a9a2fa1da619f276580b0d4c5d12efac89e8642b ]
+[ Upstream commit 06937db21ee311ed07eba47954447245041a982d ]
 
-net_shaper_nl_group_doit() does not deduplicate NET_SHAPER_A_LEAVES
-entries. When userspace supplies the same leaf handle twice, the same
-old-parent pointer lands twice in old_nodes[]. The cleanup loop double
-frees the parent. Of course the same parent may still be in old_nodes[]
-twice if we are moving multiple of its leaves.
+The SKB used to assemble packets from fragments in gmac_rx()
+is static local, but the Gemini has two ethernet ports, meaning
+there can be races between the ports on a bad day if a device
+is using both.
 
-Note that this patch also implicitly fixes the fact that the
-i >= leaves_count path forgets to set ret.
+Make the RX SKB a per-port variable and carry it over between
+invocations in the port struct instead.
 
-Fixes: 5d5d4700e75d ("net-shapers: implement NL group operation")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260510192904.3987113-4-kuba@kernel.org
+Zero the pointer once we call napi_gro_frags(), on error (after
+calling napi_free_frags()) or if the port is stopped.
+
+Zero it in some place where not strictly necessary just to
+emphasize what is going on.
+
+This was found by Sashiko during normal patch review.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-2-6c5d20ddc35b@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 60 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 45 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index 86319ddbf2905..c8960821cf236 100644
---- a/net/shaper/shaper.c
-+++ b/net/shaper/shaper.c
-@@ -941,6 +941,46 @@ static int net_shaper_handle_cmp(const struct net_shaper_handle *a,
- 	return memcmp(a, b, sizeof(*a));
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 4824232f48907..57a25030f883c 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -122,6 +122,8 @@ struct gemini_ethernet_port {
+ 	struct napi_struct	napi;
+ 	struct hrtimer		rx_coalesce_timer;
+ 	unsigned int		rx_coalesce_nsecs;
++	struct sk_buff		*rx_skb;
++
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+ 	unsigned int		txq_order;
+@@ -1442,10 +1444,10 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+ 	struct gemini_ethernet *geth = port->geth;
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
++	struct sk_buff *skb = port->rx_skb;
+ 	unsigned int frame_len, frag_len;
+ 	struct gmac_rxdesc *rx = NULL;
+ 	struct gmac_queue_page *gpage;
+-	static struct sk_buff *skb;
+ 	union gmac_rxdesc_0 word0;
+ 	union gmac_rxdesc_1 word1;
+ 	union gmac_rxdesc_3 word3;
+@@ -1499,6 +1501,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 			if (skb) {
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
++				skb = NULL;
+ 			}
+ 
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+@@ -1549,6 +1552,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		port->stats.rx_dropped++;
+ 	}
+ 
++	port->rx_skb = skb;
+ 	writew(r, ptr_reg);
+ 	return budget;
  }
+@@ -1876,6 +1880,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	gmac_disable_tx_rx(netdev);
+ 	gmac_stop_dma(port);
+ 	napi_disable(&port->napi);
++	port->rx_skb = NULL;
  
-+static int net_shaper_parse_leaves(struct net_shaper_binding *binding,
-+				   struct genl_info *info,
-+				   const struct net_shaper *node,
-+				   struct net_shaper *leaves,
-+				   int leaves_count)
-+{
-+	struct nlattr *attr;
-+	int i, j, ret, rem;
-+
-+	i = 0;
-+	nla_for_each_attr_type(attr, NET_SHAPER_A_LEAVES,
-+			       genlmsg_data(info->genlhdr),
-+			       genlmsg_len(info->genlhdr), rem) {
-+		if (WARN_ON_ONCE(i >= leaves_count))
-+			return -EINVAL;
-+
-+		ret = net_shaper_parse_leaf(binding, attr, info,
-+					    node, &leaves[i]);
-+		if (ret)
-+			return ret;
-+
-+		/* Reject duplicates */
-+		for (j = 0; j < i; j++) {
-+			if (net_shaper_handle_cmp(&leaves[i].handle,
-+						  &leaves[j].handle))
-+				continue;
-+
-+			NL_SET_ERR_MSG_ATTR_FMT(info->extack, attr,
-+						"Duplicate leaf shaper %d:%d",
-+						leaves[i].handle.scope,
-+						leaves[i].handle.id);
-+			return -EINVAL;
-+		}
-+
-+		i++;
-+	}
-+
-+	return 0;
-+}
-+
- static int net_shaper_parent_from_leaves(int leaves_count,
- 					 const struct net_shaper *leaves,
- 					 struct net_shaper *node,
-@@ -1197,10 +1237,9 @@ int net_shaper_nl_group_doit(struct sk_buff *skb, struct genl_info *info)
- 	struct net_shaper **old_nodes, *leaves, node = {};
- 	struct net_shaper_hierarchy *hierarchy;
- 	struct net_shaper_binding *binding;
--	int i, ret, rem, leaves_count;
-+	int i, ret, leaves_count;
- 	int old_nodes_count = 0;
- 	struct sk_buff *msg;
--	struct nlattr *attr;
- 
- 	if (GENL_REQ_ATTR_CHECK(info, NET_SHAPER_A_LEAVES))
- 		return -EINVAL;
-@@ -1228,19 +1267,10 @@ int net_shaper_nl_group_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (ret)
- 		goto free_leaves;
- 
--	i = 0;
--	nla_for_each_attr_type(attr, NET_SHAPER_A_LEAVES,
--			       genlmsg_data(info->genlhdr),
--			       genlmsg_len(info->genlhdr), rem) {
--		if (WARN_ON_ONCE(i >= leaves_count))
--			goto free_leaves;
--
--		ret = net_shaper_parse_leaf(binding, attr, info,
--					    &node, &leaves[i]);
--		if (ret)
--			goto free_leaves;
--		i++;
--	}
-+	ret = net_shaper_parse_leaves(binding, info, &node,
-+				      leaves, leaves_count);
-+	if (ret)
-+		goto free_leaves;
- 
- 	/* Prepare the msg reply in advance, to avoid device operation
- 	 * rollback on allocation failure.
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
