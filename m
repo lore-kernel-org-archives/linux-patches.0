@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A428D3346BE;
-	Thu, 28 May 2026 20:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1AD2EF652;
+	Thu, 28 May 2026 20:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000996; cv=none; b=MxUCVt1p03b59KDd3aYWOJ/MPd0O0zSmC/+aZPi2AE8EXmIr4wTvkK8S4JUOC6a/8NdxHjFq+5EVUmDZZ9ZkMa/dPCL72Emk04A/CTjVfeHzmstt2HMTvJdVBLoqb6bhYo7MvWdbdCnVqTQB5XjzyvbYOMLWkP9RN4sqJ+yT2lc=
+	t=1780000999; cv=none; b=eN4W2JaXGYZdjMfYgMfyyhM+erU2rDJ6ogjxXGZuOkPQXxh7s7vfh4VhB1NwCXoM/EQ8PPdVIkgMv8AF4SbAPTmBleEY/o0jbBSp5PHc+yJRaQ6JGwRr7BsulvbHdwdtIERfa3GbF+39ReQcgogDATMSJ7gTAa4THLaVmAZdRUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000996; c=relaxed/simple;
-	bh=ol7LO/S78ndhnAwoHDTS+OZHkYk32fUViWwsFRqpSlA=;
+	s=arc-20240116; t=1780000999; c=relaxed/simple;
+	bh=fvBpg8xixQ84CnGiCGbLobzDjrvCob0JF+GealTZvQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hnGoxJ8mVtUO74BQTnTA7hDoYdQpqptUMmioj9JCAO1I01EvAK2C7ciRFCvZAGpIgfLDlk1YzKWN8NlVz9Kq4Gmeb8zPIcV2DPIo5pzCdLfdcBtRuxkRQOsp6lXHZmi6Fjk4nAJ9PqnZ9fufT1RAZUVGKccN7zbnHxbdYgaC/8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfhHoxqH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JmGz/8kHCXTV06tbOpCH9L5CB8WbMflzbfjIV3gvXg60w8iftN1WyrVf61Q98QQkunoswqXcZzjO9YfjPlghR70dMLQjsjZP002OT7D2eSaheNjTYRoxkA+NznlFgdzor61RIn/mKTkhzNhVKqdHg2khNqMThonhZtYW8zaBP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGDpR4g4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfhHoxqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4781F00A3A;
-	Thu, 28 May 2026 20:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGDpR4g4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD0D1F000E9;
+	Thu, 28 May 2026 20:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000995;
-	bh=jHQ/aCxPVsFbtuxSb4jql2mDTxKHlRPPaPEQRbG12BI=;
+	s=korg; t=1780000998;
+	bh=+Y9dByTESdEjxcC/2J991HzJp+siXogqO0at63APwOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfhHoxqHUMslQNClFSSjVtXtUc6wJ92IyCsDqqkS4ue9HB9ggm+TY46wHFoErnNRc
-	 Mff7klBjT7npwKYYdpZiR2WORackA0krgjju6ucYYOZT62Z5N7nTZ/jcK9wenmBNql
-	 LVHJQBLaYDNY8PsRokT70AP2hE8tfeUENVIP5ME8=
+	b=FGDpR4g4cSU3gtoYQEr/Ui2fI6X3VwEk7HWWGZEpYYPt9k58q0l3VcpW5UhrTEqWQ
+	 3gDXya++HDT3eE/LVOB8fwDnF4udDs7hUFPzkPjprtYigVqLvWsui/Qw8bI8W5N8rz
+	 aoEPFg34IY/zjPiv4I21uK12E24t2qVb9mUTjJMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 242/272] drm/i915/dp: Fix readback for target_rr in Adaptive Sync SDP
-Date: Thu, 28 May 2026 21:50:16 +0200
-Message-ID: <20260528194635.918477903@linuxfoundation.org>
+Subject: [PATCH 6.12 243/272] kbuild: pacman-pkg: make "rc" releases adhere to pacman versioning scheme
+Date: Thu, 28 May 2026 21:50:17 +0200
+Message-ID: <20260528194635.944232855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -54,41 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+From: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
 
-[ Upstream commit f87abd0c6604fb6cc31cc86fc7ccc6a576924352 ]
+[ Upstream commit 202550713128da20d9381d6d2dc0f6b73839f434 ]
 
-Correct the bit-shift logic to properly readback the 10 bit target_rr from
-DB3 and DB4.
+The package versioning scheme does not enable smooth upgrades from "rc"
+releases to the corresponding stable releases (e.g. 7.0.0-rc7 -> 7.0.0)
+because pacman considers that a downgrade due to the underscore in
+pkgver (e.g. 7.0.0_rc7), see e.g. vercmp(8) for an explanation of the
+package version comparison used by pacman. Package versions which are
+derived from said releases (e.g. built from git revisions) are
+similarly affected. Fix this by modifying pkgver in order to remove the
+hyphen from kernel versions containing "-rcN", where N is a
+non-negative integer.
 
-v2: Align the style with readback for vtotal. (Ville)
-
-Fixes: 12ea89291603 ("drm/i915/dp: Add Read/Write support for Adaptive Sync SDP")
-Cc: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260511123218.1589830-2-ankit.k.nautiyal@intel.com
-(cherry picked from commit f7abc4af2b19240a145a221461dfe756cc01d74a)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260515215913.92481-1-viktor_jaegerskuepper@freenet.de
+Fixes: c8578539deba ("kbuild: add script and target to generate pacman package")
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 2 +-
+ scripts/package/PKGBUILD | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 756bb0b1c83be..bb5a2a40b64c6 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -4583,7 +4583,7 @@ int intel_dp_as_sdp_unpack(struct drm_dp_as_sdp *as_sdp,
- 	as_sdp->length = sdp->sdp_header.HB3 & DP_ADAPTIVE_SYNC_SDP_LENGTH;
- 	as_sdp->mode = sdp->db[0] & DP_ADAPTIVE_SYNC_SDP_OPERATION_MODE;
- 	as_sdp->vtotal = (sdp->db[2] << 8) | sdp->db[1];
--	as_sdp->target_rr = (u64)sdp->db[3] | ((u64)sdp->db[4] & 0x3);
-+	as_sdp->target_rr = ((sdp->db[4] & 0x3) << 8) | sdp->db[3];
- 	as_sdp->target_rr_divider = sdp->db[4] & 0x20 ? true : false;
+diff --git a/scripts/package/PKGBUILD b/scripts/package/PKGBUILD
+index dca706617adc7..e7a077d483347 100644
+--- a/scripts/package/PKGBUILD
++++ b/scripts/package/PKGBUILD
+@@ -10,7 +10,7 @@ for pkg in $_extrapackages; do
+ 	pkgname+=("${pkgbase}-${pkg}")
+ done
  
- 	return 0;
+-pkgver="${KERNELRELEASE//-/_}"
++pkgver="$(echo "${KERNELRELEASE}" | sed 's/-\(rc[0-9]\+\)/\1/;s/-/_/g')"
+ # The PKGBUILD is evaluated multiple times.
+ # Running scripts/build-version from here would introduce inconsistencies.
+ pkgrel="${KBUILD_REVISION}"
 -- 
 2.53.0
 
