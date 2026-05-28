@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A85E3290B0;
-	Thu, 28 May 2026 19:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289AE33F5B4;
+	Thu, 28 May 2026 19:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998262; cv=none; b=UmUTpgMNqJr9bUTCyQjaKgXyvI7o7h5LhX4RNtbwMhMqLTaNS1SMdn/UGjIWUUI0V1MUZf12qVCtj3EPCAhcJZuAF4fbpt9u5WlyadgZRE+C/pAHln3/gLJ9viRA0Ze7vhoQ5yqjUp8FkcwjEZfIntBE47b+OoUTqXvXKsQQ6VM=
+	t=1779998265; cv=none; b=YozqEvRvcSOx1XbcYWbZKiUYlC1HhawMZeyL5rhCA2mZYR1ft1h3hGD5IXO2UgHN1l3AcB2M01Q9h4SkY3o3YY4oBNqzkGLspGnMR2nBhQzm3rcj6FGAeX0owVUhDvzPohao2NBHzZE355815W+tdKrLN0c2+rXBlrWLKWabwCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998262; c=relaxed/simple;
-	bh=jbzFOr/g1ZOTYukvAShUgZa4ZAh5gSMJlbVNbIcKb3Q=;
+	s=arc-20240116; t=1779998265; c=relaxed/simple;
+	bh=V0cObrbj+57VsaUeU2dos0yz7hnHBTFx//ayWXlznX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqA2e8EyeeTpmux61FL5jkhHtZ8fP7B1wj8FS6BdEGLmmiiIMc7+AByWEOJVTSVCGVB2oWkPIAkfdO0wDiBz7YQT7pFZyQ42zJX3OSKAPNiB9nnnOFfYeAQIU+iQFSV2Lo25r4bUiVZSMPaxsn/lIDmNK5pubujwX5sUx1OS254=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXiYxjbM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKuMcjKxmU7CHhQEvw6O4EGmxKRwaZgxuBEvrZfoLcZBZqZHcza2HLujWgZdo9iHaBu3NhdwSK2E/kc9Io+WqGas2GJtXjG5O4ypnRu5t2GZvvNPAEJl4q/et4clwxZdUuxuVJA7nGk5c+XPE2O6ljRKPvc4H5G+LgreFigF2lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKYlIVoP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXiYxjbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80121F000E9;
-	Thu, 28 May 2026 19:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKYlIVoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865BE1F000E9;
+	Thu, 28 May 2026 19:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998261;
-	bh=Yj7IZeGK2xHJew5xzKcQBOklnw4LvwyHm7wvu+R/JM8=;
+	s=korg; t=1779998264;
+	bh=EjjSdrsZWKGsHyJJCcxx+9OQyxO1PqgrnI5U3l3k8no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXiYxjbMab0p7VU9XtOU5Mj2JjLIgbUTq7xygsasQCVhHfTL5mB1m/64zRj+qlxkz
-	 E5EGSDLfCbJ/5mXrNCE1RQWY3e8Buy0tOq57ExaGrUMbi180IF395ioKYiw5sgK4j1
-	 7XuIMXAG/tDIP+Mv+zDo6dKYLflEClua2OdggQ3w=
+	b=HKYlIVoPfnQdviXsXLL0geoPjBfc4guzmbgjuP32KFFlWlmtlvpDHlNEaQ+5XYWJZ
+	 78Ji3mirsJeouuUpDvx5YJN98AIyaoTlPxUPD+c3IGFXC/uD+fS1WYz82Pq8TL0fhE
+	 zyqw3vXj3Zg3HiN+B9jkNhUgV9kduuBVGULgX+9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Wei-Cheng Chen <weichengc@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 7.0 110/461] phy: tegra: xusb: Fix per-pad high-speed termination calibration
-Date: Thu, 28 May 2026 21:43:59 +0200
-Message-ID: <20260528194650.152770345@linuxfoundation.org>
+Subject: [PATCH 7.0 111/461] phy: qcom-qmp-ufs: Fix kaanapali PHY PLL lock failure after SM8650 G4 fix
+Date: Thu, 28 May 2026 21:44:00 +0200
+Message-ID: <20260528194650.182779400@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,148 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 
-commit da110228b54f2e2143d97ea7151e0dc22e539d67 upstream.
+commit 80305760d7a55b884fb9023c490b75568d1ea0b1 upstream.
 
-The existing code reads a single hs_term_range_adj value from bit field
-[10:7] of FUSE_SKU_CALIB_0 and applies it to all USB2 pads uniformly.
-However, on SoCs that support per-pad termination, each pad has its own
-hs_term_range_adj field: pad 0 in FUSE_SKU_CALIB_0[10:7], and pads 1-3
-in FUSE_USB_CALIB_EXT_0 at bit offsets [8:5], [12:9], and [16:13]
-respectively.
+Commit 81af9e40e2e4 ("phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4")
+moved QPHY_V6_PCS_UFS_PLL_CNTL register configuration from the shared
+sm8650_ufsphy_g5_pcs table to the SM8650-specific sm8650_ufsphy_pcs base
+table to fix Gear 4 operation on SM8650.
 
-Fix the calibration by reading per-pad values from the appropriate fuse
-registers. For SoCs that do not support per-pad termination, replicate
-pad 0's value to all pads to maintain existing behavior.
+However, this change inadvertently broke kaanapali and SM8750 SoCs
+which also rely on the shared sm8650_ufsphy_g5_pcs table for Gear 5
+configuration but use their own sm8750_ufsphy_pcs base table. After the
+change, kaanapali PHYs are left without the required PLL_CNTL = 0x33
+setting, causing the PHY PLL to remain at its hardware reset default
+value, preventing PLL lock and resulting in DME_LINKSTARTUP timeouts.
 
-Add a has_per_pad_term flag to the SoC data to indicate whether per-pad
-termination values are available in FUSE_USB_CALIB_EXT_0.
+Fix this by adding the missing QPHY_V6_PCS_UFS_PLL_CNTL = 0x33 entry
+to the sm8750_ufsphy_pcs table, mirroring what the original commit
+already did for sm8650_ufsphy_pcs.
 
-Fixes: 1ef535c6ba8e ("phy: tegra: xusb: Add Tegra194 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260504033305.2283145-1-weichengc@nvidia.com
+Cc: stable@vger.kernel.org # v6.19.12
+Fixes: 81af9e40e2e4 ("phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4")
+Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260415104851.2763238-1-nitin.rawat@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb-tegra186.c |   33 ++++++++++++++++++++++++++-------
- drivers/phy/tegra/xusb.h          |    1 +
- 2 files changed, 27 insertions(+), 7 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/phy/tegra/xusb-tegra186.c
-+++ b/drivers/phy/tegra/xusb-tegra186.c
-@@ -20,8 +20,8 @@
- /* FUSE USB_CALIB registers */
- #define HS_CURR_LEVEL_PADX_SHIFT(x)	((x) ? (11 + (x - 1) * 6) : 0)
- #define HS_CURR_LEVEL_PAD_MASK		0x3f
--#define HS_TERM_RANGE_ADJ_SHIFT		7
--#define HS_TERM_RANGE_ADJ_MASK		0xf
-+#define HS_TERM_RANGE_ADJ_PADX_SHIFT(x)	((x) ? (5 + (x - 1) * 4) : 7)
-+#define HS_TERM_RANGE_ADJ_PAD_MASK	0xf
- #define HS_SQUELCH_SHIFT		29
- #define HS_SQUELCH_MASK			0x7
- 
-@@ -253,7 +253,7 @@
- struct tegra_xusb_fuse_calibration {
- 	u32 *hs_curr_level;
- 	u32 hs_squelch;
--	u32 hs_term_range_adj;
-+	u32 *hs_term_range_adj;
- 	u32 rpd_ctrl;
- };
- 
-@@ -930,7 +930,7 @@ static int tegra186_utmi_phy_power_on(st
- 
- 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
- 	value &= ~TERM_RANGE_ADJ(~0);
--	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj);
-+	value |= TERM_RANGE_ADJ(priv->calib.hs_term_range_adj[index]);
- 	value &= ~RPD_CTRL(~0);
- 	value |= RPD_CTRL(priv->calib.rpd_ctrl);
- 	padctl_writel(padctl, value, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
-@@ -1464,17 +1464,23 @@ static const char * const tegra186_usb3_
- static int
- tegra186_xusb_read_fuse_calibration(struct tegra186_xusb_padctl *padctl)
- {
-+	const struct tegra_xusb_padctl_soc *soc = padctl->base.soc;
- 	struct device *dev = padctl->base.dev;
- 	unsigned int i, count;
- 	u32 value, *level;
-+	u32 *hs_term_range_adj;
- 	int err;
- 
--	count = padctl->base.soc->ports.usb2.count;
-+	count = soc->ports.usb2.count;
- 
- 	level = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
- 	if (!level)
- 		return -ENOMEM;
- 
-+	hs_term_range_adj = devm_kcalloc(dev, count, sizeof(u32), GFP_KERNEL);
-+	if (!hs_term_range_adj)
-+		return -ENOMEM;
-+
- 	err = tegra_fuse_readl(TEGRA_FUSE_SKU_CALIB_0, &value);
- 	if (err)
- 		return dev_err_probe(dev, err,
-@@ -1490,8 +1496,8 @@ tegra186_xusb_read_fuse_calibration(stru
- 
- 	padctl->calib.hs_squelch = (value >> HS_SQUELCH_SHIFT) &
- 					HS_SQUELCH_MASK;
--	padctl->calib.hs_term_range_adj = (value >> HS_TERM_RANGE_ADJ_SHIFT) &
--						HS_TERM_RANGE_ADJ_MASK;
-+	hs_term_range_adj[0] = (value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(0)) &
-+				HS_TERM_RANGE_ADJ_PAD_MASK;
- 
- 	err = tegra_fuse_readl(TEGRA_FUSE_USB_CALIB_EXT_0, &value);
- 	if (err) {
-@@ -1503,6 +1509,17 @@ tegra186_xusb_read_fuse_calibration(stru
- 
- 	padctl->calib.rpd_ctrl = (value >> RPD_CTRL_SHIFT) & RPD_CTRL_MASK;
- 
-+	for (i = 1; i < count; i++) {
-+		if (soc->has_per_pad_term)
-+			hs_term_range_adj[i] =
-+				(value >> HS_TERM_RANGE_ADJ_PADX_SHIFT(i)) &
-+				HS_TERM_RANGE_ADJ_PAD_MASK;
-+		else
-+			hs_term_range_adj[i] = hs_term_range_adj[0];
-+	}
-+
-+	padctl->calib.hs_term_range_adj = hs_term_range_adj;
-+
- 	return 0;
- }
- 
-@@ -1708,6 +1725,7 @@ const struct tegra_xusb_padctl_soc tegra
- 	.num_supplies = ARRAY_SIZE(tegra194_xusb_padctl_supply_names),
- 	.supports_gen2 = true,
- 	.poll_trk_completed = true,
-+	.has_per_pad_term = true,
- };
- EXPORT_SYMBOL_GPL(tegra194_xusb_padctl_soc);
- 
-@@ -1732,6 +1750,7 @@ const struct tegra_xusb_padctl_soc tegra
- 	.trk_hw_mode = false,
- 	.trk_update_on_idle = true,
- 	.supports_lp_cfg_en = true,
-+	.has_per_pad_term = true,
- };
- EXPORT_SYMBOL_GPL(tegra234_xusb_padctl_soc);
- #endif
---- a/drivers/phy/tegra/xusb.h
-+++ b/drivers/phy/tegra/xusb.h
-@@ -435,6 +435,7 @@ struct tegra_xusb_padctl_soc {
- 	bool trk_hw_mode;
- 	bool trk_update_on_idle;
- 	bool supports_lp_cfg_en;
-+	bool has_per_pad_term;
- };
- 
- struct tegra_xusb_padctl {
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -1112,6 +1112,7 @@ static const struct qmp_phy_init_tbl sm8
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PCS_CTRL1, 0x40),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_POST_EMP_LVL_S4, 0x0e),
 
 
