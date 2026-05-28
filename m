@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF6313550;
-	Thu, 28 May 2026 20:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C126D2C15AC;
+	Thu, 28 May 2026 20:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000422; cv=none; b=nJftX7Nm9vpzx8TKAtCNs1tz4J1hRPlZEa00fxkWbSLI5y7pBx5HBIac4V59DP9G0KpK1vDXev8Xh2OKiJryIss7NJiHVvv0HCgTOvT4jSm1PEXtlcVrdh22xdstmvXHKYHMHlFjGf4cUAcyqfsHbG2408VZViF+MawOKFM17dE=
+	t=1780000426; cv=none; b=KH/vaT+wuUrkq2yIcISBG2c+6PV1r3Xz+1ERuRgnt3Cu2KokocHDo5Kuh9ck4Zg9ulwPBZRQm+teUjXba/PQf7vWZfbFQbkk4B75xb3EmH0i/rgjHzcEuI3Cu97Z1FecEQ3lehVmUK6PAqJVeLv6OGDH5LwWAKk2k1AQyiJBU1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000422; c=relaxed/simple;
-	bh=LmdadW29mgFb2XF3Dnm3Iq41pTkvaqUxO5VgdcQLd60=;
+	s=arc-20240116; t=1780000426; c=relaxed/simple;
+	bh=NMkrbYibtgW65SWQ7HiTBBJu1wEFls0MOTKUEUQ72Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bpQN4RIB5y6Wv0im2XEeircNlBKWJ6x7jwQd5eOfiSjz5J+Gxu9C4NSckPRT11WhCn1XtJipvrcw7Mb03azlPYmuBY9pRqCBveze/W56nn4kfnl1dYFxbC0sYlAAaamoXm6kzATOFAUcxp+/EkCzoSvOreIgc0nlx0q/cj4YQEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9zR6L2x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CJfZDzMgRhB/XSgX1qrkt4XT9IbKa7G4/Bic816V1JJOryAkIrDKhepG85LowNgCL0av5usr9klMKBat0PsXRhs1sL6GCqRGr3yc7XLxq2qLQSHLjoLDtMZZQFse+IZM01YX4qzs7zuaKshE6VhbFamAAoSIugDAOpOiLb//0MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqKhTJbS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9zR6L2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DE21F000E9;
-	Thu, 28 May 2026 20:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqKhTJbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FAE1F000E9;
+	Thu, 28 May 2026 20:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000421;
-	bh=uiJdDZ9kZK2ol57u5dqaZ9jZCTqLkjSGk13/xCt4aiU=;
+	s=korg; t=1780000424;
+	bh=iw87/VMqLreJ240jYspCS2wlwQELAM9i7OmR+ahHobY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9zR6L2xeccEEytjXtSPSaZphN2RGKO3zzcCv4CDnI/0zbY3NS+2ebOqgquNuxrn+
-	 +M3hVGQtb0TaH78z+oW9uQewd74zj/PN2Nu6+0AsFHbmiI756q/FlX0khgABtl7TI1
-	 qYgWppXqIThstrQvcsx4Gji/nJSCur0Ifa4KaGJs=
+	b=gqKhTJbSuogobgnM3hoaEIJ01qgwQWYBNlDg5ZBfhD7utGxaf8jUYVCHI5At0+3gr
+	 mBZo4xTd+6jsH3Wzd62M0WgJ5AgHUf6w5zLxoiYKIl0MSRcF77joh1ou3MNuWSs1Ml
+	 jMAHClNqlNAq3qILTuMJzNVsGjiofIx1Vsy9XR+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Gyokhan Kochmarla <gyokhan@amazon.de>,
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Fang Wang <32840572@qq.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/272] riscv: fgraph: Fix stack layout to match __arch_ftrace_regs argument of ftrace_return_to_handler
-Date: Thu, 28 May 2026 21:46:52 +0200
-Message-ID: <20260528194630.451178441@linuxfoundation.org>
+Subject: [PATCH 6.12 039/272] hwmon: (pmbus/core) Protect regulator operations with mutex
+Date: Thu, 28 May 2026 21:46:53 +0200
+Message-ID: <20260528194630.479011171@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -49,129 +46,265 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 67a5ba8f742f247bc83e46dd2313c142b1383276 upstream.
+[ Upstream commit 754bd2b4a084b90b5e7b630e1f423061a9b9b761 ]
 
-Naresh Kamboju reported a "Bad frame pointer" kernel warning while
-running LTP trace ftrace_stress_test.sh in riscv. We can reproduce the
-same issue with the following command:
+The regulator operations pmbus_regulator_get_voltage(),
+pmbus_regulator_set_voltage(), and pmbus_regulator_list_voltage()
+access PMBus registers and shared data but were not protected by
+the update_lock mutex. This could lead to race conditions.
 
-```
-$ cd /sys/kernel/debug/tracing
-$ echo 'f:myprobe do_nanosleep%return args1=$retval' > dynamic_events
-$ echo 1 > events/fprobes/enable
-$ echo 1 > tracing_on
-$ sleep 1
-```
+However, adding mutex protection directly to these functions causes
+a deadlock because pmbus_regulator_notify() (which calls
+regulator_notifier_call_chain()) is often called with the mutex
+already held (e.g., from pmbus_fault_handler()). If a regulator
+callback then calls one of the now-protected voltage functions,
+it will attempt to acquire the same mutex.
 
-And we can get the following kernel warning:
+Rework pmbus_regulator_notify() to utilize a worker function to
+send notifications outside of the mutex protection. Events are
+stored as atomics in a per-page bitmask and processed by the worker.
 
-[  127.692888] ------------[ cut here ]------------
-[  127.693755] Bad frame pointer: expected ff2000000065be50, received ba34c141e9594000
-[  127.693755]   from func do_nanosleep return to ffffffff800ccb16
-[  127.698699] WARNING: CPU: 1 PID: 129 at kernel/trace/fgraph.c:755 ftrace_return_to_handler+0x1b2/0x1be
-[  127.699894] Modules linked in:
-[  127.700908] CPU: 1 UID: 0 PID: 129 Comm: sleep Not tainted 6.14.0-rc3-g0ab191c74642 #32
-[  127.701453] Hardware name: riscv-virtio,qemu (DT)
-[  127.701859] epc : ftrace_return_to_handler+0x1b2/0x1be
-[  127.702032]  ra : ftrace_return_to_handler+0x1b2/0x1be
-[  127.702151] epc : ffffffff8013b5e0 ra : ffffffff8013b5e0 sp : ff2000000065bd10
-[  127.702221]  gp : ffffffff819c12f8 tp : ff60000080853100 t0 : 6e00000000000000
-[  127.702284]  t1 : 0000000000000020 t2 : 6e7566206d6f7266 s0 : ff2000000065bd80
-[  127.702346]  s1 : ff60000081262000 a0 : 000000000000007b a1 : ffffffff81894f20
-[  127.702408]  a2 : 0000000000000010 a3 : fffffffffffffffe a4 : 0000000000000000
-[  127.702470]  a5 : 0000000000000000 a6 : 0000000000000008 a7 : 0000000000000038
-[  127.702530]  s2 : ba34c141e9594000 s3 : 0000000000000000 s4 : ff2000000065bdd0
-[  127.702591]  s5 : 00007fff8adcf400 s6 : 000055556dc1d8c0 s7 : 0000000000000068
-[  127.702651]  s8 : 00007fff8adf5d10 s9 : 000000000000006d s10: 0000000000000001
-[  127.702710]  s11: 00005555737377c8 t3 : ffffffff819d899e t4 : ffffffff819d899e
-[  127.702769]  t5 : ffffffff819d89a0 t6 : ff2000000065bb18
-[  127.702826] status: 0000000200000120 badaddr: 0000000000000000 cause: 0000000000000003
-[  127.703292] [<ffffffff8013b5e0>] ftrace_return_to_handler+0x1b2/0x1be
-[  127.703760] [<ffffffff80017bce>] return_to_handler+0x16/0x26
-[  127.704009] [<ffffffff80017bb8>] return_to_handler+0x0/0x26
-[  127.704057] [<ffffffff800d3352>] common_nsleep+0x42/0x54
-[  127.704117] [<ffffffff800d44a2>] __riscv_sys_clock_nanosleep+0xba/0x10a
-[  127.704176] [<ffffffff80901c56>] do_trap_ecall_u+0x188/0x218
-[  127.704295] [<ffffffff8090cc3e>] handle_exception+0x14a/0x156
-[  127.705436] ---[ end trace 0000000000000000 ]---
+Initialize the worker and its associated data during regulator
+registration, and ensure it is cancelled on device removal using
+devm_add_action_or_reset().
 
-The reason is that the stack layout for constructing argument for the
-ftrace_return_to_handler in the return_to_handler does not match the
-__arch_ftrace_regs structure of riscv, leading to unexpected results.
+While at it, remove the unnecessary include of linux/of.h.
 
-Fixes: a3ed4157b7d8 ("fgraph: Replace fgraph_ret_regs with ftrace_regs")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/all/CA+G9fYvp_oAxeDFj88Tk2rfEZ7jtYKAKSwfYS66=57Db9TBdyA@mail.gmail.com
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Tested-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20250317031214.4138436-2-pulehui@huaweicloud.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
+Cc: Sanman Pradhan <psanman@juniper.net>
+Fixes: ddbb4db4ced1b ("hwmon: (pmbus) Add regulator support")
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Fang Wang <32840572@qq.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/mcount.S | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 117 ++++++++++++++++++++++++-------
+ 1 file changed, 91 insertions(+), 26 deletions(-)
 
-diff --git a/arch/riscv/kernel/mcount.S b/arch/riscv/kernel/mcount.S
-index 068168046e0ef..da4a4000e57ea 100644
---- a/arch/riscv/kernel/mcount.S
-+++ b/arch/riscv/kernel/mcount.S
-@@ -12,8 +12,6 @@
- #include <asm/asm-offsets.h>
- #include <asm/ftrace.h>
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 41c66ece5177e..e37fd206510a6 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -6,6 +6,7 @@
+  * Copyright (c) 2012 Guenter Roeck
+  */
  
--#define ABI_SIZE_ON_STACK	80
++#include <linux/atomic.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+@@ -20,8 +21,8 @@
+ #include <linux/pmbus.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/of.h>
+ #include <linux/thermal.h>
++#include <linux/workqueue.h>
+ #include "pmbus.h"
+ 
+ /*
+@@ -102,6 +103,11 @@ struct pmbus_data {
+ 
+ 	struct mutex update_lock;
+ 
++#if IS_ENABLED(CONFIG_REGULATOR)
++	atomic_t regulator_events[PMBUS_PAGES];
++	struct work_struct regulator_notify_work;
++#endif
++
+ 	bool has_status_word;		/* device uses STATUS_WORD register */
+ 	int (*read_status)(struct i2c_client *client, int page);
+ 
+@@ -3181,12 +3187,19 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
+ 		.class = PSC_VOLTAGE_OUT,
+ 		.convert = true,
+ 	};
++	int ret;
+ 
++	mutex_lock(&data->update_lock);
+ 	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
+-	if (s.data < 0)
+-		return s.data;
++	if (s.data < 0) {
++		ret = s.data;
++		goto unlock;
++	}
+ 
+-	return (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+@@ -3203,16 +3216,22 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 	};
+ 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
+ 	int low, high;
++	int ret;
+ 
+ 	*selector = 0;
+ 
++	mutex_lock(&data->update_lock);
+ 	low = pmbus_regulator_get_low_margin(client, s.page);
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, s.page);
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+ 	/* Make sure we are within margins */
+ 	if (low > val)
+@@ -3222,7 +3241,10 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 
+ 	val = pmbus_data2reg(data, &s, val);
+ 
+-	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+@@ -3230,7 +3252,9 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
++	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int val, low, high;
++	int ret;
+ 
+ 	if (selector >= rdev->desc->n_voltages ||
+ 	    selector < rdev->desc->linear_min_sel)
+@@ -3240,18 +3264,29 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
+ 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
+ 
++	mutex_lock(&data->update_lock);
++
+ 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+-	if (val >= low && val <= high)
+-		return val * 1000; /* unit is uV */
++	if (val >= low && val <= high) {
++		ret = val * 1000; /* unit is uV */
++		goto unlock;
++	}
+ 
+-	return 0;
++	ret = 0;
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ const struct regulator_ops pmbus_regulator_ops = {
+@@ -3266,12 +3301,42 @@ const struct regulator_ops pmbus_regulator_ops = {
+ };
+ EXPORT_SYMBOL_NS_GPL(pmbus_regulator_ops, PMBUS);
+ 
++static void pmbus_regulator_notify_work_cancel(void *data)
++{
++	struct pmbus_data *pdata = data;
++
++	cancel_work_sync(&pdata->regulator_notify_work);
++}
++
++static void pmbus_regulator_notify_worker(struct work_struct *work)
++{
++	struct pmbus_data *data =
++		container_of(work, struct pmbus_data, regulator_notify_work);
++	int i, j;
++
++	for (i = 0; i < data->info->pages; i++) {
++		int event;
++
++		event = atomic_xchg(&data->regulator_events[i], 0);
++		if (!event)
++			continue;
++
++		for (j = 0; j < data->info->num_regulators; j++) {
++			if (i == rdev_get_id(data->rdevs[j])) {
++				regulator_notifier_call_chain(data->rdevs[j],
++							      event, NULL);
++				break;
++			}
++		}
++	}
++}
++
+ static int pmbus_regulator_register(struct pmbus_data *data)
+ {
+ 	struct device *dev = data->dev;
+ 	const struct pmbus_driver_info *info = data->info;
+ 	const struct pmbus_platform_data *pdata = dev_get_platdata(dev);
+-	int i;
++	int i, ret;
+ 
+ 	data->rdevs = devm_kzalloc(dev, sizeof(struct regulator_dev *) * info->num_regulators,
+ 				   GFP_KERNEL);
+@@ -3295,20 +3360,20 @@ static int pmbus_regulator_register(struct pmbus_data *data)
+ 					     info->reg_desc[i].name);
+ 	}
+ 
++	INIT_WORK(&data->regulator_notify_work, pmbus_regulator_notify_worker);
++
++	ret = devm_add_action_or_reset(dev, pmbus_regulator_notify_work_cancel, data);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
+ static int pmbus_regulator_notify(struct pmbus_data *data, int page, int event)
+ {
+-		int j;
 -
- 	.text
- 
- 	.macro SAVE_ABI_STATE
-@@ -28,12 +26,12 @@
- 	 * register if a0 was not saved.
- 	 */
- 	.macro SAVE_RET_ABI_STATE
--	addi	sp, sp, -ABI_SIZE_ON_STACK
--	REG_S	ra, 1*SZREG(sp)
--	REG_S	s0, 8*SZREG(sp)
--	REG_S	a0, 10*SZREG(sp)
--	REG_S	a1, 11*SZREG(sp)
--	addi	s0, sp, ABI_SIZE_ON_STACK
-+	addi	sp, sp, -FREGS_SIZE_ON_STACK
-+	REG_S	ra, FREGS_RA(sp)
-+	REG_S	s0, FREGS_S0(sp)
-+	REG_S	a0, FREGS_A0(sp)
-+	REG_S	a1, FREGS_A1(sp)
-+	addi	s0, sp, FREGS_SIZE_ON_STACK
- 	.endm
- 
- 	.macro RESTORE_ABI_STATE
-@@ -43,11 +41,11 @@
- 	.endm
- 
- 	.macro RESTORE_RET_ABI_STATE
--	REG_L	ra, 1*SZREG(sp)
--	REG_L	s0, 8*SZREG(sp)
--	REG_L	a0, 10*SZREG(sp)
--	REG_L	a1, 11*SZREG(sp)
--	addi	sp, sp, ABI_SIZE_ON_STACK
-+	REG_L	ra, FREGS_RA(sp)
-+	REG_L	s0, FREGS_S0(sp)
-+	REG_L	a0, FREGS_A0(sp)
-+	REG_L	a1, FREGS_A1(sp)
-+	addi	sp, sp, FREGS_SIZE_ON_STACK
- 	.endm
- 
- SYM_TYPED_FUNC_START(ftrace_stub)
+-		for (j = 0; j < data->info->num_regulators; j++) {
+-			if (page == rdev_get_id(data->rdevs[j])) {
+-				regulator_notifier_call_chain(data->rdevs[j], event, NULL);
+-				break;
+-			}
+-		}
+-		return 0;
++	atomic_or(event, &data->regulator_events[page]);
++	schedule_work(&data->regulator_notify_work);
++	return 0;
+ }
+ #else
+ static int pmbus_regulator_register(struct pmbus_data *data)
 -- 
 2.53.0
 
