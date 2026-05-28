@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A890301472;
-	Thu, 28 May 2026 20:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6741EA65;
+	Thu, 28 May 2026 20:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000136; cv=none; b=OPSoGCDiPX2rXjaQDJuWV9pkHHpcET2Pnwz7e9+Hn6et5QcO/Cec5dman158pQCUBHCBeHtcwEB3TqpE2zbQXvf0V7VsqdJwyl8P52Pn8rvixI2hhSF5EcDUcZf8EnhHfXwk0lRcWipBUsgf0a0bxhvXljjwPEXwwrRaWXf16Rc=
+	t=1780000140; cv=none; b=AXyzk3QKPmF070tb9BLeB+zEowUPleMTttcPB4AiC0yau/AU3EaqcG03/dFEJnOmYKTU+z5Fj4zmSi7ASLi/iPWx1ySil0YJS9p7vu8SqPJs/iuVnNR856lWMwgscZfdOQPtOax9gQPnUluJaeip0GsCZq264PnTBPkxOjRi+7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000136; c=relaxed/simple;
-	bh=IqOeDBAuKERLiQ4YLNci/oYeJVUsQ8Ik8tEJ0FrF7fQ=;
+	s=arc-20240116; t=1780000140; c=relaxed/simple;
+	bh=iwRqPelPxTusJIe+bSfdJfc0+l9j8YfDHuwzE0AQ4tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnJ8zCfsQfrLJYc4sWPtVNeEBSHL6fhvHj+XO14VIrPBxkNKoKalwWiJLw0LA0Zi+T1w5GU5XBhkn+w1b74t7gxDjXbZBOCiX+W+v7abNI/wMbyfKVQmVfloedBOO4cEc9UiKIfEAOcZ32E4cxyrR9wmGI1L6aplqT2Ljr6uMHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8Q5XBFz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PgEYIbTK9s+lGdeHJchOvZ0oO3b/7GMEOo+r06aXRWrlYzNEZGLA6gEnWwUv4CD0gj0sgx6ox67l2uEFKBPi+Qs716edO/+XOymWVVBtrFNcwACEk6+3GJxou56qXy3v7FRORgObNpRBJ4ExBQkVOe/2y87NF+ysqCTfbT98Im0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxauM072; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8Q5XBFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40F41F000E9;
-	Thu, 28 May 2026 20:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxauM072"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8237D1F00A3A;
+	Thu, 28 May 2026 20:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000135;
-	bh=sU1gpgELlApdovt07wRDP/vav2hJEbZCcdbzzVNtqrE=;
+	s=korg; t=1780000139;
+	bh=2g+7c8S8sc7i8TmGGit5h29uVfUHImzBDxz3SGqyebk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8Q5XBFz43UXaqUJxhe2etUAgCd3lg8tRPyZ44lNPJnTt0xcK3bRHHMTuukoHUdd5
-	 OD4ytyZIHdhsWnciHSe7ZBXB2gxx3/oOzaaSZXbRNfF7UQ6OjqxF+ErbOX0fQokwtK
-	 WiSjTHNfVfWzowvf+OjNDYN4tJ4ToB240lnhFiZw=
+	b=BxauM072OX9nbY0XgZvqy/H0Da6J9gFR0DZblcF2GZrM5SjYWtlTQSHGJ5VutRiAZ
+	 PGLV420k43e8/z9qPWLhhBB/YSFmxrOPRVVjFJGQyjz42Zi7blBzrSAZ9p1ree1SE1
+	 SmJHgb3Uet4cpdDId0f1XdS0iRtPdIxOS7oeq3Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Lukas Maar <lukas.maar@tugraz.at>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 278/377] drm/msm: Fix iommu_map_sgtable() return value check and avoid WARN
-Date: Thu, 28 May 2026 21:48:36 +0200
-Message-ID: <20260528194646.407037204@linuxfoundation.org>
+Subject: [PATCH 6.18 269/377] accel/qaic: Add overflow check to remap_pfn_range during mmap
+Date: Thu, 28 May 2026 21:48:27 +0200
+Message-ID: <20260528194646.155062067@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,50 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
 
-[ Upstream commit 55e0f0d1c1a4ee1e46da7da4d443eb3044fb3851 ]
+[ Upstream commit aa16b2bc0f02709919e2435f531406531e5bcc69 ]
 
-Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
-changed iommu_map_sgtable() to return an ssize_t and negative values
-in error cases, rather than a size_t and a zero.
+The call to remap_pfn_range in qaic_gem_object_mmap is susceptible to
+(re)mapping beyond the VMA if the BO is too large. This can cause use
+after free issues when munmap() unmaps only the VMA region and not the
+additional mappings. To prevent this, check the remaining size of the
+VMA before remapping and truncate the remapped length if sg->length is
+too large.
 
-Store the return value in the appropriate type and in case of error,
-return it rather than WARNing.
-
-Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/719685/
-Message-ID: <20260421-iommu_map_sgtable-return-v1-3-fb484c07d2a1@nvidia.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Reported-by: Lukas Maar <lukas.maar@tugraz.at>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+[jhugo: fix braces from checkpatch --strict]
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260430193858.1178641-1-zachary.mckevitt@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/accel/qaic/qaic_data.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index a188617653e85..82a172f21a3ec 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -677,7 +677,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
- 			 int prot)
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index c4f117edb266e..3335c92b0d7dc 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -605,8 +605,11 @@ static const struct vm_operations_struct drm_vm_ops = {
+ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
  {
- 	struct msm_iommu *iommu = to_msm_iommu(mmu);
--	size_t ret;
-+	ssize_t ret;
+ 	struct qaic_bo *bo = to_qaic_bo(obj);
++	unsigned long remap_start;
+ 	unsigned long offset = 0;
++	unsigned long remap_end;
+ 	struct scatterlist *sg;
++	unsigned long length;
+ 	int ret = 0;
  
- 	WARN_ON(off != 0);
+ 	if (drm_gem_is_imported(obj))
+@@ -614,11 +617,27 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
  
-@@ -686,7 +686,8 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
- 		iova |= GENMASK_ULL(63, 49);
+ 	for (sg = bo->sgt->sgl; sg; sg = sg_next(sg)) {
+ 		if (sg_page(sg)) {
++			/* if sg is too large for the VMA, so truncate it to fit */
++			if (check_add_overflow(vma->vm_start, offset, &remap_start))
++				return -EINVAL;
++			if (check_add_overflow(remap_start, sg->length, &remap_end))
++				return -EINVAL;
++
++			if (remap_end > vma->vm_end) {
++				if (check_sub_overflow(vma->vm_end, remap_start, &length))
++					return -EINVAL;
++			} else {
++				length = sg->length;
++			}
++
++			if (length == 0)
++				goto out;
++
+ 			ret = remap_pfn_range(vma, vma->vm_start + offset, page_to_pfn(sg_page(sg)),
+-					      sg->length, vma->vm_page_prot);
++					      length, vma->vm_page_prot);
+ 			if (ret)
+ 				goto out;
+-			offset += sg->length;
++			offset += length;
+ 		}
+ 	}
  
- 	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
--	WARN_ON(!ret);
-+	if (ret < 0)
-+		return ret;
- 
- 	return (ret == len) ? 0 : -EINVAL;
- }
 -- 
 2.53.0
 
