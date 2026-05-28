@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612B2339866;
-	Thu, 28 May 2026 20:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C1B2F691F;
+	Thu, 28 May 2026 20:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998770; cv=none; b=BY3nv8+PpZOsjaOI1zyWKnhE3CFNE0NfQTrqUA/y5VKBVe8XwqtXmhvx5bJAVD6I2TkvhJKNJmWxc4fFjoVYVFu1F8gKDpXo5d54BMAWqMXGOggSnZzzaDyn/+36yTSEOHwF9LZBHVXrnkFjnkiYmYkKnMsqVjiU8jiiFxjXVk4=
+	t=1779998773; cv=none; b=GiMye1qNB0L2FRweTyHN6Ivr4BVP57SAWRrGOcrfLY1FuIxWnziJmIFO9Vgiu1bhBMp17zZNYIS9lQGSurQvp5wGUhzOepTjILBh+jR82EWi2205Vxypulv7aQUy1WOUXlynsnjX9hgyrvMRcKpPj/jf1xKD9j9VtfNZFkxYmtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998770; c=relaxed/simple;
-	bh=Amy3hkgbaa6kXT7N27XVz3DKswKbP0C+Ch4jQu+zrEw=;
+	s=arc-20240116; t=1779998773; c=relaxed/simple;
+	bh=Gm2fwoIa8Pj/49YmD9NDaJYDFMhuyMeI7cgTO9rLp3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMKZhYXoSUoNSsjMZF6SO5Cnx6AMNgqRSxTfT6OCKb4x2TmeXY7zQVgI5ohINkBhL+d3dmDbYxlTTUbUjsdec1gdQCiyLY4SpLEOPwZnzFHQIO93uxs+XwlrxLoCSyesn0goko1mY7f6zwJwpONMz1a0R/fN/T2BMA5pneu9b40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcVsO5LC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNOyGnrFqDr0ot7FUOvlyntiuvo5Hi+ySGj0KL6p3jbn+0YWxTruwzarGICmoymFaCFY7sC4eaNhydHPYWV/zdo7ce6kb9ZpaI+DWBvax/p3kuamDbLrk7m1k8K6Ypy3X3QY86rHhX4xot3tRtvTEYWbOWyZH4Qc/UKd1iCqY1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZ4gI3Jb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcVsO5LC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB301F000E9;
-	Thu, 28 May 2026 20:06:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZ4gI3Jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1241F000E9;
+	Thu, 28 May 2026 20:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998769;
-	bh=AZ8dswdZvFjPjuBE5upF+oiub8n8b9cCwVgAt5CR0zI=;
+	s=korg; t=1779998772;
+	bh=s9T4RPWb2P7+PdX3BDxFOjWbAOBjwEsPqIULdne6Q5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcVsO5LC8jVi82ySEICxUVc4hZpItAbmsYinB+azBDQox5EG/R/kGsU2zNp1z95pd
-	 5RqR4dDy2osuOvmEoSn7P7aOSKsLShwIndsu2A54m7Lbz6eN3jYyaTEsU8LLyJPFjr
-	 yT4eAXmwvI0PuCOgEWGdBgsADwDSBEkMFEuCzm6E=
+	b=qZ4gI3JbDnEuMCHADj3hwpaDUYfObsRe2CmVar7EZVkbJLIfOPk65NOKLCe6+yxFJ
+	 bHVLsSNAPNf559gXPOiJ428a5oDzt71MosIoNJ5+THn+YGKKj3RNcMlD9Xo6t3Qf/t
+	 K1kFgr3DZWut2fyzlxWMyNhg2tOHBpEHT9iIgowU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 274/461] net: ethernet: cortina: Carry over frag counter
-Date: Thu, 28 May 2026 21:46:43 +0200
-Message-ID: <20260528194655.102448941@linuxfoundation.org>
+Subject: [PATCH 7.0 292/461] net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint
+Date: Thu, 28 May 2026 21:47:01 +0200
+Message-ID: <20260528194655.670376975@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,116 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit ebd8ec2b309e3a447851b456ccaf8fb39f3661e7 ]
+[ Upstream commit 7bf563badd37cb796df5477d2b78bb64148a1268 ]
 
-The gmac_rx() NAPI poll function assembles packets in an
-SKB from a ring buffer.
+The smc_msg_event tracepoint class, shared by smc_tx_sendmsg and
+smc_rx_recvmsg, unconditionally dereferences smc->conn.lnk:
 
-If the ring buffer gets completely emptied during a poll cycle,
-we exit gmac_rx(), but the packet is not yet completely
-assembled in the SKB, yet the fragment counter frag_nr is
-reset to zero on the next invocation.
+	__string(name, smc->conn.lnk->ibname)
 
-Solve this by making the RX fragment counter a part of the
-port struct, and carry it over between invocations.
+conn->lnk is only set for SMC-R; for SMC-D it is NULL. Other code on
+these paths already handles this (e.g. !conn->lnk in
+SMC_STAT_RMB_TX_SIZE_SMALL()). With the tracepoint enabled, the first
+sendmsg()/recvmsg() on an SMC-D socket crashes:
 
-Reset the fragment counter only right after calling
-napi_gro_frags(), on error (after calling napi_free_frags())
-or if stopping the port.
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [...]
+  RIP: 0010:strlen+0x1e/0xa0
+  Call Trace:
+   trace_event_raw_event_smc_msg_event (net/smc/smc_tracepoint.h:44)
+   smc_rx_recvmsg (net/smc/smc_rx.c:515)
+   smc_recvmsg (net/smc/af_smc.c:2859)
+   __sys_recvfrom (net/socket.c:2315)
+   __x64_sys_recvfrom (net/socket.c:2326)
+   do_syscall_64
 
-Reset it in some place where not strictly necessary just to
-emphasize what is going on.
+The faulting address 0x3e0 is offsetof(struct smc_link, ibname),
+confirming the NULL ->lnk deref. Enabling the tracepoint requires
+root, but the trigger itself is unprivileged: socket(AF_SMC, ...) has
+no capability check, and SMC-D negotiation needs no admin step on
+s390 or on x86 with the loopback ISM device loaded.
 
-This was found by Sashiko during normal patch review.
+Log an empty device name for SMC-D instead of dereferencing NULL.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-3-6c5d20ddc35b@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: aff3083f10bf ("net/smc: Introduce tracepoints for tx and rx msg")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/smc/smc_tracepoint.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index e8d973b8fb0c3..ccd14a386e3b9 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -123,6 +123,7 @@ struct gemini_ethernet_port {
- 	struct hrtimer		rx_coalesce_timer;
- 	unsigned int		rx_coalesce_nsecs;
- 	struct sk_buff		*rx_skb;
-+	unsigned int		rx_frag_nr;
+diff --git a/net/smc/smc_tracepoint.h b/net/smc/smc_tracepoint.h
+index a9a6e3c1113aa..53da84f57fd6f 100644
+--- a/net/smc/smc_tracepoint.h
++++ b/net/smc/smc_tracepoint.h
+@@ -51,7 +51,7 @@ DECLARE_EVENT_CLASS(smc_msg_event,
+ 				     __field(const void *, smc)
+ 				     __field(u64, net_cookie)
+ 				     __field(size_t, len)
+-				     __string(name, smc->conn.lnk->ibname)
++				     __string(name, smc->conn.lnk ? smc->conn.lnk->ibname : "")
+ 		    ),
  
- 	unsigned int		freeq_refill;
- 	struct gmac_txq		txq[TX_QUEUE_NUM];
-@@ -1444,6 +1445,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short m = (1 << port->rxq_order) - 1;
- 	struct gemini_ethernet *geth = port->geth;
- 	void __iomem *ptr_reg = port->rxq_rwptr;
-+	unsigned int frag_nr = port->rx_frag_nr;
- 	struct sk_buff *skb = port->rx_skb;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
-@@ -1457,7 +1459,6 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short r, w;
- 	union dma_rwptr rw;
- 	dma_addr_t mapping;
--	int frag_nr = 0;
- 
- 	spin_lock_irqsave(&geth->irq_lock, flags);
- 	rw.bits32 = readl(ptr_reg);
-@@ -1497,6 +1498,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 			continue;
- 		}
-@@ -1507,6 +1509,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 
- 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
-@@ -1541,6 +1544,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (word3.bits32 & EOF_BIT) {
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 			--budget;
- 		}
- 		continue;
-@@ -1549,6 +1553,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (skb) {
- 			napi_free_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 		}
- 
- 		if (mapping)
-@@ -1558,6 +1563,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	}
- 
- 	port->rx_skb = skb;
-+	port->rx_frag_nr = frag_nr;
- 	writew(r, ptr_reg);
- 	return budget;
- }
-@@ -1886,6 +1892,7 @@ static int gmac_stop(struct net_device *netdev)
- 	gmac_stop_dma(port);
- 	napi_disable(&port->napi);
- 	port->rx_skb = NULL;
-+	port->rx_frag_nr = 0;
- 
- 	gmac_enable_irq(netdev, 0);
- 	gmac_cleanup_rxq(netdev);
+ 		    TP_fast_assign(
 -- 
 2.53.0
 
