@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B816223328;
-	Thu, 28 May 2026 20:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3616325F7B9;
+	Thu, 28 May 2026 20:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000389; cv=none; b=HqCpxZsOH1vh8i92cYMqPxtysBARvrC+Xo1V58zPHX6ZeKnB/xHIHknhU10SseZ6h0JN/nJnCosbj5TpxUdEDwUTKC52KXR0m0Po495T3m4zN/9UtC3fpAxyQWVYl/SvfU5sLheiyol7M3srwgr6a8N4st9zacEHqkaeovsNOB8=
+	t=1780000392; cv=none; b=pyWddqPbTJLQrv5Ro2JQLuam7x+6JjI2akl9qR5LE/GTqeEeWwRRggZJrM0aOO8uVtsyjzwtLsOSJeIaLjbRBXDQdr8v1ACNDO3Ieknq2mPdumIFZFmPsIp0fNf4HnVgSDe8eLQ2MnVlKuxRDNT646OQUkBRKio9oQHxV1DNOeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000389; c=relaxed/simple;
-	bh=MV5gxmhrORCO9woLtS1fIa4dWZb5Ku++3sJH6z6II4Y=;
+	s=arc-20240116; t=1780000392; c=relaxed/simple;
+	bh=eU3kTdQwMxSKQ+h/UoaJpvHBhnovrNjlMo6l4kYCuIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWL20fMREn1m8ghRflZ8IIh5bKpzE6ERfSC61NBpvR+1GOriZsXMUU03oS4BmuzSo/MBgIBJ8/DZ+gReK4QNDa5u3fH7GurAOgXDvv/gEKOQ9a7oy/kVwklwM9OX9/uMvaWRjSkfhgsGdFZxVk8fAz+4VnWyxupATQJ2qWSSIyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKb0nasa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WfyzUhL4/vHmCa3FM+vjDrwQZGa94yl9sv7SvoZFJxuRPh+Tn1Yc64mpjJ7ojvMvyVZssjMBrolXpix73288vjcFNtVRvf2o+LMnUa2Bja/1A0zhxnMWJ30ephMLhlY/pUFY2qNKvgNtZqM/glatBflXQiQV9Lwke+R/71eFtxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQxSdlPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKb0nasa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0851F000E9;
-	Thu, 28 May 2026 20:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQxSdlPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949431F000E9;
+	Thu, 28 May 2026 20:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000388;
-	bh=/30GHWjkAbVk26sE/xno3bdt5FV4fsXEr7n8Ib2gXB8=;
+	s=korg; t=1780000391;
+	bh=6ZkjDuCmOfyQvdxatwfz42bAM2fwNBjySsA5+DJN1vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKb0nasaVdMgjsselJ4rIu/bgqCl4GojY0pjxQF4jCQMoMlHd71yHAaRTiCoFpcvO
-	 0hFlvbeuNZ6NHCuiaq7oNPq4e50qrRyYCL/U0+eou/XCnjQueu/WaW/cU+b4pYE4PZ
-	 Ogz5GwKnYzW0obYLvJiR3JGTkygXY6wdSZpLok7Y=
+	b=SQxSdlPsPbsKKlO8ok8gTUGnM+L8SySv0eguaPkgHPE/mGNUR5TJm2fhyjTb4bifJ
+	 nkYA3qK89kzUowTxejKg0sezxzma8uQVyJ+ZEJ8h2q4vncBR2t3zUqnIfPXxnK/l+g
+	 RBdaJc9A8Tf4zMHEZCmkig//GWl9Egoa0I3n6q2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tommy Kelly <linux@tkel.ly>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 027/272] ata: libata-scsi: do not use the deferred QC feature on PMPs with CBS
-Date: Thu, 28 May 2026 21:46:41 +0200
-Message-ID: <20260528194630.147751578@linuxfoundation.org>
+Subject: [PATCH 6.12 028/272] ata: libata-scsi: do not needlessly defer commands when using PMP with FBS
+Date: Thu, 28 May 2026 21:46:42 +0200
+Message-ID: <20260528194630.177056563@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,134 +53,271 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-commit f233124fb36cd57ef09f96d517a38ab4b902e15e upstream.
+commit 759e8756da00aa115d504a18155b1d1ee1cc12e8 upstream.
 
-When using Port Multipliers (PMPs) with Command-Based Switching (CBS), you
-can only issue commands to one link at a time. For PMPs with CBS, there is
-already code to handle commands being sent to different links in
-sata_pmp_qc_defer_cmd_switch() using ap->excl_link. sata_sil24 also makes
-use of ap->excl_link.
+The ACS specification does not allow a non-NCQ command to be issued while
+an NCQ command is outstanding.
 
-A user on the list reported that commit 0ea84089dbf6 ("ata: libata-scsi:
-avoid Non-NCQ command starvation") broke PMPs with CBS. The commit
-introduced code that stores a deferred qc in ap->deferred_qc, to later be
-issued via a workqueue. It turns out that this change is incompatible with
-the existing ap->excl_link handling used by PMPs with CBS.
+Commit 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
+introduced a feature where a deferred non-NCQ command gets issued from a
+workqueue. The design stores a single non-NCQ command per port.
 
-Thus, modify sata_pmp_qc_defer_cmd_switch() and sil24_qc_defer() to return
-ATA_DEFER_LINK_EXCL, and make sure that the deferred QC handling via
-workqueue is not used for this return value.
+However, when using Port Multipliers (PMPs), specifically PMPs that
+support FIS-Based Switching (FBS), non-NCQ and NCQ commands can be mixed
+on the same port, just not for the same link, see e.g. ata_std_qc_defer()
+which is, and always has operated on a per-link basis.
 
-This way, PMPs with CBS will work once again. Note that the starvation
-referenced in commit 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ
-command starvation") can only happen on libsas ports, and libsas does not
-support Port Multipliers, thus there is no harm of reverting back to the
-previous way of deferring commands for PMPs with CBS.
-
-Non-libsas ports connected to anything but a PMP with CBS (e.g. a normal
-drive or a PMP with FBS) will continue using the deferred workqueue, since
-it does result in lower completion latencies for non-NCQ commands, even
-though the workqueue is not strictly needed to avoid starvation for
-non-libsas ports.
-
-If we want to modify the scope of the workqueue issuing to also handle
-PMPs with CBS, then we should ensure that we can save both NCQ and non-NCQ
-commands in ap->deferred_qc, while also removing the existing PMP CBS
-handling using ap->excl_link, such that we don't duplicate features.
-
-While at it, also add a comment explaining how the ap->excl_link mechanism
-works.
+Therefore, move the deferred_qc from struct ata_port to struct ata_link.
+This way, when using a PMP with FBS, we will not needlessly defer commands
+to all other links, just because one link issued a non-NCQ command while
+having an NCQ command outstanding. Only commands for that specific link
+will be deferred. This is in line with how PMPs with FBS worked before
+commit 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation").
 
 Fixes: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
 Tested-by: Tommy Kelly <linux@tkel.ly>
-Reported-by: Tommy Kelly <linux@tkel.ly>
-Closes: https://lore.kernel.org/linux-ide/ce09cc21-a8e9-4845-b205-35411e22fba9@tkel.ly/
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-pmp.c  |   13 ++++++++++++-
- drivers/ata/libata-scsi.c |    8 ++++++++
- drivers/ata/sata_sil24.c  |    6 +++++-
- include/linux/libata.h    |    1 +
- 4 files changed, 26 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c |    9 +++++--
+ drivers/ata/libata-eh.c   |    8 +++---
+ drivers/ata/libata-pmp.c  |    5 +++-
+ drivers/ata/libata-scsi.c |   54 +++++++++++++++++++++++++---------------------
+ include/linux/libata.h    |    6 ++---
+ 5 files changed, 47 insertions(+), 35 deletions(-)
 
---- a/drivers/ata/libata-pmp.c
-+++ b/drivers/ata/libata-pmp.c
-@@ -110,13 +110,24 @@ int sata_pmp_qc_defer_cmd_switch(struct
- {
- 	struct ata_link *link = qc->dev->link;
- 	struct ata_port *ap = link->ap;
-+	int ret;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5444,6 +5444,7 @@ void ata_link_init(struct ata_port *ap,
+ 	link->pmp = pmp;
+ 	link->active_tag = ATA_TAG_POISON;
+ 	link->hw_sata_spd_limit = UINT_MAX;
++	INIT_WORK(&link->deferred_qc_work, ata_scsi_deferred_qc_work);
  
- 	if (ap->excl_link == NULL || ap->excl_link == link) {
- 		if (ap->nr_active_links == 0 || ata_link_active(link)) {
- 			qc->flags |= ATA_QCFLAG_CLEAR_EXCL;
--			return ata_std_qc_defer(qc);
-+			ret = ata_std_qc_defer(qc);
-+			if (ret == ATA_DEFER_LINK)
-+				return ATA_DEFER_LINK_EXCL;
-+			return ret;
+ 	/* can't use iterator, ap isn't initialized yet */
+ 	for (i = 0; i < ATA_MAX_DEVICES; i++) {
+@@ -5526,7 +5527,6 @@ struct ata_port *ata_port_alloc(struct a
+ 	mutex_init(&ap->scsi_scan_mutex);
+ 	INIT_DELAYED_WORK(&ap->hotplug_task, ata_scsi_hotplug);
+ 	INIT_DELAYED_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
+-	INIT_WORK(&ap->deferred_qc_work, ata_scsi_deferred_qc_work);
+ 	INIT_LIST_HEAD(&ap->eh_done_q);
+ 	init_waitqueue_head(&ap->eh_wait_q);
+ 	init_completion(&ap->park_req_pending);
+@@ -6149,12 +6149,15 @@ static void ata_port_detach(struct ata_p
+ 
+ 	/* It better be dead now and not have any remaining deferred qc. */
+ 	WARN_ON(!(ap->pflags & ATA_PFLAG_UNLOADED));
+-	WARN_ON(ap->deferred_qc);
+ 
+-	cancel_work_sync(&ap->deferred_qc_work);
+ 	cancel_delayed_work_sync(&ap->hotplug_task);
+ 	cancel_delayed_work_sync(&ap->scsi_rescan_task);
+ 
++	ata_for_each_link(link, ap, PMP_FIRST) {
++		WARN_ON(link->deferred_qc);
++		cancel_work_sync(&link->deferred_qc_work);
++	}
++
+ 	/* Delete port multiplier link transport devices */
+ 	if (ap->pmp_link) {
+ 		int i;
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -645,11 +645,11 @@ void ata_scsi_cmd_error_handler(struct S
+ 			if (qc->scsicmd != scmd)
+ 				continue;
+ 			if ((qc->flags & ATA_QCFLAG_ACTIVE) ||
+-			    qc == ap->deferred_qc)
++			    qc == qc->dev->link->deferred_qc)
+ 				break;
  		}
  
-+		/*
-+		 * Note: ap->excl_link contains the link that is next in line,
-+		 * i.e. implicit round robin. If there is only one link
-+		 * dispatching, ap->excl_link will be left unclaimed, allowing
-+		 * other links to set ap->excl_link, ensuring that the currently
-+		 * active link cannot queue any more.
-+		 */
- 		ap->excl_link = link;
- 	}
+-		if (i < ATA_MAX_QUEUE && qc == ap->deferred_qc) {
++		if (i < ATA_MAX_QUEUE && qc == qc->dev->link->deferred_qc) {
+ 			/*
+ 			 * This is a deferred command that timed out while
+ 			 * waiting for the command queue to drain. Since the qc
+@@ -660,8 +660,8 @@ void ata_scsi_cmd_error_handler(struct S
+ 			 * deferred qc work from issuing this qc.
+ 			 */
+ 			WARN_ON_ONCE(qc->flags & ATA_QCFLAG_ACTIVE);
+-			ap->deferred_qc = NULL;
+-			cancel_work(&ap->deferred_qc_work);
++			qc->dev->link->deferred_qc = NULL;
++			cancel_work(&qc->dev->link->deferred_qc_work);
+ 			set_host_byte(scmd, DID_TIME_OUT);
+ 			scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
+ 		} else if (i < ATA_MAX_QUEUE) {
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -582,8 +582,11 @@ static void sata_pmp_detach(struct ata_d
+ 	if (ap->ops->pmp_detach)
+ 		ap->ops->pmp_detach(ap);
  
+-	ata_for_each_link(tlink, ap, EDGE)
++	ata_for_each_link(tlink, ap, EDGE) {
++		WARN_ON(tlink->deferred_qc);
++		cancel_work_sync(&tlink->deferred_qc_work);
+ 		ata_eh_detach_dev(tlink->device);
++	}
+ 
+ 	spin_lock_irqsave(ap->lock, flags);
+ 	ap->nr_pmp_links = 0;
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -1799,6 +1799,14 @@ static int ata_scsi_qc_issue(struct ata_
- 	case ATA_DEFER_LINK:
- 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
- 		goto defer_qc;
-+	case ATA_DEFER_LINK_EXCL:
-+		/*
-+		 * Drivers making use of ap->excl_link cannot store the QC in
-+		 * ap->deferred_qc, because the ap->excl_link handling is
-+		 * incompatible with the ap->deferred_qc workqueue handling.
-+		 */
-+		ret = SCSI_MLQUEUE_DEVICE_BUSY;
-+		goto free_qc;
- 	case ATA_DEFER_PORT:
- 		ret = SCSI_MLQUEUE_HOST_BUSY;
- 		goto free_qc;
---- a/drivers/ata/sata_sil24.c
-+++ b/drivers/ata/sata_sil24.c
-@@ -790,6 +790,7 @@ static int sil24_qc_defer(struct ata_que
- 	struct ata_link *link = qc->dev->link;
- 	struct ata_port *ap = link->ap;
- 	u8 prot = qc->tf.protocol;
-+	int ret;
+@@ -1673,8 +1673,9 @@ static void ata_qc_done(struct ata_queue
  
- 	/*
- 	 * There is a bug in the chip:
-@@ -827,7 +828,10 @@ static int sil24_qc_defer(struct ata_que
- 		qc->flags |= ATA_QCFLAG_CLEAR_EXCL;
+ void ata_scsi_deferred_qc_work(struct work_struct *work)
+ {
+-	struct ata_port *ap =
+-		container_of(work, struct ata_port, deferred_qc_work);
++	struct ata_link *link =
++		container_of(work, struct ata_link, deferred_qc_work);
++	struct ata_port *ap = link->ap;
+ 	struct ata_queued_cmd *qc;
+ 	unsigned long flags;
+ 
+@@ -1685,10 +1686,10 @@ void ata_scsi_deferred_qc_work(struct wo
+ 	 * such case, we should not need any more deferring the qc, so warn if
+ 	 * qc_defer() says otherwise.
+ 	 */
+-	qc = ap->deferred_qc;
++	qc = link->deferred_qc;
+ 	if (qc && !ata_port_eh_scheduled(ap)) {
+ 		WARN_ON_ONCE(ap->ops->qc_defer(qc));
+-		ap->deferred_qc = NULL;
++		link->deferred_qc = NULL;
+ 		ata_qc_issue(qc);
  	}
  
--	return ata_std_qc_defer(qc);
-+	ret = ata_std_qc_defer(qc);
-+	if (ret == ATA_DEFER_LINK)
-+		return ATA_DEFER_LINK_EXCL;
-+	return ret;
+@@ -1697,8 +1698,7 @@ void ata_scsi_deferred_qc_work(struct wo
+ 
+ void ata_scsi_requeue_deferred_qc(struct ata_port *ap)
+ {
+-	struct ata_queued_cmd *qc = ap->deferred_qc;
+-	struct scsi_cmnd *scmd;
++	struct ata_link *link;
+ 
+ 	lockdep_assert_held(ap->lock);
+ 
+@@ -1707,20 +1707,25 @@ void ata_scsi_requeue_deferred_qc(struct
+ 	 * do not try to be smart about what to do with this deferred command
+ 	 * and simply requeue it by completing it with DID_REQUEUE.
+ 	 */
+-	if (!qc)
+-		return;
+-
+-	scmd = qc->scsicmd;
+-	ap->deferred_qc = NULL;
+-	cancel_work(&ap->deferred_qc_work);
+-	ata_qc_free(qc);
+-	scmd->result = (DID_REQUEUE << 16);
+-	scsi_done(scmd);
++	ata_for_each_link(link, ap, PMP_FIRST) {
++		struct ata_queued_cmd *qc = link->deferred_qc;
++		struct scsi_cmnd *scmd;
++
++		if (qc) {
++			scmd = qc->scsicmd;
++			link->deferred_qc = NULL;
++			cancel_work(&link->deferred_qc_work);
++			ata_qc_free(qc);
++			scmd->result = (DID_REQUEUE << 16);
++			scsi_done(scmd);
++		}
++	}
  }
  
- static enum ata_completion_errors sil24_qc_prep(struct ata_queued_cmd *qc)
+-static void ata_scsi_schedule_deferred_qc(struct ata_port *ap)
++static void ata_scsi_schedule_deferred_qc(struct ata_link *link)
+ {
+-	struct ata_queued_cmd *qc = ap->deferred_qc;
++	struct ata_queued_cmd *qc = link->deferred_qc;
++	struct ata_port *ap = link->ap;
+ 
+ 	lockdep_assert_held(ap->lock);
+ 
+@@ -1737,12 +1742,12 @@ static void ata_scsi_schedule_deferred_q
+ 		return;
+ 	}
+ 	if (!ap->ops->qc_defer(qc))
+-		queue_work(system_highpri_wq, &ap->deferred_qc_work);
++		queue_work(system_highpri_wq, &link->deferred_qc_work);
+ }
+ 
+ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
+ {
+-	struct ata_port *ap = qc->ap;
++	struct ata_link *link = qc->dev->link;
+ 	struct scsi_cmnd *cmd = qc->scsicmd;
+ 	u8 *cdb = cmd->cmnd;
+ 	bool have_sense = qc->flags & ATA_QCFLAG_SENSE_VALID;
+@@ -1771,11 +1776,12 @@ static void ata_scsi_qc_complete(struct
+ 
+ 	ata_qc_done(qc);
+ 
+-	ata_scsi_schedule_deferred_qc(ap);
++	ata_scsi_schedule_deferred_qc(link);
+ }
+ 
+ static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
+ {
++	struct ata_link *link = qc->dev->link;
+ 	int ret;
+ 
+ 	if (!ap->ops->qc_defer)
+@@ -1786,7 +1792,7 @@ static int ata_scsi_qc_issue(struct ata_
+ 	 * requeue and defer all incoming commands until the deferred qc is
+ 	 * processed, once all on-going commands complete.
+ 	 */
+-	if (ap->deferred_qc) {
++	if (link->deferred_qc) {
+ 		ata_qc_free(qc);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
+ 	}
+@@ -1802,8 +1808,8 @@ static int ata_scsi_qc_issue(struct ata_
+ 	case ATA_DEFER_LINK_EXCL:
+ 		/*
+ 		 * Drivers making use of ap->excl_link cannot store the QC in
+-		 * ap->deferred_qc, because the ap->excl_link handling is
+-		 * incompatible with the ap->deferred_qc workqueue handling.
++		 * link->deferred_qc, because the ap->excl_link handling is
++		 * incompatible with the link->deferred_qc workqueue handling.
+ 		 */
+ 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
+ 		goto free_qc;
+@@ -1829,7 +1835,7 @@ defer_qc:
+ 	 * commands complete.
+ 	 */
+ 	if (!ata_is_ncq(qc->tf.protocol)) {
+-		ap->deferred_qc = qc;
++		link->deferred_qc = qc;
+ 		return 0;
+ 	}
+ 
 --- a/include/linux/libata.h
 +++ b/include/linux/libata.h
-@@ -348,6 +348,7 @@ enum {
- 	/* return values for ->qc_defer */
- 	ATA_DEFER_LINK		= 1,
- 	ATA_DEFER_PORT		= 2,
-+	ATA_DEFER_LINK_EXCL	= 3,
+@@ -853,6 +853,9 @@ struct ata_link {
+ 	unsigned int		sata_spd;	/* current SATA PHY speed */
+ 	enum ata_lpm_policy	lpm_policy;
  
- 	/* desc_len for ata_eh_info and context */
- 	ATA_EH_DESC_LEN		= 80,
++	struct work_struct	deferred_qc_work;
++	struct ata_queued_cmd	*deferred_qc;
++
+ 	/* record runtime error info, protected by host_set lock */
+ 	struct ata_eh_info	eh_info;
+ 	/* EH context */
+@@ -898,9 +901,6 @@ struct ata_port {
+ 	u64			qc_active;
+ 	int			nr_active_links; /* #links with active qcs */
+ 
+-	struct work_struct	deferred_qc_work;
+-	struct ata_queued_cmd	*deferred_qc;
+-
+ 	struct ata_link		link;		/* host default link */
+ 	struct ata_link		*slave_link;	/* see ata_slave_link_init() */
+ 
 
 
