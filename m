@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0203E1C3318;
-	Thu, 28 May 2026 20:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54F3DDC5;
+	Thu, 28 May 2026 20:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000113; cv=none; b=LPA2ScS9r+BHs+ggw5Ae8P/crGcJ8LBx/ZXiJrOrP3LdbP/P0Ui1tE7C/N43DaRhuq4GO2plySmBkSjL8M8yS0/ZFC9eZiwWVqLH6nxNMhsz5E0qOdmKlx4tn7atRDFrKTPLOBZH3Usw2etTqQasZAJKynaUEgR1ElfBT5fC+Wc=
+	t=1780000116; cv=none; b=gn+5CZk3utjq55i48aP1Xxby/Pjcny1VbLNPJwlx6i0lSW1/lzORFF7vVrMUC44JAMg8LFqM1Su5rJ3Qpah0H8nnye5PSis6yPj4r5g+FMDM0uMFTSU+zg0hB7yofMks4RQUhJN/MQp25GELJmfwgRHjZDXHUj/ryu5MIBBV/MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000113; c=relaxed/simple;
-	bh=uwAyvRNs97aNQU9s4rEf6iexqRKrzqYsuy/2lk/H5z0=;
+	s=arc-20240116; t=1780000116; c=relaxed/simple;
+	bh=J1XQnfUtMnmiG3n3opYvTji5eQV2BV+Okr1BDELDd/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JiiaOsRfcRbXUS8dAwv8O5s3xS67iM80xFOGF6+a1gMc2C5bgi/bUq+M/EdWlwTwZbpknXkWchVQ3yxNuUVQyCSK+/A6KW1YERddapDYXrgrxcEv081+CmN6q/mPFc5/OYTClekl9FfVRAAzTPGyP2vTQWOimYLuxJEt14p7LEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qReXWDV3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FE8UE2XSDT3C25yXJckmwtStVY2TkZCXSyq/a1bzmItKZydGI83Ewb/iBrNdUNuwwKutF14aHN34clxs+90NDRwQfu+k/IWQKY8qE9VMbKlBAougXyQ/OQrMeK2nO/tCfI2REUO2SNPjjRVQypoj3AtCFHl7Z72Zx3JlTFU+QyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0rd9AiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qReXWDV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D5B1F000E9;
-	Thu, 28 May 2026 20:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0rd9AiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD151F000E9;
+	Thu, 28 May 2026 20:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000112;
-	bh=q4kDVw7zwk1/l5ZvxszR3x3pARjRkBkzZEactHDhZU4=;
+	s=korg; t=1780000115;
+	bh=SORGKgDyiNqONqVZOUOHm24uAEW6tlXox2vmF7wjPEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qReXWDV3pAoyFwjKz0JxD+L87jAXw4/P4OLbfr8McUlLUCk/vf7zszhHbmksZbZti
-	 vFjqvSpDGgKyV2+LQckkzwtcMWY20iMrosr+PfNUvOiA5WP1FXlYZn9vo7eXr9S7D9
-	 sEOoDuPvNSLZdGc7/HcRy9Ui9CWQZafLe3o0aanY=
+	b=x0rd9AiLYoe9sMgHlSJ1oiwMdqHQ+1oMOlz+YsHqmpmI7FsZjJWeUKVobNE4mDszu
+	 IW7NfhP1ijWT3d5/H9Pyi7VCBrvMR1XbL6hfgwBpFMyXc5YqMadC6mswlsSGJKuM2e
+	 cR7Xg0JQcSsABQuAoSeX3ouzeP+a76KAEqKkUNnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 306/377] spi: mtk-snfi: Fix resource leak in mtk_snand_read_page_cache()
-Date: Thu, 28 May 2026 21:49:04 +0200
-Message-ID: <20260528194647.226023777@linuxfoundation.org>
+Subject: [PATCH 6.18 307/377] netfilter: nft_inner: release local_lock before re-enabling softirqs
+Date: Thu, 28 May 2026 21:49:05 +0200
+Message-ID: <20260528194647.258234089@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,36 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 496ba79b9496b8b3747cbc764ebd33ee7325e806 ]
+[ Upstream commit a6cb3ff979855f7f0ee9450a947fe8f96c2ba37a ]
 
-When DMA read times out in mtk_snand_read_page_cache(), the original code
-erroneously jumped to cleanup label which skips DMA unmapping and ECC
-disable, causing a resource leak.
+Quoting sashiko:
+ In the error path, local_bh_enable() is called before
+ local_unlock_nested_bh().
 
-Fixes: 764f1b748164 ("spi: add driver for MTK SPI NAND Flash Interface")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260510-snfi-v1-1-bc375cf1af8e@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ba36fada9ab4 ("netfilter: nft_inner: Use nested-BH locking for nft_pcpu_tun_ctx")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mtk-snfi.c | 2 +-
+ net/netfilter/nft_inner.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mtk-snfi.c b/drivers/spi/spi-mtk-snfi.c
-index a026b0e61994b..9e6038a5a2ad0 100644
---- a/drivers/spi/spi-mtk-snfi.c
-+++ b/drivers/spi/spi-mtk-snfi.c
-@@ -961,7 +961,7 @@ static int mtk_snand_read_page_cache(struct mtk_snand *snf,
- 		    &snf->op_done, usecs_to_jiffies(SNFI_POLL_INTERVAL))) {
- 		dev_err(snf->dev, "DMA timed out for reading from cache.\n");
- 		ret = -ETIMEDOUT;
--		goto cleanup;
-+		goto cleanup2;
+diff --git a/net/netfilter/nft_inner.c b/net/netfilter/nft_inner.c
+index 1b3e7a976f560..ad08a43535b55 100644
+--- a/net/netfilter/nft_inner.c
++++ b/net/netfilter/nft_inner.c
+@@ -246,8 +246,8 @@ static bool nft_inner_restore_tun_ctx(const struct nft_pktinfo *pkt,
+ 	local_lock_nested_bh(&nft_pcpu_tun_ctx.bh_lock);
+ 	this_cpu_tun_ctx = this_cpu_ptr(&nft_pcpu_tun_ctx.ctx);
+ 	if (this_cpu_tun_ctx->cookie != (unsigned long)pkt->skb) {
+-		local_bh_enable();
+ 		local_unlock_nested_bh(&nft_pcpu_tun_ctx.bh_lock);
++		local_bh_enable();
+ 		return false;
  	}
- 
- 	// Wait for BUS_SEC_CNTR returning expected value
+ 	*tun_ctx = *this_cpu_tun_ctx;
 -- 
 2.53.0
 
