@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F00A330B2D;
-	Thu, 28 May 2026 19:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FF3318EE1;
+	Thu, 28 May 2026 19:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998125; cv=none; b=Nd7+6Q/J2Vpq2BvDzx9/EbZfaZOB4za3C08paJ2KzrvIillsQrr1iAGxzaN+xUFxE2BGBJkb05Czum9q3FGAnVVH7P49Rm4asivnPg93dEtEhke+03457CakxoV4aqQ+YE8pDpVNqr3vdJTBAGeKIyamUgnLxUhoQclk0sbi+00=
+	t=1779998128; cv=none; b=n3dCjXtbgZvSUY+dlv3XXGgxYEIijbK0rfZctShBo3UOvel0QhOz1XC/XFx1nOX65w6L6zANDvBknEWZNdbY/rNLODkOkuf6MIa8RoO71Et+t4NamuGzYJXypsKfSgfUH185b+zM+0Tu1T5REaPEXbwMgHl84a1dPLRGEzWwqK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998125; c=relaxed/simple;
-	bh=GncCrtrNwSKdjVOie3CjkljKns9b2Sk4RQwIfyh9XQw=;
+	s=arc-20240116; t=1779998128; c=relaxed/simple;
+	bh=eK+fr7mGUtQl5+iDTgdRiAWVmN3O+UybyuG3DZzP9UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxRdtCXZqgyElETQytPeHtJAU8cFn2khB1+eEB+2CKX+u87qMVhxBy6nVk16xw6/Aup531Obc9DzXseBoOsTM5j/5p4pPsxa4vijMW07U86/2m17iOsibNgdQrC7oJemRFdOB9kWnRFPPxm1hnVF7LwfLYMlcYPsTAObepq+MZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAGcaED+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mMvcmmINsiRWWla4WWzpgF0EMVP7B7tTlxV/AgdrddmBsEuwRwoLg+NluDrptfHwYLeW0y/hvU+SRlvtBRCkdpylQskZhRMNrUl1rK/YTSKliHAb08BgFoaGpfo/9OiUGVNivOjlgbRbiWqfOBbCibV/ekIB6fS4x1L5dV4v39A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uR01m0ru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAGcaED+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB36B1F000E9;
-	Thu, 28 May 2026 19:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uR01m0ru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04F51F000E9;
+	Thu, 28 May 2026 19:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998124;
-	bh=RVlEKMjFx/nxwU5Y+zTUKPewxVwhej3qPBfKPVUkEL4=;
+	s=korg; t=1779998127;
+	bh=xcVN06j3A1aGQx4zT284jarhNGjPVoepqtCxLiccl5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAGcaED+LTYdXf5VixWpksMDQaa9GPiC1qQLizmzRbpNyPNENarrop5zKQFhnjiXu
-	 244aj8RVNTqsliLZTQLpHjksLdX2B7dC29x2V7KYvEtFkcNu9EXrytJjBkn/VlxvHF
-	 fzGMQg30Iph+75JsnV9qLbXd2pTQMDkgh4dlUNfg=
+	b=uR01m0rueUfjBZslE2eyuSDHpbKBkH/mLwDWCz4sSFyBdE0CY7jtMgK5NXXTxYd2b
+	 aksA75dSSoNJO5bBJkgV9pX+BBr9Cv6Aqm0z7xpRd1X/N13NHWOAIpvlSQj4261jAP
+	 L3nZ9IshoL+u/curaOs9ZambcNLe5hHzk9GmYCsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 062/461] net: ethtool: phy: avoid NULL deref when PHY driver is unbound
-Date: Thu, 28 May 2026 21:43:11 +0200
-Message-ID: <20260528194648.710542907@linuxfoundation.org>
+Subject: [PATCH 7.0 063/461] ACPI: driver: Check ACPI_COMPANION() against NULL during probe
+Date: Thu, 28 May 2026 21:43:12 +0200
+Message-ID: <20260528194648.739594996@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,56 +52,302 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e3adf69f8eb121a9128c2b0029efd050d3649153 ]
+[ Upstream commit e4865a56d013e86e46ea6acea15bb6eae01898ff ]
 
-phydev->drv can become NULL while the phy_device is still attached to
-its net_device, namely after the PHY driver is unbound via sysfs:
+Since every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override(),
+platform drivers that rely on the existence of a device's ACPI companion
+object should verify its presence.
 
-	echo <mdio_id> > /sys/bus/mdio_bus/drivers/<phy_drv>/unbind
+Accordingly, add requisite ACPI_COMPANION() or ACPI_HANDLE() checks
+against NULL to 13 platform drivers handling core ACPI devices.
 
-phy_remove() clears phydev->drv but doesn't call phy_detach(), so the
-phy_device stays in the link topology xarray and ethnl_req_get_phydev()
-still hands it back. ETHTOOL_MSG_PHY_GET then oopses on:
+Also change the value returned by the ACPI thermal zone driver when
+the device's ACPI companion is not present to -ENODEV for consistency
+with the other drivers.
 
-	rep_data->drvname = kstrdup(phydev->drv->name, GFP_KERNEL);
-
-drvname is already treated as optional by phy_reply_size(),
-phy_fill_reply() and phy_cleanup_data(), so just skip the allocation
-when there is no driver bound.
-
-Fixes: 9dd2ad5e92b9 ("net: ethtool: phy: Convert the PHY_GET command to generic phy dump")
-Cc: stable@vger.kernel.org # 6.13.x
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260509215046.107157-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/4516068.ejJDZkT8p0@rafael.j.wysocki
+Cc: 7.0+ <stable@vger.kernel.org> # 7.0+
+[ reordered variable declaration to add NULL check before pre-existing stable-only code that dereferences the pointer ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/phy.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/acpi/ac.c                |    6 +++++-
+ drivers/acpi/acpi_pad.c          |    6 +++++-
+ drivers/acpi/acpi_tad.c          |    6 +++++-
+ drivers/acpi/battery.c           |    6 +++++-
+ drivers/acpi/button.c            |    9 +++++++--
+ drivers/acpi/ec.c                |    6 +++++-
+ drivers/acpi/hed.c               |    6 +++++-
+ drivers/acpi/nfit/core.c         |    6 +++++-
+ drivers/acpi/pfr_telemetry.c     |    6 +++++-
+ drivers/acpi/pfr_update.c        |    6 +++++-
+ drivers/acpi/sbs.c               |    6 +++++-
+ drivers/acpi/sbshc.c             |    6 +++++-
+ drivers/acpi/thermal.c           |    2 +-
+ drivers/acpi/tiny-power-button.c |    6 +++++-
+ 14 files changed, 68 insertions(+), 15 deletions(-)
 
---- a/net/ethtool/phy.c
-+++ b/net/ethtool/phy.c
-@@ -94,10 +94,12 @@ static int phy_prepare_data(const struct
- 	if (!rep_data->name)
+--- a/drivers/acpi/ac.c
++++ b/drivers/acpi/ac.c
+@@ -203,11 +203,15 @@ static const struct dmi_system_id ac_dmi
+ 
+ static int acpi_ac_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
+ 	struct power_supply_config psy_cfg = {};
++	struct acpi_device *adev;
+ 	struct acpi_ac *ac;
+ 	int result;
+ 
++	adev = ACPI_COMPANION(&pdev->dev);
++	if (!adev)
++		return -ENODEV;
++
+ 	ac = kzalloc_obj(struct acpi_ac);
+ 	if (!ac)
  		return -ENOMEM;
+--- a/drivers/acpi/acpi_pad.c
++++ b/drivers/acpi/acpi_pad.c
+@@ -426,9 +426,13 @@ static void acpi_pad_notify(acpi_handle
  
--	rep_data->drvname = kstrdup(phydev->drv->name, GFP_KERNEL);
--	if (!rep_data->drvname) {
--		ret = -ENOMEM;
--		goto err_free_name;
-+	if (phydev->drv) {
-+		rep_data->drvname = kstrdup(phydev->drv->name, GFP_KERNEL);
-+		if (!rep_data->drvname) {
-+			ret = -ENOMEM;
-+			goto err_free_name;
-+		}
- 	}
+ static int acpi_pad_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *adev;
+ 	acpi_status status;
  
- 	rep_data->upstream_type = pdn->upstream_type;
++	adev = ACPI_COMPANION(&pdev->dev);
++	if (!adev)
++		return -ENODEV;
++
+ 	strscpy(acpi_device_name(adev), ACPI_PROCESSOR_AGGREGATOR_DEVICE_NAME);
+ 	strscpy(acpi_device_class(adev), ACPI_PROCESSOR_AGGREGATOR_CLASS);
+ 
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -593,12 +593,16 @@ static void acpi_tad_remove(struct platf
+ static int acpi_tad_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	acpi_handle handle = ACPI_HANDLE(dev);
+ 	struct acpi_tad_driver_data *dd;
++	acpi_handle handle;
+ 	acpi_status status;
+ 	unsigned long long caps;
+ 	int ret;
+ 
++	handle = ACPI_HANDLE(dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	ret = acpi_install_cmos_rtc_space_handler(handle);
+ 	if (ret < 0) {
+ 		dev_info(dev, "Unable to install space handler\n");
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -1216,10 +1216,14 @@ static void sysfs_battery_cleanup(struct
+ 
+ static int acpi_battery_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+ 	struct acpi_battery *battery;
++	struct acpi_device *device;
+ 	int result;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	if (device->dep_unmet)
+ 		return -EPROBE_DEFER;
+ 
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -531,15 +531,20 @@ static int acpi_lid_input_open(struct in
+ 
+ static int acpi_button_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+ 	acpi_notify_handler handler;
++	struct acpi_device *device;
+ 	struct acpi_button *button;
+ 	struct input_dev *input;
+-	const char *hid = acpi_device_hid(device);
+ 	acpi_status status;
+ 	char *name, *class;
++	const char *hid;
+ 	int error = 0;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
++	hid = acpi_device_hid(device);
+ 	if (!strcmp(hid, ACPI_BUTTON_HID_LID) &&
+ 	     lid_init_state == ACPI_BUTTON_LID_INIT_DISABLED)
+ 		return -ENODEV;
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1679,10 +1679,14 @@ static int acpi_ec_setup(struct acpi_ec
+ 
+ static int acpi_ec_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	struct acpi_ec *ec;
+ 	int ret;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	strscpy(acpi_device_name(device), ACPI_EC_DEVICE_NAME);
+ 	strscpy(acpi_device_class(device), ACPI_EC_CLASS);
+ 
+--- a/drivers/acpi/hed.c
++++ b/drivers/acpi/hed.c
+@@ -50,9 +50,13 @@ static void acpi_hed_notify(acpi_handle
+ 
+ static int acpi_hed_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	int err;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	/* Only one hardware error device */
+ 	if (hed_handle)
+ 		return -EINVAL;
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3341,12 +3341,16 @@ static int acpi_nfit_probe(struct platfo
+ 	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct acpi_nfit_desc *acpi_desc;
+ 	struct device *dev = &pdev->dev;
+-	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct acpi_table_header *tbl;
++	struct acpi_device *adev;
+ 	acpi_status status = AE_OK;
+ 	acpi_size sz;
+ 	int rc = 0;
+ 
++	adev = ACPI_COMPANION(&pdev->dev);
++	if (!adev)
++		return -ENODEV;
++
+ 	rc = acpi_dev_install_notify_handler(adev, ACPI_DEVICE_NOTIFY,
+ 					     acpi_nfit_notify, dev);
+ 	if (rc)
+--- a/drivers/acpi/pfr_telemetry.c
++++ b/drivers/acpi/pfr_telemetry.c
+@@ -360,10 +360,14 @@ static void pfrt_log_put_idx(void *data)
+ 
+ static int acpi_pfrt_log_probe(struct platform_device *pdev)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
+ 	struct pfrt_log_device *pfrt_log_dev;
++	acpi_handle handle;
+ 	int ret;
+ 
++	handle = ACPI_HANDLE(&pdev->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	if (!acpi_has_method(handle, "_DSM")) {
+ 		dev_dbg(&pdev->dev, "Missing _DSM\n");
+ 		return -ENODEV;
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -538,10 +538,14 @@ static void pfru_put_idx(void *data)
+ 
+ static int acpi_pfru_probe(struct platform_device *pdev)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
+ 	struct pfru_device *pfru_dev;
++	acpi_handle handle;
+ 	int ret;
+ 
++	handle = ACPI_HANDLE(&pdev->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	if (!acpi_has_method(handle, "_DSM")) {
+ 		dev_dbg(&pdev->dev, "Missing _DSM\n");
+ 		return -ENODEV;
+--- a/drivers/acpi/sbs.c
++++ b/drivers/acpi/sbs.c
+@@ -631,11 +631,15 @@ static void acpi_sbs_callback(void *cont
+ 
+ static int acpi_sbs_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	struct acpi_sbs *sbs;
+ 	int result = 0;
+ 	int id;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	sbs = kzalloc_obj(struct acpi_sbs);
+ 	if (!sbs) {
+ 		result = -ENOMEM;
+--- a/drivers/acpi/sbshc.c
++++ b/drivers/acpi/sbshc.c
+@@ -240,11 +240,15 @@ static int smbus_alarm(void *context)
+ 
+ static int acpi_smbus_hc_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	int status;
+ 	unsigned long long val;
+ 	struct acpi_smb_hc *hc;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	status = acpi_evaluate_integer(device->handle, "_EC", NULL, &val);
+ 	if (ACPI_FAILURE(status)) {
+ 		pr_err("error obtaining _EC.\n");
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -790,7 +790,7 @@ static int acpi_thermal_probe(struct pla
+ 	int i;
+ 
+ 	if (!device)
+-		return -EINVAL;
++		return -ENODEV;
+ 
+ 	tz = kzalloc_obj(struct acpi_thermal);
+ 	if (!tz)
+--- a/drivers/acpi/tiny-power-button.c
++++ b/drivers/acpi/tiny-power-button.c
+@@ -38,9 +38,13 @@ static u32 acpi_tiny_power_button_event(
+ 
+ static int acpi_tiny_power_button_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	acpi_status status;
+ 
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
+ 	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON) {
+ 		status = acpi_install_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
+ 							  acpi_tiny_power_button_event,
 
 
