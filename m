@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0C52459DD;
-	Thu, 28 May 2026 20:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF43A2459DD;
+	Thu, 28 May 2026 20:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001285; cv=none; b=X0UlN3ACgZjykOKZYpduei4kGCOdfyee+XjofH96oBppRCzgC1iw2oaaH9PEiJRVwRrYqhyz8DEq3TyUpH0fxh0ZR1HLAAVjWGj1aK5uMO3zJ4+Z2+nf/byfxnNZapSHqK2B6kHZvVXc81IxEkcimQJxSXgJs+LfpyjZkNZJooY=
+	t=1780001288; cv=none; b=oLU5496oUg4y/4qe1KzG7PY8/d7vd2lmLf1pUmE4JRHUyFg9BzRmT2Hze/v79YLGNU9yUFbFiYAC5gJ0s1lH9jByihZ5HZCWbVyAHVX0ejnv2z0APIMt/Xx0zrnqyxcUTjp/9ooagJGEjksB/zE+61mdNAfVH8NKdPxQUK8ZAm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001285; c=relaxed/simple;
-	bh=uwl8cutzgof3rffvwJipYlMT+wJEq1WJWFTrFz6eF34=;
+	s=arc-20240116; t=1780001288; c=relaxed/simple;
+	bh=smTPM2gYAWckIC0AdfME/7XGKQAUO6FLBvvxyRDID6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bL/ONw9RWsOLBr+wiF7bjz/bPM8JqarO3bg5SbP+poORhiHWqbV/MA+TpFy1nFqjPkDYnqWL2fC5NYEyFGjGuqEH0NjOGHGwVckUPHHJSFh/3t/ChGN6zU6+sKKApCbBf0DcZ1PCd9zpf+wWX/uyeTC2bQd08dcFQAxXzqDYeiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFYjyTdD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0yQlEqL/aWCth6btEiXwxuU+DXEI2ZOjpsROvPCoPGzP2OlcDhDDiS5uFXQlrhwo+5KdnmTQ3uv5fyrc9OBXwmiIMFQI9tsGvBjXOAWVtG2VtFbiLfDIr8r4/8I1monsq2pPqtJtC/hV/pOhtp3QGxD9Ht/H/4IUwUi4lvByLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTarjUti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFYjyTdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4488F1F000E9;
-	Thu, 28 May 2026 20:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTarjUti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185321F000E9;
+	Thu, 28 May 2026 20:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001284;
-	bh=vOTzVQrZYLzYNPYb8jODORuNHLD4H8SlSHGU4zdBwA0=;
+	s=korg; t=1780001287;
+	bh=nDMCSWD0I13XQdSKGzyMStp1EePF8sFxJaFPKq8hBMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFYjyTdDpNyNrBDF0cjbRmkLCGnVut4BVdaOyodR2NE7O/d732shQir8H7fya9CR0
-	 K5RpLlFQCkY1r771/rOtd/1MnDYXZWYpRcvW0dSKmCQCB0562qMtDU8dqgaaosksLQ
-	 0uWcZI73ypalHLf426TZxMhs3EWs/ZImST+ZxaBM=
+	b=qTarjUtiHS0Niy+yQoZmUCGRhyoqHf7HxJe0gCW/gpMW9MN4fWTJtUefSbVPbp8kq
+	 F2ZlhoYMSaj6Y1+uWv3QhNPWoL/+fDUdmTXmvotDnCAW8cgF9g/h7F2Y0+0G4Prizf
+	 ly3ge9jE1/C9W1GW09r9NCzE/8174EPl926KODBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh R <vigneshr@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 066/186] spi: ti-qspi: fix use-after-free after DMA setup failure
-Date: Thu, 28 May 2026 21:49:06 +0200
-Message-ID: <20260528194930.735404637@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 075/186] drm/amd/display: Validate payload length and link_index in dc_process_dmub_aux_transfer_async
+Date: Thu, 28 May 2026 21:49:15 +0200
+Message-ID: <20260528194930.963304854@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,41 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
+commit 6c92f6d9600efa3ef0d9e560a2b52776d9803c29 upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+[Why&How]
+dc_process_dmub_aux_transfer_async() copies payload->length bytes into a
+16-byte stack buffer (dpaux.data[16]) guarded only by an ASSERT(), which
+is a no-op in release builds. If a caller ever passes length > 16 this
+results in a stack buffer overflow via memcpy.
 
-Make sure to clear the DMA channel pointer also if buffer allocation
-fails to avoid passing a pointer to the released channel to the DMA
-engine (or trying to free the channel a second time on late probe errors
-or driver unbind).
+Additionally, link_index is used to dereference dc->links[] without
+bounds checking against dc->link_count, risking an out-of-bounds access.
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
+Replace the ASSERT with a hard runtime check that returns false when
+payload->length exceeds the destination buffer size, and add a bounds
+check for link_index before it is used.
 
-Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Vignesh R <vigneshr@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: GitHub Copilot:Claude claude-4-opus
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ba4caa9fecdf7a38f98c878ad05a8a64148b6881)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ti-qspi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -874,6 +874,7 @@ static int ti_qspi_probe(struct platform
- 		dev_err(qspi->dev,
- 			"dma_alloc_coherent failed, using PIO mode\n");
- 		dma_release_channel(qspi->rx_chan);
-+		qspi->rx_chan = NULL;
- 		goto no_dma;
- 	}
- 	host->dma_rx = qspi->rx_chan;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -4965,7 +4965,11 @@ bool dc_process_dmub_aux_transfer_async(
+ 	uint8_t action;
+ 	union dmub_rb_cmd cmd = {0};
+ 
+-	ASSERT(payload->length <= 16);
++	if (link_index >= dc->link_count || !dc->links[link_index])
++		return false;
++
++	if (payload->length > sizeof(cmd.dp_aux_access.aux_control.dpaux.data))
++		return false;
+ 
+ 	cmd.dp_aux_access.header.type = DMUB_CMD__DP_AUX_ACCESS;
+ 	cmd.dp_aux_access.header.payload_bytes = 0;
 
 
