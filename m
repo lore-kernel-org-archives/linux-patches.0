@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D464E2C11F9;
-	Thu, 28 May 2026 20:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8E72580D7;
+	Thu, 28 May 2026 20:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999575; cv=none; b=r4jA3ZvZsFyVnXfQ2DYehniALegegjDCxPT40rRy55hO3fvOoC3CpxUtwU+Er5iKEwHMxeebbZLqw6yLGZRyHYJxzDE7vKsAfFT2Fw5NNjenbSXEYFDdFDCRSwWxxMix22jwBf7m7ipotgBRcrW7LPdKrf7/sZunFXwzV1kVAoE=
+	t=1779999578; cv=none; b=usDhaph0emQnFs/gxXTNu0s55N/9EZ0qtCyEIb32H5GUSWoeH0dhs9svG8M+4B83SBT+ppAuhpr7ilCRk+0bicz/3wsJzl3SlDGzqC1ldP9ML47X9m2ndlJO+luBYdi1RgFrQVGXmUQq4jixe49d6AHc9d5eYQgmAVmz8n1gQdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999575; c=relaxed/simple;
-	bh=SF8DqkoQZ0nzo416vBx7kyjxbGBmxpnfLnhn2JMqb7I=;
+	s=arc-20240116; t=1779999578; c=relaxed/simple;
+	bh=anpGqwcMUnhNQykqt2TXrCNeFrsJs1AZ2de5OQsufQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pja/XH4Q261JfxyN3fDusHKGcRVkq7DKwR+LVs3dIzFSq/ZTe+0RQQnT1o95sOUpr0sA4ETsHQWwrvZrKI5W3+8ft4vRWOR43UFzToxrzAg5t6Ae+x+fSBojTOyuOfZLBflk8V/5iKvZEnEmY5UfTJjPac9Pj2D12AOLOVvSde4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjiePxFF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sledwNYHrgYmGKV8YgvqXkyf6sBgXQj7HYqEx0d/PddVjkSusZ9dIEBQLnde+CXatT4SHbX6vrRmxqm20DE1dWT1E3NkyIhTgFjedQwlLM9pFFQ6D6jiyuZK/ziQzRN60xOj5bL0hFOGzU0+7XqOoiod36NHhZ5lZApihPljv9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH0fvuO5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjiePxFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AD91F000E9;
-	Thu, 28 May 2026 20:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH0fvuO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C977C1F000E9;
+	Thu, 28 May 2026 20:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999574;
-	bh=/TPC9Jmq72JGDqdK7wEvY17iil1TZXBVweQU1Cls9u8=;
+	s=korg; t=1779999577;
+	bh=SHv+BHoeXbACYOsJoEx2HZwlIweDl3Ab3DdEPEWzYZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjiePxFFTmo+yW24P52m78sb3EHvTrE7vjgch2wfsMLeXc8ctmYofrPafZm4Bhlva
-	 ZZj3tUhyRkJ/cnif/2wDtDYZYR7nv1KHDp3WHw7vEZTztg8v2oGeizCsLrM+H1mT3P
-	 XxL1rroQjL/dTLjLz8Fr4TouXjWoTTpB1OgCFc04=
+	b=KH0fvuO5thyBZ0JRL0kIoiAcLmOpZC1PswNhSSBra0sBjxwFRhgRNeyxKMCwq234B
+	 3G4S2H++dV9xSCPcseNe37Hxr2JBgEAhN3eSA1++4JlHdgHXeBXC9PxcNUm0pZytDT
+	 qIKF5gpmfRoyZN08Fvc+1gfo28zFEvD0xDmA2dU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.18 078/377] fs/ntfs3: handle attr_set_size() errors when truncating files
-Date: Thu, 28 May 2026 21:45:16 +0200
-Message-ID: <20260528194640.631084376@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 079/377] l2tp: use list_del_rcu in l2tp_session_unhash
+Date: Thu, 28 May 2026 21:45:17 +0200
+Message-ID: <20260528194640.660122217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,66 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 576248a34b927e93b2fd3fff7df735ba73ad7d01 ]
+commit 979c017803c40829b03acd9e5236e354b7622360 upstream.
 
-If attr_set_size() fails while truncating down, the error is silently
-ignored and the inode may be left in an inconsistent state.
+An unprivileged local user can pin a host CPU indefinitely in
+l2tp_session_get_by_ifname() by issuing L2TP_CMD_SESSION_GET on
+L2TP_ATTR_IFNAME concurrently with L2TP_CMD_SESSION_CREATE and
+L2TP_CMD_SESSION_DELETE on the same tunnel. All three commands take
+GENL_UNS_ADMIN_PERM, so CAP_NET_ADMIN in the netns user namespace
+suffices; on any host that has l2tp_core loaded the trigger is
+reachable from a standard `unshare -Urn` sandbox.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-[ Minor context conflict resolved. ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
+l2tp_session_unhash() removes a session from tunnel->session_list
+with list_del_init(), but that list is walked by
+l2tp_session_get_by_ifname() with list_for_each_entry_rcu() under
+rcu_read_lock_bh(). list_del_init() leaves the deleted entry's
+next/prev self-pointing; a reader that has loaded the entry and
+then advances pos->list.next reads &session->list, container_of()s
+back to the same session, and list_for_each_entry_rcu() never
+reaches the list head. The CPU stays in strcmp() inside the
+walker, with BH and preemption disabled, so RCU grace periods on
+the host stall behind it and the wedged thread cannot be killed
+(SIGKILL is delivered on syscall return).
+
+Use list_del_rcu() to match the existing list_add_rcu() in
+l2tp_session_register(); the deleted session remains visible to
+in-flight walkers with consistent next/prev pointers until
+kfree_rcu() in l2tp_session_free() releases it. tunnel->session_list
+has exactly one list_del_init() call site; the list_del_init
+(&session->clist) at l2tp_core.c:533 operates on the per-collision
+list, which is not walked under RCU. list_empty(&session->list) is
+not used anywhere in net/l2tp/ after the unhash point, so dropping
+the post-delete self-init is safe; the fix has no userspace-visible
+behavior change.
+
+Fixes: 89b768ec2dfef ("l2tp: use rcu list add/del when updating lists")
+Cc: stable@vger.kernel.org # 6.11+
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260518183447.64078-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/file.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/l2tp/l2tp_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -458,8 +458,8 @@ static int ntfs_truncate(struct inode *i
- {
- 	struct super_block *sb = inode->i_sb;
- 	struct ntfs_inode *ni = ntfs_i(inode);
--	int err, dirty = 0;
- 	u64 new_valid;
-+	int err;
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -1360,7 +1360,7 @@ static void l2tp_session_unhash(struct l
+ 		spin_lock_bh(&pn->l2tp_session_idr_lock);
  
- 	if (!S_ISREG(inode->i_mode))
- 		return 0;
-@@ -475,7 +475,6 @@ static int ntfs_truncate(struct inode *i
- 	}
+ 		/* Remove from the per-tunnel list */
+-		list_del_init(&session->list);
++		list_del_rcu(&session->list);
  
- 	new_valid = ntfs_up_block(sb, min_t(u64, ni->i_valid, new_size));
--
- 	truncate_setsize(inode, new_size);
- 
- 	ni_lock(ni);
-@@ -489,22 +488,19 @@ static int ntfs_truncate(struct inode *i
- 		ni->i_valid = new_valid;
- 
- 	ni_unlock(ni);
-+	if (unlikely(err))
-+		return err;
- 
- 	ni->std_fa |= FILE_ATTRIBUTE_ARCHIVE;
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
- 	if (!IS_DIRSYNC(inode)) {
--		dirty = 1;
-+		mark_inode_dirty(inode);
- 	} else {
- 		err = ntfs_sync_inode(inode);
- 		if (err)
- 			return err;
- 	}
- 
--	if (dirty)
--		mark_inode_dirty(inode);
--
--	/*ntfs_flush_inodes(inode->i_sb, inode, NULL);*/
--
- 	return 0;
- }
- 
+ 		/* Remove from per-net IDR */
+ 		if (tunnel->version == L2TP_HDR_VER_3) {
 
 
