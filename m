@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55579339866;
-	Thu, 28 May 2026 20:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6865932ABC0;
+	Thu, 28 May 2026 20:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999114; cv=none; b=DS4oAHDklJ7tcpA7l4lGTvEPWaOTWdd5Oqg8ZlsR5GKYTjDTg4TVKkARpK5dTQd+ZCXG5ElnN7g1l8//38sfRs2MXFNalztXjXGVolkTi2DF7uVPaqpJG6enssgzGGNUAiOmGRRoNIaz50QYOHs4gj59EaN7gs3XX1ph82piIYQ=
+	t=1779999117; cv=none; b=OmoeSoyRZhse8wB1DxTMBMUrgZ6KhgvJ5+lR8SRf2h1kuGQjUPnfzeauR7cxRaqv2+gMuBjEnHGrSpPDUHTuVaxVVYhyTtqFmPHpiJ6Ppp8jcB9/J3T449JQkqcgtbArTApVgaC0YDBVXMS1mSQYacpFW/Ll/nhaTM/LDSptk8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999114; c=relaxed/simple;
-	bh=TLsFDGcWqeNgOwJQuTATVlty+Zr7WlUWG8tk4TfGFp8=;
+	s=arc-20240116; t=1779999117; c=relaxed/simple;
+	bh=2QRbvSyU7VZYT8cv/q03oD92S0DXEaKbrfuW7N9c+wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajUjGHnbWk95JCRGXk0gppBotJymnRwbOU97TWORowZjsiR1i5OGf70uiBkYKJXHES49GUvugNjWPiMoWMpOejhPGeo+bHMlC8NCxhF/NU1ZurUADQxd/n10aeHNryvAPZM/A0cuxLAxcB2OwgEwYWxeqCEoADTMCyiN72FmsbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWjNglFp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Euuwo3IE6nDiHYGVF7OI7AS6/V/qwktKNTfttQ8rAqkM0iDliXmDKFzVY6YFNf+CLGdxVEPpGWTwSxnkN5XvmChXKbbzT0FMQiP/15Xo+K2D9/Scs7Vo6/NcLRTJVHRng/jHgbT43+yzCbXt9qsixHh/BnHAG/qFBR0EnDemsdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6vyWMrB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWjNglFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D941F000E9;
-	Thu, 28 May 2026 20:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6vyWMrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D8A1F000E9;
+	Thu, 28 May 2026 20:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999113;
-	bh=wGMyl+vkmGEzkuEUTmAys96moOw3X8lfIPqLsKO8gQA=;
+	s=korg; t=1779999116;
+	bh=pC/X1bznQmGnIlIbK5pFg3wcj98jAs/SLp0XppucG4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWjNglFp64CV6OWdRaIpGrd6eC0RETizwztHHUBL7c/G/Sed2qOJdOLO8Z+VrNbPZ
-	 N+hYkqJsUrfNGCLJe4x5iYkRN6YS8DUwWjhqpoxohklqsHrH6G8NPmMZ8RpIzk/M7O
-	 CUnENEynzpODqPfHxh4Q4cD3fAMzLlgR1tE+1N48=
+	b=S6vyWMrBjmHeWYvCe84Q4gQySjCbA1zmUj6pN9SzJtpckmSNHjoLc5zrpJBZUwiBO
+	 kyUCM+zHh5W1iIfxx81MRJCbRIcSQK4AI9+bMAHWNsE6GSZaPqTxO7+X1dBdsZyJdT
+	 G4/7VEo59vY1Wlq+gcjMsNkClXwU9pKeLdBbO3A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
 	Ilan Peer <ilan.peer@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 413/461] wifi: mac80211: fix MLE defragmentation
-Date: Thu, 28 May 2026 21:49:02 +0200
-Message-ID: <20260528194659.446424308@linuxfoundation.org>
+Subject: [PATCH 7.0 414/461] wifi: mac80211: fix multi-link element inheritance
+Date: Thu, 28 May 2026 21:49:03 +0200
+Message-ID: <20260528194659.476844169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -54,156 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a74e893f30db64cdce0fc7a96d3baa417bcd55f5 ]
+[ Upstream commit fe2d61a5d2849ee75dd4deeb2fe35f78d80721f8 ]
 
-If either reconf or EPCS multi-link element (MLE) is contained in
-a non-transmitted profile, the defragmentation routine is called
-with a pointer to the defragmented copy, but the original elements.
+When parsing a beacon, mac80211 erroneously inherits any
+reconfiguration or EPCS multi-link elements from the outer
+elements into the multi-BSSID profile that's requested, if
+connected to a non-transmitted BSS, unless that profile
+has a non-inheritance element.
 
-This is incorrect for two reasons:
- - if the original defragmentation was needed, it will not find the
-   correct data
- - if the original frame is at a higher address, the parsing will
-   potentially overrun the heap data (though given the layout of
-   the buffers, only into the new defragmentation buffer, and then
-   it has to stop and fail once that's filled with copied data.
+This also happens if parsing a multi-BSSID profile that
+doesn't have a non-inheritance element.
 
-Fix it by tracking the container along with the pointer and in
-doing so also unify the two almost identical defragmentation
-routines.
+Fix this by having an empty non-inheritance element so
+cfg80211_is_element_inherited() is invoked in these cases
+and causes the parser to skip the elements that should
+never be inherited.
 
-Fixes: 4d70e9c5488d ("wifi: mac80211: defragment reconfiguration MLE when parsing")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Fixes: cf36cdef10e2 ("wifi: mac80211: Add support for parsing Reconfiguration Multi Link element")
+Fixes: 24711d60f849 ("wifi: mac80211: Support parsing EPCS ML element")
 Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260508091031.8a6c34613178.I4de16ebbce2d27f2f8f98fc49949c7a376c2fe8d@changeid
+Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20260508091032.92184c0a3f08.I3c43b0b63d2cef8a4ddddaef1c2faaeb1de711ad@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 71 +++++++++++++++++++-------------------------
- 1 file changed, 31 insertions(+), 40 deletions(-)
+ net/mac80211/parse.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
 diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index 2b3632c6008af..666cdd5fd0ea5 100644
+index 666cdd5fd0ea5..77894d9971135 100644
 --- a/net/mac80211/parse.c
 +++ b/net/mac80211/parse.c
-@@ -34,6 +34,13 @@
+@@ -34,6 +34,15 @@
  #include "led.h"
  #include "wep.h"
  
-+struct ieee80211_elem_defrag {
-+	const struct element *elem;
-+	/* container start/len */
-+	const u8 *start;
-+	size_t len;
++static const u8 empty_non_inheritance[] = {
++	WLAN_EID_EXTENSION, 1, WLAN_EID_EXT_NON_INHERITANCE,
++	/*
++	 * cfg80211_is_element_inherited() hardcodes elements that
++	 * cannot be inherited, so we just need an empty one to be
++	 * calling it at all.
++	 */
 +};
 +
- struct ieee80211_elems_parse {
- 	/* must be first for kfree to work */
- 	struct ieee802_11_elems elems;
-@@ -41,11 +48,7 @@ struct ieee80211_elems_parse {
- 	/* The basic Multi-Link element in the original elements */
- 	const struct element *ml_basic_elem;
- 
--	/* The reconfiguration Multi-Link element in the original elements */
--	const struct element *ml_reconf_elem;
--
--	/* The EPCS Multi-Link element in the original elements */
--	const struct element *ml_epcs_elem;
-+	struct ieee80211_elem_defrag ml_reconf, ml_epcs;
- 
- 	bool multi_link_inner;
- 	bool skip_vendor;
-@@ -162,10 +165,14 @@ ieee80211_parse_extension_element(u32 *crc,
- 				}
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_RECONF:
--				elems_parse->ml_reconf_elem = elem;
-+				elems_parse->ml_reconf.elem = elem;
-+				elems_parse->ml_reconf.start = params->start;
-+				elems_parse->ml_reconf.len = params->len;
- 				break;
- 			case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
--				elems_parse->ml_epcs_elem = elem;
-+				elems_parse->ml_epcs.elem = elem;
-+				elems_parse->ml_epcs.start = params->start;
-+				elems_parse->ml_epcs.len = params->len;
- 				break;
- 			default:
- 				break;
-@@ -990,46 +997,27 @@ ieee80211_prep_mle_link_parse(struct ieee80211_elems_parse *elems_parse,
- 				      sub->start, sub->len);
- }
- 
--static void
--ieee80211_mle_defrag_reconf(struct ieee80211_elems_parse *elems_parse)
--{
--	struct ieee802_11_elems *elems = &elems_parse->elems;
--	ssize_t ml_len;
--
--	ml_len = cfg80211_defragment_element(elems_parse->ml_reconf_elem,
--					     elems->ie_start,
--					     elems->total_len,
--					     elems_parse->scratch_pos,
--					     elems_parse->scratch +
--						elems_parse->scratch_len -
--						elems_parse->scratch_pos,
--					     WLAN_EID_FRAGMENT);
--	if (ml_len < 0)
--		return;
--	elems->ml_reconf = (void *)elems_parse->scratch_pos;
--	elems->ml_reconf_len = ml_len;
--	elems_parse->scratch_pos += ml_len;
--}
--
--static void
--ieee80211_mle_defrag_epcs(struct ieee80211_elems_parse *elems_parse)
-+static const void *
-+ieee80211_mle_defrag(struct ieee80211_elems_parse *elems_parse,
-+		     struct ieee80211_elem_defrag *defrag,
-+		     size_t *out_len)
+ struct ieee80211_elem_defrag {
+ 	const struct element *elem;
+ 	/* container start/len */
+@@ -923,7 +932,7 @@ ieee80211_prep_mle_link_parse(struct ieee80211_elems_parse *elems_parse,
  {
--	struct ieee802_11_elems *elems = &elems_parse->elems;
-+	const void *ret;
+ 	struct ieee802_11_elems *elems = &elems_parse->elems;
+ 	struct ieee80211_mle_per_sta_profile *prof;
+-	const struct element *tmp;
++	const struct element *tmp, *ret;
  	ssize_t ml_len;
+ 	const u8 *end;
  
--	ml_len = cfg80211_defragment_element(elems_parse->ml_epcs_elem,
--					     elems->ie_start,
--					     elems->total_len,
-+	ml_len = cfg80211_defragment_element(defrag->elem,
-+					     defrag->start, defrag->len,
- 					     elems_parse->scratch_pos,
- 					     elems_parse->scratch +
- 						elems_parse->scratch_len -
- 						elems_parse->scratch_pos,
- 					     WLAN_EID_FRAGMENT);
- 	if (ml_len < 0)
--		return;
--	elems->ml_epcs = (void *)elems_parse->scratch_pos;
--	elems->ml_epcs_len = ml_len;
-+		return NULL;
-+	ret = elems_parse->scratch_pos;
-+	*out_len = ml_len;
- 	elems_parse->scratch_pos += ml_len;
-+	return ret;
+@@ -993,8 +1002,17 @@ ieee80211_prep_mle_link_parse(struct ieee80211_elems_parse *elems_parse,
+ 	sub->from_ap = params->from_ap;
+ 	sub->link_id = -1;
+ 
+-	return cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
+-				      sub->start, sub->len);
++	ret = cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
++				     sub->start, sub->len);
++	if (ret)
++		return ret;
++
++	/*
++	 * Since we know we want and found a profile, apply an empty
++	 * non-inheritance if the profile didn't have one, so that any
++	 * element that shouldn't be inherited by spec isn't.
++	 */
++	return (const void *)empty_non_inheritance;
  }
  
- struct ieee802_11_elems *
-@@ -1109,9 +1097,12 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
- 		_ieee802_11_parse_elems_full(&sub, elems_parse, NULL);
- 	}
+ static const void *
+@@ -1030,6 +1048,7 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
+ 	size_t scratch_len = 3 * params->len;
+ 	bool multi_link_inner = false;
  
--	ieee80211_mle_defrag_reconf(elems_parse);
--
--	ieee80211_mle_defrag_epcs(elems_parse);
-+	elems->ml_reconf = ieee80211_mle_defrag(elems_parse,
-+						&elems_parse->ml_reconf,
-+						&elems->ml_reconf_len);
-+	elems->ml_epcs = ieee80211_mle_defrag(elems_parse,
-+					      &elems_parse->ml_epcs,
-+					      &elems->ml_epcs_len);
++	BUILD_BUG_ON(sizeof(empty_non_inheritance) != empty_non_inheritance[1] + 2);
+ 	BUILD_BUG_ON(offsetof(typeof(*elems_parse), elems) != 0);
  
- 	if (elems->tim && !elems->parse_error) {
- 		const struct ieee80211_tim_ie *tim_ie = elems->tim;
+ 	/* cannot parse for both a specific link and non-transmitted BSS */
+@@ -1077,6 +1096,17 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
+ 
+ 		non_inherit = cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
+ 						     sub.start, nontx_len);
++		/*
++		 * If it's a non-transmitted BSS, we shouldn't pick
++		 * any elements in the outer parsing that shouldn't
++		 * be inherited. If the profile has a non-inheritance
++		 * element this automatically happens, but if not then
++		 * provide an empty one so that the hard-coded elements
++		 * in cfg80211_is_element_inherited() are ignored, but
++		 * it must be called.
++		 */
++		if (params->bss->transmitted_bss && !non_inherit)
++			non_inherit = (const void *)empty_non_inheritance;
+ 	} else {
+ 		/* must always parse to get elems_parse->ml_basic_elem */
+ 		non_inherit = ieee80211_prep_mle_link_parse(elems_parse, params,
 -- 
 2.53.0
 
