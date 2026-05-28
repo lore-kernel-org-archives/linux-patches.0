@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8721225F7B9;
-	Thu, 28 May 2026 20:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D50D223328;
+	Thu, 28 May 2026 20:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000375; cv=none; b=g6oDE3wZxnP5liVOMH34yICJcTdcDY/BYUaOUouHRzKgq97ahdrKTCpdHsbVn6zU4XdFAeoWKSiXLLW0PidjimYWMiYLZyf3bS4rxw30VpsEhUzvpFl6eARqRRM1KUv1qGJP5g6NHHM//U5JAS7l8M5UROAe3cy+4y1eFbermTg=
+	t=1780000378; cv=none; b=umaEOEsQRSkHeVtkxiIwMOWp6PrIxveXc1BSkoousTzJkAMI0Tj8qN4+1qb2N6EZT1jglPey45mMJDk/FTHC+bZ6YBBPu08lvWYvUL3CBNnoM7VD/zegXLWiYr9TJ3lxeQTQNnwZztOGwXvlcRfeXJ3asQmJo9YaXhAO8bv0VnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000375; c=relaxed/simple;
-	bh=Pnp4KZBQ367H8T4jrmYZpNAOTwOB09TccUV2MW9lk6A=;
+	s=arc-20240116; t=1780000378; c=relaxed/simple;
+	bh=gXZLikwZwCw6iJg5Gm7hi5fQmIZUC85AQn4Z8l+aLTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1H/vBYXKgGhae3S5MJdAcFJ0ZWkj0ZbqBcIkKb7+VRPocM3m8hyqifwn+kXyTg8SO3brxnBF7so7MG2sO/hru9NESAgHyxiW8caGS1bTf04SpiFUep2kXab5sMekN1GMTXNBnHqUZPxTnV/TdIgkVk4fFheraO0jPT/oVrqxN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+nDPAj/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V0douASZkVrN4MBf2Rr005jf1E3dNVRdjOlDfkHfTe89U8Obj2DCDxeKfhzmlvKoODyrPp9+zBX+jZPj7DzKlbAwKR1ptjcF5vqkR2ujJ8AsZDq4zLOegNHw6U323T+c7aueb1eZF/0Fy4YNqTRZowf0g+MwjaVlTaNyM9z7mNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cuc0+Uz/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+nDPAj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68241F000E9;
-	Thu, 28 May 2026 20:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cuc0+Uz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA5C1F000E9;
+	Thu, 28 May 2026 20:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000374;
-	bh=CdesftrJsv/x2IMPjbnyzgDlyBm5r6gC0ue+SlU2fDE=;
+	s=korg; t=1780000377;
+	bh=nVw/GAWRPDTpoXqj3ToTPOf1tgLQuw9E99VRKweGWx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+nDPAj/Wq3q8Cm5LULtEEJPasMrLvuzovk9KkJ419ouIuY43vGG55kef+rCyi+Kv
-	 CXcMclfBQ8c+MyuKbV5O82j7QGC0LgFrIzk8S8l5kTdgHgoTpI5yGzskbIzpoIEIfJ
-	 Enf+ic/yVqtxXzsPF8pK9dsHncpnKFhbffWbBOZY=
+	b=Cuc0+Uz/Wc8qv6YrAC+xwCNsfpQGH03OsedsQt0oc47JWwICxrj1Q0osim+yOLC3P
+	 jyB416DA7bm5BeuFVkpYNiZG8BxjXAHgDYuRVwLm+dlTgTaHRp1SeaxsnKmFhJsVi6
+	 aPj3EqmyXBluIQB7G6Ecgb789BNoR3pDRylkPbc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/272] drm/imagination: Synchronize interrupts before suspending the GPU
-Date: Thu, 28 May 2026 21:46:37 +0200
-Message-ID: <20260528194630.036554823@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 024/272] smb: client: reject userspace cifs.spnego descriptions
+Date: Thu, 28 May 2026 21:46:38 +0200
+Message-ID: <20260528194630.063358162@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,121 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Belle <alessio.belle@imgtec.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit 2d7f05cddf4c268cc36256a2476946041dbdd36d upstream.
+commit 3da1fdf4efbc490041eb4f836bf596201203f8f2 upstream.
 
-The runtime PM suspend callback doesn't know whether the IRQ handler is
-in progress on a different CPU core and doesn't wait for it to finish.
+cifs.spnego key descriptions contain authority-bearing fields such as
+pid, uid, creduid, and upcall_target that cifs.upcall treats as
+kernel-originating inputs. However, userspace can also create keys of
+this type through request_key(2) or add_key(2), allowing those fields to
+be supplied without CIFS origin.
 
-Depending on timing, the IRQ handler could be running while the GPU is
-suspended, leading to it being killed when trying to access GPU
-registers. See example signature below.
+Only accept cifs.spnego descriptions while CIFS is using its private
+spnego_cred to request the key.
 
-In a power off sequence initiated by the runtime PM suspend callback,
-wait for any IRQ handlers in progress on other CPU cores to finish, by
-calling synchronize_irq().
-
-This version of the patch contains only the part of the upstream commit
-that applies to 6.12; the rest was a revert of code added in 6.16.
-The second paragraph above is different because on 6.12 this kind of bug
-doesn't seem to crash the entire kernel, only the IRQ handler, leaving
-the driver unusable in practice.
-
-The crash signature below is also different, both because of the above,
-and because there was no support for TI AM68 SK in 6.12.
-
-Example signature on a TI AM62 SK platform:
-
-  [ 7827.189088] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
-  [ 7827.197311] Modules linked in:
-  [ 7827.222015] CPU: 0 UID: 0 PID: 461 Comm: irq/405-gpu Tainted: G   M               6.12.90 #5
-  [ 7827.230461] Tainted: [M]=MACHINE_CHECK
-  [ 7827.234203] Hardware name: Texas Instruments AM625 SK (DT)
-  [ 7827.239682] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  [ 7827.246637] pc : pvr_device_irq_thread_handler+0x64/0x180 [powervr]
-  [ 7827.252941] lr : irq_thread_fn+0x2c/0xa8
-  [ 7827.256872] sp : ffff800082d8bd50
-  [ 7827.260179] x29: ffff800082d8bd70 x28: ffff8000800ce374 x27: ffff800081829cc0
-  [ 7827.267328] x26: ffff000004701e80 x25: ffff000005b884ac x24: ffff000005bd5780
-  [ 7827.274472] x23: ffff00000da40bc0 x22: ffff00000da40ba0 x21: ffff800082d8bd58
-  [ 7827.281614] x20: ffff00000da40000 x19: ffff000004701e80 x18: 08000000c6af9003
-  [ 7827.288750] x17: 0000000000000010 x16: 0000000000000068 x15: 0df234008df66400
-  [ 7827.295886] x14: 0000000000000000 x13: 000005c68f6e7191 x12: 000000000000025e
-  [ 7827.303020] x11: 00000000000000c0 x10: 0000000000000ac0 x9 : ffff800082d8bd00
-  [ 7827.310157] x8 : ffff000005bd62a0 x7 : ffff000077261380 x6 : 00000000000005c6
-  [ 7827.317292] x5 : 000000000000425e x4 : 0000000000000000 x3 : 0000000000000000
-  [ 7827.324428] x2 : 00000000000008a8 x1 : ffff800082d608a8 x0 : ffff000005bd5780
-  [ 7827.331568] Call trace:
-  [ 7827.334011]  pvr_device_irq_thread_handler+0x64/0x180 [powervr]
-  [ 7827.339954]  irq_thread_fn+0x2c/0xa8
-  [ 7827.343530]  irq_thread+0x16c/0x2f4
-  [ 7827.347019]  kthread+0x110/0x114
-  [ 7827.350248]  ret_from_fork+0x10/0x20
-  [ 7827.353834] Code: f9446682 f943c281 b9404442 8b020021 (b9400021)
-  [ 7827.359921] ---[ end trace 0000000000000000 ]---
-  [ 7827.364820] genirq: exiting task "irq/405-gpu" (461) is an active IRQ thread (irq 405)
-  [ 8011.230278] powervr fd00000.gpu: Job timeout
-  [ 8011.230350] powervr fd00000.gpu: Job timeout
-  [ 8011.230426] powervr fd00000.gpu: Job timeout
-
-Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
-Fixes: 96822d38ff57 ("drm/imagination: Handle Rogue safety event IRQs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patch.msgid.link/20260310-drain-irqs-before-suspend-v1-1-bf4f9ed68e75@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f1d662a7d5e5 ("[CIFS] Add upcall files for cifs to use spnego/kerberos")
+Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_power.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/smb/client/cifs_spnego.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
-index bf4cf8426f913..077d2651798c8 100644
---- a/drivers/gpu/drm/imagination/pvr_power.c
-+++ b/drivers/gpu/drm/imagination/pvr_power.c
-@@ -84,7 +84,7 @@ pvr_power_request_pwr_off(struct pvr_device *pvr_dev)
+--- a/fs/smb/client/cifs_spnego.c
++++ b/fs/smb/client/cifs_spnego.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include <linux/list.h>
++#include <linux/cred.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <keys/user-type.h>
+@@ -46,12 +47,27 @@ cifs_spnego_key_destroy(struct key *key)
+ 	kfree(key->payload.data[0]);
  }
  
- static int
--pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset)
-+pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset, bool rpm_suspend)
- {
- 	if (!hard_reset) {
- 		int err;
-@@ -100,6 +100,11 @@ pvr_power_fw_disable(struct pvr_device *pvr_dev, bool hard_reset)
- 			return err;
- 	}
++static int
++cifs_spnego_key_vet_description(const char *description)
++{
++	/*
++	 * cifs.spnego descriptions are authority-bearing inputs to cifs.upcall.
++	 * They are only valid when produced by CIFS while using the private
++	 * spnego_cred installed below.  Do not let userspace create this type
++	 * of key through request_key(2)/add_key(2), since the helper treats
++	 * pid/uid/creduid/upcall_target as kernel-originating fields.
++	 */
++	if (current_cred() != spnego_cred)
++		return -EPERM;
++	return 0;
++}
  
-+	if (rpm_suspend) {
-+		/* Wait for late processing of GPU or firmware IRQs in other cores */
-+		synchronize_irq(pvr_dev->irq);
-+	}
-+
- 	return pvr_fw_stop(pvr_dev);
- }
- 
-@@ -243,7 +248,7 @@ pvr_power_device_suspend(struct device *dev)
- 		return -EIO;
- 
- 	if (pvr_dev->fw_dev.booted) {
--		err = pvr_power_fw_disable(pvr_dev, false);
-+		err = pvr_power_fw_disable(pvr_dev, false, true);
- 		if (err)
- 			goto err_drm_dev_exit;
- 	}
-@@ -425,7 +430,7 @@ pvr_power_reset(struct pvr_device *pvr_dev, bool hard_reset)
- 			queues_disabled = true;
- 		}
- 
--		err = pvr_power_fw_disable(pvr_dev, hard_reset);
-+		err = pvr_power_fw_disable(pvr_dev, hard_reset, false);
- 		if (!err) {
- 			if (hard_reset) {
- 				pvr_dev->fw_dev.booted = false;
--- 
-2.53.0
-
+ /*
+  * keytype for CIFS spnego keys
+  */
+ struct key_type cifs_spnego_key_type = {
+ 	.name		= "cifs.spnego",
++	.vet_description = cifs_spnego_key_vet_description,
+ 	.instantiate	= cifs_spnego_key_instantiate,
+ 	.destroy	= cifs_spnego_key_destroy,
+ 	.describe	= user_describe,
 
 
