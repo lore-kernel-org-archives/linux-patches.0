@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8C827603A;
-	Thu, 28 May 2026 20:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E34827603A;
+	Thu, 28 May 2026 20:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001538; cv=none; b=cZleaFzS1Bt1Vs74bv3bUtxGmV9HS2ZQtfWuBkM047ad0LYybl40ZsRVd0WsWsg35bPrMidvHlCS3c4KyLsDgKEFcU5Q/OR+ASeQbWIqV1CEnO3UunJgv/zkGkK7axCkkgQokhVmG9q33MwvJK1k3LIJ22CjsBlDaosQIzphxPQ=
+	t=1780001541; cv=none; b=fy2p00ZKWTPc9WRFYGSZYXFjSNF+2xbIufOmxxOJYMNXzT0BjVat0bqpfQokavm+Nu5KKqjh4ASAFuFXz3/wBhIMmelPXwitpZlqd+k9RgQiW+tscKgzKfyVORb3o03/vG3grVS0HPYtXmy3sGvQS/nNSY9bjCmTabun9STb5pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001538; c=relaxed/simple;
-	bh=pjXOQBtiNrG+oGwsUUrbYz9H/E0OA+sUlucbzpi38VA=;
+	s=arc-20240116; t=1780001541; c=relaxed/simple;
+	bh=HozFXRsX+Az/rbOJfh0bKt0RDaWO9N0i9xNRb3BM4vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEd7Nad+cKxan0xJqhquxv9kimAzTcXPRJbV++zwss3RkDoAkyIr48vi9d7zew5rxrf82SZiWzc7mD9Ag8C+kTNFNOBRuu9s9TvHcdC8WYPp2EuYeYTYu/ebrejRzdImuOeEJleTAiTpnFCs8U4ZIv0TSnM6ymwq6NAkipPxD5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYoErqX2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zj/FocAp7byV1XZhfcSAKdhG283FjVKtTQ5wnZ21/mC3sHmgNHSgCsXznolNCbv2rpau9mP8P2/4RddptkBX5SZPV0fy3SZyRKL3F4saRa9QxrsMOrIpMgJByeJM6GHP1gWYJIBOhCP9bRPim+ciH6T5NSY2X2BOUAnmVPClIl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FE+E37jX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYoErqX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97B11F000E9;
-	Thu, 28 May 2026 20:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FE+E37jX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AED1F000E9;
+	Thu, 28 May 2026 20:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001537;
-	bh=KaMqL5A355LXOOtmh0iadIqs2ctMwryEEn6Oq4pXax4=;
+	s=korg; t=1780001540;
+	bh=9AfEXmudfUha9pwXnO2IrOwG5oIsm1YiFegWEa3lfCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZYoErqX2rDDy2s2p1hIaLm8R8MqHCuNU1f22RcRylyCyud+wiRozweIpUgDg+vZtM
-	 btIIrhLf+2gfFU87rFhN0lp+ym6B+k6sNBvGFoQ9//nk6ZcxCzHO4wcktfQsOdXGNT
-	 46Kuun7YarLcdchzrofwv6oc6y90afimdeByGMaM=
+	b=FE+E37jXzL1kc6ujGzImy3t/Qve5zsQ1FBzWBHF0pfvYxqNztPO2GO94gUg99Sx96
+	 P7HgSUs+JiIVUHls2qv/v9/Fgp/90x0Jff4ppNhKFIvt0MUYsJF7+55FtdKF+DL4Km
+	 t4rOBRyt4+HK62vmvrmVVXzOSws5AlC1N1KSGJ8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	syzbot+ae231e0552fa77b26ea1@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/186] net: phy: c45: add genphy_c45_pma_read_ext_abilities() function
-Date: Thu, 28 May 2026 21:50:26 +0200
-Message-ID: <20260528194932.895010543@linuxfoundation.org>
+Subject: [PATCH 6.6 164/186] bridge: mcast: Fix a possible use-after-free when removing a bridge port
+Date: Thu, 28 May 2026 21:50:44 +0200
+Message-ID: <20260528194933.392836713@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -53,190 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 0c476157085fe2ad13b9bec70ea672e86647fa1a ]
+[ Upstream commit 4df78ff02629c7729168f0696a7a2123c389818d ]
 
-Move part of the genphy_c45_pma_read_abilities() code to a separate
-function.
+When per-VLAN multicast snooping is enabled, the bridge iterates over
+all the bridge ports, disables the per-port multicast context on each
+port and enables the per-{port, VLAN} multicast contexts instead. The
+reverse happens when per-VLAN multicast snooping is disabled.
 
-Some PHYs do not implement PMA/PMD status 2 register (Register 1.8) but
-do implement PMA/PMD extended ability register (Register 1.11). To make
-use of it, we need to be able to access this part of code separately.
+When global multicast snooping is enabled, the bridge iterates over all
+the bridge ports and enables the per-port multicast context on each
+port. The reverse happens when multicast snooping is disabled.
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20231212054144.87527-2-o.rempel@pengutronix.de
+The above scheme can result in a situation where both types of contexts
+(per-port and per-{port, VLAN}) are enabled on a single bridge port:
+
+ # ip link add name br1 up type bridge mcast_snooping 1 mcast_querier 1 vlan_filtering 1
+ # ip link add name dummy1 up master br1 type dummy
+ # ip link set dev br1 type bridge mcast_vlan_snooping 1
+ # ip link set dev br1 type bridge mcast_snooping 0
+ # ip link set dev br1 type bridge mcast_snooping 1
+
+This is not intended and it is a problem since the commit cited below.
+Prior to this commit, when removing a bridge port,
+br_multicast_disable_port() would disable the per-port multicast context
+and the per-{port, VLAN} multicast contexts would get disabled when
+flushing VLANs.
+
+After this commit, br_multicast_disable_port() only disables the
+per-port multicast context if per-VLAN multicast snooping is disabled.
+If both types of contexts were enabled on the port when it was removed,
+the per-port multicast context would remain enabled when freeing the
+bridge port, leading to a use-after-free [1].
+
+Fix by preventing the bridge from enabling / disabling the per-port
+multicast contexts when toggling global multicast snooping if per-VLAN
+multicast snooping is enabled.
+
+[1]
+ODEBUG: free active (active state 0) object: ffff88810f8bda78 object type: timer_list hint: br_ip6_multicast_port_query_expired (net/bridge/br_multicast.c:1927)
+WARNING: lib/debugobjects.c:629 at debug_print_object+0x1b1/0x3e0, CPU#5: swapper/5/0
+[...]
+Call Trace:
+<IRQ>
+__debug_check_no_obj_freed (lib/debugobjects.c:1116)
+kfree (mm/slub.c:2620 mm/slub.c:6250 mm/slub.c:6565)
+kobject_cleanup (lib/kobject.c:689)
+rcu_do_batch (kernel/rcu/tree.c:2617)
+rcu_core (kernel/rcu/tree.c:2869)
+handle_softirqs (kernel/softirq.c:622)
+__irq_exit_rcu (kernel/softirq.c:656 kernel/softirq.c:496 kernel/softirq.c:735)
+irq_exit_rcu (kernel/softirq.c:752)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1061 (discriminator 47) arch/x86/kernel/apic/apic.c:1061 (discriminator 47))
+</IRQ>
+
+Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
+Reported-by: syzbot+ae231e0552fa77b26ea1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/87qznowlfs.ffs@tglx/
+Reported-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260517121122.188333-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c78bdba7b966 ("net: phy: DP83TC811: add reading of abilities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy-c45.c | 129 ++++++++++++++++++++++----------------
- include/linux/phy.h       |   1 +
- 2 files changed, 75 insertions(+), 55 deletions(-)
+ net/bridge/br_multicast.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/phy-c45.c b/drivers/net/phy/phy-c45.c
-index 8e6fd4962c486..747d14bf152c3 100644
---- a/drivers/net/phy/phy-c45.c
-+++ b/drivers/net/phy/phy-c45.c
-@@ -919,6 +919,79 @@ int genphy_c45_pma_baset1_read_abilities(struct phy_device *phydev)
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index f0a0f24f2172a..9c91b663bc3bd 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -4641,10 +4641,24 @@ static void br_multicast_start_querier(struct net_bridge_mcast *brmctx,
+ 	rcu_read_unlock();
  }
- EXPORT_SYMBOL_GPL(genphy_c45_pma_baset1_read_abilities);
  
-+/**
-+ * genphy_c45_pma_read_ext_abilities - read supported link modes from PMA
-+ * @phydev: target phy_device struct
-+ *
-+ * Read the supported link modes from the PMA/PMD extended ability register
-+ * (Register 1.11).
-+ */
-+int genphy_c45_pma_read_ext_abilities(struct phy_device *phydev)
-+{
-+	int val;
+-static void br_multicast_del_grps(struct net_bridge *br)
++static void br_multicast_enable_all_ports(struct net_bridge *br)
+ {
+ 	struct net_bridge_port *port;
+ 
++	if (br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED))
++		return;
 +
-+	val = phy_read_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_EXTABLE);
-+	if (val < 0)
-+		return val;
-+
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseLRM_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10GBLRM);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseT_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10GBT);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10GBKX4);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseKR_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10GBKR);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseT_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_1000BT);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_1000BKX);
-+
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_100baseT_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_100BTX);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_100baseT_Half_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_100BTX);
-+
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10baseT_Full_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10BT);
-+	linkmode_mod_bit(ETHTOOL_LINK_MODE_10baseT_Half_BIT,
-+			 phydev->supported,
-+			 val & MDIO_PMA_EXTABLE_10BT);
-+
-+	if (val & MDIO_PMA_EXTABLE_NBT) {
-+		val = phy_read_mmd(phydev, MDIO_MMD_PMAPMD,
-+				   MDIO_PMA_NG_EXTABLE);
-+		if (val < 0)
-+			return val;
-+
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
-+				 phydev->supported,
-+				 val & MDIO_PMA_NG_EXTABLE_2_5GBT);
-+
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_5000baseT_Full_BIT,
-+				 phydev->supported,
-+				 val & MDIO_PMA_NG_EXTABLE_5GBT);
-+	}
-+
-+	if (val & MDIO_PMA_EXTABLE_BT1) {
-+		val = genphy_c45_pma_baset1_read_abilities(phydev);
-+		if (val < 0)
-+			return val;
-+	}
-+
-+	return 0;
++	list_for_each_entry(port, &br->port_list, list)
++		__br_multicast_enable_port_ctx(&port->multicast_ctx);
 +}
-+EXPORT_SYMBOL_GPL(genphy_c45_pma_read_ext_abilities);
 +
- /**
-  * genphy_c45_pma_read_abilities - read supported link modes from PMA
-  * @phydev: target phy_device struct
-@@ -962,63 +1035,9 @@ int genphy_c45_pma_read_abilities(struct phy_device *phydev)
- 			 val & MDIO_PMA_STAT2_10GBER);
++static void br_multicast_disable_all_ports(struct net_bridge *br)
++{
++	struct net_bridge_port *port;
++
++	if (br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED))
++		return;
++
+ 	list_for_each_entry(port, &br->port_list, list)
+ 		__br_multicast_disable_port_ctx(&port->multicast_ctx);
+ }
+@@ -4652,7 +4666,6 @@ static void br_multicast_del_grps(struct net_bridge *br)
+ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 			struct netlink_ext_ack *extack)
+ {
+-	struct net_bridge_port *port;
+ 	bool change_snoopers = false;
+ 	int err = 0;
  
- 	if (val & MDIO_PMA_STAT2_EXTABLE) {
--		val = phy_read_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_EXTABLE);
-+		val = genphy_c45_pma_read_ext_abilities(phydev);
- 		if (val < 0)
- 			return val;
--
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseLRM_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10GBLRM);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseT_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10GBT);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10GBKX4);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10000baseKR_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10GBKR);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseT_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_1000BT);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_1000BKX);
--
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_100baseT_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_100BTX);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_100baseT_Half_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_100BTX);
--
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10baseT_Full_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10BT);
--		linkmode_mod_bit(ETHTOOL_LINK_MODE_10baseT_Half_BIT,
--				 phydev->supported,
--				 val & MDIO_PMA_EXTABLE_10BT);
--
--		if (val & MDIO_PMA_EXTABLE_NBT) {
--			val = phy_read_mmd(phydev, MDIO_MMD_PMAPMD,
--					   MDIO_PMA_NG_EXTABLE);
--			if (val < 0)
--				return val;
--
--			linkmode_mod_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
--					 phydev->supported,
--					 val & MDIO_PMA_NG_EXTABLE_2_5GBT);
--
--			linkmode_mod_bit(ETHTOOL_LINK_MODE_5000baseT_Full_BIT,
--					 phydev->supported,
--					 val & MDIO_PMA_NG_EXTABLE_5GBT);
--		}
--
--		if (val & MDIO_PMA_EXTABLE_BT1) {
--			val = genphy_c45_pma_baset1_read_abilities(phydev);
--			if (val < 0)
--				return val;
--		}
+@@ -4669,7 +4682,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 	br_opt_toggle(br, BROPT_MULTICAST_ENABLED, !!val);
+ 	if (!br_opt_get(br, BROPT_MULTICAST_ENABLED)) {
+ 		change_snoopers = true;
+-		br_multicast_del_grps(br);
++		br_multicast_disable_all_ports(br);
+ 		goto unlock;
  	}
  
- 	/* This is optional functionality. If not supported, we may get an error
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index a57e799b1de18..586973404ad47 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -1857,6 +1857,7 @@ int genphy_c45_an_config_aneg(struct phy_device *phydev);
- int genphy_c45_an_disable_aneg(struct phy_device *phydev);
- int genphy_c45_read_mdix(struct phy_device *phydev);
- int genphy_c45_pma_read_abilities(struct phy_device *phydev);
-+int genphy_c45_pma_read_ext_abilities(struct phy_device *phydev);
- int genphy_c45_pma_baset1_read_abilities(struct phy_device *phydev);
- int genphy_c45_read_eee_abilities(struct phy_device *phydev);
- int genphy_c45_pma_baset1_read_master_slave(struct phy_device *phydev);
+@@ -4677,8 +4690,7 @@ int br_multicast_toggle(struct net_bridge *br, unsigned long val,
+ 		goto unlock;
+ 
+ 	br_multicast_open(br);
+-	list_for_each_entry(port, &br->port_list, list)
+-		__br_multicast_enable_port_ctx(&port->multicast_ctx);
++	br_multicast_enable_all_ports(br);
+ 
+ 	change_snoopers = true;
+ 
 -- 
 2.53.0
 
