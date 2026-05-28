@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991B830C15B;
-	Thu, 28 May 2026 20:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120E72D9787;
+	Thu, 28 May 2026 20:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999673; cv=none; b=WvBqjLQXl1FZGeISvpOp8DdUKqtS6qDY7DOR4PttIhkIgaFtyW1mNgOHoP10E0imWuWTJszuprsEYgqFnd+jhhXtX6Qipdv21kevgDrqk3NeNl7VbmkYW+K5rHZdW+hi0z1D6NO3jz3UfkHd9x48P+6HQ3By6ZLAHnn7zV8j+u8=
+	t=1779999676; cv=none; b=oKWfDa/CSbLKwhSte5IMCviSpTSrATsMR7qPbT/1FMmEHPBmYNNTTvgUdIqmLzc6wyDdyN2rqxpDo/Wh4PKCosKJ4Yr9TRMH4XD/FbEv570JASPqwrFCz+VIs+rM54xtYAaCucW+yAvATlcxrha7Jh6kAJbXSqBh+dVhHb6zlVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999673; c=relaxed/simple;
-	bh=pNyN02h6iIBV+H/WQ6wHeOzQoq2wMj6xbl0i2bYfd4c=;
+	s=arc-20240116; t=1779999676; c=relaxed/simple;
+	bh=VIvoIWgvhbbjMuRHyPNj7+y9uoMfAxq4nWssr43UHH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijZHze8eaxEV3HOPDkXefMNNbW8ZsNqNWJSv+XnFzb0u/OmQlADyrSDrn4TTovorQVowAGKGVcdCiMmPRflu6pQkN2P3gRviYh95+2vx3llfej+3qtfLIhS7SL3VhVZG7ymMhJdBwV3HS5yh80EpjLyFMZrwmd5UdoTknNtOyMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqxZRKc8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZMX4F+uzUWGXh7faemRAvDwYCbhoyj5UvF4VABEoUIyXo3A0ML4sWWIlF26cdt0ZjRVLoBvw11aJ9h1ftSzdy8KWhYFPA8Juk2n4g0Rfhw1j9lWXNsqu3SC4GPUbb9l1ZaXxNqf7C2wLWKPtRwcE/1GpXXNm8xJmXr7kbelcmcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grxyYRs+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqxZRKc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1E31F000E9;
-	Thu, 28 May 2026 20:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grxyYRs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D4D1F000E9;
+	Thu, 28 May 2026 20:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999672;
-	bh=Wd8aurS/i6RcXXkOIZPkXfBBQxY5Jc5NrNXSPDvlRSA=;
+	s=korg; t=1779999675;
+	bh=cwDw2tlNPXY5ysc27aWiOUmKfORkMSKICEmSuxAVqVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqxZRKc8tcXgylcWk58Ha0Z5beZ1uFixVo5Qiu0Fan4YyxNWJp0DM9vuktwlAD8du
-	 pjCfAjw5fkqaN2dNIQLNX2noq97nLVIoRK0pBnmxN2stBvLc2eC19gAVK6OL2poMYA
-	 A0DF+8RqL8+HtijTblo6qxrcxGt8yiWUGJjBzYog=
+	b=grxyYRs+aBWjLFhP46f4t7+SuOLqnc+IcesVlcKS/CKgPfSTWSrrjVhNqHbsFXt86
+	 JoWT/LSI3LQNppIFnTWhXlQg0Nq5kXNC1jcegmsERQBgyi46JXd19Tdcus4wpvOWwA
+	 0/0LnPAFzKzRSrSiBg5/4dL92iunifuvlI9hwejE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Ido Schimmel <idosch@nvidia.com>,
-	syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 149/377] batman-adv: bla: avoid NULL-ptr deref for claim via dropped interface
-Date: Thu, 28 May 2026 21:46:27 +0200
-Message-ID: <20260528194642.699065010@linuxfoundation.org>
+Subject: [PATCH 6.18 150/377] batman-adv: tp_meter: avoid use of uninit sender vars
+Date: Thu, 28 May 2026 21:46:28 +0200
+Message-ID: <20260528194642.733036091@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -54,45 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit f80d3d98d2ff78d9e2fe5d68b1f45948c4f7bd24 upstream.
+commit 6c65cf23d4c6170fcf5714c32aa64689718cb142 upstream.
 
-Without rtnl_lock held, a hardif might be retrieved as primary interface of
-a meshif, but then (while operating on this interface) getting decoupled
-from the mesh interface. In this case, the meshif still exists but the
-pointer from the primary hardif to the meshif is set to NULL.
+batadv_tp_recv_ack() and batadv_tp_stop() are only valid for tp_vars in the
+BATADV_TP_SENDER role. When called with a BATADV_TP_RECEIVER role, it
+proceeds to read sender-only members that were never initialized, leading
+to undefined behavior.
 
-The mesh_iface must be checked first to be non-NULL before continuing to
-send an ARP request using meshif.
+This can be triggered when a node that is currently acting as a receiver in
+an ongoing tp_meter session receives a malicious ACK packet.
+
+Guard against this by checking tp_vars->role immediately after the
+lookup and bailing out if it is not BATADV_TP_SENDER, before any of
+those members are accessed.
 
 Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Reported-by: syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9fdcc9f05a98a540b816
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Yuan Tan <yuantan098@gmail.com>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/batman-adv/tp_meter.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -357,12 +357,14 @@ static void batadv_bla_send_claim(struct
- 	       sizeof(local_claim_dest));
- 	local_claim_dest.type = claimtype;
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -663,6 +663,9 @@ static void batadv_tp_recv_ack(struct ba
+ 	if (unlikely(!tp_vars))
+ 		return;
  
--	mesh_iface = primary_if->mesh_iface;
-+	mesh_iface = READ_ONCE(primary_if->mesh_iface);
-+	if (!mesh_iface)
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
 +		goto out;
++
+ 	if (unlikely(atomic_read(&tp_vars->sending) == 0))
+ 		goto out;
  
- 	skb = arp_create(ARPOP_REPLY, ETH_P_ARP,
- 			 /* IP DST: 0.0.0.0 */
- 			 zeroip,
--			 primary_if->mesh_iface,
-+			 mesh_iface,
- 			 /* IP SRC: 0.0.0.0 */
- 			 zeroip,
- 			 /* Ethernet DST: Broadcast */
+@@ -1100,12 +1103,16 @@ void batadv_tp_stop(struct batadv_priv *
+ 	if (!tp_vars) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: trying to interrupt an already over connection\n");
+-		goto out;
++		goto out_put_orig_node;
+ 	}
+ 
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
++		goto out_put_tp_vars;
++
+ 	batadv_tp_sender_shutdown(tp_vars, return_value);
++out_put_tp_vars:
+ 	batadv_tp_vars_put(tp_vars);
+-out:
++out_put_orig_node:
+ 	batadv_orig_node_put(orig_node);
+ }
+ 
 
 
