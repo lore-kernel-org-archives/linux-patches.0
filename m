@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78362304BB3;
-	Thu, 28 May 2026 20:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466FD2F691F;
+	Thu, 28 May 2026 20:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998809; cv=none; b=TcEATk1sK+rnwYnxICajJW1Knot2/JHSc3xpG6UGwbfZf0fNZGgsgqULtFG2xdFNjl/R2dYGgVif9JMKIQb1lTn79yB7FpWfYwEogbz2XELJVoq0FzZeTvYxiUxdsP9CQvIHf2Ovko5++lDdl2HDUWQ0hCxrZthpka07aVpj5Mg=
+	t=1779998812; cv=none; b=HRP2dKhy1OZTK2XA581gRXZ9mPUxIPZp/c7jByHFrvBYaqq+EaZOkUbfCeAStEI5/pSIe7IOEQmgJhYFnsHdfJy3kuV/jwmDOSyD5G7dgGiX8fmgeE9O9szz9WNBW/YY0fXqCXGj8QyVlNeR5L4z6cW//2QQd36bQqN8awV3hJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998809; c=relaxed/simple;
-	bh=gci3qXWfMs1+w4Y9smnPvbkKyqekafd1WyYWHPThfyc=;
+	s=arc-20240116; t=1779998812; c=relaxed/simple;
+	bh=hG7D7F1e0T2C9UX7mGaQ3Z0FBQrP5tyrxbbigK9pYHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uoP7SMkCcDYlgEqTLwFR2j3uDUiRwg4zCyAr+IHbQIELQfSs3BKftxgx0QLQTuBqjDUCXEK9n218liBpEUEfQbAsojCVHdRtDrI9C7tRQjX/mxKjCWaztt37mxzYT0oUE9kA02126MCn4jhudsKw780oamqi5b9PQiNxDm0olD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWLQCojx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X1UfrICJR0lhLvSS9SpTwhOVuIMGgU1Hil/jmY2r9a9/Ul7ERgt+RAL7MQx9LOw9abWcRrFqt86mqM/i60mXJLVS9fEJX03bgUogIJpG+NkVoKAzt39bbIs44mWBYraNtCJZUzzdmySQDiaWlXR2X47HOGGofihLRoZw1uCCABg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/HK7Ss3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWLQCojx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE60E1F000E9;
-	Thu, 28 May 2026 20:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/HK7Ss3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38701F00A3A;
+	Thu, 28 May 2026 20:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998808;
-	bh=R7gXULahR6PWrK1h3elYDumNVPPblUsp702TsV1wM4I=;
+	s=korg; t=1779998811;
+	bh=QQn9QioIiOgAFu4zswWSFnP42Nj5P7W6TD4iRU5N4LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWLQCojxhPxCU80u7QYXiI5wWTyIEYKHKoqLI36ZdycDdvR/BYOYpPoUUqZGBDLbA
-	 K9DXKPsXzxVWHXc+B6Rb0LOR+H+Juel20loTGqUmjX+jUI8S3NaG4ThiLZqEnLVdgK
-	 eWioBEXV9BSr8yq6qF/Z1CGg3wg0lxBsCfs2muFs=
+	b=B/HK7Ss3dMdh4t6Sj1dGj0BZKTeAtc2OqG7V7KvUlhmc+/I9kBrGHtnFTV9q29xh/
+	 WVqsycXuvh1u/UWlwRuCNGbEd9dfwCbU4KmmKAQhymTwunnUqVlI39h2N7B8cPaKX/
+	 A0E5rpS55y1f790fVNvI7WklZQicNHjS7CSQXW14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Koskovich <akoskovich@pm.me>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 304/461] drm/msm: Fix GMEM_BASE for A650
-Date: Thu, 28 May 2026 21:47:13 +0200
-Message-ID: <20260528194656.066646093@linuxfoundation.org>
+Subject: [PATCH 7.0 305/461] drm/msm/a6xx: Add soft fuse detection support
+Date: Thu, 28 May 2026 21:47:14 +0200
+Message-ID: <20260528194656.102354197@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -54,45 +51,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 46e351e84853dda726072bb3d38ba7bd63e7532b ]
+[ Upstream commit 4ac686bfd1929ef659a99f893ebe8faf7f35c76c ]
 
-Commit dc220915ddb2 ("drm/msm: Fix GMEM_BASE for gen8") changed the
-GMEM_BASE check from adreno_is_a650_family() & adreno_is_a740_family()
-to family >= ADRENO_6XX_GEN4.
+Recent chipsets like Glymur supports a new mechanism for SKU detection.
+A new CX_MISC register exposes the combined (or final) speedbin value
+from both HW fuse register and the Soft Fuse register. Implement this new
+SKU detection along with a new quirk to identify the GPUs that has soft
+fuse support.
 
-This inadvertently excluded A650 (ADRENO_6XX_GEN3), causing it to report
-an incorrect GMEM_BASE which results in severe rendering corruption.
+There is a side effect of this patch on A4x and older series. The
+speedbin field in the MSM_PARAM_CHIPID will be 0 instead of 0xffff. This
+should be okay as Mesa correctly handles it. Speedbin was not even a
+thing when those GPUs' support were added.
 
-Update check to also include ADRENO_6XX_GEN3 to fix A650.
-
-Fixes: dc220915ddb2 ("drm/msm: Fix GMEM_BASE for gen8")
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/711880/
-Message-ID: <20260314-fix-gmem-base-a650-v1-1-3308f60cf74c@pm.me>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714676/
+Message-ID: <20260327-a8xx-gpu-batch2-v2-12-2b53c38d2101@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Stable-dep-of: e64bca63647d ("drm/msm/adreno: Fix a reference leak in a6xx_gpu_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  6 +++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         | 41 +++++++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  5 ---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  1 +
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml |  4 ++
+ 5 files changed, 45 insertions(+), 12 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index e44302251de56..79acae11154aa 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1730,6 +1730,7 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+ 	unsigned int nr_rings;
++	u32 speedbin;
+ 	int ret;
+ 
+ 	a5xx_gpu = kzalloc_obj(*a5xx_gpu);
+@@ -1756,6 +1757,11 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 		return ERR_PTR(ret);
+ 	}
+ 
++	/* Set the speedbin value that is passed to userspace */
++	if (adreno_read_speedbin(&pdev->dev, &speedbin) || !speedbin)
++		speedbin = 0xffff;
++	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
++
+ 	msm_mmu_set_fault_handler(to_msm_vm(gpu->vm)->mmu, gpu,
+ 				  a5xx_fault_handler);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 0e8a48ca816dd..ae61c204898cd 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2546,13 +2546,33 @@ static u32 fuse_to_supp_hw(const struct adreno_info *info, u32 fuse)
+ 	return UINT_MAX;
+ }
+ 
+-static int a6xx_set_supported_hw(struct device *dev, const struct adreno_info *info)
++static int a6xx_read_speedbin(struct device *dev, struct a6xx_gpu *a6xx_gpu,
++		const struct adreno_info *info, u32 *speedbin)
++{
++	int ret;
++
++	/* Use speedbin fuse if present. Otherwise, fallback to softfuse */
++	ret = adreno_read_speedbin(dev, speedbin);
++	if (ret != -ENOENT)
++		return ret;
++
++	if (info->quirks & ADRENO_QUIRK_SOFTFUSE) {
++		*speedbin = a6xx_llc_read(a6xx_gpu, REG_A8XX_CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS);
++		*speedbin = A8XX_CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS_FINALFREQLIMIT(*speedbin);
++		return 0;
++	}
++
++	return -ENOENT;
++}
++
++static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
++		const struct adreno_info *info)
+ {
+ 	u32 supp_hw;
+ 	u32 speedbin;
+ 	int ret;
+ 
+-	ret = adreno_read_speedbin(dev, &speedbin);
++	ret = a6xx_read_speedbin(dev, a6xx_gpu, info, &speedbin);
+ 	/*
+ 	 * -ENOENT means that the platform doesn't support speedbin which is
+ 	 * fine
+@@ -2586,11 +2606,13 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct platform_device *pdev = priv->gpu_pdev;
+ 	struct adreno_platform_config *config = pdev->dev.platform_data;
++	const struct adreno_info *info = config->info;
+ 	struct device_node *node;
+ 	struct a6xx_gpu *a6xx_gpu;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+ 	extern int enable_preemption;
++	u32 speedbin;
+ 	bool is_a7xx;
+ 	int ret, nr_rings = 1;
+ 
+@@ -2614,14 +2636,14 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	adreno_gpu->gmu_is_wrapper = of_device_is_compatible(node, "qcom,adreno-gmu-wrapper");
+ 
+ 	adreno_gpu->base.hw_apriv =
+-		!!(config->info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
++		!!(info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
+ 
+ 	/* gpu->info only gets assigned in adreno_gpu_init(). A8x is included intentionally */
+-	is_a7xx = config->info->family >= ADRENO_7XX_GEN1;
++	is_a7xx = info->family >= ADRENO_7XX_GEN1;
+ 
+ 	a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
+ 
+-	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
++	ret = a6xx_set_supported_hw(&pdev->dev, a6xx_gpu, info);
+ 	if (ret) {
+ 		a6xx_llc_slices_destroy(a6xx_gpu);
+ 		kfree(a6xx_gpu);
+@@ -2629,15 +2651,20 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	}
+ 
+ 	if ((enable_preemption == 1) || (enable_preemption == -1 &&
+-	    (config->info->quirks & ADRENO_QUIRK_PREEMPTION)))
++	    (info->quirks & ADRENO_QUIRK_PREEMPTION)))
+ 		nr_rings = 4;
+ 
+-	ret = adreno_gpu_init(dev, pdev, adreno_gpu, config->info->funcs, nr_rings);
++	ret = adreno_gpu_init(dev, pdev, adreno_gpu, info->funcs, nr_rings);
+ 	if (ret) {
+ 		a6xx_destroy(&(a6xx_gpu->base.base));
+ 		return ERR_PTR(ret);
+ 	}
+ 
++	/* Set the speedbin value that is passed to userspace */
++	if (a6xx_read_speedbin(&pdev->dev, a6xx_gpu, info, &speedbin) || !speedbin)
++		speedbin = 0xffff;
++	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
++
+ 	/*
+ 	 * For now only clamp to idle freq for devices where this is known not
+ 	 * to cause power supply issues:
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 785e99fb5bd5d..8bf19e72e5bcd 100644
+index 8bf19e72e5bcd..277ef0c5c08d1 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -376,7 +376,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		*value = adreno_gpu->info->gmem;
- 		return 0;
- 	case MSM_PARAM_GMEM_BASE:
--		if (adreno_gpu->info->family >= ADRENO_6XX_GEN4)
-+		if (adreno_gpu->info->family >= ADRENO_6XX_GEN3)
- 			*value = 0;
- 		else
- 			*value = 0x100000;
+@@ -1182,7 +1182,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	struct msm_gpu_config adreno_gpu_config  = { 0 };
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
+ 	const char *gpu_name;
+-	u32 speedbin;
+ 	int ret;
+ 
+ 	adreno_gpu->funcs = funcs;
+@@ -1211,10 +1210,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 			devm_pm_opp_set_clkname(dev, "core");
+ 	}
+ 
+-	if (adreno_read_speedbin(dev, &speedbin) || !speedbin)
+-		speedbin = 0xffff;
+-	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
+-
+ 	gpu_name = devm_kasprintf(dev, GFP_KERNEL, "%"ADRENO_CHIPID_FMT,
+ 			ADRENO_CHIPID_ARGS(config->chip_id));
+ 	if (!gpu_name)
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 29097e6b42535..044ed4d49aa7a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -63,6 +63,7 @@ enum adreno_family {
+ #define ADRENO_QUIRK_PREEMPTION			BIT(5)
+ #define ADRENO_QUIRK_4GB_VA			BIT(6)
+ #define ADRENO_QUIRK_IFPC			BIT(7)
++#define ADRENO_QUIRK_SOFTFUSE			BIT(8)
+ 
+ /* Helper for formating the chip_id in the way that userspace tools like
+  * crashdec expect.
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+index 3941e75107545..2309870f50317 100644
+--- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+@@ -5016,6 +5016,10 @@ by a particular renderpass/blit.
+ 		<bitfield pos="1" name="LPAC" type="boolean"/>
+ 		<bitfield pos="2" name="RAYTRACING" type="boolean"/>
+ 	</reg32>
++	<reg32 offset="0x0405" name="CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS" variants="A8XX-">
++		<bitfield high="8" low="0" name="FINALFREQLIMIT"/>
++		<bitfield pos="24" name="SOFTSKUDISABLED" type="boolean"/>
++	</reg32>
+ </domain>
+ 
+ </database>
 -- 
 2.53.0
 
