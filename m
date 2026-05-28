@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A6B32ABC0;
-	Thu, 28 May 2026 20:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7368D32ABC0;
+	Thu, 28 May 2026 20:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999153; cv=none; b=T9/ssu5wuos4gaLhZtZp9+ZNS0sfi4q5ZtqZSdZb5/X1jx7sXOJ/KlkEkPUGCrukJSDxdvoJ/nMT0r8AtiGE/YIpOvVolntn+PDDN8T93CcUMlBEJCPxogmtXgVFS7QrfaWfwMm3X6+xE4+0y5cCwYSr7VtKgc4oColCCkZwO3g=
+	t=1779999156; cv=none; b=IrfyzSf89OcOx1VXyoQMrIcxJsRw07PBcxZuJ4s0/3UrSq2e5dQU5kmB87mKK+AeTYPwzmRtqpOCRxg8a6f+VkUsJpXA172IIFnfL5Orrabhwx3UXes+WuCHFP2bv8kPXjBvgPbExNB8PF1Yz4qRPvwH0oLnLpag7NSAiS7DxNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999153; c=relaxed/simple;
-	bh=+Q3zBdC8lrOXsyo4Bom+QHVSmoEo6CngYO3HPJjNJWM=;
+	s=arc-20240116; t=1779999156; c=relaxed/simple;
+	bh=oY1ukiBzBz50Gnsu2nWA8WjOhsqtWzmOhK0DGANMxW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzZ+pZzQKZMU2oW4noTEOwuJ9A/sEbByBJXLNl3To87nYKxF2Jt8DMEfJ1Orm9R5Iwns5074tAeiOO6UglerhMwGGLpKb++5CTd3IXAKSDD1M1t/4+wjDYvGn09I9MNyrFOrIkHeiBTYe79L2FnBfn/kGM1jy+hqhypODvdKiqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsS/53hF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BixouBm0i3pfIBCTHy37uYATwlKJDSRQFlvAfpA3+5ntds/E1BxpjvwrXIYFOEA6umAxIDPcvbHf8L6LVEIsb60DpBEKiiL7d5NHQklElJpaEtTiRUt42Y5ltpk5O0+X0z5J9JbbZ2hB9BVexdKt5mHlMkHkf4pAojT8fKoT1/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeF7i2ef; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsS/53hF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10BF1F000E9;
-	Thu, 28 May 2026 20:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeF7i2ef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969EE1F000E9;
+	Thu, 28 May 2026 20:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999152;
-	bh=wwg5Cjga/IPbBpVz/JZqaQV6rSBpvigdKhfziTDpueU=;
+	s=korg; t=1779999155;
+	bh=qGO04eTvSNHWltD8SL6l+7/RnoIAB5SbJAcdleYINEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsS/53hFI1gVIuQZrn2jJm9X7+vxqCeXsziXpUrsvPkkM11pEda8RfVa1NX1HP20e
-	 a5pYr0yV1bGZtVVOyg95+RYWi3K/MWTNW5JKNB6dtA83DfAWwDtUsO057YbXCvi9U6
-	 dHqAE1QYbXdQ1BwvmNcVaVnMD2GtDLuhUz6OCiFw=
+	b=CeF7i2efr12T1VZ2vxTr1gfLPJdPewiN5gq6zjbGLppdcwnyaE1Y9ApDqmr8Q6EEz
+	 DHM+PaxxDXE7Bo9c0xMdOfGlEv9QDUpZ7J2XDr7JA9JgyKdUlvQ0Lr31tRgwrerJNg
+	 LtX1OiUGuRAFewh/MaUPCv5HOV+7dobtb6PGErJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Simon Horman <horms@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	linux-afs@lists.infradead.org,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 426/461] net: shaper: rework the VALID marking (again)
-Date: Thu, 28 May 2026 21:49:15 +0200
-Message-ID: <20260528194659.841569051@linuxfoundation.org>
+Subject: [PATCH 7.0 427/461] crypto/krb5, rxrpc: Fix lack of pre-decrypt/pre-verify length checks
+Date: Thu, 28 May 2026 21:49:16 +0200
+Message-ID: <20260528194659.875050964@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,141 +57,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b8d7519352ba8c6df83259295d4a3bad093cae90 ]
+[ Upstream commit 2b50aceafe6606ea52ed42aadd1b4d44a188aade ]
 
-Recent commit changed the semantics from NOT_VALID to VALID.
-I didn't realize that the flags are not stored atomically
-with the entry in XArray. There's still a race of reader
-observing a VALID mark for a slot, getting interrupted,
-writer replacing the entry with a different one, reader
-continuing, fetching the entry which is now a different
-pointer than the pointer for which VALID was meant.
+Change the krb5 crypto library to provide facilities to precheck the length
+of the message about to be decrypted or verified.
 
-The biggest consequence of this is that we may see a UAF
-since net_shaper_rollback() assumed that entries without
-VALID can be freed without observing RCU.
+Fix AF_RXRPC to make use of this to validate DATA packets secured with
+RxGK.
 
-Looks like the XArray marks are buying us nothing at this
-point. Let's convert the code to an explicit valid field.
-The smp_load_acquire() / smp_store_release() barriers are
-marginally cleaner.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 93954b40f6a4 ("net-shapers: implement NL set and delete operations")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260515221325.1685455-3-kuba@kernel.org
+Fixes: 9d1d2b59341f ("rxrpc: rxgk: Implement the yfs-rxgk security class (GSSAPI)")
+Closes: https://sashiko.dev/#/patchset/20260511160753.607296-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: Simon Horman <horms@kernel.org>
+cc: Chuck Lever <chuck.lever@oracle.com>
+cc: linux-afs@lists.infradead.org
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+Link: https://patch.msgid.link/20260515230516.2718212-2-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/net_shaper.h |  1 +
- net/shaper/shaper.c      | 45 ++++++++++++++++------------------------
- 2 files changed, 19 insertions(+), 27 deletions(-)
+ Documentation/crypto/krb5.rst | 17 ++++++++---
+ crypto/krb5/krb5_api.c        | 54 +++++++++++++++++++++++++++++++----
+ include/crypto/krb5.h         |  9 ++++--
+ include/trace/events/rxrpc.h  |  1 +
+ net/rxrpc/rxgk.c              | 15 ++++++++--
+ 5 files changed, 81 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/net_shaper.h b/include/net/net_shaper.h
-index 5c3f49b52fe96..3939b816b0011 100644
---- a/include/net/net_shaper.h
-+++ b/include/net/net_shaper.h
-@@ -53,6 +53,7 @@ struct net_shaper {
+diff --git a/Documentation/crypto/krb5.rst b/Documentation/crypto/krb5.rst
+index beffa0133446d..f62e07ac68114 100644
+--- a/Documentation/crypto/krb5.rst
++++ b/Documentation/crypto/krb5.rst
+@@ -158,13 +158,22 @@ returned.
+ When a message has been received, the location and size of the data with the
+ message can be determined by calling::
  
- 	/* private: */
- 	u32 leaves; /* accounted only for NODE scope */
-+	bool valid;
- 	struct rcu_head rcu;
- };
+-	void crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
+-					   enum krb5_crypto_mode mode,
+-					   size_t *_offset, size_t *_len);
++	int crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
++					  enum krb5_crypto_mode mode,
++					  size_t *_offset, size_t *_len);
  
-diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index 520cefdc3d908..dea9270f3e57d 100644
---- a/net/shaper/shaper.c
-+++ b/net/shaper/shaper.c
-@@ -306,31 +306,24 @@ static void net_shaper_default_parent(const struct net_shaper_handle *handle,
- 	parent->id = 0;
- }
+ The caller provides the offset and length of the message to the function, which
+ then alters those values to indicate the region containing the data (plus any
+-padding).  It is up to the caller to determine how much padding there is.
++padding).  It is up to the caller to determine how much padding there is.  The
++function returns an error if the length is too small or if the mode is
++unsupported.  An additional function::
++
++	int crypto_krb5_check_data_len(const struct krb5_enctype *krb5,
++				       enum krb5_crypto_mode mode,
++				       size_t len, size_t min_content);
++
++is provided to just do a basic check that the decrypted/verified message would
++have a sufficient minimum payload.
  
--/* MARK_0 is already in use due to XA_FLAGS_ALLOC. The VALID mark is set on
-- * an entry only after the device-side configuration has completed
-- * successfully (see net_shaper_commit()). Lookups and dumps must filter on
-- * this mark to avoid exposing tentative entries inserted by
-- * net_shaper_pre_insert() while the driver call is still in flight.
-- */
--#define NET_SHAPER_VALID	XA_MARK_1
--
- static struct net_shaper *
- net_shaper_lookup(struct net_shaper_binding *binding,
- 		  const struct net_shaper_handle *handle)
+ Preparation Functions
+ ---------------------
+diff --git a/crypto/krb5/krb5_api.c b/crypto/krb5/krb5_api.c
+index 23026d4206c82..c7ea40f900a77 100644
+--- a/crypto/krb5/krb5_api.c
++++ b/crypto/krb5/krb5_api.c
+@@ -134,27 +134,69 @@ EXPORT_SYMBOL(crypto_krb5_how_much_data);
+  * Find the offset and size of the data in a secure message so that this
+  * information can be used in the metadata buffer which will get added to the
+  * digest by crypto_krb5_verify_mic().
++ *
++ * Return: 0 if successful, -EBADMSG if the message is too short or -EINVAL if
++ * the mode is unsupported.
+  */
+-void crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
+-				   enum krb5_crypto_mode mode,
+-				   size_t *_offset, size_t *_len)
++int crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
++				  enum krb5_crypto_mode mode,
++				  size_t *_offset, size_t *_len)
  {
- 	u32 index = net_shaper_handle_to_index(handle);
- 	struct net_shaper_hierarchy *hierarchy;
-+	struct net_shaper *cur;
- 
- 	hierarchy = net_shaper_hierarchy_rcu(binding);
--	if (!hierarchy || !xa_get_mark(&hierarchy->shapers, index,
--				       NET_SHAPER_VALID))
-+	if (!hierarchy)
- 		return NULL;
- 
--	/* Pairs with smp_wmb() in net_shaper_commit(): if the entry is
--	 * valid, its contents must be visible too.
--	 */
--	smp_rmb();
--	return xa_load(&hierarchy->shapers, index);
-+	cur = xa_load(&hierarchy->shapers, index);
-+	/* Check valid before reading fields */
-+	if (!cur || !smp_load_acquire(&cur->valid))
-+		return NULL;
-+
-+	return cur;
- }
- 
- /* Allocate on demand the per device shaper's hierarchy container.
-@@ -444,12 +437,10 @@ static void net_shaper_commit(struct net_shaper_binding *binding,
- 		if (WARN_ON_ONCE(!cur))
- 			continue;
- 
--		/* Successful update: drop the tentative mark
--		 * and update the hierarchy container.
--		 */
-+		/* Successful update: update the hierarchy container... */
- 		net_shaper_copy(cur, &shapers[i]);
--		smp_wmb();
--		__xa_set_mark(&hierarchy->shapers, index, NET_SHAPER_VALID);
-+		/* ... publish to lockless readers. */
-+		smp_store_release(&cur->valid, true);
+ 	switch (mode) {
+ 	case KRB5_CHECKSUM_MODE:
++		if (*_len < krb5->cksum_len)
++			return -EBADMSG;
+ 		*_offset += krb5->cksum_len;
+ 		*_len -= krb5->cksum_len;
+-		return;
++		return 0;
+ 	case KRB5_ENCRYPT_MODE:
++		if (*_len < krb5->conf_len + krb5->cksum_len)
++			return -EBADMSG;
+ 		*_offset += krb5->conf_len;
+ 		*_len -= krb5->conf_len + krb5->cksum_len;
+-		return;
++		return 0;
+ 	default:
+ 		WARN_ON_ONCE(1);
+-		return;
++		return -EINVAL;
  	}
- 	xa_unlock(&hierarchy->shapers);
  }
-@@ -466,10 +457,10 @@ static void net_shaper_rollback(struct net_shaper_binding *binding)
+ EXPORT_SYMBOL(crypto_krb5_where_is_the_data);
  
- 	xa_lock(&hierarchy->shapers);
- 	xa_for_each(&hierarchy->shapers, index, cur) {
--		if (xa_get_mark(&hierarchy->shapers, index, NET_SHAPER_VALID))
-+		if (cur->valid)
- 			continue;
- 		__xa_erase(&hierarchy->shapers, index);
--		kfree(cur);
-+		kfree_rcu(cur, rcu);
- 	}
- 	xa_unlock(&hierarchy->shapers);
- }
-@@ -882,12 +873,12 @@ int net_shaper_nl_get_dumpit(struct sk_buff *skb,
- 		goto out_unlock;
- 
- 	for (; (shaper = xa_find(&hierarchy->shapers, &ctx->start_index,
--				 U32_MAX, NET_SHAPER_VALID));
-+				 U32_MAX, XA_PRESENT));
- 	     ctx->start_index++) {
--		/* Pairs with smp_wmb() in net_shaper_commit(): the entry
--		 * is marked VALID, so its contents must be visible too.
--		 */
--		smp_rmb();
-+		/* Check valid before reading fields */
-+		if (!smp_load_acquire(&shaper->valid))
-+			continue;
++/**
++ * crypto_krb5_check_data_len - Check a message is big enough
++ * @krb5: The encoding to use.
++ * @mode: Mode of operation.
++ * @len: The length of the secure blob.
++ * @min_content: Minimum length of the content inside the blob.
++ *
++ * Check that a message is large enough to hold whatever bits the encryption
++ * type wants to glue on (nonce, checksum) plus a minimum amount of content.
++ *
++ * Return: 0 if successful, -EBADMSG if the message is too short or -EINVAL if
++ * the mode is unsupported.
++ */
++int crypto_krb5_check_data_len(const struct krb5_enctype *krb5,
++			       enum krb5_crypto_mode mode,
++			       size_t len, size_t min_content)
++{
++	switch (mode) {
++	case KRB5_CHECKSUM_MODE:
++		if (len < krb5->cksum_len ||
++		    len - krb5->cksum_len < min_content)
++			return -EBADMSG;
++		return 0;
++	case KRB5_ENCRYPT_MODE:
++		if (len < krb5->conf_len + krb5->cksum_len ||
++		    len - (krb5->conf_len + krb5->cksum_len) < min_content)
++			return -EBADMSG;
++		return 0;
++	default:
++		WARN_ON_ONCE(1);
++		return -EINVAL;
++	}
++}
++EXPORT_SYMBOL(crypto_krb5_check_data_len);
 +
- 		ret = net_shaper_fill_one(skb, binding, shaper, info);
- 		if (ret)
- 			break;
+ /*
+  * Prepare the encryption with derived key data.
+  */
+diff --git a/include/crypto/krb5.h b/include/crypto/krb5.h
+index 71dd38f59be1d..aac3ecf88467c 100644
+--- a/include/crypto/krb5.h
++++ b/include/crypto/krb5.h
+@@ -121,9 +121,12 @@ size_t crypto_krb5_how_much_buffer(const struct krb5_enctype *krb5,
+ size_t crypto_krb5_how_much_data(const struct krb5_enctype *krb5,
+ 				 enum krb5_crypto_mode mode,
+ 				 size_t *_buffer_size, size_t *_offset);
+-void crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
+-				   enum krb5_crypto_mode mode,
+-				   size_t *_offset, size_t *_len);
++int crypto_krb5_where_is_the_data(const struct krb5_enctype *krb5,
++				  enum krb5_crypto_mode mode,
++				  size_t *_offset, size_t *_len);
++int crypto_krb5_check_data_len(const struct krb5_enctype *krb5,
++			       enum krb5_crypto_mode mode,
++			       size_t len, size_t min_content);
+ struct crypto_aead *crypto_krb5_prepare_encryption(const struct krb5_enctype *krb5,
+ 						   const struct krb5_buffer *TK,
+ 						   u32 usage, gfp_t gfp);
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index 573f2df3a2c99..704a10de66700 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -71,6 +71,7 @@
+ 	EM(rxkad_abort_resp_unknown_tkt,	"rxkad-resp-unknown-tkt") \
+ 	EM(rxkad_abort_resp_version,		"rxkad-resp-version")	\
+ 	/* RxGK security errors */					\
++	EM(rxgk_abort_1_short_header,		"rxgk1-short-hdr")	\
+ 	EM(rxgk_abort_1_verify_mic_eproto,	"rxgk1-vfy-mic-eproto")	\
+ 	EM(rxgk_abort_2_decrypt_eproto,		"rxgk2-dec-eproto")	\
+ 	EM(rxgk_abort_2_short_data,		"rxgk2-short-data")	\
+diff --git a/net/rxrpc/rxgk.c b/net/rxrpc/rxgk.c
+index 0d5e654da918f..26e723052a37e 100644
+--- a/net/rxrpc/rxgk.c
++++ b/net/rxrpc/rxgk.c
+@@ -480,8 +480,12 @@ static int rxgk_verify_packet_integrity(struct rxrpc_call *call,
+ 
+ 	_enter("");
+ 
+-	crypto_krb5_where_is_the_data(gk->krb5, KRB5_CHECKSUM_MODE,
+-				      &data_offset, &data_len);
++	if (crypto_krb5_where_is_the_data(gk->krb5, KRB5_CHECKSUM_MODE,
++					  &data_offset, &data_len) < 0) {
++		ret = rxrpc_abort_eproto(call, skb, RXGK_PACKETSHORT,
++					 rxgk_abort_1_short_header);
++		goto put_gk;
++	}
+ 
+ 	hdr = kzalloc_obj(*hdr, GFP_NOFS);
+ 	if (!hdr)
+@@ -529,6 +533,13 @@ static int rxgk_verify_packet_encrypted(struct rxrpc_call *call,
+ 
+ 	_enter("");
+ 
++	if (crypto_krb5_check_data_len(gk->krb5, KRB5_ENCRYPT_MODE,
++				       len, sizeof(hdr)) < 0) {
++		ret = rxrpc_abort_eproto(call, skb, RXGK_PACKETSHORT,
++					 rxgk_abort_2_short_header);
++		goto error;
++	}
++
+ 	ret = rxgk_decrypt_skb(gk->krb5, gk->rx_enc, skb, &offset, &len, &ac);
+ 	if (ret < 0) {
+ 		if (ret != -ENOMEM)
 -- 
 2.53.0
 
