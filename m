@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962EA33A702;
-	Thu, 28 May 2026 20:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F01B33CE8A;
+	Thu, 28 May 2026 20:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999066; cv=none; b=aEY9LsKQaOW7usZPdWrNYnuXYvaw+NTv0wb0OP0NR6MXiT5X0UiFBEXVeAUgAHB1bazBNrtPKJTgYkSOyTL4UVP8Hno1dzHvWbqPiJ1r/r3FVlUn9woqpYtUbeepcmWFePpRCldvElTJAHwPhgidHm5LqQmEbGKNm1lyNusb9XU=
+	t=1779999069; cv=none; b=nGm6MijrLnCSspATpYubfbrysLgKxgTl956CQAQSGjlQ9wTCdURgFiioVc/C/je60oYn5KidYgl/c58zsmYUNi0hlMtlYgjmDPT/25QOvNylHy0S45wBRY39mU4ZU5G4mfQJ8u22PU0KoObZ20tX9SgQ2KOXlEboEUM54O8XwCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999066; c=relaxed/simple;
-	bh=aH+kJbDz3hLb0XICd8cFhWIPATI6IKPux8P3YURShXs=;
+	s=arc-20240116; t=1779999069; c=relaxed/simple;
+	bh=seCGoeq7wGTRUVnKbUHl6JlJ1o++wz2KL8vwhFl1F7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2opvP13lX9kzkKY0HKX1bhK39PU3w5x20nKX2L8SxsEzcCVNnn6fGEf9Pcw+IDkpYpv2BBWqfly7IhMlAywT+myihxrpvz4asL+9vdtLSkOZBqHdgaoFi4VIMVWMamkUi2Lbh+KVoMQsGGvBb429Hqv5CjEMfBDk6ffymi1ZD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKkSDtJY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bDd+hIZQWOUhRYDO5qHKOjsmZBRjvShZ/Ta2/QqagUs8y59exKpASCrGHmtw0SnvzSaXRC4BHpGP/zMupb4GtHw8E1WsOUvdPA9M0GewtUYXZUGlbS+4fy88I0fy8RZmoJ+XK80mnfx/FBGdhSXgf0q05tz1o05QbaU7TKzwHB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyRe1e//; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKkSDtJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4D21F000E9;
-	Thu, 28 May 2026 20:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyRe1e//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD83F1F000E9;
+	Thu, 28 May 2026 20:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999065;
-	bh=oRi+xa2J00+5XhJrSV0Ri9YJjLMILbdaqQCl4cp73xc=;
+	s=korg; t=1779999068;
+	bh=1q1ukYRxmid3845YpivWCuaUKcA4Yy88mbMvBn4/v+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mKkSDtJYQThWyxAufP8gHDPGc8Bgh32Y0bxsLOU9YwsGEX1tAWwlbtNOxEosGhATL
-	 FMAGD39hkfuid2ajecht8qciah4mlokUzaW1rBdhmwKxTDrM7LHqQR0MwGORYrG0aA
-	 2CJe1zxmyky79knjYTgVMeX8O2IIeBmRvl8oGC5o=
+	b=jyRe1e//n5UR4HKV8XmVSXvNQOtFlU8qD3a9Y3wWo7AGm/LEPSq24cBASt18te4QF
+	 n36DWAiQen63kGy5jIvQNo5+cJ+vCBqnkUCUdV7VDfH6jzn9Ovz9LaBGyeaxR6u7GW
+	 LIueV6+lHIr4Vb5A7f9kM5UVbl12T0dYZKamAH9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Eric Naim <dnaim@cachyos.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 360/461] drm/xe/vf: Fix signature of print functions
-Date: Thu, 28 May 2026 21:48:09 +0200
-Message-ID: <20260528194657.848478669@linuxfoundation.org>
+Subject: [PATCH 7.0 351/461] ALSA: hda/realtek: Use ALC287_FIXUP_TXNW2781_I2C for ASUS Strix Gxx5
+Date: Thu, 28 May 2026 21:48:00 +0200
+Message-ID: <20260528194657.560408369@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,122 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Eric Naim <dnaim@cachyos.org>
 
-[ Upstream commit 9bb2f1d7e6e58b8e434ddc2048c661bf87ccdf2a ]
+[ Upstream commit 4372286ac774536e8e68bc6dfa0f0b0152b31fce ]
 
-We have plugged-in existing VF print functions into our GT debugfs
-show helper as-is, but we missed that the helper expects functions
-to return int, while they were defined as void. This can lead to
-errors being reported when CFI is enabled.
+These devices were incorrectly using the ALC287_FIXUP_TAS2781_I2C quirk
+leading to errors:
 
-Fixes: 63d8cb8fe3dd ("drm/xe/vf: Expose SR-IOV VF attributes to GT debugfs")
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Mohanram Meenakshisundaram <mohanram.meenakshisundaram@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260514155726.7165-1-michal.wajdeczko@intel.com
-(cherry picked from commit 314e31c9a8a1c421ee4f7f755b9348aefbbca090)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[ 18.765990] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
+[ 18.768153] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
+[ 18.768476] Serial bus multi instantiate pseudo device driver TXNW2781:00: error -ENXIO: IRQ index 0 not found
+[ 18.768899] Serial bus multi instantiate pseudo device driver TXNW2781:00: Instantiated 3 I2C devices.
+
+Use the ALC287_FIXUP_TXNW2781_I2C quirk instead to fix this and restore
+speaker audio on affected devices.
+
+Fixes: 1e9c708dc3ae ("ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects")
+Link: https://lore.kernel.org/59fd4aa4-76b9-4984-8db9-a60e55ec6e80@losource.net/
+Closes: https://lore.kernel.org/CACB9z7kjs8rhLstEc8fV29BCTb5dd881JwGozoKdO5cwCb=YwQ@mail.gmail.com
+Signed-off-by: Eric Naim <dnaim@cachyos.org>
+Link: https://patch.msgid.link/20260516111532.111463-1-dnaim@cachyos.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_vf.c | 24 ++++++++++++++++++------
- drivers/gpu/drm/xe/xe_gt_sriov_vf.h |  6 +++---
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-index 30e8c2cf5f09a..82703a25e96d9 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.c
-@@ -1129,13 +1129,15 @@ void xe_gt_sriov_vf_write32(struct xe_gt *gt, struct xe_reg reg, u32 val)
- }
- 
- /**
-- * xe_gt_sriov_vf_print_config - Print VF self config.
-+ * xe_gt_sriov_vf_print_config() - Print VF self config.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
-  *
-  * This function is for VF use only.
-+ *
-+ * Return: always 0.
-  */
--void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
- {
- 	struct xe_gt_sriov_vf_selfconfig *config = &gt->sriov.vf.self_config;
- 	struct xe_device *xe = gt_to_xe(gt);
-@@ -1162,16 +1164,20 @@ void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p)
- 
- 	drm_printf(p, "GuC contexts:\t%u\n", config->num_ctxs);
- 	drm_printf(p, "GuC doorbells:\t%u\n", config->num_dbs);
-+
-+	return 0;
- }
- 
- /**
-- * xe_gt_sriov_vf_print_runtime - Print VF's runtime regs received from PF.
-+ * xe_gt_sriov_vf_print_runtime() - Print VF's runtime regs received from PF.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
-  *
-  * This function is for VF use only.
-+ *
-+ * Return: always 0.
-  */
--void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
- {
- 	struct vf_runtime_reg *vf_regs = gt->sriov.vf.runtime.regs;
- 	unsigned int size = gt->sriov.vf.runtime.num_regs;
-@@ -1180,16 +1186,20 @@ void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p)
- 
- 	for (; size--; vf_regs++)
- 		drm_printf(p, "%#x = %#x\n", vf_regs->offset, vf_regs->value);
-+
-+	return 0;
- }
- 
- /**
-- * xe_gt_sriov_vf_print_version - Print VF ABI versions.
-+ * xe_gt_sriov_vf_print_version() - Print VF ABI versions.
-  * @gt: the &xe_gt
-  * @p: the &drm_printer
-  *
-  * This function is for VF use only.
-+ *
-+ * Return: always 0.
-  */
--void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
-+int xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
- {
- 	struct xe_device *xe = gt_to_xe(gt);
- 	struct xe_uc_fw_version *guc_version = &gt->sriov.vf.guc_version;
-@@ -1219,6 +1229,8 @@ void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p)
- 		   GUC_RELAY_VERSION_LATEST_MAJOR, GUC_RELAY_VERSION_LATEST_MINOR);
- 	drm_printf(p, "\thandshake:\t%u.%u\n",
- 		   pf_version->major, pf_version->minor);
-+
-+	return 0;
- }
- 
- static bool vf_post_migration_shutdown(struct xe_gt *gt)
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-index 7d97189c2d3d9..4f1c7aa422e7b 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_vf.h
-@@ -35,9 +35,9 @@ bool xe_gt_sriov_vf_sched_groups_enabled(struct xe_gt *gt);
- u32 xe_gt_sriov_vf_read32(struct xe_gt *gt, struct xe_reg reg);
- void xe_gt_sriov_vf_write32(struct xe_gt *gt, struct xe_reg reg, u32 val);
- 
--void xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p);
--void xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p);
--void xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_config(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_runtime(struct xe_gt *gt, struct drm_printer *p);
-+int xe_gt_sriov_vf_print_version(struct xe_gt *gt, struct drm_printer *p);
- 
- void xe_gt_sriov_vf_wait_valid_ggtt(struct xe_gt *gt);
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 8f7d8337b4bc6..c59021c15d66c 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7389,12 +7389,12 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x3e00, "ASUS G814FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3e20, "ASUS G814PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3e30, "ASUS TP3607SA", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3ee0, "ASUS Strix G815_JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TAS2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3ee0, "ASUS Strix G815_JHR_JMR_JPR", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3ef0, "ASUS Strix G635LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f00, "ASUS Strix G815LH_LM_LP", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f10, "ASUS Strix G835LR_LW_LX", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f20, "ASUS Strix G615LR_LW", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x3f30, "ASUS Strix G815LR_LW", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x3fd0, "ASUS B3605CVA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x3ff0, "ASUS B5405CVA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
