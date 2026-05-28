@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF812EF652;
-	Thu, 28 May 2026 20:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC482C15AC;
+	Thu, 28 May 2026 20:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000685; cv=none; b=ak8+FtgLpmppg2zPX85pFVlrQAIT2bvzcyNwFxrEKtGef0reLtaa/mEqK3ofOKH8Yuewynta3xD3Q39z+eBv4IPGp466kGwfNzTDTVFOhk7IJvIPILyr5+l2VXC+zbJHivBRuOCtwt6tJwUkaT9xSmSkc9cftw+pq3BoC6QcqUY=
+	t=1780000687; cv=none; b=XAvZln6/NiPjdhJdzcJP/P/rDbbaWbpcChpRqD6+AqzPjwMWcyzhmquM51VhuEY7Hw04nkfKq6UbB543ADnsFKfQWQZ2I39IXdj7dPOUs6N7cXeeZqsUsM8fIRarfyTyMU2ovUEk6rDvA2TojdKqNqytQbeFCpsrLOMvlqSyzfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000685; c=relaxed/simple;
-	bh=52Lj6JkyO/rCgPTiKEODNJQwQ5qt8BRASOElHH5hdpU=;
+	s=arc-20240116; t=1780000687; c=relaxed/simple;
+	bh=ZvefC5B5IfcvSnhymPD5pTK9ynepae9+9VvppjNFhhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PV0+B8HuC+j7fyUVEeW6zcrJwF7Ujqj3rnV9QtD7XYS/AyA0Vhl/GDnVXwbqUhTC4bwK46KbqYMYIW1L3AwWp+Ymo9ppCrHSZmxNA77NEM4R+441bEVOu/Tao1aqSls03lLQU1mH08obavXCBqieVo4oLBFp79wmoPrI3bTqlRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeSCKA/w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rNcIKSFnsD2o4Mg+7Qc8ll5kF/aARsyDl6DTtEt7Vh8oAjp4b89IA9a2rxppU+hsQuzNDJLd9W1sCcQdzFhd5vier7syR3oWqdk9IojVGEiBjsMsfgSz0c2o5+WpSTxkgUUq+5Zh9o3XYdoR6orDLu0vShoxmHcssipb2KUy6AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCJX2XTu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeSCKA/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A8C1F000E9;
-	Thu, 28 May 2026 20:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCJX2XTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB401F000E9;
+	Thu, 28 May 2026 20:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000683;
-	bh=WS7aJhwSE4UpQf9jHUq8EEWYow4F91095sgveOViKT0=;
+	s=korg; t=1780000686;
+	bh=hnF6JHaWLw67HLUNy9B5SpHcVkkxX5Gr6DYIcanTTgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CeSCKA/w8eldM/rW/bv2va+GCZ4UFPAaWLmEC9JWQg/WUiqmIXBAA3p0qajl1blMn
-	 MCx24Hv3OxWcqDnHl12dZRc/hWA8L10yGOlFAeYbGm9obF16vf/kHtu2u5RZJZ7qCn
-	 xZNupvujxkZLC2xnX2QuTHjseBWK/27x6niJDPrU=
+	b=dCJX2XTu9UTsJnfE7t3JtK/uykeR9wcr51QTj9zUftj6dlMWFWz+EXlMgStQXG3NC
+	 X8X5+LA8riVl/ydB2ydG8lyv5tHPXbe9/z+fBtvoqRzafcaKaQIukvZWKD8HyZNe9J
+	 UvQ2s0jMyAyNC33i4LB17mmQyCK+S8ooa+B8p5Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 086/272] vsock/virtio: reset connection on receiving queue overflow
-Date: Thu, 28 May 2026 21:47:40 +0200
-Message-ID: <20260528194631.787440376@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.12 126/272] batman-adv: frag: disallow unicast fragment in fragment
+Date: Thu, 28 May 2026 21:48:20 +0200
+Message-ID: <20260528194632.907232249@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,85 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit a4f0b001782b21663d10df983b4b208195bec66c upstream.
+commit bc62216dc8e221e3781afa14430f45208bfa9af9 upstream.
 
-When there is no more space to queue an incoming packet, the packet is
-silently dropped. This causes data loss without any notification to
-either peer, since there is no retransmission.
+batadv_frag_skb_buffer() is called by batadv_batman_skb_recv() when a
+BATADV_UNICAST_FRAG packet is received. Once all fragments are collected
+and the packet is reassembled, batadv_recv_frag_packet() calls
+batadv_batman_skb_recv() again to process the defragmented payload.
 
-Under normal circumstances, this should never happen. However, it could
-happen if the other peer doesn't respect the credit, or if the skb
-overhead, which we recently began to take into account with commit
-059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue"),
-is too high.
+A malicious sender can craft a BATADV_UNICAST_FRAG packet whose reassembled
+payload is itself a BATADV_UNICAST_FRAG packet (matryoshka-style nesting).
+Each nesting level recurses through batadv_batman_skb_recv() without bound,
+growing the kernel stack until it is exhausted.
 
-Fix this by resetting the connection and setting the local socket error
-to ENOBUFS when virtio_transport_recv_enqueue() can no longer queue a
-packet, so both peers are explicitly notified of the failure rather than
-silently losing data.
+Since refragmentation or fragments in fragments are not actually allowed,
+discard all packets which are still BATADV_UNICAST_FRAG packets after the
+defragmentation process.
 
-Fixes: ae6fcfbf5f03 ("vsock/virtio: discard packets if credit is not respected")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-2-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@kernel.org
+Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/batman-adv/fragmentation.c |   35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1348,7 +1348,7 @@ destroy:
- 	return err;
+--- a/net/batman-adv/fragmentation.c
++++ b/net/batman-adv/fragmentation.c
+@@ -305,6 +305,31 @@ free:
  }
  
--static void
-+static bool
- virtio_transport_recv_enqueue(struct vsock_sock *vsk,
- 			      struct sk_buff *skb)
- {
-@@ -1363,10 +1363,8 @@ virtio_transport_recv_enqueue(struct vso
- 	spin_lock_bh(&vvs->rx_lock);
- 
- 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
--	if (!can_enqueue) {
--		free_pkt = true;
-+	if (!can_enqueue)
- 		goto out;
--	}
- 
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count++;
-@@ -1406,6 +1404,8 @@ out:
- 	spin_unlock_bh(&vvs->rx_lock);
- 	if (free_pkt)
- 		kfree_skb(skb);
+ /**
++ * batadv_skb_is_frag() - check if newly merged skb is gain a unicast packet
++ * @skb: newly merged skb
++ *
++ * Return: if newly skb is of type BATADV_UNICAST_FRAG
++ */
++static bool batadv_skb_is_frag(struct sk_buff *skb)
++{
++	struct batadv_ogm_packet *batadv_ogm_packet;
 +
-+	return can_enqueue;
- }
++	/* packet should hold at least type and version */
++	if (unlikely(!pskb_may_pull(skb, 2)))
++		return false;
++
++	batadv_ogm_packet = (struct batadv_ogm_packet *)skb->data;
++
++	if (batadv_ogm_packet->version != BATADV_COMPAT_VERSION)
++		return false;
++
++	if (batadv_ogm_packet->packet_type != BATADV_UNICAST_FRAG)
++		return false;
++
++	return true;
++}
++
++/**
+  * batadv_frag_skb_buffer() - buffer fragment for later merge
+  * @skb: skb to buffer
+  * @orig_node_src: originator that the skb is received from
+@@ -337,6 +362,16 @@ bool batadv_frag_skb_buffer(struct sk_bu
+ 	if (!skb_out)
+ 		goto out_err;
  
- static int
-@@ -1418,7 +1418,17 @@ virtio_transport_recv_connected(struct s
- 
- 	switch (le16_to_cpu(hdr->op)) {
- 	case VIRTIO_VSOCK_OP_RW:
--		virtio_transport_recv_enqueue(vsk, skb);
-+		if (!virtio_transport_recv_enqueue(vsk, skb)) {
-+			/* There is no more space to queue the packet, so let's
-+			 * close the connection; otherwise, we'll lose data.
-+			 */
-+			(void)virtio_transport_reset(vsk, skb);
-+			virtio_transport_do_close(vsk, true);
-+			sk->sk_err = ENOBUFS;
-+			sk_error_report(sk);
-+			vsock_remove_sock(vsk);
-+			break;
-+		}
- 		vsock_data_ready(sk);
- 		return err;
- 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
++	/* fragment in fragment is not allowed. otherwise it is possible
++	 * to exhaust the stack when receiving a matryoshka-style
++	 * "fragments in a fragment packet"
++	 */
++	if (batadv_skb_is_frag(skb_out)) {
++		kfree_skb(skb_out);
++		skb_out = NULL;
++		goto out_err;
++	}
++
+ out:
+ 	ret = true;
+ out_err:
 
 
