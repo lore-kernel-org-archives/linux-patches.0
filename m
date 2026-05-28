@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E652C2459D1;
-	Thu, 28 May 2026 20:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37A7257854;
+	Thu, 28 May 2026 20:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999351; cv=none; b=f0cLnPng2ZnWyz6rwrGGkkAELfNeHUhRdc3l/pqLs+M+h1vVYkHAsSXYjQOWnseZvEPUrY0bcOn345vA3HR7sPu0/3ueN9swiKnIV2GTRb/FCj0bQg6v1vmXS/qp/sbGcK/qZTXNpB7S46tmqSgWcobWQVfe5QE73hIYcQdbjUg=
+	t=1779999354; cv=none; b=bkb+RXqLW9NkTNqBZfQ2YC8NTkQi3eMWCy1IeHU3Gz/bu+xmH5G2i1WPvl2kV7uRihsvBE5FL4QWoDhD16nxtyILMB/U/tov4fWTbGKSuHxPL8AU85BzdzXqYbH0uq1LXQTgjUr/xg5EvI4uA8j3E6fM/ZONh74R3QySOHEeDGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999351; c=relaxed/simple;
-	bh=BdHX4xjprSzLpCF/w6KHa0M3/awU4sXi+JU0AgeBG/E=;
+	s=arc-20240116; t=1779999354; c=relaxed/simple;
+	bh=yG4sALSubs+S4BSpIx9bkgdGeJDnKxpiKXinou/S+1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DOI+HkB9H/OLl62Hz3gi9w3nLt3RfzysC3iQx48jOPNmg+3R8oT/L4WBJGeOSf36HlNcu3RhcTw4utB5BmkIj9fYSevYDZv96GwI6qi8OD5DAVw3D+/fb0G9nr/PWOdBOrnEke0M/mCaf18gNLtyg+pnGTj4uWmfOu6qOBzEYCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPRylR4j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QoNQj94L0F4Jold9I7u/aSbDGXHBjqf9tAxkFG+VEwaHLRN6WcVSTDdMbKmK8hwMU48EoY/0+dg72AeCyTLIpOv0XWBtlwWNKmF+ZSx+VPlszkkXJb0xAvkX1Ok/oUfCNwzqp+TDEVr/y5g94RQG+UpT58hq74y6p7/0fBXk2wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1TlaDE1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPRylR4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519791F000E9;
-	Thu, 28 May 2026 20:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1TlaDE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBE81F000E9;
+	Thu, 28 May 2026 20:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999349;
-	bh=MdB3o42altVIbyhj0YPjFqyvzzWHz4bnpLcd3KEGziQ=;
+	s=korg; t=1779999352;
+	bh=uSIWMVmwhpifFzLl2V7vFh2Sh1QxziGo9JILigz+pyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPRylR4jUgO8K0zex65hrgtCQC6vnwaq7Ee8xTdaQQXT7yO7VJt52JUYA1BRoCZrp
-	 WVRiFFoPxBcLzyLuZCDjRDt8o4tCZ/SeEGORebwus8zwvXsHZpm5rHVfjpR0As6h9j
-	 4jaT7qfVPKw/DLdQzXybLwXZP0zDhhsF6t34IKbM=
+	b=L1TlaDE1vdfOpjDm/Tna2csZ0xNMBZeLr84AonAfy+NGo57iULRXfREP+dZFSpwpp
+	 s10BUjWQmJBjopV5QiqClNdrzB4+vvxk9EuJEMt4Hj08mMnGS+JyLuNKe4vkBP/19B
+	 HWt+M8cX7ej22p8h4BkraWX4OUXfMSTd5HN17J+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/377] cxl/mbox: validate payload size before accessing contents in cxl_payload_from_user_allowed()
-Date: Thu, 28 May 2026 21:44:03 +0200
-Message-ID: <20260528194638.539341082@linuxfoundation.org>
+Subject: [PATCH 6.18 006/377] sched: Employ sched_change guards
+Date: Thu, 28 May 2026 21:44:04 +0200
+Message-ID: <20260528194638.568079724@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -46,123 +47,505 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 60b5d1f68338aff2c5af0113f04aefa7169c50c2 ]
+[ Upstream commit e9139f765ac7048cadc9981e962acdf8b08eabf3 ]
 
-cxl_payload_from_user_allowed() casts and dereferences the input
-payload without first verifying its size. When a raw mailbox command
-is sent with an undersized payload (ie: 1 byte for CXL_MBOX_OP_CLEAR_LOG,
-which expects a 16-byte UUID), uuid_equal() reads past the allocated buffer,
-triggering a KASAN splat:
+As proposed a long while ago -- and half done by scx -- wrap the
+scheduler's 'change' pattern in a guard helper.
 
-BUG: KASAN: slab-out-of-bounds in memcmp+0x176/0x1d0 lib/string.c:683
-Read of size 8 at addr ffff88810130f5c0 by task syz.1.62/2258
-
-CPU: 2 UID: 0 PID: 2258 Comm: syz.1.62 Not tainted 6.19.0-dirty #3 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xab/0xe0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x650 mm/kasan/report.c:482
- kasan_report+0xce/0x100 mm/kasan/report.c:595
- memcmp+0x176/0x1d0 lib/string.c:683
- uuid_equal include/linux/uuid.h:73 [inline]
- cxl_payload_from_user_allowed drivers/cxl/core/mbox.c:345 [inline]
- cxl_mbox_cmd_ctor drivers/cxl/core/mbox.c:368 [inline]
- cxl_validate_cmd_from_user drivers/cxl/core/mbox.c:522 [inline]
- cxl_send_cmd+0x9c0/0xb50 drivers/cxl/core/mbox.c:643
- __cxl_memdev_ioctl drivers/cxl/core/memdev.c:698 [inline]
- cxl_memdev_ioctl+0x14f/0x190 drivers/cxl/core/memdev.c:713
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xa8/0x330 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fdaf331ba79
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fdaf1d77038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fdaf3585fa0 RCX: 00007fdaf331ba79
-RDX: 00002000000001c0 RSI: 00000000c030ce02 RDI: 0000000000000003
-RBP: 00007fdaf33749df R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fdaf3586038 R14: 00007fdaf3585fa0 R15: 00007ffced2af768
- </TASK>
-
-Add 'in_size' parameter to cxl_payload_from_user_allowed() and validate
-the payload is large enough.
-
-Fixes: 6179045ccc0c ("cxl/mbox: Block immediate mode in SET_PARTITION_INFO command")
-Fixes: 206f9fa9d555 ("cxl/mbox: Add Clear Log mailbox command")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260220001618.963490-2-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+Stable-dep-of: d658686a1331 ("sched/deadline: Fix missing ENQUEUE_REPLENISH during PI de-boosting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/linux/cleanup.h |   5 ++
+ kernel/sched/core.c     | 159 +++++++++++++++-------------------------
+ kernel/sched/ext.c      |  39 +++++-----
+ kernel/sched/sched.h    |  33 ++++++---
+ kernel/sched/syscalls.c |  65 ++++++----------
+ 5 files changed, 131 insertions(+), 170 deletions(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index fa6dd0c94656f..e7a6452bf5445 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -311,6 +311,7 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  * cxl_payload_from_user_allowed() - Check contents of in_payload.
-  * @opcode: The mailbox command opcode.
-  * @payload_in: Pointer to the input payload passed in from user space.
-+ * @in_size: Size of @payload_in in bytes.
-  *
-  * Return:
-  *  * true	- payload_in passes check for @opcode.
-@@ -325,12 +326,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  *
-  * The specific checks are determined by the opcode.
+diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
+index 19c7e475d3a4d..a1194e44b5276 100644
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -341,6 +341,11 @@ _label:                                                    \
+ #define __DEFINE_CLASS_IS_CONDITIONAL(_name, _is_cond)	\
+ static __maybe_unused const bool class_##_name##_is_conditional = _is_cond
+ 
++#define DEFINE_CLASS_IS_UNCONDITIONAL(_name)		\
++	__DEFINE_CLASS_IS_CONDITIONAL(_name, false);	\
++	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
++	{ return (void *)1; }
++
+ #define __GUARD_IS_ERR(_ptr)                                       \
+ 	({                                                         \
+ 		unsigned long _rc = (__force unsigned long)(_ptr); \
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 0d93f60fed20a..46fc94f2338e8 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7332,7 +7332,7 @@ void rt_mutex_post_schedule(void)
   */
--static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
-+static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in,
-+					  size_t in_size)
+ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
  {
- 	switch (opcode) {
- 	case CXL_MBOX_OP_SET_PARTITION_INFO: {
- 		struct cxl_mbox_set_partition_info *pi = payload_in;
+-	int prio, oldprio, queued, running, queue_flag =
++	int prio, oldprio, queue_flag =
+ 		DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
+ 	const struct sched_class *prev_class, *next_class;
+ 	struct rq_flags rf;
+@@ -7397,52 +7397,42 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
+ 	if (prev_class != next_class && p->se.sched_delayed)
+ 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
  
-+		if (in_size < sizeof(*pi))
-+			return false;
- 		if (pi->flags & CXL_SET_PARTITION_IMMEDIATE_FLAG)
- 			return false;
- 		break;
-@@ -338,6 +342,8 @@ static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
- 	case CXL_MBOX_OP_CLEAR_LOG: {
- 		const uuid_t *uuid = (uuid_t *)payload_in;
+-	queued = task_on_rq_queued(p);
+-	running = task_current_donor(rq, p);
+-	if (queued)
+-		dequeue_task(rq, p, queue_flag);
+-	if (running)
+-		put_prev_task(rq, p);
+-
+-	/*
+-	 * Boosting condition are:
+-	 * 1. -rt task is running and holds mutex A
+-	 *      --> -dl task blocks on mutex A
+-	 *
+-	 * 2. -dl task is running and holds mutex A
+-	 *      --> -dl task blocks on mutex A and could preempt the
+-	 *          running task
+-	 */
+-	if (dl_prio(prio)) {
+-		if (!dl_prio(p->normal_prio) ||
+-		    (pi_task && dl_prio(pi_task->prio) &&
+-		     dl_entity_preempt(&pi_task->dl, &p->dl))) {
+-			p->dl.pi_se = pi_task->dl.pi_se;
+-			queue_flag |= ENQUEUE_REPLENISH;
++	scoped_guard (sched_change, p, queue_flag) {
++		/*
++		 * Boosting condition are:
++		 * 1. -rt task is running and holds mutex A
++		 *      --> -dl task blocks on mutex A
++		 *
++		 * 2. -dl task is running and holds mutex A
++		 *      --> -dl task blocks on mutex A and could preempt the
++		 *          running task
++		 */
++		if (dl_prio(prio)) {
++			if (!dl_prio(p->normal_prio) ||
++			    (pi_task && dl_prio(pi_task->prio) &&
++			     dl_entity_preempt(&pi_task->dl, &p->dl))) {
++				p->dl.pi_se = pi_task->dl.pi_se;
++				scope->flags |= ENQUEUE_REPLENISH;
++			} else {
++				p->dl.pi_se = &p->dl;
++			}
++		} else if (rt_prio(prio)) {
++			if (dl_prio(oldprio))
++				p->dl.pi_se = &p->dl;
++			if (oldprio < prio)
++				scope->flags |= ENQUEUE_HEAD;
+ 		} else {
+-			p->dl.pi_se = &p->dl;
++			if (dl_prio(oldprio))
++				p->dl.pi_se = &p->dl;
++			if (rt_prio(oldprio))
++				p->rt.timeout = 0;
+ 		}
+-	} else if (rt_prio(prio)) {
+-		if (dl_prio(oldprio))
+-			p->dl.pi_se = &p->dl;
+-		if (oldprio < prio)
+-			queue_flag |= ENQUEUE_HEAD;
+-	} else {
+-		if (dl_prio(oldprio))
+-			p->dl.pi_se = &p->dl;
+-		if (rt_prio(oldprio))
+-			p->rt.timeout = 0;
+-	}
  
-+		if (in_size < sizeof(uuid_t))
-+			return false;
- 		/*
- 		 * Restrict the ‘Clear log’ action to only apply to
- 		 * Vendor debug logs.
-@@ -365,7 +371,8 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox_cmd,
- 		if (IS_ERR(mbox_cmd->payload_in))
- 			return PTR_ERR(mbox_cmd->payload_in);
+-	p->sched_class = next_class;
+-	p->prio = prio;
++		p->sched_class = next_class;
++		p->prio = prio;
  
--		if (!cxl_payload_from_user_allowed(opcode, mbox_cmd->payload_in)) {
-+		if (!cxl_payload_from_user_allowed(opcode, mbox_cmd->payload_in,
-+						  in_size)) {
- 			dev_dbg(cxl_mbox->host, "%s: input payload not allowed\n",
- 				cxl_mem_opcode_to_name(opcode));
- 			kvfree(mbox_cmd->payload_in);
+-	check_class_changing(rq, p, prev_class);
+-
+-	if (queued)
+-		enqueue_task(rq, p, queue_flag);
+-	if (running)
+-		set_next_task(rq, p);
++		check_class_changing(rq, p, prev_class);
++	}
+ 
+ 	check_class_changed(rq, p, prev_class, oldprio);
+ out_unlock:
+@@ -8090,26 +8080,9 @@ int migrate_task_to(struct task_struct *p, int target_cpu)
+  */
+ void sched_setnuma(struct task_struct *p, int nid)
+ {
+-	bool queued, running;
+-	struct rq_flags rf;
+-	struct rq *rq;
+-
+-	rq = task_rq_lock(p, &rf);
+-	queued = task_on_rq_queued(p);
+-	running = task_current_donor(rq, p);
+-
+-	if (queued)
+-		dequeue_task(rq, p, DEQUEUE_SAVE);
+-	if (running)
+-		put_prev_task(rq, p);
+-
+-	p->numa_preferred_nid = nid;
+-
+-	if (queued)
+-		enqueue_task(rq, p, ENQUEUE_RESTORE | ENQUEUE_NOCLOCK);
+-	if (running)
+-		set_next_task(rq, p);
+-	task_rq_unlock(rq, p, &rf);
++	guard(task_rq_lock)(p);
++	scoped_guard (sched_change, p, DEQUEUE_SAVE)
++		p->numa_preferred_nid = nid;
+ }
+ #endif /* CONFIG_NUMA_BALANCING */
+ 
+@@ -9215,8 +9188,9 @@ static void sched_change_group(struct task_struct *tsk)
+  */
+ void sched_move_task(struct task_struct *tsk, bool for_autogroup)
+ {
+-	int queued, running, queue_flags =
++	unsigned int queue_flags =
+ 		DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
++	bool resched = false;
+ 	struct rq *rq;
+ 
+ 	CLASS(task_rq_lock, rq_guard)(tsk);
+@@ -9224,29 +9198,16 @@ void sched_move_task(struct task_struct *tsk, bool for_autogroup)
+ 
+ 	update_rq_clock(rq);
+ 
+-	running = task_current_donor(rq, tsk);
+-	queued = task_on_rq_queued(tsk);
+-
+-	if (queued)
+-		dequeue_task(rq, tsk, queue_flags);
+-	if (running)
+-		put_prev_task(rq, tsk);
+-
+-	sched_change_group(tsk);
+-	if (!for_autogroup)
+-		scx_cgroup_move_task(tsk);
++	scoped_guard (sched_change, tsk, queue_flags) {
++		sched_change_group(tsk);
++		if (!for_autogroup)
++			scx_cgroup_move_task(tsk);
++		if (scope->running)
++			resched = true;
++	}
+ 
+-	if (queued)
+-		enqueue_task(rq, tsk, queue_flags);
+-	if (running) {
+-		set_next_task(rq, tsk);
+-		/*
+-		 * After changing group, the running task may have joined a
+-		 * throttled one but it's still the running task. Trigger a
+-		 * resched to make sure that task can still run.
+-		 */
++	if (resched)
+ 		resched_curr(rq);
+-	}
+ }
+ 
+ static struct cgroup_subsys_state *
+@@ -10902,37 +10863,39 @@ void sched_mm_cid_fork(struct task_struct *t)
+ }
+ #endif /* CONFIG_SCHED_MM_CID */
+ 
+-#ifdef CONFIG_SCHED_CLASS_EXT
+-void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
+-			    struct sched_enq_and_set_ctx *ctx)
++static DEFINE_PER_CPU(struct sched_change_ctx, sched_change_ctx);
++
++struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags)
+ {
++	struct sched_change_ctx *ctx = this_cpu_ptr(&sched_change_ctx);
+ 	struct rq *rq = task_rq(p);
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
+-	*ctx = (struct sched_enq_and_set_ctx){
++	*ctx = (struct sched_change_ctx){
+ 		.p = p,
+-		.queue_flags = queue_flags,
++		.flags = flags,
+ 		.queued = task_on_rq_queued(p),
+-		.running = task_current(rq, p),
++		.running = task_current_donor(rq, p),
+ 	};
+ 
+-	update_rq_clock(rq);
+ 	if (ctx->queued)
+-		dequeue_task(rq, p, queue_flags | DEQUEUE_NOCLOCK);
++		dequeue_task(rq, p, flags);
+ 	if (ctx->running)
+ 		put_prev_task(rq, p);
++
++	return ctx;
+ }
+ 
+-void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx)
++void sched_change_end(struct sched_change_ctx *ctx)
+ {
+-	struct rq *rq = task_rq(ctx->p);
++	struct task_struct *p = ctx->p;
++	struct rq *rq = task_rq(p);
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
+ 	if (ctx->queued)
+-		enqueue_task(rq, ctx->p, ctx->queue_flags | ENQUEUE_NOCLOCK);
++		enqueue_task(rq, p, ctx->flags | ENQUEUE_NOCLOCK);
+ 	if (ctx->running)
+-		set_next_task(rq, ctx->p);
++		set_next_task(rq, p);
+ }
+-#endif /* CONFIG_SCHED_CLASS_EXT */
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 35c0b31924d37..3029e5b8f9a57 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3866,11 +3866,10 @@ static void scx_bypass(bool bypass)
+ 		 */
+ 		list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list,
+ 						 scx.runnable_node) {
+-			struct sched_enq_and_set_ctx ctx;
+-
+ 			/* cycling deq/enq is enough, see the function comment */
+-			sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
+-			sched_enq_and_set_task(&ctx);
++			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
++				/* nothing */ ;
++			}
+ 		}
+ 
+ 		/* resched to restore ticks and idle state */
+@@ -4021,17 +4020,16 @@ static void scx_disable_workfn(struct kthread_work *work)
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		const struct sched_class *old_class = p->sched_class;
+ 		const struct sched_class *new_class = scx_setscheduler_class(p);
+-		struct sched_enq_and_set_ctx ctx;
+ 
+-		if (old_class != new_class && p->se.sched_delayed)
+-			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
++		update_rq_clock(task_rq(p));
+ 
+-		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
+-
+-		p->sched_class = new_class;
+-		check_class_changing(task_rq(p), p, old_class);
++		if (old_class != new_class && p->se.sched_delayed)
++			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+ 
+-		sched_enq_and_set_task(&ctx);
++		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
++			p->sched_class = new_class;
++			check_class_changing(task_rq(p), p, old_class);
++		}
+ 
+ 		check_class_changed(task_rq(p), p, old_class, p->prio);
+ 		scx_exit_task(p);
+@@ -4845,21 +4843,20 @@ static void scx_enable_workfn(struct kthread_work *work)
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		const struct sched_class *old_class = p->sched_class;
+ 		const struct sched_class *new_class = scx_setscheduler_class(p);
+-		struct sched_enq_and_set_ctx ctx;
+ 
+ 		if (!tryget_task_struct(p))
+ 			continue;
+ 
+-		if (old_class != new_class && p->se.sched_delayed)
+-			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
+-
+-		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE, &ctx);
++		update_rq_clock(task_rq(p));
+ 
+-		p->scx.slice = SCX_SLICE_DFL;
+-		p->sched_class = new_class;
+-		check_class_changing(task_rq(p), p, old_class);
++		if (old_class != new_class && p->se.sched_delayed)
++			dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+ 
+-		sched_enq_and_set_task(&ctx);
++		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
++			p->scx.slice = SCX_SLICE_DFL;
++			p->sched_class = new_class;
++			check_class_changing(task_rq(p), p, old_class);
++		}
+ 
+ 		check_class_changed(task_rq(p), p, old_class, p->prio);
+ 		put_task_struct(p);
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index f750dea7b7876..668841022dbf2 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -3891,23 +3891,38 @@ extern void check_class_changed(struct rq *rq, struct task_struct *p,
+ extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
+ extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
+ 
+-#ifdef CONFIG_SCHED_CLASS_EXT
+ /*
+- * Used by SCX in the enable/disable paths to move tasks between sched_classes
+- * and establish invariants.
++ * The 'sched_change' pattern is the safe, easy and slow way of changing a
++ * task's scheduling properties. It dequeues a task, such that the scheduler
++ * is fully unaware of it; at which point its properties can be modified;
++ * after which it is enqueued again.
++ *
++ * Typically this must be called while holding task_rq_lock, since most/all
++ * properties are serialized under those locks. There is currently one
++ * exception to this rule in sched/ext which only holds rq->lock.
++ */
++
++/*
++ * This structure is a temporary, used to preserve/convey the queueing state
++ * of the task between sched_change_begin() and sched_change_end(). Ensuring
++ * the task's queueing state is idempotent across the operation.
+  */
+-struct sched_enq_and_set_ctx {
++struct sched_change_ctx {
+ 	struct task_struct	*p;
+-	int			queue_flags;
++	int			flags;
+ 	bool			queued;
+ 	bool			running;
+ };
+ 
+-void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
+-			    struct sched_enq_and_set_ctx *ctx);
+-void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
++struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
++void sched_change_end(struct sched_change_ctx *ctx);
+ 
+-#endif /* CONFIG_SCHED_CLASS_EXT */
++DEFINE_CLASS(sched_change, struct sched_change_ctx *,
++	     sched_change_end(_T),
++	     sched_change_begin(p, flags),
++	     struct task_struct *p, unsigned int flags)
++
++DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
+ 
+ #include "ext.h"
+ 
+diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
+index 6805a63d47af7..d2bcedc10152f 100644
+--- a/kernel/sched/syscalls.c
++++ b/kernel/sched/syscalls.c
+@@ -64,7 +64,6 @@ static int effective_prio(struct task_struct *p)
+ 
+ void set_user_nice(struct task_struct *p, long nice)
+ {
+-	bool queued, running;
+ 	struct rq *rq;
+ 	int old_prio;
+ 
+@@ -90,22 +89,12 @@ void set_user_nice(struct task_struct *p, long nice)
+ 		return;
+ 	}
+ 
+-	queued = task_on_rq_queued(p);
+-	running = task_current_donor(rq, p);
+-	if (queued)
+-		dequeue_task(rq, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK);
+-	if (running)
+-		put_prev_task(rq, p);
+-
+-	p->static_prio = NICE_TO_PRIO(nice);
+-	set_load_weight(p, true);
+-	old_prio = p->prio;
+-	p->prio = effective_prio(p);
+-
+-	if (queued)
+-		enqueue_task(rq, p, ENQUEUE_RESTORE | ENQUEUE_NOCLOCK);
+-	if (running)
+-		set_next_task(rq, p);
++	scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK) {
++		p->static_prio = NICE_TO_PRIO(nice);
++		set_load_weight(p, true);
++		old_prio = p->prio;
++		p->prio = effective_prio(p);
++	}
+ 
+ 	/*
+ 	 * If the task increased its priority or is running and
+@@ -515,7 +504,7 @@ int __sched_setscheduler(struct task_struct *p,
+ 			 bool user, bool pi)
+ {
+ 	int oldpolicy = -1, policy = attr->sched_policy;
+-	int retval, oldprio, newprio, queued, running;
++	int retval, oldprio, newprio;
+ 	const struct sched_class *prev_class, *next_class;
+ 	struct balance_callback *head;
+ 	struct rq_flags rf;
+@@ -698,33 +687,25 @@ int __sched_setscheduler(struct task_struct *p,
+ 	if (prev_class != next_class && p->se.sched_delayed)
+ 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+ 
+-	queued = task_on_rq_queued(p);
+-	running = task_current_donor(rq, p);
+-	if (queued)
+-		dequeue_task(rq, p, queue_flags);
+-	if (running)
+-		put_prev_task(rq, p);
+-
+-	if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
+-		__setscheduler_params(p, attr);
+-		p->sched_class = next_class;
+-		p->prio = newprio;
+-	}
+-	__setscheduler_uclamp(p, attr);
+-	check_class_changing(rq, p, prev_class);
++	scoped_guard (sched_change, p, queue_flags) {
+ 
+-	if (queued) {
+-		/*
+-		 * We enqueue to tail when the priority of a task is
+-		 * increased (user space view).
+-		 */
+-		if (oldprio < p->prio)
+-			queue_flags |= ENQUEUE_HEAD;
++		if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
++			__setscheduler_params(p, attr);
++			p->sched_class = next_class;
++			p->prio = newprio;
++		}
++		__setscheduler_uclamp(p, attr);
++		check_class_changing(rq, p, prev_class);
+ 
+-		enqueue_task(rq, p, queue_flags);
++		if (scope->queued) {
++			/*
++			 * We enqueue to tail when the priority of a task is
++			 * increased (user space view).
++			 */
++			if (oldprio < p->prio)
++				scope->flags |= ENQUEUE_HEAD;
++		}
+ 	}
+-	if (running)
+-		set_next_task(rq, p);
+ 
+ 	check_class_changed(rq, p, prev_class, oldprio);
+ 
 -- 
 2.53.0
 
