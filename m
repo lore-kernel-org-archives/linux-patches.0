@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCCF304BB3;
-	Thu, 28 May 2026 20:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD680304BB3;
+	Thu, 28 May 2026 20:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001508; cv=none; b=FMNGgkH9+ns+/A1XDnZeJFjPEKfKKZTF7uFnRQyXV45Sf4NvPF32xFe0gVUbiaPTaryVjRu07/Wo9gEoC6adzaoGdGrhy8NQyvPInenhK4fm4scxuV0RyXm6VAswWS8iKMASAzR6ECoLDwK6Gsl1HqSQkfYkw5DEIb/nc5S+GNs=
+	t=1780001510; cv=none; b=cS0CwbcL+wNLNtp4ZXtvxz3CMmpgQ/lBJAx2CJcLdCm2qXlvCbj65eABnKAHZ/u40H3/4gGpqdElqI3HZe9NvYARLSGVtsPpfc8XfhOt9r4gD3GIGk5DgzgU5WVs4ExA+57j47cofOA7XUO3eB/9qAlOXo6DwqplhqFd0A/qsTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001508; c=relaxed/simple;
-	bh=008BPo3hgiL1a5Kc0vHQL5LgV4LnWIA2VHy+GeDsTnA=;
+	s=arc-20240116; t=1780001510; c=relaxed/simple;
+	bh=EFw1Jhrgqx/Jl1WuqFtNE8QfEe9ogsjCpWZlfImz6Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMkhmxdLeJOiJIF0swLzLrZ0wGZbVQ2kJN7SZFyb9mCA7JedmrL27t0aOGxuXhq+IcEsS/wUZTo6wimm3Gx7/WolxCGGIP4vCQElUKa+kKIC3pyPRsBUq7dFyEjZbSq6h7g3B+j0gtRp2hC9JvsMZCvx6ESyen8pViIhROaAeN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqOisOYM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oWhoePuDdDCGxj0WuUfyhLA99W5Lm+Xm4F+7E1HFkYmFEMDn/p6T7QCd6Nhqy4TSRXOIWLaZErQcvf12ldBe9jSjxUU9ppleIoPXeok7mj5ZDEXT08FZBNNulZnZG/+XiVW8ZBwQw0Sh3xjePtt1ePDRtIe9mIIJXAFiwd6dypI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=essYm59i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqOisOYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BA11F000E9;
-	Thu, 28 May 2026 20:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="essYm59i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270891F000E9;
+	Thu, 28 May 2026 20:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001506;
-	bh=BkC1BGf25Gy6L5qAU8Ae+XiajJqwLhntDeibJBSYhwM=;
+	s=korg; t=1780001509;
+	bh=j71Xmk5JDXEc/r+I+PBCdg/dN9KLvZYMEbTdvecHTlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqOisOYMYVKjX2jPnADyE1ljEdXFYEaKdCZqxOrdwf5QUOVgZoJATvcUe4bHFmAkW
-	 cI+ZlmM9cShjc1vNpSN6GrPksZRcNcBM26MODG6N4bvtY+Np4q73uGZMo6qXWBVwF2
-	 ejmtChfn2/YD/s/s4RpaIRURCOJJhuoTqylR0XBk=
+	b=essYm59i7VJel9Ud6Xk98TKsxgaQAZd2ql7Vq038GRAxSg1LnUDl8i4AJgAFZ/vCC
+	 4QJTMJbq/tlZckbMdTuUcXo7LNfH3bvQ67uJhxfiFf4/gYgwEBgWm8mjZ8v2lnN4sI
+	 PQ2TLDbHLKtmB+MAG+o3ibsQYwf8mMWwEoQuT5FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/186] net: tls: prevent chain-after-chain in plain text SG
-Date: Thu, 28 May 2026 21:50:25 +0200
-Message-ID: <20260528194932.867970931@linuxfoundation.org>
+Subject: [PATCH 6.6 154/186] net: dsa: mt7530: fix FDB entries not aging out with short timeout
+Date: Thu, 28 May 2026 21:50:34 +0200
+Message-ID: <20260528194933.112571735@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,90 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit ff26a0e8377dec07e4a7230db7675bed1b9a6d03 ]
+[ Upstream commit e824e40d0e841fab66ab7897d6c7b14dc81c66a7 ]
 
-Sashiko points out that if end = 0 (start != 0) the current
-code will create a chain link to content type right after
-the wrap link:
+The DSA forwarding selftests bridge_vlan_aware.sh and
+bridge_vlan_unaware.sh configure the bridge with ageing_time set to
+LOW_AGEING_TIME (1000 centiseconds, i.e. 10 seconds) and then run
+learning_test() in lib.sh, which expects a learned FDB entry to be
+removed after ageing_time + 10 seconds. On MT7530/MT7531 the entry
+persisted past the deadline and the "Found FDB record when should
+not" assertion failed.
 
-  This would create a chain where the wrap link points directly
-  to another chain link. The scatterlist API sg_next iterator
-  does not recursively resolve consecutive chain links.
+With msecs=10000, the algorithm in mt7530_set_ageing_time() finds
+AGE_CNT=0 and AGE_UNIT=9 as the first exact match (starting the
+search from tmp_age_count=0). The per-entry aging counter is
+initialized to AGE_CNT when a MAC address is learned, so with
+AGE_CNT=0 new entries start with a counter value of 0, which the
+hardware treats as "already aged" and never removes, effectively
+disabling aging.
 
-meaning this is illegal input to crypto.
+Fix this by starting the search from tmp_age_count=1 to ensure
+entries always have a non-zero initial aging counter. For a
+10-second ageing time this yields AGE_CNT=1 and AGE_UNIT=4 instead:
+the timer ticks every 5 seconds and entries are removed after 2
+ticks.
 
-The wrapping link is unnecessary if end = 0. end is the entry after
-the last one used so end = 0 means there's nothing pushed after
-the wrap:
+Starting the search at AGE_CNT=1 raises the minimum representable
+ageing time from 1 to 2 seconds. Without bounds, a stale ageing_time
+of 1 second would now make the loop fall through without setting
+age_count and age_unit, leaving them uninitialized when written to
+the MT7530_AAC hardware register. Set ds->ageing_time_min and
+ds->ageing_time_max so the DSA core validates the range before the
+callback is invoked, and drop the now-redundant range check from
+mt7530_set_ageing_time().
 
-   end         start            i
-    v            v              v
-  [   ]...[   ][ d ][ d ][ d ][ d ][rsv for wrap]
-
-Skip the wrapping in this case.
-
-TLS 1.3 can use the "wrapping slot" for it's chaining if end = 0.
-This avoids the chain-after-chain.
-
-Move the wrap chaining before marking END and chaining off content
-type, that feels like more logical ordering to me, but should not
-matter from functional perspective.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260511174920.433155-3-kuba@kernel.org
+Fixes: ea6d5c924e39 ("net: dsa: mt7530: support setting ageing time")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/7788ded12dc07b1bce329ec35fa70f4b45f3f9b7.1778766629.git.daniel@makrotopia.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/net/dsa/mt7530.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 5ada6e54fb328..0c2e9724083ee 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -789,21 +789,33 @@ static int tls_push_record(struct sock *sk, int flags,
- 	i = msg_pl->sg.end;
- 	sk_msg_iter_var_prev(i);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 2d18a03d92742..ada56e432dd7a 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -880,12 +880,16 @@ mt7530_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
+ 	unsigned int age_count;
+ 	unsigned int age_unit;
  
-+	/* msg_pl->sg.data is a ring; data[MAX+1] is reserved for the wrap
-+	 * link (frags won't use it). 'i' is now the last filled entry:
-+	 *
-+	 *         i   end              start
-+	 *         v    v                 v            [ rsv ]
-+	 *  [ d ][ d ][   ][   ]...[   ][ d ][ d ][ d ][chain]
-+	 *    ^   END                                     v
-+	 *     `-----------------------------------------'
-+	 *
-+	 * Note that SGL does not allow chain-after-chain, so for TLS 1.3,
-+	 * we must make sure we don't create the wrap entry and then chain
-+	 * link to content_type immediately at index 0.
-+	 */
-+	if (i < msg_pl->sg.start)
-+		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
-+			 msg_pl->sg.data);
-+
- 	rec->content_type = record_type;
- 	if (prot->version == TLS_1_3_VERSION) {
- 		/* Add content type to end of message.  No padding added */
- 		sg_set_buf(&rec->sg_content_type, &rec->content_type, 1);
- 		sg_mark_end(&rec->sg_content_type);
--		sg_chain(msg_pl->sg.data, msg_pl->sg.end + 1,
--			 &rec->sg_content_type);
-+		sg_chain(msg_pl->sg.data, i + 2, &rec->sg_content_type);
- 	} else {
- 		sg_mark_end(sk_msg_elem(msg_pl, i));
- 	}
- 
--	if (msg_pl->sg.end < msg_pl->sg.start)
--		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
--			 msg_pl->sg.data);
+-	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds */
+-	if (secs < 1 || secs > (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1))
+-		return -ERANGE;
 -
- 	i = msg_pl->sg.start;
- 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
+-	/* iterate through all possible age_count to find the closest pair */
+-	for (tmp_age_count = 0; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
++	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds.
++	 * The DSA core has already validated the range using
++	 * ds->ageing_time_min and ds->ageing_time_max.
++	 *
++	 * Iterate through all possible age_count values to find the closest
++	 * pair. Start from 1 because the per-entry aging counter is
++	 * initialized to AGE_CNT and a value of 0 means the entry will
++	 * never be aged out.
++	 */
++	for (tmp_age_count = 1; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
+ 		unsigned int tmp_age_unit = secs / (tmp_age_count + 1) - 1;
+ 
+ 		if (tmp_age_unit <= AGE_UNIT_MAX) {
+@@ -2419,6 +2423,8 @@ mt7530_setup(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	if (priv->id == ID_MT7530) {
+ 		regulator_set_voltage(priv->core_pwr, 1000000, 1000000);
+@@ -2598,6 +2604,8 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	mt753x_trap_frames(priv);
  
 -- 
 2.53.0
