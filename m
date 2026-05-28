@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F0533CE8A;
-	Thu, 28 May 2026 20:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD7D33CE8A;
+	Thu, 28 May 2026 20:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999281; cv=none; b=ZEAElV/sujKL6PG77/HKPKk4ELRxOvnBp+mGy+YKhWTNQTEPVfWPgVepxVeHDXS/AlIyCybJf7TCTL5Wy8d8QyRGMr0EnMquT8FU4qUKdJ1KijdmLKjKflYzs00JXiXvt8bPeOldnUK2Z1eUQ5R7ilsBpDvE84dJThn6ZVfvkIo=
+	t=1779999283; cv=none; b=r9wbkqpLTyc5sVeZ3Mawa5qZ13o9TRB/Uf9L5qoj2gfKfNZ54nLEbgDhYj+NcXwLj2GwdhAvhAV2qfYpe+kSwDCNpabGPcLQ4WXPeArso6vPPESSRB+I8bjp408igw8frGktf+L449bRM8TXUiTa7cfknTmWt7D+JZMFPEw5vaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999281; c=relaxed/simple;
-	bh=cjnDDRXY9RLjaliqdF4L64WbP7xzVeoEBMCb6YLQwuo=;
+	s=arc-20240116; t=1779999283; c=relaxed/simple;
+	bh=YliCkXe5CeRDARX1GoQ8kiES3czC7irAT9/x5Q7uod0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdMzNhfke2ef1bwQREoR2hzkQ9+LYOoppBIOYEJHBLZ8ATIwFqfHJ7tnVlBtxPVA/NJy7m1Rzv6EEWsWByOm/QW+F6npbzMP3if82sM0Hrt07jWjhb0gJbCAuJYRDKxlhak7mULN0ygWdhQCM3Bc1JiD9H9sD9TJcB8NTbjwHCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNgCXhfD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZyBG2zkp0ELU5SpLq4GrDvy6SBLNYbjvI7uoGjPo+Vi8sUoQrgDfMkv3WmayZPUWlcsG2j6qcUh6EeO8Qd8M1+xMMZNL8gCz8tEulydR6Co3NlB/8pLw0svEc1zGoNHywzQ3StOjwR37YmFOYfKVVP8wOSLQtM/WarCJd9dPUXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJLM5lHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNgCXhfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5331F000E9;
-	Thu, 28 May 2026 20:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJLM5lHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575FB1F000E9;
+	Thu, 28 May 2026 20:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999280;
-	bh=D+mQO/ZeKASSEr9FS8PBz6qJ0AVaTdLcd+IpVJ+aL5Y=;
+	s=korg; t=1779999282;
+	bh=EVZWh50usgx4zYpvbskga7BKBC5F/VVGZOFcOnv6nZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SNgCXhfDKbb36j+GhDh1ljIzLrhwrf1DrGK5U1wzLC/LCkwD67o8zaJgOsR3WrwH/
-	 wnjsBHSQuPY1nxJrgXhWSW9mcxemrinO/wYZRpYYpg6gfmjIauGgBFRdFVvhD9pitJ
-	 ateTdsB2jW3nLOIHeKMApwr1Nmewk+UaipJEPAtI=
+	b=VJLM5lHhtGBNSFAQcHtfdpNA0fQIZ9kPpMTtfmc0ooK9Bfe9R30m5bMkFFMhkoGFd
+	 LE3tlkfqwpiWbFZe/aCXXYNrgplCuvk9Z5w/p2U3aDBidipDCl3I6c52ZW8qmztaS/
+	 +ShtJd14DjarnBmt0tv48t7PrDGn44N2raMX3QfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 011/377] smb: client: reject userspace cifs.spnego descriptions
-Date: Thu, 28 May 2026 21:44:09 +0200
-Message-ID: <20260528194638.715343147@linuxfoundation.org>
+	Stanimir Varbanov <svarbanov@suse.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 012/377] dt-bindings: soc: bcm: Add bcm2712 compatible
+Date: Thu, 28 May 2026 21:44:10 +0200
+Message-ID: <20260528194638.743206747@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,66 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Stanimir Varbanov <svarbanov@suse.de>
 
-commit 3da1fdf4efbc490041eb4f836bf596201203f8f2 upstream.
+commit 34194cb385033656d347ebe45c241e4739a58125 upstream.
 
-cifs.spnego key descriptions contain authority-bearing fields such as
-pid, uid, creduid, and upcall_target that cifs.upcall treats as
-kernel-originating inputs. However, userspace can also create keys of
-this type through request_key(2) or add_key(2), allowing those fields to
-be supplied without CIFS origin.
+Add bcm2712-pm compatible and update the bindings to satisfy it's
+requirements. The PM hardware block inside bcm2712 lacks the "asb"
+and "rpivid_asb" register ranges and also does not have clocks, update
+the bindings accordingly.
 
-Only accept cifs.spnego descriptions while CIFS is using its private
-spnego_cred to request the key.
-
-Fixes: f1d662a7d5e5 ("[CIFS] Add upcall files for cifs to use spnego/kerberos")
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_spnego.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ Documentation/devicetree/bindings/soc/bcm/brcm,bcm2835-pm.yaml |   38 ++++++++--
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/fs/smb/client/cifs_spnego.c
-+++ b/fs/smb/client/cifs_spnego.c
-@@ -8,6 +8,7 @@
-  */
+--- a/Documentation/devicetree/bindings/soc/bcm/brcm,bcm2835-pm.yaml
++++ b/Documentation/devicetree/bindings/soc/bcm/brcm,bcm2835-pm.yaml
+@@ -13,23 +13,21 @@ description: |
+ maintainers:
+   - Nicolas Saenz Julienne <nsaenz@kernel.org>
  
- #include <linux/list.h>
-+#include <linux/cred.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <keys/user-type.h>
-@@ -40,12 +41,27 @@ cifs_spnego_key_destroy(struct key *key)
- 	kfree(key->payload.data[0]);
- }
+-allOf:
+-  - $ref: /schemas/watchdog/watchdog.yaml#
+-
+ properties:
+   compatible:
+     items:
+       - enum:
+           - brcm,bcm2835-pm
+           - brcm,bcm2711-pm
++          - brcm,bcm2712-pm
+       - const: brcm,bcm2835-pm-wdt
  
-+static int
-+cifs_spnego_key_vet_description(const char *description)
-+{
-+	/*
-+	 * cifs.spnego descriptions are authority-bearing inputs to cifs.upcall.
-+	 * They are only valid when produced by CIFS while using the private
-+	 * spnego_cred installed below.  Do not let userspace create this type
-+	 * of key through request_key(2)/add_key(2), since the helper treats
-+	 * pid/uid/creduid/upcall_target as kernel-originating fields.
-+	 */
-+	if (current_cred() != spnego_cred)
-+		return -EPERM;
-+	return 0;
-+}
+   reg:
+-    minItems: 2
++    minItems: 1
+     maxItems: 3
  
- /*
-  * keytype for CIFS spnego keys
-  */
- struct key_type cifs_spnego_key_type = {
- 	.name		= "cifs.spnego",
-+	.vet_description = cifs_spnego_key_vet_description,
- 	.instantiate	= cifs_spnego_key_instantiate,
- 	.destroy	= cifs_spnego_key_destroy,
- 	.describe	= user_describe,
+   reg-names:
+-    minItems: 2
++    minItems: 1
+     items:
+       - const: pm
+       - const: asb
+@@ -62,7 +60,35 @@ required:
+   - reg
+   - "#power-domain-cells"
+   - "#reset-cells"
+-  - clocks
++
++allOf:
++  - $ref: /schemas/watchdog/watchdog.yaml#
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - brcm,bcm2835-pm
++              - brcm,bcm2711-pm
++    then:
++      required:
++        - clocks
++
++      properties:
++        reg:
++          minItems: 2
++
++        reg-names:
++          minItems: 2
++
++    else:
++      properties:
++        reg:
++          maxItems: 1
++
++        reg-names:
++          maxItems: 1
+ 
+ additionalProperties: false
+ 
 
 
