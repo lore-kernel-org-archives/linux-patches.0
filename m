@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ECD330307;
-	Thu, 28 May 2026 20:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8698318B9D;
+	Thu, 28 May 2026 20:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001149; cv=none; b=eFPMPwJggdgOw2QlmoEylRRVdJzzMxXShXHTrDqOG9RuVJGAsM4lWus6iQ7KriJ+bf6G3TvxH+B+94X4YWsLM6BO8yCRlqlbOk8Y7akrTh5blOmxoc7cwt2Y3RSh46euvkSqsIb/ilDDUJpCo07rSNz8VOf236JQezD4s14z3nk=
+	t=1780001152; cv=none; b=OyhtFOGs5mwnXMbaBqSQI8wiWFjY/6b0jcMQIfWA3dtCdaVrjo2OCvO6rDo3Cjto1xWZAPihR3bkXp4sXEI+ujmaqcwtWmviaB27lgfNRfWgK5umrmOb0PVqJfk4mvKO3Mv9X46EYpNgTHenOm9EnUo7ukUiAksK/Q/pi12fpzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001149; c=relaxed/simple;
-	bh=5DnJ425ATff2CDb1S7sVqp31qmmNuEg0t5Cj1+SoUs0=;
+	s=arc-20240116; t=1780001152; c=relaxed/simple;
+	bh=DQzYTUqKSp5KC6tXxY/5UMEA8ubGgp3QdI0rzAiof0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOAp1qIQ9p9ZqvYs+FAz0Tomfc9ztsxq30Zc/sYNVVhCFFlrZCMN7mLz4vNii0r3astBLyuES9Z+7bpyClX9aIm04IrJt25Ewa+O94OyFmD2QsASg74U7exscIF6RxT8POpiLD3kp8wU8dueKvKZKUuM/9sDtjx8AkZ7WjnWa+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EetFC/sw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O/3tyFodSJ5eDaxmbud3XehsY86m7aPZNnrsmqJzHV53UmOHx35yYAqCqD4cySfCx+WMBA9EDK6tDvzNN/tVgWPBLGBbefQvj7RzEvKh7q6q4MnBnLGPKj5wslqN9ELk1my1oA85lW2vpsue1zSfXuxlgo9HK861bmLHakI78LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFxIEnyU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EetFC/sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864E51F000E9;
-	Thu, 28 May 2026 20:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFxIEnyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523921F000E9;
+	Thu, 28 May 2026 20:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001148;
-	bh=RwV8ShvB8J3dkl9x8ahgI8FajfeI5LncACIcTIpAsxI=;
+	s=korg; t=1780001150;
+	bh=3dglbacoThz2ufQzfu3Tr7osOxpOgjx7ZjQMl4V9bJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EetFC/sw2lIMADoGX0PVQk5GiXU6VMJ5fXIaAPt99tS708v6TJF5xtROYCU09VLja
-	 qIFotzkcImehCh5EwCVZI8LtApQYRoPcY/l/WD6MeK8DkrpTf4EkCM2abcnQD7iVYX
-	 lood783Lm5GmaDMUo706MiZfZUXDLeMniwkOyW5g=
+	b=ZFxIEnyUflZPga/n4gWe8u6riL51+WejTnhrTPH4wxslDY+d7ncS7KBKxE7w20uXq
+	 hfhotcPBieSvCvMnsw3L999U0HV0k6lhI8ZU0XSOTIQbvug3DonhMJ/UDWer6E/ezr
+	 0iM30A2K1WZdf8N9MulUt4C4ZNqzmkxlieJcJsAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fabian Godehardt <fg@emlix.com>,
+	Mark Brown <broonie@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/186] mptcp: pm: ADD_ADDR rtx: free sk if last
-Date: Thu, 28 May 2026 21:48:04 +0200
-Message-ID: <20260528194929.066370487@linuxfoundation.org>
+Subject: [PATCH 6.6 005/186] spi: spidev: fix lock inversion between spi_lock and buf_lock
+Date: Thu, 28 May 2026 21:48:05 +0200
+Message-ID: <20260528194929.093640436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,125 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Fabian Godehardt <fg@emlix.com>
 
-commit b7b9a461569734d33d3259d58d2507adfac107ed upstream.
+[ Upstream commit 40534d19ed2afb880ecf202dab26a8e7a5808d16 ]
 
-When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer(),
-and released at the end.
+The spidev driver previously used two mutexes, spi_lock and buf_lock,
+but acquired them in different orders depending on the code path:
 
-If at that moment, it was the last reference being held, the sk would
-not be freed. sock_put() should then be called instead of __sock_put().
+  write()/read(): buf_lock -> spi_lock
+  ioctl():       spi_lock -> buf_lock
 
-But that's not enough: if it is the last reference, sock_put() will call
-sk_free(), which will end up calling sk_stop_timer_sync() on the same
-timer, and waiting indefinitely to finish. So it is needed to mark that
-the timer is done at the end of the timer handler when it has not been
-rescheduled, not to call sk_stop_timer_sync() on "itself".
+This AB-BA locking pattern triggers lockdep warnings and can
+cause real deadlocks:
 
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-5-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Applied to net/mptcp/pm_netlink.c instead of upstream's pm_kernel.c.
-  Also, there were conflicts, because commit 30549eebc4d8 ("mptcp: make
-  ADD_ADDR retransmission timeout adaptive") is not in this version and
-  changed the context. Also, other conflicts were due to newer patches
-  being backported with resolved conflicts before this one. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+  WARNING: possible circular locking dependency detected
+  spidev_ioctl() -> mutex_lock(&spidev->buf_lock)
+  spidev_sync_write() -> mutex_lock(&spidev->spi_lock)
+  *** DEADLOCK ***
+
+The issue is reproducible with a simple userspace program that
+performs write() and SPI_IOC_WR_MAX_SPEED_HZ ioctl() calls from
+separate threads on the same spidev file descriptor.
+
+Fix this by simplifying the locking model and removing the lock
+inversion entirely. spidev_sync() no longer performs any locking,
+and all callers serialize access using spi_lock.
+
+buf_lock is removed since its functionality is fully covered by
+spi_lock, eliminating the possibility of lock ordering issues.
+
+This removes the lock inversion and prevents deadlocks without
+changing userspace ABI or behaviour.
+
+Signed-off-by: Fabian Godehardt <fg@emlix.com>
+Link: https://patch.msgid.link/20260211072616.489522-1-fg@emlix.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Minor context conflict resolved. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/spi/spidev.c | 63 ++++++++++++++++----------------------------
+ 1 file changed, 22 insertions(+), 41 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index d087d5fc3067d..6e5570f97236a 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -27,6 +27,7 @@ struct mptcp_pm_add_entry {
- 	struct list_head	list;
- 	struct mptcp_addr_info	addr;
- 	u8			retrans_times;
-+	bool			timer_done;
- 	struct timer_list	add_timer;
- 	struct mptcp_sock	*sock;
- 	struct rcu_head		rcu;
-@@ -295,22 +296,22 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
--	unsigned int timeout;
-+	unsigned int timeout = 0;
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 16bb4fc3a4ba9..2024532dfc447 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -74,7 +74,6 @@ struct spidev_data {
+ 	struct list_head	device_entry;
  
- 	pr_debug("msk=%p\n", msk);
- 
-+	bh_lock_sock(sk);
- 	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
--		goto exit;
-+		goto out;
- 
--	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk)) {
- 		/* Try again later. */
--		sk_reset_timer(sk, timer, jiffies + HZ / 20);
-+		timeout = HZ / 20;
- 		goto out;
- 	}
- 
- 	if (mptcp_pm_should_add_signal_addr(msk)) {
--		sk_reset_timer(sk, timer, jiffies + HZ);
-+		timeout = HZ;
- 		goto out;
- 	}
- 
-@@ -327,9 +328,8 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 		entry->retrans_times++;
- 	}
- 
--	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
--		sk_reset_timer(sk, timer,
--			       jiffies + timeout);
-+	if (entry->retrans_times >= ADD_ADDR_RETRANS_MAX)
-+		timeout = 0;
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -337,9 +337,13 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 		mptcp_pm_subflow_established(msk);
- 
- out:
-+	if (timeout)
-+		sk_reset_timer(sk, timer, jiffies + timeout);
-+	else
-+		/* if sock_put calls sk_free: avoid waiting for this timer */
-+		entry->timer_done = true;
- 	bh_unlock_sock(sk);
--exit:
--	__sock_put(sk);
-+	sock_put(sk);
+ 	/* TX/RX buffers are NULL unless this device is open (users > 0) */
+-	struct mutex		buf_lock;
+ 	unsigned		users;
+ 	u8			*tx_buffer;
+ 	u8			*rx_buffer;
+@@ -102,24 +101,6 @@ spidev_sync_unlocked(struct spi_device *spi, struct spi_message *message)
+ 	return status;
  }
  
- struct mptcp_pm_add_entry *
-@@ -403,6 +407,7 @@ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+-static ssize_t
+-spidev_sync(struct spidev_data *spidev, struct spi_message *message)
+-{
+-	ssize_t status;
+-	struct spi_device *spi;
+-
+-	mutex_lock(&spidev->spi_lock);
+-	spi = spidev->spi;
+-
+-	if (spi == NULL)
+-		status = -ESHUTDOWN;
+-	else
+-		status = spidev_sync_unlocked(spi, message);
+-
+-	mutex_unlock(&spidev->spi_lock);
+-	return status;
+-}
+-
+ static inline ssize_t
+ spidev_sync_write(struct spidev_data *spidev, size_t len)
+ {
+@@ -132,7 +113,8 @@ spidev_sync_write(struct spidev_data *spidev, size_t len)
  
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
- reset_timer:
-+	add_entry->timer_done = false;
- 	timeout = mptcp_get_add_addr_timeout(net);
- 	if (timeout)
- 		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
-@@ -423,7 +428,8 @@ void mptcp_pm_free_anno_list(struct mptcp_sock *msk)
- 	spin_unlock_bh(&msk->pm.lock);
- 
- 	list_for_each_entry_safe(entry, tmp, &free_list, list) {
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+		if (!entry->timer_done)
-+			sk_stop_timer_sync(sk, &entry->add_timer);
- 		kfree_rcu(entry, rcu);
- 	}
+ 	spi_message_init(&m);
+ 	spi_message_add_tail(&t, &m);
+-	return spidev_sync(spidev, &m);
++
++	return spidev_sync_unlocked(spidev->spi, &m);
  }
+ 
+ static inline ssize_t
+@@ -147,7 +129,8 @@ spidev_sync_read(struct spidev_data *spidev, size_t len)
+ 
+ 	spi_message_init(&m);
+ 	spi_message_add_tail(&t, &m);
+-	return spidev_sync(spidev, &m);
++
++	return spidev_sync_unlocked(spidev->spi, &m);
+ }
+ 
+ /*-------------------------------------------------------------------------*/
+@@ -157,7 +140,7 @@ static ssize_t
+ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+ {
+ 	struct spidev_data	*spidev;
+-	ssize_t			status;
++	ssize_t			status = -ESHUTDOWN;
+ 
+ 	/* chipselect only toggles at start or end of operation */
+ 	if (count > bufsiz)
+@@ -165,7 +148,11 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+ 
+ 	spidev = filp->private_data;
+ 
+-	mutex_lock(&spidev->buf_lock);
++	mutex_lock(&spidev->spi_lock);
++
++	if (spidev->spi == NULL)
++		goto err_spi_removed;
++
+ 	status = spidev_sync_read(spidev, count);
+ 	if (status > 0) {
+ 		unsigned long	missing;
+@@ -176,7 +163,9 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+ 		else
+ 			status = status - missing;
+ 	}
+-	mutex_unlock(&spidev->buf_lock);
++
++err_spi_removed:
++	mutex_unlock(&spidev->spi_lock);
+ 
+ 	return status;
+ }
+@@ -187,7 +176,7 @@ spidev_write(struct file *filp, const char __user *buf,
+ 		size_t count, loff_t *f_pos)
+ {
+ 	struct spidev_data	*spidev;
+-	ssize_t			status;
++	ssize_t			status = -ESHUTDOWN;
+ 	unsigned long		missing;
+ 
+ 	/* chipselect only toggles at start or end of operation */
+@@ -196,13 +185,19 @@ spidev_write(struct file *filp, const char __user *buf,
+ 
+ 	spidev = filp->private_data;
+ 
+-	mutex_lock(&spidev->buf_lock);
++	mutex_lock(&spidev->spi_lock);
++
++	if (spidev->spi == NULL)
++		goto err_spi_removed;
++
+ 	missing = copy_from_user(spidev->tx_buffer, buf, count);
+ 	if (missing == 0)
+ 		status = spidev_sync_write(spidev, count);
+ 	else
+ 		status = -EFAULT;
+-	mutex_unlock(&spidev->buf_lock);
++
++err_spi_removed:
++	mutex_unlock(&spidev->spi_lock);
+ 
+ 	return status;
+ }
+@@ -376,14 +371,6 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 		return -ESHUTDOWN;
+ 	}
+ 
+-	/* use the buffer lock here for triple duty:
+-	 *  - prevent I/O (from us) so calling spi_setup() is safe;
+-	 *  - prevent concurrent SPI_IOC_WR_* from morphing
+-	 *    data fields while SPI_IOC_RD_* reads them;
+-	 *  - SPI_IOC_MESSAGE needs the buffer locked "normally".
+-	 */
+-	mutex_lock(&spidev->buf_lock);
+-
+ 	switch (cmd) {
+ 	/* read requests */
+ 	case SPI_IOC_RD_MODE:
+@@ -516,7 +503,6 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 		break;
+ 	}
+ 
+-	mutex_unlock(&spidev->buf_lock);
+ 	spi_dev_put(spi);
+ 	mutex_unlock(&spidev->spi_lock);
+ 	return retval;
+@@ -547,9 +533,6 @@ spidev_compat_ioc_message(struct file *filp, unsigned int cmd,
+ 		return -ESHUTDOWN;
+ 	}
+ 
+-	/* SPI_IOC_MESSAGE needs the buffer locked "normally" */
+-	mutex_lock(&spidev->buf_lock);
+-
+ 	/* Check message and copy into scratch area */
+ 	ioc = spidev_get_ioc_message(cmd, u_ioc, &n_ioc);
+ 	if (IS_ERR(ioc)) {
+@@ -570,7 +553,6 @@ spidev_compat_ioc_message(struct file *filp, unsigned int cmd,
+ 	kfree(ioc);
+ 
+ done:
+-	mutex_unlock(&spidev->buf_lock);
+ 	spi_dev_put(spi);
+ 	mutex_unlock(&spidev->spi_lock);
+ 	return retval;
+@@ -795,7 +777,6 @@ static int spidev_probe(struct spi_device *spi)
+ 	/* Initialize the driver data */
+ 	spidev->spi = spi;
+ 	mutex_init(&spidev->spi_lock);
+-	mutex_init(&spidev->buf_lock);
+ 
+ 	INIT_LIST_HEAD(&spidev->device_entry);
+ 
 -- 
 2.53.0
 
