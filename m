@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539C435202A;
-	Thu, 28 May 2026 20:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45463002A0;
+	Thu, 28 May 2026 20:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999882; cv=none; b=MgYeAonoOoAkDiwKk3vWgYKPwBqs5ks2tXvwlqkL/3DJEbvIHeazzIe7AQTpYHNjV8x9YrpvTCM8nUBXsweEUK2LTziENlgGRVOxGbLvll7NENvQaVoHhe/3XQHTDZPo9LKCvnTd/EcYvGt9+ClQKjATskj/aGImPKCtt//c1I8=
+	t=1779999884; cv=none; b=W/4E6dAS02RyZrHz5V8Ai9KSggwkxeTueVdjD0ZLReUXC4sbsW0zBJsqZYMk4TFHskevY8+G5cb2hFHvycTYcaA6cc2nM3lB9AiLJV9npcacdnAsrtHvAVap5oQoss1pv6MKtTSS7WJJIHE4Z1WXeZojA8oaqs4g9U0/8WZtNlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999882; c=relaxed/simple;
-	bh=gaZwI6YhgHK3XtA5kPyrrlRSyYb2PyMjVeRrZpff+SA=;
+	s=arc-20240116; t=1779999884; c=relaxed/simple;
+	bh=U7LkFHK4ZIFhOwjUbBfo8N9s7IFDMw9/x89meLC7rzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSU2HHtM95aFV5RK0SNj58pAsoePJu3xGpjQtdJYkHiEgDyrCs4r54FuFYdG78lIP0Ohk5fwrEdVl3bHUUHuWE+fBzAFGbYvfqHj4myF7p2+7zL9aLCvE9QUxAh9+y0OwIplLkkj6EJ1z5DxsrTHgsLaxhnxSDQNJRyRvA1ZKos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uYXLW9k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PoZINzq26DddSATSiGcMJ46VeWMdn3YDbuT7B5kMhRY2VRpBsJr+oKrAUgJRf7pAt4MqDn87o3qVzFGf2oYRbx0ptv30CFdsPOtkfu1D1gd5L0jTCEdxIvZe8QrnPoU5BWYIK1ul1nWUqFScCswYtZLZ/NLiPyU3gtGswzVGsUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRDnOuVf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uYXLW9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A271F000E9;
-	Thu, 28 May 2026 20:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRDnOuVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB911F000E9;
+	Thu, 28 May 2026 20:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999880;
-	bh=4OJ75DmXJDUlLhIuIXip3xKOGGU+qlbKB8H/i3IiIb0=;
+	s=korg; t=1779999883;
+	bh=nE+Ere9PkdNlsEbuMaemKEi72D1OGJBywalajqZzqTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2uYXLW9kpaJ/dX38xBSfM615uTkbCxpM+LHr3i1C0qBJb4rMu/L12SaWtOMOUvNos
-	 qcirSwUzKkSjS4Zc45EOmlSBZG2J9xz9b8FzkCK9TKFqgsja2BfXbHQYdqzF3ZTaUQ
-	 5CLoytbmnwd2u5ow6jmFi7pSPDFV//2B+g82gdkY=
+	b=eRDnOuVfunrUnTcgOcOH/jA7EW6DKmctUJOf4Qfn1IDjzFZCE5+uMr737FULx2vO8
+	 fNA2n5/FMcIjxGeQKCKd+L2mbdRGXYgGduHKunPK4NoLgBGqzmW6gsbcDwkxozhSsi
+	 wUDn0vW0sUU8nd3ocunR4SkdWk+aYqbefpFZTnQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 223/377] ublk: reject max_sectors smaller than PAGE_SECTORS in parameter validation
-Date: Thu, 28 May 2026 21:47:41 +0200
-Message-ID: <20260528194644.848695206@linuxfoundation.org>
+Subject: [PATCH 6.18 224/377] nsfs: fix wrong error code returned for pidns ioctls
+Date: Thu, 28 May 2026 21:47:42 +0200
+Message-ID: <20260528194644.878758876@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 1860c2f85922917d8a46f16a6f4bd2298ffa0fb5 ]
+[ Upstream commit 725ecd80688bf3c57ca9205431f2c06174ff0756 ]
 
-blk_validate_limits() requires max_hw_sectors >= PAGE_SECTORS and fires
-a WARN_ON_ONCE if this invariant is violated. ublk_validate_params()
-only checked the upper bound of max_sectors against max_io_buf_bytes,
-allowing userspace to pass small values (including zero) that trigger
-the warning when blk_mq_alloc_disk() is called from
-ublk_ctrl_start_dev().
+When executing NS_GET_PID_FROM_PIDNS (or similar pidns ioctls), if the
+target task cannot be found in the corresponding pid_ns, the error code
+should be ESRCH instead of ENOTTY.
 
-Before 494ea040bcb5, ublk used blk_queue_max_hw_sectors() which silently
-clamped small values up to PAGE_SECTORS. The conversion to passing
-queue_limits directly to blk_mq_alloc_disk() lost that clamping and now
-hits blk_validate_limits()'s WARN_ON_ONCE instead.
+This bug was introduced when the extensible ioctl handling was added.
+Without proper return, ret would be overwritten by the default case in
+the extensible ioctl switch statement.
 
-Validate that max_sectors is at least PAGE_SECTORS in
-ublk_validate_params() so invalid values are rejected early with
--EINVAL instead of reaching the block layer.
-
-Fixes: 494ea040bcb5 ("ublk: pass queue_limits to blk_mq_alloc_disk")
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260510144843.769031-1-tom.leiming@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: a1d220d9dafa8 ("nsfs: iterate through mount namespaces")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20260507112301.1042757-1-chengzhihao1@huawei.com
+Reviewed-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nsfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 2729b1556e810..c339222513b03 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -601,6 +601,9 @@ static int ublk_validate_params(const struct ublk_device *ub)
- 		if (p->max_sectors > (ub->dev_info.max_io_buf_bytes >> 9))
- 			return -EINVAL;
+diff --git a/fs/nsfs.c b/fs/nsfs.c
+index f22c2a636e8f3..e2f9a725883c7 100644
+--- a/fs/nsfs.c
++++ b/fs/nsfs.c
+@@ -261,7 +261,7 @@ static long ns_ioctl(struct file *filp, unsigned int ioctl,
+ 		else
+ 			tsk = find_task_by_pid_ns(arg, pid_ns);
+ 		if (!tsk)
+-			break;
++			return ret;
  
-+		if (p->max_sectors < PAGE_SECTORS)
-+			return -EINVAL;
-+
- 		if (ublk_dev_is_zoned(ub) && !p->chunk_sectors)
- 			return -EINVAL;
- 	} else
+ 		switch (ioctl) {
+ 		case NS_GET_PID_FROM_PIDNS:
 -- 
 2.53.0
 
