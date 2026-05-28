@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A35334D4D6;
-	Thu, 28 May 2026 19:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040AE409630;
+	Thu, 28 May 2026 19:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998046; cv=none; b=q+VyZxbLG/YRvQVQDFTVLF2HpE2k1j5kscA82cNjDZ3LdVymCwSfuV2tnAFi1jnsdoa5TI5HvmD1YShIiGnK3DH/4vkM9/LID3gOCcKCHcjT/EdpnaoIS+M/mSlPI+RRXXDkQlJWqvUzzEvz/l04VZKvPCkpDFbBkXxSPzqwiJs=
+	t=1779998048; cv=none; b=n6RKC8Qa/D7vkm39Ltc0Uo/0rTmliqUy8xQ0387Ypd9exhE7xj0vQ0aAdcRn1V3mvP8Ozf2htc9BY5JRHY5MyjRfh4FrXP7TVwehUWSWcah5V1M6hzxgmHCehl9XZzyeIg4lI9/lvWOFd8l9g5jcAKNE+lTAXKPc2lVsBXbtufQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998046; c=relaxed/simple;
-	bh=+QjueiJ/jXbteXXhOPPe0YPIfsVd5MW5mW1psTrkDJk=;
+	s=arc-20240116; t=1779998048; c=relaxed/simple;
+	bh=GTtmb9N7ePCRyMsO0jpMFotzGIx2WJHJO3aj83PIa2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPl7N0HZtMl33bai+vcUdtcbqpezMpSQ6AmFsrIuR44HYi0QYvKexs4xKBBd+PVl6e6XVbMmqwFSyy4CVTpJaRlsbz8ZzhxIfeIK2oC2gllKADp2uIZJA8T4SKqRs8lWLSDY+UfDsWzyEdHkFdAxj9SOPpDag8KnZeMgdI5IRsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ig/gMwTG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XA71c5qGeW1jHaIFz/pa302nA7bt1sunVMSA9I2PF6AYfiwhloCNr8oFyblT5CDV8tvxSsFYpeG9ZzGnrCXCzUFM5YWQfVSNtGeYFKfEfnfKlUe8ngWV1Ld9ReJiXY499MU/IWlyfOUi55geNwRaqiPbdjy5H2pVjaaW/JsWeRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXTm5RvB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ig/gMwTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229B71F00A3E;
-	Thu, 28 May 2026 19:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXTm5RvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3911F00A3C;
+	Thu, 28 May 2026 19:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998043;
-	bh=MlxoBDSAStuJQZjgpq/0eNtdWAV4h9ogWbXtdDsm9PA=;
+	s=korg; t=1779998046;
+	bh=OT1+cJkFPvMfKutNdQ0SBNaTT/g4qln481H5rznHf14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ig/gMwTGm+mLpllmx9LFYCKdLQyPX2wLv3nbBkRRI+punx9V2o35mUD7A2Z1qOPmQ
-	 dMUidvjv9jZRbflL7tdjhu6pm3N2GEfJ12AsKq1Ev6sBDdYVmJI/eyl3o3/pMsLM/1
-	 pBbtv3O8jklCy8QYoVNUcsSRYvYlIXzYm14Jy1JE=
+	b=hXTm5RvBZq79ACrp5FflMGOIkVXGQL+MA9EoOzeoUO2a+eU4hsBfttM547pGqYni7
+	 w6Xk7afEYazoHKq2KeXtCEdglORfwa0UexnSBKILnD5E10wgHaweY7/FQ9Z1vi7xnh
+	 whaCo4/wRz0wHY/rYhGmeSKnyY+0uXntU+ZOPkE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 032/461] ipv6: ioam: refresh hdr pointer before ioam6_event()
-Date: Thu, 28 May 2026 21:42:41 +0200
-Message-ID: <20260528194647.826544434@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	=?UTF-8?q?Arsen=20Arsenovi=C4=87?= <aarsenovic@baylibre.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 033/461] mm/memory: fix spurious warning when unmapping device-private/exclusive pages
+Date: Thu, 28 May 2026 21:42:42 +0200
+Message-ID: <20260528194647.855938466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,68 +60,194 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Iurman <justin.iurman@gmail.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit e46e6bc97fb1f339730ff1ba74267fbf48e7a422 upstream.
+commit be3f38d05cc5a7c3f13e51994c5dd043ab604d28 upstream.
 
-Reported by Sashiko:
+Device private and exclusive entries are only supported for anonymous
+folios.  This condition is tested in __migrate_device_pages() and
+make_device_exclusive() using folio_test_anon().  However the unmap path
+tests this assumption using vma_is_anonymous().
 
-In ipv6_hop_ioam(), the hdr pointer is initialized to point into the
-skb's linear data buffer. Later, the code calls skb_ensure_writable(),
-which might reallocate the buffer:
+This is wrong because whilst anonymous VMAs can only contain folios where
+folio_test_anon() is true the opposite relation does not hold.  A folio
+for which folio_test_anon() is true does not imply vma_is_anonymous() is
+true.  Such a condition can occur if for example a folio is part of a
+private filebacked mapping.
 
-	if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
-		goto drop;
+In this case vma_is_anonymous() is false as the mapping is filebacked, but
+folio_test_anon() may be true, thus permitting devices to migrate the
+folio to device private memory.  This can lead to the following spurious
+warnings during process teardown:
 
-	/* Trace pointer may have changed */
-	trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
-					   + optoff + sizeof(*hdr));
+[  772.737706] ------------[ cut here ]------------
+[  772.739201] WARNING: mm/memory.c:1754 at unmap_page_range.cold+0x26/0x18a, CPU#17: hmm-tests/2041
+[  772.742050] Modules linked in: test_hmm nvidia_uvm(O) nvidia(O)
+[  772.743959] CPU: 17 UID: 0 PID: 2041 Comm: hmm-tests Tainted: G        W  O        7.0.0+ #387 PREEMPT(full)
+[  772.747104] Tainted: [W]=WARN, [O]=OOT_MODULE
+[  772.748509] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[  772.752117] RIP: 0010:unmap_page_range.cold+0x26/0x18a
+[  772.753780] Code: 7e fe ff ff 48 89 4c 24 78 4c 89 44 24 38 e8 f2 ff b1 00 48 8b 4c 24 78 4c 8b 44 24 38 48 8b 44 24 18 48 83 78 48 00 74 04 90 <0f> 0b 90 48 89 ca b8 ff ff 37 00 48 c1 ea 03 48 c1 e0 2a 80 3c 02
+[  772.759602] RSP: 0018:ffff888112607550 EFLAGS: 00010286
+[  772.761310] RAX: ffff88811bbf4dc0 RBX: dffffc0000000000 RCX: ffffea03e9bfffd8
+[  772.763583] RDX: 1ffff1102377e9c1 RSI: 0000000000000008 RDI: ffff88811bbf4e08
+[  772.765914] RBP: 0000000000000006 R08: ffff8881059f7448 R09: ffffed10224c0e68
+[  772.768184] R10: ffff888112607347 R11: 0000000000000001 R12: 0000000000000001
+[  772.770461] R13: ffffea03e9bfffc0 R14: ffff888112607908 R15: ffffea03e9bfffc0
+[  772.772782] FS:  00007f327caa2780(0000) GS:ffff888427b7d000(0000) knlGS:0000000000000000
+[  772.775328] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  772.777187] CR2: 00007f327ca89000 CR3: 00000001994d5000 CR4: 00000000000006f0
+[  772.779135] Call Trace:
+[  772.779792]  <TASK>
+[  772.780317]  ? dmirror_interval_invalidate+0x1a3/0x290 [test_hmm]
+[  772.781873]  ? vm_normal_page_pud+0x2b0/0x2b0
+[  772.782992]  ? __rwlock_init+0x150/0x150
+[  772.784006]  ? lock_release+0x216/0x2b0
+[  772.785008]  ? __mmu_notifier_invalidate_range_start+0x505/0x6e0
+[  772.786522]  ? lock_release+0x216/0x2b0
+[  772.787498]  ? unmap_single_vma+0xb6/0x210
+[  772.788573]  unmap_vmas+0x27d/0x520
+[  772.789506]  ? unmap_single_vma+0x210/0x210
+[  772.790607]  ? mas_update_gap.part.0+0x620/0x620
+[  772.791834]  unmap_region+0x19e/0x350
+[  772.792769]  ? remove_vma+0x130/0x130
+[  772.793684]  ? mas_alloc_nodes+0x1f2/0x300
+[  772.794730]  vms_complete_munmap_vmas+0x8c1/0xe20
+[  772.795926]  ? unmap_region+0x350/0x350
+[  772.796917]  do_vmi_align_munmap+0x36a/0x4e0
+[  772.798018]  ? lock_release+0x216/0x2b0
+[  772.799024]  ? vma_shrink+0x620/0x620
+[  772.799983]  do_vmi_munmap+0x150/0x2c0
+[  772.800939]  __vm_munmap+0x161/0x2c0
+[  772.801872]  ? expand_downwards+0xd60/0xd60
+[  772.802948]  ? clockevents_program_event+0x1ef/0x540
+[  772.804217]  ? lock_release+0x216/0x2b0
+[  772.805158]  __x64_sys_munmap+0x59/0x80
+[  772.805776]  do_syscall_64+0xfc/0x670
+[  772.806336]  ? irqentry_exit+0xda/0x580
+[  772.806976]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[  772.807772] RIP: 0033:0x7f327cbb2717
+[  772.808323] Code: 73 01 c3 48 8b 0d f9 76 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 0b 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d c9 76 0d 00 f7 d8 64 89 01 48
+[  772.811337] RSP: 002b:00007ffde7f57d38 EFLAGS: 00000202 ORIG_RAX: 000000000000000b
+[  772.812564] RAX: ffffffffffffffda RBX: 00007f327cc9c000 RCX: 00007f327cbb2717
+[  772.813733] RDX: 0000000000000000 RSI: 0000000000400000 RDI: 00007f327c289000
+[  772.814867] RBP: 0000000000421360 R08: 000000000000001a R09: 0000000000000000
+[  772.815991] R10: 0000000000000003 R11: 0000000000000202 R12: 00007ffde7f57d74
+[  772.817121] R13: 00007f327c689010 R14: 0000000000100000 R15: 00007f327c289000
+[  772.818272]  </TASK>
+[  772.818614] irq event stamp: 0
+[  772.819159] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+[  772.820174] hardirqs last disabled at (0): [<ffffffff82a57ab3>] copy_process+0x19f3/0x6440
+[  772.821511] softirqs last  enabled at (0): [<ffffffff82a57b00>] copy_process+0x1a40/0x6440
+[  772.822869] softirqs last disabled at (0): [<0000000000000000>] 0x0
+[  772.823871] ---[ end trace 0000000000000000 ]---
 
-	ioam6_fill_trace_data(skb, ns, trace, true);
+Fix this by using the same check for folio_test_anon() in
+zap_nonpresent_ptes(). Also add a hmm-test case for this.
 
-	ioam6_event(IOAM6_EVENT_TRACE, dev_net(skb->dev),
-		    GFP_ATOMIC, (void *)trace, hdr->opt_len - 2);
-
-If the skb is cloned or lacks sufficient linear headroom,
-skb_ensure_writable() will invoke pskb_expand_head(), which reallocates
-the skb's data buffer and frees the old one, invalidating pointers to
-it. While the code recalculates the trace pointer immediately after the
-call to skb_ensure_writable(), it fails to recalculate the hdr pointer.
-
-This patch fixes the above by recalculating the hdr pointer before
-passing hdr->opt_len to ioam6_event(), so that we avoid any UaF.
-
-Fixes: f655c78d6225 ("net: exthdrs: ioam6: send trace event")
-Cc: stable@vger.kernel.org
-Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260520124242.32320-1-justin.iurman@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20260501065116.2057242-1-apopple@nvidia.com
+Fixes: 999dad824c39 ("mm/shmem: persist uffd-wp bit across zapping for file-backed")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reported-by: Arsen Arsenović <aarsenovic@baylibre.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/memory.c                            |    2 -
+ tools/testing/selftests/mm/hmm-tests.c |   50 +++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -955,9 +955,9 @@ static bool ipv6_hop_ioam(struct sk_buff
- 		if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
- 			goto drop;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -1750,7 +1750,7 @@ static inline int zap_nonpresent_ptes(st
+ 		 * consider uffd-wp bit when zap. For more information,
+ 		 * see zap_install_uffd_wp_if_needed().
+ 		 */
+-		WARN_ON_ONCE(!vma_is_anonymous(vma));
++		WARN_ON_ONCE(!folio_test_anon(folio));
+ 		rss[mm_counter(folio)]--;
+ 		folio_remove_rmap_pte(folio, page, vma);
+ 		folio_put(folio);
+--- a/tools/testing/selftests/mm/hmm-tests.c
++++ b/tools/testing/selftests/mm/hmm-tests.c
+@@ -986,6 +986,56 @@ TEST_F(hmm, migrate)
+ }
  
--		/* Trace pointer may have changed */
--		trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
--						   + optoff + sizeof(*hdr));
-+		/* Trace and hdr pointers may have changed */
-+		hdr = (struct ioam6_hdr *)(skb_network_header(skb) + optoff);
-+		trace = (struct ioam6_trace_hdr *)((u8 *)hdr + sizeof(*hdr));
- 
- 		ioam6_fill_trace_data(skb, ns, trace, true);
- 
+ /*
++ * Migrate private file memory to device private memory.
++ */
++TEST_F(hmm, migrate_file_private)
++{
++	struct hmm_buffer *buffer;
++	unsigned long npages;
++	unsigned long size;
++	unsigned long i;
++	int *ptr;
++	int ret;
++	int fd;
++
++	npages = ALIGN(HMM_BUFFER_SIZE, self->page_size) >> self->page_shift;
++	ASSERT_NE(npages, 0);
++	size = npages << self->page_shift;
++
++	fd = hmm_create_file(size);
++	ASSERT_GE(fd, 0);
++
++	buffer = malloc(sizeof(*buffer));
++	ASSERT_NE(buffer, NULL);
++
++	buffer->fd = fd;
++	buffer->size = size;
++	buffer->mirror = malloc(size);
++	ASSERT_NE(buffer->mirror, NULL);
++
++	buffer->ptr = mmap(NULL, size,
++			   PROT_READ | PROT_WRITE,
++			   MAP_PRIVATE,
++			   buffer->fd, 0);
++	ASSERT_NE(buffer->ptr, MAP_FAILED);
++
++	/* Initialize buffer in system memory. */
++	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
++		ptr[i] = i;
++
++	/* Migrate memory to device. */
++	ret = hmm_migrate_sys_to_dev(self->fd, buffer, npages);
++	ASSERT_EQ(ret, 0);
++	ASSERT_EQ(buffer->cpages, npages);
++
++	/* Check what the device read. */
++	for (i = 0, ptr = buffer->mirror; i < size / sizeof(*ptr); ++i)
++		ASSERT_EQ(ptr[i], i);
++
++	hmm_buffer_free(buffer);
++}
++
++/*
+  * Migrate anonymous memory to device private memory and fault some of it back
+  * to system memory, then try migrating the resulting mix of system and device
+  * private memory to the device.
 
 
