@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E7426B973;
-	Thu, 28 May 2026 20:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23AE3BD649;
+	Thu, 28 May 2026 20:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998455; cv=none; b=lvMQi4EJGq0Z9nrSiPgWz/NgFUXMPMPFW8Y/SczPnX2ZO4vKJxEa+z4ajDLUmO7JQW7TaRre7fyVdDCHHvr39UQmD9I8HjPwrGpfi3IZmfGklFZccDiq9TsjLKJVjSWbcByAfZtXeizlWEjHElAAufLFOAtWhnRw/47Niv9S3Go=
+	t=1779998457; cv=none; b=EFJlgfp9hjMWW0JGhZJTbYsrTYQoik/XHK2sldqJAQJEsv/io1hC3fnV4JZ/R6Krw1z6LbS1GX6LclK3LztZYSoat706bq/G32zB/U2CfzL9MFz4jGTdOzciaKebw78uqM02aB6ftzOFdaOsf9aSbwdi+J3QI6mExlsN0cLTPKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998455; c=relaxed/simple;
-	bh=wHXk1nKm94+AmX0Rq6EJN6OJyoRXOO/YhLIPjVSvNCQ=;
+	s=arc-20240116; t=1779998457; c=relaxed/simple;
+	bh=47NAb95NguBFaaQrupuF2vktIPSnOU7YYLKMp2n99dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pg8WSizmc72j1LJFetlZg9W92yoijj3PIEKbnU+AeD6qIM8TyWzyuU8VKtMRuemT8Kmrv+M8b3WAFv6amSUNoitgKTcZMCY/k8s9CoGc1g4G7USGMy+UtaSr3DDnWx2f3hA8vdso7ZXqH5HnZSWmqBUVLPlEnB5lIWhsF8UJjUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRMXU/tC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PPt/wxBNPbMJThMmDL3nNtf3HWGSJYm9URO46ikqMvIv5OXoUacidMwnt3XtdjPgUvbca0SRGuF+WM6aKzDrHq7HtLUy/YtRWoNcBvC4lpCyaYY9OYISLhYfy84I0N6OrYl3ww0tn5qiwiSTT22wDN8+cwuBGIDmuALUJsFZPn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyoeNFE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRMXU/tC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E211F000E9;
-	Thu, 28 May 2026 20:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyoeNFE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8AC1F000E9;
+	Thu, 28 May 2026 20:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998454;
-	bh=DNTv1604A/4VW5nqYOCqntP84DQPmbBKXWqaTVm7qNk=;
+	s=korg; t=1779998456;
+	bh=ZhXL+R5s5fu/6j/Z8vfklVNmn/cOVimHphGHZjfeVzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JRMXU/tCZ0fZqFHn30DE3rr97o/N2amIQV4R7IquROXM3OlmTSBJIgVzNQ8vn4JRH
-	 3fzZBzpBjODS3gIJela1sEXKTjQKv/qti27ZjKjxmIGyHOEBMXaxCW1prya184KlGc
-	 ceoHYYLzumlpjl/Q6CLuH/nugsfmp1iaQrS8vZHU=
+	b=IyoeNFE/hIvIq05rrHixGIJZF3G2LnrEL8d9pSoXloP4LAWaLRBH2E80UgWtmsIQJ
+	 vlBpcm/l8p9oUtw9RAZW5nR3uxF4afMoLDXnko1pv9z34N8ImICMPXxkd7KcFqdWn7
+	 9Xj8a82GnSNfrAc17m+TyqdxOhmbsPMRwKcqiy14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 179/461] pinctrl: renesas: rzg2l: Fix incorrect PUPD register offset for high pins during suspend/resume
-Date: Thu, 28 May 2026 21:45:08 +0200
-Message-ID: <20260528194652.254483413@linuxfoundation.org>
+Subject: [PATCH 7.0 180/461] pinctrl: renesas: rzg2l: Fix SMT register cache handling
+Date: Thu, 28 May 2026 21:45:09 +0200
+Message-ID: <20260528194652.283666105@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,50 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 6dba9b7268cc50166bce47608670192fd874e363 ]
+[ Upstream commit c88ab9407986836820848128ce1f90f2fa49da95 ]
 
-When saving/restoring pull-up/down register state during suspend/resume,
-the second PUPD register access was incorrectly using the same base offset
-as the first, effectively reading/writing the same register twice instead
-of the adjacent one.
+Store SMT register cache per bank instead of using a single array.
 
-Add the correct + 4 byte offset to the second RZG2L_PCTRL_REG_ACCESS32
-call so that pupd[1][port] is properly saved and restored from the next
-32-bit register in the PUPD register pair, covering pins 4–7 of ports
-with 4 or more pins.
+On RZ/V2H(P), RZ/V2N, and RZ/G3E, the SMT register is split across two
+32-bit registers: bits 0/8/16/24 control pins 0-3, while pins 4-7 are
+controlled by the corresponding bits in the next register.  The previous
+implementation cached only a single SMT register, leading to incomplete
+save/restore of SMT state.
 
-Fixes: b2bd65fbb617 ("pinctrl: renesas: rzg2l: Add suspend/resume support for pull up/down")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Convert cache->smt to a per-bank array and allocate storage for both
+halves.  Update suspend/resume handling to save and restore both SMT
+registers when present.
+
+Fixes: 837afa592c623 ("pinctrl: renesas: rzg2l: Add suspend/resume support for Schmitt control registers")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260328090548.84124-1-biju.das.jz@bp.renesas.com
+Link: https://patch.msgid.link/20260413182456.811543-2-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 55e35f63343c7..36c3995bac836 100644
+index 36c3995bac836..99008ec3deb03 100644
 --- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
 +++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -3050,7 +3050,7 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off),
- 						 cache->pupd[0][port]);
- 			if (pincnt >= 4) {
--				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off),
-+				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + PUPD(off) + 4,
- 							 cache->pupd[1][port]);
+@@ -335,7 +335,7 @@ struct rzg2l_pinctrl_reg_cache {
+ 	u32	*iolh[2];
+ 	u32	*ien[2];
+ 	u32	*pupd[2];
+-	u32	*smt;
++	u32	*smt[2];
+ 	u8	sd_ch[2];
+ 	u8	eth_poc[2];
+ 	u8	oen;
+@@ -2738,10 +2738,6 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
+ 	if (!cache->pfc)
+ 		return -ENOMEM;
+ 
+-	cache->smt = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->smt), GFP_KERNEL);
+-	if (!cache->smt)
+-		return -ENOMEM;
+-
+ 	for (u8 i = 0; i < 2; i++) {
+ 		u32 n_dedicated_pins = pctrl->data->n_dedicated_pins;
+ 
+@@ -2760,6 +2756,11 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
+ 		if (!cache->pupd[i])
+ 			return -ENOMEM;
+ 
++		cache->smt[i] = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->smt[i]),
++					     GFP_KERNEL);
++		if (!cache->smt[i])
++			return -ENOMEM;
++
+ 		/* Allocate dedicated cache. */
+ 		dedicated_cache->iolh[i] = devm_kcalloc(pctrl->dev, n_dedicated_pins,
+ 							sizeof(*dedicated_cache->iolh[i]),
+@@ -3067,8 +3068,14 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
  			}
  		}
+ 
+-		if (has_smt)
+-			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off), cache->smt[port]);
++		if (has_smt) {
++			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off),
++						 cache->smt[0][port]);
++			if (pincnt >= 4) {
++				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off) + 4,
++							 cache->smt[1][port]);
++			}
++		}
+ 	}
+ }
+ 
 -- 
 2.53.0
 
