@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A714133065C;
-	Thu, 28 May 2026 20:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4452FD7C3;
+	Thu, 28 May 2026 20:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998758; cv=none; b=b+0aDKkmBGmKZfGySecK27bEmi203NoDgPKd55fHTAlC654bi65zpLPd/NorFEN+i494iEh/oGejY/Pv7tCa6NZnS83pqGSXl4HgHzl8vKWefQsSN4xJuJ/CxzIvXOhI9xv0WsAZXtSD1aL3HQ0DE5eWTQgu1rjPTcMY3ZHoDWY=
+	t=1779998761; cv=none; b=ctFjwGzmOU58OTtAActJ1VbgDXjABqMm7HBt7qUUqJM182+SA3dgDAcoZHWLhPKohcOA1tM1qcOQcUDZkgpVpyzMkwkbO8JiqrJmTdSqj6ZdIlXE4dpTOMEBrF0N0SWeohhCsWrKL44ADE0kaTnpTutrtv4gKDnP25hs7MSiDjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998758; c=relaxed/simple;
-	bh=5NFXC6rqY8Qrj68lk+wrY23ll1WmZZ7OEutBy+qtO1Q=;
+	s=arc-20240116; t=1779998761; c=relaxed/simple;
+	bh=9nqwPMseKq+THY8scm1KqPfytR2GJrVCHn4e2vPDOX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CidumOOune2UiqO9fRb8lsgaze6lbXBqEhUEYcZ5/HcHsFzyaTrABe3k6qi9ma83WIbWY20BDatBJVj3N8AO2nMEoBocclrHwBEXUPulNCFFG0IcE9wcS996ruuVzwR39uMYPToNMrxh+COaMlMUpFaIWjrY1guhmKMRz6c2FfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzZ5DFFh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LcNHqewbaPqvMpev/8BeYt6DVd6L4FFWq2L6lRE+hL0en7H1PGbufUbPRNM7y6TnXV5TQaCOcN0J7ga8q/oaEatZVgdqahseTEIiUqfp6w0zrNOhRmW/GLuZvTLVIuUjg1etyllDLcaJfw+jOVlZSOmctm2hS9aQEMt5pV1CCnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vk4H02lP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzZ5DFFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1277E1F000E9;
-	Thu, 28 May 2026 20:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vk4H02lP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D311F000E9;
+	Thu, 28 May 2026 20:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998757;
-	bh=c/yGDM3L2pT1jjbXbuSVuqj5Bck9GfS9FQxr5Ar/1gk=;
+	s=korg; t=1779998760;
+	bh=tKwZqx4oBvnfqTpkTDVaoVUbNoR1fMcVnu103wJSNgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QzZ5DFFhPznJqFUK0feVhmBUPf4Z6oKVzylBoN3anoDRqP1DCx/k8pPAK/DsSFMW1
-	 +kKAQl1OmXHUFCFp96jxM70cmO8YJhFpIUFzk14IS9WsEhD/MS3Fld7P0BOFo5kEX+
-	 RPiGVoyg4/ex5UxJSqReOs60k6Ts+8cMSjMWQ07o=
+	b=Vk4H02lPuFwA8jGK8f4qMsYRf5bO7EmwYXHnuQ3MUU24Xw9Ls5TifbbN0oDZCzTBD
+	 /44woy6BIeMCkC4N8WpN18MeSf3Fatwu/ZReOxYGNav304s7MV4BeUHQulsWFjZeVl
+	 KaKGKhQYkOhVifYmRQftwJHCjedKzWuT86aONCeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Chen <cachen@purestorage.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 288/461] block: recompute nr_integrity_segments in blk_insert_cloned_request
-Date: Thu, 28 May 2026 21:46:57 +0200
-Message-ID: <20260528194655.543095841@linuxfoundation.org>
+Subject: [PATCH 7.0 289/461] HID: quirks: really enable the intended work around for appledisplay
+Date: Thu, 28 May 2026 21:46:58 +0200
+Message-ID: <20260528194655.582153323@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,80 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Chen <cachen@purestorage.com>
+From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
 
-[ Upstream commit 2c6e6a18a37b905cb584eb0dda3ae482162a81ca ]
+[ Upstream commit 5f90dcfa8dc32a488581b78e575cdd7808ba5c78 ]
 
-blk_insert_cloned_request() already recomputes nr_phys_segments
-against the bottom queue, because "the queue settings related to
-segment counting may differ from the original queue." The exact same
-reasoning applies to integrity segments: a stacked driver's underlying
-queue can have tighter virt_boundary_mask, seg_boundary_mask, or
-max_segment_size than the top queue, in which case
-blk_rq_count_integrity_sg() against the bottom queue produces a
-different count than the cached rq->nr_integrity_segments inherited
-from the source request by blk_rq_prep_clone().
+Commit c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for
+appledisplay") intends to add a quirk for kernels built with Apple Cinema
+Display support, but it refers to the non-existing config option
+CONFIG_APPLEDISPLAY, whereas the config option for Apple Cinema Display
+support is named CONFIG_USB_APPLEDISPLAY.
 
-When the cached count is lower than the bottom queue's actual count,
-blk_rq_map_integrity_sg() trips
+Refer to the intended config option CONFIG_USB_APPLEDISPLAY in the ifdef
+directive.
 
-	BUG_ON(segments > rq->nr_integrity_segments);
-
-on dispatch. The same families of stacked setups that motivated the
-existing nr_phys_segments recompute -- dm-multipath fanning out to
-nvme-rdma in particular -- can produce this.
-
-Mirror the nr_phys_segments handling: when the request carries
-integrity, recompute nr_integrity_segments against the bottom queue
-and reject the request if it exceeds the bottom queue's
-max_integrity_segments. blk_rq_count_integrity_sg() and
-queue_max_integrity_segments() are both already available via
-<linux/blk-integrity.h>, which blk-mq.c includes.
-
-This closes a latent gap in the stacking contract and brings the
-integrity-segment accounting in line with the existing
-phys-segment accounting.
-
-Fixes: 76c313f658d2 ("blk-integrity: improved sg segment mapping")
-Signed-off-by: Casey Chen <cachen@purestorage.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511212230.27511-1-cachen@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for appledisplay")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/hid/hid-quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 3da2215b29125..7a7d8d536841d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3305,6 +3305,25 @@ blk_status_t blk_insert_cloned_request(struct request *rq)
- 		return BLK_STS_IOERR;
- 	}
- 
-+	/*
-+	 * Integrity segment counting depends on the same queue limits
-+	 * (virt_boundary_mask, seg_boundary_mask, max_segment_size) that
-+	 * vary across stacked queues, so recompute against the bottom
-+	 * queue just like nr_phys_segments above.
-+	 */
-+	if (blk_integrity_rq(rq) && rq->bio) {
-+		unsigned short max_int_segs = queue_max_integrity_segments(q);
-+
-+		rq->nr_integrity_segments =
-+			blk_rq_count_integrity_sg(rq->q, rq->bio);
-+		if (rq->nr_integrity_segments > max_int_segs) {
-+			printk(KERN_ERR "%s: over max integrity segments limit. (%u > %u)\n",
-+				__func__, rq->nr_integrity_segments,
-+				max_int_segs);
-+			return BLK_STS_IOERR;
-+		}
-+	}
-+
- 	if (q->disk && should_fail_request(q->disk->part0, blk_rq_bytes(rq)))
- 		return BLK_STS_IOERR;
- 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 02f7db5c10564..5e754b0a50325 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -234,7 +234,7 @@ static const struct hid_device_id hid_quirks[] = {
+  * used as a driver. See hid_scan_report().
+  */
+ static const struct hid_device_id hid_have_special_driver[] = {
+-#if IS_ENABLED(CONFIG_APPLEDISPLAY)
++#if IS_ENABLED(CONFIG_USB_APPLEDISPLAY)
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
 -- 
 2.53.0
 
