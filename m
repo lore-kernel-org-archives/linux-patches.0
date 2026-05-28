@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17BD33A702;
-	Thu, 28 May 2026 20:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8C4352019;
+	Thu, 28 May 2026 20:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999247; cv=none; b=jcu3t4+Fk/zMLw3JulPxar5udgb0aWNNXWhle/1BHj9iovsGoLdKfueUWdr0DoS+Luqw3xL/7JpAvBLvzErawIh7Wyt+X15JQuF5F/eCeyPBGe7UTbs2ABXqdfaEgwVWnCxWk32Lh821YBGhPM3ZnBgMeZvrpxzQZBjgi/e30vs=
+	t=1779999250; cv=none; b=CNvkSiKnpTeqfaz5Zt6pGc6VjS/fHVZWtP6KS3RV9gBM/Lz0NS7KQY/JikDp2f9vwSo4quUpnQhoL/k9jKzoNEDmGmaOoTlXxNG1D3lsCf9j8mL9FNVdV/sxezvyC6ZViHzcC4GiSmK7os4YZbXa2KpjVV5qEZXeHMgdb3jMRVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999247; c=relaxed/simple;
-	bh=VowR2scbdusePTs0U4CDg+eJrs8JcBFCg6s3dZD897s=;
+	s=arc-20240116; t=1779999250; c=relaxed/simple;
+	bh=ORXnBcUUs1rsKdn5NivTJOlUSMSs+M90mwQVnX9BxgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQzq3MiYA8J8Kxkq8oce2KyBJsG89WGyYWNOi7Dur+yPM3zZdIZdlMaBX3j2CeyCHX4Y1C904SCwTh4NEdF2O5S8pscXf3FQ24zYga6IpuhBuQUL1Mqnc5SeSBFeUwD5KyfUWZ7WrTEnQ8W1o8gHq0pd4RZANCnJvNp4BXTHuh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV61kyb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k437L58HiyQunvNZBaf5UJIL2HxY0bYasI3e+xpFevyi7gnYwFYD+Y7uEjwd1Ly0dldC7dmPN92IgZODGu77n/G1j3rjdX9yfHduGvZSxeo5NRl/AN4mEwn/P0zJNqabLKBGW2WuJadG+XAg09jVpdzNWNUAU8fmJuYTek7G0as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Gq8Uoji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV61kyb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CE61F000E9;
-	Thu, 28 May 2026 20:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Gq8Uoji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6C91F000E9;
+	Thu, 28 May 2026 20:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999246;
-	bh=XytJLuhJxN2saDJOQmUokp2foqLjnGScQkVj7PVCvPQ=;
+	s=korg; t=1779999249;
+	bh=k3vdENpsL+uogjQxBdioSPBTnDaCvBqLo2V8/mOYJF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MV61kyb+dX0l00DZapGsZbSo7MdxdePh3uzXmDHhmGfdV5zceuH0GLOEizPup/BT7
-	 PnW6xMW+XhIw7lR1EKHrpwaP+IzzIRPOKfj6Z2F54GjtY9pynnQAvqT+ZZWeY5pZru
-	 Tf7KMpQNsts9sWDQtO1KL1hhYRD2I6NQpkurcAq4=
+	b=1Gq8Uojia02neeHV3gswBx5svRODKOpZRXJzEohOUjGDF3qAkNbt0muBmRiXqy40J
+	 dw+40Xo86VLSPsu2VY+MayqQGgdxw1hHHQGRQkl04NmjiuiPUkIGbDNTsuiZBbsR99
+	 LE0M567wfP4HFqr4AX+UUfiNb/DpGXEAUqIgLF/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <lizhi2@eswincomputing.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 433/461] net: stmmac: eswin: clear TXD and RXD delay registers during initialization
-Date: Thu, 28 May 2026 21:49:22 +0200
-Message-ID: <20260528194700.060188130@linuxfoundation.org>
+Subject: [PATCH 7.0 460/461] Documentation: laptops: Update documentation for uniwill laptops
+Date: Thu, 28 May 2026 21:49:49 +0200
+Message-ID: <20260528194700.855540272@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,89 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhi Li <lizhi2@eswincomputing.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 6872fb088edc1a3c36792b301f8e4a1c35dd7c35 ]
+[ Upstream commit 9ec6bf62cf98e30c7126a0f51ee7cdf2e8d458b6 ]
 
-Clear the TXD and RXD delay control registers during EIC7700 DWMAC
-initialization.
+Adds short description for two new sysfs entries, ctgp_offset and
+usb_c_power_priority, to the documentation of uniwill laptops.
 
-These registers may retain values programmed by the bootloader. If left
-unchanged, residual delays can alter the effective RGMII timing seen by
-the MAC and override the configuration described by the device tree.
-
-This may violate the expected RGMII timing model and can cause link
-instability or prevent the Ethernet controller from operating correctly.
-
-Explicitly clearing these registers ensures that the MAC delay settings
-are determined solely by the kernel configuration.
-
-The corresponding register offsets are optional, and the registers are
-only cleared when the offsets are provided in the device tree.
-
-Fixes: ea77dbbdbc4e ("net: stmmac: add Eswin EIC7700 glue driver")
-Signed-off-by: Zhi Li <lizhi2@eswincomputing.com>
-Link: https://patch.msgid.link/20260518022137.464-1-lizhi2@eswincomputing.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260324203413.454361-6-wse@tuxedocomputers.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 26cbe119f99c ("platform/x86: uniwill-laptop: Do not enable the charging limit even when forced")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/dwmac-eic7700.c   | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ .../ABI/testing/sysfs-driver-uniwill-laptop   | 27 +++++++++++++++++++
+ .../admin-guide/laptops/uniwill-laptop.rst    | 12 +++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
-index 63001c4acdb7a..541b279f08a17 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-eic7700.c
-@@ -46,7 +46,11 @@ struct eic7700_qos_priv {
- 	u32 eth_axi_lp_ctrl_offset;
- 	u32 eth_phy_ctrl_offset;
- 	u32 eth_clk_offset;
-+	u32 eth_txd_offset;
-+	u32 eth_rxd_offset;
- 	u32 eth_clk_dly_param;
-+	bool has_txd_offset;
-+	bool has_rxd_offset;
- };
+diff --git a/Documentation/ABI/testing/sysfs-driver-uniwill-laptop b/Documentation/ABI/testing/sysfs-driver-uniwill-laptop
+index 2df70792968f3..2397c65c969a6 100644
+--- a/Documentation/ABI/testing/sysfs-driver-uniwill-laptop
++++ b/Documentation/ABI/testing/sysfs-driver-uniwill-laptop
+@@ -51,3 +51,30 @@ Description:
  
- static int eic7700_clks_config(void *priv, bool enabled)
-@@ -84,6 +88,12 @@ static int eic7700_dwmac_init(struct device *dev, void *priv)
- 	regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_axi_lp_ctrl_offset,
- 		     EIC7700_ETH_CSYSREQ_VAL);
+ 		Reading this file returns the current status of the breathing animation
+ 		functionality.
++
++What:		/sys/bus/platform/devices/INOU0000:XX/ctgp_offset
++Date:		January 2026
++KernelVersion:	7.0
++Contact:	Werner Sembach <wse@tuxedocomputers.com>
++Description:
++		Allows userspace applications to set the configurable TGP offset on top of the base
++		TGP. Base TGP and max TGP and therefore the max cTGP offset are device specific.
++		Note that setting the maximum cTGP leaves no window open for Dynamic Boost as
++		Dynamic Boost also can not go over max TGP. Setting the cTGP to maximum is
++		effectively disabling Dynamic Boost and telling the device to always prioritize the
++		GPU over the CPU.
++
++		Reading this file returns the current configurable TGP offset.
++
++What:		/sys/bus/platform/devices/INOU0000:XX/usb_c_power_priority
++Date:		February 2026
++KernelVersion:	7.1
++Contact:	Werner Sembach <wse@tuxedocomputers.com>
++Description:
++		Allows userspace applications to choose the USB-C power distribution profile between
++		one that offers a bigger share of the power to the battery and one that offers more
++		of it to the CPU. Writing "charging"/"performance" into this file selects the
++		respective profile.
++
++		Reading this file returns the profile names with the currently active one in
++		brackets.
+diff --git a/Documentation/admin-guide/laptops/uniwill-laptop.rst b/Documentation/admin-guide/laptops/uniwill-laptop.rst
+index aff5f57a6bd47..561334865feb7 100644
+--- a/Documentation/admin-guide/laptops/uniwill-laptop.rst
++++ b/Documentation/admin-guide/laptops/uniwill-laptop.rst
+@@ -50,6 +50,10 @@ between 1 and 100 percent are supported.
+ Additionally the driver signals the presence of battery charging issues through the standard
+ ``health`` power supply sysfs attribute.
  
-+	if (dwc->has_txd_offset)
-+		regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_txd_offset, 0);
++It also lets you set whether a USB-C power source should prioritise charging the battery or
++delivering immediate power to the cpu. See Documentation/ABI/testing/sysfs-driver-uniwill-laptop for
++details.
 +
-+	if (dwc->has_rxd_offset)
-+		regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_rxd_offset, 0);
-+
- 	regmap_write(dwc->eic7700_hsp_regmap, dwc->eth_clk_offset,
- 		     dwc->eth_clk_dly_param);
+ Lightbar
+ --------
  
-@@ -190,6 +200,18 @@ static int eic7700_dwmac_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, ret,
- 				     "can't get eth_clk_offset\n");
+@@ -58,3 +62,11 @@ LED class device. The default name of this LED class device is ``uniwill:multico
  
-+	ret = of_property_read_u32_index(pdev->dev.of_node,
-+					 "eswin,hsp-sp-csr",
-+					 4, &dwc_priv->eth_txd_offset);
-+	if (!ret)
-+		dwc_priv->has_txd_offset = true;
+ See Documentation/ABI/testing/sysfs-driver-uniwill-laptop for details on how to control the various
+ animation modes of the lightbar.
 +
-+	ret = of_property_read_u32_index(pdev->dev.of_node,
-+					 "eswin,hsp-sp-csr",
-+					 5, &dwc_priv->eth_rxd_offset);
-+	if (!ret)
-+		dwc_priv->has_rxd_offset = true;
++Configurable TGP
++----------------
 +
- 	plat_dat->num_clks = ARRAY_SIZE(eic7700_clk_names);
- 	plat_dat->clks = devm_kcalloc(&pdev->dev,
- 				      plat_dat->num_clks,
++The ``uniwill-laptop`` driver allows to set the configurable TGP for devices with NVIDIA GPUs that
++allow it.
++
++See Documentation/ABI/testing/sysfs-driver-uniwill-laptop for details.
 -- 
 2.53.0
 
