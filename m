@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FB32FD7C3;
-	Thu, 28 May 2026 20:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512F71C3318;
+	Thu, 28 May 2026 20:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999887; cv=none; b=VnNxvLgzOpF7o/+Njlt/ynx7VjwKNZtiTlb6hGQSG9mfYiyEanqg1t01Nt4F/PFDoP1UuZhql2fdDsQy1/jXqxC1N6m3dLvrK/7qNGa73NFHwTtvGTAh/i9mNCg4ZTtlLo4bksRkDjdagfnOcBeLVX7I8nsQnyLEQj43bgcuk2U=
+	t=1779999890; cv=none; b=fJ4yxGyoe3JbmSKlw7cBuXatObptZTnyu4vENmdgjRpVkV1ifSHXlfKBRUV/4dTDAU7qFRHHiSe5uYoObGvovAS/oo8zARysrDU9PescTt0yQcpTfwZWxt+BbyT7wZcIDu7XqwMAK29VaCk7Tk5Vafbh13ECsxbxec0cEiZIJyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999887; c=relaxed/simple;
-	bh=m/Uk/DJlaoAt7MtKwPDu4IGHpp8MIkF4PgVummuZpas=;
+	s=arc-20240116; t=1779999890; c=relaxed/simple;
+	bh=Yx2XpbaVPy6M/XXMcow5ulYZzfI+oMeVeip5QYLG5oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kLpVEh/wryh7MMhJcN7+7TVKL48TAgxi2904wGMVlpt3RJR06oxncd0oMs3XzC4lJEMqkZvvCL5qPanB256FAYIanytdKVgzaY/btfy9jHg7m2EncSxdkyKssJvWtdx42owvYdMfME+fYn0dNJna3MXDPoSnw+8hJq9GKe9XHrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnYpckib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IURaE/n6w1QBhTk315sOWQC7zUJ4Ny8XR5rVStl4fOJ5tr+7EB4ic5SvOjK8dTSlPwbTzx7O79LeZgemEQBM48uZrogvd3GoMvZg4/dwXm0phBjtODA2As2k3jdqaSjpBDWx2hDSS9R2Aw5I4mzMcPogWVl678EA/65ZJIPv4II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myeNqebA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnYpckib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAF91F000E9;
-	Thu, 28 May 2026 20:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myeNqebA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3741F000E9;
+	Thu, 28 May 2026 20:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999886;
-	bh=MOS/FMVOjUyWQUwK5zCrR66sOV412kc9OmbFN6HkJuk=;
+	s=korg; t=1779999889;
+	bh=kDsJEtOAd3UWRiS/Xrx6cjgEV2/W0WfoAYhLeAsWUuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JnYpckibo7eRTx73nt5lBJo3H94GaOhlTHdhoUxig6XvoI4/sObhLIcmRol7urwWS
-	 17zkPN4nav/uRW8kAW1gogbxH0piZxHHhlnYMqgNrY2Lx1XrCzcxsx6kIOFlRmmXPX
-	 tlUbImd5ZwdSjiBQzl3SvfRiBTAd3e4tXtsYYy7A=
+	b=myeNqebAOhMVo/ZAO/JeimJ3dkwqAaANlzF3KiArZ6CpQL/HS+EHponSboMSgvGCJ
+	 4O8hlcR8mpVphex6nohdKypvq8MbK+Mv7WnWKqaUEPfY//UeGA6stivHeFJvOf0pRQ
+	 z6pZmZy+mcn2rtKtRYR46M4c6WTWR+pfaDO0bGJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 225/377] irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT
-Date: Thu, 28 May 2026 21:47:43 +0200
-Message-ID: <20260528194644.905771180@linuxfoundation.org>
+Subject: [PATCH 6.18 226/377] nvme: fix bio leak on mapping failure
+Date: Thu, 28 May 2026 21:47:44 +0200
+Message-ID: <20260528194644.936144737@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -47,68 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 91840be8f710370607f949a627e070896faeddb8 ]
+[ Upstream commit 2279cd9c61a330e5de4d6eb0bc422820dd6fdf36 ]
 
-On PREEMPT_RT, non-HARD irq_work runs in per-CPU kthreads via
-run_irq_workd(), so irq_work_sync() uses rcuwait() to wait for BUSY==0.
+The local bio is always NULL, so we'd leak the bio if the integrity
+mapping failed. Just get it directly from the request.
 
-After irq_work_single() clears BUSY via atomic_cmpxchg(), it still
-dereferences @work for irq_work_is_hard() and rcuwait_wake_up().
-
-An irq_work_sync() caller on another CPU that enters after BUSY is cleared
-can observe BUSY==0 immediately, return, and free the work before those
-accesses complete — causing a use-after-free.
-
-Fix this by wrapping run_irq_workd() in guard(rcu)() so that the entire
-irq_work_single() execution is within an RCU read-side critical
-section. Then add synchronize_rcu() in irq_work_sync() after
-rcuwait_wait_event() to ensure the caller waits for the RCU grace period
-before returning, preventing premature frees.
-
-Fixes: 810979682ccc ("irq_work: Allow irq_work_sync() to sleep if irq_work() no IRQ support.")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260330073234.303732-1-jiayuan.chen@linux.dev
+Fixes: d0d1d522316e91f ("blk-map: provide the bdev to bio if one exists")
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq_work.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/host/ioctl.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/irq_work.c b/kernel/irq_work.c
-index 73f7e1fd4ab4d..bf411656c3160 100644
---- a/kernel/irq_work.c
-+++ b/kernel/irq_work.c
-@@ -292,6 +292,12 @@ void irq_work_sync(struct irq_work *work)
- 	    !arch_irq_work_has_interrupt()) {
- 		rcuwait_wait_event(&work->irqwait, !irq_work_is_busy(work),
- 				   TASK_UNINTERRUPTIBLE);
-+		/*
-+		 * Ensure irq_work_single() does not access @work
-+		 * after removing IRQ_WORK_BUSY. It is always
-+		 * accessed within a RCU-read section.
-+		 */
-+		synchronize_rcu();
- 		return;
- 	}
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index c212fa952c0f4..5bbaf257fd6c5 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -122,7 +122,6 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 	bool supports_metadata = bdev && blk_get_integrity(bdev->bd_disk);
+ 	struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
+ 	bool has_metadata = meta_buffer && meta_len;
+-	struct bio *bio = NULL;
+ 	int ret;
  
-@@ -302,6 +308,7 @@ EXPORT_SYMBOL_GPL(irq_work_sync);
+ 	if (!nvme_ctrl_sgl_supported(ctrl))
+@@ -154,8 +153,8 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 	return ret;
  
- static void run_irq_workd(unsigned int cpu)
- {
-+	guard(rcu)();
- 	irq_work_run_list(this_cpu_ptr(&lazy_list));
+ out_unmap:
+-	if (bio)
+-		blk_rq_unmap_user(bio);
++	if (req->bio)
++		blk_rq_unmap_user(req->bio);
+ 	return ret;
  }
  
 -- 
