@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F32C318EE1;
-	Thu, 28 May 2026 20:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C97339866;
+	Thu, 28 May 2026 20:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998888; cv=none; b=MRi9EjljuPEocucJqQ3eYkT7ART0xseEMfroPn/NsnMWjQ0NOlBSUuH7lr5AQwNRCDXI2O0y6G0gmTKIkTdu4IcZBGwNGZl+YRJpaD7FepsOy2netMjGkauaUcvUpq3qG76Rz8vQzk+GWmIM+gGf0/9uRwhWHCtI6osnNeUC9OY=
+	t=1779998891; cv=none; b=Ru5F7Mx0V34XEyi6pFRHSmu2GelWAFxixtFf36HCb0x4V7hWNtntiyHv2uxP9RVl00WiDtaMWVmImubwPy1UO8jGXpVEqQvUUlpW/6vqlqYjMCaBtUA1sSlszPZdkC15rBkutah0ffzWIXrBWXkDSjrN3xEbfRiNodQAYuS6eoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998888; c=relaxed/simple;
-	bh=bDgw7o3FYqqOenEAO0XdpZfUnHciOclck4f1hMS2lxw=;
+	s=arc-20240116; t=1779998891; c=relaxed/simple;
+	bh=Y8G8UWwSITLWW043P/8/Ak1LQm068brGPS2gsxp9PlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAE34oJmyFbl82dpdyHx9j9x7QJpE6f1cPVAU78uFpWAhT9EnOawywFVq18QYU5YnwuAYpDVV5d7VD05L/sbEr8kKgDgaCZ6TElxNjFjNB4DALpz+f1lUy3ksYVUvHekCiP96eCXYQHFyclHhAYMVDzdfnVPtpwfs4QPRigB60g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZ8HVJYK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qo//nYW1hS+r65IBwdijF1CITKcKGx2muMswU8B4HRXb/w0nXv0ARClxevlOvr+Omnkhc/bdr2f5Dh44BqXjV8DgcxDwHmxYlCbxi9dPz1C5KrfRqYTD1/0fA1Oi+x5feL+CcUrBd+2KpmB8ukKKJTb0IDZs4V8cczp1RmaMj5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8k9+VbX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZ8HVJYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5325D1F000E9;
-	Thu, 28 May 2026 20:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8k9+VbX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2412B1F000E9;
+	Thu, 28 May 2026 20:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998886;
-	bh=D7a1DdEO5Eagx2FNTZZZTCLa8o2mU5cc69epNlMb/dk=;
+	s=korg; t=1779998889;
+	bh=ds9/e7tCf4j7I9qALARBMfw5D9p3RtmCazI0wvsykXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZ8HVJYKAHJqlSHkvxePQB/if5Y2nuSnFdIJ5D7N19/ePG7W4nArczMhLN3PhqcfQ
-	 X4iNNHlSa6fL8hAc1S3rNNlu3hElDZ6N/Flq36dAIXtrER7R7ISdnfbzdNBGrtajme
-	 +68ymsulY22M+Hoqa6JFhpUBzcyR9+1vxAjgPElc=
+	b=X8k9+VbXS0gttaRHevfgMh18+nz2gzFTOsY+OTtOlfR3iflQhIt5bEAsrk3bFYpmJ
+	 wMOOjVuFyw3Ri0Xxv/tu2QPbFU8cj3t2sQeba9Etp0SGKElf5X5XEqcpWk84NzxTJq
+	 X4C9y+ZXGNrf++VQaCa20NDW+Uy+RWpWX+jIGocw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
-	Mark Brown <broonie@kernel.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 333/461] ASoC: codecs: fs210x: fix possible buffer overflow
-Date: Thu, 28 May 2026 21:47:42 +0200
-Message-ID: <20260528194656.991676532@linuxfoundation.org>
+Subject: [PATCH 7.0 334/461] iommupt: Directly call iommupts unmap_range()
+Date: Thu, 28 May 2026 21:47:43 +0200
+Message-ID: <20260528194657.021597726@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,42 +54,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 0d435a7ebcd4e97e47673c1ab6fb27f973a053ec ]
+[ Upstream commit 99fb8afa16add85ed016baee9735231bca0c32b4 ]
 
-In fs210x_effect_scene_info(), a string was copied like this:
+The common algorithm in iommupt does not require the iommu_pgsize()
+calculations, it can directly unmap any arbitrary range. Add a new function
+pointer to directly call an iommupt unmap_range op and make
+__iommu_unmap() call it directly.
 
-    strscpy(DST, SRC, strlen(SRC) + 1);
+Gives about a 5% gain on single page unmappings.
 
-A buffer overflow would happen if strlen(SRC) >= sizeof(DST).
-Actually, strscpy() must be used this way:
+The function pointer is run through pt_iommu_ops instead of
+iommu_domain_ops to discourage using it outside iommupt. All drivers with
+their own page tables should continue to use the simplified
+map/unmap_pages() style interfaces.
 
-    strscpy(DST, SRC, sizeof(DST));
-    strscpy(DST, SRC); // defaults to sizeof(DST)
-
-Fixes: 756117701779 ("ASoC: codecs: Add FourSemi FS2104/5S audio amplifier driver")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260513190852.196723-2-grandmaster@al2klimov.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Stable-dep-of: 0735c54804c7 ("iommu: Handle unmap error when iommu_debug is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/fs210x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/generic_pt/iommu_pt.h | 29 ++++------------------
+ drivers/iommu/iommu.c               | 27 ++++++++++++++++-----
+ include/linux/generic_pt/iommu.h    | 37 ++++++++++++++++++++++++-----
+ include/linux/iommu.h               |  1 +
+ 4 files changed, 57 insertions(+), 37 deletions(-)
 
-diff --git a/sound/soc/codecs/fs210x.c b/sound/soc/codecs/fs210x.c
-index e6195b71adadc..eda716f817b58 100644
---- a/sound/soc/codecs/fs210x.c
-+++ b/sound/soc/codecs/fs210x.c
-@@ -968,7 +968,7 @@ static int fs210x_effect_scene_info(struct snd_kcontrol *kcontrol,
- 	if (scene->name)
- 		name = scene->name;
- 
--	strscpy(uinfo->value.enumerated.name, name, strlen(name) + 1);
-+	strscpy(uinfo->value.enumerated.name, name);
- 
- 	return 0;
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 7e7a6e7abdeed..8bc4683a64dc1 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -1020,34 +1020,12 @@ static __maybe_unused int __unmap_range(struct pt_range *range, void *arg,
+ 	return ret;
  }
+ 
+-/**
+- * unmap_pages() - Make a range of IOVA empty/not present
+- * @domain: Domain to manipulate
+- * @iova: IO virtual address to start
+- * @pgsize: Length of each page
+- * @pgcount: Length of the range in pgsize units starting from @iova
+- * @iotlb_gather: Gather struct that must be flushed on return
+- *
+- * unmap_pages() will remove a translation created by map_pages(). It cannot
+- * subdivide a mapping created by map_pages(), so it should be called with IOVA
+- * ranges that match those passed to map_pages(). The IOVA range can aggregate
+- * contiguous map_pages() calls so long as no individual range is split.
+- *
+- * Context: The caller must hold a write range lock that includes
+- * the whole range.
+- *
+- * Returns: Number of bytes of VA unmapped. iova + res will be the point
+- * unmapping stopped.
+- */
+-size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
+-			      size_t pgsize, size_t pgcount,
++static size_t NS(unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
++			      dma_addr_t len,
+ 			      struct iommu_iotlb_gather *iotlb_gather)
+ {
+-	struct pt_iommu *iommu_table =
+-		container_of(domain, struct pt_iommu, domain);
+ 	struct pt_unmap_args unmap = { .free_list = IOMMU_PAGES_LIST_INIT(
+ 					       unmap.free_list) };
+-	pt_vaddr_t len = pgsize * pgcount;
+ 	struct pt_range range;
+ 	int ret;
+ 
+@@ -1062,7 +1040,6 @@ size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
+ 
+ 	return unmap.unmapped;
+ }
+-EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(unmap_pages), "GENERIC_PT_IOMMU");
+ 
+ static void NS(get_info)(struct pt_iommu *iommu_table,
+ 			 struct pt_iommu_info *info)
+@@ -1110,6 +1087,7 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
+ }
+ 
+ static const struct pt_iommu_ops NS(ops) = {
++	.unmap_range = NS(unmap_range),
+ #if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_is_write_dirty) && \
+ 	IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_dirty)
+ 	.set_dirty = NS(set_dirty),
+@@ -1172,6 +1150,7 @@ static int pt_iommu_init_domain(struct pt_iommu *iommu_table,
+ 
+ 	domain->type = __IOMMU_DOMAIN_PAGING;
+ 	domain->pgsize_bitmap = info.pgsize_bitmap;
++	domain->is_iommupt = true;
+ 
+ 	if (pt_feature(common, PT_FEAT_DYNAMIC_TOP))
+ 		range = _pt_top_range(common,
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index ef08c2c4ec95b..04b1c0f358b05 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -34,6 +34,7 @@
+ #include <linux/sched/mm.h>
+ #include <linux/msi.h>
+ #include <uapi/linux/iommufd.h>
++#include <linux/generic_pt/iommu.h>
+ 
+ #include "dma-iommu.h"
+ #include "iommu-priv.h"
+@@ -2710,13 +2711,12 @@ int iommu_map(struct iommu_domain *domain, unsigned long iova,
+ }
+ EXPORT_SYMBOL_GPL(iommu_map);
+ 
+-static size_t __iommu_unmap(struct iommu_domain *domain,
+-			    unsigned long iova, size_t size,
+-			    struct iommu_iotlb_gather *iotlb_gather)
++static size_t
++__iommu_unmap_domain_pgtbl(struct iommu_domain *domain, unsigned long iova,
++			   size_t size, struct iommu_iotlb_gather *iotlb_gather)
+ {
+ 	const struct iommu_domain_ops *ops = domain->ops;
+ 	size_t unmapped_page, unmapped = 0;
+-	unsigned long orig_iova = iova;
+ 	unsigned int min_pagesz;
+ 
+ 	if (unlikely(!(domain->type & __IOMMU_DOMAIN_PAGING)))
+@@ -2768,8 +2768,23 @@ static size_t __iommu_unmap(struct iommu_domain *domain,
+ 		unmapped += unmapped_page;
+ 	}
+ 
+-	trace_unmap(orig_iova, size, unmapped);
+-	iommu_debug_unmap_end(domain, orig_iova, size, unmapped);
++	return unmapped;
++}
++
++static size_t __iommu_unmap(struct iommu_domain *domain, unsigned long iova,
++			    size_t size,
++			    struct iommu_iotlb_gather *iotlb_gather)
++{
++	struct pt_iommu *pt = iommupt_from_domain(domain);
++	size_t unmapped;
++
++	if (pt)
++		unmapped = pt->ops->unmap_range(pt, iova, size, iotlb_gather);
++	else
++		unmapped = __iommu_unmap_domain_pgtbl(domain, iova, size,
++						      iotlb_gather);
++	trace_unmap(iova, size, unmapped);
++	iommu_debug_unmap_end(domain, iova, size, unmapped);
+ 	return unmapped;
+ }
+ 
+diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+index 9eefbb74efd08..f094f8f44e4e8 100644
+--- a/include/linux/generic_pt/iommu.h
++++ b/include/linux/generic_pt/iommu.h
+@@ -66,6 +66,13 @@ struct pt_iommu {
+ 	struct device *iommu_device;
+ };
+ 
++static inline struct pt_iommu *iommupt_from_domain(struct iommu_domain *domain)
++{
++	if (!IS_ENABLED(CONFIG_IOMMU_PT) || !domain->is_iommupt)
++		return NULL;
++	return container_of(domain, struct pt_iommu, domain);
++}
++
+ /**
+  * struct pt_iommu_info - Details about the IOMMU page table
+  *
+@@ -80,6 +87,29 @@ struct pt_iommu_info {
+ };
+ 
+ struct pt_iommu_ops {
++	/**
++	 * @unmap_range: Make a range of IOVA empty/not present
++	 * @iommu_table: Table to manipulate
++	 * @iova: IO virtual address to start
++	 * @len: Length of the range starting from @iova
++	 * @iotlb_gather: Gather struct that must be flushed on return
++	 *
++	 * unmap_range() will remove a translation created by map_range(). It
++	 * cannot subdivide a mapping created by map_range(), so it should be
++	 * called with IOVA ranges that match those passed to map_pages. The
++	 * IOVA range can aggregate contiguous map_range() calls so long as no
++	 * individual range is split.
++	 *
++	 * Context: The caller must hold a write range lock that includes
++	 * the whole range.
++	 *
++	 * Returns: Number of bytes of VA unmapped. iova + res will be the
++	 * point unmapping stopped.
++	 */
++	size_t (*unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
++			      dma_addr_t len,
++			      struct iommu_iotlb_gather *iotlb_gather);
++
+ 	/**
+ 	 * @set_dirty: Make the iova write dirty
+ 	 * @iommu_table: Table to manipulate
+@@ -198,10 +228,6 @@ struct pt_iommu_cfg {
+ 				       unsigned long iova, phys_addr_t paddr,  \
+ 				       size_t pgsize, size_t pgcount,          \
+ 				       int prot, gfp_t gfp, size_t *mapped);   \
+-	size_t pt_iommu_##fmt##_unmap_pages(                                   \
+-		struct iommu_domain *domain, unsigned long iova,               \
+-		size_t pgsize, size_t pgcount,                                 \
+-		struct iommu_iotlb_gather *iotlb_gather);                      \
+ 	int pt_iommu_##fmt##_read_and_clear_dirty(                             \
+ 		struct iommu_domain *domain, unsigned long iova, size_t size,  \
+ 		unsigned long flags, struct iommu_dirty_bitmap *dirty);        \
+@@ -223,8 +249,7 @@ struct pt_iommu_cfg {
+  */
+ #define IOMMU_PT_DOMAIN_OPS(fmt)                        \
+ 	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys, \
+-	.map_pages = &pt_iommu_##fmt##_map_pages,       \
+-	.unmap_pages = &pt_iommu_##fmt##_unmap_pages
++	.map_pages = &pt_iommu_##fmt##_map_pages
+ #define IOMMU_PT_DIRTY_OPS(fmt) \
+ 	.read_and_clear_dirty = &pt_iommu_##fmt##_read_and_clear_dirty
+ 
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index 555597b54083c..563d0f104114b 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -223,6 +223,7 @@ enum iommu_domain_cookie_type {
+ struct iommu_domain {
+ 	unsigned type;
+ 	enum iommu_domain_cookie_type cookie_type;
++	bool is_iommupt;
+ 	const struct iommu_domain_ops *ops;
+ 	const struct iommu_dirty_ops *dirty_ops;
+ 	const struct iommu_ops *owner; /* Whose domain_alloc we came from */
 -- 
 2.53.0
 
