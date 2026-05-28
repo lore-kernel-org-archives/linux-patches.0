@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C97339866;
-	Thu, 28 May 2026 20:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF642F691F;
+	Thu, 28 May 2026 20:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998891; cv=none; b=Ru5F7Mx0V34XEyi6pFRHSmu2GelWAFxixtFf36HCb0x4V7hWNtntiyHv2uxP9RVl00WiDtaMWVmImubwPy1UO8jGXpVEqQvUUlpW/6vqlqYjMCaBtUA1sSlszPZdkC15rBkutah0ffzWIXrBWXkDSjrN3xEbfRiNodQAYuS6eoI=
+	t=1779998894; cv=none; b=kaGQGOXI0P0DRvAehYI+pkvQXAh4pOQrSNYQgHUcAPzMUndi3MJqB0MN17SIUgIkRr+SYY6guPEjTrYByxK5cGQTK6bCOXDszq+AcbyzPKD5s0wCWf8AAYu2eLBap1qoT1zzc/q8JFSjLcRdscjI0znGYitJKEtCuBjBF0pVpIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998891; c=relaxed/simple;
-	bh=Y8G8UWwSITLWW043P/8/Ak1LQm068brGPS2gsxp9PlI=;
+	s=arc-20240116; t=1779998894; c=relaxed/simple;
+	bh=3YmVdVsVVSaePVvN0DgsJRPnemm3mFiPw8ST3EPLye4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qo//nYW1hS+r65IBwdijF1CITKcKGx2muMswU8B4HRXb/w0nXv0ARClxevlOvr+Omnkhc/bdr2f5Dh44BqXjV8DgcxDwHmxYlCbxi9dPz1C5KrfRqYTD1/0fA1Oi+x5feL+CcUrBd+2KpmB8ukKKJTb0IDZs4V8cczp1RmaMj5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8k9+VbX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=REobmGQO1VhiLdRdCEdzLelIMdwhmy6wmvIzWbcMSK43yP66UdwxLUUjZq3DWwn9FFZETgT2yjY2Tzm6M+V9i4n8Vn5X5sP8glnCmmVnf/FgwoiICqdVTxZH0+AXKDS12J7AC4QNQ610xHTweVElCBPdnaTsrpSKC9UTNu257Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2hQHRwrS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8k9+VbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2412B1F000E9;
-	Thu, 28 May 2026 20:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hQHRwrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BD31F000E9;
+	Thu, 28 May 2026 20:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998889;
-	bh=ds9/e7tCf4j7I9qALARBMfw5D9p3RtmCazI0wvsykXI=;
+	s=korg; t=1779998892;
+	bh=IRbLRtarKlp1gPc2Aj1Gp0yivIex6Xs2QWZQWikw1mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8k9+VbXS0gttaRHevfgMh18+nz2gzFTOsY+OTtOlfR3iflQhIt5bEAsrk3bFYpmJ
-	 wMOOjVuFyw3Ri0Xxv/tu2QPbFU8cj3t2sQeba9Etp0SGKElf5X5XEqcpWk84NzxTJq
-	 X4C9y+ZXGNrf++VQaCa20NDW+Uy+RWpWX+jIGocw=
+	b=2hQHRwrSPfh2ex6ggTLsLFTLVAVeaPW+SwOYaVEI3Zzc4JMG0urGGUqaxP/n2pwvO
+	 hd7o4eTaoPABpHjD3X7d1tgjfkJiCtX8+OeQnQDXC16q/A6Jf/FLWC4EbDqWhB94s9
+	 Bqw6c2yBszPpHVpCCTB6HlfzjEcVWv6miuBQIdP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 334/461] iommupt: Directly call iommupts unmap_range()
-Date: Thu, 28 May 2026 21:47:43 +0200
-Message-ID: <20260528194657.021597726@linuxfoundation.org>
+Subject: [PATCH 7.0 335/461] iommupt: Avoid rewalking during map
+Date: Thu, 28 May 2026 21:47:44 +0200
+Message-ID: <20260528194657.052301352@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -56,19 +56,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 99fb8afa16add85ed016baee9735231bca0c32b4 ]
+[ Upstream commit d6c65b0fd6218bd21ed0be7a8d3218e8f6dc91de ]
 
-The common algorithm in iommupt does not require the iommu_pgsize()
-calculations, it can directly unmap any arbitrary range. Add a new function
-pointer to directly call an iommupt unmap_range op and make
-__iommu_unmap() call it directly.
+Currently the core code provides a simplified interface to drivers where
+it fragments a requested multi-page map into single page size steps after
+doing all the calculations to figure out what page size is
+appropriate. Each step rewalks the page tables from the start.
 
-Gives about a 5% gain on single page unmappings.
+Since iommupt has a single implementation of the mapping algorithm it can
+internally compute each step as it goes while retaining its current
+position in the walk.
+
+Add a new function pt_pgsz_count() which computes the same page size
+fragement of a large mapping operations.
+
+Compute the next fragment when all the leaf entries of the current
+fragement have been written, then continue walking from the current
+point.
 
 The function pointer is run through pt_iommu_ops instead of
 iommu_domain_ops to discourage using it outside iommupt. All drivers with
-their own page tables should continue to use the simplified
-map/unmap_pages() style interfaces.
+their own page tables should continue to use the simplified map_pages()
+style interfaces.
 
 Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
@@ -78,213 +87,458 @@ Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Stable-dep-of: 0735c54804c7 ("iommu: Handle unmap error when iommu_debug is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/generic_pt/iommu_pt.h | 29 ++++------------------
- drivers/iommu/iommu.c               | 27 ++++++++++++++++-----
- include/linux/generic_pt/iommu.h    | 37 ++++++++++++++++++++++++-----
- include/linux/iommu.h               |  1 +
- 4 files changed, 57 insertions(+), 37 deletions(-)
+ drivers/iommu/generic_pt/iommu_pt.h         | 133 ++++++++++++--------
+ drivers/iommu/generic_pt/kunit_generic_pt.h |  12 ++
+ drivers/iommu/generic_pt/pt_iter.h          |  22 ++++
+ drivers/iommu/iommu.c                       |  39 ++++--
+ include/linux/generic_pt/iommu.h            |  34 ++++-
+ 5 files changed, 175 insertions(+), 65 deletions(-)
 
 diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
-index 7e7a6e7abdeed..8bc4683a64dc1 100644
+index 8bc4683a64dc1..c0241b24a6098 100644
 --- a/drivers/iommu/generic_pt/iommu_pt.h
 +++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -1020,34 +1020,12 @@ static __maybe_unused int __unmap_range(struct pt_range *range, void *arg,
- 	return ret;
+@@ -466,6 +466,7 @@ struct pt_iommu_map_args {
+ 	pt_oaddr_t oa;
+ 	unsigned int leaf_pgsize_lg2;
+ 	unsigned int leaf_level;
++	pt_vaddr_t num_leaves;
+ };
+ 
+ /*
+@@ -518,11 +519,15 @@ static int clear_contig(const struct pt_state *start_pts,
+ static int __map_range_leaf(struct pt_range *range, void *arg,
+ 			    unsigned int level, struct pt_table_p *table)
+ {
++	struct pt_iommu *iommu_table = iommu_from_common(range->common);
+ 	struct pt_state pts = pt_init(range, level, table);
+ 	struct pt_iommu_map_args *map = arg;
+ 	unsigned int leaf_pgsize_lg2 = map->leaf_pgsize_lg2;
+ 	unsigned int start_index;
+ 	pt_oaddr_t oa = map->oa;
++	unsigned int num_leaves;
++	unsigned int orig_end;
++	pt_vaddr_t last_va;
+ 	unsigned int step;
+ 	bool need_contig;
+ 	int ret = 0;
+@@ -536,6 +541,15 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
+ 
+ 	_pt_iter_first(&pts);
+ 	start_index = pts.index;
++	orig_end = pts.end_index;
++	if (pts.index + map->num_leaves < pts.end_index) {
++		/* Need to stop in the middle of the table to change sizes */
++		pts.end_index = pts.index + map->num_leaves;
++		num_leaves = 0;
++	} else {
++		num_leaves = map->num_leaves - (pts.end_index - pts.index);
++	}
++
+ 	do {
+ 		pts.type = pt_load_entry_raw(&pts);
+ 		if (pts.type != PT_ENTRY_EMPTY || need_contig) {
+@@ -561,7 +575,40 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
+ 	flush_writes_range(&pts, start_index, pts.index);
+ 
+ 	map->oa = oa;
+-	return ret;
++	map->num_leaves = num_leaves;
++	if (ret || num_leaves)
++		return ret;
++
++	/* range->va is not valid if we reached the end of the table */
++	pts.index -= step;
++	pt_index_to_va(&pts);
++	pts.index += step;
++	last_va = range->va + log2_to_int(leaf_pgsize_lg2);
++
++	if (last_va - 1 == range->last_va) {
++		PT_WARN_ON(pts.index != orig_end);
++		return 0;
++	}
++
++	/*
++	 * Reached a point where the page size changed, compute the new
++	 * parameters.
++	 */
++	map->leaf_pgsize_lg2 = pt_compute_best_pgsize(
++		iommu_table->domain.pgsize_bitmap, last_va, range->last_va, oa);
++	map->leaf_level =
++		pt_pgsz_lg2_to_level(range->common, map->leaf_pgsize_lg2);
++	map->num_leaves = pt_pgsz_count(iommu_table->domain.pgsize_bitmap,
++					last_va, range->last_va, oa,
++					map->leaf_pgsize_lg2);
++
++	/* Didn't finish this table level, caller will repeat it */
++	if (pts.index != orig_end) {
++		if (pts.index != start_index)
++			pt_index_to_va(&pts);
++		return -EAGAIN;
++	}
++	return 0;
+ }
+ 
+ static int __map_range(struct pt_range *range, void *arg, unsigned int level,
+@@ -584,14 +631,9 @@ static int __map_range(struct pt_range *range, void *arg, unsigned int level,
+ 			if (pts.type != PT_ENTRY_EMPTY)
+ 				return -EADDRINUSE;
+ 			ret = pt_iommu_new_table(&pts, &map->attrs);
+-			if (ret) {
+-				/*
+-				 * Racing with another thread installing a table
+-				 */
+-				if (ret == -EAGAIN)
+-					continue;
++			/* EAGAIN on a race will loop again */
++			if (ret)
+ 				return ret;
+-			}
+ 		} else {
+ 			pts.table_lower = pt_table_ptr(&pts);
+ 			/*
+@@ -615,10 +657,12 @@ static int __map_range(struct pt_range *range, void *arg, unsigned int level,
+ 		 * The already present table can possibly be shared with another
+ 		 * concurrent map.
+ 		 */
+-		if (map->leaf_level == level - 1)
+-			ret = pt_descend(&pts, arg, __map_range_leaf);
+-		else
+-			ret = pt_descend(&pts, arg, __map_range);
++		do {
++			if (map->leaf_level == level - 1)
++				ret = pt_descend(&pts, arg, __map_range_leaf);
++			else
++				ret = pt_descend(&pts, arg, __map_range);
++		} while (ret == -EAGAIN);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -626,6 +670,14 @@ static int __map_range(struct pt_range *range, void *arg, unsigned int level,
+ 		pt_index_to_va(&pts);
+ 		if (pts.index >= pts.end_index)
+ 			break;
++
++		/*
++		 * This level is currently running __map_range_leaf() which is
++		 * not correct if the target level has been updated to this
++		 * level. Have the caller invoke __map_range_leaf.
++		 */
++		if (map->leaf_level == level)
++			return -EAGAIN;
+ 	} while (true);
+ 	return 0;
+ }
+@@ -797,12 +849,13 @@ static int check_map_range(struct pt_iommu *iommu_table, struct pt_range *range,
+ static int do_map(struct pt_range *range, struct pt_common *common,
+ 		  bool single_page, struct pt_iommu_map_args *map)
+ {
++	int ret;
++
+ 	/*
+ 	 * The __map_single_page() fast path does not support DMA_INCOHERENT
+ 	 * flushing to keep its .text small.
+ 	 */
+ 	if (single_page && !pt_feature(common, PT_FEAT_DMA_INCOHERENT)) {
+-		int ret;
+ 
+ 		ret = pt_walk_range(range, __map_single_page, map);
+ 		if (ret != -EAGAIN)
+@@ -810,50 +863,25 @@ static int do_map(struct pt_range *range, struct pt_common *common,
+ 		/* EAGAIN falls through to the full path */
+ 	}
+ 
+-	if (map->leaf_level == range->top_level)
+-		return pt_walk_range(range, __map_range_leaf, map);
+-	return pt_walk_range(range, __map_range, map);
++	do {
++		if (map->leaf_level == range->top_level)
++			ret = pt_walk_range(range, __map_range_leaf, map);
++		else
++			ret = pt_walk_range(range, __map_range, map);
++	} while (ret == -EAGAIN);
++	return ret;
  }
  
 -/**
-- * unmap_pages() - Make a range of IOVA empty/not present
+- * map_pages() - Install translation for an IOVA range
 - * @domain: Domain to manipulate
 - * @iova: IO virtual address to start
+- * @paddr: Physical/Output address to start
 - * @pgsize: Length of each page
 - * @pgcount: Length of the range in pgsize units starting from @iova
-- * @iotlb_gather: Gather struct that must be flushed on return
+- * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
+- * @gfp: GFP flags for any memory allocations
+- * @mapped: Total bytes successfully mapped
 - *
-- * unmap_pages() will remove a translation created by map_pages(). It cannot
-- * subdivide a mapping created by map_pages(), so it should be called with IOVA
-- * ranges that match those passed to map_pages(). The IOVA range can aggregate
-- * contiguous map_pages() calls so long as no individual range is split.
+- * The range starting at IOVA will have paddr installed into it. The caller
+- * must specify a valid pgsize and pgcount to segment the range into compatible
+- * blocks.
 - *
-- * Context: The caller must hold a write range lock that includes
-- * the whole range.
+- * On error the caller will probably want to invoke unmap on the range from iova
+- * up to the amount indicated by @mapped to return the table back to an
+- * unchanged state.
 - *
-- * Returns: Number of bytes of VA unmapped. iova + res will be the point
-- * unmapping stopped.
+- * Context: The caller must hold a write range lock that includes the whole
+- * range.
+- *
+- * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA that were
+- * mapped are added to @mapped, @mapped is not zerod first.
 - */
--size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
--			      size_t pgsize, size_t pgcount,
-+static size_t NS(unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-+			      dma_addr_t len,
- 			      struct iommu_iotlb_gather *iotlb_gather)
+-int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+-			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
+-			 int prot, gfp_t gfp, size_t *mapped)
++static int NS(map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
++			 phys_addr_t paddr, dma_addr_t len, unsigned int prot,
++			 gfp_t gfp, size_t *mapped)
  {
 -	struct pt_iommu *iommu_table =
 -		container_of(domain, struct pt_iommu, domain);
- 	struct pt_unmap_args unmap = { .free_list = IOMMU_PAGES_LIST_INIT(
- 					       unmap.free_list) };
+ 	pt_vaddr_t pgsize_bitmap = iommu_table->domain.pgsize_bitmap;
+ 	struct pt_common *common = common_from_iommu(iommu_table);
+ 	struct iommu_iotlb_gather iotlb_gather;
 -	pt_vaddr_t len = pgsize * pgcount;
+ 	struct pt_iommu_map_args map = {
+ 		.iotlb_gather = &iotlb_gather,
+ 		.oa = paddr,
+-		.leaf_pgsize_lg2 = vaffs(pgsize),
+ 	};
+ 	bool single_page = false;
  	struct pt_range range;
- 	int ret;
+@@ -881,13 +909,13 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+ 		return ret;
  
-@@ -1062,7 +1040,6 @@ size_t DOMAIN_NS(unmap_pages)(struct iommu_domain *domain, unsigned long iova,
+ 	/* Calculate target page size and level for the leaves */
+-	if (pt_has_system_page_size(common) && pgsize == PAGE_SIZE &&
+-	    pgcount == 1) {
++	if (pt_has_system_page_size(common) && len == PAGE_SIZE) {
+ 		PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
+ 		if (log2_mod(iova | paddr, PAGE_SHIFT))
+ 			return -ENXIO;
+ 		map.leaf_pgsize_lg2 = PAGE_SHIFT;
+ 		map.leaf_level = 0;
++		map.num_leaves = 1;
+ 		single_page = true;
+ 	} else {
+ 		map.leaf_pgsize_lg2 = pt_compute_best_pgsize(
+@@ -896,6 +924,9 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+ 			return -ENXIO;
+ 		map.leaf_level =
+ 			pt_pgsz_lg2_to_level(common, map.leaf_pgsize_lg2);
++		map.num_leaves = pt_pgsz_count(pgsize_bitmap, range.va,
++					       range.last_va, paddr,
++					       map.leaf_pgsize_lg2);
+ 	}
  
- 	return unmap.unmapped;
+ 	ret = check_map_range(iommu_table, &range, &map);
+@@ -918,7 +949,6 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+ 	*mapped += map.oa - paddr;
+ 	return ret;
  }
--EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(unmap_pages), "GENERIC_PT_IOMMU");
+-EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(map_pages), "GENERIC_PT_IOMMU");
  
- static void NS(get_info)(struct pt_iommu *iommu_table,
- 			 struct pt_iommu_info *info)
-@@ -1110,6 +1087,7 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
+ struct pt_unmap_args {
+ 	struct iommu_pages_list free_list;
+@@ -1087,6 +1117,7 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
  }
  
  static const struct pt_iommu_ops NS(ops) = {
-+	.unmap_range = NS(unmap_range),
++	.map_range = NS(map_range),
+ 	.unmap_range = NS(unmap_range),
  #if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_is_write_dirty) && \
  	IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_dirty)
- 	.set_dirty = NS(set_dirty),
-@@ -1172,6 +1150,7 @@ static int pt_iommu_init_domain(struct pt_iommu *iommu_table,
+diff --git a/drivers/iommu/generic_pt/kunit_generic_pt.h b/drivers/iommu/generic_pt/kunit_generic_pt.h
+index 68278bf15cfe0..374e475f591e1 100644
+--- a/drivers/iommu/generic_pt/kunit_generic_pt.h
++++ b/drivers/iommu/generic_pt/kunit_generic_pt.h
+@@ -312,6 +312,17 @@ static void test_best_pgsize(struct kunit *test)
+ 	}
+ }
  
- 	domain->type = __IOMMU_DOMAIN_PAGING;
- 	domain->pgsize_bitmap = info.pgsize_bitmap;
-+	domain->is_iommupt = true;
++static void test_pgsz_count(struct kunit *test)
++{
++	KUNIT_EXPECT_EQ(test,
++			pt_pgsz_count(SZ_4K, 0, SZ_1G - 1, 0, ilog2(SZ_4K)),
++			SZ_1G / SZ_4K);
++	KUNIT_EXPECT_EQ(test,
++			pt_pgsz_count(SZ_2M | SZ_4K, SZ_4K, SZ_1G - 1, SZ_4K,
++				      ilog2(SZ_4K)),
++			(SZ_2M - SZ_4K) / SZ_4K);
++}
++
+ /*
+  * Check that pt_install_table() and pt_table_pa() match
+  */
+@@ -770,6 +781,7 @@ static struct kunit_case generic_pt_test_cases[] = {
+ 	KUNIT_CASE_FMT(test_init),
+ 	KUNIT_CASE_FMT(test_bitops),
+ 	KUNIT_CASE_FMT(test_best_pgsize),
++	KUNIT_CASE_FMT(test_pgsz_count),
+ 	KUNIT_CASE_FMT(test_table_ptr),
+ 	KUNIT_CASE_FMT(test_max_va),
+ 	KUNIT_CASE_FMT(test_table_radix),
+diff --git a/drivers/iommu/generic_pt/pt_iter.h b/drivers/iommu/generic_pt/pt_iter.h
+index c0d8617cce292..3e45dbde6b832 100644
+--- a/drivers/iommu/generic_pt/pt_iter.h
++++ b/drivers/iommu/generic_pt/pt_iter.h
+@@ -569,6 +569,28 @@ static inline unsigned int pt_compute_best_pgsize(pt_vaddr_t pgsz_bitmap,
+ 	return pgsz_lg2;
+ }
  
- 	if (pt_feature(common, PT_FEAT_DYNAMIC_TOP))
- 		range = _pt_top_range(common,
++/*
++ * Return the number of pgsize_lg2 leaf entries that can be mapped for
++ * va to oa. This accounts for any requirement to reduce or increase the page
++ * size across the VA range.
++ */
++static inline pt_vaddr_t pt_pgsz_count(pt_vaddr_t pgsz_bitmap, pt_vaddr_t va,
++				       pt_vaddr_t last_va, pt_oaddr_t oa,
++				       unsigned int pgsize_lg2)
++{
++	pt_vaddr_t len = last_va - va + 1;
++	pt_vaddr_t next_pgsizes = log2_set_mod(pgsz_bitmap, 0, pgsize_lg2 + 1);
++
++	if (next_pgsizes) {
++		unsigned int next_pgsize_lg2 = vaffs(next_pgsizes);
++
++		if (log2_mod(va ^ oa, next_pgsize_lg2) == 0)
++			len = min(len, log2_set_mod_max(va, next_pgsize_lg2) -
++					       va + 1);
++	}
++	return log2_div(len, pgsize_lg2);
++}
++
+ #define _PT_MAKE_CALL_LEVEL(fn)                                          \
+ 	static __always_inline int fn(struct pt_range *range, void *arg, \
+ 				      unsigned int level,                \
 diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index ef08c2c4ec95b..04b1c0f358b05 100644
+index 04b1c0f358b05..973be8e2ab4c8 100644
 --- a/drivers/iommu/iommu.c
 +++ b/drivers/iommu/iommu.c
-@@ -34,6 +34,7 @@
- #include <linux/sched/mm.h>
- #include <linux/msi.h>
- #include <uapi/linux/iommufd.h>
-+#include <linux/generic_pt/iommu.h>
- 
- #include "dma-iommu.h"
- #include "iommu-priv.h"
-@@ -2710,13 +2711,12 @@ int iommu_map(struct iommu_domain *domain, unsigned long iova,
+@@ -2613,14 +2613,14 @@ static size_t iommu_pgsize(struct iommu_domain *domain, unsigned long iova,
+ 	return pgsize;
  }
- EXPORT_SYMBOL_GPL(iommu_map);
  
--static size_t __iommu_unmap(struct iommu_domain *domain,
--			    unsigned long iova, size_t size,
--			    struct iommu_iotlb_gather *iotlb_gather)
-+static size_t
-+__iommu_unmap_domain_pgtbl(struct iommu_domain *domain, unsigned long iova,
-+			   size_t size, struct iommu_iotlb_gather *iotlb_gather)
+-int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
+-		phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
++static int __iommu_map_domain_pgtbl(struct iommu_domain *domain,
++				    unsigned long iova, phys_addr_t paddr,
++				    size_t size, int prot, gfp_t gfp)
  {
  	const struct iommu_domain_ops *ops = domain->ops;
- 	size_t unmapped_page, unmapped = 0;
--	unsigned long orig_iova = iova;
+ 	unsigned long orig_iova = iova;
  	unsigned int min_pagesz;
+ 	size_t orig_size = size;
+-	phys_addr_t orig_paddr = paddr;
+ 	int ret = 0;
  
- 	if (unlikely(!(domain->type & __IOMMU_DOMAIN_PAGING)))
-@@ -2768,8 +2768,23 @@ static size_t __iommu_unmap(struct iommu_domain *domain,
- 		unmapped += unmapped_page;
+ 	might_sleep_if(gfpflags_allow_blocking(gfp));
+@@ -2677,12 +2677,9 @@ int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
+ 	/* unroll mapping in case something went wrong */
+ 	if (ret) {
+ 		iommu_unmap(domain, orig_iova, orig_size - size);
+-	} else {
+-		trace_map(orig_iova, orig_paddr, orig_size);
+-		iommu_debug_map(domain, orig_paddr, orig_size);
++		return ret;
  	}
- 
--	trace_unmap(orig_iova, size, unmapped);
--	iommu_debug_unmap_end(domain, orig_iova, size, unmapped);
-+	return unmapped;
-+}
-+
-+static size_t __iommu_unmap(struct iommu_domain *domain, unsigned long iova,
-+			    size_t size,
-+			    struct iommu_iotlb_gather *iotlb_gather)
-+{
-+	struct pt_iommu *pt = iommupt_from_domain(domain);
-+	size_t unmapped;
-+
-+	if (pt)
-+		unmapped = pt->ops->unmap_range(pt, iova, size, iotlb_gather);
-+	else
-+		unmapped = __iommu_unmap_domain_pgtbl(domain, iova, size,
-+						      iotlb_gather);
-+	trace_unmap(iova, size, unmapped);
-+	iommu_debug_unmap_end(domain, iova, size, unmapped);
- 	return unmapped;
+-
+-	return ret;
++	return 0;
  }
  
-diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
-index 9eefbb74efd08..f094f8f44e4e8 100644
---- a/include/linux/generic_pt/iommu.h
-+++ b/include/linux/generic_pt/iommu.h
-@@ -66,6 +66,13 @@ struct pt_iommu {
- 	struct device *iommu_device;
- };
+ int iommu_sync_map(struct iommu_domain *domain, unsigned long iova, size_t size)
+@@ -2694,6 +2691,32 @@ int iommu_sync_map(struct iommu_domain *domain, unsigned long iova, size_t size)
+ 	return ops->iotlb_sync_map(domain, iova, size);
+ }
  
-+static inline struct pt_iommu *iommupt_from_domain(struct iommu_domain *domain)
++int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
++		phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
 +{
-+	if (!IS_ENABLED(CONFIG_IOMMU_PT) || !domain->is_iommupt)
-+		return NULL;
-+	return container_of(domain, struct pt_iommu, domain);
++	struct pt_iommu *pt = iommupt_from_domain(domain);
++	int ret;
++
++	if (pt) {
++		size_t mapped = 0;
++
++		ret = pt->ops->map_range(pt, iova, paddr, size, prot, gfp,
++					 &mapped);
++		if (ret) {
++			iommu_unmap(domain, iova, mapped);
++			return ret;
++		}
++		return 0;
++	}
++	ret = __iommu_map_domain_pgtbl(domain, iova, paddr, size, prot, gfp);
++	if (!ret)
++		return ret;
++
++	trace_map(iova, paddr, size);
++	iommu_debug_map(domain, paddr, size);
++	return 0;
 +}
 +
- /**
-  * struct pt_iommu_info - Details about the IOMMU page table
-  *
-@@ -80,6 +87,29 @@ struct pt_iommu_info {
+ int iommu_map(struct iommu_domain *domain, unsigned long iova,
+ 	      phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
+ {
+diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+index f094f8f44e4e8..43cc98c9c55f7 100644
+--- a/include/linux/generic_pt/iommu.h
++++ b/include/linux/generic_pt/iommu.h
+@@ -87,6 +87,33 @@ struct pt_iommu_info {
  };
  
  struct pt_iommu_ops {
 +	/**
-+	 * @unmap_range: Make a range of IOVA empty/not present
++	 * @map_range: Install translation for an IOVA range
 +	 * @iommu_table: Table to manipulate
 +	 * @iova: IO virtual address to start
++	 * @paddr: Physical/Output address to start
 +	 * @len: Length of the range starting from @iova
-+	 * @iotlb_gather: Gather struct that must be flushed on return
++	 * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
++	 * @gfp: GFP flags for any memory allocations
 +	 *
-+	 * unmap_range() will remove a translation created by map_range(). It
-+	 * cannot subdivide a mapping created by map_range(), so it should be
-+	 * called with IOVA ranges that match those passed to map_pages. The
-+	 * IOVA range can aggregate contiguous map_range() calls so long as no
-+	 * individual range is split.
++	 * The range starting at IOVA will have paddr installed into it. The
++	 * rage is automatically segmented into optimally sized table entries,
++	 * and can have any valid alignment.
++	 *
++	 * On error the caller will probably want to invoke unmap on the range
++	 * from iova up to the amount indicated by @mapped to return the table
++	 * back to an unchanged state.
 +	 *
 +	 * Context: The caller must hold a write range lock that includes
 +	 * the whole range.
 +	 *
-+	 * Returns: Number of bytes of VA unmapped. iova + res will be the
-+	 * point unmapping stopped.
++	 * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA
++	 * that were mapped are added to @mapped, @mapped is not zerod first.
 +	 */
-+	size_t (*unmap_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-+			      dma_addr_t len,
-+			      struct iommu_iotlb_gather *iotlb_gather);
++	int (*map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
++			 phys_addr_t paddr, dma_addr_t len, unsigned int prot,
++			 gfp_t gfp, size_t *mapped);
 +
  	/**
- 	 * @set_dirty: Make the iova write dirty
+ 	 * @unmap_range: Make a range of IOVA empty/not present
  	 * @iommu_table: Table to manipulate
-@@ -198,10 +228,6 @@ struct pt_iommu_cfg {
- 				       unsigned long iova, phys_addr_t paddr,  \
- 				       size_t pgsize, size_t pgcount,          \
- 				       int prot, gfp_t gfp, size_t *mapped);   \
--	size_t pt_iommu_##fmt##_unmap_pages(                                   \
--		struct iommu_domain *domain, unsigned long iova,               \
--		size_t pgsize, size_t pgcount,                                 \
--		struct iommu_iotlb_gather *iotlb_gather);                      \
+@@ -224,10 +251,6 @@ struct pt_iommu_cfg {
+ #define IOMMU_PROTOTYPES(fmt)                                                  \
+ 	phys_addr_t pt_iommu_##fmt##_iova_to_phys(struct iommu_domain *domain, \
+ 						  dma_addr_t iova);            \
+-	int pt_iommu_##fmt##_map_pages(struct iommu_domain *domain,            \
+-				       unsigned long iova, phys_addr_t paddr,  \
+-				       size_t pgsize, size_t pgcount,          \
+-				       int prot, gfp_t gfp, size_t *mapped);   \
  	int pt_iommu_##fmt##_read_and_clear_dirty(                             \
  		struct iommu_domain *domain, unsigned long iova, size_t size,  \
  		unsigned long flags, struct iommu_dirty_bitmap *dirty);        \
-@@ -223,8 +249,7 @@ struct pt_iommu_cfg {
+@@ -248,8 +271,7 @@ struct pt_iommu_cfg {
+  * iommu_pt
   */
  #define IOMMU_PT_DOMAIN_OPS(fmt)                        \
- 	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys, \
--	.map_pages = &pt_iommu_##fmt##_map_pages,       \
--	.unmap_pages = &pt_iommu_##fmt##_unmap_pages
-+	.map_pages = &pt_iommu_##fmt##_map_pages
+-	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys, \
+-	.map_pages = &pt_iommu_##fmt##_map_pages
++	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys
  #define IOMMU_PT_DIRTY_OPS(fmt) \
  	.read_and_clear_dirty = &pt_iommu_##fmt##_read_and_clear_dirty
  
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 555597b54083c..563d0f104114b 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -223,6 +223,7 @@ enum iommu_domain_cookie_type {
- struct iommu_domain {
- 	unsigned type;
- 	enum iommu_domain_cookie_type cookie_type;
-+	bool is_iommupt;
- 	const struct iommu_domain_ops *ops;
- 	const struct iommu_dirty_ops *dirty_ops;
- 	const struct iommu_ops *owner; /* Whose domain_alloc we came from */
 -- 
 2.53.0
 
