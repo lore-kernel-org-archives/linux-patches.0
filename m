@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3112C15AC;
-	Thu, 28 May 2026 20:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D29223328;
+	Thu, 28 May 2026 20:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000412; cv=none; b=R8QxPa7PBKzzjFB/aN/botoYzddSbgNOF1uH88INeUFCSk1Mrxb+3rmL68K1369pmCDaBc0yXwA3ZqLAxzedDSUqSez2e6hBqy94TJUZr2ywhdC2PIfQIIPIvu9BTSoDRK/iTLeOtIydcj42s6BSKujwUYfT0BG6ZUaz1/dbT5w=
+	t=1780000414; cv=none; b=QKtlqcxnOu/Q956yYPZVWvq/d/H5++ZRK3Suh54kadzscpNDcPLUMs6Jkz4fO00STmQljsX8/wZZFCiJP96XUfrX/2qhzP0ScJdGxjTeLlvb4CVJv6SNtzWhpJlzRZiSu9Sd3J0LcsDJO6tSs7GxPLTYROwM2K/Y1qshpQEdm1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000412; c=relaxed/simple;
-	bh=iAB3NO0zk1Jyz/6+g0mEJ4bhn/sZnibdxwME8yYbAXc=;
+	s=arc-20240116; t=1780000414; c=relaxed/simple;
+	bh=MRyGqomhweGIY68ABxui6jcEbmloSeTQDATHMseNmYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGs0zIL2Y5alaRBNQpjQxWI9C2Fq7gUqm8P42lo2XuVGD39ZBNLMVg4k2JFg+w1tQ3gov06Eip0MdPKW87IBIEcRGJEVF88hr9+kddH1Obi50DaOMtzql17imHnv81LrJqyF1gCg4x7M9S5jp96Cbp0MsOH6aWA/+x3Ed3jV/fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JT0p3got; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LlHDe2SnWoMlWeCT6IAzqf3XOCrdy4MmsQady/gD7Z7+uAmdkYVwP0gMsHGW82u3wYlrAAwHrv20VTBXrDQ4LGcitbg6IFhdO5QPLZxEplb4BT10I/B7/R8h7T+zk4wTdT17NV9ksUCtM6LYQ+sCLdS/G2OvN2izpa7G8V4HKSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAlWK6wN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JT0p3got"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A8E1F00ACF;
-	Thu, 28 May 2026 20:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAlWK6wN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E771F000E9;
+	Thu, 28 May 2026 20:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000410;
-	bh=/3AQhB3tqfXYF2URNfd49+zbNGdvFt27JYdLT4IxXwg=;
+	s=korg; t=1780000413;
+	bh=pSOWgaFNMUtAhCmU+TQ5EqhUxs+KiZJg4R6aBsjTfrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JT0p3got5FWp/ETGDuySD9KAAxXLWezlKOsV0MJd6ihp9F+hszhPVp4tZHt7T6oHC
-	 XICGrGhZdU3F+X71FKte5UMY7vmfun0DbmJVHEuAdzcATPfafcppJzhH6foqFXsbiA
-	 r3gqJ4uz9uB90lWtuhRSX0yVTyk/K0diDS4g4b3A=
+	b=LAlWK6wN+Ho/2S8prhMGGRKD8oDWhn2ZT+28muvXfcjtYVw9JtVN3uGDRZ/WEOMyY
+	 Ketc6pXKr0JSz91qimtIX5zbksve2pcf9M2NzDwBkJ0ntmvQiIkz1YfgNP0ijt/msU
+	 +gTToX9W/vF4v/5wbWktF+qQL6MNrWWl2yGRyy6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Gyokhan Kochmarla <gyokhan@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/272] x86/fgraph: Fix return_to_handler regs.rsp value
-Date: Thu, 28 May 2026 21:46:49 +0200
-Message-ID: <20260528194630.368142111@linuxfoundation.org>
+Subject: [PATCH 6.12 036/272] iommu/vt-d: Draining PRQ in sva unbind path when FPD bit set
+Date: Thu, 28 May 2026 21:46:50 +0200
+Message-ID: <20260528194630.395140168@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,65 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 8bc11700e0d23d4fdb7d8d5a73b2e95de427cabc upstream.
+commit cf08ca81d08a04b3b304e8fb4e052f323a09783d upstream.
 
-The previous change (Fixes commit) messed up the rsp register value,
-which is wrong because it's already adjusted with FRAME_SIZE, we need
-the original rsp value.
+When a device uses a PASID for SVA (Shared Virtual Address), it's possible
+that the PASID entry is marked as non-present and FPD bit set before the
+device flushes all ongoing DMA requests and removes the SVA domain. This
+can occur when an exception happens and the process terminates before the
+device driver stops DMA and calls the iommu driver to unbind the PASID.
 
-This change does not affect fprobe current kernel unwind, the !perf_hw_regs
-path perf_callchain_kernel:
+There's no need to drain the PRQ in the mm release path. Instead, the PRQ
+will be drained in the SVA unbind path. But in such case,
+intel_pasid_tear_down_entry() only checks the presence of the pasid entry
+and returns directly.
 
-        if (perf_hw_regs(regs)) {
-                if (perf_callchain_store(entry, regs->ip))
-                        return;
-                unwind_start(&state, current, regs, NULL);
-        } else {
-                unwind_start(&state, current, NULL, (void *)regs->sp);
-        }
+Add the code to clear the FPD bit and drain the PRQ.
 
-which uses pt_regs.sp as first_frame boundary (FRAME_SIZE shift makes
-no difference, unwind stil stops at the right frame).
-
-This change fixes the other path when we want to unwind directly from
-pt_regs sp/fp/ip state, which is coming in following change.
-
-Fixes: 20a0bc10272f ("x86/fgraph,bpf: Fix stack ORC unwind from kprobe_multi return probe")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/bpf/20260126211837.472802-2-jolsa@kernel.org
+Fixes: c43e1ccdebf2 ("iommu/vt-d: Drain PRQs when domain removed from RID")
+Suggested-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20241217024240.139615-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/ftrace_64.S | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/pasid.c | 22 +++++++++++++++++++++-
+ drivers/iommu/intel/pasid.h |  6 ++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
-index 8a3cff618692c..143fc62bf6f88 100644
---- a/arch/x86/kernel/ftrace_64.S
-+++ b/arch/x86/kernel/ftrace_64.S
-@@ -349,6 +349,9 @@ SYM_CODE_START(return_to_handler)
- 	UNWIND_HINT_UNDEFINED
- 	ANNOTATE_NOENDBR
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 3d1d43675bf22..74be6b547fc0c 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -245,11 +245,31 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
  
-+	/* Store original rsp for pt_regs.sp value. */
-+	movq %rsp, %rdi
+ 	spin_lock(&iommu->lock);
+ 	pte = intel_pasid_get_entry(dev, pasid);
+-	if (WARN_ON(!pte) || !pasid_pte_is_present(pte)) {
++	if (WARN_ON(!pte)) {
+ 		spin_unlock(&iommu->lock);
+ 		return;
+ 	}
+ 
++	if (!pasid_pte_is_present(pte)) {
++		if (!pasid_pte_is_fault_disabled(pte)) {
++			WARN_ON(READ_ONCE(pte->val[0]) != 0);
++			spin_unlock(&iommu->lock);
++			return;
++		}
 +
- 	/* Restore return_to_handler value that got eaten by previous ret instruction. */
- 	subq $8, %rsp
- 	UNWIND_HINT_FUNC
-@@ -359,7 +362,7 @@ SYM_CODE_START(return_to_handler)
- 	movq %rax, RAX(%rsp)
- 	movq %rdx, RDX(%rsp)
- 	movq %rbp, RBP(%rsp)
--	movq %rsp, RSP(%rsp)
-+	movq %rdi, RSP(%rsp)
- 	movq %rsp, %rdi
++		/*
++		 * When a PASID is used for SVA by a device, it's possible
++		 * that the pasid entry is non-present with the Fault
++		 * Processing Disabled bit set. Clear the pasid entry and
++		 * drain the PRQ for the PASID before return.
++		 */
++		pasid_clear_entry(pte);
++		spin_unlock(&iommu->lock);
++		intel_iommu_drain_pasid_prq(dev, pasid);
++
++		return;
++	}
++
+ 	did = pasid_get_domain_id(pte);
+ 	pgtt = pasid_pte_get_pgtt(pte);
+ 	pasid_clear_present(pte);
+diff --git a/drivers/iommu/intel/pasid.h b/drivers/iommu/intel/pasid.h
+index 55cad7bfa294e..8ffb01163f0e6 100644
+--- a/drivers/iommu/intel/pasid.h
++++ b/drivers/iommu/intel/pasid.h
+@@ -80,6 +80,12 @@ static inline bool pasid_pte_is_present(struct pasid_entry *pte)
+ 	return READ_ONCE(pte->val[0]) & PASID_PTE_PRESENT;
+ }
  
- 	call ftrace_return_to_handler
++/* Get FPD(Fault Processing Disable) bit of a PASID table entry */
++static inline bool pasid_pte_is_fault_disabled(struct pasid_entry *pte)
++{
++	return READ_ONCE(pte->val[0]) & PASID_PTE_FPD;
++}
++
+ /* Get PGTT field of a PASID table entry */
+ static inline u16 pasid_pte_get_pgtt(struct pasid_entry *pte)
+ {
 -- 
 2.53.0
 
