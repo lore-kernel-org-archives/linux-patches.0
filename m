@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110E92F1FEC;
-	Thu, 28 May 2026 20:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75DF3346BE;
+	Thu, 28 May 2026 20:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000550; cv=none; b=qyadsVDnoZSrRvjPeVB/NtjHRT+IcZo7ZiDtLZdwq6cXG1rYoBCIcjgPAg6NNntNH5IuWiVtx3WtGJ9+EaHukXXN1OVDnOc7MpcifzgwnW29s3C4SeG1zw7PXqEEfc2A5SG+gVTbmB9CEBqPaGZEqOwyXCJwwuphMjHJj91QxyI=
+	t=1780000552; cv=none; b=LN/cJ5P05THoqLM4rlLdbHbyCDxWusGvRi+FncNILeaCK50kbLRQ0WoyfETmgfCbOLkLJLes4MMF4w9N7KpL96bsO1gEbaruzmufImQnUAL/38J3yGX3SivtIWvvl8kfOHrnlc+Zmi7NWwveAjHKFqnmC383URhHRrIMx70YAHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000550; c=relaxed/simple;
-	bh=rttEHrBuV92TtpQKgZd6YHO+nuoLcgFALavlp74ouyg=;
+	s=arc-20240116; t=1780000552; c=relaxed/simple;
+	bh=lRG3ngZG/Ktra2ezqWHZ1mhR/z15yHRLhr5cgthADXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAOZuk9txFUdrI/kkCWWpubSdMJfpiKdTnFSATkycDI4kER/cMwKf2g4r6LjeQyGsw29lL3pkgR0qerLWWKJyGngi40YnbXqESPhk67g5hQfoPXEjHveljMvyHSk3/o1x92+uC9VpSdeey82KgqPOZFScLis/yprosC9Yq8zP6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNIXjpGa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H1CjC6EayolgqQGSJ1RxX3a3vNaY0A2UjU66y/jrv2cbcxsFKU+Arip5x9PdY1pvZ+iAhcQ0xJ7BsVcsNDZp+Kats6o1+EALMeXqHSv6NqL2EECTjqzeEn+cuI25uyBoU6EmwZ5MoFUZf6N0lJ0muSp80yQx+s7Nz/GpRRGWssg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvPB0gfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNIXjpGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD761F000E9;
-	Thu, 28 May 2026 20:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvPB0gfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411671F00A3A;
+	Thu, 28 May 2026 20:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000549;
-	bh=XqtnsAbL1sF5Q0pWSj6aMKUZljp8OHlf/fjPl73zL1k=;
+	s=korg; t=1780000551;
+	bh=oojyrmjSb9hr31HOW+VH/vh8J1rbJti+S06ftYJMS3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNIXjpGatUk84KhSmM375dgBeKpphSzgyBpyfUirr/DoDuQHv32Cw3DMKpYXNx59F
-	 672Yknyf2FxGmvRwR21gzGJjwqLVub8246k1n55GSAEyqifFKTpoTVRKQNIGWTKVfG
-	 p87aZY/uqRAofEzLHKlchIHm57kyigbDPVbM9SR8=
+	b=NvPB0gfnXkOAn5FKMjyFmqMeczfUECfArXoX4eP7dPoplUhnOT+8cUAXcFJ6bF47W
+	 E941i3l/k5gf3ZVXrc5Sswxw8SQwyC532GE8qimnGnvj6vPn/4RznTW5SLsitoZdfg
+	 kEhJZTcYeiZVDL6qpi6xr+yBabsKfrK/eqSoUOAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 083/272] ring-buffer: Fix reporting of missed events in iterator
-Date: Thu, 28 May 2026 21:47:37 +0200
-Message-ID: <20260528194631.702583912@linuxfoundation.org>
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 084/272] ipv6: ioam: add NULL check for idev in ipv6_hop_ioam()
+Date: Thu, 28 May 2026 21:47:38 +0200
+Message-ID: <20260528194631.731510147@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,72 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-commit a254b6d13b0edd6272926674d2afc46d46e496b7 upstream.
+commit d4ea0dfd75011b78cebf3808f98ac4c4f51a6fb9 upstream.
 
-When tracing is active while reading the trace file, if the iterator
-reading the buffer detects that the writer has passed the iterator head,
-it will reset and set a "missed events" flag. This flag is passed to the
-output processing to show the user that events were missed:
+Reported by Sashiko:
 
-  CPU:4 [LOST EVENTS]
+The function ipv6_hop_ioam() accesses
+__in6_dev_get(skb->dev)->cnf.ioam6_enabled without validating the returned
+idev pointer. Because addrconf_ifdown() can concurrently clear dev->ip6_ptr
+via RCU, __in6_dev_get() can return NULL during interface teardown, which
+could cause a NULL pointer dereference when processing an IOAM Hop-by-Hop
+option.
 
-The problem is that the flag is reset after it is checked in
-ring_buffer_iter_dropped(). But the "trace" file iterates over all the CPU
-ring buffers and it will check if they are dropped when figuring out which
-buffer to print next. This prematurely clears the missed_events flag if
-the CPU buffer with the missed events is not the one that is printed next.
+Let's add a check and use SKB_DROP_REASON_IPV6DISABLED accordingly.
 
-On the iteration where the CPU buffer with the missed events is printed,
-the check if it had missed events would return false and the output does
-not show that events were missed.
-
-Do not reset the missed_events flag when checking if there were missed
-events, but instead clear it when moving the iterator head to the next
-event.
-
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
 Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260520220801.4fd09d13@fedora
-Fixes: c9b7a4a72ff64 ("ring-buffer/tracing: Have iterator acknowledge dropped events")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260517183059.29140-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/ipv6/exthdrs.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5120,6 +5120,7 @@ static void rb_iter_reset(struct ring_bu
- 	iter->head_page = cpu_buffer->reader_page;
- 	iter->head = cpu_buffer->reader_page->read;
- 	iter->next_event = iter->head;
-+	iter->missed_events = 0;
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -912,16 +912,27 @@ static bool ipv6_hop_ra(struct sk_buff *
  
- 	iter->cache_reader_page = iter->head_page;
- 	iter->cache_read = cpu_buffer->read;
-@@ -5735,10 +5736,7 @@ ring_buffer_peek(struct trace_buffer *bu
-  */
- bool ring_buffer_iter_dropped(struct ring_buffer_iter *iter)
+ static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
  {
--	bool ret = iter->missed_events != 0;
--
--	iter->missed_events = 0;
--	return ret;
-+	return iter->missed_events != 0;
++	enum skb_drop_reason drop_reason;
+ 	struct ioam6_trace_hdr *trace;
+ 	struct ioam6_namespace *ns;
++	struct inet6_dev *idev;
+ 	struct ioam6_hdr *hdr;
+ 
++	drop_reason = SKB_DROP_REASON_IP_INHDR;
++
+ 	/* Bad alignment (must be 4n-aligned) */
+ 	if (optoff & 3)
+ 		goto drop;
+ 
++	/* Does the device still have IPv6 configuration? */
++	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		drop_reason = SKB_DROP_REASON_IPV6DISABLED;
++		goto drop;
++	}
++
+ 	/* Ignore if IOAM is not enabled on ingress */
+-	if (!READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_enabled))
++	if (!READ_ONCE(idev->cnf.ioam6_enabled))
+ 		goto ignore;
+ 
+ 	/* Truncated Option header */
+@@ -974,7 +985,7 @@ ignore:
+ 	return true;
+ 
+ drop:
+-	kfree_skb_reason(skb, SKB_DROP_REASON_IP_INHDR);
++	kfree_skb_reason(skb, drop_reason);
+ 	return false;
  }
- EXPORT_SYMBOL_GPL(ring_buffer_iter_dropped);
  
-@@ -5900,7 +5898,7 @@ void ring_buffer_iter_advance(struct rin
- 	unsigned long flags;
- 
- 	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
--
-+	iter->missed_events = 0;
- 	rb_advance_iter(iter);
- 
- 	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
 
 
