@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8022023394D;
-	Thu, 28 May 2026 20:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8DD329396;
+	Thu, 28 May 2026 20:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001160; cv=none; b=oGV/qJe3xxJNiflZmfG5uxpJGPPEx0uiGlS7xkXf+BFaWmg5I+PC0nThxPpJe/owH2ydK+KMdKNJJwtGZlscFcwrlQN8U5d4nLkJMyRErNvxmTctVpj/ivh70DwCru6ukUToLiS/iXSMr08rN3YX/0d3lrwsINbOfL87Hxlhfp8=
+	t=1780001163; cv=none; b=Lfof4QOe7XHV3jlYPwa2mDczsc8UA9KzId/nZWIl4eonBuFXyHqUQxykEWvHUp9UqKbmJnUbe0AWq0JAu0qlu9w5vEUs91vZXFIPUDqbNcAvRWbLbDYq5s1lqdez6E1kewmqjH0gsVGWo4SI4QZcZpBRuBajwAVbF74dDX7q48Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001160; c=relaxed/simple;
-	bh=447xHg9bm5DCjAjVELZBF2GcwWPg/7hukhqJg+jyAho=;
+	s=arc-20240116; t=1780001163; c=relaxed/simple;
+	bh=+pnl8gWNipPDj94bFopiT+L0L8WbiYMiZRRgJVRwQLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBuKQ9S0J9VN8JQJnvo5GlWcHQRjCBxtX32gq5NCwETXTHBbDubCM3uJGJeS77VioxVUqkP52Hu5LNxjs0YmbiMX8Z0sbty9Boy48BEmZRnp4IgbdjBIMyPXO+XnqyRKe3Y7SQ3AnXDUU3a2+q8+Tu0jq24COPKUnp7QNpz3Mp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCxp6P0d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XsEpB7JacxjfavHO8Ydj4Sy9abyS5RgCnDHiyPbN/Ijus2eTZQBfuOHuWyb/uCTpdJ2rEwaFbGNW3Gdj3fs0369vKDcs9SvAhRrqAcSnpFToM+gy0kAYWRSTHSPjdMwxqV5/09I7/vLEvWuToPc7zzJffzqKvnC/3/a77vdLWQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUhsjvLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCxp6P0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C651F000E9;
-	Thu, 28 May 2026 20:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUhsjvLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8508A1F000E9;
+	Thu, 28 May 2026 20:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001159;
-	bh=7OhEVpfkNbBpg85BrY2owl7bkONjA6TH947zZ6rUkH0=;
+	s=korg; t=1780001162;
+	bh=ijH5aBh08Ap4bop8xV0c9XVlkVmxiBXPkOCnSuUciIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCxp6P0dkinNyurVpz06EVMDBc49tjiHUFcY9mwb1zV2+MgR1CPrkzvrREZOvF9UQ
-	 Tb6reUvvBmOM3JqmiQGAobclow9DD+a1Z/+2F/BgpJDQuyJTcrrKxFRwkwa3kOQorz
-	 lbbot0vAy8mORL3Lv/r7bFL7mA5n4DA7Tpj3li+g=
+	b=RUhsjvLrWqN6k3h5qLAdcxwaxQ7j7yFOwG+LyOFBPyCUWKFeEm8lSSIAi6J93BAtd
+	 KT/XdCFHEiE8nqWZgMEXe1VlnEAW1ixFH6JlynF9VNPTQUIMN+UK3bDneYe3LfZJqp
+	 gEcCJSeeLxnmfo69HTWoyWplpQshVI4sEuogo7p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/186] s390/debug: Reject zero-length input before trimming a newline
-Date: Thu, 28 May 2026 21:48:08 +0200
-Message-ID: <20260528194929.175225883@linuxfoundation.org>
+Subject: [PATCH 6.6 009/186] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Thu, 28 May 2026 21:48:09 +0200
+Message-ID: <20260528194929.202881705@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -53,47 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit c366a7b5ed7564e41345c380285bd3f6cb98971b ]
+[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
 
-debug_get_user_string() copies the userspace buffer into a newly
-allocated NUL-terminated buffer and then unconditionally looks at
-buffer[user_len - 1] to strip a trailing newline.
+When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
+station exists but not whether it is actually a TDLS station. This
+allows the operation to proceed for non-TDLS stations, causing
+unintended side effects like modifying channel context and HT
+protection before failing.
 
-A zero-length write reaches this helper unchanged, so the newline trim
-reads before the start of the allocated buffer.
+Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
+any side effects occur, to ensure the operation is only allowed for
+actual TDLS peers.
 
-Reject empty writes before accessing the last input byte.
-
-Fixes: 66a464dbc8e0 ("[PATCH] s390: debug feature changes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260417073530.96002-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
+Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index cbe209fe0df15..893c35aeb746a 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -1258,6 +1258,9 @@ static inline char *debug_get_user_string(const char __user *user_buf,
- {
- 	char *buffer;
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index 0fd353fec9fc6..c3622f779d120 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1481,7 +1481,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
  
-+	if (!user_len)
-+		return ERR_PTR(-EINVAL);
-+
- 	buffer = kmalloc(user_len + 1, GFP_KERNEL);
- 	if (!buffer)
- 		return ERR_PTR(-ENOMEM);
+ 		mutex_lock(&local->sta_mtx);
+ 		sta = sta_info_get(sdata, peer);
+-		if (!sta) {
++		if (!sta || !sta->sta.tdls) {
+ 			mutex_unlock(&local->sta_mtx);
+ 			ret = -ENOLINK;
+ 			break;
 -- 
 2.53.0
 
