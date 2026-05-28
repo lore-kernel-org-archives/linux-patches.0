@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3272F1FEF;
-	Thu, 28 May 2026 20:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9BF328B7B;
+	Thu, 28 May 2026 20:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001393; cv=none; b=eCqtCQEObWxE/eA0XpQkuQxdiPKNCA/YjJaZToe+aQ47OBTJgQHmne4nWuyj9SHHroXkWrWzguWoJdXF/NF/pKJcfzyl4TTfUmIIszS45zypHHgNfVKCfYxbOXiiTo4fIDUugp/Pn6cGhTiw2/0uFZ4c7lfeAKTWk+vpPUJaTTQ=
+	t=1780001394; cv=none; b=SG0GLumIWs3lsURjhAkf0ILwI8wMpuCcsdoR0qHtT39t6/542K959zOL8ylS2DuiXC0WPc/WReIsu3VWp+i6uzyjLuWvBjLvrOz1Y9cuXg5EeqBrMCHwY1kOyoHGl3ias9VTf1W3m1SoZ+t1OfA9IwAo8jUsJJCz7vXmr0Nr0Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001393; c=relaxed/simple;
-	bh=Kbbd6kkT8U0qG7Hlte6Avu9qetA3Z12YOreuWe2GjWw=;
+	s=arc-20240116; t=1780001394; c=relaxed/simple;
+	bh=GhO339xVaNlXsy0cnxKlu/GzADeKmkymFjL2bXIvTi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MloNMk5UW+I38fTxk59U5GdfCfnUgP1fYyh019yhfTz9GCGORrYlzkRMUy4Q9S5tb5kvH8/k6mafuGE4ZKE0bZ4bPUSiTBqNgKhBAvlY9dzbe+6JotrDtcKsoJzttgOqlXt6oeAt7Z44H0YJs2FoX3FObm6H4ntD0hfbhp9rKwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8Yloa+L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zat82tc5NPLtDJc/Ju+YqwUfpep7Csh75r5fpjSBiv6uROAr551BdP32SBxoiC7/Vj7gDeGVzo8V6v22ZkveXoxUh1X5omsLZ3PFC3dOThtMfIEkAVftNzIPXtAvMYahouRe5wX/Dwa0hKWfBSFUj2wgaWnu2rp/rhA/bda+ekQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vw5C5cKf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8Yloa+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474C41F000E9;
-	Thu, 28 May 2026 20:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vw5C5cKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1161B1F00A3A;
+	Thu, 28 May 2026 20:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001389;
-	bh=L37ajHslYT54G1ivTa0Q4ioQFY3IfupaM1Yu/y5IApU=;
+	s=korg; t=1780001392;
+	bh=HTvqsQEVDETLFu7jjdfAHxkvs0TnJKBZh//8F8uTcvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8Yloa+LEzHdtiGK6gGQRsf6DY8rcUJQbkEzaXP4JhjX7vKXN23Cee010BqJ/Rs5I
-	 Z8NoQ+835cq3BEUjQ/4lVbr5KiqUdwRaPYIAydmzABs8+0JcY7NRI7kKj5hBUYJviK
-	 48wOo0HzlOIrcUEEYtskIC5lhXjIIbpGcpgsIux0=
+	b=Vw5C5cKf/Hu70FdZ2Hqv3Ly/pxpjBTLQ+HZz3tS1IWt7o4918wnxELNqzVjh6Xs17
+	 C0pradOEa++23TJ3HKRmyQjQzQoNG2s1ezPPFl0Hcc9FCi7QZ9fjAsP7SCm8sFMEsk
+	 jBQrY1cr27fluK+1AQzvidaND4746l0L1fcylYkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ivan Lipski <ivan.lipski@amd.com>,
 	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 073/186] drm/amd/display: Fix integer overflow in bios_get_image()
-Date: Thu, 28 May 2026 21:49:13 +0200
-Message-ID: <20260528194930.911901807@linuxfoundation.org>
+Subject: [PATCH 6.6 074/186] drm/amd/display: Validate GPIO pin LUT table size before iterating
+Date: Thu, 28 May 2026 21:49:14 +0200
+Message-ID: <20260528194930.937479851@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -55,54 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Harry Wentland <harry.wentland@amd.com>
 
-commit cd86529ec61474a38c3837fb7823790a7c3f8cce upstream.
+commit 86d2b20644b11d21fe52c596e6e922b4590a3e3f upstream.
 
 [Why&How]
-The bounds check in bios_get_image() computes 'offset + size' using
-unsigned 32-bit arithmetic before comparing against bios_size. If a
-VBIOS image contains a near-UINT32_MAX offset the addition wraps to a
-small value, the comparison passes, and the function returns a wild
-pointer past the VBIOS mapping.
+The GPIO pin table parsers in get_gpio_i2c_info() and
+bios_parser_get_gpio_pin_info() derive an element count from the VBIOS
+table_header.structuresize field, then iterate over gpio_pin[] entries.
+However, GET_IMAGE() only validates that the table header itself fits
+within the BIOS image. If the VBIOS reports a structuresize larger than
+the actual mapped data, the loop reads past the end of the BIOS image,
+causing an out-of-bounds read.
 
-Additionally, the comparison uses '<' (strict), which incorrectly
-rejects the valid exact-fit case where offset + size == bios_size.
+Fix this by calling bios_get_image() to validate that the full claimed
+structuresize is accessible within the BIOS image before entering the
+loop in both functions.
 
-Fix both issues by restructuring the check to avoid the addition
-entirely: first reject if offset alone exceeds bios_size, then check
-size against the remaining space (bios_size - offset). This eliminates
-the overflow and correctly permits exact-fit accesses.
-
-Assisted-by: GitHub Copilot:claude-opus-4.6
+Assisted-by: GitHub Copilot:claude-opus-4-6
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
 Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d40fb392af659c4a02b560319f226842f6ec1a95)
+(cherry picked from commit ba5e95b43b773ae1bf1f66ee6b31eb774e65afe3)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
-@@ -37,10 +37,13 @@ uint8_t *bios_get_image(struct dc_bios *
- 	uint32_t offset,
- 	uint32_t size)
- {
--	if (bp->bios && offset + size < bp->bios_size)
--		return bp->bios + offset;
--	else
-+	if (!bp->bios)
- 		return NULL;
-+
-+	if (offset > bp->bios_size || size > bp->bios_size - offset)
-+		return NULL;
-+
-+	return bp->bios + offset;
- }
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -488,6 +488,10 @@ static enum bp_result get_gpio_i2c_info(
+ 			- sizeof(struct atom_common_table_header))
+ 				/ sizeof(struct atom_gpio_pin_assignment);
  
- #include "reg_helper.h"
++	if (!bios_get_image(&bp->base, DATA_TABLES(gpio_pin_lut),
++			    le16_to_cpu(header->table_header.structuresize)))
++		return BP_RESULT_BADBIOSTABLE;
++
+ 	pin = (struct atom_gpio_pin_assignment *) header->gpio_pin;
+ 
+ 	for (table_index = 0; table_index < count; table_index++) {
+@@ -677,6 +681,11 @@ static enum bp_result bios_parser_get_gp
+ 	count = (le16_to_cpu(header->table_header.structuresize)
+ 			- sizeof(struct atom_common_table_header))
+ 				/ sizeof(struct atom_gpio_pin_assignment);
++
++	if (!bios_get_image(&bp->base, DATA_TABLES(gpio_pin_lut),
++			    le16_to_cpu(header->table_header.structuresize)))
++		return BP_RESULT_BADBIOSTABLE;
++
+ 	for (i = 0; i < count; ++i) {
+ 		if (header->gpio_pin[i].gpio_id != gpio_id)
+ 			continue;
 
 
