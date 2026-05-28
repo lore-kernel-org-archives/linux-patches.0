@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5E7259CBD;
-	Thu, 28 May 2026 20:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000D3352012;
+	Thu, 28 May 2026 20:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000566; cv=none; b=M3v/JTb+yGlVaRgKN8Rvs86q68LO9SeeK3MHU+JDA7X0M8oiKBwtxsoZ/ZDD4KxQS3OmInJgngFldVC9sNEh2bPrAJBNr7zvHgQTtsa07Su+bCCpOPY7kD8wvCcSfaVj3tYfGnnKLfFxjn8I264BihVAipYYnRo4bt5HZpJIz6g=
+	t=1780000569; cv=none; b=Kyv4md921hCaVOAYmZZMvWc+c/M3LXN+LwLid4FBgsGJ0wCpCV0lDySwvAXm7phv4psPYWV54hqzjztdhMZlLmljlqaQNv7Oism17atwU4W3NlZVGPHkWqx+8lcSF3jh5AvxlHmPh1pKGBWuod9woGadvnf7Ro8I6FJmNKYunRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000566; c=relaxed/simple;
-	bh=XaT+dhzWZh2gwHV0npTx6Po/V55a4Je3ZjkDn9Tzm8g=;
+	s=arc-20240116; t=1780000569; c=relaxed/simple;
+	bh=lwgj2bBMTnycW42rPv5tik3uz08YmSIWb+P1Zb5xihg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3VxOxHf53GjG3cWmkOjaNJlZnD2pmzYrjOyjH9rZ6craJsDGmod76A8yhP267fXaBFthfEoQU4ciLvIQFsrHOMtEOTazXH0XE316XjkNqhN76xslAD3VYor7wrrB+9wVJQ78ut6CdpQiZOHjyFWK/tFfcao7kjqQ2Eq4pNylCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK00JEzd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eCbx9dPusG0CCjWHm+cpVcyXPpWw9/dGON1sUQWsUkS7Xd5VUojyeLL/iNChxbPMUn2Bp9njuVrp+pBochau02qs3Ie5Om+ojnR8+6tR5OeTdRPgJcBU0Ox7tPsUE3cCbPqf3ctTdJWu0X5NyxNUsqoaTPmhKRlG/gzIaV2Oz44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhznIctl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK00JEzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462121F000E9;
-	Thu, 28 May 2026 20:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhznIctl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AE71F000E9;
+	Thu, 28 May 2026 20:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000565;
-	bh=erEd+LQmUhezxPXbEGTTm506Kv0nMxtue+cp5ZzAVuQ=;
+	s=korg; t=1780000568;
+	bh=0xsvj88V8+wBiTvYtlvtKyQl1Z+dGdeiFzEZlY6TGdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PK00JEzdVtOaFq7/MXcdI7TnubBQy7xWOrCq5Lyp0c3uhQ7JsagyhtxlYlGSR84PB
-	 tk32CoLZhMV/znyWoBim8S0Y8fvHPu02VwDK2EJ4pcHQynh31NIExlvMVs6p4A8u31
-	 rmHNaEuMk5yldIeHLGgUSSp3u0DKFm4ehDcAeY0g=
+	b=UhznIctlvTxOd+IjR7JxYJ4epGOBIMqv22UerKLoZotfoG/L3+heiTmrzeFUmSeUs
+	 XGfqx63999UxzzKvgAZd4D3GKY8hP2fRS0C6Tlto5BgmMABjG9U9a8FiJFAY81zZSD
+	 off1xoGaC165Lmd+ku6mkfNAFyJqvDVyloRbVdZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 053/272] ALSA: pcm: Dont setup bogus iov_iter for silencing
-Date: Thu, 28 May 2026 21:47:07 +0200
-Message-ID: <20260528194630.869352091@linuxfoundation.org>
+Subject: [PATCH 6.12 054/272] ALSA: asihpi: Fix potential OOB array access at reading cache
+Date: Thu, 28 May 2026 21:47:08 +0200
+Message-ID: <20260528194630.896065196@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit e4d3386b74fba8e01280484b67ee481ece00201e upstream.
+commit 7b7d6572145c1dab2dd9bfb550b188e5f0ff3c3f upstream.
 
-At transition to the iov_iter for PCM data transfer, we blindly
-applied the iov_iter setup also for silencing (i.e. data = NULL), and
-it leads to a calculation of bogus iov_iter.  Fortunately this didn't
-cause troubles on most of architectures but it goes wrong on RISC-V
-now, causing a NULL dereference.
+find_control() to retrieve a cached info accesses the array with the
+given index blindly, which may lead to an OOB array access.
+Add a sanity check for avoiding it.
 
-Handle the NULL data case to treat the silencing in interleaved_copy()
-for addressing the bug above.  noninterleaved_copy() has already the
-NULL data handling, so it doesn't need changes.
-
-Reported-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
-Closes: https://lore.kernel.org/20260515051516.3103036-1-xujiakai24@mails.ucas.ac.cn
-Fixes: cf393babb37a ("ALSA: pcm: Add copy ops with iov_iter")
+Link: https://sashiko.dev/#/patchset/20260511230121.28606-1-rosenp%40gmail.com
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260517165121.31399-1-tiwai@suse.de
+Link: https://patch.msgid.link/20260515085606.242284-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_lib.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/asihpi/hpicmn.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2138,6 +2138,9 @@ static int interleaved_copy(struct snd_p
- 	off = frames_to_bytes(runtime, off);
- 	frames = frames_to_bytes(runtime, frames);
+--- a/sound/pci/asihpi/hpicmn.c
++++ b/sound/pci/asihpi/hpicmn.c
+@@ -276,6 +276,12 @@ static short find_control(u16 control_in
+ 		return 0;
+ 	}
  
-+	if (!data)
-+		return fill_silence(substream, 0, hwoff, NULL, frames);
++	if (control_index >= p_cache->control_count) {
++		HPI_DEBUG_LOG(VERBOSE, "control_index out of bounce %d\n",
++			control_index);
++		return 0;
++	}
 +
- 	return do_transfer(substream, 0, hwoff, data + off, frames, transfer,
- 			   in_kernel);
- }
+ 	*pI = p_cache->p_info[control_index];
+ 	if (!*pI) {
+ 		HPI_DEBUG_LOG(VERBOSE, "Uncached Control %d\n",
 
 
