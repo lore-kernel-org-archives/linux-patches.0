@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656BD3264DF;
-	Thu, 28 May 2026 20:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAF925F7B9;
+	Thu, 28 May 2026 20:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000896; cv=none; b=JIoHZ++tLAalYpj8dd/5QmWbe/NmkGTGg3HoFgHMvc3krSQBYLKbKsIufu+a75JECYUz5h/zEY3VeZ0rzJB8WSDTC/RsGUbp3BxPK4xXI6AObYjQ804oKrWjoUYv7+QtdQRCNcKu1wNPeDggIvTHuPCl9uVaxyPxujOk6uV4NTc=
+	t=1780000899; cv=none; b=siVAUqvi+BAVdalTLahFwXImXZAbDW3kgDguTXCdrnjOkK27lZrais5jrjAyIIR9n0ubwbZ70JqFuuPPldnJGEc09iw+LS9DDaXDh6o/MOOPG3wutaostCudnnzx710FvRNRDf4yGHyOjSkrfjPqugF98p4pQELa9lfJkixFbkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000896; c=relaxed/simple;
-	bh=Lse6Dm2ZGQWm9GDpKsrzgzT5UpFX16NkQlpEUQOc8ks=;
+	s=arc-20240116; t=1780000899; c=relaxed/simple;
+	bh=iN1Mmbxw8vmB40UkSjyzNQDZ2GtzECpgxfgyP0Pbjzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WA9prD1Pim69jaujb3dVkCM1BtetUQ6yZqQHLv0p8IXooZiEbJCgDBv7e7M7Ql9YJ0JJgOSaYPoo2/R/P8DCAQO1Gv49fcGRQ2oyTFsCwzk5pODPh3L0czhdvHEZOSSOALJHIGfdMhKeRMIJG4E/6ZjHm02u5fFBuQOP7ZuVai8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PunF50qM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C1B0gY9hWoGrQqr4tlSvh7kOR5t9Rjhr741myc2I2euvW+QW38BEgqzELCiKxeso/emhaAwyz88v7RxIfbjDwjxT9lVkwymPmPiHX/T9IK/dKFLTZq5+WQ6yU351Gknx9f+mjGIn0LmhbfXYrUdzCnVkHj2BS30z4hBtgyZWwfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8e9uKCQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PunF50qM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886E01F000E9;
-	Thu, 28 May 2026 20:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8e9uKCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A441F000E9;
+	Thu, 28 May 2026 20:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000895;
-	bh=PhguMYpKuIJIHkF3AyVTPZZ9HrUUETmyvfuhEweCUcQ=;
+	s=korg; t=1780000897;
+	bh=VEPO5QtLfRv4XVusUpRRaO018CWE+rPemD5DANGbOSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PunF50qM1T1EjKuCHF2XhbEww+opX4RtF78IPBqlU0ncS5TiIC2IyKCH/SqHsnnFm
-	 NslRPzbG3f2pLHENTF1X4xqaQcQY+2k96BOFR3KM/KBfM4FHuhVXMqRLmXm+3S/Vgk
-	 FCiV8o0GXLJN7O7JSXfD4Hot2EyclQtcdKWP0Uu8=
+	b=n8e9uKCQgLNwK23rAbk3d9pKH20JwWXMmUkquoPPqtUuUG4Hzv2lODY4tYVs+Tzx2
+	 jpMoQzFA6TjmyuxxPuaCuXWv7bCRtcHNHi5+M2PpQvbwNgpNNxc/JhMX7lgsAsdbKi
+	 3wnwo3QQmCf0qmfo7RKSa7WEnQwuVAZHktnweE+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/272] netfilter: ebtables: move to two-stage removal scheme
-Date: Thu, 28 May 2026 21:49:05 +0200
-Message-ID: <20260528194634.107153937@linuxfoundation.org>
+Subject: [PATCH 6.12 172/272] netfilter: ebtables: close dangling table module init race
+Date: Thu, 28 May 2026 21:49:06 +0200
+Message-ID: <20260528194634.133048990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -54,13 +54,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit b7f0544d86d439cb946515d2ef6a0a75e8626710 ]
+[ Upstream commit 92c603fa07bc0d6a17345de3ad7954730b8de44b ]
 
-Like previous patches for x_tables, follow same pattern in ebtables.
-We can't reuse xt helpers: ebt_table struct layout is incompatible.
+sashiko reported for a related patch:
+ In modules like iptable_raw.c, [..], if register_pernet_subsys() fails,
+ the rollback might call kfree(rawtable_ops) before [..]
+ During this window, could a concurrent userspace process find the globally
+ visible template, trigger table_init(), [..]
 
-table->ops assignment is now done while still holding the ebt mutex
-to make sure we never expose partially-filled table struct.
+The table init functions must always register the template last.
+
+Otherwise, set/getsockopt can instantiate a table in a namespace
+while the required pernet ops (contain the destructor) isn't available.
+This change is also required in x_tables, handled in followup change.
 
 Fixes: 87663c39f898 ("netfilter: ebtables: do not hook tables by default")
 Reviewed-by: Tristan Madani <tristan@talencesecurity.com>
@@ -68,179 +74,92 @@ Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtable_broute.c |  2 +-
- net/bridge/netfilter/ebtable_filter.c |  2 +-
- net/bridge/netfilter/ebtable_nat.c    |  2 +-
- net/bridge/netfilter/ebtables.c       | 60 +++++++++++++++++----------
- 4 files changed, 40 insertions(+), 26 deletions(-)
+ net/bridge/netfilter/ebtable_broute.c | 12 +++++-------
+ net/bridge/netfilter/ebtable_filter.c | 12 +++++-------
+ net/bridge/netfilter/ebtable_nat.c    | 10 ++++------
+ 3 files changed, 14 insertions(+), 20 deletions(-)
 
 diff --git a/net/bridge/netfilter/ebtable_broute.c b/net/bridge/netfilter/ebtable_broute.c
-index 7413602195525..e6f9e343b41f1 100644
+index e6f9e343b41f1..f05c79f215ea0 100644
 --- a/net/bridge/netfilter/ebtable_broute.c
 +++ b/net/bridge/netfilter/ebtable_broute.c
-@@ -128,8 +128,8 @@ static int __init ebtable_broute_init(void)
+@@ -112,18 +112,16 @@ static struct pernet_operations broute_net_ops = {
+ 
+ static int __init ebtable_broute_init(void)
+ {
+-	int ret = ebt_register_template(&broute_table, broute_table_init);
++	int ret = register_pernet_subsys(&broute_net_ops);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = register_pernet_subsys(&broute_net_ops);
+-	if (ret) {
+-		ebt_unregister_template(&broute_table);
+-		return ret;
+-	}
++	ret = ebt_register_template(&broute_table, broute_table_init);
++	if (ret)
++		unregister_pernet_subsys(&broute_net_ops);
+ 
+-	return 0;
++	return ret;
+ }
  
  static void __exit ebtable_broute_fini(void)
- {
--	unregister_pernet_subsys(&broute_net_ops);
- 	ebt_unregister_template(&broute_table);
-+	unregister_pernet_subsys(&broute_net_ops);
- }
- 
- module_init(ebtable_broute_init);
 diff --git a/net/bridge/netfilter/ebtable_filter.c b/net/bridge/netfilter/ebtable_filter.c
-index dacd81b12e626..02b6501c15a5e 100644
+index 02b6501c15a5e..0fc03b07e62ae 100644
 --- a/net/bridge/netfilter/ebtable_filter.c
 +++ b/net/bridge/netfilter/ebtable_filter.c
-@@ -109,8 +109,8 @@ static int __init ebtable_filter_init(void)
+@@ -93,18 +93,16 @@ static struct pernet_operations frame_filter_net_ops = {
+ 
+ static int __init ebtable_filter_init(void)
+ {
+-	int ret = ebt_register_template(&frame_filter, frame_filter_table_init);
++	int ret = register_pernet_subsys(&frame_filter_net_ops);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = register_pernet_subsys(&frame_filter_net_ops);
+-	if (ret) {
+-		ebt_unregister_template(&frame_filter);
+-		return ret;
+-	}
++	ret = ebt_register_template(&frame_filter, frame_filter_table_init);
++	if (ret)
++		unregister_pernet_subsys(&frame_filter_net_ops);
+ 
+-	return 0;
++	return ret;
+ }
  
  static void __exit ebtable_filter_fini(void)
- {
--	unregister_pernet_subsys(&frame_filter_net_ops);
- 	ebt_unregister_template(&frame_filter);
-+	unregister_pernet_subsys(&frame_filter_net_ops);
- }
- 
- module_init(ebtable_filter_init);
 diff --git a/net/bridge/netfilter/ebtable_nat.c b/net/bridge/netfilter/ebtable_nat.c
-index 0f2a8c6118d42..9985a82555c41 100644
+index 9985a82555c41..8a10375d89099 100644
 --- a/net/bridge/netfilter/ebtable_nat.c
 +++ b/net/bridge/netfilter/ebtable_nat.c
-@@ -109,8 +109,8 @@ static int __init ebtable_nat_init(void)
+@@ -93,16 +93,14 @@ static struct pernet_operations frame_nat_net_ops = {
  
- static void __exit ebtable_nat_fini(void)
+ static int __init ebtable_nat_init(void)
  {
--	unregister_pernet_subsys(&frame_nat_net_ops);
- 	ebt_unregister_template(&frame_nat);
-+	unregister_pernet_subsys(&frame_nat_net_ops);
+-	int ret = ebt_register_template(&frame_nat, frame_nat_table_init);
++	int ret = register_pernet_subsys(&frame_nat_net_ops);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = register_pernet_subsys(&frame_nat_net_ops);
+-	if (ret) {
+-		ebt_unregister_template(&frame_nat);
+-		return ret;
+-	}
++	ret = ebt_register_template(&frame_nat, frame_nat_table_init);
++	if (ret)
++		unregister_pernet_subsys(&frame_nat_net_ops);
+ 
+ 	return ret;
  }
- 
- module_init(ebtable_nat_init);
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index a461c59ad2859..6240bb2b5b5b7 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -42,6 +42,7 @@
- 
- struct ebt_pernet {
- 	struct list_head tables;
-+	struct list_head dead_tables;
- };
- 
- struct ebt_template {
-@@ -1162,11 +1163,6 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
- 
- static void __ebt_unregister_table(struct net *net, struct ebt_table *table)
- {
--	mutex_lock(&ebt_mutex);
--	list_del(&table->list);
--	mutex_unlock(&ebt_mutex);
--	audit_log_nfcfg(table->name, AF_BRIDGE, table->private->nentries,
--			AUDIT_XT_OP_UNREGISTER, GFP_KERNEL);
- 	EBT_ENTRY_ITERATE(table->private->entries, table->private->entries_size,
- 			  ebt_cleanup_entry, net, NULL);
- 	if (table->private->nentries)
-@@ -1267,13 +1263,15 @@ int ebt_register_table(struct net *net, const struct ebt_table *input_table,
- 	for (i = 0; i < num_ops; i++)
- 		ops[i].priv = table;
- 
--	list_add(&table->list, &ebt_net->tables);
--	mutex_unlock(&ebt_mutex);
--
- 	table->ops = ops;
- 	ret = nf_register_net_hooks(net, ops, num_ops);
--	if (ret)
-+	if (ret) {
-+		synchronize_rcu();
- 		__ebt_unregister_table(net, table);
-+	} else {
-+		list_add(&table->list, &ebt_net->tables);
-+	}
-+	mutex_unlock(&ebt_mutex);
- 
- 	audit_log_nfcfg(repl->name, AF_BRIDGE, repl->nentries,
- 			AUDIT_XT_OP_REGISTER, GFP_KERNEL);
-@@ -1339,7 +1337,7 @@ void ebt_unregister_template(const struct ebt_table *t)
- }
- EXPORT_SYMBOL(ebt_unregister_template);
- 
--static struct ebt_table *__ebt_find_table(struct net *net, const char *name)
-+void ebt_unregister_table_pre_exit(struct net *net, const char *name)
- {
- 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
- 	struct ebt_table *t;
-@@ -1348,30 +1346,36 @@ static struct ebt_table *__ebt_find_table(struct net *net, const char *name)
- 
- 	list_for_each_entry(t, &ebt_net->tables, list) {
- 		if (strcmp(t->name, name) == 0) {
-+			list_move(&t->list, &ebt_net->dead_tables);
- 			mutex_unlock(&ebt_mutex);
--			return t;
-+			nf_unregister_net_hooks(net, t->ops, hweight32(t->valid_hooks));
-+			return;
- 		}
- 	}
- 
- 	mutex_unlock(&ebt_mutex);
--	return NULL;
--}
--
--void ebt_unregister_table_pre_exit(struct net *net, const char *name)
--{
--	struct ebt_table *table = __ebt_find_table(net, name);
--
--	if (table)
--		nf_unregister_net_hooks(net, table->ops, hweight32(table->valid_hooks));
- }
- EXPORT_SYMBOL(ebt_unregister_table_pre_exit);
- 
- void ebt_unregister_table(struct net *net, const char *name)
- {
--	struct ebt_table *table = __ebt_find_table(net, name);
-+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
-+	struct ebt_table *t;
- 
--	if (table)
--		__ebt_unregister_table(net, table);
-+	mutex_lock(&ebt_mutex);
-+
-+	list_for_each_entry(t, &ebt_net->dead_tables, list) {
-+		if (strcmp(t->name, name) == 0) {
-+			list_del(&t->list);
-+			audit_log_nfcfg(t->name, AF_BRIDGE, t->private->nentries,
-+					AUDIT_XT_OP_UNREGISTER, GFP_KERNEL);
-+			__ebt_unregister_table(net, t);
-+			mutex_unlock(&ebt_mutex);
-+			return;
-+		}
-+	}
-+
-+	mutex_unlock(&ebt_mutex);
- }
- 
- /* userspace just supplied us with counters */
-@@ -2556,11 +2560,21 @@ static int __net_init ebt_pernet_init(struct net *net)
- 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
- 
- 	INIT_LIST_HEAD(&ebt_net->tables);
-+	INIT_LIST_HEAD(&ebt_net->dead_tables);
- 	return 0;
- }
- 
-+static void __net_exit ebt_pernet_exit(struct net *net)
-+{
-+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
-+
-+	WARN_ON_ONCE(!list_empty(&ebt_net->tables));
-+	WARN_ON_ONCE(!list_empty(&ebt_net->dead_tables));
-+}
-+
- static struct pernet_operations ebt_net_ops = {
- 	.init = ebt_pernet_init,
-+	.exit = ebt_pernet_exit,
- 	.id   = &ebt_pernet_id,
- 	.size = sizeof(struct ebt_pernet),
- };
 -- 
 2.53.0
 
