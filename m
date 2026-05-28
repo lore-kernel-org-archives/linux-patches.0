@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0009B223328;
-	Thu, 28 May 2026 20:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7C9313550;
+	Thu, 28 May 2026 20:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000370; cv=none; b=jRs/ZnQbZ2iVay3iYXPBQl43telmmmXUj4M3TemvcomWdX8171VmrrohZC8wr+aZVsAEleZRFz+0zJJr5BttqKazBuIf7V8PuJNPlwA9fYQYuRbAChw0v1NTFiPqciEYuUPFAdDQn+Fmwd2fAZgo7SyGN6a5iwARmNPyc8iNYss=
+	t=1780000373; cv=none; b=giNyBCoq7UsrL66Uu/R6UMKIaamf9lZrC9FQ6fwpU1dThBLNg7guDV+yhzGlumvP+miSPFe+/KisFbPF412ejwXp33cfWOqxAIB0cRV4rGCMhFv6ampvKgcb5nGg92lnl94IiY3bGEOFGoj/7vQQIqbCNwoRAwgrF2T1apIeCcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000370; c=relaxed/simple;
-	bh=YzCb2RPdxtlW0xqPGBtvGC53p2CBHBTdGbZ5NysP53A=;
+	s=arc-20240116; t=1780000373; c=relaxed/simple;
+	bh=hDrnCAymPT8Cm8IHv4OZREWdjTkxwJFnqnawzaqvdNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRlDmGKQjVUMZonk/v2VqLowxN6bLGxs+ODYvy6szlWtN+Gxbp7MWLeNv58eQN7bRXGSLYJe279DGsp5uT+yt0D24Tlylrla9j90L3uOroviYiElmyOVsg9/ZaCIzCuRqrzwlTBEv7FPrwBvO7fzdeM5vD+9eoqu0FHhjGCDm6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWwWcvxc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8e4wVfx0vXpXHEkZUnsITTkOlLG+tPrZKfJ9znC4X/kX9mYGqhGC4wS0sHG1ZZurY/xZ2o7ytLE9pH8YkwWkHtG0kALpZPf0qYgrMOeQxFXBq6QA9ZW6DYAm/dz0MWV7AiS2mZrjsZO7w5hJqNwoYaOQF75+AHRvEvoXzWn5R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8DqZkpe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWwWcvxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB221F000E9;
-	Thu, 28 May 2026 20:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8DqZkpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DD61F000E9;
+	Thu, 28 May 2026 20:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000368;
-	bh=p7n4Xu1LdMnr07zhAbXbe+S9v9NpqLef0pNiU4/xp+E=;
+	s=korg; t=1780000371;
+	bh=TNlBM0L7KM1NdqiC0/OWAgbbhfw05xX0ApT32Vd63+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWwWcvxct6TzaWFDaRslbsT4Hbor63STPSqJ7Pbo3tdtoZr4rrQ9WWYvW9b6nVB7M
-	 rS8bbM7af1USmIOf1mCCbIl/CrIBTY+u8EIZerICB+w4uQe8P1BjVXHv9lKFdXMIfn
-	 dbJ+sVAPvKTryug70iM7ZrZuW4t88KJ1n5ib6D48=
+	b=z8DqZkpepOIyGpxb4lvTDz/MObKvt6VnhcReHfYpsfhDaW+qr/3jGZmkReShdP2XI
+	 FyuhqmEEruaTbRHQIrXbxN+wwy3b1B+Gu0l0/byt0inKkyZJ/hnkmVF1QbkMx3l+hG
+	 l9AUgQW9C1PCpYghRomU1xpAomJSPhsxrjzHhDUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Igor Ushakov <sysroot314@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Leon Chen <leonchen.oss@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/272] ksmbd: close durable scavenger races against m_fp_list lookups
-Date: Thu, 28 May 2026 21:46:35 +0200
-Message-ID: <20260528194629.977524549@linuxfoundation.org>
+Subject: [PATCH 6.12 022/272] af_unix: Give up GC if MSG_PEEK intervened.
+Date: Thu, 28 May 2026 21:46:36 +0200
+Message-ID: <20260528194630.006513711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,258 +53,256 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit bf736184d063da1a552ffeff0481813599a182cc ]
+[ Upstream commit e5b31d988a41549037b8d8721a3c3cae893d8670 ]
 
-ksmbd_durable_scavenger() has two related races against any walker
-that iterates f_ci->m_fp_list, including ksmbd_lookup_fd_inode()
-(used by ksmbd_vfs_rename) and the share-mode checks in
-fs/smb/server/smb_common.c.
+Igor Ushakov reported that GC purged the receive queue of
+an alive socket due to a race with MSG_PEEK with a nice repro.
 
-(1) fp->node list-head reuse.  Durable-preserved handles can remain
-linked on f_ci->m_fp_list after session teardown so share-mode checks
-still see them while the handle is reconnectable.  The scavenger
-collected expired handles by adding fp->node to a local
-scavenger_list after removing them from the global durable idr.
-Because fp->node is the same list_head used by m_fp_list,
-list_add(&fp->node, &scavenger_list) overwrites the m_fp_list links
-and corrupts both lists.  CONFIG_DEBUG_LIST can report this on the
-share-mode walk path.
+This is the exact same issue previously fixed by commit
+cbcf01128d0a ("af_unix: fix garbage collect vs MSG_PEEK").
 
-(2) Refcount race against m_fp_list walkers.  The scavenger qualifies
-an expired durable handle with atomic_read(&fp->refcount) > 1 and
-fp->conn under global_ft.lock, removes fp from global_ft, then drops
-global_ft.lock before unlinking fp from m_fp_list and freeing it.
-During that gap fp is still linked on m_fp_list with f_state ==
-FP_INITED.  ksmbd_lookup_fd_inode() under m_lock read calls
-ksmbd_fp_get() (atomic_inc_not_zero on refcount that is still 1) and
-takes a live reference; the scavenger then unlinks and frees fp
-while the holder owns a reference, leading to UAF on the holder's
-subsequent ksmbd_fd_put() and on any field reads performed by a
-concurrent share-mode walker that iterates m_fp_list without taking
-ksmbd_fp_get() (smb_check_perm_dleases-like paths).
+After GC was replaced with the current algorithm, the cited
+commit removed the locking dance in unix_peek_fds() and
+reintroduced the same issue.
 
-Fix both:
+The problem is that MSG_PEEK bumps a file refcount without
+interacting with GC.
 
-  * Stop reusing fp->node as a scavenger-private list node.  Remove
-    one expired handle from global_ft under global_ft.lock, take an
-    explicit transient reference, drop the lock, unlink fp->node
-    from m_fp_list under f_ci->m_lock, then drop both the durable
-    lifetime and transient references with atomic_sub_and_test(2,
-    &fp->refcount).  If the scavenger is the last putter the close
-    runs there; otherwise an in-flight holder that already raced
-    through the m_fp_list lookup owns the final close via its
-    ksmbd_fd_put() path.  The one-at-a-time disposal can rescan the
-    durable idr when multiple handles expire in the same pass, but
-    durable scavenging is a background expiration path and the final
-    full scan recomputes min_timeout before the next wait.
+Consider an SCC containing sk-A and sk-B, where sk-A is
+close()d but can be recv()ed via sk-B.
 
-  * Clear fp->persistent_id inside __ksmbd_remove_durable_fd() right
-    after idr_remove(), so a delayed final close from a holder that
-    snatched fp does not re-issue idr_remove() on a persistent id
-    that idr_alloc_cyclic() in ksmbd_open_durable_fd() may have
-    already handed out to a brand-new durable handle.
+The bad thing happens if sk-A is recv()ed with MSG_PEEK from
+sk-B and sk-B is close()d while GC is checking unix_vertex_dead()
+for sk-A and sk-B.
 
-  * Bypass the per-conn open_files_count decrement in
-    __put_fd_final() when fp is detached from any session table
-    (fp->conn cleared by session_fd_check() at durable preserve --
-    paired with the volatile_id clear at unpublish, so checking
-    fp->conn alone is sufficient).  The walker that owns the final
-    close runs from an unrelated work->conn whose
-    stats.open_files_count never tracked this durable fp; without
-    this guard the holder would underflow that unrelated counter.
+  GC thread                    User thread
+  ---------                    -----------
+  unix_vertex_dead(sk-A)
+  -> true   <------.
+                    \
+                     `------   recv(sk-B, MSG_PEEK)
+              invalidate !!    -> sk-A's file refcount : 1 -> 2
 
-The two races are folded into one patch because patch (1) alone
-cleans up the corrupted list but leaves a deterministic UAF window
-for m_fp_list walkers that the transient-reference and
-persistent_id discipline in (2) close; bisecting onto an
-intermediate state would land on a UAF that pre-patch chaos merely
-made less reproducible.
+                               close(sk-B)
+                               -> sk-B's file refcount : 2 -> 1
+  unix_vertex_dead(sk-B)
+  -> true
 
-Validation:
-  * CONFIG_DEBUG_LIST coverage for the list_head reuse path.
-  * KASAN-enabled direct SMB2 durable-handle coverage that exercised
-    ksmbd_durable_scavenger() and non-NULL ksmbd_lookup_fd_inode()
-    returns while durable handles expired under concurrent rename
-    lookups, with no KASAN, UAF, list-corruption, ODEBUG, or WARNING
-    reports.
-  * checkpatch --strict
-  * make -j$(nproc) M=fs/smb/server
+Initially, sk-A's file refcount is 1 by the inflight fd in sk-B
+recvq.  GC thinks sk-A is dead because the file refcount is the
+same as the number of its inflight fds.
 
-Fixes: d484d621d40f ("ksmbd: add durable scavenger timer")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+However, sk-A's file refcount is bumped silently by MSG_PEEK,
+which invalidates the previous evaluation.
+
+At this moment, sk-B's file refcount is 2; one by the open fd,
+and one by the inflight fd in sk-A.  The subsequent close()
+releases one refcount by the former.
+
+Finally, GC incorrectly concludes that both sk-A and sk-B are dead.
+
+One option is to restore the locking dance in unix_peek_fds(),
+but we can resolve this more elegantly thanks to the new algorithm.
+
+The point is that the issue does not occur without the subsequent
+close() and we actually do not need to synchronise MSG_PEEK with
+the dead SCC detection.
+
+When the issue occurs, close() and GC touch the same file refcount.
+If GC sees the refcount being decremented by close(), it can just
+give up garbage-collecting the SCC.
+
+Therefore, we only need to signal the race during MSG_PEEK with
+a proper memory barrier to make it visible to the GC.
+
+Let's use seqcount_t to notify GC when MSG_PEEK occurs and let
+it defer the SCC to the next run.
+
+This way no locking is needed on the MSG_PEEK side, and we can
+avoid imposing a penalty on every MSG_PEEK unnecessarily.
+
+Note that we can retry within unix_scc_dead() if MSG_PEEK is
+detected, but we do not do so to avoid hung task splat from
+abusive MSG_PEEK calls.
+
+Fixes: 118f457da9ed ("af_unix: Remove lock dance in unix_peek_fds().")
+Reported-by: Igor Ushakov <sysroot314@gmail.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260311054043.1231316-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Using include/net/af_unix.h instead of net/unix/af_unix.h on 6.12.y ]
+Signed-off-by: Leon Chen <leonchen.oss@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 104 ++++++++++++++++++++++++++++----------
- 1 file changed, 77 insertions(+), 27 deletions(-)
+ include/net/af_unix.h |  1 +
+ net/unix/af_unix.c    |  2 ++
+ net/unix/garbage.c    | 79 ++++++++++++++++++++++++++++---------------
+ 3 files changed, 54 insertions(+), 28 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index d29cc1d01bd2c..a8fed467e9b69 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -325,6 +325,14 @@ static void __ksmbd_remove_durable_fd(struct ksmbd_file *fp)
- 		return;
+diff --git a/include/net/af_unix.h b/include/net/af_unix.h
+index 63129c79b8cbc..8cacc5290d8bb 100644
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -23,6 +23,7 @@ void unix_del_edges(struct scm_fp_list *fpl);
+ void unix_update_edges(struct unix_sock *receiver);
+ int unix_prepare_fpl(struct scm_fp_list *fpl);
+ void unix_destroy_fpl(struct scm_fp_list *fpl);
++void unix_peek_fpl(struct scm_fp_list *fpl);
+ void unix_gc(void);
+ void wait_for_unix_gc(struct scm_fp_list *fpl);
  
- 	idr_remove(global_ft.idr, fp->persistent_id);
-+	/*
-+	 * Clear persistent_id so a later __ksmbd_close_fd() that runs from a
-+	 * delayed putter (e.g. when a concurrent ksmbd_lookup_fd_inode()
-+	 * walker held the final reference) does not re-issue idr_remove() on
-+	 * an id that idr_alloc_cyclic() may have already handed out to a new
-+	 * durable handle.
-+	 */
-+	fp->persistent_id = KSMBD_NO_FID;
- }
- 
- static void ksmbd_remove_durable_fd(struct ksmbd_file *fp)
-@@ -417,6 +425,20 @@ static struct ksmbd_file *__ksmbd_lookup_fd(struct ksmbd_file_table *ft,
- 
- static void __put_fd_final(struct ksmbd_work *work, struct ksmbd_file *fp)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 77976f36c4aa4..9c5a812bd6813 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1878,6 +1878,8 @@ static void unix_detach_fds(struct scm_cookie *scm, struct sk_buff *skb)
+ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
  {
-+	/*
-+	 * Detached durable fp -- session_fd_check() cleared fp->conn at
-+	 * preserve, so this fp is no longer tracked by any conn's
-+	 * stats.open_files_count.  This happens when
-+	 * ksmbd_scavenger_dispose_dh() hands the final close off to an
-+	 * m_fp_list walker (e.g. ksmbd_lookup_fd_inode()) whose work->conn
-+	 * is unrelated to the conn that originally opened the handle; close
-+	 * via the NULL-ft path so we do not underflow that unrelated
-+	 * counter.
-+	 */
-+	if (!fp->conn) {
-+		__ksmbd_close_fd(NULL, fp);
-+		return;
-+	}
- 	__ksmbd_close_fd(&work->sess->file_table, fp);
- 	atomic_dec(&work->conn->stats.open_files_count);
+ 	scm->fp = scm_fp_dup(UNIXCB(skb).fp);
++
++	unix_peek_fpl(scm->fp);
  }
-@@ -788,24 +810,37 @@ static bool ksmbd_durable_scavenger_alive(void)
+ 
+ static void unix_destruct_scm(struct sk_buff *skb)
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 66fd606c43f45..1cdb54c61619f 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -306,6 +306,25 @@ void unix_destroy_fpl(struct scm_fp_list *fpl)
+ 	unix_free_vertices(fpl);
+ }
+ 
++static bool gc_in_progress;
++static seqcount_t unix_peek_seq = SEQCNT_ZERO(unix_peek_seq);
++
++void unix_peek_fpl(struct scm_fp_list *fpl)
++{
++	static DEFINE_SPINLOCK(unix_peek_lock);
++
++	if (!fpl || !fpl->count_unix)
++		return;
++
++	if (!READ_ONCE(gc_in_progress))
++		return;
++
++	/* Invalidate the final refcnt check in unix_vertex_dead(). */
++	spin_lock(&unix_peek_lock);
++	raw_write_seqcount_barrier(&unix_peek_seq);
++	spin_unlock(&unix_peek_lock);
++}
++
+ static bool unix_vertex_dead(struct unix_vertex *vertex)
+ {
+ 	struct unix_edge *edge;
+@@ -339,6 +358,36 @@ static bool unix_vertex_dead(struct unix_vertex *vertex)
  	return true;
  }
  
--static void ksmbd_scavenger_dispose_dh(struct list_head *head)
-+static void ksmbd_scavenger_dispose_dh(struct ksmbd_file *fp)
++static LIST_HEAD(unix_visited_vertices);
++static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
++
++static bool unix_scc_dead(struct list_head *scc, bool fast)
++{
++	struct unix_vertex *vertex;
++	bool scc_dead = true;
++	unsigned int seq;
++
++	seq = read_seqcount_begin(&unix_peek_seq);
++
++	list_for_each_entry_reverse(vertex, scc, scc_entry) {
++		/* Don't restart DFS from this vertex. */
++		list_move_tail(&vertex->entry, &unix_visited_vertices);
++
++		/* Mark vertex as off-stack for __unix_walk_scc(). */
++		if (!fast)
++			vertex->index = unix_vertex_grouped_index;
++
++		if (scc_dead)
++			scc_dead = unix_vertex_dead(vertex);
++	}
++
++	/* If MSG_PEEK intervened, defer this SCC to the next round. */
++	if (read_seqcount_retry(&unix_peek_seq, seq))
++		return false;
++
++	return scc_dead;
++}
++
+ static void unix_collect_skb(struct list_head *scc, struct sk_buff_head *hitlist)
  {
--	while (!list_empty(head)) {
--		struct ksmbd_file *fp;
-+	/*
-+	 * Durable-preserved fp can remain linked on f_ci->m_fp_list for
-+	 * share-mode checks.  Unlink it before final close; fp->node is not
-+	 * available as a scavenger-private list node because re-adding it to
-+	 * another list corrupts m_fp_list.
-+	 */
-+	down_write(&fp->f_ci->m_lock);
-+	list_del_init(&fp->node);
-+	up_write(&fp->f_ci->m_lock);
- 
--		fp = list_first_entry(head, struct ksmbd_file, node);
--		list_del_init(&fp->node);
-+	/*
-+	 * Drop both the durable lifetime reference and the transient reference
-+	 * taken by the scavenger under global_ft.lock.  If a concurrent
-+	 * ksmbd_lookup_fd_inode() (or any other m_fp_list walker) snatched fp
-+	 * before the unlink above, that holder owns the final close via
-+	 * ksmbd_fd_put() -> __ksmbd_close_fd().  Otherwise the scavenger is
-+	 * the last putter and finalises fp here.
-+	 */
-+	if (atomic_sub_and_test(2, &fp->refcount))
- 		__ksmbd_close_fd(NULL, fp);
--	}
+ 	struct unix_vertex *vertex;
+@@ -392,9 +441,6 @@ static bool unix_scc_cyclic(struct list_head *scc)
+ 	return false;
  }
  
- static int ksmbd_durable_scavenger(void *dummy)
+-static LIST_HEAD(unix_visited_vertices);
+-static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
+-
+ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index,
+ 			    struct sk_buff_head *hitlist)
  {
- 	struct ksmbd_file *fp = NULL;
-+	struct ksmbd_file *expired_fp;
- 	unsigned int id;
- 	unsigned int min_timeout = 1;
- 	bool found_fp_timeout;
--	LIST_HEAD(scavenger_list);
- 	unsigned long remaining_jiffies;
+@@ -460,9 +506,7 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
+ 	}
  
- 	__module_get(THIS_MODULE);
-@@ -815,8 +850,6 @@ static int ksmbd_durable_scavenger(void *dummy)
- 		if (try_to_freeze())
- 			continue;
+ 	if (vertex->index == vertex->scc_index) {
+-		struct unix_vertex *v;
+ 		struct list_head scc;
+-		bool scc_dead = true;
  
--		found_fp_timeout = false;
+ 		/* SCC finalised.
+ 		 *
+@@ -471,18 +515,7 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
+ 		 */
+ 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
+ 
+-		list_for_each_entry_reverse(v, &scc, scc_entry) {
+-			/* Don't restart DFS from this vertex in unix_walk_scc(). */
+-			list_move_tail(&v->entry, &unix_visited_vertices);
 -
- 		remaining_jiffies = wait_event_timeout(dh_wq,
- 				   ksmbd_durable_scavenger_alive() == false,
- 				   __msecs_to_jiffies(min_timeout));
-@@ -825,23 +858,39 @@ static int ksmbd_durable_scavenger(void *dummy)
- 		else
- 			min_timeout = DURABLE_HANDLE_MAX_TIMEOUT;
- 
--		write_lock(&global_ft.lock);
--		idr_for_each_entry(global_ft.idr, fp, id) {
--			if (!fp->durable_timeout)
--				continue;
+-			/* Mark vertex as off-stack. */
+-			v->index = unix_vertex_grouped_index;
 -
--			if (atomic_read(&fp->refcount) > 1 ||
--			    fp->conn)
--				continue;
--
--			found_fp_timeout = true;
--			if (fp->durable_scavenger_timeout <=
--			    jiffies_to_msecs(jiffies)) {
--				__ksmbd_remove_durable_fd(fp);
--				list_add(&fp->node, &scavenger_list);
--			} else {
-+		do {
-+			expired_fp = NULL;
-+			found_fp_timeout = false;
-+
-+			write_lock(&global_ft.lock);
-+			idr_for_each_entry(global_ft.idr, fp, id) {
- 				unsigned long durable_timeout;
- 
-+				if (!fp->durable_timeout)
-+					continue;
-+
-+				if (atomic_read(&fp->refcount) > 1 ||
-+				    fp->conn)
-+					continue;
-+
-+				found_fp_timeout = true;
-+				if (fp->durable_scavenger_timeout <=
-+				    jiffies_to_msecs(jiffies)) {
-+					__ksmbd_remove_durable_fd(fp);
-+					/*
-+					 * Take a transient reference so fp
-+					 * cannot be freed by an in-flight
-+					 * ksmbd_lookup_fd_inode() that found
-+					 * it through f_ci->m_fp_list while we
-+					 * drop global_ft.lock and reach the
-+					 * m_fp_list unlink in
-+					 * ksmbd_scavenger_dispose_dh().
-+					 */
-+					atomic_inc(&fp->refcount);
-+					expired_fp = fp;
-+					break;
-+				}
-+
- 				durable_timeout =
- 					fp->durable_scavenger_timeout -
- 						jiffies_to_msecs(jiffies);
-@@ -849,10 +898,11 @@ static int ksmbd_durable_scavenger(void *dummy)
- 				if (min_timeout > durable_timeout)
- 					min_timeout = durable_timeout;
- 			}
+-			if (scc_dead)
+-				scc_dead = unix_vertex_dead(v);
 -		}
--		write_unlock(&global_ft.lock);
-+			write_unlock(&global_ft.lock);
+-
+-		if (scc_dead) {
++		if (unix_scc_dead(&scc, false)) {
+ 			unix_collect_skb(&scc, hitlist);
+ 		} else {
+ 			if (unix_vertex_max_scc_index < vertex->scc_index)
+@@ -530,19 +563,11 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 	while (!list_empty(&unix_unvisited_vertices)) {
+ 		struct unix_vertex *vertex;
+ 		struct list_head scc;
+-		bool scc_dead = true;
  
--		ksmbd_scavenger_dispose_dh(&scavenger_list);
-+			if (expired_fp)
-+				ksmbd_scavenger_dispose_dh(expired_fp);
-+		} while (expired_fp);
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+ 		list_add(&scc, &vertex->scc_entry);
  
- 		if (found_fp_timeout == false)
- 			break;
+-		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
+-			list_move_tail(&vertex->entry, &unix_visited_vertices);
+-
+-			if (scc_dead)
+-				scc_dead = unix_vertex_dead(vertex);
+-		}
+-
+-		if (scc_dead)
++		if (unix_scc_dead(&scc, true))
+ 			unix_collect_skb(&scc, hitlist);
+ 		else if (!unix_graph_maybe_cyclic)
+ 			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
+@@ -553,8 +578,6 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
+ }
+ 
+-static bool gc_in_progress;
+-
+ static void __unix_gc(struct work_struct *work)
+ {
+ 	struct sk_buff_head hitlist;
 -- 
 2.53.0
 
