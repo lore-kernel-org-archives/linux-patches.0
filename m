@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6ABD2EF652;
-	Thu, 28 May 2026 20:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816232F1FEC;
+	Thu, 28 May 2026 20:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000940; cv=none; b=GCHA/YcqrnDfEnR9rxs8GylCbCq0kvxXgoEFQMj5tM5tmkM0RlhAwoNCul7aO880DRH6KjNjjdI7/2ST2YO56q4ufiyGukxc2tD0XkWnAm+2p1eNj+0Q5QAj0SvNqPHinFbArwUdk+oC0uJ262VPvDNQXG50VZ4MveFh+WtXwN8=
+	t=1780000943; cv=none; b=V1RqfIeRbrByD8g+Qy02BnRZZ9A/oDte26Xl32lTp8EXyEpi1Mu/+cj6sSGIexjve+Z09gQYhQViEV5EWUtSG8dNZU1QS9ENnWhz1C2tFh41CP/I653gYfrBXS2WORPhyxNVEFQBJtBvpKivbyVhBVUTu8jxqEx8BQ0La/hp9mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000940; c=relaxed/simple;
-	bh=SBP32ncVsiFp5vCltsJ2pDuhpupAPSfHFpzwJ+IOiLU=;
+	s=arc-20240116; t=1780000943; c=relaxed/simple;
+	bh=tcyvNvqvAS+FyHJJNop/qLRMFCUHV+pRyknMhGIPqUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAcwF/LS9yPkrM6iVkHbd+rVaFfwJUMQB+OLMaYXsnn7RXaJftax71aWYAnJ5TyF9Nll17XRzmFkyw3BR/y0fDZHNCneewK1Xe1+0fvXB3/1bt/DwAueyCFeBShbj5hFvFHyQnGYuer5ecGWiB4OhuBh4Vg/aFFLwtrGLrYaU5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTjTdeqg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OMdzswbvi3P+XasJtf+0aGGJpgJtUIgMvfmw6B+JH2f79aNjEgjcrf1JwWCwqQM1TcJBAruuOPnqicV4XUvR1EWHhNSKEdyMrzmqEJ1L9BNSF6DIanG8U9vJ/gNre/T+5NhsDIQQMSnKkhNOPyw3zuXqWNVjzsk/93lAvVmK3Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1giS03e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTjTdeqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208A41F000E9;
-	Thu, 28 May 2026 20:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1giS03e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02B11F000E9;
+	Thu, 28 May 2026 20:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000939;
-	bh=8Cj8yJQaEbSejcwgIRxkSPfVPyAfINYc1sb9DOYZp0o=;
+	s=korg; t=1780000942;
+	bh=rZ3q4AlsOCkKNZtvNJM0qUMgtk4evBgOBq4XJFTty9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTjTdeqgIUjsfzRN9RUSYjvRH5pvXwCfXHv8SEpxejK4VZ/6VjNzYIYsfl/pKFqi9
-	 hYwNhS0Yp6nS0ykfk86QyCK3PJUiCJHFXAtxRMkuvNUsykVQTlg/iFSGECJzKt56Rm
-	 O9g8rA10YDzWVEPuya0H41Ga33k8ISrJTAEL2fKA=
+	b=R1giS03e7xuHRo0mRHEEONbKdJs5NF7n+tNI66SXwZbyaTLavAWGy9E3Zw+Y63v0h
+	 JttViuzxw/zWjjPdpv8Y6ufP+hFHjRHXYNDjzjA8pqjxNLE1bzW39UF7+GglNJuZ7m
+	 e+VSl2iRTAtTOdq/fXdgq5O8Q2tNEvhYMPbAiFsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/272] wifi: ath11k: fix error path leaks in some WMI WOW calls
-Date: Thu, 28 May 2026 21:49:40 +0200
-Message-ID: <20260528194635.004383702@linuxfoundation.org>
+Subject: [PATCH 6.12 224/272] net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot
+Date: Thu, 28 May 2026 21:49:58 +0200
+Message-ID: <20260528194635.464733877@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -53,75 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 55dda532bbc261aef495e403c8900c5e2ab5fa34 ]
+[ Upstream commit 277740023def559a4a2ddc3e8e784ee37a0f16a9 ]
 
-Fix two instances where we used to directly return the result of
-ath11k_wmi_cmd_send(...). Because we did not check the return value, we
-also did not free the skb in the error path.
+On the SMC-D client, slot 0 of ini->ism_dev[]/ini->ism_chid[] is
+reserved for an SMC-Dv1 device. smc_find_ism_v2_device_clnt()
+populates V2 entries starting at index 1, so when no V1 device is
+selected slot 0 is left in its kzalloc()'ed state with ism_dev[0] ==
+NULL and ism_chid[0] == 0.
 
-Fixes: 79802b13a492 ("ath11k: implement WoW enable and wakeup commands")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260506134240.2284016-2-nico.escande@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+smc_v2_determine_accepted_chid() then matches the peer's CHID against
+the array starting from index 0 using the CHID alone. A malicious
+peer replying to a SMC-Dv2-only proposal with d1.chid == 0 matches
+the empty slot, ini->ism_selected becomes 0, and the subsequent
+ism_dev[0]->lgr_lock dereference in smc_conn_create() faults at
+offsetof(struct smcd_dev, lgr_lock) == 0x68:
+
+  BUG: KASAN: null-ptr-deref in _raw_spin_lock_bh+0x79/0xe0
+  Write of size 4 at addr 0000000000000068 by task exploit/144
+  Call Trace:
+   _raw_spin_lock_bh
+   smc_conn_create (net/smc/smc_core.c:1997)
+   __smc_connect (net/smc/af_smc.c:1447)
+   smc_connect (net/smc/af_smc.c:1720)
+   __sys_connect
+   __x64_sys_connect
+   do_syscall_64
+
+Require ism_dev[i] to be non-NULL before accepting a CHID match.
+
+Fixes: a7c9c5f4af7f ("net/smc: CLC accept / confirm V2")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260511062138.2839584-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ net/smc/af_smc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 3b41bc5b125f4..5f15f7acd5132 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -9191,6 +9191,7 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
- 	struct wmi_wow_host_wakeup_ind *cmd;
- 	struct sk_buff *skb;
- 	size_t len;
-+	int ret;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 23bb360ebd07b..c96abb1386be4 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1398,7 +1398,8 @@ smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm *aclc,
+ 	int i;
  
- 	len = sizeof(*cmd);
- 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
-@@ -9204,14 +9205,20 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
- 
- 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "tlv wow host wakeup ind\n");
- 
--	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
-+	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
-+	if (ret) {
-+		ath11k_warn(ar->ab, "failed to send WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID\n");
-+		dev_kfree_skb(skb);
-+	}
-+
-+	return ret;
- }
- 
- int ath11k_wmi_wow_enable(struct ath11k *ar)
- {
- 	struct wmi_wow_enable_cmd *cmd;
- 	struct sk_buff *skb;
--	int len;
-+	int ret, len;
- 
- 	len = sizeof(*cmd);
- 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
-@@ -9226,7 +9233,13 @@ int ath11k_wmi_wow_enable(struct ath11k *ar)
- 	cmd->pause_iface_config = WOW_IFACE_PAUSE_ENABLED;
- 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "tlv wow enable\n");
- 
--	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
-+	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
-+	if (ret) {
-+		ath11k_warn(ar->ab, "failed to send WMI_WOW_ENABLE_CMDID\n");
-+		dev_kfree_skb(skb);
-+	}
-+
-+	return ret;
- }
- 
- int ath11k_wmi_scan_prob_req_oui(struct ath11k *ar,
+ 	for (i = 0; i < ini->ism_offered_cnt + 1; i++) {
+-		if (ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
++		if (ini->ism_dev[i] &&
++		    ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
+ 			ini->ism_selected = i;
+ 			return 0;
+ 		}
 -- 
 2.53.0
 
