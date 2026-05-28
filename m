@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CEC318B96;
-	Thu, 28 May 2026 20:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A998330B32;
+	Thu, 28 May 2026 20:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001485; cv=none; b=efhKRTRWzUG3vuVypSCPIyMXmraFnpgpBRFkd+QryA19BgcCzKG3O8INHDOAWmt22bLOHfQ5tLTT8HhRU9cd2UWScj6NMPeio74f8gVZJcQM64EqAkgSo0a0H7HLKD8Nstg4ByHQ2OVhm22D81xOHwtyXFmZ4FXkZuCCyfxxkCc=
+	t=1780001488; cv=none; b=lpvb6iVaSFzgddPGoeGF2Xltwep8BPl20qH1ot16oWydESs9FA6Luu3zLU7savXYHPoJjRNVKy/Zq9UUJgg9hsmWewTC/omVRWZBweKen0ZH0ti/OcKrTZNWYlgNdp8S0DQomcku+jLrziSloDv3DKvwsNrgxe13TWRxrxQMcdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001485; c=relaxed/simple;
-	bh=IxDaWclae19SooHc2Q4mp8YAujS+x/ePM+r1M59vA9k=;
+	s=arc-20240116; t=1780001488; c=relaxed/simple;
+	bh=A9xHpfZ2OC/d1bwxmzUK0O2vPuMZYfsA63yGV8JVPBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzIf5HXJq9eeXkVZRHfr0xsyVTEnBCMP0GIB/oDJEkvJJJuae4X/LL5EGRV8mOBrCNJ57xUaIFz6rGZPcGWryCn4EUOyA8/cRMFCBMBwwNKe5RLPGx7gHQdnJ6bgL8YIlALoPLzrjpafQ1ZQOaqO9y+wKT8TyqxTFMafnwBonS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+y7u52N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJIJjeoWJDovs0h2QLH/dK8b4vQ9cUzGqZRexNqtHK34VeWKRn7nASx6GcdDbYkboJqcclOZOZkdUjkWr5IvIqN+JYwYGpE6FJh28pTbxRIy+uLoqsFcptSedeRRBu9ocZi0OB0YlUw+mHANge/8Wu7kGag0K/ISAjwrNhL0BXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTJAQCiP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+y7u52N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1E81F000E9;
-	Thu, 28 May 2026 20:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTJAQCiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B9B1F000E9;
+	Thu, 28 May 2026 20:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001484;
-	bh=0WaKUCih6A6gozKezBu5W3qLgZRccGW4V68sIsvdNkg=;
+	s=korg; t=1780001487;
+	bh=S1lht82PSNH54glxW4tlGcsvlJ8TU76zdA7ZS05XlcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+y7u52N4uTwAgh7HTWC783R0YW+RNh2jq28s7sT+MDxEHfj/U9AS5/ohsPYQFJiP
-	 S5lLc4kZaA52bm6IKG2QYKI27D1ekXgQK7jTHbGeB/h1tK7BXAZ4F2qeuyqSao00QA
-	 //8S/vfpKHZLEgckdhiXPZs1yGo3T5p0KuZnxu5Y=
+	b=sTJAQCiP0bFBhuTmtmfPxCwi7qD9qZpSz8+KygtiXEYMOeLUnpk5oBrWIHFmJxCqu
+	 uwinM5JJIoVnL1kx3OQkd8driUjGu/ok6B5VSRdvTXn5KO/FRIp22F+6i0C90YfmaZ
+	 FqBBPo3+QQeV7XJFEVM62GSYwByApVT3z9sgApQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/186] net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot
-Date: Thu, 28 May 2026 21:50:23 +0200
-Message-ID: <20260528194932.812801762@linuxfoundation.org>
+Subject: [PATCH 6.6 109/186] netfilter: ebtables: allow xtables-nft only builds
+Date: Thu, 28 May 2026 21:49:49 +0200
+Message-ID: <20260528194931.882967501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,61 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 277740023def559a4a2ddc3e8e784ee37a0f16a9 ]
+[ Upstream commit 7ad269787b6615ca56bb161063331991fce51abf ]
 
-On the SMC-D client, slot 0 of ini->ism_dev[]/ini->ism_chid[] is
-reserved for an SMC-Dv1 device. smc_find_ism_v2_device_clnt()
-populates V2 entries starting at index 1, so when no V1 device is
-selected slot 0 is left in its kzalloc()'ed state with ism_dev[0] ==
-NULL and ism_chid[0] == 0.
+Same patch as previous one, but for ebtables.
 
-smc_v2_determine_accepted_chid() then matches the peer's CHID against
-the array starting from index 0 using the CHID alone. A malicious
-peer replying to a SMC-Dv2-only proposal with d1.chid == 0 matches
-the empty slot, ini->ism_selected becomes 0, and the subsequent
-ism_dev[0]->lgr_lock dereference in smc_conn_create() faults at
-offsetof(struct smcd_dev, lgr_lock) == 0x68:
+To build a kernel that only supports ebtables-nft, the builtin tables
+need to be disabled, i.e.:
 
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock_bh+0x79/0xe0
-  Write of size 4 at addr 0000000000000068 by task exploit/144
-  Call Trace:
-   _raw_spin_lock_bh
-   smc_conn_create (net/smc/smc_core.c:1997)
-   __smc_connect (net/smc/af_smc.c:1447)
-   smc_connect (net/smc/af_smc.c:1720)
-   __sys_connect
-   __x64_sys_connect
-   do_syscall_64
+CONFIG_BRIDGE_EBT_BROUTE=n
+CONFIG_BRIDGE_EBT_T_FILTER=n
+CONFIG_BRIDGE_EBT_T_NAT=n
 
-Require ism_dev[i] to be non-NULL before accepting a CHID match.
+The ebtables specific extensions can then be used nftables'
+NFT_COMPAT interface.
 
-Fixes: a7c9c5f4af7f ("net/smc: CLC accept / confirm V2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260511062138.2839584-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/Kconfig  | 7 +++++++
+ net/bridge/netfilter/Makefile | 2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 0e9a3b8da6a63..6629fd61be06a 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1378,7 +1378,8 @@ smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm *aclc,
- 	int i;
+diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
+index 7f304a19ac1bf..104c0125e32e8 100644
+--- a/net/bridge/netfilter/Kconfig
++++ b/net/bridge/netfilter/Kconfig
+@@ -39,6 +39,10 @@ config NF_CONNTRACK_BRIDGE
  
- 	for (i = 0; i < ini->ism_offered_cnt + 1; i++) {
--		if (ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
-+		if (ini->ism_dev[i] &&
-+		    ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
- 			ini->ism_selected = i;
- 			return 0;
- 		}
+ 	  To compile it as a module, choose M here.  If unsure, say N.
+ 
++# old sockopt interface and eval loop
++config BRIDGE_NF_EBTABLES_LEGACY
++	tristate
++
+ menuconfig BRIDGE_NF_EBTABLES
+ 	tristate "Ethernet Bridge tables (ebtables) support"
+ 	depends on BRIDGE && NETFILTER && NETFILTER_XTABLES
+@@ -55,6 +59,7 @@ if BRIDGE_NF_EBTABLES
+ #
+ config BRIDGE_EBT_BROUTE
+ 	tristate "ebt: broute table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables broute table is used to define rules that decide between
+ 	  bridging and routing frames, giving Linux the functionality of a
+@@ -65,6 +70,7 @@ config BRIDGE_EBT_BROUTE
+ 
+ config BRIDGE_EBT_T_FILTER
+ 	tristate "ebt: filter table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables filter table is used to define frame filtering rules at
+ 	  local input, forwarding and local output. See the man page for
+@@ -74,6 +80,7 @@ config BRIDGE_EBT_T_FILTER
+ 
+ config BRIDGE_EBT_T_NAT
+ 	tristate "ebt: nat table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables nat table is used to define rules that alter the MAC
+ 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
+diff --git a/net/bridge/netfilter/Makefile b/net/bridge/netfilter/Makefile
+index 1c9ce49ab6513..b9a1303da9771 100644
+--- a/net/bridge/netfilter/Makefile
++++ b/net/bridge/netfilter/Makefile
+@@ -9,7 +9,7 @@ obj-$(CONFIG_NFT_BRIDGE_REJECT)  += nft_reject_bridge.o
+ # connection tracking
+ obj-$(CONFIG_NF_CONNTRACK_BRIDGE) += nf_conntrack_bridge.o
+ 
+-obj-$(CONFIG_BRIDGE_NF_EBTABLES) += ebtables.o
++obj-$(CONFIG_BRIDGE_NF_EBTABLES_LEGACY) += ebtables.o
+ 
+ # tables
+ obj-$(CONFIG_BRIDGE_EBT_BROUTE) += ebtable_broute.o
 -- 
 2.53.0
 
