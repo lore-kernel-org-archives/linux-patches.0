@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A998330B32;
-	Thu, 28 May 2026 20:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB6D2F1FEF;
+	Thu, 28 May 2026 20:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001488; cv=none; b=lpvb6iVaSFzgddPGoeGF2Xltwep8BPl20qH1ot16oWydESs9FA6Luu3zLU7savXYHPoJjRNVKy/Zq9UUJgg9hsmWewTC/omVRWZBweKen0ZH0ti/OcKrTZNWYlgNdp8S0DQomcku+jLrziSloDv3DKvwsNrgxe13TWRxrxQMcdM=
+	t=1780001491; cv=none; b=lO0+rr3RrFWLu+nyLyjBVieKbkTIuFViWj3+QLjrU7yJYtmR75uu3xu+PutDlbRnmMpU78RR4Qhu7BAOq78/6FhBH9LoG9o7Fbhx6xuQDWjsjHJsbPeL7JVZ884GVFP2Aac19YQ7qCkLRaQQGJY1LTZLMgYqGYbanR7vrhl/4po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001488; c=relaxed/simple;
-	bh=A9xHpfZ2OC/d1bwxmzUK0O2vPuMZYfsA63yGV8JVPBQ=;
+	s=arc-20240116; t=1780001491; c=relaxed/simple;
+	bh=vSDkuEkT2ODEUrPKb9ZbOHFsp+WemlTbYJ0jzVl7FrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJIJjeoWJDovs0h2QLH/dK8b4vQ9cUzGqZRexNqtHK34VeWKRn7nASx6GcdDbYkboJqcclOZOZkdUjkWr5IvIqN+JYwYGpE6FJh28pTbxRIy+uLoqsFcptSedeRRBu9ocZi0OB0YlUw+mHANge/8Wu7kGag0K/ISAjwrNhL0BXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTJAQCiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OV9imAu2uwfTR+lS5CvCVPcHsYIBZcvQCMW2vKF12nWhPs+bkROGrEkLMd0ZBzVfwby/AiBVKdVrYYenEu4mtX+xfrILxWuSkFucbyjgFLd+b4nZWCgbLBLdfAAZP8CxdiLE9zvbqH4IR0pARUkA06n655s/5NpZGbNluP0XHZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzRUB3e2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTJAQCiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B9B1F000E9;
-	Thu, 28 May 2026 20:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzRUB3e2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988EF1F000E9;
+	Thu, 28 May 2026 20:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001487;
-	bh=S1lht82PSNH54glxW4tlGcsvlJ8TU76zdA7ZS05XlcA=;
+	s=korg; t=1780001490;
+	bh=K87B1GrV/GcZ2EP8gpAKZK/0KusLpJwbcJxw1/o9xzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTJAQCiP0bFBhuTmtmfPxCwi7qD9qZpSz8+KygtiXEYMOeLUnpk5oBrWIHFmJxCqu
-	 uwinM5JJIoVnL1kx3OQkd8driUjGu/ok6B5VSRdvTXn5KO/FRIp22F+6i0C90YfmaZ
-	 FqBBPo3+QQeV7XJFEVM62GSYwByApVT3z9sgApQk=
+	b=IzRUB3e2aWeJzMduXR/ZxCzW7g+y9thJPiNIr/VlMf1YHEQwLm3gAbvp1tc7RTUqh
+	 9+6OYJMoWHIcpGERY4CFzrkIvfObhHxb87TO2sx8QA8ROy6+wlmESAzXw86PrXcUgb
+	 0rX41/RgESS0nqcvhMtLxpD/4bgcCTgvs8jxVKY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/186] netfilter: ebtables: allow xtables-nft only builds
-Date: Thu, 28 May 2026 21:49:49 +0200
-Message-ID: <20260528194931.882967501@linuxfoundation.org>
+Subject: [PATCH 6.6 110/186] netfilter: xtables: fix up kconfig dependencies
+Date: Thu, 28 May 2026 21:49:50 +0200
+Message-ID: <20260528194931.910324123@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,80 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 7ad269787b6615ca56bb161063331991fce51abf ]
+[ Upstream commit 749d4ef0868c5d8a98e07073791b2198178c93b4 ]
 
-Same patch as previous one, but for ebtables.
+Randy Dunlap reports arptables build failure:
+arp_tables.c:(.text+0x20): undefined reference to `xt_find_table'
 
-To build a kernel that only supports ebtables-nft, the builtin tables
-need to be disabled, i.e.:
+... because recent change removed a 'select' on the xtables core.
+Add a "depends" clause on arptables to resolve this.
 
-CONFIG_BRIDGE_EBT_BROUTE=n
-CONFIG_BRIDGE_EBT_T_FILTER=n
-CONFIG_BRIDGE_EBT_T_NAT=n
+Kernel test robot reports another build breakage:
+iptable_nat.c:(.text+0x8): undefined reference to `ipt_unregister_table_exit'
 
-The ebtables specific extensions can then be used nftables'
-NFT_COMPAT interface.
+... because of a typo, the nat table selected ip6tables.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Closes: https://lore.kernel.org/netfilter-devel/d0dfbaef-046a-4c42-9daa-53636664bf6d@infradead.org/
+Fixes: a9525c7f6219 ("netfilter: xtables: allow xtables-nft only builds")
+Fixes: 4654467dc7e1 ("netfilter: arptables: allow xtables-nft only builds")
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/Kconfig  | 7 +++++++
- net/bridge/netfilter/Makefile | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ net/ipv4/netfilter/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
-index 7f304a19ac1bf..104c0125e32e8 100644
---- a/net/bridge/netfilter/Kconfig
-+++ b/net/bridge/netfilter/Kconfig
-@@ -39,6 +39,10 @@ config NF_CONNTRACK_BRIDGE
- 
- 	  To compile it as a module, choose M here.  If unsure, say N.
- 
-+# old sockopt interface and eval loop
-+config BRIDGE_NF_EBTABLES_LEGACY
-+	tristate
-+
- menuconfig BRIDGE_NF_EBTABLES
- 	tristate "Ethernet Bridge tables (ebtables) support"
- 	depends on BRIDGE && NETFILTER && NETFILTER_XTABLES
-@@ -55,6 +59,7 @@ if BRIDGE_NF_EBTABLES
- #
- config BRIDGE_EBT_BROUTE
- 	tristate "ebt: broute table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
+diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
+index 7835230872818..8f6e950163a79 100644
+--- a/net/ipv4/netfilter/Kconfig
++++ b/net/ipv4/netfilter/Kconfig
+@@ -217,7 +217,7 @@ config IP_NF_NAT
+ 	default m if NETFILTER_ADVANCED=n
+ 	select NF_NAT
+ 	select NETFILTER_XT_NAT
+-	select IP6_NF_IPTABLES_LEGACY
++	select IP_NF_IPTABLES_LEGACY
  	help
- 	  The ebtables broute table is used to define rules that decide between
- 	  bridging and routing frames, giving Linux the functionality of a
-@@ -65,6 +70,7 @@ config BRIDGE_EBT_BROUTE
- 
- config BRIDGE_EBT_T_FILTER
- 	tristate "ebt: filter table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
+ 	  This enables the `nat' table in iptables. This allows masquerading,
+ 	  port forwarding and other forms of full Network Address Port
+@@ -329,6 +329,7 @@ config NFT_COMPAT_ARP
+ config IP_NF_ARPFILTER
+ 	tristate "arptables-legacy packet filtering support"
+ 	select IP_NF_ARPTABLES
++	depends on NETFILTER_XTABLES
  	help
- 	  The ebtables filter table is used to define frame filtering rules at
- 	  local input, forwarding and local output. See the man page for
-@@ -74,6 +80,7 @@ config BRIDGE_EBT_T_FILTER
- 
- config BRIDGE_EBT_T_NAT
- 	tristate "ebt: nat table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables nat table is used to define rules that alter the MAC
- 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
-diff --git a/net/bridge/netfilter/Makefile b/net/bridge/netfilter/Makefile
-index 1c9ce49ab6513..b9a1303da9771 100644
---- a/net/bridge/netfilter/Makefile
-+++ b/net/bridge/netfilter/Makefile
-@@ -9,7 +9,7 @@ obj-$(CONFIG_NFT_BRIDGE_REJECT)  += nft_reject_bridge.o
- # connection tracking
- obj-$(CONFIG_NF_CONNTRACK_BRIDGE) += nf_conntrack_bridge.o
- 
--obj-$(CONFIG_BRIDGE_NF_EBTABLES) += ebtables.o
-+obj-$(CONFIG_BRIDGE_NF_EBTABLES_LEGACY) += ebtables.o
- 
- # tables
- obj-$(CONFIG_BRIDGE_EBT_BROUTE) += ebtable_broute.o
+ 	  ARP packet filtering defines a table `filter', which has a series of
+ 	  rules for simple ARP packet filtering at local input and
 -- 
 2.53.0
 
