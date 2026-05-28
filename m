@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C4C335566;
-	Thu, 28 May 2026 20:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22E532ABC0;
+	Thu, 28 May 2026 20:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999170; cv=none; b=K8pOIuiYzo0x0gKi6JusqZueXvUbu+SHh0MKe7FxJIezViiWl+BDBAdKLIzghTt4EKNrM3ITq/BTkFUSwubO9Wplc5S1LlFVK7lxIreWb7YJV6lHRWKg1tavVuytli4NzT3R+aZIVjvSCO9Pm4IKOEDdt3mzIMxJAL4kGNe92eM=
+	t=1779999172; cv=none; b=YzNVNPLLCFIb32tMdbhhZIqjRYhZhACWKZ1wGltl1IjWCCH5pjWAVJwwtBGlEb9m/yZVbbuzbIicvGvu1dr4EbFBp1JVkGF7g157ncBHUdygLpjh5TjP/Nl6ctdO8C8LAw0mSZ0/2BZx+rJ/WkIG9QmLpyC10eC4IbEY+odykCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999170; c=relaxed/simple;
-	bh=S6AkcyZCuQXD4FpjOP+LZmPtwYn7j7Y78DQEOIXAHck=;
+	s=arc-20240116; t=1779999172; c=relaxed/simple;
+	bh=azWJVPwOFgr1AHRM4Bo+hKt426G7QQRg2zoQUdaAz7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KYfEF1P+NQs7i0x7c2gwbPrewGDC6Yb/Xc15zKWpVsrmxWRyZiH2b4OZCvTugUmbaN6eMKmTwXMOA2AnpW+kgvqc1PuYOJNz9Ct8S3MciYsMhkHdz32ErSTqRzZVe2iYi7uJpnwiNBjCiVWSe6g3Qr2QFrECOFsG7naBgUWnrgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peHdP8w+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=acK3eOGs+1ZGTDaJRGaripPIHOoyyV649O+SiSyor8Z3xu5Ql7td2Hi7Tk/+amXTPIUR+URC+xjaIwnfrL3AJrd3Qiafw2ggdlJ+6Ve6qWPBsKp/ZESbjHHZNc/OKNeGcsac+EieA1jJsjnISRI6Wt675zuHRpzwFKKdRNwYvtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay+/LP75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peHdP8w+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854AB1F000E9;
-	Thu, 28 May 2026 20:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay+/LP75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534C31F000E9;
+	Thu, 28 May 2026 20:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999169;
-	bh=NGMjod/rFQJ/yG6bJAzFeSRjS32O5oSc55IclPprBWc=;
+	s=korg; t=1779999171;
+	bh=p2cH3u6xznuk5RORifVZ2kmObs+YuuiZrq8YxTIZSEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=peHdP8w+gBHsZTAG1a8nXBuBRWYyS6TL9YQoGk2HsqGpGmM1fNF8EeMVsawxmv5gn
-	 Yfb1Ryi5b5+oyd/G/qg7Nwy0Ew3ZB8L9i5EY3ltPyh+q8u+pAB6BpWVvCFvKEHFILO
-	 634DkFf/C/fi+itayaqu+72Zx52ln1Y48FFrjImI=
+	b=ay+/LP75F5bc0+RtxDqMViBscneC6RXf0RxxJZT7lR/oXbeCMGRkO53DfGdmu1vZF
+	 jUR2SaYXA6lOa5Y62OTjA9S6EkQ9NUHal+NU2AyZxg7UHRZDBKNRM4ELS6GOY9txwY
+	 ECLFxDnIv5g5kzSPc7fX8OCWAdFF1Qtm1ywk75vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Yaseen <yaseen@ghoul.dev>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Robertus Diawan Chris <robertusdchris@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 396/461] platform/x86: asus-armoury: fix mini-LED mode get/set on MODE2 devices
-Date: Thu, 28 May 2026 21:48:45 +0200
-Message-ID: <20260528194658.931904674@linuxfoundation.org>
+Subject: [PATCH 7.0 397/461] ASoC: soc-utils: Add missing va_end in snd_soc_ret()
+Date: Thu, 28 May 2026 21:48:46 +0200
+Message-ID: <20260528194658.960727614@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -46,94 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Yaseen <yaseen@ghoul.dev>
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
 
-[ Upstream commit d2d2e7c8fb37b27301ee5c8343b2f7037efc6ea6 ]
+[ Upstream commit 298a43b54432fbc3a32949a94c72544ee18c8c00 ]
 
-The mini-LED current_value attribute does not work on devices that use
-ASUS_WMI_DEVID_MINI_LED_MODE2 (2024 and newer models).
+The default case in snd_soc_ret() use va_start without va_end to
+cleanup "args" object which can cause undefined behavior. So, add
+missing va_end to cleanup "args" object.
 
-Reading is broken: mini_led_mode_current_value_show() fetches the mode
-from the device but then decodes a literal 0 instead of the value it
-just read:
+This is reported by Coverity Scan as "Missing varargs init or cleanup".
 
-    mode = FIELD_GET(ASUS_MINI_LED_MODE_MASK, 0);
-
-So mode is always 0, and the attribute always reports the same thing
-regardless of the real hardware state.
-
-Writing is broken too. The number a user writes is an index; the value
-the firmware actually wants is looked up from that index in
-mini_led_mode_map[]. mini_led_mode_current_value_store() skips that
-lookup and passes the raw index straight to armoury_attr_uint_store().
-On 2024 devices the firmware numbers its modes differently from the
-index, so some writes are rejected with -EINVAL and the rest send the
-wrong mode to the hardware.
-
-Fix both paths: decode the value actually read from the device when
-reading, and look up the firmware value before sending it when
-writing. Older (MODE1) devices were unaffected because there the index
-and the firmware value are the same.
-
-Fixes: f99eb098090e ("platform/x86: asus-armoury: move existing tunings to asus-armoury module")
-Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260517182957.11069-1-yaseen@ghoul.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 943116ba2a6a ("ASoC: add common snd_soc_ret() and use it")
+Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+Link: https://patch.msgid.link/20260519054024.274741-1-robertusdchris@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-armoury.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ sound/soc/soc-utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/asus-armoury.c b/drivers/platform/x86/asus-armoury.c
-index 5b0987ccc2702..495dc1e31d40e 100644
---- a/drivers/platform/x86/asus-armoury.c
-+++ b/drivers/platform/x86/asus-armoury.c
-@@ -370,7 +370,7 @@ static ssize_t mini_led_mode_current_value_show(struct kobject *kobj,
- 	if (err)
- 		return err;
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index c8adfff826bd4..9cb7567e263eb 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -36,6 +36,7 @@ int snd_soc_ret(const struct device *dev, int ret, const char *fmt, ...)
+ 		vaf.va = &args;
  
--	mode = FIELD_GET(ASUS_MINI_LED_MODE_MASK, 0);
-+	mode = FIELD_GET(ASUS_MINI_LED_MODE_MASK, mode);
- 
- 	for (i = 0; i < mini_led_mode_map_size; i++)
- 		if (mode == mini_led_mode_map[i])
-@@ -386,6 +386,7 @@ static ssize_t mini_led_mode_current_value_store(struct kobject *kobj,
- {
- 	u32 *mini_led_mode_map;
- 	size_t mini_led_mode_map_size;
-+	char mapped_value[12];
- 	u32 mode;
- 	int err;
- 
-@@ -414,9 +415,16 @@ static ssize_t mini_led_mode_current_value_store(struct kobject *kobj,
- 		return -ENODEV;
+ 		dev_err(dev, "ASoC error (%d): %pV", ret, &vaf);
++		va_end(args);
  	}
  
--	return armoury_attr_uint_store(kobj, attr, buf, count,
--				       0, mini_led_mode_map[mode],
--				       NULL, asus_armoury.mini_led_dev_id);
-+	/*
-+	 * armoury_attr_uint_store() parses and sends the value from the
-+	 * passed buffer; hand it the mapped firmware value so the device
-+	 * receives the translated mode instead of the raw index.
-+	 */
-+	snprintf(mapped_value, sizeof(mapped_value), "%u", mini_led_mode_map[mode]);
-+
-+	return armoury_attr_uint_store(kobj, attr, mapped_value, count, 0,
-+				       mini_led_mode_map[mode], NULL,
-+				       asus_armoury.mini_led_dev_id);
- }
- 
- static ssize_t mini_led_mode_possible_values_show(struct kobject *kobj,
+ 	return ret;
 -- 
 2.53.0
 
