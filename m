@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514662F260C;
-	Thu, 28 May 2026 20:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C77F2F260C;
+	Thu, 28 May 2026 20:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001438; cv=none; b=LwwCvMHBI06olBWEIKfMZHiAslttDjcUXPwpQN+RIX5ovXRTft80p5Ai/J7yZ8F2Ayl8qGLzsrLHb+skSSQoYnMAStZORxmu0FPg4ogcRZbQJW6y2ueoARnhIkdJOxeL8a1yL2hn3626eg9Inav0/7dIIsi8hRjfBiPsIA1p2Ns=
+	t=1780001441; cv=none; b=a3Zwx4SztSEK7kcbn1uOxsIAaynP/KcxCV4/0/S4/vbqmU7XIjIOh1fVURwnIAvZfiKeZyxTeeeFDUlJYU1jxRKuJdNn6/crdqQbygephaBM4oLMHwFQJtTyiN5ROjnVGT8xOaaHCfTkRJbHP5xOhjdnrUXW9bnb5X6EocxKNVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001438; c=relaxed/simple;
-	bh=Kgndg6P1KU/kijKMv1EAAzJ3qYGAEuFDlWw8kl5tnXs=;
+	s=arc-20240116; t=1780001441; c=relaxed/simple;
+	bh=RTw6pl2CJ01NI/B/tY/YCZHxY6Qpv5zfJOnfucmfcAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oVrRVeGsCvJPL0VKEe//JncfafOVdKR8INGhCP3+N7Fn0lzz4w7IxvN25l3GQQgfZTFZj4FMahiMbY6Xby9TnqfAU/RSaqAzwvsvNjEPz7jh9ruSfW6znaWlSB82PJCrY3LlJrZXgoTOv6oRtE7qo8WOxmE5pjO23Mb2BB8Zmjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egr6bBwl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hEsYqbxvqDTrFM2UD7yW6ncIC97Q1uQb+jhlw8mq+37ZJOamk362DksWxSNVC4P8nivr39EjKtq0tCHk95XfpjGgpL7kpDs3/2MEO3OK+UjA3Dbc2oHGC+5i7yN4Dgdns0CeNNDvXPiL8PnVnRSp/jtWk9kuK/IoWEObGqv3QuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKTBQEBE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egr6bBwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02DE1F000E9;
-	Thu, 28 May 2026 20:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKTBQEBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD541F000E9;
+	Thu, 28 May 2026 20:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001437;
-	bh=P51+eyUDg1TsskTjF4/KkHTnuR1Fb1ClOXJl14vB6wE=;
+	s=korg; t=1780001440;
+	bh=lGZ6DBuF+h1QloFf4Z/cBRMlz58wtYWZ8n9hToX4D8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egr6bBwlLUdPE/RmlIlGZr5ZjCPnxlrmfiu1XYeaHL7DYRJSZjE0fKeHWX6pwpQ2J
-	 t6UA8IzLUbeTOeVLvLDXtSV1nBkLOxd5KxJP9nS5VlGRyGBVYvfizzmEOk+vwwQqox
-	 Jm35FRzywRWm81S5KFWjbJw0n3I4YIaVJrPHvEY8=
+	b=fKTBQEBEt1Ql5CsvrShMlfV29Klm5V7nXCty8AykQcY522MUymACh/jwKkNwr527C
+	 CDE2D4UC7w4+ulZMHIt0y1IH6+ZXKVwA6IfURF0t0Uj5cI9mggnyRmbX1TKo6XmEXu
+	 F3bbxaWe6pNt8O7ZfS+SSVPJ4WqNzI5VoPLy/wto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/186] irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT
-Date: Thu, 28 May 2026 21:50:07 +0200
-Message-ID: <20260528194932.374290819@linuxfoundation.org>
+Subject: [PATCH 6.6 128/186] zonefs: handle integer overflow in zonefs_fname_to_fno
+Date: Thu, 28 May 2026 21:50:08 +0200
+Message-ID: <20260528194932.401908647@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -47,69 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 91840be8f710370607f949a627e070896faeddb8 ]
+[ Upstream commit 3a8389d42bdf4213730f4067f8bfa78bae6564ef ]
 
-On PREEMPT_RT, non-HARD irq_work runs in per-CPU kthreads via
-run_irq_workd(), so irq_work_sync() uses rcuwait() to wait for BUSY==0.
+In zonefs the file name in one of the two directories corresponds to the
+zone number.
 
-After irq_work_single() clears BUSY via atomic_cmpxchg(), it still
-dereferences @work for irq_work_is_hard() and rcuwait_wake_up().
+Here Alexey reported a possible integer overflow in zonefs_fname_to_fno(),
+where the parsing of the zone number from the file name can overflow the
+'long' data type.
 
-An irq_work_sync() caller on another CPU that enters after BUSY is cleared
-can observe BUSY==0 immediately, return, and free the work before those
-accesses complete — causing a use-after-free.
+Add a check for integer overflows and if the fno 'long' did overflow
+return -ENOENT.
 
-Fix this by wrapping run_irq_workd() in guard(rcu)() so that the entire
-irq_work_single() execution is within an RCU read-side critical
-section. Then add synchronize_rcu() in irq_work_sync() after
-rcuwait_wait_event() to ensure the caller waits for the RCU grace period
-before returning, preventing premature frees.
-
-Fixes: 810979682ccc ("irq_work: Allow irq_work_sync() to sleep if irq_work() no IRQ support.")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260330073234.303732-1-jiayuan.chen@linux.dev
+Reported-by: Alexey Dobriyan <adobriyan@gmail.com>
+Fixes: d207794ababe ("zonefs: Dynamically create file inodes when needed")
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq_work.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/zonefs/super.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq_work.c b/kernel/irq_work.c
-index 2f4fb336dda17..188721af8eb31 100644
---- a/kernel/irq_work.c
-+++ b/kernel/irq_work.c
-@@ -292,6 +292,12 @@ void irq_work_sync(struct irq_work *work)
- 	    !arch_irq_work_has_interrupt()) {
- 		rcuwait_wait_event(&work->irqwait, !irq_work_is_busy(work),
- 				   TASK_UNINTERRUPTIBLE);
-+		/*
-+		 * Ensure irq_work_single() does not access @work
-+		 * after removing IRQ_WORK_BUSY. It is always
-+		 * accessed within a RCU-read section.
-+		 */
-+		synchronize_rcu();
- 		return;
+diff --git a/fs/zonefs/super.c b/fs/zonefs/super.c
+index cc364669d723d..f1ebe46084570 100644
+--- a/fs/zonefs/super.c
++++ b/fs/zonefs/super.c
+@@ -627,10 +627,14 @@ static long zonefs_fname_to_fno(const struct qstr *fname)
+ 		return c - '0';
+ 
+ 	for (i = 0, rname = name + len - 1; i < len; i++, rname--) {
++		long digit;
++
+ 		c = *rname;
+ 		if (!isdigit(c))
+ 			return -ENOENT;
+-		fno += (c - '0') * shift;
++		digit = (c - '0') * shift;
++		if (check_add_overflow(fno, digit, &fno))
++			return -ENOENT;
+ 		shift *= 10;
  	}
- 
-@@ -302,6 +308,7 @@ EXPORT_SYMBOL_GPL(irq_work_sync);
- 
- static void run_irq_workd(unsigned int cpu)
- {
-+	guard(rcu)();
- 	irq_work_run_list(this_cpu_ptr(&lazy_list));
- }
  
 -- 
 2.53.0
