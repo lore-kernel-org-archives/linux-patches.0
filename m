@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B356E24677F;
-	Thu, 28 May 2026 20:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836591AA1D2;
+	Thu, 28 May 2026 20:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998474; cv=none; b=pnmPl5YngBwN3S2ZkpENyPC0G9pEMMrxzlqmyFizA9ttHVeeThXHPthxkCIsPahYf6mQX7hQYIwYHTtRvXrxpSN4vxaq3tGPpfJ/8sXIoctkSDb8NV4Q0DMLPj7R5ajyvLsdZaAkLNjZYcW6KSA7JqFPVFKxVx/u0GZX4FnXQac=
+	t=1779998477; cv=none; b=Z4pFqjzUrX8Wgm54PxBSsht6VmpI16VAhbOqGqAy/7vCygj2RtyTlKoaH/tau5g85x/9fN1FjnCJUWY+5LFEzedf7ZrmwvgMLW0uOlYR4urZ+JDvYIxbW+BkNfAi6lDJnGV5nwuNIadYmbLQZCnqLWX9oEy5aGvNqJcjeyOxMhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998474; c=relaxed/simple;
-	bh=E/HlvaIGAWza6MHXMrRASu+TheEm62LcH1h7RVo2vdw=;
+	s=arc-20240116; t=1779998477; c=relaxed/simple;
+	bh=opHldEzE8sKeNMPCecOmkTn3UkSFTRVbgDmfOMP09wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLjybiascjtvUdrfWAZl4nqkesNO50pc9PtAhRIpntWa/YfgKuKRB0Oi8Y3H2YDTXnjUp8VBw9zoYj3xEsri2T+B4N2uTiF4aGU95vsUM4VpLOYeVxAYEIBtyxoMoP8DthOxZFYBol2ZdxMRsJ8Pwn/+8UKX6quM5gVrVYnRNGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBZBsP7l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKZFc3Xeouzx7WI0Ou0YrK2uFoJXtAGKbbPLBHdgVFYfb48dTy7Rv12HlIcqrRS8PXZEdEFSMDHGq7fIKEJsq7G1viA0PcYFqjA1q/SiwvN2LlSJ2oaKAlqEe4ARwClE8/7Fy/QJBWUnhGB0ASbpNCE9BxpsQvePjSCt8z76h7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTbgxTp7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBZBsP7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDC41F000E9;
-	Thu, 28 May 2026 20:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTbgxTp7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05231F00A3A;
+	Thu, 28 May 2026 20:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998473;
-	bh=Bx/A7fkCWshjSolDYOA0y8D++pmU1IBnuK7tcsBEMNs=;
+	s=korg; t=1779998476;
+	bh=BPT5S4TltYcx7QfnK2LYSP6675mcwohyDFkC34D9+Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBZBsP7lIwzfpIhSFam0UNoChm3PHysOeyGUlWlq+U/ae1xxailrkbVXJXQgUz/q5
-	 oek/fVyP8wr2CN+RQhM9yK75e31Ann2gWIr3RvMxD1YhmwEzwh0OT1vV/gz37vvNoj
-	 dO+NQOvloP1OynPIhl0v7h9o+YeR9xjynafGOYV0=
+	b=BTbgxTp7XJEISp9qdAhPUBo/mCaUSwfz8XMaon8OggwjeUTkgNSThdY2bgLcAT+fY
+	 oldzWhNhVuWQleQ9m5Sbx/lFs4OJog5IYqyX/StA7B8RVW9jPFurrzUTcZ4+vJLRd4
+	 SOY4VxaQAeV/a3R4kxQHi5lBoFwhAJglxNFE/9dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Even Xu <even.xu@intel.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Takashi Iwai <tiwai@suse.de>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 185/461] HID: intel-thc-hid: Intel-quickspi: Fix some error codes
-Date: Thu, 28 May 2026 21:45:14 +0200
-Message-ID: <20260528194652.431028075@linuxfoundation.org>
+Subject: [PATCH 7.0 186/461] HID: uclogic: Fix regression of input name assignment
+Date: Thu, 28 May 2026 21:45:15 +0200
+Message-ID: <20260528194652.459923440@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ae4ac077332ea3341a0f4c0973556c6b7ac5b7a1 ]
+[ Upstream commit 487359284509a6745e14b8c0518768bc277809b0 ]
 
-If we have a partial read that is supposed to be treated as failure but
-in this code we forgot to set the error code.  Return -EINVAL.
+The previous fix for adding the devm_kasprintf() return check in the
+commit bd07f751208b ("HID: uclogic: Add NULL check in
+uclogic_input_configured()") changed the condition of hi->input->name
+assignment, and it resulted in missing the proper input device name
+when no custom suffix is defined.
 
-Fixes: 9d8d51735a3a ("HID: intel-thc-hid: intel-quickspi: Add HIDSPI protocol implementation")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Even Xu <even.xu@intel.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Restore the conditional to the original content to address the
+regression.
+
+Fixes: bd07f751208b ("HID: uclogic: Add NULL check in uclogic_input_configured()")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-uclogic-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-index 16f780bc879b1..cb19057f1191b 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
-@@ -94,7 +94,7 @@ static int quickspi_get_device_descriptor(struct quickspi_device *qsdev)
- 		dev_err_once(qsdev->dev, "Read DEVICE_DESCRIPTOR failed, ret = %d\n", ret);
- 		dev_err_once(qsdev->dev, "DEVICE_DESCRIPTOR expected len = %u, actual read = %u\n",
- 			     input_len, read_len);
--		return ret;
-+		return ret ?: -EINVAL;
- 	}
- 
- 	input_rep_type = ((struct input_report_body_header *)read_buf)->input_report_type;
-@@ -318,7 +318,7 @@ int reset_tic(struct quickspi_device *qsdev)
- 		dev_err_once(qsdev->dev, "Read RESET_RESPONSE body failed, ret = %d\n", ret);
- 		dev_err_once(qsdev->dev, "RESET_RESPONSE body expected len = %u, actual = %u\n",
- 			     read_len, actual_read_len);
--		return ret;
-+		return ret ?: -EINVAL;
- 	}
- 
- 	input_rep_type = FIELD_GET(HIDSPI_IN_REP_BDY_HDR_REP_TYPE, reset_response);
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index bd7f93e96e4e4..b73f09d26688a 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -184,7 +184,9 @@ static int uclogic_input_configured(struct hid_device *hdev,
+ 			suffix = "System Control";
+ 			break;
+ 		}
+-	} else {
++	}
++
++	if (suffix) {
+ 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
+ 						 "%s %s", hdev->name, suffix);
+ 		if (!hi->input->name)
 -- 
 2.53.0
 
