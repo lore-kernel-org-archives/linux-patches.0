@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7165257854;
-	Thu, 28 May 2026 20:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D1E2459D1;
+	Thu, 28 May 2026 20:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999400; cv=none; b=ubqpySHjTv4tiNPHh9Y/XW/9H36L1jS1P6FOZSs8Pe3KLTN3a1gQyoXx5jUso5WoblEis0jb9uyo/DIgtK4187klqUp2ZYcHViksVhLYYEwX6FT5P6K/fkOJ3ZG5H5wgz3y8ydReZ2XPQadwS+aGBJRmXvmicibr0r7fpd/njSM=
+	t=1779999403; cv=none; b=Nk7zhiZU4StW1VLM4zC2KN6+JhmbyYynF1n+VcBMlb/z7cjtzs2wXB03yR4OnX8MSuM84QckWuz+aT5B7nffsWxhIGSj/fijPDHtsysg43NWp0s0f7xilTOAyGPTNH2E1jiDexVFU0hYiIn3iffNkyeHOflwpATtswi3btS+WtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999400; c=relaxed/simple;
-	bh=O7Zvf5pMThuZU8TrkpNQv8WtlFzq/e47PBl8g6do0Yc=;
+	s=arc-20240116; t=1779999403; c=relaxed/simple;
+	bh=YsZaaikrlzPIFVWwvhD923QWJ6JiCcKXLUzkrmaeH6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HG8+mez1b/akQhbYnsNiLVuwvk2zaKLcGMVJlSuw4Ra1se5GvF5Q9OFuAb7s6pqdbANk6926je51LPLHEc2y1/3RLgHY3tzRgVeUzDeayMMSB9A1oKtSivayrESJw5tUKnrJ+3hQbwIFx6jvMVJhQctfqVlEbHLYeSct+bDMe2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qf8Yg78J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZeIVE0VOWPBPgrmyqdaTMLjFVshpyv1ddzfHipBT6VWupQjWqncj4vNLujgZMcSIaGw+2rXH4TyMPHzkhMLwoJm2JGSrEnKtVEnQtXhyTCB020Y6LgYxtcmqLVz+KtauGCtwzOkZh2vnTb2i+Ky0QUEit3KweNsLul1nOFhTKoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZb2iLjn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf8Yg78J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DF01F000E9;
-	Thu, 28 May 2026 20:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZb2iLjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015751F000E9;
+	Thu, 28 May 2026 20:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999399;
-	bh=ZwgNxXT0zS26gpbPpaGmhquEmm2f7A4ljY8eKLwhjUU=;
+	s=korg; t=1779999402;
+	bh=tx0neAyvPK7qJ3OVIaoaxL9IdJSPZS9d6h3AoexxnLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qf8Yg78JgMjGK9OrzWnTe/W40O5fKOZqLKd4lrQaZ0z4n0a2x3sNhor8pTVwI3BCP
-	 BdmpWpQ9yDPEWx0OduUIPnq3DA07l2EIddYydZhjBHAlZ/uTuCNzNq6vBx7h+WyLuU
-	 JsfK/L7ec+LHnCHFZaDcqbDa0L9tuNwlNtkn7s0s=
+	b=RZb2iLjn0pgXcgmPdfnKakf6YXnPgMstqQAgkpsTlm0vuHM/UcFGEofqH9qUdSE2+
+	 eQeQKWgNIm7M7ejZcr9E1YnusXdAW5hxTr56T5toKuRVz6ZEMZ4l2R1o0LuVLmCoyP
+	 C/Xd4PjLJeRKJJyyFRBLF3emJmCzifyHA7e40sdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
+	Jann Horn <jannh@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 053/377] Bluetooth: ISO: drop ISO_END frames received without prior ISO_START
-Date: Thu, 28 May 2026 21:44:51 +0200
-Message-ID: <20260528194639.906554789@linuxfoundation.org>
+Subject: [PATCH 6.18 054/377] Bluetooth: bnep: Fix UAF read of dev->name
+Date: Thu, 28 May 2026 21:44:52 +0200
+Message-ID: <20260528194639.934925367@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,47 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit 84c24fb151fc1179355296d7ff29129ac7c42129 upstream.
+commit 59e932ded949fa6f0340bf7c6d7818f962fa4fd2 upstream.
 
-ISO data PDUs carry a packet-boundary flag indicating START, CONT, END
-or SINGLE. The ISO_CONT branch of iso_recv() guards against a missing
-ISO_START by checking conn->rx_len before touching conn->rx_skb, but
-ISO_END does not.
+bnep_add_connection() needs to keep holding the bnep_session_sem while
+reading dev->name (just like bnep_get_connlist() does); otherwise the
+bnep_session() thread can concurrently free the net_device, which can for
+example be triggered by a concurrent bnep_del_connection().
 
-If a peer sends an ISO_END as the first packet on a fresh ISO
-connection, conn->rx_skb is still NULL and conn->rx_len is zero, so
-skb_put(conn->rx_skb, ...) dereferences NULL and oopses. For BIS,
-where receivers sync to a broadcaster without pairing, any broadcaster
-on the air can trigger this.
+(This UAF is fairly uninteresting from a security perspective;
+calling bnep_add_connection() requires passing a capable(CAP_NET_ADMIN)
+check. It also requires completely tearing down a netdev during a fairly
+tight race window.)
 
-Mirror the ISO_CONT check at the top of ISO_END so a stray end fragment
-is logged and dropped instead of crashing the host.
-
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/bnep/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2461,6 +2461,11 @@ int iso_recv(struct hci_dev *hdev, u16 h
- 		break;
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -638,8 +638,8 @@ int bnep_add_connection(struct bnep_conn
+ 		goto failed;
+ 	}
  
- 	case ISO_END:
-+		if (!conn->rx_len) {
-+			BT_ERR("Unexpected end frame (len %d)", skb->len);
-+			goto drop;
-+		}
-+
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
- 					  skb->len);
- 		conn->rx_len -= skb->len;
+-	up_write(&bnep_session_sem);
+ 	strcpy(req->device, dev->name);
++	up_write(&bnep_session_sem);
+ 	return 0;
+ 
+ failed:
 
 
