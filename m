@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB5E26B973;
-	Thu, 28 May 2026 19:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC7815B998;
+	Thu, 28 May 2026 19:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998384; cv=none; b=VOUCShGHqF6TBmZSY7TQT+ifg3GI0umeU0lM7M7e/oHZHgX4iOZ1hCU6gNCIw4S72jTmYXjUEhiVGQFFLLVGiUI7uCzM2VYVYO8gd3un46GWU86nhllf0H7PZ91LCwV8W4/Ithk00VKJjKfor4Mk9Lg+/6/3k3kkZEYqAO51Nqo=
+	t=1779998386; cv=none; b=m03kI1zRvSfx1YPgKCFmF6q7kmNmF7k8mL37QihjV/uuYf+DJSbjcRpZt5vV0v38asvSpg67puotykJnRiZxMzFm9C+PPJWkGrhAlvxSuWKiatrZveBaPhrLjWh6M1zJdu5RUvhUI4Lwb9ikpgHA721R0er0FOWFzeA5BFVVNm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998384; c=relaxed/simple;
-	bh=eAEGnfgWpfYSJC+jB/Gh8Uyl8aWhI2yXkrWiqeXZ2Aw=;
+	s=arc-20240116; t=1779998386; c=relaxed/simple;
+	bh=gOZhcaL9ob2Sj36RsfLSCwq6jTEKHcvnREWoqOkETIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQoF6mjboBzwcRobnu56jH4i04MX/jfd6sBV1QgJKGBp20jXLg4zXwa/4ho2R+tl+ziHZKHNuAAiBCGQHGKgVlpVea2n+5NXqF+LD24s0Jq2PrZZC6VO2mvT/sT1TsRaqQZ7iPb6hienM9A4hfTKv1Ua0sT3f6IUSugOxkQ+o1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apFqFqRU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A0ziJGFpHqYm//1BmyxwHY+7H0eLXXppBEE245i0tyj94Ay8pJAW9cp2NW74oQkTSL9Llfcdy8gO1pvtEcbDIxmJQreKq+6SButsqwNaX3TDWfr5EgLwghYu2BVGngOVruBbo+jdP+C5fdr+9YZ7wiwJ3thMPYflOofNDy8JrQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3lhTWB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apFqFqRU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA821F000E9;
-	Thu, 28 May 2026 19:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3lhTWB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496381F000E9;
+	Thu, 28 May 2026 19:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998383;
-	bh=tdTJHfK6BInjm38k8OKj11cEfQWfivB2f+p8mxzGUFo=;
+	s=korg; t=1779998385;
+	bh=GV3du2oK390Pw0NrKGMJzqmES79puzkkeHpe8KGRS8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apFqFqRU92n9adiMU1t+o2aDJGse6ifaIu7VxTu1WRbDo9H80YIFXNPCR0ZRiKMfL
-	 og27brlg6aroG0jH01UPJicuVuwluVIZH0u5MxGSN8NVc//QaWqbx56NdKNTwKyr67
-	 zHBpIL0BEQns9v5ewGegoiEuKYn+tqNffRs9xjfg=
+	b=w3lhTWB908ArXnk/DCn66So6WcyFTf6goa9B3NXLzsHjwjr9+ry6s95AwIFvvLjqk
+	 r9gY47ep9CZql6Ol3llmNQzRoJuWQ/nEFlWwW1zVpL1t+mVZaaJKuc1LjRfogO97QT
+	 0Wh7WBSL3CKdCNbeHlF/An7nnghO7Jc4z+S12V4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ido Schimmel <idosch@nvidia.com>,
-	syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.0 153/461] batman-adv: bla: avoid NULL-ptr deref for claim via dropped interface
-Date: Thu, 28 May 2026 21:44:42 +0200
-Message-ID: <20260528194651.468030098@linuxfoundation.org>
+	Vignesh R <vigneshr@ti.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 118/461] spi: ti-qspi: fix use-after-free after DMA setup failure
+Date: Thu, 28 May 2026 21:44:07 +0200
+Message-ID: <20260528194650.391171060@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit f80d3d98d2ff78d9e2fe5d68b1f45948c4f7bd24 upstream.
+commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
 
-Without rtnl_lock held, a hardif might be retrieved as primary interface of
-a meshif, but then (while operating on this interface) getting decoupled
-from the mesh interface. In this case, the meshif still exists but the
-pointer from the primary hardif to the meshif is set to NULL.
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-The mesh_iface must be checked first to be non-NULL before continuing to
-send an ARP request using meshif.
+Make sure to clear the DMA channel pointer also if buffer allocation
+fails to avoid passing a pointer to the released channel to the DMA
+engine (or trying to free the channel a second time on late probe errors
+or driver unbind).
 
-Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Reported-by: syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9fdcc9f05a98a540b816
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
+
+Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
+Cc: stable@vger.kernel.org	# 4.12
+Cc: Vignesh R <vigneshr@ti.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-ti-qspi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -356,12 +356,14 @@ static void batadv_bla_send_claim(struct
- 	       sizeof(local_claim_dest));
- 	local_claim_dest.type = claimtype;
- 
--	mesh_iface = primary_if->mesh_iface;
-+	mesh_iface = READ_ONCE(primary_if->mesh_iface);
-+	if (!mesh_iface)
-+		goto out;
- 
- 	skb = arp_create(ARPOP_REPLY, ETH_P_ARP,
- 			 /* IP DST: 0.0.0.0 */
- 			 zeroip,
--			 primary_if->mesh_iface,
-+			 mesh_iface,
- 			 /* IP SRC: 0.0.0.0 */
- 			 zeroip,
- 			 /* Ethernet DST: Broadcast */
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -867,6 +867,7 @@ static int ti_qspi_probe(struct platform
+ 		dev_err(qspi->dev,
+ 			"dma_alloc_coherent failed, using PIO mode\n");
+ 		dma_release_channel(qspi->rx_chan);
++		qspi->rx_chan = NULL;
+ 		goto no_dma;
+ 	}
+ 	host->dma_rx = qspi->rx_chan;
 
 
