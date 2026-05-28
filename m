@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C95F2C15AC;
-	Thu, 28 May 2026 20:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1164134887B;
+	Thu, 28 May 2026 20:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000660; cv=none; b=JAhZxj2yKJg7m18Gn6J0BsZyVUAUHns7hatlvfIFzLeIGDo21IuELLY8qtso6LrIr0SlhDx2VskkmoMlX1C9NGzKSoisKwsqK0bQOGlnT9ekGNu9EgkHLquvGB7BjG0u0ZP0Er/H9wzHUJRpnVVcVJ37N20pqj/dPXId0051If0=
+	t=1780000663; cv=none; b=TugDdCh3snhTOYa04UZZojzTkyjpatjGpaYthRVylHc455TQmaio9vH57Lghvol3Hmoww+rc0aaYOlTV0MsSuB4FkizK68ZuOnBLONW4M5vgq/TJEYtPwREx1BwTCoI0ChbX6g7uHuHd9zHaLF1f85w+A0CBXE9I+h6tGJwPA4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000660; c=relaxed/simple;
-	bh=uvx62BL4myU7I2o1uGE9M/aQA3W4sVH3FSn/iH+muaI=;
+	s=arc-20240116; t=1780000663; c=relaxed/simple;
+	bh=ywjBL2Q3kBnorYPOaNRj2BJw8duSnhD/VxFGgZqOC14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riIuup5BEzw5VxtlVJkzozfPAKbCEQ6s51zyA1j9ZSDZmIfs6n1E7SGeAGgnH6cGOBeRGuxgsPEjbOTk2qyiKvryKZlBxbzIbgnARWFelyHTDNY/IK/1Rkw1FzPhLF4vpuD1eH+psj6BZJ5zyLIdGPrYPeTSVsfsDq9q/6UnzII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOP7H9fa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LdYXDaXFwxgRxL7BMcV3PP0gcEMuc76KsFQXAtdGj3Okv0t7+NsZpVIHgQEAdzNV9AgA6GEnMVSUThBh9vT4RTAHeidNF5jdB5s6YTBOVE6+Rcci61twyOG7mjr78yQ1t3lIZpeONki4EKzfq5YWUGgbV1RLmgs5zma3MydWsek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtPBkoke; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOP7H9fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619781F000E9;
-	Thu, 28 May 2026 20:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtPBkoke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261A21F000E9;
+	Thu, 28 May 2026 20:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000658;
-	bh=Amt14/xPfrbcwAcL2RtfTFVcs9+O78F0S7izepDGvEg=;
+	s=korg; t=1780000661;
+	bh=sgcSvI9Z2Yv+8sOXXLzPkLe8xgkb9un+oRP5CuYLC7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AOP7H9faP5yg8Uax0QdT1xRTKhBS9hy7SlbXw4ZUT3x+h2FtLqyRsYdYGQJb0m/o3
-	 8zKreyF79fKP4ykoZe+3/V14ysf7MwSKgyO5GHmxhwH6fh+rftYSJj61UdZHk3kG0x
-	 QFnrSWbT+EA4FDzjxGYjS7kUkrCUvtMFgnCOrPMk=
+	b=GtPBkokeUIEFjoK/hXLNFIcobmbsFr+ftf8hUOXWkI7E0oV2aew3lXt4CNiZcjaIi
+	 Cwug6GBX3k14Sg3Lz/Z5Grx124KpTppAjqpevwKXNkx9xWiAGotLLtyhfPTEG/XrYQ
+	 hFnhPSl2uyicaQKFUJHzjxYndDw4zUJnvzAfsqPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,13 +32,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ruijie Li <ruijieli51@gmail.com>,
-	Zhanpeng Li <lzhanpeng2025@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 122/272] batman-adv: clear current gateway during teardown
-Date: Thu, 28 May 2026 21:48:16 +0200
-Message-ID: <20260528194632.795086839@linuxfoundation.org>
+Subject: [PATCH 6.12 123/272] batman-adv: dat: handle forward allocation error
+Date: Thu, 28 May 2026 21:48:17 +0200
+Message-ID: <20260528194632.822848331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -57,48 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruijie Li <ruijieli51@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit a340a51ed801eab7bb454150c226323b865263cc upstream.
+commit 2d8826a2d3657cea66fb0370f9e521575a673871 upstream.
 
-batadv_gw_node_free() removes the gateway list entries during mesh teardown,
-but it does not clear the currently selected gateway. This leaves stale
-gateway state behind across cleanup and can break a later mesh recreation.
+batadv_dat_forward_data() calls pskb_copy_for_clone() to duplicate an skb
+for each DHT candidate, but does not check the return value before passing
+it to batadv_send_skb_prepare_unicast_4addr(). That function dereferences
+the skb unconditionally, so a failed allocation triggers a NULL pointer
+dereference.
 
-Clear bat_priv->gw.curr_gw before walking the gateway list so the selected
-gateway reference is dropped as part of teardown.
+Skip forwarding to the current DHT candidate on allocation failure.
 
-Fixes: 2265c1410864 ("batman-adv: gateway election code refactoring")
 Cc: stable@kernel.org
+Fixes: 785ea1144182 ("batman-adv: Distributed ARP Table - create DHT helper functions")
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
-Signed-off-by: Zhanpeng Li <lzhanpeng2025@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Yuan Tan <yuantan098@gmail.com>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/gateway_client.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/batman-adv/distributed-arp-table.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/batman-adv/gateway_client.c
-+++ b/net/batman-adv/gateway_client.c
-@@ -479,10 +479,14 @@ void batadv_gw_node_delete(struct batadv
-  */
- void batadv_gw_node_free(struct batadv_priv *bat_priv)
- {
-+	struct batadv_gw_node *curr_gw;
- 	struct batadv_gw_node *gw_node;
- 	struct hlist_node *node_tmp;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -698,6 +698,9 @@ static bool batadv_dat_forward_data(stru
+ 			goto free_orig;
  
- 	spin_lock_bh(&bat_priv->gw.list_lock);
-+	curr_gw = rcu_replace_pointer(bat_priv->gw.curr_gw, NULL, true);
-+	batadv_gw_node_put(curr_gw);
+ 		tmp_skb = pskb_copy_for_clone(skb, GFP_ATOMIC);
++		if (!tmp_skb)
++			goto free_neigh;
 +
- 	hlist_for_each_entry_safe(gw_node, node_tmp,
- 				  &bat_priv->gw.gateway_list, list) {
- 		hlist_del_init_rcu(&gw_node->list);
+ 		if (!batadv_send_skb_prepare_unicast_4addr(bat_priv, tmp_skb,
+ 							   cand[i].orig_node,
+ 							   packet_subtype)) {
 
 
