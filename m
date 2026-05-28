@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB22C11F9;
-	Thu, 28 May 2026 20:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFE32C11F9;
+	Thu, 28 May 2026 20:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999589; cv=none; b=jdMT/4SI6siNtBcjfwm5y6TfRHaNWHfex7iKlliWZBLgW5einjVu4OZCkMYK8213w48qLQnnh+681WYjMQXnyccsNf6d9oqzqjZ/71VTuL+uBvKCX/WBA4WIqS1nSwXMcMGZPNrvHgEdli1TxV2iVp7TMHg4/clXO5oY9dkbThY=
+	t=1779999592; cv=none; b=lXyI4TGqfLAEcAeYMo+MLrd0oCBfNchdhkioOQ9bhwQmy2PBEv6ddcAqmIrD5zBBhtUbXEN69MKSiZOJo4n22DN48lz7DtmnVv6zCSyCRKitMag+kK24d2UISIUFaq3lFiqGhDsiCLN0IhDhwNAz3Sr8sGYXsYoFJKvrN/MmcTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999589; c=relaxed/simple;
-	bh=98/esds2eCQwjli5sZS64tLPmVyWBdDGXoYr9BP7Jns=;
+	s=arc-20240116; t=1779999592; c=relaxed/simple;
+	bh=bQqHC6gzj5QQT33aukNsS7ZhqIeEb24FsPsCYRLd7aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Elpbl1QrtY9jxbkLE4mTRQJIo35Ho1UaP9T9x3S4vurrXbHk4fSxF4y9wXf+BiM1rmaNPUZnJIOiQs30rnG15De7IuQZMOQgIEk3R92Fuu7e+tcE6i0QfoS07evvROGTN4vzP6BnB7/isFe798qkoCxyf9YRHd5ocwMoQnLsnCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr1NWwzN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vzy9hGEA5N/BMnaSvWNAt/GKGF1djy86nilrtYRn2pShKXjWL4P7cUF/GfRCOtWQHCZxz4P4fpzoEiJyEB1XF88Hak5BjO8Oi91z+J9jHETRfckl3qf+6GyhsmVhgfH1bi4aCA7GxkdZK/mhTLKFt9rhdquu01koprtGAck5+W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+Uo/HkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr1NWwzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077BC1F000E9;
-	Thu, 28 May 2026 20:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+Uo/HkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCD61F000E9;
+	Thu, 28 May 2026 20:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999588;
-	bh=igEdafO1BvdeykcyTin45WOLs5NIMIii0ScH9j24Dx4=;
+	s=korg; t=1779999591;
+	bh=L5U6ntr9kFfEmk9OG5WMnOomDPJtlvdNIR+WidRc41k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr1NWwzNLcX2aWAXOXJeppEFx8fqBjtoKifKACS86XNZ/IRgwcTDYxEQECGJj68Ms
-	 QWq4WS/50eapwEQAINCjUI5TKPuXHvMY8Hnfv+B3SJ75l+Fo+Y1r20z41U48w0cuqU
-	 K6bcPFTsqRZAPPsKdvvgaQOYQOPaNwVEKZzy1Z7Q=
+	b=n+Uo/HkXkf0zEmwjBurdviKWYsNzS6pccwcDjT4Pvlj2hJvM0lAH+sJbhlCDW33Y/
+	 3IhHB6bdmm0euaZCv9TpN4dh9Kt+2WKwQqiTtBVrvVuaRx0Pj+bgk0PC3iNuuLPMFx
+	 jLrlR7f1e45uX/sS+8zKzBQ8l+RgZwokFfV72tCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.18 113/377] drm/bridge: chipone-icn6211: use devm_drm_bridge_add in i2c probe
-Date: Thu, 28 May 2026 21:45:51 +0200
-Message-ID: <20260528194641.604719390@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 122/377] RDMA/siw: Reject MPA FPDU length underflow before signed receive math
+Date: Thu, 28 May 2026 21:46:00 +0200
+Message-ID: <20260528194641.873758429@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,36 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 73d01051e8040c0b1de7fd26b3b8d0c2ffa6895c upstream.
+commit 0ce1bc9e46ecabe84772bb561e373c0d9876d6f2 upstream.
 
-Use devm_drm_bridge_add() so the bridge is released if probe
-fails after registration, and drop drm_bridge_remove() in chipone_i2c_probe.
+A malicious connected siw peer can send an iWARP FPDU whose MPA length
+field (c_hdr->mpa_len, 16 bit big-endian, peer-controlled) is smaller
+than the fixed DDP/RDMAP header for the announced opcode. Soft-iWARP
+parses the full header in siw_get_hdr() based on iwarp_pktinfo[opcode]
+.hdr_len, but never compares mpa_len against that header length.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: 8dde6f7452a1 ("drm: bridge: icn6211: Add I2C configuration support")
+siw_tcp_rx_data() then derives
+
+    srx->fpdu_part_rem = be16_to_cpu(mpa_len) - fpdu_part_rcvd
+                         + MPA_HDR_SIZE;
+
+where fpdu_part_rcvd equals iwarp_pktinfo[opcode].hdr_len at this
+point. For a tagged WRITE (hdr_len 16, MPA_HDR_SIZE 2) the smallest
+on-wire mpa_len of 0 yields fpdu_part_rem = -14, and any mpa_len below
+hdr_len - MPA_HDR_SIZE underflows to a negative int.
+
+The signed value then flows into siw_proc_write()/siw_proc_rresp() as
+
+    bytes = min(srx->fpdu_part_rem, srx->skb_new);
+
+is handed to siw_check_mem() as an int len (whose interval check
+addr + len > mem->va + mem->len is satisfied for a valid base when
+len is negative), and reaches siw_rx_data() -> siw_rx_kva() /
+siw_rx_umem() -> skb_copy_bits() as a signed copy length. The header
+copy branch in skb_copy_bits() promotes that to size_t, producing a
+multi-gigabyte read.
+
+KASAN under a KUnit harness that drives the real kernel TCP receive
+path -- a loopback AF_INET socketpair, the malformed FPDU written via
+kernel_sendmsg, sk_data_ready firing in softirq, tcp_read_sock
+dispatching to siw_tcp_rx_data -- reports:
+
+    BUG: KASAN: use-after-free in skb_copy_bits+0x284/0x480
+    Read of size 4294967295 at addr ffff888...
+    Call Trace:
+     skb_copy_bits
+     siw_rx_kva
+     siw_rx_data
+     siw_check_mem
+     siw_proc_write
+     siw_tcp_rx_data
+     __tcp_read_sock
+     siw_qp_llp_data_ready
+     tcp_data_ready
+     tcp_data_queue
+
+Add the missing invariant at the earliest point where the peer header
+is fully assembled. iwarp_pktinfo[*].hdr_len - MPA_HDR_SIZE is exactly
+the value the siw transmitter uses as the minimum mpa_len for each
+opcode (drivers/infiniband/sw/siw/siw_qp.c:33), so this matches the
+protocol contract. Out-of-range FPDUs terminate the connection with
+TERM_ERROR_LAYER_LLP / LLP_ETYPE_MPA / LLP_ECODE_FPDU_START -- which
+is RFC 5044 Section 8 error code 3 ("Marker and ULPDU Length fields
+do not agree on the start of an FPDU"), the correct framing-error
+class for this inconsistency.
+
+Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Link: https://patch.msgid.link/r/20260513175325.2042630-2-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260430194944.78119-1-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/chipone-icn6211.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_qp_rx.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/gpu/drm/bridge/chipone-icn6211.c
-+++ b/drivers/gpu/drm/bridge/chipone-icn6211.c
-@@ -758,7 +758,9 @@ static int chipone_i2c_probe(struct i2c_
- 	dev_set_drvdata(dev, icn);
- 	i2c_set_clientdata(client, icn);
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -1082,6 +1082,21 @@ static int siw_get_hdr(struct siw_rx_str
+ 	}
  
--	drm_bridge_add(&icn->bridge);
-+	ret = devm_drm_bridge_add(dev, &icn->bridge);
-+	if (ret)
-+		return ret;
- 
- 	return chipone_dsi_host_attach(icn);
- }
+ 	/*
++	 * Peer-controlled mpa_len must not underflow srx->fpdu_part_rem
++	 * in siw_tcp_rx_data(); a negative value flows as a signed copy
++	 * length into siw_check_mem() and skb_copy_bits().
++	 */
++	if (unlikely(be16_to_cpu(c_hdr->mpa_len) + MPA_HDR_SIZE <
++		     iwarp_pktinfo[opcode].hdr_len)) {
++		pr_warn_ratelimited("siw: short mpa_len %u for opcode %u (hdr_len %u)\n",
++				    be16_to_cpu(c_hdr->mpa_len), opcode,
++				    iwarp_pktinfo[opcode].hdr_len);
++		siw_init_terminate(rx_qp(srx), TERM_ERROR_LAYER_LLP,
++				   LLP_ETYPE_MPA, LLP_ECODE_FPDU_START, 0);
++		return -EINVAL;
++	}
++
++	/*
+ 	 * DDP/RDMAP header receive completed. Check if the current
+ 	 * DDP segment starts a new RDMAP message or continues a previously
+ 	 * started RDMAP message.
 
 
