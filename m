@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0072B340409;
-	Thu, 28 May 2026 19:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F433F5B4;
+	Thu, 28 May 2026 19:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998148; cv=none; b=jPrA6+A/T+xjgcGYwC13bQdmNQQW1+WlRLsrbGLz/V66gVP6RsTB/q9iDKaeB/e81TKlf5UrtoWiSnwBqsspypCWjh6S3SiIuKbCuAn/l2OybP5w43X//0iY1ha9Bh6jIj6X2NZyCpyYqMrMTCulLfR9JLsdPAfsr1uBB0rh9U0=
+	t=1779998150; cv=none; b=hHSRIlw71tZKTkYnsz8Dvto14+zd3YPOzzCurj5izvwcaaXVzTN+FqP5bkfs8OnnDDsj/7f1DeQZp5Vj1tqvI03axoRdyl7sNO5HmH5IB1mVKA2zwSZFMB6HI8KpBVvvB0tuNe5/St2x3NBnA+Oz6lmBMgc8vSlotomPx7FGYOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998148; c=relaxed/simple;
-	bh=SBZuxD1YBsw7jlzVaAvWab4KR2j+ZzF7kw06Lhwc6yg=;
+	s=arc-20240116; t=1779998150; c=relaxed/simple;
+	bh=Cbm3I8KvxEN7BCkN4x1HeGVBdLC9uXaE2yl6vz4L/II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EblY6LSD+HA5zNGoxetgjCd89iZLl+xbEB9vNPcgYOIf6e6h2MZxGMWM1t5DXjsUJDsmBvvSBYz97fQ0c7VcW3jeymIRnDJfLgF7e5T1hyF0eGJyrUWVWMljtZ9Hp4oys8pV9c28+8TKzuFyWHoqi6kMBF5h4K40fZ8SqWF54aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pbkpgq8J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9y4zX6aJX7s2HcWyKtcxYfYqoHjSiU3Yw9lr4gVl85meDH3gplbAFi+ozYThZMoHRQWy2BxJvQkEwzNm1lsdhCWIpZVR/yyu6Klaz4DoOo4Zd+heA9PMNdVYCFhd1J+mYOcgINftHfU/fX+MrQ3I3naS6IxWPFw2/a1q/f6pYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ou0atcL4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pbkpgq8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A10C1F000E9;
-	Thu, 28 May 2026 19:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou0atcL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F281D1F000E9;
+	Thu, 28 May 2026 19:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998146;
-	bh=nirqVfeEm9E15KRQA+Oq4+FxiGUPblbB0jG4rxX67E8=;
+	s=korg; t=1779998149;
+	bh=3lAy0neJGuWxMiknJX3L5O/dZ3xcHpqlXa8jrj/scEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pbkpgq8JTWHZKjXnByL8iM8x36hcfRzvseoe/a80tNkkNy+FKC2PoAQcXbsm5PaQe
-	 OF5gTXzGwa4Yz6Subv/uBtYDkwdB8uZwcgePnmrxbu0DCGYk1d08dvjzUZRUM82iVc
-	 6lPHHgOZmd1En8IEruPvWKAvBCHC89tGzV8Kj87c=
+	b=ou0atcL4mkRiFphPSFCwZ1UTjfb+5bBoHrZu4VClg+Rx4S0I/NJ3lIbZZzC0YgTOF
+	 bwoNmdFvyZEtfAfcuyPzx+rQyNbyPqu2HwHAetknSzGWTujGY9rOFhxcWJ0ypJeC7L
+	 KkKOAawbk38bezFb+3ZGjf9Q2qN64/nxa9H8B4hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ian Rogers <irogers@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.0 069/461] ring-buffer: Flush and stop persistent ring buffer on panic
-Date: Thu, 28 May 2026 21:43:18 +0200
-Message-ID: <20260528194648.921544257@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.0 070/461] wifi: mac80211: capture fast-RX rate before mesh reuses skb->cb
+Date: Thu, 28 May 2026 21:43:19 +0200
+Message-ID: <20260528194648.950451495@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -55,327 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit a494d3c8d5392bcdff83c2a593df0c160ff9f322 upstream.
+commit d71c841be5d9e586ee7f36c0dc8ed4db0d9a1349 upstream.
 
-On real hardware, panic and machine reboot may not flush hardware cache
-to memory. This means the persistent ring buffer, which relies on a
-coherent state of memory, may not have its events written to the buffer
-and they may be lost. Moreover, there may be inconsistency with the
-counters which are used for validation of the integrity of the
-persistent ring buffer which may cause all data to be discarded.
+ieee80211_invoke_fast_rx() reads RX status through
+IEEE80211_SKB_RXCB(skb), which aliases the same skb->cb storage
+that ieee80211_rx_mesh_data() reuses as IEEE80211_TX_INFO.  In the
+unicast forward path, mesh_data does:
 
-To avoid this issue, stop recording of the ring buffer on panic and
-flush the cache of the ring buffer's memory.
+	info = IEEE80211_SKB_CB(fwd_skb);
+	memset(info, 0, sizeof(*info));
 
-Fixes: e645535a954a ("tracing: Add option to use memmapped memory for trace boot instance")
+on the same skb the caller still names via rx->skb, then either
+queues the skb for TX (success) or kfree_skb()'s it (no-route)
+before returning RX_QUEUED.  The caller's RX_QUEUED arm then
+calls sta_stats_encode_rate(status) on memory that is either
+zeroed (success path) or freed (no-route path).  The latter is
+KASAN slab-use-after-free in ieee80211_prepare_and_rx_handle.
+
+Fix by encoding the rate from status before invoking
+ieee80211_rx_mesh_data(), so the RX_QUEUED arm consumes a value
+captured while status was still backed by valid memory.
+
+Fixes: 3468e1e0c639 ("wifi: mac80211: add mesh fast-rx support")
 Cc: stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Ian Rogers <irogers@google.com>
-Link: https://patch.msgid.link/177751969602.2136606.12031934362587643488.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260509043427.60322-2-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/asm/Kbuild        |    1 +
- arch/arc/include/asm/Kbuild          |    1 +
- arch/arm/include/asm/Kbuild          |    1 +
- arch/arm64/include/asm/ring_buffer.h |   10 ++++++++++
- arch/csky/include/asm/Kbuild         |    1 +
- arch/hexagon/include/asm/Kbuild      |    1 +
- arch/loongarch/include/asm/Kbuild    |    1 +
- arch/m68k/include/asm/Kbuild         |    1 +
- arch/microblaze/include/asm/Kbuild   |    1 +
- arch/mips/include/asm/Kbuild         |    1 +
- arch/nios2/include/asm/Kbuild        |    1 +
- arch/openrisc/include/asm/Kbuild     |    1 +
- arch/parisc/include/asm/Kbuild       |    1 +
- arch/powerpc/include/asm/Kbuild      |    1 +
- arch/riscv/include/asm/Kbuild        |    1 +
- arch/s390/include/asm/Kbuild         |    1 +
- arch/sh/include/asm/Kbuild           |    1 +
- arch/sparc/include/asm/Kbuild        |    1 +
- arch/um/include/asm/Kbuild           |    1 +
- arch/x86/include/asm/Kbuild          |    1 +
- arch/xtensa/include/asm/Kbuild       |    1 +
- include/asm-generic/ring_buffer.h    |   13 +++++++++++++
- kernel/trace/ring_buffer.c           |   22 ++++++++++++++++++++++
- 23 files changed, 65 insertions(+)
- create mode 100644 arch/arm64/include/asm/ring_buffer.h
- create mode 100644 include/asm-generic/ring_buffer.h
+ net/mac80211/rx.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/alpha/include/asm/Kbuild
-+++ b/arch/alpha/include/asm/Kbuild
-@@ -5,4 +5,5 @@ generic-y += agp.h
- generic-y += asm-offsets.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += text-patching.h
---- a/arch/arc/include/asm/Kbuild
-+++ b/arch/arc/include/asm/Kbuild
-@@ -5,5 +5,6 @@ generic-y += extable.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
- generic-y += parport.h
-+generic-y += ring_buffer.h
- generic-y += user.h
- generic-y += text-patching.h
---- a/arch/arm/include/asm/Kbuild
-+++ b/arch/arm/include/asm/Kbuild
-@@ -3,6 +3,7 @@ generic-y += early_ioremap.h
- generic-y += extable.h
- generic-y += flat.h
- generic-y += parport.h
-+generic-y += ring_buffer.h
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4941,6 +4941,7 @@ static bool ieee80211_invoke_fast_rx(str
+ 		u8 sa[ETH_ALEN];
+ 	} addrs __aligned(2);
+ 	struct ieee80211_sta_rx_stats *stats;
++	u32 encoded_rate;
  
- generated-y += mach-types.h
- generated-y += unistd-nr.h
---- /dev/null
-+++ b/arch/arm64/include/asm/ring_buffer.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+#ifndef _ASM_ARM64_RING_BUFFER_H
-+#define _ASM_ARM64_RING_BUFFER_H
+ 	/* for parallel-rx, we need to have DUP_VALIDATED, otherwise we write
+ 	 * to a common data structure; drivers can implement that per queue
+@@ -5048,11 +5049,14 @@ static bool ieee80211_invoke_fast_rx(str
+ 	/* push the addresses in front */
+ 	memcpy(skb_push(skb, sizeof(addrs)), &addrs, sizeof(addrs));
+ 
++	/* capture before mesh forward may memset or free skb->cb */
++	encoded_rate = sta_stats_encode_rate(status);
 +
-+#include <asm/cacheflush.h>
-+
-+/* Flush D-cache on persistent ring buffer */
-+#define arch_ring_buffer_flush_range(start, end)	dcache_clean_pop(start, end)
-+
-+#endif /* _ASM_ARM64_RING_BUFFER_H */
---- a/arch/csky/include/asm/Kbuild
-+++ b/arch/csky/include/asm/Kbuild
-@@ -9,6 +9,7 @@ generic-y += qrwlock.h
- generic-y += qrwlock_types.h
- generic-y += qspinlock.h
- generic-y += parport.h
-+generic-y += ring_buffer.h
- generic-y += user.h
- generic-y += vmlinux.lds.h
- generic-y += text-patching.h
---- a/arch/hexagon/include/asm/Kbuild
-+++ b/arch/hexagon/include/asm/Kbuild
-@@ -5,4 +5,5 @@ generic-y += extable.h
- generic-y += iomap.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += text-patching.h
---- a/arch/loongarch/include/asm/Kbuild
-+++ b/arch/loongarch/include/asm/Kbuild
-@@ -10,5 +10,6 @@ generic-y += qrwlock.h
- generic-y += user.h
- generic-y += ioctl.h
- generic-y += mmzone.h
-+generic-y += ring_buffer.h
- generic-y += statfs.h
- generic-y += text-patching.h
---- a/arch/m68k/include/asm/Kbuild
-+++ b/arch/m68k/include/asm/Kbuild
-@@ -3,5 +3,6 @@ generated-y += syscall_table.h
- generic-y += extable.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += spinlock.h
- generic-y += text-patching.h
---- a/arch/microblaze/include/asm/Kbuild
-+++ b/arch/microblaze/include/asm/Kbuild
-@@ -5,6 +5,7 @@ generic-y += extable.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
- generic-y += parport.h
-+generic-y += ring_buffer.h
- generic-y += syscalls.h
- generic-y += tlb.h
- generic-y += user.h
---- a/arch/mips/include/asm/Kbuild
-+++ b/arch/mips/include/asm/Kbuild
-@@ -12,5 +12,6 @@ generic-y += mcs_spinlock.h
- generic-y += parport.h
- generic-y += qrwlock.h
- generic-y += qspinlock.h
-+generic-y += ring_buffer.h
- generic-y += user.h
- generic-y += text-patching.h
---- a/arch/nios2/include/asm/Kbuild
-+++ b/arch/nios2/include/asm/Kbuild
-@@ -5,6 +5,7 @@ generic-y += cmpxchg.h
- generic-y += extable.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += spinlock.h
- generic-y += user.h
- generic-y += text-patching.h
---- a/arch/openrisc/include/asm/Kbuild
-+++ b/arch/openrisc/include/asm/Kbuild
-@@ -8,4 +8,5 @@ generic-y += spinlock_types.h
- generic-y += spinlock.h
- generic-y += qrwlock_types.h
- generic-y += qrwlock.h
-+generic-y += ring_buffer.h
- generic-y += user.h
---- a/arch/parisc/include/asm/Kbuild
-+++ b/arch/parisc/include/asm/Kbuild
-@@ -4,4 +4,5 @@ generated-y += syscall_table_64.h
- generic-y += agp.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += user.h
---- a/arch/powerpc/include/asm/Kbuild
-+++ b/arch/powerpc/include/asm/Kbuild
-@@ -5,4 +5,5 @@ generated-y += syscall_table_spu.h
- generic-y += agp.h
- generic-y += mcs_spinlock.h
- generic-y += qrwlock.h
-+generic-y += ring_buffer.h
- generic-y += early_ioremap.h
---- a/arch/riscv/include/asm/Kbuild
-+++ b/arch/riscv/include/asm/Kbuild
-@@ -14,5 +14,6 @@ generic-y += ticket_spinlock.h
- generic-y += qrwlock.h
- generic-y += qrwlock_types.h
- generic-y += qspinlock.h
-+generic-y += ring_buffer.h
- generic-y += user.h
- generic-y += vmlinux.lds.h
---- a/arch/s390/include/asm/Kbuild
-+++ b/arch/s390/include/asm/Kbuild
-@@ -7,3 +7,4 @@ generated-y += unistd_nr.h
- generic-y += asm-offsets.h
- generic-y += mcs_spinlock.h
- generic-y += mmzone.h
-+generic-y += ring_buffer.h
---- a/arch/sh/include/asm/Kbuild
-+++ b/arch/sh/include/asm/Kbuild
-@@ -3,4 +3,5 @@ generated-y += syscall_table.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
- generic-y += parport.h
-+generic-y += ring_buffer.h
- generic-y += text-patching.h
---- a/arch/sparc/include/asm/Kbuild
-+++ b/arch/sparc/include/asm/Kbuild
-@@ -4,4 +4,5 @@ generated-y += syscall_table_64.h
- generic-y += agp.h
- generic-y += kvm_para.h
- generic-y += mcs_spinlock.h
-+generic-y += ring_buffer.h
- generic-y += text-patching.h
---- a/arch/um/include/asm/Kbuild
-+++ b/arch/um/include/asm/Kbuild
-@@ -17,6 +17,7 @@ generic-y += module.lds.h
- generic-y += parport.h
- generic-y += percpu.h
- generic-y += preempt.h
-+generic-y += ring_buffer.h
- generic-y += runtime-const.h
- generic-y += softirq_stack.h
- generic-y += switch_to.h
---- a/arch/x86/include/asm/Kbuild
-+++ b/arch/x86/include/asm/Kbuild
-@@ -14,3 +14,4 @@ generic-y += early_ioremap.h
- generic-y += fprobe.h
- generic-y += mcs_spinlock.h
- generic-y += mmzone.h
-+generic-y += ring_buffer.h
---- a/arch/xtensa/include/asm/Kbuild
-+++ b/arch/xtensa/include/asm/Kbuild
-@@ -6,5 +6,6 @@ generic-y += mcs_spinlock.h
- generic-y += parport.h
- generic-y += qrwlock.h
- generic-y += qspinlock.h
-+generic-y += ring_buffer.h
- generic-y += user.h
- generic-y += text-patching.h
---- /dev/null
-+++ b/include/asm-generic/ring_buffer.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Generic arch dependent ring_buffer macros.
-+ */
-+#ifndef __ASM_GENERIC_RING_BUFFER_H__
-+#define __ASM_GENERIC_RING_BUFFER_H__
-+
-+#include <linux/cacheflush.h>
-+
-+/* Flush cache on ring buffer range if needed. Do nothing by default. */
-+#define arch_ring_buffer_flush_range(start, end)	do { } while (0)
-+
-+#endif /* __ASM_GENERIC_RING_BUFFER_H__ */
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -6,6 +6,7 @@
-  */
- #include <linux/sched/isolation.h>
- #include <linux/trace_recursion.h>
-+#include <linux/panic_notifier.h>
- #include <linux/trace_events.h>
- #include <linux/ring_buffer.h>
- #include <linux/trace_clock.h>
-@@ -30,6 +31,7 @@
- #include <linux/oom.h>
- #include <linux/mm.h>
- 
-+#include <asm/ring_buffer.h>
- #include <asm/local64.h>
- #include <asm/local.h>
- #include <asm/setup.h>
-@@ -589,6 +591,7 @@ struct trace_buffer {
- 
- 	unsigned long			range_addr_start;
- 	unsigned long			range_addr_end;
-+	struct notifier_block		flush_nb;
- 
- 	struct ring_buffer_meta		*meta;
- 
-@@ -2472,6 +2475,16 @@ static void rb_free_cpu_buffer(struct ri
- 	kfree(cpu_buffer);
- }
- 
-+/* Stop recording on a persistent buffer and flush cache if needed. */
-+static int rb_flush_buffer_cb(struct notifier_block *nb, unsigned long event, void *data)
-+{
-+	struct trace_buffer *buffer = container_of(nb, struct trace_buffer, flush_nb);
-+
-+	ring_buffer_record_off(buffer);
-+	arch_ring_buffer_flush_range(buffer->range_addr_start, buffer->range_addr_end);
-+	return NOTIFY_DONE;
-+}
-+
- static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
- 					 int order, unsigned long start,
- 					 unsigned long end,
-@@ -2591,6 +2604,12 @@ static struct trace_buffer *alloc_buffer
- 
- 	mutex_init(&buffer->mutex);
- 
-+	/* Persistent ring buffer needs to flush cache before reboot. */
-+	if (start && end) {
-+		buffer->flush_nb.notifier_call = rb_flush_buffer_cb;
-+		atomic_notifier_chain_register(&panic_notifier_list, &buffer->flush_nb);
-+	}
-+
- 	return_ptr(buffer);
- 
-  fail_free_buffers:
-@@ -2678,6 +2697,9 @@ ring_buffer_free(struct trace_buffer *bu
- {
- 	int cpu;
- 
-+	if (buffer->range_addr_start && buffer->range_addr_end)
-+		atomic_notifier_chain_unregister(&panic_notifier_list, &buffer->flush_nb);
-+
- 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
- 
- 	irq_work_sync(&buffer->irq_work.work);
+ 	res = ieee80211_rx_mesh_data(rx->sdata, rx->sta, rx->skb);
+ 	switch (res) {
+ 	case RX_QUEUED:
+ 		stats->last_rx = jiffies;
+-		stats->last_rate = sta_stats_encode_rate(status);
++		stats->last_rate = encoded_rate;
+ 		return true;
+ 	case RX_CONTINUE:
+ 		break;
 
 
