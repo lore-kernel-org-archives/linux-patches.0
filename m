@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFE732AAD6;
-	Thu, 28 May 2026 20:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD6C2EF652;
+	Thu, 28 May 2026 20:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000795; cv=none; b=nuwivny6f1O6HFz0pClhS11xSaxwZDTufRHniX2XriqzAjEyv1k9jZU+z5hHp3IDB5S0HyxqckkaD41av6NERaSJE6noidLJz3BZlwwWo3UqrNSdiosGewbAyCJzRY8MaXdwM5DVc9HJ8ZgYaND80kigYV2MNyIHkSHnPIl4JgA=
+	t=1780000798; cv=none; b=b7L4XsGnqQ+NjodmckqjsTbBatFp/MzOjHD7sn+58Ma106uN13vEVS2UxgZm05gqS/ZUkeWk83eW8yL5BMT304Xp///l/0XAzqUTy3Zmvn9UTf4/hB64xjcWVraR89/xHta2ARH88f3CufCHHhOAfUJp1qZGqHsYNz9HYIvjtFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000795; c=relaxed/simple;
-	bh=Mujds/ZP6jjGLhwTw2NRs3DyRqwud+fOojHCj0c9MvI=;
+	s=arc-20240116; t=1780000798; c=relaxed/simple;
+	bh=Pv1hxwSS0qmckSEAUdX6qpXHsCmpZb+C7aI3thpOpig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfckZvafzsfclpiphL2ETYPcF5Os6mMlaa4v5hEaW7KCQn4ypym+hWFDiDxOZ0vrZWsNaMc4Q5YnXiPIqowIW7+ac7HTfg/lYjE9OxP7+mBeeC/lCX64eI+De8BLp7A2iVZ7m52sRaW45OchvOM/owBSXX/RKiEnU5fHvxQ4r5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCZ6x4pv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GPLkYHJE2RDbXdE2Nk1IODVPqenQZZRa+l4sCBqvYWrfgBvJNkBkcvcdRO5PQskeBLgIiTS0kLUbYxCCTre6JiQZoUDVbyjrcl/B15PIuSDfrzZ9wab6dU9n+8+7sH5zWu8daQBsLwd9a4e1FFkSkhimWRZiKv7UAKVl5Hw3GS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhyZIpdq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCZ6x4pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1871F000E9;
-	Thu, 28 May 2026 20:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhyZIpdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CA91F000E9;
+	Thu, 28 May 2026 20:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000794;
-	bh=nIGJl61NJakCm7/uucms7nHAD4i0r2FUBUJXCQ+zJJ0=;
+	s=korg; t=1780000797;
+	bh=BeGqYcwzF0o4kvVey+9LNwdCW1wbbZhzE99BIk1PgYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCZ6x4pvBsmtmJ6md9cYuul2Eght3hov1dS90oMIRUPX8kXHL9bt8QPoGsJ+/Iz8p
-	 oLlCRWWBdCygxHbqDoXD9n6AOTtwBFq7t/6bee03JeKabhfdH4Cwpg7brWc5Duyd5b
-	 fEgO0Vz35AaqLUBNu47w3eoVxuihCxPjPGJu7TFE=
+	b=EhyZIpdq5V7hpX5UB+acwgEcCEqk/jJth2PZEvZBhkP93Ym/nLKKYY4mpGlML5LcN
+	 AARZ1GwQGM5yRMBDATb5kEHOJRGcnu5CoF7IMeL0z2ePvL7eY9zDlx7rAPsFsz6ANh
+	 J0PA+f6UJMAcbh1Dg1OHEFjohBJ5RNCiNX8D4y/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 134/272] hwmon: (pmbus/adm1266) reject implausible blackbox record_count
-Date: Thu, 28 May 2026 21:48:28 +0200
-Message-ID: <20260528194633.130195664@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.12 125/272] batman-adv: fix tp_meter counter underflow during shutdown
+Date: Thu, 28 May 2026 21:48:19 +0200
+Message-ID: <20260528194632.880139208@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,51 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 4afca954622d672ea65ed961bed01cf91caa034e upstream.
+commit 94f3b133168d1c49895e7cc6afbcf1cc0b354602 upstream.
 
-adm1266_nvmem_read_blackbox() loops over a record_count that comes
-straight from byte 3 of the BLACKBOX_INFO response.  The destination
-buffer is data->dev_mem, sized for the nvmem cell's declared 2048
-bytes (ADM1266_BLACKBOX_MAX_RECORDS * ADM1266_BLACKBOX_SIZE = 32 * 64).
-A device that reports a record_count greater than 32 -- whether due
-to firmware bugs, bus corruption, or a non-responsive slave returning
-0xff -- would walk read_buff past the end of the dev_mem allocation
-on the trailing iterations.
+batadv_tp_sender_shutdown() unconditionally decrements the "sending"
+atomic counter. If multiple paths (e.g. timeout, user cancel, and
+normal finish) call this function, the counter can underflow to -1.
 
-Cap record_count at ADM1266_BLACKBOX_MAX_RECORDS (introduced here)
-before entering the loop and return -EIO on any larger value, so a
-malformed BLACKBOX_INFO response cannot drive the loop out of bounds.
+Since the sender logic treats any non-zero value as "still sending",
+a negative value causes the sender kthread to loop indefinitely.
+This leads to a use-after-free when the interface is removed while
+the zombie thread is still active.
 
-Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-3-1c1ea1349cfe@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fix this by using atomic_xchg() to ensure the counter only transitions
+from 1 to 0 once.
+
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+[sven: added missing change in batadv_tp_send]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/tp_meter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -46,6 +46,7 @@
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -451,7 +451,7 @@ static void batadv_tp_sender_end(struct
+ static void batadv_tp_sender_shutdown(struct batadv_tp_vars *tp_vars,
+ 				      enum batadv_tp_meter_reason reason)
+ {
+-	if (!atomic_dec_and_test(&tp_vars->sending))
++	if (atomic_xchg(&tp_vars->sending, 0) != 1)
+ 		return;
  
- #define ADM1266_BLACKBOX_OFFSET		0
- #define ADM1266_BLACKBOX_SIZE		64
-+#define ADM1266_BLACKBOX_MAX_RECORDS	32
- 
- #define ADM1266_PMBUS_BLOCK_MAX		255
- 
-@@ -360,6 +361,8 @@ static int adm1266_nvmem_read_blackbox(s
- 		return -EIO;
- 
- 	record_count = buf[3];
-+	if (record_count > ADM1266_BLACKBOX_MAX_RECORDS)
-+		return -EIO;
- 
- 	for (index = 0; index < record_count; index++) {
- 		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
+ 	tp_vars->reason = reason;
+@@ -885,7 +885,7 @@ static int batadv_tp_send(void *arg)
+ 				   "Meter: %s() cannot send packets (%d)\n",
+ 				   __func__, err);
+ 			/* ensure nobody else tries to stop the thread now */
+-			if (atomic_dec_and_test(&tp_vars->sending))
++			if (atomic_xchg(&tp_vars->sending, 0) == 1)
+ 				tp_vars->reason = err;
+ 			break;
+ 		}
 
 
