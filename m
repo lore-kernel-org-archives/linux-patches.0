@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F1B223328;
-	Thu, 28 May 2026 20:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E3C248F62;
+	Thu, 28 May 2026 20:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000255; cv=none; b=gE4XDqybpIuhr0xQi69FXe+vXqdUukTpZsppSAYM5XWzk7r+gUVQlRToSNfzJPZd+RfbVoChzx/hLvhGgpBVqiREwVb5jK+gaib9VOPcX12RYdurNnwVnJF4vmgjs80hPTuyZd0v3fet9jfLse4w8ycBmd6r7B/Qk1pRke7DL18=
+	t=1780000258; cv=none; b=Tyxpt0iA1F9ekDj4g0fI3FeHYm58SjoqIL3QXebDtZldPBe/9HBnNwSDy221brWvsjxdFAHESHyV4k4FPFe3i4m9S57c4rkm9PE7zSjm34T9ZIwQ/TB+94DCvHYVYtKlcjb63uPr3D8/QI6cDBD0F1hNWA/w4VBZtJD0Tq4mCrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000255; c=relaxed/simple;
-	bh=/Ir/0y8UEOtPzS7iA39NjedKtIqvQYDGDWWq3bVynYo=;
+	s=arc-20240116; t=1780000258; c=relaxed/simple;
+	bh=/YAtvuEtzypG+lDm6pfTMZYcnmGNBbkzlnScQXpEQtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dr9kRclVwHmJ0BljE5omyWIScS3wWDl9aB1CIrN0II+7MDTACrKhN7md1dLb5anUDMpdcTQhmTNAI718YIXsh54enYhdP70eKrL6piAltfnB+/zXhbKCN7cq9dVW4aNVN7EmKg+OWlh1r46FWvk1ZxYXhJWy952DstV5dhY9JK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxfF9q01; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ia+06a3I31lnCHIzCyOBb8Do7X/6CwAX34FY+/XQxT27J0gXoUI5vQqsgUy6Vl/9A3Ns2V9OHMs4ci+W4rHVsGAwCiEV679Maq4PvcoFguPJA0VH+7QlfhpyMu4pTjUxWGJd87/Pkd76gspnqFU9oRlnumSZZC6NwYuKoao97D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jux5nJMO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxfF9q01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17CA1F000E9;
-	Thu, 28 May 2026 20:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jux5nJMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B109B1F000E9;
+	Thu, 28 May 2026 20:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000254;
-	bh=djIJBSZUXYabq6hObHfh5l3eB26tiG2CenoN1xGTQWw=;
+	s=korg; t=1780000257;
+	bh=wgzm6roNsk7A6JIsJ7TM439LsCmnWdhhrQ5Rm08poO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lxfF9q01nV/DWotsWKz3w+CR/QOGWa5MuTmbZObwQnxuPMvP6XtlxBlr7E/0xhZzE
-	 dVieiMkDNZiyXA9G7kIJsKMcLdr88Nf82eGqv2okSvM/X1RixJl+f02K4XUzf6AZnl
-	 1RkMjFcONoLF5NnyYsfUFnZWunkiBUvvf3hEKc90=
+	b=jux5nJMOaKjJC9OWJ3LZO9TmibT0GCxO3RmyDu1NpJDzAf047pVBnuskhFHDAflad
+	 QY9fk9OLNmR0wOa7JcIzOnfWUV5GKe4pYqDU4mHCyvlqDUUWuDWFzHYi+SvCIcvDPQ
+	 aFO9tTZ7r6vI4CnftZ5soPeq9jsw666Y9Zz1DxE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cunlong Li <shenxiaogll@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Xingwang Xiang <v3rdant.xiang@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 350/377] cgroup: rstat: relax NMI guard after switch to try_cmpxchg
-Date: Thu, 28 May 2026 21:49:48 +0200
-Message-ID: <20260528194648.561803667@linuxfoundation.org>
+Subject: [PATCH 6.18 359/377] bpf, skmsg: fix verdict sk_data_ready racing with ktls rx
+Date: Thu, 28 May 2026 21:49:57 +0200
+Message-ID: <20260528194648.825146032@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,59 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunlong Li <shenxiaogll@gmail.com>
+From: Xingwang Xiang <v3rdant.xiang@gmail.com>
 
-[ Upstream commit 22572dbcd3486e6c4dced877125bbf50e4e24edf ]
+[ Upstream commit ddf8029623a1af20e984c040e89ff918158397ab ]
 
-Commit 36df6e3dbd7e ("cgroup: make css_rstat_updated nmi safe") used
-this_cpu_cmpxchg() for the lockless insertion, and therefore required
-both ARCH_HAVE_NMI_SAFE_CMPXCHG and ARCH_HAS_NMI_SAFE_THIS_CPU_OPS in
-the NMI guard: on archs without the latter, this_cpu_cmpxchg() falls
-back to "local_irq_save() + plain cmpxchg", and local_irq_save()
-cannot mask NMIs.
+sk_psock_strp_data_ready() already checks tls_sw_has_ctx_rx() and
+defers to psock->saved_data_ready when a TLS RX context is present,
+avoiding a conflict with the TLS strparser's ownership of the receive
+queue (commit e91de6afa81c, "bpf: Fix running sk_skb program types
+with ktls").
 
-Commit 3309b63a2281 ("cgroup: rstat: use LOCK CMPXCHG in
-css_rstat_updated") later replaced this_cpu_cmpxchg() with plain
-try_cmpxchg() to fix cross-CPU lockless-list corruption, but left the
-NMI guard untouched.  After that switch, css_rstat_updated() no longer
-performs any this_cpu_*() RMW operations and only relies on the arch
-having NMI-safe cmpxchg, so ARCH_HAS_NMI_SAFE_THIS_CPU_OPS is no
-longer required in the guard.
+sk_psock_verdict_data_ready() has no equivalent guard.  When a socket
+is inserted into a sockmap (BPF_SK_SKB_VERDICT) before TLS RX is
+configured, tls_sw_strparser_arm() saves sk_psock_verdict_data_ready
+as rx_ctx->saved_data_ready.  On data arrival:
 
-Relax the guard accordingly so that archs which have HAVE_NMI and
-ARCH_HAVE_NMI_SAFE_CMPXCHG but not ARCH_HAS_NMI_SAFE_THIS_CPU_OPS
-(e.g. sparc, powerpc on PPC64/BOOK3S) can benefit from the existing
-CONFIG_MEMCG_NMI_SAFETY_REQUIRES_ATOMIC path.  Without this, the css
-is never queued in NMI on those archs, and the atomics staged by
-account_{slab,kmem}_nmi_safe() are not drained by flush_nmi_stats().
+  tls_data_ready -> tls_strp_data_ready -> tls_rx_msg_ready
+    -> saved_data_ready() = sk_psock_verdict_data_ready()
+      -> tcp_read_skb() drains sk_receive_queue via __skb_unlink()
+         without calling tcp_eat_skb(), so copied_seq is not advanced.
 
-Fixes: 3309b63a2281 ("cgroup: rstat: use LOCK CMPXCHG in css_rstat_updated")
-Signed-off-by: Cunlong Li <shenxiaogll@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+tls_strp_msg_load() then finds tcp_inq() >= full_len (stale), calls
+tcp_recv_skb() on the now-empty queue, hits WARN_ON_ONCE(!first), and
+returns with rx_ctx->strp.anchor.frag_list pointing at a psock-owned
+(potentially freed) skb.  tls_decrypt_sg() subsequently walks that
+frag_list: use-after-free.
+
+Apply the same fix as sk_psock_strp_data_ready(): if a TLS RX context
+is present, call psock->saved_data_ready (sock_def_readable) to wake
+recv() waiters and return immediately, leaving the receive queue
+untouched.  TLS retains sole ownership of the queue and decrypts the
+record normally through tls_sw_recvmsg().
+
+Fixes: ef5659280eb1 ("bpf, sockmap: Allow skipping sk_skb parser program")
+Signed-off-by: Xingwang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260517145630.20521-2-v3rdant.xiang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/rstat.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/core/skmsg.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
-index ed60ba119c687..de816a43db9f0 100644
---- a/kernel/cgroup/rstat.c
-+++ b/kernel/cgroup/rstat.c
-@@ -81,11 +81,10 @@ void __css_rstat_updated(struct cgroup_subsys_state *css, int cpu)
- 	lockdep_assert_preemption_disabled();
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 35a6acbf9a579..75ea4fdb27642 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1268,12 +1268,19 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+ 	const struct proto_ops *ops = NULL;
++	struct sk_psock *psock;
+ 	struct socket *sock;
+ 	int copied;
  
- 	/*
--	 * For archs withnot nmi safe cmpxchg or percpu ops support, ignore
--	 * the requests from nmi context.
-+	 * The lockless insertion below relies on NMI-safe cmpxchg;
-+	 * bail out in NMI on archs that don't provide it.
- 	 */
--	if ((!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) ||
--	     !IS_ENABLED(CONFIG_ARCH_HAS_NMI_SAFE_THIS_CPU_OPS)) && in_nmi())
-+	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) && in_nmi())
- 		return;
+ 	trace_sk_data_ready(sk);
  
- 	rstatc = css_rstat_cpu(css, cpu);
+ 	rcu_read_lock();
++	psock = sk_psock(sk);
++	if (psock && tls_sw_has_ctx_rx(sk)) {
++		psock->saved_data_ready(sk);
++		rcu_read_unlock();
++		return;
++	}
+ 	sock = READ_ONCE(sk->sk_socket);
+ 	if (likely(sock))
+ 		ops = READ_ONCE(sock->ops);
+@@ -1283,8 +1290,6 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
+ 
+ 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
+ 	if (copied >= 0) {
+-		struct sk_psock *psock;
+-
+ 		rcu_read_lock();
+ 		psock = sk_psock(sk);
+ 		if (psock)
 -- 
 2.53.0
 
