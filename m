@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F744330D35;
-	Thu, 28 May 2026 20:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3112C15AC;
+	Thu, 28 May 2026 20:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000409; cv=none; b=H5ASY6gqlU4TN5x2TS32zP5+ig9CxiU+BFQxNU7rBSQpHr1NP/Rfx2Lgvhj3C6+WuHKO+NemQzhg2ghUmgM9vntuItbKahcfw6EEw9GRrIjVN8YXVxoHg98uhlKQHBONOEXhkTGmBQlR0ams4AXEtysa+Bam2IemrG35cZSk+aI=
+	t=1780000412; cv=none; b=R8QxPa7PBKzzjFB/aN/botoYzddSbgNOF1uH88INeUFCSk1Mrxb+3rmL68K1369pmCDaBc0yXwA3ZqLAxzedDSUqSez2e6hBqy94TJUZr2ywhdC2PIfQIIPIvu9BTSoDRK/iTLeOtIydcj42s6BSKujwUYfT0BG6ZUaz1/dbT5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000409; c=relaxed/simple;
-	bh=zssesHPdSqexwjspS1VpgxQ5kQXoJp7I2wGnVPDNTYo=;
+	s=arc-20240116; t=1780000412; c=relaxed/simple;
+	bh=iAB3NO0zk1Jyz/6+g0mEJ4bhn/sZnibdxwME8yYbAXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrMjX9H8g6tfNkhqQ235Xnhzp3xFplkHjzM1scPAPQKxQsJ5JGCZdoZQWKzBEsjkp8Sw4JVm7bgSU1Tknp5PQ3ZAx2575cIep3SZYYKwEt07Q8eMhmP3UEqNoxa3WA4ubzTu74ny69pE0W1xugUT4trPp0gQ1zvuuWqrX2dnV/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oD6KJszi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WGs0zIL2Y5alaRBNQpjQxWI9C2Fq7gUqm8P42lo2XuVGD39ZBNLMVg4k2JFg+w1tQ3gov06Eip0MdPKW87IBIEcRGJEVF88hr9+kddH1Obi50DaOMtzql17imHnv81LrJqyF1gCg4x7M9S5jp96Cbp0MsOH6aWA/+x3Ed3jV/fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JT0p3got; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oD6KJszi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1DA1F000E9;
-	Thu, 28 May 2026 20:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JT0p3got"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A8E1F00ACF;
+	Thu, 28 May 2026 20:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000407;
-	bh=jHrsLjkPi3At+KYRZTVVCx0tb1aOeW7KJWJlfPYzaRc=;
+	s=korg; t=1780000410;
+	bh=/3AQhB3tqfXYF2URNfd49+zbNGdvFt27JYdLT4IxXwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oD6KJszixZrzNzuD640UPjTNtiGlj6/4410f3kzYfbnJPTyc9pzffklFBovR/n7+k
-	 n2zhIdFFSrtIDAM1AteXkYzOVxUBvJ5eZkDmZupm4WHm3B3YHLgk3fd8HHq9WZKXos
-	 XlbwAI33mtEWKzbMFhtT5cU65sfpUD7OY8ftrsRk=
+	b=JT0p3got5FWp/ETGDuySD9KAAxXLWezlKOsV0MJd6ihp9F+hszhPVp4tZHt7T6oHC
+	 XICGrGhZdU3F+X71FKte5UMY7vmfun0DbmJVHEuAdzcATPfafcppJzhH6foqFXsbiA
+	 r3gqJ4uz9uB90lWtuhRSX0yVTyk/K0diDS4g4b3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Gyokhan Kochmarla <gyokhan@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/272] net/mlx5e: Use ip6_dst_lookup instead of ipv6_dst_lookup_flow for MAC init
-Date: Thu, 28 May 2026 21:46:48 +0200
-Message-ID: <20260528194630.342805089@linuxfoundation.org>
+Subject: [PATCH 6.12 035/272] x86/fgraph: Fix return_to_handler regs.rsp value
+Date: Thu, 28 May 2026 21:46:49 +0200
+Message-ID: <20260528194630.368142111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -54,48 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit e35d7da8dd9e55b37c3e8ab548f6793af0c2ab49 upstream.
+commit 8bc11700e0d23d4fdb7d8d5a73b2e95de427cabc upstream.
 
-Replace ipv6_stub->ipv6_dst_lookup_flow() with ip6_dst_lookup() in
-mlx5e_ipsec_init_macs() since IPsec transformations are not needed
-during Security Association setup - only basic routing information is
-required for nexthop MAC address resolution.
+The previous change (Fixes commit) messed up the rsp register value,
+which is wrong because it's already adjusted with FRAME_SIZE, we need
+the original rsp value.
 
-This resolves an issue where XfrmOutNoStates error counter would be
-incremented when xfrm policy is configured before xfrm state, as the
-IPsec-aware routing function would attempt policy checks during SA
-initialization.
+This change does not affect fprobe current kernel unwind, the !perf_hw_regs
+path perf_callchain_kernel:
 
-Fixes: 71670f766b8f ("net/mlx5e: Support routed networks during IPsec MACs initialization")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-7-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+        if (perf_hw_regs(regs)) {
+                if (perf_callchain_store(entry, regs->ip))
+                        return;
+                unwind_start(&state, current, regs, NULL);
+        } else {
+                unwind_start(&state, current, NULL, (void *)regs->sp);
+        }
+
+which uses pt_regs.sp as first_frame boundary (FRAME_SIZE shift makes
+no difference, unwind stil stops at the right frame).
+
+This change fixes the other path when we want to unwind directly from
+pt_regs sp/fp/ip state, which is coming in following change.
+
+Fixes: 20a0bc10272f ("x86/fgraph,bpf: Fix stack ORC unwind from kprobe_multi return probe")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/bpf/20260126211837.472802-2-jolsa@kernel.org
 Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/x86/kernel/ftrace_64.S | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index e2915d3143e6b..c1b6893389fdf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -348,9 +348,8 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
- 		rt_dst_entry = &rt->dst;
- 		break;
- 	case AF_INET6:
--		rt_dst_entry = ipv6_stub->ipv6_dst_lookup_flow(
--			dev_net(netdev), NULL, &fl6, NULL);
--		if (IS_ERR(rt_dst_entry))
-+		if (!IS_ENABLED(CONFIG_IPV6) ||
-+		    ip6_dst_lookup(dev_net(netdev), NULL, &rt_dst_entry, &fl6))
- 			goto neigh;
- 		break;
- 	default:
+diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
+index 8a3cff618692c..143fc62bf6f88 100644
+--- a/arch/x86/kernel/ftrace_64.S
++++ b/arch/x86/kernel/ftrace_64.S
+@@ -349,6 +349,9 @@ SYM_CODE_START(return_to_handler)
+ 	UNWIND_HINT_UNDEFINED
+ 	ANNOTATE_NOENDBR
+ 
++	/* Store original rsp for pt_regs.sp value. */
++	movq %rsp, %rdi
++
+ 	/* Restore return_to_handler value that got eaten by previous ret instruction. */
+ 	subq $8, %rsp
+ 	UNWIND_HINT_FUNC
+@@ -359,7 +362,7 @@ SYM_CODE_START(return_to_handler)
+ 	movq %rax, RAX(%rsp)
+ 	movq %rdx, RDX(%rsp)
+ 	movq %rbp, RBP(%rsp)
+-	movq %rsp, RSP(%rsp)
++	movq %rdi, RSP(%rsp)
+ 	movq %rsp, %rdi
+ 
+ 	call ftrace_return_to_handler
 -- 
 2.53.0
 
