@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE463290B0;
-	Thu, 28 May 2026 19:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E803403E7;
+	Thu, 28 May 2026 19:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998290; cv=none; b=jGD7Ra8XIpeV+eev8rwlPuKvzGt4eoX3EOmrT33exlTtjmMRO+iIcGHNpCnQZ1LOJ8RyyBgHVomsaKHYxIK+U2vPHLbtWgi5UQaT08gdf8ENBcONYa8CEIdRQlZE2UlnnOds1dslYbCeclbf9KOTWSvsP/deMikUZ1TUIybwuso=
+	t=1779998293; cv=none; b=jzfuJedPXJBjc34CbF4dxn8ZnU0REkykz+8Mx8I9jgVOwU0uMD+FlrvjIBbIA7dCYeczw2YGp2lEyed/R9rwKerw1Rbh0Uid1Av2sMr510uQzyccR5wukCNm7wmJXpw+JDspX7IAGnc2rwDaKJkybDd4g6Pprkj9BFapdgTgIH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998290; c=relaxed/simple;
-	bh=R7qf7Bh/03aMMealRcLc2RGvYYvjQuuv2+MKO+FyuGc=;
+	s=arc-20240116; t=1779998293; c=relaxed/simple;
+	bh=FFSA8Bs6x7RYytXgjJVGqWtG73BOMNxcic+yGfI+6u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYjutEtR99GMd6WBrIpU3AuOxri1HvmFn88pWPPPAMEAtb2T8FKQmmt8nQsAc+IYhKmbzXVNPSUEO2NdjDXMjAnyGonXs1rLWQmUM4MqH3mEYW6/Fa5jZGvIqbNELQCSZPxgr3T3XSATE/z4Q18ZpH/Mj8XsKHaKtDcTOdJSxbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHqop1mp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fl3b0XI/FPcSXYpWgYRdBIErRw3qnElsKv+yCkH3q7vmAoZXjTjWpG4N3xICZh0a+H3uvufilPHtg7GbEgeAxHZhNwe7y8wkgu6BKFPGE9M1cNVgHMSOnowqltE9ffCipzPZcPHttdhaHh3qyEv/asCCCSICgDegsOryKF7TVcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq/zkKpC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHqop1mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAAE1F000E9;
-	Thu, 28 May 2026 19:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq/zkKpC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAEB1F000E9;
+	Thu, 28 May 2026 19:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998289;
-	bh=MLfojNjalCnhV3CksdehAb2TjQUUbuOQ9dzRk0muMt8=;
+	s=korg; t=1779998291;
+	bh=V0IQ1onOaFNMQw0pMT7ZdfBj4XID3fMuY4f/FvojmAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHqop1mp+ckPZnRaAfDWICF3k5M9GVmy/GKWeXMbHJUx+27kj9kd+GX4y+Nq3ft9S
-	 O0OvORPxDZzAsZmWuu24AHB7FFBXmUN9GLh5JQ2LVHipiKppfHPQRaVAxdme6+tNkE
-	 wBwJl5KH95gpqRF3IZFlkkmlNarzaVsRVJRh/ME4=
+	b=Tq/zkKpCGSK3HVbAQVmF+ysmjpp+PsKeDpGpHReiIJROZ0sd/w/cZHvIqPy3bqRVG
+	 DR7WmEZPCA+63wO4QfZGcsCGNNMbOJsLxLkdNzsnRPlgAnS6osboahKIduNdi4E+OP
+	 +85WQ0AuYemvuipW6S+xVLan/b3uCICSC9C37IcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 075/461] vsock/virtio: reset connection on receiving queue overflow
-Date: Thu, 28 May 2026 21:43:24 +0200
-Message-ID: <20260528194649.088656993@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 7.0 115/461] scsi: isci: Fix use-after-free in device removal path
+Date: Thu, 28 May 2026 21:44:04 +0200
+Message-ID: <20260528194650.302311014@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,85 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a4f0b001782b21663d10df983b4b208195bec66c upstream.
+commit b52a8d52c3125ec9a93106ed816582368de34426 upstream.
 
-When there is no more space to queue an incoming packet, the packet is
-silently dropped. This causes data loss without any notification to
-either peer, since there is no retransmission.
+The ISCI completion tasklet is initialized in isci_host_alloc()
+(drivers/scsi/isci/init.c:496) and scheduled from both MSI-X and legacy
+interrupt handlers (drivers/scsi/isci/host.c:223,613).
 
-Under normal circumstances, this should never happen. However, it could
-happen if the other peer doesn't respect the credit, or if the skb
-overhead, which we recently began to take into account with commit
-059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue"),
-is too high.
+isci_host_deinit() stops the controller and waits for stop completion,
+but it never kills completion_tasklet before teardown continues. A
+top-of-function tasklet_kill() is not sufficient here: interrupts are
+only disabled when isci_host_stop_complete() runs, so until
+wait_for_stop() returns the IRQ handlers can still requeue the
+tasklet. The tasklet callback also re-enables interrupts after draining
+completions, so killing the tasklet before the source is quiesced leaves
+the same race open.
 
-Fix this by resetting the connection and setting the local socket error
-to ENOBUFS when virtio_transport_recv_enqueue() can no longer queue a
-packet, so both peers are explicitly notified of the failure rather than
-silently losing data.
+Once wait_for_stop() returns, no further IRQ-driven scheduling can
+occur. Kill completion_tasklet there so teardown cannot race a queued
+tasklet running on a dead ihost. On remove or unload, the stale callback
+can otherwise dereference ihost and touch ihost->smu_registers after the
+host lifetime ends.
 
-Fixes: ae6fcfbf5f03 ("vsock/virtio: discard packets if credit is not respected")
+A UML + KASAN analogue reproduced the failure class both with no
+tasklet_kill() and with tasklet_kill() placed before source quiesce, and
+stayed clean once the kill happened after quiescing the scheduling
+source.
+
+This mirrors commit f6ab594672d4 ("scsi: aic94xx: fix use-after-free in
+device removal path"), but ISCI needs the kill after wait_for_stop().
+
+Fixes: 6f231dda6808 ("isci: Intel(R) C600 Series Chipset Storage Control Unit Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-2-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-opus-4-7
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260419210420.2134639-1-michael.bommarito@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/scsi/isci/host.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1350,7 +1350,7 @@ destroy:
- 	return err;
- }
+--- a/drivers/scsi/isci/host.c
++++ b/drivers/scsi/isci/host.c
+@@ -1252,6 +1252,9 @@ void isci_host_deinit(struct isci_host *
  
--static void
-+static bool
- virtio_transport_recv_enqueue(struct vsock_sock *vsk,
- 			      struct sk_buff *skb)
- {
-@@ -1365,10 +1365,8 @@ virtio_transport_recv_enqueue(struct vso
- 	spin_lock_bh(&vvs->rx_lock);
+ 	wait_for_stop(ihost);
  
- 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
--	if (!can_enqueue) {
--		free_pkt = true;
-+	if (!can_enqueue)
- 		goto out;
--	}
- 
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count++;
-@@ -1408,6 +1406,8 @@ out:
- 	spin_unlock_bh(&vvs->rx_lock);
- 	if (free_pkt)
- 		kfree_skb(skb);
++	/* No further IRQ-driven scheduling can happen past wait_for_stop(). */
++	tasklet_kill(&ihost->completion_tasklet);
 +
-+	return can_enqueue;
- }
- 
- static int
-@@ -1420,7 +1420,17 @@ virtio_transport_recv_connected(struct s
- 
- 	switch (le16_to_cpu(hdr->op)) {
- 	case VIRTIO_VSOCK_OP_RW:
--		virtio_transport_recv_enqueue(vsk, skb);
-+		if (!virtio_transport_recv_enqueue(vsk, skb)) {
-+			/* There is no more space to queue the packet, so let's
-+			 * close the connection; otherwise, we'll lose data.
-+			 */
-+			(void)virtio_transport_reset(vsk, skb);
-+			virtio_transport_do_close(vsk, true);
-+			sk->sk_err = ENOBUFS;
-+			sk_error_report(sk);
-+			vsock_remove_sock(vsk);
-+			break;
-+		}
- 		vsock_data_ready(sk);
- 		return err;
- 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
+ 	/* phy stop is after controller stop to allow port and device to
+ 	 * go idle before shutting down the phys, but the expectation is
+ 	 * that i/o has been shut off well before we reach this
 
 
