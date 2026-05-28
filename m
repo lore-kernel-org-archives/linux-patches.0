@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8D633F5B4;
-	Thu, 28 May 2026 20:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D88335564;
+	Thu, 28 May 2026 20:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001110; cv=none; b=FIWTsfNObFjJmthL9vrdRwOCVj1cKM/MPyd1N2KfuAO3ZmFxHlPkMtKtn0cHUN0VhXEp7LugQ/iZxIqghxM5gMvg8yTjKdgKAI2jHTOaXZ7GhxpSJZnNCN/e6E1CYJfB65bOJBAV1sjJxZ32aruCLyGsIMAEJWjT83TF5Bwv1do=
+	t=1780001113; cv=none; b=Fs0tM3OtSN1SR5rh7tTDGI3Cpd8FC/p38AiOnWvi5Nwybo3pUUI9pRG7/2JMyZx+Q6rA9/s0qF7FEt3W9l5+Z8fgIoRlVTFL+hhGPVnmu0Hh+jALQ0Fo8jDCTKWGZyIB7NQ6R+kmQA9FdctA7lqgY2bd3B2FIGeLZRxHG+Xukxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001110; c=relaxed/simple;
-	bh=heLFXq+zWYaQd+br/q/kWaa1UBj/1baYOgthPrjlN4Y=;
+	s=arc-20240116; t=1780001113; c=relaxed/simple;
+	bh=S8R+65uiIK0qtBIm6xR8InZnwP5fmTLh52W/6tqikyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQesff7Sbddf+AQYGJ635xnimvCMsAv3Db8xpYZqUoj6XvqI89oaBrQwfYntrUj0Hkm4lXyLiD92fXvNtjZoaemD6eEBH2wgtkAGdmxud6wgWpS8ADn2ebIA7zIfazRq9OShBism1SRYLBhBcL3geOjgRH+i2jgMqUoFrpCnmuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFKviae5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0QJWiraeU+Ir7qHdeXjk5qwSZ7l9fzCZnLB/1/arz7ytNnanhk8neSSWtzGp/00V+CuoHtGzkAnt0K3alkOJxylX9LEx5ALI/eBTqnZbvQIhiNqoKiYUabl8AlHkygSNMFX5ca7YEnWjIHvlHq6L4hIMsxhJiMQtZUHTWwQHYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/SxY7c8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFKviae5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6DB1F000E9;
-	Thu, 28 May 2026 20:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/SxY7c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C9B1F00A3A;
+	Thu, 28 May 2026 20:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001109;
-	bh=ODemq8dT2zJ13dPqHYdGKBGVRZ5JiRizzHMvpzCXEzA=;
+	s=korg; t=1780001111;
+	bh=Qk1559pbsXYimONJ7Q+ZE+PuHNOgDMoJeXJmslhEEEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFKviae5BaP5ub/rhD/IrRepIWVAwJ3HR8/vykkKKyy2KGFyNcCqxTFQHx7VxqMyL
-	 1didd/1K9nXhHhK1TpqTRny6gcvTMqJfK0oG+zAC1csy53J54JSZV6E7slxGK9YDWR
-	 NNoiSi2K2rlhNB7DgDmYthgAdhwxw/FosI23rtP8=
+	b=X/SxY7c89LIVcRgPiKD4vW4k4osXa1Tp6tLfeHt6SaWV3eEn7h11T12lVeFmcGZ9v
+	 vJbZgcBfe6by/qOc9pDPiLjjvC+tui6s6WSs/o0vwiaEUTmp+9LAvEOnTgRAWlbFk0
+	 HQ3bXx3W5ExYKLmA3Kl1Pt9j6zSFZJQjjtzkfA+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Steve French <stfrench@microsoft.com>,
 	Alva Lan <alvalan9@foxmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/186] ksmbd: avoid reclaiming expired durable opens by the client
-Date: Thu, 28 May 2026 21:48:11 +0200
-Message-ID: <20260528194929.257670937@linuxfoundation.org>
+Subject: [PATCH 6.6 012/186] ksmbd: add durable scavenger timer
+Date: Thu, 28 May 2026 21:48:12 +0200
+Message-ID: <20260528194929.286489127@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -54,60 +54,336 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 520da3c488c5bb177871634e713eb8a106082e6b ]
+[ Upstream commit d484d621d40f4a8b8959008802d79bef3609641b ]
 
-The expired durable opens should not be reclaimed by client.
-This patch add ->durable_scavenger_timeout to fp and check it in
-ksmbd_lookup_durable_fd().
+Launch ksmbd-durable-scavenger kernel thread to scan durable fps that
+have not been reclaimed by a client within the configured time.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Minor context conflict resolved. ]
 Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 9 ++++++++-
- fs/smb/server/vfs_cache.h | 1 +
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c |   2 +
+ fs/smb/server/server.c            |   1 +
+ fs/smb/server/server.h            |   1 +
+ fs/smb/server/smb2pdu.c           |   2 +-
+ fs/smb/server/smb2pdu.h           |   2 +
+ fs/smb/server/vfs_cache.c         | 163 +++++++++++++++++++++++++++++-
+ fs/smb/server/vfs_cache.h         |   2 +
+ 7 files changed, 167 insertions(+), 6 deletions(-)
 
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 6c7fbd589087e..b4a1bd037b9ee 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -164,6 +164,7 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
+ 
+ 	ksmbd_tree_conn_session_logoff(sess);
+ 	ksmbd_destroy_file_table(&sess->file_table);
++	ksmbd_launch_ksmbd_durable_scavenger();
+ 	ksmbd_session_rpc_clear_list(sess);
+ 	free_channel_list(sess);
+ 	kfree(sess->Preauth_HashValue);
+@@ -399,6 +400,7 @@ void destroy_previous_session(struct ksmbd_conn *conn,
+ 	ksmbd_destroy_file_table(&prev_sess->file_table);
+ 	prev_sess->state = SMB2_SESSION_EXPIRED;
+ 	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_launch_ksmbd_durable_scavenger();
+ out:
+ 	up_write(&conn->session_lock);
+ 	up_write(&sessions_table_lock);
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 598601a4bf92c..416b14267251d 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -372,6 +372,7 @@ static void server_ctrl_handle_reset(struct server_ctrl_struct *ctrl)
+ {
+ 	ksmbd_ipc_soft_reset();
+ 	ksmbd_conn_transport_destroy();
++	ksmbd_stop_durable_scavenger();
+ 	server_conf_free();
+ 	server_conf_init();
+ 	WRITE_ONCE(server_conf.state, SERVER_STATE_STARTING_UP);
+diff --git a/fs/smb/server/server.h b/fs/smb/server/server.h
+index 48bd203abb441..e3a0f6c9c2c35 100644
+--- a/fs/smb/server/server.h
++++ b/fs/smb/server/server.h
+@@ -47,6 +47,7 @@ struct ksmbd_server_config {
+ 
+ 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
+ 	bool			bind_interfaces_only;
++	struct task_struct	*dh_task;
+ };
+ 
+ extern struct ksmbd_server_config server_conf;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index d68fe617369e0..66163a464c563 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3601,7 +3601,7 @@ int smb2_open(struct ksmbd_work *work)
+ 					SMB2_CREATE_GUID_SIZE);
+ 			if (dh_info.timeout)
+ 				fp->durable_timeout = min(dh_info.timeout,
+-						300000);
++						DURABLE_HANDLE_MAX_TIMEOUT);
+ 			else
+ 				fp->durable_timeout = 60;
+ 		}
+diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
+index 2821e6c8298f4..ad02d0a376025 100644
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -75,6 +75,8 @@ struct create_durable_req_v2 {
+ 	__u8 CreateGuid[16];
+ } __packed;
+ 
++#define DURABLE_HANDLE_MAX_TIMEOUT	300000
++
+ struct create_durable_reconn_req {
+ 	struct create_context_hdr ccontext;
+ 	__u8   Name[8];
 diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index eacc6ef41db03..729758697c129 100644
+index 729758697c129..913c2a8d2b0ee 100644
 --- a/fs/smb/server/vfs_cache.c
 +++ b/fs/smb/server/vfs_cache.c
-@@ -515,7 +515,10 @@ struct ksmbd_file *ksmbd_lookup_durable_fd(unsigned long long id)
- 	struct ksmbd_file *fp;
+@@ -8,6 +8,8 @@
+ #include <linux/filelock.h>
+ #include <linux/slab.h>
+ #include <linux/vmalloc.h>
++#include <linux/kthread.h>
++#include <linux/freezer.h>
  
- 	fp = __ksmbd_lookup_fd(&global_ft, id);
--	if (fp && fp->conn) {
-+	if (fp && (fp->conn ||
-+		   (fp->durable_scavenger_timeout &&
-+		    (fp->durable_scavenger_timeout <
-+		     jiffies_to_msecs(jiffies))))) {
- 		ksmbd_put_durable_fd(fp);
- 		fp = NULL;
- 	}
-@@ -784,6 +787,10 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
- 	fp->tcon = NULL;
- 	fp->volatile_id = KSMBD_NO_FID;
+ #include "glob.h"
+ #include "vfs_cache.h"
+@@ -17,6 +19,7 @@
+ #include "mgmt/tree_connect.h"
+ #include "mgmt/user_session.h"
+ #include "smb_common.h"
++#include "server.h"
  
-+	if (fp->durable_timeout)
-+		fp->durable_scavenger_timeout =
-+			jiffies_to_msecs(jiffies) + fp->durable_timeout;
+ #define S_DEL_PENDING			1
+ #define S_DEL_ON_CLS			2
+@@ -31,6 +34,10 @@ static struct ksmbd_file_table global_ft;
+ static atomic_long_t fd_limit;
+ static struct kmem_cache *filp_cache;
+ 
++static bool durable_scavenger_running;
++static DEFINE_MUTEX(durable_scavenger_lock);
++static wait_queue_head_t dh_wq;
 +
- 	return true;
+ void ksmbd_set_fd_limit(unsigned long limit)
+ {
+ 	limit = min(limit, get_max_files());
+@@ -316,9 +323,16 @@ static void __ksmbd_remove_durable_fd(struct ksmbd_file *fp)
+ 	if (!has_file_id(fp->persistent_id))
+ 		return;
+ 
+-	write_lock(&global_ft.lock);
+ 	idr_remove(global_ft.idr, fp->persistent_id);
++}
++
++static void ksmbd_remove_durable_fd(struct ksmbd_file *fp)
++{
++	write_lock(&global_ft.lock);
++	__ksmbd_remove_durable_fd(fp);
+ 	write_unlock(&global_ft.lock);
++	if (waitqueue_active(&dh_wq))
++		wake_up(&dh_wq);
  }
  
+ static void __ksmbd_remove_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+@@ -341,7 +355,7 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ 	struct ksmbd_lock *smb_lock, *tmp_lock;
+ 
+ 	fd_limit_close();
+-	__ksmbd_remove_durable_fd(fp);
++	ksmbd_remove_durable_fd(fp);
+ 	if (ft)
+ 		__ksmbd_remove_fd(ft, fp);
+ 
+@@ -754,6 +768,142 @@ static bool tree_conn_fd_check(struct ksmbd_tree_connect *tcon,
+ 	return fp->tcon != tcon;
+ }
+ 
++static bool ksmbd_durable_scavenger_alive(void)
++{
++	mutex_lock(&durable_scavenger_lock);
++	if (!durable_scavenger_running) {
++		mutex_unlock(&durable_scavenger_lock);
++		return false;
++	}
++	mutex_unlock(&durable_scavenger_lock);
++
++	if (kthread_should_stop())
++		return false;
++
++	if (idr_is_empty(global_ft.idr))
++		return false;
++
++	return true;
++}
++
++static void ksmbd_scavenger_dispose_dh(struct list_head *head)
++{
++	while (!list_empty(head)) {
++		struct ksmbd_file *fp;
++
++		fp = list_first_entry(head, struct ksmbd_file, node);
++		list_del_init(&fp->node);
++		__ksmbd_close_fd(NULL, fp);
++	}
++}
++
++static int ksmbd_durable_scavenger(void *dummy)
++{
++	struct ksmbd_file *fp = NULL;
++	unsigned int id;
++	unsigned int min_timeout = 1;
++	bool found_fp_timeout;
++	LIST_HEAD(scavenger_list);
++	unsigned long remaining_jiffies;
++
++	__module_get(THIS_MODULE);
++
++	set_freezable();
++	while (ksmbd_durable_scavenger_alive()) {
++		if (try_to_freeze())
++			continue;
++
++		found_fp_timeout = false;
++
++		remaining_jiffies = wait_event_timeout(dh_wq,
++				   ksmbd_durable_scavenger_alive() == false,
++				   __msecs_to_jiffies(min_timeout));
++		if (remaining_jiffies)
++			min_timeout = jiffies_to_msecs(remaining_jiffies);
++		else
++			min_timeout = DURABLE_HANDLE_MAX_TIMEOUT;
++
++		write_lock(&global_ft.lock);
++		idr_for_each_entry(global_ft.idr, fp, id) {
++			if (!fp->durable_timeout)
++				continue;
++
++			if (atomic_read(&fp->refcount) > 1 ||
++			    fp->conn)
++				continue;
++
++			found_fp_timeout = true;
++			if (fp->durable_scavenger_timeout <=
++			    jiffies_to_msecs(jiffies)) {
++				__ksmbd_remove_durable_fd(fp);
++				list_add(&fp->node, &scavenger_list);
++			} else {
++				unsigned long durable_timeout;
++
++				durable_timeout =
++					fp->durable_scavenger_timeout -
++						jiffies_to_msecs(jiffies);
++
++				if (min_timeout > durable_timeout)
++					min_timeout = durable_timeout;
++			}
++		}
++		write_unlock(&global_ft.lock);
++
++		ksmbd_scavenger_dispose_dh(&scavenger_list);
++
++		if (found_fp_timeout == false)
++			break;
++	}
++
++	mutex_lock(&durable_scavenger_lock);
++	durable_scavenger_running = false;
++	mutex_unlock(&durable_scavenger_lock);
++
++	module_put(THIS_MODULE);
++
++	return 0;
++}
++
++void ksmbd_launch_ksmbd_durable_scavenger(void)
++{
++	if (!(server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE))
++		return;
++
++	mutex_lock(&durable_scavenger_lock);
++	if (durable_scavenger_running == true) {
++		mutex_unlock(&durable_scavenger_lock);
++		return;
++	}
++
++	durable_scavenger_running = true;
++
++	server_conf.dh_task = kthread_run(ksmbd_durable_scavenger,
++				     (void *)NULL, "ksmbd-durable-scavenger");
++	if (IS_ERR(server_conf.dh_task))
++		pr_err("cannot start conn thread, err : %ld\n",
++		       PTR_ERR(server_conf.dh_task));
++	mutex_unlock(&durable_scavenger_lock);
++}
++
++void ksmbd_stop_durable_scavenger(void)
++{
++	if (!(server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE))
++		return;
++
++	mutex_lock(&durable_scavenger_lock);
++	if (!durable_scavenger_running) {
++		mutex_unlock(&durable_scavenger_lock);
++		return;
++	}
++
++	durable_scavenger_running = false;
++	if (waitqueue_active(&dh_wq))
++		wake_up(&dh_wq);
++	mutex_unlock(&durable_scavenger_lock);
++	kthread_stop(server_conf.dh_task);
++}
++
+ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 			     struct ksmbd_file *fp)
+ {
+@@ -823,11 +973,12 @@ void ksmbd_free_global_file_table(void)
+ 	unsigned int		id;
+ 
+ 	idr_for_each_entry(global_ft.idr, fp, id) {
+-		__ksmbd_remove_durable_fd(fp);
+-		kmem_cache_free(filp_cache, fp);
++		ksmbd_remove_durable_fd(fp);
++		__ksmbd_close_fd(NULL, fp);
+ 	}
+ 
+-	ksmbd_destroy_file_table(&global_ft);
++	idr_destroy(global_ft.idr);
++	kfree(global_ft.idr);
+ }
+ 
+ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
+@@ -934,6 +1085,8 @@ int ksmbd_init_file_cache(void)
+ 	if (!filp_cache)
+ 		goto out;
+ 
++	init_waitqueue_head(&dh_wq);
++
+ 	return 0;
+ 
+ out:
 diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index 5a225e7055f19..f2ab1514e81a7 100644
+index f2ab1514e81a7..b0f6d0f94cb8d 100644
 --- a/fs/smb/server/vfs_cache.h
 +++ b/fs/smb/server/vfs_cache.h
-@@ -101,6 +101,7 @@ struct ksmbd_file {
- 	struct list_head		lock_list;
- 
- 	int				durable_timeout;
-+	int				durable_scavenger_timeout;
- 
- 	/* if ls is happening on directory, below is valid*/
- 	struct ksmbd_readdir_data	readdir_data;
+@@ -153,6 +153,8 @@ struct ksmbd_file *ksmbd_lookup_fd_cguid(char *cguid);
+ struct ksmbd_file *ksmbd_lookup_fd_inode(struct dentry *dentry);
+ unsigned int ksmbd_open_durable_fd(struct ksmbd_file *fp);
+ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp);
++void ksmbd_launch_ksmbd_durable_scavenger(void);
++void ksmbd_stop_durable_scavenger(void);
+ void ksmbd_close_tree_conn_fds(struct ksmbd_work *work);
+ void ksmbd_close_session_fds(struct ksmbd_work *work);
+ int ksmbd_close_inode_fds(struct ksmbd_work *work, struct inode *inode);
 -- 
 2.53.0
 
