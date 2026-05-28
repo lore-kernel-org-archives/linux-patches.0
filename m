@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E24224677F;
-	Thu, 28 May 2026 20:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566DF2FD7C3;
+	Thu, 28 May 2026 20:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998572; cv=none; b=We4sKfbwCMiKwSgL6AjL6+PAZ5HK8gaI3CzFCgZ99QR3uoqzujYeqxQAbWU7YZlQlPGcBo+d3ikNciWs1JlZa9fr7AFQOJiOJOpW4tSSm5vxJn3D1J1I9kmNSVtCEwELZ6NrngXzuhSQzJeTH9oFW3zHQjWTmTAMDLl1NIh0sOo=
+	t=1779998575; cv=none; b=lKwH6LKHCUX/3dnO5sliXbszojNCuMqbammnRa5fsq29ldHFxSPZEcva+ezkdhBxmVVkeBHAidq7Y0npusagUaGDVN3bXa58CtiSYtduuf3lgb4KX3vSmUx0PKe0jjCHgnI92iu9SgA/xt39kZpq459KQ9RshxMd9VFP5xG497o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998572; c=relaxed/simple;
-	bh=V8r3IuN2Oxu3+svLjrBDMsJ2JTBODDvdUFlzbrUht6U=;
+	s=arc-20240116; t=1779998575; c=relaxed/simple;
+	bh=bLpBgyzYJx7xQWF6RJtVMmtYTDhM1Voo6ISmQ7/dyXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9ElCzc/PHkO+oAKvXWdTC3hdxuBvmxoQdPE3DJ8wS/NkhMfQCOnM/ocWAO6BQuYe2K99W56X3JN/GR6KGTAZvWRP1OzKF8XoNmahvgy6sYGNOOD4rw5KKeDeZ3onpfE74J3jJ6NfpymiYeO0bIAM60yVrYIOFSo2/eQTiz1g/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrJCfKVf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+gwNPY29efjlQ4CdG/fFOM6gQzLs1mNPLsrD9wCAlPylshV1VArmMJE8VNtfGpd1CljFl5r60TUqoYttWKMQPdu3t4fydUe3fBONiW3Z3vuWqdVqUrjPo4OBPyV8hmazJ0HlcVzOyiLVH2sj1SJ70OSgToMPTU3NwZD4U3L8ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNJIY8d/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrJCfKVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA171F000E9;
-	Thu, 28 May 2026 20:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNJIY8d/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDEA1F000E9;
+	Thu, 28 May 2026 20:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998571;
-	bh=WTMvisilVcXVDKs3U9QGMaIqXx9jBAiok1iIlI3Hc08=;
+	s=korg; t=1779998574;
+	bh=hZBtctLGhPONNveAEn6gmaL+RnM6J+fOXrmJ7eMa1GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrJCfKVfvptPk61BQn6+y+JEr20wqJ2a0wkGyuh6fHf+VOIsMVuF9xAYrcmc0pAN7
-	 bnGLrBrNnXXPE5dacUB9mYLE2leF1W6kXisW8Lbp+6qshogitRbhRTDWZyHmvP9Irr
-	 CD54rt5JCvt2HF8ZZmMVkqQziFgVaHsmM/o8XncE=
+	b=eNJIY8d/SPCYqXjPLVuLrzr7UBSSrJEhyMxvWsSQPoqNZzNTlQaiBPMurK0dnGJwV
+	 dvN2VuV+dSG0YfCL+kLQLLWXJ5hY2Q/naaqePN5YuW88dW+/M9vG106VejU59lS3JM
+	 b4UXViZZpMcP5q7qDMdDc9nyJoC3sqT7nCUe6ijg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <hmohsin@meta.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 221/461] net: shaper: Reject reparenting of existing nodes
-Date: Thu, 28 May 2026 21:45:50 +0200
-Message-ID: <20260528194653.529108946@linuxfoundation.org>
+Subject: [PATCH 7.0 222/461] idpf: fix read_dev_clk_lock spinlock init in idpf_ptp_init()
+Date: Thu, 28 May 2026 21:45:51 +0200
+Message-ID: <20260528194653.557683740@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,88 +56,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohsin Bashir <hmohsin@meta.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit a77d5a069d959dc45f5f472d48cba37d8cba0f1c ]
+[ Upstream commit da4f76b6a84ede14a71282ef841768299ead0221 ]
 
-When an existing node-scope shaper is moved to a different parent
-via the group operation, the framework fails to update the leaves
-count on both the old and new parent shapers. Only newly created
-nodes (handle.id == NET_SHAPER_ID_UNSPEC) trigger the parent
-leaves increment at line 1039.
+In idpf_ptp_init(), read_dev_clk_lock is initialized after
+ptp_schedule_worker() had already been called (and after
+idpf_ptp_settime64() could reach the lock). The PTP aux worker
+fires immediately upon scheduling and can call into
+idpf_ptp_read_src_clk_reg_direct(), which takes
+spin_lock(&ptp->read_dev_clk_lock) on an uninitialized lock, triggering
+the lockdep "non-static key" warning:
 
-This causes the parent's leaves counter to diverge from the
-actual number of children in the xarray. When the node is later
-deleted, pre_del_node() allocates an array sized by the stale
-leaves count, but the xarray iteration finds more children than
-expected, hitting the WARN_ON_ONCE guard and returning -EINVAL.
+[12973.796587] idpf 0000:83:00.0: Device HW Reset initiated
+[12974.094507] INFO: trying to register non-static key.
+...
+[12974.097208] Call Trace:
+[12974.097213]  <TASK>
+[12974.097218]  dump_stack_lvl+0x93/0xe0
+[12974.097234]  register_lock_class+0x4c4/0x4e0
+[12974.097249]  ? __lock_acquire+0x427/0x2290
+[12974.097259]  __lock_acquire+0x98/0x2290
+[12974.097272]  lock_acquire+0xc6/0x310
+[12974.097281]  ? idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
+[12974.097311]  ? lockdep_hardirqs_on_prepare+0xde/0x190
+[12974.097318]  ? finish_task_switch.isra.0+0xd2/0x350
+[12974.097330]  ? __pfx_ptp_aux_kworker+0x10/0x10 [ptp]
+[12974.097343]  _raw_spin_lock+0x30/0x40
+[12974.097353]  ? idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
+[12974.097373]  idpf_ptp_read_src_clk_reg+0xb7/0x150 [idpf]
+[12974.097391]  ? kthread_worker_fn+0x88/0x3d0
+[12974.097404]  ? kthread_worker_fn+0x4e/0x3d0
+[12974.097411]  idpf_ptp_update_cached_phctime+0x26/0x120 [idpf]
+[12974.097428]  ? _raw_spin_unlock_irq+0x28/0x50
+[12974.097436]  idpf_ptp_do_aux_work+0x15/0x20 [idpf]
+[12974.097454]  ptp_aux_kworker+0x20/0x40 [ptp]
+[12974.097464]  kthread_worker_fn+0xd5/0x3d0
+[12974.097474]  ? __pfx_kthread_worker_fn+0x10/0x10
+[12974.097482]  kthread+0xf4/0x130
+[12974.097489]  ? __pfx_kthread+0x10/0x10
+[12974.097498]  ret_from_fork+0x32c/0x410
+[12974.097512]  ? __pfx_kthread+0x10/0x10
+[12974.097519]  ret_from_fork_asm+0x1a/0x30
+[12974.097540]  </TASK>
 
-Rather than adding reparenting support with complex leaves count
-bookkeeping, reject group calls that attempt to change an existing
-node's parent. Updates to an existing node's rate or leaves under
-the same parent remain permitted. We expect that for any modification
-of the topology user should always create new groups and let the
-kernel garbage collect the leaf-less nodes.
+Move the call to spin_lock_init() up a bit to make sure read_dev_clk_lock
+is not touched before it's been initialized.
 
-Fixes: 5d5d4700e75d ("net-shapers: implement NL group operation")
-Signed-off-by: Mohsin Bashir <hmohsin@meta.com>
-Link: https://patch.msgid.link/20260506233745.111895-1-mohsin.bashr@gmail.com
+Fixes: 5cb8805d2366 ("idpf: negotiate PTP capabilities and get PTP clock")
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-3-a5ea4dc837a9@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_ptp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index 94bc9c7382ea6..1069fa4eb9f60 100644
---- a/net/shaper/shaper.c
-+++ b/net/shaper/shaper.c
-@@ -964,15 +964,22 @@ static int __net_shaper_group(struct net_shaper_binding *binding,
- 	int i, ret;
- 
- 	if (node->handle.scope == NET_SHAPER_SCOPE_NODE) {
-+		struct net_shaper *cur = NULL;
-+
- 		new_node = node->handle.id == NET_SHAPER_ID_UNSPEC;
- 
--		if (!new_node && !net_shaper_lookup(binding, &node->handle)) {
--			/* The related attribute is not available when
--			 * reaching here from the delete() op.
--			 */
--			NL_SET_ERR_MSG_FMT(extack, "Node shaper %d:%d does not exists",
--					   node->handle.scope, node->handle.id);
--			return -ENOENT;
-+		if (!new_node) {
-+			cur = net_shaper_lookup(binding, &node->handle);
-+			if (!cur) {
-+				/* The related attribute is not available
-+				 * when reaching here from the delete() op.
-+				 */
-+				NL_SET_ERR_MSG_FMT(extack,
-+						   "Node shaper %d:%d does not exist",
-+						   node->handle.scope,
-+						   node->handle.id);
-+				return -ENOENT;
-+			}
- 		}
- 
- 		/* When unspecified, the node parent scope is inherited from
-@@ -986,6 +993,15 @@ static int __net_shaper_group(struct net_shaper_binding *binding,
- 				return ret;
- 		}
- 
-+		if (cur && net_shaper_handle_cmp(&cur->parent,
-+						 &node->parent)) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "Cannot reparent node shaper %d:%d",
-+					   node->handle.scope,
-+					   node->handle.id);
-+			return -EOPNOTSUPP;
-+		}
-+
- 	} else {
- 		net_shaper_default_parent(&node->handle, &node->parent);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_ptp.c b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
+index eec91c4f0a75a..4a51d2727547d 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_ptp.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
+@@ -952,6 +952,8 @@ int idpf_ptp_init(struct idpf_adapter *adapter)
+ 		goto free_ptp;
  	}
+ 
++	spin_lock_init(&adapter->ptp->read_dev_clk_lock);
++
+ 	err = idpf_ptp_create_clock(adapter);
+ 	if (err)
+ 		goto free_ptp;
+@@ -977,8 +979,6 @@ int idpf_ptp_init(struct idpf_adapter *adapter)
+ 			goto remove_clock;
+ 	}
+ 
+-	spin_lock_init(&adapter->ptp->read_dev_clk_lock);
+-
+ 	pci_dbg(adapter->pdev, "PTP init successful\n");
+ 
+ 	return 0;
 -- 
 2.53.0
 
