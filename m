@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8132DF6E6;
-	Thu, 28 May 2026 20:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C532D1303;
+	Thu, 28 May 2026 20:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999373; cv=none; b=UMzGqR6uZEOmzaxzY0yNOWsbXF8dP65xhTy88TAlpBZslNqlTpO0KqaS4PGPbIoms1J4W0NA1p5v/9xCqTQcm2YzH5MOLXe35L4iyLdLKol4ksKZXdVKMe8FrC8bomlB5nxvnpkVa558WlbTKpOsVgcqnNtP6VfW8YscsLEbUXE=
+	t=1779999376; cv=none; b=THumIxij8298pwv/XrXmCWC4ZNigBTRGh9/uvWzTyKyFfe5p38qh5BD3o+qcRkgnNkpVFl/v8WLVwebipHq9rYxbra4R43b9wdYIflGd9qQlfjQfrciPeYxoo71RXUsY8Lgg3FYt4sNO5vp/wgD7/XZBDMpu3NQMPEhJSIIXe/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999373; c=relaxed/simple;
-	bh=lbHd8Gm04ZZVLgYnA3/BhZrKhPfi+X8BS2jNql/BLcU=;
+	s=arc-20240116; t=1779999376; c=relaxed/simple;
+	bh=4OxH9xH5ffpM62y2CaJpO9hGMlb06BZAdYzmkHtYVnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTTOOWF3YWv5dt7rLu/z+dHCnCCp0FAUuYh/sUSACUDRgCRSEJWHQycjzNgpi/iqeAVm5w9RjjQaWrnixZqvzJnED334L7Lj8jByAV8sj6Dp1OOZOICTS6tOvPEnpO+WTkqAAI06LDaCmUrBbE8LrzBSOOMNZcvh892kpEN+aE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqz005NK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dgyUI5kVZpBA9l0bWzBBjzZ0jK5LUtg3NjvroAxHXp+mcJif7WpPOJqEeco+pqNQcL0Co7ZVav4hfI24eTJ1RVja21xqejX2KVLQmhPZXnETvj2eiFi6m9c//CmjDYS9bEwtZae86QUK6C9+Eu2H8J3TC5Dw85/oOfNZf1bTvls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xt+slnS8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqz005NK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84A41F000E9;
-	Thu, 28 May 2026 20:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xt+slnS8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECFF1F000E9;
+	Thu, 28 May 2026 20:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999372;
-	bh=qX4l0WoQ0GDf74uAzzisiXKzhPAdA6/YeFHzQiyNT6w=;
+	s=korg; t=1779999375;
+	bh=UWCsyZ2KAJr2iN88RoO9Bj8/7MpGVhsjuGiEBcbCSCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqz005NKabiYlS5UtiTyq3zJJODiv+mnfYQIIkr28ybBX2q6yoTH/GPUv1pcaRoKi
-	 0EJeHgRhXcRwiOsU4f25y+DvLIdLaH/EiUMeWtwo30yjNnLrX9qiO3JAfkb55TmKpH
-	 f6ZrE4DaFKwfGVtMoM+HVU39A6phhgXKmmq9jGUI=
+	b=xt+slnS8ntf1dJZfhfg8wjwTy1BCZTEUcehh2Fp3iS4rKPrmWZOctO6R+hpggSGBe
+	 /1+kcnNjkWdh9adom8KG4D6iTEQSRKOQRAIRZYXsctVeVrAT5MwUtuXDyzW4ed5PQY
+	 h5RbDes1EMWJXz5RyRyOmTjkIIx8Rhi5uP1PfVo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Huang, Ying" <huang.ying.caritas@gmail.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 044/377] drivers/base/memory: fix memory block reference leak in poison accounting
-Date: Thu, 28 May 2026 21:44:42 +0200
-Message-ID: <20260528194639.649518185@linuxfoundation.org>
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 045/377] ipv6: ioam: refresh hdr pointer before ioam6_event()
+Date: Thu, 28 May 2026 21:44:43 +0200
+Message-ID: <20260528194639.679276719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -58,62 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-commit 03a2cc1756a0570f887d624cd6c535ea0cbd4951 upstream.
+commit e46e6bc97fb1f339730ff1ba74267fbf48e7a422 upstream.
 
-memblk_nr_poison_inc() and memblk_nr_poison_sub() look up a memory block
-via find_memory_block_by_id(), which acquires a reference to the memory
-block device.
+Reported by Sashiko:
 
-Both helpers use the returned memory block without dropping that
-reference, leaking the device reference on each successful lookup.  Drop
-the reference after updating nr_hwpoison.
+In ipv6_hop_ioam(), the hdr pointer is initialized to point into the
+skb's linear data buffer. Later, the code calls skb_ensure_writable(),
+which might reallocate the buffer:
 
-Link: https://lore.kernel.org/20260428085219.1316047-3-songmuchun@bytedance.com
-Fixes: 5033091de814 ("mm/hwpoison: introduce per-memory_block hwpoison counter")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+	if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
+		goto drop;
+
+	/* Trace pointer may have changed */
+	trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
+					   + optoff + sizeof(*hdr));
+
+	ioam6_fill_trace_data(skb, ns, trace, true);
+
+	ioam6_event(IOAM6_EVENT_TRACE, dev_net(skb->dev),
+		    GFP_ATOMIC, (void *)trace, hdr->opt_len - 2);
+
+If the skb is cloned or lacks sufficient linear headroom,
+skb_ensure_writable() will invoke pskb_expand_head(), which reallocates
+the skb's data buffer and frees the old one, invalidating pointers to
+it. While the code recalculates the trace pointer immediately after the
+call to skb_ensure_writable(), it fails to recalculate the hdr pointer.
+
+This patch fixes the above by recalculating the hdr pointer before
+passing hdr->opt_len to ioam6_event(), so that we avoid any UaF.
+
+Fixes: f655c78d6225 ("net: exthdrs: ioam6: send trace event")
+Cc: stable@vger.kernel.org
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260520124242.32320-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/memory.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv6/exthdrs.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/base/memory.c
-+++ b/drivers/base/memory.c
-@@ -1251,8 +1251,10 @@ void memblk_nr_poison_inc(unsigned long
- 	const unsigned long block_id = pfn_to_block_id(pfn);
- 	struct memory_block *mem = find_memory_block_by_id(block_id);
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -955,9 +955,9 @@ static bool ipv6_hop_ioam(struct sk_buff
+ 		if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
+ 			goto drop;
  
--	if (mem)
-+	if (mem) {
- 		atomic_long_inc(&mem->nr_hwpoison);
-+		put_device(&mem->dev);
-+	}
- }
+-		/* Trace pointer may have changed */
+-		trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
+-						   + optoff + sizeof(*hdr));
++		/* Trace and hdr pointers may have changed */
++		hdr = (struct ioam6_hdr *)(skb_network_header(skb) + optoff);
++		trace = (struct ioam6_trace_hdr *)((u8 *)hdr + sizeof(*hdr));
  
- void memblk_nr_poison_sub(unsigned long pfn, long i)
-@@ -1260,8 +1262,10 @@ void memblk_nr_poison_sub(unsigned long
- 	const unsigned long block_id = pfn_to_block_id(pfn);
- 	struct memory_block *mem = find_memory_block_by_id(block_id);
+ 		ioam6_fill_trace_data(skb, ns, trace, true);
  
--	if (mem)
-+	if (mem) {
- 		atomic_long_sub(i, &mem->nr_hwpoison);
-+		put_device(&mem->dev);
-+	}
- }
- 
- static unsigned long memblk_nr_poison(struct memory_block *mem)
 
 
