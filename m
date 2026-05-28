@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1E5282F17;
-	Thu, 28 May 2026 20:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34172D1303;
+	Thu, 28 May 2026 20:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999334; cv=none; b=EsFO2HTeEYeQGA+UQLzRITpIDT9R+sZJByf2y5oixe3Wk6WYRh7Xuebe+6Ihu14yX+T/F2xmw+GyoO/R22DYLiD9ZCo1PdEh+8nuVj4yFUMMdAVbMHvxnQRg1mKDz6Jkei71EYptHiHq2OO++GDmwRf7SLLqW2LoIkSUJmzJrlc=
+	t=1779999336; cv=none; b=LDQ2TutlIRQm5IA858W/Yeu9C0VZkAO9VyF2NvSjUFJUpzFjELIbAst0lkKQEaLwmN7eUgrfwCjnALdPhs4AHTT+CbkLJ1y+eF2DPkbAkNceZBpJtvCx5kKg8aXjlMEGF/DmddhWWBaxvVnSLr7rauzZ2qtlpZ9B9AbIFlereU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999334; c=relaxed/simple;
-	bh=b8aVmvjCLxtYQUTnOBYGGfQ/zRi+KSL2/Yl1hyld2HQ=;
+	s=arc-20240116; t=1779999336; c=relaxed/simple;
+	bh=+tA/g8Dk/YQLNS6Up9U6+Wrx0IrdbJDljERzNNgmyU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/7LXlwBkyb5o/mF+Ta3p6UgqVc75lZRc4DT/YJOH2atCN3WvnNFQCUO9hc4PVnYujsAUK3iSdb7UknPZlkwn0kWbbrc7qf3kLfgfYLXYwis6GZYfQBSL4hU0bqhHSpG3C9W/Gj162ehEile6LKLtXx4p/cJjCnFCvM6RbAJM9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHQysBtM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SovApl04nfoAMWXOlJZ21f3vzNa+QWTVvpUhLIRyC7uz48CHVtA2lUUy3Tvo8EqX+T2rAs0WbQCrqCvu2gdFYvmfT3my7TLnkxX7Ddascuih6ephc/Qesotxh224jEd1wnf4zy2oCyrY8ZciLr5T/2mWvteJO2oVGLhQZXBsWl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maZT/Kf4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHQysBtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751591F000E9;
-	Thu, 28 May 2026 20:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maZT/Kf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4061F000E9;
+	Thu, 28 May 2026 20:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999333;
-	bh=BjV1DKFYxiCwBDgCaIVmQsHkjSsq2T1N8OSdabgUPbs=;
+	s=korg; t=1779999335;
+	bh=IlsyPIPOhoXlTC/7CR318X34AKuWKbBVVc+D5LIGVjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHQysBtMWki/Ja/Dhr9RsNPeaCCi5mndap2pxrLzN6HbFbuXwKYjWsVGi2J0/dceF
-	 clqkSVtE2JtOG+A6W5Ll3jNSZmBWjjQ4/36ZtMw2Hzsn+Br5eC/DKmQG1FVd2k5dQO
-	 kLrfrhtFXfwEEW3NhRbT8dVrSIw31oiKtB8q66kg=
+	b=maZT/Kf4CJXlRm/gS6z6vx17C5BOYTVCYoyANtrJwr/yl7twyhE3PA6ah1A5ozI6C
+	 sEOtLGEh75Bo2MnMy8vyzFLOYqFwOFDypnbtOy8vRkAld1MUlsvy6Odgw6PJpQb4cd
+	 2+kS+HymxkjvlhlusDu719utGDy4BLiC/gprK9PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Meng <mengferry@linux.alibaba.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 029/377] ksmbd: fix SID memory leak in set_posix_acl_entries_dacl() on overflow
-Date: Thu, 28 May 2026 21:44:27 +0200
-Message-ID: <20260528194639.230031378@linuxfoundation.org>
+	Eder Zulian <ezulian@redhat.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 003/377] iommu/amd: Remove latent out-of-bounds access in IOMMU debugfs
+Date: Thu, 28 May 2026 21:44:01 +0200
+Message-ID: <20260528194638.480808288@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,76 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ferry Meng <mengferry@linux.alibaba.com>
+From: Eder Zulian <ezulian@redhat.com>
 
-commit af92ee994cc7f7e83a41c2025f32257a2f82a7ef upstream.
+[ Upstream commit 8dfd3d8d74435344ee8dc9237596959c8b2a6cbe ]
 
-Commit 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16
-DACL size overflow") added check_add_overflow() guards that break out
-of the ACE-building loops in set_posix_acl_entries_dacl() when the
-accumulated DACL size would wrap past 65535.
+In iommu_mmio_write() and iommu_capability_write(), the variables
+dbg_mmio_offset and dbg_cap_offset are declared as int. However, they
+are populated using kstrtou32_from_user(). If a user provides a
+sufficiently large value, it can become a negative integer.
 
-However, each iteration allocates a struct smb_sid via kmalloc_obj()
-at the top of the loop and relies on the kfree(sid) call at the end
-of the loop body (the 'pass_same_sid' label in the first loop, and
-the explicit kfree at the tail of the second loop) to release it.
-The newly introduced 'break' statements bypass those kfree() calls,
-leaking the sid buffer every time an overflow is detected.
+Prior to this patch, the AMD IOMMU debugfs implementation was already
+protected by different mechanisms.
 
-A malicious or malformed file with enough POSIX ACL entries to trip
-the overflow check will leak one or more struct smb_sid allocations
-on every request that touches the file's DACL, providing a trivial
-kernel memory exhaustion vector.
+1. #define OFS_IN_SZ 8 ensures the user string <= 8 bytes, so
+   e.g. 0xffffffff isn't a valid input.
 
-Free sid before breaking out of the loops to plug the leak.
+  if (cnt > OFS_IN_SZ)
+     return -EINVAL;
 
-Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
+2. Implicit type promotion in iommu_mmio_write(), dbg_mmio_offset is int
+   and iommu->mmio_phys_end is u64
+
+  if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
+      return -EINVAL;
+
+3. The show handlers would currently catch the negative number and
+   refuse to perform the read.
+
+Replace kstrtou32_from_user() with kstrtos32_from_user() to parse the
+input, and check for negative values to explicitly prevent out-of-bounds
+memory accesses directly in iommu_mmio_write() and
+iommu_capability_write().
+
+Signed-off-by: Eder Zulian <ezulian@redhat.com>
+Fixes: 7a4ee419e8c1 ("iommu/amd: Add debugfs support to dump IOMMU MMIO registers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iommu/amd/debugfs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -643,8 +643,10 @@ static void set_posix_acl_entries_dacl(s
- 		ntace = (struct smb_ace *)((char *)pndace + *size);
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
- 				pace->e_perm, 0777);
--		if (check_add_overflow(*size, ace_sz, size))
-+		if (check_add_overflow(*size, ace_sz, size)) {
-+			kfree(sid);
- 			break;
-+		}
- 		(*num_aces)++;
- 		if (pace->e_tag == ACL_USER)
- 			ntace->access_req |=
-@@ -655,8 +657,10 @@ static void set_posix_acl_entries_dacl(s
- 			ntace = (struct smb_ace *)((char *)pndace + *size);
- 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
- 					0x03, pace->e_perm, 0777);
--			if (check_add_overflow(*size, ace_sz, size))
-+			if (check_add_overflow(*size, ace_sz, size)) {
-+				kfree(sid);
- 				break;
-+			}
- 			(*num_aces)++;
- 			if (pace->e_tag == ACL_USER)
- 				ntace->access_req |=
-@@ -698,8 +702,10 @@ posix_default_acl:
- 		ntace = (struct smb_ace *)((char *)pndace + *size);
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
- 				pace->e_perm, 0777);
--		if (check_add_overflow(*size, ace_sz, size))
-+		if (check_add_overflow(*size, ace_sz, size)) {
-+			kfree(sid);
- 			break;
-+		}
- 		(*num_aces)++;
- 		if (pace->e_tag == ACL_USER)
- 			ntace->access_req |=
+diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
+index 0584ca2f859d9..3909a1fb218e9 100644
+--- a/drivers/iommu/amd/debugfs.c
++++ b/drivers/iommu/amd/debugfs.c
+@@ -31,11 +31,12 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
++	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
++	if (dbg_mmio_offset < 0 || dbg_mmio_offset >
++			iommu->mmio_phys_end - sizeof(u64))
+ 		return -EINVAL;
+ 
+ 	iommu->dbg_mmio_offset = dbg_mmio_offset;
+@@ -71,12 +72,12 @@ static ssize_t iommu_capability_write(struct file *filp, const char __user *ubuf
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
++	ret = kstrtos32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Capability register at offset 0x14 is the last IOMMU capability register. */
+-	if (dbg_cap_offset > 0x14)
++	if (dbg_cap_offset < 0 || dbg_cap_offset > 0x14)
+ 		return -EINVAL;
+ 
+ 	iommu->dbg_cap_offset = dbg_cap_offset;
+-- 
+2.53.0
+
 
 
