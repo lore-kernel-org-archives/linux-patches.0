@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6FF282F17;
-	Thu, 28 May 2026 20:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AFD2459D1;
+	Thu, 28 May 2026 20:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999539; cv=none; b=kbuKx8EPSY8rsQ55W8OVq7hhbT4P5HqFVxTzfHSqTiBEoPia42SGs9HTxoNSwhKoxhz05A33RMk0Ukj6+KtkQWTKLe865MLZoyiZ1G75oJRjBMxIqSOrd1yYFGOoVum+CIEHtPdr/iCRK3gdZUha4kyTm+O1vrN6IViXPcgoFA8=
+	t=1779999542; cv=none; b=PzUdqmLEPt/ypbWRRQtpkToV2gvYhwOs27BwUOAaz1TAoHFynTcoycylUjdu4Djn1rDfq6+ssDsXxh5sobjpxab0lzkIAf6+RrLVIUrTTFTxoQEKkm4ZO6tbAPoYDktAH/2hSPu755320e9fd4QZiNTJBBWD+KoK+ocXYl+yDYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999539; c=relaxed/simple;
-	bh=UMkfW16CXVCAXYcyv0RIGm6qzlAZiVrilxpIdHQKR7Q=;
+	s=arc-20240116; t=1779999542; c=relaxed/simple;
+	bh=7HfdiHPEIm6mzknyDDC29duJUcrH4MHwKjvtcduyTRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pP+YvUPdiYHScU9+Kp+Bf5HxSPruSPGky9NHOyQQhMqnA96O1RVOGe8bSRlqmuQzg/8wHTi0SFq2JL84f2R6lG02jxc/mpDjdbwwIhni6UK6eW3Kgze6L5d+zqWNidi9miJfcGG2pOE3w1bJpsLtWD+3K0RZCNmpwh+teH0q/hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrFqw2+v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=os9l7qlcJqhKWPifmrQ796gkGN+aFo/WMfeaew8DCDmJBNdFZXZdk8mRxGd4qe60BIi8k/obwdCpmlPDfq9ptVMM+vDNX3P63SwqVGi6Ya2YeUY1mkVvtWT/U5QB/c2DgkJaoBtvuGyNJUQFxeMzMsXlWHjh+cuEU1POW9rtpEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtwiWfCy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrFqw2+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB731F00A3C;
-	Thu, 28 May 2026 20:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtwiWfCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851491F000E9;
+	Thu, 28 May 2026 20:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999538;
-	bh=d8vPR0zgrGnhf/8vAvHT0sDkrBByK2iUlsdBJCB93Vc=;
+	s=korg; t=1779999540;
+	bh=94RBcr7y6UtuiMFse3kcTU1DgDQzYSeXj389R2LEWbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UrFqw2+vFGjk2wFuT6c2i1y7gDcOxA8eDhVyTVCQxOhk6anhoG84OWi5gTp3cC8GH
-	 cP9ljOjticMrYHVsbTLBfCSYgDjcXa6J/BR3phy6zzpsFoHMVywbWjobW9w2+wuL+p
-	 E5O54a7SLrU/gGuJjIjauVutsPNRk8LldWVFkQB0=
+	b=wtwiWfCy0fbBB1H+GoCZJAdgCyuoQm5uM0Y7azjESixAQiRAsL9lRBXHZ/Hkce+b+
+	 stK2AE1UuV8u3VGy4jV5YR9h+nbtW/Ct76A2rf1rqpIwPccuXgEh4Efx4VHc/vlvKy
+	 zQMJlSTfR9aN5J73x3/ud7FLwF8+z8IBr5PlKITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Chen Ridong <chenridong@huaweicloud.com>,
-	Waiman Long <longman@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 075/377] cgroup/cpuset: Reset DL migration state on can_attach() failure
-Date: Thu, 28 May 2026 21:45:13 +0200
-Message-ID: <20260528194640.538978247@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 102/377] af_unix: Fix UAF read of tail->len in unix_stream_data_wait()
+Date: Thu, 28 May 2026 21:45:40 +0200
+Message-ID: <20260528194641.302120077@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,67 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 4a39eda5fdd867fc39f3c039714dd432cee00268 ]
+commit be309f8eae8b474a4a617eaae01324da996fc719 upstream.
 
-cpuset_can_attach() accumulates temporary SCHED_DEADLINE migration
-state in the destination cpuset while walking the taskset.
+unix_stream_data_wait() does skb_peek_tail(&sk->sk_receive_queue) without
+holding any lock that prevents SKBs on that queue from being dequeued and
+freed.
+This has been the case since commit 79f632c71bea ("unix/stream: fix
+peeking with an offset larger than data in queue").
+The first consequence of this is that the pointer comparison
+`tail != last` can be false even if `last` semantically refers to an
+already-freed SKB while `tail` is a new SKB allocated at the same address;
+which can cause unix_stream_data_wait() to wrongly keep blocking after new
+data has arrived, but only in a weird scenario where a peeking recv() and
+a normal recv() on the same socket are racing, which is probably not a
+real problem.
 
-If a later task_can_attach() or security_task_setscheduler() check
-fails, cgroup_migrate_execute() treats cpuset as the failing subsystem
-and does not call cpuset_cancel_attach() for it. The partially
-accumulated state is then left behind and can be consumed by a later
-attach, corrupting cpuset DL task accounting and pending DL bandwidth
-accounting.
+But since commit 2b514574f7e8 ("net: af_unix: implement splice for stream
+af_unix sockets"), `tail` is actually dereferenced, which can cause UAF in
+the following race scenario (where test_setup() runs single-threaded,
+and afterwards, test_thread1() and test_thread2() run concurrently in
+two threads:
+```
+static int socks[2];
+void test_setup(void) {
+  socketpair(AF_UNIX, SOCK_STREAM, 0, socks);
+  send(socks[1], "A", 1, 0);
+  int peekoff = 1;
+  setsockopt(socks[0], SOL_SOCKET, SO_PEEK_OFF, &peekoff, sizeof(peekoff));
+}
+void test_thread1(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, MSG_PEEK);
+}
+void test_thread2(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, 0);
+  shutdown(socks[1], SHUT_WR);
+}
+```
 
-Reset the pending DL migration state from the common error exit when
-ret is non-zero. Successful can_attach() keeps the state for
-cpuset_attach() or cpuset_cancel_attach().
+when racing like this:
+```
+thread1                       thread2
+unix_stream_read_generic
+  mutex_lock(&u->iolock)
+  skb_peek(&sk->sk_receive_queue)
+  skb_peek_next(skb, &sk->sk_receive_queue)
+  mutex_unlock(&u->iolock)
+                              unix_stream_read_generic
+                                unix_state_lock(sk)
+                                skb_peek(&sk->sk_receive_queue)
+                                unix_state_unlock(sk)
+  unix_stream_data_wait
+    unix_state_lock(sk)
+    tail = skb_peek_tail(&sk->sk_receive_queue)
+                                spin_lock(&sk->sk_receive_queue.lock)
+                                __skb_unlink(skb, &sk->sk_receive_queue)
+                                spin_unlock(&sk->sk_receive_queue.lock)
+                                consume_skb(skb) [frees the SKB]
+    `tail != last`: false
+    `tail`: true
+    `tail->len != last_len` ***UAF***
+```
 
-Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
-Cc: stable@vger.kernel.org # v6.10+
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-[ omitted upstream context line `cs->dl_bw_cpu = cpu;` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the UAF by removing the read of tail->len; checking tail->len would
+only make sense if SKBs in the receive queue of a UNIX socket could grow,
+which can no longer happen.
+
+Kuniyuki explained:
+
+> When commit 869e7c62486e ("net: af_unix: implement stream sendpage
+> support") added sendpage() support, data could be appended to the last
+> skb in the receiver's queue.
+>
+> That's why we needed to check if the length of the last skb was changed
+> while waiting for new data in unix_stream_data_wait().
+>
+> However, commit a0dbf5f818f9 ("af_unix: Support MSG_SPLICE_PAGES") and
+> commit 57d44a354a43 ("unix: Convert unix_stream_sendpage() to use
+> MSG_SPLICE_PAGES") refactored sendmsg(), and now data is always added
+> to a new skb.
+
+That means this fix is not suitable for kernels before 6.5.
+
+Fixes: 2b514574f7e8 ("net: af_unix: implement splice for stream af_unix sockets")
+Cc: stable@vger.kernel.org # 6.5.x
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260518-b4-unix-recv-wait-hotfix-v2-1-83e29ce8ad31@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/unix/af_unix.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -3163,16 +3163,13 @@ static int cpuset_can_attach(struct cgro
- 		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2716,8 +2716,7 @@ static int unix_read_skb(struct sock *sk
+  *	Sleep until more data has arrived. But check for races..
+  */
+ static long unix_stream_data_wait(struct sock *sk, long timeo,
+-				  struct sk_buff *last, unsigned int last_len,
+-				  bool freezable)
++				  struct sk_buff *last, bool freezable)
+ {
+ 	unsigned int state = TASK_INTERRUPTIBLE | freezable * TASK_FREEZABLE;
+ 	struct sk_buff *tail;
+@@ -2730,7 +2729,6 @@ static long unix_stream_data_wait(struct
  
- 		if (unlikely(cpu >= nr_cpu_ids)) {
--			reset_migrate_dl_data(cs);
- 			ret = -EINVAL;
- 			goto out_unlock;
+ 		tail = skb_peek_tail(&sk->sk_receive_queue);
+ 		if (tail != last ||
+-		    (tail && tail->len != last_len) ||
+ 		    sk->sk_err ||
+ 		    (sk->sk_shutdown & RCV_SHUTDOWN) ||
+ 		    signal_pending(current) ||
+@@ -2923,7 +2921,6 @@ static int unix_stream_read_generic(stru
+ 	int flags = state->flags;
+ 	bool check_creds = false;
+ 	struct scm_cookie scm;
+-	unsigned int last_len;
+ 	struct unix_sock *u;
+ 	int copied = 0;
+ 	int err = 0;
+@@ -2969,7 +2966,6 @@ redo:
+ 			goto unlock;
  		}
+ 		last = skb = skb_peek(&sk->sk_receive_queue);
+-		last_len = last ? last->len : 0;
  
- 		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
--		if (ret) {
--			reset_migrate_dl_data(cs);
-+		if (ret)
- 			goto out_unlock;
--		}
- 	}
+ again:
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+@@ -3003,8 +2999,7 @@ again:
  
- out_success:
-@@ -3181,7 +3178,10 @@ out_success:
- 	 * changes which zero cpus/mems_allowed.
- 	 */
- 	cs->attach_in_progress++;
-+
- out_unlock:
-+	if (ret)
-+		reset_migrate_dl_data(cs);
- 	mutex_unlock(&cpuset_mutex);
- 	return ret;
- }
+ 			mutex_unlock(&u->iolock);
+ 
+-			timeo = unix_stream_data_wait(sk, timeo, last,
+-						      last_len, freezable);
++			timeo = unix_stream_data_wait(sk, timeo, last, freezable);
+ 
+ 			if (signal_pending(current)) {
+ 				err = sock_intr_errno(timeo);
+@@ -3021,7 +3016,6 @@ unlock:
+ 		while (skip >= unix_skb_len(skb)) {
+ 			skip -= unix_skb_len(skb);
+ 			last = skb;
+-			last_len = skb->len;
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (!skb)
+ 				goto again;
+@@ -3096,7 +3090,6 @@ unlock:
+ 
+ 			skip = 0;
+ 			last = skb;
+-			last_len = skb->len;
+ 			unix_state_lock(sk);
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (skb)
 
 
