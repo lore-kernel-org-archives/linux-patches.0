@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D522459D1;
-	Thu, 28 May 2026 20:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16D324A047;
+	Thu, 28 May 2026 20:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999314; cv=none; b=IMcqIPNQbePHgwBsWlkUMHBYdhxpRAvf6QiaxRFVX/l3xaT+8Bs2g31fF46hL4XuTqqrhhePZ5cWzTwIqaWePacZkZpfLKi0fF0EvTuTfzMdjYntOsZVFYQUnyzv5mlXUHtNZUk/azxKPZTYDl1kgiK/EAu0wyqBXUbWz5e3cm0=
+	t=1779999317; cv=none; b=Gxa3tRB1MfdTw1z9t73oiiTtQgvONkcuitC3V+240KHqXDaw+Hz/nWaE7T3rlQOY/sbuV7f34k/rDYeYM7SEXiuG7dTxpC++KseZQ895U1WW0fq+BqbLqGbjAfvbWuCXhARiJSIA668wd7Nlz/c6kRWlYPPqTyiwm7SYQeuA2+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999314; c=relaxed/simple;
-	bh=7E6ZXyLgcsCbNERe9x/FBtQ8JvLIIzg13A3QNK8DyQg=;
+	s=arc-20240116; t=1779999317; c=relaxed/simple;
+	bh=9fBUKsUKP6oAMFQ34XrmI8ddWhLT9WBarDE1scUL84M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PutVaWpNhrDzmW9M36RT27TTyABKBfEGZ7DemQXh7wG+WdxBv7aPrY131+4bFtr4GI9bySkzD7sfelfevNKSKA5iyMlJq6Q3bQctRcWcMzcqZvAdGvg0Pso2da4scbDxr2HDILeAqnjsprHCDj3MuPd5QVZGVvcfsOoZeNrs2ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuGSUGyC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eXrMo9+fUSw9sE+Z5qpR/Zbibs+ZNFbSBtqLzOLwrWVpXt6eV+kjDcM3RBpOTeXDPadv5xyqpazsBNoZyVxWwZYaLCCSTmJvzTmLTazQ7jouPmRKi6Q9lasZRjGCzK25mfDbU066o5brOEjqhcAUCCLjo4vI2qpbUhf1RvanoIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXeyUHvr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuGSUGyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A851F000E9;
-	Thu, 28 May 2026 20:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXeyUHvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CD1F000E9;
+	Thu, 28 May 2026 20:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999313;
-	bh=/M2FQoeYf3c3apDghEEdK2zq+WdcWEA3j2b/U4Etf60=;
+	s=korg; t=1779999316;
+	bh=9ub8qTyuO1ZglknRrhSCxj3Ttf5IApNx+Ef4aOgZTPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TuGSUGyCbAZ7oOzjeTfdyqAiLHu0EJF5Kyagnrk6WLj+Mgaao7JQduT574rECfXx6
-	 40VpFApc4Fl/J8IhB5w/JkrOClQlwd6Sfidj4/5ZDiEail8hmsUR9UwaWMl9Uj/saw
-	 JNtEehW/Uunp69tSU9WeiEUri2dRwk5S8k1VlgGI=
+	b=VXeyUHvrZbXalrgfTQ6ol6kfCcq1k4ryHd5WDqua3iAw9Zv9cDitZuBYZVMBFRSkj
+	 jhM5yp9uJx/ENcwbce0OLtEa4XfTnuJwDzuG8HUjlshx1rmr2LakPn7Zkr9km/gZ66
+	 T3bqSRmuJaUhYYhxNCvnqibfhpx7igxa5W7DCOUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
 	Javier Martinez Canillas <javierm@redhat.com>,
-	Michael Kelley <mhklinux@outlook.com>,
 	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/377] drm/vblank: Add CRTC helpers for simple use cases
-Date: Thu, 28 May 2026 21:44:20 +0200
-Message-ID: <20260528194639.030307022@linuxfoundation.org>
+Subject: [PATCH 6.18 023/377] drm/vkms: Convert to DRMs vblank timer
+Date: Thu, 28 May 2026 21:44:21 +0200
+Message-ID: <20260528194639.057415498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -55,173 +55,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit d54dbb5963bdbdf8559903fe2b2343e871adcb30 ]
+[ Upstream commit 02e2681ffe1addde1fc8c35d05657b16bfa79613 ]
 
-Implement atomic_flush, atomic_enable and atomic_disable of struct
-drm_crtc_helper_funcs for vblank handling. Driver with no further
-requirements can use these functions instead of adding their own.
-Also simplifies the use of vblank timers.
+Replace vkms' vblank timer with the DRM implementation. The DRM
+code is identical in concept, but differs in implementation.
 
-The code has been adopted from vkms, which added the funtionality
-in commit 3a0709928b17 ("drm/vkms: Add vblank events simulated by
-hrtimers").
-
-v3:
-- mention vkms (Javier)
-v2:
-- fix docs
+Vblank timers are covered in vblank helpers and initializer macros,
+so remove the corresponding hrtimer in struct vkms_output. The
+vblank timer calls vkms' custom timeout code via handle_vblank_timeout
+in struct drm_crtc_helper_funcs.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20250916083816.30275-3-tzimmermann@suse.de
+Link: https://lore.kernel.org/r/20250916083816.30275-4-tzimmermann@suse.de
 Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_vblank_helper.c | 80 +++++++++++++++++++++++++++++
- include/drm/drm_vblank_helper.h     | 23 +++++++++
- 2 files changed, 103 insertions(+)
+ drivers/gpu/drm/vkms/vkms_crtc.c | 83 +++-----------------------------
+ drivers/gpu/drm/vkms/vkms_drv.h  |  2 -
+ 2 files changed, 7 insertions(+), 78 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_vblank_helper.c b/drivers/gpu/drm/drm_vblank_helper.c
-index f94d1e706191b..a04a6ba1b0ca0 100644
---- a/drivers/gpu/drm/drm_vblank_helper.c
-+++ b/drivers/gpu/drm/drm_vblank_helper.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: MIT
- 
-+#include <drm/drm_atomic.h>
- #include <drm/drm_crtc.h>
+diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms_crtc.c
+index e60573e0f3e95..bd79f24686dce 100644
+--- a/drivers/gpu/drm/vkms/vkms_crtc.c
++++ b/drivers/gpu/drm/vkms/vkms_crtc.c
+@@ -7,25 +7,18 @@
  #include <drm/drm_managed.h>
- #include <drm/drm_modeset_helper_vtables.h>
-@@ -17,6 +18,12 @@
-  * Drivers enable support for vblank timers by setting the vblank callbacks
-  * in struct &drm_crtc_funcs to the helpers provided by this library. The
-  * initializer macro DRM_CRTC_VBLANK_TIMER_FUNCS does this conveniently.
-+ * The driver further has to send the VBLANK event from its atomic_flush
-+ * callback and control vblank from the CRTC's atomic_enable and atomic_disable
-+ * callbacks. The callbacks are located in struct &drm_crtc_helper_funcs.
-+ * The vblank helper library provides implementations of these callbacks
-+ * for drivers without further requirements. The initializer macro
-+ * DRM_CRTC_HELPER_VBLANK_FUNCS sets them coveniently.
-  *
-  * Once the driver enables vblank support with drm_vblank_init(), each
-  * CRTC's vblank timer fires according to the programmed display mode. By
-@@ -25,6 +32,79 @@
-  * struct &drm_crtc_helper_funcs.handle_vblank_timeout.
-  */
+ #include <drm/drm_probe_helper.h>
+ #include <drm/drm_vblank.h>
++#include <drm/drm_vblank_helper.h>
  
-+/*
-+ * VBLANK helpers
-+ */
-+
-+/**
-+ * drm_crtc_vblank_atomic_flush -
-+ *	Implements struct &drm_crtc_helper_funcs.atomic_flush
-+ * @crtc: The CRTC
-+ * @state: The atomic state to apply
-+ *
-+ * The helper drm_crtc_vblank_atomic_flush() implements atomic_flush of
-+ * struct drm_crtc_helper_funcs for CRTCs that only need to send out a
-+ * VBLANK event.
-+ *
-+ * See also struct &drm_crtc_helper_funcs.atomic_flush.
-+ */
-+void drm_crtc_vblank_atomic_flush(struct drm_crtc *crtc,
-+				  struct drm_atomic_state *state)
-+{
-+	struct drm_device *dev = crtc->dev;
-+	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
-+	struct drm_pending_vblank_event *event;
-+
-+	spin_lock_irq(&dev->event_lock);
-+
-+	event = crtc_state->event;
-+	crtc_state->event = NULL;
-+
-+	if (event) {
-+		if (drm_crtc_vblank_get(crtc) == 0)
-+			drm_crtc_arm_vblank_event(crtc, event);
-+		else
-+			drm_crtc_send_vblank_event(crtc, event);
-+	}
-+
-+	spin_unlock_irq(&dev->event_lock);
-+}
-+EXPORT_SYMBOL(drm_crtc_vblank_atomic_flush);
-+
-+/**
-+ * drm_crtc_vblank_atomic_enable - Implements struct &drm_crtc_helper_funcs.atomic_enable
-+ * @crtc: The CRTC
-+ * @state: The atomic state
-+ *
-+ * The helper drm_crtc_vblank_atomic_enable() implements atomic_enable
-+ * of struct drm_crtc_helper_funcs for CRTCs the only need to enable VBLANKs.
-+ *
-+ * See also struct &drm_crtc_helper_funcs.atomic_enable.
-+ */
-+void drm_crtc_vblank_atomic_enable(struct drm_crtc *crtc,
-+				   struct drm_atomic_state *state)
-+{
-+	drm_crtc_vblank_on(crtc);
-+}
-+EXPORT_SYMBOL(drm_crtc_vblank_atomic_enable);
-+
-+/**
-+ * drm_crtc_vblank_atomic_disable - Implements struct &drm_crtc_helper_funcs.atomic_disable
-+ * @crtc: The CRTC
-+ * @state: The atomic state
-+ *
-+ * The helper drm_crtc_vblank_atomic_disable() implements atomic_disable
-+ * of struct drm_crtc_helper_funcs for CRTCs the only need to disable VBLANKs.
-+ *
-+ * See also struct &drm_crtc_funcs.atomic_disable.
-+ */
-+void drm_crtc_vblank_atomic_disable(struct drm_crtc *crtc,
-+				    struct drm_atomic_state *state)
-+{
-+	drm_crtc_vblank_off(crtc);
-+}
-+EXPORT_SYMBOL(drm_crtc_vblank_atomic_disable);
-+
- /*
-  * VBLANK timer
-  */
-diff --git a/include/drm/drm_vblank_helper.h b/include/drm/drm_vblank_helper.h
-index 74a971d0cfba0..fcd8a9b358463 100644
---- a/include/drm/drm_vblank_helper.h
-+++ b/include/drm/drm_vblank_helper.h
-@@ -6,8 +6,31 @@
- #include <linux/hrtimer_types.h>
- #include <linux/types.h>
+ #include "vkms_drv.h"
  
-+struct drm_atomic_state;
- struct drm_crtc;
+-static enum hrtimer_restart vkms_vblank_simulate(struct hrtimer *timer)
++static bool vkms_crtc_handle_vblank_timeout(struct drm_crtc *crtc)
+ {
+-	struct vkms_output *output = container_of(timer, struct vkms_output,
+-						  vblank_hrtimer);
+-	struct drm_crtc *crtc = &output->crtc;
++	struct vkms_output *output = drm_crtc_to_vkms_output(crtc);
+ 	struct vkms_crtc_state *state;
+-	u64 ret_overrun;
+ 	bool ret, fence_cookie;
  
-+/*
-+ * VBLANK helpers
-+ */
-+
-+void drm_crtc_vblank_atomic_flush(struct drm_crtc *crtc,
-+				  struct drm_atomic_state *state);
-+void drm_crtc_vblank_atomic_enable(struct drm_crtc *crtc,
-+				   struct drm_atomic_state *state);
-+void drm_crtc_vblank_atomic_disable(struct drm_crtc *crtc,
-+				    struct drm_atomic_state *crtc_state);
-+
-+/**
-+ * DRM_CRTC_HELPER_VBLANK_FUNCS - Default implementation for VBLANK helpers
-+ *
-+ * This macro initializes struct &drm_crtc_helper_funcs to default helpers
-+ * for VBLANK handling.
-+ */
-+#define DRM_CRTC_HELPER_VBLANK_FUNCS \
-+	.atomic_flush = drm_crtc_vblank_atomic_flush, \
-+	.atomic_enable = drm_crtc_vblank_atomic_enable, \
-+	.atomic_disable = drm_crtc_vblank_atomic_disable
-+
- /*
-  * VBLANK timer
-  */
+ 	fence_cookie = dma_fence_begin_signalling();
+ 
+-	ret_overrun = hrtimer_forward_now(&output->vblank_hrtimer,
+-					  output->period_ns);
+-	if (ret_overrun != 1)
+-		pr_warn("%s: vblank timer overrun\n", __func__);
+-
+ 	spin_lock(&output->lock);
+ 	ret = drm_crtc_handle_vblank(crtc);
+ 	if (!ret)
+@@ -57,55 +50,6 @@ static enum hrtimer_restart vkms_vblank_simulate(struct hrtimer *timer)
+ 
+ 	dma_fence_end_signalling(fence_cookie);
+ 
+-	return HRTIMER_RESTART;
+-}
+-
+-static int vkms_enable_vblank(struct drm_crtc *crtc)
+-{
+-	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+-	struct vkms_output *out = drm_crtc_to_vkms_output(crtc);
+-
+-	hrtimer_setup(&out->vblank_hrtimer, &vkms_vblank_simulate, CLOCK_MONOTONIC,
+-		      HRTIMER_MODE_REL);
+-	out->period_ns = ktime_set(0, vblank->framedur_ns);
+-	hrtimer_start(&out->vblank_hrtimer, out->period_ns, HRTIMER_MODE_REL);
+-
+-	return 0;
+-}
+-
+-static void vkms_disable_vblank(struct drm_crtc *crtc)
+-{
+-	struct vkms_output *out = drm_crtc_to_vkms_output(crtc);
+-
+-	hrtimer_cancel(&out->vblank_hrtimer);
+-}
+-
+-static bool vkms_get_vblank_timestamp(struct drm_crtc *crtc,
+-				      int *max_error, ktime_t *vblank_time,
+-				      bool in_vblank_irq)
+-{
+-	struct vkms_output *output = drm_crtc_to_vkms_output(crtc);
+-	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+-
+-	if (!READ_ONCE(vblank->enabled)) {
+-		*vblank_time = ktime_get();
+-		return true;
+-	}
+-
+-	*vblank_time = READ_ONCE(output->vblank_hrtimer.node.expires);
+-
+-	if (WARN_ON(*vblank_time == vblank->time))
+-		return true;
+-
+-	/*
+-	 * To prevent races we roll the hrtimer forward before we do any
+-	 * interrupt processing - this is how real hw works (the interrupt is
+-	 * only generated after all the vblank registers are updated) and what
+-	 * the vblank core expects. Therefore we need to always correct the
+-	 * timestampe by one frame.
+-	 */
+-	*vblank_time -= output->period_ns;
+-
+ 	return true;
+ }
+ 
+@@ -159,9 +103,7 @@ static const struct drm_crtc_funcs vkms_crtc_funcs = {
+ 	.reset                  = vkms_atomic_crtc_reset,
+ 	.atomic_duplicate_state = vkms_atomic_crtc_duplicate_state,
+ 	.atomic_destroy_state   = vkms_atomic_crtc_destroy_state,
+-	.enable_vblank		= vkms_enable_vblank,
+-	.disable_vblank		= vkms_disable_vblank,
+-	.get_vblank_timestamp	= vkms_get_vblank_timestamp,
++	DRM_CRTC_VBLANK_TIMER_FUNCS,
+ 	.get_crc_sources	= vkms_get_crc_sources,
+ 	.set_crc_source		= vkms_set_crc_source,
+ 	.verify_crc_source	= vkms_verify_crc_source,
+@@ -213,18 +155,6 @@ static int vkms_crtc_atomic_check(struct drm_crtc *crtc,
+ 	return 0;
+ }
+ 
+-static void vkms_crtc_atomic_enable(struct drm_crtc *crtc,
+-				    struct drm_atomic_state *state)
+-{
+-	drm_crtc_vblank_on(crtc);
+-}
+-
+-static void vkms_crtc_atomic_disable(struct drm_crtc *crtc,
+-				     struct drm_atomic_state *state)
+-{
+-	drm_crtc_vblank_off(crtc);
+-}
+-
+ static void vkms_crtc_atomic_begin(struct drm_crtc *crtc,
+ 				   struct drm_atomic_state *state)
+ 	__acquires(&vkms_output->lock)
+@@ -265,8 +195,9 @@ static const struct drm_crtc_helper_funcs vkms_crtc_helper_funcs = {
+ 	.atomic_check	= vkms_crtc_atomic_check,
+ 	.atomic_begin	= vkms_crtc_atomic_begin,
+ 	.atomic_flush	= vkms_crtc_atomic_flush,
+-	.atomic_enable	= vkms_crtc_atomic_enable,
+-	.atomic_disable	= vkms_crtc_atomic_disable,
++	.atomic_enable	= drm_crtc_vblank_atomic_enable,
++	.atomic_disable	= drm_crtc_vblank_atomic_disable,
++	.handle_vblank_timeout = vkms_crtc_handle_vblank_timeout,
+ };
+ 
+ struct vkms_output *vkms_crtc_init(struct drm_device *dev, struct drm_plane *primary,
+diff --git a/drivers/gpu/drm/vkms/vkms_drv.h b/drivers/gpu/drm/vkms/vkms_drv.h
+index 8013c31efe3b1..fb9711e1c6fbd 100644
+--- a/drivers/gpu/drm/vkms/vkms_drv.h
++++ b/drivers/gpu/drm/vkms/vkms_drv.h
+@@ -215,8 +215,6 @@ struct vkms_output {
+ 	struct drm_crtc crtc;
+ 	struct drm_writeback_connector wb_connector;
+ 	struct drm_encoder wb_encoder;
+-	struct hrtimer vblank_hrtimer;
+-	ktime_t period_ns;
+ 	struct workqueue_struct *composer_workq;
+ 	spinlock_t lock;
+ 
 -- 
 2.53.0
 
