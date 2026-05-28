@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C27C335566;
-	Thu, 28 May 2026 20:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73156335566;
+	Thu, 28 May 2026 20:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999055; cv=none; b=OTmk4Ud6Dsyol8WFl/rVO2Cs6UM/G7MMmKds5CFPgjfky8ntPu0lDbN7I4mM4MRWJ2wWwZBRtKdKFVTPPlHifBG63h0z5MAkNm+JJsnaBf23CJtgVErgwaMA67uTfIwtOrQ1L5Feve+fGqgQGT15RxSI1QbIAWXjdLnTW+/46nY=
+	t=1779999058; cv=none; b=u2rluL9jcO0rkYuldZFfwKR4AaLbE/1NTGrIJ7UFJAnnjYUuKmAXmJxLLdgnksT2figjQ7EbxxvDQ2YP4/zNB/eYgpA7c+ww6MnSfcfpG4/EMuFZA4cTJuRUGpM8zoAD949WWUI/rQB6fUWc+0ttN44EUfFg1Gi0H1iQyP466uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999055; c=relaxed/simple;
-	bh=DRg1ZkHaGelnZe109SN1jVpvi66ZnMCaExur0HpBOFc=;
+	s=arc-20240116; t=1779999058; c=relaxed/simple;
+	bh=dLpSV2Z/sMjAXhnznAGiRf/aLP5rWGbIb7kM4sq9H2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGgmpykuU5y4T7Xnz+nTeXVQPXYSCvlMocvXdtpoo1DBbviapm99kamtcqne6xeaaD+FNrAGDrVr5vZE/2D6R1PrUME3DlKqBfEJThjxbh1jSEpIiTkodInVC3ZJy6zI597HZ5G6fktucxlVl5wI6bZrwMRybpj2Jv3YP3mL6ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQaa6pS6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PH82HUPoZNpfeDGHjW0T+3A4NcDJpEEk/bMkIS2rB92fOeZgSDmwvKd7NNGuouHbjo8YW7pmIXVSVsPMMuaS9BJQnTO1UtqGX+vOQOgSQyjNAzKeg4V6COd5svA30kNvJc3QYbj/DY+vFQKA0L9KmzRtJLtbRCcgoQxouJLai0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXX2amdr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQaa6pS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC3D1F000E9;
-	Thu, 28 May 2026 20:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXX2amdr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A631F000E9;
+	Thu, 28 May 2026 20:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999054;
-	bh=5+DwonjwOyCfRO8nPCRof31Uo5ta/FpvLoSZWB2cdHY=;
+	s=korg; t=1779999057;
+	bh=a1wOe/DOVO16XrVwsZSwUPgXLnxiHj+q4cJb8L1qMO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQaa6pS6p8auQ/+9garKRJuqbLlwJrTvS/bRccq7gtLf9JirJfyIgBdRqhCD5u9yn
-	 rBRYRH4KJln59upJ6OBugT4olNl9B+pAZwiXTbQ6KoMGfOAuYjG7Eo3IPwuUyOkTfv
-	 6H9tzOYeJrbdZM91kdppX5lRFNw0zd5Sbzl1tFZI=
+	b=ZXX2amdrvONvSIxe5Ir/jvkpb8Tzw5p3IH6gIJmBxQp9kOuBF8KbPG7p+c20/eev5
+	 isJFDDNoteLtIqgHUh/jU3rWBWEmwRTcwnJ6oPdjHPjeQavriChZFE/IP+Fq8RqjH1
+	 LE9xE7s4WoRSr+7O7Kg9KMccZaWHRUoa/+Sp4lUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 356/461] wifi: iwlwifi: mld: dont dereference a pointer before NULL checking it
-Date: Thu, 28 May 2026 21:48:05 +0200
-Message-ID: <20260528194657.726310057@linuxfoundation.org>
+Subject: [PATCH 7.0 357/461] dma-mapping: move dma_map_resource() sanity check into debug code
+Date: Thu, 28 May 2026 21:48:06 +0200
+Message-ID: <20260528194657.758355334@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,68 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
 
-[ Upstream commit d733ed481fd20a8e7bfe5119c4e77761ba3f87ee ]
+[ Upstream commit af0c3f05866237f7592219bfe05387bc3bfc99b5 ]
 
-In iwl_mld_remove_link, the link->fw_id is saved at the beginning of the
-function so we have it after we freed the link.
+dma_map_resource() uses pfn_valid() to ensure the range is not RAM.
+However, pfn_valid() only checks for availability of the memory map for
+a PFN but it does not ensure that the PFN is actually backed by RAM. On
+ARM64 with SPARSEMEM (128MB section granularity), MMIO addresses that
+share a section with RAM will falsely trigger the WARN_ON_ONCE and cause
+dma_map_resource() to return DMA_MAPPING_ERROR.
 
-But the link pointer can be NULL, and is not checked when the fw_id is
-stored.
+This causes a WARNING on Raspberry Pi 4 during spi_bcm2835 probe because
+the SPI FIFO register (0xfe204004) falls in the same sparsemem section
+as the end of RAM (0xf8000000-0xfbffffff), both in section 31
+(0xf8000000-0xffffffff).
 
-Fix it by simply freeing the link at the end of the function.
+Move the sanity check from dma_map_resource() into debug_dma_map_phys()
+and replace the unreliable pfn_valid() with pfn_valid() &&
+!PageReserved(), which correctly identifies actual usable RAM without
+false positives for MMIO regions that happen to have struct pages.
 
-fFixes: 0e66a39f4f0e ("wifi: iwlwifi: fix potential use after free in iwl_mld_remove_link()")
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260515151351.371f40fc6711.I6a82cfe9655564e9c5731af91c36493b26b1208e@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Since dma_map_resource() is dma_map_phys(DMA_ATTR_MMIO), the check
+applies equally to both APIs. Any non-reserved page represents kernel
+memory to a sufficient degree that using DMA_ATTR_MMIO on it is almost
+certainly wrong and risks breaking coherency on non-coherent platforms.
+ZONE_DEVICE pages used for PCI P2P DMA (MEMORY_DEVICE_PCI_P2PDMA) have
+PageReserved set, so they will not trigger a false positive.
+
+The check no longer blocks the mapping and uses err_printk() to
+integrate with dma-debug filtering.
+
+Fixes: f7326196a781 ("dma-mapping: export new dma_*map_phys() interface")
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260513072209.1486986-1-jianpeng.chang.cn@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/link.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ kernel/dma/debug.c   | 9 ++++++++-
+ kernel/dma/mapping.c | 4 ----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-index b5430e8a73d66..7496528e85874 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2024-2025 Intel Corporation
-+ * Copyright (C) 2024-2026 Intel Corporation
-  */
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index 1a725edbbbf6a..3248f8b4d096d 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -1251,7 +1251,14 @@ void debug_dma_map_phys(struct device *dev, phys_addr_t phys, size_t size,
+ 	entry->direction = direction;
+ 	entry->map_err_type = MAP_ERR_NOT_CHECKED;
  
- #include "constants.h"
-@@ -504,7 +504,6 @@ void iwl_mld_remove_link(struct iwl_mld *mld,
- 	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(bss_conf->vif);
- 	struct iwl_mld_link *link = iwl_mld_link_from_mac80211(bss_conf);
- 	bool is_deflink = link == &mld_vif->deflink;
--	u8 fw_id = link->fw_id;
- 
- 	if (WARN_ON(!link || link->active))
- 		return;
-@@ -512,15 +511,15 @@ void iwl_mld_remove_link(struct iwl_mld *mld,
- 	iwl_mld_rm_link_from_fw(mld, bss_conf);
- 	/* Continue cleanup on failure */
- 
--	if (!is_deflink)
--		kfree_rcu(link, rcu_head);
--
- 	RCU_INIT_POINTER(mld_vif->link[bss_conf->link_id], NULL);
- 
--	if (WARN_ON(fw_id >= mld->fw->ucode_capa.num_links))
-+	if (WARN_ON(link->fw_id >= mld->fw->ucode_capa.num_links))
- 		return;
- 
--	RCU_INIT_POINTER(mld->fw_id_to_bss_conf[fw_id], NULL);
-+	RCU_INIT_POINTER(mld->fw_id_to_bss_conf[link->fw_id], NULL);
+-	if (!(attrs & DMA_ATTR_MMIO)) {
++	if (attrs & DMA_ATTR_MMIO) {
++		unsigned long pfn = PHYS_PFN(phys);
 +
-+	if (!is_deflink)
-+		kfree_rcu(link, rcu_head);
- }
++		if (pfn_valid(pfn) && !PageReserved(pfn_to_page(pfn)))
++			err_printk(dev, entry,
++				   "dma_map_resource called for RAM address %pa\n",
++				   &phys);
++	} else {
+ 		check_for_stack(dev, phys);
  
- void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
+ 		if (!PhysHighMem(phys))
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index 6d3dd0bd3a886..5d59372f42770 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -356,10 +356,6 @@ EXPORT_SYMBOL(dma_unmap_sg_attrs);
+ dma_addr_t dma_map_resource(struct device *dev, phys_addr_t phys_addr,
+ 		size_t size, enum dma_data_direction dir, unsigned long attrs)
+ {
+-	if (IS_ENABLED(CONFIG_DMA_API_DEBUG) &&
+-	    WARN_ON_ONCE(pfn_valid(PHYS_PFN(phys_addr))))
+-		return DMA_MAPPING_ERROR;
+-
+ 	return dma_map_phys(dev, phys_addr, size, dir, attrs | DMA_ATTR_MMIO);
+ }
+ EXPORT_SYMBOL(dma_map_resource);
 -- 
 2.53.0
 
