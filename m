@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD4E27A476;
-	Thu, 28 May 2026 20:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8804326B973;
+	Thu, 28 May 2026 20:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998519; cv=none; b=BF0Adbl+1Tt9OPG5owwl2Gh5emJXWcnT70W1z/W0oj9geyZGCx1sOQT1fu7rutjIMcjJwpDdTxg9vtqOvqq9l/ZXraE8CQkvL440GcEbyn9qJbvU5JnVZUvsIKNQIbNGWPDEDypaE9ZctLiy2gfZP4fOcLTClJyzyyneHvtVfas=
+	t=1779998522; cv=none; b=WXFy55BlqnfUqY9lkP6rP3XcLEHrdyifNW7HZAjzJ5aNS7ZjXLGcVBKm/ZcOC6+smdN0/D0xG7T15lHhlr+9gnRfNhJdZg2W194uB6MhScFeBMlkMw569lCurIzyAkJXqzc0FwdnlvyjN5ydTzMpXlzgw+nTwQ+0GjeWh7yDG4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998519; c=relaxed/simple;
-	bh=Coc/G7HMtDzg1iGnm8Pyyc5O4WFsS4WqcHpnKHG5OGk=;
+	s=arc-20240116; t=1779998522; c=relaxed/simple;
+	bh=Y5IdkzHbVELWhrzvjrfmM49UvvW6tBH814Exyv/Mvz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enfm8r5g2OounC2cGuW7ZlgoSHpiD1lMoYO4u2mXo2rC8GE+kzhKIo7UEgT5Yu4MKykUNGHKdgzBqrMLenoLgAzaq/BEyvyNKaS2Z/ymIY/FzqupgmcOQFsLKfIwKSPPomYHYWS9n33iuvt2a6UiOgTqtL18VLBQvJsEJGmWSnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNPYWZIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qrWDnMC6XuJaIggsdq0AF/8cWeC8XhCeULzJ6+Vlb9xIx24gnqi6RuHoFJTvIJI96DLM304f5MKmsLts968HapxX9tztZd9hPPClBuAukZ3qh3TNMN6Z1dbMGfDQ8PQ9nJlj+ClvBQSY8sv4Fk+QcDJOGLvk27SDokYqdQUbadY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb+EHBPE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNPYWZIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF951F000E9;
-	Thu, 28 May 2026 20:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb+EHBPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBF51F000E9;
+	Thu, 28 May 2026 20:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998518;
-	bh=kYu4mxURHUB4504Nmu7jYnEVq56ROG3fehdkDPasqQE=;
+	s=korg; t=1779998521;
+	bh=v8CcjAWxye0Pk5NJsIYT/L37dV4AMGCSgHuLo31asqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNPYWZISsttto3Ho6QRrkxvI0hcLhvvRL2h+FNOqi0O2UhpcbJ++2FxGEvxXR1fi8
-	 d5IbY92+vT9munkUUdlWocj+2bulOdmnm/abTTokwHM+3bYg8qFG+O0VpvYNbNMKSu
-	 vNt7DMBeIcaftbbeBgtAl1ZqmBZgC7181i9RqFoY=
+	b=tb+EHBPESMO1K8nLkPYa551WcCx85PFHqg0c3IRMBnkxUW9WyJuups4P0KkXLRv8E
+	 zamhTrYH0WVza/Ox8kVQiM+zA74HinVWmAAQi6ehFDkLalUmJKEU/GbwDozVPF3TTa
+	 urxtjmn6POMVZV/jbsqt9ccW8zibSvSB7PyvkSFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <david@davidgow.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 195/461] kunit: config: KUNIT_DEBUGFS should depend on DEBUG_FS
-Date: Thu, 28 May 2026 21:45:24 +0200
-Message-ID: <20260528194652.728190733@linuxfoundation.org>
+Subject: [PATCH 7.0 204/461] ALSA: hda: cs35l56: Put ACPI device after setting companion
+Date: Thu, 28 May 2026 21:45:33 +0200
+Message-ID: <20260528194653.010640346@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,34 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <david@davidgow.net>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 8f80b5b227ef9ea422080487715c841856339aed ]
+[ Upstream commit aa2fbece1b07954ef26488c800d126a36a8ab93e ]
 
-CONFIG_KUNIT_DEBUGFS is totally useless without debugfs, so it should
-depend on CONFIG_DEBUG_FS.
+acpi_dev_get_first_match_dev() returns a refcounted ACPI device and
+callers are expected to balance it with acpi_dev_put().
 
-Link: https://lore.kernel.org/r/20260425034155.53913-2-david@davidgow.net
-Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
-Signed-off-by: David Gow <david@davidgow.net>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+When no companion is already attached, cs35l56_hda_read_acpi() looks
+up an ACPI device and sets it with ACPI_COMPANION_SET(), but leaves
+the lookup reference held.
+
+ACPI_COMPANION_SET() does not take ownership of that reference, so
+drop it with acpi_dev_put() after attaching the companion.
+
+Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Tested-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260428080139.GA1649104@chcpu16
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/Kconfig | 1 +
+ sound/hda/codecs/side-codecs/cs35l56_hda.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/lib/kunit/Kconfig b/lib/kunit/Kconfig
-index f80ca3aeedb05..94ff8e4089bfb 100644
---- a/lib/kunit/Kconfig
-+++ b/lib/kunit/Kconfig
-@@ -17,6 +17,7 @@ if KUNIT
+diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+index 4c8d01799931c..cdbc576569efe 100644
+--- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+@@ -1041,6 +1041,7 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ 			return -ENODEV;
+ 		}
+ 		ACPI_COMPANION_SET(cs35l56->base.dev, adev);
++		acpi_dev_put(adev);
+ 	}
  
- config KUNIT_DEBUGFS
- 	bool "KUnit - Enable /sys/kernel/debug/kunit debugfs representation"
-+	depends on DEBUG_FS
- 	default y
- 	help
- 	  Enable debugfs representation for kunit.  Currently this consists
+ 	/* Initialize things that could be overwritten by a fixup */
 -- 
 2.53.0
 
