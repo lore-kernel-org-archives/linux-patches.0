@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A378329396;
-	Thu, 28 May 2026 20:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E3E2F9D85;
+	Thu, 28 May 2026 20:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001196; cv=none; b=KAyANv9b67Z6u4fOtZPuZIv9aKu8tGjShLQd06VLTkIiNHa74ws1dzPZK67THz4f1IAY6ZcD5JH1nHPOTT4ZENcG7MxgLza8vZY+XEGRoNZ50YhiMbw+s9b2u0dzFrV9tlw1WiFH6VZI6LAoWjBPC7P+tKXjNbwpxvUt/eJCkVQ=
+	t=1780001199; cv=none; b=SaOPuszDsuji4QNU3UhqjPH5nCPdokCLQ1V6zymWIfr1IXrknqBKOHNpPMCgKRM78zUdiLF/Qs25fOJcytSxWKeOhFAf1dS+n6IZN7p+Fx6vyIDuMHQBVeC8NFVbNx35CZpDEToX+TKtk3C5U/i9Dab1V/8mR/NcY4y9AhGCNcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001196; c=relaxed/simple;
-	bh=iJDdPfzWWVTKfvyPB7Y82FpbI/txfSOnJiG4jhO/foU=;
+	s=arc-20240116; t=1780001199; c=relaxed/simple;
+	bh=+m2Pl/o51lv9PhYg2WLz4z2WWH24BmofUOx6n40ibLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=op6/FTrbIPolRoVkils383El3Rs+3OcqIu8EgEvjWasiXIzYz4vX/WA88g7nIVFtBwkbOO0AFb+HE5zMUd7/XW2ZIVG798uQ+xKK4PhDQ21ChzhnPcM5J4moKKuBKwY+dNANIct+hkHXg9nl8St1C3qWJPMY+iC5pSgbtSljDmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsHXH6wa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lHtrNOjTPUiTJoYd7LGt53qGT6zM/3SHfjm0W5RRErZ3lPYDkJ3WvbdUv0r0jpmQATo51ixgz7sYfy3PPvhfctT26krRcNiy1qDvPgiKXykzUC9/ZJTndmHXN40rcwMmOVALzfCdlxSUvsEywhl9TeGfRMoWiXHkTc0d4fORnJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivMP+H2j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsHXH6wa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D381F000E9;
-	Thu, 28 May 2026 20:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivMP+H2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C731C1F00A3A;
+	Thu, 28 May 2026 20:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001195;
-	bh=cHAHQNozU7SypzteL4wSuuJ33bdKtzzGY8+SW6SLgZY=;
+	s=korg; t=1780001198;
+	bh=0WOtDTKnhjIqPR+RtdkwH5hi3mnFEckIG+7KBTMyJ8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WsHXH6waRYvV0VskYMd2Cp0s2EwKpHQh+pWSFO8ZQOnq9eGF5AzqL9NN0lpygrtYm
-	 U3cVF+tlXLzVVsMgOqROJya9pXxryBZkopR5Th+eBCy2IZxKC4r/PepyeUvM/y5jvN
-	 HuoeQKyjtKzsEDJwLD5Q7yFTTI4za8jW5m0biHxA=
+	b=ivMP+H2jYmTVFIAMjmADBbf82TIv5KCcl3KGw3JxPfm1nrFNuE25aeySppOubjnCX
+	 6VgqSeNAgAauEZMyV2tKwCD5O5JhUkbBDiVl8DA6acz4HyvzoKhRC1N79mcX/pqX66
+	 zkS+B2ZHnHc2J0P3rO/B3sqdTDUWqEnJGMskptCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 042/186] net: bcmgenet: keep RBUF EEE/PM disabled
-Date: Thu, 28 May 2026 21:48:42 +0200
-Message-ID: <20260528194930.102983554@linuxfoundation.org>
+	Ferry Meng <mengferry@linux.alibaba.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 025/186] ksmbd: fix SID memory leak in set_posix_acl_entries_dacl() on overflow
+Date: Thu, 28 May 2026 21:48:25 +0200
+Message-ID: <20260528194929.639215138@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,62 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Ferry Meng <mengferry@linux.alibaba.com>
 
-commit 9a1730245e416d11ad5c0f2c100061d61cc43f60 upstream.
+commit af92ee994cc7f7e83a41c2025f32257a2f82a7ef upstream.
 
-Setting RBUF_EEE_EN | RBUF_PM_EN in RBUF_ENERGY_CTRL breaks the RX
-path on GENET hardware once MAC EEE becomes active. RX traffic stops
-flowing while the link stays up and the usual descriptor/RX error
-counters remain quiet. In that state the MAC still accepts frames
-(rbuf_ovflow_cnt keeps climbing) but RBUF no longer forwards them to
-DMA, so rx_packets is no longer incremented at the netdev level. On
-some boards the corruption ends up as a paging fault in
-skb_release_data via bcmgenet_rx_poll on an LPI exit.
+Commit 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16
+DACL size overflow") added check_add_overflow() guards that break out
+of the ACE-building loops in set_posix_acl_entries_dacl() when the
+accumulated DACL size would wrap past 65535.
 
-Reproduced on Pi 4B (BCM2711 + BCM54213PE) and confirmed by Florian
-Fainelli on an internal Broadcom 4908-family board with the same crash
-signature. RBUF_PM_EN is not publicly documented.
+However, each iteration allocates a struct smb_sid via kmalloc_obj()
+at the top of the loop and relies on the kfree(sid) call at the end
+of the loop body (the 'pass_same_sid' label in the first loop, and
+the explicit kfree at the tail of the second loop) to release it.
+The newly introduced 'break' statements bypass those kfree() calls,
+leaking the sid buffer every time an overflow is detected.
 
-This shows up more often now that phy_support_eee() enables EEE by
-default, but it also affects older kernels as soon as TX LPI is
-turned on via ethtool, so it is not specific to recent changes.
+A malicious or malformed file with enough POSIX ACL entries to trip
+the overflow check will leak one or more struct smb_sid allocations
+on every request that touches the file's DACL, providing a trivial
+kernel memory exhaustion vector.
 
-Always clear RBUF_EEE_EN | RBUF_PM_EN in bcmgenet_eee_enable_set so
-the bits stay off across resets. UMAC and TBUF setup is left alone so
-TX-side EEE keeps working.
+Free sid before breaking out of the loops to plug the leak.
 
-Link: https://github.com/raspberrypi/linux/issues/7304
-Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260520184320.652053-1-nb@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/smb/server/smbacl.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1326,13 +1326,12 @@ void bcmgenet_eee_enable_set(struct net_
- 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
- 	bcmgenet_writel(reg, priv->base + off);
- 
--	/* Do the same for thing for RBUF */
-+	/* RBUF EEE/PM can break the RX path on GENET. Keep it disabled. */
- 	reg = bcmgenet_rbuf_readl(priv, RBUF_ENERGY_CTRL);
--	if (enable)
--		reg |= RBUF_EEE_EN | RBUF_PM_EN;
--	else
-+	if (reg & (RBUF_EEE_EN | RBUF_PM_EN)) {
- 		reg &= ~(RBUF_EEE_EN | RBUF_PM_EN);
--	bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+		bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+	}
- 
- 	if (!enable && priv->clk_eee_enabled) {
- 		clk_disable_unprepare(priv->clk_eee);
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index c1d1f34581d6..9161e9d7ed24 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -643,8 +643,10 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
+ 				pace->e_perm, 0777);
+-		if (check_add_overflow(*size, ace_sz, size))
++		if (check_add_overflow(*size, ace_sz, size)) {
++			kfree(sid);
+ 			break;
++		}
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -655,8 +657,10 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 			ntace = (struct smb_ace *)((char *)pndace + *size);
+ 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
+ 					0x03, pace->e_perm, 0777);
+-			if (check_add_overflow(*size, ace_sz, size))
++			if (check_add_overflow(*size, ace_sz, size)) {
++				kfree(sid);
+ 				break;
++			}
+ 			(*num_aces)++;
+ 			if (pace->e_tag == ACL_USER)
+ 				ntace->access_req |=
+@@ -698,8 +702,10 @@ posix_default_acl:
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
+ 				pace->e_perm, 0777);
+-		if (check_add_overflow(*size, ace_sz, size))
++		if (check_add_overflow(*size, ace_sz, size)) {
++			kfree(sid);
+ 			break;
++		}
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+-- 
+2.54.0
+
 
 
