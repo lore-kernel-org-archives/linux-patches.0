@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAE42D9787;
-	Thu, 28 May 2026 20:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24804316199;
+	Thu, 28 May 2026 20:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999620; cv=none; b=gUmFHoYXOW53OLpieW0iVGmK1bM/yR7d/ICtsKbzPgFPskyKAET4XozUwU6cwd3NWht4D5UQ6DCS3G1RPgaDcXY3+hnQvUNOiugi05Uj6HuBeBviUOUgkpZaJqY9ANlNWy3KzXK4KbdcR23hHM6EcQYA9DSE5QL6txepU7Z1xeY=
+	t=1779999623; cv=none; b=qOQ32kVqHRIJ9ASSIevVTMGELfWwU16+74A/Rmcf7gnOh9VUqOI0Qs8gmB5cJrp3Cs8LWVroGT8ijRDpH7W4nwMJ6Xiz75qhD/8UZL/F8AfuHyovGASI5DwK/73W6+zMEAmCxMK9jJAbmUFsr02w7ucTw10VL29EpdYv38K7qkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999620; c=relaxed/simple;
-	bh=ac5y0u/+dO+/qcg/kUkr7pO1fUk7Wh0GAgUQyECPqcc=;
+	s=arc-20240116; t=1779999623; c=relaxed/simple;
+	bh=ZnMOZx1ewR9Ce8fX/ChqywASmduYkMI7WgxhgoaoaAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SY+UYa07ASu8ZR9jfjwun6Z1GzuKEfE4fVxs/2E/HeHxC3Ef9kQTb7jLYP2MgIvGB3ZzEyhdz4c7GJNCGmfnmPAi1XJq+DCYmupn9cfQCUwYgwU+iOSIUx8FpQ6aWWIuuuHBoKHi/6bBZCnFkevLBgQWGnyH2Lq3mC5jP9Sl+yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AW23zaKz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TwGTruC1h85dY8xo0FbgwWKLwIS3yM/Xt4OkLVSPkrTrM+TGekmri5y8CFtRIfgM6Mrvx6ZYHMWF4HjsQVWgbS9d82O21BeXgawNmq9ua95Z0gyJitXQLZdR7LaVsJPIp05hafcwT8e4Tlt3zdinn8Gjr92IqdFfpcW3GSO1hIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HutKSS0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AW23zaKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D041F000E9;
-	Thu, 28 May 2026 20:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HutKSS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828A01F000E9;
+	Thu, 28 May 2026 20:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999619;
-	bh=8rzHbFVyUyUL1h/a1iccEZQ2FUgG0PJ159XpJ8VwdvM=;
+	s=korg; t=1779999622;
+	bh=CxXNlil9i7mXZmIUD4pRXjcQCVy/IDMv9VLi2tfbAwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AW23zaKzOJvhGkSgCn/G2SJVxSrlejn067thlSzS69uU2a6BojvpZLWA1Wr23qIta
-	 GKmj89sRvd3ZS7w9ZC1TsQK3E9W+6XwIuYxJWQ8cF5tbzF80GjG2NAiBinbQsuPK6R
-	 uj83YkE4HwsxROE6eAkm0JXAQdZ0bSxre04nE2Gw=
+	b=1HutKSS05yZhkVTP3VOFIpmmTD3wDOLspygbdrko+ji1OKUViG9J6YwPgJRnt2+LI
+	 kTTZTE3NWWq5vxgd0YgAhqtPazo+39Ouyh9irvrRmothlZK5yb9Lm4FghEKsfecEhm
+	 f9RlWJy6qMn0DYQYHL7t4NJ0StV91IPHZs5q9Fug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 114/377] spi: qup: fix error pointer deref after DMA setup failure
-Date: Thu, 28 May 2026 21:45:52 +0200
-Message-ID: <20260528194641.635534623@linuxfoundation.org>
+	Julien Chauveau <chauveau.julien@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 6.18 132/377] drm/bridge: it66121: acquire reset GPIO in probe
+Date: Thu, 28 May 2026 21:46:10 +0200
+Message-ID: <20260528194642.185655503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -50,43 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Julien Chauveau <chauveau.julien@gmail.com>
 
-commit a7e8f3efd50a165ba0189f6dc57f7e51a7d149db upstream.
+commit e02b5262fd288cc235f14e12233ea54e78c04611 upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+The it66121_ctx structure has a gpio_reset field, and it66121_hw_reset()
+calls gpiod_set_value() on it. However, the GPIO descriptor is never
+acquired via devm_gpiod_get(), leaving gpio_reset as NULL throughout
+the driver lifetime.
 
-Make sure to the clear the DMA channel pointers on setup failure to
-avoid dereferencing an error pointer (or attempting to release a channel
-a second time) on later probe errors or driver unbind.
+gpiod_set_value() silently returns when passed a NULL descriptor, so
+the hardware reset sequence in it66121_hw_reset() is a no-op. This
+leaves the chip in an undefined state at probe time, which can prevent
+it from responding on the I2C bus.
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
+The DT binding marks reset-gpios as a required property, so all
+compliant device trees provide this GPIO. Add the missing
+devm_gpiod_get() call after enabling power supplies and before the
+hardware reset, so the chip is properly reset with power applied.
 
-Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=4
-Cc: stable@vger.kernel.org	# 4.1
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074334.914735-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 988156dc2fc9 ("drm: bridge: add it66121 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Julien Chauveau <chauveau.julien@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Tested-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260324193011.16583-1-chauveau.julien@gmail.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qup.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/ite-it66121.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -996,8 +996,11 @@ static int spi_qup_init_dma(struct spi_c
+--- a/drivers/gpu/drm/bridge/ite-it66121.c
++++ b/drivers/gpu/drm/bridge/ite-it66121.c
+@@ -1559,6 +1559,11 @@ static int it66121_probe(struct i2c_clie
+ 		return ret;
+ 	}
  
- err:
- 	dma_release_channel(host->dma_tx);
-+	host->dma_tx = NULL;
- err_tx:
- 	dma_release_channel(host->dma_rx);
-+	host->dma_rx = NULL;
++	ctx->gpio_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(ctx->gpio_reset))
++		return dev_err_probe(dev, PTR_ERR(ctx->gpio_reset),
++				     "Failed to get reset GPIO\n");
 +
- 	return ret;
- }
+ 	it66121_hw_reset(ctx);
  
+ 	ctx->regmap = devm_regmap_init_i2c(client, &it66121_regmap_config);
 
 
