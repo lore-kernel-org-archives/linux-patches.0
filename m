@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F0224677F;
-	Thu, 28 May 2026 20:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B356E24677F;
+	Thu, 28 May 2026 20:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998472; cv=none; b=XCk/Ib4HnuLQq0nTeKaOhjXWJxLu/4Fm9YYzljl/3jPJA7YwJNl2Du3vxznZgzN4eWcpOGqMoIDzBvCMEad99Jc5zLz6p8UItvIOoNJesnnV0GMi0UWCSLEppTV3IEz7yyCtg6NGznBgqX14EkKSkUSA7PdYXoohwE4UGgmgdvs=
+	t=1779998474; cv=none; b=pnmPl5YngBwN3S2ZkpENyPC0G9pEMMrxzlqmyFizA9ttHVeeThXHPthxkCIsPahYf6mQX7hQYIwYHTtRvXrxpSN4vxaq3tGPpfJ/8sXIoctkSDb8NV4Q0DMLPj7R5ajyvLsdZaAkLNjZYcW6KSA7JqFPVFKxVx/u0GZX4FnXQac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998472; c=relaxed/simple;
-	bh=rq4SUR9/Z3z8WH5nxgzAj1X1/AAujMeDI7lD2EfQH7k=;
+	s=arc-20240116; t=1779998474; c=relaxed/simple;
+	bh=E/HlvaIGAWza6MHXMrRASu+TheEm62LcH1h7RVo2vdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snIIRzKBziil3KpGMJlMzU08tbAV5j5lwH1nrpV1OIbDHoOoiBdNXPSvIgezL7K4eTTFJubYgZbvjMkqegyFCt9d5Q1lIepoeNKDAwclNRlpXU9HIBq9CPrnGmvjkfY2BgVT281mxpyY+KuaHqvHoK0LLh8qWjDycxp4ROd1z/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMd0vGpy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FLjybiascjtvUdrfWAZl4nqkesNO50pc9PtAhRIpntWa/YfgKuKRB0Oi8Y3H2YDTXnjUp8VBw9zoYj3xEsri2T+B4N2uTiF4aGU95vsUM4VpLOYeVxAYEIBtyxoMoP8DthOxZFYBol2ZdxMRsJ8Pwn/+8UKX6quM5gVrVYnRNGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBZBsP7l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMd0vGpy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522AD1F000E9;
-	Thu, 28 May 2026 20:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBZBsP7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDC41F000E9;
+	Thu, 28 May 2026 20:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998470;
-	bh=FowXgyKjfQu8Qbj9ZvZ1zY4r84MnLcHFNCNOEHFF3Mk=;
+	s=korg; t=1779998473;
+	bh=Bx/A7fkCWshjSolDYOA0y8D++pmU1IBnuK7tcsBEMNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMd0vGpyTLLG2RCJMqIy43ply2fYagdBTtWuoH3ecVpAJLJag7+ixiqtTvGdXqZoz
-	 6rlqXGEYpMwqPjjec62KgRG/0v6NJeyyOEnWOfDxU4Hh3ANw6Xg+WZ5i2OVpMXSMAS
-	 t84SdAsVe0eZXKILvn+uOUtLheBifRekEr7euCHc=
+	b=OBZBsP7lIwzfpIhSFam0UNoChm3PHysOeyGUlWlq+U/ae1xxailrkbVXJXQgUz/q5
+	 oek/fVyP8wr2CN+RQhM9yK75e31Ann2gWIr3RvMxD1YhmwEzwh0OT1vV/gz37vvNoj
+	 dO+NQOvloP1OynPIhl0v7h9o+YeR9xjynafGOYV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Even Xu <even.xu@intel.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 184/461] mm/memfd_luo: report error when restoring a folio fails mid-loop
-Date: Thu, 28 May 2026 21:45:13 +0200
-Message-ID: <20260528194652.402387980@linuxfoundation.org>
+Subject: [PATCH 7.0 185/461] HID: intel-thc-hid: Intel-quickspi: Fix some error codes
+Date: Thu, 28 May 2026 21:45:14 +0200
+Message-ID: <20260528194652.431028075@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 0fb1daf0b78d0e23b63b6b65de56d4a3fd83bc14 ]
+[ Upstream commit ae4ac077332ea3341a0f4c0973556c6b7ac5b7a1 ]
 
-memfd_luo_retrieve_folios() initialises err to -EIO, but the per-iteration
-calls to mem_cgroup_charge(), shmem_add_to_page_cache() and
-shmem_inode_acct_blocks() reuse and overwrite err.  Once any iteration
-completes successfully, err becomes zero.
+If we have a partial read that is supposed to be treated as failure but
+in this code we forgot to set the error code.  Return -EINVAL.
 
-If a later iteration's kho_restore_folio() returns NULL, the failure path
-jumps to put_folios without resetting err, so the function returns 0.
-The caller memfd_luo_retrieve() then takes the success path, sets
-args->file and reports the restore as successful, leaving userspace with
-a partially populated memfd and no indication that anything went wrong.
-
-Set err to -EIO in the kho_restore_folio() failure branch so the error
-is propagated to the caller.
-
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
-Link: https://patch.msgid.link/20260415052300.362539-1-devnexen@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 9d8d51735a3a ("HID: intel-thc-hid: intel-quickspi: Add HIDSPI protocol implementation")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Even Xu <even.xu@intel.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd_luo.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memfd_luo.c b/mm/memfd_luo.c
-index cfd665a5b7874..bb5f601418032 100644
---- a/mm/memfd_luo.c
-+++ b/mm/memfd_luo.c
-@@ -412,6 +412,7 @@ static int memfd_luo_retrieve_folios(struct file *file,
- 		if (!folio) {
- 			pr_err("Unable to restore folio at physical address: %llx\n",
- 			       phys);
-+			err = -EIO;
- 			goto put_folios;
- 		}
- 		index = pfolio->index;
+diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+index 16f780bc879b1..cb19057f1191b 100644
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+@@ -94,7 +94,7 @@ static int quickspi_get_device_descriptor(struct quickspi_device *qsdev)
+ 		dev_err_once(qsdev->dev, "Read DEVICE_DESCRIPTOR failed, ret = %d\n", ret);
+ 		dev_err_once(qsdev->dev, "DEVICE_DESCRIPTOR expected len = %u, actual read = %u\n",
+ 			     input_len, read_len);
+-		return ret;
++		return ret ?: -EINVAL;
+ 	}
+ 
+ 	input_rep_type = ((struct input_report_body_header *)read_buf)->input_report_type;
+@@ -318,7 +318,7 @@ int reset_tic(struct quickspi_device *qsdev)
+ 		dev_err_once(qsdev->dev, "Read RESET_RESPONSE body failed, ret = %d\n", ret);
+ 		dev_err_once(qsdev->dev, "RESET_RESPONSE body expected len = %u, actual = %u\n",
+ 			     read_len, actual_read_len);
+-		return ret;
++		return ret ?: -EINVAL;
+ 	}
+ 
+ 	input_rep_type = FIELD_GET(HIDSPI_IN_REP_BDY_HDR_REP_TYPE, reset_response);
 -- 
 2.53.0
 
