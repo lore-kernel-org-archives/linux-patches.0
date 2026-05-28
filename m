@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5868402B8F;
-	Thu, 28 May 2026 20:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F0339866;
+	Thu, 28 May 2026 20:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999227; cv=none; b=ZNIngj4Po6DIjJYVz2EJAqttLfIVQEDgAuggUqM+SFLDA3dPx8Ickd1gsnRzRuI3YpTmh60njt+lqPv14Om/k8TU/2kyGH+V4JiCUeacRNjcFsxNPRUTywyQ43/4OWGHuwOfXh9k3liogfVyTek4CMY1sR5ahUHpFeUTAkJnd+k=
+	t=1779999230; cv=none; b=HWoJHHXFjuWCGk6hPiCKnsc/jS6zXXl3PAiVYLpzd6nfrNWmyeO4S2K4s4e4lI516kDhC2VFv2YKre7PDQ3wNXaTb9Qh7WjPso0nDjQWcslwxRntkFMhxvTbqfGmBFk+YfP/sk+YxQLEOnLhErsKNgxKPcc7gCHlF8eHjbTvsJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999227; c=relaxed/simple;
-	bh=oMbbMO/EwMeCvFHyYbWzJcyTzHQNH+dMOTI/N6iSGdU=;
+	s=arc-20240116; t=1779999230; c=relaxed/simple;
+	bh=cKY0Y10qbdltheZsr4rygYrv0kC7IYPD94xxca5+J10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu+LhA+oyhMlxcI5AqSaAhTacUTK2IGulijNNXSGlbl8LIch/40X2jcC9U1JQRCDNpd5Y76MivPi3eRqtCqWsuzVv0RfKVorST97XJlFtRJkt4DanTQ0Vl99nimzD22poc1/TiQ9Xakjo1PF/m1nq6LmVEhutXwfLLqFQWrv1rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H40F9tNX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MyTLhhcefFPhrP6F97Ahp8ztrjkMal7W+2/gYSFbDA3rHxfAZTL3VFMK3WgPIo4FA2qSq4MRS31IdlowL/R3SRo+RuQJN14KQ0JvE4nbYLGkqBa2Gh2yqV04UMu+yfQdj8f2FPFrqdmzvkRT7A79s1xZw8IG+7o9H1qviAR+waA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XahS/+V+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H40F9tNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED2D1F000E9;
-	Thu, 28 May 2026 20:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XahS/+V+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136FD1F000E9;
+	Thu, 28 May 2026 20:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999226;
-	bh=z9MpXg3JPPLRt2jF0wXsntwmTeDEyaN7wTvyI5tCKvQ=;
+	s=korg; t=1779999229;
+	bh=Izo4Hj4C5TJmMs3ZqDIuU2lIDEMotRXawrqj5SgfMps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H40F9tNXYyxEi5T87mr2+eu57JPi574UwjjihpbX2QIfuqoADKvHJA61nSPJDkUWk
-	 orAZAJIpnefbWYMJ+Tl1sxGeejruqug90wS/U1NXoAv7S46yqgtEAq0b58Vkh52juC
-	 BpiBnTSC//Hcf+aPTyVjzAB4m4MxF5otOhCtW20w=
+	b=XahS/+V+amo0EJRdpk2VxZN/psl+CU/TIPs1DJ2hdsuPqKwkmObZ8RIahdCOw0Byi
+	 F0f3SBiIsTL8WcxpQnozidf4FR+AV3qPHBsKNE/71ZGyZZO1IEsHUEUYow6IVAJcK4
+	 bbmba3MoYn86lxJIPBEwTESlzn/sllw4rOfH9CZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huzaifa Sidhpurwala <huzaifas@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Willem de Bruijn <willemb@google.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 453/461] net: gro: dont merge zcopy skbs
-Date: Thu, 28 May 2026 21:49:42 +0200
-Message-ID: <20260528194700.652010613@linuxfoundation.org>
+Subject: [PATCH 7.0 454/461] net: enetc: fix missing error code when pf->vf_state allocation fails
+Date: Thu, 28 May 2026 21:49:43 +0200
+Message-ID: <20260528194700.681960302@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 4db79a322db8c97f7b73b8a347395ef4d685eb40 ]
+[ Upstream commit 5027266dea471e140f93dd534845c9c4f43219a3 ]
 
-skb_gro_receive() can currently copy frags between the source and GRO
-skb, without checking the zerocopy status, and in particular the
-SKBFL_MANAGED_FRAG_REFS flag.
+In enetc_pf_probe(), when the memory allocation for pf->vf_state fails,
+the code jumps to the error handling label but the variable 'err' is not
+assigned an appropriate error code beforehand. This causes the function
+to return 0 (success) on an allocation failure path, misleading the
+caller into thinking the probe succeeded. So set err to -ENOMEM before
+jumping to the error handling label when the allocation for pf->vf_state
+returns NULL.
 
-When SKBFL_MANAGED_FRAG_REFS is set, the skb doesn't hold a reference
-on the pages in shinfo->frags. Appending those frags to another skb's
-frags without fixing up the page refcount can lead to UAF.
-
-When either the last skb in the GRO chain (the one we would append
-frags to) or the source skb is zerocopy, don't merge the skbs.
-
-Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
-Reported-by: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/c3b7f906bbfcbdfd7b4fa9d6c18a438870df85be.1779307748.git.sd@queasysnail.net
+Fixes: e15c5506dd39 ("net: enetc: allocate vf_state during PF probes")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20260520064421.91569-3-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 9f8960789b2cf..a847539834679 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -109,6 +109,9 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
- 	if (p->pp_recycle != skb->pp_recycle)
- 		return -ETOOMANYREFS;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index a12fd54a475f6..ed8f7b3dc5260 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -960,8 +960,10 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ 	if (pf->total_vfs) {
+ 		pf->vf_state = kzalloc_objs(struct enetc_vf_state,
+ 					    pf->total_vfs);
+-		if (!pf->vf_state)
++		if (!pf->vf_state) {
++			err = -ENOMEM;
+ 			goto err_alloc_vf_state;
++		}
+ 	}
  
-+	if (skb_zcopy(p) || skb_zcopy(skb))
-+		return -ETOOMANYREFS;
-+
- 	if (unlikely(p->len + len >= netif_get_gro_max_size(p->dev, p) ||
- 		     NAPI_GRO_CB(skb)->flush))
- 		return -E2BIG;
+ 	err = enetc_setup_mac_addresses(node, pf);
 -- 
 2.53.0
 
