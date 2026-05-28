@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A02A34F49F;
-	Thu, 28 May 2026 20:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA80932AAD6;
+	Thu, 28 May 2026 20:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000807; cv=none; b=Scz672J7KOc2GhvJ2SfteGYLS0m7nd0LkC++E2nN8d2WdfNvci7r79ayzA8fBxLKig8IEBcnHmYfqaPN9dSOtjH6s+DEvgPOpCm6ES+ugqgjxkiVFjn1wJGHat4wWRLvFchXQZadCf9Vm/spx87WFYKJkGLVEIvL7y+Q7JkjkLM=
+	t=1780000809; cv=none; b=UCdEuWGeXs4vAVptK3Nr4WDJWazyvkyrCkxkoPkDJJSQKp4JnsLomck+st69NC1fnblQvjY/Ayy89Mh/ht0onaK2TS9CrFpjEqEymgI7MELGDgWwLXV0vi1HaEfu7IwVBKuEfL9IrO8vCR8QX6I5T9QKwl/Zm58OGGDzfJwBKyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000807; c=relaxed/simple;
-	bh=WU8ZQXGYc370JGVsbgEONkNI66TvQ5VaLMgeKEiIoGY=;
+	s=arc-20240116; t=1780000809; c=relaxed/simple;
+	bh=oDdAkUtY1mh/QCtR9/mY5gUvnXCOK1Bp1k68KSgNePU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3MtIf62KYQCSnbFPSgh2laJdaMOb0SW5vwOEXaSlOKeKHNZjxnabtm7zE/0XqKRj//+4uYLHTSPSbjl9+NWAqxDOmbxP/ANsjeFfxHo5eMia/wqRZdapFWQI1NT3wWF1Ld9wMMOYJu9RTtVHTsHD7/d9O/etAPJ2I+Ckuh4mRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFUNOwk4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtJ0ZYcpUB+FijjhgTZY53zpGuUAYZ2lgx7AOLaMroC7Snhu8jzUpUzSw1He7KoHbDh/VU5bY+ZEdVvRUuFvbmZNUbfEdvFihTb8kIAr3dZjxEjbBQB1Bb7bz5ky3cZe6sXTOS9gcuSKZHwJUwLSJA/3GX8KyuqOO0waWejGZLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07SuO69V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFUNOwk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7679D1F000E9;
-	Thu, 28 May 2026 20:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07SuO69V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F6A1F00A3C;
+	Thu, 28 May 2026 20:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000806;
-	bh=XDVeazT01Juw/V8qeDbahvPGaNNEZLMrWwbqlnwkt1Q=;
+	s=korg; t=1780000808;
+	bh=x9+WgMN1YiGV2D2w5b0Lhq7/ofrak+2J4gbHghfSQaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WFUNOwk4q+oXRNgNj1MWfOTv/5OIhjMF+SrNVJuQz2zTKBtVA/d9rSb4RB6UFIbaY
-	 mOhMtotuN8Mq6e9fctKGOnIAA4RU6z7bOSqBoNn9jEuwjsjeEBRrDTqaJ5SqXORMVs
-	 VJq+VuBCtwjSyI6cI+0FLBm7iOe/23oJSqzvmPT0=
+	b=07SuO69Vh9I839Iy9Ow2I+CYeW00UcJJmFfJ+wEVikvZGgaPfyC8rX8sOIGhrSBjf
+	 nJ8TBxzBc8ZHARdQ9n0gNt6qrySVUyXMBItGRBNfq/7duIayHrqWEQG1Hnjwseb07F
+	 owMZAORu296UX30jiRFiKJplnTYzgANsLroVEWOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Damiano Melotti <melotti@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 176/272] test_kprobes: clear kprobes between test runs
-Date: Thu, 28 May 2026 21:49:10 +0200
-Message-ID: <20260528194634.236955712@linuxfoundation.org>
+Subject: [PATCH 6.12 177/272] tcp: Fix imbalanced icsk_accept_queue count.
+Date: Thu, 28 May 2026 21:49:11 +0200
+Message-ID: <20260528194634.262413839@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,126 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ef5581bb30efb939cc2bf093475c6cc85258e5cd ]
+[ Upstream commit 7eca3292cac7c26dad4c236f51ba225c39a0523f ]
 
-Running the kprobes sanity tests twice makes all tests fail and
-eventually crashes the kernel.
+When TCP socket migration happens in reqsk_timer_handler(),
+@sk_listener will be updated with the new listener.
 
-[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
-...
-   # Totals: pass:5 fail:0 skip:0 total:5
-   ok 1 kprobes_test
-[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
-...
-  # test_kprobe: EXPECTATION FAILED at lib/tests/test_kprobes.c:64
-  Expected 0 == register_kprobe(&kp), but
-      register_kprobe(&kp) == -22 (0xffffffffffffffea)
-...
-  Unable to handle kernel paging request ...
+When we call __inet_csk_reqsk_queue_drop(), the listener must
+be the one stored in req->rsk_listener.
 
-The testsuite defines several kprobes and kretprobes as static variables
-that are preserved across test runs.
+The cited commit accidentally replaced oreq->rsk_listener with
+sk_listener, leading to imbalanced icsk_accept_queue count.
 
-After register_kprobe and unregister_kprobe, a kprobe contains some
-leftover data that must be cleared before the kprobe can be registered
-again. The tests are setting symbol_name to define the probe location.
-Address and flags must be cleared.
+Let's pass the correct listener to __inet_csk_reqsk_queue_drop().
 
-The existing code clears some of the probes between subsequent tests, but
-not between two test runs. The leftover data from a previous test run
-makes the registrations fail in the next run.
-
-Move the cleanups for all kprobes into kprobes_test_init, this function
-is called before each single test (including the first test of a test
-run).
-
-Link: https://lore.kernel.org/all/20260507134615.1010905-1-martin@kaiser.cx/
-
-Fixes: e44e81c5b90f ("kprobes: convert tests to kunit")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260506035954.1563147-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_kprobes.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ net/ipv4/inet_connection_sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/test_kprobes.c b/lib/test_kprobes.c
-index b7582010125c3..06e729e4de051 100644
---- a/lib/test_kprobes.c
-+++ b/lib/test_kprobes.c
-@@ -12,6 +12,12 @@
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index bf4e5f49030b7..dd39cabb39001 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1172,7 +1172,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	}
  
- #define div_factor 3
+ drop:
+-	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
++	__inet_csk_reqsk_queue_drop(oreq->rsk_listener, oreq, true);
+ 	reqsk_put(oreq);
+ }
  
-+#define KP_CLEAR(_kp) \
-+do { \
-+	(_kp).addr = NULL; \
-+	(_kp).flags = 0; \
-+} while (0)
-+
- static u32 rand1, preh_val, posth_val;
- static u32 (*target)(u32 value);
- static u32 (*recursed_target)(u32 value);
-@@ -125,10 +131,6 @@ static void test_kprobes(struct kunit *test)
- 
- 	current_test = test;
- 
--	/* addr and flags should be cleard for reusing kprobe. */
--	kp.addr = NULL;
--	kp.flags = 0;
--
- 	KUNIT_EXPECT_EQ(test, 0, register_kprobes(kps, 2));
- 	preh_val = 0;
- 	posth_val = 0;
-@@ -226,9 +228,6 @@ static void test_kretprobes(struct kunit *test)
- 	struct kretprobe *rps[2] = {&rp, &rp2};
- 
- 	current_test = test;
--	/* addr and flags should be cleard for reusing kprobe. */
--	rp.kp.addr = NULL;
--	rp.kp.flags = 0;
- 	KUNIT_EXPECT_EQ(test, 0, register_kretprobes(rps, 2));
- 
- 	krph_val = 0;
-@@ -290,8 +289,6 @@ static void test_stacktrace_on_kretprobe(struct kunit *test)
- 	unsigned long myretaddr = (unsigned long)__builtin_return_address(0);
- 
- 	current_test = test;
--	rp3.kp.addr = NULL;
--	rp3.kp.flags = 0;
- 
- 	/*
- 	 * Run the stacktrace_driver() to record correct return address in
-@@ -352,8 +349,6 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
- 	struct kretprobe *rps[2] = {&rp3, &rp4};
- 
- 	current_test = test;
--	rp3.kp.addr = NULL;
--	rp3.kp.flags = 0;
- 
- 	//KUNIT_ASSERT_NE(test, myretaddr, stacktrace_driver());
- 
-@@ -367,6 +362,18 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
- 
- static int kprobes_test_init(struct kunit *test)
- {
-+	KP_CLEAR(kp);
-+	KP_CLEAR(kp2);
-+	KP_CLEAR(kp_missed);
-+#ifdef CONFIG_KRETPROBES
-+	KP_CLEAR(rp.kp);
-+	KP_CLEAR(rp2.kp);
-+#ifdef CONFIG_ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
-+	KP_CLEAR(rp3.kp);
-+	KP_CLEAR(rp4.kp);
-+#endif
-+#endif
-+
- 	target = kprobe_target;
- 	target2 = kprobe_target2;
- 	recursed_target = kprobe_recursed_target;
 -- 
 2.53.0
 
