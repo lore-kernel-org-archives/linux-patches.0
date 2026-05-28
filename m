@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E195E2D9787;
-	Thu, 28 May 2026 20:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6572E7377;
+	Thu, 28 May 2026 20:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999745; cv=none; b=CkQYmgtdER9auvMdgZgMza6V1mA+SLyZS4AZatzS8nDF7zdhUq4/pC9o9mY8EZ2XyJ8Hr6OtilEDi0KeP9g5fER5u8hgFUGR3ri2TdRZoxiJTo0b+kZp0KEgEhek3vrnoblc0eoZzXtT4eGQ/bKylxLVsPoFeWuvf+6vKkGyH3Y=
+	t=1779999748; cv=none; b=tEIN72Yde6zZwQSDAJljXFDQ5K6tlvjsnReGpAk5jyqrkWR5NtYrL9EKT1xUMwfOYcnLWIg8EZqHxcN7uJ5aQpEnndMMHc1Y2Rc4eLu+GD2pwYnWe8aQwOf+CgHHiHkD7/QC7mxnUOgClqZEX31wy+xGBpV0t/pIaP67WY8x+6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999745; c=relaxed/simple;
-	bh=n4dGNjWV5uBWb8xggwXTJFRK0YKzWJbLjKwOJ5l/yk8=;
+	s=arc-20240116; t=1779999748; c=relaxed/simple;
+	bh=RSkQFM8659yI2cf9q2sKc0lqJRh1LinjXelmLr5zN/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXPNW+rfEURSuE6+N36Mf89NxxfdqYbT3/PmwiDVFpOCMS6C7uvJXQWOrbWlsZmoGI0MSpV1tzkNln9xBLzkz1dr9w1A3YplcdbByWDnucZmc7HTrnM/bGp5BV5cMWKudu/fBGSnbMT0VtBO5xoyBDIp3TzLENHSdGTuGjdVw+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL2reOeB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KipTvINlmi04eaoC0C5ExqLth2GnTxedR5jnL2vDgei5BDoUqVIW78kbTDV+GGRZ8meeDDYfwC43IG6s+Ov2pd1jo08s8CIUgRNC20BJjnDT05vSiYQcPrkos+qSmDNzAyH/RvAoacvkmg445P0UvWwnE/bYQ6vWjUd3+u+KcDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojnePqfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL2reOeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0FD1F000E9;
-	Thu, 28 May 2026 20:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojnePqfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193C81F00A3A;
+	Thu, 28 May 2026 20:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999744;
-	bh=xGF8KR5G49FxeIglurCYnuG0zCosEeJQNRNMrscCggQ=;
+	s=korg; t=1779999747;
+	bh=LRzVQjfyVPr3wtTsdAeKzAIu05l7D027Qkc3QIAqHpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eL2reOeBg5mD8yERDPuG5eXpLaZTjVOC62AUzFs2VpoBIYH0Tb76xiAXrY8Fc/xGs
-	 1CZ8JS2ia+a6z0f5Ie65PcBGSZCbxTyMp8ZyF2wYr0f8vcYQm1IR/+nT6TSDXyHFby
-	 TJB3IL0ZfWrsFNaLWIqoKnv/7fw6vedVdyHxPlCg=
+	b=ojnePqfntjWHERZStvHRBYjor5cMaIF3HfTvQlKKokQFz4Qx897TH5Hqq9DPGh/nK
+	 3NL44o2Cl6GGnFS4xvti45MZaIfLcO6Lt3hnFS82nzLUix9VNb5aF3yCUbdD/rE/fh
+	 Cze0NZPxF6/aPSqdiLH+0yh2+Ezleu6GMdF9rOrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Navya Malempati <navya.malempati@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Even Xu <even.xu@intel.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 176/377] pinctrl: qcom: Fix GPIO to PDC wake irq map for qcs615
-Date: Thu, 28 May 2026 21:46:54 +0200
-Message-ID: <20260528194643.518744967@linuxfoundation.org>
+Subject: [PATCH 6.18 177/377] HID: intel-thc-hid: Intel-quickspi: Fix some error codes
+Date: Thu, 28 May 2026 21:46:55 +0200
+Message-ID: <20260528194643.544740942@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -53,43 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 9d69033ad967b6e09b1e5b30d1a32c6c4876465d ]
+[ Upstream commit ae4ac077332ea3341a0f4c0973556c6b7ac5b7a1 ]
 
-PDC interrupts 122-125 were meant for ibi_i3c wakeup but qcs615 do not
-support i3c. GPIOs 39,51,88 and 89 are also connected to different PDC
-pin to support non-ibi wakeup. Update the wakeirq map to reflect same.
+If we have a partial read that is supposed to be treated as failure but
+in this code we forgot to set the error code.  Return -EINVAL.
 
-Fixes: b698f36a9d40 ("pinctrl: qcom: add the tlmm driver for QCS615 platform")
-Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Signed-off-by: Navya Malempati <navya.malempati@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 9d8d51735a3a ("HID: intel-thc-hid: intel-quickspi: Add HIDSPI protocol implementation")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Even Xu <even.xu@intel.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-qcs615.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcs615.c b/drivers/pinctrl/qcom/pinctrl-qcs615.c
-index f1c827ddbfbfa..4d474c312c10b 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcs615.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcs615.c
-@@ -1043,11 +1043,11 @@ static const struct msm_pingroup qcs615_groups[] = {
- static const struct msm_gpio_wakeirq_map qcs615_pdc_map[] = {
- 	{ 1, 45 },    { 3, 31 },    { 7, 55 },    { 9, 110 },   { 11, 34 },
- 	{ 13, 33 },   { 14, 35 },   { 17, 46 },   { 19, 48 },   { 21, 83 },
--	{ 22, 36 },   { 26, 38 },   { 35, 37 },   { 39, 125 },  { 41, 47 },
--	{ 47, 49 },   { 48, 51 },   { 50, 52 },   { 51, 123 },  { 55, 56 },
-+	{ 22, 36 },   { 26, 38 },   { 35, 37 },   { 39, 118 },  { 41, 47 },
-+	{ 47, 49 },   { 48, 51 },   { 50, 52 },   { 51, 116 },  { 55, 56 },
- 	{ 56, 57 },   { 57, 58 },   { 60, 60 },   { 71, 54 },   { 80, 73 },
- 	{ 81, 64 },   { 82, 50 },   { 83, 65 },   { 84, 92 },   { 85, 99 },
--	{ 86, 67 },   { 87, 84 },   { 88, 124 },  { 89, 122 },  { 90, 69 },
-+	{ 86, 67 },   { 87, 84 },   { 88, 117 },  { 89, 115 },  { 90, 69 },
- 	{ 92, 88 },   { 93, 75 },   { 94, 91 },   { 95, 72 },   { 96, 82 },
- 	{ 97, 74 },   { 98, 95 },   { 99, 94 },   { 100, 100 }, { 101, 40 },
- 	{ 102, 93 },  { 103, 77 },  { 104, 78 },  { 105, 96 },  { 107, 97 },
+diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+index 16f780bc879b1..cb19057f1191b 100644
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+@@ -94,7 +94,7 @@ static int quickspi_get_device_descriptor(struct quickspi_device *qsdev)
+ 		dev_err_once(qsdev->dev, "Read DEVICE_DESCRIPTOR failed, ret = %d\n", ret);
+ 		dev_err_once(qsdev->dev, "DEVICE_DESCRIPTOR expected len = %u, actual read = %u\n",
+ 			     input_len, read_len);
+-		return ret;
++		return ret ?: -EINVAL;
+ 	}
+ 
+ 	input_rep_type = ((struct input_report_body_header *)read_buf)->input_report_type;
+@@ -318,7 +318,7 @@ int reset_tic(struct quickspi_device *qsdev)
+ 		dev_err_once(qsdev->dev, "Read RESET_RESPONSE body failed, ret = %d\n", ret);
+ 		dev_err_once(qsdev->dev, "RESET_RESPONSE body expected len = %u, actual = %u\n",
+ 			     read_len, actual_read_len);
+-		return ret;
++		return ret ?: -EINVAL;
+ 	}
+ 
+ 	input_rep_type = FIELD_GET(HIDSPI_IN_REP_BDY_HDR_REP_TYPE, reset_response);
 -- 
 2.53.0
 
