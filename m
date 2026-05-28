@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0723350D7D;
-	Thu, 28 May 2026 20:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B4E33987F;
+	Thu, 28 May 2026 20:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000555; cv=none; b=r+FDgMe76pIPjVUY4iVmEfq/Qv8vT/a9RpCgqCZUvx0sfOJmk/MXl/IJ74OpfZ6Of1ndn3lgScy7kUwAThxgeuLuNLrR4TPd1AHp/d5iHv4yupDvt0/l73QmSbV7uIk8CKomotdRYgVmPHG/lk6nR4FW19pffWFNJHG/XfzpwvU=
+	t=1780000558; cv=none; b=SNF1XN6naPm/kYJUTE2tItGgkag2SIkaLAJOGFVzr9dciamobjFNLtTHqvMIQaNEnU5zN5Xew3K3Xxu/tI61H3bswiUDTzPGwa0YGVFzYzAVQYVFX84sNM+kWtNxpOFqrFFWel+lLL+rNBlggJEMk42ReJxRwXsNuFv8xLD5N14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000555; c=relaxed/simple;
-	bh=hJVJxQQ+pEmOshI36nlwDy+enBY/lMIWWrIIjM0bng0=;
+	s=arc-20240116; t=1780000558; c=relaxed/simple;
+	bh=HEICKYx83VMsPog9LTdtD2bn5hZ+UHFv03fLzhYVu/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfOTT2DRMOI5E5cRjNSvJcZmAGZy8qzIjgcQCAqztjz3I2Arz+J2TDYGyFhAxuJE7k3zHHoLhLqoRpC0EEhC71Hus+dsE8H5wizmkKygVJeqCtpe4jv00H5+U9ueYVknR59FCNIhOMcExuAqbJx82VaedUFx3FDcGbjL71r+XVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDLWn25W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bkl8ysg+pFb1cMpxDujvumiuamUM6vhjfz/MlekJ2W0kmJrkeMIqJFDg9fj/vvFlMdcRI0tWGyg55esKGVyw6BWKvk4uEI7oiKY9jedjJbaVtBqYb+saJ2u+MSDt11vUtnpjUD1qAryW0ZJE1VUojTrl5bZ+G7Xz6lH8SGDCXW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv2ULM4X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDLWn25W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1442C1F000E9;
-	Thu, 28 May 2026 20:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv2ULM4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F6B1F000E9;
+	Thu, 28 May 2026 20:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000554;
-	bh=HEB3TKIrm08qOKqYOaga+MXKe33J0ze4hN+sOAJPn68=;
+	s=korg; t=1780000557;
+	bh=rjT6RhniKKTdDEjISCnv0Og9dm1JQj7yhKIhqHxKdUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDLWn25WAXT67rRprn5goF+Pay4MAi2zNBFyKrWFeptmirBTtrrHKAqPEIasFO0Ln
-	 nhTQWb+ql53dT9NfGauACQbz8Tw0S0aaoTUdyEVqtq/K9wb2YZon7xZtkbtSigJ7yR
-	 3ULlxHFxRLi7kTV7R8gW5ZSySLH2kyDhRWp9r79E=
+	b=qv2ULM4XFWCwIP4QY2XtIOPT7aqGZDVtnFaeFSwSWd9qSN37bnSelw2PTpSVTUMXY
+	 qy37f08sJtOB+z+nIXN0AoGxWG42RKElugyTRlMeb9/OucazD3ozMBgOTrHRQ8nfcz
+	 3kMa9/CqCCRkaCtGQgAUGvY7/SBfGP2R4LRgUf4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 085/272] vsock/vmci: fix UAF when peer resets connection during handshake
-Date: Thu, 28 May 2026 21:47:39 +0200
-Message-ID: <20260528194631.758961753@linuxfoundation.org>
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.12 050/272] smb/server: promote S_DEL_ON_CLS to S_DEL_PENDING when close
+Date: Thu, 28 May 2026 21:47:04 +0200
+Message-ID: <20260528194630.783993399@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,64 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minh Nguyen <minhnguyen.080505@gmail.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
+commit 4ec9c8e023c79f613fe4d5ad8cc737112efb2e44 upstream.
 
-vmci_transport_recv_connecting_server() returned err = 0 for a peer
-RST in its default switch arm:
+Reproducer:
 
-	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
+  1. server: systemctl start ksmbd
+  2. client: mount -t cifs //${server_ip}/export /mnt
+  3. client: C program: openat(AT_FDCWD, "/mnt", O_RDWR | O_TMPFILE, 0600)
 
-That made vmci_transport_recv_listen() skip vsock_remove_pending(),
-leaving the pending socket on the listener's pending_links with
-sk_state = TCP_CLOSE while destroy: still dropped the explicit
-reference taken before schedule_delayed_work().
+Do not treat `FILE_DELETE_ON_CLOSE_LE` as delete pending while files
+remain open.
 
-One second later vsock_pending_work() observed is_pending=true and
-performed full cleanup: vsock_remove_pending() then the two trailing
-sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
-the socket, and the second wrote into the freed object:
+This patch fixes xfstests generic/004.
 
-  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
-  Write of size 4 at addr ffff88800b1cac80 by task kworker
-  Workqueue: events vsock_pending_work
-
-Treat peer RST like any other unexpected packet type (err = -EINVAL).
-All destroy: arms now return err < 0, so vmci_transport_recv_listen()
-removes pending from pending_links synchronously and
-vsock_pending_work() takes the is_pending=false / !rejected branch,
-dropping only its own work reference.  This also closes the
-multi-packet race Sashiko reported on v2: pending is removed from
-the list before any subsequent packet can find it.
-
-The pre-existing sk_acceptq_removed() gap on the err < 0 path of
-vmci_transport_recv_listen() that Sashiko also noted is not
-introduced or changed by this patch.
-
-Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
-Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://chenxiaosong.com/en/smb-xfstests-generic-004.html
+Co-developed-by: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Tested-by: Steve French <stfrench@microsoft.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1156,7 +1156,7 @@ vmci_transport_recv_connecting_server(st
- 		/* Close and cleanup the connection. */
- 		vmci_transport_send_reset(pending, pkt);
- 		skerr = EPROTO;
--		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
-+		err = -EINVAL;
- 		goto destroy;
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -118,7 +118,7 @@ int ksmbd_query_inode_status(struct dent
+ 		return ret;
+ 
+ 	down_read(&ci->m_lock);
+-	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
++	if (ci->m_flags & S_DEL_PENDING)
+ 		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
+ 	else
+ 		ret = KSMBD_INODE_STATUS_OK;
+@@ -134,7 +134,7 @@ bool ksmbd_inode_pending_delete(struct k
+ 	int ret;
+ 
+ 	down_read(&ci->m_lock);
+-	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	ret = (ci->m_flags & S_DEL_PENDING);
+ 	up_read(&ci->m_lock);
+ 
+ 	return ret;
+@@ -302,12 +302,20 @@ static void __ksmbd_inode_close(struct k
+ 		}
  	}
  
++	down_write(&ci->m_lock);
++	/* Promote S_DEL_ON_CLS to S_DEL_PENDING when close */
++	if (ci->m_flags & S_DEL_ON_CLS) {
++		ci->m_flags &= ~S_DEL_ON_CLS;
++		ci->m_flags |= S_DEL_PENDING;
++	}
++	up_write(&ci->m_lock);
++
+ 	if (atomic_dec_and_test(&ci->m_count)) {
+ 		bool do_unlink = false;
+ 
+ 		down_write(&ci->m_lock);
+-		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
+-			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
++		if (ci->m_flags & S_DEL_PENDING) {
++			ci->m_flags &= ~S_DEL_PENDING;
+ 			do_unlink = true;
+ 		}
+ 		up_write(&ci->m_lock);
 
 
