@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B80C2EF652;
-	Thu, 28 May 2026 20:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97B530C343;
+	Thu, 28 May 2026 20:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000603; cv=none; b=cz3hChLoplpnhV1YO1gsHhq6YpPxftVWi9jM3Lhp6hslnypOO8mT+XUFsAnbLy+/6x3Ln8o1/SbnASPDN+IHMWGhXPe6sh/x8c6TdepFcHNDHQcvM3MzwztbAFtteYjfPaKGfg96kkiGAy7NBFSKr3OYRvkrqY22JUusTkEeXIA=
+	t=1780000605; cv=none; b=WvhoFSnXiPPpGO0aA0DfAnjBe1EhIFdheNcBn5kWfIiIraDNAnK5/92uMPeFdOq0KNuCNbX5tbCG8trE8J5+9y2YPKSmu1afUpJ4H6D7R8bsFza4lgsLaXuikiX1/ftIth1f35K/h+CqdF7Exj5l0itUOWFmguEZ92MxAH/Srlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000603; c=relaxed/simple;
-	bh=AZFDTOPMfJKyNwjXIOQTZt5dHEh1w4/doVe3Z+nLmRo=;
+	s=arc-20240116; t=1780000605; c=relaxed/simple;
+	bh=UtWMY9Y3TiaJZG4cvTed8RScCUmgxsVJHDWLeaX4KtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YV4c7CxoTaZQNaPtBmN1YcTPU0dzyqwggHJ3G2yQ3sEETpe3C6S7eesDT5zn2M1O/DgC6n99ksD9mEVYwQ479N8Jk6q8D2RTyiq4ZuFoBCcpQ4BsFqb4ZRn+hzFluuUF/Tly8mDpmgpKcQb2NYhoB37dePOkPq+DxCRsug77PKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/hbO8wk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KS/9nCmXxyuUM0hmg11yDEZwNpqmVoI+48uit9yjkZC7e96+XvZR2yUtayYsypkC2eRZGUiqFdVw+aaO5SezFwpTDV345pc1x9koZvvzQjHwIwoWvRQHPlxQtNrTuaeDlx4mWQvYuNXSzrWBTUg00ZFFWNJqcB3ScIKXuHDbb24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABYXNKha; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/hbO8wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A54A1F000E9;
-	Thu, 28 May 2026 20:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABYXNKha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541B01F000E9;
+	Thu, 28 May 2026 20:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000602;
-	bh=WOsanqMRA6Bvv8G3OvMWDjU+TyfYl1xbghK3Fp+ZB2k=;
+	s=korg; t=1780000604;
+	bh=0ekUPvpnHCr0GavI2YMII+waK59n3Q436HmkR+uybGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/hbO8wkyFBzAFQcfcu5vxoTsbC4d/irCMn5vNvjWnukH8rIvpBQowFhCCCTWd78v
-	 kgg2avSXrq00GnbmDUYcsbc9SNelumHadl9oZfU3OzexMu6agWW8NMpVEiWMTSx+HP
-	 kwzJoopa14pQ9NJXvVgvL6cqhCHOEdRq9NtQTA+0=
+	b=ABYXNKhassPhank4l+jEt66rXWRlBj+y5vH7StjzWjRpw438Xs2kXrJVnL0rdPl/x
+	 qCAwD8OEltvPX4YSKP4wzVr4bCSHKTONXk1WR+axB55bNo3ZL4UtsggnlskAvxc2p8
+	 PeK/xO/W3dPvwpkmYCumsbYFpyy+x8H3IfHvb6Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.12 104/272] drm/bridge: chipone-icn6211: use devm_drm_bridge_add in i2c probe
-Date: Thu, 28 May 2026 21:47:58 +0200
-Message-ID: <20260528194632.290698452@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 105/272] spi: qup: fix error pointer deref after DMA setup failure
+Date: Thu, 28 May 2026 21:47:59 +0200
+Message-ID: <20260528194632.317745188@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -50,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 73d01051e8040c0b1de7fd26b3b8d0c2ffa6895c upstream.
+commit a7e8f3efd50a165ba0189f6dc57f7e51a7d149db upstream.
 
-Use devm_drm_bridge_add() so the bridge is released if probe
-fails after registration, and drop drm_bridge_remove() in chipone_i2c_probe.
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: 8dde6f7452a1 ("drm: bridge: icn6211: Add I2C configuration support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260430194944.78119-1-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Make sure to the clear the DMA channel pointers on setup failure to
+avoid dereferencing an error pointer (or attempting to release a channel
+a second time) on later probe errors or driver unbind.
+
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
+
+Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=4
+Cc: stable@vger.kernel.org	# 4.1
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074334.914735-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/chipone-icn6211.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-qup.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/bridge/chipone-icn6211.c
-+++ b/drivers/gpu/drm/bridge/chipone-icn6211.c
-@@ -757,7 +757,9 @@ static int chipone_i2c_probe(struct i2c_
- 	dev_set_drvdata(dev, icn);
- 	i2c_set_clientdata(client, icn);
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -996,8 +996,11 @@ static int spi_qup_init_dma(struct spi_c
  
--	drm_bridge_add(&icn->bridge);
-+	ret = devm_drm_bridge_add(dev, &icn->bridge);
-+	if (ret)
-+		return ret;
- 
- 	return chipone_dsi_host_attach(icn);
+ err:
+ 	dma_release_channel(host->dma_tx);
++	host->dma_tx = NULL;
+ err_tx:
+ 	dma_release_channel(host->dma_rx);
++	host->dma_rx = NULL;
++
+ 	return ret;
  }
+ 
 
 
