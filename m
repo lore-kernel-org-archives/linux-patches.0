@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E499310620;
-	Thu, 28 May 2026 20:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD3C23394D;
+	Thu, 28 May 2026 20:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001221; cv=none; b=asdUkIxk1m6NUhHsY3YhROJLVkE5quPPGGG8JkEGw6IDqaeUjF4lo9VOsKONBSS1kGFubJOoPLUVd1mk54iGHUIKwwRkBvT/H0EN8NIbOVdmrcI0rn1PM5uWaHHeVuM28oiKEJLkjWGHjL4HWpRF2YyfNa2CYSNp6/DuJcat0Us=
+	t=1780001224; cv=none; b=fvPrjYjIu8AJkHff5bk5w1zd1fHi27kU4stR/sWl1M2r3DivU09kgm057HTolGvdOucvKKDj2kVY7TaUE+CcfiGLMBWaF7J6nKH3fv72GDC9CNAeJdBf19+7IfRYfNO7mFFM8mhDb18yvsMWjIfq2ZtyAxDZQj5Iuly4b/zIduI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001221; c=relaxed/simple;
-	bh=NWQrwn/k968B6hhYHRburljA47ov4h8D+UL0bC1vyHU=;
+	s=arc-20240116; t=1780001224; c=relaxed/simple;
+	bh=C36wharRITK6Mg3JRurh64IqKCic+mcVCH+3e1RdUPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcCbMMHYwGaTKz74uIBFVZudx/GcVImIJAO5SjmWUNJpOz0Z/7/mX2ENDuqvTzGTOPDMTH7i/OLWU0wCS2ygP6ROaaBz/WlL0KZUfqJLmwJl+fHbarzvu2kCJZ/pv4Z3D6FcReLmM4DxAERvJ/pmlrDLk/GaLf7sDo2znpricjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOUGYdJO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L6+3aJTnhY0BT6Y0w7Ha/EfvnCM2TOAKElV/8rBrW9VNU0tYBa9RB0akud47vMi6qdQIy4VAAW511A5cOfRKamImBmez5XDPn7t6RmGgqZPPOWw7hxpuv+gE9A4g7fSNjIVRZx3Iqxv9rzTxRM+BO1i2VJLk50dmy+JaPswG/SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6iD2QJZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOUGYdJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071B21F000E9;
-	Thu, 28 May 2026 20:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6iD2QJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB67D1F000E9;
+	Thu, 28 May 2026 20:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001220;
-	bh=Dkiew4KWI5YboURr3rvcsi2gUzUHvxh6+RRinXtfZ0M=;
+	s=korg; t=1780001223;
+	bh=whf4JNz8hwNJD+WKu6SOsQjvvYd6Dh9d2IKXKVFcFKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mOUGYdJOhXD8Tcytpbd5hzxZZEt6Dh22DZTPn61oy0PtPF+7nC8GDsOu7O9oRs3DN
-	 +E83mug7DWN3wlIFuHPbuA64uFSkQAc7nIn3wzDu1Ku8Cg1VYtjLHZT3QZ1Hb00nDf
-	 cWEs7fL4YfvVXSVN2uuNbw8nWJxylBbsB4He3RWE=
+	b=d6iD2QJZd27EkRoUwc1L7wXQ7muOCjOkM7i6xmtt/lawEDF78sqQ/FdlcRFH8f4/M
+	 ntF9mfOFCK2J79QfUS2Fk5QO3GjwrnGbWb0uHsHj+JIiX+ZVXYR+BM68Eo0keAvEB5
+	 IIQ9d4jdJXLDMOnuVi31ml54GKW5YNgoO6XRWA24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 050/186] vsock/vmci: fix UAF when peer resets connection during handshake
-Date: Thu, 28 May 2026 21:48:50 +0200
-Message-ID: <20260528194930.322064493@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 051/186] vsock/virtio: reset connection on receiving queue overflow
+Date: Thu, 28 May 2026 21:48:51 +0200
+Message-ID: <20260528194930.349239457@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,64 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minh Nguyen <minhnguyen.080505@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
+commit a4f0b001782b21663d10df983b4b208195bec66c upstream.
 
-vmci_transport_recv_connecting_server() returned err = 0 for a peer
-RST in its default switch arm:
+When there is no more space to queue an incoming packet, the packet is
+silently dropped. This causes data loss without any notification to
+either peer, since there is no retransmission.
 
-	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
+Under normal circumstances, this should never happen. However, it could
+happen if the other peer doesn't respect the credit, or if the skb
+overhead, which we recently began to take into account with commit
+059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue"),
+is too high.
 
-That made vmci_transport_recv_listen() skip vsock_remove_pending(),
-leaving the pending socket on the listener's pending_links with
-sk_state = TCP_CLOSE while destroy: still dropped the explicit
-reference taken before schedule_delayed_work().
+Fix this by resetting the connection and setting the local socket error
+to ENOBUFS when virtio_transport_recv_enqueue() can no longer queue a
+packet, so both peers are explicitly notified of the failure rather than
+silently losing data.
 
-One second later vsock_pending_work() observed is_pending=true and
-performed full cleanup: vsock_remove_pending() then the two trailing
-sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
-the socket, and the second wrote into the freed object:
-
-  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
-  Write of size 4 at addr ffff88800b1cac80 by task kworker
-  Workqueue: events vsock_pending_work
-
-Treat peer RST like any other unexpected packet type (err = -EINVAL).
-All destroy: arms now return err < 0, so vmci_transport_recv_listen()
-removes pending from pending_links synchronously and
-vsock_pending_work() takes the is_pending=false / !rejected branch,
-dropping only its own work reference.  This also closes the
-multi-packet race Sashiko reported on v2: pending is removed from
-the list before any subsequent packet can find it.
-
-The pre-existing sk_acceptq_removed() gap on the err < 0 path of
-vmci_transport_recv_listen() that Sashiko also noted is not
-introduced or changed by this patch.
-
-Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Fixes: ae6fcfbf5f03 ("vsock/virtio: discard packets if credit is not respected")
 Cc: stable@vger.kernel.org
-Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
-Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260518090656.134588-2-sgarzare@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/virtio_transport_common.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1156,7 +1156,7 @@ vmci_transport_recv_connecting_server(st
- 		/* Close and cleanup the connection. */
- 		vmci_transport_send_reset(pending, pkt);
- 		skerr = EPROTO;
--		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
-+		err = -EINVAL;
- 		goto destroy;
- 	}
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1157,7 +1157,7 @@ destroy:
+ 	return err;
+ }
  
+-static void
++static bool
+ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
+ 			      struct sk_buff *skb)
+ {
+@@ -1172,10 +1172,8 @@ virtio_transport_recv_enqueue(struct vso
+ 	spin_lock_bh(&vvs->rx_lock);
+ 
+ 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
+-	if (!can_enqueue) {
+-		free_pkt = true;
++	if (!can_enqueue)
+ 		goto out;
+-	}
+ 
+ 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
+ 		vvs->msg_count++;
+@@ -1213,6 +1211,8 @@ out:
+ 	spin_unlock_bh(&vvs->rx_lock);
+ 	if (free_pkt)
+ 		kfree_skb(skb);
++
++	return can_enqueue;
+ }
+ 
+ static int
+@@ -1225,7 +1225,17 @@ virtio_transport_recv_connected(struct s
+ 
+ 	switch (le16_to_cpu(hdr->op)) {
+ 	case VIRTIO_VSOCK_OP_RW:
+-		virtio_transport_recv_enqueue(vsk, skb);
++		if (!virtio_transport_recv_enqueue(vsk, skb)) {
++			/* There is no more space to queue the packet, so let's
++			 * close the connection; otherwise, we'll lose data.
++			 */
++			(void)virtio_transport_reset(vsk, skb);
++			virtio_transport_do_close(vsk, true);
++			sk->sk_err = ENOBUFS;
++			sk_error_report(sk);
++			vsock_remove_sock(vsk);
++			break;
++		}
+ 		vsock_data_ready(sk);
+ 		return err;
+ 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
 
 
