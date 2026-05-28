@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB0E344DAC;
-	Thu, 28 May 2026 19:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D729348C45;
+	Thu, 28 May 2026 19:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998328; cv=none; b=SuAPPfLdkWlRaM2iyVaIujVRBKBu+7x/tWMCLtC5zBWq2TD/IRQqex52QM8CIPkKE+vfowUf2ca4OpJTbYsTjcqggoggS29hADQvvSXR6YYbPw47VIAJMjx/u/0II3rpu6vM2omNFlTsNFZQJxySHkHTaq6Cfm+/nAGg8ciKCes=
+	t=1779998331; cv=none; b=YtqTkO93Tk5B07lxLVFpKHkJQtk2Rq+b360HcJP7mWKouYrPw4kXy4088QXepFJu4muMsfd8aezWTvvI3bSw7ZgxJLc8YpEM6Bsg8eFQrUc4MSSKQC3/qO43eKTKJmA7m6F4BQ3J308tIeDyoF74VmYqESIpkhkP7d+SQ7akXf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998328; c=relaxed/simple;
-	bh=CNqupDFpDpQSy84+KNpf6U8zwMbG6ko/c0+rGMOthhU=;
+	s=arc-20240116; t=1779998331; c=relaxed/simple;
+	bh=sWjZPeJM5cJ44gqlLpYPERzb0LWdlm5MiA7uf6w1EhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jXzOjBMJu671YNmvnJfN8p0to8ggE/mi/6iqmpGfGrt2uK8YG/aAUu5SPItN0zzUl1+MsrKmL0AwAe4BkW7QMcfAH4DQVRD8iXMa2J9woA0UDsziAdcnl0IzxvdW6KXcMnyrsyBvvSp63upVHpaO/DZtNZEiTxf3HUQhn6JJ2ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcxbI8Xl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WcP0gldfa+88eXYVX3oJrlPwB0y6izmqjVq1ytATTHsjnzHKFupMP9Mnu/32MMDZdznsJ8B2Rvj6ZlwvJpxS/jKLEGiGbxPkSsrjcQFSeAje42kUEfDFRr8n36YRHwt35ewlwUOLrjWo0yb8ikZ72eLwOKQHM6Whrb7C5GYw+gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7lWCjTn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcxbI8Xl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD531F000E9;
-	Thu, 28 May 2026 19:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7lWCjTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B75C1F000E9;
+	Thu, 28 May 2026 19:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998327;
-	bh=HwL1ELeiniv8eitXsLSw/EtRVUCLQzMqDmvjZ6xBPtQ=;
+	s=korg; t=1779998330;
+	bh=jeK7VOrrEtlejF3BYl8Lk/fQzTPyyItmox5l7zAxUbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcxbI8Xl5lKhz6QQap/mvo60oNny69TmeQoJGOblI/y7QMWiKK1HSeoneCBLuoMw1
-	 r6ijnl5w5Q6HyFr28JRLuuieKIJjz42pFkh+3iWFnBuZusIEEqst+cf6Deot2pFMNA
-	 AMSQ0IFe9i/OD4YEi5w2s6zfsGFz9CbNgxTU1yxo=
+	b=M7lWCjTn7m45ErKRCz1epqdPf8PUrbLuXMQCf7yfa6j4P+KlwfcAiO1DMeljsp4v+
+	 qNrz2+eyO0VloxQD5RqfhHhV1Glp7zqBhlHhe8Oz+8VBk1PmLXiUS+MEo8Dj5tKFCN
+	 eD5PHhUrkMuqMYj+HrMOYZy+j88Bf8DspzBMPNko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Sebastian=20=C3=96sterlund?= <sebastian.osterlund@intel.com>,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.0 134/461] drm/xe/multi_queue: Fix secondary queue error case
-Date: Thu, 28 May 2026 21:44:23 +0200
-Message-ID: <20260528194650.869761753@linuxfoundation.org>
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Alan liu <haoping.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.0 135/461] drm/amdgpu/vpe: Force collaborate sync after TRAP
+Date: Thu, 28 May 2026 21:44:24 +0200
+Message-ID: <20260528194650.897848565@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -46,68 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+From: Alan Liu <haoping.liu@amd.com>
 
-commit 00907da2126ed785451b2a2f0fef282246dad104 upstream.
+commit b6074630a461b1322a814988779005cbc43612ea upstream.
 
-If xe_lrc_create() fails, the secondary queue added to the
-multi-queue group list is not removed before freeing the
-queue. Fix error path handling for secondary queues by
-removing it from the multi-queue group list at the right
-place.
+VPE1 could possibly hang and fail to power off at the end of commands in
+collaboration mode. This workaround adds a COLLAB_SYNC after TRAP to
+force instances synchronized to avoid VPE1 fail to power off.
 
-Reported-by: Sebastian Österlund <sebastian.osterlund@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7979
-Fixes: d716a5088c88 ("drm/xe/multi_queue: Handle tearing down of a multi queue")
-Cc: stable@vger.kernel.org # v7.0+
-Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260518191639.320890-2-niranjana.vishwanathapura@intel.com
-(cherry picked from commit d2d23c12789cf69eddc35b8d38cd8eaabd0168f1)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Alan liu <haoping.liu@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5171
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit a8b749c5c5afb7e5daa2bfb95d958fb3c6b8f055)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1623,6 +1623,14 @@ static void guc_exec_queue_fini(struct x
- 	struct xe_guc_exec_queue *ge = q->guc;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
+@@ -562,6 +562,11 @@ static void vpe_ring_emit_fence(struct a
+ 		amdgpu_ring_write(ring, 0);
+ 	}
  
-+	if (xe_exec_queue_is_multi_queue_secondary(q)) {
-+		struct xe_exec_queue_group *group = q->multi_queue.group;
-+
-+		mutex_lock(&group->list_lock);
-+		list_del(&q->multi_queue.link);
-+		mutex_unlock(&group->list_lock);
++	/* WA: Force sync after TRAP to avoid VPE1 fail to power off */
++	if (ring->adev->vpe.collaborate_mode) {
++		amdgpu_ring_write(ring, VPE_CMD_HEADER(VPE_CMD_OPCODE_COLLAB_SYNC, 0));
++		amdgpu_ring_write(ring, 0xabcd);
 +	}
-+
- 	release_guc_id(guc, q);
- 	xe_sched_entity_fini(&ge->entity);
- 	xe_sched_fini(&ge->sched);
-@@ -1644,14 +1652,6 @@ static void __guc_exec_queue_destroy_asy
- 	guard(xe_pm_runtime)(guc_to_xe(guc));
- 	trace_xe_exec_queue_destroy(q);
+ }
  
--	if (xe_exec_queue_is_multi_queue_secondary(q)) {
--		struct xe_exec_queue_group *group = q->multi_queue.group;
--
--		mutex_lock(&group->list_lock);
--		list_del(&q->multi_queue.link);
--		mutex_unlock(&group->list_lock);
--	}
--
- 	/* Confirm no work left behind accessing device structures */
- 	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
- 
+ static void vpe_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
+@@ -968,7 +973,7 @@ static const struct amdgpu_ring_funcs vp
+ 	.emit_frame_size =
+ 		5 + /* vpe_ring_init_cond_exec */
+ 		6 + /* vpe_ring_emit_pipeline_sync */
+-		10 + 10 + 10 + /* vpe_ring_emit_fence */
++		12 + 12 + 12 + /* vpe_ring_emit_fence */
+ 		/* vpe_ring_emit_vm_flush */
+ 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 3 +
+ 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 6,
 
 
