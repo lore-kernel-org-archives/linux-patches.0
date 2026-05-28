@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E914259CBD;
-	Thu, 28 May 2026 20:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1781F259CBD;
+	Thu, 28 May 2026 20:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000561; cv=none; b=mM+3SrLUmRGMXOoK7vJiXHxzsASQVa/DvZSgxRAC63+SUxulepOMk4vZdfJJQlUWBu7M613qVqLs+oDJyhLhqJpNI/GSt3DRgODW9cS4f+da4GlkTIZmKBn5mIlkSw915+nuxOjE5YSEJ+SaAIgT2xGlxV+xKDxfkEFYsqJmUmI=
+	t=1780000564; cv=none; b=aMd79KYVfajN/kS2ooz2fK/fJLBI8AxwdQOlB8dRJBULtwE9BoOlyfM/nSQA4Z9DZsiSHwBqZr1x794u5w6CnRukOhENpHL4X83rDd6tylXvPYz174Ky0zWg96cfkMBBJMnhiQlq4ljpvbgX4BSvnknpFTxJFOF470a7mJ9IyqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000561; c=relaxed/simple;
-	bh=ojvVUqGfvmJ3E5yqCWo//a6cGbEM5HZzUbvSCXYLTTA=;
+	s=arc-20240116; t=1780000564; c=relaxed/simple;
+	bh=sTelWjp1wmr/HbYFq308F9Tdw6poBIBO75Ykz7uWKG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/FsEbZzXamNYCyhKoOZnPKjUUQ0mD2Yu5OwfT8luf5xsSxkLPJ3a29lpzZyO1U6b2/GfS9H3J4JTFJKb58R/8bee1ozV3KL0tv3tVSmiz3bDKuKLr7al3Df/opEvcAqNH4Xt1ejyYId7kreUpyN7G6KlN3cn8jHJQagBldif5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjoFgnIx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BNxmBXcc/ICspMPFiYz74ry9LiMAi0TsJJgRRLI9TWPW0jm8kZgRqRQKzLJLCQPZeR+YE+4k17w72dKXQAn+KdZMqseQZwHL3T4NM9HWQKysDAFiGmWs1wv3n42W0m+IpCZI1so8zeVYPGk7Z+Tx2sBtHlrUXzwXPiq47OvFM44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRRQ8GAD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjoFgnIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A075F1F000E9;
-	Thu, 28 May 2026 20:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRRQ8GAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BC91F000E9;
+	Thu, 28 May 2026 20:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000560;
-	bh=enVzDFB3pixq3oZWo9aiTyOnzFPzSf4rJutTeMzdStU=;
+	s=korg; t=1780000563;
+	bh=7EAmWStN/wsimZL0kA2bVDxu2rlgA99K8HH8jPsPDpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XjoFgnIx5fPqyXO3Uiy5O4G5kNztgTeFGU6lI+6dsNEBmxwbTlXK0BCE7lJA6iDl5
-	 11qeOge34P7/0edHuYLCPKr0jueueUOzA+tU+q32dkloO+Q+hOJ89GKxY5DmbJs4m/
-	 lFti6KjMRdXM2dcYTzE7ulAgmSX5VG/XpfBEauvM=
+	b=BRRQ8GADh6dQpJYu+hfiMh7EnWDD32X8h6xHXRjuZmBt68PRe6njjO6cmVUKkWP6L
+	 sXkVr5t7QciGbWiSL0yQhO6OMGJ1bL6FfcCA8J8mj+rjC7H0wSvmO0hvKIoLMZZ8SL
+	 QFAjoOUuFSsT8y9clRxe8wrUfP546O20d7BH9X7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 051/272] hwmon: (pmbus/adm1266) widen blackbox-info buffer to I2C_SMBUS_BLOCK_MAX
-Date: Thu, 28 May 2026 21:47:05 +0200
-Message-ID: <20260528194630.814172237@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 052/272] ALSA: ua101: Reject too-short USB descriptors
+Date: Thu, 28 May 2026 21:47:06 +0200
+Message-ID: <20260528194630.842462079@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -44,57 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit eee213daa1e1b402eb631bcd1b8c5aa340a6b081 upstream.
+commit b59d5c51bb328a60749b4dd5fe7e649bfb4089b4 upstream.
 
-adm1266_nvmem_read_blackbox() declares a 5-byte stack buffer and
-passes it to i2c_smbus_read_block_data() to retrieve the 4-byte
-BLACKBOX_INFO response.  i2c_smbus_read_block_data() does not honour
-caller buffer sizes -- it memcpy()s data.block[0] bytes from the
-SMBus transaction (where data.block[0] is the length byte returned by
-the slave device, up to I2C_SMBUS_BLOCK_MAX = 32):
+find_format_descriptor() walks the class-specific interface extras by
+advancing with bLength. It rejects descriptors that extend past the
+remaining buffer, but it does not reject descriptor lengths smaller than
+a USB descriptor header.
 
-	memcpy(values, &data.block[1], data.block[0]);
+Reject too-short descriptors before using bLength to advance the local
+scan. This keeps the UA-101 parser robust against malformed descriptor
+data and matches the usual USB descriptor walking rules.
 
-If the device returns any block length above 5, the call overflows
-the caller's 5-byte stack buffer before the post-call
-
-	if (ret != 4)
-		return -EIO;
-
-check has a chance to reject the response.
-
-Widen the local buffer to I2C_SMBUS_BLOCK_MAX so the helper has room
-for any well-formed SMBus block response, matching the convention used
-by the other i2c_smbus_read_block_data() callers in this driver.
-
-Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-2-1c1ea1349cfe@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260519-alsa-ua101-desc-len-v1-1-4307d1a5e054@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/misc/ua101.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -349,7 +349,7 @@ static int adm1266_nvmem_read_blackbox(s
- {
- 	int record_count;
- 	char index;
--	u8 buf[5];
-+	u8 buf[I2C_SMBUS_BLOCK_MAX];
- 	int ret;
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -914,8 +914,9 @@ find_format_descriptor(struct usb_interf
+ 		struct uac_format_type_i_discrete_descriptor *desc;
  
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
+ 		desc = (struct uac_format_type_i_discrete_descriptor *)extra;
+-		if (desc->bLength > extralen) {
+-			dev_err(&interface->dev, "descriptor overflow\n");
++		if (desc->bLength < sizeof(struct usb_descriptor_header) ||
++		    desc->bLength > extralen) {
++			dev_err(&interface->dev, "invalid descriptor length\n");
+ 			return NULL;
+ 		}
+ 		if (desc->bLength == UAC_FORMAT_TYPE_I_DISCRETE_DESC_SIZE(1) &&
 
 
