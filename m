@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951CA33291F;
-	Thu, 28 May 2026 20:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D81352014;
+	Thu, 28 May 2026 20:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001608; cv=none; b=H9DQslcypVkFqQSjFzvjmlb94W1h6/4pB5vdUoqkXVg8Uqz6N1kwW5p7zfZGUb1Tn7ktkOTlH2jKviCggwSr9/cuPBZBYDjhfAygeqviroNGO3lmfovtozNNnrStWfvhAu8fdbN2vWpKx8CzKV/laqqHdTvbM7ZrjtDg8PRul30=
+	t=1780001611; cv=none; b=Cxyi9sgNiKlv9BLDr12nyiZDNk6MQfwQ47yXSFithzqVvFhuFxqr2rZDUjvvYiHI/rHU+f43yDcVls9GSDUf36B323OfXgRfidcl/fg7fPsydzPpLMqEm8fmNIl9KVaQHBhxwEoavp4B1UMbJcfnujA36b6JwXn5hWWTijjbJsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001608; c=relaxed/simple;
-	bh=PDXWZgAwZKuu/+PqCWLaPIGsenq/EuT0rJz4x4M6HbE=;
+	s=arc-20240116; t=1780001611; c=relaxed/simple;
+	bh=DgKd20ui5FI9PE54/63HEEd+M+iF02x5+dtDXLBYLjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HN9CIZJpVq0VMSyb8XBNpRTcnA24vrsI5GsoNqSQJVtByqU71zKDbFySEL8CPTiqFGJuYuQpxUBvJkUwB4qPx8NlASNvdfh+Y/fLXzLpJjqxl5YubfeFQIXtw4X3nQVgbDs896Vk6ds3rZf0aeUyoTDqAMvdmIdlQRikINiJ1H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTSrJxJ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BRXe4Rw3BQRFCfClKS4TQxHnnGq2WzMI5JOltiCRloNGdKrcl2hZTJaLDUNTNDiwgYlIuk8Om0VEdudZhnZ4SO1FF9AjGPymg/W4zu946SVwB2/eh6pJscc8kjotnyEZ7cNZqQBHKzCRGjm9TvL9bdgYwbD0anxuA1bAFX/Drlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITfzcpRj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTSrJxJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D0B1F000E9;
-	Thu, 28 May 2026 20:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITfzcpRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BC51F000E9;
+	Thu, 28 May 2026 20:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001607;
-	bh=RGfbE5umUc875GvlfBzKLQVdfFN6A/mMD3Dp9LXHy7k=;
+	s=korg; t=1780001610;
+	bh=fZpoeY5OJCG4YNkUl2IhoQ3qxTKCd4BAcN5mFYsLCq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTSrJxJ0OQX10pgTafwHGxhONPoVz9vityjrh24itIQNoca/nkEioHqp5GAzDdeI9
-	 JNzehI83YoKkT48cIh04qHtHHbSrq8ifaYrq5WcALuVWRVNKY0hxkols2DEfvhoIw2
-	 npYJdDi7+g9maLi+iTfmsYXyJ4sXDnifUeWSEJgw=
+	b=ITfzcpRj96iA6AWocHBs9dljNQJxmCPAR5QkaGTdACZSz/1epMUbYlLUeWUl+hLC4
+	 UNcOVE4CZ5zb4Mn6Sv+ml9J2n73cZrlY6r+Ll1aDfd/apkwv+FdcclmV+s6x+/J7Mh
+	 x2ZuzexIjz0vRbyAAuold7bNpuqyUQMYLGa2yg6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Salendarsingh Gaud <sgaud@qti.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/186] spi: mtk-snfi: Fix resource leak in mtk_snand_read_page_cache()
-Date: Thu, 28 May 2026 21:50:31 +0200
-Message-ID: <20260528194933.033372765@linuxfoundation.org>
+Subject: [PATCH 6.6 152/186] drm/msm/snapshot: fix dumping of the unaligned regions
+Date: Thu, 28 May 2026 21:50:32 +0200
+Message-ID: <20260528194933.059290377@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,36 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 496ba79b9496b8b3747cbc764ebd33ee7325e806 ]
+[ Upstream commit 76824d2467feb1828b745d6add2541918d7be3da ]
 
-When DMA read times out in mtk_snand_read_page_cache(), the original code
-erroneously jumped to cleanup label which skips DMA unmapping and ECC
-disable, causing a resource leak.
+The snapshotting code internally aligns data segment to 16 bytes. This
+works fine for DPU code (where most of the regions are aligned), but
+fails for snapshotting of the DSI data (because DSI data region is
+shifted by 4 bytes). Fix the code by removing length alignment and by
+accurately printing last registers in the region. While reworking the
+code also fix the 16x memory overallocation in
+msm_disp_state_dump_regs().
 
-Fixes: 764f1b748164 ("spi: add driver for MTK SPI NAND Flash Interface")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260510-snfi-v1-1-bc375cf1af8e@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Reported-by: Salendarsingh Gaud <sgaud@qti.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/725449/
+Message-ID: <20260516-msm-fix-dsi-dump-2-v2-1-9e49fb2d240e@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mtk-snfi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 24 ++++++++++++++-----
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-mtk-snfi.c b/drivers/spi/spi-mtk-snfi.c
-index 22f3b22d77ad8..f960c2c2f6b81 100644
---- a/drivers/spi/spi-mtk-snfi.c
-+++ b/drivers/spi/spi-mtk-snfi.c
-@@ -961,7 +961,7 @@ static int mtk_snand_read_page_cache(struct mtk_snand *snf,
- 		    &snf->op_done, usecs_to_jiffies(SNFI_POLL_INTERVAL))) {
- 		dev_err(snf->dev, "DMA timed out for reading from cache.\n");
- 		ret = -ETIMEDOUT;
--		goto cleanup;
-+		goto cleanup2;
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+index 4d55e3cf570f0..a966a03167cc0 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+@@ -9,7 +9,7 @@
+ 
+ #include "msm_disp_snapshot.h"
+ 
+-static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *base_addr)
++static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr)
+ {
+ 	u32 len_padded;
+ 	u32 num_rows;
+@@ -19,11 +19,11 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ 	void __iomem *end_addr;
+ 	int i;
+ 
+-	len_padded = aligned_len * REG_DUMP_ALIGN;
+-	num_rows = aligned_len / REG_DUMP_ALIGN;
++	len_padded = round_up(len, REG_DUMP_ALIGN);
++	num_rows = DIV_ROUND_UP(len, REG_DUMP_ALIGN);
+ 
+ 	addr = base_addr;
+-	end_addr = base_addr + aligned_len;
++	end_addr = base_addr + len;
+ 
+ 	if (!(*reg))
+ 		*reg = kvzalloc(len_padded, GFP_KERNEL);
+@@ -51,8 +51,8 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+ 		void __iomem *base_addr, struct drm_printer *p)
+ {
++	void __iomem *addr, *end_addr;
+ 	int i;
+-	void __iomem *addr;
+ 	u32 num_rows;
+ 
+ 	if (!dump_addr) {
+@@ -61,6 +61,7 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
  	}
  
- 	// Wait for BUS_SEC_CNTR returning expected value
+ 	addr = base_addr;
++	end_addr = base_addr + len;
+ 	num_rows = len / REG_DUMP_ALIGN;
+ 
+ 	for (i = 0; i < num_rows; i++) {
+@@ -70,6 +71,17 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
+ 				dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
+ 		addr += REG_DUMP_ALIGN;
+ 	}
++
++	if (addr != end_addr) {
++		drm_printf(p, "0x%lx : %08x",
++			   (unsigned long)(addr - base_addr),
++			   dump_addr[i * 4]);
++		if (addr + 0x4 < end_addr)
++			drm_printf(p, " %08x", dump_addr[i * 4 + 1]);
++		if (addr + 0x8 < end_addr)
++			drm_printf(p, " %08x", dump_addr[i * 4 + 2]);
++		drm_printf(p, "\n");
++	}
+ }
+ 
+ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
+@@ -189,7 +201,7 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
+ 	va_end(va);
+ 
+ 	INIT_LIST_HEAD(&new_blk->node);
+-	new_blk->size = ALIGN(len, REG_DUMP_ALIGN);
++	new_blk->size = len;
+ 	new_blk->base_addr = base_addr;
+ 
+ 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
 -- 
 2.53.0
 
