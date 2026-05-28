@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DED1C3318;
-	Thu, 28 May 2026 20:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0841C3318;
+	Thu, 28 May 2026 20:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000128; cv=none; b=Hlxq3R2RjnoKsiDcxwd6QqIDP/+j3S123oZeLE5eIr6c9pK26R7lRpyp5sTBRMH6frpzpdCbtnqTsiFqVLABKo+bXFi0XMh/QS5jB3K9zsXsCyOkluocPiYE2fxI1QMxSuP05D1U2B/xMoTP37esvBJpb+e26a7Q+gE8iiexb1M=
+	t=1780000130; cv=none; b=J9SorrrJywQE6B+EdScTZvw72ipADFqS4sXvKjkekAuXBXpviD4Ycg+JgE3SnikOp2LvG8zfIR3wHIsStEocEft55lE+yXrTusvCqF2yPQ1wHmS86ZG7NPlcUFexobdDfPtjbB18zP1ZzqGnrbpLRHCAyPbJ8Zgc/KTL65VNR2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000128; c=relaxed/simple;
-	bh=VvzhCBqzQwcY1NeACeJW6pHU8eEsvB1257RfITwpmHk=;
+	s=arc-20240116; t=1780000130; c=relaxed/simple;
+	bh=q3E5sJ1WgK06hA22WjgpenSdVjsiB+u4SqhS7i9wvmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9/zeLwtvRo55NFZtDZqX+7ZIKi8/In4ujPVJl/y/Vu+gwWs20w8dPfFScAIRrc5HQfOBLqcUa5318NxWLn6M1F1J/tfu4nDiMEOvOacJnW6bfa4vss98mr8BzwqmxXqwr2JlE+lND9InfgnWpxJJnGhQ0H7z1y+GwzMcoR4UVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRFlSp1Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TlGwMuhOGJe87Qvq4aFVhioJuqk47VaLDvhCn8fJns9Cflf7HJAsS4lat7ahj9cgic77iQqe4MwYDzOnwHetfLnH/o/dglXwpOwvUpPnPzoWn2HUHZDxWkJ/2igw29ecFCy8IAiQ67SJfyKgwzqPvoZQK3KgDLPz8z41HubZ8pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVt1Ugkn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRFlSp1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BB51F000E9;
-	Thu, 28 May 2026 20:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVt1Ugkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344D91F000E9;
+	Thu, 28 May 2026 20:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000126;
-	bh=Vw3Jz0kmkHgXYMLSCh2DR/mUDlvZGjXtZQv8T7tt/44=;
+	s=korg; t=1780000129;
+	bh=CLh+dOZ2VVxufBsBhPCDTDOIGOJ9jjk2ggK6cZf7JXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRFlSp1ZupfYdNKHnaaLtxmDsFmQ/ObN20ZINpzXrnc3d3/lh1PbnqQZY2HXeehbm
-	 qEzaMdDRl8yulgL6RHQJ2BCOqQ7aMt9JJrViJy7f33+w3826RXfOZmzOxWpzFKFMOO
-	 pVrWlax9ZmMxLOQEal4moykn+4cF99Tp37GbOva4=
+	b=vVt1UgknvP/5OmjjqyuTwACdEjC7Wey/IUD6hdabh1HerNMFuCUn6AsK/f0hFiaFp
+	 VJHUuhHI0QvDu5VNH+3mqPtQn43RKvWX2PWNqMH36PEj08huMemHVbFPTkeTC1ASD1
+	 4Ex7msNy/IbY5in84VhL1UeBCGWmCYtlc/o3K/zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 275/377] x86/mce: Restore MCA polling interval halving
-Date: Thu, 28 May 2026 21:48:33 +0200
-Message-ID: <20260528194646.324473420@linuxfoundation.org>
+Subject: [PATCH 6.18 276/377] Documentation: intel_pstate: Fix description of asymmetric packing with SMT
+Date: Thu, 28 May 2026 21:48:34 +0200
+Message-ID: <20260528194646.351345623@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,136 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit ea324444ece9f301b5c4ff71b258cc68990c4d61 ]
+[ Upstream commit ee047fc7a2da90554410128195058c409a391d43 ]
 
-RongQing reported that the MCA polling interval doesn't halve when an
-error gets logged. It was traced down to the commit in Fixes:, because:
+Patchset [1], including commits
 
-  mce_timer_fn()
-  |-> mce_poll_banks()
-  |-> machine_check_poll()
-  |-> mce_log()
+ 046a5a95c3b0 ("x86/sched/itmt: Give all SMT siblings of a core the same priority")
+ 995998ebdebd ("x86/sched: Remove SD_ASYM_PACKING from the SMT domain flags")
 
-which will queue the work and return.
+overhauled asym_packing handling in the scheduler on x86 hybrid
+processors with SMT. It removed SD_ASYM_PACKING from the x86 SMT
+scheduling domain and made all SMT siblings of a core share the same
+priority. As a result, asym_packing operates only across physical
+cores, spreading tasks among them and only using idle SMT siblings
+once all physical cores are busy.
 
-Now, back in mce_timer_fn():
+Fix the documentation to reflect this behavior.
 
-        /*
-         * Alert userspace if needed. If we logged an MCE, reduce the polling
-         * interval, otherwise increase the polling interval.
-         */
-        if (mce_notify_irq())
-
-<--- here we haven't ran the notifier chain yet so mce_need_notify is
-not set yet so this won't hit and we won't halve the interval iv.
-
-Now the notifier chain runs. mce_early_notifier() sets the bit, does
-mce_notify_irq(), that clears the bit and then the notifier chain
-a little later logs the error.
-
-So this is a silly timing issue.
-
-But, that's all unnecessary.
-
-All it needs to happen here is, the "should we notify of a logged MCE"
-mce_notify_irq() asks, should be simply a question to the mce gen pool:
-"Are you empty?"
-
-And that then turns into a simple yes or no answer and it all
-JustWorks(tm).
-
-So do that and also distribute the functionality where it belongs:
- - Print that MCE events have been logged in mce_log()
- - Trigger the mcelog tool specific work in the first notifier
-
-As a result, mce_notify_irq() can go now.
-
-Fixes: 011d82611172 ("RAS: Add a Corrected Errors Collector")
-Reported-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Tested-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Link: https://lore.kernel.org/r/20260112082747.2842-1-lirongqing@baidu.com
+Fixes: f20af84c29b2 ("cpufreq: intel_pstate: Document hybrid processor support")
+Link: https://lore.kernel.org/r/20230406203148.19182-1-ricardo.neri-calderon@linux.intel.com [1]
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260424-rneri-fix-intel-pstate-doc-smt-asym-packing-v1-1-317bf7d5c362@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/core.c | 33 +++++----------------------------
- 1 file changed, 5 insertions(+), 28 deletions(-)
+ Documentation/admin-guide/pm/intel_pstate.rst | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 460e90a1a0b17..c8b112c6c5492 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -89,7 +89,6 @@ struct mca_config mca_cfg __read_mostly = {
- };
+diff --git a/Documentation/admin-guide/pm/intel_pstate.rst b/Documentation/admin-guide/pm/intel_pstate.rst
+index 26e702c7016e5..66287f8d645f0 100644
+--- a/Documentation/admin-guide/pm/intel_pstate.rst
++++ b/Documentation/admin-guide/pm/intel_pstate.rst
+@@ -348,11 +348,12 @@ HyperThreading (HT) in the context of Intel processors, is enabled on at least
+ one core, ``intel_pstate`` assigns performance-based priorities to CPUs.  Namely,
+ the priority of a given CPU reflects its highest HWP performance level which
+ causes the CPU scheduler to generally prefer more performant CPUs, so the less
+-performant CPUs are used when the other ones are fully loaded.  However, SMT
+-siblings (that is, logical CPUs sharing one physical core) are treated in a
+-special way such that if one of them is in use, the effective priority of the
+-other ones is lowered below the priorities of the CPUs located in the other
+-physical cores.
++performant CPUs are used when the other ones are fully loaded.  SMT siblings
++(that is, logical CPUs sharing one physical core) are given the same priority.
++The scheduler can pull tasks from lower-priority cores and place them on any
++sibling.  Since the scheduler spreads tasks among physical cores, tasks will be
++placed on the SMT siblings of physical cores only after all physical cores are
++busy.
  
- static DEFINE_PER_CPU(struct mce_hw_err, hw_errs_seen);
--static unsigned long mce_need_notify;
- 
- /*
-  * MCA banks polled by the period polling timer for corrected events.
-@@ -151,8 +150,10 @@ EXPORT_PER_CPU_SYMBOL_GPL(injectm);
- 
- void mce_log(struct mce_hw_err *err)
- {
--	if (mce_gen_pool_add(err))
-+	if (mce_gen_pool_add(err)) {
-+		pr_info(HW_ERR "Machine check events logged\n");
- 		irq_work_queue(&mce_irq_work);
-+	}
- }
- EXPORT_SYMBOL_GPL(mce_log);
- 
-@@ -584,28 +585,6 @@ bool mce_is_correctable(struct mce *m)
- }
- EXPORT_SYMBOL_GPL(mce_is_correctable);
- 
--/*
-- * Notify the user(s) about new machine check events.
-- * Can be called from interrupt context, but not from machine check/NMI
-- * context.
-- */
--static bool mce_notify_irq(void)
--{
--	/* Not more than two messages every minute */
--	static DEFINE_RATELIMIT_STATE(ratelimit, 60*HZ, 2);
--
--	if (test_and_clear_bit(0, &mce_need_notify)) {
--		mce_work_trigger();
--
--		if (__ratelimit(&ratelimit))
--			pr_info(HW_ERR "Machine check events logged\n");
--
--		return true;
--	}
--
--	return false;
--}
--
- static int mce_early_notifier(struct notifier_block *nb, unsigned long val,
- 			      void *data)
- {
-@@ -617,9 +596,7 @@ static int mce_early_notifier(struct notifier_block *nb, unsigned long val,
- 	/* Emit the trace record: */
- 	trace_mce_record(err);
- 
--	set_bit(0, &mce_need_notify);
--
--	mce_notify_irq();
-+	mce_work_trigger();
- 
- 	return NOTIFY_DONE;
- }
-@@ -1771,7 +1748,7 @@ static void mce_timer_fn(struct timer_list *t)
- 	 * Alert userspace if needed. If we logged an MCE, reduce the polling
- 	 * interval, otherwise increase the polling interval.
- 	 */
--	if (mce_notify_irq())
-+	if (!mce_gen_pool_empty())
- 		iv = max(iv / 2, (unsigned long) HZ/100);
- 	else
- 		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
+ This approach maximizes performance in the majority of cases, but unfortunately
+ it also leads to excessive energy usage in some important scenarios, like video
 -- 
 2.53.0
 
