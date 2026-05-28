@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1939C31618C;
-	Thu, 28 May 2026 19:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100183254A8;
+	Thu, 28 May 2026 19:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998028; cv=none; b=VnMuMUvdz6HXqPUEKr3lTIno8O8S8f9ObyhaHqa3Gd2QCocV+M4u9VHaZO5jSlPTicd2W28kBhKSu9U+2hgUeqsGvTzPvXM8rlLS2s6+CKsF28srveUFOgiVzRavx8OOgCGRCzqogDCm3sLDy9PwUWlVTgDOp2WBDn9yMgLVa3I=
+	t=1779998031; cv=none; b=POZ7pGR+ZGBMBZQf3WWSHVFKOh5rt7iXhG0N2Ug8tE6Y8AU5jJA2F792L59urYzbqqeONPMgTIzQuzOno12gpoCSpkw8OJUIITykEVnl6+0+STn0Gh/Zsb4Xi4SeITKrxD1iP9FqJ+apcKYNcGKkUxkF9xMi0CS9O0qYeCFcZTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998028; c=relaxed/simple;
-	bh=Oa/FtmToeBoJZ41ETD+FulgP05YcWcIbd2nbvLfpT30=;
+	s=arc-20240116; t=1779998031; c=relaxed/simple;
+	bh=0fep2+l7P2mA/Vu9LcI8a2YV1IL1RHbV5NHLcuMxHAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmu9+tiyYTBndzhE+9BLzDkZdkkEdUhJD1oG+Z9T9Rs1Z4BvOUWBtARoicqbxT8BQzOhGY4RUyqxBTzUc3KQ3/gXVXiuD6kRe4ukfBYFlfohIUcfSZQqLFov97NM8pk++zNQWl4tmdtafUx2duGUdf/EV/ia1PzMqiDEj+zEgao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPfcMKTI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBSMuFBKsWZyrI1Vcge/s3FmxcvpCgp3eebO3IaX2Jtnd/iNmS2h2TpmyJ7Y2i2OPZNBkv7lzkQ4XI9v8oXO3HhdjTmgzNlh5gUC/ouq8VL8bdsfWLduTCFvt4Hued/goLH1iM+YwRu7fpi5H6U1iZB7fdXu7013nbjZNhuQPJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc7gWUP4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPfcMKTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCF11F000E9;
-	Thu, 28 May 2026 19:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc7gWUP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4761F000E9;
+	Thu, 28 May 2026 19:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998027;
-	bh=nNYIj9rQ4MDMiMdaPR66Qx4YCRexLP3y9na6xSD8OU8=;
+	s=korg; t=1779998029;
+	bh=O122pj1O22hgBrJ6QMA5fm0Ngnu1hdn+qJU1EAlNvMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPfcMKTIFT7rmDQDuIxu0PGPy+DaDyIGd38sUZ2TueeM1v2h8A6wp4S861Suugjl7
-	 uDQtZQwAMH49f29+ad3rM3kH/D8kgYQswC1vgc5nCNzwKbxfNOMfQNNLqCCfqs3XlR
-	 zuasFoQn98PzWib9F+r4c8/QvLqJ2WnBkUW+TBtk=
+	b=uc7gWUP4qDrp9kc7GJju4GjBEdFsSezhzGjSRo8LVJaAKC7au+XWUAOkRUlQujhXe
+	 dLOW3iM9zTIxJ45ennRBtb8cKA4Ktv5zDir1fXp+ereU/uSvksTS5/Z/oN22GkO/KM
+	 h6I4wbAC5y4srtIWc46Gi9bAjqqBB7yi2ZFuiT8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.0 027/461] ACPI: battery: Fix system wakeup on critical battery status
-Date: Thu, 28 May 2026 21:42:36 +0200
-Message-ID: <20260528194647.678917695@linuxfoundation.org>
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 7.0 028/461] efi: Allocate runtime workqueue before ACPI init
+Date: Thu, 28 May 2026 21:42:37 +0200
+Message-ID: <20260528194647.713171354@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -49,53 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit c35cb4fc7231702d1e9952aec1a442f3e27df6f5 upstream.
+commit 13c6da02e767152c9ac4330962247a5e47011035 upstream.
 
-Commit 0a869409a981 ("ACPI: battery: Convert the driver to a platform
-one") changed the parent of the battery wakeup source to the platform
-device used for driver binding, but it forgot to update the
-acpi_pm_wakeup_event() call in acpi_battery_update() accordingly.
+Since commit
 
-Do it now to unbreak waking up the system on critical battery status
-during suspend-to-idle and during transitions to ACPI S3/S4.
+  5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
 
-Fixes: 0a869409a981 ("ACPI: battery: Convert the driver to a platform one")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: 7.0+ <stable@vger.kernel.org> # 7.0+
-Link: https://patch.msgid.link/12898712.O9o76ZdvQC@rafael.j.wysocki
+ACPI PRM calls are delegated to a workqueue which runs in a kernel
+thread, making it easier to detect and mitigate faulting memory accesses
+performed by the firmware.
+
+Rafael reports that such PRM accesses may occur before efisubsys_init()
+executes, which is where the workqueue is allocated, leading to NULL
+pointer dereferences. Since acpi_init() [which triggers the early PRM
+accesses] executes as a subsys_initcall() as well, and has its own
+dependencies that may be sensitive to initcall ordering, deferring
+acpi_init() is not an option.
+
+So instead, split off the workqueue allocation into its own postcore
+initcall, as this is the only missing piece to allow EFI runtime calls
+to be made. This ensures that EFI runtime call (including PRM calls) are
+accessible to all code running at subsys_initcall() level.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 5894cf571e14 ("acpi/prmt: Use EFI runtime sandbox to invoke PRM handlers")
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/efi.c |   28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -96,6 +96,7 @@ struct acpi_battery {
- 	struct power_supply *bat;
- 	struct power_supply_desc bat_desc;
- 	struct acpi_device *device;
-+	struct device *phys_dev;
- 	struct notifier_block pm_nb;
- 	struct list_head list;
- 	unsigned long update_time;
-@@ -1035,7 +1036,7 @@ static int acpi_battery_update(struct ac
- 	if ((battery->state & ACPI_BATTERY_STATE_CRITICAL) ||
- 	    (test_bit(ACPI_BATTERY_ALARM_PRESENT, &battery->flags) &&
- 	     (battery->capacity_now <= battery->alarm)))
--		acpi_pm_wakeup_event(&battery->device->dev);
-+		acpi_pm_wakeup_event(battery->phys_dev);
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -402,21 +402,11 @@ static void __init efi_debugfs_init(void
+ static inline void efi_debugfs_init(void) {}
+ #endif
  
- 	return result;
- }
-@@ -1228,6 +1229,7 @@ static int acpi_battery_probe(struct pla
+-/*
+- * We register the efi subsystem with the firmware subsystem and the
+- * efivars subsystem with the efi subsystem, if the system was booted with
+- * EFI.
+- */
+-static int __init efisubsys_init(void)
++static int __init efipostcore_init(void)
+ {
+-	int error;
+-
+ 	if (!efi_enabled(EFI_RUNTIME_SERVICES))
+ 		efi.runtime_supported_mask = 0;
  
- 	platform_set_drvdata(pdev, battery);
+-	if (!efi_enabled(EFI_BOOT))
+-		return 0;
+-
+ 	if (efi.runtime_supported_mask) {
+ 		/*
+ 		 * Since we process only one efi_runtime_service() at a time, an
+@@ -428,9 +418,23 @@ static int __init efisubsys_init(void)
+ 			pr_err("Creating efi_rts_wq failed, EFI runtime services disabled.\n");
+ 			clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
+ 			efi.runtime_supported_mask = 0;
+-			return 0;
+ 		}
+ 	}
++	return 0;
++}
++postcore_initcall(efipostcore_init);
++
++/*
++ * We register the efi subsystem with the firmware subsystem and the
++ * efivars subsystem with the efi subsystem, if the system was booted with
++ * EFI.
++ */
++static int __init efisubsys_init(void)
++{
++	int error;
++
++	if (!efi_enabled(EFI_BOOT))
++		return 0;
  
-+	battery->phys_dev = &pdev->dev;
- 	battery->device = device;
- 	strscpy(acpi_device_name(device), ACPI_BATTERY_DEVICE_NAME);
- 	strscpy(acpi_device_class(device), ACPI_BATTERY_CLASS);
+ 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_TIME_SERVICES))
+ 		platform_device_register_simple("rtc-efi", 0, NULL, 0);
 
 
