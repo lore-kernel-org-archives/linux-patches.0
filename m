@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5529B338936;
-	Thu, 28 May 2026 19:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1F115B998;
+	Thu, 28 May 2026 19:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998395; cv=none; b=cUm1naZW2bR9i60SdAm7+8UJu/rNiQgpZWZGX6AgyRT0eg/m/ufQAElFob7QZ/zHEmGkTpPW+F4HbQqkw7LyEbfYFCNPwhsqOtehEAru0Zp8k4+HIWSexfgN3zP5uSy9In2W5t0UNLG7clcvKCx+H1griLSBAIQRhZn+a1+uT2E=
+	t=1779998398; cv=none; b=EZp7JMDwCnORyXnApwgJZ/haCmfc1lIXbloV0o9xy5NJkeo3xMqHv1ve7VlI0T1HVQQpqO62alHAufpNhNbkZoJVB25hRoxRjkWZjEaAjaTk1WViLEvu90DodPC5HpfUhGDwnXU3mekdkpAFqlWUQnr4DoXR8+0NLkU769ly8YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998395; c=relaxed/simple;
-	bh=UiHp28j1ON4zx37f4RN1QgSJ1VYM0S2vxFEdsoUyAFo=;
+	s=arc-20240116; t=1779998398; c=relaxed/simple;
+	bh=zVPZZ3gnd5/iK8+Ryc5BeeafxjfncR8AUhj5BvMjPjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6EQTJqiQXU8ZH/mRs+viCAjW8DJ2j1WqC2mS5M5hCzDDlVNo1+wSDdC9bQSYTpD89IrbrnW/8210T0t26gOn+i3FmxoCs86v01aWU4HrF632SnoO1LVjsEWJDzPfPo2IuJlTZIh1QybjV95pM0sEOCNqnQ9ENrAMDYkKaViLOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdcxwnyF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yoss6mFk8Vgwy5hY6fT5E3PNYY5G7nWivUv3w6t7DLU7dOgGU5oSDqrrJvdge5U1mCgVNKEBnKsZqML1p0FIVBTeZa+0h+67IRnUJ3wwAGVzkf34gG76NNxUJMFEVyqP4rPoaLZ17Wbrh6BckwpoFutctTdqA8+x4T/eTJQvLH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVZDoCDI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdcxwnyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9451F00A3E;
-	Thu, 28 May 2026 19:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVZDoCDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8221F1F000E9;
+	Thu, 28 May 2026 19:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998394;
-	bh=K7M7Qp0IFJkyzKato1nFD8XMS02b5BFardKXTV7NU+k=;
+	s=korg; t=1779998397;
+	bh=h6mEd+GXk76lOSursPFR71Z60oE+dOqpJx1b2ZR/QSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdcxwnyFIrhaQm0BYlQQh9Ygiv2mfAyLyBaQ4L9LVcTD/L8kHxwPlRunPHolSHMee
-	 w5IlfFj5ajsQSRGNAx9ZUg8apH8iSpfrwxFFooMyod5rlbq2A9ajv6998ll4f8+shm
-	 dMP9n/UCGprdXrGI7TYgsU+ItyDsU87x3Pz55Ygk=
+	b=vVZDoCDIGx2dv5vCrhnkM62BfcqDPdm//vPonlkB8EptFsCT5yhxZkCTqz+XOiNLU
+	 IYu5XfsuSPV6dVBBQg/kGYwT3sbzOLz0ZoM1U9UwkdDgJPiuhcoBQ26ku4IKP4y9Vv
+	 wWKqHXiDzGcAwC2gEdC6YM7uiaOJ9wNgulbf3KUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 7.0 121/461] s390/cio: Restore GFP_DMA for CHSC allocation
-Date: Thu, 28 May 2026 21:44:10 +0200
-Message-ID: <20260528194650.484061995@linuxfoundation.org>
+Subject: [PATCH 7.0 122/461] s390/pai: Disable duplicate read of kernel PAI counter value
+Date: Thu, 28 May 2026 21:44:11 +0200
+Message-ID: <20260528194650.514239646@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,141 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-commit ea34567db0a6b3a7ce78ba421592344315c8f90e upstream.
+commit 3fe7ecab1a0856aafe1026a35af1621a5c18d53f upstream.
 
-Re-add GFP_DMA when allocating memory for CHSC control blocks.
-On some supported machines, CHSC cannot access memory outside
-the DMA zone, causing CHSC command failures.
+The PAI crypto counter design allows for user space and kernel space
+PAI counter increment recording. This is achieved by splitting the
+recording page in half. The upper part of the 4KB page records user
+space increments of PAI crypto counter and the lower half records
+kernel space increments. The page itself looks like:
+
+ lowcore ptr ---> ++++++++++++++++++++++++
+                  |user space area       |
+                  +----------------------+
+                  |kernel space area     |
+                  ++++++++++++++++++++++++
+
+User space and kernel space entries are handled via a kernel_offset
+value when wrting. For PAI crypto counters this offset is 2048 or
+half of a page size.
+
+For PAI NNPA counter design this distinction was not needed. There is
+no user and kernel space part for the page pointed to by lowcore.
+The set up is:
+
+ lowcore ptr ---> ++++++++++++++++++++++++
+                  |user + kernel space   |
+                  |area                  |
+                  |                      |
+                  ++++++++++++++++++++++++
+
+There is always only one counter value recorded and saved.
+
+Depending on number of CPUs and machine load, the number of PAI NNPA
+counter increment differs between counting (perf stat) and recording
+(perf record). The number reported by sampling was double the number
+shown by counting.
+
+This was caused by a double read of the PAI NNPA values in function
+pai_copy(). The first part of that function reads the kernel space part.
+The offset into the kernel page part must be larger than zero.
+The second part of that function reads the user space part, which
+begins of offset zero. This works fine for PAI crypto counters.
+
+It fails for PAI NNPA counters because the PMU device driver does
+not support that feature and has a kernel_offset value of 0x0.
+Executing both user and kernel space read out might end up reading
+user space value twice.
+For the PAI NNPA PMU prohibit the kernel space part read out.
 
 Cc: stable@vger.kernel.org
-Fixes: a3a64a4def8d ("s390/cio: remove unneeded DMA zone allocation")
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: f12473541356 ("s390/pai_crypto: Rename paicrypt_copy() to pai_copy()")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/chsc.c     |    4 ++--
- drivers/s390/cio/chsc_sch.c |   20 ++++++++++----------
- drivers/s390/cio/scm.c      |    2 +-
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ arch/s390/kernel/perf_pai.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/cio/chsc.c
-+++ b/drivers/s390/cio/chsc.c
-@@ -1142,8 +1142,8 @@ int __init chsc_init(void)
- {
- 	int ret;
- 
--	sei_page = (void *)get_zeroed_page(GFP_KERNEL);
--	chsc_page = (void *)get_zeroed_page(GFP_KERNEL);
-+	sei_page = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
-+	chsc_page = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!sei_page || !chsc_page) {
- 		ret = -ENOMEM;
- 		goto out_err;
---- a/drivers/s390/cio/chsc_sch.c
-+++ b/drivers/s390/cio/chsc_sch.c
-@@ -292,7 +292,7 @@ static int chsc_ioctl_start(void __user
- 	if (!css_general_characteristics.dynio)
- 		/* It makes no sense to try. */
- 		return -EOPNOTSUPP;
--	chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	chsc_area = (void *)get_zeroed_page(GFP_DMA | GFP_KERNEL);
- 	if (!chsc_area)
- 		return -ENOMEM;
- 	request = kzalloc_obj(*request);
-@@ -340,7 +340,7 @@ static int chsc_ioctl_on_close_set(void
- 		ret = -ENOMEM;
- 		goto out_unlock;
- 	}
--	on_close_chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	on_close_chsc_area = (void *)get_zeroed_page(GFP_DMA | GFP_KERNEL);
- 	if (!on_close_chsc_area) {
- 		ret = -ENOMEM;
- 		goto out_free_request;
-@@ -392,7 +392,7 @@ static int chsc_ioctl_start_sync(void __
- 	struct chsc_sync_area *chsc_area;
- 	int ret, ccode;
- 
--	chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	chsc_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!chsc_area)
- 		return -ENOMEM;
- 	if (copy_from_user(chsc_area, user_area, PAGE_SIZE)) {
-@@ -438,7 +438,7 @@ static int chsc_ioctl_info_channel_path(
- 		u8 data[PAGE_SIZE - 20];
- 	} __attribute__ ((packed)) *scpcd_area;
- 
--	scpcd_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	scpcd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!scpcd_area)
- 		return -ENOMEM;
- 	cd = kzalloc_obj(*cd);
-@@ -500,7 +500,7 @@ static int chsc_ioctl_info_cu(void __use
- 		u8 data[PAGE_SIZE - 20];
- 	} __attribute__ ((packed)) *scucd_area;
- 
--	scucd_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	scucd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!scucd_area)
- 		return -ENOMEM;
- 	cd = kzalloc_obj(*cd);
-@@ -563,7 +563,7 @@ static int chsc_ioctl_info_sch_cu(void _
- 		u8 data[PAGE_SIZE - 20];
- 	} __attribute__ ((packed)) *sscud_area;
- 
--	sscud_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	sscud_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!sscud_area)
- 		return -ENOMEM;
- 	cud = kzalloc_obj(*cud);
-@@ -625,7 +625,7 @@ static int chsc_ioctl_conf_info(void __u
- 		u8 data[PAGE_SIZE - 20];
- 	} __attribute__ ((packed)) *sci_area;
- 
--	sci_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	sci_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!sci_area)
- 		return -ENOMEM;
- 	ci = kzalloc_obj(*ci);
-@@ -696,7 +696,7 @@ static int chsc_ioctl_conf_comp_list(voi
- 		u32 res;
- 	} __attribute__ ((packed)) *cssids_parm;
- 
--	sccl_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	sccl_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!sccl_area)
- 		return -ENOMEM;
- 	ccl = kzalloc_obj(*ccl);
-@@ -756,7 +756,7 @@ static int chsc_ioctl_chpd(void __user *
- 	int ret;
- 
- 	chpd = kzalloc_obj(*chpd);
--	scpd_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	scpd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!scpd_area || !chpd) {
- 		ret = -ENOMEM;
- 		goto out_free;
-@@ -796,7 +796,7 @@ static int chsc_ioctl_dcal(void __user *
- 		u8 data[PAGE_SIZE - 36];
- 	} __attribute__ ((packed)) *sdcal_area;
- 
--	sdcal_area = (void *)get_zeroed_page(GFP_KERNEL);
-+	sdcal_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
- 	if (!sdcal_area)
- 		return -ENOMEM;
- 	dcal = kzalloc_obj(*dcal);
---- a/drivers/s390/cio/scm.c
-+++ b/drivers/s390/cio/scm.c
-@@ -229,7 +229,7 @@ int scm_update_information(void)
- 	size_t num;
- 	int ret;
- 
--	scm_info = (void *)__get_free_page(GFP_KERNEL);
-+	scm_info = (void *)__get_free_page(GFP_KERNEL | GFP_DMA);
- 	if (!scm_info)
- 		return -ENOMEM;
- 
+--- a/arch/s390/kernel/perf_pai.c
++++ b/arch/s390/kernel/perf_pai.c
+@@ -651,7 +651,7 @@ static void pai_have_sample(struct perf_
+ 	rawsize = pai_copy(cpump->save, cpump->area, pp,
+ 			   (unsigned long *)PAI_SAVE_AREA(event),
+ 			   event->attr.exclude_user,
+-			   event->attr.exclude_kernel);
++			   !pp->kernel_offset ? true : event->attr.exclude_kernel);
+ 	if (rawsize)			/* No incremented counters */
+ 		pai_push_sample(rawsize, cpump, event);
+ }
 
 
