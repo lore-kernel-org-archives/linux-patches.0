@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33132F260C;
-	Thu, 28 May 2026 20:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26345318EE1;
+	Thu, 28 May 2026 20:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998826; cv=none; b=lQqlbiuAEO1a4R3KNdgH6rzhQd0AjwX/v509RTpw9SNLAhhdShNNYOoGxZ+KaQzfTxDbMNzF6os3YBcpRHuIbdqOFhNDBSpHPw0pUixHnZ0Y7sB3K/409+ZNpTtGNaQsLa4XMx3q29sS2sBXYGSENR2PRpTDS5UFN0B0YCBt5/4=
+	t=1779998829; cv=none; b=bQTIxB+iVxjQq9ghb3Yi5u1E49mq76ea8JC+clugQZ7Xr1sBhlJr6+fU/6q8NRpbNp2GbDC5jfLa+v+8QkPo08zroF7p7UjBaOfa7eP0x7hG94hja/rounnyVjw5BWLy4PW66oB7RnaRoR5qp75hQ2MuvLxculHe1geiM96e9D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998826; c=relaxed/simple;
-	bh=S68+FKaDiOdUCOx2dB+N8T3c+V3D020WnGtlSja2R2o=;
+	s=arc-20240116; t=1779998829; c=relaxed/simple;
+	bh=2Us8Uns27ViR8ewzBdceB4u6svvDPS/F5+xI6VkuWMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFdc1Bc+OdMAjy0wXHguQ2au3VNwdbHz0nvdtFf+qr3iB2bFuGTJLmrx00ApQr+FLfDPTWUGt/323i+8mxzG+hh92Li5LpkPgyh10WISSV/p1QOTw5NT0fVYGtpkFwRRraw47SzUqLh9Xlt1jC6AXcJ+KdHnrFNJmBl9mSR6zcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8XgxRjU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ox4y0QIMCGy5lOl2QwNG7vUMU+dx9Ubd++E1Pi3qLLoTA21Ig8Hrat+XfpO1n2dtBZjiavbO1F7k2z4p0bLS9xm8TatLacuInVh2h885Owd39kWVJeeLfEO0h6Xff6EFokwKjmNWvFg3wLU7rB0v2fmp/+CsqaG/uRd7/O/0Oc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc+NXgT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8XgxRjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BC61F000E9;
-	Thu, 28 May 2026 20:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc+NXgT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B8F1F000E9;
+	Thu, 28 May 2026 20:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998825;
-	bh=Bb3wS6BZyGL+7f/viP4JN4X5cILEHJIenWmHrrMrX74=;
+	s=korg; t=1779998828;
+	bh=ykQDdeHA4fG7N8S/X72mivhTl1yacqOV7wH5SiIoFSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8XgxRjUseKK/LDPK4sM3QG86RmGub15i2WdwZcHgdXbt48DeZuQ629IjaLoJ6CKi
-	 LtF4IIs10jDd6KNGnjSKdFA3pjEsNgpiRtQ4x/zlBJL2KfHqNPqYVRsyq+RAmSSfqq
-	 ObJkqFaqkrmddgvJPD2a7ARX8K2G612jaeiMjHKA=
+	b=Tc+NXgT7G1EEWb7lbh52oloDDk5xvdEEM88ZCCfqEIUIoA7sF6IcvyoCttF0QOjQk
+	 frQs2L9zyVa+MIBqHMv8zIpSSDBEb5jZd+RbpZVGpKn6PfxflD2VcHJ+67dSyvFZVt
+	 T7Hh7kz5g6ooKHg4C7QmSXNuyyg8Iy8+NaL3Pq0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 310/461] drm/msm/a6xx: Check kzalloc return in a8xx_hfi_send_perf_table
-Date: Thu, 28 May 2026 21:47:19 +0200
-Message-ID: <20260528194656.260430379@linuxfoundation.org>
+Subject: [PATCH 7.0 276/461] wifi: ath11k: fix error path leaks in some WMI WOW calls
+Date: Thu, 28 May 2026 21:46:45 +0200
+Message-ID: <20260528194655.166394645@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,38 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit b5c7a7f452b885bfbe102bd3a057a5f496802f8b ]
+[ Upstream commit 55dda532bbc261aef495e403c8900c5e2ab5fa34 ]
 
-Check the return value of kzalloc() to prevent a NULL pointer
-dereference on allocation failure.
+Fix two instances where we used to directly return the result of
+ath11k_wmi_cmd_send(...). Because we did not check the return value, we
+also did not free the skb in the error path.
 
-Fixes: 06cfbca0e1c6 ("drm/msm/a6xx: Share dependency vote table with GMU")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/721342/
-Message-ID: <20260428073558.1234238-1-nichen@iscas.ac.cn>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 79802b13a492 ("ath11k: implement WoW enable and wakeup commands")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260506134240.2284016-2-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath11k/wmi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index 4f5dbf46132ba..b40148b754207 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -289,6 +289,8 @@ static int a8xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
- 		(gmu->nr_gpu_freqs * num_gx_votes * sizeof(gmu->gx_arc_votes[0])) +
- 		(gmu->nr_gmu_freqs * num_cx_votes * sizeof(gmu->cx_arc_votes[0]));
- 	tbl = kzalloc(size, GFP_KERNEL);
-+	if (!tbl)
-+		return -ENOMEM;
- 	tbl->type = HFI_TABLE_GPU_PERF;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 40747fba3b0c0..024c2aad9fb4e 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -9332,6 +9332,7 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
+ 	struct wmi_wow_host_wakeup_ind *cmd;
+ 	struct sk_buff *skb;
+ 	size_t len;
++	int ret;
  
- 	/* First fill GX votes */
+ 	len = sizeof(*cmd);
+ 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
+@@ -9345,14 +9346,20 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
+ 
+ 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "tlv wow host wakeup ind\n");
+ 
+-	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
++	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
++	if (ret) {
++		ath11k_warn(ar->ab, "failed to send WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID\n");
++		dev_kfree_skb(skb);
++	}
++
++	return ret;
+ }
+ 
+ int ath11k_wmi_wow_enable(struct ath11k *ar)
+ {
+ 	struct wmi_wow_enable_cmd *cmd;
+ 	struct sk_buff *skb;
+-	int len;
++	int ret, len;
+ 
+ 	len = sizeof(*cmd);
+ 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
+@@ -9367,7 +9374,13 @@ int ath11k_wmi_wow_enable(struct ath11k *ar)
+ 	cmd->pause_iface_config = WOW_IFACE_PAUSE_ENABLED;
+ 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "tlv wow enable\n");
+ 
+-	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
++	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
++	if (ret) {
++		ath11k_warn(ar->ab, "failed to send WMI_WOW_ENABLE_CMDID\n");
++		dev_kfree_skb(skb);
++	}
++
++	return ret;
+ }
+ 
+ int ath11k_wmi_scan_prob_req_oui(struct ath11k *ar,
 -- 
 2.53.0
 
