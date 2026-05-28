@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73156335566;
-	Thu, 28 May 2026 20:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2D0348C6E;
+	Thu, 28 May 2026 20:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999058; cv=none; b=u2rluL9jcO0rkYuldZFfwKR4AaLbE/1NTGrIJ7UFJAnnjYUuKmAXmJxLLdgnksT2figjQ7EbxxvDQ2YP4/zNB/eYgpA7c+ww6MnSfcfpG4/EMuFZA4cTJuRUGpM8zoAD949WWUI/rQB6fUWc+0ttN44EUfFg1Gi0H1iQyP466uo=
+	t=1779999061; cv=none; b=XOpdTn55grH3g/ZHMnb3JtUPid6XnHYUIpKEckcZocbs2UCUE5rPs+SI2W/lMc3qnMUqeK2I9fG59F8pfaxMfyhYBmbVKRGDyTSymI0aQnnqG5KKdpcM+IHY1MiuO98ZNG0qgK9TVwSR+kEE4DsRDSi0mawk5FvQDej/HvZd4ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999058; c=relaxed/simple;
-	bh=dLpSV2Z/sMjAXhnznAGiRf/aLP5rWGbIb7kM4sq9H2g=;
+	s=arc-20240116; t=1779999061; c=relaxed/simple;
+	bh=BxBGbr/oDPhCsl/Sikhcz1SbCUAybX4Iwl5mryyknAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PH82HUPoZNpfeDGHjW0T+3A4NcDJpEEk/bMkIS2rB92fOeZgSDmwvKd7NNGuouHbjo8YW7pmIXVSVsPMMuaS9BJQnTO1UtqGX+vOQOgSQyjNAzKeg4V6COd5svA30kNvJc3QYbj/DY+vFQKA0L9KmzRtJLtbRCcgoQxouJLai0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXX2amdr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NW+l5CaorJkJgp8RDHUd1oTfic0l7LufibG9PoL8fOb2OAPZIttgsA072m5QhVUmoAdIWWPHhdPYpBOi0bJlg7Oy4oilLMi+ubJz+0unSaIBgqnTiYuTaftGuALnYlx2KeBgtm+U3OOgSjIC/cxwwVJECU4l7e53+p4v+9rBj1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRnbLpzb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXX2amdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A631F000E9;
-	Thu, 28 May 2026 20:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRnbLpzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1CA1F000E9;
+	Thu, 28 May 2026 20:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999057;
-	bh=a1wOe/DOVO16XrVwsZSwUPgXLnxiHj+q4cJb8L1qMO4=;
+	s=korg; t=1779999059;
+	bh=TrtytAQdxIhp7QKqF1spxiQSibqesblmDBih9i2RbOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXX2amdrvONvSIxe5Ir/jvkpb8Tzw5p3IH6gIJmBxQp9kOuBF8KbPG7p+c20/eev5
-	 isJFDDNoteLtIqgHUh/jU3rWBWEmwRTcwnJ6oPdjHPjeQavriChZFE/IP+Fq8RqjH1
-	 LE9xE7s4WoRSr+7O7Kg9KMccZaWHRUoa/+Sp4lUI=
+	b=BRnbLpzbCu32T0xqUiXvH78AauSppugVxJB70BUZD1pfDaaLERStfSWcagDC1EN1a
+	 qUmPn7qPTR1u0Qcu3EBMedoMakxxY/CrObU2FQKRid5SjYKjnyKeQOlWDL/rZO9ZUK
+	 qfJ04AX1h3+rSp69ZxRRyvGMHIiBq4ej0p4Jp3jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 357/461] dma-mapping: move dma_map_resource() sanity check into debug code
-Date: Thu, 28 May 2026 21:48:06 +0200
-Message-ID: <20260528194657.758355334@linuxfoundation.org>
+Subject: [PATCH 7.0 358/461] drm/gem: Make the GEM LRU lock part of drm_device
+Date: Thu, 28 May 2026 21:48:07 +0200
+Message-ID: <20260528194657.787738681@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,84 +54,546 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit af0c3f05866237f7592219bfe05387bc3bfc99b5 ]
+[ Upstream commit 379e8f1ca5e919b130b40d8115d92a536e5f8d7a ]
 
-dma_map_resource() uses pfn_valid() to ensure the range is not RAM.
-However, pfn_valid() only checks for availability of the memory map for
-a PFN but it does not ensure that the PFN is actually backed by RAM. On
-ARM64 with SPARSEMEM (128MB section granularity), MMIO addresses that
-share a section with RAM will falsely trigger the WARN_ON_ONCE and cause
-dma_map_resource() to return DMA_MAPPING_ERROR.
+Recently, a few races have been discovered in the GEM LRU logic, all
+of them caused by the fact the LRU lock is accessed through
+gem->lru->lock, and that very same lock also protects changes to
+gem->lru, leading to situations where gem->lru needs to first be
+accessed without the lock held, to then get the lru to access the lock
+through and finally take the lock and do the expected operation.
 
-This causes a WARNING on Raspberry Pi 4 during spi_bcm2835 probe because
-the SPI FIFO register (0xfe204004) falls in the same sparsemem section
-as the end of RAM (0xf8000000-0xfbffffff), both in section 31
-(0xf8000000-0xffffffff).
+Currently, the only driver making use of this API (MSM) declares a
+device-wide lock, and the user we're about to add (panthor) will
+do the same. There's no evidence that we will ever have a driver
+that wants different pools of LRUs protected by different locks under
+the same drm_device. So we're better off moving this lock to drm_device
+and always locking it through obj->dev->gem_lru_mutex, or directly
+through dev->gem_lru_mutex.
 
-Move the sanity check from dma_map_resource() into debug_dma_map_phys()
-and replace the unreliable pfn_valid() with pfn_valid() &&
-!PageReserved(), which correctly identifies actual usable RAM without
-false positives for MMIO regions that happen to have struct pages.
+If anyone ever needs more fine-grained locking, this can be revisited
+to pass some drm_gem_lru_pool object representing the pool of LRUs
+under a specific lock, but for now, the per-device lock seems to be
+enough.
 
-Since dma_map_resource() is dma_map_phys(DMA_ATTR_MMIO), the check
-applies equally to both APIs. Any non-reserved page represents kernel
-memory to a sufficient degree that using DMA_ATTR_MMIO on it is almost
-certainly wrong and risks breaking coherency on non-coherent platforms.
-ZONE_DEVICE pages used for PCI P2P DMA (MEMORY_DEVICE_PCI_P2PDMA) have
-PageReserved set, so they will not trigger a false positive.
-
-The check no longer blocks the mapping and uses err_printk() to
-integrate with dma-debug filtering.
-
-Fixes: f7326196a781 ("dma-mapping: export new dma_*map_phys() interface")
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260513072209.1486986-1-jianpeng.chang.cn@windriver.com
+Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
+Reported-by: Chia-I Wu <olvaffe@gmail.com>
+Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
+Link: https://patch.msgid.link/20260518-panthor-shrinker-fixes-v4-1-1920234470d5@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/debug.c   | 9 ++++++++-
- kernel/dma/mapping.c | 4 ----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_drv.c              |  2 ++
+ drivers/gpu/drm/drm_gem.c              | 36 ++++++++++++--------------
+ drivers/gpu/drm/msm/msm_drv.c          | 11 ++++----
+ drivers/gpu/drm/msm/msm_drv.h          |  7 -----
+ drivers/gpu/drm/msm/msm_gem.c          | 33 ++++++++++++-----------
+ drivers/gpu/drm/msm/msm_gem_shrinker.c |  4 +--
+ drivers/gpu/drm/msm/msm_gem_submit.c   |  6 ++---
+ drivers/gpu/drm/msm/msm_gem_vma.c      | 12 ++++-----
+ drivers/gpu/drm/msm/msm_ringbuffer.c   |  6 ++---
+ include/drm/drm_device.h               |  7 +++++
+ include/drm/drm_gem.h                  | 20 +++++++-------
+ 11 files changed, 69 insertions(+), 75 deletions(-)
 
-diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
-index 1a725edbbbf6a..3248f8b4d096d 100644
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -1251,7 +1251,14 @@ void debug_dma_map_phys(struct device *dev, phys_addr_t phys, size_t size,
- 	entry->direction = direction;
- 	entry->map_err_type = MAP_ERR_NOT_CHECKED;
- 
--	if (!(attrs & DMA_ATTR_MMIO)) {
-+	if (attrs & DMA_ATTR_MMIO) {
-+		unsigned long pfn = PHYS_PFN(phys);
-+
-+		if (pfn_valid(pfn) && !PageReserved(pfn_to_page(pfn)))
-+			err_printk(dev, entry,
-+				   "dma_map_resource called for RAM address %pa\n",
-+				   &phys);
-+	} else {
- 		check_for_stack(dev, phys);
- 
- 		if (!PhysHighMem(phys))
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index 6d3dd0bd3a886..5d59372f42770 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -356,10 +356,6 @@ EXPORT_SYMBOL(dma_unmap_sg_attrs);
- dma_addr_t dma_map_resource(struct device *dev, phys_addr_t phys_addr,
- 		size_t size, enum dma_data_direction dir, unsigned long attrs)
- {
--	if (IS_ENABLED(CONFIG_DMA_API_DEBUG) &&
--	    WARN_ON_ONCE(pfn_valid(PHYS_PFN(phys_addr))))
--		return DMA_MAPPING_ERROR;
--
- 	return dma_map_phys(dev, phys_addr, size, dir, attrs | DMA_ATTR_MMIO);
+diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+index 2915118436ce8..0238445cf96cf 100644
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -696,6 +696,7 @@ static void drm_dev_init_release(struct drm_device *dev, void *res)
+ 	mutex_destroy(&dev->master_mutex);
+ 	mutex_destroy(&dev->clientlist_mutex);
+ 	mutex_destroy(&dev->filelist_mutex);
++	mutex_destroy(&dev->gem_lru_mutex);
  }
- EXPORT_SYMBOL(dma_map_resource);
+ 
+ static int drm_dev_init(struct drm_device *dev,
+@@ -737,6 +738,7 @@ static int drm_dev_init(struct drm_device *dev,
+ 	INIT_LIST_HEAD(&dev->vblank_event_list);
+ 
+ 	spin_lock_init(&dev->event_lock);
++	mutex_init(&dev->gem_lru_mutex);
+ 	mutex_init(&dev->filelist_mutex);
+ 	mutex_init(&dev->clientlist_mutex);
+ 	mutex_init(&dev->master_mutex);
+diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+index 2b152e3103c32..52151452adf98 100644
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -1543,12 +1543,10 @@ EXPORT_SYMBOL(drm_gem_unlock_reservations);
+  * drm_gem_lru_init - initialize a LRU
+  *
+  * @lru: The LRU to initialize
+- * @lock: The lock protecting the LRU
+  */
+ void
+-drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
++drm_gem_lru_init(struct drm_gem_lru *lru)
+ {
+-	lru->lock = lock;
+ 	lru->count = 0;
+ 	INIT_LIST_HEAD(&lru->list);
+ }
+@@ -1573,14 +1571,10 @@ drm_gem_lru_remove_locked(struct drm_gem_object *obj)
+ void
+ drm_gem_lru_remove(struct drm_gem_object *obj)
+ {
+-	struct drm_gem_lru *lru = obj->lru;
+-
+-	if (!lru)
+-		return;
+-
+-	mutex_lock(lru->lock);
+-	drm_gem_lru_remove_locked(obj);
+-	mutex_unlock(lru->lock);
++	mutex_lock(&obj->dev->gem_lru_mutex);
++	if (obj->lru)
++		drm_gem_lru_remove_locked(obj);
++	mutex_unlock(&obj->dev->gem_lru_mutex);
+ }
+ EXPORT_SYMBOL(drm_gem_lru_remove);
+ 
+@@ -1595,7 +1589,7 @@ EXPORT_SYMBOL(drm_gem_lru_remove);
+ void
+ drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj)
+ {
+-	lockdep_assert_held_once(lru->lock);
++	lockdep_assert_held_once(&obj->dev->gem_lru_mutex);
+ 
+ 	if (obj->lru)
+ 		drm_gem_lru_remove_locked(obj);
+@@ -1619,9 +1613,9 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail_locked);
+ void
+ drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj)
+ {
+-	mutex_lock(lru->lock);
++	mutex_lock(&obj->dev->gem_lru_mutex);
+ 	drm_gem_lru_move_tail_locked(lru, obj);
+-	mutex_unlock(lru->lock);
++	mutex_unlock(&obj->dev->gem_lru_mutex);
+ }
+ EXPORT_SYMBOL(drm_gem_lru_move_tail);
+ 
+@@ -1635,6 +1629,7 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
+  * of the shrink callback to check for this (ie. dma_resv_test_signaled())
+  * or if necessary block until the buffer becomes idle.
+  *
++ * @dev: DRM device the LRU belongs to
+  * @lru: The LRU to scan
+  * @nr_to_scan: The number of pages to try to reclaim
+  * @remaining: The number of pages left to reclaim, should be initialized by caller
+@@ -1642,7 +1637,8 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
+  * @ticket: Optional ww_acquire_ctx context to use for locking
+  */
+ unsigned long
+-drm_gem_lru_scan(struct drm_gem_lru *lru,
++drm_gem_lru_scan(struct drm_device *dev,
++		 struct drm_gem_lru *lru,
+ 		 unsigned int nr_to_scan,
+ 		 unsigned long *remaining,
+ 		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
+@@ -1652,9 +1648,9 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+ 	struct drm_gem_object *obj;
+ 	unsigned freed = 0;
+ 
+-	drm_gem_lru_init(&still_in_lru, lru->lock);
++	drm_gem_lru_init(&still_in_lru);
+ 
+-	mutex_lock(lru->lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 
+ 	while (freed < nr_to_scan) {
+ 		obj = list_first_entry_or_null(&lru->list, typeof(*obj), lru_node);
+@@ -1677,7 +1673,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+ 		 * rest of the loop body, to reduce contention with other
+ 		 * code paths that need the LRU lock
+ 		 */
+-		mutex_unlock(lru->lock);
++		mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 		if (ticket)
+ 			ww_acquire_init(ticket, &reservation_ww_class);
+@@ -1711,7 +1707,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+ 
+ tail:
+ 		drm_gem_object_put(obj);
+-		mutex_lock(lru->lock);
++		mutex_lock(&dev->gem_lru_mutex);
+ 	}
+ 
+ 	/*
+@@ -1723,7 +1719,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+ 	list_splice_tail(&still_in_lru.list, &lru->list);
+ 	lru->count += still_in_lru.count;
+ 
+-	mutex_unlock(lru->lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	return freed;
+ }
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 195f40e331e5a..cc2bcd14b1c26 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -128,11 +128,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
+ 	/*
+ 	 * Initialize the LRUs:
+ 	 */
+-	mutex_init(&priv->lru.lock);
+-	drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
+-	drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
+-	drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
+-	drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
++	drm_gem_lru_init(&priv->lru.unbacked);
++	drm_gem_lru_init(&priv->lru.pinned);
++	drm_gem_lru_init(&priv->lru.willneed);
++	drm_gem_lru_init(&priv->lru.dontneed);
+ 
+ 	/* Initialize stall-on-fault */
+ 	spin_lock_init(&priv->fault_stall_lock);
+@@ -140,7 +139,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
+ 
+ 	/* Teach lockdep about lock ordering wrt. shrinker: */
+ 	fs_reclaim_acquire(GFP_KERNEL);
+-	might_lock(&priv->lru.lock);
++	might_lock(&ddev->gem_lru_mutex);
+ 	fs_reclaim_release(GFP_KERNEL);
+ 
+ 	if (priv->kms_init) {
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 6d847d593f1ae..617b3c4b42c0c 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -150,13 +150,6 @@ struct msm_drm_private {
+ 		 * DONTNEED state (ie. can be purged)
+ 		 */
+ 		struct drm_gem_lru dontneed;
+-
+-		/**
+-		 * lock:
+-		 *
+-		 * Protects manipulation of all of the LRUs.
+-		 */
+-		struct mutex lock;
+ 	} lru;
+ 
+ 	struct notifier_block vmap_notifier;
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 2cb3ab04f1250..efd3d3c9a4490 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -177,11 +177,11 @@ static void update_lru_locked(struct drm_gem_object *obj)
+ 
+ static void update_lru(struct drm_gem_object *obj)
+ {
+-	struct msm_drm_private *priv = obj->dev->dev_private;
++	struct drm_device *dev = obj->dev;
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	update_lru_locked(obj);
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ }
+ 
+ static struct page **get_pages(struct drm_gem_object *obj)
+@@ -292,11 +292,11 @@ void msm_gem_pin_obj_locked(struct drm_gem_object *obj)
+ 
+ static void pin_obj_locked(struct drm_gem_object *obj)
+ {
+-	struct msm_drm_private *priv = obj->dev->dev_private;
++	struct drm_device *dev = obj->dev;
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	msm_gem_pin_obj_locked(obj);
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ }
+ 
+ struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
+@@ -487,16 +487,16 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct drm_gpuva *vma)
+ 
+ void msm_gem_unpin_locked(struct drm_gem_object *obj)
+ {
+-	struct msm_drm_private *priv = obj->dev->dev_private;
++	struct drm_device *dev = obj->dev;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+ 	msm_gem_assert_locked(obj);
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	msm_obj->pin_count--;
+ 	GEM_WARN_ON(msm_obj->pin_count < 0);
+ 	update_lru_locked(obj);
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ }
+ 
+ /* Special unpin path for use in fence-signaling path, avoiding the need
+@@ -507,10 +507,10 @@ void msm_gem_unpin_locked(struct drm_gem_object *obj)
+  */
+ void msm_gem_unpin_active(struct drm_gem_object *obj)
+ {
+-	struct msm_drm_private *priv = obj->dev->dev_private;
++	struct drm_device *dev = obj->dev;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+-	GEM_WARN_ON(!mutex_is_locked(&priv->lru.lock));
++	GEM_WARN_ON(!mutex_is_locked(&dev->gem_lru_mutex));
+ 
+ 	msm_obj->pin_count--;
+ 	GEM_WARN_ON(msm_obj->pin_count < 0);
+@@ -797,12 +797,12 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj)
+  */
+ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+ {
+-	struct msm_drm_private *priv = obj->dev->dev_private;
++	struct drm_device *dev = obj->dev;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+ 	msm_gem_lock(obj);
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 
+ 	if (msm_obj->madv != __MSM_MADV_PURGED)
+ 		msm_obj->madv = madv;
+@@ -814,7 +814,7 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+ 	 */
+ 	update_lru_locked(obj);
+ 
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	msm_gem_unlock(obj);
+ 
+@@ -824,7 +824,6 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+ void msm_gem_purge(struct drm_gem_object *obj)
+ {
+ 	struct drm_device *dev = obj->dev;
+-	struct msm_drm_private *priv = obj->dev->dev_private;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+ 	msm_gem_assert_locked(obj);
+@@ -839,10 +838,10 @@ void msm_gem_purge(struct drm_gem_object *obj)
+ 
+ 	put_pages(obj);
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	/* A one-way transition: */
+ 	msm_obj->madv = __MSM_MADV_PURGED;
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	drm_gem_free_mmap_offset(obj);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 6e39e4e578bba..c8dda2b68cff2 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -178,7 +178,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ 		 * 'ticket' not needed on trylock paths
+ 		 */
+ 		stages[i].freed =
+-			drm_gem_lru_scan(stages[i].lru, nr,
++			drm_gem_lru_scan(priv->dev, stages[i].lru, nr,
+ 					 &stages[i].remaining,
+ 					 stages[i].shrink,
+ 					 NULL);
+@@ -247,7 +247,7 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
+ 	unsigned long remaining = 0;
+ 
+ 	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
+-		unmapped += drm_gem_lru_scan(lrus[idx],
++		unmapped += drm_gem_lru_scan(priv->dev, lrus[idx],
+ 					     vmap_shrink_limit - unmapped,
+ 					     &remaining,
+ 					     vmap_shrink,
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 75d9f35743700..771d7bb12c2de 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -350,7 +350,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit)
+ 
+ static int submit_pin_objects(struct msm_gem_submit *submit)
+ {
+-	struct msm_drm_private *priv = submit->dev->dev_private;
++	struct drm_device *dev = submit->dev;
+ 	int i, ret = 0;
+ 
+ 	for (i = 0; i < submit->nr_bos; i++) {
+@@ -379,11 +379,11 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
+ 	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
+ 	 * could trigger deadlock with the shrinker).
+ 	 */
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	for (i = 0; i < submit->nr_bos; i++) {
+ 		msm_gem_pin_obj_locked(submit->bos[i].obj);
+ 	}
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	submit->bos_pinned = true;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index 9e3632019bc92..3b418ee32658d 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -696,7 +696,7 @@ static struct dma_fence *
+ msm_vma_job_run(struct drm_sched_job *_job)
+ {
+ 	struct msm_vm_bind_job *job = to_msm_vm_bind_job(_job);
+-	struct msm_drm_private *priv = job->vm->drm->dev_private;
++	struct drm_device *dev = job->vm->drm;
+ 	struct msm_gem_vm *vm = to_msm_vm(job->vm);
+ 	struct drm_gem_object *obj;
+ 	int ret = vm->unusable ? -EINVAL : 0;
+@@ -739,13 +739,13 @@ msm_vma_job_run(struct drm_sched_job *_job)
+ 	if (ret)
+ 		msm_gem_vm_unusable(job->vm);
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 
+ 	job_foreach_bo (obj, job) {
+ 		msm_gem_unpin_active(obj);
+ 	}
+ 
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	/* VM_BIND ops are synchronous, so no fence to wait on: */
+ 	return NULL;
+@@ -1299,7 +1299,7 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
+ 			return PTR_ERR(pages);
+ 	}
+ 
+-	struct msm_drm_private *priv = job->vm->drm->dev_private;
++	struct drm_device *dev = job->vm->drm;
+ 
+ 	/*
+ 	 * A second loop while holding the LRU lock (a) avoids acquiring/dropping
+@@ -1308,10 +1308,10 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
+ 	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
+ 	 * could trigger deadlock with the shrinker).
+ 	 */
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 	job_foreach_bo (obj, job)
+ 		msm_gem_pin_obj_locked(obj);
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	job->bos_pinned = true;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+index 30ddb5351e983..2d6b930b766ec 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -16,13 +16,13 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+ 	struct msm_gem_submit *submit = to_msm_submit(job);
+ 	struct msm_fence_context *fctx = submit->ring->fctx;
+ 	struct msm_gpu *gpu = submit->gpu;
+-	struct msm_drm_private *priv = gpu->dev->dev_private;
++	struct drm_device *dev = gpu->dev;
+ 	unsigned nr_cmds = submit->nr_cmds;
+ 	int i;
+ 
+ 	msm_fence_init(submit->hw_fence, fctx);
+ 
+-	mutex_lock(&priv->lru.lock);
++	mutex_lock(&dev->gem_lru_mutex);
+ 
+ 	for (i = 0; i < submit->nr_bos; i++) {
+ 		struct drm_gem_object *obj = submit->bos[i].obj;
+@@ -32,7 +32,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+ 
+ 	submit->bos_pinned = false;
+ 
+-	mutex_unlock(&priv->lru.lock);
++	mutex_unlock(&dev->gem_lru_mutex);
+ 
+ 	/* TODO move submit path over to using a per-ring lock.. */
+ 	mutex_lock(&gpu->lock);
+diff --git a/include/drm/drm_device.h b/include/drm/drm_device.h
+index bc78fb77cc279..768a8dae83c52 100644
+--- a/include/drm/drm_device.h
++++ b/include/drm/drm_device.h
+@@ -375,6 +375,13 @@ struct drm_device {
+ 	 * Root directory for debugfs files.
+ 	 */
+ 	struct dentry *debugfs_root;
++
++	/**
++	 * @gem_lru_mutex:
++	 *
++	 * Lock protecting movement of GEM objects between LRUs.
++	 */
++	struct mutex gem_lru_mutex;
+ };
+ 
+ void drm_dev_set_dma_dev(struct drm_device *dev, struct device *dma_dev);
+diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+index 86f5846154f7d..8a704f6a65c15 100644
+--- a/include/drm/drm_gem.h
++++ b/include/drm/drm_gem.h
+@@ -245,17 +245,11 @@ struct drm_gem_object_funcs {
+  * for lockless &shrinker.count_objects, and provides
+  * &drm_gem_lru_scan for driver's &shrinker.scan_objects
+  * implementation.
++ *
++ * Any access to this kind of object must be done with
++ * drm_device::gem_lru_mutex held.
+  */
+ struct drm_gem_lru {
+-	/**
+-	 * @lock:
+-	 *
+-	 * Lock protecting movement of GEM objects between LRUs.  All
+-	 * LRUs that the object can move between should be protected
+-	 * by the same lock.
+-	 */
+-	struct mutex *lock;
+-
+ 	/**
+ 	 * @count:
+ 	 *
+@@ -453,6 +447,9 @@ struct drm_gem_object {
+ 	 * @lru:
+ 	 *
+ 	 * The current LRU list that the GEM object is on.
++	 *
++	 * Access to this field must be done with drm_device::gem_lru_mutex
++	 * held.
+ 	 */
+ 	struct drm_gem_lru *lru;
+ };
+@@ -610,12 +607,13 @@ void drm_gem_unlock_reservations(struct drm_gem_object **objs, int count,
+ int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+ 			    u32 handle, u64 *offset);
+ 
+-void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
++void drm_gem_lru_init(struct drm_gem_lru *lru);
+ void drm_gem_lru_remove(struct drm_gem_object *obj);
+ void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+ void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+ unsigned long
+-drm_gem_lru_scan(struct drm_gem_lru *lru,
++drm_gem_lru_scan(struct drm_device *dev,
++		 struct drm_gem_lru *lru,
+ 		 unsigned int nr_to_scan,
+ 		 unsigned long *remaining,
+ 		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
 -- 
 2.53.0
 
