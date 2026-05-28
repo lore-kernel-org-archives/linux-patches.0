@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4E82D9787;
-	Thu, 28 May 2026 20:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DC12E7379;
+	Thu, 28 May 2026 20:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999754; cv=none; b=fOpYR+1oKBhYTNNs9AmA+P2ofB/7Ir0k1JBYdYdNNLxxlAj2cJKKHp95Ay2gd2VbgKGPTGGzW4jsUDr1XCuw8xuMxiDg7PoFt+YQRBHjfLERcSpBcdsO8ooHcxNMl/4IzjMp9adzknA/0M30gPjE4eJBspYIJGdiWeg6H9koKGI=
+	t=1779999756; cv=none; b=By5QvOeOp7nntxI6jlmxC35gwIwTd9ig5tI4tosVtsFBbz9IpMajbzbN/uSt9E+plOr2TQkAGDKI9qQeeQ2GAkV0vU81PGb7JwujpYSb3eeB+ottJlL0zgim6k5sPpAelhxoTvzS403IGUuZnx+CH9QQOs0VZ/d29jHnKPdau/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999754; c=relaxed/simple;
-	bh=VtojNSpozyzKhxHpKi3hK8aEaeypMnuxZBldLXWNLhU=;
+	s=arc-20240116; t=1779999756; c=relaxed/simple;
+	bh=VoWWErAtPnW7valjic0diW1D9r6nhvr8cuiQyfWiPjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Afn7ebZ1+y0fx3DBRxS754ur++ueeYdrTJ6eBD7pv8OXb2alKpbEmtBcyXxzmKgDVm974bSOHJBgpReuVhkSbWV3W5tYSlkku9Xb1px7gtpk461A7h9d0Q05K+spUOGhQ8Kvw8L12HDtNbRB3ugf6vZjrOxBypIrTyoVBSrYUlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTn74d0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AhsWneHwLpTTi/Krjc+9LHWpJEjTZUS79Wf4mXFBoa35TZLdj9d9REqoEPbiZQ4senPyFdulnK6ArJRcVe0MUUc5/RWrGfOvzVNr653wZTjQlGTMc/xBiyADsO1tdOcJke4Zwgub/duXyYUECul/DlINNRND41EaSIfJjJeMAl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB8Bkvmh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTn74d0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76B51F000E9;
-	Thu, 28 May 2026 20:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB8Bkvmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703FF1F000E9;
+	Thu, 28 May 2026 20:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999753;
-	bh=SZFNBVKq6ithVc3FWKftVc6H7pt5dmmcOm1P/QPoVug=;
+	s=korg; t=1779999756;
+	bh=+ujj80sQ/TCYIdT/slIX9UqqPjI69Pq13Bf6YP+XQ3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTn74d0a5IVJg7tRZXaIftYPxzhxYkm1dUh7HT9GW0AMejbwS3Kwbyk8BFyBQuLv4
-	 THlzY8JQmdlgPwdCHBqWPLKn8HU1TEHsXUbE6yEh3OeSGWS7HQADox6DRDmOHlDG/L
-	 kDsp7ntsssut1SvQBjkbe3Lb7NbRvukwFbIdIzYw=
+	b=ZB8BkvmhJmbSEkmcXeAbJIdFScGX1GfhCx4qb/jJ9aLZyI77prZM3zSpfpyS+57WO
+	 /kQXHXhGtsaIFttZN2Ml9qSidUSz72hgEoqVsq1J9pkx89/ACv+5tui+TUua5bACsQ
+	 TNQuaVMP/rApFKCj1wP4lhnIweJXwg9cZtjPwEPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 179/377] firmware: arm_ffa: Check for NULL FF-A ID table while driver registration
-Date: Thu, 28 May 2026 21:46:57 +0200
-Message-ID: <20260528194643.604946644@linuxfoundation.org>
+Subject: [PATCH 6.18 180/377] firmware: arm_ffa: Skip free_pages on RX buffer alloc failure
+Date: Thu, 28 May 2026 21:46:58 +0200
+Message-ID: <20260528194643.635329699@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,43 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 0a5e695095c557d2380131b613dea4e8d90371be ]
+[ Upstream commit 09527e2c534911619d7e098729711100290bc3e1 ]
 
-The bus match callback assumes that every FF-A driver provides an
-id_table and dereferences it unconditionally. Enforce that contract at
-registration time so a buggy client driver cannot crash the bus during
-match.
+If the RX buffer allocation fails in ffa_init(), the error path jumps to
+free_pages even though no buffer has been allocated yet. Route that case
+directly to free_drv_info so the cleanup path is only used after at
+least one RX/TX buffer allocation has succeeded.
 
-Fixes: 92743071464f ("firmware: arm_ffa: Ensure drivers provide a probe function")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-1-8595ae450034@kernel.org
+Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
+Link: https://patch.msgid.link/20260428-ffa_fixes-v2-2-8595ae450034@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/bus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
-index 50bfe56c755e9..6779923e35c55 100644
---- a/drivers/firmware/arm_ffa/bus.c
-+++ b/drivers/firmware/arm_ffa/bus.c
-@@ -26,6 +26,8 @@ static int ffa_device_match(struct device *dev, const struct device_driver *drv)
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index d71a2ef335d1c..cf7f913a55b6e 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -2063,7 +2063,7 @@ static int __init ffa_init(void)
+ 	drv_info->rx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
+ 	if (!drv_info->rx_buffer) {
+ 		ret = -ENOMEM;
+-		goto free_pages;
++		goto free_drv_info;
+ 	}
  
- 	id_table = to_ffa_driver(drv)->id_table;
- 	ffa_dev = to_ffa_dev(dev);
-+	if (!id_table)
-+		return 0;
- 
- 	while (!uuid_is_null(&id_table->uuid)) {
- 		/*
-@@ -123,7 +125,7 @@ int ffa_driver_register(struct ffa_driver *driver, struct module *owner,
- {
- 	int ret;
- 
--	if (!driver->probe)
-+	if (!driver->probe || !driver->id_table)
- 		return -EINVAL;
- 
- 	driver->driver.bus = &ffa_bus_type;
+ 	drv_info->tx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
 -- 
 2.53.0
 
