@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682DB34D4D6;
-	Thu, 28 May 2026 19:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7FF318EE1;
+	Thu, 28 May 2026 19:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998061; cv=none; b=nyLrRc4olIDFNcy+rXU9YX4BQ0a5BldXxuud9F62CAj1AZSYdFdmvYCDLUqMk+zUm9lGsvDaH0aT6P4YRiRt9aIY5ZBaM24frzAzf5D4215RK1XeUAFxdKuvqDGfLs9w7Y831tEZrJS2pevteRpEIFKi1LTR9skUn5K34LVVRTE=
+	t=1779998064; cv=none; b=eJw6l9eZvclTUJorPx1Iux8kR6AoGALXhiyTOZHaAVPAPKNaNTry9DLR/tRdbwPiNV26Ybct3ya2pvxUvh1qy5z+6CtdblFcAJjo2gW4PHd+58C+2P5HZXrQMhAbch4boEyZdk13pbupxCsWYc75l5ugVoVrBF7GzTbqGG+K9bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998061; c=relaxed/simple;
-	bh=8aMUV+R2m22hLcDgLTdJL0B3hfNgFR/tpmRjO7gxtRw=;
+	s=arc-20240116; t=1779998064; c=relaxed/simple;
+	bh=ls28b/BLIhKrZ9jAK9krZ4Fs1lhkoiPhfbKXAn5MBGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5dIzg6KzDD+OT4lWt0LwhQ+FISc9xGqXfK0QitIE8LN8wSYO6EjH2Fq2FooP/aylpeZTH0MJ05E/EnGMn12z4K+FwHmfsODdg5GkIGWj+cxal5Ih7E7UiiOou733BoKdWiZruD6hcbx/KSTdhzaUR14q0Wph8ceU51HJRLIBHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrApmZnE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpuPMMZgzb3x/QOKyfxYsWDDwMHUzy2FkwKMibzWOvoGbX726emAGIJW5gfGkrc5x3RhzubVjD2BkO3eDP9DwXPoPJlHeQCQW5Mk7z/RAiHYEUDNP8y+WSi7Fgn/vD5dZxDVARKywMXbHQgn8Sj2rJmiCIBiqWuNuee59ImPeX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPucL//U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrApmZnE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EB61F000E9;
-	Thu, 28 May 2026 19:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPucL//U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5842E1F000E9;
+	Thu, 28 May 2026 19:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998060;
-	bh=uRjlZZEN8EVIYCXMTZGAI2K8xc3h385lQcGwyusg9sk=;
+	s=korg; t=1779998062;
+	bh=byfg8NisFehQQdzNsY6mDs66qrnRIFUfpas/MakQ1yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zrApmZnEvKWLGsNzYmFNjiXfqQRE7yK+HBCSBdvNBFz56ffh20jbByuecJqQOuYD5
-	 IXnQgaRv+jYmz+gvvwwRPpTHflozTQlHjcELYV3BI24j9rOPFszC2klw1loEHGnZbp
-	 iVwdc38G2albG4AqikC8meQuhybMB32nSTGQkrEk=
+	b=qPucL//USowoq2coXrMG22++i3AO45tbhKvb2/9c8Lt2TQZ+LDXDT6xaKMfSdLiJQ
+	 W7l0BwfAZXWRv0KxOBpp1n5sf25TAxKkP1+k6UhiCymsFOliD+bbblRX/HWn815yLk
+	 JG+lHkm6zMiDPIF6KMEao8agLxbl4dFPKQWHZHx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tommy Kelly <linux@tkel.ly>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 7.0 006/461] ata: libata-scsi: do not use the deferred QC feature for ATA_DEFER_PORT
-Date: Thu, 28 May 2026 21:42:15 +0200
-Message-ID: <20260528194647.021145343@linuxfoundation.org>
+Subject: [PATCH 7.0 007/461] ata: libata-scsi: do not use the deferred QC feature on PMPs with CBS
+Date: Thu, 28 May 2026 21:42:16 +0200
+Message-ID: <20260528194647.052568474@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -53,52 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-commit ce4548807d2e4ae48fd0dbe38865467369877913 upstream.
+commit f233124fb36cd57ef09f96d517a38ab4b902e15e upstream.
 
-The deferred QC feature was meant to handle mixed NCQ and non-NCQ commands,
-i.e. for return value ATA_DEFER_LINK.
+When using Port Multipliers (PMPs) with Command-Based Switching (CBS), you
+can only issue commands to one link at a time. For PMPs with CBS, there is
+already code to handle commands being sent to different links in
+sata_pmp_qc_defer_cmd_switch() using ap->excl_link. sata_sil24 also makes
+use of ap->excl_link.
 
-ATA_DEFER_PORT is returned by PATA drivers, but also certain SATA drivers
-like sata_mv and sata_sil24 that uses ap->excl_link to workaround hardware
-bugs in these HBAs. Regardless of the reason, using the deferred QC feature
-for ATA_DEFER_PORT is always wrong, and will break the ap->excl_link usage
-of the SATA drivers that rely on that feature.
+A user on the list reported that commit 0ea84089dbf6 ("ata: libata-scsi:
+avoid Non-NCQ command starvation") broke PMPs with CBS. The commit
+introduced code that stores a deferred qc in ap->deferred_qc, to later be
+issued via a workqueue. It turns out that this change is incompatible with
+the existing ap->excl_link handling used by PMPs with CBS.
 
-Modify ata_scsi_qc_issue() to only use the deferred QC feature when mixing
-NCQ and non-NCQ commands, i.e. ATA_DEFER_LINK.
+Thus, modify sata_pmp_qc_defer_cmd_switch() and sil24_qc_defer() to return
+ATA_DEFER_LINK_EXCL, and make sure that the deferred QC handling via
+workqueue is not used for this return value.
+
+This way, PMPs with CBS will work once again. Note that the starvation
+referenced in commit 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ
+command starvation") can only happen on libsas ports, and libsas does not
+support Port Multipliers, thus there is no harm of reverting back to the
+previous way of deferring commands for PMPs with CBS.
+
+Non-libsas ports connected to anything but a PMP with CBS (e.g. a normal
+drive or a PMP with FBS) will continue using the deferred workqueue, since
+it does result in lower completion latencies for non-NCQ commands, even
+though the workqueue is not strictly needed to avoid starvation for
+non-libsas ports.
+
+If we want to modify the scope of the workqueue issuing to also handle
+PMPs with CBS, then we should ensure that we can save both NCQ and non-NCQ
+commands in ap->deferred_qc, while also removing the existing PMP CBS
+handling using ap->excl_link, such that we don't duplicate features.
+
+While at it, also add a comment explaining how the ap->excl_link mechanism
+works.
 
 Fixes: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
 Tested-by: Tommy Kelly <linux@tkel.ly>
+Reported-by: Tommy Kelly <linux@tkel.ly>
+Closes: https://lore.kernel.org/linux-ide/ce09cc21-a8e9-4845-b205-35411e22fba9@tkel.ly/
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/ata/libata-pmp.c  |   13 ++++++++++++-
+ drivers/ata/libata-scsi.c |    8 ++++++++
+ drivers/ata/sata_sil24.c  |    6 +++++-
+ include/linux/libata.h    |    1 +
+ 4 files changed, 26 insertions(+), 2 deletions(-)
 
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -110,13 +110,24 @@ int sata_pmp_qc_defer_cmd_switch(struct
+ {
+ 	struct ata_link *link = qc->dev->link;
+ 	struct ata_port *ap = link->ap;
++	int ret;
+ 
+ 	if (ap->excl_link == NULL || ap->excl_link == link) {
+ 		if (ap->nr_active_links == 0 || ata_link_active(link)) {
+ 			qc->flags |= ATA_QCFLAG_CLEAR_EXCL;
+-			return ata_std_qc_defer(qc);
++			ret = ata_std_qc_defer(qc);
++			if (ret == ATA_DEFER_LINK)
++				return ATA_DEFER_LINK_EXCL;
++			return ret;
+ 		}
+ 
++		/*
++		 * Note: ap->excl_link contains the link that is next in line,
++		 * i.e. implicit round robin. If there is only one link
++		 * dispatching, ap->excl_link will be left unclaimed, allowing
++		 * other links to set ap->excl_link, ensuring that the currently
++		 * active link cannot queue any more.
++		 */
+ 		ap->excl_link = link;
+ 	}
+ 
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -1790,11 +1790,11 @@ static int ata_scsi_qc_issue(struct ata_
+@@ -1788,6 +1788,14 @@ static int ata_scsi_qc_issue(struct ata_
+ 	case ATA_DEFER_LINK:
+ 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
  		goto defer_qc;
++	case ATA_DEFER_LINK_EXCL:
++		/*
++		 * Drivers making use of ap->excl_link cannot store the QC in
++		 * ap->deferred_qc, because the ap->excl_link handling is
++		 * incompatible with the ap->deferred_qc workqueue handling.
++		 */
++		ret = SCSI_MLQUEUE_DEVICE_BUSY;
++		goto free_qc;
  	case ATA_DEFER_PORT:
  		ret = SCSI_MLQUEUE_HOST_BUSY;
--		goto defer_qc;
-+		goto free_qc;
- 	default:
- 		WARN_ON_ONCE(1);
- 		ret = SCSI_MLQUEUE_HOST_BUSY;
--		goto defer_qc;
-+		goto free_qc;
+ 		goto free_qc;
+--- a/drivers/ata/sata_sil24.c
++++ b/drivers/ata/sata_sil24.c
+@@ -789,6 +789,7 @@ static int sil24_qc_defer(struct ata_que
+ 	struct ata_link *link = qc->dev->link;
+ 	struct ata_port *ap = link->ap;
+ 	u8 prot = qc->tf.protocol;
++	int ret;
+ 
+ 	/*
+ 	 * There is a bug in the chip:
+@@ -826,7 +827,10 @@ static int sil24_qc_defer(struct ata_que
+ 		qc->flags |= ATA_QCFLAG_CLEAR_EXCL;
  	}
  
- issue_qc:
-@@ -1814,6 +1814,7 @@ defer_qc:
- 		return 0;
- 	}
+-	return ata_std_qc_defer(qc);
++	ret = ata_std_qc_defer(qc);
++	if (ret == ATA_DEFER_LINK)
++		return ATA_DEFER_LINK_EXCL;
++	return ret;
+ }
  
-+free_qc:
- 	/* Force a requeue of the command to defer its execution. */
- 	ata_qc_free(qc);
+ static enum ata_completion_errors sil24_qc_prep(struct ata_queued_cmd *qc)
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -371,6 +371,7 @@ enum {
+ 	/* return values for ->qc_defer */
+ 	ATA_DEFER_LINK		= 1,
+ 	ATA_DEFER_PORT		= 2,
++	ATA_DEFER_LINK_EXCL	= 3,
  
+ 	/* desc_len for ata_eh_info and context */
+ 	ATA_EH_DESC_LEN		= 80,
 
 
