@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3B02E92BA;
-	Thu, 28 May 2026 20:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DFD2F1FEF;
+	Thu, 28 May 2026 20:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001466; cv=none; b=gPe+azEQaQbQFUZSWlG/nfWestnbsvebrOlfA33JrpAmmn4J5gbWi3M0A3smRnfR7mZ39T1rgdI/dLuxTAKD8TqgolWHDAJ6+ecrUnsipUWfxaj2xZeYqRcyGw8dPI3De4xSM5I53OccM5LOO9Pv0zT4IHrBqsZdgl8avvcBChw=
+	t=1780001469; cv=none; b=uufPI6tbIJ05xrhg9fl4BtWArrhOMMgTZ0NlUyM/MSlm/qBKCzU1bL00lJNliCWJX4D2fTnYwJ3woi2MpaJk+81opngoFOQJuTc4C6oH44NA20uQhwP36DB5CZO7Mqqw85WnYuPH/WVz1s36YUuIcP+3yhkypWxrJq4n2fV3ans=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001466; c=relaxed/simple;
-	bh=DPaMAzXwO9x2tWgXFO9NRmTYhW3RM+xMcfepOzOSuyk=;
+	s=arc-20240116; t=1780001469; c=relaxed/simple;
+	bh=lfdU/oCoHklpxgcL6j2mRbxILEurCUYdqQIzTvyCkMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g87psmSxR/9LdgSXqbc40HWBwU5vVFN4g6xh1OAzgQCusrGPfaFCdzNU7tKEoMHEKT/A40dRPl6AXgEF26evVK9bvQ9aHyTGyJf+ELMFNFtuf+tRYJeG4ZinvsEHhC2wzXC12o9OIsHM4YCEC0taH3fIfuR1mJtv4u+ZrLC48zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ADcHd0Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/ujR2DLbETkjsepTUi5PjxbkX/a2saunPvWY0VI/vIEA1D0GItfQR1bOfhUJkkF/jHwdUxpzJQ00IESkhoCdqGwXxHYLGB0DPcP91kmTA8qF6+u5SIiSLOhOCk4HWmBFDNydrnwkCNaLHsRgZ42BU6DysN9q0Hex3be9Thr/l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKK2FyNI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ADcHd0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3111F000E9;
-	Thu, 28 May 2026 20:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKK2FyNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4E21F000E9;
+	Thu, 28 May 2026 20:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001465;
-	bh=ddLCLnVnTkMWvIO3ZicetGtzWAdjcb5ZjnVYVi1DY/s=;
+	s=korg; t=1780001467;
+	bh=hrBXteUUA+vHxNxO6TbSctu3j85RcDuMsaoEq4SJWDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ADcHd0YCVDW97I22uIh6dwovtOG3kMFB62JCiyL68vCbNSHoKhMCsxQoRv83mFxr
-	 ZfUEOR1l709TGBwv4GsMcv2hRsuvsI2wf5rbo8QpOzoZf5BlurRc7xoqtfbA1bdYgB
-	 VbOE0clx9aU9i8a5+k/sNTWkNFvHK3T0Vm/ZDRj0=
+	b=iKK2FyNI3y1sC6EDpPbCwJPxQj9dCJHbfUgeBxuuf+T244+Geq7EuHlCsaJos3dT3
+	 6ga+VdhRD8/7ZaXbtbICUSPp10jUb4kn5qUm3hKxTC4MLzlrE5IpbSZ73z6vS8/ZeG
+	 Eex7iGswpiMDxGZDmJloBYUCiRuikZG716LGaLhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Lukas Maar <lukas.maar@tugraz.at>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/186] HID: quirks: really enable the intended work around for appledisplay
-Date: Thu, 28 May 2026 21:50:16 +0200
-Message-ID: <20260528194932.624435136@linuxfoundation.org>
+Subject: [PATCH 6.6 137/186] accel/qaic: Add overflow check to remap_pfn_range during mmap
+Date: Thu, 28 May 2026 21:50:17 +0200
+Message-ID: <20260528194932.651346519@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,40 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
 
-[ Upstream commit 5f90dcfa8dc32a488581b78e575cdd7808ba5c78 ]
+[ Upstream commit aa16b2bc0f02709919e2435f531406531e5bcc69 ]
 
-Commit c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for
-appledisplay") intends to add a quirk for kernels built with Apple Cinema
-Display support, but it refers to the non-existing config option
-CONFIG_APPLEDISPLAY, whereas the config option for Apple Cinema Display
-support is named CONFIG_USB_APPLEDISPLAY.
+The call to remap_pfn_range in qaic_gem_object_mmap is susceptible to
+(re)mapping beyond the VMA if the BO is too large. This can cause use
+after free issues when munmap() unmaps only the VMA region and not the
+additional mappings. To prevent this, check the remaining size of the
+VMA before remapping and truncate the remapped length if sg->length is
+too large.
 
-Refer to the intended config option CONFIG_USB_APPLEDISPLAY in the ifdef
-directive.
-
-Fixes: c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for appledisplay")
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Lukas Maar <lukas.maar@tugraz.at>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+[jhugo: fix braces from checkpatch --strict]
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260430193858.1178641-1-zachary.mckevitt@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index d9e33dde89899..9d396d2e534d0 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -234,7 +234,7 @@ static const struct hid_device_id hid_quirks[] = {
-  * used as a driver. See hid_scan_report().
-  */
- static const struct hid_device_id hid_have_special_driver[] = {
--#if IS_ENABLED(CONFIG_APPLEDISPLAY)
-+#if IS_ENABLED(CONFIG_USB_APPLEDISPLAY)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index d00068987d9bd..7beab1309e369 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -595,8 +595,11 @@ static const struct vm_operations_struct drm_vm_ops = {
+ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
+ {
+ 	struct qaic_bo *bo = to_qaic_bo(obj);
++	unsigned long remap_start;
+ 	unsigned long offset = 0;
++	unsigned long remap_end;
+ 	struct scatterlist *sg;
++	unsigned long length;
+ 	int ret = 0;
+ 
+ 	if (obj->import_attach)
+@@ -604,11 +607,27 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
+ 
+ 	for (sg = bo->sgt->sgl; sg; sg = sg_next(sg)) {
+ 		if (sg_page(sg)) {
++			/* if sg is too large for the VMA, so truncate it to fit */
++			if (check_add_overflow(vma->vm_start, offset, &remap_start))
++				return -EINVAL;
++			if (check_add_overflow(remap_start, sg->length, &remap_end))
++				return -EINVAL;
++
++			if (remap_end > vma->vm_end) {
++				if (check_sub_overflow(vma->vm_end, remap_start, &length))
++					return -EINVAL;
++			} else {
++				length = sg->length;
++			}
++
++			if (length == 0)
++				goto out;
++
+ 			ret = remap_pfn_range(vma, vma->vm_start + offset, page_to_pfn(sg_page(sg)),
+-					      sg->length, vma->vm_page_prot);
++					      length, vma->vm_page_prot);
+ 			if (ret)
+ 				goto out;
+-			offset += sg->length;
++			offset += length;
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
