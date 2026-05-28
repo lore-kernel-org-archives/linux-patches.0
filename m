@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2867F32ABC0;
-	Thu, 28 May 2026 20:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DFA2F260C;
+	Thu, 28 May 2026 20:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998818; cv=none; b=dnc9kny1d2WHayPjTGW/3wQii+XD0F3wHCegF/xsQkeMmh97DkbtV8UbAJ7dsTaQev6y1HzYQXsI0VnoIelit+Rh8bL2cE5Gks+xDFBjHc9DfOvs3FHOwGEVjecUKV0gWDXMNvf1JPVU5oV6JUn/N81wD5QfRjy6nOlH+9QMdBU=
+	t=1779998820; cv=none; b=qOAygbBZ1UF0AXLqM0LbWKxcubVTrUibbjYEKu+hhK7CGpY9F7s6dn0HbHCMi0E9/87mLbru9mlpbK/NE1rBMpTUapAmp64DLZUD6IxypEtkiwVLncBfSffAYud6z5ZsTHjnXJ8YvAF+J3S1J+r1zjVAOtZ7YfFYqRR6AY40mKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998818; c=relaxed/simple;
-	bh=3hSYoKAqMr9KUlxPujgXh1fm8Ea6EkG3GKEkCv1YjTo=;
+	s=arc-20240116; t=1779998820; c=relaxed/simple;
+	bh=DeoiKbWlagdmsTuwBO6ORZp/hpR81pBPflW4ZDwfIz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDDCxMW2mqUPvk3DJf1bpzyrQsA/HLC55130gGkeoO822ZBzRO42z4ek2TsRVdymHpIQ11UbiQPWsHTtdF95x77WB61HYkfVHzWF/7WE7lZPxcvIq0OgypeUY/IYCAHtoV4WvF+M7Ifd7ds7BTC9gG5igBZnaEIxT4+V3OvjQXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNSUwxQT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HHrWkRQEqny6B0TWBfxNMevrubT1nLqEF/n2f0XpWdP9G9D43SUTg+zRFhkxv8RI74+r55T1P70zijOy0qR1GgmwNzYbPKFJPhaDsXxv9KS8xkTKH7ADatk1sgdq1PcXB8htO6NxZ1mw9+Nd3T7Vj8aMgt9GlavyS2aWfuEifwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyCaR2YG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNSUwxQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0551F000E9;
-	Thu, 28 May 2026 20:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyCaR2YG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1881F000E9;
+	Thu, 28 May 2026 20:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998816;
-	bh=rU6KA0cwShWjFUQs7p7wUqQM7DGaqlOhu5PN9EregaA=;
+	s=korg; t=1779998819;
+	bh=JFHAifFNzPKD1ePx6trOREGbJmwGo9o21eGhkJo2FsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNSUwxQTKAogwHvFE6UJ3iK1edIF60h/SnCZJSFwTYCwePJJoPNOE2kkpGimnuzhW
-	 9ELQ+UAgCQjZ5UCvHCcetlYUk4GvReXTHwM7hMcYGFLZFteiln33MZRNfGARnynmqB
-	 LsV54XkSiDqJaqWZuA526bCC8GTcDxj+ANOGymho=
+	b=wyCaR2YGwUKdaxYqhBkioRLCn0HEcdrD7qpiWqTl41AXvMHktdIOYc9YB0yfFOHVI
+	 ESfK1Ee7nNG/MkjejNmj5uBDkqWG995zmmfa40FMgCWkVBU8Qq04kb/KTHEnj3xgLK
+	 UnNXAIe/wUrkWh1wYHc3VwH0Sps3Athhl6JCIPQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 307/461] drm/msm/adreno: fix userspace-triggered crash on a2xx-a4xx
-Date: Thu, 28 May 2026 21:47:16 +0200
-Message-ID: <20260528194656.162543277@linuxfoundation.org>
+Subject: [PATCH 7.0 308/461] drm/msm/a6xx: Restore sysprof_active
+Date: Thu, 28 May 2026 21:47:17 +0200
+Message-ID: <20260528194656.193929602@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,53 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit 2b4abf879360ea00a9e2b46d2d15dcdbc0687eed ]
+[ Upstream commit 7a529ff48b99011c946e6d8addd071c06d3ccdae ]
 
-Before a5xx Adreno driver will not try fetching UBWC params (because
-those generations didn't support UBWC anyway), however it's still
-possible to query UBWC-related params from the userspace, triggering
-possible NULL pointer dereference. Check for UBWC config in
-adreno_get_param() and return sane defaults if there is none.
+This got lost in the shuffle somehow when moving the vfunc table to
+catalogue.  Fixes inhibiting IFPC when userspace is collecting perfcntr
+data.
 
-Fixes: a452510aad53 ("drm/msm/adreno: Switch to the common UBWC config struct")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/717778/
-Message-ID: <20260411-adreno-fix-ubwc-v3-1-4983156f3f80@oss.qualcomm.com>
+Fixes: 491fadb2b818 ("drm/msm/adreno: Move adreno_gpu_func to catalogue")
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/717780/
+Message-ID: <20260411150312.257937-1-robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 277ef0c5c08d1..682a09a376fbf 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -424,15 +424,21 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		*value = vm->mm_range;
- 		return 0;
- 	case MSM_PARAM_HIGHEST_BANK_BIT:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->highest_bank_bit;
- 		return 0;
- 	case MSM_PARAM_RAYTRACING:
- 		*value = adreno_gpu->has_ray_tracing;
- 		return 0;
- 	case MSM_PARAM_UBWC_SWIZZLE:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->ubwc_swizzle;
- 		return 0;
- 	case MSM_PARAM_MACROTILE_MODE:
-+		if (!adreno_gpu->ubwc_config)
-+			return UERR(ENOENT, drm, "no UBWC on this platform");
- 		*value = adreno_gpu->ubwc_config->macrotile_mode;
- 		return 0;
- 	case MSM_PARAM_UCHE_TRAP_BASE:
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 02a776ac9ab43..3e26b60d7f678 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2725,6 +2725,7 @@ const struct adreno_gpu_funcs a6xx_gpu_funcs = {
+ 		.create_private_vm = a6xx_create_private_vm,
+ 		.get_rptr = a6xx_get_rptr,
+ 		.progress = a6xx_progress,
++		.sysprof_setup = a6xx_gmu_sysprof_setup,
+ 	},
+ 	.init = a6xx_gpu_init,
+ 	.get_timestamp = a6xx_gmu_get_timestamp,
+@@ -2793,6 +2794,7 @@ const struct adreno_gpu_funcs a7xx_gpu_funcs = {
+ 		.create_private_vm = a6xx_create_private_vm,
+ 		.get_rptr = a6xx_get_rptr,
+ 		.progress = a6xx_progress,
++		.sysprof_setup = a6xx_gmu_sysprof_setup,
+ 	},
+ 	.init = a6xx_gpu_init,
+ 	.get_timestamp = a6xx_gmu_get_timestamp,
 -- 
 2.53.0
 
