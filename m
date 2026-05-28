@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED0F32E6BC;
-	Thu, 28 May 2026 20:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C8532E6BC;
+	Thu, 28 May 2026 20:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998613; cv=none; b=HEHjGms/nmsbviQbTC38/uy0CGBus3cGyTALQVQv18AoS/rjNJzjYxtgHjr+6tdK1vTdZAZlTZTL6sFbkqbG9CAnpF33XiOr0sTFws6qo0lxX2mZaBTBYf2s9ZnBn2c1gwWNOnvlJZ9O6h1b+3TGBlVzLiR1YaQUD5gag3oka1I=
+	t=1779998616; cv=none; b=u/KWXXANNK3aHvE6wChd2d4NC77/gqAxdJSHugKEY/6jEyeFcTTucVUwr7GzXKrOpuANGL6Joi6HhKTat3tlmNoT2/RlcCpFZupyasQmiIPImueqLtZNBqQzlMaMUeKIQ1pT6HhSkYVTre5XYPtdCHzpAQBPdkhYIx+h8SQ3ZsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998613; c=relaxed/simple;
-	bh=CB3A2Y/ZE2dba+dsvijXmjZ8SEacaZOpmE8bTZMvWdY=;
+	s=arc-20240116; t=1779998616; c=relaxed/simple;
+	bh=2CJldPSN2tTXalR74mTeR8XhlSCkMF1nmp0VF1EsMOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZ/IR19+cQAtrFNF8JJfPA7TOWfcYNFgpQBNEA4IYWzM5mA7urSDdruLtED/C9XmDdbM+/9HTmggGSv+WvdR256oz1kgnjrfP1DlIwT9qJS9xmQO+/8hGmFXs2PWjCC/do8Y0IqkQs3RDtmnDeONkvXqgbt7uwv7hfBrjBFKVdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGaHrdOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UwMIWFLyI3NpkVpqYa5hLRLrjU/z7aRjbg0/lu+AQGDOcMqoYkjBTdlJAUN8Nlf98XD1IcWwo4D0RDJSSZ/FEPS1TFk2ceEcHf2Wc7cI5Yh8V6IWzYDQuAgLpBgqVEjFHnVg7WhodnPjwe6x1c3Wzouh8W91ogiHayNxDs7dIF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZxb0bXe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGaHrdOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE89B1F000E9;
-	Thu, 28 May 2026 20:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZxb0bXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D38B1F000E9;
+	Thu, 28 May 2026 20:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998612;
-	bh=NE1maPb0vZGbuVfiVGMGfY6Ybbp2ujT1NZhUoaboIsM=;
+	s=korg; t=1779998615;
+	bh=j3yn1WZuLzKH0DnKvMzXs0/2mwQJUxL1E5Ol53gpqzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGaHrdOOzoCy8N3qICw1YlYJyDLn1jb8ndvFHXpQoNPi2OQxHb4xjfcFqLPdwdJp4
-	 oJGeNI6W4fLJAIs4pyPMcG28OMUkfUa6q+yI58vaepM5tFvdetBnODAfOZ8SL19W7F
-	 bsw3MecstWSm8sB8o4TLsglpEo6XmGmV5NWQchvk=
+	b=PZxb0bXe6JKfVZy/kJnYkFGRFoT9+P1n5wD3L2B3JY4EbjAcJ84+wok1LX0/3IL5V
+	 unQOOrKZeL11fO5lfx8+m6BqBfuyPx7LCEnXRez4KS+Lr3e0QBHelNlYtkyyDTCce2
+	 Yz8NH87yhdQ5uIqHluLe0ZZmEVWqg+LsgAAFOyOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sebastian Ene <sebastianene@google.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 199/461] firmware: arm_ffa: Validate framework notification message layout
-Date: Thu, 28 May 2026 21:45:28 +0200
-Message-ID: <20260528194652.846315395@linuxfoundation.org>
+Subject: [PATCH 7.0 200/461] firmware: arm_ffa: Align RxTx buffer size before mapping
+Date: Thu, 28 May 2026 21:45:29 +0200
+Message-ID: <20260528194652.877314659@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,67 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 4a1cc9e96b311d2609a6f963a5e35bd4ae730d97 ]
+[ Upstream commit 0399e3f872ca3d78044bb715a73ea645806d2c7b ]
 
-Framework notifications carry an indirect message in the shared RX
-buffer. Validate the reported offset and size before using them, reject
-zero-length payloads, and ensure that any non-header payload starts at
-the UUID field rather than in the middle of the message header.
+Commit 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during
+RXTX_MAP") advertises PAGE_ALIGN(rxtx_bufsz) to firmware when mapping the
+buffers but the driver continues to stores the minimum FF-A buffer size
+in drv_info->rxtx_bufsz which is used elsewhere in the driver.
 
-Use the validated offset and size values for both kmemdup() and the UUID
-parsing path so malformed firmware data cannot drive an out-of-bounds
-read or an oversized allocation.
+Align the size before storing it so that the allocation, validation and
+FFA_RXTX_MAP all use the same buffer size.
 
-Fixes: 285a5ea0f542 ("firmware: arm_ffa: Add support for handling framework notifications")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-8-8595ae450034@kernel.org
+Fixes: 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during RXTX_MAP")
+Cc: Sebastian Ene <sebastianene@google.com>
+Link: https://sashiko.dev/#/patchset/20260402113939.930221-1-sebastianene@google.com
+Reviewed-by: Sebastian Ene <sebastianene@google.com>
+Link: https://patch.msgid.link/20260428-ffa_fixes-v2-9-8595ae450034@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 23623b61f2682..ed24794986c57 100644
+index ed24794986c57..001e6f40881df 100644
 --- a/drivers/firmware/arm_ffa/driver.c
 +++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1487,21 +1487,35 @@ static void handle_fwk_notif_callbacks(u32 bitmap)
- 	int notify_id = 0, target;
- 	struct ffa_indirect_msg_hdr *msg;
- 	struct notifier_cb_info *cb_info = NULL;
-+	size_t min_offset = offsetof(struct ffa_indirect_msg_hdr, uuid);
+@@ -2106,6 +2106,7 @@ static int __init ffa_init(void)
+ 			rxtx_bufsz = SZ_4K;
+ 	}
  
- 	/* Only one framework notification defined and supported for now */
- 	if (!(bitmap & FRAMEWORK_NOTIFY_RX_BUFFER_FULL))
- 		return;
++	rxtx_bufsz = PAGE_ALIGN(rxtx_bufsz);
+ 	drv_info->rxtx_bufsz = rxtx_bufsz;
+ 	drv_info->rx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
+ 	if (!drv_info->rx_buffer) {
+@@ -2121,7 +2122,7 @@ static int __init ffa_init(void)
  
- 	scoped_guard(mutex, &drv_info->rx_lock) {
-+		u32 offset, size;
-+
- 		msg = drv_info->rx_buffer;
--		buf = kmemdup((void *)msg + msg->offset, msg->size, GFP_KERNEL);
-+		offset = msg->offset;
-+		size = msg->size;
-+
-+		if (!size || (offset != min_offset && offset < sizeof(*msg)) ||
-+		    offset > drv_info->rxtx_bufsz ||
-+		    size > drv_info->rxtx_bufsz - offset) {
-+			pr_err("invalid framework notification message\n");
-+			ffa_rx_release();
-+			return;
-+		}
-+
-+		buf = kmemdup((void *)msg + offset, size, GFP_KERNEL);
- 		if (!buf) {
- 			ffa_rx_release();
- 			return;
- 		}
- 
- 		target = SENDER_ID(msg->send_recv_id);
--		if (msg->offset >= sizeof(*msg))
-+		if (offset >= sizeof(*msg))
- 			uuid_copy(&uuid, &msg->uuid);
- 		else
- 			uuid_copy(&uuid, &uuid_null);
+ 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
+ 			   virt_to_phys(drv_info->rx_buffer),
+-			   PAGE_ALIGN(rxtx_bufsz) / FFA_PAGE_SIZE);
++			   rxtx_bufsz / FFA_PAGE_SIZE);
+ 	if (ret) {
+ 		pr_err("failed to register FFA RxTx buffers\n");
+ 		goto free_pages;
 -- 
 2.53.0
 
