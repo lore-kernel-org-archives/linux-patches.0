@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C295833F5B4;
-	Thu, 28 May 2026 20:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B932ABC0;
+	Thu, 28 May 2026 20:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999108; cv=none; b=pqr5wlXXrrzEoX4tiV9Z7wQ03vDoZ+dt0YU0JMy9On9ns8yz9NYuYf3RWQDB8dCyQxf1+Sg78A2m8+sJySY+you0BIhoi6L45uscW4bdqxJckeZjPBx1xvANSY2dEbQreEpIDVU29SV+7QTfFuhpwdQO5CTnIw72Z6bSdaRMwIE=
+	t=1779999111; cv=none; b=jeScu71YsJBZA0ePNMaNR+bZLKfJxao43WSK//x8DdebmH/c/oU46bAA7NuoaLuscLwM9imN0NJcxpwZahIxET80cgeOlK0S5ohM/cAyUUo+nknXqC6PLgDQfnJONppuZ4EWDod6egs2Y6k44qLOrgogCcPQBGPQr6ZgcwyK9IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999108; c=relaxed/simple;
-	bh=ELezFeciqlLRzpJSR/Qm/kpuZ93nC9qvyddUncH7IJg=;
+	s=arc-20240116; t=1779999111; c=relaxed/simple;
+	bh=g/AxR0cI+ghiHJH5skQRidL25W+zcYFtK4btzv/8J2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYLpZlXlurQH/vG7JstyPAoC//Febig3qOOOjUJlmD0M8FWpUvRFFVJeA0OYGkyzx416e0JDp9UV0H9mUPcxEmE9Ju5lXqCoS0psqDEn+DCKXP9yElAyHVu3Z0WKwxW1bbZXDt9KuSAeIYAenZkYaXr7ODbkHDIObHUZbFrRn+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3toR/h5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GGTA3EcQ8BeNt/adNatU6HuM5g8N5asfrpCKVC07ngXMgsxUOc1uhwMzzLKjduwYp4FHLVkt0NFOoawMD/744c3326bNc2ZE5PLEgojvsFuoJjjXz21/EuSwx71TSmqp/+QcpUVfj9wemkXQBTeYYCAL3YKoeTpqBncFCJ0eEEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7mMU7KW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3toR/h5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242CE1F000E9;
-	Thu, 28 May 2026 20:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7mMU7KW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF81A1F000E9;
+	Thu, 28 May 2026 20:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999107;
-	bh=MGmwGBg0rxxGIfXFe/tDSiVVjiKWdMCcz5B2ab4HxUk=;
+	s=korg; t=1779999110;
+	bh=zKrfK6w677vCAoQuBRjoQ5u+SyVynJh50piOFQ7VfCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3toR/h5bg/FZF+lXTJBsP95nkESvhD1PY2v1GW59WbEnSZxfpzo3ZciWZKMZ8kTX
-	 wMw5hzecjiRDC2OACQQwQDE1U0al/Sgbng6ralkfSbA4u7rGRQ62luC5UNb68M7JbK
-	 Lc0yixR2rJDp8KYH8JLbD8GUAP6ar1nc4DJwXxuk=
+	b=F7mMU7KWZoC0sWrZBdPL4WaAZD99Pq0xkqY0ESy7DDT7/K1IK/NEWlH7OUTDUKyxR
+	 tkPgRJ8oWWq1WNkJnISI9PNE0cOX/VJVpNCuf0g3KP6lsMyEEzYINQT6ZWjMOqntRH
+	 FBqNYqzaRHG3kyUi6FV0BetYEMxUth4cNKj22mwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 411/461] erofs: fix metabuf leak in inode xattr initialization
-Date: Thu, 28 May 2026 21:49:00 +0200
-Message-ID: <20260528194659.385800675@linuxfoundation.org>
+Subject: [PATCH 7.0 412/461] wifi: mac80211: bounds-check link_id in ieee80211_ml_epcs
+Date: Thu, 28 May 2026 21:49:01 +0200
+Message-ID: <20260528194659.415391799@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,64 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Zhu <zhujia.zj@bytedance.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-[ Upstream commit 79b09c54c6563df9846ca3094bcfd72082c3e1d7 ]
+[ Upstream commit f718506edd2d9c6a308ded9d13c632bf7b7d5a2c ]
 
-commit bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-converted xattr operations to use on-stack erofs_buf instances.
-erofs_init_inode_xattrs() uses such a metabuf while reading the inline
-xattr header and shared xattr id array.
+IEEE80211_MLE_STA_EPCS_CONTROL_LINK_ID is 0x000f, so link_id extracted
+from a PRIO_ACCESS ML element PER_STA_PROFILE subelement can be 0..15.
+sdata->link[] has IEEE80211_MLD_MAX_NUM_LINKS (15) entries (indices 0..14),
+making index 15 out-of-bounds.
 
-Some error paths after erofs_read_metabuf() leave through out_unlock
-without dropping the metabuf, so the folio reference can leak.
+A connected WiFi 7 AP can trigger this by sending an EPCS Enable Response
+action frame with a PER_STA_PROFILE subelement where link_id = 15.  The
+unsolicited-notification path (dialog_token = 0) is reachable any time
+EPCS is already enabled, without any prior client request.
 
-Consolidate the cleanup at out_unlock. erofs_put_metabuf() is a
-no-op if no folio has been acquired, and this keeps all paths after
-taking EROFS_I_BL_XATTR_BIT covered by a single cleanup site.
+sdata->link[15] reads into the first word of sdata->activate_links_work
+(a wiphy_work whose embedded list_head is non-NULL after INIT_LIST_HEAD),
+so the NULL check on the result does not catch the invalid access.  The
+garbage pointer is then passed to ieee80211_sta_wmm_params(), which
+dereferences link->sdata and crashes the kernel.
 
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+The same class of bug was fixed for ieee80211_ml_reconfiguration() by
+commit 162d331d833d ("wifi: mac80211: bounds-check link_id in
+ieee80211_ml_reconfiguration").
+
+Fixes: de86c5f60839 ("wifi: mac80211: Add support for EPCS configuration")
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260515102908.1653088-1-hossu.alexandru@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/xattr.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/mac80211/mlme.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
-index 41e311019a251..df7ea019526d7 100644
---- a/fs/erofs/xattr.c
-+++ b/fs/erofs/xattr.c
-@@ -89,13 +89,11 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 	    vi->xattr_isize - sizeof(struct erofs_xattr_ibody_header)) {
- 		erofs_err(sb, "invalid h_shared_count %u @ nid %llu",
- 			  vi->xattr_shared_count, vi->nid);
--		erofs_put_metabuf(&buf);
- 		ret = -EFSCORRUPTED;
- 		goto out_unlock;
- 	}
- 	vi->xattr_shared_xattrs = kmalloc_objs(uint, vi->xattr_shared_count);
- 	if (!vi->xattr_shared_xattrs) {
--		erofs_put_metabuf(&buf);
- 		ret = -ENOMEM;
- 		goto out_unlock;
- 	}
-@@ -112,12 +110,12 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 		}
- 		vi->xattr_shared_xattrs[i] = le32_to_cpu(*xattr_id);
- 	}
--	erofs_put_metabuf(&buf);
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 991519ea44827..eba890366e9fe 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -11137,6 +11137,9 @@ static void ieee80211_ml_epcs(struct ieee80211_sub_if_data *sdata,
+ 		control = get_unaligned_le16(pos);
+ 		link_id = control & IEEE80211_MLE_STA_EPCS_CONTROL_LINK_ID;
  
- 	/* paired with smp_mb() at the beginning of the function. */
- 	smp_mb();
- 	set_bit(EROFS_I_EA_INITED_BIT, &vi->flags);
- out_unlock:
-+	erofs_put_metabuf(&buf);
- 	clear_and_wake_up_bit(EROFS_I_BL_XATTR_BIT, &vi->flags);
- 	return ret;
- }
++		if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
++			continue;
++
+ 		link = sdata_dereference(sdata->link[link_id], sdata);
+ 		if (!link)
+ 			continue;
 -- 
 2.53.0
 
