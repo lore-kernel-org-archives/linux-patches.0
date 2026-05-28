@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA35339866;
-	Thu, 28 May 2026 20:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD471339866;
+	Thu, 28 May 2026 20:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000578; cv=none; b=UbVgOq01fChFYj5gzVLSTBKGilXj1j2PE5w4OJE76tQpvyJCB6Li9kXwzg/QKJSsdJN7OSVkoX7hve69iS1BPu8vVoCTTnmhkFt6NUaO7CJMOOT7DA8OsPCqGTcOpjqbR8n1Al93Pgvo7K8GztTS5fWFevdm6HSl5eLmK25rU0E=
+	t=1780000581; cv=none; b=M+8fBMObctCuXGQR6z4010ZeIgy5tkRO0JKaT9dduoo9aewEqhQmJB3KL2FPhAdXtIgZRQpLYssOPocExJ97rbE9Mr4crFFmQbIPpm5/f4mPtPyNuV9JyUikPGNZvrTWwWhyaG/sb1dfvp8/5K8Sd4ykHb7RyGd+OEaH0+kUFp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000578; c=relaxed/simple;
-	bh=RZ6pCQ3NcWoYqWlzVhJ0a5zeh9LeJEX4ogKY9RflKT4=;
+	s=arc-20240116; t=1780000581; c=relaxed/simple;
+	bh=ZB2V8FBqYdPuqyYOG8CB7Rrqb19V5f+LBseirG1AhEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpKMHTO4065MPuVPVvMBC+TU58kbb07Yz0rHp7fvS/WNkN8qJWpankMspi1SZ0s++F9N508L9qBlqmA2VNc8CqqBP8plk2EICpc4nFvHYh9vniSlNmzzDElIiZOzp90wQVCSLU6lB4kHCDOqbfYndFCB9GUBQU0F7p0HwAg+bt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTw1YKp3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OVs2T0M1QwSJeAUCQT7mNIi9mG/ZLlh8KpPDToxS3LKsmH12jMY6wGwSNUSShqAZfNeEMQx3tKYEirG3pMVNISeB2r1pefDdSaZmkb5J5BMttTUWizesmV/uCwkZ1m0jLIC6Tgl2jsnXjhY19dEnQRiKpeQIeJ6HtyIelN8qfhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj6lLht1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTw1YKp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDB81F000E9;
-	Thu, 28 May 2026 20:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj6lLht1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4775D1F000E9;
+	Thu, 28 May 2026 20:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000577;
-	bh=5axpfZ9adRRMxyzJjyAoszWRDVZEps+GDdAOcDxploc=;
+	s=korg; t=1780000579;
+	bh=VtseP8hiz/zwcntRi/uO3UlQlkYvX5uMkdv9EPD53Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTw1YKp3wyWzqYKc6A2SSCIODzig0dOvpQ4mavFsOz1YXektx/YhYpY24VJ0YmlgI
-	 l+9Mez/9G5P/S9IXfLNwVAEVIFE2Xy9koA/Z/0N2r8JVWWn1a0aHmyJRfWlXIMfFuM
-	 yXfhdaCz4+2BonebfeT71eMb+Px912a6LiOByo48=
+	b=gj6lLht1dqjSM+LLIsjZVsbrITgKZ25fssveWHFFA8o44hodfT5kIl9dZMNXwiwsM
+	 s5L4BTyZyibIZGuB0FD8FGZjex9xFqqPSldgpHdo0CmmbprwZnUDyGVFozOLgqsR0H
+	 RFBtZyAjeFYYrwJcS0d8vX5mjSGDlaKx57ENe0eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Farnung <kfarnung@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 087/272] wifi: ath11k: clear shared SRNG pointer state on restart
-Date: Thu, 28 May 2026 21:47:41 +0200
-Message-ID: <20260528194631.815663728@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 096/272] af_unix: Fix UAF read of tail->len in unix_stream_data_wait()
+Date: Thu, 28 May 2026 21:47:50 +0200
+Message-ID: <20260528194632.067001284@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -52,60 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Farnung <kfarnung@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
+commit be309f8eae8b474a4a617eaae01324da996fc719 upstream.
 
-LMAC rings reuse the shared rdp/wrp pointer buffers without going
-through the normal SRNG hw-init path that zeros non-LMAC ring
-pointers. After restart, ath11k_hal_srng_clear() can therefore hand
-stale hp/tp state from the previous firmware instance back to the new
-one.
+unix_stream_data_wait() does skb_peek_tail(&sk->sk_receive_queue) without
+holding any lock that prevents SKBs on that queue from being dequeued and
+freed.
+This has been the case since commit 79f632c71bea ("unix/stream: fix
+peeking with an offset larger than data in queue").
+The first consequence of this is that the pointer comparison
+`tail != last` can be false even if `last` semantically refers to an
+already-freed SKB while `tail` is a new SKB allocated at the same address;
+which can cause unix_stream_data_wait() to wrongly keep blocking after new
+data has arrived, but only in a weird scenario where a peeking recv() and
+a normal recv() on the same socket are racing, which is probably not a
+real problem.
 
-Clear the shared pointer buffers while keeping the allocations in
-place so restart still avoids reallocating SRNG DMA memory, but starts
-with fresh ring-pointer state.
+But since commit 2b514574f7e8 ("net: af_unix: implement splice for stream
+af_unix sockets"), `tail` is actually dereferenced, which can cause UAF in
+the following race scenario (where test_setup() runs single-threaded,
+and afterwards, test_thread1() and test_thread2() run concurrently in
+two threads:
+```
+static int socks[2];
+void test_setup(void) {
+  socketpair(AF_UNIX, SOCK_STREAM, 0, socks);
+  send(socks[1], "A", 1, 0);
+  int peekoff = 1;
+  setsockopt(socks[0], SOL_SOCKET, SO_PEEK_OFF, &peekoff, sizeof(peekoff));
+}
+void test_thread1(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, MSG_PEEK);
+}
+void test_thread2(void) {
+  char dummy;
+  recv(socks[0], &dummy, 1, 0);
+  shutdown(socks[1], SHUT_WR);
+}
+```
 
-Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
-Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+when racing like this:
+```
+thread1                       thread2
+unix_stream_read_generic
+  mutex_lock(&u->iolock)
+  skb_peek(&sk->sk_receive_queue)
+  skb_peek_next(skb, &sk->sk_receive_queue)
+  mutex_unlock(&u->iolock)
+                              unix_stream_read_generic
+                                unix_state_lock(sk)
+                                skb_peek(&sk->sk_receive_queue)
+                                unix_state_unlock(sk)
+  unix_stream_data_wait
+    unix_state_lock(sk)
+    tail = skb_peek_tail(&sk->sk_receive_queue)
+                                spin_lock(&sk->sk_receive_queue.lock)
+                                __skb_unlink(skb, &sk->sk_receive_queue)
+                                spin_unlock(&sk->sk_receive_queue.lock)
+                                consume_skb(skb) [frees the SKB]
+    `tail != last`: false
+    `tail`: true
+    `tail->len != last_len` ***UAF***
+```
+
+Fix the UAF by removing the read of tail->len; checking tail->len would
+only make sense if SKBs in the receive queue of a UNIX socket could grow,
+which can no longer happen.
+
+Kuniyuki explained:
+
+> When commit 869e7c62486e ("net: af_unix: implement stream sendpage
+> support") added sendpage() support, data could be appended to the last
+> skb in the receiver's queue.
+>
+> That's why we needed to check if the length of the last skb was changed
+> while waiting for new data in unix_stream_data_wait().
+>
+> However, commit a0dbf5f818f9 ("af_unix: Support MSG_SPLICE_PAGES") and
+> commit 57d44a354a43 ("unix: Convert unix_stream_sendpage() to use
+> MSG_SPLICE_PAGES") refactored sendmsg(), and now data is always added
+> to a new skb.
+
+That means this fix is not suitable for kernels before 6.5.
+
+Fixes: 2b514574f7e8 ("net: af_unix: implement splice for stream af_unix sockets")
+Cc: stable@vger.kernel.org # 6.5.x
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260518-b4-unix-recv-wait-hotfix-v2-1-83e29ce8ad31@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1385,14 +1385,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
- 
- void ath11k_hal_srng_clear(struct ath11k_base *ab)
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2570,8 +2570,7 @@ static int unix_read_skb(struct sock *sk
+  *	Sleep until more data has arrived. But check for races..
+  */
+ static long unix_stream_data_wait(struct sock *sk, long timeo,
+-				  struct sk_buff *last, unsigned int last_len,
+-				  bool freezable)
++				  struct sk_buff *last, bool freezable)
  {
--	/* No need to memset rdp and wrp memory since each individual
--	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
--	 * and ath11k_hal_srng_dst_hw_init().
-+	/*
-+	 * Preserve the shared pointer buffers, but clear the previous
-+	 * firmware instance's hp/tp state before handing them back to FW.
-+	 * LMAC rings reuse this shared memory without going through the
-+	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
- 	 */
- 	memset(ab->hal.srng_list, 0,
- 	       sizeof(ab->hal.srng_list));
- 	memset(ab->hal.shadow_reg_addr, 0,
- 	       sizeof(ab->hal.shadow_reg_addr));
-+	if (ab->hal.rdp.vaddr)
-+		memset(ab->hal.rdp.vaddr, 0,
-+		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
-+	if (ab->hal.wrp.vaddr)
-+		memset(ab->hal.wrp.vaddr, 0,
-+		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
- 	ab->hal.avail_blk_resource = 0;
- 	ab->hal.current_blk_index = 0;
- 	ab->hal.num_shadow_reg_configured = 0;
+ 	unsigned int state = TASK_INTERRUPTIBLE | freezable * TASK_FREEZABLE;
+ 	struct sk_buff *tail;
+@@ -2584,7 +2583,6 @@ static long unix_stream_data_wait(struct
+ 
+ 		tail = skb_peek_tail(&sk->sk_receive_queue);
+ 		if (tail != last ||
+-		    (tail && tail->len != last_len) ||
+ 		    sk->sk_err ||
+ 		    (sk->sk_shutdown & RCV_SHUTDOWN) ||
+ 		    signal_pending(current) ||
+@@ -2779,7 +2777,6 @@ static int unix_stream_read_generic(stru
+ 	int flags = state->flags;
+ 	bool check_creds = false;
+ 	struct scm_cookie scm;
+-	unsigned int last_len;
+ 	struct unix_sock *u;
+ 	int copied = 0;
+ 	int err = 0;
+@@ -2825,7 +2822,6 @@ redo:
+ 			goto unlock;
+ 		}
+ 		last = skb = skb_peek(&sk->sk_receive_queue);
+-		last_len = last ? last->len : 0;
+ 
+ again:
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+@@ -2859,8 +2855,7 @@ again:
+ 
+ 			mutex_unlock(&u->iolock);
+ 
+-			timeo = unix_stream_data_wait(sk, timeo, last,
+-						      last_len, freezable);
++			timeo = unix_stream_data_wait(sk, timeo, last, freezable);
+ 
+ 			if (signal_pending(current)) {
+ 				err = sock_intr_errno(timeo);
+@@ -2877,7 +2872,6 @@ unlock:
+ 		while (skip >= unix_skb_len(skb)) {
+ 			skip -= unix_skb_len(skb);
+ 			last = skb;
+-			last_len = skb->len;
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (!skb)
+ 				goto again;
+@@ -2950,7 +2944,6 @@ unlock:
+ 
+ 			skip = 0;
+ 			last = skb;
+-			last_len = skb->len;
+ 			unix_state_lock(sk);
+ 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			if (skb)
 
 
