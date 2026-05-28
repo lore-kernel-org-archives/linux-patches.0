@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F62333C51D;
-	Thu, 28 May 2026 20:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539C435202A;
+	Thu, 28 May 2026 20:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999879; cv=none; b=tZYqZQ7QUgM+DlM2wUq8tZlwZNWca8xthyjNtIeM/rEkoLGOLmA0S4cekvVDyMEZl2lMvgzv2/Mv3ZGNh8/h7bcuQQzo5MPWcOdQfzY43Uan+o9Va20d1TI22OvgdKKvesqwwMgAsl+VIhwIqPGqPEiaVGCkaIqyglmJovWzTD0=
+	t=1779999882; cv=none; b=MgYeAonoOoAkDiwKk3vWgYKPwBqs5ks2tXvwlqkL/3DJEbvIHeazzIe7AQTpYHNjV8x9YrpvTCM8nUBXsweEUK2LTziENlgGRVOxGbLvll7NENvQaVoHhe/3XQHTDZPo9LKCvnTd/EcYvGt9+ClQKjATskj/aGImPKCtt//c1I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999879; c=relaxed/simple;
-	bh=517p9j9WozpB3EC+5Q2CUE7pePp9qe6OJ/kTdJCI3J8=;
+	s=arc-20240116; t=1779999882; c=relaxed/simple;
+	bh=gaZwI6YhgHK3XtA5kPyrrlRSyYb2PyMjVeRrZpff+SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTErr/ww9C2J1/dg4sbW0FAlL1genXTXStDhKA52wokyi5k19sHgbN1acXTzfqfVcIJrRkCmfLz8Sq1oVIRZqpxEwyeXhgAqOSId2xvqj+ifw1uWk9byIKKSwo7NzRndDC97VCtd5W5RpU4hiFEei/mw5h3ElGzx2rq+UAKb5BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FI2EfCNB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSU2HHtM95aFV5RK0SNj58pAsoePJu3xGpjQtdJYkHiEgDyrCs4r54FuFYdG78lIP0Ohk5fwrEdVl3bHUUHuWE+fBzAFGbYvfqHj4myF7p2+7zL9aLCvE9QUxAh9+y0OwIplLkkj6EJ1z5DxsrTHgsLaxhnxSDQNJRyRvA1ZKos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uYXLW9k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FI2EfCNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A491F000E9;
-	Thu, 28 May 2026 20:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uYXLW9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A271F000E9;
+	Thu, 28 May 2026 20:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999878;
-	bh=k+jhgIHdRMmSFg3yDmRW8SVYNNm7JHSnqFRGCFHSzWg=;
+	s=korg; t=1779999880;
+	bh=4OJ75DmXJDUlLhIuIXip3xKOGGU+qlbKB8H/i3IiIb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FI2EfCNBwkbvToCvkolgGkiKMnHHvQaMukh1s3E/PwGdgDNQpurTtN19f97aOU903
-	 CIBxGChnRYeuHRPlX10S6cjtf8bZj4P3A8Zu+mWm7iCdsAP2bZ4nhuLoJorCzRDPEp
-	 xubfygcjYnUcY5liMAXEQMSaECvkzcMZioXxA2tE=
+	b=2uYXLW9kpaJ/dX38xBSfM615uTkbCxpM+LHr3i1C0qBJb4rMu/L12SaWtOMOUvNos
+	 qcirSwUzKkSjS4Zc45EOmlSBZG2J9xz9b8FzkCK9TKFqgsja2BfXbHQYdqzF3ZTaUQ
+	 5CLoytbmnwd2u5ow6jmFi7pSPDFV//2B+g82gdkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 222/377] irqchip/ath79-cpu: Remove unused function
-Date: Thu, 28 May 2026 21:47:40 +0200
-Message-ID: <20260528194644.821374203@linuxfoundation.org>
+Subject: [PATCH 6.18 223/377] ublk: reject max_sectors smaller than PAGE_SECTORS in parameter validation
+Date: Thu, 28 May 2026 21:47:41 +0200
+Message-ID: <20260528194644.848695206@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -52,44 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 0fa10fb77069fb67aa51384868ef3702b7791465 ]
+[ Upstream commit 1860c2f85922917d8a46f16a6f4bd2298ffa0fb5 ]
 
-ath79_cpu_irq_init() was part of the legacy pre-OF code that got removed a
-while back.
+blk_validate_limits() requires max_hw_sectors >= PAGE_SECTORS and fires
+a WARN_ON_ONCE if this invariant is violated. ublk_validate_params()
+only checked the upper bound of max_sectors against max_io_buf_bytes,
+allowing userspace to pass small values (including zero) that trigger
+the warning when blk_mq_alloc_disk() is called from
+ublk_ctrl_start_dev().
 
-Remove it to get rid of a missing prototype warning, reported by the kernel test
-robot.
+Before 494ea040bcb5, ublk used blk_queue_max_hw_sectors() which silently
+clamped small values up to PAGE_SECTORS. The conversion to passing
+queue_limits directly to blk_mq_alloc_disk() lost that clamping and now
+hits blk_validate_limits()'s WARN_ON_ONCE instead.
 
-[ tglx: Fix the subject prefix. Sigh ... ]
+Validate that max_sectors is at least PAGE_SECTORS in
+ublk_validate_params() so invalid values are rejected early with
+-EINVAL instead of reaching the block layer.
 
-Fixes: 51fa4f8912c0 ("MIPS: ath79: drop legacy IRQ code")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260506085522.1210143-1-rosenp@gmail.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202412011509.kGQkDr1y-lkp@intel.com/
+Fixes: 494ea040bcb5 ("ublk: pass queue_limits to blk_mq_alloc_disk")
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260510144843.769031-1-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-ath79-cpu.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/block/ublk_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/irq-ath79-cpu.c b/drivers/irqchip/irq-ath79-cpu.c
-index 923e4bba37767..9b7273a7f8ced 100644
---- a/drivers/irqchip/irq-ath79-cpu.c
-+++ b/drivers/irqchip/irq-ath79-cpu.c
-@@ -85,10 +85,3 @@ static int __init ar79_cpu_intc_of_init(
- }
- IRQCHIP_DECLARE(ar79_cpu_intc, "qca,ar7100-cpu-intc",
- 		ar79_cpu_intc_of_init);
--
--void __init ath79_cpu_irq_init(unsigned irq_wb_chan2, unsigned irq_wb_chan3)
--{
--	irq_wb_chan[2] = irq_wb_chan2;
--	irq_wb_chan[3] = irq_wb_chan3;
--	mips_cpu_irq_init();
--}
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 2729b1556e810..c339222513b03 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -601,6 +601,9 @@ static int ublk_validate_params(const struct ublk_device *ub)
+ 		if (p->max_sectors > (ub->dev_info.max_io_buf_bytes >> 9))
+ 			return -EINVAL;
+ 
++		if (p->max_sectors < PAGE_SECTORS)
++			return -EINVAL;
++
+ 		if (ublk_dev_is_zoned(ub) && !p->chunk_sectors)
+ 			return -EINVAL;
+ 	} else
 -- 
 2.53.0
 
