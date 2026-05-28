@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BDC2D9787;
-	Thu, 28 May 2026 20:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225A82D9787;
+	Thu, 28 May 2026 20:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999740; cv=none; b=Yu1wPssWDmyJlNv9ZFxEV4mncPJ7FtqN+9sFJsFPKUAlin0Cn5S7BLRuvpa2d0ZRKlUKAySCmTonOlEScl9mHpjuoIYhy8xBTkhRNigM4Ke6TNjSTUg+Tuo9iiFif2hKyhhg2FC5POmx3jA5Y1mvTP7l7+BFD8dPMQhy1Nd3r+A=
+	t=1779999743; cv=none; b=d21TpCLVX7FQeV9A58pA/U55gGP1DcIHOgImkHhwXs5ikTU6Dvl1FDYuh1BEz5jj7XVrs5ZQd467iITJP8ozy1se4Rs7GQDg35LoxaZJJ1VhY4KwT8zvSdPog7ANhqhwpZHEpuIJcUCMhnEFVMjeA2yXa2A9toayqzwSJEfohFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999740; c=relaxed/simple;
-	bh=BRGLqmQ8WJcVkbq72MxTXXyHJSBqd2yxdJwAbUg9d+c=;
+	s=arc-20240116; t=1779999743; c=relaxed/simple;
+	bh=y6+FKr6AOwywxoafvAO+yESYtQXdTo0rBvQ6AES7vQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVhtARAmUi0HGqIshAYe3LviVZ246IzbXXGQV0NPriLVX8ntM0UPJry/FAeuOwdzb2mwy09jh0MMN5JXg9ji093Kz4jRFdM2/lKj+12az1jh3Ub4K5CWc0HS0Vz3m8FPX3v85umZTNtg3qUmxZwlPsrA6xTSrh41/lItARQBjpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0BdAUY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tjBqrRcgujbCl3VUjAf67r4GYNbSrEdpvR1ggqRVLBF9coVsvlubq/w62o5r3Sh4/dXsT5rsR7Zp+50Mw8oVT9k6ImDm5EZ3qqd2UtTlYOLJDkQw5Gl0HRXNfKn3tywyxN+K1AnYZb+yTOVMNo7fRXw1T+cFHDlajWC1Zm/ibdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1bn5arA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0BdAUY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12DD1F000E9;
-	Thu, 28 May 2026 20:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1bn5arA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D3B1F000E9;
+	Thu, 28 May 2026 20:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999739;
-	bh=3JlilkD1Edi+K57CGI8ml4Hqbx6FnTwhpHJxWWHLwN8=;
+	s=korg; t=1779999742;
+	bh=RKCVD79Yg5EJwRMl/7XppFfk6WvAPdoQHUGV2AXikRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D0BdAUY30sIlskkOh2hJdBFpwOg7onzki8zd0Puz5cCdbrfEiUYBIXx0XWgC8jUdJ
-	 O9Wla56gfSfpROkDDmM1+RdhqYYupvnjnfDLC4EOkuoGz0RE8ChGYmj77aFi41HnZA
-	 BaJf5zPgUoGYOZ7sSGG8PGBg2cgHKwQRFyNCrPs8=
+	b=D1bn5arAfa6vSUzSfuM92cQn1o+i4J0DVhaE4WsDeklaLMS1VCOolXae+mxPC9H1a
+	 6BCBi6y/OUF1nuCTD1tMm0rs49BLz5XdDDYrF5kKD/JTNzjTCu2PARETr4kjQZFApz
+	 HCnRg6HtYYb64Cc3e4KdKnBsgOSVRGISaBZf9TIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 174/377] pinctrl: renesas: rzg2l: Fix SMT register cache handling
-Date: Thu, 28 May 2026 21:46:52 +0200
-Message-ID: <20260528194643.465868479@linuxfoundation.org>
+Subject: [PATCH 6.18 175/377] pinctrl: meson: amlogic-a4: fix deadlock issue
+Date: Thu, 28 May 2026 21:46:53 +0200
+Message-ID: <20260528194643.491835958@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,85 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit c88ab9407986836820848128ce1f90f2fa49da95 ]
+[ Upstream commit e72ce029810390eb987a036fb2c8a5da9a23b685 ]
 
-Store SMT register cache per bank instead of using a single array.
+Accessing the pinconf-pins sysfs node may deadlock.
 
-On RZ/V2H(P), RZ/V2N, and RZ/G3E, the SMT register is split across two
-32-bit registers: bits 0/8/16/24 control pins 0-3, while pins 4-7 are
-controlled by the corresponding bits in the next register.  The previous
-implementation cached only a single SMT register, leading to incomplete
-save/restore of SMT state.
+pinconf_pins_show() holds pctldev->mutex, and the platform driver
+calls pinctrl_find_gpio_range_from_pin(), which tries to acquire
+the same mutex again, leading to a deadlock.
 
-Convert cache->smt to a per-bank array and allocate storage for both
-halves.  Update suspend/resume handling to save and restore both SMT
-registers when present.
+Use pinctrl_find_gpio_range_from_pin_nolock() to fix this issue.
 
-Fixes: 837afa592c623 ("pinctrl: renesas: rzg2l: Add suspend/resume support for Schmitt control registers")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260413182456.811543-2-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index df784e3807af0..aaa783c79e6dd 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -335,7 +335,7 @@ struct rzg2l_pinctrl_reg_cache {
- 	u32	*iolh[2];
- 	u32	*ien[2];
- 	u32	*pupd[2];
--	u32	*smt;
-+	u32	*smt[2];
- 	u8	sd_ch[2];
- 	u8	eth_poc[2];
- 	u8	oen;
-@@ -2723,10 +2723,6 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
- 	if (!cache->pfc)
- 		return -ENOMEM;
- 
--	cache->smt = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->smt), GFP_KERNEL);
--	if (!cache->smt)
--		return -ENOMEM;
--
- 	for (u8 i = 0; i < 2; i++) {
- 		u32 n_dedicated_pins = pctrl->data->n_dedicated_pins;
- 
-@@ -2745,6 +2741,11 @@ static int rzg2l_pinctrl_reg_cache_alloc(struct rzg2l_pinctrl *pctrl)
- 		if (!cache->pupd[i])
- 			return -ENOMEM;
- 
-+		cache->smt[i] = devm_kcalloc(pctrl->dev, nports, sizeof(*cache->smt[i]),
-+					     GFP_KERNEL);
-+		if (!cache->smt[i])
-+			return -ENOMEM;
-+
- 		/* Allocate dedicated cache. */
- 		dedicated_cache->iolh[i] = devm_kcalloc(pctrl->dev, n_dedicated_pins,
- 							sizeof(*dedicated_cache->iolh[i]),
-@@ -3052,8 +3053,14 @@ static void rzg2l_pinctrl_pm_setup_regs(struct rzg2l_pinctrl *pctrl, bool suspen
- 			}
- 		}
- 
--		if (has_smt)
--			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off), cache->smt[port]);
-+		if (has_smt) {
-+			RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off),
-+						 cache->smt[0][port]);
-+			if (pincnt >= 4) {
-+				RZG2L_PCTRL_REG_ACCESS32(suspend, pctrl->base + SMT(off) + 4,
-+							 cache->smt[1][port]);
-+			}
-+		}
- 	}
- }
- 
+diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+index e2293a872dcb7..35d27626a336b 100644
+--- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
++++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+@@ -292,7 +292,7 @@ static int aml_calc_reg_and_bit(struct pinctrl_gpio_range *range,
+ static int aml_pinconf_get_pull(struct aml_pinctrl *info, unsigned int pin)
+ {
+ 	struct pinctrl_gpio_range *range =
+-			 pinctrl_find_gpio_range_from_pin(info->pctl, pin);
++			 pinctrl_find_gpio_range_from_pin_nolock(info->pctl, pin);
+ 	struct aml_gpio_bank *bank = gpio_chip_to_bank(range->gc);
+ 	unsigned int reg, bit, val;
+ 	int ret, conf;
+@@ -326,7 +326,7 @@ static int aml_pinconf_get_drive_strength(struct aml_pinctrl *info,
+ 					  u16 *drive_strength_ua)
+ {
+ 	struct pinctrl_gpio_range *range =
+-			 pinctrl_find_gpio_range_from_pin(info->pctl, pin);
++			 pinctrl_find_gpio_range_from_pin_nolock(info->pctl, pin);
+ 	struct aml_gpio_bank *bank = gpio_chip_to_bank(range->gc);
+ 	unsigned int reg, bit;
+ 	unsigned int val;
+@@ -365,7 +365,7 @@ static int aml_pinconf_get_gpio_bit(struct aml_pinctrl *info,
+ 				    unsigned int reg_type)
+ {
+ 	struct pinctrl_gpio_range *range =
+-			 pinctrl_find_gpio_range_from_pin(info->pctl, pin);
++			 pinctrl_find_gpio_range_from_pin_nolock(info->pctl, pin);
+ 	struct aml_gpio_bank *bank = gpio_chip_to_bank(range->gc);
+ 	unsigned int reg, bit, val;
+ 	int ret;
 -- 
 2.53.0
 
