@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210F02F1FEF;
-	Thu, 28 May 2026 20:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B8A330B32;
+	Thu, 28 May 2026 20:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001519; cv=none; b=OuxIjakzEXpn2YtqNb4lopWYtIUORNzbR7ptIRLIKidVyFG8mrxhOeg+2bOEZkkDoK0n35VnEwbMnu1sJxBJBYY5w1htLA7pKPqK+cXYoUTkvboXyi+vtJXo7fouE23SAyIX+fSF62YKML4xxrxKYrwIM8jjYjZwAGoWgnv6Gng=
+	t=1780001521; cv=none; b=QieVc3cjHbCkX1gec3v5PLHvcPc0N1U6eEuCjS96zlx8frgg0lWtHF+yXUs5M5fAPBhxa3CtsgV3tgfPYDKPpoJTOX+c8l6dICUYrHCjem5ftP2PJJajiGFB9jadQWcXz715iHVFCxkViUhWW2a1Xxr+9EUdz6Q0I1ixNdQQnAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001519; c=relaxed/simple;
-	bh=n7Jh/CmOeupfY2y8UT0kqQQFTOYtis79SzDvGXZDt9A=;
+	s=arc-20240116; t=1780001521; c=relaxed/simple;
+	bh=nPO1vikQ118rR9BISOfaidrXiadSckj7uBCemKIvBp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuoGZLtKRVE5++wbIcaJQRKDUSwYj+JKd5sbE4CJvoOegq1CZhx/gMgg5DrCmd1DEQDvsxTfO/2G+FJw2c1/ORUuQATOmo6VjjyP9MTG+UPScjQtUQ3EtIGXKseOGo+ndt7M5wjkJ5llQRNsSE9Kd/7k4sBPA4RalQPHS7oJP4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqWxumSJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rfh83GNJ7OjfOvMMPD7+lHGlqdTURyuozYT4or3pPIcJuC0HNWvtKCN1LFIKZ0stmMPxvjrDlhtIgCF7BdC/W14oZg8O+w1XmsDDWTaaB2DiBwsLbcZusHNQqZyKu4eq5yLruvRLbK5B2hW8T5RjbBUhOjm7RYPYl/C2PU9HFVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQADOy8m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqWxumSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F63E1F000E9;
-	Thu, 28 May 2026 20:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQADOy8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6AC1F000E9;
+	Thu, 28 May 2026 20:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001518;
-	bh=YQFDXtlGXzsNI8JCGjo3ZyF0QdiBIfP37YTZy7prrvI=;
+	s=korg; t=1780001520;
+	bh=5uAbcmWW9rLXkUSy1ZUgRghgo0ltB5nA0N8yhJy/0Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uqWxumSJidRRJP2o9573zwU6XY2d4eN7JK85BM/WrHWCcvT99WuO0zePombbhZMtP
-	 39LYUxcHzHrut8ZGamWlEiFQRg1r1imaoMjmZrT4Al78grvZ7kbDM93ODB6Azxa9YB
-	 eN7o/25fmpQ7zWIoRR8X3U1hCYAuYjXdgUOmNL6M=
+	b=cQADOy8mBu3EXOgTuw8NaGrEQG0I1Glo7eOWwkOr6uUiQeXO4hDsgQhyoBKlfaTzz
+	 9w9o9cMeqByyftX9JnMjfqXOlhhZVVEnYJd3WOFgU8R7w8tvXRNB6Yj4i+1V+wGqwn
+	 IVgD9Vd0NFOvwz0DkPQRCxZDUiUIVdElscAfnafs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/186] net: mana: Fix TOCTOU double-fetch of hwc_msg_id from DMA buffer
-Date: Thu, 28 May 2026 21:50:37 +0200
-Message-ID: <20260528194933.196654078@linuxfoundation.org>
+Subject: [PATCH 6.6 158/186] platform/x86: adv_swbutton: Check ACPI_HANDLE() against NULL
+Date: Thu, 28 May 2026 21:50:38 +0200
+Message-ID: <20260528194933.223669945@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -45,99 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 35f0f0a2536a4d604b4dbad92c85c4a8fdebb870 ]
+[ Upstream commit e7a9a6ea40e352cd7977f6a8c80bdeadf65ad838 ]
 
-In mana_hwc_rx_event_handler(), resp->response.hwc_msg_id is read from
-DMA-coherent memory and bounds-checked, then mana_hwc_handle_resp()
-re-reads the same field from the same DMA buffer for test_bit() and
-pointer arithmetic.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-DMA-coherent memory is mapped uncacheable on x86 and is shared,
-unencrypted, in Confidential VMs (SEV-SNP/TDX), so each load goes
-directly to host-visible memory. A H/W can modify the value
-between the check and the use, bypassing the bounds validation.
+Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
+platform/x86 adv_swbutton driver.
 
-Fix this by reading hwc_msg_id exactly once using READ_ONCE() into a
-stack-local variable in mana_hwc_rx_event_handler(), and passing the
-validated value as a parameter to mana_hwc_handle_resp().
-
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260514194156.466823-1-ernis@linux.microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3d904005f686 ("platform/x86: add support for Advantech software defined button")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/5115425.31r3eYUQgx@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microsoft/mana/hw_channel.c  | 23 +++++++++++--------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/platform/x86/adv_swbutton.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index 148dda6570fc5..b5ec1250a674f 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -75,21 +75,19 @@ static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
- }
- 
- static void mana_hwc_handle_resp(struct hw_channel_context *hwc, u32 resp_len,
--				 struct hwc_work_request *rx_req)
-+				 struct hwc_work_request *rx_req, u16 msg_id)
+diff --git a/drivers/platform/x86/adv_swbutton.c b/drivers/platform/x86/adv_swbutton.c
+index 6b23ba78e028f..f7bc252650d5a 100644
+--- a/drivers/platform/x86/adv_swbutton.c
++++ b/drivers/platform/x86/adv_swbutton.c
+@@ -48,10 +48,14 @@ static int adv_swbutton_probe(struct platform_device *device)
  {
- 	const struct gdma_resp_hdr *resp_msg = rx_req->buf_va;
- 	struct hwc_caller_ctx *ctx;
- 	int err;
+ 	struct adv_swbutton *button;
+ 	struct input_dev *input;
+-	acpi_handle handle = ACPI_HANDLE(&device->dev);
++	acpi_handle handle;
+ 	acpi_status status;
+ 	int error;
  
--	if (!test_bit(resp_msg->response.hwc_msg_id,
--		      hwc->inflight_msg_res.map)) {
--		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n",
--			resp_msg->response.hwc_msg_id);
-+	if (!test_bit(msg_id, hwc->inflight_msg_res.map)) {
-+		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n", msg_id);
- 		mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
- 		return;
- 	}
- 
--	ctx = hwc->caller_ctx + resp_msg->response.hwc_msg_id;
-+	ctx = hwc->caller_ctx + msg_id;
- 	err = mana_hwc_verify_resp_msg(ctx, resp_msg, resp_len);
- 	if (err)
- 		goto out;
-@@ -218,6 +216,7 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
- 	struct gdma_sge *sge;
- 	u64 rq_base_addr;
- 	u64 rx_req_idx;
-+	u16 msg_id;
- 	u8 *wqe;
- 
- 	if (WARN_ON_ONCE(hwc_rxq->gdma_wq->id != gdma_rxq_id))
-@@ -236,13 +235,17 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
- 	rx_req = &hwc_rxq->msg_buf->reqs[rx_req_idx];
- 	resp = (struct gdma_resp_hdr *)rx_req->buf_va;
- 
--	if (resp->response.hwc_msg_id >= hwc->num_inflight_msg) {
--		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n",
--			resp->response.hwc_msg_id);
-+	/* Read msg_id once from DMA buffer to prevent TOCTOU:
-+	 * DMA memory is shared/unencrypted in CVMs - host can
-+	 * modify it between reads.
-+	 */
-+	msg_id = READ_ONCE(resp->response.hwc_msg_id);
-+	if (msg_id >= hwc->num_inflight_msg) {
-+		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n", msg_id);
- 		return;
- 	}
- 
--	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req);
-+	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req, msg_id);
- 
- 	/* Can no longer use 'resp', because the buffer is posted to the HW
- 	 * in mana_hwc_handle_resp() above.
++	handle = ACPI_HANDLE(&device->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	button = devm_kzalloc(&device->dev, sizeof(*button), GFP_KERNEL);
+ 	if (!button)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
