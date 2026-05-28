@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F5714ABE;
-	Thu, 28 May 2026 20:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B525D2E7379;
+	Thu, 28 May 2026 20:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001052; cv=none; b=AiqFbLfWAofGuED6LuyUd6Qm8xb/sh8/xgZeJ/tzargVjlMHioyJur2SFsYqzS82fXHOqq/mOosejVmxC4/2V2Vt8ipH1KuW/eyePQcraT0CYI5vbF5IpYwh9L5FmYhOSHZrDPPZGRJk0szvty/ZicChbI8gD5dq4n2WcbqOUlg=
+	t=1780001055; cv=none; b=RWZ5m6+ZGHXaDz6NeEX1FxJdoTMCEf0khCek14bdd7O4whMb+uWMfA+UU1o4mlQo/jh1fV3etKN/+Sw0J8E42qMsS++VB4ZTHyW0ep9bi3/m+y1HnC2o9kxZLKHufrisC+fYtqdQPsjm5wjrApA0wSsy8T4qp6RNd3CPh5cnAkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001052; c=relaxed/simple;
-	bh=pYSuzyWi5Rl6qxQSfhLW6iTnHwTrgUNiw/i0HHteH9o=;
+	s=arc-20240116; t=1780001055; c=relaxed/simple;
+	bh=nhTtPaNsgyRLlOc65udxEFKk8KeSSRn5K6O9mdor8e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdHStSzS9CgnraoNo9J2jOlxU/19L+yVvyDKErBJFYwimZVKTVcEaMnPUDwCg95A5N01DvQRVq/HfnPN86iNPtRmAXY6RYdAU3Cag6UmQs3moiA7IZEB0KQ3dLYQhXJL2XyYf8m6C8fkXHOTj4Y8U+fnPMN8OAYjn8TJjR3wFQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz3EQnn6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lQJYdki1qLEazqP/mphGTwyM46l8e2UKIKghF1VjT9YFau2FyHw+GcjdU8dEEwy4vp5KMMDKoIwjdrIIMk+Q+YxUox8sAdn0RxyiPXHmeqOmjBtac71bwggtVmt9nOcf28BjFuFRn6Hyqt/t9l/dqJm2jJCyzdH3I84gq27tpfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2ilVjkt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz3EQnn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62091F000E9;
-	Thu, 28 May 2026 20:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2ilVjkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A271D1F000E9;
+	Thu, 28 May 2026 20:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001051;
-	bh=tT525u0XOlK1tBzz9ABzc4Akkhi2s3pM51wKoamnAQo=;
+	s=korg; t=1780001054;
+	bh=faIrnP6L5zskAGOQuhcxj0Q5lGOR2c4fgsLnoMXUp2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dz3EQnn6dajoxfRH+3jfGolpkgDjQD3bRSHVqwsDfYeQGdfLeEvkh1d6MP1AuuG9E
-	 T5fAS4RQUIrlVp4qk4a2KkwZdvlQD/T/v3aQyIYN4sVpIezqDyhnouaghlrdQoStBZ
-	 8gi/WGjo8PX13MBl3kl86sOqrIW2gyb4j8pgAaPo=
+	b=y2ilVjktTNtGShaO4msJsgdzLzrZSDob0ESWSY2KiVUQXgrHwJyxoQ7HvSpRsU1xS
+	 tzSZQ7rUj+CH07Frp8S63TNrtp7kUibeSq4sazAozbeYkdLG0IK50JNuDpl0I7eSgO
+	 07Lii079kDqm3Gcomm+iQ0bTarxBJP4+60KLXYg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 246/272] net: mana: Fix TOCTOU double-fetch of hwc_msg_id from DMA buffer
-Date: Thu, 28 May 2026 21:50:20 +0200
-Message-ID: <20260528194636.020474257@linuxfoundation.org>
+Subject: [PATCH 6.12 264/272] gpio: cdev: check if uAPI v2 config attributes are correctly zeroed
+Date: Thu, 28 May 2026 21:50:38 +0200
+Message-ID: <20260528194636.478937808@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,93 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 35f0f0a2536a4d604b4dbad92c85c4a8fdebb870 ]
+[ Upstream commit 3e6ccd790ed69bedd3d9626d01dd35cf9821c121 ]
 
-In mana_hwc_rx_event_handler(), resp->response.hwc_msg_id is read from
-DMA-coherent memory and bounds-checked, then mana_hwc_handle_resp()
-re-reads the same field from the same DMA buffer for test_bit() and
-pointer arithmetic.
+We check the padding of other uAPI v2 structures but not that of line
+config attributes. For used attributes: check if their padding is
+zeroed, for unused: check if the entire structure is zeroed.
 
-DMA-coherent memory is mapped uncacheable on x86 and is shared,
-unencrypted, in Confidential VMs (SEV-SNP/TDX), so each load goes
-directly to host-visible memory. A H/W can modify the value
-between the check and the use, bypassing the bounds validation.
-
-Fix this by reading hwc_msg_id exactly once using READ_ONCE() into a
-stack-local variable in mana_hwc_rx_event_handler(), and passing the
-validated value as a parameter to mana_hwc_handle_resp().
-
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260514194156.466823-1-ernis@linux.microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20260521-gpio-cdev-attr-padding-check-v3-1-ec3bcbe2e358@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microsoft/mana/hw_channel.c  | 23 +++++++++++--------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index e07d0a9529782..f8971844e6d8e 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -76,21 +76,19 @@ static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
- }
- 
- static void mana_hwc_handle_resp(struct hw_channel_context *hwc, u32 resp_len,
--				 struct hwc_work_request *rx_req)
-+				 struct hwc_work_request *rx_req, u16 msg_id)
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index d44a3e4c2a09c..e77ec4b205f42 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1324,6 +1324,7 @@ static int gpio_v2_line_flags_validate(u64 flags)
+ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
+ 					unsigned int num_lines)
  {
- 	const struct gdma_resp_hdr *resp_msg = rx_req->buf_va;
- 	struct hwc_caller_ctx *ctx;
- 	int err;
++	size_t unused_attrs;
+ 	unsigned int i;
+ 	u64 flags;
+ 	int ret;
+@@ -1331,9 +1332,21 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
+ 	if (lc->num_attrs > GPIO_V2_LINE_NUM_ATTRS_MAX)
+ 		return -EINVAL;
  
--	if (!test_bit(resp_msg->response.hwc_msg_id,
--		      hwc->inflight_msg_res.map)) {
--		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n",
--			resp_msg->response.hwc_msg_id);
-+	if (!test_bit(msg_id, hwc->inflight_msg_res.map)) {
-+		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n", msg_id);
- 		mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
- 		return;
- 	}
++	unused_attrs = GPIO_V2_LINE_NUM_ATTRS_MAX - lc->num_attrs;
++
+ 	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
+ 		return -EINVAL;
  
--	ctx = hwc->caller_ctx + resp_msg->response.hwc_msg_id;
-+	ctx = hwc->caller_ctx + msg_id;
- 	err = mana_hwc_verify_resp_msg(ctx, resp_msg, resp_len);
- 	if (err)
- 		goto out;
-@@ -219,6 +217,7 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
- 	struct gdma_sge *sge;
- 	u64 rq_base_addr;
- 	u64 rx_req_idx;
-+	u16 msg_id;
- 	u8 *wqe;
- 
- 	if (WARN_ON_ONCE(hwc_rxq->gdma_wq->id != gdma_rxq_id))
-@@ -237,13 +236,17 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
- 	rx_req = &hwc_rxq->msg_buf->reqs[rx_req_idx];
- 	resp = (struct gdma_resp_hdr *)rx_req->buf_va;
- 
--	if (resp->response.hwc_msg_id >= hwc->num_inflight_msg) {
--		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n",
--			resp->response.hwc_msg_id);
-+	/* Read msg_id once from DMA buffer to prevent TOCTOU:
-+	 * DMA memory is shared/unencrypted in CVMs - host can
-+	 * modify it between reads.
-+	 */
-+	msg_id = READ_ONCE(resp->response.hwc_msg_id);
-+	if (msg_id >= hwc->num_inflight_msg) {
-+		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n", msg_id);
- 		return;
- 	}
- 
--	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req);
-+	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req, msg_id);
- 
- 	/* Can no longer use 'resp', because the buffer is posted to the HW
- 	 * in mana_hwc_handle_resp() above.
++	for (i = 0; i < lc->num_attrs; i++) {
++		if (lc->attrs[i].attr.padding != 0)
++			return -EINVAL;
++	}
++
++	if (unused_attrs) {
++		if (!mem_is_zero(&lc->attrs[lc->num_attrs], unused_attrs * sizeof(*lc->attrs)))
++			return -EINVAL;
++	}
++
+ 	for (i = 0; i < num_lines; i++) {
+ 		flags = gpio_v2_line_config_flags(lc, i);
+ 		ret = gpio_v2_line_flags_validate(flags);
 -- 
 2.53.0
 
