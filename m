@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DDB352033;
-	Thu, 28 May 2026 20:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD8133D4E2;
+	Thu, 28 May 2026 20:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999856; cv=none; b=GfjdlXGwBl1Xt7Bnzf4CH6L5TBfiHRwIVKnq9LrqVuYkePh7SadkQ4F4zSNJ81B4g8bYm8LWTiDixsoGNcTFQsuVKhWc7RAf9AKQPH44IgDLtKjQS2XE/OWV4/qYDLmAfzOMwWxAojdKp7HKN8VFAlKkt+R83JcBE1QeM9DRTYk=
+	t=1779999859; cv=none; b=HNKxvx93B3k0NmHiA06F8dYx/hXc+m+qrtp45+4iwxqFl1yPbhOTBxWsonwRXvk4EVGfioHbhbR1NQ0+Hsah9gzsJil4kk4LHPN0JLFZX5wQ2/kB8IIMbSE8CvTbw3lNbRoVXtGRhI+8/B9IFufMkSW+krHL2Oo9p+wgW91Vg0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999856; c=relaxed/simple;
-	bh=E2MaoaFPerAUZMJvUkUS1xu4WIC4GQxamIJiN52I7Yg=;
+	s=arc-20240116; t=1779999859; c=relaxed/simple;
+	bh=COZkj6x+xFRYXg8c0kd/jUUUR6cQYBt4wD04KcWA5F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pXMlIahHdZbHe4YEtsWdP+OWFWSI41haDhBygWpfiBWNX3RDw6kW/5iQfoO4/4pH+FIbBXa+tfei5Txbii89KXVsFfbzQThIFfiStHMHVPapQqicVmjkrLTy8VInFmv02mgTyvqV1cj+dyC2PMCog4hMx6u0wRYR80huoyLF1tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZVpw3bG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tqo+/amUozkeft1iWD2QRUhTF0Qruy1Dz5KfzfHnDAbAw7V6VKa4UVsDtXZqcUjRfgOplMtju6NaAwTawfSHG8Pgq3fQ8oYUD5Z/eVQOhkJ0q0Oe/Aam22kMVOdbUP5KjHTCJWeuXjOGmvkpk3lQCs1zKqoBmxEaE9LNhKWg8so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbsCW6pw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZVpw3bG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8311F000E9;
-	Thu, 28 May 2026 20:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbsCW6pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC79D1F00A3E;
+	Thu, 28 May 2026 20:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999855;
-	bh=QHVwIQjFws1m/6S5LEmgCuUwBKtgkyMa0JmsrpgEKk8=;
+	s=korg; t=1779999858;
+	bh=8K30amJfoY+p1MEn9JRxyPBZgVJMBc+t4PMVr7j9LsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZVpw3bGpGx2X7xBCLRcMfcy28YZCZgyYXqGgWYH2z2sVhJ8MbXL32mETqj8Caz0l
-	 KIcDmxclDBsgUBQ7jk2Eld1pVKAOYyXNdOxBbamfP2SsHbStjfhdFHdjXLRZowtXY1
-	 O9IHriGhPdy74wX0pO+AGblPCqQxJKqEC/uEzK7w=
+	b=nbsCW6pwLgnKTtixMERHRrrqgk+8H0rLeqnLaxmu72fFGFBWvm4xpeHIVPzJJ2156
+	 R/hRmroF86ny4QDuK2eRMeUC1p7yjpP4Kxd/5h9FgZsIrOmgkSj7JHDzS1sLNfAr0z
+	 KrZF/vWaBTGSKt77O3Z1XBpyQ0QJ2a8IEaNOz07c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 215/377] phy: marvell: mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access
-Date: Thu, 28 May 2026 21:47:33 +0200
-Message-ID: <20260528194644.625649866@linuxfoundation.org>
+Subject: [PATCH 6.18 216/377] NFSD: Fix infinite loop in layout state revocation
+Date: Thu, 28 May 2026 21:47:34 +0200
+Message-ID: <20260528194644.654520298@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -46,52 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 91ddf6f722084383fb05be731c0107814b055c0c ]
+[ Upstream commit 4f8ef58c10bfe5f86a643c7c8331b37e69e3dae1 ]
 
-The mvebu_a3700_utmi_phy_power_off() function tries to modify the
-USB2_PHY_CTRL register by using the IO address of the PHY IP block along
-with the readl/writel IO accessors. However, the register exist in the
-USB miscellaneous register space, and as such it must be accessed via
-regmap like it is done in the mvebu_a3700_utmi_phy_power_on() function.
+find_one_sb_stid() skips stids whose sc_status is non-zero, but the
+SC_TYPE_LAYOUT case in nfsd4_revoke_states() never sets sc_status
+before calling nfsd4_close_layout(). The retry loop therefore finds
+the same layout stid on every iteration, hanging the revoker
+indefinitely.
 
-Change the code to use regmap_update_bits() for modífying the register
-to fix this.
-
-Fixes: cc8b7a0ae866 ("phy: add A3700 UTMI PHY driver")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260321-a3700-utmi-fix-usb2_phy_ctrl-access-v1-1-6005ff4b5058@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 1e33e1414bec ("nfsd: allow layout state to be admin-revoked.")
+Reported-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/marvell/phy-mvebu-a3700-utmi.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-index 04f4fb4bed702..f882bc57649c7 100644
---- a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-+++ b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-@@ -168,9 +168,8 @@ static int mvebu_a3700_utmi_phy_power_off(struct phy *phy)
- 	u32 reg;
- 
- 	/* Disable PHY pull-up and enable USB2 suspend */
--	reg = readl(utmi->regs + USB2_PHY_CTRL(usb32));
--	reg &= ~(RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32));
--	writel(reg, utmi->regs + USB2_PHY_CTRL(usb32));
-+	regmap_update_bits(utmi->usb_misc, USB2_PHY_CTRL(usb32),
-+			   RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32), 0);
- 
- 	/* Power down OTG module */
- 	if (usb32) {
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index cb8096e94f518..a9e95df2fdb68 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1848,6 +1848,13 @@ void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
+ 					break;
+ 				case SC_TYPE_LAYOUT:
+ 					ls = layoutstateid(stid);
++					spin_lock(&clp->cl_lock);
++					if (stid->sc_status == 0) {
++						stid->sc_status |=
++							SC_STATUS_ADMIN_REVOKED;
++						atomic_inc(&clp->cl_admin_revoked);
++					}
++					spin_unlock(&clp->cl_lock);
+ 					nfsd4_close_layout(ls);
+ 					break;
+ 				}
 -- 
 2.53.0
 
