@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9273254A8;
-	Thu, 28 May 2026 19:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F653290B0;
+	Thu, 28 May 2026 19:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998053; cv=none; b=BNfXa4fHCpYZFlPWUu567cTsnntkRhP6hjF7nMg/Cx9lPGjBFW0UALRsJIi8ReqwXK9QIn+QDFOA+nb0LRArbXBcfEZsmJhcesPO5sp6pcTUjeaF4LeAASebU6K5YdITbkJhmS/e6hbDLi3vlUR0v3LBh0KE2OBRQFQ4RiwTvpA=
+	t=1779998056; cv=none; b=L3qvLHFcPZCF9Dfzqle2GEKubzR8+/pyN8Jn66MY/urbpj99yVb7WE0/4L6lq4Yb764U3np1ow4XPD253kLXnIBl++KDAEu+SgXB/nK4z4bwuKQV0C68aQLv/xjy4ebNVGmOa2UuD0DUTd+JhvKCsCAntMh9H2QbmBLqyeDWIVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998053; c=relaxed/simple;
-	bh=9cd3pgU1cE+Za0n8KHo8FKi6rTXaIt9s4t8ATON3bHE=;
+	s=arc-20240116; t=1779998056; c=relaxed/simple;
+	bh=o8Go4LZuTzWVLta78kLabuDYeooe0EmCPHAamYjw+B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdDziD0k4RyU+iD1BJnBLUtdP2tQ8JFKyp8Z8wVEBg6F3PhUtY7OVTWE0dHF5ZERcvZY8dI5SBJkTLzxhdzRVSSgJUqdZ4Bb/l3rh9E41a5GDbZHNPDHYasIXDOL80zVfFSzreJZtiozg36haX2UbYZCh5c6sIvWoyo3p/qQE4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhAR845j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VDwxo+CvyCY/0Nazv5+fUKlF2mw0esWJAdm8unyR3ijSM4LX1YzYaA2+Gbiw9gajMgguDJJSLByGXsWmcZaDr54AxHUgJcEzB9ZLgon8G442e/PJURqBWTRiIwm+OkToSrwsDrCtyk9YA5SXVZiOjLMVlwf9D0ZoKlZx8I5skWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUbq8zR7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhAR845j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C10A1F000E9;
-	Thu, 28 May 2026 19:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUbq8zR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5C51F000E9;
+	Thu, 28 May 2026 19:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998051;
-	bh=XrnXhra2iGzqrZifH6Ch3TSYvnoxLyY7gtB6e6M32o4=;
+	s=korg; t=1779998054;
+	bh=Fw9EV42ugAg5zQqdm4OTzjCX7Gxy645bfvOTIoYY1MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhAR845jIQCHAOxkxPeMHjX0d8U6444pbJBpkEhTyYPj1/KrsO+VBvyDUsalJ9kJt
-	 0v4nppB67NXit1YnvMDYG/uG9mkeaGRc4AWcy+2VbyvovWmDOZNMm8SH10bfy+43o3
-	 fn6OOJRRSpTpZBDKqFoxXSk1lqGLpfVTrjsXfCuM=
+	b=NUbq8zR7C5vfGH7qqjShnfSAWFfvi31QAA4yzfHUfBQItFOdmLZAiqnboKT+owlZt
+	 3uwBCD/O7HqoD0IjNnveuclhDGwsP1th2QIQeq6oWdHR6HOSUV6UaRv2JbFi9yagF+
+	 Zxcg6MG1Jj0Y2RabGb4yOmEQbuSabBsu+Ps9iZ7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Huang, Ying" <huang.ying.caritas@gmail.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 035/461] mm/memory_hotplug: fix memory block reference leak on remove
-Date: Thu, 28 May 2026 21:42:44 +0200
-Message-ID: <20260528194647.912667748@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 004/461] smb: client: reject userspace cifs.spnego descriptions
+Date: Thu, 28 May 2026 21:42:13 +0200
+Message-ID: <20260528194646.961044123@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -58,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit 93866f55f7e292fe3d47d36c9efe5ee10213a06b upstream.
+commit 3da1fdf4efbc490041eb4f836bf596201203f8f2 upstream.
 
-Patch series "mm: Fix memory block leaks and locking", v2.
+cifs.spnego key descriptions contain authority-bearing fields such as
+pid, uid, creduid, and upcall_target that cifs.upcall treats as
+kernel-originating inputs. However, userspace can also create keys of
+this type through request_key(2) or add_key(2), allowing those fields to
+be supplied without CIFS origin.
 
-This series fixes two memory block device reference leaks and one locking
-issue around the per-memory_block hwpoison counter.
+Only accept cifs.spnego descriptions while CIFS is using its private
+spnego_cred to request the key.
 
-
-This patch (of 2):
-
-remove_memory_blocks_and_altmaps() looks up each memory block with
-find_memory_block(), which acquires a reference to the memory block
-device.
-
-That reference is never dropped on this path, resulting in a leaked device
-reference when removing memory blocks and their altmaps.  Drop the
-reference after retrieving mem->altmap and clearing mem->altmap, before
-removing the memory block device.
-
-Link: https://lore.kernel.org/20260428085219.1316047-1-songmuchun@bytedance.com
-Link: https://lore.kernel.org/20260428085219.1316047-2-songmuchun@bytedance.com
-Fixes: 6b8f0798b85a ("mm/memory_hotplug: split memmap_on_memory requests across memblocks")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f1d662a7d5e5 ("[CIFS] Add upcall files for cifs to use spnego/kerberos")
+Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cifs_spnego.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1430,6 +1430,8 @@ static void remove_memory_blocks_and_alt
+--- a/fs/smb/client/cifs_spnego.c
++++ b/fs/smb/client/cifs_spnego.c
+@@ -8,6 +8,7 @@
+  */
  
- 		altmap = mem->altmap;
- 		mem->altmap = NULL;
-+		/* drop the ref. we got via find_memory_block() */
-+		put_device(&mem->dev);
+ #include <linux/list.h>
++#include <linux/cred.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <keys/user-type.h>
+@@ -40,12 +41,27 @@ cifs_spnego_key_destroy(struct key *key)
+ 	kfree(key->payload.data[0]);
+ }
  
- 		remove_memory_block_devices(cur_start, memblock_size);
++static int
++cifs_spnego_key_vet_description(const char *description)
++{
++	/*
++	 * cifs.spnego descriptions are authority-bearing inputs to cifs.upcall.
++	 * They are only valid when produced by CIFS while using the private
++	 * spnego_cred installed below.  Do not let userspace create this type
++	 * of key through request_key(2)/add_key(2), since the helper treats
++	 * pid/uid/creduid/upcall_target as kernel-originating fields.
++	 */
++	if (current_cred() != spnego_cred)
++		return -EPERM;
++	return 0;
++}
  
+ /*
+  * keytype for CIFS spnego keys
+  */
+ struct key_type cifs_spnego_key_type = {
+ 	.name		= "cifs.spnego",
++	.vet_description = cifs_spnego_key_vet_description,
+ 	.instantiate	= cifs_spnego_key_instantiate,
+ 	.destroy	= cifs_spnego_key_destroy,
+ 	.describe	= user_describe,
 
 
