@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8703016E0;
-	Thu, 28 May 2026 20:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAE42D9787;
+	Thu, 28 May 2026 20:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999617; cv=none; b=JpmlXp4Jd9kPOJKs+yx6gyBkiH85i0lTbMH2VHP0A/fvYofp9l0DBQZ0fsHtAZr0Qnhiy5MozgAkQYDlfV3anN9DZNVGStmaD6g3aiPAyCc82p4cyWzm9JDpXjvZ1sRoVFxrSv460/d9f+lvRrOfmVjBJkRo25m7I1ZCWZqj2HQ=
+	t=1779999620; cv=none; b=gUmFHoYXOW53OLpieW0iVGmK1bM/yR7d/ICtsKbzPgFPskyKAET4XozUwU6cwd3NWht4D5UQ6DCS3G1RPgaDcXY3+hnQvUNOiugi05Uj6HuBeBviUOUgkpZaJqY9ANlNWy3KzXK4KbdcR23hHM6EcQYA9DSE5QL6txepU7Z1xeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999617; c=relaxed/simple;
-	bh=bu3QeVXrlo4b++EKVC4xjb/OQzYvrRINRvlFwVHWfzc=;
+	s=arc-20240116; t=1779999620; c=relaxed/simple;
+	bh=ac5y0u/+dO+/qcg/kUkr7pO1fUk7Wh0GAgUQyECPqcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZkMAmh01KzV+mmSUxhVLkO+VpUP12VB3Gr5rJZqrGWvolmeiKj8W/O03wJay/P/kKuyQWz+po+OEVznJTrMF3mmElJNNvK4GYfWH7R0VbnguAvGC6xsXLJV0uiXupqQ0wy9AapCVCg4p7jomjttFRHQQl1gnfvhVbf8Q4TF7HaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmw2ShCu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SY+UYa07ASu8ZR9jfjwun6Z1GzuKEfE4fVxs/2E/HeHxC3Ef9kQTb7jLYP2MgIvGB3ZzEyhdz4c7GJNCGmfnmPAi1XJq+DCYmupn9cfQCUwYgwU+iOSIUx8FpQ6aWWIuuuHBoKHi/6bBZCnFkevLBgQWGnyH2Lq3mC5jP9Sl+yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AW23zaKz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmw2ShCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE31F1F000E9;
-	Thu, 28 May 2026 20:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AW23zaKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D041F000E9;
+	Thu, 28 May 2026 20:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999616;
-	bh=Qqly/oLQEVLf5jk4IPGxnt88cEL8Xa9gmxeiOBv12Yg=;
+	s=korg; t=1779999619;
+	bh=8rzHbFVyUyUL1h/a1iccEZQ2FUgG0PJ159XpJ8VwdvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmw2ShCuZsImXdWl09248bVGymjoVNmB/LcFs+uMinQXSr5dN1hZuX835RO6/ZhSo
-	 l+u6mMWXvzFzIg2cVps/hADkFNog5+fG5iJXWzRGoStoUbQKRZkvecaMa0N6rcGNO8
-	 IcU7XnUl23Xgpc8wE7zDgQgpIQEUps88l8D0cPyg=
+	b=AW23zaKzOJvhGkSgCn/G2SJVxSrlejn067thlSzS69uU2a6BojvpZLWA1Wr23qIta
+	 GKmj89sRvd3ZS7w9ZC1TsQK3E9W+6XwIuYxJWQ8cF5tbzF80GjG2NAiBinbQsuPK6R
+	 uj83YkE4HwsxROE6eAkm0JXAQdZ0bSxre04nE2Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alan liu <haoping.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 131/377] drm/amdgpu/vpe: Force collaborate sync after TRAP
-Date: Thu, 28 May 2026 21:46:09 +0200
-Message-ID: <20260528194642.154687109@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 114/377] spi: qup: fix error pointer deref after DMA setup failure
+Date: Thu, 28 May 2026 21:45:52 +0200
+Message-ID: <20260528194641.635534623@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,47 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Liu <haoping.liu@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit b6074630a461b1322a814988779005cbc43612ea upstream.
+commit a7e8f3efd50a165ba0189f6dc57f7e51a7d149db upstream.
 
-VPE1 could possibly hang and fail to power off at the end of commands in
-collaboration mode. This workaround adds a COLLAB_SYNC after TRAP to
-force instances synchronized to avoid VPE1 fail to power off.
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alan liu <haoping.liu@amd.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5171
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a8b749c5c5afb7e5daa2bfb95d958fb3c6b8f055)
-Cc: stable@vger.kernel.org
+Make sure to the clear the DMA channel pointers on setup failure to
+avoid dereferencing an error pointer (or attempting to release a channel
+a second time) on later probe errors or driver unbind.
+
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
+
+Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=4
+Cc: stable@vger.kernel.org	# 4.1
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074334.914735-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/spi/spi-qup.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-@@ -562,6 +562,11 @@ static void vpe_ring_emit_fence(struct a
- 		amdgpu_ring_write(ring, 0);
- 	}
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -996,8 +996,11 @@ static int spi_qup_init_dma(struct spi_c
  
-+	/* WA: Force sync after TRAP to avoid VPE1 fail to power off */
-+	if (ring->adev->vpe.collaborate_mode) {
-+		amdgpu_ring_write(ring, VPE_CMD_HEADER(VPE_CMD_OPCODE_COLLAB_SYNC, 0));
-+		amdgpu_ring_write(ring, 0xabcd);
-+	}
+ err:
+ 	dma_release_channel(host->dma_tx);
++	host->dma_tx = NULL;
+ err_tx:
+ 	dma_release_channel(host->dma_rx);
++	host->dma_rx = NULL;
++
+ 	return ret;
  }
  
- static void vpe_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
-@@ -968,7 +973,7 @@ static const struct amdgpu_ring_funcs vp
- 	.emit_frame_size =
- 		5 + /* vpe_ring_init_cond_exec */
- 		6 + /* vpe_ring_emit_pipeline_sync */
--		10 + 10 + 10 + /* vpe_ring_emit_fence */
-+		12 + 12 + 12 + /* vpe_ring_emit_fence */
- 		/* vpe_ring_emit_vm_flush */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 3 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 6,
 
 
