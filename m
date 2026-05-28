@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937CF330D35;
-	Thu, 28 May 2026 20:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC6D332909;
+	Thu, 28 May 2026 20:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000665; cv=none; b=u63wRgH1s6dejrpDJYhJ8CQIbfDhtGHGjpVrbhnm9YDN1+iMxpQkTL8yLLePgA8Ous75mkmshnG4Nf5pZEnKjlRuSdTFYwIWbQjnImJyUXaLoWid0JasZiKwZqZdBH7BEIGpNZQLUiQifR/uBgDdCx9zeemWZfgQFnqU0v9Q7Hs=
+	t=1780000668; cv=none; b=VvHxUw9Pm/0vWjcRMw2V5+0xu66UatclvalduEBtYzdEtTFDlX0r6PRKIqJ9TtzIC7itO7efhRfqWlZa0bV4+a4tSLkwGdx0QB4//sKrsYSZaKdiWuxpk8p9wBPD0mDuOA67HnY8a6Lx4j9A9Pvhcd+Ea/p2gCXhHG0mFP/X4ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000665; c=relaxed/simple;
-	bh=pQ51wGCkzBmwNTf5kWyWaSUJbCuxKcvW3UWdCtvxpv4=;
+	s=arc-20240116; t=1780000668; c=relaxed/simple;
+	bh=pBM7C3O9ZyeK2cDdLd40JY/QlnnfVc5UirCa8/1i2uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCk9oUwdwOdFq1oyWgsGgkxumDDEYgcOi6Sfhy1KFuWeFlENRmsVfMwtJqWu7rCb1Q+TOlxFCs6mZT8q428R6MKmUrEUOmPFYLEenYW39t/lakpXAnEx9PigYARLZl7K5gsjRzwjBk7C1pTUJAk7XQmMfF+D4E3Lkg705MRV4wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5vQrU7r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nKoelC0KNgLd0ptnZFQuA5upUwB3x6E2Ck/U6tWZcc/vsIR6I9WLsJXX+bYE034KKkqmYT9dq441SF2abWseom680E5XsOFvz8vRw7Y4UktcivrvmPepwCfcj4sz/GDk6Y8EpoE5uko7+YeourNk/yYiHxjckfHmq91yRkmKiik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYy3+Vej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5vQrU7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE311F000E9;
-	Thu, 28 May 2026 20:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYy3+Vej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B4E1F000E9;
+	Thu, 28 May 2026 20:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000664;
-	bh=XCMXwa2f3wZmTd9weG8wolFkjzRkLuPneyoge5pui7g=;
+	s=korg; t=1780000667;
+	bh=kOsXlw1F0pdMw4hgLRHnClsfcNS+i87VMipWFVyWEyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5vQrU7r2pOAiigZo7y0WGw3zwaR/Vg3Db6E22Jzx39Q8prhud83cuhp8AGhiwxib
-	 iPFICd0Lg5EDS8HgyGhDm1AwNjWxGjiagmdE+G8m8I/5+ffuxg8ra7ukAA7ixnbHmG
-	 YUJ94gFuY0V/qHCIwG1a8ceiqAGLuPlhJa6hBhU8=
+	b=JYy3+Vejea55wK6BOk141wfyXvsMHo6yaoc83g5DP3EY98QpATeJ487QIkk/wolIe
+	 4Sg3mpM6J3hJd/XnPnlB7rs3TCiQdnNnW7+rYDkCgFJuYO3RP+umY+AHtjnnpiZDM6
+	 oo29Z+TiVWRI0EUvyd8mcd3xoxo2SAF6QHqEldCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 124/272] batman-adv: fix fragment reassembly length accounting
-Date: Thu, 28 May 2026 21:48:18 +0200
-Message-ID: <20260528194632.851240281@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.12 090/272] rbd: eliminate a race in lock_dwork draining on unmap
+Date: Thu, 28 May 2026 21:47:44 +0200
+Message-ID: <20260528194631.900058331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -57,132 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 9cd3f16c320bfdadd4509358122368deb56a5741 upstream.
+commit 9fc75b71fdd38465c76c6f6a884cdd4ae3c72d90 upstream.
 
-batman-adv keeps a running payload length for queued fragments and uses it
-to validate a fragment chain before reassembly.
+Given how rbd_lock_add_request() and rbd_img_exclusive_lock() are
+written, lock_dwork may be (re)queued more than it's actually needed:
+for example in case a new I/O request comes in while we are in the
+middle of rbd_acquire_lock() on behalf of another I/O request.  This is
+expected and with rbd_release_lock() preemptively canceling lock_dwork
+is benign under normal operation.
 
-That accounting currently allows the accumulated fragment length to be
-truncated during updates. As a result, malformed fragment chains can
-bypass the intended validation and drive reassembly with inconsistent
-length state, leading to a local denial of service.
+A more problematic example is maybe_kick_acquire():
 
-Fix the accounting by storing the accumulated length in a length-typed
-field and rejecting update overflows before the existing validation logic
-runs.
+    if (have_requests || delayed_work_pending(&rbd_dev->lock_dwork)) {
+            dout("%s rbd_dev %p kicking lock_dwork\n", __func__, rbd_dev);
+            mod_delayed_work(rbd_dev->task_wq, &rbd_dev->lock_dwork, 0);
+    }
 
-The fix was verified against the original reproducer and against valid
-fragment reassembly paths.
+It's not unrealistic for lock_dwork to get canceled right after
+delayed_work_pending() returns true and for mod_delayed_work() to
+requeue it right there anyway.  This is a classic TOCTOU race.
 
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+When it comes to unmapping the image, there is an implicit assumption
+of no self-initiated exclusive lock activity past the point of return
+from rbd_dev_image_unlock() which unlocks the lock if it happens to be
+held.  This unlock is assumed to be final and lock_dwork (as well as
+all other exclusive lock tasks, really) isn't expected to get queued
+again.  However, lock_dwork is canceled only in cancel_tasks_sync()
+(i.e. later in the unmap sequence) and on top of that the cancellation
+can get in effect nullified by maybe_kick_acquire().  This may result
+in rbd_acquire_lock() executing after rbd_dev_device_release() and
+rbd_dev_image_release() run and free and/or reset a bunch of things.
+One of the possible failure modes then is a violated
+
+    rbd_assert(rbd_image_format_valid(rbd_dev->image_format));
+
+in rbd_dev_header_info() which is called via rbd_dev_refresh() from
+rbd_post_acquire_action().
+
+Redo exclusive lock task draining to provide saner semantics and try
+to meet the assumptions around rbd_dev_image_unlock().
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |   23 +++++++++++++++++------
- net/batman-adv/types.h         |    2 +-
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ drivers/block/rbd.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -17,6 +17,7 @@
- #include <linux/lockdep.h>
- #include <linux/minmax.h>
- #include <linux/netdevice.h>
-+#include <linux/overflow.h>
- #include <linux/skbuff.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -80,9 +81,9 @@ void batadv_frag_purge_orig(struct batad
-  *
-  * Return: the maximum size of payload that can be fragmented.
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -4565,24 +4565,12 @@ out:
+ 	return ret;
+ }
+ 
+-static void cancel_tasks_sync(struct rbd_device *rbd_dev)
+-{
+-	dout("%s rbd_dev %p\n", __func__, rbd_dev);
+-
+-	cancel_work_sync(&rbd_dev->acquired_lock_work);
+-	cancel_work_sync(&rbd_dev->released_lock_work);
+-	cancel_delayed_work_sync(&rbd_dev->lock_dwork);
+-	cancel_work_sync(&rbd_dev->unlock_work);
+-}
+-
+ /*
+  * header_rwsem must not be held to avoid a deadlock with
+  * rbd_dev_refresh() when flushing notifies.
   */
--static int batadv_frag_size_limit(void)
-+static size_t batadv_frag_size_limit(void)
+ static void rbd_unregister_watch(struct rbd_device *rbd_dev)
  {
--	int limit = BATADV_FRAG_MAX_FRAG_SIZE;
-+	size_t limit = BATADV_FRAG_MAX_FRAG_SIZE;
+-	cancel_tasks_sync(rbd_dev);
+-
+ 	mutex_lock(&rbd_dev->watch_mutex);
+ 	if (rbd_dev->watch_state == RBD_WATCH_STATE_REGISTERED)
+ 		__rbd_unregister_watch(rbd_dev);
+@@ -6549,10 +6537,18 @@ out_err:
  
- 	limit -= sizeof(struct batadv_frag_packet);
- 	limit *= BATADV_FRAG_MAX_FRAGMENTS;
-@@ -143,7 +144,9 @@ static bool batadv_frag_insert_packet(st
- 	struct batadv_frag_packet *frag_packet;
- 	u8 bucket;
- 	u16 seqno, hdr_size = sizeof(struct batadv_frag_packet);
-+	bool overflow = false;
- 	bool ret = false;
-+	size_t data_len;
- 
- 	/* Linearize packet to avoid linearizing 16 packets in a row when doing
- 	 * the later merge. Non-linear merge should be added to remove this
-@@ -153,6 +156,7 @@ static bool batadv_frag_insert_packet(st
- 		goto err;
- 
- 	frag_packet = (struct batadv_frag_packet *)skb->data;
-+	data_len = skb->len - hdr_size;
- 	seqno = ntohs(frag_packet->seqno);
- 	bucket = seqno % BATADV_FRAG_BUFFER_COUNT;
- 
-@@ -171,7 +175,7 @@ static bool batadv_frag_insert_packet(st
- 	spin_lock_bh(&chain->lock);
- 	if (batadv_frag_init_chain(chain, seqno)) {
- 		hlist_add_head(&frag_entry_new->list, &chain->fragment_list);
--		chain->size = skb->len - hdr_size;
-+		chain->size = data_len;
- 		chain->timestamp = jiffies;
- 		chain->total_size = ntohs(frag_packet->total_size);
- 		ret = true;
-@@ -188,7 +192,11 @@ static bool batadv_frag_insert_packet(st
- 		if (frag_entry_curr->no < frag_entry_new->no) {
- 			hlist_add_before(&frag_entry_new->list,
- 					 &frag_entry_curr->list);
--			chain->size += skb->len - hdr_size;
+ static void rbd_dev_image_unlock(struct rbd_device *rbd_dev)
+ {
++	dout("%s rbd_dev %p\n", __func__, rbd_dev);
 +
-+			if (check_add_overflow(chain->size, data_len,
-+					       &chain->size))
-+				overflow = true;
++	disable_delayed_work_sync(&rbd_dev->lock_dwork);
++	disable_work_sync(&rbd_dev->unlock_work);
 +
- 			chain->timestamp = jiffies;
- 			ret = true;
- 			goto out;
-@@ -201,13 +209,16 @@ static bool batadv_frag_insert_packet(st
- 	/* Reached the end of the list, so insert after 'frag_entry_last'. */
- 	if (likely(frag_entry_last)) {
- 		hlist_add_behind(&frag_entry_new->list, &frag_entry_last->list);
--		chain->size += skb->len - hdr_size;
+ 	down_write(&rbd_dev->lock_rwsem);
+ 	if (__rbd_is_lock_owner(rbd_dev))
+ 		__rbd_release_lock(rbd_dev);
+ 	up_write(&rbd_dev->lock_rwsem);
 +
-+		if (check_add_overflow(chain->size, data_len, &chain->size))
-+			overflow = true;
-+
- 		chain->timestamp = jiffies;
- 		ret = true;
- 	}
++	flush_work(&rbd_dev->acquired_lock_work);
++	flush_work(&rbd_dev->released_lock_work);
+ }
  
- out:
--	if (chain->size > batadv_frag_size_limit() ||
-+	if (overflow || chain->size > batadv_frag_size_limit() ||
- 	    chain->total_size != ntohs(frag_packet->total_size) ||
- 	    chain->total_size > batadv_frag_size_limit()) {
- 		/* Clear chain if total size of either the list or the packet
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -295,7 +295,7 @@ struct batadv_frag_table_entry {
- 	u16 seqno;
- 
- 	/** @size: accumulated size of packets in list */
--	u16 size;
-+	size_t size;
- 
- 	/** @total_size: expected size of the assembled packet */
- 	u16 total_size;
+ /*
 
 
