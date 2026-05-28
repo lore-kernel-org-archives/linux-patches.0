@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E033CE8A;
-	Thu, 28 May 2026 20:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC71344DAC;
+	Thu, 28 May 2026 20:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999030; cv=none; b=nkpUCx6BSGrMnrIwVKXyyFlh/+nyZWAx2YJ255cB5F0IEaQ11X0tiylXQ9zfrx0CeoIHiqYl/X4340q6ioGgjK5y1oMjz4/WTDOGVvh5UuemFoSoXnxTBwS+lJcYgrmtQxWE6RDkUmvvFjwihP9acQa9m8BJVCeUA2QiSj87l5k=
+	t=1779999033; cv=none; b=qrIxszbOvigijqk50vglLLiyzLUyVdhKACqZTNxAG2c6x7RDvD2g4EFed3MpQQWovcW/2iB7V4Jzbl/kqJqpQYRYn1R9oapIVUCA4R+aq4CoaVP33BAvEjYOul7aSVWNg8zxloP/LBhE230ttw3TJo7dS9SvH0UuC97rbTbIwjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999030; c=relaxed/simple;
-	bh=5+bCqJL9/0iQTCpUJW5drFekRG61UuUDxE4ovglApuA=;
+	s=arc-20240116; t=1779999033; c=relaxed/simple;
+	bh=N/gxprgtxFCuZqvV7v3B4b3FpxZSYr3ywO4OsHtcmkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAtfvcihT0o4xC/0bBrC9o+mj1NvDK2gUQPLl0lK5thRGTCbptE0NpTiyvvekkdNaGkYDvkea8W8vwq23pSACqdpsTmiUOaObiyWHZacLZyBzAEr/59d6J6cG0e/Ka1gnf2C+hCCttWbJAuB8w9gM/ia77oItVojMtGmgXixisI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EGijhcS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kFX0uC598jDaNEFEhsp096J5jlHn2PrJY7+C8I6YFn3E4jhTQDm4LCIctzxn10Y2r5CX3s3RPN0aRiDCROP+3xkSN6YUxJ2k01QItFjsWzs3T/rjxCfxWXiAwUooKtYtaSkKlLxSGqX9ZsxDouAX1MSAI48jJFFKWNM0a9k5UIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1J4Rc8I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EGijhcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0B71F000E9;
-	Thu, 28 May 2026 20:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1J4Rc8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0F61F000E9;
+	Thu, 28 May 2026 20:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999029;
-	bh=TW/nn3aj6/O8UVS5tQyoWGb8n+aMtkF4dVZayg6u8mg=;
+	s=korg; t=1779999032;
+	bh=pSg25hCTduxgMzlzTuwhGkqE80MkfIrKIj/Dd8ByjMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1EGijhcSTyTkWAu6Dj3S+Ctjtua/mQINLe9gkGx/F3HWZFFtVY2JSEoPRnbGciGJ7
-	 W4sbzhIgBugs4PA4F0JH7R7tLsuHFGcw4zoS28N71x/xr/Q6Dw8P7AI6uX4Us969qT
-	 dwvHwYxnYubqGD4dwQ9iVe/vsLyssCPtyR9I0lO8=
+	b=l1J4Rc8Ihkxj9CO+I2lBbwRQs2wZLITdh9hkXeSbPgpwD/0TMynwctyUhOkRDsEom
+	 Xi0XJZKSgljiyur7glgJ8Bcc1IZzn3PzEjDJTWWUNyTJw05faB5N1vSYW3v6X55fhj
+	 P60MGd4JSx2p46yOEUB22+sOdWoHE4w8pkYMKsMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 382/461] phy: qcom: qmp-usbc: Fix out-of-bounds array access in dp swing config
-Date: Thu, 28 May 2026 21:48:31 +0200
-Message-ID: <20260528194658.513342776@linuxfoundation.org>
+Subject: [PATCH 7.0 383/461] kbuild: pacman-pkg: make "rc" releases adhere to pacman versioning scheme
+Date: Thu, 28 May 2026 21:48:32 +0200
+Message-ID: <20260528194658.542735620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -48,45 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+From: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
 
-[ Upstream commit ea17fc4d7dc2ba6459b1a318962960520201baf1 ]
+[ Upstream commit 202550713128da20d9381d6d2dc0f6b73839f434 ]
 
-swing_tbl and pre_emphasis_tbl are 4x4 arrays (valid indices 0-3), but
-the boundary check uses "> 4" instead of ">= 4", allowing index 4 to
-cause an out-of-bounds access.
+The package versioning scheme does not enable smooth upgrades from "rc"
+releases to the corresponding stable releases (e.g. 7.0.0-rc7 -> 7.0.0)
+because pacman considers that a downgrade due to the underscore in
+pkgver (e.g. 7.0.0_rc7), see e.g. vercmp(8) for an explanation of the
+package version comparison used by pacman. Package versions which are
+derived from said releases (e.g. built from git revisions) are
+similarly affected. Fix this by modifying pkgver in order to remove the
+hyphen from kernel versions containing "-rcN", where N is a
+non-negative integer.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 81791c45c8e0 ("phy: qcom: qmp-usbc: Add QCS615 USB/DP PHY config and DP mode support")
-Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260227-master-v1-1-8d91b9407fdb@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260515215913.92481-1-viktor_jaegerskuepper@freenet.de
+Fixes: c8578539deba ("kbuild: add script and target to generate pacman package")
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 2 +-
+ scripts/package/PKGBUILD | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-index 14feb77789b3e..0dd7000614f44 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-@@ -794,7 +794,7 @@ static int qmp_v2_configure_dp_swing(struct qmp_usbc *qmp)
- 		p_level = max(p_level, dp_opts->pre[i]);
- 	}
+diff --git a/scripts/package/PKGBUILD b/scripts/package/PKGBUILD
+index 452374d63c244..1213c8e04671e 100644
+--- a/scripts/package/PKGBUILD
++++ b/scripts/package/PKGBUILD
+@@ -10,7 +10,7 @@ for pkg in $_extrapackages; do
+ 	pkgname+=("${pkgbase}-${pkg}")
+ done
  
--	if (v_level > 4 || p_level > 4) {
-+	if (v_level >= 4 || p_level >= 4) {
- 		dev_err(qmp->dev, "Invalid v(%d) | p(%d) level)\n",
- 			v_level, p_level);
- 		return -EINVAL;
+-pkgver="${KERNELRELEASE//-/_}"
++pkgver="$(echo "${KERNELRELEASE}" | sed 's/-\(rc[0-9]\+\)/\1/;s/-/_/g')"
+ # The PKGBUILD is evaluated multiple times.
+ # Running scripts/build-version from here would introduce inconsistencies.
+ pkgrel="${KBUILD_REVISION}"
 -- 
 2.53.0
 
