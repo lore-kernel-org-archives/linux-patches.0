@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DF731159C;
-	Thu, 28 May 2026 20:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E916C2F260C;
+	Thu, 28 May 2026 20:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001416; cv=none; b=J8INFrQaYRZf2Zw67MYQVlFoAkeg6xxW+YWNse+rXNxT0Ptx5aflAJdTf0n3An3tjFPICReb1axNZ+4INfDmaZ3v4CGovCvOJZwapjX92lkKZqitOw8t7PZqV8mGgMPJ7XdtQILc78wPS/wRe6IvvBryVCcYQK2IkmT42iwU+3o=
+	t=1780001419; cv=none; b=TIf5H3Q49/7Y0gNi2TCmPoluuOMDFmbmNMTchgjih4Dm1O9u87MCiTUD1MHh2Y2b2NI92hj+jM4QZSSxRbMBpdDwXF92xIpLF1cKTo4ENah0gE6CNXt0iXmz7FP88pd+7YtuBDl6hj5rppo4/7L2jg8gnWQX78T7xQe6lMsWKIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001416; c=relaxed/simple;
-	bh=WpY7bTiiP/RdmEzXsmdFrw7Cgvj5QHqa1ISoYylW7TU=;
+	s=arc-20240116; t=1780001419; c=relaxed/simple;
+	bh=4Do3FCAs+NGpXzbIVdO9uOR1nXa1hfsWWaUSWxzhYFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hu6PgbtjIFBVHjT7osYn4UCBJ+mRfNFsdrIwfgBeQU8nzohVqCgC5c6g95jyzFjGlDYFuNxtQbbZwm/VeeWQmcwylmN13E9HLmh33qhQQKpebzKJG3VrPrdq45mP8gmmlk5yEH4U+kE4ei13gW/hUDq+gMJ02eyE4RxPwGynPvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cib4ubuY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bhBPXWMHpzbTiQmfVloOZgknJbYQIzMISeBcrzT73mgJz5nyjbMkbVkhe99a0goTiZX6SCi14XE4pLoERD5tLyJgyuaN81rSAs+W/FgUdOGeJuuK5LeBTMoy67P6L5pCzEG0tdKOFYy+i4FFMLusnqcKH5MRtfy7m2/BP6n7/z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZ5Kmoub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cib4ubuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534F21F000E9;
-	Thu, 28 May 2026 20:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZ5Kmoub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D67F1F000E9;
+	Thu, 28 May 2026 20:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001414;
-	bh=YfG9jIqPo1Gx+jlfvZjzFWkCseLT7kg/M1qrQ1G5Jgk=;
+	s=korg; t=1780001417;
+	bh=9v7Cq4T8I1UFase3JjNjGMYmUfwnwjmOCkmbGVKjgqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cib4ubuYwM8+yo0sjdixvhftvGCKcmfoAK6gvbyv3xpIVi662CXjsxNivJOOkgSoh
-	 BuQwD1naZn2pnaa1dkgupxqywAaAmla+I8yngP7wMzzGGUiGUyNPWx/23Ab4qWezvO
-	 sCZFA5uj7WAjgq4tEJTodNhW/UWJriUlcQLxGc+8=
+	b=hZ5Kmoub1dQKdNHzgqdAUr4XYd6UdlWfcDOSjtHeBqGWTpBU7cYMDjbM+fdhin+s/
+	 V0EHDnP+SGqJyaA0vY7JyeQHaZfPHDTvjYsNkeG7xSb797OteNceSatjDGTMN2DZI0
+	 yS8Ai69QuvcSi9qEwnfbV1PRnLhpJ6fU0c6EAs7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	Martin Kaiser <martin@kaiser.cx>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/186] kprobes: skip non-symbol addresses in kprobe_add_ksym_blacklist()
-Date: Thu, 28 May 2026 21:50:00 +0200
-Message-ID: <20260528194932.182700667@linuxfoundation.org>
+Subject: [PATCH 6.6 121/186] test_kprobes: clear kprobes between test runs
+Date: Thu, 28 May 2026 21:50:01 +0200
+Message-ID: <20260528194932.210924020@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -51,101 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 307abfac04a254c09c5705d816b33354acee97a0 ]
+[ Upstream commit ef5581bb30efb939cc2bf093475c6cc85258e5cd ]
 
-When kprobe_add_area_blacklist() iterates through a section like
-.kprobes.text, the start address may not correspond to a named symbol.
-On ARM64 with CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y (introduced by
-commit baaf553d3bc3 ("arm64: Implement
-HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS")), the compiler flag
--fpatchable-function-entry=4,2 inserts 2 NOPs before each function entry
-point for ftrace call_ops. These pre-function NOPs sit at the section base
-address, before the first named function symbol. The compiler emits a $x
-mapping symbol at offset 0x00 to mark the start of code, but
-find_kallsyms_symbol() ignores mapping symbols.
+Running the kprobes sanity tests twice makes all tests fail and
+eventually crashes the kernel.
 
-Without CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS (e.g. defconfig), no
-pre-function NOPs are inserted, the first function starts at offset
-0x00, and the bug does not trigger.
+[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
+...
+   # Totals: pass:5 fail:0 skip:0 total:5
+   ok 1 kprobes_test
+[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
+...
+  # test_kprobe: EXPECTATION FAILED at lib/tests/test_kprobes.c:64
+  Expected 0 == register_kprobe(&kp), but
+      register_kprobe(&kp) == -22 (0xffffffffffffffea)
+...
+  Unable to handle kernel paging request ...
 
-This only affects modules that have a .kprobes.text section (i.e. those
-using the __kprobes annotation). Modules using NOKPROBE_SYMBOL() instead
-(like kretprobe_example.ko) blacklist exact function addresses via the
-_kprobe_blacklist section and are not affected.
+The testsuite defines several kprobes and kretprobes as static variables
+that are preserved across test runs.
 
-For kprobe_example.ko on ARM64 with -fpatchable-function-entry=4,2,
-the .kprobes.text section layout is:
+After register_kprobe and unregister_kprobe, a kprobe contains some
+leftover data that must be cleared before the kprobe can be registered
+again. The tests are setting symbol_name to define the probe location.
+Address and flags must be cleared.
 
-  offset 0x00: $x + 2 NOPs    (mapping symbol + ftrace preamble)
-  offset 0x08: handler_post   (64 bytes)
-  offset 0x50: handler_pre    (68 bytes)
+The existing code clears some of the probes between subsequent tests, but
+not between two test runs. The leftover data from a previous test run
+makes the registrations fail in the next run.
 
-kprobe_add_area_blacklist() starts iterating from the section base
-address (offset 0x00), which only has the $x mapping symbol.
-kprobe_add_ksym_blacklist() then calls kallsyms_lookup_size_offset()
-for this address, which goes through:
+Move the cleanups for all kprobes into kprobes_test_init, this function
+is called before each single test (including the first test of a test
+run).
 
-  kallsyms_lookup_size_offset()
-    -> module_address_lookup()
-      -> find_kallsyms_symbol()
+Link: https://lore.kernel.org/all/20260507134615.1010905-1-martin@kaiser.cx/
 
-find_kallsyms_symbol() scans all module symbols to find the closest
-preceding symbol.
-
-Since no named text symbol exists at offset 0x00,
-find_kallsyms_symbol() picks __UNIQUE_ID_vermagic (a .modinfo symbol
-whose address is in the temporary image) as the "best" match. The
-computed "size" = next_text_symbol - modinfo_symbol spans across
-these two unrelated memory regions, creating a blacklist entry with
-a bogus range of tens of terabytes.
-
-Whether this causes a visible failure depends on address randomization,
-here is what happens on Raspberry Pi 4/5:
-
-  - On RPi5, the bogus size was ~35 TB. start + size stayed within
-    64-bit range, so the blacklist entry covered the entire kernel
-    text. register_kprobe() in the module's own init function failed
-    with -EINVAL.
-
-  - On RPi4, the bogus size was ~75 TB. start + size overflowed
-    64 bits and wrapped to a small address near zero. The range
-    check (addr >= start && addr < end) then failed because end
-    wrapped around, so the bogus entry was accidentally harmless
-    and kprobes worked by luck.
-
-The same bug exists on both machines, but randomization determines whether
-the integer overflow masks it or not.
-
-Fix this by adding notrace to the __kprobes macro. Functions in
-.kprobes.text are kprobe infrastructure handlers that should never be
-traced by ftrace. With notrace, the compiler stops inserting them and the
-non-symbol gap at the section start disappears entirely.
-
-Link: https://lore.kernel.org/all/20260506012706.2785785-1-jianpeng.chang.cn@windriver.com/
-
-Fixes: baaf553d3bc3 ("arm64: Implement HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Fixes: e44e81c5b90f ("kprobes: convert tests to kunit")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/kprobes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/test_kprobes.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/include/asm-generic/kprobes.h b/include/asm-generic/kprobes.h
-index 060eab094e5a2..5290a2b2e15a0 100644
---- a/include/asm-generic/kprobes.h
-+++ b/include/asm-generic/kprobes.h
-@@ -14,7 +14,7 @@ static unsigned long __used					\
- 	_kbl_addr_##fname = (unsigned long)fname;
- # define NOKPROBE_SYMBOL(fname)	__NOKPROBE_SYMBOL(fname)
- /* Use this to forbid a kprobes attach on very low level functions */
--# define __kprobes	__section(".kprobes.text")
-+# define __kprobes	notrace __section(".kprobes.text")
- # define nokprobe_inline	__always_inline
- #else
- # define NOKPROBE_SYMBOL(fname)
+diff --git a/lib/test_kprobes.c b/lib/test_kprobes.c
+index 0648f7154f5c4..cd7a452ab3032 100644
+--- a/lib/test_kprobes.c
++++ b/lib/test_kprobes.c
+@@ -12,6 +12,12 @@
+ 
+ #define div_factor 3
+ 
++#define KP_CLEAR(_kp) \
++do { \
++	(_kp).addr = NULL; \
++	(_kp).flags = 0; \
++} while (0)
++
+ static u32 rand1, preh_val, posth_val;
+ static u32 (*target)(u32 value);
+ static u32 (*recursed_target)(u32 value);
+@@ -125,10 +131,6 @@ static void test_kprobes(struct kunit *test)
+ 
+ 	current_test = test;
+ 
+-	/* addr and flags should be cleard for reusing kprobe. */
+-	kp.addr = NULL;
+-	kp.flags = 0;
+-
+ 	KUNIT_EXPECT_EQ(test, 0, register_kprobes(kps, 2));
+ 	preh_val = 0;
+ 	posth_val = 0;
+@@ -226,9 +228,6 @@ static void test_kretprobes(struct kunit *test)
+ 	struct kretprobe *rps[2] = {&rp, &rp2};
+ 
+ 	current_test = test;
+-	/* addr and flags should be cleard for reusing kprobe. */
+-	rp.kp.addr = NULL;
+-	rp.kp.flags = 0;
+ 	KUNIT_EXPECT_EQ(test, 0, register_kretprobes(rps, 2));
+ 
+ 	krph_val = 0;
+@@ -290,8 +289,6 @@ static void test_stacktrace_on_kretprobe(struct kunit *test)
+ 	unsigned long myretaddr = (unsigned long)__builtin_return_address(0);
+ 
+ 	current_test = test;
+-	rp3.kp.addr = NULL;
+-	rp3.kp.flags = 0;
+ 
+ 	/*
+ 	 * Run the stacktrace_driver() to record correct return address in
+@@ -352,8 +349,6 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
+ 	struct kretprobe *rps[2] = {&rp3, &rp4};
+ 
+ 	current_test = test;
+-	rp3.kp.addr = NULL;
+-	rp3.kp.flags = 0;
+ 
+ 	//KUNIT_ASSERT_NE(test, myretaddr, stacktrace_driver());
+ 
+@@ -367,6 +362,18 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
+ 
+ static int kprobes_test_init(struct kunit *test)
+ {
++	KP_CLEAR(kp);
++	KP_CLEAR(kp2);
++	KP_CLEAR(kp_missed);
++#ifdef CONFIG_KRETPROBES
++	KP_CLEAR(rp.kp);
++	KP_CLEAR(rp2.kp);
++#ifdef CONFIG_ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
++	KP_CLEAR(rp3.kp);
++	KP_CLEAR(rp4.kp);
++#endif
++#endif
++
+ 	target = kprobe_target;
+ 	target2 = kprobe_target2;
+ 	recursed_target = kprobe_recursed_target;
 -- 
 2.53.0
 
