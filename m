@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8F232ABC0;
-	Thu, 28 May 2026 20:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D032527A476;
+	Thu, 28 May 2026 20:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998497; cv=none; b=p2ILo9yIZrXeVWDlxepO7MrcsIm3LlGTUkYEzJvyBC+6Fbvc4OSeAQbXS9PO/mY2m1fTCitDN6uZuGCqEnFtMtYk7LMTdyMEFv3U0TteigmMAdqj6FioBlRRw2KRlsU77xssKzQpR2lhg+daq7x11bkbEe121HXAGrtQOSeO0K8=
+	t=1779998500; cv=none; b=fcZ7iaPnExtCDH51UVUHSnlC8PUDNm5nZ8jUFh00Q8N1qOKGD5t3kx9nLSOgcl2DvQIb5VcXYwHW7qMSeE8cEBoYrQWf76k+W48dixe5SPCTBmlWGAl+gS7NKngf6jSZ++7+KLNxdhvcJM6VaGvkqdhBEdfO31QCliTcQntqJic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998497; c=relaxed/simple;
-	bh=fGUQ3DvRaT1IWgAr72K47uFvjO5PpRV/doGwvBclYUI=;
+	s=arc-20240116; t=1779998500; c=relaxed/simple;
+	bh=NNpgYuXFEyoR/YDwdwGuibBw/yrmSACENZT7iZqI0J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=chdbXIPa/ekJsKwp52+sS/emN05DhYpkcLL0CNGrQC5RUasx0hAtVgJ9fGMoj5SVPhidfnX+mQJ1YTx8nddfMbkHSvYhdGQFosbkgNaeQ8ft3/z/H1q8HpCLN0Vgs0pHsJ8p8LKT4jAQWpRq7umecPFo6g+9aeRZkZ8Iekg9dRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpLZ8f0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WcKSZGm4r9NIoKssHEQDoqd5EsO9V9gFFMU+iUXo5y+3Q0MooLrXbk7YLtnmiW+y2pHk1I7Vwy7OBrcDIw4Tv6s/sYH+tUmqRhpsaBknxdlJMF+iqecSq10Txa5qfUqrudJGBcwAJad6aU/SrR8zBC9+0LJs3+vBCQ6cddRIF14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ar85RCB7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpLZ8f0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5BE1F00A3E;
-	Thu, 28 May 2026 20:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar85RCB7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8861F000E9;
+	Thu, 28 May 2026 20:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998496;
-	bh=8/S+p04B0S6uuG/IaOcWI54HfK6Vxf0GacUBSKTQchA=;
+	s=korg; t=1779998498;
+	bh=V1BEhbhhhCJV8VF1XFt2tK0z3MWSoKXOT/x8rvmP050=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpLZ8f0VfDvv3e05ugt7p1BrRFCijYBPI6vdwvNqGJY2E6tuJQe6idRhBMFA3zfgU
-	 mAJfeiqeryvHYf1kGDUNcYQposFVjM3h/dkt3tBqruDBGHz2StXyNxbMz5tTgABtLK
-	 hLTUX0/VzPOldt+XXkMAnGm8e4rDEsjvN8pm0r4c=
+	b=ar85RCB7mACWtt45bOxmEcWjtTy9IBCSx8EFMz7NhXsilvua1K8TrF3eiWyYr0/i3
+	 LZyxgKO4kZEXKh1IScwc6SSzDHIitrphIs86JJRrgUMOLxfXEeb1ESBVuR/CPaBdjj
+	 PmmfR0lEwjMK3H46QiMLAvBhe1Gj+U3CRP/7IZYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
-	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 193/461] riscv: mm: Fixup no5lvl failure when vaddr is invalid
-Date: Thu, 28 May 2026 21:45:22 +0200
-Message-ID: <20260528194652.667687018@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 7.0 158/461] batman-adv: tp_meter: avoid role confusion in tp_list
+Date: Thu, 28 May 2026 21:44:47 +0200
+Message-ID: <20260528194651.623720990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -48,91 +44,196 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit db909bd7986c10da074917af3dae83a60fa65093 ]
+commit ff24f2ecfd94c07a2b89bac497433e3b23271cac upstream.
 
-Unlike no4lvl, no5lvl still continues to detect satp, which
-requires va=pa mapping. When pa=0x800000000000, no5lvl
-would fail in Sv48 mode due to an illegal VA value of
-0x800000000000.
+Session lookups in tp_list matched only on destination address (and
+optionally session ID), leaving role validation to the caller. If two
+sessions with the same other_end coexisted (one as sender, one as receiver)
+a lookup could silently return the wrong one, causing the caller's role to
+bail out early, potentially skipping necessary cleanup.
 
-So, prevent detecting the satp flow for no5lvl, when
-vaddr is invalid. Add the is_vaddr_valid() function for
-checking.
+Move the role check into the lookup functions themselves so the correct
+entry is always returned, or none at all. Since batadv_tp_start()
+legitimately needs to detect any active session to a destination regardless
+of role, introduce a dedicated helper for that case rather than bending the
+existing lookup semantics.
 
-Fixes: 26e7aacb83df ("riscv: Allow to downgrade paging mode from the command line")
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
-Tested-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Link: https://patch.msgid.link/20260125055212.433163-1-guoren@kernel.org
-[pjw@kernel.org: cleaned up commit message]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/init.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/batman-adv/tp_meter.c |   59 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 23 deletions(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 811e03786c560..1b221c3fe2750 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -846,6 +846,27 @@ static void __init set_mmap_rnd_bits_max(void)
- 	mmap_rnd_bits_max = MMAP_VA_BITS - PAGE_SHIFT - 3;
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -255,6 +255,7 @@ static void batadv_tp_batctl_error_notif
+  * batadv_tp_list_find() - find a tp_vars object in the global list
+  * @bat_priv: the bat priv with all the mesh interface information
+  * @dst: the other endpoint MAC address to look for
++ * @role: role of the session
+  *
+  * Look for a tp_vars object matching dst as end_point and return it after
+  * having increment the refcounter. Return NULL is not found
+@@ -262,7 +263,8 @@ static void batadv_tp_batctl_error_notif
+  * Return: matching tp_vars or NULL when no tp_vars with @dst was found
+  */
+ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
+-						  const u8 *dst)
++						  const u8 *dst,
++						  enum batadv_tp_meter_role role)
+ {
+ 	struct batadv_tp_vars *pos, *tp_vars = NULL;
+ 
+@@ -271,6 +273,9 @@ static struct batadv_tp_vars *batadv_tp_
+ 		if (!batadv_compare_eth(pos->other_end, dst))
+ 			continue;
+ 
++		if (pos->role != role)
++			continue;
++
+ 		/* most of the time this function is invoked during the normal
+ 		 * process..it makes sens to pay more when the session is
+ 		 * finished and to speed the process up during the measurement
+@@ -287,11 +292,32 @@ static struct batadv_tp_vars *batadv_tp_
  }
  
-+static bool __init is_vaddr_valid(unsigned long va)
+ /**
++ * batadv_tp_list_active() - check if session from/to destination is ongoing
++ * @bat_priv: the bat priv with all the mesh interface information
++ * @dst: the other endpoint MAC address to look for
++ *
++ * Return: if matching session with @dst was found
++ */
++static bool batadv_tp_list_active(struct batadv_priv *bat_priv, const u8 *dst)
++	__must_hold(&bat_priv->tp_list_lock)
 +{
-+	unsigned long up = 0;
++	struct batadv_tp_vars *tp_vars;
 +
-+	switch (satp_mode) {
-+	case SATP_MODE_39:
-+		up = 1UL << 38;
-+		break;
-+	case SATP_MODE_48:
-+		up = 1UL << 47;
-+		break;
-+	case SATP_MODE_57:
-+		up = 1UL << 56;
-+		break;
-+	default:
-+		return false;
++	hlist_for_each_entry_rcu(tp_vars, &bat_priv->tp_list, list) {
++		if (batadv_compare_eth(tp_vars->other_end, dst))
++			return true;
 +	}
 +
-+	return (va < up) || (va >= (ULONG_MAX - up + 1));
++	return false;
 +}
 +
- /*
-  * There is a simple way to determine if 4-level is supported by the
-  * underlying hardware: establish 1:1 mapping in 4-level page table mode
-@@ -887,6 +908,9 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
- 			   set_satp_mode_pmd + PMD_SIZE,
- 			   PMD_SIZE, PAGE_KERNEL_EXEC);
- retry:
-+	if (!is_vaddr_valid(set_satp_mode_pmd))
-+		goto out;
++/**
+  * batadv_tp_list_find_session() - find tp_vars session object in the global
+  *  list
+  * @bat_priv: the bat priv with all the mesh interface information
+  * @dst: the other endpoint MAC address to look for
+  * @session: session identifier
++ * @role: role of the session
+  *
+  * Look for a tp_vars object matching dst as end_point, session as tp meter
+  * session and return it after having increment the refcounter. Return NULL
+@@ -301,7 +327,7 @@ static struct batadv_tp_vars *batadv_tp_
+  */
+ static struct batadv_tp_vars *
+ batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
+-			    const u8 *session)
++			    const u8 *session, enum batadv_tp_meter_role role)
+ {
+ 	struct batadv_tp_vars *pos, *tp_vars = NULL;
+ 
+@@ -313,6 +339,9 @@ batadv_tp_list_find_session(struct batad
+ 		if (memcmp(pos->session, session, sizeof(pos->session)) != 0)
+ 			continue;
+ 
++		if (pos->role != role)
++			continue;
 +
- 	create_pgd_mapping(early_pg_dir,
- 			   set_satp_mode_pmd,
- 			   pgtable_l5_enabled ?
-@@ -909,6 +933,7 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
- 		disable_pgtable_l4();
+ 		/* most of the time this function is invoked during the normal
+ 		 * process..it makes sense to pay more when the session is
+ 		 * finished and to speed the process up during the measurement
+@@ -665,13 +694,10 @@ static void batadv_tp_recv_ack(struct ba
+ 
+ 	/* find the tp_vars */
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-					      icmp->session);
++					      icmp->session, BATADV_TP_SENDER);
+ 	if (unlikely(!tp_vars))
+ 		return;
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
+-		goto out;
+-
+ 	if (unlikely(batadv_tp_sender_stopped(tp_vars)))
+ 		goto out;
+ 
+@@ -980,10 +1006,8 @@ void batadv_tp_start(struct batadv_priv
+ 		return;
  	}
  
-+out:
- 	memset(early_pg_dir, 0, PAGE_SIZE);
- 	memset(early_p4d, 0, PAGE_SIZE);
- 	memset(early_pud, 0, PAGE_SIZE);
--- 
-2.53.0
-
+-	tp_vars = batadv_tp_list_find(bat_priv, dst);
+-	if (tp_vars) {
++	if (batadv_tp_list_active(bat_priv, dst)) {
+ 		spin_unlock_bh(&bat_priv->tp_list_lock);
+-		batadv_tp_vars_put(tp_vars);
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: test to or from the same node already ongoing, aborting\n");
+ 		batadv_tp_batctl_error_notify(BATADV_TP_REASON_ALREADY_ONGOING,
+@@ -1104,18 +1128,14 @@ void batadv_tp_stop(struct batadv_priv *
+ 	if (!orig_node)
+ 		return;
+ 
+-	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig);
++	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig, BATADV_TP_SENDER);
+ 	if (!tp_vars) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: trying to interrupt an already over connection\n");
+ 		goto out_put_orig_node;
+ 	}
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
+-		goto out_put_tp_vars;
+-
+ 	batadv_tp_sender_shutdown(tp_vars, return_value);
+-out_put_tp_vars:
+ 	batadv_tp_vars_put(tp_vars);
+ out_put_orig_node:
+ 	batadv_orig_node_put(orig_node);
+@@ -1371,7 +1391,7 @@ batadv_tp_init_recv(struct batadv_priv *
+ 		goto out_unlock;
+ 
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-					      icmp->session);
++					      icmp->session, BATADV_TP_RECEIVER);
+ 	if (tp_vars)
+ 		goto out_unlock;
+ 
+@@ -1442,7 +1462,7 @@ static void batadv_tp_recv_msg(struct ba
+ 		}
+ 	} else {
+ 		tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+-						      icmp->session);
++						      icmp->session, BATADV_TP_RECEIVER);
+ 		if (!tp_vars) {
+ 			batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 				   "Unexpected packet from %pM!\n",
+@@ -1451,13 +1471,6 @@ static void batadv_tp_recv_msg(struct ba
+ 		}
+ 	}
+ 
+-	if (unlikely(tp_vars->role != BATADV_TP_RECEIVER)) {
+-		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+-			   "Meter: dropping packet: not expected (role=%u)\n",
+-			   tp_vars->role);
+-		goto out;
+-	}
+-
+ 	tp_vars->last_recv_time = jiffies;
+ 
+ 	/* if the packet is a duplicate, it may be the case that an ACK has been
 
 
