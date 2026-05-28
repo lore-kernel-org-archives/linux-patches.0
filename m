@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD02E7379;
-	Thu, 28 May 2026 20:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430AE1EA65;
+	Thu, 28 May 2026 20:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999834; cv=none; b=AneUC0uWGJvfHCEdKK9VqTGChzZeAfp4UY5wFulcadtqiYsaIPUJlxVCKgsfiUq6SsHultm5gVXC+RumxaItRtmmfQ1Z2petET5j45VBp1DLgNcv36R8KGL1/8t8/C5ZaN6Q4vJe7p5AdmMxY7IvqeV0z3E878HxufU+pHsJx5M=
+	t=1779999837; cv=none; b=FyzhbeAZdx33YWjryIv8q13as4Mm4U49maKKaPI3wcZZD1OPl8xbdC8ZfOWskC04aRPQRDNxkk1I/bRkJuFUwuyG+rGNX/9PFZhXSZPZK/mR7qYWU+toBsutsvk32hCOL2zXTyMgooCLwp0jNcVGsqRpG8/4tbi6XsZz1FHaJZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999834; c=relaxed/simple;
-	bh=YYEl8zMouIrCcx/WgwPK8VXLG2LO25RzXOTat06lbbQ=;
+	s=arc-20240116; t=1779999837; c=relaxed/simple;
+	bh=QhK6moksvlDQ1KRieidy3Z3NAogC7OIG/OgNHuaKhsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9VO/94sM2Ae+rNRKYfazXPmFrjIGpxdGz5SMGpqTB1uKC+pY7EBhvcwHT5OC3dLa2KVnoVf9jMjsbXdPVe+Zvvq89SFJW3sT6B7EFO7J0Yy2kOwdk70HcXlvSQlFWs2PIPeVtLk8qxWT+SYEW89Df9F3FXYww7zys4xiE/NJow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5/12ro2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MmOWgFPvf0K76IhVF+c9puoYewPsRkxY4tt8qS0LZmkpKmxSev7QonDfSv8nai2jK5+momZ7RjpOiPVwjv00XqCNXBtGGd/I7pmJp6p/o6qBVYIdrYe+0XBZ9Qe2SppixIUCRO4G0QnomRu5huXNY3NbPITqX6ST9rmCyZl78UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bzRjXo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5/12ro2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2537A1F000E9;
-	Thu, 28 May 2026 20:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bzRjXo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C061F000E9;
+	Thu, 28 May 2026 20:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999832;
-	bh=1jAWuROhiz9WGpmvsQrlUuLASlwwTHCFr9kUioGdfQQ=;
+	s=korg; t=1779999836;
+	bh=RXgfGRj//gmR5vPPnqMpbxHEw5czYJMxBDXsJlfRNlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z5/12ro27H8WMgpbcjAUho1OL7Tu9DPL3Ttx4BRdV1aHLeiFNnXvcX+NtsSD5Kr5M
-	 CSuXWleknUIbUnQPEZB/0557Z+tOFlkazuqowHl27culnb40P/fh8j0WstduReST7D
-	 ledRaY7buZxnvDZYYh9ijPkQbD2vdgoUFx7gf1Ec=
+	b=2bzRjXo+phu/gtjZJ8wQS/6pct2bd59MbgyZZ5eVgqJdfsjTjYr0cs27ddv6ujmn1
+	 4gXBszz2rmNAIji6lj2Hpbw7H9wC3jm9zPgs+VrrcyBAz5HS27rob8qHVsceLp0/PR
+	 chs0dy0rXqZuF0xJXBRsaaowYo+F8NDhZ97CjT7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Karsten <mkarsten@uwaterloo.ca>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Joe Damato <joe@dama.to>,
+	Mohsin Bashir <hmohsin@meta.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 208/377] net: napi: Avoid gro timer misfiring at end of busypoll
-Date: Thu, 28 May 2026 21:47:26 +0200
-Message-ID: <20260528194644.427140119@linuxfoundation.org>
+Subject: [PATCH 6.18 209/377] net: shaper: Reject reparenting of existing nodes
+Date: Thu, 28 May 2026 21:47:27 +0200
+Message-ID: <20260528194644.454305586@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -55,93 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Mohsin Bashir <hmohsin@meta.com>
 
-[ Upstream commit 58e2330bd45572a6e3d46ea94cf7a9641f43591a ]
+[ Upstream commit a77d5a069d959dc45f5f472d48cba37d8cba0f1c ]
 
-When in irq deferral mode (defer-hard-irqs > 0), a short enough
-gro-flush timeout can trigger before NAPI_STATE_SCHED is cleared if the
-last poll in busy_poll_stop() takes too long. This can have the effect
-of leaving the queue stuck with interrupts disabled and no timer armed
-which results in a tx timeout if there is no subsequent busypoll cycle.
+When an existing node-scope shaper is moved to a different parent
+via the group operation, the framework fails to update the leaves
+count on both the old and new parent shapers. Only newly created
+nodes (handle.id == NET_SHAPER_ID_UNSPEC) trigger the parent
+leaves increment at line 1039.
 
-To prevent this, defer the gro-flush timer arm after the last poll.
+This causes the parent's leaves counter to diverge from the
+actual number of children in the xarray. When the node is later
+deleted, pre_del_node() allocates an array sized by the stale
+leaves count, but the xarray iteration finds more children than
+expected, hitting the WARN_ON_ONCE guard and returning -EINVAL.
 
-Fixes: 7fd3253a7de6 ("net: Introduce preferred busy-polling")
-Co-developed-by: Martin Karsten <mkarsten@uwaterloo.ca>
-Signed-off-by: Martin Karsten <mkarsten@uwaterloo.ca>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260506090808.820559-2-dtatulea@nvidia.com
+Rather than adding reparenting support with complex leaves count
+bookkeeping, reject group calls that attempt to change an existing
+node's parent. Updates to an existing node's rate or leaves under
+the same parent remain permitted. We expect that for any modification
+of the topology user should always create new groups and let the
+kernel garbage collect the leaf-less nodes.
+
+Fixes: 5d5d4700e75d ("net-shapers: implement NL group operation")
+Signed-off-by: Mohsin Bashir <hmohsin@meta.com>
+Link: https://patch.msgid.link/20260506233745.111895-1-mohsin.bashr@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ net/shaper/shaper.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 29f2f35ae5ebe..681d7de89c505 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6777,9 +6777,9 @@ static void skb_defer_free_flush(void)
+diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
+index be9999ab62e39..e41a82241230d 100644
+--- a/net/shaper/shaper.c
++++ b/net/shaper/shaper.c
+@@ -964,15 +964,22 @@ static int __net_shaper_group(struct net_shaper_binding *binding,
+ 	int i, ret;
  
- #if defined(CONFIG_NET_RX_BUSY_POLL)
+ 	if (node->handle.scope == NET_SHAPER_SCOPE_NODE) {
++		struct net_shaper *cur = NULL;
++
+ 		new_node = node->handle.id == NET_SHAPER_ID_UNSPEC;
  
--static void __busy_poll_stop(struct napi_struct *napi, bool skip_schedule)
-+static void __busy_poll_stop(struct napi_struct *napi, unsigned long timeout)
- {
--	if (!skip_schedule) {
-+	if (!timeout) {
- 		gro_normal_list(&napi->gro);
- 		__napi_schedule(napi);
- 		return;
-@@ -6789,6 +6789,8 @@ static void __busy_poll_stop(struct napi_struct *napi, bool skip_schedule)
- 	gro_flush_normal(&napi->gro, HZ >= 1000);
- 
- 	clear_bit(NAPI_STATE_SCHED, &napi->state);
-+	hrtimer_start(&napi->timer, ns_to_ktime(timeout),
-+		      HRTIMER_MODE_REL_PINNED);
- }
- 
- enum {
-@@ -6800,8 +6802,7 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
- 			   unsigned flags, u16 budget)
- {
- 	struct bpf_net_context __bpf_net_ctx, *bpf_net_ctx;
--	bool skip_schedule = false;
--	unsigned long timeout;
-+	unsigned long timeout = 0;
- 	int rc;
- 
- 	/* Busy polling means there is a high chance device driver hard irq
-@@ -6821,10 +6822,12 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
- 
- 	if (flags & NAPI_F_PREFER_BUSY_POLL) {
- 		napi->defer_hard_irqs_count = napi_get_defer_hard_irqs(napi);
--		timeout = napi_get_gro_flush_timeout(napi);
--		if (napi->defer_hard_irqs_count && timeout) {
--			hrtimer_start(&napi->timer, ns_to_ktime(timeout), HRTIMER_MODE_REL_PINNED);
--			skip_schedule = true;
-+		if (napi->defer_hard_irqs_count) {
-+			/* A short enough gro flush timeout and long enough
-+			 * poll can result in timer firing too early.
-+			 * Timer will be armed later if necessary.
-+			 */
-+			timeout = napi_get_gro_flush_timeout(napi);
+-		if (!new_node && !net_shaper_lookup(binding, &node->handle)) {
+-			/* The related attribute is not available when
+-			 * reaching here from the delete() op.
+-			 */
+-			NL_SET_ERR_MSG_FMT(extack, "Node shaper %d:%d does not exists",
+-					   node->handle.scope, node->handle.id);
+-			return -ENOENT;
++		if (!new_node) {
++			cur = net_shaper_lookup(binding, &node->handle);
++			if (!cur) {
++				/* The related attribute is not available
++				 * when reaching here from the delete() op.
++				 */
++				NL_SET_ERR_MSG_FMT(extack,
++						   "Node shaper %d:%d does not exist",
++						   node->handle.scope,
++						   node->handle.id);
++				return -ENOENT;
++			}
  		}
- 	}
  
-@@ -6839,7 +6842,7 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
- 	trace_napi_poll(napi, rc, budget);
- 	netpoll_poll_unlock(have_poll_lock);
- 	if (rc == budget)
--		__busy_poll_stop(napi, skip_schedule);
-+		__busy_poll_stop(napi, timeout);
- 	bpf_net_ctx_clear(bpf_net_ctx);
- 	local_bh_enable();
- }
+ 		/* When unspecified, the node parent scope is inherited from
+@@ -986,6 +993,15 @@ static int __net_shaper_group(struct net_shaper_binding *binding,
+ 				return ret;
+ 		}
+ 
++		if (cur && net_shaper_handle_cmp(&cur->parent,
++						 &node->parent)) {
++			NL_SET_ERR_MSG_FMT(extack,
++					   "Cannot reparent node shaper %d:%d",
++					   node->handle.scope,
++					   node->handle.id);
++			return -EOPNOTSUPP;
++		}
++
+ 	} else {
+ 		net_shaper_default_parent(&node->handle, &node->parent);
+ 	}
 -- 
 2.53.0
 
