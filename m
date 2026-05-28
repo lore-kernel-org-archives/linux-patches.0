@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E631327C00;
-	Thu, 28 May 2026 20:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFBF2E92BA;
+	Thu, 28 May 2026 20:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780001427; cv=none; b=a2MMKD2cDb4pauYP2RPppTem6baBOh2Vx4GzAAKH+/RQzTSE8KSM0TvJvgxl991H6Feqml8E/w/tieW030VyaHR3okEgIDkV/avVJ6g163Jlp2M/JRCXv4EoWx2a2fQM7v8PRXXbtjTmu+ilHPxkAGNG0W+7aFImJd5GzL0KgDM=
+	t=1780001429; cv=none; b=NG1tXvHhJq9O0aHMKJOri/ewsabnvSYsq/3tJKPg10q5LHIhfi/kqza8wvyMoKeZ4/av9DuHFppa0wFSGO7331zHE7YQPsAq9uf19uckIMNSjSqmHHcM5YWJilLFVhjGTNO+FBAE+JYPE2Uug69mFvkmO1yxTt7+Y102nWhFFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780001427; c=relaxed/simple;
-	bh=jmOldHPDFFCGDdY9ZvVxVNYMnLwVDvugAdHdAwGTMHc=;
+	s=arc-20240116; t=1780001429; c=relaxed/simple;
+	bh=5pmkrRdjzOd2Hj1nstTeFRq9+aan0Ho/9/Ix2QfolWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHH656C8NEP96QqSgpBgn1l8gSw6y6GlSeOtdWZdaI0MhCmfqSRgbVa13NjIcYg7eLrHGj6p6e8iX3yBCfP8sTgnZ3+H1qFEeqyLRlYrnZFPA0LmvB2bl9pPUPRlruY9jC4wynxNe1xbBbzUEg9RAHhvJ3i/1l9G9W6Rb8PFfgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkIaKJv5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YlyvtApm8hAkoKrSg89KhhWusjyNh7wKyY2jjgxPYbXeemNVaAbjbOF1GqyMjVNgwYyqcnOrAVIWPsEPGKajKE7FKHv7ZTAyJxkiDibgfuzR1hZJbNSdSuGvvk8xloCHgRhi7OcAXLaoOuuzPVnkBjH7RpN35WcPvINGsXN2v08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hghF3olM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkIaKJv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEC41F000E9;
-	Thu, 28 May 2026 20:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hghF3olM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493A31F000E9;
+	Thu, 28 May 2026 20:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780001426;
-	bh=9rLmfIZOMA1Xx1/7xUFbwk9bZIh5WA0+gZzA6uPGgJ8=;
+	s=korg; t=1780001428;
+	bh=mATd0+p7i+IF6ztpYl/HXy+ZOeKlb01MGcULzNJ/1ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkIaKJv59FydD4ggcTd7jZLM9lhrboPNyRjWAddR4tOY6Kzl6xWYpcIE5FhHEKbDR
-	 735W0u6quvsgIGCh/bYzg5Ft9MQiF0qqvhx5NWjkoop7jvrxASh6vFnOQ0iGzDv3Mc
-	 pbeFnHO5ByOV0j4/ZRPYJsU6poH51/R5+TbdVNYs=
+	b=hghF3olMNrI38wJYJoNCNq6KFxA7xgZPPf3JRAJqUaZVd08ywX1CPAtp65AMEFRZy
+	 SS4AmSWD7HtOKMKfEhaSN9toqB1FcDqDdgDVBntwO7d/kZVdXBu5FZlvoiJfIkzwN1
+	 tSTkF25FInGEKLobyfK/6GGN1EW+gWIxSKdYSaQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Phil Sutter <phil@nwl.cc>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/186] net: lan966x: avoid unregistering netdev on register failure
-Date: Thu, 28 May 2026 21:50:04 +0200
-Message-ID: <20260528194932.292237574@linuxfoundation.org>
+Subject: [PATCH 6.6 107/186] netfilter: arptables: allow xtables-nft only builds
+Date: Thu, 28 May 2026 21:49:47 +0200
+Message-ID: <20260528194931.826741634@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
 References: <20260528194928.941004471@linuxfoundation.org>
@@ -52,62 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c4f3d6eb1fcf6cd9ce4644f604d5aad1ce594dfc ]
+[ Upstream commit 4654467dc7e111e84f43ed1b70322873ae77e7be ]
 
-lan966x_probe_port() stores the newly allocated net_device in the
-port before calling register_netdev(). If register_netdev() fails,
-the probe error path calls lan966x_cleanup_ports(), which sees
-port->dev and calls unregister_netdev() for a device that was never
-registered.
+Allows to build kernel that supports the arptables mangle target
+via nftables' compat infra but without the arptables get/setsockopt
+interface or the old arptables filter interpreter.
 
-Destroy the phylink instance created for this port and clear port->dev
-before returning the registration error. The common cleanup path now skips
-ports without port->dev before reaching the registered netdev cleanup, so
-it only handles ports that reached the registered-netdev lifetime.
+IOW, setting IP_NF_ARPFILTER=n will break arptables-legacy, but
+arptables-nft will continue to work as long as nftables compat
+support is enabled.
 
-This also avoids treating an uninitialized FDMA netdev and the failed port
-as a NULL == NULL match in the common cleanup path.
-
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260506124331.31945-1-mhun512@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
+Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/ipv4/netfilter/Kconfig | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 5466f14e000ce..ce48685a50b20 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -750,11 +750,10 @@ static void lan966x_cleanup_ports(struct lan966x *lan966x)
+diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
+index f71a7e9a7de6d..070475392236f 100644
+--- a/net/ipv4/netfilter/Kconfig
++++ b/net/ipv4/netfilter/Kconfig
+@@ -309,36 +309,34 @@ endif # IP_NF_IPTABLES
  
- 	for (p = 0; p < lan966x->num_phys_ports; p++) {
- 		port = lan966x->ports[p];
--		if (!port)
-+		if (!port || !port->dev)
- 			continue;
+ # ARP tables
+ config IP_NF_ARPTABLES
+-	tristate "ARP tables support"
+-	select NETFILTER_XTABLES
+-	select NETFILTER_FAMILY_ARP
+-	depends on NETFILTER_ADVANCED
+-	help
+-	  arptables is a general, extensible packet identification framework.
+-	  The ARP packet filtering and mangling (manipulation)subsystems
+-	  use this: say Y or M here if you want to use either of those.
+-
+-	  To compile it as a module, choose M here.  If unsure, say N.
++	tristate
  
--		if (port->dev)
--			unregister_netdev(port->dev);
-+		unregister_netdev(port->dev);
+-if IP_NF_ARPTABLES
++config NFT_COMPAT_ARP
++	tristate
++	depends on NF_TABLES_ARP && NFT_COMPAT
++	default m if NFT_COMPAT=m
++	default y if NFT_COMPAT=y
  
- 		lan966x_xdp_port_deinit(port);
- 		if (lan966x->fdma && lan966x->fdma_ndev == port->dev)
-@@ -875,6 +874,9 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
- 	err = register_netdev(dev);
- 	if (err) {
- 		dev_err(lan966x->dev, "register_netdev failed\n");
-+		phylink_destroy(phylink);
-+		port->phylink = NULL;
-+		port->dev = NULL;
- 		return err;
- 	}
+ config IP_NF_ARPFILTER
+-	tristate "ARP packet filtering"
++	tristate "arptables-legacy packet filtering support"
++	select IP_NF_ARPTABLES
+ 	help
+ 	  ARP packet filtering defines a table `filter', which has a series of
+ 	  rules for simple ARP packet filtering at local input and
+-	  local output.  On a bridge, you can also specify filtering rules
+-	  for forwarded ARP packets. See the man page for arptables(8).
++	  local output.  This is only needed for arptables-legacy(8).
++	  Neither arptables-nft nor nftables need this to work.
+ 
+ 	  To compile it as a module, choose M here.  If unsure, say N.
+ 
+ config IP_NF_ARP_MANGLE
+ 	tristate "ARP payload mangling"
++	depends on IP_NF_ARPTABLES || NFT_COMPAT_ARP
+ 	help
+ 	  Allows altering the ARP packet payload: source and destination
+ 	  hardware and network addresses.
+ 
+-endif # IP_NF_ARPTABLES
++	  This option is needed by both arptables-legacy and arptables-nft.
++	  It is not used by nftables.
+ 
+ endmenu
  
 -- 
 2.53.0
