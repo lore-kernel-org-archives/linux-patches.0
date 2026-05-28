@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E4D3446C5;
-	Thu, 28 May 2026 20:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA35339866;
+	Thu, 28 May 2026 20:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000575; cv=none; b=r17X8b5xH8MHEl02fbQhPMCSZar6v2nWiGMn9p4kPzuAZKYDw317kF+a/N+IalRQEntm2UHR7oGt8krZVUxbX8xXC4f8wRc3K3lzoJqQMBlxcRfNwBCwjfaPKJrHQpe4aPTa3oNUF0zILOVBZ9LF/HWef4h7kbsA/oXhaZu9MnQ=
+	t=1780000578; cv=none; b=UbVgOq01fChFYj5gzVLSTBKGilXj1j2PE5w4OJE76tQpvyJCB6Li9kXwzg/QKJSsdJN7OSVkoX7hve69iS1BPu8vVoCTTnmhkFt6NUaO7CJMOOT7DA8OsPCqGTcOpjqbR8n1Al93Pgvo7K8GztTS5fWFevdm6HSl5eLmK25rU0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000575; c=relaxed/simple;
-	bh=8M7Dy4bzk9g3H1o+agmdyXaPM8tc+9TiAsVf0IlKhy4=;
+	s=arc-20240116; t=1780000578; c=relaxed/simple;
+	bh=RZ6pCQ3NcWoYqWlzVhJ0a5zeh9LeJEX4ogKY9RflKT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqfjTWB1PwpHc2uUGHk9qqj+8jFylgW9dxkVvOLXWhWCHQtcDFg86BcTeSlzVB8wkVzPkFuCUayiGKVIArHGAllW2Co/hxSL3c/VZ6pXqQsrFyX3srdgXfyBTlSnuLTSxEcvcupo+eVrX/ZqoAJzRDnOSchGsrlsCY3ACPhEEvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKD9IMpQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IpKMHTO4065MPuVPVvMBC+TU58kbb07Yz0rHp7fvS/WNkN8qJWpankMspi1SZ0s++F9N508L9qBlqmA2VNc8CqqBP8plk2EICpc4nFvHYh9vniSlNmzzDElIiZOzp90wQVCSLU6lB4kHCDOqbfYndFCB9GUBQU0F7p0HwAg+bt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTw1YKp3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKD9IMpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DB61F000E9;
-	Thu, 28 May 2026 20:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTw1YKp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDB81F000E9;
+	Thu, 28 May 2026 20:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000574;
-	bh=NOTwMwfu5Dx0U+NaP4SVmN8SVwc5A7bVXKdQItLT1Gw=;
+	s=korg; t=1780000577;
+	bh=5axpfZ9adRRMxyzJjyAoszWRDVZEps+GDdAOcDxploc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XKD9IMpQSk071F5bpbJE6x6UyjV/LVN2mcT19wMptCPA9C6jpIZn7wZTGJpGbTwVB
-	 uZt7qUeaMZYN+UVXBv5kZQkZSdixzfVMMhSfE8AhrTjM08ZmGIt57kTsO5bDoVj6Qe
-	 9k4PjkakDZhcFX+5JY8JEHSVgy39WEZ4OJ9EbOzI=
+	b=OTw1YKp3wyWzqYKc6A2SSCIODzig0dOvpQ4mavFsOz1YXektx/YhYpY24VJ0YmlgI
+	 l+9Mez/9G5P/S9IXfLNwVAEVIFE2Xy9koA/Z/0N2r8JVWWn1a0aHmyJRfWlXIMfFuM
+	 yXfhdaCz4+2BonebfeT71eMb+Px912a6LiOByo48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyi Liu <moss80199@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 046/272] ksmbd: validate SID in parent security descriptor during ACL inheritance
-Date: Thu, 28 May 2026 21:47:00 +0200
-Message-ID: <20260528194630.668032001@linuxfoundation.org>
+	Kyle Farnung <kfarnung@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.12 087/272] wifi: ath11k: clear shared SRNG pointer state on restart
+Date: Thu, 28 May 2026 21:47:41 +0200
+Message-ID: <20260528194631.815663728@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,130 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyi Liu <moss80199@gmail.com>
+From: Kyle Farnung <kfarnung@gmail.com>
 
-commit 69f030cf95488ae1186c72ac8c66fd279664ea7f upstream.
+commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
 
-Introduce smb_validate_ntsd_sid() helper to safely validate Owner SID
-and Group SID inside the NT Security Descriptor (smb_ntsd) retrieved
-from the parent directory.
+LMAC rings reuse the shared rdp/wrp pointer buffers without going
+through the normal SRNG hw-init path that zeros non-LMAC ring
+pointers. After restart, ath11k_hal_srng_clear() can therefore hand
+stale hp/tp state from the previous firmware instance back to the new
+one.
 
+Clear the shared pointer buffers while keeping the allocations in
+place so restart still avoids reallocating SRNG DMA memory, but starts
+with fresh ring-pointer state.
+
+Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junyi Liu <moss80199@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
+Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   66 +++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 50 insertions(+), 16 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1096,6 +1096,40 @@ static int smb_append_inherited_ace(stru
- 	return 0;
- }
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1385,14 +1385,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
  
-+static int smb_validate_ntsd_sid(struct smb_ntsd *pntsd, size_t pntsd_size,
-+				  unsigned int sid_offset, struct smb_sid **sid,
-+				  size_t *sid_size)
-+{
-+	size_t sid_end;
-+
-+	*sid = NULL;
-+	*sid_size = 0;
-+
-+	if (!sid_offset)
-+		return 0;
-+
-+	if (sid_offset < sizeof(struct smb_ntsd) ||
-+	    check_add_overflow(sid_offset, (size_t)CIFS_SID_BASE_SIZE,
-+			       &sid_end) ||
-+	    sid_end > pntsd_size)
-+		return -EINVAL;
-+
-+	*sid = (struct smb_sid *)((char *)pntsd + sid_offset);
-+	if ((*sid)->num_subauth > SID_MAX_SUB_AUTHORITIES)
-+		return -EINVAL;
-+
-+	if (check_add_overflow((size_t)CIFS_SID_BASE_SIZE,
-+			       sizeof(__le32) * (size_t)(*sid)->num_subauth,
-+			       &sid_end))
-+		return -EINVAL;
-+
-+	if (sid_offset > pntsd_size || sid_end > pntsd_size - sid_offset)
-+		return -EINVAL;
-+
-+	*sid_size = sid_end;
-+	return 0;
-+}
-+
- int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		     const struct path *path,
- 		     unsigned int uid, unsigned int gid)
-@@ -1108,28 +1142,28 @@ int smb_inherit_dacl(struct ksmbd_conn *
- 	struct dentry *parent = path->dentry->d_parent;
- 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
- 	int inherited_flags = 0, flags = 0, i, nt_size = 0, pdacl_size;
--	int rc = 0, pntsd_type, pntsd_size, acl_len, aces_size;
-+	int rc = 0, pntsd_type, ppntsd_size, acl_len, aces_size;
- 	unsigned int dacloffset;
- 	size_t dacl_struct_end;
- 	u16 num_aces, ace_cnt = 0;
- 	char *aces_base;
- 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
- 
--	pntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
-+	ppntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
- 					    parent, &parent_pntsd);
--	if (pntsd_size <= 0)
-+	if (ppntsd_size <= 0)
- 		return -ENOENT;
- 
- 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
- 	if (!dacloffset ||
- 	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
--	    dacl_struct_end > (size_t)pntsd_size) {
-+	    dacl_struct_end > (size_t)ppntsd_size) {
- 		rc = -EINVAL;
- 		goto free_parent_pntsd;
- 	}
- 
- 	parent_pdacl = (struct smb_acl *)((char *)parent_pntsd + dacloffset);
--	acl_len = pntsd_size - dacloffset;
-+	acl_len = ppntsd_size - dacloffset;
- 	num_aces = le16_to_cpu(parent_pdacl->num_aces);
- 	pntsd_type = le16_to_cpu(parent_pntsd->type);
- 	pdacl_size = le16_to_cpu(parent_pdacl->size);
-@@ -1243,19 +1277,19 @@ pass:
- 		struct smb_ntsd *pntsd;
- 		struct smb_acl *pdacl;
- 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
--		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
-+		size_t powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
- 		size_t pntsd_alloc_size;
- 
--		if (parent_pntsd->osidoffset) {
--			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
--					le32_to_cpu(parent_pntsd->osidoffset));
--			powner_sid_size = 1 + 1 + 6 + (powner_sid->num_subauth * 4);
--		}
--		if (parent_pntsd->gsidoffset) {
--			pgroup_sid = (struct smb_sid *)((char *)parent_pntsd +
--					le32_to_cpu(parent_pntsd->gsidoffset));
--			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
--		}
-+		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
-+					   le32_to_cpu(parent_pntsd->osidoffset),
-+					   &powner_sid, &powner_sid_size);
-+		if (rc)
-+			goto free_aces_base;
-+		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
-+					   le32_to_cpu(parent_pntsd->gsidoffset),
-+					   &pgroup_sid, &pgroup_sid_size);
-+		if (rc)
-+			goto free_aces_base;
- 
- 		if (check_add_overflow(sizeof(struct smb_ntsd),
- 				       (size_t)powner_sid_size,
+ void ath11k_hal_srng_clear(struct ath11k_base *ab)
+ {
+-	/* No need to memset rdp and wrp memory since each individual
+-	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
+-	 * and ath11k_hal_srng_dst_hw_init().
++	/*
++	 * Preserve the shared pointer buffers, but clear the previous
++	 * firmware instance's hp/tp state before handing them back to FW.
++	 * LMAC rings reuse this shared memory without going through the
++	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
+ 	 */
+ 	memset(ab->hal.srng_list, 0,
+ 	       sizeof(ab->hal.srng_list));
+ 	memset(ab->hal.shadow_reg_addr, 0,
+ 	       sizeof(ab->hal.shadow_reg_addr));
++	if (ab->hal.rdp.vaddr)
++		memset(ab->hal.rdp.vaddr, 0,
++		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
++	if (ab->hal.wrp.vaddr)
++		memset(ab->hal.wrp.vaddr, 0,
++		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
+ 	ab->hal.avail_blk_resource = 0;
+ 	ab->hal.current_blk_index = 0;
+ 	ab->hal.num_shadow_reg_configured = 0;
 
 
