@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F3B24677F;
-	Thu, 28 May 2026 20:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E5E24677F;
+	Thu, 28 May 2026 20:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998508; cv=none; b=dFFcs90RXEmVblzonRll015x2rpG8XbKlTTOLrRITvY3TiqGnujgDmOTRL9wBjqZoUcRnbyiZRybZU1B7FZvQzsygLJy0y11ABLhAUIqJ8Ae8ynU6HyrWMyJzCwgHghTBrNcxZ2LBZ5jg/eDR+fTLCzbpoeWRHaZRcteqALf0Ks=
+	t=1779998510; cv=none; b=CfHF3ENTJrCnLGvGJDU2z9OsAxHR4vE6AauU1p2Eq+FiBrI/2hVpeHQ9BIhe9V+MTa7YsYANwJzDzz91y9btaEWmSOBvJPzZjZV6NZGA2t2iDYoRk+Sb1DOlgO6YMoyeAzoMkD08h83M/hIANINIgdZXN26mwTWBqBdf3OeBXHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998508; c=relaxed/simple;
-	bh=ZAMDPmDyvZVPHolOQpfLrxGSBqe63bo+TiFaQuEimdc=;
+	s=arc-20240116; t=1779998510; c=relaxed/simple;
+	bh=7wopySjFNW2M2RmEKAXnmtw1I7W+YQyfcP0SnOH5N7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWa0kTj6DVf9wE9P2Fr6Festyh5BeRZVepxYgQJr7dJK9gkx9etKSxCIkT0Xi/1aQeQbr5plk6jrcvm8f5JMNlJJ/3raENqeqheA9nNa5+k1euvSksKHOM1ncnQjDaN1JwiTbIsb9aKdKWiEvIksww9cdADizJhOMesB2mrFT5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXxa3amO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSc6NpkMVRxM0j9G40B3mOdyJOiqVO4UX2/rAIEI5wsnjZEJ4QuemFsvZ7S7w7D9C32fndFRylIAeRh8/730N497PE7KaN+xVzdOZsECcha5I8VUPg95N+kp829/irSmr+LfoI2zNR8g4xCOsvIvW0BRXzrNobWdHd9a1zctcbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOCqAkn0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXxa3amO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C711F000E9;
-	Thu, 28 May 2026 20:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOCqAkn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D421F000E9;
+	Thu, 28 May 2026 20:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998507;
-	bh=ezQZgFxs8FQ6wWc+drgl+aKgmcYvNk69/nbxNCa6WTU=;
+	s=korg; t=1779998509;
+	bh=viGXgnn+sVCC0dh5Ay9WWhXnvI1NzVThy11lymgwivo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXxa3amO7fw452TM2iS9x5vn6pR86Ifs4Rw3ScLyJTiNtBdZ+LEV1ywNQYlwhlKEj
-	 6mUJg/jt5ZESojxdd/yHMqP513682R1Mjk+AQ8FclKqsZgERM51brWhthzawQj7jqs
-	 WsbV7JiVL5WFOElHRmqqLscdjyVx86jGXLPW0nRo=
+	b=eOCqAkn0QuEgkrhmfsvYfVZ3qp1StLodFFH8pSvTTpvPZdlkZt1Ae96IQjDB1mdkX
+	 V0n/DQdveS1uGD5u08Ho9MFqBigZHr9OVJTT4un+5Cogm//IdlBMuHBrdQcNm6PPNG
+	 eBKRHBNwhAFwRBG/t4QXdvqknQaNZlugrHSVkdiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.0 161/461] batman-adv: tt: avoid empty VLAN responses
-Date: Thu, 28 May 2026 21:44:50 +0200
-Message-ID: <20260528194651.712673645@linuxfoundation.org>
+Subject: [PATCH 7.0 162/461] batman-adv: tt: fix negative last_changeset_len
+Date: Thu, 28 May 2026 21:44:51 +0200
+Message-ID: <20260528194651.741862274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -52,81 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit fa1bd704940b5bcbc32c0b28db9167405c8ee5e0 upstream.
+commit fc92cdfcb295cefa4344d71a527d61b638b7bfc4 upstream.
 
-The commit 16116dac2339 ("batman-adv: prevent TT request storms by not
-sending inconsistent TT TLVLs") added checks to the local (direct) TT
-response code. But the response can also be done indirectly by another node
-using the global TT state. To avoid such inconsistency states reported in
-the original fix, also avoid sending empty VLANs for replies from the
-global TT state.
+batadv_piv_tt::last_changeset_len len was declared as s16, but the field is
+never intended to hold a negative value. When a value greater than 32767 is
+assigned, it wraps to a negative signed integer.
+
+In batadv_send_my_tt_response(), last_changeset_len is temporarily widened
+to s32. The incorrectly negative s16 value propagates into the s32, causing
+batadv_tt_prepare_tvlv_local_data() to allocate a full sized buffer but
+populates only a small portion of it with the collected changeset. All
+remaining bits are kept uninitialized.
+
+Using an u16 avoids this type confusion and ensures that no (negative) sign
+extension is performed in batadv_send_my_tt_response().
 
 Cc: stable@kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ net/batman-adv/types.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -797,24 +797,26 @@ batadv_tt_prepare_tvlv_global_data(struc
- 				   s32 *tt_len)
- {
- 	u16 num_vlan = 0;
--	u16 num_entries = 0;
- 	u16 tvlv_len = 0;
- 	unsigned int change_offset;
- 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
- 	struct batadv_orig_node_vlan *vlan;
-+	u16 total_entries = 0;
- 	u8 *tt_change_ptr;
-+	int vlan_entries;
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -996,7 +996,7 @@ struct batadv_priv_tt {
+ 	 * @last_changeset_len: length of last tt changeset this host has
+ 	 *  generated
+ 	 */
+-	s16 last_changeset_len;
++	u16 last_changeset_len;
  
- 	spin_lock_bh(&orig_node->vlan_list_lock);
- 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
-+		vlan_entries = atomic_read(&vlan->tt.num_entries);
-+		total_entries += vlan_entries;
- 		num_vlan++;
--		num_entries += atomic_read(&vlan->tt.num_entries);
- 	}
- 
- 	change_offset = struct_size(*tt_data, vlan_data, num_vlan);
- 
- 	/* if tt_len is negative, allocate the space needed by the full table */
- 	if (*tt_len < 0)
--		*tt_len = batadv_tt_len(num_entries);
-+		*tt_len = batadv_tt_len(total_entries);
- 
- 	if (change_offset > U16_MAX || *tt_len > U16_MAX - change_offset) {
- 		*tt_len = 0;
-@@ -835,14 +837,26 @@ batadv_tt_prepare_tvlv_global_data(struc
- 	(*tt_data)->num_vlan = htons(num_vlan);
- 
- 	tt_vlan = (*tt_data)->vlan_data;
-+	num_vlan = 0;
- 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
-+		vlan_entries = atomic_read(&vlan->tt.num_entries);
-+		if (vlan_entries < 1)
-+			continue;
-+
- 		tt_vlan->vid = htons(vlan->vid);
- 		tt_vlan->crc = htonl(vlan->tt.crc);
- 		tt_vlan->reserved = 0;
- 
- 		tt_vlan++;
-+		num_vlan++;
- 	}
- 
-+	/* recalculate in case number of VLANs reduced */
-+	change_offset = struct_size(*tt_data, vlan_data, num_vlan);
-+	tvlv_len = *tt_len + change_offset;
-+
-+	(*tt_data)->num_vlan = htons(num_vlan);
-+
- 	tt_change_ptr = (u8 *)*tt_data + change_offset;
- 	*tt_change = (struct batadv_tvlv_tt_change *)tt_change_ptr;
- 
+ 	/**
+ 	 * @last_changeset_lock: lock protecting last_changeset &
 
 
