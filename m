@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22E532ABC0;
-	Thu, 28 May 2026 20:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD98335566;
+	Thu, 28 May 2026 20:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999172; cv=none; b=YzNVNPLLCFIb32tMdbhhZIqjRYhZhACWKZ1wGltl1IjWCCH5pjWAVJwwtBGlEb9m/yZVbbuzbIicvGvu1dr4EbFBp1JVkGF7g157ncBHUdygLpjh5TjP/Nl6ctdO8C8LAw0mSZ0/2BZx+rJ/WkIG9QmLpyC10eC4IbEY+odykCo=
+	t=1779999175; cv=none; b=lFJIEMPi94NSWk71CznttNNWaLOGFikyqCHpApGxYshfP8PyfA+S32rwjJxwwviKq/Kg21IrsPoqmWwRQ9xBgRwhgL7+7vb9J0lPcsv4Yx3oTXI3svXkAVtKRfnBnmEi//tjLNl22BCIbkVDqnhan7Jkxus3xoVv6kW5HEDZqfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999172; c=relaxed/simple;
-	bh=azWJVPwOFgr1AHRM4Bo+hKt426G7QQRg2zoQUdaAz7E=;
+	s=arc-20240116; t=1779999175; c=relaxed/simple;
+	bh=JjFbkMBQ663BbMZ0WJeWw6FAnLDSudBAbHqE4LXhvfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acK3eOGs+1ZGTDaJRGaripPIHOoyyV649O+SiSyor8Z3xu5Ql7td2Hi7Tk/+amXTPIUR+URC+xjaIwnfrL3AJrd3Qiafw2ggdlJ+6Ve6qWPBsKp/ZESbjHHZNc/OKNeGcsac+EieA1jJsjnISRI6Wt675zuHRpzwFKKdRNwYvtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay+/LP75; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QvXERDjLrZreba/IAPooMmAeyoRh44PxF6WXFtcpl/f/ijlWlbtWUN6dzCbLNQ7XshP/tkp+CgwSMu3neKyI4TkicaBAsLfSCgUiEL+IKbN+9Ph9hIF4fX0LaBva+ULZ8r4b+s8tmaYY3zYMfKMqUIlLvDGA19y9uS0shJU/ex4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIyUqaQw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay+/LP75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534C31F000E9;
-	Thu, 28 May 2026 20:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIyUqaQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267351F000E9;
+	Thu, 28 May 2026 20:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999171;
-	bh=p2cH3u6xznuk5RORifVZ2kmObs+YuuiZrq8YxTIZSEw=;
+	s=korg; t=1779999174;
+	bh=DQg5v20c7Z77dsjFLPZp6AHuCysRNAjRWOKUNGUYqSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ay+/LP75F5bc0+RtxDqMViBscneC6RXf0RxxJZT7lR/oXbeCMGRkO53DfGdmu1vZF
-	 jUR2SaYXA6lOa5Y62OTjA9S6EkQ9NUHal+NU2AyZxg7UHRZDBKNRM4ELS6GOY9txwY
-	 ECLFxDnIv5g5kzSPc7fX8OCWAdFF1Qtm1ywk75vk=
+	b=HIyUqaQwE3QrTjA0bJCsHiAqHWw9bedq+UMjLgvaHRlEiHSCmHxqZPzTmAiFrmWdd
+	 vXfNF9qeVNRwWHKmNtvpurGnMCKlLZmpeOZmi0D2CCkcp9PoFKtosHP2i7NLWaggJj
+	 dcg8BxYeK/HKiX9CekGMl9GGT7TL5vF+p7su0D2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robertus Diawan Chris <robertusdchris@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 397/461] ASoC: soc-utils: Add missing va_end in snd_soc_ret()
-Date: Thu, 28 May 2026 21:48:46 +0200
-Message-ID: <20260528194658.960727614@linuxfoundation.org>
+Subject: [PATCH 7.0 398/461] drm/amdgpu: Align amdgpu_gtt_mgr entries to TLB size on Tahiti (v2)
+Date: Thu, 28 May 2026 21:48:47 +0200
+Message-ID: <20260528194658.991932281@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -45,43 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 298a43b54432fbc3a32949a94c72544ee18c8c00 ]
+[ Upstream commit 4d798ea0712fddbd35b439cef32b8ac735eb76f9 ]
 
-The default case in snd_soc_ret() use va_start without va_end to
-cleanup "args" object which can cause undefined behavior. So, add
-missing va_end to cleanup "args" object.
+The TLB is organized in groups of 8 entries, each one is 4K.
+On Tahiti, the HW requires these GART entries to be 32K-aligned.
 
-This is reported by Coverity Scan as "Missing varargs init or cleanup".
+This fixes a VCE 1 firmware validation failure that can happen
+after suspend/resume since we use amdgpu_gtt_mgr for VCE 1.
 
-Fixes: 943116ba2a6a ("ASoC: add common snd_soc_ret() and use it")
-Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
-Link: https://patch.msgid.link/20260519054024.274741-1-robertusdchris@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+v2:
+- Change variable declaration order
+- Add comment about "V bit HW bug"
+
+Fixes: 698fa62f56aa ("drm/amdgpu: Add helper to alloc GART entries")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 530411b465ef0b2c0cc18c2e3d7e38422b1117d1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-utils.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
-index c8adfff826bd4..9cb7567e263eb 100644
---- a/sound/soc/soc-utils.c
-+++ b/sound/soc/soc-utils.c
-@@ -36,6 +36,7 @@ int snd_soc_ret(const struct device *dev, int ret, const char *fmt, ...)
- 		vaf.va = &args;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
+index ac276bb53c7c2..9dd6cfd6c0fe0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
+@@ -199,11 +199,18 @@ int amdgpu_gtt_mgr_alloc_entries(struct amdgpu_gtt_mgr *mgr,
+ 				 enum drm_mm_insert_mode mode)
+ {
+ 	struct amdgpu_device *adev = container_of(mgr, typeof(*adev), mman.gtt_mgr);
++	u32 alignment = 0;
+ 	int r;
  
- 		dev_err(dev, "ASoC error (%d): %pV", ret, &vaf);
-+		va_end(args);
- 	}
- 
- 	return ret;
++	/* Align to TLB L2 cache entry size to work around "V bit HW bug" */
++	if (adev->asic_type == CHIP_TAHITI) {
++		alignment = 32 * 1024 / AMDGPU_GPU_PAGE_SIZE;
++		num_pages = ALIGN(num_pages, alignment);
++	}
++
+ 	spin_lock(&mgr->lock);
+ 	r = drm_mm_insert_node_in_range(&mgr->mm, mm_node, num_pages,
+-					0, GART_ENTRY_WITHOUT_BO_COLOR, 0,
++					alignment, GART_ENTRY_WITHOUT_BO_COLOR, 0,
+ 					adev->gmc.gart_size >> PAGE_SHIFT,
+ 					mode);
+ 	spin_unlock(&mgr->lock);
 -- 
 2.53.0
 
