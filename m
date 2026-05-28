@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49392F691F;
-	Thu, 28 May 2026 20:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93848352019;
+	Thu, 28 May 2026 20:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998764; cv=none; b=cATLRUJnkjphxG0nAtSFfA9TiopL+CJNCe3cXmFh561J0fqPLLXeezg+HJa4+T6sdZsDcLv7enLGdNjEyuaDIlzfAOCnDBbKJJCTWx6WVNKOJYCtzIxzvs5FlrWlah7zmOLqTcru8hM3Msidtfz8eqmdxIk/oaHvW2EVTtGv93A=
+	t=1779998767; cv=none; b=Ts44RimHWNxJI/tFdDhVBcIcBeNOQDjKzfMH/1V+r+nr2MmoRD5RdFVvHFkb+vmVSPladzmsDpt4RZq7WpjVztFjZB3Rl3mujHsFTIkjkJjMOdAJNt/Z5PBar+3YFFUQaN71bHd/v5mXJwUzQgRTN92kWe3XGRE5Fda2jpZUcjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998764; c=relaxed/simple;
-	bh=mVM4wAy3r4FMrGSp6svikNaAdbhvKJnXSqv1mtnWbjg=;
+	s=arc-20240116; t=1779998767; c=relaxed/simple;
+	bh=wlC6capQX5g9+Yet+hsHj9Lq3htlOfkFaBJniLTnKho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/krjUymoQwFTWvz4JcaAk94lzG3LsyKYoYnCYvGxkiNJXpuoU0X9ys0V89Yay5c8Ah5+ZemP7ZZks6nytoANK1OcQGXejFDSZtaLxdJuCvM9lW+NVZ/OSrWqkLr5E0Be1mI1v/y6dpwaa/yKCvCtPii1ncnLjynXsrcuDLTBE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oQjh2Jk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W+b+SGmrivDt3UmB7UZ/hwo5Cg5ThEAimAaJQQg/8FJ6ghb1n/MKSfcAak/Vc7Rpw74OFUO1EbflpK+3GD8pATbPp14yT8eFrwU0yaSkO9ZdF9WPp1VfyU70RHMEUqJjD/OAu75u9N2IwF2rX7I21b8QTO2SnCilA6hJEc0xf6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGc1v7y2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oQjh2Jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379DD1F000E9;
-	Thu, 28 May 2026 20:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGc1v7y2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11F81F000E9;
+	Thu, 28 May 2026 20:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998763;
-	bh=DLGuUI3DU1JPVXojoPV6xNlhFldkebAoAUhMJjWlb+I=;
+	s=korg; t=1779998766;
+	bh=sLo0aHVFIgW6Qo6FyErAicefvUrE3f2Qh5Lc4Wt4zzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1oQjh2Jk4w1IlEf/Ne1ZgwD0RrAi8A+IUsfUkRAk7fc4aE4tyDfVYx8VlimWBPnyM
-	 M5edb9hFkTbXLNuzHH1KGWI3OcckGQlFfnCNj0CyXTFZyKPs7JAysuWR9JP9IuEG2d
-	 NcGvtSBD+x/CDjM04LYyVAVTpjLK2VmeRJ1RV6Rs=
+	b=WGc1v7y2JlDZeIYe/jitqusmLC4BoZeG+Xk9fkqqayx+AAynrQ+0vlYRN3JRfDtvG
+	 +qMUP7SBfzoPfI+itM0yDqzj7hirTHYt6ODRsz9//udfhsK/fm9VlVXqIXiv/Gc+2/
+	 VnazpbEyYvCCkp9op5lx7Y5Mv3K4usgLyX+0PjdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Lukas Maar <lukas.maar@tugraz.at>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 290/461] block: bio-integrity: Fix null-ptr-deref in bio_integrity_map_user()
-Date: Thu, 28 May 2026 21:46:59 +0200
-Message-ID: <20260528194655.610024047@linuxfoundation.org>
+Subject: [PATCH 7.0 291/461] accel/qaic: Add overflow check to remap_pfn_range during mmap
+Date: Thu, 28 May 2026 21:47:00 +0200
+Message-ID: <20260528194655.640043787@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -55,70 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
 
-[ Upstream commit 8582792cf23b3d94674d4d838f7cde9a28d0fcaf ]
+[ Upstream commit aa16b2bc0f02709919e2435f531406531e5bcc69 ]
 
-pin_user_pages_fast() can partially succeed and return the number of
-pages that were actually pinned. However, the bio_integrity_map_user()
-does not handle this partial pinning. This leads to a general protection
-fault since bvec_from_pages() dereferences an unpinned page address,
-which is 0.
+The call to remap_pfn_range in qaic_gem_object_mmap is susceptible to
+(re)mapping beyond the VMA if the BO is too large. This can cause use
+after free issues when munmap() unmaps only the VMA region and not the
+additional mappings. To prevent this, check the remaining size of the
+VMA before remapping and truncate the remapped length if sg->length is
+too large.
 
-To fix this, add a check to verify that all requested memory is pinned.
-If partial pinning occurs, unpin the memory and return -EFAULT.
-
-Kernel Oops:
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 UID: 0 PID: 1061 Comm: nvme-passthroug Not tainted 7.0.0-11783-g90957f9314e8-dirty #16 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-RIP: 0010:bio_integrity_map_user.cold+0x1b0/0x9d6
-
-Fixes: 492c5d455969 ("block: bio-integrity: directly map user buffers")
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://github.com/linux-blktests/blktests/pull/244
-Link: https://patch.msgid.link/20260512050929.541397-2-iam@sung-woo.kim
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Lukas Maar <lukas.maar@tugraz.at>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+[jhugo: fix braces from checkpatch --strict]
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260430193858.1178641-1-zachary.mckevitt@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/accel/qaic/qaic_data.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/block/bio-integrity.c b/block/bio-integrity.c
-index 5a316d8bc5efa..d6c9a09a8dc6e 100644
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -338,6 +338,24 @@ int bio_integrity_map_user(struct bio *bio, struct iov_iter *iter)
- 	if (unlikely(ret < 0))
- 		goto free_bvec;
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 95300c2f7d8af..1e4c579d27256 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -606,8 +606,11 @@ static const struct vm_operations_struct drm_vm_ops = {
+ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
+ {
+ 	struct qaic_bo *bo = to_qaic_bo(obj);
++	unsigned long remap_start;
+ 	unsigned long offset = 0;
++	unsigned long remap_end;
+ 	struct scatterlist *sg;
++	unsigned long length;
+ 	int ret = 0;
  
-+	/*
-+	 * Handle partial pinning. This can happen when pin_user_pages_fast()
-+	 * returns fewer pages than requested.
-+	 */
-+	if (user_backed_iter(iter) && unlikely(ret != bytes)) {
-+		if (ret > 0) {
-+			int npinned = DIV_ROUND_UP(offset + ret, PAGE_SIZE);
-+			int i;
+ 	if (drm_gem_is_imported(obj))
+@@ -615,11 +618,27 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
+ 
+ 	for (sg = bo->sgt->sgl; sg; sg = sg_next(sg)) {
+ 		if (sg_page(sg)) {
++			/* if sg is too large for the VMA, so truncate it to fit */
++			if (check_add_overflow(vma->vm_start, offset, &remap_start))
++				return -EINVAL;
++			if (check_add_overflow(remap_start, sg->length, &remap_end))
++				return -EINVAL;
 +
-+			for (i = 0; i < npinned; i++)
-+				unpin_user_page(pages[i]);
-+		}
-+		if (pages != stack_pages)
-+			kvfree(pages);
-+		ret = -EFAULT;
-+		goto free_bvec;
-+	}
++			if (remap_end > vma->vm_end) {
++				if (check_sub_overflow(vma->vm_end, remap_start, &length))
++					return -EINVAL;
++			} else {
++				length = sg->length;
++			}
 +
- 	nr_bvecs = bvec_from_pages(bvec, pages, nr_vecs, bytes, offset,
- 				   &is_p2p);
- 	if (pages != stack_pages)
++			if (length == 0)
++				goto out;
++
+ 			ret = remap_pfn_range(vma, vma->vm_start + offset, page_to_pfn(sg_page(sg)),
+-					      sg->length, vma->vm_page_prot);
++					      length, vma->vm_page_prot);
+ 			if (ret)
+ 				goto out;
+-			offset += sg->length;
++			offset += length;
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
