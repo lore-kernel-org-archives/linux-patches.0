@@ -1,91 +1,86 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-dy1-f202.google.com (mail-dy1-f202.google.com [74.125.82.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD58309F1D
-	for <patches@lists.linux.dev>; Thu, 28 May 2026 22:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C4C30F535
+	for <patches@lists.linux.dev>; Thu, 28 May 2026 22:31:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780005762; cv=none; b=iNjkA8/bS+shLPgIuggZyTbz3nsJUkNJ3t/IADLV6Td6fBlrZli4OYlbr0vUhRl99gNE1+yV7iHG6JQfQkF4L3QaQOgNQM7U3gQZiKQXhD84L1p9j8/yjJsg8HwqxDo/bCezHwgaWS2W65h+wMoGQje9EKw2hEdXyz47i1OdpQY=
+	t=1780007517; cv=none; b=coMZ4KcGn9lhvaBpqGxI9MjB0boRqR1x7mfoeABVcmcajua583TObCzm2PVm3BNcuem22Ughwv1tsIWuIqssMR8+1L4tf5xtDJLj6ouqwA+0AU6S8QQRsZEA1nY7QWeWTFr/WOpay2pSAuOBn2BgsBl/DICbY+T7BcMtpCJ8Ap8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780005762; c=relaxed/simple;
-	bh=LdY5w1w9JKQhpaZBSyVUr8rGqdk+R+saAIJWzDuNvjo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nouWKNlPWuy2may6qHjCqO3xsj6AyiLeBuy5/pF8yMoY5dj+ozYBeHnPiFDxBGgBo48NnzOiou533faw3rUPYFPg3flWViVU8kVLEFKXzgyfd0+tFROrxUXRtMzHeqbe2IlRDZ+lXt19pP3xAqvzfOfhcPuQGKzKm8Pluh75Z5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=i7mxkX9V; arc=none smtp.client-ip=209.85.215.171
+	s=arc-20240116; t=1780007517; c=relaxed/simple;
+	bh=fewyrO7jRSDRezpROiazTrcQjh82K+907ZqYYNd/aeo=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=dTym1MwdfPVt9XuDcwMM/pcX2YnzWp98f0vAcI0PrgRnTSYUyWfxnllnfxxoXpAzlIxbwvhYuXO9P1DfROvTFmBp6nPiyenDF+3F7yaMkfkqJG3quYLn/295l4i4iEOHCj63ZJbn47iKewIr40AfnlU/QbVIW1vNGAhjYwNtfuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HcvpQw7e; arc=none smtp.client-ip=74.125.82.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="i7mxkX9V"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c796163fac5so10120065a12.1
-        for <patches@lists.linux.dev>; Thu, 28 May 2026 15:02:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HcvpQw7e"
+Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-3041ab826ddso13605815eec.0
+        for <patches@lists.linux.dev>; Thu, 28 May 2026 15:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780005759; x=1780610559; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a7lu1PeNcCkgTIxgc3W2FpjZdWenBKdIMuLJ/NcoWBc=;
-        b=i7mxkX9VF8vMnCY4eB+7c7uUuRN5vrESW4YZCyr9C+BNxlKVFCIi3sA63ANfAsemT3
-         YcwsMuZ2IxDsV3D9NBOHgDwOJdOnQD17IMVmu/wRcQoViDzWe36n7d+uFP5cpagotLrv
-         qnsHpXEm04VlOJ2/+BsNs+o7b07mFqaCCFvledTHxqouu2Jali7MzxonGCTNWXoBqWJF
-         +Hxe6XGIfkFxKAa1BoXYrgYzJX/p7ursHgqABlbwrenqj1JlJnfPVuG60yvnlxbrwUWI
-         +4usbNIsRMNK5KHIcKabAjrW8KwvOPZmFLlX0PSGBq/U70OqM1YaNnFbZYEqZxWlqpkA
-         ggMA==
+        d=google.com; s=20251104; t=1780007515; x=1780612315; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lA9n52XOp29AfkFZf1NgzFL5E2eupZtzE4Xy3Kjuzc8=;
+        b=HcvpQw7ehVKMTtKxJmbO/8ECoSE5KO7txG5/5JjdF1+qk/qO5jyyAjW6eL5WADSmn3
+         0SH1zriNCvHgRWriAnLhDwKITnDSDMS+zQrRcztmu6XJee5yo+1VYGd7yb4EizjN4u/a
+         iyUsJcPaKCuJp6fltFYCyWJ3m0wJSMVXg/pqx5PVVjudABxNLRbKSqMtUhfZCMKkfbCV
+         KRtcoCLeyN6IxH3JYLGYnOEOW/W7sKfCFAng/EXFu9DrNTpuXTTkfEjbebKjzgnffMiO
+         xtHqNPkySAq+T2qZOi767xwR1ds319dQvPtF5kuDucpsEsMbeu+MaNqkAiXN6+ipqhM4
+         IzuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780005759; x=1780610559;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a7lu1PeNcCkgTIxgc3W2FpjZdWenBKdIMuLJ/NcoWBc=;
-        b=CObOXb0m1zwnlOa950htUjfsYE9Y2Gv+6FGYeSCwQcoK48MfBClQC926lg8m85+Lqf
-         +yBH2e6xxDng41iGbq4lcfUX4H2uX7FxUMWH1Y9lowNbscYb2a2UT+QdGP1mnMHo6EzA
-         7GPxS4Hy278+WEE/meHMWj70uzx8FPMjKR6Cx4uZ1x0tjLYFieudPM1KP7vTCatZXh28
-         pPrGSwksuMqQjg9SAHWpN2w1Pfk5t8/r2jq2acjQktv3AGwxu6pzWWetp+2QMuooeR5f
-         S6iBr9pZU3MKGdg/BBkl9orMDYR/5qwz07CNw6FNRtO7e2spaQQP9AWdUiT0VC9RFuM1
-         6CHQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+77c4o4l1ZpWrj5/azyFDu3kdJdRZcdm0gNPn99+zWd9XesoKm0rYV2HEMMiL8co55NQSToi/+@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy6sOjq0qIoNSvuLhZg7P0DH71QApmJ2s71DcrGdikTqkJU94Uf
-	793ulTHJgKkMmLXOGS6utuAJkE7kXeiLINH7OeQ2ZdcgN9bikeQIJRSNQaOKl3aW1g==
-X-Gm-Gg: Acq92OFQ1ybHhSXGZkAz7uCD/Uhu7YNQe6TtEPWPSOWMEnWJyu5wkAbW+YzNY2WVECd
-	detKTl82ISJrIyev3FcCZNqbUGFOrXMcBgd+IaHU5D5Kqo0bFHwqAKTLJAJplesuCRoadZYTaqV
-	oj/TXw7ewvWi7XcskmQ4gvg/0w3kZU2CVtbnmXu9Z3sBuxDbqJM7wI8Dqoq/jCZOCqf5wcZM+GB
-	mE2ul0XeBdq9NrQywfH1HQO7++/XUlwJ1AEqkue0r+/qoufBAGYfw2Qtv1c0pQAXM2tbJ3Nfu3k
-	YNLUFWr/s/EpKjiePjIaz5MLPMb30wq8czr/rdm5q1KNl3iitNPcXwTDkL21oEqsHXDC+9fF+mP
-	VZTO718Z+mK9cXbq+6rpq4nwMGWE5rf8tHqY4UlARYNd/PiaYWvrmgwJFNoY2YJJnDqK2UsHYbN
-	gh14V6j5Q7IkoAZ63LJ4oFrbOVBB6vmfic95yMDcmJEitGtqMakShK1Sj6wrm9MvwRtRfN0KWR
-X-Received: by 2002:a05:6a21:648f:b0:39b:9644:6e94 with SMTP id adf61e73a8af0-3b40e32b279mr628896637.9.1780005758951;
-        Thu, 28 May 2026 15:02:38 -0700 (PDT)
-Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85759af1f5sm31047a12.11.2026.05.28.15.02.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 15:02:38 -0700 (PDT)
-Date: Thu, 28 May 2026 22:02:35 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 08/11] vfio: selftests: Add dev_dbg
-Message-ID: <ahi7e1MEoHwk-rtF@google.com>
-References: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
- <8-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+        d=1e100.net; s=20251104; t=1780007515; x=1780612315;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lA9n52XOp29AfkFZf1NgzFL5E2eupZtzE4Xy3Kjuzc8=;
+        b=mk8/V4YvcaMrtmRSHSewLEabfSWN7xNfHVVpiBmV03FGR4LBJLy+hpnbnUOs3eJsrL
+         X2PEIEMSvJIYOm0XZG99Sdx0Vo3gYhLjlg4cPF7f9krNtFBH8mVip4limKVUDZlOzTCf
+         q4yuWrVe0ikYzUlGJP5DR4xwHVAr5RE6mM7MZOsswAHux6OPB8GKcsNrW5alcTvZW2Bb
+         kKIPH6IIAaB4oVUDa2+wJ5Mck7njHhu8sgmCXVxtJVnkimv3eTEyryMx9smeSj3OZRxi
+         /6NBcm8Qq9qupsbEmtLZRdEWBxaC+FSB2oL5wixSJxXB7wpsFA23V4nj+eD8azyf2D2I
+         BwEw==
+X-Forwarded-Encrypted: i=1; AFNElJ+iYnQbf0I+yXn91jLhDItMhG12tzEsvCof8N79EzqH0cgVO1Zl3dLTlXRX2YVaXDIa3iHCPrmV@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/ia/GSYeFEfsix5tpFLC++1arEm1QJO29p/UI/1lN3ljNU9KD
+	nbxvDs+89B7LkgnKQ8+HN7M11fprT7P6zsrysSXtt69daVVfIW65TxTuPXq3mPpo99vkJcuBn9w
+	crw==
+X-Received: from dyx4.prod.google.com ([2002:a05:693c:8204:b0:304:eb73:cff1])
+ (user=wnliu job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7300:7f9f:b0:2f2:6dde:df50
+ with SMTP id 5a478bee46e88-304eb0d30ffmr188430eec.17.1780007515107; Thu, 28
+ May 2026 15:31:55 -0700 (PDT)
+Date: Thu, 28 May 2026 22:31:46 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.54.0.823.g6e5bcc1fc9-goog
+Message-ID: <20260528223147.750229-1-wnliu@google.com>
+Subject: [PATCH v2 0/1] Don't split flush for amd_iommu_domain_flush_all()
+From: Weinan Liu <wnliu@google.com>
+To: iommu@lists.linux.dev, jgg@nvidia.com, joro@8bytes.org, 
+	suravee.suthikulpanit@amd.com
+Cc: will@kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	robin.murphy@arm.com, vasant.hegde@amd.com, santosh.shukla@amd.com, 
+	chrisl@kernel.org, josef@toxicpanda.com, Weinan Liu <wnliu@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2026-05-15 02:30 PM, Jason Gunthorpe wrote:
-> Enable it with a #define DEBUG at the top of the file. Allows leaving
-> behind debugging prints that are useful in case future changes are
-> required.
-> 
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This patch is a respin of Josef Bacik's original work[1] to fix the
+performance issues and soft lockups in the AMD IOMMU driver when running
+within a VM. I am taking over the respin as Josef currently has limited
+time for this
 
-Reviewed-by: David Matlack <dmatlack@google.com>
+[1]:https://lore.kernel.org/linux-iommu/ad8652c5e9f8aeee05e2103f4987589cdd4a3fd0.1772659768.git.josef@toxicpanda.com
+
+Changes in v2:
+* Update the patch according to comments of v1
+
+Weinan Liu (1):
+  iommu/amd: Don't split flush for amd_iommu_domain_flush_all()
+
+ drivers/iommu/amd/iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.54.0.823.g6e5bcc1fc9-goog
+
