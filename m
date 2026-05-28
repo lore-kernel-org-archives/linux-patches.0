@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956992F39B4;
-	Thu, 28 May 2026 20:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B77C31DD97;
+	Thu, 28 May 2026 20:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000333; cv=none; b=YXyfVluLRzvxwvwIQqvylt5mzxdiIfC2UT+2w/ccjeSIrylzmz0tmpS4yHjh1WuvHuJvQjAXREFxIdjtuSHrWqwyJ30NtRvS0ZR+g7Cg7YDDRRP6jIMDV6FRQFf857zLNma4vgiDtAjEnVSAjOSKm92vffq70TFnBIt7XXRHpCs=
+	t=1780000336; cv=none; b=kVQnqXs2pKu695Z6+gPeMRBe40/vnkwk1HssGbKnwTiRjmfqVuSTyN4FZFdADOif81/dxHG4PECM7YItF/SN5+hfKoNAKWpou/Z+l0YcSzwoYofqz6/JV8v8/tuAXnfIZuGZfswronuIJ55a8UMyyj4rUQkWyOp7diOMqIxx4kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000333; c=relaxed/simple;
-	bh=s2fCDyqlT0fk0uNQ6XNS+e4eGua0Ai5NzbwEw0Mz3ek=;
+	s=arc-20240116; t=1780000336; c=relaxed/simple;
+	bh=w+4jS/jMibBXLT7ttX7tHGhIn4/GQEmt3fbT66dcuy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nvp6QMcZK/tIxKgHQjN/+3A2zCIsve63I534RIX3MghCAYc5rMLDkaqQW4KkQfI8GWK6z5lvH9P4AcPqDyBojz8MTXxDm2VKGBmuesJlOPud3Xf/ZCdM/2s9M/oMfKsr9uRaf5kRqS5gqSSFc35yhx8T9xOZTZuVmRCnTr15fUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X77tuIq5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWRE8314F9u/gMog0b2IyaHOhOL4rx3MvbnkI/BeQgkOKhDRGIngOopwY776K7IZYyJ48As1qQD2Rq5TU7ye52XUhmR401YBL+oibaav7uFe8a1erc0llPZ1Vivtkd4I0bIw6+2bxcXg3tpDWmP043+Hh50CwYAuhB4h+ZO38a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boh/8yLx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X77tuIq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D231F00A3A;
-	Thu, 28 May 2026 20:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boh/8yLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01191F000E9;
+	Thu, 28 May 2026 20:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000332;
-	bh=rDAspQzrey+Hvt6dFmTtcxXCeyGgE7qXkMvCn6z9MZ8=;
+	s=korg; t=1780000335;
+	bh=MytMPCtuN7JtdyzMKKKxS8w7RyE/6HM3IiCZ8riOIMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X77tuIq5Nap/AZcZzCHOvDg7nM9whQjQNgJ245u7lXZEw6pUVTBQSdWjB/CxSgVXJ
-	 koanFCArEqn4tZAthB2Jw660+BWxQMXrTRAQY0GaDmnipLx3xFy2qy7yeJ95wxAz4+
-	 FveW2K75j1tkGqdco+jB+D03/4thsnpl1Wvv2Jis=
+	b=boh/8yLxDMhfG7nd8H8OtmV4c8rtDqYEc8aK679qJSTAT3v0MyN9K+OV0lMZBgJ+8
+	 BazYJ3KXN8uIh2UZxdifg418y38mCnpTDCziWjj42Ol6mzfQs1OyBtbFWAKIUBa37v
+	 ffT/s2KQY0VlRRFGdwcXu6QhEtjSBWRGQsLPLoOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Zhang Cen <rollkingzzc@gmail.com>,
+	Gang Yan <yangang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 349/377] ALSA: seq: Serialize UMP output teardown with event_input
-Date: Thu, 28 May 2026 21:49:47 +0200
-Message-ID: <20260528194648.530784219@linuxfoundation.org>
+Subject: [PATCH 6.12 001/272] mptcp: sync the msk->sndbuf at accept() time
+Date: Thu, 28 May 2026 21:46:15 +0200
+Message-ID: <20260528194629.424529211@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
-References: <20260528194638.371537336@linuxfoundation.org>
+In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
+References: <20260528194629.379955525@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,176 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-[ Upstream commit 60a1969fae6209644698fca91c185d153674f631 ]
+commit fcf04b14334641f4b0b8647824480935e9416d52 upstream.
 
-seq_ump_process_event() borrows client->out_rfile.output without
-synchronizing with the first-open and last-close transition in
-seq_ump_client_open() and seq_ump_client_close().
+On passive MPTCP connections, the msk sndbuf is not updated correctly.
 
-The last output unuse can therefore drop opened[STR_OUT] to zero and
-release the rawmidi file while an in-flight event_input callback is still
-inside snd_rawmidi_kernel_write(). That leaves the rawmidi substream
-runtime exposed to teardown before the write path has taken its own
-buffer reference.
+The root cause is an order issue in the accept path:
 
-Add a per-client rwlock for the event_input-visible output file. Publish
-a newly opened output file under the write side, and hold the read side
-from the output lookup through snd_rawmidi_kernel_write(). The last
-output close copies and clears the visible output file under the write
-side, then drops the lock and releases the saved rawmidi file. Use
-IRQ-safe rwlock guards because event_input can also be reached from
-atomic sequencer delivery.
+- tcp_check_req() -> subflow_syn_recv_sock() -> mptcp_sk_clone_init()
+  calls __mptcp_propagate_sndbuf() to copy the ssk sndbuf into msk
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
+- Later, tcp_child_process() -> tcp_init_transfer() ->
+  tcp_sndbuf_expand() grows the ssk sndbuf.
 
-path A label: event_input path         path B label: last unuse path
-1. seq_ump_process_event() reads       1. seq_ump_client_close()
-   client->out_rfile.output.              drops opened[STR_OUT] to zero.
-2. snd_rawmidi_kernel_write1()         2. snd_rawmidi_kernel_release()
-   has not yet pinned runtime.            closes the output file.
-3. The writer continues using          3. close_substream() frees
-   the borrowed substream.                substream->runtime.
+So __mptcp_propagate_sndbuf() runs before the ssk sndbuf has been
+expanded and the msk ends up with a much smaller sndbuf than the
+subflow:
 
-This keeps the output substream and runtime alive for the full
-event_input write while keeping rawmidi release outside the rwlock.
+  MPTCP: msk->sndbuf:20480, msk->first->sndbuf:2626560
 
-KASAN reproduced this as a slab-use-after-free in
-snd_rawmidi_kernel_write1(), with allocation through
-seq_ump_use()/snd_seq_port_connect() and free through
-seq_ump_unuse()/snd_seq_port_disconnect().
+Fix this by moving the __mptcp_propagate_sndbuf() call from
+mptcp_sk_clone_init() -- the ssk sndbuf is not yet finalized there -- to
+__mptcp_propagate_sndbuf() at accept() time, when the ssk sndbuf has
+been fully expanded by tcp_sndbuf_expand().
 
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in snd_rawmidi_kernel_write1+0x9d/0x400
-RIP: 0033:0x7f5528af837f
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x73/0xb0 (?:?)
-  print_report+0xd1/0x650 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x1a7/0x340 (?:?)
-  kasan_complete_mode_report_info+0x64/0x200 (?:?)
-  kasan_report+0xf7/0x130 (?:?)
-  snd_rawmidi_kernel_write1+0x9d/0x400 (?:?)
-  __asan_load8+0x82/0xb0 (?:?)
-  update_stack_state+0x1ef/0x2d0 (?:?)
-  snd_rawmidi_kernel_write+0x1a/0x20 (?:?)
-  seq_ump_process_event+0xd4/0x120 (sound/core/seq/seq_ump_client.c:82)
-  __snd_seq_deliver_single_event+0x8a/0xe0 (?:?)
-  snd_seq_deliver_from_ump+0x2b2/0xd60 (?:?)
-  lock_acquire+0x14e/0x2e0 (?:?)
-  find_held_lock+0x31/0x90 (?:?)
-  snd_seq_port_use_ptr+0xa6/0xe0 (?:?)
-  __kasan_check_write+0x18/0x20 (?:?)
-  do_raw_read_unlock+0x32/0xa0 (?:?)
-  _raw_read_unlock+0x26/0x50 (?:?)
-  snd_seq_deliver_single_event+0x45c/0x4b0 (?:?)
-  snd_seq_deliver_event+0x10d/0x1b0 (?:?)
-  snd_seq_client_enqueue_event+0x192/0x240 (?:?)
-  snd_seq_write+0x2cd/0x450 (?:?)
-  apparmor_file_permission+0x20/0x30 (?:?)
-  security_file_permission+0x51/0x60 (?:?)
-  vfs_write+0x1ce/0x850 (?:?)
-  __fget_files+0x12b/0x220 (?:?)
-  lock_release+0xc8/0x2a0 (?:?)
-  __rcu_read_unlock+0x74/0x2d0 (?:?)
-  __fget_files+0x135/0x220 (?:?)
-  ksys_write+0x15a/0x180 (?:?)
-  rcu_is_watching+0x24/0x60 (?:?)
-  __x64_sys_write+0x46/0x60 (?:?)
-  x64_sys_call+0x7d/0x20d0 (?:?)
-  do_syscall_64+0xc1/0x360 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-
-Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Link: https://patch.msgid.link/20260520103249.3048345-1-rollkingzzc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/602
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260420-net-mptcp-sync-sndbuf-accept-v1-1-e3523e3aeb44@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ No conflicts, but move __mptcp_propagate_sndbuf() above the for-loop
+  (mptcp_for_each_subflow()) present in this version, which will modify
+  'subflow' used by __mptcp_propagate_sndbuf() in this new patch. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_client.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index ebbe1cbe0b9b7..9a6b4b61bd74c 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -37,6 +37,7 @@ struct seq_ump_client {
- 	struct snd_ump_endpoint *ump;	/* assigned endpoint */
- 	int seq_client;			/* sequencer client id */
- 	int opened[2];			/* current opens for each direction */
-+	rwlock_t output_lock;		/* protects out_rfile output access */
- 	struct snd_rawmidi_file out_rfile; /* rawmidi for output */
- 	struct seq_ump_input_buffer input; /* input parser context */
- 	void *ump_info[SNDRV_UMP_MAX_BLOCKS + 1]; /* shadow of seq client ump_info */
-@@ -88,6 +89,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- 	unsigned char type;
- 	int len;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 7dbb666c72c30..c1b1fb0fe8bcb 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3493,7 +3493,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 	 * uses the correct data
+ 	 */
+ 	mptcp_copy_inaddrs(nsk, ssk);
+-	__mptcp_propagate_sndbuf(nsk, ssk);
  
-+	guard(read_lock_irqsave)(&client->output_lock);
- 	substream = client->out_rfile.output;
- 	if (!substream)
- 		return -ENODEV;
-@@ -106,6 +108,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 	int err;
+ 	mptcp_rcv_space_init(msk, ssk);
+ 	msk->rcvq_space.time = mptcp_stamp();
+@@ -4101,6 +4100,8 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
+ 		msk = mptcp_sk(newsk);
+ 		msk->in_accept_queue = 0;
  
- 	guard(mutex)(&ump->open_mutex);
-@@ -113,9 +116,11 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- 		err = snd_rawmidi_kernel_open(&ump->core, 0,
- 					      SNDRV_RAWMIDI_LFLG_OUTPUT |
- 					      SNDRV_RAWMIDI_LFLG_APPEND,
--					      &client->out_rfile);
-+					      &rfile);
- 		if (err < 0)
- 			return err;
-+		scoped_guard(write_lock_irqsave, &client->output_lock)
-+			client->out_rfile = rfile;
- 	}
- 	client->opened[dir]++;
- 	return 0;
-@@ -125,11 +130,19 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- static int seq_ump_client_close(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 
- 	guard(mutex)(&ump->open_mutex);
--	if (!--client->opened[dir])
--		if (dir == STR_OUT)
--			snd_rawmidi_kernel_release(&client->out_rfile);
-+	if (!--client->opened[dir]) {
-+		if (dir == STR_OUT) {
-+			scoped_guard(write_lock_irqsave, &client->output_lock) {
-+				rfile = client->out_rfile;
-+				client->out_rfile = (struct snd_rawmidi_file){};
-+			}
-+			if (rfile.rmidi)
-+				snd_rawmidi_kernel_release(&rfile);
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -468,6 +481,7 @@ static int snd_seq_ump_probe(struct device *_dev)
- 
- 	INIT_WORK(&client->group_notify_work, handle_group_notify);
- 	client->ump = ump;
-+	rwlock_init(&client->output_lock);
- 
- 	client->seq_client =
- 		snd_seq_create_kernel_client(card, ump->core.device,
++		__mptcp_propagate_sndbuf(newsk, mptcp_subflow_tcp_sock(subflow));
++
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+ 		 * This is needed so NOSPACE flag can be set from tcp stack.
+ 		 */
 -- 
 2.53.0
 
