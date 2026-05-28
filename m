@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD472F1FEC;
-	Thu, 28 May 2026 20:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CF22E92BA;
+	Thu, 28 May 2026 20:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000497; cv=none; b=KCcCVvBs+3QBzZLgq2/4G6dHVObYuI5cXeB7UJELj/AGSXKjS7rKiaRm0OSLek5aNuOTuwitOkGi4OKJ9dLXKuTM+Rij0Gok7npIv0a8IG9wijx9P8LWclRRTZWDYhjdRvGe0UqhRhQs6h7YfQ+LLN0aa0Ln/OSXhDoxILF4kfw=
+	t=1780000500; cv=none; b=okfKZE7lZFAXbjina7tld3NDaFjcs6KrnfQwfBFI5mF0sqqCLdkYZV702Kvx0kDjDys8PrlP0mNilTDWz80vjDjVqFffDpGuXwG73cf3awpdl/XbyZd1EAi/y+6B9p+MUt09awQh34mUm1ghvZpOfJoF59Tsk8Z9jCg3B09SQ4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000497; c=relaxed/simple;
-	bh=0wSvuOAL5KhCRo+9lOEeHso1TXj2guotSDw7OeZRRdc=;
+	s=arc-20240116; t=1780000500; c=relaxed/simple;
+	bh=BEoH65E5FzR62SNQ1q4TPZ6x5LBCYY9bHDKaEzEQbec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXkrbuFFIVrW28fjgJyiVKiULUdOP6dWaCZNhowxrEbfY2rSXvW14/rxC7dU+YGoG8Xbjn6gR37Eh2D9Yagpn9PL1WZqYHVN5DGZ7zXLEgMpSsEN9C+XJ8FROg3BWqtbuChxHufoghUjeNvX1V6UC5TeDKg5yBo2qggtoUFazfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk6yvr6d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGJbjHLU4I+HCrWaQI1xroiD2deK/J1ETtSuzyDDRgZ+5vFI/Gu4jrm4HTEVat3+/S+BhhnjJgnISooDIKLkPwpXkeXUWwLNRC967nUWAjv1rcdLaLVarUtFtmclLnelT0VGcb84ug2K/SN20sEHegwXQjKtQoLzT+AXHOcV2G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaadEX3t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk6yvr6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968D61F000E9;
-	Thu, 28 May 2026 20:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaadEX3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637361F000E9;
+	Thu, 28 May 2026 20:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000496;
-	bh=fEVBkcLhwdR+w5tlX+D02/CZ9ITVHG+H6KiK2fSS0+4=;
+	s=korg; t=1780000498;
+	bh=QmkCRR6uK+YrA/yobcQZ3LmX6CLwvDaftVADJ74Ko3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lk6yvr6dZiIhUBG8+5lPX7DgoL8avZfiDxQLpsjavM4i6bmg6JSha3KU0beCBausW
-	 pnuatbwIGiLkIQXIRA0090BiMxys47pUtYjnnysQF9Khq/KxGuFkt7qynDhCj+eqIJ
-	 3uR9dqLa/o6XGqz0kEZqYs593lFSlQvjYQusPc3Q=
+	b=gaadEX3tUEuRyael17QLEIhkUuuKL/nt3VyzRnq2N1reyTS6udIx3135LY3IY2rYt
+	 p5lGhrDH5wQkYRN5U5WdVuq2Xb/gkTMR2f2nXle1WqVCqP/JBM6zjJmH6Eh1NYO6Vq
+	 o6mcAZqICqL8TqgGg/JqE3Qics2Q5S7/qD3aKoUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 048/272] smb: client: protect tc_count increment in smb2_find_smb_sess_tcon_unlocked()
-Date: Thu, 28 May 2026 21:47:02 +0200
-Message-ID: <20260528194630.727278364@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 066/272] Bluetooth: L2CAP: ecred_reconfigure: send packed pdu, not stack pointer
+Date: Thu, 28 May 2026 21:47:20 +0200
+Message-ID: <20260528194631.228056166@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -51,38 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 4d8690dace005a38e6dbde9ecce2da3ad85c7c41 upstream.
+commit 3374ef8cf99368a40f7efd51a2a375a4c5dc6f0d upstream.
 
-Commit 96c4af418586 ("cifs: Fix locking usage for tcon fields")
-refactored cifs code to change cifs_tcp_ses_lock for tc_lock around
-tc_count changes.
+Commit 1c08108f3014 ("Bluetooth: L2CAP: Avoid -Wflex-array-member-not-at-end
+warnings") converted the on-stack request PDU in l2cap_ecred_reconfigure()
+from an explicit packed struct to DEFINE_RAW_FLEX(), but did not adjust the
+size and source-pointer arguments to l2cap_send_cmd():
 
-There was missing lock around tc_count increment inside
-smb2_find_smb_sess_tcon_unlocked().
+  -    struct {
+  -            struct l2cap_ecred_reconf_req req;
+  -            __le16 scid;
+  -    } pdu;
+  +    DEFINE_RAW_FLEX(struct l2cap_ecred_reconf_req, pdu, scid, 1);
+       ...
+       l2cap_send_cmd(conn, chan->ident, L2CAP_ECRED_RECONF_REQ,
+                      sizeof(pdu), &pdu);
+
+After the conversion, DEFINE_RAW_FLEX() expands to declare an anonymous
+union pdu_u plus a local pointer "pdu" pointing at it. Therefore:
+
+  - sizeof(pdu) is now sizeof(struct l2cap_ecred_reconf_req *) = 8 on
+    64-bit (4 on 32-bit), not the 6 bytes of (mtu, mps, scid[1]).
+  - &pdu is the address of the local pointer's stack storage, not the
+    address of the request payload.
+
+l2cap_send_cmd() forwards (data, count) to l2cap_build_cmd(), which calls
+skb_put_data(skb, data, count). The L2CAP_ECRED_RECONFIGURE_REQ packet
+body therefore contains 8 bytes copied from the kernel stack starting at
+&pdu -- the 8 bytes overlap the pdu pointer's value, leaking a kernel
+stack address to the paired Bluetooth peer. The intended (mtu, mps, scid)
+fields are not transmitted at all, so the peer rejects the request as
+malformed and the L2CAP_ECRED_RECONFIGURE feature itself has been broken
+for the local-side initiator since the introducing commit landed.
+
+The sibling site l2cap_ecred_conn_req() in the same commit was converted
+correctly (sizeof(*pdu) + len, pdu); only this site was missed.
+
+Restore the original semantics: pass the full flex-struct size via
+struct_size(pdu, scid, 1) and the pdu pointer (the struct address) as
+the source.
+
+Validated on a stock 7.0-based host kernel via the real call path:
+setsockopt(SOL_BLUETOOTH, BT_RCVMTU, ...) on a BT_CONNECTED
+L2CAP_MODE_EXT_FLOWCTL socket emits an L2CAP_ECRED_RECONFIGURE_REQ
+whose body is 8 bytes (the on-stack pdu local's value) rather than
+the expected 6. Three captures from fresh socket / fresh hciemu peer
+on the same host -- low bytes vary per call, high 0xffff confirms a
+kernel virtual address (KASLR-randomised stack slot, not a fixed
+string):
+
+  RECONF_REQ body (ident=0x02 len=8): 42 fb 54 af 0e ca ff ff
+  RECONF_REQ body (ident=0x02 len=8): 52 3d 2e af 0e ca ff ff
+  RECONF_REQ body (ident=0x02 len=8): b2 fc 5b af 0e ca ff ff
+
+After this patch the body is 6 bytes carrying the expected
+little-endian (mtu, mps, scid).
 
 Cc: stable@vger.kernel.org
-Fixes: 96c4af418586 ("cifs: Fix locking usage for tcon fields")
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1c08108f3014 ("Bluetooth: L2CAP: Avoid -Wflex-array-member-not-at-end warnings")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2transport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -214,7 +214,9 @@ smb2_find_smb_sess_tcon_unlocked(struct
- 	list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 		if (tcon->tid != tid)
- 			continue;
-+		spin_lock(&tcon->tc_lock);
- 		++tcon->tc_count;
-+		spin_unlock(&tcon->tc_lock);
- 		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 				    netfs_trace_tcon_ref_get_find_sess_tcon);
- 		return tcon;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7199,7 +7199,7 @@ static void l2cap_ecred_reconfigure(stru
+ 	chan->ident = l2cap_get_ident(conn);
+ 
+ 	l2cap_send_cmd(conn, chan->ident, L2CAP_ECRED_RECONF_REQ,
+-		       sizeof(pdu), &pdu);
++		       struct_size(pdu, scid, 1), pdu);
+ }
+ 
+ int l2cap_chan_reconfigure(struct l2cap_chan *chan, __u16 mtu)
 
 
