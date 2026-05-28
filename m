@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349C4339866;
-	Thu, 28 May 2026 20:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAEB40961F;
+	Thu, 28 May 2026 20:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999129; cv=none; b=eIqdEzHcyHf2GBsTFsL+VhI15Wa0eBDXTaUg7wJtafBWkK3vhcO6/RMw+CvvNAsqqN7XGA6NBGxI/sFP0E01xzOFwYCH+fJvh5S0gDWVjpBQT3aOrer9uPwvbMW9ztRA9UaigiHOSZRiUb5lR6XeaXBbu3jvbMHBAH/Uffp4czg=
+	t=1779999131; cv=none; b=kNvDZe7jy4QCMVo01IMoT2+i9A00ZtoKZYqNoW9h3ZqHDAKtl5YsM7gkE/kgHcSutBThYDzFASRnmDLe71dFgAPtdZVtr/eb00eeHhiaJ/Hgya4oKj+mmzE0fbKuMYPo0hbOV+87iS4ly5WstY4o6qpXhb6X4NEDinwXyH8E360=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999129; c=relaxed/simple;
-	bh=Mow8uktnYdVI6sBhg5sybT9x0Sw0oBoyENcxlujXf2s=;
+	s=arc-20240116; t=1779999131; c=relaxed/simple;
+	bh=HlpMoWyeI2+PLAN/kkbi4b15vpacLYiFCZGO9zM9sqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcCiXoxSnjq8/oIYZRrfw3oLaqQJ4YswehTO6hpJ0zPMg9BiXzs/hrIJ9BqBCggToe2IbiF8a4g1DANislI3oB1C9o0Fo7jViFXx2NV8heMWD3jiymPsdn9sm42wY1QpdFeBmz8URW6X/WHR3uDo+LQqr8nAzc5NSCCfCEooP5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN+hs9w0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C3of/A0Dt+RCMdY8f0wWkhUBFN4mvVi3s8DsJZH3ofEnQbOvgIpWmHKgFANwx/pB1sc0Eq0GS5ZhdARFNgGeD3JaPT1NFSNIZ5ismvW0UE3M7a7Svl4IxxTc2llrTSwiVf6Nw/64rkHiaAx/4ygb/d/lfDLn4tnqJ8wgiavUZwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWvxR7Sk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN+hs9w0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9288A1F000E9;
-	Thu, 28 May 2026 20:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWvxR7Sk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618F21F00A3A;
+	Thu, 28 May 2026 20:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999127;
-	bh=ZKUkKXWF7t53Va3R97MF+ygFiUrD672QlhaOIuxZQO0=;
+	s=korg; t=1779999129;
+	bh=rHiImgAvu7gS01eilDBgajrr8rERsPAdetH8MP8sRLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EN+hs9w0VbfShHCCIELqwkvy/bU7bIVzdgUSmQdSJLabFfHn/bKEjEayZQrEiChLM
-	 bhIBpO6RxjQoK53ZFyacwT3LrcwB8D/Zmi5sQ7236fiOZ6Cg5dYwprFYlPmLh6/Oiq
-	 iQsy7+ZYbyRG5S8LxIyHBKHk+WUO00TzvJtn9SQM=
+	b=BWvxR7SkdMrCZs/v+cjf5/CgJolBDmF7/VJagp4y2pGRp6ouYwOJbT1nCacZ4TTXc
+	 TEAwuGVaLOCn0vLDVHjFref+ru5ql4SDcqiFcX3D2EDE+i7sUiU269FwNpJFGLDicQ
+	 Hh11cAlpoouWH5NqMq4yg76YuMllc6ML7damfeZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 418/461] tracing: Avoid NULL return from hist_field_name() on truncation
-Date: Thu, 28 May 2026 21:49:07 +0200
-Message-ID: <20260528194659.598268342@linuxfoundation.org>
+Subject: [PATCH 7.0 419/461] Bluetooth: hci_sync: Fix not setting mask for HCI_EVT_LE_ALL_REMOTE_FEATURES_COMPLETE
+Date: Thu, 28 May 2026 21:49:08 +0200
+Message-ID: <20260528194659.628237028@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,50 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 576ec047d20b368b43c4d5db98c4f2e0f3c101ec ]
+[ Upstream commit 23d528d817a485fe9800a66c9411bd9e3d8a6f63 ]
 
-hist_field_name() returns "" everywhere except the fully-qualified
-VAR_REF/EXPR case, where snprintf() truncation returns NULL early
-and bypasses the bottom NULL->"" guard. Callers don't expect NULL:
-strcat(expr, hist_field_name(field, 0)) at trace_events_hist.c:1758
-and the strcmp() in the sort-key match loop at :4804 both deref it.
+This fixes not setting the bit for HCI_EVT_LE_ALL_REMOTE_FEATURES_COMPLETE
+when extended features bit is set otherwise the controller may not
+generate HCI_EVT_LE_ALL_REMOTE_FEATURES_COMPLETE causing
+hci_le_read_all_remote_features_sync to timeout waiting for it.
 
-system and event_name are bounded by MAX_EVENT_NAME_LEN, but the
-field name on a VAR_REF is kstrdup'd from a histogram variable
-name parsed out of the trigger string and has no length cap, so
-a long enough var name in a fully qualified reference can reach
-the truncation path.
+Also remove dead code.
 
-Keep the length check but leave field_name as "" on overflow.
-
-Link: https://patch.msgid.link/20260508195747.25492-1-devnexen@gmail.com
-Fixes: 5ec1d1e97de1 ("tracing: Rebuild full_name on each hist_field_name() call")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: a106e50be74b ("Bluetooth: HCI: Add support for LL Extended Feature Set")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index f9c8a4f078ea0..f8c0e66cc5871 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1366,10 +1366,8 @@ static const char *hist_field_name(struct hist_field *field,
- 			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
- 				       field->system, field->event_name,
- 				       field->name);
--			if (len >= sizeof(full_name))
--				return NULL;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 919ec275dd237..426f465be3553 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -4438,6 +4438,9 @@ static int hci_le_set_event_mask_sync(struct hci_dev *hdev)
+ 		events[4] |= 0x02;	/* LE BIG Info Advertising Report */
+ 	}
+ 
++	if (ll_ext_feature_capable(hdev))
++		events[5] |= BIT(2);
++
+ 	if (le_cs_capable(hdev)) {
+ 		/* Channel Sounding events */
+ 		events[5] |= 0x08;	/* LE CS Read Remote Supported Cap Complete event */
+@@ -7413,9 +7416,6 @@ static int hci_le_read_all_remote_features_sync(struct hci_dev *hdev,
+ 					sizeof(cp), &cp,
+ 					HCI_EVT_LE_ALL_REMOTE_FEATURES_COMPLETE,
+ 					HCI_CMD_TIMEOUT, NULL);
 -
--			field_name = full_name;
-+			if (len < sizeof(full_name))
-+				field_name = full_name;
- 		} else
- 			field_name = field->name;
- 	} else if (field->flags & HIST_FIELD_FL_TIMESTAMP)
+-	return __hci_cmd_sync_status(hdev, HCI_OP_LE_READ_ALL_REMOTE_FEATURES,
+-				     sizeof(cp), &cp, HCI_CMD_TIMEOUT);
+ }
+ 
+ static int hci_le_read_remote_features_sync(struct hci_dev *hdev, void *data)
 -- 
 2.53.0
 
