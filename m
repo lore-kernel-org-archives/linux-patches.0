@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899A92E92BA;
-	Thu, 28 May 2026 20:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB60259CBD;
+	Thu, 28 May 2026 20:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780000530; cv=none; b=RZllsBI/aIaNhasQ/xEY21cn+M8237ZsHrescKyUfOoxWc06f3ptIUI+iWz6zSAMYLGFioPcQKkVP8vFBLxPbUCsL9Q1HTz9QlxE2J1rFoH0gFQxCzLTOcYrShopT3D9L2jeHdmJt5PBw49lqjzmQ1Zcba71LJCB5eBlq2i0CIc=
+	t=1780000533; cv=none; b=XhVqMy607ArgcTFIoOwdpBWuyBPu0jYEKUpILmZa5qh0KbYMWIl9669oAbbh/lg+DEmqt3nadyO9tK9Y1vbNhwaAvsZhFUvNJV9UoaL534DGGDriAFWzXO9z5KWGmTGBVvDWHZ40zuXD+DN7frYQBUosYCWdFUkFRgbyx39Qi+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780000530; c=relaxed/simple;
-	bh=BC+TUa8BdMvceaocy+Y0/Xh5+t9d7g8GK4TGb9+DOKg=;
+	s=arc-20240116; t=1780000533; c=relaxed/simple;
+	bh=22+6odYQ78JLDDZMyWUAhdqcC2dycLW5SQaKiEKtlbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i6/kb5iDAAw2mqePdjETrUmwiy+cc4IskSCdV1teL2CJ2EUjYvINZKeYRJ2p3jKFB49jrrDRpMMGpWHKvwLg82BWSb40ogX9y82gB2bR1TfNOXZMR7PWJUB+D1L6zlSaGpYAUhwaWIuS2yZlOjyEl1gpCGyE6BsPz7Jv8A1DYvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2uDD0hm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IztyYQ5be+ohIOgLqYONs43w1w5D8mJrTUzoRKHKbiwCyYKZ8PMWnL5goOyDWyaGefoLaF2ZCMYxkztcdKSzEoGpitOhy+VsAAYY7tNQ86QKHMd4bMtu7+fxPq8CUeLWbgHbMb18BpXiR7z38INvGDqSHocSnL4WxU3MYtx3Wnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+43LKEw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2uDD0hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12D51F000E9;
-	Thu, 28 May 2026 20:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+43LKEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39C91F000E9;
+	Thu, 28 May 2026 20:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780000529;
-	bh=1y3MqMDtsLVrV/Vi7zISgcun5tceEnGsQOBaahJNkUY=;
+	s=korg; t=1780000532;
+	bh=4aOKF7AfmUfq/JdCDf0bDhvdcCjtPc8PZavr9f8dn90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A2uDD0hmHNclDjG9S4DEazhgr5J5go+2VelJ6qorMUYgF0/a7v4nz+5IRSxW0c1iM
-	 agFu83e5nrgaptPNG9bIxztbmrgCg3LWcLppZJG7L+5vZB1H9jrxleWl7V0g1m5E3r
-	 PJ994xMXgYNU+pjmphpsR3fvs4zjc168rslv0OyA=
+	b=B+43LKEwVuk4+ZtgsZHFA/k0w65OUNvxcZCGX46D2QxmcCaqLYguc2OdiSSjFZNVH
+	 cBp6/dNSunLOtOJNikMqwN2FQmSU2twuYhQecI63UiOQ7rjmhp8gDcBDHstlqwe3Km
+	 r98KsxFF030QmPZxSRrRR20xu/UU9SVze+sgqKOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 076/272] netfilter: nft_inner: Fix IPv6 inner_thoff desync
-Date: Thu, 28 May 2026 21:47:30 +0200
-Message-ID: <20260528194631.503309543@linuxfoundation.org>
+	Samuele Mariotti <smariotti@disroot.org>,
+	Paolo Valente <paolo.valente@unimore.it>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 077/272] sched_ext: Fix missing warning in scx_set_task_state() default case
+Date: Thu, 28 May 2026 21:47:31 +0200
+Message-ID: <20260528194631.531703867@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194629.379955525@linuxfoundation.org>
 References: <20260528194629.379955525@linuxfoundation.org>
@@ -49,57 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Samuele Mariotti <smariotti@disroot.org>
 
-commit b6a91f68ebfed9c38e0e9150f58a9b85da07181c upstream.
+[ Upstream commit b905ee77d5f557a83a485b4146210f54f13365fc ]
 
-In nft_inner_parse_l2l3(), when processing inner IPv6 packets,
-ipv6_find_hdr() correctly computes the transport header offset
-traversing all extension headers, but the result is immediately
-overwritten with nhoff + sizeof(_ip6h) (40 bytes), which only
-accounts for the IPv6 base header. This creates a desync between
-inner_thoff (wrong — points to extension header start) and l4proto
-(correct — e.g., IPPROTO_TCP), enabling transport header forgery
-and potential firewall bypass. This issue affects stable versions
-from Linux 6.2.
+In scx_set_task_state(), the default case was setting the
+warn flag, but then returning immediately. This is problematic
+because the only purpose of the warn flag is to trigger
+WARN_ONCE, but the early return prevented it from ever firing,
+leaving invalid task states undetected and untraced.
 
-For comparison, the normal (non-inner) IPv6 path correctly
-preserves ipv6_find_hdr()'s result. Removing the incorrect overwrite
-ensures that ipv6_find_hdr()'s calculated transport header offset is
-preserved, thereby fixing the desynchronization.
+To fix this, a WARN_ONCE call is now added directly in the
+default case.
 
-Fixes: 3a07327d10a0 ("netfilter: nft_inner: support for inner tunnel header matching")
-Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:5.1 Z.ai
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The fix addresses two aspects:
+
+ - Guarantees the invalid task states are properly logged
+   and traced.
+
+ - Provides a distinct warning message
+   ("sched_ext: Invalid task state") specifically for
+   states outside the defined scx_task_state enum values,
+   making it easier to distinguish from other transition
+   warnings.
+
+This ensures proper detection and reporting of invalid states.
+
+Signed-off-by: Samuele Mariotti <smariotti@disroot.org>
+Signed-off-by: Paolo Valente <paolo.valente@unimore.it>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 9a415cc53711 ("sched_ext: Avoid UAF in scx_root_enable_workfn() init failure path")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_inner.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/sched/ext.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_inner.c
-+++ b/net/netfilter/nft_inner.c
-@@ -156,7 +156,6 @@ static int nft_inner_parse_l2l3(const st
- 			return -1;
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3637,7 +3637,8 @@ static void scx_set_task_state(struct ta
+ 		warn = prev_state != SCX_TASK_READY;
+ 		break;
+ 	default:
+-		warn = true;
++		WARN_ONCE(1, "sched_ext: Invalid task state %d -> %d for %s[%d]",
++			  prev_state, state, p->comm, p->pid);
+ 		return;
+ 	}
  
- 		if (fragoff == 0) {
--			thoff = nhoff + sizeof(_ip6h);
- 			ctx->flags |= NFT_PAYLOAD_CTX_INNER_TH;
- 			ctx->inner_thoff = thoff;
- 			ctx->l4proto = l4proto;
 
 
