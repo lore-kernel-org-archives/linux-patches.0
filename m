@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0A232ABC0;
-	Thu, 28 May 2026 20:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F24B24677F;
+	Thu, 28 May 2026 20:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779998622; cv=none; b=VFo3nBfAxT0bD1E1KjHvh5G+sOqOhsYW3SIsNTJBmIeYuOBmegzZ/kofY5Ae7rogyJoQATHfNeIUkc67cEBKq3p3f3V5/hqidyEqEvGfJclLlKvopeQMAKkbnvtp5vAugR9KosHZ00O03+7DhpvyH4j8khqXRrqMp6exg8Zk/NY=
+	t=1779998624; cv=none; b=r2zgSJK3Jl3fhGXjTfvkZ4UhvXcivPhKHnV/D3I7oFBloVL5gHG9u1TdEw/42746eHtqaHqOHqVb1C1i/VhfK8cC8HVHTY0xUj59Ymlotw+ZGmATKSCsQ2+LlHrLl9psNfzVsOpCUz+2fmllrSJvceT8jLC3nh9EZQW0uTAxBwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779998622; c=relaxed/simple;
-	bh=ggF5aHqQo3+pNc3p98CbUNiUAEycqr8gi2QHwgzmbwU=;
+	s=arc-20240116; t=1779998624; c=relaxed/simple;
+	bh=n1PkagUP0OZP2n5cTRgfsQUCHmg2PCocWNeweRVQ9C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lS8a0EYfL7OCppsRPTi0zAJw7hw/RgN5xVBzfqn2sl6RfGV9j7OsFFofu4VABHvF6vzoIH/UlvctDxzWjM6LrOvL28MlG4kaP7vbwSaqKyidHfHqPoZlapYontvE9I79R4VFaD12ar7wLQody/mnapf7VWf6qCcvRF8mBQ0vccQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXl5PB8Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mN90/uEZrzer5jo694FHDRsiLrHuuwMGhryWbhbwSOTpeFeNcdOzvvOxguW6fWsQN2ZI7FlvPjKX6Gn3nIR0SvKRBzz97eM4eCnCBLiHCYZvZMYkrvSReWWHm2rAWVIEChvjfJj08UxsL0zTIpk9gULcQMxHtxUUnEkuek5a1wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gg1CWVxc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXl5PB8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4721F000E9;
-	Thu, 28 May 2026 20:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gg1CWVxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEC11F000E9;
+	Thu, 28 May 2026 20:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779998620;
-	bh=QskPk+mT7TzqErStvwyEb/BoELZZD0RWSDmohHWywTY=;
+	s=korg; t=1779998623;
+	bh=icSplH8/qlzKAa+Iwhm1rVWIzFFI4nVG9W0Rj9C98F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXl5PB8Q472sJ1PzTq3why3NGXYnNx1ZzT6o9uhvmJWG2gCGQfj3q/LRxhsFC25SD
-	 2dO7hybaDa/II7mJefzJ3hC2fGOhUnTR2qGhA3NUTblUmOjYr8o2KetUBk3TUxsUFY
-	 jORqBZY+k2qMMlZD+Ge4a3LQs2LIuFendjyl3Imo=
+	b=gg1CWVxcOJLSIfAUtZqnsrJqVrdGtqJUMgUlD/xRv71eyp7UirAcd9xrCkmrDxoXd
+	 svH3QLYPOl5DbS6Mf8k873YUUtVns9jGEvThBIZNgyH2dnccz3GiNQE1WLBI3RoS28
+	 yTUJUldU/y5jEY2B9HbUE/Jd+dl4ZZPyev+YwyNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 202/461] firmware: arm_ffa: Fix sched-recv callback partition lookup
-Date: Thu, 28 May 2026 21:45:31 +0200
-Message-ID: <20260528194652.936315250@linuxfoundation.org>
+Subject: [PATCH 7.0 203/461] ARM: integrator: Fix early initialization
+Date: Thu, 28 May 2026 21:45:32 +0200
+Message-ID: <20260528194652.968546933@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -50,51 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit a6848a50404eefb6f0b131c21881a2d8d21b31a9 ]
+[ Upstream commit 90d77b30a666049ad24df463f52e5d529c44e8cd ]
 
-ffa_sched_recv_cb_update() used list_for_each_entry_safe() to search for
-a matching partition and then tested the iterator against NULL. That is
-not a valid end-of-list check for circular lists and can fall through
-with an invalid pointer. Use a normal iterator and detect the not-found
-case correctly before touching the partition state.
+Starting with commit bdb249fce9ad4 ("ARM: integrator: read counter using
+syscon/regmap"), intcp_init_early calls syscon_regmap_lookup_by_compatible
+which in turn calls of_syscon_register. This function allocates memory.
+Since the memory management code has not been initialized at that time,
+the call always fails. It either returns -ENOMEM or crashes as follows.
 
-Fixes: be61da938576 ("firmware: arm_ffa: Allow multiple UUIDs per partition to register SRI callback")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-11-8595ae450034@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000c when read
+[0000000c] *pgd=00000000
+Internal error: Oops: 5 [#1] ARM
+Modules linked in:
+CPU: 0 UID: 0 PID: 0 Comm: swapper Not tainted 6.15.0-rc5-00026-g5fcc9bf84ee5 #1 PREEMPT
+Hardware name: ARM Integrator/CP (Device Tree)
+PC is at __kmalloc_cache_noprof+0xec/0x39c
+LR is at __kmalloc_cache_noprof+0x34/0x39c
+...
+Call trace:
+ __kmalloc_cache_noprof from of_syscon_register+0x7c/0x310
+ of_syscon_register from device_node_get_regmap+0xa4/0xb0
+ device_node_get_regmap from intcp_init_early+0xc/0x40
+ intcp_init_early from start_kernel+0x60/0x688
+ start_kernel from 0x0
+
+The crash is seen due to a dereferenced pointer which is not supposed to be
+NULL but is NULL if the memory management subsystem has not been
+initialized. The crash is not seen with all versions of gcc. Some versions
+such as gcc 9.x apparently do not dereference the pointer, presumably if
+tracing is disabled. The problem has been reproduced with gcc 10.x, 11.x,
+and 13.x. Either case, if the crash is not seen, the call to
+syscon_regmap_lookup_by_compatible returns -ENOMEM, and
+sched_clock_register is never called.
+
+Fix the problem by moving the early initialization code into the standard
+machine initialization code.
+
+Fixes: bdb249fce9ad4 ("ARM: integrator: read counter using syscon/regmap")
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/20250518164118.3859567-1-linux@roeck-us.net
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20260505-integrator-fixes-v1-1-56ab9aac59db@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/mach-versatile/integrator_cp.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index aa6b9d52a673f..e0263c3fad70b 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1207,7 +1207,7 @@ static int
- ffa_sched_recv_cb_update(struct ffa_device *dev, ffa_sched_recv_cb callback,
- 			 void *cb_data, bool is_registration)
+diff --git a/arch/arm/mach-versatile/integrator_cp.c b/arch/arm/mach-versatile/integrator_cp.c
+index 2ed4ded56b3fe..03dfb5f720b7b 100644
+--- a/arch/arm/mach-versatile/integrator_cp.c
++++ b/arch/arm/mach-versatile/integrator_cp.c
+@@ -86,14 +86,6 @@ static u64 notrace intcp_read_sched_clock(void)
+ 	return val;
+ }
+ 
+-static void __init intcp_init_early(void)
+-{
+-	cm_map = syscon_regmap_lookup_by_compatible("arm,core-module-integrator");
+-	if (IS_ERR(cm_map))
+-		return;
+-	sched_clock_register(intcp_read_sched_clock, 32, 24000000);
+-}
+-
+ static void __init intcp_init_irq_of(void)
  {
--	struct ffa_dev_part_info *partition = NULL, *tmp;
-+	struct ffa_dev_part_info *partition = NULL;
- 	struct list_head *phead;
- 	bool cb_valid;
+ 	cm_init();
+@@ -119,6 +111,10 @@ static void __init intcp_init_of(void)
+ {
+ 	struct device_node *cpcon;
  
-@@ -1220,11 +1220,11 @@ ffa_sched_recv_cb_update(struct ffa_device *dev, ffa_sched_recv_cb callback,
- 		return -EINVAL;
- 	}
- 
--	list_for_each_entry_safe(partition, tmp, phead, node)
-+	list_for_each_entry(partition, phead, node)
- 		if (partition->dev == dev)
- 			break;
- 
--	if (!partition) {
-+	if (&partition->node == phead) {
- 		pr_err("%s: No such partition ID 0x%x\n", __func__, dev->vm_id);
- 		return -EINVAL;
- 	}
++	cm_map = syscon_regmap_lookup_by_compatible("arm,core-module-integrator");
++	if (!IS_ERR(cm_map))
++		sched_clock_register(intcp_read_sched_clock, 32, 24000000);
++
+ 	cpcon = of_find_matching_node(NULL, intcp_syscon_match);
+ 	if (!cpcon)
+ 		return;
+@@ -138,7 +134,6 @@ static const char * intcp_dt_board_compat[] = {
+ DT_MACHINE_START(INTEGRATOR_CP_DT, "ARM Integrator/CP (Device Tree)")
+ 	.reserve	= integrator_reserve,
+ 	.map_io		= intcp_map_io,
+-	.init_early	= intcp_init_early,
+ 	.init_irq	= intcp_init_irq_of,
+ 	.init_machine	= intcp_init_of,
+ 	.dt_compat      = intcp_dt_board_compat,
 -- 
 2.53.0
 
