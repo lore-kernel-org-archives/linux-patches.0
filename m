@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861262E7379;
-	Thu, 28 May 2026 20:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5908A257854;
+	Thu, 28 May 2026 20:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999723; cv=none; b=mffnyYguOlNAehGtjOV6QG1RuxYp8XTiNRie71aePvKZTzhGM35Jn3BZFd1mV88cWigdrjbJlfIfPKwQQwcQayOplcNkU/a79NoNNRFAT8hBKDep+F3ZcIu38mDmEXCRaldsxrYfmlreJNaY8js53ZJyTVSzVk+NUtyxb4i4dFo=
+	t=1779999726; cv=none; b=YFyhxstK+4OIjRIn+JDiWSP99Y/FDGhZTap4HSEBvlLnyfZyGm1jL9FCEef1dLhG1AJ9aLcHAjsxB6RWmSlA2P73oNANc3OIkuZpMZEa3cXrqq6xwdUeQ6aPW/8O1Yq5Lvwmsv+IcsCNf5KOPJchMoXKl5AuBpeLhc1qkIZ2QvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999723; c=relaxed/simple;
-	bh=n7DCaI6tQTiQKLUk5rtt/9hpW+TRgkmPOfzwthKDMLA=;
+	s=arc-20240116; t=1779999726; c=relaxed/simple;
+	bh=/HrN/Ql9nNuJukmOePSbnpipZvWvExzyKR6FZ7DuO8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GArsbcZyFHpPN7uI3/Eudy/FLBnzf0LNefoMireFZfnmyxrmof0S6kiUFYoFgxocglpS5o1b5TKiExYA8vxu4olZ3bL5TLbp/ChBSP/49BidU3RHYVM23eEq4T5AHGoPicRPLLMa52nJUZbI9w0s7o5zlsoJLBQcKC6knshT6CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVe6Bg8k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V7GUXq7DmmRjlTN9996QlSBpGMJS+K4kuD/Hv7O/9kQvqJSlEkF1xy+vibmKAt/V8+F1TRMMIKQVk6UKYg5FKOqojLLUt+U2WAPdeJucgfP2X9s3d8Salyo/kHyDfXKF4ltZxnY+dNGf0wStLeCqWQjFljG+/KH7eyywzwLGnD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dC25Q62q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVe6Bg8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E475A1F000E9;
-	Thu, 28 May 2026 20:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dC25Q62q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E71F000E9;
+	Thu, 28 May 2026 20:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999722;
-	bh=DsQT/SlOWG/cseJJA6a/xYsKHjRvMa/sHsbm8iufG/Y=;
+	s=korg; t=1779999725;
+	bh=3aAHhNuUOUfBxJTXI2f0V3pXscXWm8pHzC3/JZjqKP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVe6Bg8kik5Bcug8sIcShzKljYkaCw1PCK1svAyunVD2lnfnQElhd7hwe+4NtcaVB
-	 aO0fs37fuUPd87plD9OatvSaHfnE91MIxtI51HMKnhnr1ckr8krp7W+nRUmUjVWmNR
-	 bhYcWdpQ2ASkG6JxpuM829fkRZZsxtmtywEmWccc=
+	b=dC25Q62q0ih3UDRO2Q03DVdxh5eRLVSDwVkHBKSCQc5ZGHXF7F/NCZ9s+SLA4HagT
+	 SZtNHv03casIn6ALwwuEteKiXl5K01ZZgm+xGU2GqgOG9IP+h6Ke6WozYJT38kO361
+	 0O4SmXsPuoRZZFoyhEDnuo9hsPAK3DnDWXIjo4i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 169/377] hwmon: (pmbus/adm1266) reject short block-read responses in the GPIO accessors
-Date: Thu, 28 May 2026 21:46:47 +0200
-Message-ID: <20260528194643.323493177@linuxfoundation.org>
+	Til Kaiser <mail@tk154.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 170/377] pinctrl: qcom: ipq4019: mark gpio as a GPIO pin function
+Date: Thu, 28 May 2026 21:46:48 +0200
+Message-ID: <20260528194643.353109235@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
 References: <20260528194638.371537336@linuxfoundation.org>
@@ -51,71 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Til Kaiser <mail@tk154.de>
 
-commit a7232f68c43ca62f545049b7f5fbfc75137b843b upstream.
+[ Upstream commit b51d33ea8a164bb5f0eec8ad817fa9730ac2b577 ]
 
-adm1266_gpio_get() and adm1266_gpio_get_multiple() both compose the
-pin-status word as
+The qcom pinctrl core supports marking functions that represent GPIO mode
+via PINCTRL_GPIO_PINFUNCTION(), so that strict pinmuxing does not reject
+GPIO requests for pins that are muxed to the GPIO function.
 
-	pins_status = read_buf[0] + (read_buf[1] << 8);
+ipq4019 still describes its gpio function with QCA_PIN_FUNCTION(gpio),
+so it is not treated as a GPIO pin function. As a result, GPIO consumers
+can still conflict with pinctrl states that select the "gpio" function.
 
-right after i2c_smbus_read_block_data(), guarding only against an
-error return.  A well-behaved device returns 2 bytes for
-GPIO_STATUS/PDIO_STATUS, but the helper happily reports a 0- or
-1-byte response too.  If the device returns 0 bytes, both read_buf
-slots are uninitialized stack memory; if it returns 1 byte, read_buf[1]
-is.
+Add a QCA_GPIO_PIN_FUNCTION() helper and use it for the ipq4019 gpio
+function, matching how the msm-based qcom drivers handle this.
 
-The composed value then flows through set_bit() into the caller's
-*bits in adm1266_gpio_get_multiple(), or into the return value of
-adm1266_gpio_get(), and ends up in userspace via gpiolib (sysfs and
-the char-dev ioctls).  That leaks a few bits of kernel stack per
-request on any device whose firmware glitch, bus error, or hostile
-slave produces a short block-read response.
+This allows ipq4019 to keep the GPIO-related pin configuration in DTS
+without tripping over strict pinmux ownership checks.
 
-Add the missing length check to both call sites and surface a short
-response as -EIO.
-
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-3-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cc85cb96e2e4 ("pinctrl: qcom: make the pinmuxing strict")
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h     | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -176,6 +176,8 @@ static int adm1266_gpio_get(struct gpio_
- 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq4019.c b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
+index 6ede3149b6e17..07df812fb7282 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq4019.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
+@@ -480,7 +480,7 @@ static const struct pinfunction ipq4019_functions[] = {
+ 	QCA_PIN_FUNCTION(blsp_uart0),
+ 	QCA_PIN_FUNCTION(blsp_uart1),
+ 	QCA_PIN_FUNCTION(chip_rst),
+-	QCA_PIN_FUNCTION(gpio),
++	QCA_GPIO_PIN_FUNCTION(gpio),
+ 	QCA_PIN_FUNCTION(i2s_rx),
+ 	QCA_PIN_FUNCTION(i2s_spdif_in),
+ 	QCA_PIN_FUNCTION(i2s_spdif_out),
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 4625fa5320a95..120217012a9f6 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -39,6 +39,11 @@ struct pinctrl_pin_desc;
+ 					fname##_groups,		\
+ 					ARRAY_SIZE(fname##_groups))
  
- 	pins_status = read_buf[0] + (read_buf[1] << 8);
- 	if (offset < ADM1266_GPIO_NR)
-@@ -196,6 +198,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
-@@ -208,6 +212,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
++#define QCA_GPIO_PIN_FUNCTION(fname)				\
++	[qca_mux_##fname] = PINCTRL_GPIO_PINFUNCTION(#fname,	\
++					fname##_groups,		\
++					ARRAY_SIZE(fname##_groups))
++
+ /**
+  * struct msm_pingroup - Qualcomm pingroup definition
+  * @grp:                  Generic data of the pin group (name and pins)
+-- 
+2.53.0
+
 
 
