@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA52832ABC0;
-	Thu, 28 May 2026 20:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664BB352019;
+	Thu, 28 May 2026 20:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779999122; cv=none; b=h47TiavISmO5+A0LteEkOrU2w2kkx9a2YLMksK84C6rHhNrW8rT1elLYnKe5cmnyFAJyN3KQ6lorPy15xZDqIQ43VQbaPuhkaxb16b294+5w1+x1hmheiVbvx/X0W8GG4boSyJ2TBwXMaBvlVMIWkfTyMOCLiZGiYZyYLuxWGq8=
+	t=1779999125; cv=none; b=OgXbQTEmhVRqOFwAzeDbIiXIJTDEi/thJNzqqUj0InhcJePzn+rOHDjyku2sJqjErm8yu/0hk3XU7e7R/gPQCiwVRuoJQVlfKWle2wgM5Hj2oT1uZTH05PDWlNMoVlV/dhMrTol3uIXWicvjmxl9IpddXTIHVGxG88R/DH4xaNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779999122; c=relaxed/simple;
-	bh=TcSzmIDzrNObgGAcbSxxolD48GwHwU8WcaxhNEtTu24=;
+	s=arc-20240116; t=1779999125; c=relaxed/simple;
+	bh=3s8GaQdNlhkYAUp5KdGuahhUlm9ynI7bN3DEGIeELtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxjE1Q537fyVz3pzW0XMg44t0/Qb+1SMDBcn8D7nNb+JQaw+jBjdudN39//if2Bt/Ko8fWrRt2m9mnDEza3K9rbVD0q+/WjJqZoZl9QvvmqxhZ1hbXU8oEds97ABJbWnnoId7m3UVPBeJL5TqS2gDT/g8bhuTGCI5Q7l8GDEF3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngAfUPFU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8LoAdDgdoCzoFfHqeNbHfRgE9YAeDw5V+HF52t6scTZ93ykUQ6FbxwAXZvW4jbv2UTFpj0OUDj0OM5wdv15HcXUZQCarzOJCiVb/o55IPy1iEJikis79Jn2tCzykWa2aU8ruy5GF0nwPaR6pdElgU2gnLI9wZGPqsB3TwayYCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+IH4erl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngAfUPFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238491F000E9;
-	Thu, 28 May 2026 20:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+IH4erl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9D61F000E9;
+	Thu, 28 May 2026 20:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779999121;
-	bh=X1CgwKGeJwvy0pC5ZsvfpKiHxQ1KGCcAvJ24hGCwTR4=;
+	s=korg; t=1779999124;
+	bh=Z0piLGsJ5Xst/nLi0o9yMRvz1WLxRSuDj7hUmMJPwdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngAfUPFU8tAXOXQpuo1XoDSQ7EzcJMy0q8YRWjMLQL0Dr/YhpPdFKtHCxlsySHBIu
-	 QcCzDve4lT7p19WQcPeHiYthqvAARykgtZtL4S7wk2tq9dJEiOiFMvds0AaKpQND1J
-	 hMJfaRLWFQmzsbulhPMqFA5j65UrgBECu3EVVEOM=
+	b=x+IH4erluLKsoGeux74/qKWsciY03ImPNk9yT3NKvPRz1E1zB5m6T1179jwvUP+ad
+	 a6VfxuEQjkAgFsdSD/2WQGKirdxVAQn1Vl3Vp2o/2l48Z2FdZwxlFe2QbwpOCwxYgs
+	 QpjI8zQt5q0Sm+/fUmW1peK6cjJESW7ZJlbVg6No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Zhang Cen <rollkingzzc@gmail.com>,
+	Cunlong Li <shenxiaogll@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 416/461] ALSA: seq: Serialize UMP output teardown with event_input
-Date: Thu, 28 May 2026 21:49:05 +0200
-Message-ID: <20260528194659.537135357@linuxfoundation.org>
+Subject: [PATCH 7.0 417/461] cgroup: rstat: relax NMI guard after switch to try_cmpxchg
+Date: Thu, 28 May 2026 21:49:06 +0200
+Message-ID: <20260528194659.568445694@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
 References: <20260528194646.819809818@linuxfoundation.org>
@@ -51,172 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Cunlong Li <shenxiaogll@gmail.com>
 
-[ Upstream commit 60a1969fae6209644698fca91c185d153674f631 ]
+[ Upstream commit 22572dbcd3486e6c4dced877125bbf50e4e24edf ]
 
-seq_ump_process_event() borrows client->out_rfile.output without
-synchronizing with the first-open and last-close transition in
-seq_ump_client_open() and seq_ump_client_close().
+Commit 36df6e3dbd7e ("cgroup: make css_rstat_updated nmi safe") used
+this_cpu_cmpxchg() for the lockless insertion, and therefore required
+both ARCH_HAVE_NMI_SAFE_CMPXCHG and ARCH_HAS_NMI_SAFE_THIS_CPU_OPS in
+the NMI guard: on archs without the latter, this_cpu_cmpxchg() falls
+back to "local_irq_save() + plain cmpxchg", and local_irq_save()
+cannot mask NMIs.
 
-The last output unuse can therefore drop opened[STR_OUT] to zero and
-release the rawmidi file while an in-flight event_input callback is still
-inside snd_rawmidi_kernel_write(). That leaves the rawmidi substream
-runtime exposed to teardown before the write path has taken its own
-buffer reference.
+Commit 3309b63a2281 ("cgroup: rstat: use LOCK CMPXCHG in
+css_rstat_updated") later replaced this_cpu_cmpxchg() with plain
+try_cmpxchg() to fix cross-CPU lockless-list corruption, but left the
+NMI guard untouched.  After that switch, css_rstat_updated() no longer
+performs any this_cpu_*() RMW operations and only relies on the arch
+having NMI-safe cmpxchg, so ARCH_HAS_NMI_SAFE_THIS_CPU_OPS is no
+longer required in the guard.
 
-Add a per-client rwlock for the event_input-visible output file. Publish
-a newly opened output file under the write side, and hold the read side
-from the output lookup through snd_rawmidi_kernel_write(). The last
-output close copies and clears the visible output file under the write
-side, then drops the lock and releases the saved rawmidi file. Use
-IRQ-safe rwlock guards because event_input can also be reached from
-atomic sequencer delivery.
+Relax the guard accordingly so that archs which have HAVE_NMI and
+ARCH_HAVE_NMI_SAFE_CMPXCHG but not ARCH_HAS_NMI_SAFE_THIS_CPU_OPS
+(e.g. sparc, powerpc on PPC64/BOOK3S) can benefit from the existing
+CONFIG_MEMCG_NMI_SAFETY_REQUIRES_ATOMIC path.  Without this, the css
+is never queued in NMI on those archs, and the atomics staged by
+account_{slab,kmem}_nmi_safe() are not drained by flush_nmi_stats().
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
-
-path A label: event_input path         path B label: last unuse path
-1. seq_ump_process_event() reads       1. seq_ump_client_close()
-   client->out_rfile.output.              drops opened[STR_OUT] to zero.
-2. snd_rawmidi_kernel_write1()         2. snd_rawmidi_kernel_release()
-   has not yet pinned runtime.            closes the output file.
-3. The writer continues using          3. close_substream() frees
-   the borrowed substream.                substream->runtime.
-
-This keeps the output substream and runtime alive for the full
-event_input write while keeping rawmidi release outside the rwlock.
-
-KASAN reproduced this as a slab-use-after-free in
-snd_rawmidi_kernel_write1(), with allocation through
-seq_ump_use()/snd_seq_port_connect() and free through
-seq_ump_unuse()/snd_seq_port_disconnect().
-
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in snd_rawmidi_kernel_write1+0x9d/0x400
-RIP: 0033:0x7f5528af837f
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x73/0xb0 (?:?)
-  print_report+0xd1/0x650 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x1a7/0x340 (?:?)
-  kasan_complete_mode_report_info+0x64/0x200 (?:?)
-  kasan_report+0xf7/0x130 (?:?)
-  snd_rawmidi_kernel_write1+0x9d/0x400 (?:?)
-  __asan_load8+0x82/0xb0 (?:?)
-  update_stack_state+0x1ef/0x2d0 (?:?)
-  snd_rawmidi_kernel_write+0x1a/0x20 (?:?)
-  seq_ump_process_event+0xd4/0x120 (sound/core/seq/seq_ump_client.c:82)
-  __snd_seq_deliver_single_event+0x8a/0xe0 (?:?)
-  snd_seq_deliver_from_ump+0x2b2/0xd60 (?:?)
-  lock_acquire+0x14e/0x2e0 (?:?)
-  find_held_lock+0x31/0x90 (?:?)
-  snd_seq_port_use_ptr+0xa6/0xe0 (?:?)
-  __kasan_check_write+0x18/0x20 (?:?)
-  do_raw_read_unlock+0x32/0xa0 (?:?)
-  _raw_read_unlock+0x26/0x50 (?:?)
-  snd_seq_deliver_single_event+0x45c/0x4b0 (?:?)
-  snd_seq_deliver_event+0x10d/0x1b0 (?:?)
-  snd_seq_client_enqueue_event+0x192/0x240 (?:?)
-  snd_seq_write+0x2cd/0x450 (?:?)
-  apparmor_file_permission+0x20/0x30 (?:?)
-  security_file_permission+0x51/0x60 (?:?)
-  vfs_write+0x1ce/0x850 (?:?)
-  __fget_files+0x12b/0x220 (?:?)
-  lock_release+0xc8/0x2a0 (?:?)
-  __rcu_read_unlock+0x74/0x2d0 (?:?)
-  __fget_files+0x135/0x220 (?:?)
-  ksys_write+0x15a/0x180 (?:?)
-  rcu_is_watching+0x24/0x60 (?:?)
-  __x64_sys_write+0x46/0x60 (?:?)
-  x64_sys_call+0x7d/0x20d0 (?:?)
-  do_syscall_64+0xc1/0x360 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-
-Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Link: https://patch.msgid.link/20260520103249.3048345-1-rollkingzzc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3309b63a2281 ("cgroup: rstat: use LOCK CMPXCHG in css_rstat_updated")
+Signed-off-by: Cunlong Li <shenxiaogll@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_client.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ kernel/cgroup/rstat.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index 9079ccfdc8666..ccd93599b493b 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -37,6 +37,7 @@ struct seq_ump_client {
- 	struct snd_ump_endpoint *ump;	/* assigned endpoint */
- 	int seq_client;			/* sequencer client id */
- 	int opened[2];			/* current opens for each direction */
-+	rwlock_t output_lock;		/* protects out_rfile output access */
- 	struct snd_rawmidi_file out_rfile; /* rawmidi for output */
- 	struct seq_ump_input_buffer input; /* input parser context */
- 	void *ump_info[SNDRV_UMP_MAX_BLOCKS + 1]; /* shadow of seq client ump_info */
-@@ -88,6 +89,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- 	unsigned char type;
- 	int len;
+diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
+index ed60ba119c687..de816a43db9f0 100644
+--- a/kernel/cgroup/rstat.c
++++ b/kernel/cgroup/rstat.c
+@@ -81,11 +81,10 @@ void __css_rstat_updated(struct cgroup_subsys_state *css, int cpu)
+ 	lockdep_assert_preemption_disabled();
  
-+	guard(read_lock_irqsave)(&client->output_lock);
- 	substream = client->out_rfile.output;
- 	if (!substream)
- 		return -ENODEV;
-@@ -106,6 +108,7 @@ static int seq_ump_process_event(struct snd_seq_event *ev, int direct,
- static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 	int err;
+ 	/*
+-	 * For archs withnot nmi safe cmpxchg or percpu ops support, ignore
+-	 * the requests from nmi context.
++	 * The lockless insertion below relies on NMI-safe cmpxchg;
++	 * bail out in NMI on archs that don't provide it.
+ 	 */
+-	if ((!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) ||
+-	     !IS_ENABLED(CONFIG_ARCH_HAS_NMI_SAFE_THIS_CPU_OPS)) && in_nmi())
++	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) && in_nmi())
+ 		return;
  
- 	guard(mutex)(&ump->open_mutex);
-@@ -113,9 +116,11 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- 		err = snd_rawmidi_kernel_open(&ump->core, 0,
- 					      SNDRV_RAWMIDI_LFLG_OUTPUT |
- 					      SNDRV_RAWMIDI_LFLG_APPEND,
--					      &client->out_rfile);
-+					      &rfile);
- 		if (err < 0)
- 			return err;
-+		scoped_guard(write_lock_irqsave, &client->output_lock)
-+			client->out_rfile = rfile;
- 	}
- 	client->opened[dir]++;
- 	return 0;
-@@ -125,11 +130,19 @@ static int seq_ump_client_open(struct seq_ump_client *client, int dir)
- static int seq_ump_client_close(struct seq_ump_client *client, int dir)
- {
- 	struct snd_ump_endpoint *ump = client->ump;
-+	struct snd_rawmidi_file rfile = {};
- 
- 	guard(mutex)(&ump->open_mutex);
--	if (!--client->opened[dir])
--		if (dir == STR_OUT)
--			snd_rawmidi_kernel_release(&client->out_rfile);
-+	if (!--client->opened[dir]) {
-+		if (dir == STR_OUT) {
-+			scoped_guard(write_lock_irqsave, &client->output_lock) {
-+				rfile = client->out_rfile;
-+				client->out_rfile = (struct snd_rawmidi_file){};
-+			}
-+			if (rfile.rmidi)
-+				snd_rawmidi_kernel_release(&rfile);
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -467,6 +480,7 @@ static int snd_seq_ump_probe(struct snd_seq_device *dev)
- 
- 	INIT_WORK(&client->group_notify_work, handle_group_notify);
- 	client->ump = ump;
-+	rwlock_init(&client->output_lock);
- 
- 	client->seq_client =
- 		snd_seq_create_kernel_client(card, ump->core.device,
+ 	rstatc = css_rstat_cpu(css, cpu);
 -- 
 2.53.0
 
