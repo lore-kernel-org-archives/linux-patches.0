@@ -1,375 +1,176 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.61.103])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010055.outbound.protection.outlook.com [52.101.56.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7F337107F
-	for <patches@lists.linux.dev>; Fri, 29 May 2026 04:23:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.61.103
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780028614; cv=none; b=rdW7WQZ/XCJQgyoMn0GLmOtmuWRMOTwrPS8efmD9glKAoPCpt//gY3FZReDOkOjIogSqNffDqOltGfn/5P+hobYFtMxEQfFYb7M3gmBttn3rZCUFIL4bcR4u9x94gYPHCb0CoZLN0BdcVsDnRRUmclXsQWKtLq2H6F4W4I9kmY4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780028614; c=relaxed/simple;
-	bh=VI+zN+U9mnRel4FyP26jh3w1GM29zTBMlPuNIhxk4Zc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j5WRiahH9PFwx0SnfDCpzhy8QUfUiziK29cnB+50UAjQcPi3jyL87Fg1LEONIShFqCP3QmPzg9KSt0+R6+WJxTIQS/Ctzs1495Vw4sU3rFEYa+xD6AB+dRSkAbIrqw/wB0gQgD55Aj90ddRJKzYcVWLYLaduZgSzPrcv9aT2Pac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=OoL1W9bg; arc=none smtp.client-ip=188.68.61.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEE621E097;
+	Fri, 29 May 2026 05:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780031895; cv=fail; b=F7eRSHsv5o8W0YJonxTW51TJJlsHD5X+PFEuiZ4xJ00L8lDbtq1UUJp54EzKxUvBNyzmOBwMo4+nh2QKSHCum66N68GNbfx5wKXq1TeBF9B87MYdBZYmfpQqRseToaLfqJHUSjQsAu1T24HZsqGqR/QIgZjks/Vw2usL/4Ivid4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780031895; c=relaxed/simple;
+	bh=+6ujn/o5zcUAk8PViEk6G0nRAWTgkDY/O0XvVMJPsBk=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=fwCil4Gx1kFKc2wYS04+tIC9NmemH9/GarqUATpOvzOfN4Ed120aD9e2bk8anxAs7F/64BqrALCdxhkBfp07cFD0nEmHD3G86K0VOqpfjKZL1ywQOi7AHvoF21uwjYnAQc3R9Uv0JXp8cdDVma2KSigiPlRckxBjp79OB20mf9A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=CB3bD1hh; arc=fail smtp.client-ip=52.101.56.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="OoL1W9bg"
-Received: from mors-relay-8403.netcup.net (localhost [127.0.0.1])
-	by mors-relay-8403.netcup.net (Postfix) with ESMTPS id 4gRVbJ06kgz88Mn;
-	Fri, 29 May 2026 06:23:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=leemhuis.info;
-	s=key2; t=1780028604;
-	bh=VI+zN+U9mnRel4FyP26jh3w1GM29zTBMlPuNIhxk4Zc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OoL1W9bgvVPri8TtRVoS653mvFvx2BM+ICzGSO2dElEMSTR/i+ZBv1SgxmShmxX32
-	 NuCG1BBDqqVz4quGLlbcfIPp5djOyVV4o3BVdcIktRHpTpA1hkdzM8hwm3Fdmac/51
-	 EM+s/+Jc7b+bowDzfBzy+AJ99XsWxYzRzLLMoW5hHgFA3f3usLkle/5HPqBMbvV0W4
-	 lmCidsXKoVPXA4PgVvpAaYwNPuzoq2iAkfcpF1kRHHSWXctLndB9Loij5hjYumLN/j
-	 jsUfc8fbnINl0RASh2HG7ZgFXPxs0GX4Hpmzn/9Ek0XdepnBj85llIKaSyo7tN6jEb
-	 ElcEA7i1dpDkA==
-Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-8403.netcup.net (Postfix) with ESMTPS id 4gRVZz69Ldz8DWV;
-	Fri, 29 May 2026 06:23:07 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
-X-Spam-Flag: NO
-X-Spam-Score: -2.898
-X-Spam-Level: 
-Received: from mxe9fb.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4gRVZy2f7Kz8tY8;
-	Fri, 29 May 2026 06:23:06 +0200 (CEST)
-Received: from [IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f] (unknown [IPv6:2a02:8108:8984:1d00:a0cf:1912:4be:477f])
-	by mxe9fb.netcup.net (Postfix) with ESMTPSA id A478C61743;
-	Fri, 29 May 2026 06:23:05 +0200 (CEST)
-Authentication-Results: mxe9fb;
-        spf=pass (sender IP is 2a02:8108:8984:1d00:a0cf:1912:4be:477f) smtp.mailfrom=linux@leemhuis.info smtp.helo=[IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f]
-Received-SPF: pass (mxe9fb: connection is authenticated)
-Message-ID: <d66f5c95-ebc0-4c53-9852-f73c790363f7@leemhuis.info>
-Date: Fri, 29 May 2026 06:23:04 +0200
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="CB3bD1hh"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VxJmnOQ8tE43AlEMaMYkvcpWcRwPvYOsbQGfZRPJJzooduU/hT2IO58kSFnMVhJkjFiBNuvhKgsU2RBccJZ/cuSbAzm8UjB+XhI4Nd38nQPhwPeZfTUh1QDAWTK8i9DJ7FuMxAXzZcsMqbgAPL42PshA60ntKToM0UaL7wDl+m5yYR/+EahQ2SN3LPxPy2vO9O/lTnXgwq3S2H3hVfgQARDN7JbVBeBvzAAxOp7XN6NUXsoEZdNCXg1yvFz/SqDEVP7Qqu5f8CkHxmbyTAhTCdf0hgm4z3zEB4MDqaio1ZZ+/Gj/tqhEwdo8y98OOAnpp4vDWRE7GFIBWFatAiZP7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vADAtwph+sPZZJzGPkl8siuhyUxNCLlqmi9GKC8o1E0=;
+ b=h/UNRiM6eNZuGfgnXKSh2qIZ6zmZONE1MeE/oGKSrNi01/oUtBmZGUGmPBR0og3jnRFKAe2gI4o4VQl6RyH53mt2UCmmsTwXNSo4ioPMnM/GsPfz1cItLc93bHXJJ5q1ldUcUWfjMHv96N2DTGfCC4yG1/R+AYKy3GOy8Bod2nBvPPjjXyxm83Y1NO/0PLFMSgSKfmbdWxEjwOWzWrgK/MyVH9CP3nmP/PvNJjxr4BEQHHL8skKEmj/iDub1Kf7aLgki+6TqqwqqDTCNSg1N+1LqdUVktIQCG9RiJBOmbZ9aexvesCTaUZEx2YTuZm9GlFUkrwNQasacRxoT6wKg9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vADAtwph+sPZZJzGPkl8siuhyUxNCLlqmi9GKC8o1E0=;
+ b=CB3bD1hhxcuKarHjJu/7kUoXg2Qztw9EakEb4hyJ4yfXjcFBFYDdan2cmhLS5wjY8a3qa2y4hzuUSVrLzUjXwBsIiuTHcE9y7nKyfbSLD1UZXUzmjqBE0VjryTuNEbQv3De9MHN/y4Yj2PemXbgymaTEZhTqcRw+Zj7RJ522qNI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB5766.namprd12.prod.outlook.com (2603:10b6:8:75::12) by
+ DS0PR12MB9273.namprd12.prod.outlook.com (2603:10b6:8:193::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.71.14; Fri, 29 May 2026 05:18:11 +0000
+Received: from DS7PR12MB5766.namprd12.prod.outlook.com
+ ([fe80::222:966a:d65d:d08e]) by DS7PR12MB5766.namprd12.prod.outlook.com
+ ([fe80::222:966a:d65d:d08e%3]) with mapi id 15.21.0071.010; Fri, 29 May 2026
+ 05:18:11 +0000
+Message-ID: <a1bd3c5f-2730-49a2-aae2-f17abc055fbd@amd.com>
+Date: Fri, 29 May 2026 10:48:02 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] iommu/amd: Don't split flush for
+ amd_iommu_domain_flush_all()
+To: Weinan Liu <wnliu@google.com>, iommu@lists.linux.dev, jgg@nvidia.com,
+ joro@8bytes.org, suravee.suthikulpanit@amd.com
+Cc: will@kernel.org, patches@lists.linux.dev, stable@vger.kernel.org,
+ robin.murphy@arm.com, santosh.shukla@amd.com, chrisl@kernel.org,
+ josef@toxicpanda.com, Wei Wang <wei.w.wang@hotmail.com>,
+ Samiullah Khawaja <skhawaja@google.com>
+References: <20260528223147.750229-1-wnliu@google.com>
+ <20260528223147.750229-2-wnliu@google.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <20260528223147.750229-2-wnliu@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5PR01CA0074.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1b7::15) To DS7PR12MB5766.namprd12.prod.outlook.com
+ (2603:10b6:8:75::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 284/461] net: shaper: reject handle IDs exceeding
- internal bit-width
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
-References: <20260528194646.819809818@linuxfoundation.org>
- <20260528194655.415018028@linuxfoundation.org>
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Content-Language: de-DE, en-US
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 MEK4
-In-Reply-To: <20260528194655.415018028@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <178002858599.2275909.5788585644474533789@mxe9fb.netcup.net>
-X-NC-CID: vN1nhgLmAUckWVYgptyBtvsbVJMXPzSKFqBy00s84wIrhJS6RL0=
-
-On 5/28/26 21:46, Greg Kroah-Hartman wrote:
-> 7.0-stable review patch.  If anyone has any objections, please let me know.
-> > ------------------
-> 
-> From: Jakub Kicinski <kuba@kernel.org>
-> 
-> [ Upstream commit 8d5806c600fddb907ebe378f9c366d4b52ac3a39 ]
-> 
-> net_shaper_parse_handle() reads the user-supplied handle ID via
-> nla_get_u32(), accepting the full u32 range. However, the xarray key
-> is built by net_shaper_handle_to_index() using
-> FIELD_PREP(NET_SHAPER_ID_MASK, handle->id), where NET_SHAPER_ID_MASK
-> is GENMASK(25, 0) - only 26 bits wide. FIELD_PREP silently masks off
-> the upper bits at runtime. A user-supplied NODE id like 0x04000123
-> becomes id 0x123.
-
-This causes a error for me when building ynl.
-
-It can be fixed by reverting this patch from the stable-rc queue or by
-applying fbf5df34a4dbcd ("tools: ynl: add scope qualifier for
-definitions") [v7.1-rc4] (preceding patch from the same patch series)
-
-The build error looks like this:
-
-"""
-> GEN nlctrl-user.h
-> 	GEN ovpn-user.c
-> 	GEN ovpn-user.h
-> 	GEN ovs_datapath-user.c
-> Traceback (most recent call last):
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 3734, in <module>
->     main()
->     ~~~~^^
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 3439, in main
->     parsed = Family(args.spec, exclude_ops, args.fn_prefix)
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 1245, in __init__
->     super().__init__(file_name, exclude_ops=exclude_ops)
->     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/pyynl/lib/nlspec.py", line 472, in __init__
->     SpecFamily.jsonschema.validate(self.yaml, schema)
->     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
->   File "/usr/lib/python3.14/site-packages/jsonschema/validators.py", line 1332, in validate
->     raise error
-> jsonschema.exceptions.ValidationError: Additional properties are not allowed ('scope' was unexpected)
-> 
-> Failed validating 'additionalProperties' in schema['properties']['definitions']['items']:
->     {'type': 'object',
->      'required': ['type', 'name'],
->      'additionalProperties': False,
->      'properties': {'name': {'$ref': '#/$defs/name'},
->                     'header': {'description': 'For C-compatible languages, '
->                                               'header which already '
->                                               'defines this value.',
->                                'type': 'string'},
->                     'type': {'enum': ['const', 'enum', 'flags']},
->                     'doc': {'type': 'string'},
->                     'value': {'description': 'For const - the value.',
->                               'type': ['string', 'integer']},
->                     'value-start': {'description': 'For enum or flags the '
->                                                    'literal initializer '
->                                                    'for the first value.',
->                                     'type': ['string', 'integer']},
->                     'entries': {'description': 'For enum or flags array of '
->                                                'values.',
->                                 'type': 'array',
->                                 'items': {'oneOf': [{'type': 'string'},
->                                                     {'type': 'object',
->                                                      'required': ['name'],
->                                                      'additionalProperties': False,
->                                                      'properties': {'name': {'$ref': '#/$defs/name'},
->                                                                     'value': {'type': 'integer'},
->                                                                     'doc': {'type': 'string'}}}]}},
->                     'render-max': {'description': 'Render the max members '
->                                                   'for this enum.',
->                                    'type': 'boolean'}}}
-> 
-> On instance['definitions'][0]:
->     {'type': 'const',
->      'name': 'max-handle-id',
->      'value': 67108862,
->      'scope': 'kernel'}
-> Traceback (most recent call last):
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 3734, in <module>
->     main()
->     ~~~~^^
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 3439, in main
->     parsed = Family(args.spec, exclude_ops, args.fn_prefix)
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/generated/../pyynl/ynl_gen_c.py", line 1245, in __init__
->     super().__init__(file_name, exclude_ops=exclude_ops)
->     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/builddir/build/BUILD/kernel-7.0.11-build/kernel-7.0.11-rc1/linux-7.0.11-0.rc1.301.vanilla.fc44.x86_64/tools/net/ynl/pyynl/lib/nlspec.py", line 472, in __init__
->     SpecFamily.jsonschema.validate(self.yaml, schema)
->     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
->   File "/usr/lib/python3.14/site-packages/jsonschema/validators.py", line 1332, in validate
->     raise error
-> jsonschema.exceptions.ValidationError: Additional properties are not allowed ('scope' was unexpected)
-> 
-> Failed validating 'additionalProperties' in schema['properties']['definitions']['items']:
->     {'type': 'object',
->      'required': ['type', 'name'],
->      'additionalProperties': False,
->      'properties': {'name': {'$ref': '#/$defs/name'},
->                     'header': {'description': 'For C-compatible languages, '
->                                               'header which already '
->                                               'defines this value.',
->                                'type': 'string'},
->                     'type': {'enum': ['const', 'enum', 'flags']},
->                     'doc': {'type': 'string'},
->                     'value': {'description': 'For const - the value.',
->                               'type': ['string', 'integer']},
->                     'value-start': {'description': 'For enum or flags the '
->                                                    'literal initializer '
->                                                    'for the first value.',
->                                     'type': ['string', 'integer']},
->                     'entries': {'description': 'For enum or flags array of '
->                                                'values.',
->                                 'type': 'array',
->                                 'items': {'oneOf': [{'type': 'string'},
->                                                     {'type': 'object',
->                                                      'required': ['name'],
->                                                      'additionalProperties': False,
->                                                      'properties': {'name': {'$ref': '#/$defs/name'},
->                                                                     'value': {'type': 'integer'},
->                                                                     'doc': {'type': 'string'}}}]}},
->                     'render-max': {'description': 'Render the max members '
->                                                   'for this enum.',
->                                    'type': 'boolean'}}}
-> 
-> On instance['definitions'][0]:
->     {'type': 'const',
->      'name': 'max-handle-id',
->      'value': 67108862,
->      'scope': 'kernel'}
-> 	GEN ovs_datapath-user.h
-> 	GEN ovs_flow-user.c
-> 	GEN ovs_flow-user.h
-> 	GEN ovs_vport-user.c
-> 	GEN ovs_vport-user.h
-> 	GEN psp-user.c
-> 	GEN psp-user.h
-> 	GEN rt-addr-user.c
-> 	GEN rt-addr-user.h
-> make[1]: *** [Makefile:43: net_shaper-user.h] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> 	GEN rt-link-user.c
-> 	GEN rt-link-user.h
-> make[1]: *** [Makefile:48: net_shaper-user.c] Error 1
-> 	AR ynl.a
-> make: *** [Makefile:28: generated] Error 2
-"""
-
-Full log:
-https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora-rc/fedora-44-x86_64/10521840-stablerc-fedorarc-releases/builder-live.log.gz
-Ciao, Thorsten
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB5766:EE_|DS0PR12MB9273:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f180861-d447-4b72-ea8c-08debd41ad32
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|22082099003|18002099003|11063799006|56012099006|4143699003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	Fdvb0tSQy8Bl7KKXplgCQzrUiJ12MFF4+YcscffaFiWDNKYHsjdBLsybVCcnLISX15Paaxhqq4gvY5BNkLJKzULcAJafg4AD8/hdhtiYVkclMQhl2XmrEjJsEUrG45ktmc6NhrPQBwDJk+3X8rqu6Em7s2TTb8UnJeEfEkCqido01wE+u5B7bPkefVeeUapjQ7SRXR9NAgVQ+fm+t7hWnp1jcgInG0n70XMnHGVvdfuXS6qhVHwiyMtM//Dd08M1Qmkhkr8o08b8vOLAV8QxyaGxbNcrmTJrw7qXlNDejzk16isqFNHmYJwCPIECkyztD7W2Y6zxjdjTOMsXwaPAWlA7wZ9+jveNu94bQzFfsWqSWjTNB0QEzmfkeXncTuJ4cpJ0DRrnD0KYDucysTlJS8yKUPs9nosjbSJdNI5WCh8+PLPzbjK6PDN0BPTDlPKxs3QxnVRi+MVdymDbwWbjP+hf6vLSiJGCyq+U0l8n4PvC66pqSw07T0rhNkQiahnW7a6L413BuRzN+IXj9E5Crm8c2qg5otxLkUs9OJ90TQzWB0LBNmpKEbd2sfJlLgjvTk7ariJPaPz4Inmf01PJYAEEsQUmNwVStBLEErQfotEhPcxb68GCCqQ3Tna9UYbpc2somNOnkBHgBPGxoS4YVoqH2vhSR6d255DMzyK0QqXccfoQJrlPzomkKTLKwm0VwPvvV1buGbTV50MbhT9BRQ==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB5766.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?L2lKMEtVcjNoNlF6NC9POXh2OFhPYTVOZmNjbGQyd2pMeThlWVR5OGxBOVRU?=
+ =?utf-8?B?RFoxMmpZNHNwQTVFaVNWZlJkWlpVeEZpMlpxSDhXL2E2YnRubUpQL0w3Q2hR?=
+ =?utf-8?B?QXdDVTVLZTlvYkZuYU52UEJRdGJDdS94c082MzdQSEkxRzVXYUNLUkNxTDhx?=
+ =?utf-8?B?ODhlL3p1cDkrSytMNnQ4WFJhRXdNelY2ZFZuYWRIVEU1ZklXT3dhcm5EQVZm?=
+ =?utf-8?B?SXcrOElWL0JXYjRzbFlVc05naTk5OERrWlhQWThsOWNKb3BKb2ZIVTZDOVJD?=
+ =?utf-8?B?Y0pneWVZWTdOb3lyMFFPMUo5Nk9WNU5QaUp0WFN2Q2tIa1hRclFMeXhTZW9y?=
+ =?utf-8?B?M3p2WHMzdWpMQllYYTNvcW9CeGFpUHRhcHRVQUZtSEFoR2pMVUZvRnBWZzZn?=
+ =?utf-8?B?UWpDaFlLOFVyR0JuMFFKUk9UMURUVHg5b0ZGaExYNGpwNW14V0RMWDcweGlW?=
+ =?utf-8?B?QnpIY25yZTFDaXp3aW5xSHZjRk1lY2o2Tjk0MHZLb3N4TVFoL2ZUSzFWa2Qx?=
+ =?utf-8?B?L0dETGcvR1p1Tkk0SDVZR0VsR0tJQm14UDZGdkxEelhlYlNBSVJwbGxFU1di?=
+ =?utf-8?B?OUtHQ0cxVk9CRHZXd1VaZmRROVM5eHc3UEkrT2l2N0g3VmJIQmp1Snk1ME9Y?=
+ =?utf-8?B?bEZ3Ykx0K0lZRnV3Q0h2SEhrNy9tZmwxbnc5TUwzQWZQQTBXd2FVWEN5RnpR?=
+ =?utf-8?B?UjBiNnJTb3dvUCtTcS82czJtVGV3Q0gwQ1ByQU10R3p2VTBuQ25MSWtjZGJU?=
+ =?utf-8?B?Y1lsS2xqbXNYd3kzYVZDT2loeFF0Tmc2V2RKaGROZ3Vncjl0UTZ1eFpndFkz?=
+ =?utf-8?B?WG5nd04yTzN0dFNPMmF4eE9BamQzNi90d0tmcUdvLzZzUUp0U3ZnbU1zV2Zo?=
+ =?utf-8?B?RWoyYTVpM1BXVDY1aWZXZng5M3FvYitzVXFIYk0rNXVvZHZKL1JMWHhWbVZC?=
+ =?utf-8?B?SndSajA1ZDMxU2FSd3haM1YwWkdFcDNyejg3T2FuNmNrbzZIN29WMkJFVCt4?=
+ =?utf-8?B?UWp3Ly9VUHFKbWdGbGUvSE5mQWpIRHY1aktKakpUemtGTHNhZ3c1eGJxQzNu?=
+ =?utf-8?B?ZVNlT3BGbjZvSlhla1hUbE9lZzRpZm9GOTc1akYvam14TDQrcXl6UW9LaFVm?=
+ =?utf-8?B?NmE3cmlMV0RyZHFHRjNoK3RuL2NoMTNGa1JVcUxZUjJuOERuYys3SzhOL0p0?=
+ =?utf-8?B?ZEZROW5aMFlTZzBqeTJpdGdFR3NzWE9Sa3dIbjNreGhDM0lxT1VvQk1IOUVw?=
+ =?utf-8?B?Y3VRa0o5VExNNnBYZ0Q0WGJxYzRnQTBIWm5mZXlLU1pXdklUcFFIN1pYODlF?=
+ =?utf-8?B?QWdxa2pzQ05xbWVZdlQ5aGU5bTIyKy9Icnl2eFpRalNKQ2l3TlNMRkxsWWVw?=
+ =?utf-8?B?cjBTb0tKODNOa1QyMUlvWnBtVENOSDFDdWV4MUFvemp0Y2hPVkRtNTk1cUN5?=
+ =?utf-8?B?K3llTVNZMGkvUytiM2JDSTFtWUdwVktFQitVdXI1UWJtUmJkTUpxV1JsZmV4?=
+ =?utf-8?B?aHVaZWxENnRkY3dESE5JU1MxU0Erb0EzalFlVERVWjl6NW9YbXdsRFJQamZU?=
+ =?utf-8?B?cGVRM1BqQ1pBZGFmbVJSRFRXbCtOTnI0UnJEUTdQTnduS092Qy9LVzhSc1ps?=
+ =?utf-8?B?YVp0NE5YMTBFUkt5SlVMVWRYUDR3VGdONjNHektwckNWdGNnVUE3SUZHMnVs?=
+ =?utf-8?B?VUpyUUoxZkdhaUIwL3BXUXFMVDUxTXY4TFEvRjBBaHF4aGhxa3hYbHU2MjEy?=
+ =?utf-8?B?eW1hVmdLSVB3SEc4Mmo2NGx5OFJPV1d5Y1VXREVtNFpBcFNPMVVJclBPQklV?=
+ =?utf-8?B?OUgyU2wvR1pNMFFVYUgzT0RFZ1BPazRpUTlyVHZhOEdsTzZkaTEyVDA0b1cv?=
+ =?utf-8?B?QmVlQ0pnOEpqUVBNQ2VYeU80VGtlbC9zMGhTVlRoeDFUU1BNelJ3RWc0M0xB?=
+ =?utf-8?B?MlZNS0JwM1BtWW5XeTIzL0tHREdBVEcyamlLOWJzVlZJY1pUMlZ4UFZTbUpJ?=
+ =?utf-8?B?N1N2b1RvNWswU0s5eDQ0WkVOVGMwT0Nnb2E5UUtKWUcrTE14NlFBVTBKYmdY?=
+ =?utf-8?B?QThMd1JCMFplQ0pUNURiVFBoKzhzNjRtOEh2QjBNdjdJb1h3enpBMkxUWS9R?=
+ =?utf-8?B?WnI4U25xZExBZVg3SzZ4RjBRRUFLdGNjK3ZyMDdVZlVKampOWmRLb0JNSDRX?=
+ =?utf-8?B?OWJKVnc0ZEYxNWFkeGM2Z29hNHZPSlVVVUlqdXJwRW43dHY2T0lMSnpaaS9q?=
+ =?utf-8?B?ajFwSHozMjhpU1dhT0gxVnpjOWhkektwVjByc1FTZmU0V3YxeklxN0poN3dR?=
+ =?utf-8?B?ait1MEhydkdRT1FUOGVHZHhiWHM2T2Iwd25yYWpEL0krbHNZQTMwUT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f180861-d447-4b72-ea8c-08debd41ad32
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB5766.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 May 2026 05:18:11.1389
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UQVSqLujyut6dg0xTvEzp5ndI6evbCYbORi+XebZWuS9Szi2l5lbT3PTNVfSMlBe87hnwR9iDcfX363zX0/1dg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9273
 
 
-> Additionally, a user-supplied id equal to NET_SHAPER_ID_UNSPEC
-> (0x03FFFFFF, which is NET_SHAPER_ID_MASK itself) would collide with
-> the sentinel used internally by the group operation to signal
-> "allocate a new NODE id".
+
+On 5/29/2026 4:01 AM, Weinan Liu wrote:
+> We have observed multiple full invalidations occurring during device
+> detach when we are done using the vfio-device.
 > 
-> Reject user-supplied IDs >= NET_SHAPER_ID_MASK (i.e., >= 0x03FFFFFF)
-> in the policy.
+> blocked_domain_attach_device()
+>   -> detach_device()
+>     -> amd_iommu_domain_flush_all()
+>       -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
 > 
-> Fixes: 4b623f9f0f59 ("net-shapers: implement NL get operation")
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Link: https://patch.msgid.link/20260510192904.3987113-9-kuba@kernel.org
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  Documentation/netlink/specs/net_shaper.yaml | 7 +++++++
->  net/shaper/shaper.c                         | 4 +++-
->  net/shaper/shaper_nl_gen.c                  | 7 ++++++-
->  net/shaper/shaper_nl_gen.h                  | 2 ++
->  4 files changed, 18 insertions(+), 2 deletions(-)
+>       	while (size != 0) {
 > 
-> diff --git a/Documentation/netlink/specs/net_shaper.yaml b/Documentation/netlink/specs/net_shaper.yaml
-> index 3f2ad772b64b1..de01f922040a5 100644
-> --- a/Documentation/netlink/specs/net_shaper.yaml
-> +++ b/Documentation/netlink/specs/net_shaper.yaml
-> @@ -33,6 +33,11 @@ doc: |
->    @cap-get operation.
->  
->  definitions:
-> +  -
-> +    type: const
-> +    name: max-handle-id
-> +    value: 0x3fffffe
-> +    scope: kernel
->    -
->      type: enum
->      name: scope
-> @@ -140,6 +145,8 @@ attribute-sets:
->        -
->          name: id
->          type: u32
-> +        checks:
-> +          max: max-handle-id
->          doc: |
->            Numeric identifier of a shaper. The id semantic depends on
->            the scope. For @queue scope it's the queue id and for @node
-> diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-> index 08fde2d9e8aa8..eb049847fed65 100644
-> --- a/net/shaper/shaper.c
-> +++ b/net/shaper/shaper.c
-> @@ -21,6 +21,8 @@
->  
->  #define NET_SHAPER_ID_UNSPEC NET_SHAPER_ID_MASK
->  
-> +static_assert(NET_SHAPER_ID_UNSPEC == NET_SHAPER_MAX_HANDLE_ID + 1);
-> +
->  struct net_shaper_hierarchy {
->  	struct xarray shapers;
->  };
-> @@ -360,7 +362,7 @@ static int net_shaper_pre_insert(struct net_shaper_binding *binding,
->  	    handle->id == NET_SHAPER_ID_UNSPEC) {
->  		u32 min, max;
->  
-> -		handle->id = NET_SHAPER_ID_MASK - 1;
-> +		handle->id = NET_SHAPER_MAX_HANDLE_ID;
->  		max = net_shaper_handle_to_index(handle);
->  		handle->id = 0;
->  		min = net_shaper_handle_to_index(handle);
-> diff --git a/net/shaper/shaper_nl_gen.c b/net/shaper/shaper_nl_gen.c
-> index 9b29be3ef19a8..76eff85ec66df 100644
-> --- a/net/shaper/shaper_nl_gen.c
-> +++ b/net/shaper/shaper_nl_gen.c
-> @@ -11,10 +11,15 @@
->  
->  #include <uapi/linux/net_shaper.h>
->  
-> +/* Integer value ranges */
-> +static const struct netlink_range_validation net_shaper_a_handle_id_range = {
-> +	.max	= NET_SHAPER_MAX_HANDLE_ID,
-> +};
-> +
->  /* Common nested types */
->  const struct nla_policy net_shaper_handle_nl_policy[NET_SHAPER_A_HANDLE_ID + 1] = {
->  	[NET_SHAPER_A_HANDLE_SCOPE] = NLA_POLICY_MAX(NLA_U32, 3),
-> -	[NET_SHAPER_A_HANDLE_ID] = { .type = NLA_U32, },
-> +	[NET_SHAPER_A_HANDLE_ID] = NLA_POLICY_FULL_RANGE(NLA_U32, &net_shaper_a_handle_id_range),
->  };
->  
->  const struct nla_policy net_shaper_leaf_info_nl_policy[NET_SHAPER_A_WEIGHT + 1] = {
-> diff --git a/net/shaper/shaper_nl_gen.h b/net/shaper/shaper_nl_gen.h
-> index 42c46c52c7751..2406652a9014a 100644
-> --- a/net/shaper/shaper_nl_gen.h
-> +++ b/net/shaper/shaper_nl_gen.h
-> @@ -12,6 +12,8 @@
->  
->  #include <uapi/linux/net_shaper.h>
->  
-> +#define NET_SHAPER_MAX_HANDLE_ID	67108862
-> +
->  /* Common nested types */
->  extern const struct nla_policy net_shaper_handle_nl_policy[NET_SHAPER_A_HANDLE_ID + 1];
->  extern const struct nla_policy net_shaper_leaf_info_nl_policy[NET_SHAPER_A_WEIGHT + 1];
+>           -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
+>             -> domain_flush_pages_v1()
+>               -> build_inv_iommu_pages()
+>                 -> build_inv_address()
+> 
+>          }
+> 
+> build_inv_address() will trigger a full invalidation  if the chunk
+> size > (1 << 51). Consequently, the guest will issue multiple full
+> invalidations for a single call to  amd_iommu_domain_flush_all()
+> 
+> Without this patch, we will see 10 time instead of 1 time full
+> invalidations for every amd_iommu_domain_flush_all().
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
+> Suggested-by: Josef Bacik <josef@toxicpanda.com>
+> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+> Signed-off-by: Weinan Liu <wnliu@google.com>
+> Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+> Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+
+
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+
+
+-Vasant
 
