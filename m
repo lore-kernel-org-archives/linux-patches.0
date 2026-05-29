@@ -1,112 +1,117 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3605B3F1664
-	for <patches@lists.linux.dev>; Fri, 29 May 2026 14:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780065908; cv=none; b=p6s6A/N7xX8CJmj9F46y+IKkhxA/7YBYlzOe8sJVDJOybMqh+rbSGw2rJ9Y/Ipxnu28R2LUlxzcv5VY0QpeozpaP7gpqT50bh7ewbAaBA4GP9ekAKLZ5cHgZOWa/f1GkahA+V3+JXo3KQDZGaBkYtDsrMNWu+bQBCHNOenCPo2o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780065908; c=relaxed/simple;
-	bh=V9wVFrjL2s+J6A1HeEIPVxKxw1Vqrz1KQ6SjM4LVf00=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=C9zvvLRX7fLixSMzRTzThIWdFn0Xk+YXIumBIM39JuxfsXgQtshZlSuWfDsjeT9/KGLf6t4DEn8Rmn/8V/WKnv3rMAGzGAnX9Cgl0NxqbRMQ0+rSrHW/Ved8La1XCmEI1xPuIJwCD8bLxH+Lo26yBTeR1vZePiu4rdAP3sDfjdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=ofgK2H2W; arc=none smtp.client-ip=54.206.34.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708353BFE52
+	for <patches@lists.linux.dev>; Fri, 29 May 2026 15:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780069550; cv=pass; b=f2dnKWksFO/arFlPrPvdyG83gMPituyXIVVtD0SkRIYZokHPj9VzzxMi/P2JWSsH+2Olv/wSyOwvMkmeHtBVelTPsxyWWOjI+6byjUBW1v3IqKMSevLbg3gtFmqNwl0o8pNHsJe2VVc885uWT0URZNDWP0HGvLIqLX1CEFSMYag=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780069550; c=relaxed/simple;
+	bh=1hMieIIxqcU89DUFDk9X5WdEWgHHTxNRY3vF1kpWUpw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QS5gWgp6xNRP71XrUFyXpjM13xfFxyrr7zoSJ6KHGG7r4yGSFgMii8pvHopwxDdp0aDyX7J1cXpksKFEcg03F0yLSaPNO/5SRvC2lY5wy83XP1+ChWn1+yNHviERVRPJ++bDaKzGJokE8CPXuOMVcqql+Auk1gyAgDjVhT6yClg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=aOZdB4Ti; arc=pass smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="ofgK2H2W"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1780065880;
-	bh=aQuiN57gGblTDVdeHTf3pgndGWjilaSgrAFg/rCxDco=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=ofgK2H2WLl5ouk/HOTgjUtqX5wvTwUY4XjAyNwZh54CxNeFhRTrEybrWWVdJwjSHI
-	 ffJfU+/PUduP9tXDTV+Pyo0TAIIGgPWq9+XgTE2IlLOLh71uZEu3yvCwTEaHTBlgV3
-	 2Hl1lsjmkhOrLqyMJ5KKOASpbYlJLPBNTOqO0qb0=
-X-QQ-mid: zesmtpsz4t1780065873t868af0b4
-X-QQ-Originating-IP: yQD9oCqZeyI8NxAwMemD0/auxZ2yG5oT20Sph+Z0SnQ=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 29 May 2026 22:44:30 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 15854156992415530431
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.18 000/377] 6.18.34-rc1 review
-Date: Fri, 29 May 2026 22:44:27 +0800
-Message-Id: <20260529144427.2989037-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260528194638.371537336@linuxfoundation.org>
-References: <20260528194638.371537336@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="aOZdB4Ti"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-45ed18d8a1bso2825551f8f.0
+        for <patches@lists.linux.dev>; Fri, 29 May 2026 08:45:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780069548; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hhx9Ldta0JUigc+Ddqr9dl2mugeYyxoUfCVMVif44P2d/474mJ9WfcZp6ITxKKnIGj
+         gmKFm/2/bzXKX1Mmw1j4DsmYpKtJOpqiZSxp04t7Gw1nnhOa2ZKEnBOIxa7nOtkSk8Mz
+         CTIh5huSpDHAXbgUb2m9pK7fcCTFBLpw2onjXS/3gM53diDCt6lc2ROo9MLngUjhmvKN
+         y76TWsVtF+bWOTA1P9csSRFzrt84jYZKEChLbs5xbDe5SL1qjXWw3MEh7bwXLOAiHYjR
+         81qOuzSSYv4/KmsOARhnn1MCt+WYCwojrygdd64Rt5u9kon52AFEbpMSzDYICmgz0IWK
+         Dcjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1hMieIIxqcU89DUFDk9X5WdEWgHHTxNRY3vF1kpWUpw=;
+        fh=c3v1vUdjLzLZE3ROpIbNSSzvAry8ho5rbfjx1IrOWAA=;
+        b=ZKwljgizZFCr/cFjXpxhf762oEN7bFK9aQtNWcUDywYg0VwNey0J+Txk2Mdpi+SsDu
+         LdaGtYh4Arf9g/qpEQbrT5uv+Llf4nBAB9Adt/wG6zzc51e33K2ecQNn3+hLEHshjsBW
+         iiMlzybZPNHuAocsgfzcdn/JNN/wzwD61WdtWOMRM7197SNETtt3pJmSzQjk9sL/4pZS
+         2LBUTq+40ErlQ2LsgKFFdCON19/3C7OUq1NjwYkJugYPj5cI6rOfXmGq9nrbrXBNQgjq
+         aV+VRX/710+FOZKP2pykyaQsn+w4YKEprfEeK9YvGkLZWOA80L+IQ8KsATx+JJrmbjvw
+         Js1g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1780069548; x=1780674348; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1hMieIIxqcU89DUFDk9X5WdEWgHHTxNRY3vF1kpWUpw=;
+        b=aOZdB4TiezfiVJg0RLsqXEkg20T8F5RxsbR4A486qdUe/usxS0HAL1ezGouvD7jxHR
+         KaMg4ZzLIE3qA2LwijhZOPE7SVqyaA6pJrGsdyCj1fW9SL6lwFv+6V2oGHsFHukrsbTs
+         5Sj1EOBXHW6TJutYAVKkvcC8RXDLHhmWe0N/kgXDY31XHyNtsMYsBLc+M4YmCrRe/eQI
+         qvfrdx9yjXl9EkrcLrdzzuHCaBAmw698C9WvwnrYWBTBf7b4uRf9cVYWUmnhcCBe10VU
+         nTLKyR8ov06kGHrqnrdg4ZiG3hYeGjRtlDUSTxTFkaDkrzUEBK57T+5/WrdGA0HkYePR
+         zuCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780069548; x=1780674348;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1hMieIIxqcU89DUFDk9X5WdEWgHHTxNRY3vF1kpWUpw=;
+        b=Hi0/BKuJdYuTUteriSuq6kl0Pg2wnzn3eFE5VT+vtAe9XDYLo1THpA7Qyo5+lJh/ly
+         8j5WqbJ2PAB2YY2vKhlFXDHec/WeXzw0jNXP6jBMcYXPcapQMPy4jH92U8Svc7rqH5ai
+         4iA8FPpQHk/wPl3ggow98R7WjOZ+TQTqItYdr1KEPzviSX8qftDeOfamOD/7m0mS6IqQ
+         JpB3hJ29O3w3xYeoAspWEGjrTsMTUWHlw00i7vb3vQJuT5NELNoUwZulb1rSDwJIW5k/
+         Hug3FAyPNRWx0VfeUDWTiij1ctoddo9JQttkCI0zgE6Tr20WbQvVWWdjBEmur5SKaWQf
+         ipPg==
+X-Forwarded-Encrypted: i=1; AFNElJ86E/wwwRJOWld/+lYel3YGTYqsNUuBjV4NmrSBBUyYWHR9G2gJDFxk8uwx6IwXu/nCpLavGywd@lists.linux.dev
+X-Gm-Message-State: AOJu0YyjWtFWUMFqZZmOdto28zNATgFqlMZ66G2RSulAtcKEgr74gbui
+	Uil+zEPgqdiSphE//ghQ+sVtuDAykA3Zr1EufdqJ/UeNvqIktMyThU9Bv486xsVG/+G1NSg6V4R
+	SGh2CVdHjj6yG7xy83z8R47lusMPLe2rogGlE0SR1Hw==
+X-Gm-Gg: Acq92OGMDVaf0y5YaSngaoCf1c/gcHZAP+QHb0jIQf2hHrdcq8LY1IeGk2J9L5H+9ov
+	+kTI+xiTd+i+s3dLzbZ9kWEKENiVngouiCT0186tgE92sgoz4EXMoOLaRBoMXLogtW5cBsKx65/
+	xVgY2NDMSTSHX4ktqD014n9IMDgDNlakgqSFwfDOS91RVVG5qv3k+BhtLOaFMz3Guhz67i4bnQv
+	jRIFOZXg1UXenbaKY+tv4lUH941xd50DmINekJ6BAPODpN0ZjjJB3+2zGwZmeFsHT7cJ5aZQv38
+	gpPp4R3QsofBSKr2xA+JJ6kUacU04u+lBz8a3i/IdT/azYl7h8ZKCUP8KFprmpa/p3NbptKnfWl
+	z6qjdhzXAAD6aSRI=
+X-Received: by 2002:a5d:6e89:0:b0:45e:a0ab:8bd1 with SMTP id
+ ffacd0b85a97d-45ef6af783emr544721f8f.7.1780069547846; Fri, 29 May 2026
+ 08:45:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OegHrGdQ9dQUJeug1R/+dFU3X+7wfva/cchgOQCdT8XJtTnuwgmzq2pO
-	82BzEyU/aA+0W7XPtUuGTlA/uZ2gtA8f/bmDSjK82tA7mYWAz06dOUiZdyh1m/GV75GHpQY
-	llKUj8T9El1F/ogA90+SN3rOHEJNvvnBb0oKypSVRD93wFwi5aU0XWWVzHd9SVkbZqBovfg
-	Cikh6ZIBfIlvohH/wEbQr1kTLeEAEXaC1aY31Z1k0Pn7C3hDPlgPQssVkwiVTTtAJJbLCFT
-	S+swb/hz/D7f1rXWG2rvgi1oKBVXr5kFGdPymaAhcjTz6S/cx+KQNYQJJEFyBel9S0tN10E
-	K+OdGWPyAH2XioDA4SMXjSaZ5zkWqshlqGkgMVhqQ0+mzFTasfJTl0aE8GTVrw5tnWZ+W4v
-	5RdwtoMOSsa7JkrfENhFOmR/CMQLwvLR5iTL8/mFKHKwM9WAFHrj1MCLgknlq2Wyn7jb5ig
-	KMSn46C3VPFltJPMlgoj5Sbc46BlqDrM9TdN18n4Mz1M1OvCQJ16AQbgMpzWq6SjtgjUpju
-	j6GPtuEYkSKoZeBt0vdVQO4sk9YppcPDxhV9XA0fsVhzAS0oXx97fqKU/4O+tBmvSeeI+A2
-	VOUFRjGnG82amB/A9kVVL8ewrPPbwGAWkEQuN6tJWdBoLY21Sk11pt+/S3A0r0d4Iu4uiZA
-	KOiBRAX/LXhTJjJN246VSGlBwfb7k410ZAXLDXXvs+irBZV6q8ALFBS62KdNaGEvExl8fZC
-	Y8CQ4YRo/rqHhJFJE5xmEciiPhW6MJQMsyUIn7LDe3PBReUt760pmKuMqLC278hOHfyI+7k
-	eroetJWYYzShh05Cc3xsv7ffq2yykDfo4ZthVOdak1FSxzpV3gVP2v6OdT77kJ5sTRBV8Nn
-	Ya4/duITufd9wio1xcKJOWfpJj9wbQHrzk58UPbzjcsJH+2/oeQDsga1TI/C91Tayqxm8SW
-	Fim2+OXbgylQ6UmSFw6+V5HZ9EKaUcWJNIsCGAAgjPM5WKsh6kS6FsESmEm+qVHp+ep7M/3
-	YP6wKIJLkvNoe4Nwl5gKQfjGS28nnkQX2z7LlLKBifzuADMMT9DzNsmcGnBMsmqUTcMVke+
-	u0hXVFncnrrYRHISMtKU9c5G+jR+rbkz88rdzjsfcF8IdzeLLVtj8I=
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+References: <20260528194638.371537336@linuxfoundation.org> <20260528194647.015775177@linuxfoundation.org>
+ <CAPjX3Ff-a8JHxeMr1Hk83BmQX9YLGNR+g+7waygn43ZD7pWMHg@mail.gmail.com> <20260529120000.btrfs-inolookup-keep@kernel.org>
+In-Reply-To: <20260529120000.btrfs-inolookup-keep@kernel.org>
+From: Daniel Vacek <neelx@suse.com>
+Date: Fri, 29 May 2026 17:45:36 +0200
+X-Gm-Features: AVHnY4KdAWpYm2FShY6ZN8oR0VRdT_3F7I0pxlt6c9pg_DFkco-beqT3hh1-SlY
+Message-ID: <CAPjX3FdGqfvAW=Uj70bg9PKngBQOUypMz9wZgwwsUKspRJTxKQ@mail.gmail.com>
+Subject: Re: [PATCH 6.18 299/377] btrfs: dont search back for dir inode item
+ in INO_LOOKUP_USER
+To: Sasha Levin <sashal@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, Johannes Thumshirn <johannes.thumshirn@wdc.com>, 
+	Josef Bacik <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+On Fri, 29 May 2026 at 14:44, Sasha Levin <sashal@kernel.org> wrote:
+> On Fri, May 29, 2026 at 08:39:10AM +0200, Daniel Vacek wrote:
+> > This is not a bugfix, rather, it is a cleanup.
+> > Even though it's kinda small and limited to a single function, I'm not
+> > sure it's worth the stable backport.
+> > Is there any specific reason you picked this patch?
+>
+> You're right that it's a cleanup on its own. It wasn't selected as a
+> standalone backport - it was pulled in as a dependency (it carries
+> Stable-dep-of: 1e92637722ae "btrfs: check for subvolume before deleting
+> squota qgroup") so that the squota qgroup fix applies cleanly.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Nah, right. My bad, I missed that. Sorry about the noise.
 
-BRs
-Wentao Guan
+--nX
 
-defconfigs:
-https://gist.github.com/opsiff/a840ae9e3d6857f5b7bacb9cdc49f8e9
-
-Log:
-strings vmlinux-*6.18.34-rc1* | grep "Linux version 6.18.34"
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Fri May 29 22:01:37 CST 2026
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT_DYNAMIC Fri May 29 22:19:13 CST 2026
-Linux version 6.18.34-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT 
-Linux version 6.18.34-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP PREEMPT Fri May 29 22:38:58 CST 2026
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.34-rc1-g89dbc07155c2 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Fri May 29 21:40:40 CST 2026
-
+> --
+> Thanks,
+> Sasha
