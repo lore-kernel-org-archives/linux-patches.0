@@ -1,82 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C5E33291F;
-	Fri, 29 May 2026 21:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843DE388E57
+	for <patches@lists.linux.dev>; Fri, 29 May 2026 22:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780091443; cv=none; b=r7Lar3A7LulrHuiVTPnhNsfGXYeBzDeqCiNjurITcXwGCqK4ppwMS+KX4QKG1Yf0flAQ2TGHxiIwa04CI35i9N94YDMQO8fvs3VJBd8VOVqcpBgPGgIZMmLScz+EnmmA3acBkeS9xpxcoIgzl/QgtyCrV3ZpUyaQKDlJguBXzJg=
+	t=1780095513; cv=none; b=tOwjFqrl3zUiaLSHay/CBzmFZsQ5PGxn3IXvBoxtS+NjGfO2npUWZh3Vi2af38xMD0e/VjA3QdXtZai759cvGt/dU963y7zjH11T6VGmM7/TCzrMMGh4NqXhaifzKrY/yGAauR12f8Kvy8b5aDA0MA3oC7k54qva2Ea6cQ3IWOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780091443; c=relaxed/simple;
-	bh=Enwk5nWz8LXoEsyh1ezDKKOh834oywpjiYXD+SwaE/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oq9M69tlovQRcE6iRHfyhincfuStX+nn3M5Tq1JSio+Anv1x0XqEYLLgR3KHQjac68glgF63O3oYwQTDxsWhzu83WCPXwK35GI61xQS2+zR9C94oZUWqIDaWkNbr+fdfqHLpaL8oI6zGYt98HrP7jtTjYqwHZ9RhM9m9qNte6F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaTuIUPk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780095513; c=relaxed/simple;
+	bh=ptw36ihhOIzTsxqr1eMO0bzZoqrv11FTm8UZmCwLNM0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cTPE1BJ64KHkNvK1DtYY4cKGow1e8h/TH4HqMGQt+evvWSo5CWARzEudbZVTleQqgrKFb0lJjNxj2DUW8YUzOQwjCuudRwMplDY/I8A/ZAvkzF8XwP+OXzLnQhWd3+kdp3w/tWp2ZB4PQE9+KwCodNBEXJCa60oOd4SDjFolD08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ob7Aso3f; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaTuIUPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6531F00893;
-	Fri, 29 May 2026 21:50:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780091442;
-	bh=0ioN6XjK1O62niVGcXVWf+JcluZwrHeHbgMsIsdNzvg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gaTuIUPk0bq85Jaf09lAoVN3J3HXMavJ3jPKIDsFyAPK6liTeJB1Yc0/ogz/PFis9
-	 +29yMvrU6mfKBSyT/6IZPseXw8mlp5Mob7pXUUD36n+zIQ0cTdnAzrWzZ/ddBjWgEn
-	 7uiwUKYLiAdUKQ5+tWalBgxFXwHZ9cllnz/7UKJkKy0tj10Q2uFhCx8hHhd9vVWb4T
-	 YIIGW1/ogcGGTw+ISwU8PmODQKw4y25nBO4YN1dH3luNT8jwh94nsS40GFore9thDT
-	 AcyinuPPZjVlTP7RtG5hFUiKeklwPUtCwSVB4kHpW2w2N1OnStHGzhUAJGlQXxY0iH
-	 Q5V0dCiklP4Zw==
-Date: Fri, 29 May 2026 22:50:36 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 000/186] 6.6.142-rc1 review
-Message-ID: <2d75f594-fe97-487e-aead-bb1c9a1bddb5@sirena.org.uk>
-References: <20260528194928.941004471@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ob7Aso3f"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-45ed18d8a1bso2968093f8f.0
+        for <patches@lists.linux.dev>; Fri, 29 May 2026 15:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780095510; x=1780700310; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4iesyYDPlSTsntkLH8m0VqrZNjF44k6q6gTGsFUht8k=;
+        b=ob7Aso3fe/zTBK9v6tjwOZrSpWHm9yKGEZO+ut6HBDDDnvOyRSoQnhoK5rfyjj86J8
+         UxMrJkYfbgfb98ALfM51hD9szsgNLcHMqdwwynNxdfO0IxqqUt6nkKQt4/P+3T3joom/
+         xAVa+T7egCr5qibbhou4NOgM9L6QGzUUZRNzC95t5Odxfe+SqvmcYd7CiBS4t3WdgaWX
+         wMjuuHoHY+yEUM+it+yarqMNE/OY8/MHZ+mC5pzXhHKhQfYzWPkb8forAS1jkDK/18q0
+         AG6KkHakS8M+D3Kalyx7j6bzb+QDDm2HB5609AAetwESHe15YDWsoQ9nj15LUYCL2DY8
+         S4jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780095510; x=1780700310;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4iesyYDPlSTsntkLH8m0VqrZNjF44k6q6gTGsFUht8k=;
+        b=YZnIZMbmREQE/6UN3tWwpOjW6Ph735qZC7N+GHLuC3KDWAkY4EDkxXpbUZNe+tQLt7
+         L0rRZAASzuCjWIEDWb2iDiwKaeTCnmZbe2273mGNx3vYaBjXkjgmz/ExPJAbOsv1v7K2
+         WB79DpAVc+vVLzirhcpEqJJ8GZmcE54I7IhDCeDobwkuqFksTZGB1wgWKgQckmlOHhV1
+         Er/vktRUSbBNpPes7k2lyZL677QowbPQvxFlLe7Rbbw6qPnvuc7yEN8LkV3/817dlw/x
+         Qbg0lsdIWFUz3ASIiZxbVaqh1K0uV4hrMHdDlhN+Y/6alqMvfIrPyu/iN8c3FhpkJrc6
+         P4yg==
+X-Gm-Message-State: AOJu0YxKYZ37r/d1rAT073tZirVvKj/E2gn5LsYDcebn1NvQKa3zZQC3
+	5TP2rqbHOCF6Mj1bTVS/VSBogwoQO86oVY17i2vTSILCdV1Ino0VygBa
+X-Gm-Gg: Acq92OEzuoFPtRkOyNLr5hAxld81qIBShaQNfBGtnWgMxS2kh4HnhhLI1qSh12UTNfr
+	eX/T2Wo/kiQ/3sZOXZufa+Mt+K94N+Mj5Q55u5MgvvKpqQ2TyI4WHHSzICKw0Se5LLMACiS+1Ii
+	OhruiJByTr6A2SR02apiNTIoVFmxeaEA85YdTF+y+9iEHfCapUXV3hXnIswWw3GlfQy6j4yhaLT
+	zE58CvQe3pfBXn9SBgwCIUON0V9BXEzRP8sgiILUEPZ5WkwbGh0si/aVSdeJ3FT9hxl/TJou313
+	vZdGZs8AYlPZXTFfRT0VW9cBzZv3s91BWfSX9fefm+ZB124guUlQA+WO72mf4v2mkvVZwgOZmdv
+	qA3HmQnmDhwDhKOaGrhRFp3kXmpe9oNydq4szc0g8eWFl1t7AB9UVMtUDyDME2V77nnTwZGEVrv
+	vHt+K5GB2FzDqmi11Yp10E36jq3USG6V96PifMUDQY
+X-Received: by 2002:a05:600c:450d:b0:490:778:4fec with SMTP id 5b1f17b1804b1-490a2951a54mr22943045e9.33.1780095509756;
+        Fri, 29 May 2026 15:58:29 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4909cab7b00sm73451845e9.14.2026.05.29.15.58.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 May 2026 15:58:29 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: linux-fsdevel@vger.kernel.org,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	kernel-janitors@vger.kernel.org
+Subject: [PATCH] include/linux/splice.h: trivial fix: declerations -> declarations
+Date: Fri, 29 May 2026 22:58:13 +0000
+Message-ID: <20260529225813.546405-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JbDHAJ0PU+OGwMly"
-Content-Disposition: inline
-In-Reply-To: <20260528194928.941004471@linuxfoundation.org>
-X-Cookie: Equal bytes for women.
+Content-Transfer-Encoding: 8bit
 
+Trivial fix: declerations -> declarations
 
---JbDHAJ0PU+OGwMly
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Askar Safin <safinaskar@gmail.com>
+---
 
-On Thu, May 28, 2026 at 09:48:00PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.142 release.
-> There are 186 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+This patch is for VFS tree.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+---
+ include/linux/splice.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---JbDHAJ0PU+OGwMly
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/include/linux/splice.h b/include/linux/splice.h
+index 9dec4861d..8f6b17079 100644
+--- a/include/linux/splice.h
++++ b/include/linux/splice.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Function declerations and data structures related to the splice
++ * Function declarations and data structures related to the splice
+  * implementation.
+  *
+  * Copyright (C) 2007 Jens Axboe <jens.axboe@oracle.com>
 
------BEGIN PGP SIGNATURE-----
+base-commit: 9215e74f228f2b239f41271da9e5076ee3439d1b
+-- 
+2.47.3
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoaCisACgkQJNaLcl1U
-h9Chowf/Yy/H1jKP3ZLrtuMrxiEbwNotmgUxTUXpLz/2QBQSXMZnhcb7JD9i8DwS
-kmNcUSAx79Ah79xZ4oHdCRCPq3K9zmyyTzNtpWiD7aMRbGsmJufn0O2vCAtiQR1i
-su12Rec1q/Nx6yBD/QzsXKngw7umhMvAinZMVzNpKRsaIjXiDrSCTZwrj/XwPc7z
-AxGQIyevpcgoGqs8Xrt6/kaMPUUlqKs122475Ef5nLPciTydBM7W0LX3MVjxwsJK
-UqVAo2Yjq7DLv1/Vz6ub2XPTKxvDV2H0axM7jv7u77ITxz2t+2T8XoJTGAc+XOWO
-5iHgLrFf7aykyutwVy/+l/Wg85ceHQ==
-=Zpwv
------END PGP SIGNATURE-----
-
---JbDHAJ0PU+OGwMly--
