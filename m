@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1402FDC5E;
-	Sat, 30 May 2026 17:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2FC3148DA;
+	Sat, 30 May 2026 17:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162140; cv=none; b=ObGZxFIhjA9qTrfYuUd/NNiFaZdWdmQVi8MPi0s/dIs56XSxE+x4rEJvdsRWlEL+wFZdNtLDxMYM/+ON71SKcXsSl97wg1+H50WOOspwaNe6p29IQ1jCqgMz8SYijEorTKhhAtGEZdJCcyJmmUuXiPCOmdDmbpTAL0pDla0gWzg=
+	t=1780162143; cv=none; b=hJ94bDr+/jMT0I5e3OhnJYo/ExTJyoq1F7B5yHd3h44o7NhtZRfow7cgggpd68oMwac9wO8XKDkthzTBismeUHevr8ork8k47J+f3d3yRTJcXbl7s7Qj2rdV5RKcREEDhWf4e4pH3ItnpDe0MJ/xrrOEiui7vqpt+YGL2CwyzV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162140; c=relaxed/simple;
-	bh=guZUCWjMe6dNh03+CO1T7STiUwCU4uKN7ttWPHqJkU8=;
+	s=arc-20240116; t=1780162143; c=relaxed/simple;
+	bh=b27T23S4cDYQ+UPEOvU0YRx83tZBCcwZrPlHzjXPrdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvQb/A97dJWhm3Ng+hRlmN6yj0qu/OfgHeNQ3sQfTi4ME0Mz+reyI1aqPKf+hSO+Yox4LRfCqqH5DRJtqycnGfZz5nKgztAjkFKi9FzfXD6hIncsD8Qh6kOzYHsGErXV3kh6sYaQEhW+yBOgO1EaIoZeQUn4+kgQdl3HPolREa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZHhyYcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ovtzYajV0Hau1bonEGln97/xG+g1gYJ83vamY/W0Nul/i/rr8wy4B62KpgiswfQ+MpepoSjn0aZZSbrXce1Ze9RA1cOSJuJ1lO4b0gsEETDqM3REtQzmlLfDXjT7LyBGD/chdKtrx/fA2VqKCEwrK1aa5wfslwv77avNen9aDg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmAv455p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZHhyYcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7B71F00893;
-	Sat, 30 May 2026 17:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmAv455p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E754E1F00893;
+	Sat, 30 May 2026 17:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162139;
-	bh=JtRChtVtM51n1fICF/d0F2X6vijPkeY+hXGEyHzd4/U=;
+	s=korg; t=1780162142;
+	bh=Uf01Jm+vwyOPZ/UfbLe1JaVtMlqhkGuGu8Tgxbv4YAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZHhyYcHVqyxY7W5YvCyvJW5JCr5Fn5g2rn720Sq3hb59bLZ53TZAC2FrbAI/PHsV
-	 6D0guKf/IV/qVjlE5t/VFI6vcTFWZ2C4oWFr7PR3C/0SDgKB32ovey/C+nmnOCua3b
-	 87Ld2MUv2YUc0FKNlkvY5a38FR1Ts81ZMoH97xeY=
+	b=XmAv455pMxNPYTo0KR/AiHa/UlH3V7FW5qZgJtZ1FEKOxSO3GSLLBf/Uw5VHBtJ9l
+	 trw8GLIdVn9T2U4uyCcjdr2rWxxbdoArZY3OXphgjVg+WDLA44aOcncnyDVwGwzAwW
+	 c6x5C7drqU3uoYL34jhIoln2k5YhGPsEQWLlJxoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 793/969] net/sched: sch_pie: annotate more data-races in pie_dump_stats()
-Date: Sat, 30 May 2026 18:05:17 +0200
-Message-ID: <20260530160322.512290254@linuxfoundation.org>
+	Gyeyoung Baek <gye976@gmail.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 6.1 826/969] drm/panfrost: Fix wait_bo ioctl leaking positive return from dma_resv_wait_timeout()
+Date: Sat, 30 May 2026 18:05:50 +0200
+Message-ID: <20260530160323.452290195@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,88 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gyeyoung Baek <gye976@gmail.com>
 
-[ Upstream commit 6d4106e8df94c0c52cf3ca6a6a0d01567fb3844e ]
+commit 459d75523b71c0ec254d153d8850d0b7008af396 upstream.
 
-My prior patch missed few READ_ONCE()/WRITE_ONCE() annotations.
+dma_resv_wait_timeout() returns a positive 'remaining jiffies' value
+on success, 0 on timeout, and -errno on failure.
 
-Fixes: 5154561d9b11 ("net/sched: sch_pie: annotate data-races in pie_dump_stats()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260430080056.35104-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+panfrost_ioctl_wait_bo() returns this 'long' result from an int-typed
+ioctl handler, so positive values reach userspace as bogus errors.
+Explicitly set ret to 0 on the success path.
+
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
+Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/fe33f82fded7be1c18e2e0eb2db451d5a738cf39.1776581974.git.gye976@gmail.com
+Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_pie.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_drv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index afa94f058f5f5..4ab296678b0b1 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -212,16 +212,14 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
- 	 * packet timestamp.
- 	 */
- 	if (!params->dq_rate_estimator) {
--		vars->qdelay = now - pie_get_enqueue_time(skb);
-+		WRITE_ONCE(vars->qdelay,
-+			   backlog ? now - pie_get_enqueue_time(skb) : 0);
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -330,6 +330,8 @@ panfrost_ioctl_wait_bo(struct drm_device
+ 				    true, timeout);
+ 	if (!ret)
+ 		ret = timeout ? -ETIMEDOUT : -EBUSY;
++	else if (ret > 0)
++		ret = 0;
  
- 		if (vars->dq_tstamp != DTIME_INVALID)
- 			dtime = now - vars->dq_tstamp;
+ 	drm_gem_object_put(gem_obj);
  
- 		vars->dq_tstamp = now;
- 
--		if (backlog == 0)
--			vars->qdelay = 0;
--
- 		if (dtime == 0)
- 			return;
- 
-@@ -369,7 +367,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	if (qdelay > (PSCHED_NS2TICKS(250 * NSEC_PER_MSEC)))
- 		delta += MAX_PROB / (100 / 2);
- 
--	vars->prob += delta;
-+	WRITE_ONCE(vars->prob, vars->prob + delta);
- 
- 	if (delta > 0) {
- 		/* prevent overflow */
-@@ -394,7 +392,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 
- 	if (qdelay == 0 && qdelay_old == 0 && update_prob)
- 		/* Reduce drop probability to 98.4% */
--		vars->prob -= vars->prob / 64;
-+		WRITE_ONCE(vars->prob, vars->prob - vars->prob / 64);
- 
- 	WRITE_ONCE(vars->qdelay, qdelay);
- 	vars->backlog_old = backlog;
-@@ -493,7 +491,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct tc_pie_xstats st = {
--		.prob		= q->vars.prob << BITS_PER_BYTE,
-+		.prob		= READ_ONCE(q->vars.prob) << BITS_PER_BYTE,
- 		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
- 				   NSEC_PER_USEC,
- 		.packets_in	= READ_ONCE(q->stats.packets_in),
-@@ -504,7 +502,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	};
- 
- 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
--	st.dq_rate_estimating = q->params.dq_rate_estimator;
-+	st.dq_rate_estimating = READ_ONCE(q->params.dq_rate_estimator);
- 
- 	/* unscale and return dq_rate in bytes per sec */
- 	if (st.dq_rate_estimating)
--- 
-2.53.0
-
 
 
