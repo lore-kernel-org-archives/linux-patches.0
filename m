@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3323A17555;
-	Sat, 30 May 2026 18:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727823242BE;
+	Sat, 30 May 2026 18:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165164; cv=none; b=qrpnGl67irmtNSekVT3uoByk3pAqHXuDv0jB5IEsABDVtRSijUA7Sjl86kSOIAO8Y7QYVNqBnFadLCPTV/rNOTb/MbnQhtM8K1FHwtwWf5V7Hw3f07jEYykb60x1005XQ2DQFwjqlAS6c4+jS26/ltw4+f9c8kZ26RP1B+AcsGk=
+	t=1780165167; cv=none; b=QdhR54btCHIr0i9ytsYVw6d+3lctjXy41MH58DGO4RkK/aX2UoAVmB5mcrTE8+pQ434aD56VdbLyTf0G59AYQ1n0ojMJLdlahTd8IjxtHR5w7/CpW0Yea1SpjSadILTcesvID7suTE5lPT1vBc7dwR3O/+fEagNzOvFQ4TuCl48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165164; c=relaxed/simple;
-	bh=oNbVAzfeTp71Olbp72Vx8VkIMYpvDIXUmJFRYCRC34Y=;
+	s=arc-20240116; t=1780165167; c=relaxed/simple;
+	bh=FgHdVxFT69f7FZlqAO3n2HuX494kW07Pj6Vupi557+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiVkkDYnXABHlomk00kzJyXQhFXDdxJ+r5b/YoOMJZMBd2hw/CXiw+1SEOdQOM0CDf7u47lC01I+3p1xfof1OwAyh7ftARd5qKoErDU3C2aHXpKMxzh+wK2nrX/g/Gxs7Kv8JXtSGcISxnBXaUtc6eW/X7SSK4LcBg2a4TPovcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEei/1kf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4q/PzHUPdEy4nmUS5/FAFoaGggvFdJjvNdlTIMU6zgnnY9dZMlhnAzzVLCHTFPSgPimdT5lL4mTKKAYgDdI8sqwAgFa+5Xeprn7J94Dk47JnRnVfn/iSFs8YVYbua9qpehRKA9RfkIO91m2bpV+K/LnepjCDmHpwWsthW77EdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgmuWiQU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEei/1kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763BF1F00893;
-	Sat, 30 May 2026 18:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgmuWiQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79CC1F00893;
+	Sat, 30 May 2026 18:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165163;
-	bh=aJQj4UktZ/C0g7WFra54ILAsVGTax52UGw6uR4Kbhn0=;
+	s=korg; t=1780165166;
+	bh=E2Wc5LhiFGNm1VldT+c/ukYSw6tollpKjrRfaw8RHTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEei/1kfiFngZrrxOG+vb7wP0FkzvQESwBhh14/PPSRfF84aX/fITDfvrdI+ABcCn
-	 8PFRfbuO8kwbQ0Y5g1AkVALquXCP/NcVxI6xOmSMSoGVLSXRTcvPK0VSqEe6T/3vc+
-	 nYqfdTylXlZk6AVGM3cwMjSn03OsjOrGGxJCy5e0=
+	b=tgmuWiQUD2dYgjvsFV0Bma5M3lk6C1pk80gxhpA2hHED8oTo7PypwSbOnjMlKB2FV
+	 AbIJmMsDvkFl6a+dOy0BBus4anzd9EDqnlmCO9qtJ8sf2+fgOyIZdy1P3NZn6xR3TN
+	 cnibwIpA1T54ZTRndPDMRDy9UtHAfuU9mnM5dQ50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 750/776] net: ethernet: cortina: Carry over frag counter
-Date: Sat, 30 May 2026 18:07:44 +0200
-Message-ID: <20260530160259.149501100@linuxfoundation.org>
+Subject: [PATCH 5.15 768/776] RDMA/rtrs: Fix use-after-free in path file creation cleanup
+Date: Sat, 30 May 2026 18:08:02 +0200
+Message-ID: <20260530160259.570798542@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,116 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit ebd8ec2b309e3a447851b456ccaf8fb39f3661e7 ]
+[ Upstream commit 5b74373390113fba798a76b483837029ab010fef ]
 
-The gmac_rx() NAPI poll function assembles packets in an
-SKB from a ring buffer.
+In the error path of rtrs_srv_create_path_files(), the sysfs root folders
+may already have been created and srv_path->kobj may already have been
+initialized. If a later step fails, the cleanup currently calls
+kobject_put(&srv_path->kobj) before
+rtrs_srv_destroy_once_sysfs_root_folders(srv_path).
 
-If the ring buffer gets completely emptied during a poll cycle,
-we exit gmac_rx(), but the packet is not yet completely
-assembled in the SKB, yet the fragment counter frag_nr is
-reset to zero on the next invocation.
+kobject_put() may drop the last reference to srv_path->kobj and invoke the
+release callback, rtrs_srv_release(), which frees srv_path. The following
+call to rtrs_srv_destroy_once_sysfs_root_folders(srv_path) then
+dereferences srv_path internally to access srv_path->srv, resulting in a
+use-after-free.
 
-Solve this by making the RX fragment counter a part of the
-port struct, and carry it over between invocations.
+This failure path is reached before rtrs_srv_create_path_files() returns
+success, so the successful-path lifetime handling is not involved.
 
-Reset the fragment counter only right after calling
-napi_gro_frags(), on error (after calling napi_free_frags())
-or if stopping the port.
+Fix this by destroying the sysfs root folders before calling
+kobject_put(&srv_path->kobj), so srv_path is still valid while the helper
+accesses it.
 
-Reset it in some place where not strictly necessary just to
-emphasize what is going on.
+This issue was found by a static analysis tool I am developing.
 
-This was found by Sashiko during normal patch review.
-
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-3-6c5d20ddc35b@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ae4c81644e91 ("RDMA/rtrs-srv: Rename rtrs_srv_sess to rtrs_srv_path")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260514113834.865530-1-lgs201920130244@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index be2b106b4aa27..8cc3cca1f4bd4 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -121,6 +121,7 @@ struct gemini_ethernet_port {
- 	struct hrtimer		rx_coalesce_timer;
- 	unsigned int		rx_coalesce_nsecs;
- 	struct sk_buff		*rx_skb;
-+	unsigned int		rx_frag_nr;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
+index 309080184aac7..d42659a2e9058 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv-sysfs.c
+@@ -294,8 +294,8 @@ int rtrs_srv_create_path_files(struct rtrs_srv_path *srv_path)
+ put_kobj:
+ 	kobject_del(&srv_path->kobj);
+ destroy_root:
+-	kobject_put(&srv_path->kobj);
+ 	rtrs_srv_destroy_once_sysfs_root_folders(srv_path);
++	kobject_put(&srv_path->kobj);
  
- 	unsigned int		freeq_refill;
- 	struct gmac_txq		txq[TX_QUEUE_NUM];
-@@ -1413,6 +1414,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short m = (1 << port->rxq_order) - 1;
- 	struct gemini_ethernet *geth = port->geth;
- 	void __iomem *ptr_reg = port->rxq_rwptr;
-+	unsigned int frag_nr = port->rx_frag_nr;
- 	struct sk_buff *skb = port->rx_skb;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
-@@ -1426,7 +1428,6 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short r, w;
- 	union dma_rwptr rw;
- 	dma_addr_t mapping;
--	int frag_nr = 0;
- 
- 	spin_lock_irqsave(&geth->irq_lock, flags);
- 	rw.bits32 = readl(ptr_reg);
-@@ -1466,6 +1467,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 			continue;
- 		}
-@@ -1476,6 +1478,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
- 				skb = NULL;
-+				frag_nr = 0;
- 			}
- 
- 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
-@@ -1510,6 +1513,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (word3.bits32 & EOF_BIT) {
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 			--budget;
- 		}
- 		continue;
-@@ -1518,6 +1522,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		if (skb) {
- 			napi_free_frags(&port->napi);
- 			skb = NULL;
-+			frag_nr = 0;
- 		}
- 
- 		if (mapping)
-@@ -1527,6 +1532,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	}
- 
- 	port->rx_skb = skb;
-+	port->rx_frag_nr = frag_nr;
- 	writew(r, ptr_reg);
- 	return budget;
+ 	return err;
  }
-@@ -1856,6 +1862,7 @@ static int gmac_stop(struct net_device *netdev)
- 	gmac_stop_dma(port);
- 	napi_disable(&port->napi);
- 	port->rx_skb = NULL;
-+	port->rx_frag_nr = 0;
- 
- 	gmac_enable_irq(netdev, 0);
- 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
