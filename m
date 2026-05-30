@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB7D332EA7;
-	Sat, 30 May 2026 16:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBC62E92B3;
+	Sat, 30 May 2026 16:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160344; cv=none; b=Fa2soQIPSGkVUQTfrQCES0KfkKdZJa9GybAzaph7oIjPn4gLsZLVDTi9Cj57+qTcJaJZJ32sHF2DZd+cyAytw4AQTQqBdAB4En0Aig6ec5UXW67C3niZ1OBFs63EtoU8hyabPbtTTCQRQ4tSKys31F1pj+IRwazHXBfLkNBeZWU=
+	t=1780160347; cv=none; b=hHGejsGXKgfbK8V8AHQuXmFu/dfhzl6417z/6H1qN9KlJE1GjmVFW/zfSSH70j0kICykeZPCK5iR79r/7G7iLCx2n2KL2kH0AL++YuJGZ11eACnsLywwpoJAMzXp3xeRbajCu77dT6dEHm5Nd84ixCwsC9lC/oAr3y9UqGd20Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160344; c=relaxed/simple;
-	bh=AsKyjqIG632J9B5An24n4/qh+j+vTqvq/ypsylc/FUU=;
+	s=arc-20240116; t=1780160347; c=relaxed/simple;
+	bh=A8lpaAN2dPm6/f/V71rvlANzZGyeWfw7Cw4gszc3Pl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j54++JemYB2kg9gFXPksL82+Zdb7rbIWWpKWlOUSTqKVPfi1f/339gWsPgFoHmG0ED9n2Js/4PQCDRi5rjGQ6SmJ5PE+2e52K84S5Yv79T30seRnvKFK/59d8m4kzZBnh+QeuwUijKNsn46pVTRnCdwjMzUkfFp5xn9YjbLjfaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqTVjj12; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m93aIwhPDwiJX/EDG/QSBSKshdayBgL8Wq4DJof6UWIj0MQFs4y7sQf/mi10FLQzewssw+vscloBmOFRzZkFEKIhiG4NAx+n3D/rw/DuxINt7ULX996U2lwtzDjbnBY+Hzv4dBEl7vzG6P5Cptg/DKZ25Dpe/Ha7brzUF9cGrJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcgz/K+7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqTVjj12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525AE1F00893;
-	Sat, 30 May 2026 16:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcgz/K+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEAA1F00893;
+	Sat, 30 May 2026 16:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160343;
-	bh=lvQ7GYMytft3BuOF/Iwi6fqonm2GGZdMwJD/kKOhqdQ=;
+	s=korg; t=1780160346;
+	bh=q6MHOR9o2r9HGrQP+Qr6t+qSFFuVIyVF6NJKTkmOqro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uqTVjj12AF0lzVKBDoT/irK/XeuEAFpFjLMbaRozSdW5qFZaN7BvT204w4E8e/M8x
-	 6E/em8boBcMuVjtWR2RJGBwTbsq2UthLnDiNUGg6lhHGDvoqUeSuT6pRStdUEfkkvZ
-	 Z8pvXA4Q3g9WQC8ryLeRl2WMtl99suliMwqJ8fec=
+	b=pcgz/K+7PnFXlbWOfL4xiQt+69kvSpro2dZkMt4QtnAFAzR55aMl053Ay7nd11fVT
+	 B9QwWvWd1B0KkXD3SocIcMxXaxrXG9rWQSsOUNPk6ziFeYEchjMdVj4Hpk9WUtaudH
+	 OfYyEP2TvzwLXdSjfzmL5858Bbm05Zy+/URkFOYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pete Zaitcev <zaitcev@redhat.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 305/969] usb: usblp: fix heap leak in IEEE 1284 device ID via short response
-Date: Sat, 30 May 2026 17:57:09 +0200
-Message-ID: <20260530160308.852312343@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.1 314/969] xfrm: provide message size for XFRM_MSG_MAPPING
+Date: Sat, 30 May 2026 17:57:18 +0200
+Message-ID: <20260530160309.082084934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,49 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 7a400c6fe3617e31e690e3f7ca37bb335e0498f3 upstream.
+commit 28465227c80fe417b4013c432be1f3737cb9f9a3 upstream.
 
-usblp_ctrl_msg() collapses the usb_control_msg() return value to
-0/-errno, discarding the actual number of bytes transferred.  A broken
-printer can complete the GET_DEVICE_ID control transfer short and the
-driver has no way to know.
+The compat 64=>32 translation path handles XFRM_MSG_MAPPING, but
+xfrm_msg_min[] does not provide the native payload size for this
+message type.
 
-usblp_cache_device_id_string() reads the 2-byte big-endian length prefix
-from the response and trusts it (clamped only to the buffer bounds).
-The buffer is kmalloc(1024) at probe time. A device that sends exactly
-two bytes (e.g. 0x03 0xFF, claiming a 1023-byte ID) leaves
-device_id_string[2..1022] holding stale kmalloc heap.
+Add the missing XFRM_MSG_MAPPING entry so compat translation can size
+and translate mapping notifications correctly.
 
-That stale data is then exposed:
-  - via the ieee1284_id sysfs attribute (sprintf("%s", buf+2), truncated
-    at the first NUL in the stale heap), and
-  - via the IOCNR_GET_DEVICE_ID ioctl, which copy_to_user()s the full
-    claimed length regardless of NULs, up to 1021 bytes of uninitialized
-    heap, with the leak size chosen by the device.
-
-Fix this up by just zapping the buffer with zeros before each request
-sent to the device.
-
-Cc: Pete Zaitcev <zaitcev@redhat.com>
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026042002-unicorn-greedily-3c63@gregkh
+Fixes: 5461fc0c8d9f ("xfrm/compat: Add 64=>32-bit messages translator")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usblp.c |    1 +
+ net/xfrm/xfrm_user.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/usb/class/usblp.c
-+++ b/drivers/usb/class/usblp.c
-@@ -1365,6 +1365,7 @@ static int usblp_cache_device_id_string(
- {
- 	int err, length;
- 
-+	memset(usblp->device_id_string, 0, USBLP_DEVICE_ID_SIZE);
- 	err = usblp_get_id(usblp, 0, usblp->device_id_string, USBLP_DEVICE_ID_SIZE - 1);
- 	if (err < 0) {
- 		dev_dbg(&usblp->intf->dev,
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2960,6 +2960,7 @@ const int xfrm_msg_min[XFRM_NR_MSGTYPES]
+ 	[XFRM_MSG_GETSADINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_NEWSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_GETSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
++	[XFRM_MSG_MAPPING     - XFRM_MSG_BASE] = XMSGSIZE(xfrm_user_mapping),
+ 	[XFRM_MSG_SETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ 	[XFRM_MSG_GETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ };
 
 
