@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC7F261B9E;
-	Sat, 30 May 2026 17:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED52C351C2F;
+	Sat, 30 May 2026 17:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163236; cv=none; b=MZDnbMsB/sR+RCNA5YK+ZdBx8LlrEd7FzDUgzixNxDR0M+oZeCA4BYgBXuv5E6tYvBLeRGPfbkjfnelGF+QJhqD+/+eIGE9Hw4SarDlG4wVeVDO7ZL9RujiRgcZsSzmj+KaNHCHlyXbPbcd67VJbmR9vxH5KOcRw8XjKQui0rQ4=
+	t=1780163239; cv=none; b=jxXfDhoLMXJwPYH6DTMR59ehQoUkxj+Z2EfV69lTZYmmmS8pSxkyMyEdJIgTnsYGmfDiXZDlH0O5m0QEQmMm/V/1/v9vIYxh87KfA1n0ws8DPrbzTxfvIvK7qEm9G3dcTtZ97jPeLgGCANU2WNd/pbAnX54/7TedepWB8OmW9QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163236; c=relaxed/simple;
-	bh=/m3lrlD9bCiCV67Iekjzg+To3S2rGePYBnsFODtD0VM=;
+	s=arc-20240116; t=1780163239; c=relaxed/simple;
+	bh=RRyo2Wkmh6rdS/tcCh1N/4HpJNjmUG1snDYuN8/YYYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlsSQqox9+++VUQ7JFnXpRz71ZqCKjxHyj2s38hPbX+ysPk3tLM6AhLX/CUWufvQDmMdGwn1nSw6Tqu5gcGDsV/KkpRjciKGGgQRU3orRV8syb4uXX3iYs+hfmZN9GqJc/5lGhcSIBZU5PoJXnuAbrTBGaaLad8Z7WuXuF/uqi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnQo97R5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W83ffhAdAIezq1HMvLqJqDJ3yWSrUhMbQQiwGKNjPdQph84orlfJ0+h8d2Yy+qjUiYiPFKr9VBDGLsJ25ZHcsMQnEW3ckv39O+BS4ByrEnvg3jsvoqb1mIqhjbqLtXLtH4nfzFT/KNs/4A0lEMBKRzXWa+TFtu+JQcvIx7QVGI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p22vGmxT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnQo97R5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D341F00893;
-	Sat, 30 May 2026 17:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p22vGmxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EDB1F00893;
+	Sat, 30 May 2026 17:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163235;
-	bh=R6Yobmy8jb9rfvVvA1cGcOm137DUKyTG2Ad9Us9R2zA=;
+	s=korg; t=1780163238;
+	bh=I0U4Q3OgE3Ei6HvGKrOPNGNVDPChI035VtKOVajz/j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnQo97R5xDHQQl94+G1iRnhIgS/6w/FMeLLaP/YkVuTStLcUZS+kuZpexWgYM8M9g
-	 La+qTdb07O6dfE0mt5QqFJansf+Ki+DGegqaaR0DAx+ekse1o4O1VQ3MY1hOOdBPJm
-	 de4NfKPR9oQC6iCPsqUh+kV2dZiM9JVkmzLdA4gs=
+	b=p22vGmxTgM+vxkSJbJYnSrlZKeEHRAwJbK4j3rd8gPP7TTFCUI6sDauDkpbVVr7Of
+	 ZzMNYidb2bmaXvTEZXZpcBNTLC6A7tanbV9rzpYbCdS35xkm5Anw5PMsId50qfgqRL
+	 1I0G1JXoQ9cxejffiqG5UOFBZJi3TgFmAM/XUuCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guocai He <guocai.he.cn@windriver.com>
-Subject: [PATCH 5.15 164/776] Revert "wifi: cfg80211: stop NAN and P2P in cfg80211_leave"
-Date: Sat, 30 May 2026 17:57:58 +0200
-Message-ID: <20260530160244.730320826@linuxfoundation.org>
+	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.15 165/776] scripts/dtc: Remove unused dts_version in dtc-lexer.l
+Date: Sat, 30 May 2026 17:57:59 +0200
+Message-ID: <20260530160244.755739771@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,33 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guocai He <guocai.he.cn@windriver.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-This reverts commit 31344ffecd7a34335ce2b52e8c205bce3cbfca4b which is commit
-e1696c8bd0056bc1a5f7766f58ac333adc203e8a upstream.
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
-The reverted patch introduced a deadlock. The locking situation in mainline is
-totally different, so it is incorrect to directly backport the commit from mainline.
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in dtc-lexer.lex.c (compiled from
+dtc-lexer.l):
 
-Signed-off-by: Guocai He <guocai.he.cn@windriver.com>
+  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
+    641 | static int dts_version = 1;
+        |            ^
+
+Remove it to clear up the warning, as it is truly unused.
+
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+This should apply cleanly to all supported stable branches.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ scripts/dtc/dtc-lexer.l |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1300,10 +1300,8 @@ void __cfg80211_leave(struct cfg80211_re
- 		__cfg80211_leave_ocb(rdev, dev);
- 		break;
- 	case NL80211_IFTYPE_P2P_DEVICE:
--		cfg80211_stop_p2p_device(rdev, wdev);
--		break;
- 	case NL80211_IFTYPE_NAN:
--		cfg80211_stop_nan(rdev, wdev);
-+		/* cannot happen, has no netdev */
- 		break;
- 	case NL80211_IFTYPE_AP_VLAN:
- 	case NL80211_IFTYPE_MONITOR:
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
+ 
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
+ 
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
+ 
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
 
 
