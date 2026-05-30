@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE703998B1;
-	Sat, 30 May 2026 16:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E6333A9DA;
+	Sat, 30 May 2026 16:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159941; cv=none; b=XTa7eRI9tRg528jb8xWOugxUtXGkUo2/RFi9EhhQ5l6iyjVuDnuMLBOZqhka1oHqBwVXEgAMGCad7DXBHgzLmosqIAlFypIqYj7VUY0WV5TxxoNFwCNn/efYmrfgn9IqG8FTFIaYgvpMm0ZaCo71LRe3LLzvc20KcyeOhs/MnuM=
+	t=1780159946; cv=none; b=AoGv6GzS20hafrOpZqy1a/AhmjkBVIWvZSQwZdUpCTZ3sakiRnJDGIe2qACrl5pWPC0FbN2OIhIYa0LctwrCDwkGJ5UjtGtEbOKvVxLphwVvG+OR4QoeoMN/yMybHCA8jk64DVXlWVmPw1zqA6Oqi1H199qwzwLbC6hzdxthPF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159941; c=relaxed/simple;
-	bh=qxbEeQhPLQk/MYxe5XA9Y2o9ZCAuuJ7hmv6exQPdxkU=;
+	s=arc-20240116; t=1780159946; c=relaxed/simple;
+	bh=oIySzXllgiT36LQMbCRdvATflUYtRLUn0ydODkttt3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eb5AEWJyogkozNyo21RuS6Xh/5r+MHna114ANJfwguCKpUfsagqPuEIH1X1zpJ33aeDv4dmWEC+Vy8h+Vgr02H+abZKS5ahZzdUUFPUAtq8QFidZLnNdshN8xOhyTgRXZpCM65aF6SFficMtozkTI01eq9bMEVpUiAbySSD4NQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsVnxxbD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bbZ4/E2P+PuVT0SbbB2CRhEpU0qkyIXoa15K+ZhBDD4sSm9t7uVO7iHL6dLkgyU4bGEd9mX0d+nbh726g8TcZny8/KKz8iQKx7Z60dfn7lT9OSFgW0cKrvOOuD1Pzk5e+m+Tay5Ye5lJ5ByxzUdNhIoFKRXh9Fg3j117fxxlD9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDKV3mLb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsVnxxbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2B61F00893;
-	Sat, 30 May 2026 16:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDKV3mLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AF81F00893;
+	Sat, 30 May 2026 16:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159939;
-	bh=yeYlKKZkbM/oldPESEF3YYr1dVpovXvELnym8Xxb51s=;
+	s=korg; t=1780159943;
+	bh=te943qwlm1rUytNLaCk6wwqXC9pBwJlLlJVF1kMuimI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WsVnxxbD2Hchja8eCX0Pd9LHA3h/6zo99RVEwOw6vhBQPwwIdyqvvxwCAH260MGnV
-	 7iWJiYFyREKn3fC06ALKx85al41swaj3Gu7y9t2ioZlrY+YC1+nXa/N1asAC7Lx+lL
-	 wXSCcWZQS6aPwQTa9jn8FvhoqvonGi604MrImTXU=
+	b=nDKV3mLbCz0a+qhj6y2k05v6y6sZSBOxehOpQy104rw+gqMDlcNRI9XCyr5xozHd9
+	 nB/BNMwJxZsCIgVJbr4ianWe9uU6QT6VIcbXTJZD733dH0aMY2BHalFrPNk6VhLFKg
+	 4ZHYh9PvU4Ceb1Fw6BPpHXzfmbjXsUXxCTWVr/hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Liebold <simonlie@amazon.de>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 202/969] selftests/mqueue: Fix incorrectly named file
-Date: Sat, 30 May 2026 17:55:26 +0200
-Message-ID: <20260530160306.055813975@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 203/969] rbd: fix null-ptr-deref when device_add_disk() fails
+Date: Sat, 30 May 2026 17:55:27 +0200
+Message-ID: <20260530160306.083355816@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,41 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Liebold <simonlie@amazon.de>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 64fac99037689020ad97e472ae898e96ea3616dc upstream.
+commit d1fef92e414433ca7b89abf85cb0df42b8d475eb upstream.
 
-Commit 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
-intended to increase the timeout for mq_perf_tests from the default
-kselftest limit of 45 seconds to 180 seconds.
+do_rbd_add() publishes the device with device_add() before calling
+device_add_disk(). If device_add_disk() fails after device_add()
+succeeds, the error path calls rbd_free_disk() directly and then later
+falls through to rbd_dev_device_release(), which calls rbd_free_disk()
+again. This double teardown can leave blk-mq cleanup operating on
+invalid state and trigger a null-ptr-deref in
+__blk_mq_free_map_and_rqs(), reached from blk_mq_free_tag_set().
 
-Unfortunately, the file storing this information was incorrectly named
-`setting` instead of `settings`, causing the kselftest runner not to
-pick up the limit and keep using the default 45 seconds limit.
+Fix this by following the normal remove ordering: call device_del()
+before rbd_dev_device_release() when device_add_disk() fails after
+device_add(). That keeps the teardown sequence consistent and avoids
+re-entering disk cleanup through the wrong path.
 
-Fix this by renaming it to `settings` to ensure that the kselftest
-runner uses the increased timeout of 180 seconds for this test.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available.
 
-Fixes: 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
-Cc: <stable@vger.kernel.org> # 5.10.y
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
-Link: https://lore.kernel.org/r/20260312140200.2224850-1-simonlie@amazon.de
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+We reproduced the bug on v7.0 with a real Ceph backend and a QEMU x86_64
+guest booted with KASAN and CONFIG_FAILSLAB enabled. The reproducer
+confines failslab injections to the __add_disk() range and injects
+fail-nth while mapping an RBD image through
+/sys/bus/rbd/add_single_major.
+
+On the unpatched kernel, fail-nth=4 reliably triggered the fault:
+
+	Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+	KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+	CPU: 0 UID: 0 PID: 273 Comm: bash Not tainted 7.0.0-01247-gd60bc1401583 #6 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+	RIP: 0010:__blk_mq_free_map_and_rqs+0x8c/0x240
+	Code: 00 00 48 8b 6b 60 41 89 f4 49 c1 e4 03 4c 01 e5 45 85 ed 0f 85 0a 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 e9 48 c1 e9 03 <80> 3c 01 00 0f 85 31 01 00 00 4c 8b 6d 00 4d 85 ed 0f 84 e2 00 00
+	RSP: 0018:ff1100000ab0fac8 EFLAGS: 00000246
+	RAX: dffffc0000000000 RBX: ff1100000c4806a0 RCX: 0000000000000000
+	RDX: 0000000000000002 RSI: 0000000000000000 RDI: ff1100000c4806f4
+	RBP: 0000000000000000 R08: 0000000000000001 R09: ffe21c000189001b
+	R10: ff1100000c4800df R11: ff1100006cf37be0 R12: 0000000000000000
+	R13: 0000000000000000 R14: ff1100000c480700 R15: ff1100000c480004
+	FS:  00007f0fbe8fe740(0000) GS:ff110000e5851000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 00007fe53473b2e0 CR3: 0000000012eef000 CR4: 00000000007516f0
+	PKRU: 55555554
+	Call Trace:
+	 <TASK>
+	 blk_mq_free_tag_set+0x77/0x460
+	 do_rbd_add+0x1446/0x2b80
+	 ? __pfx_do_rbd_add+0x10/0x10
+	 ? lock_acquire+0x18c/0x300
+	 ? find_held_lock+0x2b/0x80
+	 ? sysfs_file_kobj+0xb6/0x1b0
+	 ? __pfx_sysfs_kf_write+0x10/0x10
+	 kernfs_fop_write_iter+0x2f4/0x4a0
+	 vfs_write+0x98e/0x1000
+	 ? expand_files+0x51f/0x850
+	 ? __pfx_vfs_write+0x10/0x10
+	 ksys_write+0xf2/0x1d0
+	 ? __pfx_ksys_write+0x10/0x10
+	 do_syscall_64+0x115/0x690
+	 entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7f0fbea15907
+	Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
+	RSP: 002b:00007ffe22346ea8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+	RAX: ffffffffffffffda RBX: 0000000000000058 RCX: 00007f0fbea15907
+	RDX: 0000000000000058 RSI: 0000563ace6c0ef0 RDI: 0000000000000001
+	RBP: 0000563ace6c0ef0 R08: 0000563ace6c0ef0 R09: 6b6435726d694141
+	R10: 5250337279762f78 R11: 0000000000000246 R12: 0000000000000058
+	R13: 00007f0fbeb1c780 R14: ff1100000c480700 R15: ff1100000c480004
+	 </TASK>
+
+With this fix applied, rerunning the reproducer over fail-nth=1..256
+yields no KASAN reports.
+
+[ idryomov: rename err_out_device_del -> err_out_device ]
+
+Cc: stable@vger.kernel.org
+Fixes: 27c97abc30e2 ("rbd: add add_disk() error handling")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mqueue/{setting => settings} | 0
- tools/testing/selftests/mqueue/setting  |    1 -
- tools/testing/selftests/mqueue/settings |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tools/testing/selftests/mqueue/{setting => settings} (100%)
+ drivers/block/rbd.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/mqueue/setting
-+++ /dev/null
-@@ -1 +0,0 @@
--timeout=180
---- /dev/null
-+++ b/tools/testing/selftests/mqueue/settings
-@@ -0,0 +1 @@
-+timeout=180
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -7175,7 +7175,7 @@ static ssize_t do_rbd_add(struct bus_typ
+ 
+ 	rc = device_add_disk(&rbd_dev->dev, rbd_dev->disk, NULL);
+ 	if (rc)
+-		goto err_out_cleanup_disk;
++		goto err_out_device;
+ 
+ 	spin_lock(&rbd_dev_list_lock);
+ 	list_add_tail(&rbd_dev->node, &rbd_dev_list);
+@@ -7189,8 +7189,8 @@ out:
+ 	module_put(THIS_MODULE);
+ 	return rc;
+ 
+-err_out_cleanup_disk:
+-	rbd_free_disk(rbd_dev);
++err_out_device:
++	device_del(&rbd_dev->dev);
+ err_out_image_lock:
+ 	rbd_dev_image_unlock(rbd_dev);
+ 	rbd_dev_device_release(rbd_dev);
 
 
