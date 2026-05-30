@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7528032B11D;
-	Sat, 30 May 2026 17:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03472690D5;
+	Sat, 30 May 2026 17:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160674; cv=none; b=cpFjXq+au3gyCiooOh7crh6TuUwebB9CVvBZ3q4FvjDCIu0Sk/0Lo+mdhME8c4IUXfGyLJ59Us7SjenNrd0Z42v6iyzOY7TzReSDtnN72wb2DygEGnVjuyf4Hli1qmYR7sH/0iEXoAi+D/Q5n2/UETUbQx4PsJ8COUPHsuiT0jo=
+	t=1780160677; cv=none; b=IeVFaJCUMFj44huGGn8F6ArahvSWz74tlu8VCrj/mUiNEqulMvKdrEB3t4QzS4Bcsr2n4QlO4S1DEZGbCEdm+FcovO0X9TgAJft3PjEVXvxiGQSZhDlzopbbdNwb8ijpBQQbqbVKTpOL4LfgPHgJf1jJlQ+UCOZwvoD6PvsxzKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160674; c=relaxed/simple;
-	bh=OmPvng3fiChG84t+hGCHU3CIksuu71us4lSXa/0cTJM=;
+	s=arc-20240116; t=1780160677; c=relaxed/simple;
+	bh=hQZs4XCTYQcFZCSVR83u8Wvr8SJ53WchQddkCed3I5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTwu/0DCDMYDwTktnYhjiT4NrBZdclSw88LDHrVUqCC1aAZP09xrZkfc51BvQPloCTCaljoTv59oDE8I5kSVopp5rUcxfTVpyAL+8iXKUZRwu+Yy9DNsJlpGjPwbnuTqlYRhpxgKTCt5ILmM5dCOitYEID918iKzE5XqWtpx5Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQHqBRBc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3EhF5yegpzjra/1D94MHJ/3JuXe3trb09I/wR7JX5Q3tGzKp6oHEDeO3VRmw8zYlJW5LcOE75XS4F2xqyk3G42LplrgNceajWdtRL1FXgzUjtumzV1Rjny6pETgt7rHAtjdVcFRspQpdEwfrjFD64sFP/zTT7Ekn2tM6jpYKJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuSRQoFJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQHqBRBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE451F00898;
-	Sat, 30 May 2026 17:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuSRQoFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118021F00898;
+	Sat, 30 May 2026 17:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160673;
-	bh=nx6rSuuksG7AcgLIe0DQYSqAxkmFD51Ri1QAcRfSb94=;
+	s=korg; t=1780160676;
+	bh=ZbV+9wXIrsHefJBkIDarSJpVtifiZrVGTvEz5aVpnRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQHqBRBc/K65UHClM+p8AsBgz1OcCy8l7uM2IM75YmsOphTSClaM2FjyUGn01rLxs
-	 JfAb9NKXv1zPWgxpUD253WTSbnDzQkc9i5T90iJq58RgQP0FfLhlQft4hnmg03Ys49
-	 l/75jFJd+HTdb7bxLznMJC6srvCzZypXbwx6SZM8=
+	b=cuSRQoFJn6bmBpEq9nVPYqBQM29U2LdThgaIkZCCdJuEOijbYqhoMNQ+kr53OW/3M
+	 ZnhcndHQLvJa1LgCjFG+Gw7IqS4G39malG0bBYiB4WPFoJa6r6xthBAOSqnTVQoZ7X
+	 GvhlL33u9Bz21hUxdY1o2F12G+iq9uY+vJhiLubI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 401/969] spi: orion: fix clock imbalance on registration failure
-Date: Sat, 30 May 2026 17:58:45 +0200
-Message-ID: <20260530160311.362573604@linuxfoundation.org>
+	Gang Yan <yangang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 373/969] mptcp: sockopt: set timestamp flags on subflow socket, not msk
+Date: Sat, 30 May 2026 17:58:17 +0200
+Message-ID: <20260530160310.613419377@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,51 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Gang Yan <yangang@kylinos.cn>
 
-commit 443cde0dc59c5d154156ac9f27a7dadef8ebc0c2 upstream.
+commit 5f95c21fc23a7ef22b4d27d1ed9bb55557ffb926 upstream.
 
-Make sure that the controller is not runtime suspended before disabling
-clocks on probe failure.
+Both mptcp_setsockopt_sol_socket_tstamp() and
+mptcp_setsockopt_sol_socket_timestamping() iterate over subflows,
+acquire the subflow socket lock, but then erroneously pass the MPTCP
+msk socket to sock_set_timestamp() / sock_set_timestamping() instead
+of the subflow ssk. As a result, the timestamp flags are set on the
+wrong socket and have no effect on the actual subflows.
 
-Also restore the autosuspend setting.
+Pass ssk instead of sk to both helpers.
 
-Fixes: 5c6786945b4e ("spi: spi-orion: add runtime PM support")
-Cc: stable@vger.kernel.org	# 3.17
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421130211.1537628-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-1-7432b7f279fa@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-orion.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mptcp/sockopt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-orion.c
-+++ b/drivers/spi/spi-orion.c
-@@ -780,6 +780,7 @@ static int orion_spi_probe(struct platfo
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, SPI_AUTOSUSPEND_TIMEOUT);
-+	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -159,7 +159,7 @@ static int mptcp_setsockopt_sol_socket_t
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast(ssk);
  
- 	status = orion_spi_reset(spi);
-@@ -791,10 +792,15 @@ static int orion_spi_probe(struct platfo
- 	if (status < 0)
- 		goto out_rel_pm;
+-		sock_set_timestamp(sk, optname, !!val);
++		sock_set_timestamp(ssk, optname, !!val);
+ 		unlock_sock_fast(ssk, slow);
+ 	}
  
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
- 	return status;
+@@ -235,7 +235,7 @@ static int mptcp_setsockopt_sol_socket_t
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast(ssk);
  
- out_rel_pm:
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- out_rel_axi_clk:
- 	clk_disable_unprepare(spi->axi_clk);
- out_rel_clk:
+-		sock_set_timestamping(sk, optname, timestamping);
++		sock_set_timestamping(ssk, optname, timestamping);
+ 		unlock_sock_fast(ssk, slow);
+ 	}
+ 
 
 
