@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC2232B10F;
-	Sat, 30 May 2026 16:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE1B31DD96;
+	Sat, 30 May 2026 16:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157593; cv=none; b=fdsMmLZwoQNv7+8UO4Ft015YIM5nWfnBu29O/no+fmv4QIobtLXd8sGkNWFFSHHPsIAejZVz75nBNMzddWgP7wGMk27TF74gyJxibs1wiu31p8VFl3jB2RhE7uyu0DEQXNSjogDny2baqaRjRrHXqELAu9SKypg+3QMX1TCa80E=
+	t=1780157605; cv=none; b=QRuSIcB16U/LHXaqkefMi09uK2NaTgKKwXP/QVf+GWrfTFTblQXZ88S/joKXePEq+qEOb6KvgTFaX91jvDXMq0RHdiV/PeS+WQcMkhTe/1DIXlvOW7Sj6W4ncmM03dTIzcZi8cNuMQ29UzPYxO1QDgXWueElD3/ncNEZqrUHxNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157593; c=relaxed/simple;
-	bh=intT23irT1rljL4NrkJ+U+B9aiGEA0lNZ4F1QZt+sBw=;
+	s=arc-20240116; t=1780157605; c=relaxed/simple;
+	bh=1o7kuhGQvHIMSBHBcSEYUv7i8OkPsCZiz8HjtjrEQto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/eP2wZR7F4bjR7ETsovXLUDl86ZNQXzUZcyFgm1f/gNC9BYcDXAS2Eeh6sOLgFexdHmLPLBWr161z1bLc6gID07QccWdi2ITF7xKI5IqJCN0IGkrzDCy7l94AFBs3zfczyYJV4uEA/Qg7QrGpkfNlEsmQbNGdfTqehLPtPteDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/uRVieo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a2tiPd5bppCk1ih6ie/c1f9j4pPdPl4RYsXshokMV9LVCTixkI4oNFzUwAKMsNEvgMqC+WAGZvhn02ZjaUqsS8o5rKpDCVXOTuU8n/jlgsvaBpCFmhORGGDFolm63EPZUBq3I19IUChvn/+KQRIeshkHIrnv8+Oj6ZoO1///B0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sURBsfTv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/uRVieo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEF41F00893;
-	Sat, 30 May 2026 16:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sURBsfTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF84D1F00893;
+	Sat, 30 May 2026 16:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157592;
-	bh=CjKOWhRhM/Dv3l+r3q5nGmY8bbxr7Ju4NGMQqCg5D3M=;
+	s=korg; t=1780157603;
+	bh=ur+FcSdyxk8tN3dYiepQwyPNWTco+o9a2Ar3uQ6cMq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/uRVieobnlp27eV9klZeYJtcN/nfkfUDXpMV/laSy7LTerJ8i+JXBpeQlDTUHHWX
-	 Ud3pNxudjUTSEdIJFkSGHQ7we++S2hRg8ctzH11V5gS/RVrWMGaesxMMdYdAT+TilS
-	 iyii4QqD1hGJJUdVb9KhSCawfnV6hbzVxtDpFnYY=
+	b=sURBsfTvJ/5JLfkHYE6fofoTgJ5UxtGcPL8RjfiebTMOrewe6/EtiTiL8Bwjnvlvx
+	 maMughN9Ll6mRRL1KlEsYHpVoRIv2fTIIocd9xLEJpqxTkXG2oJTVYHju4kUK0s1C6
+	 MR2O+hiG79grH3ksU5wUPf8y+WXMIsUytTPk/g9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Boris Burkov <boris@bur.io>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/776] can: mcp251x: add error handling for power enable in open and resume
-Date: Sat, 30 May 2026 17:55:17 +0200
-Message-ID: <20260530160240.327410170@linuxfoundation.org>
+Subject: [PATCH 5.15 004/776] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
+Date: Sat, 30 May 2026 17:55:18 +0200
+Message-ID: <20260530160240.356212925@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,88 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
+[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
 
-Add missing error handling for mcp251x_power_enable() calls in both
-mcp251x_open() and mcp251x_can_resume() functions.
+If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
+super block and fsid assignment will lead to a crash.
 
-In mcp251x_open(), if power enable fails, jump to error path to close
-candev without attempting to disable power again.
+Use file_inode(file)->i_sb to always get btrfs_sb.
 
-In mcp251x_can_resume(), properly check return values of power enable calls
-for both power and transceiver regulators. If any fails, return the error
-code to the PM framework and log the failure.
-
-This ensures the driver properly handles power control failures and
-maintains correct device state.
-
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
-[mkl: fix patch description]
-[mkl: mcp251x_can_resume(): replace goto by return]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ include/trace/events/btrfs.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index e71edca7afbb2..2810583b818a3 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1218,7 +1218,11 @@ static int mcp251x_open(struct net_device *net)
- 	}
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index a5f77b685c55f..058c85534f3f1 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -695,12 +695,15 @@ TRACE_EVENT(btrfs_sync_file,
+ 	),
  
- 	mutex_lock(&priv->mcp_lock);
--	mcp251x_power_enable(priv->transceiver, 1);
-+	ret = mcp251x_power_enable(priv->transceiver, 1);
-+	if (ret) {
-+		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
-+		goto out_close_candev;
-+	}
+ 	TP_fast_assign(
+-		const struct dentry *dentry = file->f_path.dentry;
+-		const struct inode *inode = d_inode(dentry);
++		struct dentry *dentry = file_dentry(file);
++		struct inode *inode = file_inode(file);
++		struct dentry *parent = dget_parent(dentry);
++		struct inode *parent_inode = d_inode(parent);
  
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -1267,6 +1271,7 @@ static int mcp251x_open(struct net_device *net)
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
-+out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
- 	if (release_irq)
-@@ -1505,11 +1510,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
- {
- 	struct spi_device *spi = to_spi_device(dev);
- 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
-+	int ret = 0;
- 
--	if (priv->after_suspend & AFTER_SUSPEND_POWER)
--		mcp251x_power_enable(priv->power, 1);
--	if (priv->after_suspend & AFTER_SUSPEND_UP)
--		mcp251x_power_enable(priv->transceiver, 1);
-+	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
-+		ret = mcp251x_power_enable(priv->power, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
-+			return ret;
-+		}
-+	}
-+
-+	if (priv->after_suspend & AFTER_SUSPEND_UP) {
-+		ret = mcp251x_power_enable(priv->transceiver, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
-+			if (priv->after_suspend & AFTER_SUSPEND_POWER)
-+				mcp251x_power_enable(priv->power, 0);
-+			return ret;
-+		}
-+	}
- 
- 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
- 		queue_work(priv->wq, &priv->restart_work);
+-		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
++		dput(parent);
++		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+-		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
++		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
+ 		__entry->datasync	= datasync;
+ 		__entry->root_objectid	=
+ 				 BTRFS_I(inode)->root->root_key.objectid;
 -- 
 2.53.0
 
