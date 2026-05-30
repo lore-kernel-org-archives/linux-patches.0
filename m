@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFFB2FDC5E;
-	Sat, 30 May 2026 17:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439222FDC5E;
+	Sat, 30 May 2026 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162080; cv=none; b=n9icg1Ng0c3HliNYzxbe8X/cJyqToI5D5u7xQmTl0NEQsQo2UQ9AeASr3ItRW53lePEWJT/QSbaD05b5y/ly3SXp9gfXBBcDWeapZnOUudYeoczy2QVsrX23p22gJ+Rw7RO3RStPHaAEdwhp137uQ8gbZAm1u/DayVqzl1wtvpE=
+	t=1780162084; cv=none; b=CEUiTGiTiJP4tFz0JT/IrmaVdf+ut+GUkxwJO/d7S92Jhb+8v8DIz+bzuZVqij4jEWWmBGhO8pfzWrT+Jt/u90hzF6HdFcZXA0+XOy3PJEE/wPJ7iWP2SYoJjVyW3XdeEYBxqVe3GhzyuEnVdCcX3Oq073hQsOcZEg4J6b9aOz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162080; c=relaxed/simple;
-	bh=z61/4VwS/L2FOkAXTL0opR8AFo8zTEmMixVYzu6XLX4=;
+	s=arc-20240116; t=1780162084; c=relaxed/simple;
+	bh=zHp/uvuQBa8nwA4OMk3aQMjV/p35JW/r1lZr41qTSzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJReNtxJlp6J8tUXCsfPiTx50l92UWplrNuRWMzdPBDlg7aasZc2FaNjKLp4xa/DU0ApBvYbiGWZW7RmH51IyeGaM03CFfjKDXQ/pQc60iGdSF+78WP7lQPLsgIBf+JJpsDjmmdea+2i+/ZSi1bRNGGCK45KKDRz/qJd9QRIT7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct4z5SU8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mqP8xaM96vcxIEcKE4H3q9T7D0TesJyMv+K3Lk8E+a3O6Za7JVJrLFElQ+yLJjjPlPikFYiRgq00NmzzvO9mHrZkBMt56uq/Bq+47u++AbDIyIVKQMEWuOypkEiHxPyzCht4hO63U/TV7zsQ63Lx46jyYlBK3pY77RNWXZbyMvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tN4Pcb07; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct4z5SU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7C61F00893;
-	Sat, 30 May 2026 17:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tN4Pcb07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8668B1F00893;
+	Sat, 30 May 2026 17:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162079;
-	bh=Nd1Hx2b+ztFRGGAUyB8/vVIWPKvDk8vdq1S/c9xWQ/U=;
+	s=korg; t=1780162083;
+	bh=qr9nwkRbVhG6fPyjA6eQ6gTN4w5tk/zVfN/CzvNcm8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ct4z5SU8NRV0FUckaEsKSSMwcuNSSDNMD0dEA12zb/BDWggfWqEL2KEsJv9vfw4vn
-	 tysvxuH43ypsEf+r/FEMfyv/9rX2dWFBZZN9IhO8C1fd5krcm7BdZ4c8bTaRxTpMK3
-	 IX1e8RMlqzfmvqk/Y+B/YbSNBRBVcWb4hQOV0nQg=
+	b=tN4Pcb07wu+xKxW1AOugM/D/8MXYjxgI1jYqj3PYos32TnBkTZ4qgrRCAL3UOzaXe
+	 gbKm8HSFf5Ll8Txdl7Z27EtBp6OlayKuI1Mykumas2lVxq6/KNTOGB2L+68eh7Vtvj
+	 ypzxgD2uq63fVQvmSY+Gcrk7//LPPgaSyuAzhQ1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 814/969] KVM: x86: Fix Xen hypercall tracepoint argument assignment
-Date: Sat, 30 May 2026 18:05:38 +0200
-Message-ID: <20260530160323.113740569@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Ye Bin <yebin10@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 815/969] smb/client: fix possible infinite loop and oob read in symlink_data()
+Date: Sat, 30 May 2026 18:05:39 +0200
+Message-ID: <20260530160323.143026556@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,35 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 2b72f1674e427c56e3772c5ccf785fdda2138820 upstream.
+commit 7d9a7f1f96cd617ee9e75bb22217c709038e26b8 upstream.
 
-TRACE_EVENT(kvm_xen_hypercall) stores a5 in __entry->a4 instead of
-__entry->a5.
+On 32-bit architectures, the infinite loop is as follows:
 
-That overwrites the recorded a4 argument and leaves a5 unset in the
-trace entry. Fix the typo so both arguments are captured correctly.
+  len = p->ErrorDataLength == 0xfffffff8
+  u8 *next = p->ErrorContextData + len
+  next == p
 
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Link: https://patch.msgid.link/20260512015313.1685784-1-maqianga@uniontech.com/
+On 32-bit architectures, the out-of-bounds read is as follows:
+
+  len = p->ErrorDataLength == 0xfffffff0
+  u8 *next = p->ErrorContextData + len
+  next == (u8 *)p - 8
+
+Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/trace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2file.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/trace.h
-+++ b/arch/x86/kvm/trace.h
-@@ -138,7 +138,7 @@ TRACE_EVENT(kvm_xen_hypercall,
- 		__entry->a2 = a2;
- 		__entry->a3 = a3;
- 		__entry->a4 = a4;
--		__entry->a4 = a5;
-+		__entry->a5 = a5;
- 	),
+--- a/fs/smb/client/smb2file.c
++++ b/fs/smb/client/smb2file.c
+@@ -48,6 +48,9 @@ static struct smb2_symlink_err_rsp *syml
+ 				 __func__, le32_to_cpu(p->ErrorId));
  
- 	TP_printk("nr 0x%lx a0 0x%lx a1 0x%lx a2 0x%lx a3 0x%lx a4 0x%lx a5 %lx",
+ 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
++			if (len > end - ((u8 *)p + sizeof(*p)))
++				return ERR_PTR(-EINVAL);
++
+ 			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
+ 		}
+ 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
 
 
