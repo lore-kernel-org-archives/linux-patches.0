@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68286329E46;
-	Sat, 30 May 2026 17:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7890732B106;
+	Sat, 30 May 2026 17:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162367; cv=none; b=jOqJTMkOois6MxX47OG1jrMxiN1Plft3/FBHpmJ4GR1kuiBzyhyM9sbx7XoKqjYVzmOHwRbB+0AEuWd4QAoZbe9wVwdvlQqVjQNTE4CCJKVxKb7E7G4xCjmwsBsO9teUpEv7muH6oWMHffXvCemDzlZPOlYhUaiyBodMiHum/TQ=
+	t=1780162370; cv=none; b=doDnSRxsfoCq4ZfkX1hCq0HHMitRFP6dK16xEyOKIwMaQrIWyKvN4bEC6gDk+pdtW9cupdEW+NPoySOPEQ3ZTgKkVExrZ8iCCR3n+FuKm5geTBHXsVPiz+E3iE9GqEDZnS80/nwqyFCQPdmqMIZRvT3xKUUPIZr7ATdLBPny5SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162367; c=relaxed/simple;
-	bh=sD3Z8j/7pKv5OlqXOD3kSzRoGJ1AwSDnBmdjyyhy3Fk=;
+	s=arc-20240116; t=1780162370; c=relaxed/simple;
+	bh=QFw+ZPOTEjrLdHiJOAIbijvJIOpAQcuMPJ4GOSDrKmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGcctnsjvRv4ix36cwrNo3ivWuz5+/a6pbmF/+YY96yYV4vTiZ9Z+ITcYRicZx0p1XncFxccr861ZViRpcQ6yC+mzBUbH3H+leVFp3H4OmC1A4RCIXQErAv3dyGn0iaOrKCVYKAYP5Ujauu6vrScy+F1ZIE6Y0Uv4/7oj1B+uJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6Z24AB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAiZS5Njh9wdwPxowJ4PBuyc/R4Ra83GQABtQR+HO84VYS+VK5hraLAoY2XUGX0aOHJhrmzI+hg6tZst0iJeyE/QVJp6Jegew9/9Xaba2bz+4kx4AFnTAec8GcXkDWztS2QLa3xLYaE08TFHDE5FF+G/KlY5gZCWPYrcBFiWfV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq7sxi4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6Z24AB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740711F00893;
-	Sat, 30 May 2026 17:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq7sxi4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3DC1F00893;
+	Sat, 30 May 2026 17:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162366;
-	bh=E3IN9q+zKKp5elq8/CN3i3zDykyAW+B6H+plyPJU0ps=;
+	s=korg; t=1780162369;
+	bh=F1GRNvUDnwpSV9bvOM6YWs8Zb7gtUlFbB8hI6MH0i60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6Z24AB0w38ePbMoL5rGoK8UcKrwXYfqIWKEd2uHnbZgEi6M038xCb9Scy6udR7Db
-	 NAHUkXzal/CaEBDd988Eedo43ZqdMGGTc4zMPXXjDi+SV6Mhy/r4oPq6OISHUX3lo1
-	 jyKuQD5SGx+/1iuNw+liAD6cwx8kn6uZwY92kHyE=
+	b=Bq7sxi4wUlAActiLghD2cmYBHOY0PuEWSqSXFio71Jcv8ns1wljTfFl+YBUBdwSXZ
+	 Rcnk6Ag0Gzdsfx5rEs9sTMtBQ1akWdRP/nXT45uN96NcZ64C3CJjy9gVHVTmXwUJRr
+	 /PcYaI6kjCn2Ju7c8hqZukZV3QmdeWHk/7TF+TbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 898/969] hwmon: (pmbus/adm1266) reject short block-read responses in the GPIO accessors
-Date: Sat, 30 May 2026 18:07:02 +0200
-Message-ID: <20260530160325.504724298@linuxfoundation.org>
+	Marcin Szycik <marcin.szycik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 862/969] ice: fix setting promisc mode while adding VID filter
+Date: Sat, 30 May 2026 18:06:26 +0200
+Message-ID: <20260530160324.474394433@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,71 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Marcin Szycik <marcin.szycik@intel.com>
 
-commit a7232f68c43ca62f545049b7f5fbfc75137b843b upstream.
+commit ebc8de716c9ec2be384abdc2dd866da26c6580d1 upstream.
 
-adm1266_gpio_get() and adm1266_gpio_get_multiple() both compose the
-pin-status word as
+There are at least two paths through which VSI promiscuous mode can be
+independently configured via ice_fltr_set_vsi_promisc():
+- ice_vlan_rx_add_vid() (netdev op)
+- ice_service_task() -> ... -> ice_set_promisc()
 
-	pins_status = read_buf[0] + (read_buf[1] << 8);
+Both paths may try to program promiscuous mode concurrently. One such
+scenario is:
 
-right after i2c_smbus_read_block_data(), guarding only against an
-error return.  A well-behaved device returns 2 bytes for
-GPIO_STATUS/PDIO_STATUS, but the helper happily reports a 0- or
-1-byte response too.  If the device returns 0 bytes, both read_buf
-slots are uninitialized stack memory; if it returns 1 byte, read_buf[1]
-is.
+1. Add ice netdev to bond
+2. Add the bond netdev to bridge
+3. ice netdev enters allmulticast mode (IFF_ALLMULTI)
+4. Service task programs promisc mode filter
+5. Bridge -> bond calls ice_vlan_rx_add_vid()
 
-The composed value then flows through set_bit() into the caller's
-*bits in adm1266_gpio_get_multiple(), or into the return value of
-adm1266_gpio_get(), and ends up in userspace via gpiolib (sysfs and
-the char-dev ioctls).  That leaks a few bits of kernel stack per
-request on any device whose firmware glitch, bus error, or hostile
-slave produces a short block-read response.
+Crucially, ice_vlan_rx_add_vid() fails if ice_fltr_set_vsi_promisc()
+returns any error, including -EEXIST. This causes VLAN filtering setup
+to fail on the bond interface. ice_set_promisc() already handles -EEXIST
+correctly.
 
-Add the missing length check to both call sites and surface a short
-response as -EIO.
+Fix by adding the same -EEXIST check to ice_vlan_rx_add_vid(): if the
+promisc filter is already programmed, continue without returning error.
 
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
+Fixes: 1273f89578f2 ("ice: Fix broken IFF_ALLMULTI handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-3-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Marcin Szycik <marcin.szycik@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-4-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -176,6 +176,8 @@ static int adm1266_gpio_get(struct gpio_
- 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	pins_status = read_buf[0] + (read_buf[1] << 8);
- 	if (offset < ADM1266_GPIO_NR)
-@@ -196,6 +198,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
-@@ -208,6 +212,8 @@ static int adm1266_gpio_get_multiple(str
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-+	if (ret < 2)
-+		return -EIO;
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3616,7 +3616,7 @@ ice_vlan_rx_add_vid(struct net_device *n
+ 		ret = ice_fltr_set_vsi_promisc(&vsi->back->hw, vsi->idx,
+ 					       ICE_MCAST_VLAN_PROMISC_BITS,
+ 					       vid);
+-		if (ret)
++		if (ret && ret != -EEXIST)
+ 			goto finish;
+ 	}
  
 
 
