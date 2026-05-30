@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66382E7379;
-	Sat, 30 May 2026 17:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393C421B191;
+	Sat, 30 May 2026 17:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162832; cv=none; b=fz5r02ABn/FeK4mot44TJLgzIHPrkUs5+ABuGXs+P4TvK2YSRNBzmvG8+E14USnL2p6rWmXpJWkHn7GhEKoejsahY5yWPwVY7QuOvC8R9ueM5JPUPBgYyXLwBzb2Xm6CK6PS4Y+4Nz0xvaJb6GdkrtN7CB7TX1hb4kDBW5fEKm8=
+	t=1780162836; cv=none; b=IUnFaPY7XPXPp2E2cO/ds0ZjJ/9RVEsRdLfxvjGQLWmJPBdbwtssSFJas3H9O00F8YzrleX87JVQTjJgy6z4rGbFLjA4stHvcMfF1Wjat2+E0cqFRCP8EXnTE9LhEXIL1Ewp8cARneRMUVRC7FkCWd3zZY6bEByXUq2ay8WkPfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162832; c=relaxed/simple;
-	bh=alpNI7+XD2GUpYRQDzGrhkoW2gHPIrS+OMXiLpQ4fJk=;
+	s=arc-20240116; t=1780162836; c=relaxed/simple;
+	bh=SUaDV/XjOhPUWZGqIQo8s20wYdbHgbYXStyMlyFmBW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OVTRXsgKvbNSmD7IBGM4cEAjhBlAFYpYb/ufKby73TjUjb5mi9FNu5FdrtzzwqTjrIo436eECg0QhNdb1AfEEF50dTEoTXXeZvS4qpYP+GSwnrQGfC1ExyyGE2cv9f1q2P+Cc6c/SATQfpDi5VVuKVnUTJQS2W0qQv45TRHHGEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugZhCUzx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dAhyh5xF+z2xCDYDK+wp3gw+sbHSaPwaaktt9XixMKkvDLUYc0likUmoWgpptc4EIRqbjYz2x5iE4k+3lKbD7lBrJ55d8b1Kgd+79NJCOzMU4VPAjwQh/SVN7o1mOaPgBPZt+aKD53wegqJITVDYIlw4QbzKY96Gnc/pM8ykVy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6ptAePQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugZhCUzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340051F00893;
-	Sat, 30 May 2026 17:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6ptAePQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7B51F00893;
+	Sat, 30 May 2026 17:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162831;
-	bh=d7y2+Z7s3fUzBxFQ5Eo289jifX2hzBnDkdAm59NTvgw=;
+	s=korg; t=1780162835;
+	bh=yf59mr5uOPr/8Zzy/Jsiuvu/ofWsGq3s6ktu8p/0tno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ugZhCUzx0RpH2u7RDQY8VxdPdcxAHGbSU3fk2flZ06CPbZ3G03oIq1bbFrxDlMEMM
-	 9xWNaBGejiCzu5s61LRcPzD+rt/HNgi37XDDy45Tue7LJgJY9l7+ilBgTjIGuBldYU
-	 WDrEQFsr1F7aK0HASzetlGoSY1W/3a0JsDecCu8g=
+	b=V6ptAePQ/OVOxZb02kEQ/5Eeef1ZidBRIJrHMR/drBd7STknpjHGj8ugWElBKyiOi
+	 wKhzXlw0dR5Ch/jvBIkU2+4N3UTNmvnxC+RQHlO1FT+pEuxLfN2D6iy/hs1yy/vC0s
+	 u2ha0y9P93r4xAhDUYpXRHhEy9zRsRUOs2WZkb5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gurpreet Shergill <giki.shergill@proton.me>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Li hongliang <1468888505@139.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/776] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
-Date: Sat, 30 May 2026 17:56:31 +0200
-Message-ID: <20260530160242.315965059@linuxfoundation.org>
+Subject: [PATCH 5.15 078/776] rxrpc: proc: size address buffers for %pISpc output
+Date: Sat, 30 May 2026 17:56:32 +0200
+Message-ID: <20260530160242.343231446@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -47,110 +51,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
+[ Upstream commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 ]
 
-If cloning the second stateful expression in the element via GFP_ATOMIC
-fails, then the first stateful expression remains in place without being
-released.
+The AF_RXRPC procfs helpers format local and remote socket addresses into
+fixed 50-byte stack buffers with "%pISpc".
 
-   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
-     comm "softirq", pid 0, jiffies 4294931867
-     hex dump (first 16 bytes on cpu 3):
-       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-     backtrace (crc 0):
-       pcpu_alloc_noprof+0x453/0xd80
-       nft_counter_clone+0x9c/0x190 [nf_tables]
-       nft_expr_clone+0x8f/0x1b0 [nf_tables]
-       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
-       nft_rhash_update+0x236/0x11c0 [nf_tables]
-       nft_dynset_eval+0x11f/0x670 [nf_tables]
-       nft_do_chain+0x253/0x1700 [nf_tables]
-       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
-       nf_hook_slow+0xaa/0x1e0
-       ip_local_deliver+0x209/0x330
+That is too small for the longest current-tree IPv6-with-port form the
+formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
+dotted-quad tail not only for v4mapped addresses, but also for ISATAP
+addresses via ipv6_addr_is_isatap().
 
-Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
-Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+As a result, a case such as
+
+  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
+
+is possible with the current formatter. That is 50 visible characters, so
+51 bytes including the trailing NUL, which does not fit in the existing
+char[50] buffers used by net/rxrpc/proc.c.
+
+Size the buffers from the formatter's maximum textual form and switch the
+call sites to scnprintf().
+
+Changes since v1:
+- correct the changelog to cite the actual maximum current-tree case
+  explicitly
+- frame the proof around the ISATAP formatting path instead of the earlier
+  mapped-v4 example
+
+Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Anderson Nascimento <anderson@allelesecurity.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted address accessors and variable declarations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     |  4 ++--
- net/netfilter/nft_dynset.c        | 10 +++++++++-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ net/rxrpc/proc.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 9f68155e054cf..2b977d5d6f30f 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -821,6 +821,8 @@ void *nft_set_elem_init(const struct nft_set *set,
- 			u64 timeout, u64 expiration, gfp_t gfp);
- int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
- 			    struct nft_expr *expr_array[]);
-+void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
-+			       struct nft_set_elem_expr *elem_expr);
- void nft_set_elem_destroy(const struct nft_set *set, void *elem,
- 			  bool destroy_expr);
- void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 53d7dd39a95bc..623b776bf7926 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5919,8 +5919,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
- 	}
- }
+diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
+index 245418943e01c..47d36554ad311 100644
+--- a/net/rxrpc/proc.c
++++ b/net/rxrpc/proc.c
+@@ -10,6 +10,10 @@
+ #include <net/af_rxrpc.h>
+ #include "ar-internal.h"
  
--static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
--				      struct nft_set_elem_expr *elem_expr)
-+void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
-+			       struct nft_set_elem_expr *elem_expr)
- {
- 	struct nft_expr *expr;
- 	u32 size;
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index ecdd4a60db9c5..673c5e6a3e8d6 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
- 				 const struct nft_set_ext *ext)
- {
- 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
-+	struct nft_ctx ctx = {
-+		.net	= read_pnet(&priv->set->net),
-+		.family	= priv->set->table->family,
-+	};
- 	struct nft_expr *expr;
- 	int i;
- 
- 	for (i = 0; i < priv->num_exprs; i++) {
- 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
- 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
--			return -1;
-+			goto err_out;
- 
- 		elem_expr->size += priv->expr_array[i]->ops->size;
- 	}
- 
- 	return 0;
-+err_out:
-+	nft_set_elem_expr_destroy(&ctx, elem_expr);
++#define RXRPC_PROC_ADDRBUF_SIZE \
++	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
++	 sizeof(":12345"))
 +
-+	return -1;
- }
+ static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
+ 	[RXRPC_CONN_UNUSED]			= "Unused  ",
+ 	[RXRPC_CONN_CLIENT]			= "Client  ",
+@@ -55,7 +59,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+ 	unsigned long timeout = 0;
+ 	rxrpc_seq_t tx_hard_ack, rx_hard_ack;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
  
- static void *nft_dynset_new(struct nft_set *set, const struct nft_expr *expr,
+ 	if (v == &rxnet->calls) {
+ 		seq_puts(seq,
+@@ -72,7 +76,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
+ 	if (rx) {
+ 		local = READ_ONCE(rx->local);
+ 		if (local)
+-			sprintf(lbuff, "%pISpc", &local->srx.transport);
++			scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
+ 		else
+ 			strcpy(lbuff, "no_local");
+ 	} else {
+@@ -81,7 +85,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
+ 
+ 	peer = call->peer;
+ 	if (peer)
+-		sprintf(rbuff, "%pISpc", &peer->srx.transport);
++		scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
+ 	else
+ 		strcpy(rbuff, "no_connection");
+ 
+@@ -152,7 +156,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
+ {
+ 	struct rxrpc_connection *conn;
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == &rxnet->conn_proc_list) {
+ 		seq_puts(seq,
+@@ -171,9 +175,9 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
+ 		goto print;
+ 	}
+ 
+-	sprintf(lbuff, "%pISpc", &conn->params.local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->params.local->srx.transport);
+ 
+-	sprintf(rbuff, "%pISpc", &conn->params.peer->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->params.peer->srx.transport);
+ print:
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %-47.47s %4x %08x %s %3u"
+@@ -210,7 +214,7 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
+ {
+ 	struct rxrpc_peer *peer;
+ 	time64_t now;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -223,9 +227,9 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
+ 
+ 	peer = list_entry(v, struct rxrpc_peer, hash_link);
+ 
+-	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
+ 
+-	sprintf(rbuff, "%pISpc", &peer->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
+ 
+ 	now = ktime_get_seconds();
+ 	seq_printf(seq,
+@@ -335,7 +339,7 @@ const struct seq_operations rxrpc_peer_seq_ops = {
+ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
+ {
+ 	struct rxrpc_local *local;
+-	char lbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -346,7 +350,7 @@ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
+ 
+ 	local = hlist_entry(v, struct rxrpc_local, link);
+ 
+-	sprintf(lbuff, "%pISpc", &local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
+ 
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %3u %3u\n",
 -- 
 2.53.0
 
