@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA89C3AB482;
-	Sat, 30 May 2026 17:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFFD3BF667;
+	Sat, 30 May 2026 17:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163483; cv=none; b=sfS3kGu1Jz/1gsSiTvF1lgEbuT6trnK0oCFUs6NJ1ahjIeativBsHkkifxenFG4KfHVyP/O8BIGBxvr4E+9VelWKigEwT5krKJGvhwu5bxhuJxRxVguoe6Kq+sd5W/3+NFbTBSlTGZPuKOhAYVtr3TiGQvq7fvCW3lMLKoeZkSc=
+	t=1780163486; cv=none; b=V3D5GKg1iUKj6vSs4vyb5fEJPRIlGezG8kf2Gsh8qVF12eD/y9KT/XYvMeKoWHtXGJVrrURcaUUmNrV45Sgye+Logvfn3YxH2z8ueZh+h/djPyyxetvKVuTIz2a2Rje56F/GR6ev7LDPAc8Tvb2lF+aOK4J8o/1t3WqH3ICDSnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163483; c=relaxed/simple;
-	bh=7b5bkrkU7c8/uKC2HVld+gfAPz+t+atHR1TRUhi6MoA=;
+	s=arc-20240116; t=1780163486; c=relaxed/simple;
+	bh=9ADxpyPbSSt2cMtfIkHavY0BsLJuoohBY1EzisTJ1ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCDyfWC5im6q8/Lkhu03cVelLkBfry7zDEJcjnoZLKMO5mGu0xLnPjT2Kp0mjmI9DxpsvxJyR3VO0l7T7bVLjRrpJv/AAdU+S8FV7O6diwhKhFQbzdgd5zEgaZD2bAR0o3UI69MIX0pnHFkhh5T7El/kScwMzfBN5HZ+HTz1P4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxFxV98I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LDEGkh9p7y2dP8Jn7RLGiIaGVTbQrEYVDKS2yAQpySvAaJdWBYGMkA2FtSK8iplwLUg188++FB59XIbjwRG4IYJflY5VCVFl0iwguujS1S62hYCOcyRqNj6O2lrpOpocZ/zyyMoz2YKvf+sKASQVbY0sdLq93D8dfJGd6MIujVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QI/9noX4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxFxV98I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AD51F00893;
-	Sat, 30 May 2026 17:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QI/9noX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622081F00893;
+	Sat, 30 May 2026 17:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163481;
-	bh=taLjFNdAZkmBCBOB0iHYJwuKL7apOexb5nThJDETlKI=;
+	s=korg; t=1780163485;
+	bh=zzYLoH+TsZ2odrrFj89ANsz20T0dCSQKBaA6CbhvaMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxFxV98I99DZxqiuc0xGQhsFkJcQO9QJXlqeesTd4k0V92lYeFXOdNsLpXMZplvkZ
-	 RZ1pAiK0T4IRWL6xnYMmwnPz3YcTCURidFM9finAyn0WnI+wVmO8KaQ1iuB61HbO8t
-	 j6OAXK6VDWNTqr2bE+usMF2t1ZNvzmiY1VBH6REY=
+	b=QI/9noX4PFhsORJMsBNsZfwHmIqoPjyilVhi4i8swyfzJQkv8m3lPb1hki1BgfE14
+	 +Y5+KRUpWcA5JyoSk4uhpYMDlw+FHcXqwbbo6Fa/y0u02Tuvqq0ittmAHUK/DCI0mx
+	 UTfyV1rQpysDHaatF4vXVkEej2VvWi4wmm+Nktg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matt Fleming <mfleming@cloudflare.com>,
 	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 5.15 272/776] ipmi: Add limits to event and receive message requests
-Date: Sat, 30 May 2026 17:59:46 +0200
-Message-ID: <20260530160247.588866401@linuxfoundation.org>
+Subject: [PATCH 5.15 273/776] ipmi: Check event message buffer response for bad data
+Date: Sat, 30 May 2026 17:59:47 +0200
+Message-ID: <20260530160247.613694070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,207 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <corey@minyard.net>
 
-commit c4cca236968683eb0d59abfb12d5c7e4d8514227 upstream.
+commit 36920f30e78e69df01f9691c470b6f3ba8aebf98 upstream.
 
-The driver would just fetch events and receive messages until the
-BMC said it was done.  To avoid issues with BMCs that never say they are
-done, add a limit of 10 fetches at a time.
+The event message buffer response data size got checked later when
+processing, but check it right after the response comes back.  It
+appears some BMCs may return an empty message instead of an error
+when fetching events.
 
-In addition, an si interface has an attn state it can return from the
-hardware which is supposed to cause a flag fetch to see if the driver
-needs to fetch events or message or a few other things.  If the attn
-bit gets stuck, it's a similar problem.  So allow messages in between
-flag fetches so the driver itself doesn't get stuck.
-
-This is a more general fix than the previous fix for the specific bad
-BMC, but should fix the more general issue of a BMC that won't stop
-saying it has data.
-
-This has been there from the beginning of the driver.  It's not a bug
-per-se, but it is accounting for bugs in BMCs.
+There are apparently some new BMCs that make this error, so we need to
+compensate.
 
 Reported-by: Matt Fleming <mfleming@cloudflare.com>
 Closes: https://lore.kernel.org/lkml/20260415115930.3428942-1-matt@readmodwrite.com/
-Fixes: <1da177e4c3f4> ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |   54 +++++++++++++++++++++++++++++++--------
- drivers/char/ipmi/ipmi_ssif.c    |   23 +++++++++++++++-
- 2 files changed, 64 insertions(+), 13 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 --- a/drivers/char/ipmi/ipmi_si_intf.c
 +++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -162,6 +162,10 @@ struct smi_info {
- 			     OEM2_DATA_AVAIL)
- 	unsigned char       msg_flags;
+@@ -624,7 +624,13 @@ static void handle_transaction_done(stru
+ 		 */
+ 		msg = smi_info->curr_msg;
+ 		smi_info->curr_msg = NULL;
+-		if (msg->rsp[2] != 0) {
++		/*
++		 * It appears some BMCs, with no event data, return no
++		 * data in the message and not a 0x80 error as the
++		 * spec says they should.  Shut down processing if
++		 * the data is not the right length.
++		 */
++		if (msg->rsp[2] != 0 || msg->rsp_size != 19) {
+ 			/* Error getting event, probably done. */
+ 			msg->done(msg);
  
-+	/* When requesting events and messages, don't do it forever. */
-+	unsigned int        num_requests_in_a_row;
-+	bool		    last_was_flag_fetch;
-+
- 	/* Does the BMC have an event buffer? */
- 	bool		    has_event_buffer;
- 
-@@ -393,7 +397,10 @@ static void start_getting_msg_queue(stru
- 
- 	start_new_msg(smi_info, smi_info->curr_msg->data,
- 		      smi_info->curr_msg->data_size);
--	smi_info->si_state = SI_GETTING_MESSAGES;
-+	if (smi_info->si_state != SI_GETTING_MESSAGES) {
-+		smi_info->num_requests_in_a_row = 0;
-+		smi_info->si_state = SI_GETTING_MESSAGES;
-+	}
- }
- 
- static void start_getting_events(struct smi_info *smi_info)
-@@ -404,7 +411,10 @@ static void start_getting_events(struct
- 
- 	start_new_msg(smi_info, smi_info->curr_msg->data,
- 		      smi_info->curr_msg->data_size);
--	smi_info->si_state = SI_GETTING_EVENTS;
-+	if (smi_info->si_state != SI_GETTING_EVENTS) {
-+		smi_info->num_requests_in_a_row = 0;
-+		smi_info->si_state = SI_GETTING_EVENTS;
-+	}
- }
- 
- /*
-@@ -578,6 +588,7 @@ static void handle_transaction_done(stru
- 			smi_info->si_state = SI_NORMAL;
- 		} else {
- 			smi_info->msg_flags = msg[3];
-+			smi_info->last_was_flag_fetch = true;
- 			handle_flags(smi_info);
- 		}
- 		break;
-@@ -623,6 +634,11 @@ static void handle_transaction_done(stru
- 		} else {
- 			smi_inc_stat(smi_info, events);
- 
-+			smi_info->num_requests_in_a_row++;
-+			if (smi_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				smi_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
-+
- 			/*
- 			 * Do this before we deliver the message
- 			 * because delivering the message releases the
-@@ -661,6 +677,11 @@ static void handle_transaction_done(stru
- 		} else {
- 			smi_inc_stat(smi_info, incoming_messages);
- 
-+			smi_info->num_requests_in_a_row++;
-+			if (smi_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				smi_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
-+
- 			/*
- 			 * Do this before we deliver the message
- 			 * because delivering the message releases the
-@@ -789,6 +810,26 @@ restart:
- 	}
- 
- 	/*
-+	 * If we are currently idle, or if the last thing that was
-+	 * done was a flag fetch and there is a message pending, try
-+	 * to start the next message.
-+	 *
-+	 * We do the waiting message check to avoid a stuck flag
-+	 * completely wedging the driver.  Let a message through
-+	 * in between flag operations if that happens.
-+	 */
-+	if (si_sm_result == SI_SM_IDLE ||
-+	    (si_sm_result == SI_SM_ATTN && smi_info->waiting_msg &&
-+	     smi_info->last_was_flag_fetch)) {
-+		smi_info->last_was_flag_fetch = false;
-+		smi_inc_stat(smi_info, idles);
-+
-+		si_sm_result = start_next_msg(smi_info);
-+		if (si_sm_result != SI_SM_IDLE)
-+			goto restart;
-+	}
-+
-+	/*
- 	 * We prefer handling attn over new messages.  But don't do
- 	 * this if there is not yet an upper layer to handle anything.
- 	 */
-@@ -821,15 +862,6 @@ restart:
- 		}
- 	}
- 
--	/* If we are currently idle, try to start the next message. */
--	if (si_sm_result == SI_SM_IDLE) {
--		smi_inc_stat(smi_info, idles);
--
--		si_sm_result = start_next_msg(smi_info);
--		if (si_sm_result != SI_SM_IDLE)
--			goto restart;
--	}
--
- 	if ((si_sm_result == SI_SM_IDLE)
- 	    && (atomic_read(&smi_info->req_events))) {
- 		/*
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -225,6 +225,9 @@ struct ssif_info {
- 	bool		    has_event_buffer;
- 	bool		    supports_alert;
- 
-+	/* When requesting events and messages, don't do it forever. */
-+	unsigned int        num_requests_in_a_row;
-+
- 	/*
- 	 * Used to tell what we should do with alerts.  If we are
- 	 * waiting on a response, read the data immediately.
-@@ -419,7 +422,10 @@ static void start_event_fetch(struct ssi
- 	}
- 
- 	ssif_info->curr_msg = msg;
--	ssif_info->ssif_state = SSIF_GETTING_EVENTS;
-+	if (ssif_info->ssif_state != SSIF_GETTING_EVENTS) {
-+		ssif_info->num_requests_in_a_row = 0;
-+		ssif_info->ssif_state = SSIF_GETTING_EVENTS;
-+	}
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	msg->data[0] = (IPMI_NETFN_APP_REQUEST << 2);
-@@ -442,7 +448,10 @@ static void start_recv_msg_fetch(struct
- 	}
- 
- 	ssif_info->curr_msg = msg;
--	ssif_info->ssif_state = SSIF_GETTING_MESSAGES;
-+	if (ssif_info->ssif_state != SSIF_GETTING_MESSAGES) {
-+		ssif_info->num_requests_in_a_row = 0;
-+		ssif_info->ssif_state = SSIF_GETTING_MESSAGES;
-+	}
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	msg->data[0] = (IPMI_NETFN_APP_REQUEST << 2);
-@@ -851,6 +860,11 @@ static void msg_done_handler(struct ssif
- 			ssif_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
- 			handle_flags(ssif_info, flags);
- 		} else {
-+			ssif_info->num_requests_in_a_row++;
-+			if (ssif_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				ssif_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
-+
- 			handle_flags(ssif_info, flags);
- 			ssif_inc_stat(ssif_info, events);
- 			deliver_recv_msg(ssif_info, msg);
-@@ -884,6 +898,11 @@ static void msg_done_handler(struct ssif
- 			ssif_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
- 			handle_flags(ssif_info, flags);
- 		} else {
-+			ssif_info->num_requests_in_a_row++;
-+			if (ssif_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				ssif_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
-+
- 			ssif_inc_stat(ssif_info, incoming_messages);
- 			handle_flags(ssif_info, flags);
- 			deliver_recv_msg(ssif_info, msg);
 
 
