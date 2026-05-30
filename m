@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5453438AE;
-	Sat, 30 May 2026 17:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52BC34389F;
+	Sat, 30 May 2026 17:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162879; cv=none; b=LctLV4nM/lhn07oC/yCJvbPPhq8IHL5SHHCeHUzWQvn8t1VR39Y/1or5czXLXxmzsjPM0+ld/ghqwH2SV555y9DI4bHg+Twlw5/0MG1su3YvvXqEMgcwKmxBFL3DyI/Smn2EXLW1MHGeWEcbRZlcCjODh//raEaR4FqgmRzhz3g=
+	t=1780162882; cv=none; b=a+2TX6FXCSJS7DJ1aquD5qgAO5esiD0yzZWZj/WrsKdVjM04COGZiWIMKjbJfT7xdA1r0KDSGS6Yis+Dlxb+/bNOEMqubdvE6fESZILVGBMZtCNotLzBhsNOMcoXortC7Gspnqx0GjQgnNf+CBCvZzW+HG22jCCYXufo31qXyEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162879; c=relaxed/simple;
-	bh=cLgWMYVZCQ74nH/hxP6Ntx0Q3NzL7QwxE/XUwxcKgtU=;
+	s=arc-20240116; t=1780162882; c=relaxed/simple;
+	bh=0+aY/znyy0cURpqsvnTBCKvk/AiPUfQf2Rge6mlRATY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTWznyQWfirFvmuPJzXb6kaI+kXojkuFKJnuXqVynSv0QwkmsXKzNbinbHM/7XhUEu8eIJGLaPs5xlc2ok45enanIlStJx8rKBg6hdbZ4rNNRKzgdFGphS5CJs5nrn9RA1c166vFcbL+CGREWLeouG3SxjHOBRPzM+e2rRhDrnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inNpD/+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OI9qZeYq3K8WlsHIJv2KmUoMB1R0ltYld/F8qLqwleys4vvJhVSbyun/Lu1xnwqlEThk7d94zAgrSK4Y8ZnEsYrmfANq9RIVHQ89hFJWQ8v4evkPmnRwr3hO5Ycby1LnQn71wlFHssVt5Gx+OggwR0wpR5QU2kGEg28PB7UU768=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6Lj6B23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inNpD/+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18FD1F00893;
-	Sat, 30 May 2026 17:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6Lj6B23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D421F00893;
+	Sat, 30 May 2026 17:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162878;
-	bh=SR9HnDclxjSp5EeRfcRAsIQVIfp2GGUgGczbr008ZJA=;
+	s=korg; t=1780162881;
+	bh=nhoB8y4zTYseBXs+umPB21s2z5qB5YMLIU1WWFkVy3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=inNpD/+oejQdbxd9+6YY6svNehgu8EpFMiUz8KOnt8dxlmfs5erGB2jukWY1HBOui
-	 /EdUjk1fgrngCMVw7ElIOXlKLQ3fhZ5eliWt1KIzBN/G9GNUioNMVnNFaOdoRzTPVm
-	 zFqGkS54ElVafvwUl9R8pOCHOeRkkbAq5YduVVlo=
+	b=Y6Lj6B23XA3NjtY//PcDUZoInjSsofvZfxK63U1qn/RB5d4RWg6SzX1+oWBw8dOLH
+	 mpWrbb3JM39PPOqN0ik97tFhy9Zrv8RBy8zY2Uo2re3Yox8i1SziFREjDuiOoO68bv
+	 p83VjpbNvEDA3eEegR1oUT1vv5dqegb8YR4GYyzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezar Bulinaru <cbulinaru@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/776] net: tap: NULL pointer derefence in dev_parse_header_protocol when skb->dev is null
-Date: Sat, 30 May 2026 17:56:44 +0200
-Message-ID: <20260530160242.662292699@linuxfoundation.org>
+Subject: [PATCH 5.15 091/776] PCI: endpoint: pci-epf-vntb: Remove duplicate resource teardown
+Date: Sat, 30 May 2026 17:56:45 +0200
+Message-ID: <20260530160242.688929816@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,113 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezar Bulinaru <cbulinaru@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 4f61f133f354853bc394ec7d6028adb9b02dd701 upstream.
+[ Upstream commit 0da63230d3ec1ec5fcc443a2314233e95bfece54 ]
 
-Fixes a NULL pointer derefence bug triggered from tap driver.
-When tap_get_user calls virtio_net_hdr_to_skb the skb->dev is null
-(in tap.c skb->dev is set after the call to virtio_net_hdr_to_skb)
-virtio_net_hdr_to_skb calls dev_parse_header_protocol which
-needs skb->dev field to be valid.
+epf_ntb_epc_destroy() duplicates the teardown that the caller is
+supposed to perform later. This leads to an oops when .allow_link fails
+or when .drop_link is performed. The following is an example oops of the
+former case:
 
-The line that trigers the bug is in dev_parse_header_protocol
-(dev is at offset 0x10 from skb and is stored in RAX register)
-  if (!dev->header_ops || !dev->header_ops->parse_protocol)
-  22e1:   mov    0x10(%rbx),%rax
-  22e5:	  mov    0x230(%rax),%rax
+  Unable to handle kernel paging request at virtual address dead000000000108
+  [...]
+  [dead000000000108] address between user and kernel address ranges
+  Internal error: Oops: 0000000096000044 [#1]  SMP
+  [...]
+  Call trace:
+   pci_epc_remove_epf+0x78/0xe0 (P)
+   pci_primary_epc_epf_link+0x88/0xa8
+   configfs_symlink+0x1f4/0x5a0
+   vfs_symlink+0x134/0x1d8
+   do_symlinkat+0x88/0x138
+   __arm64_sys_symlinkat+0x74/0xe0
+  [...]
 
-Setting skb->dev before the call in tap.c fixes the issue.
+Remove the helper, and drop pci_epc_put(). EPC device refcounting is
+tied to the configfs EPC group lifetime, and pci_epc_put() in the
+.drop_link path is sufficient.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000230
-RIP: 0010:virtio_net_hdr_to_skb.constprop.0+0x335/0x410 [tap]
-Code: c0 0f 85 b7 fd ff ff eb d4 41 39 c6 77 cf 29 c6 48 89 df 44 01 f6 e8 7a 79 83 c1 48 85 c0 0f 85 d9 fd ff ff eb b7 48 8b 43 10 <48> 8b 80 30 02 00 00 48 85 c0 74 55 48 8b 40 28 48 85 c0 74 4c 48
-RSP: 0018:ffffc90005c27c38 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff888298f25300 RCX: 0000000000000010
-RDX: 0000000000000005 RSI: ffffc90005c27cb6 RDI: ffff888298f25300
-RBP: ffffc90005c27c80 R08: 00000000ffffffea R09: 00000000000007e8
-R10: ffff88858ec77458 R11: 0000000000000000 R12: 0000000000000001
-R13: 0000000000000014 R14: ffffc90005c27e08 R15: ffffc90005c27cb6
-FS:  0000000000000000(0000) GS:ffff88858ec40000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000230 CR3: 0000000281408006 CR4: 00000000003706e0
-Call Trace:
- tap_get_user+0x3f1/0x540 [tap]
- tap_sendmsg+0x56/0x362 [tap]
- ? get_tx_bufs+0xc2/0x1e0 [vhost_net]
- handle_tx_copy+0x114/0x670 [vhost_net]
- handle_tx+0xb0/0xe0 [vhost_net]
- handle_tx_kick+0x15/0x20 [vhost_net]
- vhost_worker+0x7b/0xc0 [vhost]
- ? vhost_vring_call_reset+0x40/0x40 [vhost]
- kthread+0xfa/0x120
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x1f/0x30
-
-Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
-Signed-off-by: Cezar Bulinaru <cbulinaru@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ kovalev: bp to fix CVE-2022-50073 ]
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260226084142.2226875-2-den@valinux.co.jp
+[ context mismatch in deletion hunk ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 53eadd82f9b8c..a08adca412b41 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -703,11 +703,22 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
- 	skb_reset_mac_header(skb);
- 	skb->protocol = eth_hdr(skb)->h_proto;
- 
-+	rcu_read_lock();
-+	tap = rcu_dereference(q->tap);
-+	if (!tap) {
-+		kfree_skb(skb);
-+		rcu_read_unlock();
-+		return total_len;
-+	}
-+	skb->dev = tap->dev;
-+
- 	if (vnet_hdr_len) {
- 		err = virtio_net_hdr_to_skb(skb, &vnet_hdr,
- 					    tap_is_little_endian(q));
--		if (err)
-+		if (err) {
-+			rcu_read_unlock();
- 			goto err_kfree;
-+		}
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 45530bca50fb8..e9402b5dc8359 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -650,18 +650,6 @@ static void epf_ntb_mw_bar_clear(struct epf_ntb *ntb)
  	}
+ }
  
- 	skb_probe_transport_header(skb);
-@@ -717,8 +728,6 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
- 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
- 
--	rcu_read_lock();
--	tap = rcu_dereference(q->tap);
- 	/* copy skb_ubuf_info for callback when skb has no error */
- 	if (zerocopy) {
- 		skb_zcopy_init(skb, msg_control);
-@@ -727,14 +736,8 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
- 		uarg->callback(NULL, uarg, false);
- 	}
- 
--	if (tap) {
--		skb->dev = tap->dev;
--		dev_queue_xmit(skb);
--	} else {
--		kfree_skb(skb);
--	}
-+	dev_queue_xmit(skb);
- 	rcu_read_unlock();
+-/**
+- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
+- * @ntb: NTB device that facilitates communication between HOST and vHOST
+- *
+- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
+- */
+-static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
+-{
+-	pci_epc_remove_epf(ntb->epf->epc, ntb->epf, 0);
+-	pci_epc_put(ntb->epf->epc);
+-}
 -
- 	return total_len;
+ /**
+  * epf_ntb_init_epc_bar() - Identify BARs to be used for each of the NTB
+  * constructs (scratchpad region, doorbell, memorywindow)
+@@ -1289,7 +1277,7 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ 	ret = epf_ntb_init_epc_bar(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to create NTB EPC\n");
+-		goto err_bar_init;
++		return ret;
+ 	}
  
- err_kfree:
+ 	ret = epf_ntb_config_spad_bar_alloc(ntb);
+@@ -1326,9 +1314,6 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ err_bar_alloc:
+ 	epf_ntb_config_spad_bar_free(ntb);
+ 
+-err_bar_init:
+-	epf_ntb_epc_destroy(ntb);
+-
+ 	return ret;
+ }
+ 
+@@ -1344,7 +1329,6 @@ static void epf_ntb_unbind(struct pci_epf *epf)
+ 
+ 	epf_ntb_epc_cleanup(ntb);
+ 	epf_ntb_config_spad_bar_free(ntb);
+-	epf_ntb_epc_destroy(ntb);
+ 
+ 	pci_unregister_driver(&vntb_pci_driver);
+ }
 -- 
 2.53.0
 
