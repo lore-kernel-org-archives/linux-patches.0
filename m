@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6232C261B9E;
-	Sat, 30 May 2026 17:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6413546EA;
+	Sat, 30 May 2026 17:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163689; cv=none; b=SQkxz1G9pZnCt9sYA9XMpNmmmmYznLlorG4hFvXI05c23BlbosT8jV9Zl8OKUgWjhRKmGWex740owhqBehh8Rsl/OG4rXbM0Vy5tySnR3PDvq/s1vnUqgTfvFhJlhULwWlcVSimQycJ/uaDsO+wjvk9BKC0qS8RsPzhWSqnrPeI=
+	t=1780163692; cv=none; b=hM1HAdFEd1YHGNZqwrjpezACXABA2dl5QnIvfVW2PzpvykfrJ2/o+LLC8SvVK5Wp9rjndz72PwZpi1JEjjmpAXXC7aeZKOmP18iC7zNTdloW3UXYk7va4wxagF0mBWd2DwzLhjLDfl1HWWKR0CRKjAU//DuU8FZqy1HTW8XsQ0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163689; c=relaxed/simple;
-	bh=XGhKS22g9YTKX/lRf3VOCp7ouevarpqQhVkKJduCok4=;
+	s=arc-20240116; t=1780163692; c=relaxed/simple;
+	bh=TUu3ZineOpZ3oOm1jOfQNeGRCb1y1iu+DEYpgHzJcyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/g5D9J5Tw1BBDezK7ihDXw/qXqQ19y5aU9WuNBQ9BsNq+2VnnWYFWBCLDrN1EhR5QKyBNXg2VvjdVpDtTv15LWFl0ImaAyAUYdFT3Eq2zv+qKNYhTCp48LK9YjwuHW9SXLf6IM9QCoOTk4RV2eoQfeOBhVVAxdWCiHB2p/cvTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jE7SmmCi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C0hasvLM5rY3kreUp1gwFnzHr7USbhHAY/80CFXUWyiwYWdYxRl++OIrPCwR89n+9rykq9jE/1rHThha1nlHb1XhagXAfpGUvD2c+PliCaLVLrXjSGBITkZf1d44ig8NneXRvO7Lu8wAox5ic6eGVe9kul1Pjre9n7ZyWwsPeF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJnC0Cx6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jE7SmmCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69051F00893;
-	Sat, 30 May 2026 17:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJnC0Cx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31EA1F00893;
+	Sat, 30 May 2026 17:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163688;
-	bh=nRGrAUxgj3xrksW1BXf0lv8u1evmTYaUp4YY4nS2J0w=;
+	s=korg; t=1780163691;
+	bh=oDX6V1MlxLU5Nz5huQZ1a5GQ1SUlS8VZ8f8dHvXoiL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jE7SmmCibdZp25tCMAmEixkxuOyTr5VhMHqtfWvnHgNBygQkof+ACINUVtTNDP6Ly
-	 Z1Afo4xh9LapCCXWmrkJSJul9xDbeaT/6BMX5/EY/xDw1RMDCzJH6PodLjBKzhpBgt
-	 mSGZmzqGsd+C6+XZX49rYzvrRGnjg8EAzK3YNOfg=
+	b=vJnC0Cx6hY3mhdPkmZGm+3r/tlhucwNMqesXjSVo3Zk4G5B3DreeqzjABYxAK2AMa
+	 rhl+VvNPcVm6pMBfoxDauNbDhzl78Vhs5DYhtYf3dfXMAAPbWoxAAR7q3z5FVXQwxs
+	 DSQHw7OsiPVUr5/+FFrkjZey/9fL3jGIoz2rUO78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 325/776] ASoC: fsl_easrc: fix comment typo
-Date: Sat, 30 May 2026 18:00:39 +0200
-Message-ID: <20260530160248.971252639@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 334/776] libceph: Fix slab-out-of-bounds access in auth message processing
+Date: Sat, 30 May 2026 18:00:48 +0200
+Message-ID: <20260530160249.204458907@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,38 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 804dce6c73fdfa44184ee4e8b09abad7f5da408f upstream.
+commit 1c439de70b1c3eb3c6bffa8245c16b9fc318f114 upstream.
 
-The file contains a spelling error in a source comment (funciton).
+If a (potentially corrupted) message of type CEPH_MSG_AUTH_REPLY
+contains a positive value in its result field, it is treated as an
+error code by ceph_handle_auth_reply() and returned to
+handle_auth_reply(). Thereafter, an attempt is made to send the
+preallocated message of type CEPH_MSG_AUTH, where the returned value is
+interpreted as the size of the front segment to send. If the result
+value in the message is greater than the size of the memory buffer
+allocated for the front segment, an out-of-bounds access occurs, and
+the content of the memory region beyond this buffer is sent out.
 
-Typos in comments reduce readability and make text searches less reliable
-for developers and maintainers.
+This patch fixes the issue by treating only negative values in the
+result field as errors. Positive values are therefore treated as success
+in the same way as a zero value. Additionally, a BUG_ON is added to
+__send_prepared_auth_request() comparing the len parameter to
+front_alloc_len to prevent sending the message if it exceeds the bounds
+of the allocation and to make it easier to catch any logic flaws leading
+to this.
 
-Replace 'funciton' with 'function' in the affected comment. This is a
-comment-only cleanup and does not change behavior.
-
-Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Link: https://patch.msgid.link/20260316180545.144032-1-joseph.salisbury@oracle.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_easrc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/auth.c       |    2 +-
+ net/ceph/mon_client.c |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -1286,7 +1286,7 @@ static int fsl_easrc_request_context(int
- /*
-  * Release the context
-  *
-- * This funciton is mainly doing the revert thing in request context
-+ * This function is mainly doing the revert thing in request context
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -257,7 +257,7 @@ int ceph_handle_auth_reply(struct ceph_a
+ 		ac->negotiating = false;
+ 	}
+ 
+-	if (result) {
++	if (result < 0) {
+ 		pr_err("auth protocol '%s' mauth authentication failed: %d\n",
+ 		       ceph_auth_proto_name(ac->protocol), result);
+ 		ret = result;
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -174,6 +174,8 @@ int ceph_monmap_contains(struct ceph_mon
   */
- static void fsl_easrc_release_context(struct fsl_asrc_pair *ctx)
+ static void __send_prepared_auth_request(struct ceph_mon_client *monc, int len)
  {
++	BUG_ON(len > monc->m_auth->front_alloc_len);
++
+ 	monc->pending_auth = 1;
+ 	monc->m_auth->front.iov_len = len;
+ 	monc->m_auth->hdr.front_len = cpu_to_le32(len);
 
 
