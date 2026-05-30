@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFE332D42B;
-	Sat, 30 May 2026 17:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83842690D5;
+	Sat, 30 May 2026 17:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160664; cv=none; b=ts5eOtrZqaMoV0eShrlVSwRYZXer/e9/kH0eRc6cTiNZoxPH+BMKt0OxfaVB+LQFekLpJaZCrpJ6DKwhIVEX0nIU3pXuz7hnzkAAFr5tEyUEdfMKCHt8KrNLx+ExsBGPscWAuEWTL98u5Zrw7+Oy8vJL652Sz42Voj1EFS4l6P0=
+	t=1780160667; cv=none; b=tFzRnM5bOtIziIj62KLrCRKCMkQ+EAUtyYvfNpkvkxKaQx/CIXRais15y3Db0kC1dYygmj2sBubCSPzEU4Erv5tr7/ELsKIUL4r1OyWX/C7vaL6/yBmeAaNhal+gyscYCa3XPK59vynp69YpNUHcMkA4De5T7+DnL7vnyXNd+2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160664; c=relaxed/simple;
-	bh=vF/4c7SeRVfHkV6FXp0mRZNK1iHn6jZ5NT3YZSeQ7Kg=;
+	s=arc-20240116; t=1780160667; c=relaxed/simple;
+	bh=YrLVaznKkx3JTiO5XvgcCesj1bG6IIs414K7pwN1ZZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuGEZ3x6AkYcI2SPrp65Mb1HCoxeTO2MNyRgovtkwFfpVI/gVocyBk7HqtLIG4IWN+p1F1WFXn0zjwmFAD70XuJOb0+QxAqoOEE7GWoGaoI5eI8JiGYMN7/HFDma06X5tw9QYcS8mHWKmAcdHsuCazRLE1a+3pbtdsZMhYMWzmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HusEuBVC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u5/MJaYToG6nT1uPt45ckrL0d2TwQ+jWjFvGeQUePfZvNtL3fLa0kfWJHVUxAdsixVdGxPo+dSFZzldCxLnukmUW0R0fHwOXfbmYe8RzHGcduAARjVXsaYqL8rw6B7sHI0R7Q742wLlKihMLHg60imvsc90rcakZv5yqbGVCFwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/rOKun0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HusEuBVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39D51F00893;
-	Sat, 30 May 2026 17:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/rOKun0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A42C1F00893;
+	Sat, 30 May 2026 17:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160663;
-	bh=qZhXLw1uXH7n0pHImRoT48gWAQ5ah7zGCy9jc1O96Mc=;
+	s=korg; t=1780160666;
+	bh=7VInI5O2h6KyzDrsg+MTmrZpNG3WnUEeHVqdf5a5m6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HusEuBVCr4f4TzZDA8r584Vq+NhEW/yrQff9PJs+e0DoFxmkH8t9nq2JPFU8gXJvs
-	 AWNZDKKy20SqHur331qarCE7hzED5FwpmBqAPwo6B2dHiMs9qf6mAwQUh3iXSeBmav
-	 fxEjj0K56MXeLKv5hAJwx8DHpy67qJg1+lIo5XsY=
+	b=X/rOKun0Fo2WkkQbLhBJhRQIwr40ZuZuwj7dYKCHR6BKf9HAyld2Kr8E15hRjdCnY
+	 klgNgf7DHtEdVTAeFcapceWritVEV5n0E0PyXVpB6szppshT/21rf8H4vkz9GqDKr+
+	 0OINuGYHjotO0y80xBF9Ve1FyGKDkco+uiQDb3i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 372/969] mptcp: use MPTCP_RST_EMPTCP for ACK HMAC validation failure
-Date: Sat, 30 May 2026 17:58:16 +0200
-Message-ID: <20260530160310.587893575@linuxfoundation.org>
+	Chuanhong Guo <gch981213@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 399/969] spi: mtk-nor: fix controller deregistration
+Date: Sat, 30 May 2026 17:58:43 +0200
+Message-ID: <20260530160311.309263751@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a6da02d4c00fdda2417e42ad2b762a9209e6cc49 upstream.
+commit 76336f24934621db286cabb20b483773ee01dcaa upstream.
 
-When HMAC validation fails on a received ACK + MP_JOIN in
-subflow_syn_recv_sock(), the subflow is reset with reason
-MPTCP_RST_EPROHIBIT ("Administratively prohibited"). This is
-incorrect: HMAC validation failure is an MPTCP protocol-level
-error, not an administrative policy denial.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-The mirror site on the client, in subflow_finish_connect(), already
-uses MPTCP_RST_EMPTCP ("MPTCP-specific error") for the same kind of
-HMAC failure on the SYN/ACK + MP_JOIN. Use the same reason on the
-server side for symmetry and accuracy.
-
-Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Fixes: 443041deb5ef ("mptcp: fix NULL pointer in can_accept_new_subflow")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-2-b70118df778e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 881d1ee9fe81 ("spi: add support for mediatek spi-nor controller")
+Cc: stable@vger.kernel.org	# 5.7
+Cc: Chuanhong Guo <gch981213@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-mtk-nor.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -796,7 +796,7 @@ create_child:
+--- a/drivers/spi/spi-mtk-nor.c
++++ b/drivers/spi/spi-mtk-nor.c
+@@ -900,7 +900,7 @@ static int mtk_nor_probe(struct platform
+ 	pm_runtime_enable(&pdev->dev);
+ 	pm_runtime_get_noresume(&pdev->dev);
  
- 			if (!subflow_hmac_valid(req, &mp_opt)) {
- 				SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINACKMAC);
--				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
-+				subflow_add_reset_reason(skb, MPTCP_RST_EMPTCP);
- 				goto dispose_child;
- 			}
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0)
+ 		goto err_probe;
  
+@@ -926,6 +926,8 @@ static int mtk_nor_remove(struct platfor
+ 	struct spi_controller *ctlr = dev_get_drvdata(&pdev->dev);
+ 	struct mtk_nor *sp = spi_controller_get_devdata(ctlr);
+ 
++	spi_unregister_controller(ctlr);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 
 
