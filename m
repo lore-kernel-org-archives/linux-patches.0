@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924543242D7;
-	Sat, 30 May 2026 17:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9037630E829;
+	Sat, 30 May 2026 17:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161609; cv=none; b=hnYOCQF0Kx4XaV64pmd/Ny5pvZpbK87VT35WqOcrQmwmYa5PBfzYf34mEiomi2hDZXEu2bCCfImDd/fjSC5BiBkz8iEDwyhJmuRXj3FZvnN1Xpy9TgUwvS8wtJDVzyIy2xxMQ4+qH4vORSYtX5+GpHeqgtQh73G/E758NHiBek0=
+	t=1780161612; cv=none; b=qteLT5oea0Q92DPeEIXXL2FMqrVXo28REUZWm1iJGdhYgeSw4uKUF8vJWh+fRr+B+KztqBLF1P/9lthEToqHMj4oTy6uYbDmDuncim6m+zN3UivvTBqdIO+8Vt1CZRY6HJrjliZmiKUem5w6pWS7knVCNhDRvbEK1ppyAZoLEhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161609; c=relaxed/simple;
-	bh=25zmkX3tnVgPzZ6HEcmHqXM6PjpNJRZCGY8Bhf8Jgso=;
+	s=arc-20240116; t=1780161612; c=relaxed/simple;
+	bh=CM2IUZLubtRsZ/2AuSK1Hn+TbzfWaXToVw0nI8PotSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tu90LAeKz7QUr9nglKLptFxFuM/rtdy57870U3NjXESKt3Oom+eAnIiLPsehFyofqheOMtwyGq0v7taxlZ41UuZCg9cpBojD+WHguG8v1PFxjs0esRWTGeUY2zZthrnHLfdJB45/7xBatwJzc1xbHgVjAcFSKlJ/7cWUOuPp7Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiNuZG9x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmgNTRBaKwaTOD22GieCKJsc5oMc/bkaBQQBoRbMxRx2YPFgkrnXGvuAktMbm6JtLvDDRTA9AEA5RWVf1whqsXv0cpr4LzQVJql90s8pBeHg+QLTP8Io8RB0UlFD4+lhR4+OA3k574YYkiDznUe078REwo6YMbZxI2tzTMMrLqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlCTZ2Oh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiNuZG9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4251F00893;
-	Sat, 30 May 2026 17:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlCTZ2Oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A5C1F00893;
+	Sat, 30 May 2026 17:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161608;
-	bh=vrsZ+6zb1mgtEXreBm97Un3udE9oPoaK8vNC8uv+sSU=;
+	s=korg; t=1780161611;
+	bh=rAkNp028NpTYqyJMnC+S6hvc3dp7CPHh4wMC4Et198I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XiNuZG9x78vWtuUdBkliIxfGidavb2nvgUPx+yE/Z9YijPQ+rJIzVHUco29chKDbs
-	 8chchF113aY6hrL9l/6+mCfiB+kI0/mdbn9i9NScaWVZCtjK0SUgr1i1pydUXwsH6d
-	 gQzQAPX93kfDON4VByFkSina//2lt9VZ6PxwOe6Q=
+	b=dlCTZ2OhaFp68jekr5XLGY4WgCZh3QnlWdkCnFBQCQTakEosOBKU+2PKJUget6ukv
+	 OU2c++6USoLvaPsbfVvqQwbHvZtTLSdDRBCJpmLSe8B9yB/L55vEBJWOPyAljQR+lT
+	 pSfOshJlQLE3I8gWvP6Ha5UdrceWrMpgZfJNPzcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 674/969] crypto: ccp - copy IV using skcipher ivsize
-Date: Sat, 30 May 2026 18:03:18 +0200
-Message-ID: <20260530160319.105447494@linuxfoundation.org>
+Subject: [PATCH 6.1 675/969] arm64: dts: imx8mp-icore-mx8mp: Correct PAD settings for PMIC_nINT
+Date: Sat, 30 May 2026 18:03:19 +0200
+Message-ID: <20260530160319.136584485@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit a7a1f3cdd64d8a165d9b8c9e9ad7fb46ac19dfc4 ]
+[ Upstream commit ea8c90f5c7ceeb6657a8fe564aa7b190dce298a6 ]
 
-AF_ALG rfc3686-ctr-aes-ccp requests pass an 8-byte IV to the driver.
+With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
+there might be interrupt storm for this board. Need to set PAD PUE and PU
+together to make pull up work properly.
 
-ccp_aes_complete() restores AES_BLOCK_SIZE bytes into the caller's IV
-buffer while RFC3686 skciphers expose an 8-byte IV, so the restore
-overruns the provided buffer.
-
-Use crypto_skcipher_ivsize() to copy only the algorithm's IV length.
-
-Fixes: 2b789435d7f3 ("crypto: ccp - CCP AES crypto API support")
-Signed-off-by: Paul Moses <p@1g4.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: eefe06b295087 ("arm64: dts: imx8mp: Add Engicam i.Core MX8M Plus SoM")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-crypto-aes.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/ccp-crypto-aes.c b/drivers/crypto/ccp/ccp-crypto-aes.c
-index bed331953ff94..87b628bebf96e 100644
---- a/drivers/crypto/ccp/ccp-crypto-aes.c
-+++ b/drivers/crypto/ccp/ccp-crypto-aes.c
-@@ -28,8 +28,11 @@ static int ccp_aes_complete(struct crypto_async_request *async_req, int ret)
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
+index a6319824ea2eb..69558ffefa9a6 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
+@@ -132,7 +132,7 @@ MX8MP_IOMUXC_I2C1_SDA__I2C1_SDA		0x400001c3
  
--	if (ctx->u.aes.mode != CCP_AES_MODE_ECB)
--		memcpy(req->iv, rctx->iv, AES_BLOCK_SIZE);
-+	if (ctx->u.aes.mode != CCP_AES_MODE_ECB) {
-+		size_t ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(req));
-+
-+		memcpy(req->iv, rctx->iv, ivsize);
-+	}
+ 	pinctrl_pmic: pmicgrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_NAND_CE0_B__GPIO3_IO01	  0x41
++			MX8MP_IOMUXC_NAND_CE0_B__GPIO3_IO01	0x1c0
+ 		>;
+ 	};
  
- 	return 0;
- }
 -- 
 2.53.0
 
