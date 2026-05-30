@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2690F340A6F;
-	Sat, 30 May 2026 18:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA8B3B9D80;
+	Sat, 30 May 2026 18:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164401; cv=none; b=qV0UxXIS9EwmFDt1M6p3hQKwEHmQBavuoWD9NopNZMYEeWeI+u6aA7ApO2xJxoUznQjTV7CIo+dCoE96pGxdoB99KrXwgFS8CFbdPUbVnm3Z6V1YGC1iiVxvSvfhopOvGyCyjkzavkeOVN6D5xcTdq/cCW0NKluixsxClXUeCWg=
+	t=1780164404; cv=none; b=o+D91dk5iruuKn36qktkZcE+Pz8btfweP7bKtw96u6nDJw43qV7rqbB6g+zykHbOkPitdJyReI6+VPVEf0V5Txs4QchQ5jzvZ5xQeYOL6yIs+xx3EZg8LHa/fuClut1od/rHLVMn6fq9YeJqsv5Av0BptDVOER7KVbkS7G/G2Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164401; c=relaxed/simple;
-	bh=jWV+5VJw41GA9rycJ1y50MZ8hCxYOIQ0hFe+CM/Qd0Q=;
+	s=arc-20240116; t=1780164404; c=relaxed/simple;
+	bh=ag7dSodl40SGLgbWPxtpyo18P3Fz/Evpr9HD/PaP1jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKlbEuBXBDdVjNYiXyy3Yr72WouAVhwGcbg6RwXycZBhLLYPdmWMUJvW4cbqXveD+zk0HXUDTkjTZYvWtuFr0kWgJPyo1PSBvSFOBy/bcgbrdx9MdMFuprc5toSiXhGFDJKkk4IlhnXZQ5wItXIMxvnS6jAm70/LKzWvXZHqusc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7zC4YDX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uQbGbq10ydYBMIv8RmFh3ZIlABTfEEsMSFyK7zMu10OpGWqyNb4f3ZTH1dBHxJXCYe9+Fze3WHZLYfWdwNKC8ljbaU5x36OwjtNTaj6T+c8PQoE7T8cS7Evcu89Zo3mLIEOMXZ1hq1sdfpV6qz3wYnZNxtMcMVkMixwjtTXaFY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGwv2uva; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7zC4YDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3DC1F00893;
-	Sat, 30 May 2026 18:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGwv2uva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84521F00893;
+	Sat, 30 May 2026 18:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164400;
-	bh=K2RhuAEMRmiwX4ZrE6KASRLSda3M2vKjJtjZC0ynA0o=;
+	s=korg; t=1780164403;
+	bh=1K6H0iIhRVpVpJRjpnSaKDxURCJ+urFIV9U+oyTYABw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7zC4YDX1qvhG6zRGl5rWgCcKHjCMTVrZhu7EIckP+urdF3l1k4iBvWGvmS1uDCVZ
-	 pDfp+Y1UvQlr32ef/4HBYoeXchVmllb5hYgnbU2sfMo3FqIF5o2lLwRi4+gwinVyH4
-	 87J7IuTZrisqz5k2oiyoAH3zi7iJbcRrhTBPc2G0=
+	b=QGwv2uvaw7fgfcEscbs35v17rOHdIk7Y4gsBYmSyV/o/ngSnsNWkTodLE+MZdl2wI
+	 CooVpoqo3RNPfk/2QwORB5AQdx3ZcVoNZU/heIXQpBE/FUi8o1PJtEzvnRXAJTeMFA
+	 N88tEQDimRmfAbAGJGSSaH/leli46wX6xxtXwkrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 543/776] clk: imx: imx6q: Fix device node reference leak in pll6_bypassed()
-Date: Sat, 30 May 2026 18:04:17 +0200
-Message-ID: <20260530160254.210621015@linuxfoundation.org>
+Subject: [PATCH 5.15 544/776] clk: imx: imx6q: Fix device node reference leak in of_assigned_ldb_sels()
+Date: Sat, 30 May 2026 18:04:18 +0200
+Message-ID: <20260530160254.233905191@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -55,52 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4b84d496c804b470124cd3a08e928df6801d8eae ]
+[ Upstream commit 9faf207208951460f3f7eefbc112246c8d28ff1b ]
 
-The function pll6_bypassed() calls of_parse_phandle_with_args()
-but never calls of_node_put() to release the reference, causing
-a memory leak.
+The function of_assigned_ldb_sels() calls of_parse_phandle_with_args()
+but never calls of_node_put() to release the reference, causing a memory
+leak.
 
 Fix this by adding proper cleanup calls on all exit paths.
 
-Fixes: 3cc48976e9763 ("clk: imx6q: handle ENET PLL bypass")
+Fixes: 5d283b083800 ("clk: imx6: Fix procedure to switch the parent of LDB_DI_CLK")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260203-clk-imx6q-v3-1-6cd2696bb371@gmail.com
+Link: https://patch.msgid.link/20260203-clk-imx6q-v3-2-6cd2696bb371@gmail.com
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx6q.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx6q.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/clk/imx/clk-imx6q.c b/drivers/clk/imx/clk-imx6q.c
-index de36f58d551c0..b14c1606466d7 100644
+index b14c1606466d7..a95f07718b653 100644
 --- a/drivers/clk/imx/clk-imx6q.c
 +++ b/drivers/clk/imx/clk-imx6q.c
-@@ -233,8 +233,11 @@ static bool pll6_bypassed(struct device_node *node)
- 			return false;
- 
- 		if (clkspec.np == node &&
--		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS)
-+		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS) {
+@@ -183,9 +183,11 @@ static void of_assigned_ldb_sels(struct device_node *node,
+ 		}
+ 		if (clkspec.np != node || clkspec.args[0] >= IMX6QDL_CLK_END) {
+ 			pr_err("ccm: parent clock %d not in ccm\n", index);
 +			of_node_put(clkspec.np);
- 			break;
-+		}
+ 			return;
+ 		}
+ 		parent = clkspec.args[0];
 +		of_node_put(clkspec.np);
- 	}
  
- 	/* PLL6 bypass is not part of the assigned clock list */
-@@ -244,6 +247,9 @@ static bool pll6_bypassed(struct device_node *node)
- 	ret = of_parse_phandle_with_args(node, "assigned-clock-parents",
- 					 "#clock-cells", index, &clkspec);
- 
-+	if (!ret)
+ 		rc = of_parse_phandle_with_args(node, "assigned-clocks",
+ 				"#clock-cells", index, &clkspec);
+@@ -193,9 +195,11 @@ static void of_assigned_ldb_sels(struct device_node *node,
+ 			return;
+ 		if (clkspec.np != node || clkspec.args[0] >= IMX6QDL_CLK_END) {
+ 			pr_err("ccm: child clock %d not in ccm\n", index);
++			of_node_put(clkspec.np);
+ 			return;
+ 		}
+ 		child = clkspec.args[0];
 +		of_node_put(clkspec.np);
-+
- 	if (clkspec.args[0] != IMX6QDL_CLK_PLL6)
- 		return true;
  
+ 		if (child != IMX6QDL_CLK_LDB_DI0_SEL &&
+ 		    child != IMX6QDL_CLK_LDB_DI1_SEL)
 -- 
 2.53.0
 
