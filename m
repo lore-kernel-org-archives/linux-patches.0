@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D8B313E34;
-	Sat, 30 May 2026 18:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D99E41A8F;
+	Sat, 30 May 2026 18:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166079; cv=none; b=AaLaeuUx2XoNzYf7WJrQftc/HpBjJ0vJEHL7R0boxC3/bGjBhhqi6dqbSNwuCYQT2SxUUXs/ZK3HgFfDeFhxp8JGzf0ZGlsOknj67bBf3ZeH5FzSc217FiNY313xOn+WZNWUD225HpcT/8zYoK8mVHl6nEN54KSn/3oEqs35tTs=
+	t=1780166083; cv=none; b=ZKPfGfhFPCHlRe5EUmrxIcniyfEUVT+8ktalkyZdxl+xQ4gAK/bh4kZWA66pnLWgspNQrUAHkCb/A0Llrxkx6RY0g965lFEZoA96zGkXOBj/NPSVyc3RkVDq3VanVKisupQ6NfTukhZBEveMF/lenu4nK1TEH2VMcjwiXP7ffTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166079; c=relaxed/simple;
-	bh=PTGbxerrUnoPw4r9FgOyesOvZ05sC3/iplSEMQBgqno=;
+	s=arc-20240116; t=1780166083; c=relaxed/simple;
+	bh=4jPYPN38eMO4x0+7jB8JaSjLjnY9SqZ5uL1ai1iV39Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOthPxJtYKadPmFyFF0f/rS1Gy36/Th/X+jpCz5JGNPSgR+9/JA60lrnXkcCk0CtmIDLwl5p2PagUmjRaYc6+gUSqvoQ148hSLXhuxjsKBVJpUK3LmMpS+fB5Ly9m+Eqt4MMfXLkWLyCp96Ovp3Tdj/lWMtgILOH1HV+LpPLvK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqw/tl5A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/QJqAh7sesEzoDv14QplZVIpFlahF9fhDvz5zXN7CWfwmqTZ7umjfxhSJ5t/LYymqVnZ70FW4cF2GpipeluGOZ+zjKQP9+RlgHcy2vUN8aoLFr+RtE283j5l3iy6B3KVunSOHOt/2Sepi1PjvPpn6nIXci5NWp1vVDa9dpvei4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLvaGgc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqw/tl5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6781F00893;
-	Sat, 30 May 2026 18:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLvaGgc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D3F1F00893;
+	Sat, 30 May 2026 18:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166078;
-	bh=WoVG7fdgp9HvfA+0k1H6JcVZMVTUoNZysHsArPBfpVQ=;
+	s=korg; t=1780166082;
+	bh=bc983a29zUuszsIYZvkdL5eIf/2N9p+qTOR8/K0WG6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqw/tl5Am86TjyOBp9+dnTr3SRbCHmPYmT2Q7eAm2q+myeg8e/uJ1ep8/nh3fWUKu
-	 /mCU6WGWs7aphQ3oDQuYCwO9ol3YjRTETjQ0s5CqbD9a6wi4PCcDVbDDbbU+0VJWLp
-	 hmd0GSWysX6ZuTYExZpPXVEH4grGMlXTVoqCZO1Q=
+	b=ZLvaGgc4l/IC80gqGTohMF0b172fVxaxO8KcRP4XGZAVACcV8ER7iBb1RCleDyBlS
+	 HM5X0ZLrjBOyvtWibpkK/pI9zuYuKPQ84MbPuDO65q8/Q0q6HQUFuwCkdyyPcLNlH6
+	 sYrizUYOOyuEzsjPAVOh21/YNuKqAo5vWFrpW0S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 267/589] media: rc: streamzap: Error handling in probe
-Date: Sat, 30 May 2026 18:02:28 +0200
-Message-ID: <20260530160232.006498371@linuxfoundation.org>
+	Wenyou Yang <wenyou.yang@atmel.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 268/589] regulator: act8945a: fix OF node reference imbalance
+Date: Sat, 30 May 2026 18:02:29 +0200
+Message-ID: <20260530160232.030395195@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,54 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
+commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
 
-If submitting the URB fails, the device will be unusable.
-Probe() must fail.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
+Cc: stable@vger.kernel.org	# 4.6
+Cc: Wenyou Yang <wenyou.yang@atmel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/regulator/act8945a-regulator.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -255,9 +255,8 @@ static void streamzap_callback(struct ur
- 	case -ESHUTDOWN:
- 		/*
- 		 * this urb is terminated, clean up.
--		 * sz might already be invalid at this point
- 		 */
--		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
-+		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
- 		return;
- 	default:
- 		break;
-@@ -398,11 +397,16 @@ static int streamzap_probe(struct usb_in
+--- a/drivers/regulator/act8945a-regulator.c
++++ b/drivers/regulator/act8945a-regulator.c
+@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
+ 		num_regulators = ARRAY_SIZE(act8945a_regulators);
+ 	}
  
- 	usb_set_intfdata(intf, sz);
- 
--	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
-+	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
-+	if (retval < 0) {
- 		dev_err(sz->dev, "urb submit failed\n");
-+		goto rc_submit_fail;
-+	}
- 
- 	return 0;
--
-+rc_submit_fail:
-+	rc_free_device(sz->rdev);
-+	usb_set_intfdata(intf, NULL);
- rc_dev_fail:
- 	usb_free_urb(sz->urb_in);
- free_buf_in:
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++
+ 	config.dev = &pdev->dev;
+-	config.dev->of_node = pdev->dev.parent->of_node;
+ 	config.driver_data = act8945a;
+ 	for (i = 0; i < num_regulators; i++) {
+ 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
 
 
