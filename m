@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCA93093A6;
-	Sat, 30 May 2026 16:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E834028B;
+	Sat, 30 May 2026 16:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157802; cv=none; b=rgiOfboZTgO+8ZfjSba935TXPg/3rOq46M2P8zdmx27Ua3M19LCCaIn0PQbC22So9KxjBQhB1KNCV1C3+NVxlL6cNa9AC6NtgVg08tAJZycRWIYqJS+jjnRqE+r/M6bfc/2xB8JUlRCzuXLmATqP8X2Vrdb9N1NVL1mMZebR1hM=
+	t=1780157835; cv=none; b=IpVmk/4j8fZelSeGuK/KoWA4DYHUFui4rK7mfhsc2qqaMkltPuwUAHh4vHwITIi7cJ+rlxXaHDHJXergyRRVwYIxg6w5COG7eaNUgo/Ed2sA6lf495c/NIJqELIaxb6LPYMXSQa5+SpZ9hWtPY6Z4tLFX5KBSyJOJS68VFyL8Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157802; c=relaxed/simple;
-	bh=svqPHMsToOWw4s6gs4DF6Fpe16TV4EDATAXvYRpmUQs=;
+	s=arc-20240116; t=1780157835; c=relaxed/simple;
+	bh=H/DaAWRmZgBnu3ld8VblA9mgfojRoboG9HBEMyF4Jlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDSV2JY71LeLdUaw8+WZWA2fziUOy3LmB46y+ZhSjmEQeClUfAps/jH5/alsxLOE0ouErXJhhqO8wAUtEXcT3iuxJfivJkbcQ8kp/7JhMzmKJ31f4jrA7aODkD2iGQ7KxPYGta4HVqJNTb7z28K6zGQ2Hsg9+BGh6p6yoahpIjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2yXax4B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kwkb07mB0ypuk36nxUfQ+9fsWYjePbvlncbfFBzxKr8mGwFqLBn9NB6h238/F1emUP0S7AceYG7IaHKwrFMI03E2nZIaSqFfeWnVCpy0NM3WIvkG1ugkMW14hLIvHsNUfNC33dKUJ6ZxMZsdpJjWTp7HC7fN+GririWGcXGEEXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cmqu7hgJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2yXax4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1E61F00893;
-	Sat, 30 May 2026 16:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cmqu7hgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DAE1F00893;
+	Sat, 30 May 2026 16:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157797;
-	bh=nyKbko4qKEeM5mFUZ6dWFNoWXcEB4EFn92/nxJa42sU=;
+	s=korg; t=1780157820;
+	bh=FA0nBLqYeLkrFM9HGdlQ8+agJaf+DSgLmzwwpigVMtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I2yXax4BjBBx5jKwBlP/1hoG2EGzTkcIH6gWR0m9zEgDZgxeNHI7f2ILhdkRTfSEJ
-	 iGY8d6rpgx/9Ty1neR474Xk6L1Y5sboTh54MflQnDLo4FF+xrGrnHEF/cN5oUjC1dp
-	 GX3ile5JrUugeiSAlOBROpfZcrCWxv6nrlVSZGBs=
+	b=Cmqu7hgJt4CumG4nXHVqJ6XsYVYd7qf2mXLPUKkqksWpEm+Uk3bCzSf3PcWu8rvLI
+	 /XrzWKNThEgKfZHkzF8kTcLwYK2OsKlIdRYLy7UkniMzNr9m0wdOgqt9YXCdJLcDBN
+	 DyN26VLQrpz+0z84rPa1X2/ZPVvKIUGsALm54f7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/589] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
-Date: Sat, 30 May 2026 17:58:05 +0200
-Message-ID: <20260530160224.693047816@linuxfoundation.org>
+Subject: [PATCH 5.10 006/589] netfilter: nft_set_pipapo_avx2: dont return non-matching entry on expiry
+Date: Sat, 30 May 2026 17:58:07 +0200
+Message-ID: <20260530160224.743902329@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,47 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
+[ Upstream commit d3c0037ffe1273fa1961e779ff6906234d6cf53c ]
 
-If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
-super block and fsid assignment will lead to a crash.
+New test case fails unexpectedly when avx2 matching functions are used.
 
-Use file_inode(file)->i_sb to always get btrfs_sb.
+The test first loads a ranomly generated pipapo set
+with 'ipv4 . port' key, i.e.  nft -f foo.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This works.  Then, it reloads the set after a flush:
+(echo flush set t s; cat foo) | nft -f -
+
+This is expected to work, because its the same set after all and it was
+already loaded once.
+
+But with avx2, this fails: nft reports a clashing element.
+
+The reported clash is of following form:
+
+    We successfully re-inserted
+      a . b
+      c . d
+
+Then we try to insert a . d
+
+avx2 finds the already existing a . d, which (due to 'flush set') is marked
+as invalid in the new generation.  It skips the element and moves to next.
+
+Due to incorrect masking, the skip-step finds the next matching
+element *only considering the first field*,
+
+i.e. we return the already reinserted "a . b", even though the
+last field is different and the entry should not have been matched.
+
+No such error is reported for the generic c implementation (no avx2) or when
+the last field has to use the 'nft_pipapo_avx2_lookup_slow' fallback.
+
+Bisection points to
+7711f4bb4b36 ("netfilter: nft_set_pipapo: fix range overlap detection")
+but that fix merely uncovers this bug.
+
+Before this commit, the wrong element is returned, but erronously
+reported as a full, identical duplicate.
+
+The root-cause is too early return in the avx2 match functions.
+When we process the last field, we should continue to process data
+until the entire input size has been consumed to make sure no stale
+bits remain in the map.
+
+Link: https://lore.kernel.org/netfilter-devel/20260321152506.037f68c0@elisabeth/
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/btrfs.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/netfilter/nft_set_pipapo_avx2.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index d8aa1d3570243..7e6fcbc6c6c55 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -697,12 +697,15 @@ TRACE_EVENT(btrfs_sync_file,
- 	),
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index 7da371587f9a8..3f01952a3e10b 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -242,7 +242,7 @@ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
  
- 	TP_fast_assign(
--		const struct dentry *dentry = file->f_path.dentry;
--		const struct inode *inode = d_inode(dentry);
-+		struct dentry *dentry = file_dentry(file);
-+		struct inode *inode = file_inode(file);
-+		struct dentry *parent = dget_parent(dentry);
-+		struct inode *parent_inode = d_inode(parent);
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
  
--		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
-+		dput(parent);
-+		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
- 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
--		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
-+		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
- 		__entry->datasync	= datasync;
- 		__entry->root_objectid	=
- 				 BTRFS_I(inode)->root->root_key.objectid;
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -318,7 +318,7 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -412,7 +412,7 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -502,7 +502,7 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -637,7 +637,7 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -694,7 +694,7 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -758,7 +758,7 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -832,7 +832,7 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -917,7 +917,7 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
+@@ -1010,7 +1010,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+ 
+ 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
+ 		if (last)
+-			return b;
++			ret = b;
+ 
+ 		if (unlikely(ret == -1))
+ 			ret = b / XSAVE_YMM_SIZE;
 -- 
 2.53.0
 
