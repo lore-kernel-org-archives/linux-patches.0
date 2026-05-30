@@ -1,38 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C1621ADC7;
-	Sat, 30 May 2026 18:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34711219303;
+	Sat, 30 May 2026 18:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165607; cv=none; b=nlhEIqS7Qdm6ODeUtOfkkaxHaNGEcrb+aEmA2Rj7LEN8WdroBEijENbze1qdlB6Tklw8i5HshOBISxWGXm/ujqS0+fcZ6TqqOQctp/74OC+9rpoyfbLyRkk/QJ0YRz+yWcIdf188ik8vMLzcZR0HFXhf7D6HFGVtUZUp0t/jYdc=
+	t=1780165611; cv=none; b=H+NZjSsG0sYL1azygtHlQy4/fxKTNdNrTG8o5Y4wbu2tKgnWRRWVXHByG1ZXDe0XqPEHMVDJfEptyZabsVXipv5S6g+PV1jB5VWLKaSaMDjPP4miRvLTG7hKdNOAV+RphQZlmN6CV97vWaeH0Lfy1IlVtlbE2seSYnit/H78HXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165607; c=relaxed/simple;
-	bh=pPcxCHRFwvrFmB1jEkOGQhb9bDWnXXmXiEGmWYq0vDM=;
+	s=arc-20240116; t=1780165611; c=relaxed/simple;
+	bh=YWT4zbADFAl4Zoucz0Y0++DgSaQjKXaCZbe5Xmx0BZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGmR9k8lK+J+/GFW3lAh6koud/gw0F5gN26OscMrmWxPKFR3Txz11XZQuPDTJTQqXnXKwly2y2DYIc+iCiNkETnp7bpkYHfF3u9dQH99p8Q4VPfQfCkmNLJJKle7B/R/KQcc4BmzaeH7zxOmqXjeKMyz9tmCgujX3PA7iHauSqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnELswRg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QR9EGpZLBGs+wF7qVf7tFXzF0i7lbCRLAAx2dFYaHVoWeaxeyzxN4hzOjX/91azhTMjvXVInzy4kYaZOUsO9czEfkLAFImQPazeJuKha42WxFC42vMCEfbOLnqADg1dkZREwXYEbvwMCPhT5trK80CeuZsvGNv5KDOBlEHsL1Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9fnqDGM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnELswRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BDA1F00893;
-	Sat, 30 May 2026 18:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9fnqDGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3F11F00893;
+	Sat, 30 May 2026 18:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165606;
-	bh=axJ8MMwajyFGWkQhmMWrWscppNYskTNittBB9x1s/NU=;
+	s=korg; t=1780165610;
+	bh=Q6SI9IZu3vycVVwWXTyCMUVIZgjOrSU+V8ds0Ys5xy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mnELswRgB+F+x1VZUmGms8bw60OVgP+tt7kmqsTkk3wCiqSI5UwZ1FqcmHx57x0lu
-	 34vCnTrbnG8F5TK9UbGsovhCaiScVi9t17UICok4unGHwNtK8i+JIckQ7xk1p3OX4Q
-	 6iD7GU6OmfDs9ACiN8sOLPoDMLX93iC9LjFuALF8=
+	b=v9fnqDGMA528YmXogNt8cRV3FSiaABQVIPBKKdQU8dfwm/smbXLmuuPEYP5YSAuIC
+	 6nlqa13JNBZM2fW9tp8E5pyO5OZEJRTRbnOwMJyyvHJpN1kzTXpMXI94y+xko2dDAr
+	 QkdxA2uC7qt+Sjw7EttrJXDlW/aY7Y5PY07RvmHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jie Wang <jiewang2024@lzu.edu.cn>,
-	Yang Yang <n05ec@lzu.edu.cn>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Jeffrey Altman <jaltman@auristor.com>,
@@ -41,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/589] rxrpc: only handle RESPONSE during service challenge
-Date: Sat, 30 May 2026 18:00:08 +0200
-Message-ID: <20260530160228.108164883@linuxfoundation.org>
+Subject: [PATCH 5.10 128/589] rxrpc: Fix anonymous key handling
+Date: Sat, 30 May 2026 18:00:09 +0200
+Message-ID: <20260530160228.136131778@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -62,87 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jie <jiewang2024@lzu.edu.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c43ffdcfdbb5567b1f143556df8a04b4eeea041c ]
+[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
 
-Only process RESPONSE packets while the service connection is still in
-RXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before
-running response verification and security initialization, then use a local
-secured flag to decide whether to queue the secured-connection work after
-the state transition. This keeps duplicate or late RESPONSE packets from
-re-running the setup path and removes the unlocked post-transition state
-test.
+In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
+be substituted for a NULL key pointer, but the variable this is done with
+is subsequently not used.
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jie Wang <jiewang2024@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Fix this by using "key" rather than "rx->key" when filling in the
+connection parameters.
+
+Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
+doesn't use sendmsg() directly and so bypasses the issue.  Further,
+AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
+in that manner works.  Since this hasn't been noticed to this point, it
+might be better just to remove the "key" variable and the code that sets it
+- and, arguably, rxrpc_init_client_call_security() would be a better place
+to handle it.
+
+Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-21-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted to spin_lock_bh usage, 3-arg verify_response(), and direct rxrpc_call_is_secure() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/conn_event.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ net/rxrpc/sendmsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -293,6 +293,7 @@ static int rxrpc_process_event(struct rx
- 			       u32 *_abort_code)
- {
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+	bool secured = false;
- 	__be32 wtmp;
- 	u32 abort_code;
- 	int loop, ret;
-@@ -337,6 +338,13 @@ static int rxrpc_process_event(struct rx
- 							    _abort_code);
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -641,7 +641,7 @@ rxrpc_new_client_call_for_sendmsg(struct
  
- 	case RXRPC_PACKET_TYPE_RESPONSE:
-+		spin_lock_bh(&conn->state_lock);
-+		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
-+			spin_unlock_bh(&conn->state_lock);
-+			return 0;
-+		}
-+		spin_unlock_bh(&conn->state_lock);
-+
- 		ret = conn->security->verify_response(conn, skb, _abort_code);
- 		if (ret < 0)
- 			return ret;
-@@ -351,17 +359,18 @@ static int rxrpc_process_event(struct rx
- 
- 		spin_lock(&conn->bundle->channel_lock);
- 		spin_lock_bh(&conn->state_lock);
--
- 		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
- 			conn->state = RXRPC_CONN_SERVICE;
--			spin_unlock_bh(&conn->state_lock);
-+			secured = true;
-+		}
-+		spin_unlock_bh(&conn->state_lock);
-+
-+		if (secured) {
- 			for (loop = 0; loop < RXRPC_MAXCALLS; loop++)
- 				rxrpc_call_is_secure(
- 					rcu_dereference_protected(
- 						conn->channels[loop].call,
- 						lockdep_is_held(&conn->bundle->channel_lock)));
--		} else {
--			spin_unlock_bh(&conn->state_lock);
- 		}
- 
- 		spin_unlock(&conn->bundle->channel_lock);
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.local		= rx->local;
+-	cp.key			= rx->key;
++	cp.key			= key;
+ 	cp.security_level	= rx->min_sec_level;
+ 	cp.exclusive		= rx->exclusive | p->exclusive;
+ 	cp.upgrade		= p->upgrade;
 
 
