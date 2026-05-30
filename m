@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9204346A04;
-	Sat, 30 May 2026 16:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDF7348C5E;
+	Sat, 30 May 2026 16:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158277; cv=none; b=IokAmruF3F7U8T/c4EzZtJxecgm4KUL5ZaO89VxhIrhAzsxyGkWa/iPwmQoF+N5U/AmrjDFlSg5OPnVi4IddH6dV2JuQtmC9j89FmxXuuPu1g5dbF2u2UrnbXzVlx0GBAHuuCrmBx+LnFyG3qY2Ibi3lh7eldZ6/aOdJAHPLDMs=
+	t=1780158292; cv=none; b=G+RJYbRdQ126c3/3Gm6+2K6f1QLYjYAVbJeHsGRn+58X44NzpeYYhevRJ3x41k52QwMbsM9pFX0Vqzm2WecOfEZwQ9WlPSMAr0kklvajZbamoL4Ogp4fd8NhqKhFFNae5U88hEi0NUv4UDPt0OWWodm8tNwW4lvuKwO38BM268c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158277; c=relaxed/simple;
-	bh=FSFc9K3gEXIdgb5uGYN+O+Ai5+jkmXnk+4MCiRcJk44=;
+	s=arc-20240116; t=1780158292; c=relaxed/simple;
+	bh=xbNyofANtFxYiYdTybOjm78usgdplaapy094gJ6StCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=phJQnBGobagKnXstr9zM0BNLvvTcwoEtacgQlh8NmNObyxgQiM0I/uj3B3+r/MhyczKY5FjjTV3yXZOrp48bKd2B3AGRCHlqppQINdvCfK/+FraiXArmlaydlO0bsOYRfyeoSgL1FjpKDqokbUzg5Q+NdQCA+vF1xHiaCTQCWXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjkXfR5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kkVRlH4Xr0WIqeBoX4ljMjOMPy/gAnY/SYWEbUOwEYI+4k5Zsj/3WvvGYf8P7K3xJYgjkaxAykMbdJnsin7n3K4rVqzSVErZqUgegomqLkA0+Nc8Polv0K82WUEoWRGTu9mVsuPV96EDnn5dg4lcMgW46pomZ+jCICVBEZmAHfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA1PoAG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjkXfR5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8710C1F00893;
-	Sat, 30 May 2026 16:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA1PoAG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9D31F00893;
+	Sat, 30 May 2026 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158276;
-	bh=JkflEZDoHpxmVVgPEKQuDIfhvDOHncDqO13/A6GHYnw=;
+	s=korg; t=1780158290;
+	bh=0Br7jvNCjvriXcHbNJAhbmptN8RfHOSZc95YCEW8Jqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sjkXfR5COqEzu76Jl+nOApVSM+xofX5fqoFYbV3+w/oEWiV3Hg0Eg+0RT9AK2uIZR
-	 akoIEgOsV4M/0P5K15WGcfWvdshlqZjOw2M3ejTuH9QM7YZ7tU2aroG75K9zd4+xSq
-	 Kk9gJuEJ72TkGtAS5MaVtDWPSFWhcXaccaICGehM=
+	b=RA1PoAG/2Y08xdQnEK+oF8R64huLi9kFBtid7BoelsMXZIsmVVmr4nWH7mvJU+so7
+	 FVbOKjbWxK99uVRVk3Zmvs5BiE5eUZGw6hzh2V1uAbdCts8WrCDg9pl2jlqHsSvO+X
+	 roCx07xxBc4c3MjKCS8Dm4wfPGBxoD74YoKDDLHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gilson=20Marquato=20J=C3=BAnior?= <gilsonmandalogo@hotmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/969] ASoC: amd: yc: Add DMI entry for HP Laptop 15-fc0xxx
-Date: Sat, 30 May 2026 17:52:20 +0200
-Message-ID: <20260530160300.915299164@linuxfoundation.org>
+Subject: [PATCH 6.1 017/969] pinctrl: intel: Fix the revision for new features (1kOhm PD, HW debouncer)
+Date: Sat, 30 May 2026 17:52:21 +0200
+Message-ID: <20260530160300.939381208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,49 +44,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gilson Marquato Júnior <gilsonmandalogo@hotmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 8ec017cf31299c4b6287ebe27afe81c986aeef88 ]
+[ Upstream commit a4337a24d13e9e3b98a113e71d6b80dc5ed5f8c4 ]
 
-The HP Laptop 15-fc0xxx (subsystem ID 0x103c8dc9) has an internal
-DMIC connected to the AMD ACP6x audio coprocessor. Add a DMI quirk
-entry so the internal microphone is properly detected on this model.
+The 1kOhm pull down and hardware debouncer are features of the revision 0.92
+of the Chassis specification. Fix that in the code accordingly.
 
-Tested on HP Laptop 15-fc0237ns with Fedora 43 (kernel 6.19.9).
-
-Signed-off-by: Gilson Marquato Júnior <gilsonmandalogo@hotmail.com>
-Link: https://patch.msgid.link/20260330-hp-15-fc0xxx-dmic-v2-v1-1-6dd6f53a1917@hotmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pinctrl/intel/pinctrl-intel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index d650091d3f302..c9bc2289d3661 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -45,6 +45,13 @@ static struct snd_soc_card acp6x_card = {
- };
- 
- static const struct dmi_system_id yc_acp_quirk_table[] = {
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP Laptop 15-fc0xxx"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
+index 8542053d4d6d0..2c357a69e0345 100644
+--- a/drivers/pinctrl/intel/pinctrl-intel.c
++++ b/drivers/pinctrl/intel/pinctrl-intel.c
+@@ -1547,7 +1547,7 @@ static int intel_pinctrl_probe(struct platform_device *pdev,
+ 		value = readl(regs + REVID);
+ 		if (value == ~0u)
+ 			return -ENODEV;
+-		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x94) {
++		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x92) {
+ 			community->features |= PINCTRL_FEATURE_DEBOUNCE;
+ 			community->features |= PINCTRL_FEATURE_1K_PD;
+ 		}
 -- 
 2.53.0
 
