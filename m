@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634433AB26B;
-	Sat, 30 May 2026 18:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B07F3AB285;
+	Sat, 30 May 2026 18:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166514; cv=none; b=pY73U9hb35CManHd1QeJFgEhZsSRkQtXxVEa8FDqPYrxNe3ljbOcz0NPUdqoiHcW98dPkeTZTk3i2Y1AZjwGePtv54quu99PigptxNPItw0qJ1Z62sPQ2aD4Sck2OXpGBoowhJd9Ti4WJeDMepUVkhxBU+Ha6pp6V/IvFxMo0vw=
+	t=1780166515; cv=none; b=Jkmo7eKCiuQ4/cvmZjWJMso6RegHWj65Ph615Ml+XUtxvAs1QX9uGiUXDRH/lbMDI/YOWar1O8xRsD0Aq+7QcOr8T28odOmeGE7/59BdPm4/1CZBH2p0A9YdYXtCoc/Tf7Us0u6EVL5ASr+xx3wD2ie7Dpml61fEVaIaS5hJDmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166514; c=relaxed/simple;
-	bh=711tM16cQT1zH9bIvsh9xgHA0nH/geET11cdShpVBnA=;
+	s=arc-20240116; t=1780166515; c=relaxed/simple;
+	bh=Ya1Gh3cgotlvweZkJskJoCS7Gw6oEkHVfZJFv1W/liI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2BRywxOnu0E6pWCepd8kxtGDQl/CjF9mcRop9nrtxIO+i/Ovb3JLjWGt+H4I6Pxh/O1O9GKpE3toEG2ax2Lqt2ILxAgAKxwy4mKT1KZnL4upKpeUQtzHx4WOngkPE2HIiMIEyVpK0yrhdKqxgxDdzGAx1fuxSVzmk4GQNagaEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j15k1Pgq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bXLwlrqehrZFTUCMXctH0ChbTcDSHpCWePuZz6OL2jyYqbNZyJ2+jYSZEokEujqKAgPXMIop/7X4uooJp98zwMDpyA92WqjVMdOMRo/EoUZVFy2U4r4ExArHEDGNG1C6elbfV/Hr4ZN3w+OV77dfw1W0+8nNnvojs/4J7URR4pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6e87bab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j15k1Pgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E29A1F00899;
-	Sat, 30 May 2026 18:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6e87bab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BD81F00898;
+	Sat, 30 May 2026 18:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166512;
-	bh=u6VxJKyAMcXFt3wvSGjQ0+nrKvOVZvWN47lBLZkoIM8=;
+	s=korg; t=1780166509;
+	bh=TK0ecHOxCGOJmACgCvEN4uUEybaW2or7DyKrrHAXV+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j15k1PgqQcJogkmRk/WrMiUamV1+pS8w4tX0cqXpKnuv3VWbCOGtXqCg1IAyAGxm2
-	 izmNGFAZeXUoBhybx5i3kOzHyTaLxycSLg1ywfEwuwDSEdmxSveQmqQT84Y948ATZC
-	 jbFg1KRMu+J2fcUS4Uc0xn5xzv668tqGdEG5zDGA=
+	b=G6e87bablRZ5wN1h82Fm8nwePqlxQ6QPWQINlq79oA0e3suca5OLr5YJgwYH57HY4
+	 fWE0DuRrbdT1ollTOJLJqC+My2VlyfuFu3hV6R/fHrtospW8ptZa9BxFBcrVwQ4GSx
+	 +6rNPEJxLyrjFBqdeUGPXq7olq0AGKVMf6CjcwzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Schumaker <anna.schumkaer@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 394/589] nfs/blocklayout: Fix compilation error (`make W=1`) in bl_write_pagelist()
-Date: Sat, 30 May 2026 18:04:35 +0200
-Message-ID: <20260530160235.144316340@linuxfoundation.org>
+Subject: [PATCH 5.10 393/589] mfd: mc13xxx-core: Fix memory leak in mc13xxx_add_subdevice_pdata()
+Date: Sat, 30 May 2026 18:04:34 +0200
+Message-ID: <20260530160235.121536766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit f83c8dda456ce4863f346aa26d88efa276eda35d ]
+[ Upstream commit a5a65a7fb2f7796bbe492cd6be59c92cb64377d1 ]
 
-Clang compiler is not happy about set but unused variable
-(when dprintk() is no-op):
+The memory allocated for cell.name using kmemdup() is not freed when
+mfd_add_devices() fails. Fix that by using devm_kmemdup().
 
-.../blocklayout/blocklayout.c:384:9: error: variable 'count' set but not used [-Werror,-Wunused-but-set-variable]
-
-Remove a leftover from the previous cleanup.
-
-Fixes: 3a6fd1f004fc ("pnfs/blocklayout: remove read-modify-write handling in bl_write_pagelist")
-Acked-by: Anna Schumaker <anna.schumkaer@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 8e00593557c3 ("mfd: Add mc13892 support to mc13xxx")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260120102622.66921-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/mfd/mc13xxx-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index a853711bcad27..145608a373193 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -404,14 +404,13 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
- 	sector_t isect, extent_length = 0;
- 	struct parallel_io *par = NULL;
- 	loff_t offset = header->args.offset;
--	size_t count = header->args.count;
- 	struct page **pages = header->args.pages;
- 	int pg_index = header->args.pgbase >> PAGE_SHIFT;
- 	unsigned int pg_len;
- 	struct blk_plug plug;
- 	int i;
+diff --git a/drivers/mfd/mc13xxx-core.c b/drivers/mfd/mc13xxx-core.c
+index e281a9202f110..a2b016a9eeae6 100644
+--- a/drivers/mfd/mc13xxx-core.c
++++ b/drivers/mfd/mc13xxx-core.c
+@@ -377,7 +377,7 @@ static int mc13xxx_add_subdevice_pdata(struct mc13xxx *mc13xxx,
+ 	if (snprintf(buf, sizeof(buf), format, name) > sizeof(buf))
+ 		return -E2BIG;
  
--	dprintk("%s enter, %zu@%lld\n", __func__, count, offset);
-+	dprintk("%s enter, %u@%lld\n", __func__, header->args.count, offset);
+-	cell.name = kmemdup(buf, strlen(buf) + 1, GFP_KERNEL);
++	cell.name = devm_kmemdup(mc13xxx->dev, buf, strlen(buf) + 1, GFP_KERNEL);
+ 	if (!cell.name)
+ 		return -ENOMEM;
  
- 	/* At this point, header->page_aray is a (sequential) list of nfs_pages.
- 	 * We want to write each, and if there is an error set pnfs_error
-@@ -453,7 +452,6 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
- 		}
- 
- 		offset += pg_len;
--		count -= pg_len;
- 		isect += (pg_len >> SECTOR_SHIFT);
- 		extent_length -= (pg_len >> SECTOR_SHIFT);
- 	}
 -- 
 2.53.0
 
