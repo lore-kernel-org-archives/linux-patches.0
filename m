@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837BD2EF652;
-	Sat, 30 May 2026 18:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D8B313E34;
+	Sat, 30 May 2026 18:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166076; cv=none; b=DUejc8KPY8HHjS2P4OoCODdKoXXOKvptPFpGVA+jD64p1oLQHvBL90M/AFgrQ74vcxZS0C4gTNOLVYYh8cm64t71/zFK1gRfK/ADlu7FLAQjiW304wEGpJX2bz59aYEEt5aHU9A1+Ah53D5IMDNTe2KhZxqa66V/A6+touJXfgM=
+	t=1780166079; cv=none; b=AaLaeuUx2XoNzYf7WJrQftc/HpBjJ0vJEHL7R0boxC3/bGjBhhqi6dqbSNwuCYQT2SxUUXs/ZK3HgFfDeFhxp8JGzf0ZGlsOknj67bBf3ZeH5FzSc217FiNY313xOn+WZNWUD225HpcT/8zYoK8mVHl6nEN54KSn/3oEqs35tTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166076; c=relaxed/simple;
-	bh=vOT+DJRm8LMi80ODFqO11T/CH+6kxQnDXUZA6yII1Qk=;
+	s=arc-20240116; t=1780166079; c=relaxed/simple;
+	bh=PTGbxerrUnoPw4r9FgOyesOvZ05sC3/iplSEMQBgqno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFu+ENMjuU43tm+ta9encbintK3UE1lDDjoqtKcZD6PwYR6r7oAmf7AxGB2G8hoR6cDt1jm6XIYRvS4OM7LiKcEzjf7xOruFCFlq/RUdOhCarQo7lcDkTe+AdFe/gtrjXdldq/LPEkuHj5RSY4zxSKEhUKkX4c9+rpl6V3yvv/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2VpC/SK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AOthPxJtYKadPmFyFF0f/rS1Gy36/Th/X+jpCz5JGNPSgR+9/JA60lrnXkcCk0CtmIDLwl5p2PagUmjRaYc6+gUSqvoQ148hSLXhuxjsKBVJpUK3LmMpS+fB5Ly9m+Eqt4MMfXLkWLyCp96Ovp3Tdj/lWMtgILOH1HV+LpPLvK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqw/tl5A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2VpC/SK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C473C1F00893;
-	Sat, 30 May 2026 18:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqw/tl5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6781F00893;
+	Sat, 30 May 2026 18:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166075;
-	bh=L7PSwrHHm76De6TU9wNV6CgvswjZYAB2appAa8QcsGQ=;
+	s=korg; t=1780166078;
+	bh=WoVG7fdgp9HvfA+0k1H6JcVZMVTUoNZysHsArPBfpVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V2VpC/SKbgglAOqGUcydDi3poi6sdXUPH6yQkaT68Gn/nidbYavwQu3I+zeZ+ibNc
-	 nqYS3JQfqm6I2C5foKnP6ArPMdJDVyhL2YkW6tyCGgoxoog27cgqw3dKYmb881hCyI
-	 JcMV0RVGHOoPt0LtCNcwVvP+Ukh7QPC8GYZnV4Dc=
+	b=mqw/tl5Am86TjyOBp9+dnTr3SRbCHmPYmT2Q7eAm2q+myeg8e/uJ1ep8/nh3fWUKu
+	 /mCU6WGWs7aphQ3oDQuYCwO9ol3YjRTETjQ0s5CqbD9a6wi4PCcDVbDDbbU+0VJWLp
+	 hmd0GSWysX6ZuTYExZpPXVEH4grGMlXTVoqCZO1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oliver Neukum <oneukum@suse.com>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 266/589] media: rc: xbox_remote: heed DMA restrictions
-Date: Sat, 30 May 2026 18:02:27 +0200
-Message-ID: <20260530160231.982529121@linuxfoundation.org>
+Subject: [PATCH 5.10 267/589] media: rc: streamzap: Error handling in probe
+Date: Sat, 30 May 2026 18:02:28 +0200
+Message-ID: <20260530160232.006498371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,59 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-commit e280d1e5e3f2595bbb43fe6e1bce00c59a43c0ff upstream.
+commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
 
-The buffer for IO must not be part of the device structure
-because that violates the DMA coherency rules.
+If submitting the URB fails, the device will be unusable.
+Probe() must fail.
 
-Fixes: 02d32bdad3123 ("media: rc: add driver for Xbox DVD Movie Playback Kit")
+Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
 Cc: stable@vger.kernel.org
 Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/xbox_remote.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/rc/streamzap.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/media/rc/xbox_remote.c
-+++ b/drivers/media/rc/xbox_remote.c
-@@ -55,7 +55,7 @@ struct xbox_remote {
- 	struct usb_interface *interface;
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -255,9 +255,8 @@ static void streamzap_callback(struct ur
+ 	case -ESHUTDOWN:
+ 		/*
+ 		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+ 		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
+ 		return;
+ 	default:
+ 		break;
+@@ -398,11 +397,16 @@ static int streamzap_probe(struct usb_in
  
- 	struct urb *irq_urb;
--	unsigned char inbuf[DATA_BUFSIZE] __aligned(sizeof(u16));
-+	u8 *inbuf;
+ 	usb_set_intfdata(intf, sz);
  
- 	char rc_name[NAME_BUFSIZE];
- 	char rc_phys[NAME_BUFSIZE];
-@@ -220,6 +220,10 @@ static int xbox_remote_probe(struct usb_
- 	if (!xbox_remote || !rc_dev)
- 		goto exit_free_dev_rdev;
+-	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
++	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
++	if (retval < 0) {
+ 		dev_err(sz->dev, "urb submit failed\n");
++		goto rc_submit_fail;
++	}
  
-+	xbox_remote->inbuf = kzalloc(DATA_BUFSIZE, GFP_KERNEL);
-+	if (!xbox_remote->inbuf)
-+		goto exit_free_inbuf;
-+
- 	/* Allocate URB buffer */
- 	xbox_remote->irq_urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!xbox_remote->irq_urb)
-@@ -266,6 +270,8 @@ exit_kill_urbs:
- 	usb_kill_urb(xbox_remote->irq_urb);
- exit_free_buffers:
- 	usb_free_urb(xbox_remote->irq_urb);
-+exit_free_inbuf:
-+	kfree(xbox_remote->inbuf);
- exit_free_dev_rdev:
- 	rc_free_device(rc_dev);
- 	kfree(xbox_remote);
-@@ -290,6 +296,7 @@ static void xbox_remote_disconnect(struc
- 	usb_kill_urb(xbox_remote->irq_urb);
- 	rc_unregister_device(xbox_remote->rdev);
- 	usb_free_urb(xbox_remote->irq_urb);
-+	kfree(xbox_remote->inbuf);
- 	kfree(xbox_remote);
- }
- 
+ 	return 0;
+-
++rc_submit_fail:
++	rc_free_device(sz->rdev);
++	usb_set_intfdata(intf, NULL);
+ rc_dev_fail:
+ 	usb_free_urb(sz->urb_in);
+ free_buf_in:
 
 
