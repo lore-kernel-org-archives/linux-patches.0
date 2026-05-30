@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913E130E853;
-	Sat, 30 May 2026 17:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9401C5799;
+	Sat, 30 May 2026 17:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162481; cv=none; b=frBtFeFCgCT84rkFOW9pvt/+cjBh71xgpfPxGcK/zNprKlNBnlZ4optqXZ/a7FH+hEgq1E+63dZpIWmEPW//NtcTMIfX7AZ7vC5xrYG9GYeQgSrXl+6gQwFIslcPrjo7fzL7+EiGY8afhsONC8CQHD8ktB0puJsqOmKHV8y/WIM=
+	t=1780162484; cv=none; b=FyvVw4W9fEBPxXS15YWqTmwJhMk5lEAFztrTvB4XK2k5o38U03XwQymoGddHDgbt0HNXjEfj9eARin+dRjZgpafswUnNp1Q4M25qelh0a1MAT1DwXa4p6KIV6derB/jMXYZ3BlCHGObE28LPMx67wQaEmPqRdei5YmxBK6gIHoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162481; c=relaxed/simple;
-	bh=QqXzyeQGNXjPMTb+LyEpe8GEN0UU35xOonty6Mf67Bs=;
+	s=arc-20240116; t=1780162484; c=relaxed/simple;
+	bh=/ICaCQTD/wCnpFbmj3EAwOYGDeXefu/oqHkiWrYieAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsZ7sDKVxT0bqmTDZRqHQJJHzBTjfLtPThKzUbfaiA/aE+qRsjXBgU5ePRJyl2jiMTmjuUxmmL8J1OM9395y8KS8ibdqeCXB3/LZURC+4s91wwd3slzgn/apLRS5J48aXPeOttF3ACKy9xaibz1EyCXs1cB1TlZtqvkrysJS92U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPeG+/00; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PPGxXX+vujCQWMnMXvO4bWQan3XlZ4ftHz3euAxwMVX1f7PUTs5PvsiRhZYwM/f+WqLAoIvYTe6dDv7/2XmDmuP1evHJyHRrBe+xoCtf+ebp8NgdH3H3Z5PxAXC2U52Xjv/41UxMZq5GZU7Z8py/nHHFqzu/a0AgT2KF2Qw7SUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTe2vcQO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPeG+/00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C911F00893;
-	Sat, 30 May 2026 17:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTe2vcQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6B21F00893;
+	Sat, 30 May 2026 17:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162480;
-	bh=xS/dQZhoPMoam7qN/5PGhsJToUdaTIl0GEepc4mxzuk=;
+	s=korg; t=1780162483;
+	bh=qE6mMWjI11g7Q9NLf+ZawOEStacW27Wj5UJZfTGHF+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QPeG+/00H6r/MorjRzyGdJFazTKSUe+2eKRK2rRC5xSjQOv8TeQ9q2n+dH+jaHN+7
-	 oSJlEU+z7/79PtOd7AWuaS3kAvPJZ8sCovargEt0jg9LET1Thgkj21o4oDdyuuSOpx
-	 33F4dVimgaJd1hNSK5zzh6EKYJkq/6sBcTwe7Msw=
+	b=vTe2vcQOdnyYro0cnvNWoSqevcU+mqip1C3dpPlO5zbC+7Zpc9tx5d7UYMX5B9FQp
+	 vJ/qZMFxhreU11eGSkrv1jvuFJvLECDjVpbjSEVYFrSTQnaSfF0r4ZbdGMhIluGjNT
+	 hkh9hWO+ldpJcXQDl+2yL/XYgVOSZ7bsZq+MLgBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 933/969] ethtool: fix ethnl_bitmap32_not_zero() bit interval semantics
-Date: Sat, 30 May 2026 18:07:37 +0200
-Message-ID: <20260530160326.508874158@linuxfoundation.org>
+Subject: [PATCH 6.1 934/969] drm/msm/dsi: dont dump registers past the mapped region
+Date: Sat, 30 May 2026 18:07:38 +0200
+Message-ID: <20260530160326.539232279@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,56 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3d042592ebd4c7e44974d556de0b727cb7db4dab ]
+[ Upstream commit 5b49a46baa853b26dbefa65c6c75dd9ff69f63d4 ]
 
-ethnl_bitmap32_not_zero() should return true if some bit in [start, end)
-is set:
+On DSI 6G platforms the IO address space is internally adjusted by
+io_offset. Later this adjusted address might be used for memory dumping.
+However the size that is used for memory dumping isn't adjusted to
+account for the io_offset, leading to the potential access to the
+unmapped region. Lower ctrl_size by the io_offset value to prevent
+access past the mapped area.
 
-- Fix inverted memchr_inv() sense: return true when the scan finds a
-  non-zero byte, not when the middle words are all zero.
-- Return false for an empty interval (end <= start).
-- When end is 32-bit aligned, indices in [start, end) do not include any
-  bits from map[end_word]; return false after earlier checks found no
-  non-zero data.
+ msm_disp_snapshot_add_block+0x1d4/0x3c8 [msm] (P)
+ msm_dsi_host_snapshot+0x4c/0x78 [msm]
+ msm_dsi_snapshot+0x28/0x50 [msm]
+ msm_disp_snapshot_capture_state+0x74/0x140 [msm]
+ msm_disp_snapshot_state_sync+0x60/0x90 [msm]
+ _msm_disp_snapshot_work+0x30/0x90 [msm]
+ kthread_worker_fn+0xdc/0x460
+ kthread+0x120/0x140
 
-Fixes: 10b518d4e6dd ("ethtool: netlink bitset handling")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bac2c6a62ed9 ("drm/msm: get rid of msm_iomap_size")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/721747/
+Link: https://lore.kernel.org/r/20260428-msm-fix-dsi-dump-v1-1-5d4cb5ccfac7@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/bitset.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
-index f0883357d12e5..4691d6d0f2b75 100644
---- a/net/ethtool/bitset.c
-+++ b/net/ethtool/bitset.c
-@@ -91,7 +91,7 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
- 	u32 mask;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 88843505d89c9..a2a6cb3a2262d 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1947,6 +1947,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
  
- 	if (end <= start)
--		return true;
-+		return false;
+ 	/* fixup base address by io offset */
+ 	msm_host->ctrl_base += cfg->io_offset;
++	msm_host->ctrl_size -= cfg->io_offset;
  
- 	if (start % 32) {
- 		mask = ethnl_upper_bits(start);
-@@ -104,11 +104,11 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
- 		start_word++;
- 	}
- 
--	if (!memchr_inv(map + start_word, '\0',
--			(end_word - start_word) * sizeof(u32)))
-+	if (memchr_inv(map + start_word, '\0',
-+		       (end_word - start_word) * sizeof(u32)))
- 		return true;
- 	if (end % 32 == 0)
--		return true;
-+		return false;
- 	return map[end_word] & ethnl_lower_bits(end);
- }
- 
+ 	ret = devm_regulator_bulk_get_const(&pdev->dev, cfg->num_regulators,
+ 					    cfg->regulator_data,
 -- 
 2.53.0
 
