@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F3532B11D;
-	Sat, 30 May 2026 17:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D9932D42B;
+	Sat, 30 May 2026 17:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160498; cv=none; b=N6F/JSaH+9zStAp4g8ya4SD7Jh5qgu8ewtBD4Dg57a9w8VUxgapIKMLz7VMm93Al5fCDp6a4UHauSIjRQXKM9BABlFq35JOVFgyJvdVFFBuvz2BOwC7Bu4OJyaux/Dx9HlYeFYkDHUm+ezcI6M47/tPnpf+HCcjuMaHyCrUacXo=
+	t=1780160502; cv=none; b=Exez7AzOusgKT0edTMup9BA06RnOPzCcTmHn5xyMeCIA0oURd3Q9zG0SvgF2fiLF/Sq9Ms0EGpq8Rmw+9Zzr305xIbPNje1UX8ZqD6u/X/rKgSQKjtTsSdT+mqCZelfyzsSTQBUmm8q/qXNE2+Y+nG3f8SR3paiEG/WwOPP8aqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160498; c=relaxed/simple;
-	bh=wc3LV2/zIfv2k35MKtksXYBjQq1OLHgxBeW25ki+QOA=;
+	s=arc-20240116; t=1780160502; c=relaxed/simple;
+	bh=aCtwWwwQkB2iAlj57wJqHHI18n/f0nGRWitT47Sb+4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzChWmrCBqUzJ1fuqkywzE9ngQyZjQ5FCP7dzPaJF77ZFGZfau4zLCZQ8p5wf/IxepEOTUjBgzPnZ2GzSD7z0bBOkOVIU+fHCPlrNrGcr612jU8Y2xXE0cJOwYTqX9rUVZAVk+AQxIeIV28riJ+WBJ8XUzoqsFA1Mid/9qcSN9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdX0y0oq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGcRit6wH180Xp02SCE/5Tu5EySTMXfFhzdIJtbbQgIftVe9cl6Ewm4lg2mRnR9PpAARxzcUeyD4Cq+sJln52cZfn5ND5y7HH6H/DcpSYo5v6R17gEp177w0skQVOjJpTcHAm5jjIXlju9pBHTzujUX2eWFvpKeflR/ThDzowQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvJW0DPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdX0y0oq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D361F00893;
-	Sat, 30 May 2026 17:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvJW0DPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F611F00893;
+	Sat, 30 May 2026 17:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160497;
-	bh=Zo2HKM6gEWd2gNQ66JQavLeBW6qsEw70JbEJuqqPkRA=;
+	s=korg; t=1780160501;
+	bh=xMHb3F2eX9ZxL1AAfolfxLrf4mrvdf7P15xRfImwfEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdX0y0oqvv0YEmS05/qVcFzaOnuKZrT1Nt5TZsBG9woVsiN6AVUktxVIC3aQmY3Ee
-	 MgdJgtIY8chuTpDf1j6A1mtAo3qePOcDdkDle9t1sjXxlVrVD7qxJ+J6jcR61qEiCy
-	 spDFz5u5kWOImTTVGyyEjzDnOcoD/KwF4eGoSbh8=
+	b=TvJW0DPWGqmKebQg0h/JBBoC8djPzX+1QsuCnBwV4gzE5jKwDQAj81K7CXOzmQHb2
+	 srL/pAfR09RZXK6dZUilPsgt6l1AQH39iMOba3jmq1klIho5hSXpT93rllpcYO2RNJ
+	 Wue1lwnoKCx4Q8RSosrQBsK5v4eXSZ11qEuP8IsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 355/969] isofs: validate block number from NFS file handle in isofs_export_iget
-Date: Sat, 30 May 2026 17:57:59 +0200
-Message-ID: <20260530160310.147633735@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 356/969] libceph: Fix slab-out-of-bounds access in auth message processing
+Date: Sat, 30 May 2026 17:58:00 +0200
+Message-ID: <20260530160310.173461112@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,54 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 24376458138387fb251e782e624c7776e9826796 upstream.
+commit 1c439de70b1c3eb3c6bffa8245c16b9fc318f114 upstream.
 
-isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
-controlled block number (ifid->block or ifid->parent_block) from
-the NFS file handle to isofs_export_iget(), which only rejects
-block == 0 before calling isofs_iget() and ultimately sb_bread().
-A crafted file handle with fh_len sufficient to pass the check
-added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
-fid") can still drive the server to read any in-range block on the
-backing device as if it were an iso_directory_record.  That earlier
-fix was assigned CVE-2025-37780.
+If a (potentially corrupted) message of type CEPH_MSG_AUTH_REPLY
+contains a positive value in its result field, it is treated as an
+error code by ceph_handle_auth_reply() and returned to
+handle_auth_reply(). Thereafter, an attempt is made to send the
+preallocated message of type CEPH_MSG_AUTH, where the returned value is
+interpreted as the size of the front segment to send. If the result
+value in the message is greater than the size of the memory buffer
+allocated for the front segment, an out-of-bounds access occurs, and
+the content of the memory region beyond this buffer is sent out.
 
-sb_bread() on an out-of-range block returns NULL cleanly via the
-EIO path, so there is no memory-safety violation.  For in-range
-reads of adjacent-partition data on the same block device, the
-unrelated bytes end up in iso_inode_info fields that reach the NFS
-client as dentry metadata.  The deployment surface (isofs exported
-over NFS from loop-mounted images) is narrow and requires an
-authenticated NFS peer, but the malformed-file-handle class is
-reportable as hardening next to the existing CVE-2025-37780 fix.
+This patch fixes the issue by treating only negative values in the
+result field as errors. Positive values are therefore treated as success
+in the same way as a zero value. Additionally, a BUG_ON is added to
+__send_prepared_auth_request() comparing the len parameter to
+front_alloc_len to prevent sending the message if it exceeds the bounds
+of the allocation and to make it easier to catch any logic flaws leading
+to this.
 
-Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
-the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
-call sites with a single line.
-
-Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/auth.c       |    2 +-
+ net/ceph/mon_client.c |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
- {
- 	struct inode *inode;
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -257,7 +257,7 @@ int ceph_handle_auth_reply(struct ceph_a
+ 		ac->negotiating = false;
+ 	}
  
--	if (block == 0)
-+	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
- 		return ERR_PTR(-ESTALE);
- 	inode = isofs_iget(sb, block, offset);
- 	if (IS_ERR(inode))
+-	if (result) {
++	if (result < 0) {
+ 		pr_err("auth protocol '%s' mauth authentication failed: %d\n",
+ 		       ceph_auth_proto_name(ac->protocol), result);
+ 		ret = result;
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -174,6 +174,8 @@ int ceph_monmap_contains(struct ceph_mon
+  */
+ static void __send_prepared_auth_request(struct ceph_mon_client *monc, int len)
+ {
++	BUG_ON(len > monc->m_auth->front_alloc_len);
++
+ 	monc->pending_auth = 1;
+ 	monc->m_auth->front.iov_len = len;
+ 	monc->m_auth->hdr.front_len = cpu_to_le32(len);
 
 
