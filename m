@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4DD2F25E4;
-	Sat, 30 May 2026 16:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60442F25E4;
+	Sat, 30 May 2026 16:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158527; cv=none; b=dqM2bKTTzd9UB9G9GndD8EgvjfWU+rpCQOwEXJsaIjo3q9Qyug4ENusqDXkkcTmf+IpjeT0D7BZ2VGbtbenBQ+h13MP5tH6bOSIDMDiRF2UtgZu5h+ID8DdeBLzeCcunwTpOjS4UI9FpOJOA+CHE5kRQrevYKowaFPPcTSG20bI=
+	t=1780158534; cv=none; b=cIBLM50nCRBB1AVufW7OCdQUu4jp6OMDri8qgNgOGNkschuBo0AeCgT+k7dAcPYRHE1qo3qx7o5s+lEejgZbQkCEa+8hnf7qcq/fP+bz0ITvvO3fCRPA8x8/+dguXeD11NMzEdxVwm9LG/oLe1VABB29oMKDcx7TBgCFiv1izBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158527; c=relaxed/simple;
-	bh=ijfzh8tVV8/IO7NrZRHRXpm+hxnD3iUiqnZYhRGRGQM=;
+	s=arc-20240116; t=1780158534; c=relaxed/simple;
+	bh=Y5xeR9pkaxxWlA7LIOrnFhjxnFRln7ZFCGSgxxDnHOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1SvUENSQbzEMIVEZHCn90HjUaQXIZzf78dGE8Uox57PVEWPruuBUDbITklQpC3sMj8KlgHR4Q4HVJqAO5YC7nM1YCVCRT3mQQ8tBfHL9NrlBINTnh1EWGNZa/OJsTj3YwvmFCoMfUcgi1SjK0Ts8NfjvUZEhSOoEcRplgrCcS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+IBab4E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1AvIOmXBWCnPiNtgKRohioqOKaEW21o0GVFdb6XaADrxe83ySMWDPOfVxTFBJ6P5i7qduqurcvBqZ7ywd9Blt6oabIYDM7OmQM57c8KFrFsbXdnajOYM4OZHAZsgZRMVVhCztqWPP56GW7hE629yAwOUyZKbyHouWjAVKKNPy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzdxIpM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+IBab4E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877B41F00893;
-	Sat, 30 May 2026 16:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzdxIpM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9B51F00893;
+	Sat, 30 May 2026 16:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158525;
-	bh=2HuPvQyl4/4slJ8sBWJkPp31TE0LiXLR547JYgRm8+o=;
+	s=korg; t=1780158533;
+	bh=2cO3aSB2tsLttjns6TZ0tPlZzkaAkrllnq0cjCESYDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a+IBab4EsIv21HYUWPp+5v4nSG1lIofWe9XyMXeM4ocVV+xtFfIGcley+Qn4uCYSA
-	 8sQEOr+oNUKMoaGSXQCAHe0KFfud4CS/REDI9EZx10FSUV/gGX2cophBVfTRDu/FaI
-	 DRLDShNZrHSO4DO4E9S1J5zFpBIBWY3wKLVR9uL4=
+	b=hzdxIpM/ZClmRvEG4qB9j5q/nzpO7ZKtePxYyfGHs8KYh0lsm74JnqkEw94JSlRYO
+	 sFUxIMZXVH7Pc9E/h8cYS1Abej12pGnPFo8R18HxFgCv7/fWsBlA58Tjkq28aElnxQ
+	 NB7fnQ/LdoidMD/5FjpmtUfItsaQuBCFhHxZoEWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Masaki Ota <masaki.ota@jp.alps.com>,
-	linux-input@vger.kernel.org,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 060/969] HID: alps: fix NULL pointer dereference in alps_raw_event()
-Date: Sat, 30 May 2026 17:53:04 +0200
-Message-ID: <20260530160302.041549959@linuxfoundation.org>
+	syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 034/969] net: lapbether: handle NETDEV_PRE_TYPE_CHANGE
+Date: Sat, 30 May 2026 17:52:38 +0200
+Message-ID: <20260530160301.370731534@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,44 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1badfc4319224820d5d890f8eab6aa52e4e83339 upstream.
+[ Upstream commit b120e4432f9f56c7103133d6a11245e617695adb ]
 
-Commit ecfa6f34492c ("HID: Add HID_CLAIMED_INPUT guards in raw_event
-callbacks missing them") attempted to fix up the HID drivers that had
-missed the previous fix that was done in 2ff5baa9b527 ("HID: appleir:
-Fix potential NULL dereference at raw event handle"), but the alps
-driver was missed.
+lapbeth_data_transmit() expects the underlying device type
+to be ARPHRD_ETHER.
 
-Fix this up by properly checking in the hid-alps driver that it had been
-claimed correctly before attempting to process the raw event.
+Returning NOTIFY_BAD from lapbeth_device_event() makes sure
+bonding driver can not break this expectation.
 
-Fixes: 73196ebe134d ("HID: alps: add support for Alps T4 Touchpad device")
-Cc: stable <stable@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: Masaki Ota <masaki.ota@jp.alps.com>
-Cc: linux-input@vger.kernel.org
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69cd22a1.050a0220.70c3a.0002.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Martin Schiller <ms@dev.tdt.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260402103519.1201565-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-alps.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wan/lapbether.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -437,6 +437,9 @@ static int alps_raw_event(struct hid_dev
- 	int ret = 0;
- 	struct alps_dev *hdata = hid_get_drvdata(hdev);
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index 56326f38fe8a3..da61716a66c46 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -444,33 +444,36 @@ static void lapbeth_free_device(struct lapbethdev *lapbeth)
+ static int lapbeth_device_event(struct notifier_block *this,
+ 				unsigned long event, void *ptr)
+ {
+-	struct lapbethdev *lapbeth;
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
++	struct lapbethdev *lapbeth;
  
-+	if (!(hdev->claimed & HID_CLAIMED_INPUT) || !hdata->input)
-+		return 0;
-+
- 	switch (hdev->product) {
- 	case HID_PRODUCT_ID_T4_BTNLESS:
- 		ret = t4_raw_event(hdata, data, size);
+ 	if (dev_net(dev) != &init_net)
+ 		return NOTIFY_DONE;
+ 
+-	if (!dev_is_ethdev(dev) && !lapbeth_get_x25_dev(dev))
++	lapbeth = lapbeth_get_x25_dev(dev);
++	if (!dev_is_ethdev(dev) && !lapbeth)
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
+ 	case NETDEV_UP:
+ 		/* New ethernet device -> new LAPB interface	 */
+-		if (!lapbeth_get_x25_dev(dev))
++		if (!lapbeth)
+ 			lapbeth_new_device(dev);
+ 		break;
+ 	case NETDEV_GOING_DOWN:
+ 		/* ethernet device closes -> close LAPB interface */
+-		lapbeth = lapbeth_get_x25_dev(dev);
+ 		if (lapbeth)
+ 			dev_close(lapbeth->axdev);
+ 		break;
+ 	case NETDEV_UNREGISTER:
+ 		/* ethernet device disappears -> remove LAPB interface */
+-		lapbeth = lapbeth_get_x25_dev(dev);
+ 		if (lapbeth)
+ 			lapbeth_free_device(lapbeth);
+ 		break;
++	case NETDEV_PRE_TYPE_CHANGE:
++		/* Our underlying device type must not change. */
++		if (lapbeth)
++			return NOTIFY_BAD;
+ 	}
+ 
+ 	return NOTIFY_DONE;
+-- 
+2.53.0
+
 
 
