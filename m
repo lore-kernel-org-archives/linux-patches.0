@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F132D42B;
-	Sat, 30 May 2026 17:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8235432D42B;
+	Sat, 30 May 2026 17:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160867; cv=none; b=uIpaqtjmUZIP8We6sy5U/7aJWv7VEfJr40Io3ipBBAKTYFrvmdlNJ0axKbm3dyYP3Na05YdbX8hx8BwNXwRf7fR4Bod/e8qMkEcXLR7xXAh9UZXpECumytD903cR+q8s2GywV2w+6cUPU2MACPL+eLMtHFroyCFtylOrOerNvjc=
+	t=1780160870; cv=none; b=FSBv9AmGawfGijUexsVPgUjuIi8ALVeWorDGs11R6l2IVJg2gVaJa3ZBrJ7x0RlPy7iHrVxM0y+3ckfoXN8knn41oG+btLFmQ+IbPVBJnX2YYd6Xx6UTclbchBDWOfmiXStH4G5Xd3ZuRbtnKHPlcFBmcCcb1jdTmkkOrgewUgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160867; c=relaxed/simple;
-	bh=m2t1hFx4T+xyp2xizDQ+3FyzOJUCa0QSIl3I161DBKo=;
+	s=arc-20240116; t=1780160870; c=relaxed/simple;
+	bh=yXIDfW27hLZbd/ZqxpwucJVBA6uX9egfZlHF7ykCvIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srilej8bNQQmNuAZXiW1CfZWD4/I+T2Abt6Bk5HTq5/1l4P22hZT5pdLUl2xi3syROsUxV7rT4v3/5nAX5qLmxjCL8/ZsEzBvTUmatxedyD561VkGgkTIhEFjiev36Cir39UFLL1YG/tU0C223DK5paXklzDfdnN2MLbreJ1tyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN604fZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f8MfE8HScGmbzEdFcUCTqq7z2K4h9d/bnuM23wupUGyGzuUQ77oHnNXVaPFWCG0UsD83iGQ9MbdzEQUSKxxC6dtAhLE5gHKuhxHlaajGK4LXFBpJD4vc+LQ+vMLZflkGd/T857JJUGw66ZLizD7Ja4qVS1ulnV6nHoMGM5gqaZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrNG5lcx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN604fZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F961F00898;
-	Sat, 30 May 2026 17:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrNG5lcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25901F00893;
+	Sat, 30 May 2026 17:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160866;
-	bh=eHDl/1gWkX9CdgFxpWqx1zCCaUHG1HDGdiZJOa3OctM=;
+	s=korg; t=1780160869;
+	bh=dhfTgCkQ7q1zMK4X0xCjiD/lyumvKtzP5PAhKu3nE2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vN604fZI7ELauYizn0uhe35wEeqSfQxi6hFruyd0ol78uI4b4d9LZBF0m9MCRXGer
-	 s6+KCc0p2Wm5dD2CskadIF4MB5xyJuohZ0DW71I7CplObqPKZE7tsO/xJOKRuCiWsX
-	 YN5Wcc2iP6ZmYdXVSjZHI7z41WSE0GKOxLlrDsf0=
+	b=VrNG5lcxhCrnBhZorVNOFnEoV7f5o38VP2D0AFfO+H3RHLeoi8YMxkJ6w4MKO1vpv
+	 0H1OuK4SP/sQuuwteAJBG6fBUux9DW1W6VSQSR/L6eatnX2Vart3xF4KRYVK2IqqfI
+	 nLGnZasFfXVhl6kyREIU5Sp8RjM/HgJWyPP6Ng5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 457/969] bpf: Use RCU-safe iteration in dev_map_redirect_multi() SKB path
-Date: Sat, 30 May 2026 17:59:41 +0200
-Message-ID: <20260530160312.900762341@linuxfoundation.org>
+Subject: [PATCH 6.1 458/969] wifi: rtw89: phy: fix uninitialized variable access in rtw89_phy_cfo_set_crystal_cap()
+Date: Sat, 30 May 2026 17:59:42 +0200
+Message-ID: <20260530160312.929372753@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,69 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 
-[ Upstream commit 8ed82f807bb09d2c8455aaa665f2c6cb17bc6a19 ]
+[ Upstream commit 047cddf88c611e616d49a00311d4722e46286234 ]
 
-The DEVMAP_HASH branch in dev_map_redirect_multi() uses
-hlist_for_each_entry_safe() to iterate hash buckets, but this function
-runs under RCU protection (called from xdp_do_generic_redirect_map()
-in softirq context). Concurrent writers (__dev_map_hash_update_elem,
-dev_map_hash_delete_elem) modify the list using RCU primitives
-(hlist_add_head_rcu, hlist_del_rcu).
+In the rtw89_phy_cfo_set_crystal_cap() function, for chips other than
+RTL8852A/RTL8851B, the values read by rtw89_mac_read_xtal_si() are
+stored into the local variables sc_xi_val and sc_xo_val. If either
+read fails, these variables remain uninitialized, they are later
+used to update cfo->crystal_cap and in debug print statements. This
+can lead to undefined behavior.
 
-hlist_for_each_entry_safe() performs plain pointer dereferences without
-rcu_dereference(), missing the acquire barrier needed to pair with
-writers' rcu_assign_pointer(). On weakly-ordered architectures (ARM64,
-POWER), a reader can observe a partially-constructed node. It also
-defeats CONFIG_PROVE_RCU lockdep validation and KCSAN data-race
-detection.
+Fix the issue by initializing sc_xi_val and sc_xo_val to zero,
+like is implemented in vendor driver.
 
-Replace with hlist_for_each_entry_rcu() using rcu_read_lock_bh_held()
-as the lockdep condition, consistent with the rcu_dereference_check()
-used in the DEVMAP (non-hash) branch of the same functions. Also fix
-the same incorrect lockdep_is_held(&dtab->index_lock) condition in
-dev_map_enqueue_multi(), where the lock is not held either.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20260320072645.16731-1-devnexen@gmail.com
+Fixes: 8379fa611536 ("rtw89: 8852c: add write/read crystal function in CFO tracking")
+Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260323140613.1615574-1-a.velichayshiy@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 71025d1311a57..c8d8977296bc1 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -636,7 +636,7 @@ int dev_map_enqueue_multi(struct xdp_frame *xdpf, struct net_device *dev_rx,
- 		for (i = 0; i < dtab->n_buckets; i++) {
- 			head = dev_map_index_hash(dtab, i);
- 			hlist_for_each_entry_rcu(dst, head, index_hlist,
--						 lockdep_is_held(&dtab->index_lock)) {
-+						rcu_read_lock_bh_held()) {
- 				if (!is_valid_dst(dst, xdpf))
- 					continue;
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index f6647f9d23939..980b8079bc707 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -2148,7 +2148,7 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
+ {
+ 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+-	u8 sc_xi_val, sc_xo_val;
++	u8 sc_xi_val = 0, sc_xo_val = 0;
  
-@@ -718,7 +718,6 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
- 	struct bpf_dtab_netdev *dst, *last_dst = NULL;
- 	int excluded_devices[1+MAX_NEST_DEV];
- 	struct hlist_head *head;
--	struct hlist_node *next;
- 	int num_excluded = 0;
- 	unsigned int i;
- 	int err;
-@@ -758,7 +757,7 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
- 	} else { /* BPF_MAP_TYPE_DEVMAP_HASH */
- 		for (i = 0; i < dtab->n_buckets; i++) {
- 			head = dev_map_index_hash(dtab, i);
--			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
-+			hlist_for_each_entry_rcu(dst, head, index_hlist, rcu_read_lock_bh_held()) {
- 				if (is_ifindex_excluded(excluded_devices, num_excluded,
- 							dst->dev->ifindex))
- 					continue;
+ 	if (!force && cfo->crystal_cap == crystal_cap)
+ 		return;
 -- 
 2.53.0
 
