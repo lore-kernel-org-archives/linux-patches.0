@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66ED6219303;
-	Sat, 30 May 2026 18:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB8217555;
+	Sat, 30 May 2026 18:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165371; cv=none; b=aEFXlAlzhKeDq06u+vDZs0LthcKbo8EOoOeqvNSp5OQhYJ5P/8qyuXTprS4v5YMjrtJYvgO3g1iLRAlUI5YFmwDYEWw+NDHns5fCKkYDKEC+TqXaMQrTZak56IpxvaVKGtIGJZk0FAwQmEII5IwGv4Pde4VUZSkxVcEJmPq8Lww=
+	t=1780165376; cv=none; b=Jgipw/6NnRxjM1UlcZ/wpRJ1sjnbnLZcWS8yuqcPydi277OaUGmlUAiY4KZ/2is8UwksgQwXJDuOLJUDYx2hmVCXvONfFeYmmnCjn+deErAsBDK+5N5X3HuWTo1cyY+3sot2J53rAgJFrU5L6yT21WU8jqkOta2wiX1rL5CEiu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165371; c=relaxed/simple;
-	bh=lLq74fo+f5yiHeEczv2joNCOyTulueAAh1qThQpHsv0=;
+	s=arc-20240116; t=1780165376; c=relaxed/simple;
+	bh=Nme/Ol/GYU2uCjXGdcUpmGDjuclTJtzivUQy1juhLLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZszlPQvb78rZLTeBKmgvzqxd5vwcmJo4H0B+naHcaMTNsAwQSJZ4ne8Pwaj1dvKGFY2r7GVc4CJcpPWISTo126y6RtMYMr4XbZ2DpigoYtRM7NVRPACEry7acMsw0bgprRnvCJf7O1KN/3Gy6GZHu600PyL/vLWqSU6Xfc+e0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuahXpS4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lX5H/hKYRV9EEXWT3DjXryYILLTgcIAONhxF25sEaHHcld2ec14l5FK3RtktZ+pqx4kygk5tVWS/hPmZKenxR9kTmDLYmcxtkW/PjHPJWHh7/tr/46oKCu7oBOC5jDYshghV2bVAl11qEltmqNePoNXk3w9dS6ORU55OJOWuTac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UipgmzbP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuahXpS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1BE1F00893;
-	Sat, 30 May 2026 18:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UipgmzbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33F31F00893;
+	Sat, 30 May 2026 18:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165370;
-	bh=MGHthj33QWYO/Ed0j/htjXUZ0dCNheiCHf/4Wj0Gsg8=;
+	s=korg; t=1780165375;
+	bh=qUWvIMTUnggbrSheLkzXUweUOh0iGYGuwCAlzaxLGVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuahXpS4c/6iIEiJLZUYL0j+m+V8C8na8meUmUUjw6lKkyV1slIr2rJAGscPgR5o3
-	 dqFqF0pxgiqHdxT2z9v47bOT7Mp/kzmUGC8sJg6nMumBNN0u93f9zcmzMqrw1Xbs6k
-	 hd+hiZ/49ikwkRWruXZJX5Ur3h/eh5WvHgBja/Sk=
+	b=UipgmzbP/tsTfn5Vq+GjPVSEsnhjhEAr9QPlkQeyAQHxZkeLam8fGqviCSIA4o5fv
+	 jOWB7O727A6zUkAGQVMfmWqga9Pxp9MN8Y1mQuxHFLzAOyKMc+yqFldGv56HzCeP+J
+	 voLigp20EnlDpyxfnmL5FEZjtI/r+3gz7jIBKecI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernie Thompson <bernie@plugable.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 058/589] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Sat, 30 May 2026 17:58:59 +0200
-Message-ID: <20260530160226.120538464@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 032/589] af_unix: read UNIX_DIAG_VFS data under unix_state_lock
+Date: Sat, 30 May 2026 17:58:33 +0200
+Message-ID: <20260530160225.428735666@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,37 +58,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
+[ Upstream commit 39897df386376912d561d4946499379effa1e7ef ]
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+Exact UNIX diag lookups hold a reference to the socket, but not to
+u->path. Meanwhile, unix_release_sock() clears u->path under
+unix_state_lock() and drops the path reference after unlocking.
 
-Cc: Bernie Thompson <bernie@plugable.com>
-Cc: Helge Deller <deller@gmx.de>
-Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Read the inode and device numbers for UNIX_DIAG_VFS while holding
+unix_state_lock(), then emit the netlink attribute after dropping the
+lock.
+
+This keeps the VFS data stable while the reply is being built.
+
+Fixes: 5f7b0569460b ("unix_diag: Unix inode info NLA")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260407080015.1744197-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/udlfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/unix/diag.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1077,6 +1077,9 @@ static int dlfb_ops_check_var(struct fb_
- 	struct fb_videomode mode;
- 	struct dlfb_data *dlfb = info->par;
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index 486276a1782ed..699fba7b7591d 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -25,18 +25,23 @@ static int sk_diag_dump_name(struct sock *sk, struct sk_buff *nlskb)
  
-+	if (!var->pixclock)
-+		return -EINVAL;
+ static int sk_diag_dump_vfs(struct sock *sk, struct sk_buff *nlskb)
+ {
+-	struct dentry *dentry = unix_sk(sk)->path.dentry;
++	struct unix_diag_vfs uv;
++	struct dentry *dentry;
++	bool have_vfs = false;
+ 
++	unix_state_lock(sk);
++	dentry = unix_sk(sk)->path.dentry;
+ 	if (dentry) {
+-		struct unix_diag_vfs uv = {
+-			.udiag_vfs_ino = d_backing_inode(dentry)->i_ino,
+-			.udiag_vfs_dev = dentry->d_sb->s_dev,
+-		};
+-
+-		return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
++		uv.udiag_vfs_ino = d_backing_inode(dentry)->i_ino;
++		uv.udiag_vfs_dev = dentry->d_sb->s_dev;
++		have_vfs = true;
+ 	}
++	unix_state_unlock(sk);
+ 
+-	return 0;
++	if (!have_vfs)
++		return 0;
 +
- 	/* set device-specific elements of var unrelated to mode */
- 	dlfb_var_color_format(var);
++	return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
+ }
  
+ static int sk_diag_dump_peer(struct sock *sk, struct sk_buff *nlskb)
+-- 
+2.53.0
+
 
 
