@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000D426738C;
-	Sat, 30 May 2026 18:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA682FDC5E;
+	Sat, 30 May 2026 18:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165973; cv=none; b=TkftE5fmwI7M5jCvZU77Q50VtuDJ5UCxjSPiTpQ3XkJHa564vgeut1bEsSRdunETa3iQ0y1WOLYi5z27Jfy2SY97hu7iL7aHgIisqooZgTUCdUv1eMGVqq60qy4I4jsAMThDARnyQBSwywtOkXfWSSHj+Q9CMSMSJl3BboR8Qjk=
+	t=1780165978; cv=none; b=a4YXZnHdLYDrZRxJy/iE0FhMdIbIntnpSOhF40PBZISv+V5jR7qn4z8fgU7S2Q6udfVuQWuXTuQuooZUu06Mtx8rrXOb0XP/ogMZNNS4jII+rgQMH/GtC9Pw07BhHLYquMuzOI+P6xkBz6Cz+tci7PBtLbnNlmiskZP6L9MQvvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165973; c=relaxed/simple;
-	bh=/rWfHYJer9imEGbj1/Z97nDCndERlSxuaCPA9DbPpjw=;
+	s=arc-20240116; t=1780165978; c=relaxed/simple;
+	bh=KJSBItJ51c7sRbsUs8G4S7WUKRqYANqReEySzfi5Sto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBE0/G+I0yMshD8xJczECF9Ja1WYjm5KzAtICQtC6wO55ZG4d7xFlWaMS5hSbTSmCh4jytMg/raz1+pP9IE924A+F2aRR3kPUCWE9gwYnNJe3qa/SYeCOz/zBecn5QlldQ2wzcwc7Sg8Vlomz/LsVwxTbQMFt1tlKWm14JDhgp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrODOBoo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kT/P/Z69ew4zjt136Sf8k1YfqLw39gvUlUnZ/whM7JkQe4MuuYnEHDSnPGdUldn8G4mpWCdIYcxxHoLkwdd3fhq4fE47vQEMZcaJ4kfQzhKjxeQxkJyIsBu85EY1xj92ZPb/zxtWTi2TpiYfrLyyzneUR3TpUGvNVT9O6w9yxQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrtImTXw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrODOBoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D591F00893;
-	Sat, 30 May 2026 18:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrtImTXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745F61F00893;
+	Sat, 30 May 2026 18:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165972;
-	bh=O0+tJLtu5YPMoJ1EMMsI1PzMPxnnCKK0bRMEnWvlvlc=;
+	s=korg; t=1780165977;
+	bh=e4xIu/zbXXVfNKuLIYm2LgN0Wo93WZXHCayqOgcztcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rrODOBooWKPHp84ejcf83T4LQ5ZFTr2FDcgrXLQIDF58Nw9jsRyED3EOHCCYw/EXn
-	 37dakmm1HyFqSCPJV4p8+8Qs6rHhnnrtPLCi9w/rNcu1W+mqSZX9TaM8RihyRaqNt0
-	 XYkCOLzwop/elQU63pEPXuQFl/p2VRUDhYmTCZF0=
+	b=MrtImTXwLJv2f4V0Jrw7ygbRZJpjWJffr5lcWax8pJPyj1ndvP108xugqqQ9ljKL9
+	 iCVAeK1skhwlHOGRKLVYlwgV3b3uPkSW1qB49WyQbh6sdaEOr6/Zh+ROxF3E8OhfKo
+	 8RJa8tRscVJSHkfA11de3VjipntNGLdPw40LRH2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 236/589] ip6_gre: Use cached t->net in ip6erspan_changelink().
-Date: Sat, 30 May 2026 18:01:57 +0200
-Message-ID: <20260530160231.194336409@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Nan Li <tonanli66@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 237/589] net/rds: handle zerocopy send cleanup before the message is queued
+Date: Sat, 30 May 2026 18:01:58 +0200
+Message-ID: <20260530160231.226236835@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,55 +58,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Nan Li <tonanli66@gmail.com>
 
-commit 1d324c2f43f70c965f25c58cc3611c779adbe47e upstream.
+commit 44b550d88b267320459d518c0743a241ab2108fa upstream.
 
-After commit 5e72ce3e3980 ("net: ipv6: Use link netns in newlink() of
-rtnl_link_ops"), ip6erspan_newlink() correctly resolves the per-netns
-ip6gre hash via link_net. ip6erspan_changelink() was not converted in
-that series and still uses dev_net(dev), which diverges from the
-device's creation netns after IFLA_NET_NS_FD migration.
+A zerocopy send can fail after user pages have been pinned but before
+the message is attached to the sending socket.
 
-This re-inserts the tunnel into the wrong per-netns hash. The
-original netns keeps a stale entry. When that netns is later
-destroyed, ip6gre_exit_rtnl_net() walks the stale entry, producing a
-slab-use-after-free reported by KASAN, followed by a kernel BUG at
-net/core/dev.c (LIST_POISON1) in unregister_netdevice_many_notify().
+The purge path currently infers zerocopy state from rm->m_rs, so an
+unqueued message can be cleaned up as if it owned normal payload pages.
+However, zerocopy ownership is really determined by the presence of
+op_mmp_znotifier, regardless of whether the message has reached the
+socket queue.
 
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net).
+Capture op_mmp_znotifier up front in rds_message_purge() and use it as
+the cleanup discriminator. If the message is already associated with a
+socket, keep the existing completion path. Otherwise, drop the pinned
+page accounting directly and release the notifier before putting the
+payload pages.
 
-ip6gre_changelink() earlier in the same file already uses the cached
-t->net; only ip6erspan_changelink() has the wrong shape.
+This keeps early send failure cleanup consistent with the zerocopy
+lifetime rules without changing the normal queued completion path.
 
-Fixes: 2d665034f239 ("net: ip6_gre: Fix ip6erspan hlen calculation")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260430103318.3206018-1-maoyi.xie@ntu.edu.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0cebaccef3ac ("rds: zerocopy Tx support.")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/d2ea98a6313d5467bac00f7c9fef8c7acddb9258.1777550074.git.tonanli66@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_gre.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/rds/message.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -2300,10 +2300,11 @@ static int ip6erspan_changelink(struct n
- 				struct nlattr *data[],
- 				struct netlink_ext_ack *extack)
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -129,24 +129,34 @@ static void rds_rm_zerocopy_callback(str
+  */
+ static void rds_message_purge(struct rds_message *rm)
  {
--	struct ip6gre_net *ign = net_generic(dev_net(dev), ip6gre_net_id);
-+	struct ip6_tnl *t = netdev_priv(dev);
- 	struct __ip6_tnl_parm p;
--	struct ip6_tnl *t;
-+	struct ip6gre_net *ign;
++	struct rds_znotifier *znotifier;
+ 	unsigned long i, flags;
+-	bool zcopy = false;
++	bool zcopy;
  
-+	ign = net_generic(t->net, ip6gre_net_id);
- 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
- 	if (IS_ERR(t))
- 		return PTR_ERR(t);
+ 	if (unlikely(test_bit(RDS_MSG_PAGEVEC, &rm->m_flags)))
+ 		return;
+ 
+ 	spin_lock_irqsave(&rm->m_rs_lock, flags);
++	znotifier = rm->data.op_mmp_znotifier;
++	rm->data.op_mmp_znotifier = NULL;
++	zcopy = !!znotifier;
++
+ 	if (rm->m_rs) {
+ 		struct rds_sock *rs = rm->m_rs;
+ 
+-		if (rm->data.op_mmp_znotifier) {
+-			zcopy = true;
+-			rds_rm_zerocopy_callback(rs, rm->data.op_mmp_znotifier);
++		if (znotifier) {
++			rds_rm_zerocopy_callback(rs, znotifier);
+ 			rds_wake_sk_sleep(rs);
+-			rm->data.op_mmp_znotifier = NULL;
+ 		}
+ 		sock_put(rds_rs_to_sk(rs));
+ 		rm->m_rs = NULL;
++	} else if (znotifier) {
++		/*
++		 * Zerocopy can fail before the message is queued on the
++		 * socket, so there is no rs to carry the notification.
++		 */
++		mm_unaccount_pinned_pages(&znotifier->z_mmp);
++		kfree(rds_info_from_znotifier(znotifier));
+ 	}
+ 	spin_unlock_irqrestore(&rm->m_rs_lock, flags);
+ 
 
 
