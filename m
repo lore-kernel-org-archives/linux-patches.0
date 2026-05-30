@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D2C21B191;
-	Sat, 30 May 2026 17:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE63934389F;
+	Sat, 30 May 2026 17:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162889; cv=none; b=buDeAgLtabKuc5S4WDJEQ1vi3E/piCjd+7juu2q6cGADW0enlrJm1qDq8yjzjmC3UsRpWA/WYoo/MogOmTXWikmF3/GDj2cjI/XBYiPLEvTTyTtqY1drg1K4HkFncPAtgEActb4m/jHx3VjvrxyXMomxHMC4/wWxtqK11Tps//g=
+	t=1780162892; cv=none; b=MDayH83agVSHoULx2kozQ7Kr4ycCz3uToKtKVfEFf9cVwGg6WD9qBVJFpMHaGPuE5hGFwF14TAPmy9YZYyGHYiELI+jw5CEJzbchAoaiu2KJMtknUgpTk1eFeGZf4edMK/fNvLC8sxynJYfE60Puge+7p1cMqLzW9KXWHO+7TOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162889; c=relaxed/simple;
-	bh=ZijNb7dlgXREm/aZKwJAChrJXb86qNB1y/3125dNM1M=;
+	s=arc-20240116; t=1780162892; c=relaxed/simple;
+	bh=q3pld3kY0JnaNcEuujSsLVhGsgR/Mn/XQgmryBDg8Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NidbLKeQWDx7ol+4onJqvID3mCnhAdPVG+Q6qmflneBn7FK1pGlqZeJXuce4lklU02xkafYBI56/KEyf70LX0+L1+1uItuk5zmD9/trv6ytDQXMxXFWjjU7hJAsTR0e4mmgHLoglMEJaKXfC/6/SrHZHXZCG6+06+TU9MTNwg24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9I1nsqF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G64RuGFEJczGkVb9DfHO6aiyE1nKp3B75Y6TYlTPg9WlXEGP4DYiY7dYCDzjcUZGSzcdzdDVrEIy2ePC6nDkcOkflbJf1mDcwyRMzdF5grwnUtGwgkLydfLG4EVOlKUTQZsYr7lsDRg7UiWSyew4oVpPC3lPcsB62mtnxsxgxfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1lpKK/N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9I1nsqF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C281F00893;
-	Sat, 30 May 2026 17:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1lpKK/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1761F00893;
+	Sat, 30 May 2026 17:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162888;
-	bh=5UnZX/VrxzLagLBMcaqNX7E1Ck0r9vJO/sW0D77XArI=;
+	s=korg; t=1780162891;
+	bh=yMiSPgqFGoVMZXyWj63QajokchuSUQf3G6xC0NHns8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u9I1nsqFyVGhxji3FWqJBPiDMOB3BCU3wB6NgwzejVDXKrHJOldugUKRd/xxV8ANY
-	 9BT/jTlZeQYKa9dPvyknFGuZYJ2Nt7cytxS89VRrffDYUt0WR6SoVfNhDwOcodGxKN
-	 YLfsleqeqgVGlWmLfQXoxUO+CCgJSiGrbk8+oNf4=
+	b=U1lpKK/NtqdJ3lwzQa4/81dsHISnoxHpAX4etcS40/AAlA4Fpm94K0jiJQT5I+IEn
+	 9erxuGQL2LlyPGyAuEY10Hdg351v2air1Oe+ftHrITM74QdgCYdymOBb4FW/ZkpkcX
+	 LOAvDrAXKYH12orTPOCOebj/H6ogAlYzl47nuQXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Minhong He <heminhong@kylinos.cn>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/776] Revert "net: ixp4xx_eth: convert to ndo_hwtstamp_get() and ndo_hwtstamp_set()"
-Date: Sat, 30 May 2026 17:56:47 +0200
-Message-ID: <20260530160242.740931263@linuxfoundation.org>
+Subject: [PATCH 5.15 094/776] ipv6: add NULL checks for idev in SRv6 paths
+Date: Sat, 30 May 2026 17:56:48 +0200
+Message-ID: <20260530160242.766816818@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,146 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 612c622ab8efe9033a33eaad874ae69c090a53e1.
+From: Minhong He <heminhong@kylinos.cn>
 
+[ Upstream commit 06413793526251870e20402c39930804f14d59c0 ]
+
+__in6_dev_get() can return NULL when the device has no IPv6 configuration
+(e.g. MTU < IPV6_MIN_MTU or after NETDEV_UNREGISTER).
+
+Add NULL checks for idev returned by __in6_dev_get() in both
+seg6_hmac_validate_skb() and ipv6_srh_rcv() to prevent potential NULL
+pointer dereferences.
+
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260316073301.106643-1-heminhong@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xscale/ixp4xx_eth.c | 61 +++++++++++++-----------
- 1 file changed, 32 insertions(+), 29 deletions(-)
+ net/ipv6/exthdrs.c   | 4 ++++
+ net/ipv6/seg6_hmac.c | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/xscale/ixp4xx_eth.c b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-index 9951006f1bc77..931494cc1c39e 100644
---- a/drivers/net/ethernet/xscale/ixp4xx_eth.c
-+++ b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-@@ -371,20 +371,16 @@ static void ixp_tx_timestamp(struct port *port, struct sk_buff *skb)
- 	__raw_writel(TX_SNAPSHOT_LOCKED, &regs->channel[ch].ch_event);
- }
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 10772dab66bbd..3d249c10e3e9b 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -373,6 +373,10 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
  
--static int ixp4xx_hwtstamp_set(struct net_device *netdev,
--			       struct kernel_hwtstamp_config *cfg,
--			       struct netlink_ext_ack *extack)
-+static int hwtstamp_set(struct net_device *netdev, struct ifreq *ifr)
- {
-+	struct hwtstamp_config cfg;
- 	struct ixp46x_ts_regs *regs;
- 	struct port *port = netdev_priv(netdev);
- 	int ret;
- 	int ch;
- 
--	if (!cpu_is_ixp46x())
--		return -EOPNOTSUPP;
--
--	if (!netif_running(netdev))
--		return -EINVAL;
-+	if (copy_from_user(&cfg, ifr->ifr_data, sizeof(cfg)))
-+		return -EFAULT;
- 
- 	if (cfg.flags) /* reserved for future extensions */
- 		return -EINVAL;
-@@ -396,10 +392,10 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
- 	ch = PORT2CHANNEL(port);
- 	regs = port->timesync_regs;
- 
--	if (cfg->tx_type != HWTSTAMP_TX_OFF && cfg->tx_type != HWTSTAMP_TX_ON)
-+	if (cfg.tx_type != HWTSTAMP_TX_OFF && cfg.tx_type != HWTSTAMP_TX_ON)
- 		return -ERANGE;
- 
--	switch (cfg->rx_filter) {
-+	switch (cfg.rx_filter) {
- 	case HWTSTAMP_FILTER_NONE:
- 		port->hwts_rx_en = 0;
- 		break;
-@@ -415,45 +411,39 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
- 		return -ERANGE;
- 	}
- 
--	port->hwts_tx_en = cfg->tx_type == HWTSTAMP_TX_ON;
-+	port->hwts_tx_en = cfg.tx_type == HWTSTAMP_TX_ON;
- 
- 	/* Clear out any old time stamps. */
- 	__raw_writel(TX_SNAPSHOT_LOCKED | RX_SNAPSHOT_LOCKED,
- 		     &regs->channel[ch].ch_event);
- 
--	return 0;
-+	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
- }
- 
--static int ixp4xx_hwtstamp_get(struct net_device *netdev,
--			       struct kernel_hwtstamp_config *cfg)
-+static int hwtstamp_get(struct net_device *netdev, struct ifreq *ifr)
- {
-+	struct hwtstamp_config cfg;
- 	struct port *port = netdev_priv(netdev);
- 
--	if (!cpu_is_ixp46x())
--		return -EOPNOTSUPP;
--
--	if (!netif_running(netdev))
--		return -EINVAL;
--
--	cfg->flags = 0;
--	cfg->tx_type = port->hwts_tx_en ? HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
-+	cfg.flags = 0;
-+	cfg.tx_type = port->hwts_tx_en ? HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
- 
- 	switch (port->hwts_rx_en) {
- 	case 0:
--		cfg->rx_filter = HWTSTAMP_FILTER_NONE;
-+		cfg.rx_filter = HWTSTAMP_FILTER_NONE;
- 		break;
- 	case PTP_SLAVE_MODE:
--		cfg->rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_SYNC;
-+		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_SYNC;
- 		break;
- 	case PTP_MASTER_MODE:
--		cfg->rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ;
-+		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ;
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 		return -ERANGE;
- 	}
- 
--	return 0;
-+	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
- }
- 
- static int ixp4xx_mdio_cmd(struct mii_bus *bus, int phy_id, int location,
-@@ -975,6 +965,21 @@ static void eth_set_mcast_list(struct net_device *dev)
- }
- 
- 
-+static int eth_ioctl(struct net_device *dev, struct ifreq *req, int cmd)
-+{
-+	if (!netif_running(dev))
-+		return -EINVAL;
-+
-+	if (cpu_is_ixp46x()) {
-+		if (cmd == SIOCSHWTSTAMP)
-+			return hwtstamp_set(dev, req);
-+		if (cmd == SIOCGHWTSTAMP)
-+			return hwtstamp_get(dev, req);
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		kfree_skb(skb);
++		return -1;
 +	}
-+
-+	return phy_mii_ioctl(dev->phydev, req, cmd);
-+}
-+
- /* ethtool support */
  
- static void ixp4xx_get_drvinfo(struct net_device *dev,
-@@ -1360,11 +1365,9 @@ static const struct net_device_ops ixp4xx_netdev_ops = {
- 	.ndo_stop = eth_close,
- 	.ndo_start_xmit = eth_xmit,
- 	.ndo_set_rx_mode = eth_set_mcast_list,
--	.ndo_eth_ioctl = phy_do_ioctl_running,
-+	.ndo_eth_ioctl = eth_ioctl,
- 	.ndo_set_mac_address = eth_mac_addr,
- 	.ndo_validate_addr = eth_validate_addr,
--	.ndo_hwtstamp_get = ixp4xx_hwtstamp_get,
--	.ndo_hwtstamp_set = ixp4xx_hwtstamp_set,
- };
+ 	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
+ 	if (accept_seg6 > idev->cnf.seg6_enabled)
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index 7e3a857699322..68acff337e414 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -244,6 +244,8 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
+ 	struct inet6_dev *idev;
  
- #ifdef CONFIG_OF
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev)
++		return false;
+ 
+ 	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+ 
 -- 
 2.53.0
 
