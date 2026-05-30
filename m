@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BDF33E36A;
-	Sat, 30 May 2026 17:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8015514A62B;
+	Sat, 30 May 2026 17:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161736; cv=none; b=u4JJ7cMcpUAkmVHxzZswqFkalOERE0ApvUOPiIbVdjViss94wwYWGPTEowkBYYLmOvFzWmk2T8Vu8ov/g4Gx40cLZLLBqwjtvmUiUn5rr8kgLL6siXi13fkQJffnHqpjvpVedB+I/jg29JCpAFLbwrx2unZtlIgF/8+oKO8kcS0=
+	t=1780161739; cv=none; b=mzhV14vdULAezwszLnAWSDb07WaAF/41lXsZYSNCYh+BIiI+LaMPms8Qv/w3KGtcZ0uRfgE3KVI43o5qNz7lWBv2SnExFjx/rxAbppHjupyH/PHKnUncMBL8Dz3PcOOaPOTA1efFOX8kt63h/cymZNvjJqxoaHmhHyGssWYzqzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161736; c=relaxed/simple;
-	bh=3IK9iYludppDOohsiXg0nIwwG//y/UuudP68pK9cgB8=;
+	s=arc-20240116; t=1780161739; c=relaxed/simple;
+	bh=P8jxsm9TEYkD50Yn6THqOjKqMweK+QErEujhzQRve90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGoQotWlBUfp37uNs3vdWyKZ4ajjpvHHmb2B2zbZ17vwCy8bTmMOvInrzp6JCYEMKad6EpxIekg4ZqYO17+mno35Ht1w/bG/LbzC1dCa50vK2loUa4aVR7zy6cg50ujtKyqBhy8pTmBBI0/8Wj3eNX4+RKZ07WoIxOPwgA7RrPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZAnPlWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d9D8jAUvo87//bqw8iBT0xXYlPDMhDmVgBM2HDoo8Gx6kXARIQQqi1xjmjKLw8nbbjdvKGKHcDRCNBUniA0iPpCXHCAwYM8xGlipVxwBPWdoEeiJhmOfldN/URN46D3PRjzVFI+1dHqYeP2sr+EMed2BwD3kLI/9woCR4zTXZbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1yY2Sju; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZAnPlWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C14F1F00893;
-	Sat, 30 May 2026 17:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1yY2Sju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DCF1F00893;
+	Sat, 30 May 2026 17:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161735;
-	bh=sGmER7jhbehX10c4g5PaNQG0ZeGL8WWgRbtx97lhH4s=;
+	s=korg; t=1780161738;
+	bh=tgmIiVHkrKm3Vl7G1z/YdgWw8uL0kH1t7ch4i26I7kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZAnPlWqIY7gw6F8A12OfO18zncvXGyLmbcXemfUWSq5FAXdj1KxYXGbHayyFPnvm
-	 5hYdNcLqbpc7IA2jajLjyPxGxIny0QeR1n9Ru4J4chcIGbxrBLLZ32TRJL8wBu/yJ8
-	 mZy9eMlFk4ymS2f3RsjP7b17phaVp1QpYboQpliM=
+	b=Y1yY2SjurqnvrW3VjDxGId8ZjYt7l10e3O88o5uszqdMpD3rzaMbpI81Uuf42DXHz
+	 iQKwnNv2bAfiEeyxExq7NHQhC534jfBUMnWpowDyLzWHJIF4LW3SZJZXZwiNdqYNGO
+	 qkjHfMRffS1DVuJ/stecWNGc1jCANrKWVX21/u/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 712/969] net/rds: zero per-item info buffer before handing it to visitors
-Date: Sat, 30 May 2026 18:03:56 +0200
-Message-ID: <20260530160320.192082776@linuxfoundation.org>
+Subject: [PATCH 6.1 713/969] net_sched: sch_hhf: annotate data-races in hhf_dump_stats()
+Date: Sat, 30 May 2026 18:03:57 +0200
+Message-ID: <20260530160320.219638864@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,109 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
+[ Upstream commit a6edf2cd4156b71e07258876b7626692e158f7e8 ]
 
-rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
-caller-allocated on-stack u64 buffer to a per-connection visitor and
-then copy the full item_len bytes back to user space via
-rds_info_copy() regardless of how much of the buffer the visitor
-actually wrote.
+hhf_dump_stats() only runs with RTNL held,
+reading fields that can be changed in qdisc fast path.
 
-rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
-write a subset of their output struct when the underlying
-rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
-and the two GIDs via explicit memsets). Several u32 fields
-(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
-cache_allocs) and the 2-byte alignment hole between sl and
-cache_allocs remain as whatever stack contents preceded the visitor
-call and are then memcpy_to_user()'d out to user space.
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-struct rds_info_rdma_connection and struct rds6_info_rdma_connection
-are the only rds_info_* structs in include/uapi/linux/rds.h that are
-not marked __attribute__((packed)), so they have a real alignment
-hole. The other info visitors (rds_conn_info_visitor,
-rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
-their packed output struct today and are not known to be vulnerable,
-but a future visitor that adds a conditional write-path would have
-the same bug.
-
-Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
-a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
-binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
-any netdev is sufficient), sendto()'s any peer on the same subnet
-(fails cleanly but installs an rds_connection in the global hash in
-RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
-RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
-bytes of stack garbage including kernel text/data pointers:
-
-    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
-    8..39  00 ...                      gids (memset-zeroed)
-    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
-    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
-    56..59 01 00 08 00                 rdma_mr_size (garbage)
-    60..61 00 00                       tos, sl
-    62..63 00 00                       alignment padding
-    64..67 18 00 00 00                 cache_allocs (garbage)
-
-Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
-and rds_walk_conn_path_info() before invoking the visitor. This
-covers the IPv4/IPv6 IB visitors and hardens all current and future
-visitors against the same class of bug.
-
-No functional change for visitors that fully populate their output.
-
-Changes in v2:
-- retarget at the net tree (subject prefix "[PATCH net v2]",
-  net/rds: prefix in the title)
-- pick up Reviewed-by tags from Sharath Srinivasan and
-  Allison Henderson
-
-Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Assisted-by: Claude:claude-opus-4-7
-Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260421143349.4052215-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/sched/sch_hhf.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 98c0d5ff9de9c..cd41f83863c89 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
- 	     i++, head++) {
- 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index 83fc44f20e31c..67b555c02f2c0 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -198,7 +198,8 @@ static struct hh_flow_state *seek_list(const u32 hash,
+ 				return NULL;
+ 			list_del(&flow->flowchain);
+ 			kfree(flow);
+-			q->hh_flows_current_cnt--;
++			WRITE_ONCE(q->hh_flows_current_cnt,
++				   q->hh_flows_current_cnt - 1);
+ 		} else if (flow->hash_id == hash) {
+ 			return flow;
+ 		}
+@@ -226,7 +227,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
+ 	}
  
-+			/* Zero the per-item buffer before handing it to the
-+			 * visitor so any field the visitor does not write -
-+			 * including implicit alignment padding - cannot leak
-+			 * stack contents to user space via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
-+
- 			/* XXX no c_lock usage.. */
- 			if (!visitor(conn, buffer))
- 				continue;
-@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
- 			 */
- 			cp = conn->c_path;
+ 	if (q->hh_flows_current_cnt >= q->hh_flows_limit) {
+-		q->hh_flows_overlimit++;
++		WRITE_ONCE(q->hh_flows_overlimit, q->hh_flows_overlimit + 1);
+ 		return NULL;
+ 	}
+ 	/* Create new entry. */
+@@ -234,7 +235,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
+ 	if (!flow)
+ 		return NULL;
  
-+			/* Zero the per-item buffer for the same reason as
-+			 * rds_for_each_conn_info(): any byte the visitor
-+			 * does not write (including alignment padding) must
-+			 * not leak stack contents via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
-+
- 			/* XXX no cp_lock usage.. */
- 			if (!visitor(cp, buffer))
- 				continue;
+-	q->hh_flows_current_cnt++;
++	WRITE_ONCE(q->hh_flows_current_cnt, q->hh_flows_current_cnt + 1);
+ 	INIT_LIST_HEAD(&flow->flowchain);
+ 	list_add_tail(&flow->flowchain, head);
+ 
+@@ -309,7 +310,7 @@ static enum wdrr_bucket_idx hhf_classify(struct sk_buff *skb, struct Qdisc *sch)
+ 			return WDRR_BUCKET_FOR_NON_HH;
+ 		flow->hash_id = hash;
+ 		flow->hit_timestamp = now;
+-		q->hh_flows_total_cnt++;
++		WRITE_ONCE(q->hh_flows_total_cnt, q->hh_flows_total_cnt + 1);
+ 
+ 		/* By returning without updating counters in q->hhf_arrays,
+ 		 * we implicitly implement "shielding" (see Optimization O1).
+@@ -403,7 +404,7 @@ static int hhf_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return NET_XMIT_SUCCESS;
+ 
+ 	prev_backlog = sch->qstats.backlog;
+-	q->drop_overlimit++;
++	WRITE_ONCE(q->drop_overlimit, q->drop_overlimit + 1);
+ 	/* Return Congestion Notification only if we dropped a packet from this
+ 	 * bucket.
+ 	 */
+@@ -678,10 +679,10 @@ static int hhf_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct hhf_sched_data *q = qdisc_priv(sch);
+ 	struct tc_hhf_xstats st = {
+-		.drop_overlimit = q->drop_overlimit,
+-		.hh_overlimit	= q->hh_flows_overlimit,
+-		.hh_tot_count	= q->hh_flows_total_cnt,
+-		.hh_cur_count	= q->hh_flows_current_cnt,
++		.drop_overlimit = READ_ONCE(q->drop_overlimit),
++		.hh_overlimit	= READ_ONCE(q->hh_flows_overlimit),
++		.hh_tot_count	= READ_ONCE(q->hh_flows_total_cnt),
++		.hh_cur_count	= READ_ONCE(q->hh_flows_current_cnt),
+ 	};
+ 
+ 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
