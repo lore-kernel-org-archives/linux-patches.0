@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFF8241C8C;
-	Sat, 30 May 2026 18:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E5D284690;
+	Sat, 30 May 2026 18:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164982; cv=none; b=A5aELN/fnRYjxOjMDfRAunpP0Hi4s53pZtN78F4BNLF010kOl8l999EwZbuKNH9YfbKZiMzhp/XAa2jYcuvlOEyjB/47EthCglF1sh7BoIZfPj5w+qKJm948/mjA4pESZFJZwj8Vdn7fPmg4MKWo6OcSJ26krndDqZluPh3XQl4=
+	t=1780164985; cv=none; b=lrY/a6+8U5fRr1B4x9c81N6WhgBEDs033A5r2MT6bT/3hK16DoFfLGM4PyOX/BVKYWFF8Le0aQ+k2Q1m/U3ZEupsQJ1IYFG2cTerk8GzuI9PkszFZT3+x56wrm4pMYCmVfX9jSM4nSh1KMP/6JOPNS3iG+6sctw9n9XevzQ4e0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164982; c=relaxed/simple;
-	bh=4asvzPisuQGJOHUQlNO1Ythnu5lJiHh8rFdtHGYtWtQ=;
+	s=arc-20240116; t=1780164985; c=relaxed/simple;
+	bh=zFShmFc/FVFRFVKtT5cl6JACoFxQAYv0lHrd5M4Eq8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwyYY4cDA+wcuYDrzDkPmbxJgohyv7B3lvDDworZ0LnJBo/Em9Im9iTBA7sANiCvZaN3kxyvPHBraQiqEL/indhHvu3NkH8V5Rb1AP17KxnmpmIomg/DP+7Y+H+wK+tknzNahmca0KaeH9ldC8RL25+W7PGS1DTuScFZkQEf2h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT3qUWAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k3O2iV4o1DgrzXmPssgjl2RYetGC7eFTXZ9uE73REKFe1iGSoOSNaQLJ0A7bfm/gX0uficRBQG24+ewZKXu7bz64N2L/aHLJRjHlRbYW3AlV64NdZQadvIYgXIEYovTyJc1erwmZxP8lYZpMr9jEYGMMg12OKiXE7kQRujY9ItI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpS/YOFg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT3qUWAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47751F00893;
-	Sat, 30 May 2026 18:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpS/YOFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094E81F00893;
+	Sat, 30 May 2026 18:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164981;
-	bh=EkJP6PErGV2vp5qec5Cvr1dH/7G1j4mJ6vVNVldEvE8=;
+	s=korg; t=1780164984;
+	bh=HuU56/OMMmoeMcazSU4bH80E+BgmIg3PWU7UyVmcvwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WT3qUWADcbKIudJX1cBSDPjzLbpFpZHP3ISEGdVDoe7sM6mSF5bK2mBadgGdfI5IR
-	 swcFEz0R4rm0wG/Fvjk9ht8aIVfs5l8ArzO5dy6cxbtuAG4+GzlpBTbZyX5gBCu+7Y
-	 8hEFpc9gYESjLQ6g4RJWVGnN4VWZfpqg5c2sGaRc=
+	b=FpS/YOFgU1NAtEMW4zK0OD3Jh5e1A4sROyiZwB4XVL996vBJQbOG8086Ek6cxk93I
+	 Y4wG6Zhv1mcwZgJCg/SRpFoE4bZuuq4vSV2FeQPej2qEh0beMnIRMbjhx82NIRftQL
+	 W1VGsdMaJuO0u7ULStlz9A8r3J/DtrQErAIPURc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 714/776] batman-adv: tt: fix negative last_changeset_len
-Date: Sat, 30 May 2026 18:07:08 +0200
-Message-ID: <20260530160258.279641017@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 686/776] net: bcmgenet: keep RBUF EEE/PM disabled
+Date: Sat, 30 May 2026 18:06:40 +0200
+Message-ID: <20260530160257.587292060@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,41 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-commit fc92cdfcb295cefa4344d71a527d61b638b7bfc4 upstream.
+commit 9a1730245e416d11ad5c0f2c100061d61cc43f60 upstream.
 
-batadv_piv_tt::last_changeset_len len was declared as s16, but the field is
-never intended to hold a negative value. When a value greater than 32767 is
-assigned, it wraps to a negative signed integer.
+Setting RBUF_EEE_EN | RBUF_PM_EN in RBUF_ENERGY_CTRL breaks the RX
+path on GENET hardware once MAC EEE becomes active. RX traffic stops
+flowing while the link stays up and the usual descriptor/RX error
+counters remain quiet. In that state the MAC still accepts frames
+(rbuf_ovflow_cnt keeps climbing) but RBUF no longer forwards them to
+DMA, so rx_packets is no longer incremented at the netdev level. On
+some boards the corruption ends up as a paging fault in
+skb_release_data via bcmgenet_rx_poll on an LPI exit.
 
-In batadv_send_my_tt_response(), last_changeset_len is temporarily widened
-to s32. The incorrectly negative s16 value propagates into the s32, causing
-batadv_tt_prepare_tvlv_local_data() to allocate a full sized buffer but
-populates only a small portion of it with the collected changeset. All
-remaining bits are kept uninitialized.
+Reproduced on Pi 4B (BCM2711 + BCM54213PE) and confirmed by Florian
+Fainelli on an internal Broadcom 4908-family board with the same crash
+signature. RBUF_PM_EN is not publicly documented.
 
-Using an u16 avoids this type confusion and ensures that no (negative) sign
-extension is performed in batadv_send_my_tt_response().
+This shows up more often now that phy_support_eee() enables EEE by
+default, but it also affects older kernels as soon as TX LPI is
+turned on via ethtool, so it is not specific to recent changes.
 
-Cc: stable@kernel.org
-Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Always clear RBUF_EEE_EN | RBUF_PM_EN in bcmgenet_eee_enable_set so
+the bits stay off across resets. UMAC and TBUF setup is left alone so
+TX-side EEE keeps working.
+
+Link: https://github.com/raspberrypi/linux/issues/7304
+Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260520184320.652053-1-nb@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/types.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -993,7 +993,7 @@ struct batadv_priv_tt {
- 	 * @last_changeset_len: length of last tt changeset this host has
- 	 *  generated
- 	 */
--	s16 last_changeset_len;
-+	u16 last_changeset_len;
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1275,13 +1275,12 @@ void bcmgenet_eee_enable_set(struct net_
+ 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
+ 	bcmgenet_writel(reg, priv->base + off);
  
- 	/**
- 	 * @last_changeset_lock: lock protecting last_changeset &
+-	/* Do the same for thing for RBUF */
++	/* RBUF EEE/PM can break the RX path on GENET. Keep it disabled. */
+ 	reg = bcmgenet_rbuf_readl(priv, RBUF_ENERGY_CTRL);
+-	if (enable)
+-		reg |= RBUF_EEE_EN | RBUF_PM_EN;
+-	else
++	if (reg & (RBUF_EEE_EN | RBUF_PM_EN)) {
+ 		reg &= ~(RBUF_EEE_EN | RBUF_PM_EN);
+-	bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
++		bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
++	}
+ 
+ 	if (!enable && priv->clk_eee_enabled) {
+ 		clk_disable_unprepare(priv->clk_eee);
 
 
