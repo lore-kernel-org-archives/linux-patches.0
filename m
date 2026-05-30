@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73BE2690D5;
-	Sat, 30 May 2026 17:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096DB26F288;
+	Sat, 30 May 2026 17:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160604; cv=none; b=Vj9bIAwEz/WwqhmLZTFfC3N9JxyzETdz8t+k2K8idkFn8HpKvX11BOHilxqlTPg4z+kKHs4hdYePxFlkDG+Ucu3LnuSMlXSxLE7MZZXn7+2ZahbL4vcPbeJlPmCaUPtCyn1XGdMAcxzLS41p2ns4t4Yb0LY2QbfQnvpXC0dlUz0=
+	t=1780160608; cv=none; b=OJ/r1Z2zdvtrbslLVWw9VYhGFKpGFYa9a+eyxJREZ/55U9Nqm5jqsckyAWm8TreVO6TJcENU73AyqI+sjA2/IbU8vjnT8XsfR0RCN/R9ZxoEijdREIBh/5L4YAakH5WQ6BqUUwmrCvv40ZzFogI5NWEGZQAeoUfd9Hvz7ugHRi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160604; c=relaxed/simple;
-	bh=5smW3AUTriTzxkQr8QWB5pVi47Z//lt1MvCd5pwxcqw=;
+	s=arc-20240116; t=1780160608; c=relaxed/simple;
+	bh=SfJlaIHR6ue6PzupuN9Y0QcnMKo5h1A2377waPyPZZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfR1y+r652UvbL58P+gTIwcG+YOK+arOMj3gGML2QJL51hJSBqEFhu3inzhikfvjV3+pAYqMYuy0hh+6hKZoSn4Gci9ZbAZMt0VQEL//KLyva7a+v7o8zd6q1jomdB+zD5TijQyu4f9ajUTSfRsU4DCE98LZHCUdR91TFZ8y5G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onL5xS3s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ptinqP64DoWpwuv8iWMyzgGrjkUouFh11+cLb5AklWX0iGoGRgr6YRyuasX5vZpoOrX+nmBLmqxb93+bGODBqOVTPpZxJCT0zc84j3Jqxum2OZ/O8lbQK5gHbxV+MLGnlLikA0IUNXqsWx+FyM7/O5SeSQXhFCbxTDEM/sDYl9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtEDYRg4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onL5xS3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322081F00898;
-	Sat, 30 May 2026 17:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtEDYRg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561981F00893;
+	Sat, 30 May 2026 17:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160603;
-	bh=AWepjDBwCRfskCTDOJTXRpsziBSJZsxzj9hvhqWNC/Q=;
+	s=korg; t=1780160606;
+	bh=slZdHTja2NZp469xSftxE8PS8U8Z7pHDLb7fLwPZ3pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=onL5xS3suxweIyWoDRttTaQNJYUY/3jHbym3uwGkX2lcoMOb9DyHqlGOC+uJPYuo1
-	 m0xGlgFBhbopwsSVo8kSrwq94S3QO4j8PT0tctNHtQl/hzMl61o44vV80Dxd+HPSEX
-	 iP3cOa77Xde5WtFjqiEvYG4M3aFlSnnklPou5j7Y=
+	b=KtEDYRg455hk5HVrm33dfa14clNyHhWR/rVXrBGbLk58+wzkX5MA9cum9qsW3TYwQ
+	 SXegcQO4bmFo1Kzk6U/HiNiZeZwmixCJl/jVhZ1bLZ0Ip4DrNJQPHNcX25WRhJfeLv
+	 mZ5FidLVOHdMs5VRzR34AAvWFFcTkiDFZBIbvNso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anhad Jai Singh <ffledgling@meta.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Chris Mason <clm@fb.com>,
-	Rik van Riel <riel@surriel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>
-Subject: [PATCH 6.1 383/969] exit: Sleep at TASK_IDLE when waiting for application core dump
-Date: Sat, 30 May 2026 17:58:27 +0200
-Message-ID: <20260530160310.874631722@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 384/969] media: uvcvideo: Enable VB2_DMABUF for metadata stream
+Date: Sat, 30 May 2026 17:58:28 +0200
+Message-ID: <20260530160310.906887152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -58,53 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit b8e753128ed074fcb48e9ceded940752f6b1c19f upstream.
+commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
 
-Currently, the coredump_task_exit() function sets the task state
-to TASK_UNINTERRUPTIBLE|TASK_FREEZABLE, which usually works well.
-But a combination of large memory and slow (and/or highly contended)
-mass storage can cause application core dumps to take more than
-two minutes, which can cause check_hung_task(), which is invoked by
-check_hung_uninterruptible_tasks(), to produce task-blocked splats.
-There does not seem to be any reasonable benefit to getting these splats.
+The UVC driver has two video streams, one for the frames and another one
+for the metadata. Both streams share most of the codebase, but only the
+data stream declares support for DMABUF transfer mode.
 
-Furthermore, as Oleg Nesterov points out, TASK_UNINTERRUPTIBLE could
-be misleading because the task sleeping in coredump_task_exit() really
-is killable, albeit indirectly.  See the check of signal->core_state
-in prepare_signal() and the check of fatal_signal_pending()
-in dump_interrupted(), which bypass the normal unkillability of
-TASK_UNINTERRUPTIBLE, resulting in coredump_finish() invoking
-wake_up_process() on any threads sleeping in coredump_task_exit().
+I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
+and the frames looked correct.
 
-Therefore, change that TASK_UNINTERRUPTIBLE to TASK_IDLE.
+This patch announces the support for DMABUF for the metadata stream.
+This is useful for apps/HALs that only want to support DMABUF.
 
-Reported-by: Anhad Jai Singh <ffledgling@meta.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Cc: Chris Mason <clm@fb.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: stable@vger.kernel.org
+Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_queue.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -426,7 +426,7 @@ static void coredump_task_exit(struct ta
- 			complete(&core_state->startup);
+--- a/drivers/media/usb/uvc/uvc_queue.c
++++ b/drivers/media/usb/uvc/uvc_queue.c
+@@ -218,7 +218,7 @@ int uvc_queue_init(struct uvc_video_queu
+ 	int ret;
  
- 		for (;;) {
--			set_current_state(TASK_UNINTERRUPTIBLE|TASK_FREEZABLE);
-+			set_current_state(TASK_IDLE|TASK_FREEZABLE);
- 			if (!self.task) /* see coredump_finish() */
- 				break;
- 			schedule();
+ 	queue->queue.type = type;
+-	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
++	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+ 	queue->queue.drv_priv = queue;
+ 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
+ 	queue->queue.mem_ops = &vb2_vmalloc_memops;
+@@ -231,7 +231,6 @@ int uvc_queue_init(struct uvc_video_queu
+ 		queue->queue.ops = &uvc_meta_queue_qops;
+ 		break;
+ 	default:
+-		queue->queue.io_modes |= VB2_DMABUF;
+ 		queue->queue.ops = &uvc_queue_qops;
+ 		break;
+ 	}
 
 
