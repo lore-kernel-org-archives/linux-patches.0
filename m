@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F2D341AC7;
-	Sat, 30 May 2026 18:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44850341AC7;
+	Sat, 30 May 2026 18:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164338; cv=none; b=fHPznDricBwFUxzByObTAKCKIPXdQtyYxPQjwrnNwhpTma44x4ai864rCMjGIkz4XRrCVXJCwq8dmxe3jyDg2Y0W0SruvrGNkh+JbvTk01rd7w1Kp6auN+959ApLjI/VrhfpI3YkuHiwj4xfNoAKNgiBuNE7+s6J9lpElP3UqhE=
+	t=1780164341; cv=none; b=iTPRfQMPd4oXEv76k1eZJ9TNKIYWLExvVzRo6FFGgp15/cxXOhTdkLODVTjF6sHOpRgNbPvc775A3gcBjJyMFnVTzgAGtCHlgNpx5wIjAskGY7sao4EfFfJOXEO91wC5ymPNxEhJQE6ya8PFTTEEZQ8DQIHDIY45Akt0hnMv5fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164338; c=relaxed/simple;
-	bh=RTsFj8iRKJJ0rFGf7VSa0gNuXk8wT6DRjU2tnBf0BWU=;
+	s=arc-20240116; t=1780164341; c=relaxed/simple;
+	bh=cAfyDD/yFuzf1Z4PHlladBaFGA6+peXbM3wq3AXiOkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVm9myPp/5c7CfSU+sIIsbHYjmhvYTajn7bAVPsivd6fPPrvGBbGhuVXhslYPwjc6GNumYqN/rLvwHeFTLGDcS6BO8suN9IFJKa5NqDPdI4FF+phaaVEk5F7lYrxZ9p7LkVs26kTDmWMRiNVE5kzhqRfZ7TDZP9Ty1I37pWBBak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mqg1kwq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mohulp7zaMgzhAX4XRIlzPfVaQTJNaslOOaE1wYytWXxX3dCFICTdcidJURPYcegdF40kOUF6jHLm4RrvAnGtWIGb93I5m+OnaeqrpYX7jTGV2bqUZulkAdE7pFEWzCry8EYQScj0Acf8i9jrrTarHPA0AQAIuF4Ipl2l/NeGmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVVYUL/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mqg1kwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B71F00898;
-	Sat, 30 May 2026 18:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVVYUL/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DE91F00893;
+	Sat, 30 May 2026 18:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164336;
-	bh=G948YoqqogHdLfVGd9QAKWDVtBB+oYTAhix92RlV+Js=;
+	s=korg; t=1780164340;
+	bh=HY5V0BNEWtf0Buy0EEu4p15isEg40yD+GnjEufgjYJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0mqg1kwqN4f181Cl33y1bbHtEQKzhV+7fJggDpDAOYZ1zVUWX2aZM6OneGPjCiYmg
-	 bXRgCXCflDBdtl1dmFWvUGmlEzYG/7Tb0DrkCUzXHwXEv41G9bBcZFYP5Yym887JPr
-	 z9VRz4akdl1jOSb+/YJyGEETs22YDqTIav3QMIxM=
+	b=UVVYUL/+j1sIDRI6+RrHT8m2KdxjCq4o+SNPGCMBkZciXD01pFxwbbB2i4wAmoKbc
+	 mNlsTNfnHjvVTUnzI8CUrH7bmliw3Q6tN2/CrZlvlCjONVVLdW1JqmGdtcQzhzASLr
+	 3/G2ykOTSTvWMSKC4N0Rc+zVcD+Tp7iRRUlbk7YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 495/776] ocfs2/dlm: fix off-by-one in dlm_match_regions() region comparison
-Date: Sat, 30 May 2026 18:03:29 +0200
-Message-ID: <20260530160253.098584597@linuxfoundation.org>
+Subject: [PATCH 5.15 496/776] soc: qcom: aoss: compare against normalized cooling state
+Date: Sat, 30 May 2026 18:03:30 +0200
+Message-ID: <20260530160253.124037974@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -59,46 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 01b61e8dda9b0fdb0d4cda43de25f4e390554d7b ]
+[ Upstream commit cd3c4670db3ffe997be9548c7a9db3952563cf14 ]
 
-The local-vs-remote region comparison loop uses '<=' instead of '<',
-causing it to read one entry past the valid range of qr_regions.  The
-other loops in the same function correctly use '<'.
+qmp_cdev_set_cur_state() normalizes the requested state to a boolean
+(cdev_state = !!state). The existing early-return check compares
+qmp_cdev->state == state, which can be wrong if state is non-boolean
+(any non-zero value). Compare qmp_cdev->state against cdev_state instead,
+so the check matches the effective state and avoids redundant updates.
 
-Fix the loop condition to use '<' for consistency and correctness.
-
-Link: https://lkml.kernel.org/r/SYBPR01MB78813DA26B50EC5E01F00566AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Fixes: ea2034416b54 ("ocfs2/dlm: Add message DLM_QUERY_REGION")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Fixes: 05589b30b21a ("soc: qcom: Extend AOSS QMP driver to support resources that are used to wake up the SoC.")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260329195333.1478090-1-alok.a.tiwari@oracle.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmdomain.c | 2 +-
+ drivers/soc/qcom/qcom_aoss.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/dlm/dlmdomain.c b/fs/ocfs2/dlm/dlmdomain.c
-index 5a4b0f7293fa2..45b1ae68c179a 100644
---- a/fs/ocfs2/dlm/dlmdomain.c
-+++ b/fs/ocfs2/dlm/dlmdomain.c
-@@ -1002,7 +1002,7 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
- 	for (i = 0; i < localnr; ++i) {
- 		foundit = 0;
- 		r = remote;
--		for (j = 0; j <= qr->qr_numregions; ++j) {
-+		for (j = 0; j < qr->qr_numregions; ++j) {
- 			if (!memcmp(l, r, O2HB_MAX_REGION_NAME_LEN)) {
- 				foundit = 1;
- 				break;
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index 3973accdc9820..dbef3b27e594a 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -436,7 +436,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
+ 	/* Normalize state */
+ 	cdev_state = !!state;
+ 
+-	if (qmp_cdev->state == state)
++	if (qmp_cdev->state == cdev_state)
+ 		return 0;
+ 
+ 	snprintf(buf, sizeof(buf),
 -- 
 2.53.0
 
