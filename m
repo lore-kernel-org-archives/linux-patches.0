@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B533242BE;
-	Sat, 30 May 2026 17:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5527134A3C4;
+	Sat, 30 May 2026 17:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163100; cv=none; b=sye3Yka4yAxgqQeSVdMCMyXSoItUBUGo1wcVKim42U/j7y5ycu7Tzq0LB/Eu0AJnj9jrWr6OZv2dk5eEVRNZmVZizK7uy+mmOB5eLwTVXARWKIH8SXoB/mpvvj5scQaV95m93MMsHxXfqGy62WDdVEtWae4o7T4abZwS/dfNeBc=
+	t=1780163103; cv=none; b=tcjJzJ7Nlxm9TwnXf+pWylZiCYVXnT8ZoT1JBHPzMs8hCsThBgOGjnuXgsm+ihHmQSW6/Q1LUvdbx76ipAaWEV97kmVA9gpJ0PxHKPlVMUv12VkQ5x+OcrcAeOZHV8O8xMhpsNxnP/RJCJmWbr7VkPLV0xH5m8Ar3kgF7P0wdvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163100; c=relaxed/simple;
-	bh=5sIXSWn66qItfgdrXpZI4Ij2s2Dl+M1Dzm96qN9teYM=;
+	s=arc-20240116; t=1780163103; c=relaxed/simple;
+	bh=/RsiHR5Rhrblr6hAwjPC6lUDmA/Ka4MXUn3XxN2/x4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxCh0bu7S1KMUix2jXpYa8gIeuw0cLSJjkNea3m7rtlxfFGeFIWotmgmiDbw7HPqxQikYbMGZksIYI4PM3qEyyZOgbbg0xOwaf3bNDJuzKyz8PeTzt1odO2vCLlJkl8DoCXc074Zlr4ICUS0d7VDOhs27ldlsLq18BTVE0x+x5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQLHQ5el; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i2vb57KSBhUtGad+sx/6hF+Yweor0dN/JCH3Q3Il27mAoIINHXKp31Qx/Bv8TuUU9b2BgqwKlk81MoVJBfpjNA8Gmo7/wcQsdhR+Jl37W4yGfhnaDFcs99qN3v3fMpsSvl7CB/zewHb77XFBAZN5aOwKJiysxSgDrwyVqBzrwVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rM6lZxUq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQLHQ5el"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492C51F00893;
-	Sat, 30 May 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rM6lZxUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964601F00893;
+	Sat, 30 May 2026 17:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163098;
-	bh=Ed4jCYOvuPFvciXVSfng1xRP8TTPv/Qx3C9T5u8zv8w=;
+	s=korg; t=1780163102;
+	bh=td4RGocMSq+G9Wpn5tHJHLodlprZgsD2UHZbD8I4eu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQLHQ5elyYSBHPweWsAmClaYw5VrnQaV2+2PaUxBCyp6CcJGSj8nLtE66Bd4iv+wS
-	 LYqa0CF+ZsCwWnGVWb5T8qnw02cMy4RL94wtygivJK9xsXov9vdbH05/kG1E5sU40d
-	 zPmk7kvLywS3xtLFQE+Fd4kxVAapMADnUX8wlZKg=
+	b=rM6lZxUqmLKnvIyBkduZQCXSwPM7SjebJPLuxRIuAUMQChNug5FmFP+X2CCLqx8yQ
+	 D7Oh0p4WJTbIUxcgHccqxrq9IqI/njYC6Rrp2022wPeU+SetOTDTUHDotNHFdjEWwI
+	 FtOe0tc35L+iR0Qjzpg1rxmF6h5ngr3gW8D9NCS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Filipe Manana" <fdmanana@suse.com>
+	"stable@vger.kernel.org, Konstantin Komarov" <almaz.alexandrovich@paragon-software.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc35f55c41e34c30dcb5@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
 	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 154/776] btrfs: lock the inode in shared mode before starting fiemap
-Date: Sat, 30 May 2026 17:57:48 +0200
-Message-ID: <20260530160244.447250254@linuxfoundation.org>
+Subject: [PATCH 5.15 155/776] fs/ntfs3: Add more attributes checks in mi_enum_attr()
+Date: Sat, 30 May 2026 17:57:49 +0200
+Message-ID: <20260530160244.472184780@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,174 +50,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 519b7e13b5ae8dd38da1e52275705343be6bb508 ]
+[ Upstream commit 013ff63b649475f0ee134e2c8d0c8e65284ede50 ]
 
-Currently fiemap does not take the inode's lock (VFS lock), it only locks
-a file range in the inode's io tree. This however can lead to a deadlock
-if we have a concurrent fsync on the file and fiemap code triggers a fault
-when accessing the user space buffer with fiemap_fill_next_extent(). The
-deadlock happens on the inode's i_mmap_lock semaphore, which is taken both
-by fsync and btrfs_page_mkwrite(). This deadlock was recently reported by
-syzbot and triggers a trace like the following:
-
-   task:syz-executor361 state:D stack:20264 pid:5668  ppid:5119   flags:0x00004004
-   Call Trace:
-    <TASK>
-    context_switch kernel/sched/core.c:5293 [inline]
-    __schedule+0x995/0xe20 kernel/sched/core.c:6606
-    schedule+0xcb/0x190 kernel/sched/core.c:6682
-    wait_on_state fs/btrfs/extent-io-tree.c:707 [inline]
-    wait_extent_bit+0x577/0x6f0 fs/btrfs/extent-io-tree.c:751
-    lock_extent+0x1c2/0x280 fs/btrfs/extent-io-tree.c:1742
-    find_lock_delalloc_range+0x4e6/0x9c0 fs/btrfs/extent_io.c:488
-    writepage_delalloc+0x1ef/0x540 fs/btrfs/extent_io.c:1863
-    __extent_writepage+0x736/0x14e0 fs/btrfs/extent_io.c:2174
-    extent_write_cache_pages+0x983/0x1220 fs/btrfs/extent_io.c:3091
-    extent_writepages+0x219/0x540 fs/btrfs/extent_io.c:3211
-    do_writepages+0x3c3/0x680 mm/page-writeback.c:2581
-    filemap_fdatawrite_wbc+0x11e/0x170 mm/filemap.c:388
-    __filemap_fdatawrite_range mm/filemap.c:421 [inline]
-    filemap_fdatawrite_range+0x175/0x200 mm/filemap.c:439
-    btrfs_fdatawrite_range fs/btrfs/file.c:3850 [inline]
-    start_ordered_ops fs/btrfs/file.c:1737 [inline]
-    btrfs_sync_file+0x4ff/0x1190 fs/btrfs/file.c:1839
-    generic_write_sync include/linux/fs.h:2885 [inline]
-    btrfs_do_write_iter+0xcd3/0x1280 fs/btrfs/file.c:1684
-    call_write_iter include/linux/fs.h:2189 [inline]
-    new_sync_write fs/read_write.c:491 [inline]
-    vfs_write+0x7dc/0xc50 fs/read_write.c:584
-    ksys_write+0x177/0x2a0 fs/read_write.c:637
-    do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-   RIP: 0033:0x7f7d4054e9b9
-   RSP: 002b:00007f7d404fa2f8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-   RAX: ffffffffffffffda RBX: 00007f7d405d87a0 RCX: 00007f7d4054e9b9
-   RDX: 0000000000000090 RSI: 0000000020000000 RDI: 0000000000000006
-   RBP: 00007f7d405a51d0 R08: 0000000000000000 R09: 0000000000000000
-   R10: 0000000000000000 R11: 0000000000000246 R12: 61635f65646f6e69
-   R13: 65646f7475616f6e R14: 7261637369646f6e R15: 00007f7d405d87a8
-    </TASK>
-   INFO: task syz-executor361:5697 blocked for more than 145 seconds.
-         Not tainted 6.2.0-rc3-syzkaller-00376-g7c6984405241 #0
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   task:syz-executor361 state:D stack:21216 pid:5697  ppid:5119   flags:0x00004004
-   Call Trace:
-    <TASK>
-    context_switch kernel/sched/core.c:5293 [inline]
-    __schedule+0x995/0xe20 kernel/sched/core.c:6606
-    schedule+0xcb/0x190 kernel/sched/core.c:6682
-    rwsem_down_read_slowpath+0x5f9/0x930 kernel/locking/rwsem.c:1095
-    __down_read_common+0x54/0x2a0 kernel/locking/rwsem.c:1260
-    btrfs_page_mkwrite+0x417/0xc80 fs/btrfs/inode.c:8526
-    do_page_mkwrite+0x19e/0x5e0 mm/memory.c:2947
-    wp_page_shared+0x15e/0x380 mm/memory.c:3295
-    handle_pte_fault mm/memory.c:4949 [inline]
-    __handle_mm_fault mm/memory.c:5073 [inline]
-    handle_mm_fault+0x1b79/0x26b0 mm/memory.c:5219
-    do_user_addr_fault+0x69b/0xcb0 arch/x86/mm/fault.c:1428
-    handle_page_fault arch/x86/mm/fault.c:1519 [inline]
-    exc_page_fault+0x7a/0x110 arch/x86/mm/fault.c:1575
-    asm_exc_page_fault+0x22/0x30 arch/x86/include/asm/idtentry.h:570
-   RIP: 0010:copy_user_short_string+0xd/0x40 arch/x86/lib/copy_user_64.S:233
-   Code: 74 0a 89 (...)
-   RSP: 0018:ffffc9000570f330 EFLAGS: 00050202
-   RAX: ffffffff843e6601 RBX: 00007fffffffefc8 RCX: 0000000000000007
-   RDX: 0000000000000000 RSI: ffffc9000570f3e0 RDI: 0000000020000120
-   RBP: ffffc9000570f490 R08: 0000000000000000 R09: fffff52000ae1e83
-   R10: fffff52000ae1e83 R11: 1ffff92000ae1e7c R12: 0000000000000038
-   R13: ffffc9000570f3e0 R14: 0000000020000120 R15: ffffc9000570f3e0
-    copy_user_generic arch/x86/include/asm/uaccess_64.h:37 [inline]
-    raw_copy_to_user arch/x86/include/asm/uaccess_64.h:58 [inline]
-    _copy_to_user+0xe9/0x130 lib/usercopy.c:34
-    copy_to_user include/linux/uaccess.h:169 [inline]
-    fiemap_fill_next_extent+0x22e/0x410 fs/ioctl.c:144
-    emit_fiemap_extent+0x22d/0x3c0 fs/btrfs/extent_io.c:3458
-    fiemap_process_hole+0xa00/0xad0 fs/btrfs/extent_io.c:3716
-    extent_fiemap+0xe27/0x2100 fs/btrfs/extent_io.c:3922
-    btrfs_fiemap+0x172/0x1e0 fs/btrfs/inode.c:8209
-    ioctl_fiemap fs/ioctl.c:219 [inline]
-    do_vfs_ioctl+0x185b/0x2980 fs/ioctl.c:810
-    __do_sys_ioctl fs/ioctl.c:868 [inline]
-    __se_sys_ioctl+0x83/0x170 fs/ioctl.c:856
-    do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-   RIP: 0033:0x7f7d4054e9b9
-   RSP: 002b:00007f7d390d92f8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-   RAX: ffffffffffffffda RBX: 00007f7d405d87b0 RCX: 00007f7d4054e9b9
-   RDX: 0000000020000100 RSI: 00000000c020660b RDI: 0000000000000005
-   RBP: 00007f7d405a51d0 R08: 00007f7d390d9700 R09: 0000000000000000
-   R10: 00007f7d390d9700 R11: 0000000000000246 R12: 61635f65646f6e69
-   R13: 65646f7475616f6e R14: 7261637369646f6e R15: 00007f7d405d87b8
-    </TASK>
-
-What happens is the following:
-
-1) Task A is doing an fsync, enters btrfs_sync_file() and flushes delalloc
-   before locking the inode and the i_mmap_lock semaphore, that is, before
-   calling btrfs_inode_lock();
-
-2) After task A flushes delalloc and before it calls btrfs_inode_lock(),
-   another task dirties a page;
-
-3) Task B starts a fiemap without FIEMAP_FLAG_SYNC, so the page dirtied
-   at step 2 remains dirty and unflushed. Then when it enters
-   extent_fiemap() and it locks a file range that includes the range of
-   the page dirtied in step 2;
-
-4) Task A calls btrfs_inode_lock() and locks the inode (VFS lock) and the
-   inode's i_mmap_lock semaphore in write mode. Then it tries to flush
-   delalloc by calling start_ordered_ops(), which will block, at
-   find_lock_delalloc_range(), when trying to lock the range of the page
-   dirtied at step 2, since this range was locked by the fiemap task (at
-   step 3);
-
-5) Task B generates a page fault when accessing the user space fiemap
-   buffer with a call to fiemap_fill_next_extent().
-
-   The fault handler needs to call btrfs_page_mkwrite() for some other
-   page of our inode, and there we deadlock when trying to lock the
-   inode's i_mmap_lock semaphore in read mode, since the fsync task locked
-   it in write mode (step 4) and the fsync task can not progress because
-   it's waiting to lock a file range that is currently locked by us (the
-   fiemap task, step 3).
-
-Fix this by taking the inode's lock (VFS lock) in shared mode when
-entering fiemap. This effectively serializes fiemap with fsync (except the
-most expensive part of fsync, the log sync), preventing this deadlock.
-
-Reported-by: syzbot+cc35f55c41e34c30dcb5@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/00000000000032dc7305f2a66f46@google.com/
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[ Overflow check deleted to keep context consistent. ]
 Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/record.c |   63 ++++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -5590,6 +5590,7 @@ int extent_fiemap(struct btrfs_inode *in
- 		last_for_get_extent = isize;
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -193,8 +193,9 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ {
+ 	const struct MFT_REC *rec = mi->mrec;
+ 	u32 used = le32_to_cpu(rec->used);
+-	u32 t32, off, asize;
++	u32 t32, off, asize, prev_type;
+ 	u16 t16;
++	u64 data_size, alloc_size, tot_size;
+ 
+ 	if (!attr) {
+ 		u32 total = le32_to_cpu(rec->total);
+@@ -213,6 +214,7 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 		if (!is_rec_inuse(rec))
+ 			return NULL;
+ 
++		prev_type = 0;
+ 		attr = Add2Ptr(rec, off);
+ 	} else {
+ 		/* Check if input attr inside record. */
+@@ -226,6 +228,7 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 			return NULL;
+ 		}
+ 
++		prev_type = le32_to_cpu(attr->type);
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+@@ -245,7 +248,11 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 
+ 	/* 0x100 is last known attribute for now. */
+ 	t32 = le32_to_cpu(attr->type);
+-	if ((t32 & 0xf) || (t32 > 0x100))
++	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
++		return NULL;
++
++	/* attributes in record must be ordered by type */
++	if (t32 < prev_type)
+ 		return NULL;
+ 
+ 	/* Check overflow and boundary. */
+@@ -254,16 +261,15 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 
+ 	/* Check size of attribute. */
+ 	if (!attr->non_res) {
++		/* Check resident fields. */
+ 		if (asize < SIZEOF_RESIDENT)
+ 			return NULL;
+ 
+ 		t16 = le16_to_cpu(attr->res.data_off);
+-
+ 		if (t16 > asize)
+ 			return NULL;
+ 
+-		t32 = le32_to_cpu(attr->res.data_size);
+-		if (t16 + t32 > asize)
++		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
+ 			return NULL;
+ 
+ 		if (attr->name_len &&
+@@ -274,21 +280,52 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 		return attr;
  	}
  
-+	btrfs_inode_lock(&inode->vfs_inode, BTRFS_ILOCK_SHARED);
- 	lock_extent_bits(&inode->io_tree, start, start + len - 1,
- 			 &cached_state);
+-	/* Check some nonresident fields. */
+-	if (attr->name_len &&
+-	    le16_to_cpu(attr->name_off) + sizeof(short) * attr->name_len >
+-		    le16_to_cpu(attr->nres.run_off)) {
++	/* Check nonresident fields. */
++	if (attr->non_res != 1)
++		return NULL;
++
++	t16 = le16_to_cpu(attr->nres.run_off);
++	if (t16 > asize)
++		return NULL;
++
++	t32 = sizeof(short) * attr->name_len;
++	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
++		return NULL;
++
++	/* Check start/end vcn. */
++	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
++		return NULL;
++
++	data_size = le64_to_cpu(attr->nres.data_size);
++	if (le64_to_cpu(attr->nres.valid_size) > data_size)
+ 		return NULL;
+-	}
  
-@@ -5705,6 +5706,7 @@ out_free:
- out:
- 	unlock_extent_cached(&inode->io_tree, start, start + len - 1,
- 			     &cached_state);
-+	btrfs_inode_unlock(&inode->vfs_inode, BTRFS_ILOCK_SHARED);
+-	if (attr->nres.svcn || !is_attr_ext(attr)) {
++	alloc_size = le64_to_cpu(attr->nres.alloc_size);
++	if (data_size > alloc_size)
++		return NULL;
++
++	t32 = mi->sbi->cluster_mask;
++	if (alloc_size & t32)
++		return NULL;
++
++	if (!attr->nres.svcn && is_attr_ext(attr)) {
++		/* First segment of sparse/compressed attribute */
++		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
++			return NULL;
++
++		tot_size = le64_to_cpu(attr->nres.total_size);
++		if (tot_size & t32)
++			return NULL;
++
++		if (tot_size > alloc_size)
++			return NULL;
++	} else {
+ 		if (asize + 8 < SIZEOF_NONRESIDENT)
+ 			return NULL;
  
- out_free_ulist:
- 	btrfs_free_path(path);
+ 		if (attr->nres.c_unit)
+ 			return NULL;
+-	} else if (asize + 8 < SIZEOF_NONRESIDENT_EX)
+-		return NULL;
++	}
+ 
+ 	return attr;
+ }
 
 
