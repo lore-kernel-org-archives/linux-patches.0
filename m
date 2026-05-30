@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB8B33FE15;
-	Sat, 30 May 2026 17:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012B5263F44;
+	Sat, 30 May 2026 17:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161712; cv=none; b=r53/i2RiND8/06SEhbCo3qTgtfT/bhL1rg2Cx1MVmQ0NXHAImkcqRXSSUyZpq2NB2CVgAKtD8g9vFWCt7lrgG3m0reuYGsC/yARqzD3LduCwtCADlZYFYWBMXDxpxem+mwIkZTlwgtG/Gv8L+aXjtD3dNYfgb9PkPOwkA/5MofI=
+	t=1780161715; cv=none; b=SCUSlc7GxZpG1UQ3gvkysULbcMIPwG+4yM83gEmwSPQcDkHL1dsEiG+lG8UXnCDIkfVSVDiSy+qjZbY1LUwzhnsFMdfwouKbVMg+je/lOt460MANWYmjnXCU/7h5zkNIL2SULQ2H4mqi1Dz6ydmW/N9wpO68UvX+T6Ghx5CGvis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161712; c=relaxed/simple;
-	bh=EgJYAjw1oJc4vNoRE9d+vKp5Xe/LqnrG4vJ2M/zXCaM=;
+	s=arc-20240116; t=1780161715; c=relaxed/simple;
+	bh=Y7CqHk9L1KrvRVm2TeQpwW7qfYqLM70ysvuxVuNzb84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXy3RkdKKKSqLeG0/U7+zj9qFgaftTu0om1SVGrQoVm0/PxSiRwMyQjZGgrirfAPH8ynDJROm/DFb7QC9QAKMVnhr3sK4qLd2YaY9KyiTRkb7FljIEBqXni0THPDIyUkDOdKW9ZGia1IJxtsCb2c7vYU+H6bVRc4Uv05Av9Q4dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYRpMmt4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SH85u+95TTkuLWGBVzVC/bnK5zyeaIyefSPhWqOz2UBo6b86ffqfSVV9Fr3UZUohY6jnDrwww11IkoWHFTdLDY55Eppny0+wxvmlpVA2TtbeDsWcFl7nIRUiS+7g7vSmMMSFKkn0uv4vFVSpmA4k8pRvIjqA7Rr1lSKRpl0+xTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEAEGTaj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYRpMmt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C831F00893;
-	Sat, 30 May 2026 17:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEAEGTaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419E81F00893;
+	Sat, 30 May 2026 17:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161711;
-	bh=5pUCFMW4qeVT4XSEWRRjLhsFfZgZvi2EaNroleNtw3o=;
+	s=korg; t=1780161714;
+	bh=EyX89lOhA5T3TB8ghm0Nk4i3+Kjq58IT29NvXpTZ7vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYRpMmt41tgJ4ECVpF3c91xOKH3ms6Kj5kjF4nTvt3AsmcAlPgspEgm3AIJr1Cuzb
-	 7aULUPIAkgVYkEjWnFDyV5I0pUK2WG4RCXVWGTYsF/8woKhe267J3R8n8CjJBp9cVd
-	 p2XcoDgrgz4Nnr8NH+jNAP4V7ep8zHf7IP2LRPPg=
+	b=CEAEGTajAiAZcf6QxQ3HUHqdU7XrxbVPjMmbaXsXQAskzDHJvzpcv0ZwXKFDqqmdr
+	 GXQdI3pJ9Fgive4LwPAMP4d7gy9RQjP7+aYPjhiSSozH/olNHsbFYDVV0NKf7pE3Up
+	 9Gz9ctflUxSo58MguOxaD745P57s/8bcalqs3aRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Kito Xu (veritas501)" <hxzene@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 697/969] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
-Date: Sat, 30 May 2026 18:03:41 +0200
-Message-ID: <20260530160319.764094888@linuxfoundation.org>
+Subject: [PATCH 6.1 706/969] netfilter: nfnetlink_osf: fix potential NULL dereference in ttl check
+Date: Sat, 30 May 2026 18:03:50 +0200
+Message-ID: <20260530160320.019027594@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,66 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
+[ Upstream commit 711987ba281fd806322a7cd244e98e2a81903114 ]
 
-sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
-buffer is large enough for the peer AUTH chunk list with
+The nf_osf_ttl() function accessed skb->dev to perform a local interface
+address lookup without verifying that the device pointer was valid.
 
-    if (len < num_chunks)
-            return -EINVAL;
+Additionally, the implementation utilized an in_dev_for_each_ifa_rcu
+loop to match the packet source address against local interface
+addresses. It assumed that packets from the same subnet should not see a
+decrement on the initial TTL. A packet might appear it is from the same
+subnet but it actually isn't especially in modern environments with
+containers and virtual switching.
 
-but then writes num_chunks bytes to p->gauth_chunks, which lives
-at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
-inside optval.  The check is missing the sizeof(struct
-sctp_authchunks) = 8-byte header.  When the caller supplies
-len == num_chunks (for any num_chunks > 0) the test passes but
-copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
-past the declared buffer.
+Remove the device dereference and interface loop. Replace the logic with
+a switch statement that evaluates the TTL according to the ttl_check.
 
-The sibling function sctp_getsockopt_local_auth_chunks() at the
-next line already has the correct check:
-
-    if (len < sizeof(struct sctp_authchunks) + num_chunks)
-            return -EINVAL;
-
-Align the peer variant with its sibling.
-
-Reproducer confirms on v7.0-13-generic: an unprivileged userspace
-caller that opens a loopback SCTP association with AUTH enabled,
-queries num_chunks with a short optval, then issues the real
-getsockopt with len == num_chunks and sentinel bytes painted past
-the buffer observes those sentinel bytes overwritten with the
-peer's AUTH chunk type.  The bytes written are under the peer's
-control but land in the caller's own userspace; this is not a
-kernel memory corruption, but it is a kernel-side contract
-violation that can silently corrupt adjacent userspace data.
-
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Kito Xu (veritas501) <hxzene@gmail.com>
+Closes: https://lore.kernel.org/netfilter-devel/20260414074556.2512750-1-hxzene@gmail.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nfnetlink_osf.c | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index dfc613859ff58..b544f403f7ca8 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -6995,7 +6995,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 2207bda442d54..6d3dfbeb398cb 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -31,26 +31,18 @@ EXPORT_SYMBOL_GPL(nf_osf_fingers);
+ static inline int nf_osf_ttl(const struct sk_buff *skb,
+ 			     int ttl_check, unsigned char f_ttl)
+ {
+-	struct in_device *in_dev = __in_dev_get_rcu(skb->dev);
+ 	const struct iphdr *ip = ip_hdr(skb);
+-	const struct in_ifaddr *ifa;
+-	int ret = 0;
  
- 	/* See if the user provided enough room for all the data */
- 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
--	if (len < num_chunks)
-+	if (len < sizeof(struct sctp_authchunks) + num_chunks)
- 		return -EINVAL;
+-	if (ttl_check == NF_OSF_TTL_TRUE)
++	switch (ttl_check) {
++	case NF_OSF_TTL_TRUE:
+ 		return ip->ttl == f_ttl;
+-	if (ttl_check == NF_OSF_TTL_NOCHECK)
+-		return 1;
+-	else if (ip->ttl <= f_ttl)
++		break;
++	case NF_OSF_TTL_NOCHECK:
+ 		return 1;
+-
+-	in_dev_for_each_ifa_rcu(ifa, in_dev) {
+-		if (inet_ifa_match(ip->saddr, ifa)) {
+-			ret = (ip->ttl == f_ttl);
+-			break;
+-		}
++	case NF_OSF_TTL_LESS:
++	default:
++		return ip->ttl <= f_ttl;
+ 	}
+-
+-	return ret;
+ }
  
- 	if (copy_to_user(to, ch->chunks, num_chunks))
+ struct nf_osf_hdr_ctx {
 -- 
 2.53.0
 
