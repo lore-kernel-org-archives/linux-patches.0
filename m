@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87AB32F770;
-	Sat, 30 May 2026 18:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1ACB331200;
+	Sat, 30 May 2026 18:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166126; cv=none; b=F5gIEQkj92nwIzb3mw8J8h4ri5bc9M4LbyFbk5Uzx/zoyc64OytF4MQrnZ1RP15LYuxXwd2NiEhkiAmmrmNBGPZb8RRuqxzCuTG9dC28UeHTMA9O2zbIl8t9dYb37XmlhS27dQIoaJgnP1VSDZuqiK9lAkW1Xd50MjHoQXKrZik=
+	t=1780166129; cv=none; b=qpB3n5qFWuqAxPxO6R//AZs3AvJgIH7gubx4GchXe9wgTlKxYx0lf/GcEjVRbcfBgQ59+H0XeiyOYO31zXYK7Us+AF2jg6K07gbM2qkuktcEpfdvGLTW/FuVZ/6HlcG6vaXmJQPHpzxe7AqAHsJqbyfcq3kaY6shIC3hNCyIrqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166126; c=relaxed/simple;
-	bh=s/il88bBuKKjpfMpMKc6kskShOIyoSI5kikhCjlK70E=;
+	s=arc-20240116; t=1780166129; c=relaxed/simple;
+	bh=BEsfLBpZUBSBwvqs5sH2U+d0jBXiYfmsq/v4LBPq9WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMBsiNe8wKvr1ZRnVcQ6eN0GTOs8n9HlXeKXRGzmeDsh9qtgLnm3oOtAAr/qJjyBmb29noT4wR16gfLwuuru7En915GLfbac2QN7pkPkP9nShtLnHaAIoDspNQ7JvS9vJR7XywvZ3mqPQpUwn1SGYWbjmEJgwUCmk931EARkXVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vy3NePyM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jEH+sx1maAmMy5OrdLTfZ+GcXXP93/4jrO8iRlOGsSTmZv7MlqqrRqCdE8R2CEx+2yVIbnyYdg8+0AxcwiLOByqSV7LjPN8q/+nkfukmvCxGrKRUnMxtKn8aE9nTO9UCcFyg0heAZ17u+Xb5+E7zIMJzVZzLLaFqgptl8GyuJj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eg6SfkgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vy3NePyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9521F00893;
-	Sat, 30 May 2026 18:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eg6SfkgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B551F00893;
+	Sat, 30 May 2026 18:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166125;
-	bh=FCEVLQZzfbDlub5CdC0OTsBtce5RoiXlkZLNrnlO0JA=;
+	s=korg; t=1780166128;
+	bh=jyzdE1LnZREy0q+FJprC21+gKMcci/VPE2zn9Ui5krY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vy3NePyMQ1zDdULUzi1TZLpkBtqsJS5OF1k+wigVE7nwQIh32XbHKr8mmS4uzqntr
-	 rzivTcJ/w6HqC3zBWO+f8TbABhf1dxAbY+u3uHeTVZCvXATNacqyOepL8uMnixY8vT
-	 fKqYUYBL4Mq8Qq5BuLpY9iiccMhehULFiDH73Z0U=
+	b=Eg6SfkgWGT4YzZMacQrbqGkmTxTHsnk4zpFxyy202FLMecKGJYCyUHWyPlmLbZrXf
+	 gJZ0/TfNwPLE4e63gKp8jlSfWAnbEsGtciXCl5p10dIpvkHvI+JddLvsIOXqOiRD9k
+	 2jWaRYstPRXij3gaKqi0kqRNBG/xR0SLkfeqkgSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tony Asleson <tasleson@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
-	Zdenek Kabelac <zkabelac@redhat.com>
-Subject: [PATCH 5.10 247/589] dm: dont report warning when doing deferred remove
-Date: Sat, 30 May 2026 18:02:08 +0200
-Message-ID: <20260530160231.485851072@linuxfoundation.org>
+	"Bryn M. Reeves" <bmr@redhat.com>
+Subject: [PATCH 5.10 248/589] dm: fix a buffer overflow in ioctl processing
+Date: Sat, 30 May 2026 18:02:09 +0200
+Message-ID: <20260530160231.510500646@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,33 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit b7cce3e2cca9cd78418f3c3784474b778e7996fe upstream.
+commit 2fa49cc884f6496a915c35621ba4da35649bf159 upstream.
 
-If dm_hash_remove_all was called from dm_deferred_remove, it would write
-a warning "remove_all left %d open device(s)" if there are some other
-devices active.
+Tony Asleson (using Claude) found a buffer overflow in dm-ioctl in the
+function retrieve_status:
 
-The warning is bogus, so let's disable it in this case.
+1. The code in retrieve_status checks that the output string fits into
+   the output buffer and writes the output string there
+2. Then, the code aligns the "outptr" variable to the next 8-byte
+   boundary:
+	outptr = align_ptr(outptr);
+3. The alignment doesn't check overflow, so outptr could point past the
+   buffer end
+4. The "for" loop is iterated again, it executes:
+	remaining = len - (outptr - outbuf);
+5. If "outptr" points past "outbuf + len", the arithmetics wraps around
+   and the variable "remaining" contains unusually high number
+6. With "remaining" being high, the code writes more data past the end of
+   the buffer
 
+Luckily, this bug has no security implications because:
+1. Only root can issue device mapper ioctls
+2. The commonly used libraries that communicate with device mapper
+   (libdevmapper and devicemapper-rs) use buffer size that is aligned to
+   8 bytes - thus, "outptr = align_ptr(outptr)" can't overshoot the input
+   buffer and the bug can't happen accidentally
+
+Reported-by: Tony Asleson <tasleson@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
+Reviewed-by: Bryn M. Reeves <bmr@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 2c140a246dc0 ("dm: allow remove to be deferred")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/md/dm-ioctl.c
 +++ b/drivers/md/dm-ioctl.c
-@@ -328,7 +328,7 @@ retry:
+@@ -1214,6 +1214,10 @@ static void retrieve_status(struct dm_ta
+ 		used = param->data_start + (outptr - outbuf);
  
- 	up_write(&_hash_lock);
- 
--	if (dev_skipped)
-+	if (dev_skipped && !only_deferred)
- 		DMWARN("remove_all left %d open device(s)", dev_skipped);
- }
+ 		outptr = align_ptr(outptr);
++		if (!outptr || outptr > outbuf + len) {
++			param->flags |= DM_BUFFER_FULL_FLAG;
++			break;
++		}
+ 		spec->next = outptr - outbuf;
+ 	}
  
 
 
