@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE49817555;
-	Sat, 30 May 2026 18:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A52219303;
+	Sat, 30 May 2026 18:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165406; cv=none; b=s6dIBxXl8SBkspWl7/73jtkHUjkO5gsTkqPHDRblMkdE6A1hh43UNUQ5Ap3mD9B3bVq+vuBDnxWp/zwS0XyW3Pe7gNEevmAGs/qSrOiqzJkIydHjKQHxruCJyPwNGGYVn/f3pGxg5hWsqhNmOTwzH12Y86xCIzNIgZusFbpJvQs=
+	t=1780165409; cv=none; b=oZ/pxHu4r/uAHf26aNzxWmjhtSgjgMXA5X8q4dJ6t39VYsA+XtcuXk7unDiCdmdtwaD9+Vkr05PMAC3bGGpQY4ls5k9HmkRMltDj8EiNBcUAz4ybUqe6JsEn8RMmZuWM6CW2hn6bTI+LeF8VPaGtzN1erw9vPWiz4Tgxyyb206c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165406; c=relaxed/simple;
-	bh=SFxPIrGwokyAITmjDgcGL2IQTNuAhYRTstKWZv5htAU=;
+	s=arc-20240116; t=1780165409; c=relaxed/simple;
+	bh=Y8JEtdBf7Q5Z3R9QpDMxzLa3S17ai/EqBcO/AqfJGx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5LQb80NI+eW2i+NIVAleUb0phrzsn1kzT7hHJa2b86rcwn9BaIoIEI5ouT4URAkinbU4PdAUOafmQ6R/96IABPrKwlIiW+q3LMVzd+cVJp0oP/aDxj9BuLauaNb2R2mywfFwQbPJ4jnjYU4ziMX8ARt+dyTRmgEFTymbN8Nx0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thiLtLVt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mr0sxsFApWNpqm1nG+E4NETZ2B6kyR2xcqc/ojqsLzr1SinT6vRnnYvprLFdP7MGiicq9NYNLYACQlJvdAkrwICjx7Ok+DMQMVUlgwS7k9qRY2Pueqr/7aDrUL9MXNVV9EwErIKGlnuRNarWn62sIUgXN+XHKpXm0L7385roED4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYbxEa70; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thiLtLVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D231F00893;
-	Sat, 30 May 2026 18:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYbxEa70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE83A1F00893;
+	Sat, 30 May 2026 18:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165405;
-	bh=1UUJLQUv0TLngUmbjhx0OE+CsYjSEABiGLldMY/a3b8=;
+	s=korg; t=1780165408;
+	bh=XZpueKojcMMtm+ZZVzCLeCIfOeEFUsawr29aOBKpb6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thiLtLVtSB1hgpwi3pCBB2lucHtaQyAs93vG4y5vcpkaQ2yVDqv3g/LR6gU4bkJUh
-	 OXT2fikZJ1vcYrCMuZbG2t7tGhYjypEkGUK0z1szEaimYSbHDhz/wwnpknOIG3T9GX
-	 fjNhRAwXaL9QVNwvd2VkeXHzsyDUmYaIZffnncTk=
+	b=qYbxEa700awOcT4EVV0eFtFM6GgcWo/AS5SCsX8Z5XY3TdoDPMEfcsMisUTw4tLy3
+	 qRnDcLf0Xw9FmcxnGkuVrbpq1sN9vwycIH9QRtX6xwaTYXNtbsCqtOq+9nDJlfb6lo
+	 10pLp9hAn/iqCbonRC6KpS8gzOP6YdqCzOcROVaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/589] netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator
-Date: Sat, 30 May 2026 17:58:30 +0200
-Message-ID: <20260530160225.351038632@linuxfoundation.org>
+	syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 062/589] media: vidtv: fix NULL pointer dereference in vidtv_channel_pmt_match_sections
+Date: Sat, 30 May 2026 17:59:03 +0200
+Message-ID: <20260530160226.227975034@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,51 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-[ Upstream commit 1f3083aec8836213da441270cdb1ab612dd82cf4 ]
+commit f8e1fc918a9fe67103bcda01d20d745f264d00a7 upstream.
 
-When batching multiple NFLOG messages (inst->qlen > 1), __nfulnl_send()
-appends an NLMSG_DONE terminator with sizeof(struct nfgenmsg) payload via
-nlmsg_put(), but never initializes the nfgenmsg bytes. The nlmsg_put()
-helper only zeroes alignment padding after the payload, not the payload
-itself, so four bytes of stale kernel heap data are leaked to userspace
-in the NLMSG_DONE message body.
+syzbot reported a general protection fault in vidtv_psi_desc_assign [1].
 
-Use nfnl_msg_put() to build the NLMSG_DONE terminator, which initializes
-the nfgenmsg payload via nfnl_fill_hdr(), consistent with how
-__build_packet_message() already constructs NFULNL_MSG_PACKET headers.
+vidtv_psi_pmt_stream_init() can return NULL on memory allocation
+failure, but vidtv_channel_pmt_match_sections() does not check for
+this. When tail is NULL, the subsequent call to
+vidtv_psi_desc_assign(&tail->descriptor, desc) dereferences a NULL
+pointer offset, causing a general protection fault.
 
-Fixes: 29c5d4afba51 ("[NETFILTER]: nfnetlink_log: fix sending of multipart messages")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a NULL check after vidtv_psi_pmt_stream_init(). On failure, clean
+up the already-allocated stream chain and return.
+
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:vidtv_psi_desc_assign+0x24/0x90 drivers/media/test-drivers/vidtv/vidtv_psi.c:629
+Call Trace:
+ <TASK>
+ vidtv_channel_pmt_match_sections drivers/media/test-drivers/vidtv/vidtv_channel.c:349 [inline]
+ vidtv_channel_si_init+0x1445/0x1a50 drivers/media/test-drivers/vidtv/vidtv_channel.c:479
+ vidtv_mux_init+0x526/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:519
+ vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
+ vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1f5bcc7c919ec578777a
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nfnetlink_log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_channel.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index d41560d4812d0..8c967bd772ec3 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -346,10 +346,10 @@ static void
- __nfulnl_send(struct nfulnl_instance *inst)
- {
- 	if (inst->qlen > 1) {
--		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
--						 NLMSG_DONE,
--						 sizeof(struct nfgenmsg),
--						 0);
-+		struct nlmsghdr *nlh = nfnl_msg_put(inst->skb, 0, 0,
-+						    NLMSG_DONE, 0,
-+						    AF_UNSPEC, NFNETLINK_V0,
-+						    htons(inst->group_num));
- 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
- 			      inst->skb->len, skb_tailroom(inst->skb))) {
- 			kfree_skb(inst->skb);
--- 
-2.53.0
-
+--- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
+@@ -341,6 +341,10 @@ vidtv_channel_pmt_match_sections(struct
+ 					tail = vidtv_psi_pmt_stream_init(tail,
+ 									 s->type,
+ 									 e_pid);
++					if (!tail) {
++						vidtv_psi_pmt_stream_destroy(head);
++						return;
++					}
+ 
+ 					if (!head)
+ 						head = tail;
 
 
