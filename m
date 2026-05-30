@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D288F1CAA6C;
-	Sat, 30 May 2026 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D4D32BF24;
+	Sat, 30 May 2026 16:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159970; cv=none; b=YQM/nnVFrsL2CC/4xgz3jTnl5AMeYdsuVopZQ5Tb9hunh/kT5Izmp2H3kG8uqlKQoVXztuNU88kW8BxHTy1Qguenl71TgEKlWafOxRYTFwQNhEiXxj6x3KtbSJmC8IFlBjtXderEFK7NHvZ2ud2oj5KwTsRrFUOwnBxWkz6oedU=
+	t=1780159973; cv=none; b=Mx/jumAGa9dnqO6FW0REQBRtN7lOIJyoosK1l+rzArejNJ4O9deR1tD6112a9u0EhHRT3nsKeC3fd7tdEoThxjRNeOe/WgyGvDGDPi3vENE/btFyIJeVtbdud482Up5oDqqnCjTJeQ/ATPx9bo3XE56jFa4cGiisgP/VPmEmOwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159970; c=relaxed/simple;
-	bh=pRHp96LBG7woT/irtDjQoeAgJZpF/snULqmK/wDEMZM=;
+	s=arc-20240116; t=1780159973; c=relaxed/simple;
+	bh=DrtqvhdBfDUKnk2vm1tvTEk0YJ3tPDXIXFfI8v7wl60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcFJL62uap5NsDbQuOasyDCNwchQtgftAPGcuWGMMOkAPZzmDaa0fk7gt/AOdRItxVx2WCIC45Qx6qHNAG+fFj8QQO36ATzU7WMqtAIytKTASjgoTJT/cWj44OO+TpfLePM4zGQbuH2fyxX8znU8Fmh2SYPexYokm5lB9qTLbfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LNHA97M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iEhR6f10BB73SCvOrHMX+7XzQhkA+AB9WHAoNbMz7aUb3ABKGcZgXrIaSK7OXfxaSnzkax6QuubI9yb5OneOjxRVb2X59vKjjK1xxxeVVD626iE72wqZ2ZuKmnQUKdBdZBZ5yYuKQz580Y7A/vmmaFXtJETT2Xfv0kmJeOxsaB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHaWsMz5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LNHA97M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57AE1F00893;
-	Sat, 30 May 2026 16:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHaWsMz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCA81F00893;
+	Sat, 30 May 2026 16:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159968;
-	bh=sP4ZNGwOL7W6lWHnTPDHbXwz8Dmzcfr4KEpYjUG2bbk=;
+	s=korg; t=1780159972;
+	bh=qiWKqoa0S/XqICVvxr9GdFMNXhRTnmPX1WxCbCLEOfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LNHA97MuAHskVF145UJIGKUBuQutUJQRiTHJ/5CiDHPdAYhi3TGS/lWPEMCPthQI
-	 EmgqagBJ3i196djxtSvLTmHnvmpc+GtmufYI50PUZT1Yj0DJ96qR9DHt2MhRlJQDUX
-	 eW402yVJj3HpCc7X07fCElZ9Hcuej+m4Xy0jfNA4=
+	b=PHaWsMz5u3BFxNP5SZ9q0PzG7xzIDULeCGlxVTP52Nqf7nYHvIp1V+hmHEpISq2ZM
+	 MBRsj3qr8BtBNfDmYGrBzWTUED4bV5kDen8v4L7D8pPUr807KcjQbpdZit4e959oym
+	 iJWbK4OgQsw39YDPNPo/hnjJQUX88TJqH7LuWYVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 210/969] ALSA: caiaq: Handle probe errors properly
-Date: Sat, 30 May 2026 17:55:34 +0200
-Message-ID: <20260530160306.266522061@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 193/969] ext2: reject inodes with zero i_nlink and valid mode in ext2_iget()
+Date: Sat, 30 May 2026 17:55:17 +0200
+Message-ID: <20260530160305.805829944@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -49,125 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 28abd224db4a49560b452115bca3672a20e45b2f upstream.
+commit 25947cc5b2374cd5bf627fe3141496444260d04f upstream.
 
-The probe procedure of setup_card() in caiaq driver doesn't treat the
-error cases gracefully, e.g. the error from snd_card_register() calls
-snd_card_free() but continues.  This would lead to a UAF for the
-further calls like snd_usb_caiaq_control_init(), as Berk suggested in
-another patch in the link below.
+ext2_iget() already rejects inodes with i_nlink == 0 when i_mode is
+zero or i_dtime is set, treating them as deleted. However, the case of
+i_nlink == 0 with a non-zero mode and zero dtime slips through. Since
+ext2 has no orphan list, such a combination can only result from
+filesystem corruption - a legitimate inode deletion always sets either
+i_dtime or clears i_mode before freeing the inode.
 
-However, the problem is not only that; in general, this function drops
-the all error handlings (as it's a void function) although its caller
-can propagate an error to snd_probe(), which eventually calls
-snd_card_free() as a proper error path.  That said, we should treat
-each error case in setup_card(), and just return the error code
-promptly, which is then handled later as a fatal error in snd_probe().
+A crafted image can exploit this gap to present such an inode to the
+VFS, which then triggers WARN_ON inside drop_nlink() (fs/inode.c) via
+ext2_unlink(), ext2_rename() and ext2_rmdir():
 
-This patch achieves it by changing the setup_card() to return an error
-code.  Also, the superfluous snd_card_free() call is removed, too.
+WARNING: CPU: 3 PID: 609 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
+CPU: 3 UID: 0 PID: 609 Comm: syz-executor Not tainted 6.12.77+ #1
+Call Trace:
+ <TASK>
+ inode_dec_link_count include/linux/fs.h:2518 [inline]
+ ext2_unlink+0x26c/0x300 fs/ext2/namei.c:295
+ vfs_unlink+0x2fc/0x9b0 fs/namei.c:4477
+ do_unlinkat+0x53e/0x730 fs/namei.c:4541
+ __x64_sys_unlink+0xc6/0x110 fs/namei.c:4587
+ do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Note that card->private_free can be set still safely at returning an
-error.  All called functions in card_free() have checks of the
-unassigned resources or NULL checks.
+WARNING: CPU: 0 PID: 646 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
+CPU: 0 UID: 0 PID: 646 Comm: syz.0.17 Not tainted 6.12.77+ #1
+Call Trace:
+ <TASK>
+ inode_dec_link_count include/linux/fs.h:2518 [inline]
+ ext2_rename+0x35e/0x850 fs/ext2/namei.c:374
+ vfs_rename+0xf2f/0x2060 fs/namei.c:5021
+ do_renameat2+0xbe2/0xd50 fs/namei.c:5178
+ __x64_sys_rename+0x7e/0xa0 fs/namei.c:5223
+ do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
+WARNING: CPU: 0 PID: 634 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
+CPU: 0 UID: 0 PID: 634 Comm: syz-executor Not tainted 6.12.77+ #1
+Call Trace:
+ <TASK>
+ inode_dec_link_count include/linux/fs.h:2518 [inline]
+ ext2_rmdir+0xca/0x110 fs/ext2/namei.c:311
+ vfs_rmdir+0x204/0x690 fs/namei.c:4348
+ do_rmdir+0x372/0x3e0 fs/namei.c:4407
+ __x64_sys_unlinkat+0xf0/0x130 fs/namei.c:4577
+ do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+Extend the existing i_nlink == 0 check to also catch this case,
+reporting the corruption via ext2_error() and returning -EFSCORRUPTED.
+This rejects the inode at load time and prevents it from reaching any
+of the namei.c paths.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20260413034941.1131465-2-berkcgoksel@gmail.com
-Link: https://patch.msgid.link/20260414105916.364073-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://patch.msgid.link/20260404152011.2590197-1-kovalev@altlinux.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |   33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ fs/ext2/inode.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -290,7 +290,7 @@ int snd_usb_caiaq_set_auto_msg(struct sn
- 					  tmp, sizeof(tmp));
- }
- 
--static void setup_card(struct snd_usb_caiaqdev *cdev)
-+static int setup_card(struct snd_usb_caiaqdev *cdev)
- {
- 	int ret;
- 	char val[4];
-@@ -325,8 +325,10 @@ static void setup_card(struct snd_usb_ca
- 		snd_usb_caiaq_send_command(cdev, EP1_CMD_READ_IO, NULL, 0);
- 
- 		if (!wait_event_timeout(cdev->ep1_wait_queue,
--					cdev->control_state[0] != 0xff, HZ))
--			return;
-+					cdev->control_state[0] != 0xff, HZ)) {
-+			dev_err(dev, "Read timeout for control state\n");
-+			return -EINVAL;
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -1419,9 +1419,17 @@ struct inode *ext2_iget (struct super_bl
+ 	 * the test is that same one that e2fsck uses
+ 	 * NeilBrown 1999oct15
+ 	 */
+-	if (inode->i_nlink == 0 && (inode->i_mode == 0 || ei->i_dtime)) {
+-		/* this inode is deleted */
+-		ret = -ESTALE;
++	if (inode->i_nlink == 0) {
++		if (inode->i_mode == 0 || ei->i_dtime) {
++			/* this inode is deleted */
++			ret = -ESTALE;
++		} else {
++			ext2_error(sb, __func__,
++				   "inode %lu has zero i_nlink with mode 0%o and no dtime, "
++				   "filesystem may be corrupt",
++				   ino, inode->i_mode);
++			ret = -EFSCORRUPTED;
 +		}
- 
- 		/* fix up some defaults */
- 		if ((cdev->control_state[1] != 2) ||
-@@ -347,33 +349,43 @@ static void setup_card(struct snd_usb_ca
- 	    cdev->spec.num_digital_audio_out +
- 	    cdev->spec.num_digital_audio_in > 0) {
- 		ret = snd_usb_caiaq_audio_init(cdev);
--		if (ret < 0)
-+		if (ret < 0) {
- 			dev_err(dev, "Unable to set up audio system (ret=%d)\n", ret);
-+			return ret;
-+		}
+ 		goto bad_inode;
  	}
- 
- 	if (cdev->spec.num_midi_in +
- 	    cdev->spec.num_midi_out > 0) {
- 		ret = snd_usb_caiaq_midi_init(cdev);
--		if (ret < 0)
-+		if (ret < 0) {
- 			dev_err(dev, "Unable to set up MIDI system (ret=%d)\n", ret);
-+			return ret;
-+		}
- 	}
- 
- #ifdef CONFIG_SND_USB_CAIAQ_INPUT
- 	ret = snd_usb_caiaq_input_init(cdev);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(dev, "Unable to set up input system (ret=%d)\n", ret);
-+		return ret;
-+	}
- #endif
- 
- 	/* finally, register the card and all its sub-instances */
- 	ret = snd_card_register(cdev->chip.card);
- 	if (ret < 0) {
- 		dev_err(dev, "snd_card_register() returned %d\n", ret);
--		snd_card_free(cdev->chip.card);
-+		return ret;
- 	}
- 
- 	ret = snd_usb_caiaq_control_init(cdev);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(dev, "Unable to set up control system (ret=%d)\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static void card_free(struct snd_card *card)
-@@ -499,8 +511,11 @@ static int init_card(struct snd_usb_caia
- 	snprintf(card->longname, sizeof(card->longname), "%s %s (%s)",
- 		       cdev->vendor_name, cdev->product_name, usbpath);
- 
--	setup_card(cdev);
- 	card->private_free = card_free;
-+	err = setup_card(cdev);
-+	if (err < 0)
-+		return err;
-+
- 	return 0;
- 
-  err_kill_urb:
+ 	inode->i_blocks = le32_to_cpu(raw_inode->i_blocks);
 
 
