@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220BF340293;
-	Sat, 30 May 2026 17:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381CD263F44;
+	Sat, 30 May 2026 17:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161887; cv=none; b=goW5qbjqfBhdRYuSLQqXjO2MeNbUh4mbSR6p6rdu9vzGOnFO+vDNGlraV1OdUhrCA1CVI783RCBV48oh3/22jw98bIBEEmhtYSsgvcMEkpSxG7nqlmDVsIz0JTCxMy4PfnxpgiTy3ITTtDuvtSdXw7xU8AB2ALz5xtQZjeGhJHM=
+	t=1780161890; cv=none; b=BSp9V9SDsI/WUeU5akon7CKMZ9f6icBSchWaiCL+Gx0zo5aNh5rA73EPZUWNrp70B/B710T3iwVAUhjZ6pu+SqFWfKNuDvWtZnoGq8mIR6eFrgH6SufpHGNGJ9B2aGIeIhAODQ5RSxM22bIKho3L3qKaMLpAEjNcincHqPZKsvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161887; c=relaxed/simple;
-	bh=a8iUkmVY9xkGsypBOi7YD3cvqzTovIT5JO8fFEcifZk=;
+	s=arc-20240116; t=1780161890; c=relaxed/simple;
+	bh=vPD+l/E8jwlVp0Owl5DHybdXQjnyIVLhqTDB7wtN02Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=in3PMtYD/CMSZQiQdfQ6Eu9HBJ/sxjB4BF6CVlvLOiplkRx54mW4/5QOLHzlwJJ8SWPN6aGKcL8XM8JMstiC11UDNWgv43N/7esDBXa3sYMefU8qzh1ORumCx1P0rj1ZVP35+MnsPv6QTlkXhPKbTVO6oPRwmlveuWDKAqm1HEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWLzcMKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jlNBIaXaTnoWcBINo56SZyrHskc/NpZIDDyDaUsTAcbfkxh3qm9Y/bgXObgm5wclnCuw+xb9PMawzz9SwQdXgEhr4yCFj5/yMk3TqA18HtUuI9waCbZqf24FigmEYrW3LOuyWtVyNzKGsAqCrIIk34sUyEZKsYTANfIAOgsT29w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEokkD9J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWLzcMKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F2F1F00893;
-	Sat, 30 May 2026 17:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEokkD9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1C71F00893;
+	Sat, 30 May 2026 17:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161885;
-	bh=kohF9OhRFkiJXKp1qS2Yu/DqawArLO6aC/1X+GRbzIY=;
+	s=korg; t=1780161889;
+	bh=9TEUybr3KeqXTgOR0t6pskcEPNcvouVCxO6aE5PkqzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gWLzcMKqHpznvnHTcS4rrBpfxq9IBwaZH+TaJv8dAKWlLTn05omTukK/TBel0YtqE
-	 1tCesGhQR8tMQzz608Z92piJpT4pDGeYjCUT9KHKfInHbz9MIdc4X6/3H8f0NWw8ye
-	 uRVzVDzbHoG/vgT1/SyUr/2AhmkWe3AABxCj0QJA=
+	b=DEokkD9JIm3WNSMPkPNy0VNEfsKwDZxZQpQ/0iB2Z3gXz7NH7JHM2SeVeDHn/8W76
+	 Orepj/WBQnpwcTXyM5atHJ0yWlpHDIb7KJVwsmj0+1actTllMu5a5+JB6/9MnCl45t
+	 HIUi/GnBsLqYO4iyee4FMHh9zoHKJl4oQ5pAdeiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Florian Westphal <fw@strlen.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 756/969] neighbour: add RCU protection to neigh_tables[]
-Date: Sat, 30 May 2026 18:04:40 +0200
-Message-ID: <20260530160321.441296488@linuxfoundation.org>
+Subject: [PATCH 6.1 757/969] neigh: let neigh_xmit take skb ownership
+Date: Sat, 30 May 2026 18:04:41 +0200
+Message-ID: <20260530160321.469211142@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,124 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f8f2eb9de69a1119117d198547c13d7a1123a5a9 ]
+[ Upstream commit 4438113be604ee67a7bf4f81da6e1cca41332ce4 ]
 
-In order to remove RTNL protection from neightbl_dump_info()
-and neigh_dump_info() later, we need to add
-RCU protection to neigh_tables[].
+neigh_xmit always releases the skb, except when no neighbour table is
+found. But even the first added user of neigh_xmit (mpls) relied on
+neigh_xmit to release the skb (or queue it for tx).
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4438113be604 ("neigh: let neigh_xmit take skb ownership")
+sashiko reported:
+ If neigh_xmit() is called with an uninitialized neighbor table (for
+ example, NEIGH_ND_TABLE when IPv6 is disabled), it returns -EAFNOSUPPORT
+ and bypasses its internal out_kfree_skb error path.  Because the return
+ value of neigh_xmit() is ignored here, does this leak the SKB?
+
+Assume full ownership and remove the last code path that doesn't
+xmit or free skb.
+
+Fixes: 4fd3d7d9e868 ("neigh: Add helper function neigh_xmit")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260424145843.74055-1-fw@strlen.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ net/core/neighbour.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 92dc1f1788de7..fe0e839972ba7 100644
+index fe0e839972ba7..7bdb2b5a6e014 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -1764,7 +1764,7 @@ static void neigh_parms_destroy(struct neigh_parms *parms)
+@@ -3154,8 +3154,10 @@ int neigh_xmit(int index, struct net_device *dev,
  
- static struct lock_class_key neigh_table_proxy_queue_class;
- 
--static struct neigh_table *neigh_tables[NEIGH_NR_TABLES] __read_mostly;
-+static struct neigh_table __rcu *neigh_tables[NEIGH_NR_TABLES] __read_mostly;
- 
- void neigh_table_init(int index, struct neigh_table *tbl)
- {
-@@ -1821,13 +1821,19 @@ void neigh_table_init(int index, struct neigh_table *tbl)
- 	tbl->last_flush = now;
- 	tbl->last_rand	= now + tbl->parms.reachable_time * 20;
- 
--	neigh_tables[index] = tbl;
-+	rcu_assign_pointer(neigh_tables[index], tbl);
- }
- EXPORT_SYMBOL(neigh_table_init);
- 
-+/*
-+ * Only called from ndisc_cleanup(), which means this is dead code
-+ * because we no longer can unload IPv6 module.
-+ */
- int neigh_table_clear(int index, struct neigh_table *tbl)
- {
--	neigh_tables[index] = NULL;
-+	RCU_INIT_POINTER(neigh_tables[index], NULL);
-+	synchronize_rcu();
-+
- 	/* It is not clean... Fix it to unload IPv6 module safely */
- 	cancel_delayed_work_sync(&tbl->managed_work);
- 	cancel_delayed_work_sync(&tbl->gc_work);
-@@ -1859,10 +1865,10 @@ static struct neigh_table *neigh_find_table(int family)
- 
- 	switch (family) {
- 	case AF_INET:
--		tbl = neigh_tables[NEIGH_ARP_TABLE];
-+		tbl = rcu_dereference_rtnl(neigh_tables[NEIGH_ARP_TABLE]);
- 		break;
- 	case AF_INET6:
--		tbl = neigh_tables[NEIGH_ND_TABLE];
-+		tbl = rcu_dereference_rtnl(neigh_tables[NEIGH_ND_TABLE]);
- 		break;
- 	}
- 
-@@ -2328,7 +2334,7 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	ndtmsg = nlmsg_data(nlh);
- 
- 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
--		tbl = neigh_tables[tidx];
-+		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
- 		if (!tbl)
- 			continue;
- 		if (ndtmsg->ndtm_family && tbl->family != ndtmsg->ndtm_family)
-@@ -2516,7 +2522,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
- 		struct neigh_parms *p;
- 
--		tbl = neigh_tables[tidx];
-+		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
- 		if (!tbl)
- 			continue;
- 
-@@ -2877,7 +2883,7 @@ static int neigh_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 	s_t = cb->args[0];
- 
- 	for (t = 0; t < NEIGH_NR_TABLES; t++) {
--		tbl = neigh_tables[t];
-+		tbl = rcu_dereference_rtnl(neigh_tables[t]);
- 
- 		if (!tbl)
- 			continue;
-@@ -3141,14 +3147,15 @@ int neigh_xmit(int index, struct net_device *dev,
- 	       const void *addr, struct sk_buff *skb)
- {
- 	int err = -EAFNOSUPPORT;
-+
- 	if (likely(index < NEIGH_NR_TABLES)) {
- 		struct neigh_table *tbl;
- 		struct neighbour *neigh;
- 
--		tbl = neigh_tables[index];
--		if (!tbl)
--			goto out;
  		rcu_read_lock();
-+		tbl = rcu_dereference(neigh_tables[index]);
-+		if (!tbl)
-+			goto out_unlock;
+ 		tbl = rcu_dereference(neigh_tables[index]);
+-		if (!tbl)
+-			goto out_unlock;
++		if (!tbl) {
++			rcu_read_unlock();
++			goto out_kfree_skb;
++		}
  		if (index == NEIGH_ARP_TABLE) {
  			u32 key = *((u32 *)addr);
  
-@@ -3164,6 +3171,7 @@ int neigh_xmit(int index, struct net_device *dev,
+@@ -3171,7 +3173,6 @@ int neigh_xmit(int index, struct net_device *dev,
  			goto out_kfree_skb;
  		}
  		err = READ_ONCE(neigh->output)(neigh, skb);
-+out_unlock:
+-out_unlock:
  		rcu_read_unlock();
  	}
  	else if (index == NEIGH_LINK_TABLE) {
+@@ -3181,11 +3182,10 @@ int neigh_xmit(int index, struct net_device *dev,
+ 			goto out_kfree_skb;
+ 		err = dev_queue_xmit(skb);
+ 	}
+-out:
+ 	return err;
+ out_kfree_skb:
+ 	kfree_skb(skb);
+-	goto out;
++	return err;
+ }
+ EXPORT_SYMBOL(neigh_xmit);
+ 
 -- 
 2.53.0
 
