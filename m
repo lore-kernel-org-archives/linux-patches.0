@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D019533F5A3;
-	Sat, 30 May 2026 16:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F6A3A3E74;
+	Sat, 30 May 2026 16:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159845; cv=none; b=mRHdY+OfTEltfrn2/IZ2Cm5rXQJ3UUMInqEmTnK/JCUVa2jp7lQgH5SbjBfr0mnBaYLMDzdZJXypIc+ujBqVcxXP60+6HJidipBkZv1gY7gG/Hi9N7xLbhL7IHlLFXkDpilgBt5wJnITG/etJ6/KrxO/3g6ZtpQmBDD4SvgFh0Y=
+	t=1780159850; cv=none; b=b6efvjS6ZcHb2lM4VG/IhSKBiZzKWDhLucNZ/vRNDGOuOw0b4O8evyWbB709K6odZZH10oTEffPbo65SpMs1N7peyGpoid6FHKr2spRHMZLuM8/uwbnwEXvgS4iVcpVdOYLv6mfjEZmwNnC/Hq3UQ7SHgB050gQ7y76S9kKwq5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159845; c=relaxed/simple;
-	bh=36oxzOqsxFxP8tUNG464puSQ4a7acc3SRjtuODz/yAI=;
+	s=arc-20240116; t=1780159850; c=relaxed/simple;
+	bh=AnAMxC/gFOB+0qHfEHqZZ8/NS4y9V7m8pCxksQh8PaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Onb3CAl302nwt8qSQD6Tc/BmEAiAWlYLfEvgoFihY+Avq5ZQUF0V5OO+8YWZjps1T8+n8AMkso/h5/9elF0wVCamWTrfnlszNeqcz78HAjGs/FHQh8vwHIuoFf2n+JiuMASnOavz1RzWllBsC5nxFczax1IsrxX8c6QfVbzRN4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwBQrNMG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m3dWfrmvGbfgwwiiqmkhWXdKzT04tPnA4KMkCl8AskQxqknl5LY6wulctV4DDQh68jaQzcW84+Q9kd2zNX8dHzHUFWnX9SdpyDgUPUJ+UT3LhRcEegh3QGqvZQpaZ5nKwUQxuGCul0HQ8KG33yuO0XA8h7PaMO9Y2z6SS4WNEf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/udmOJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwBQrNMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17BD1F00893;
-	Sat, 30 May 2026 16:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/udmOJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A766B1F00893;
+	Sat, 30 May 2026 16:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159843;
-	bh=5cvbTjYCis+xrI/mcXiisEHf/Iy/AKzJASWmEzU2ETU=;
+	s=korg; t=1780159847;
+	bh=/aoZvFbR/p+C+KV7KgGlxcSFLhMqj/An3oMQHWtjduQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bwBQrNMGoK5Fy36bnx47GJ84b17FYVx1mgRdnWReE/0nMurH3rQNk403y415chOxO
-	 ZQHQ2ZMX22GIbLaD2MrhlkNdhzcaLaZGPV+1sCFtmjHRsTxc6IZnqReSdBDIaOhvRc
-	 MLxeW2ZH35uEzaOwElpTljWiATw6rpD7JTqI7Vwc=
+	b=V/udmOJBKtuDsZdUyGKM+K90KGitLOghau0IR/i6qvNRV9PYI0m6rgFQjXh3cdKTM
+	 4WTubBDO7vpCeNGO8mOhtpsWGwYo6K5++tcN4+JySF17dN1YRyKn46jmmw7JbXMdsA
+	 NZp9AIC4vszcOx9lCaguh+7mZt4a5lG1qkAY9xjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.1 177/969] device property: Make modifications of fwnode "flags" thread safe
-Date: Sat, 30 May 2026 17:55:01 +0200
-Message-ID: <20260530160305.382508152@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 178/969] ocfs2: split transactions in dio completion to avoid credit exhaustion
+Date: Sat, 30 May 2026 17:55:02 +0200
+Message-ID: <20260530160305.412019727@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,313 +57,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit f72e77c33e4b5657af35125e75bab249256030f3 upstream.
+commit d647c5b2fbf81560818dacade360abc8c00a9665 upstream.
 
-In various places in the kernel, we modify the fwnode "flags" member
-by doing either:
-  fwnode->flags |= SOME_FLAG;
-  fwnode->flags &= ~SOME_FLAG;
+During ocfs2 dio operations, JBD2 may report warnings via following
+call trace:
+ocfs2_dio_end_io_write
+ ocfs2_mark_extent_written
+  ocfs2_change_extent_flag
+   ocfs2_split_extent
+    ocfs2_try_to_merge_extent
+     ocfs2_extend_rotate_transaction
+      ocfs2_extend_trans
+       jbd2__journal_restart
+        start_this_handle
+         output: JBD2: kworker/6:2 wants too many credits credits:5450 rsv_credits:0 max:5449
 
-This type of modification is not thread-safe. If two threads are both
-mucking with the flags at the same time then one can clobber the
-other.
+To prevent exceeding the credits limit, modify ocfs2_dio_end_io_write() to
+handle extents in a batch of transaction.
 
-While flags are often modified while under the "fwnode_link_lock",
-this is not universally true.
+Additionally, relocate ocfs2_del_inode_from_orphan().  The orphan inode
+should only be removed from the orphan list after the extent tree update
+is complete.  This ensures that if a crash occurs in the middle of extent
+tree updates, we won't leave stale blocks beyond EOF.
 
-Create some accessor functions for setting, clearing, and testing the
-FWNODE flags and move all users to these accessor functions. New
-accessor functions use set_bit() and clear_bit(), which are
-thread-safe.
+This patch also changes the logic for updating the inode size and removing
+orphan, making it similar to ext4_dio_write_end_io().  Both operations are
+performed only when everything looks good.
 
-Cc: stable@vger.kernel.org
-Fixes: c2c724c868c4 ("driver core: Add fw_devlink_parse_fwtree()")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Saravana Kannan <saravanak@kernel.org>
-Link: https://patch.msgid.link/20260317090112.v2.1.I0a4d03104ecd5103df3d76f66c8d21b1d15a2e38@changeid
-[ Fix fwnode_clear_flag() argument alignment, restore dropped blank
-  line in fwnode_dev_initialized(), and remove unnecessary parentheses
-  around fwnode_test_flag() calls. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Finally, thanks to Jans and Joseph for providing the bug fix prototype and
+suggestions.
+
+Link: https://lkml.kernel.org/r/20260402134328.27334-2-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c        |   24 ++++++++++++------------
- drivers/bus/imx-weim.c     |    2 +-
- drivers/i2c/i2c-core-of.c  |    2 +-
- drivers/net/phy/mdio_bus.c |    4 ++--
- drivers/of/base.c          |    2 +-
- drivers/of/dynamic.c       |    2 +-
- drivers/of/platform.c      |    2 +-
- drivers/spi/spi.c          |    2 +-
- include/linux/fwnode.h     |   44 +++++++++++++++++++++++++++++++++-----------
- 9 files changed, 53 insertions(+), 31 deletions(-)
+ fs/ocfs2/aops.c |   74 ++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 45 insertions(+), 29 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -194,7 +194,7 @@ void fw_devlink_purge_absent_suppliers(s
- 	if (fwnode->dev)
- 		return;
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -37,6 +37,8 @@
+ #include "namei.h"
+ #include "sysfile.h"
  
--	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
-+	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
- 	fwnode_links_purge_consumers(fwnode);
- 
- 	fwnode_for_each_available_child_node(fwnode, child)
-@@ -240,7 +240,7 @@ static void __fw_devlink_pickup_dangling
- 	if (fwnode->dev && fwnode->dev->bus)
- 		return;
- 
--	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
-+	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
- 	__fwnode_links_move_consumers(fwnode, new_sup);
- 
- 	fwnode_for_each_available_child_node(fwnode, child)
-@@ -1070,7 +1070,7 @@ static void device_links_missing_supplie
- static bool dev_is_best_effort(struct device *dev)
++#define OCFS2_DIO_MARK_EXTENT_BATCH 200
++
+ static int ocfs2_symlink_get_block(struct inode *inode, sector_t iblock,
+ 				   struct buffer_head *bh_result, int create)
  {
- 	return (fw_devlink_best_effort && dev->can_match) ||
--		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
-+		(dev->fwnode && fwnode_test_flag(dev->fwnode, FWNODE_FLAG_BEST_EFFORT));
- }
+@@ -2305,7 +2307,7 @@ static int ocfs2_dio_end_io_write(struct
+ 	struct ocfs2_alloc_context *meta_ac = NULL;
+ 	handle_t *handle = NULL;
+ 	loff_t end = offset + bytes;
+-	int ret = 0, credits = 0;
++	int ret = 0, credits = 0, batch = 0;
  
- static struct fwnode_handle *fwnode_links_check_suppliers(
-@@ -1764,11 +1764,11 @@ bool fw_devlink_is_strict(void)
+ 	ocfs2_init_dealloc_ctxt(&dealloc);
  
- static void fw_devlink_parse_fwnode(struct fwnode_handle *fwnode)
- {
--	if (fwnode->flags & FWNODE_FLAG_LINKS_ADDED)
-+	if (fwnode_test_flag(fwnode, FWNODE_FLAG_LINKS_ADDED))
- 		return;
- 
- 	fwnode_call_int_op(fwnode, add_links);
--	fwnode->flags |= FWNODE_FLAG_LINKS_ADDED;
-+	fwnode_set_flag(fwnode, FWNODE_FLAG_LINKS_ADDED);
- }
- 
- static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
-@@ -1889,7 +1889,7 @@ static bool fwnode_init_without_drv(stru
- 	struct device *dev;
- 	bool ret;
- 
--	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
-+	if (!fwnode_test_flag(fwnode, FWNODE_FLAG_INITIALIZED))
- 		return false;
- 
- 	dev = get_dev_from_fwnode(fwnode);
-@@ -1948,10 +1948,10 @@ static bool __fw_devlink_relax_cycles(st
- 	 * We aren't trying to find all cycles. Just a cycle between con and
- 	 * sup_handle.
- 	 */
--	if (sup_handle->flags & FWNODE_FLAG_VISITED)
-+	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_VISITED))
- 		return false;
- 
--	sup_handle->flags |= FWNODE_FLAG_VISITED;
-+	fwnode_set_flag(sup_handle, FWNODE_FLAG_VISITED);
- 
- 	/* Termination condition. */
- 	if (sup_handle == con_handle) {
-@@ -2021,7 +2021,7 @@ static bool __fw_devlink_relax_cycles(st
+@@ -2322,18 +2324,6 @@ static int ocfs2_dio_end_io_write(struct
+ 		goto out;
  	}
  
+-	/* Delete orphan before acquire i_rwsem. */
+-	if (dwc->dw_orphaned) {
+-		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+-
+-		end = end > i_size_read(inode) ? end : 0;
+-
+-		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh,
+-				!!end, end);
+-		if (ret < 0)
+-			mlog_errno(ret);
+-	}
+-
+ 	down_write(&oi->ip_alloc_sem);
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 
+@@ -2354,24 +2344,25 @@ static int ocfs2_dio_end_io_write(struct
+ 
+ 	credits = ocfs2_calc_extend_credits(inode->i_sb, &di->id2.i_list);
+ 
+-	handle = ocfs2_start_trans(osb, credits);
+-	if (IS_ERR(handle)) {
+-		ret = PTR_ERR(handle);
+-		mlog_errno(ret);
+-		goto unlock;
+-	}
+-	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
+-				      OCFS2_JOURNAL_ACCESS_WRITE);
+-	if (ret) {
+-		mlog_errno(ret);
+-		goto commit;
+-	}
+-
+ 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
++		if (!handle) {
++			handle = ocfs2_start_trans(osb, credits);
++			if (IS_ERR(handle)) {
++				ret = PTR_ERR(handle);
++				mlog_errno(ret);
++				goto unlock;
++			}
++			ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
++					OCFS2_JOURNAL_ACCESS_WRITE);
++			if (ret) {
++				mlog_errno(ret);
++				goto commit;
++			}
++		}
+ 		ret = ocfs2_assure_trans_credits(handle, credits);
+ 		if (ret < 0) {
+ 			mlog_errno(ret);
+-			break;
++			goto commit;
+ 		}
+ 		ret = ocfs2_mark_extent_written(inode, &et, handle,
+ 						ue->ue_cpos, 1,
+@@ -2379,19 +2370,44 @@ static int ocfs2_dio_end_io_write(struct
+ 						meta_ac, &dealloc);
+ 		if (ret < 0) {
+ 			mlog_errno(ret);
+-			break;
++			goto commit;
++		}
++
++		if (++batch == OCFS2_DIO_MARK_EXTENT_BATCH) {
++			ocfs2_commit_trans(osb, handle);
++			handle = NULL;
++			batch = 0;
+ 		}
+ 	}
+ 
+ 	if (end > i_size_read(inode)) {
++		if (!handle) {
++			handle = ocfs2_start_trans(osb, credits);
++			if (IS_ERR(handle)) {
++				ret = PTR_ERR(handle);
++				mlog_errno(ret);
++				goto unlock;
++			}
++		}
+ 		ret = ocfs2_set_inode_size(handle, inode, di_bh, end);
+ 		if (ret < 0)
+ 			mlog_errno(ret);
+ 	}
++
+ commit:
+-	ocfs2_commit_trans(osb, handle);
++	if (handle)
++		ocfs2_commit_trans(osb, handle);
+ unlock:
+ 	up_write(&oi->ip_alloc_sem);
++
++	/* everything looks good, let's start the cleanup */
++	if (!ret && dwc->dw_orphaned) {
++		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
++
++		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh, 0, 0);
++		if (ret < 0)
++			mlog_errno(ret);
++	}
+ 	ocfs2_inode_unlock(inode, 1);
+ 	brelse(di_bh);
  out:
--	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
-+	fwnode_clear_flag(sup_handle, FWNODE_FLAG_VISITED);
- 	put_device(sup_dev);
- 	put_device(con_dev);
- 	put_device(par_dev);
-@@ -2074,7 +2074,7 @@ static int fw_devlink_create_devlink(str
- 	 * When such a flag is set, we can't create device links where P is the
- 	 * supplier of C as that would delay the probe of C.
- 	 */
--	if (sup_handle->flags & FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD &&
-+	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD) &&
- 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
- 		return -EINVAL;
- 
-@@ -2097,7 +2097,7 @@ static int fw_devlink_create_devlink(str
- 	else
- 		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
- 
--	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
-+	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NOT_DEVICE))
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
- 	else
- 		sup_dev = get_dev_from_fwnode(sup_handle);
-@@ -2109,7 +2109,7 @@ static int fw_devlink_create_devlink(str
- 		 * supplier device indefinitely.
- 		 */
- 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
--		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
-+		    fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED)) {
- 			dev_dbg(con,
- 				"Not linking %pfwf - dev might never probe\n",
- 				sup_handle);
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -336,7 +336,7 @@ static int of_weim_notify(struct notifie
- 			 * fw_devlink doesn't skip adding consumers to this
- 			 * device.
- 			 */
--			rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
-+			fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
- 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
- 				dev_err(&pdev->dev,
- 					"Failed to create child device '%pOF'\n",
---- a/drivers/i2c/i2c-core-of.c
-+++ b/drivers/i2c/i2c-core-of.c
-@@ -182,7 +182,7 @@ static int of_i2c_notify(struct notifier
- 		 * Clear the flag before adding the device so that fw_devlink
- 		 * doesn't skip adding consumers to this device.
- 		 */
--		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
-+		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
- 		client = of_i2c_register_device(adap, rd->dn);
- 		if (IS_ERR(client)) {
- 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -539,8 +539,8 @@ int __mdiobus_register(struct mii_bus *b
- 		return -EINVAL;
- 
- 	if (bus->parent && bus->parent->of_node)
--		bus->parent->of_node->fwnode.flags |=
--					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
-+		fwnode_set_flag(&bus->parent->of_node->fwnode,
-+				FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD);
- 
- 	WARN(bus->state != MDIOBUS_ALLOCATED &&
- 	     bus->state != MDIOBUS_UNREGISTERED,
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1927,7 +1927,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
- 		if (name)
- 			of_stdout = of_find_node_opts_by_path(name, &of_stdout_options);
- 		if (of_stdout)
--			of_stdout->fwnode.flags |= FWNODE_FLAG_BEST_EFFORT;
-+			fwnode_set_flag(&of_stdout->fwnode, FWNODE_FLAG_BEST_EFFORT);
- 	}
- 
- 	if (!of_aliases)
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -227,7 +227,7 @@ static void __of_attach_node(struct devi
- 	np->sibling = np->parent->child;
- 	np->parent->child = np;
- 	of_node_clear_flag(np, OF_DETACHED);
--	np->fwnode.flags |= FWNODE_FLAG_NOT_DEVICE;
-+	fwnode_set_flag(&np->fwnode, FWNODE_FLAG_NOT_DEVICE);
- }
- 
- /**
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -745,7 +745,7 @@ static int of_platform_notify(struct not
- 		 * Clear the flag before adding the device so that fw_devlink
- 		 * doesn't skip adding consumers to this device.
- 		 */
--		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
-+		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
- 		/* pdev_parent may be NULL when no bus platform device */
- 		pdev_parent = of_find_device_by_node(rd->dn->parent);
- 		pdev = of_platform_device_create(rd->dn, NULL,
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -4480,7 +4480,7 @@ static int of_spi_notify(struct notifier
- 		 * Clear the flag before adding the device so that fw_devlink
- 		 * doesn't skip adding consumers to this device.
- 		 */
--		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
-+		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
- 		spi = of_register_spi_device(ctlr, rd->dn);
- 		put_device(&ctlr->dev);
- 
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -12,6 +12,7 @@
- #include <linux/types.h>
- #include <linux/list.h>
- #include <linux/bits.h>
-+#include <linux/bitops.h>
- #include <linux/err.h>
- 
- struct fwnode_operations;
-@@ -31,12 +32,12 @@ struct device;
-  *		suppliers. Only enforce ordering with suppliers that have
-  *		drivers.
-  */
--#define FWNODE_FLAG_LINKS_ADDED			BIT(0)
--#define FWNODE_FLAG_NOT_DEVICE			BIT(1)
--#define FWNODE_FLAG_INITIALIZED			BIT(2)
--#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
--#define FWNODE_FLAG_BEST_EFFORT			BIT(4)
--#define FWNODE_FLAG_VISITED			BIT(5)
-+#define FWNODE_FLAG_LINKS_ADDED			0
-+#define FWNODE_FLAG_NOT_DEVICE			1
-+#define FWNODE_FLAG_INITIALIZED			2
-+#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	3
-+#define FWNODE_FLAG_BEST_EFFORT			4
-+#define FWNODE_FLAG_VISITED			5
- 
- struct fwnode_handle {
- 	struct fwnode_handle *secondary;
-@@ -44,7 +45,7 @@ struct fwnode_handle {
- 	struct device *dev;
- 	struct list_head suppliers;
- 	struct list_head consumers;
--	u8 flags;
-+	unsigned long flags;
- };
- 
- /*
-@@ -197,16 +198,37 @@ static inline void fwnode_init(struct fw
- 	INIT_LIST_HEAD(&fwnode->suppliers);
- }
- 
-+static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
-+				   unsigned int bit)
-+{
-+	set_bit(bit, &fwnode->flags);
-+}
-+
-+static inline void fwnode_clear_flag(struct fwnode_handle *fwnode,
-+				     unsigned int bit)
-+{
-+	clear_bit(bit, &fwnode->flags);
-+}
-+
-+static inline void fwnode_assign_flag(struct fwnode_handle *fwnode,
-+				      unsigned int bit, bool value)
-+{
-+	assign_bit(bit, &fwnode->flags, value);
-+}
-+
-+static inline bool fwnode_test_flag(struct fwnode_handle *fwnode,
-+				    unsigned int bit)
-+{
-+	return test_bit(bit, &fwnode->flags);
-+}
-+
- static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
- 					  bool initialized)
- {
- 	if (IS_ERR_OR_NULL(fwnode))
- 		return;
- 
--	if (initialized)
--		fwnode->flags |= FWNODE_FLAG_INITIALIZED;
--	else
--		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
-+	fwnode_assign_flag(fwnode, FWNODE_FLAG_INITIALIZED, initialized);
- }
- 
- extern bool fw_devlink_is_strict(void);
 
 
