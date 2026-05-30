@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8C825B08A;
-	Sat, 30 May 2026 18:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231BE1B87C0;
+	Sat, 30 May 2026 18:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166690; cv=none; b=QzYJfx2CI5Xtd8M+ctWyo30aR+bHdCr+iCDlCPBoQvxT8UUTzLOyvHM9l6xt9C9ue6dBCH7s0BKP3srGlAKN5E8eCnea7wBokxrD7HvSAdzFd8jNnSM4kSm7hKps3cZHlaf/VFl05lq3GlTOgEKXLI8j09g8i0VCj7ooxD0558I=
+	t=1780166694; cv=none; b=mL7erhZhdCM9Dat68x8q9wXdwOsKG2KKocvVzVX6BOuQZwJR5Vp4kUGxubfn4p/VL/Q7IP5XwhThduUzXf2QSNElCqwElpiG8ZNedujNmMopFgQbDPd3kxntuigCtriIRuIrsRrOt/3/bmqn0niuuFHOytXR/uyIrMUL2tQb4EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166690; c=relaxed/simple;
-	bh=GCFVZunY13Buggl03pyWxs4IBpqkjyvE9fLI8Ow3xv0=;
+	s=arc-20240116; t=1780166694; c=relaxed/simple;
+	bh=YvjFC9o+44TxcwWEoFTHcIpNZDY2JUBzKUTTb4NySOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwONCLzMsDBIaAkSJ5fmBLkIgXtvuLB6k/nnuW6OeKI9BiiIgLV3aqrYy+wX5QYPynlPEnl+NmV7MnLfqOKVU27oX1JXicbDzeUgB3LcAInMTdRGe9Tfvdjf28dK/lUwH+bNvCmFcPpmtMEfJMl3qcZjtVxDyEFB2i36oSUkQI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUn0SW7I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T25UqbPCJSyVD3UkBszhx0PgnCOrOI3Y5PqDEgzJc2j80MI7X6FyUmLtu0Cpr2cNpxtX5m4ZWCJanPvrk0iLLOAVInXUv7WrxmQovbg7szmVr5+F1s8riiQtbqXspgG0j3mieNIfEOnnE4GnAcN5skTJtdxbNKNoJiW9ICA74aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xl49oDQs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUn0SW7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2611F00893;
-	Sat, 30 May 2026 18:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xl49oDQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B671F00893;
+	Sat, 30 May 2026 18:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166689;
-	bh=ZgWNC6/Qel1HI+UuLA0qQSq5DstV/09LjdJ7xN4BBqQ=;
+	s=korg; t=1780166693;
+	bh=aqSFxoEg4w2vWtGwuYsNGEU9ivZq18SNMnmCwBnD9z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUn0SW7IuLEbGe5icsApUB8VAht5qMvlEx0icRvvQ69vc2hF+YSpBCitS3HmdI2Yb
-	 DomOgIxlL2Guqb0Vtgsn2mYGJmZmlt0tSMNWwAZucKrIc2SZG3RxTyDBvHLIsDXl37
-	 ld7hVA4gO0SpfFllUy5YbzAatcab1qajDsMmbtVQ=
+	b=xl49oDQsxI0NsUf2Pt7v+wfjwUXU6L0Tgo6JmFXv39MSe1v/g90XhZUOlOw6R4bJF
+	 JAYgyxyH6ZtHjBoUe1LxrmAEtLFWMsSij1OKXluSso4iYhZ1SesKqoI5b/X/NE6o5i
+	 eeQR6R0e4BeKDe9bh5QQed7ou9S06DqDpiwiOF4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Xiang Mei <xmei5@asu.edu>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 434/589] netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO
-Date: Sat, 30 May 2026 18:05:15 +0200
-Message-ID: <20260530160236.120494555@linuxfoundation.org>
+Subject: [PATCH 5.10 443/589] net/rds: zero per-item info buffer before handing it to visitors
+Date: Sat, 30 May 2026 18:05:24 +0200
+Message-ID: <20260530160236.344628650@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,65 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2195574dc6d9017d32ac346987e12659f931d932 ]
+[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
 
-nf_osf_match_one() computes ctx->window % f->wss.val in the
-OSF_WSS_MODULO branch with no guard for f->wss.val == 0. A
-CAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a
-subsequent matching TCP SYN divides by zero and panics the kernel.
+rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
+caller-allocated on-stack u64 buffer to a per-connection visitor and
+then copy the full item_len bytes back to user space via
+rds_info_copy() regardless of how much of the buffer the visitor
+actually wrote.
 
-Reject the bogus fingerprint in nfnl_osf_add_callback() above the
-per-option for-loop. f->wss is per-fingerprint, not per-option, so
-the check must run regardless of f->opt_num (including 0). Also
-reject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that
-as "should not happen".
+rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
+write a subset of their output struct when the underlying
+rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
+and the two GIDs via explicit memsets). Several u32 fields
+(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
+cache_allocs) and the 2-byte alignment hole between sl and
+cache_allocs remain as whatever stack contents preceded the visitor
+call and are then memcpy_to_user()'d out to user space.
 
-Crash:
- Oops: divide error: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
- Call Trace:
- <IRQ>
-  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)
-  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
-  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)
-  nf_hook_slow (net/netfilter/core.c:622)
-  ip_local_deliver (net/ipv4/ip_input.c:265)
-  ip_rcv (include/linux/skbuff.h:1162)
-  __netif_receive_skb_one_core (net/core/dev.c:6181)
-  process_backlog (net/core/dev.c:6642)
-  __napi_poll (net/core/dev.c:7710)
-  net_rx_action (net/core/dev.c:7945)
-  handle_softirqs (kernel/softirq.c:622)
+struct rds_info_rdma_connection and struct rds6_info_rdma_connection
+are the only rds_info_* structs in include/uapi/linux/rds.h that are
+not marked __attribute__((packed)), so they have a real alignment
+hole. The other info visitors (rds_conn_info_visitor,
+rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
+their packed output struct today and are not known to be vulnerable,
+but a future visitor that adds a conditional write-path would have
+the same bug.
 
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Suggested-by: Florian Westphal <fw@strlen.de>
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
+a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
+binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
+any netdev is sufficient), sendto()'s any peer on the same subnet
+(fails cleanly but installs an rds_connection in the global hash in
+RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
+RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
+bytes of stack garbage including kernel text/data pointers:
+
+    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
+    8..39  00 ...                      gids (memset-zeroed)
+    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
+    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
+    56..59 01 00 08 00                 rdma_mr_size (garbage)
+    60..61 00 00                       tos, sl
+    62..63 00 00                       alignment padding
+    64..67 18 00 00 00                 cache_allocs (garbage)
+
+Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
+and rds_walk_conn_path_info() before invoking the visitor. This
+covers the IPv4/IPv6 IB visitors and hardens all current and future
+visitors against the same class of bug.
+
+No functional change for visitors that fully populate their output.
+
+Changes in v2:
+- retarget at the net tree (subject prefix "[PATCH net v2]",
+  net/rds: prefix in the title)
+- pick up Reviewed-by tags from Sharath Srinivasan and
+  Allison Henderson
+
+Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/rds/connection.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index a2d7bfb4c1a69..be9bf079aeddf 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -321,6 +321,10 @@ static int nfnl_osf_add_callback(struct net *net, struct sock *ctnl,
- 	if (f->opt_num > ARRAY_SIZE(f->opt))
- 		return -EINVAL;
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 98c0d5ff9de9c..cd41f83863c89 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
  
-+	if (f->wss.wc >= OSF_WSS_MAX ||
-+	    (f->wss.wc == OSF_WSS_MODULO && f->wss.val == 0))
-+		return -EINVAL;
++			/* Zero the per-item buffer before handing it to the
++			 * visitor so any field the visitor does not write -
++			 * including implicit alignment padding - cannot leak
++			 * stack contents to user space via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
 +
- 	for (i = 0; i < f->opt_num; i++) {
- 		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
- 			return -EINVAL;
+ 			/* XXX no c_lock usage.. */
+ 			if (!visitor(conn, buffer))
+ 				continue;
+@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 			 */
+ 			cp = conn->c_path;
+ 
++			/* Zero the per-item buffer for the same reason as
++			 * rds_for_each_conn_info(): any byte the visitor
++			 * does not write (including alignment padding) must
++			 * not leak stack contents via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no cp_lock usage.. */
+ 			if (!visitor(cp, buffer))
+ 				continue;
 -- 
 2.53.0
 
