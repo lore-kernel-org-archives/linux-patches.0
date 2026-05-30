@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B2F3016E1;
-	Sat, 30 May 2026 17:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9172F33F8A2;
+	Sat, 30 May 2026 17:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161266; cv=none; b=H3/ZpJVJc2vvi9Wu+M2pNhkjAuG0Q4dtq1hJavfB3ptVxY6Ql6Hwje4lyjTSRcbM4fPCfe4XdmdsldijuqLW3/B1b5cYXORTw0zhups0qRH9gT4/HnY5IRwQZ1so9n1yhE8FhsY9K7bwF50+vkdkwLDboP1DcuGQ3PocwIUSK/g=
+	t=1780161269; cv=none; b=k4+xP+5fGnNVx2daFfoWEwuE1l7YPwhMh9IHy65VKRwLNK9AH4OudurntzSNJSFnmVltGMby10/akGOhH0r4MtfBnQAb8ahk1No2bftRyCbJPqI73IJAx/h6Yr9LwnM5JS7FlEpAC+R/F9872Msq6Dzx5LFaTKu1vwMyElVjKFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161266; c=relaxed/simple;
-	bh=o/BQ1O0uKcbgueY/r3Wt2YHPiaOFXUyb7OlJQz2QOK8=;
+	s=arc-20240116; t=1780161269; c=relaxed/simple;
+	bh=imvNC2ef6QvykF7AqCxfXoIf9YhA+QOo/TDE5/GSoSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DQxgWxq1nAAfwM2tTszVhajq6iLn9fltD3RznsT5C23RzGkk3c/Hqq6hjT78O4sOHTFwiecu0SZrLEDV0ZbJzh8i7aGI091KuHHwLySO1v5BK0WbWg/5ilkuJm1lvLe/4dzrgtK5xzHgvf2eWw6/RJ59CukEUGwOXx2nhmBdkdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwQGvqrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RC+EFuitYASvENMRhn/iaYnauV30exyRuJEsmm0y/8EBoIxWYS/4cA/rmPxffPOsojzM17fbPvdQCmRq4aAyh6IG3BpMyGjEkA2umcFLslPMPLKasZcnvhSNyCet1pmKiyusTx/7LcfZ2X0kyDGauyKDGsFy36MIyam3gP67RBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4lNvgdg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwQGvqrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1B51F00893;
-	Sat, 30 May 2026 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4lNvgdg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6ECF1F00893;
+	Sat, 30 May 2026 17:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161265;
-	bh=s3Kp7gh3FNgfds3Yb1wao5v8wl6Uf5/P4k9nXMxtKgU=;
+	s=korg; t=1780161268;
+	bh=gE+rVbfMd8QtjBfe6//mYEv7D1G1/ZhPGgN8Z4Lt/9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kwQGvqrQzAO3QNeXWCLg3kO2+Mej+G/YsxVqMWfbhlSod/D6fM3u88xg9I1+x7OpJ
-	 1gME6D5RkLqrVQloPNfKXUE0gcoOLbIia1kJQmcd/H97PcbQUWwfsK1RlW/p45vOIP
-	 9QxRWLH8Q65fytrDeE3sYs5jzt/8AHmgDsVjawfw=
+	b=V4lNvgdg217TgeX65IYHbUlmMCLCFWopFxw7C1e07KD4luDRFnE4SxPEw+ggavmZH
+	 EXnq4fnqfIqYwdFX7+WbJ0WGTIcIEJ5l6sUGZZ/kwZ2RykjEnC1RQW3SY0GosOxj8F
+	 FtlEZV8obOsV/ejzrp7uf8YIUiuqvdYlWbLe6a/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 566/969] ktest: Run POST_KTEST hooks on failure and cancellation
-Date: Sat, 30 May 2026 18:01:30 +0200
-Message-ID: <20260530160316.022170611@linuxfoundation.org>
+Subject: [PATCH 6.1 575/969] arm64: dts: imx8mp-evk: Enable pull select bit for PCIe regulator GPIO (M.2 W_DISABLE1)
+Date: Sat, 30 May 2026 18:01:39 +0200
+Message-ID: <20260530160316.284578569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,107 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
+[ Upstream commit d1e7eab6033f9885a02c4b4e8f09e34d8e9d21ab ]
 
-PRE_KTEST can be useful for setting up the environment and POST_KTEST to
-tear it down, however POST_KTEST only runs on the normal end-of-run path.
-It is skipped when ktest exits through dodie() or cancel_test(). Final
-cleanup hooks are skipped.
+The current pin configuration for MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06
+sets the weak pull-up but does not enable the pull select field.
+Bit 8 in the IOMUX register must be set in order for the weak pull-up
+to actually take effect.
 
-Factor the final hook execution into run_post_ktest(), call it from the
-normal exit path and from the early exit paths, and guard it so the hook
-runs at most once.
+Update the pinctrl setting from 0x40 to 0x140 to enable both the pull
+select and the weak pull-up, ensuring the line behaves as expected.
 
-Cc: John Hawley <warthog9@eaglescrag.net>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
-Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: d50650500064 ("arm64: dts: imx8mp-evk: Add PCIe support")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-evk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 28eebfa32621d..df8588dadc2ca 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -98,6 +98,7 @@ my $test_type;
- my $build_type;
- my $build_options;
- my $final_post_ktest;
-+my $post_ktest_done = 0;
- my $pre_ktest;
- my $post_ktest;
- my $pre_test;
-@@ -1530,6 +1531,24 @@ sub get_test_name() {
-     return $name;
- }
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+index 126c839b45f2d..703eec6b0107e 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+@@ -551,7 +551,7 @@ MX8MP_IOMUXC_SD1_DATA5__GPIO2_IO07	0x40
  
-+sub run_post_ktest {
-+    my $cmd;
-+
-+    return if ($post_ktest_done);
-+
-+    if (defined($final_post_ktest)) {
-+	$cmd = $final_post_ktest;
-+    } elsif (defined($post_ktest)) {
-+	$cmd = $post_ktest;
-+    } else {
-+	return;
-+    }
-+
-+    my $cp_post_ktest = eval_kernel_version($cmd);
-+    run_command $cp_post_ktest;
-+    $post_ktest_done = 1;
-+}
-+
- sub dodie {
-     # avoid recursion
-     return if ($in_die);
-@@ -1589,6 +1608,7 @@ sub dodie {
-     if (defined($post_test)) {
- 	run_command $post_test;
-     }
-+    run_post_ktest;
+ 	pinctrl_pcie0_reg: pcie0reggrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x40
++			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x140
+ 		>;
+ 	};
  
-     die @_, "\n";
- }
-@@ -4223,6 +4243,7 @@ sub cancel_test {
- 	send_email("KTEST: Your [$name] test was cancelled",
- 	    "Your test started at $script_start_time was cancelled: sig int");
-     }
-+    run_post_ktest;
-     die "\nCaught Sig Int, test interrupted: $!\n"
- }
- 
-@@ -4533,11 +4554,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
-     success $i;
- }
- 
--if (defined($final_post_ktest)) {
--
--    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
--    run_command $cp_final_post_ktest;
--}
-+run_post_ktest;
- 
- if ($opt{"POWEROFF_ON_SUCCESS"}) {
-     halt;
 -- 
 2.53.0
 
