@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A07F3016E1;
-	Sat, 30 May 2026 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2201481DD;
+	Sat, 30 May 2026 17:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161010; cv=none; b=kPyKuuphsXXMlpePuFfioEY31oaJ1sTqFnCBs9l/qJgflqLoggv2x5B1V/ZpkmpQiFpDQf5BmUxQVXdkoCJJy+iENszoqzosN094p40Hcoos4i88aGjFBbYks00OirJEZJFDT5VzhGPqiccItJZQi1DUQ3rkj65QBExCPVJqPOE=
+	t=1780161013; cv=none; b=BhRBD30nPxkLwyuGaRQRH/EfNtGjtr9WFx6jQLa1NsqfCKJQxzdGFaRFhlP9T8UmXIMkRK+dFpQ5c6Zct48WoL1ibhf2SeRsRslQH22K6IYQmk2D7JW+AWzXbRf6hW08ASI1Cr8qUfcgW4F4p6giON8SGjK8b35PTV88Kuik2mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161010; c=relaxed/simple;
-	bh=C12iEyqgAji6MqLQq5Plw86tJ0kxEUa/CdTMPlG9ALA=;
+	s=arc-20240116; t=1780161013; c=relaxed/simple;
+	bh=FP3yI2uYRp9jyoui/UklKdvfa+hoVP2kiA53TRwyN7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdzaE42yEgIDth88vLh2ztQFIg8J26OJM+ytWtgElrBy/ErocqE1/HWT0otqqwyv797l1DuNA+tymVO36ztIlWf538A31wdy7N1NLl29ATaQGP8ZmkL8rhlnwcnGP9q9/UxIEzhhnuMjhc1aa8iXwEBQD0P45xe7uokRP0Ev0iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbGgrr4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJYQQ+xXLg/YXQWb+kLhFG2chetiZpxXTEsp60IDHYB2QgY/ngQF7y+NDtokY1tKV4xq5maAmmaXMyoQ2DGL75/wHshVSHSJ9Hnc5elfleiuC3w2pXwZ03NHtbPQg7tCcSf1jUy0KFWMAo9aoIJNs4VmD7oUd+YlptIBKDKIbf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7xw3hfE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbGgrr4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE84D1F00893;
-	Sat, 30 May 2026 17:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7xw3hfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A4D1F00893;
+	Sat, 30 May 2026 17:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161009;
-	bh=yO0zQNPUyRuGwzz8IUb6BQcAgqGImapWvWh37OUWrPk=;
+	s=korg; t=1780161012;
+	bh=FSojE+g9oT93DRGtxrvo8lgz+wvAQ7q+cvYh6gFJi2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WbGgrr4h4C+y76c5stXX3XTNzXpQajIEeIvwNC8zd+DBzb1J9L46mMwbrfPatCBSj
-	 Vhl+fqiRrz+rpcS+h27GUMBDt5WVRScj3/yDl0lqMiEcXRvd/ebqsYZFyBUXfHoxdx
-	 mu5b9saDgncT4Z1FKJ3kIB7AzASrpHsNVThkNi40=
+	b=x7xw3hfEUkFTs8oSIbfCEKKXVN31MQ+TZZGrWevh6EHpyFjkcFyuMSKt+YJF8PTJX
+	 AnDskZ+dhNQAg8XbHB+avraJB/EvlRRe4QkMVqprfBKVqE+iHcSt6jPSiYXYSw3KUE
+	 /Alc9FL93zkZXjXxYmVJ/xWE8O2lh+C6RIdXp3Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 498/969] dm cache policy smq: fix missing locks in invalidating cache blocks
-Date: Sat, 30 May 2026 18:00:22 +0200
-Message-ID: <20260530160314.075671140@linuxfoundation.org>
+Subject: [PATCH 6.1 470/969] net: bcmgenet: Remove custom ndo_poll_controller()
+Date: Sat, 30 May 2026 17:59:54 +0200
+Message-ID: <20260530160313.270327853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,89 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 2d1f7b65f5deedd2e6b09fdc6ea27f8375f24b45 ]
+[ Upstream commit 19537e125cc7cf2da43a606f5bcebbe0c9aea4cc ]
 
-In passthrough mode, the policy invalidate_mapping operation is called
-simultaneously from multiple workers, thus it should be protected by a
-lock. Otherwise, we might end up with data races on the allocated blocks
-counter, or even use-after-free issues with internal data structures
-when doing concurrent writes.
+The driver gained a .ndo_poll_controller() at a time where the TX
+cleaning process was always done from NAPI which makes this unnecessary.
+See commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional")
+for more background.
 
-Note that the existing FIXME in smq_invalidate_mapping() doesn't affect
-passthrough mode since migration tasks don't exist there, but would need
-attention if supporting fast device shrinking via suspend/resume without
-target reloading.
-
-Reproduce steps:
-
-1. Create a cache device consisting of 1024 cache entries
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-
-2. Populate the cache, and record the number of cached blocks
-
-fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
---size=64m --direct=1
-nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
-
-3. Reload the cache into passthrough mode
-
-dmsetup suspend cache
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup resume cache
-
-4. Write to the passthrough cache. By setting multiple jobs with I/O
-   size equal to the cache block size, cache blocks are invalidated
-   concurrently from different workers.
-
-fio --filename=/dev/mapper/cache --name=test --rw=randwrite --bs=64k \
---direct=1 --numjobs=2 --randrepeat=0 --size=64m
-
-5. Check if demoted matches cached block count. These numbers should
-   match but may differ due to the data race.
-
-nr_demoted=$(dmsetup status cache | awk '{print $12}')
-echo "$nr_cached, $nr_demoted"
-
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 5393b2b5bee2 ("net: bcmgenet: fix racing timeout handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-policy-smq.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 20 -------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
-index c983cf240632e..d4c2bc5c0ef45 100644
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -1587,14 +1587,18 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
- {
- 	struct smq_policy *mq = to_smq_policy(p);
- 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
-+	unsigned long flags;
- 
- 	if (!e->allocated)
- 		return -ENODATA;
- 
-+	spin_lock_irqsave(&mq->lock, flags);
- 	// FIXME: what if this block has pending background work?
- 	del_queue(mq, e);
- 	h_remove(&mq->table, e);
- 	free_entry(&mq->cache_alloc, e);
-+	spin_unlock_irqrestore(&mq->lock, flags);
-+
- 	return 0;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 1d679de9c3235..4d76c9aebd439 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3250,23 +3250,6 @@ static irqreturn_t bcmgenet_wol_isr(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
  }
  
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-static void bcmgenet_poll_controller(struct net_device *dev)
+-{
+-	struct bcmgenet_priv *priv = netdev_priv(dev);
+-
+-	/* Invoke the main RX/TX interrupt handler */
+-	disable_irq(priv->irq0);
+-	bcmgenet_isr0(priv->irq0, priv);
+-	enable_irq(priv->irq0);
+-
+-	/* And the interrupt handler for RX/TX priority queues */
+-	disable_irq(priv->irq1);
+-	bcmgenet_isr1(priv->irq1, priv);
+-	enable_irq(priv->irq1);
+-}
+-#endif
+-
+ static void bcmgenet_umac_reset(struct bcmgenet_priv *priv)
+ {
+ 	u32 reg;
+@@ -3736,9 +3719,6 @@ static const struct net_device_ops bcmgenet_netdev_ops = {
+ 	.ndo_set_mac_address	= bcmgenet_set_mac_addr,
+ 	.ndo_eth_ioctl		= phy_do_ioctl_running,
+ 	.ndo_set_features	= bcmgenet_set_features,
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-	.ndo_poll_controller	= bcmgenet_poll_controller,
+-#endif
+ 	.ndo_get_stats		= bcmgenet_get_stats,
+ 	.ndo_change_carrier	= bcmgenet_change_carrier,
+ };
 -- 
 2.53.0
 
