@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF9E3BFE4D;
-	Sat, 30 May 2026 18:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B9DEEA8;
+	Sat, 30 May 2026 18:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164014; cv=none; b=QSzNoDS4bi23UXITm4UG4AmuaO1IhzAWY5evmMEZbNjdVF695R4ifA8L7VLoW/QueWQvfnvX2J/bULKzW8w2KLeGXXdTIJqpi7ka+W0Lbi9b2ifQaLWFZpi32XQp3dF4NkIP7ke1YxdBu2e3iz2fAqtif7B9FxS9GQsO3bsocYk=
+	t=1780164016; cv=none; b=dWfTfF3Ii2z/2+UhajWx4vVF34P1RrsUr0vcBgzRzewbtmC5uQmNJCicNM96LmQ6uQes5zZ+O+LCO5cFLoXwIB8rBmHO9/UlIVRioMmlouhRZa6mJ1A/M+ilsxcu31iBz8Mfu02tiePl3IFsLBhNOssiKK1N9vFNvi2OmULkLXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164014; c=relaxed/simple;
-	bh=ZYFJgoikUMz29pjDLHcRp5HoWqBzXzHA/QJkg+zNUIA=;
+	s=arc-20240116; t=1780164016; c=relaxed/simple;
+	bh=faJ4o/8faIzsLn4e6UXL1BYpmSLioLcBbkFf/0cfOSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DwSaHgGauSpDpYViN+pbmUhtbIZVDBiSbxyzjSkFzOwjyD0+SmuHkHR3SMM9LUX2x/TXcmdRDNXgH/itdINAqVT+ne7YJ9oZ/ejoxCrT6HNh4Aiph/oajrjmrkhQ8qn7OLpa82aR/ifl04XFhCIdJEdR+Ia8G8dJL1JFlUgVYFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L3ePwgF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BzQejC16Xinj7eO9bXkR2xVHYrcTg/07u83WsqUsD5KotejzUEbF7EPrTvttsRScb5saY03QRsZjS/ff6UBDaQIlDZL2B1IJaQu5ByMG+6NbjnZFziTrOyicvYPsKIJCzUnIByTNXWT7sOhGXe5otEUpjaKVZ9qUYb2JcjU2R8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff6ByeYJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L3ePwgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8121F00893;
-	Sat, 30 May 2026 18:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff6ByeYJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4CB1F00893;
+	Sat, 30 May 2026 18:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164012;
-	bh=hCsP0kvzs8ptxWXwjsG5641ui7YoQ/6UwimvpzaZps4=;
+	s=korg; t=1780164015;
+	bh=qGPJABBVveDH7tA9Qh9wcYttuTtISFtjT372JhSgHQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2L3ePwgFDPNTHtjSO1w1Fh6dpAKDQHUymQWSXQY4FwVqOHi/z235etqQNtVZ+25B8
-	 6S4Lo3/MQj4NORiHbzTj8i9pfItqXI9kQnxj28FItFgyEV+wKJSnzTE65qGTqhfPmG
-	 3l2/BEg3aHr2DRI8KsX+v5qyhTVEh9dMZjGMFUx4=
+	b=ff6ByeYJu24HN3Cf88rNRNjFzI5mdnmB0ZJlAFflQpYfBXQyOuoCz2rLkkWnNgOwY
+	 j51SB0CBwhL6z1NBGx/U0nqfPuLb3HR0lJnl+4KNPwxf3QXDhGMLDWHcH1zXeFpO9c
+	 waPCIxBK/yxFBURlwlg4+Jh7crNejwdX69DnxAw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Jean Delvare <jdelvare@suse.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 394/776] firmware: dmi: Correct an indexing error in dmi.h
-Date: Sat, 30 May 2026 18:01:48 +0200
-Message-ID: <20260530160250.670684091@linuxfoundation.org>
+Subject: [PATCH 5.15 395/776] wifi: mwifiex: Fix memory leak in mwifiex_11n_aggregate_pkt()
+Date: Sat, 30 May 2026 18:01:49 +0200
+Message-ID: <20260530160250.697996783@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -47,65 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit c064abc68e009d2cc18416e7132d9c25e03125b6 ]
+[ Upstream commit 990a73dec3fdc145fef6c827c29205437d533ece ]
 
-The entries later in enum dmi_entry_type don't match the SMBIOS
-specification¹.
+In mwifiex_11n_aggregate_pkt(), skb_aggr is allocated via
+mwifiex_alloc_dma_align_buf(). If mwifiex_is_ralist_valid() returns false,
+the function currently returns -1 immediately without freeing the
+previously allocated skb_aggr, causing a memory leak.
 
-The entry for type 33: `64-Bit Memory Error Information` is not present and
-thus the index for all later entries is incorrect.
+Since skb_aggr has not yet been queued via skb_queue_tail(), no other
+references to this memory exist. Therefore, it has to be freed locally
+before returning the error.
 
-Add it.
+Fix this by calling mwifiex_write_data_complete() to free skb_aggr before
+returning the error status.
 
-Also, add missing entry types 43-46, while at it.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-  ¹ Search for "System Management BIOS (SMBIOS) Reference Specification"
-
-  [ bp: Drop the flaky SMBIOS spec URL. ]
-
-Fixes: 93c890dbe5287 ("firmware: Add DMI entry types to the headers")
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Link: https://patch.msgid.link/20260307141024.819807-2-superm1@kernel.org
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/20260119092625.1349934-1-zilin@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dmi.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/11n_aggr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/dmi.h b/include/linux/dmi.h
-index 927f8a8b7a1dd..2eedf44e68012 100644
---- a/include/linux/dmi.h
-+++ b/include/linux/dmi.h
-@@ -60,6 +60,7 @@ enum dmi_entry_type {
- 	DMI_ENTRY_OOB_REMOTE_ACCESS,
- 	DMI_ENTRY_BIS_ENTRY,
- 	DMI_ENTRY_SYSTEM_BOOT,
-+	DMI_ENTRY_64_MEM_ERROR,
- 	DMI_ENTRY_MGMT_DEV,
- 	DMI_ENTRY_MGMT_DEV_COMPONENT,
- 	DMI_ENTRY_MGMT_DEV_THRES,
-@@ -69,6 +70,10 @@ enum dmi_entry_type {
- 	DMI_ENTRY_ADDITIONAL,
- 	DMI_ENTRY_ONBOARD_DEV_EXT,
- 	DMI_ENTRY_MGMT_CONTROLLER_HOST,
-+	DMI_ENTRY_TPM_DEVICE,
-+	DMI_ENTRY_PROCESSOR_ADDITIONAL,
-+	DMI_ENTRY_FIRMWARE_INVENTORY,
-+	DMI_ENTRY_STRING_PROPERTY,
- 	DMI_ENTRY_INACTIVE = 126,
- 	DMI_ENTRY_END_OF_TABLE = 127,
- };
+diff --git a/drivers/net/wireless/marvell/mwifiex/11n_aggr.c b/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
+index 46f41dbcf30dd..54662bc5bc152 100644
+--- a/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
+@@ -215,6 +215,7 @@ mwifiex_11n_aggregate_pkt(struct mwifiex_private *priv,
+ 
+ 		if (!mwifiex_is_ralist_valid(priv, pra_list, ptrindex)) {
+ 			spin_unlock_bh(&priv->wmm.ra_list_spinlock);
++			mwifiex_write_data_complete(adapter, skb_aggr, 1, -1);
+ 			return -1;
+ 		}
+ 
 -- 
 2.53.0
 
