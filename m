@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A018C3242D7;
-	Sat, 30 May 2026 17:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A150430E847;
+	Sat, 30 May 2026 17:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161689; cv=none; b=YS6VZVB7lXy3Dvi3Bz63xccSksSGjVcYjq3miJWyyn2baNj+YrZD6NXavvhQ2cEOt92yArMYZvjwAvWvtQ1TNuwvj6ZjB4IMMPVbe+UqJWfi+/nS3NrkCRv3Lv8ZNn+aeafkyY6IcH3uepJAsisXnJlHUPeTFnWaX+4mQPHAxNg=
+	t=1780161692; cv=none; b=kDj4QfAQ0+gYrhWWuPK8Vyuq4kg5RCAMNjLxxwHrfKp+AiBFFRU8kBRoBitUYfJ3mSzFlj2pmyTJHQ6gu/LVRqC6gDYLQre1M4tdQCp4W2Tezg/SqXQqW65b6baL9zVhw1tj63Cxd2V80+8VlObv/58xrRCBqC2RfWAn5zsImPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161689; c=relaxed/simple;
-	bh=jR73wVMChLV4RBzBdSoVistNTrvPlq9/SnUcMH2F+Jg=;
+	s=arc-20240116; t=1780161692; c=relaxed/simple;
+	bh=B6vgtDk8qK1SsQIL8RtnXM+8hISzJBG6dXsFH0LGDcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mx80fraglrepeKMUKQenHlWoh41/BWoeJePW+ucKm2q8pKLpEVoEQ3VuIF1AdF9lBixHe/YhqRG1/F8MP+RPY+xLbfSQ4+jfMX+PSnlPzVqWlCx84sG8vOs/Yykal9MdvPFxTRM/94mbMxgZ45e56H/0wXawUBMn1Amh07olcnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXWAYFmB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=D/Wh+/YC+5on3jmzsrfTGUUO/qrvkDKZJL7oIaVOqtKVq+vSqOma9AmuTKc3lnCl6PUKXwnQZoLQKMZnYXoZjTs1RNTRE2ly7yJqYammhrbnxkEk404GQWADMwmlD+szuE8IOQWnJfhnasBAQ29C2vNKgcoavSYBa7VgpN032PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+gQbDj/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXWAYFmB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5271F00898;
-	Sat, 30 May 2026 17:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+gQbDj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FF11F00893;
+	Sat, 30 May 2026 17:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161688;
-	bh=G6wyqOdmkw4eZ93u4euCQn5z4rn8C5PfrVbN9y09n5U=;
+	s=korg; t=1780161691;
+	bh=qq3THpyNWC1UlgmdSq/tnuQ8n+9pJ4EEymKRRgMzhi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXWAYFmBGgAoWtd/wWVerwDPYAi/GP2bsV9heeb3EpKWNnSCmEGvPr9P06stsQwtD
-	 77VfpjEQWcfDOF7QnGtWHWZnGxnOkL12gfx55lBu3E4nw5NWsGyBHxyI306iJgy6wX
-	 14piDpwRjpTLhOmnf48qUBx3h0WLFzZ2To7iCZ2A=
+	b=K+gQbDj/uR1gJT071p5zMI+7al/N0KrhFIiqLmCyJK83m0wxVaUdW9lhAPmS9H74r
+	 80uXUB3qSq74TJOeSdr09TR014PTOCQAgBh5uOjCMezP13LwY/nxXThhCxWJ2cPaEk
+	 KrcRagQp0NkKGwNjJxp5vRCgUqlxqyKDFz9oV6UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 668/969] f2fs: protect extension_list reading with sb_lock in f2fs_sbi_show()
-Date: Sat, 30 May 2026 18:03:12 +0200
-Message-ID: <20260530160318.934415474@linuxfoundation.org>
+Subject: [PATCH 6.1 669/969] drm/i915: Constify watermark state checker
+Date: Sat, 30 May 2026 18:03:13 +0200
+Message-ID: <20260530160318.962686319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,61 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 5909bedbed38c558bee7cb6758ceedf9bc3a9194 ]
+[ Upstream commit 487a2db8bc4eb79c53c9ff8fca65a7fc8350df6c ]
 
-In f2fs_sbi_show(), the extension_list, extension_count and
-hot_ext_count are read without holding sbi->sb_lock. If a concurrent
-sysfs store modifies the extension list via f2fs_update_extension_list(),
-the show path may read inconsistent count and array contents, potentially
-leading to out-of-bounds access or displaying stale data.
+The skl+ wm state checker has no reason to modify the crtc state,
+so make it const.
 
-Fix this by holding sb_lock around the entire extension list read
-and format operation.
-
-Fixes: b6a06cbbb5f7 ("f2fs: support hot file extension")
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231004155607.7719-6-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Stable-dep-of: a97c88a176b6 ("drm/i915/wm: Verify the correct plane DDB entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/sysfs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/skl_watermark.c | 2 +-
+ drivers/gpu/drm/i915/display/skl_watermark.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index aeb95c74710eb..503a50542ac53 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -306,10 +306,12 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 	if (!strcmp(a->attr.name, "extension_list")) {
- 		__u8 (*extlist)[F2FS_EXTENSION_LEN] =
- 					sbi->raw_super->extension_list;
--		int cold_count = le32_to_cpu(sbi->raw_super->extension_count);
--		int hot_count = sbi->raw_super->hot_ext_count;
-+		int cold_count, hot_count;
- 		int len = 0, i;
+diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
+index a7adf02476f6a..b6951881c0570 100644
+--- a/drivers/gpu/drm/i915/display/skl_watermark.c
++++ b/drivers/gpu/drm/i915/display/skl_watermark.c
+@@ -3014,7 +3014,7 @@ void skl_wm_sanitize(struct drm_i915_private *i915)
+ }
  
-+		f2fs_down_read(&sbi->sb_lock);
-+		cold_count = le32_to_cpu(sbi->raw_super->extension_count);
-+		hot_count = sbi->raw_super->hot_ext_count;
- 		len += sysfs_emit_at(buf, len, "cold file extension:\n");
- 		for (i = 0; i < cold_count; i++)
- 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
-@@ -317,6 +319,7 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 		len += sysfs_emit_at(buf, len, "hot file extension:\n");
- 		for (i = cold_count; i < cold_count + hot_count; i++)
- 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
-+		f2fs_up_read(&sbi->sb_lock);
+ void intel_wm_state_verify(struct intel_crtc *crtc,
+-			   struct intel_crtc_state *new_crtc_state)
++			   const struct intel_crtc_state *new_crtc_state)
+ {
+ 	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
+ 	struct skl_hw_state {
+diff --git a/drivers/gpu/drm/i915/display/skl_watermark.h b/drivers/gpu/drm/i915/display/skl_watermark.h
+index 7a5a4e67cd738..d1a1fe322e869 100644
+--- a/drivers/gpu/drm/i915/display/skl_watermark.h
++++ b/drivers/gpu/drm/i915/display/skl_watermark.h
+@@ -42,7 +42,7 @@ void skl_wm_get_hw_state(struct drm_i915_private *i915);
+ void skl_wm_sanitize(struct drm_i915_private *i915);
  
- 		return len;
- 	}
+ void intel_wm_state_verify(struct intel_crtc *crtc,
+-			   struct intel_crtc_state *new_crtc_state);
++			   const struct intel_crtc_state *new_crtc_state);
+ 
+ void skl_watermark_ipc_init(struct drm_i915_private *i915);
+ void skl_watermark_ipc_update(struct drm_i915_private *i915);
 -- 
 2.53.0
 
