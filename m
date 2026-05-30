@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43995233D9E;
-	Sat, 30 May 2026 18:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D095284690;
+	Sat, 30 May 2026 18:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165030; cv=none; b=ZutVsuHKW+Av8+m7ncms4TungU8hRHJ5Fuq+KgAW5Pqs7Y3YQ/nke5QJdwvWEHjAtk6RgL8zHckEkNKnfQdwUfAtEO0KuHK16tmZ3+1KUdhdJHCFx9qLwp+zTi4LxCwc24mp62eIk2XLJkzRxe+SXstTRJSa9/yXwA36+AyW0/0=
+	t=1780165033; cv=none; b=P+acv/q5ORTsodexY/siCjnt3kFfF1T+2+ObQyJnKtps9LRBsol2GWfylZNHZY+pksJRA2bKGcigadfVhFskTA8GJ3H/tJNHtjHdT1t4Jmt+q0a/u0tXoGSWheGdsdFRGAv3eVgYaEA0ERKnFlTgxaBscRgdyE5H8Fr3YHY3dUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165030; c=relaxed/simple;
-	bh=JZQ6qM3fVDnMRAZf+T2m+an5c0fVTdQkm+e4t/TaqmA=;
+	s=arc-20240116; t=1780165033; c=relaxed/simple;
+	bh=c344TKKQT2U0WbEpIaKs86AxSrEspQpyRN/OqLEg7BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLqwnOVKW2tql8oZnxzpdzpokyMsV5E9KoxtmRiPv2T0vgEtS8E+Iw333yTpUx6laotdvSXZwA3gFbAp/l1vCnSNoiDh218jI5PoAj86cPw60yjZ0so91bujcs4xzdW2kIUZaaKSPlak7wnfuhatweovZnD4dO9aIdwYew2ME9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7jtZiuL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sLJK8g2uOlVT3QbM60pgZ3HCGekq9ZRlObOTZxJlkQ4Biu0mMxBn1z81ZkxSpIKyAFbUvWHQL3Td7+4BognslMsjnvLolUEA4nmyEG5pRrHEOFEeqMSA9Mq/GBEau3vI/KmCaIiVwgQKWWg37649p0856+rtoJyVKNnkvTjUdLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dzo9rKkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7jtZiuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF01F00893;
-	Sat, 30 May 2026 18:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dzo9rKkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8749F1F00893;
+	Sat, 30 May 2026 18:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165028;
-	bh=sF8fZoCxlv9F4AtBNnBUw2e6tK35olnSsMU23Rq6R8g=;
+	s=korg; t=1780165032;
+	bh=9xb1rN7yoHA/4gaU8biZJBI25eNxCQZx0XrVX3NaGiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7jtZiuLSCuPvGgExGsBZWXRtoJptYs9JUQXAnmiOuHQAj4V/uQ/N3IoX+E767L/T
-	 w3TXY4ggnDPxxtkiZLUy6nWsaQ5fdsTc6o5DkYyAJewwi5SvheV2V2LhFnRELOSBhC
-	 evS/CCGsn6h9c/5Rc2f4ovmyePr1c8KK7pI3N4S8=
+	b=Dzo9rKkXb+2ssHjReUkgJV4vAq3hmp2IHgTUi0eb3bL+WumCWnX5jlXwhhbGbAnKS
+	 ux3XEg1NDLW+j7USYclR43W1FpsftVMkzMmvzi5c2hkE+JG8iK/dqJktQnqXakCjzV
+	 dLnBZxhxNtN0XAQpQRKUkPtTm2VmXdqnvUPfbCYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 730/776] netfilter: x_tables: unregister the templates first
-Date: Sat, 30 May 2026 18:07:24 +0200
-Message-ID: <20260530160258.685448919@linuxfoundation.org>
+Subject: [PATCH 5.15 731/776] netfilter: arp_tables: allow use of arpt_do_table as hookfn
+Date: Sat, 30 May 2026 18:07:25 +0200
+Message-ID: <20260530160258.707703705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,160 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d338693d778579b676a61346849bebd892427158 ]
+[ Upstream commit e8d225b6002673366abc2e40e30c991bdc8d62ca ]
 
-When the module is going away we need to zap the template
-first.  Else there is a small race window where userspace
-could instantiate a new table after the pernet exit function
-has removed the current table.
+This is possible now that the xt_table structure is passed in via *priv.
 
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Tristan Madani <tristan@talencesecurity.com>
-Closes: https://lore.kernel.org/netfilter-devel/20260429175613.1459342-1-tristmd@gmail.com/
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arptable_filter.c   | 2 +-
- net/ipv4/netfilter/iptable_filter.c    | 2 +-
- net/ipv4/netfilter/iptable_mangle.c    | 2 +-
- net/ipv4/netfilter/iptable_raw.c       | 2 +-
- net/ipv4/netfilter/iptable_security.c  | 2 +-
- net/ipv6/netfilter/ip6table_filter.c   | 2 +-
- net/ipv6/netfilter/ip6table_mangle.c   | 2 +-
- net/ipv6/netfilter/ip6table_raw.c      | 2 +-
- net/ipv6/netfilter/ip6table_security.c | 2 +-
- 9 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/netfilter_arp/arp_tables.h |  5 ++---
+ net/ipv4/netfilter/arp_tables.c          |  7 ++++---
+ net/ipv4/netfilter/arptable_filter.c     | 10 +---------
+ 3 files changed, 7 insertions(+), 15 deletions(-)
 
+diff --git a/include/linux/netfilter_arp/arp_tables.h b/include/linux/netfilter_arp/arp_tables.h
+index 4f9a4b3c58926..a40aaf645fa47 100644
+--- a/include/linux/netfilter_arp/arp_tables.h
++++ b/include/linux/netfilter_arp/arp_tables.h
+@@ -54,9 +54,8 @@ int arpt_register_table(struct net *net, const struct xt_table *table,
+ 			const struct nf_hook_ops *ops);
+ void arpt_unregister_table(struct net *net, const char *name);
+ void arpt_unregister_table_pre_exit(struct net *net, const char *name);
+-extern unsigned int arpt_do_table(struct sk_buff *skb,
+-				  const struct nf_hook_state *state,
+-				  struct xt_table *table);
++extern unsigned int arpt_do_table(void *priv, struct sk_buff *skb,
++				  const struct nf_hook_state *state);
+ 
+ #ifdef CONFIG_NETFILTER_XTABLES_COMPAT
+ #include <net/compat.h>
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index 92bc90ee76748..564054123772a 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -191,10 +191,11 @@ struct arpt_entry *arpt_next_entry(const struct arpt_entry *entry)
+ 	return (void *)entry + entry->next_offset;
+ }
+ 
+-unsigned int arpt_do_table(struct sk_buff *skb,
+-			   const struct nf_hook_state *state,
+-			   struct xt_table *table)
++unsigned int arpt_do_table(void *priv,
++			   struct sk_buff *skb,
++			   const struct nf_hook_state *state)
+ {
++	const struct xt_table *table = priv;
+ 	unsigned int hook = state->hook;
+ 	static const char nulldevname[IFNAMSIZ] __attribute__((aligned(sizeof(long))));
+ 	unsigned int verdict = NF_DROP;
 diff --git a/net/ipv4/netfilter/arptable_filter.c b/net/ipv4/netfilter/arptable_filter.c
-index 3de78416ec762..771eec4629352 100644
+index 771eec4629352..359d00d74095b 100644
 --- a/net/ipv4/netfilter/arptable_filter.c
 +++ b/net/ipv4/netfilter/arptable_filter.c
-@@ -90,8 +90,8 @@ static int __init arptable_filter_init(void)
+@@ -26,14 +26,6 @@ static const struct xt_table packet_filter = {
+ 	.priority	= NF_IP_PRI_FILTER,
+ };
  
- static void __exit arptable_filter_fini(void)
- {
--	unregister_pernet_subsys(&arptable_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&arptable_filter_net_ops);
- 	kfree(arpfilter_ops);
- }
+-/* The work comes in here from netfilter.c */
+-static unsigned int
+-arptable_filter_hook(void *priv, struct sk_buff *skb,
+-		     const struct nf_hook_state *state)
+-{
+-	return arpt_do_table(skb, state, priv);
+-}
+-
+ static struct nf_hook_ops *arpfilter_ops __read_mostly;
  
-diff --git a/net/ipv4/netfilter/iptable_filter.c b/net/ipv4/netfilter/iptable_filter.c
-index 0eb0e2ab9bfc4..9155c5b5318d7 100644
---- a/net/ipv4/netfilter/iptable_filter.c
-+++ b/net/ipv4/netfilter/iptable_filter.c
-@@ -108,8 +108,8 @@ static int __init iptable_filter_init(void)
+ static int arptable_filter_table_init(struct net *net)
+@@ -72,7 +64,7 @@ static int __init arptable_filter_init(void)
+ 	if (ret < 0)
+ 		return ret;
  
- static void __exit iptable_filter_fini(void)
- {
--	unregister_pernet_subsys(&iptable_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&iptable_filter_net_ops);
- 	kfree(filter_ops);
- }
- 
-diff --git a/net/ipv4/netfilter/iptable_mangle.c b/net/ipv4/netfilter/iptable_mangle.c
-index 40417a3f930b2..f2997709c08b1 100644
---- a/net/ipv4/netfilter/iptable_mangle.c
-+++ b/net/ipv4/netfilter/iptable_mangle.c
-@@ -134,8 +134,8 @@ static int __init iptable_mangle_init(void)
- 
- static void __exit iptable_mangle_fini(void)
- {
--	unregister_pernet_subsys(&iptable_mangle_net_ops);
- 	xt_unregister_template(&packet_mangler);
-+	unregister_pernet_subsys(&iptable_mangle_net_ops);
- 	kfree(mangle_ops);
- }
- 
-diff --git a/net/ipv4/netfilter/iptable_raw.c b/net/ipv4/netfilter/iptable_raw.c
-index 8265c67657053..4749ecc9a416d 100644
---- a/net/ipv4/netfilter/iptable_raw.c
-+++ b/net/ipv4/netfilter/iptable_raw.c
-@@ -108,9 +108,9 @@ static int __init iptable_raw_init(void)
- 
- static void __exit iptable_raw_fini(void)
- {
-+	xt_unregister_template(&packet_raw);
- 	unregister_pernet_subsys(&iptable_raw_net_ops);
- 	kfree(rawtable_ops);
--	xt_unregister_template(&packet_raw);
- }
- 
- module_init(iptable_raw_init);
-diff --git a/net/ipv4/netfilter/iptable_security.c b/net/ipv4/netfilter/iptable_security.c
-index f519162a2fa51..3e85be8cc9803 100644
---- a/net/ipv4/netfilter/iptable_security.c
-+++ b/net/ipv4/netfilter/iptable_security.c
-@@ -96,9 +96,9 @@ static int __init iptable_security_init(void)
- 
- static void __exit iptable_security_fini(void)
- {
-+	xt_unregister_template(&security_table);
- 	unregister_pernet_subsys(&iptable_security_net_ops);
- 	kfree(sectbl_ops);
--	xt_unregister_template(&security_table);
- }
- 
- module_init(iptable_security_init);
-diff --git a/net/ipv6/netfilter/ip6table_filter.c b/net/ipv6/netfilter/ip6table_filter.c
-index 727ee80970124..477982fcc04ae 100644
---- a/net/ipv6/netfilter/ip6table_filter.c
-+++ b/net/ipv6/netfilter/ip6table_filter.c
-@@ -108,8 +108,8 @@ static int __init ip6table_filter_init(void)
- 
- static void __exit ip6table_filter_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_filter_net_ops);
- 	xt_unregister_template(&packet_filter);
-+	unregister_pernet_subsys(&ip6table_filter_net_ops);
- 	kfree(filter_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_mangle.c b/net/ipv6/netfilter/ip6table_mangle.c
-index 9b518ce37d6ae..bf062c01041ec 100644
---- a/net/ipv6/netfilter/ip6table_mangle.c
-+++ b/net/ipv6/netfilter/ip6table_mangle.c
-@@ -127,8 +127,8 @@ static int __init ip6table_mangle_init(void)
- 
- static void __exit ip6table_mangle_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_mangle_net_ops);
- 	xt_unregister_template(&packet_mangler);
-+	unregister_pernet_subsys(&ip6table_mangle_net_ops);
- 	kfree(mangle_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_raw.c b/net/ipv6/netfilter/ip6table_raw.c
-index 4f2a04af71d32..6214c0b97f123 100644
---- a/net/ipv6/netfilter/ip6table_raw.c
-+++ b/net/ipv6/netfilter/ip6table_raw.c
-@@ -106,8 +106,8 @@ static int __init ip6table_raw_init(void)
- 
- static void __exit ip6table_raw_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_raw_net_ops);
- 	xt_unregister_template(&packet_raw);
-+	unregister_pernet_subsys(&ip6table_raw_net_ops);
- 	kfree(rawtable_ops);
- }
- 
-diff --git a/net/ipv6/netfilter/ip6table_security.c b/net/ipv6/netfilter/ip6table_security.c
-index 931674034d8be..36b62f848897a 100644
---- a/net/ipv6/netfilter/ip6table_security.c
-+++ b/net/ipv6/netfilter/ip6table_security.c
-@@ -95,8 +95,8 @@ static int __init ip6table_security_init(void)
- 
- static void __exit ip6table_security_fini(void)
- {
--	unregister_pernet_subsys(&ip6table_security_net_ops);
- 	xt_unregister_template(&security_table);
-+	unregister_pernet_subsys(&ip6table_security_net_ops);
- 	kfree(sectbl_ops);
- }
- 
+-	arpfilter_ops = xt_hook_ops_alloc(&packet_filter, arptable_filter_hook);
++	arpfilter_ops = xt_hook_ops_alloc(&packet_filter, arpt_do_table);
+ 	if (IS_ERR(arpfilter_ops)) {
+ 		xt_unregister_template(&packet_filter);
+ 		return PTR_ERR(arpfilter_ops);
 -- 
 2.53.0
 
