@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E4C33F8A4;
-	Sat, 30 May 2026 17:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB22633F8A4;
+	Sat, 30 May 2026 17:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163020; cv=none; b=C3562uUnj2MqYe6xGO/dEtNFmQdqIhuwLPASKqhvvP9Ztmi3eRkxdtIHk1mJ0RNA4+DIQ346ZCceRvk5qywzTUDQMDgGBlbaYyV1ps7g1iU34IAeqRqi3ZrlU2u6bc/qUiLVD+qfdMiqRH+zPsSsBnyGlzD/mbURxJiiSwvsNys=
+	t=1780163024; cv=none; b=ajzFJMRSfqkvlpF5teBfuDE9TxI7rUCGiINB63DvhcERHSJnhBd6EB8sLbD3g01EHEJcnEOPrqQ8Bko6lgFAg1k3iYeSjTf5PCRbxB6qHlnMu+WgiuGvg/1oE+6V2HA3mwpZzHa07epJ+VFW2ga4P8atWCiLBJy1QbRxCEhD4Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163020; c=relaxed/simple;
-	bh=52rnjJBW4zrC4lSH0ZNbR3BsC/FMQ5F+WUhGmNl4VFg=;
+	s=arc-20240116; t=1780163024; c=relaxed/simple;
+	bh=DtaBQ+jq3CfEtLUMTpq3uAhsNEXvswR9FblcblP4lQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6/09ZmyG2dfFzmUSHb+NbG8oCwq5UOLrtjwWlfbPgxvWmNOEyi/IkWtv142u0HLZPa+5iQI6Snx+Yw2f1zHhpUm1CHv3fGaKKPcSHJ6YoIcaeqSiK24j2ahZzDWf17R0td8+TuP53rNDl5B0qGr4tnNa+oxGTGRsVHdqmEH3vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2IElQUd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHNu4QWsnkJGqQFaeqWxhlXYzg+LCV3Ogi+aLdhrYOAvrfBNetfjN3U3JRJlabibv/I0ifusUrCE/zpub1q9DyM2R9C2x5bmMV7G9c3VJ4gf3K0eHyNYlUw570r1U1oD98yPglA4uZLBF/0LnaoDEu+SSEJeSenLeqPBl9nySvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUmhrs1Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2IElQUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63751F00893;
-	Sat, 30 May 2026 17:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUmhrs1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC021F00893;
+	Sat, 30 May 2026 17:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163019;
-	bh=3XUnQKXkT3Z05RodphU4P3ZMT9KiM2YE8YtHyhpimDo=;
+	s=korg; t=1780163022;
+	bh=6wFVHg7GScDe74kh+0E3nTqrFLt+ca7xcOEQZhJCLTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b2IElQUdSk2Y6ZBtCrU5CHnXPOICMErj2mR8zNDVFEF7FByPsWze7lvLpdrpH29aK
-	 yxG4Tygp5XFU+lK2sHMOM+71eO9gsvN+quB38HeifWUruAn5euRDyJ7O2erBuBbcIt
-	 JeRkQhcuChlSKnOkNFBmcEVk/qWy8hwqtfxKD41k=
+	b=yUmhrs1Z122bq5WK2uPRXu2W6E9ID9alOT4Lt1Lbs8INimagRrHQkgOUyeRH3m3RO
+	 3IGhadkwUp9nLadNySWCi1VR/h4IL0Z6b7NWcfO8kjtVRqrYbH3D6lzTInyslbWH79
+	 nhmjtQmbvBor6t+0x0Fd5CqvgRNSr2TibQ+2HJxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
+	Jan Kara <jack@suse.cz>,
+	Boris Burkov <boris@bur.io>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 5.15 132/776] btrfs: send: check for inline extents in range_is_hole_in_parent()
-Date: Sat, 30 May 2026 17:57:26 +0200
-Message-ID: <20260530160243.812822630@linuxfoundation.org>
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 133/776] btrfs: do not strictly require dirty metadata threshold for metadata writepages
+Date: Sat, 30 May 2026 17:57:27 +0200
+Message-ID: <20260530160243.840149570@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,42 +55,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
+[ Upstream commit 4e159150a9a56d66d247f4b5510bed46fe58aa1c ]
 
-Before accessing the disk_bytenr field of a file extent item we need
-to check if we are dealing with an inline extent.
-This is because for inline extents their data starts at the offset of
-the disk_bytenr field. So accessing the disk_bytenr
-means we are accessing inline data or in case the inline data is less
-than 8 bytes we can actually cause an invalid
-memory access if this inline extent item is the first item in the leaf
-or access metadata from other items.
+[BUG]
+There is an internal report that over 1000 processes are
+waiting at the io_schedule_timeout() of balance_dirty_pages(), causing
+a system hang and trigger a kernel coredump.
 
-Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
+The kernel is v6.4 kernel based, but the root problem still applies to
+any upstream kernel before v6.18.
+
+[CAUSE]
+>From Jan Kara for his wisdom on the dirty page balance behavior first.
+
+  This cgroup dirty limit was what was actually playing the role here
+  because the cgroup had only a small amount of memory and so the dirty
+  limit for it was something like 16MB.
+
+  Dirty throttling is responsible for enforcing that nobody can dirty
+  (significantly) more dirty memory than there's dirty limit. Thus when
+  a task is dirtying pages it periodically enters into balance_dirty_pages()
+  and we let it sleep there to slow down the dirtying.
+
+  When the system is over dirty limit already (either globally or within
+  a cgroup of the running task), we will not let the task exit from
+  balance_dirty_pages() until the number of dirty pages drops below the
+  limit.
+
+  So in this particular case, as I already mentioned, there was a cgroup
+  with relatively small amount of memory and as a result with dirty limit
+  set at 16MB. A task from that cgroup has dirtied about 28MB worth of
+  pages in btrfs btree inode and these were practically the only dirty
+  pages in that cgroup.
+
+So that means the only way to reduce the dirty pages of that cgroup is
+to writeback the dirty pages of btrfs btree inode, and only after that
+those processes can exit balance_dirty_pages().
+
+Now back to the btrfs part, btree_writepages() is responsible for
+writing back dirty btree inode pages.
+
+The problem here is, there is a btrfs internal threshold that if the
+btree inode's dirty bytes are below the 32M threshold, it will not
+do any writeback.
+
+This behavior is to batch as much metadata as possible so we won't write
+back those tree blocks and then later re-COW them again for another
+modification.
+
+This internal 32MiB is higher than the existing dirty page size (28MiB),
+meaning no writeback will happen, causing a deadlock between btrfs and
+cgroup:
+
+- Btrfs doesn't want to write back btree inode until more dirty pages
+
+- Cgroup/MM doesn't want more dirty pages for btrfs btree inode
+  Thus any process touching that btree inode is put into sleep until
+  the number of dirty pages is reduced.
+
+Thanks Jan Kara a lot for the analysis of the root cause.
+
+[ENHANCEMENT]
+Since kernel commit b55102826d7d ("btrfs: set AS_KERNEL_FILE on the
+btree_inode"), btrfs btree inode pages will only be charged to the root
+cgroup which should have a much larger limit than btrfs' 32MiB
+threshold.
+So it should not affect newer kernels.
+
+But for all current LTS kernels, they are all affected by this problem,
+and backporting the whole AS_KERNEL_FILE may not be a good idea.
+
+Even for newer kernels I still think it's a good idea to get
+rid of the internal threshold at btree_writepages(), since for most cases
+cgroup/MM has a better view of full system memory usage than btrfs' fixed
+threshold.
+
+For internal callers using btrfs_btree_balance_dirty() since that
+function is already doing internal threshold check, we don't need to
+bother them.
+
+But for external callers of btree_writepages(), just respect their
+requests and write back whatever they want, ignoring the internal
+btrfs threshold to avoid such deadlock on btree inode dirty page
+balancing.
+
+CC: stable@vger.kernel.org
+CC: Jan Kara <jack@suse.cz>
+Reviewed-by: Boris Burkov <boris@bur.io>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-[ Avoid leaking the path by using { ret = 0; goto out; } instead of
-returning directly. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+[ The context change is due to the commit 41044b41ad2c
+("btrfs: add helper to get fs_info from struct inode pointer")
+in v6.9 and the commit c66f2afc7148
+("btrfs: remove pointless writepages callback wrapper")
+in v6.10 which are irrelevant to the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/disk-io.c   |   23 -----------------------
+ fs/btrfs/extent_io.c |    3 +--
+ fs/btrfs/extent_io.h |    3 +--
+ 3 files changed, 2 insertions(+), 27 deletions(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -5892,6 +5892,10 @@ static int range_is_hole_in_parent(struc
- 		extent_end = btrfs_file_extent_end(path);
- 		if (extent_end <= start)
- 			goto next;
-+		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE) {
-+			ret = 0;
-+			goto out;
-+		}
- 		if (btrfs_file_extent_disk_bytenr(leaf, fi) == 0) {
- 			search_start = extent_end;
- 			goto next;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -912,29 +912,6 @@ static int btree_migratepage(struct addr
+ }
+ #endif
+ 
+-
+-static int btree_writepages(struct address_space *mapping,
+-			    struct writeback_control *wbc)
+-{
+-	struct btrfs_fs_info *fs_info;
+-	int ret;
+-
+-	if (wbc->sync_mode == WB_SYNC_NONE) {
+-
+-		if (wbc->for_kupdate)
+-			return 0;
+-
+-		fs_info = BTRFS_I(mapping->host)->root->fs_info;
+-		/* this is a bit racy, but that's ok */
+-		ret = __percpu_counter_compare(&fs_info->dirty_metadata_bytes,
+-					     BTRFS_DIRTY_METADATA_THRESH,
+-					     fs_info->dirty_metadata_batch);
+-		if (ret < 0)
+-			return 0;
+-	}
+-	return btree_write_cache_pages(mapping, wbc);
+-}
+-
+ static int btree_releasepage(struct page *page, gfp_t gfp_flags)
+ {
+ 	if (PageWriteback(page) || PageDirty(page))
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -4792,8 +4792,7 @@ static int submit_eb_page(struct page *p
+ 	return 1;
+ }
+ 
+-int btree_write_cache_pages(struct address_space *mapping,
+-				   struct writeback_control *wbc)
++int btree_writepages(struct address_space *mapping, struct writeback_control *wbc)
+ {
+ 	struct extent_buffer *eb_context = NULL;
+ 	struct extent_page_data epd = {
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -187,8 +187,7 @@ int extent_write_locked_range(struct ino
+ 			      int mode);
+ int extent_writepages(struct address_space *mapping,
+ 		      struct writeback_control *wbc);
+-int btree_write_cache_pages(struct address_space *mapping,
+-			    struct writeback_control *wbc);
++int btree_writepages(struct address_space *mapping, struct writeback_control *wbc);
+ void extent_readahead(struct readahead_control *rac);
+ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		  u64 start, u64 len);
 
 
