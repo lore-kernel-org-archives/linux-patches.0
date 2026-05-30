@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6E7342CA7;
-	Sat, 30 May 2026 17:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49300342CA7;
+	Sat, 30 May 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163310; cv=none; b=pUIfzDJZENIlbTWxUn7e4obHehCvxwiuXoEpDMq4LKxOnVq7SsMO3exsp2rMpZAtizTnrydYQFtjRa3ggtJzfcmnrbIGpGZ5EXXM3v1peAb/R/zu718bgUO56RIboHzXNXLRu+qthC2u7CRobSRYXfXMjiQu9U877rY2OAwC9Ms=
+	t=1780163314; cv=none; b=HmdEnCbnFLvSF2u2Am3U3z2zxukG8+dlq0sxig2CEqOPjA9XaUr8dW0u90n3X9O4Eh/T6H+/w/0upFtGPup19ZyTn89Q5xt8x6rWnuV7cMNJkCuVZIgD0X8RtJODHXhjtXlshKyuSfC6oK9TxXpn7bkKWgDQkFvKhoOyBr+lIks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163310; c=relaxed/simple;
-	bh=GaEMNNZFJVkYl2q1g+qSZSWqauBqqwk37/xgrgi+r70=;
+	s=arc-20240116; t=1780163314; c=relaxed/simple;
+	bh=Ni99gC9Nd2nkR7PFZIr5006BWWZMbRQo59WntSuqu14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1WFMeeFxVVu/mnX5SXpsS3zVhmOmtK21VYBkcZKGNzwWrDxeRQ/Um4MkpwLPICs1WEL6m0JSEjvRr0IrAAJnnLuS953QdqfjkUaZFPyOuSdqeqSqoayiI3rlOl/ufgQLzJDXMoxTL4OXLgfTxDNmf+ZGtXI2b/nPOExbaP9v6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha80hOTF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4KxfnC0W2m8fttFyo3v46Lu9JmXGq2AX0lGPAXliGWV3z5oASw1GZ6lzy/yuL9LPcWRp5FXvq0kDTIW0VflEbHAfpPiMEgtsxio5QbAgTCyh4T7pQrbypzCsAwKagPT5qv6v1MK7mm2om3kmwmYNgc8Ll8wlkLudRpLsWFaDnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxrq14Yr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha80hOTF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5501F00893;
-	Sat, 30 May 2026 17:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxrq14Yr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3B71F00893;
+	Sat, 30 May 2026 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163309;
-	bh=mzrIL+8tkfVbBn/qKXkXJpb6mHzvOiffq/G6mf3acac=;
+	s=korg; t=1780163313;
+	bh=Ink75ea+don9y8UkVVB3GeuxuvAS3A4KVDQeUKGjebk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ha80hOTFZ91A+yQYa4U108Qv8Tcv1kZDpcQ+mFLxTEh54K5vwXKSrEKnPUqe7i3in
-	 JbQnNhYd+aEW180Lo3Y45o/RxFHGkAnFpXwZGFMiB5qNG07YaO/Uc8OWKYLzt9MHJg
-	 yEuzDipHj2uffC/knEwW9pmNsdCiGXRpVUu9AZxQ=
+	b=Wxrq14YrFmaGTjS+Pplqhugy7dncg4mn0E4jWWkAJTNECKiSqz+rIT8NbriE6ezZ7
+	 QQtFU17Xt3HBPSH68VTo/CZbId0XlLKC7Lz8j75F18TGL4t+J9aJ+CMK1rz9JoiA+U
+	 J2EYreLtOE5hCzRjDmH5/kZXwyKCvFUGEL6xo7Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,13 +32,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ao Zhou <draw51280@163.com>,
+	Ruijie Li <ruijieli51@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
-	Allison Henderson <achender@kernel.org>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 219/776] net: rds: fix MR cleanup on copy error
-Date: Sat, 30 May 2026 17:58:53 +0200
-Message-ID: <20260530160246.180498437@linuxfoundation.org>
+Subject: [PATCH 5.15 220/776] net/smc: avoid early lgr access in smc_clc_wait_msg
+Date: Sat, 30 May 2026 17:58:54 +0200
+Message-ID: <20260530160246.207381326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -57,47 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ao Zhou <draw51280@163.com>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 8141a2dc70080eda1aedc0389ed2db2b292af5bd upstream.
+commit 5a8db80f721deee8e916c2cfdee78decda02ce4f upstream.
 
-__rds_rdma_map() hands sg/pages ownership to the transport after
-get_mr() succeeds. If copying the generated cookie back to user space
-fails after that point, the error path must not free those resources
-again before dropping the MR reference.
+A CLC decline can be received while the handshake is still in an early
+stage, before the connection has been associated with a link group.
 
-Remove the duplicate unpin/free from the put_user() failure branch so
-that MR teardown is handled only through the existing final cleanup
-path.
+The decline handling in smc_clc_wait_msg() updates link-group level sync
+state for first-contact declines, but that state only exists after link
+group setup has completed. Guard the link-group update accordingly and
+keep the per-socket peer diagnosis handling unchanged.
 
-Fixes: 0d4597c8c5ab ("net/rds: Track user mapped pages through special API")
+This preserves the existing sync_err handling for established link-group
+contexts and avoids touching link-group state before it is available.
+
+Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ao Zhou <draw51280@163.com>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/79c8ef73ec8e5844d71038983940cc2943099baf.1776764247.git.draw51280@163.com
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/08c68a5c817acf198cce63d22517e232e8d60718.1776850759.git.ruijieli51@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma.c |    4 ----
- 1 file changed, 4 deletions(-)
+ net/smc/smc_clc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -326,10 +326,6 @@ static int __rds_rdma_map(struct rds_soc
- 
- 	if (args->cookie_addr &&
- 	    put_user(cookie, (u64 __user *)(unsigned long)args->cookie_addr)) {
--		if (!need_odp) {
--			unpin_user_pages(pages, nr_pages);
--			kfree(sg);
--		}
- 		ret = -EFAULT;
- 		goto out;
- 	}
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -440,8 +440,8 @@ int smc_clc_wait_msg(struct smc_sock *sm
+ 		dclc = (struct smc_clc_msg_decline *)clcm;
+ 		reason_code = SMC_CLC_DECL_PEERDECL;
+ 		smc->peer_diagnosis = ntohl(dclc->peer_diagnosis);
+-		if (((struct smc_clc_msg_decline *)buf)->hdr.typev2 &
+-						SMC_FIRST_CONTACT_MASK) {
++		if ((dclc->hdr.typev2 & SMC_FIRST_CONTACT_MASK) &&
++		    smc->conn.lgr) {
+ 			smc->conn.lgr->sync_err = 1;
+ 			smc_lgr_terminate_sched(smc->conn.lgr);
+ 		}
 
 
