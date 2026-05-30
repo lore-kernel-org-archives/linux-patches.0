@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B92628D;
-	Sat, 30 May 2026 17:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D80B320CAD;
+	Sat, 30 May 2026 17:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163739; cv=none; b=cNFa+HinsY+zmMvfjuQOet5OzKyhpaIYaDSysHPlUrTJyfCoYEAGVQEAQy8vOMrIQ1uQtV3BWG3/y/Aa4Bwj6obYxGB/Wj++XBA0wg3uZ6hF+5dgQ8ZbXJVyDtakzBlcJiM8Yd41urFgpcuLZOZr14lifL4BU/ylkigOZIcZ9Ig=
+	t=1780163742; cv=none; b=iZOWR8Ml8B5WZ/2oolih/Zhtt+/NYzLzQYwy1guG/E4M0oQTsZ0TTaSGHm57seHJbyqAMoIEJA/qulkyoI5fyEqN7t8xxOpsiBygOnO2gXMweLapJ8DqwzztIB7NiW0dABcLsI0cajgwRonPodOUJf0/MUXI4iXTXyWMmxLsBXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163739; c=relaxed/simple;
-	bh=r97gX8TtIGr8Le5XC7JbNijP9jospuMJexlsZT4OcHQ=;
+	s=arc-20240116; t=1780163742; c=relaxed/simple;
+	bh=Tv8VtlDFIHrJgJ3GLkp9W1CLdFRwvzC7PoSaCEPLDIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Efuro77xlN5rs1WmHWmghCCY0RgRplT+jxwBhBU8gRSG+F0xH7h2dRr/T6q57xsoRhoaojhG9dcRfUM83+2fOZsN9L8W5FijqbK204tdONEwAS/YC2CXl7AaGCDM/MogTbrOokz1zroD1X77C3w6rSwU3dzm+TPLfXrq2eEbWUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZCWKZDP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCLlddplO8mbGSEt7H1p2yFJX26tMx0RRD65e2C+NTnbaAosQ3n1zdtF7tyrBcfRvF06UfkifUUtxaNbEDRh4HqkCLuWv561J9FJTaBpdOJu1H3TpRkM10ZDbIPX8fV8ZcDg0F6KByd7e8Jv2xAck/0Y5lsbVfF2eF4wJFOwu3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9U/bNxH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZCWKZDP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C2B1F00893;
-	Sat, 30 May 2026 17:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9U/bNxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BB61F00893;
+	Sat, 30 May 2026 17:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163738;
-	bh=TC+IufGA79wapck1xhiQLd865NN4qS3/F8J11P18M+0=;
+	s=korg; t=1780163741;
+	bh=XYV56CxnwjXEdVrAq/kJ+tfT++b/jyr2OJxDhrUfHSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZCWKZDPEkbvLCS4Cz2rrcv40BCoV/1MyW6MSSs0QuBg/zSjVGzw4H1LAbn+grBLf
-	 MZqsS5FL5HY1mExlJLJol+3mY/eoKuK7hiBOEj+su/qn0xOU0W6yqItf2NFhD0hX39
-	 diqOojkikbEx7JfHC09hLAdw/1aj+nyRpJddHWGg=
+	b=W9U/bNxHYzmRB4pAKxDbF6+6ZrtzVYCnYnwywwaABaMDbeK4YMvZa/rmWKW3caFqM
+	 FaPH1Khk+esgOw+O+dSfxvQkZPMlxXxBkol9E+xwi7uGZdEgvb2MerPVIVruWG7a3z
+	 +cJwyQ98xqhR8wkO8WYdRIdXmtCbIS5sWgoFxjbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gang Yan <yangang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 347/776] mptcp: use MPTCP_RST_EMPTCP for ACK HMAC validation failure
-Date: Sat, 30 May 2026 18:01:01 +0200
-Message-ID: <20260530160249.547145093@linuxfoundation.org>
+Subject: [PATCH 5.15 348/776] mptcp: sockopt: set timestamp flags on subflow socket, not msk
+Date: Sat, 30 May 2026 18:01:02 +0200
+Message-ID: <20260530160249.572894108@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,44 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-commit a6da02d4c00fdda2417e42ad2b762a9209e6cc49 upstream.
+commit 5f95c21fc23a7ef22b4d27d1ed9bb55557ffb926 upstream.
 
-When HMAC validation fails on a received ACK + MP_JOIN in
-subflow_syn_recv_sock(), the subflow is reset with reason
-MPTCP_RST_EPROHIBIT ("Administratively prohibited"). This is
-incorrect: HMAC validation failure is an MPTCP protocol-level
-error, not an administrative policy denial.
+Both mptcp_setsockopt_sol_socket_tstamp() and
+mptcp_setsockopt_sol_socket_timestamping() iterate over subflows,
+acquire the subflow socket lock, but then erroneously pass the MPTCP
+msk socket to sock_set_timestamp() / sock_set_timestamping() instead
+of the subflow ssk. As a result, the timestamp flags are set on the
+wrong socket and have no effect on the actual subflows.
 
-The mirror site on the client, in subflow_finish_connect(), already
-uses MPTCP_RST_EMPTCP ("MPTCP-specific error") for the same kind of
-HMAC failure on the SYN/ACK + MP_JOIN. Use the same reason on the
-server side for symmetry and accuracy.
+Pass ssk instead of sk to both helpers.
 
-Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Fixes: 443041deb5ef ("mptcp: fix NULL pointer in can_accept_new_subflow")
+Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-2-b70118df778e@kernel.org
+Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-1-7432b7f279fa@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/sockopt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -787,7 +787,7 @@ create_child:
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -157,7 +157,7 @@ static int mptcp_setsockopt_sol_socket_t
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast(ssk);
  
- 			if (!subflow_hmac_valid(req, &mp_opt)) {
- 				SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINACKMAC);
--				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
-+				subflow_add_reset_reason(skb, MPTCP_RST_EMPTCP);
- 				goto dispose_child;
- 			}
+-		sock_set_timestamp(sk, optname, !!val);
++		sock_set_timestamp(ssk, optname, !!val);
+ 		unlock_sock_fast(ssk, slow);
+ 	}
+ 
+@@ -233,7 +233,7 @@ static int mptcp_setsockopt_sol_socket_t
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast(ssk);
+ 
+-		sock_set_timestamping(sk, optname, timestamping);
++		sock_set_timestamping(ssk, optname, timestamping);
+ 		unlock_sock_fast(ssk, slow);
+ 	}
  
 
 
