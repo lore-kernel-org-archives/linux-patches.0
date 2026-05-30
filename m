@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57352F25E4;
-	Sat, 30 May 2026 16:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8722F25E4;
+	Sat, 30 May 2026 16:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158478; cv=none; b=OO1eLeWikJ4Vx4+bc+qoxqZosWsapFaZ8CpzZA8v4RiS8/PtIPc0UjTbsO1rmkyvVGAeLNgPRPVrDfrKXQGvS+POYtv0yHYUkvEEIUaVdxEV8fJDMQ+CM3s1tKj3+Ht5WfZ0OU1QAfsjb1Im2oySBjXm/fUzXDCEXXUJuJ4H/24=
+	t=1780158486; cv=none; b=pJoX91oBILoeuXltEwFqa3UJlLNNgkNe7hyU1Oepn/axHQVwfEWlDwbimgPmp0Lk6luNyqUZOkHnGOQyB+ZpcvMBZfpzxKo18OfvKa6/EVX2aaA7dDc6UpW2DFBw3E16JxuOFTjRSGHCEuXwneq6ivvjtY8eHjdKb+SsXkaa5t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158478; c=relaxed/simple;
-	bh=R2m3GZ86emc89aId+/F9441UIZ9hbSkxBMdkES2v/5o=;
+	s=arc-20240116; t=1780158486; c=relaxed/simple;
+	bh=Dh6T5WauCBnX+qGQmLetYs1CIUnLW61n3noDeBPJW/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RSYvhqcpMD4iXHmXvQJ0BQUe3Sx0lksSN+VqUaYZCYU7vvd5O0Os/8Ktms96XnAwMRLCmFvgg58Hxin1IpknsxqoZMfZ6niJY/cJH4+WfPPsA1GV4pmulI5AhAUlPPyEOEmef3Z5r0wJMpXBPfQmeCWRD+Z7rnekuAG7XGp5vQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbuDWfyh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ARMneLU68RjrC4sI7YpfI6Rbj0bWAWsVu02cINp4se7++yJzA3MWaTYEP3BR3YDhdwdo+0ME8vqwJtrH0fKyyRZevaQ0gQ8cOQTm6+yd979X07uU4d9LSzE2wA3CV6NUfogTQ5iAsqjPF0OsI3uZVAo1w3Xjk2y0BoQLCZjBf3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5SDGoD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbuDWfyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E3E1F00893;
-	Sat, 30 May 2026 16:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5SDGoD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C97A1F00893;
+	Sat, 30 May 2026 16:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158477;
-	bh=OdMhpNN4ZxoNQPrbQLPIZWzAaF0Pnv+g+xujukXO9LI=;
+	s=korg; t=1780158485;
+	bh=ENcdAn1Sml6T/miJKRtkTuFuQpv9YYTgOrUC4cNx6Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbuDWfyh7SUw5j9wBIcWuLw6U62T+NR4BB4gboC7rv2JArLQ9AJda/3eAF/4l/0uD
-	 fam1EerU0L+SVebdxiBCuWkgXn3RscBinEWmxuDElshBip/kN5sjiqRr4vbD774SRp
-	 N3Tbd5bVuplRMHQFKIp+j/7BRgCg+2w/KIHnQCSc=
+	b=d5SDGoD0HcEm831LkUI2GdsC1w3+hKquceGQYQ6p4TTgpsxrp4hRtLQzwmVS9vVk1
+	 1FOCUoJOBshy5TLDix4n0rT214CiXkrGNltRA8rl7SAKNnp+x8OsM88I3ke99dlGVy
+	 Wx4eqklKTfzWE34J8kaeYD64HfkyiqcBIaXRECjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/969] drm/i915/psr: Do not use pipe_src as borders for SU area
-Date: Sat, 30 May 2026 17:52:59 +0200
-Message-ID: <20260530160301.912091314@linuxfoundation.org>
+	Junxi Qian <qjx1298677004@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 056/969] nfc: llcp: add missing return after LLCP_CLOSED checks
+Date: Sat, 30 May 2026 17:53:00 +0200
+Message-ID: <20260530160301.937897320@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,120 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Junxi Qian <qjx1298677004@gmail.com>
 
-[ Upstream commit 75519f5df2a9b23f7bf305e12dc9a6e3e65c24b7 ]
+commit 2b5dd4632966c39da6ba74dbc8689b309065e82c upstream.
 
-This far using crtc_state->pipe_src as borders for Selective Update area
-haven't caused visible problems as drm_rect_width(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-drm_rect_height(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_vdisplay when pipe scaling is not
-used. On the other hand using pipe scaling is forcing full frame updates and all the
-Selective Update area calculations are skipped. Now this improper usage of
-crtc_state->pipe_src is causing following warnings:
+In nfc_llcp_recv_hdlc() and nfc_llcp_recv_disc(), when the socket
+state is LLCP_CLOSED, the code correctly calls release_sock() and
+nfc_llcp_sock_put() but fails to return. Execution falls through to
+the remainder of the function, which calls release_sock() and
+nfc_llcp_sock_put() again. This results in a double release_sock()
+and a refcount underflow via double nfc_llcp_sock_put(), leading to
+a use-after-free.
 
-<4> [7771.978166] xe 0000:00:02.0: [drm] drm_WARN_ON_ONCE(su_lines % vdsc_cfg->slice_height)
+Add the missing return statements after the LLCP_CLOSED branches
+in both functions to prevent the fall-through.
 
-after WARN_ON_ONCE was added by commit:
-
-"drm/i915/dsc: Add helper for writing DSC Selective Update ET parameters"
-
-These warnings are seen when DSC and pipe scaling are enabled
-simultaneously. This is because on full frame update SU area is improperly
-set as pipe_src which is not aligned with DSC slice height.
-
-Fix these by creating local rectangle using
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-crtc_state->hw.adjusted_mode.crtc_vdisplay. Use this local rectangle as
-borders for SU area.
-
-Fixes: d6774b8c3c58 ("drm/i915: Ensure damage clip area is within pipe area")
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260327114553.195285-1-jouni.hogander@intel.com
-(cherry picked from commit da0cdc1c329dd2ff09c41fbbe9fbd9c92c5d2c6e)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-[ omitted hunks for DSC selective update ET alignment infrastructure ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260408081006.3723-1-qjx1298677004@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ net/nfc/llcp_core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index e2d7c0a6802aa..a465b19293108 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1686,9 +1686,9 @@ static void psr2_man_trk_ctl_calc(struct intel_crtc_state *crtc_state,
- 
- static void clip_area_update(struct drm_rect *overlap_damage_area,
- 			     struct drm_rect *damage_area,
--			     struct drm_rect *pipe_src)
-+			     struct drm_rect *display_area)
- {
--	if (!drm_rect_intersect(damage_area, pipe_src))
-+	if (!drm_rect_intersect(damage_area, display_area))
- 		return;
- 
- 	if (overlap_damage_area->y1 == -1) {
-@@ -1761,6 +1761,12 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 	struct drm_rect pipe_clip = { .x1 = 0, .y1 = -1, .x2 = INT_MAX, .y2 = -1 };
- 	struct intel_plane_state *new_plane_state, *old_plane_state;
- 	struct intel_plane *plane;
-+	struct drm_rect display_area = {
-+		.x1 = 0,
-+		.y1 = 0,
-+		.x2 = crtc_state->hw.adjusted_mode.crtc_hdisplay,
-+		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
-+	};
- 	bool full_update = false;
- 	int i, ret;
- 
-@@ -1807,14 +1813,14 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 				damaged_area.y1 = old_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = old_plane_state->uapi.dst.y2;
- 				clip_area_update(&pipe_clip, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 
- 			if (new_plane_state->uapi.visible) {
- 				damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 				clip_area_update(&pipe_clip, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 			continue;
- 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
-@@ -1822,7 +1828,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 			clip_area_update(&pipe_clip, &damaged_area,
--					 &crtc_state->pipe_src);
-+					 &display_area);
- 			continue;
- 		}
- 
-@@ -1838,7 +1844,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		damaged_area.x1 += new_plane_state->uapi.dst.x1 - src.x1;
- 		damaged_area.x2 += new_plane_state->uapi.dst.x1 - src.x1;
- 
--		clip_area_update(&pipe_clip, &damaged_area, &crtc_state->pipe_src);
-+		clip_area_update(&pipe_clip, &damaged_area, &display_area);
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -1089,6 +1089,7 @@ static void nfc_llcp_recv_hdlc(struct nf
+ 	if (sk->sk_state == LLCP_CLOSED) {
+ 		release_sock(sk);
+ 		nfc_llcp_sock_put(llcp_sock);
++		return;
  	}
  
- 	/*
--- 
-2.53.0
-
+ 	/* Pass the payload upstream */
+@@ -1180,6 +1181,7 @@ static void nfc_llcp_recv_disc(struct nf
+ 	if (sk->sk_state == LLCP_CLOSED) {
+ 		release_sock(sk);
+ 		nfc_llcp_sock_put(llcp_sock);
++		return;
+ 	}
+ 
+ 	if (sk->sk_state == LLCP_CONNECTED) {
 
 
