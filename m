@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD7F481DD;
-	Sat, 30 May 2026 17:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97163016E1;
+	Sat, 30 May 2026 17:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161060; cv=none; b=YGoSOIzdTPVih7q20hsHeOsFO67UcYymno+vVn+qoZ9T7OFdcOYwL/gUThxcOJf3jm3uhxQmTT0unIvOr+nPk6kfxzREq439mPTJvD0CbDysZsykTIuehxu1R/3b37osJPYt7GDeGoXuiDiWtRrzMfMh3eWvoHnRPxwuL5b1hD4=
+	t=1780161064; cv=none; b=neDD8jpXFUW2Xk5T/6G5A2BrDmxLzW04iCNA+etfcTclh8LkJtL4Uj2uZ4bItKQsxCW9UNilI1LTfqzPKouq2kA7xfQ1aAfo29v+0rqV+kB/21Qsci4GFNgIHz/mfAU6ESWEVMD2Ur9Rkm7nrtjCBGI1fOxE369Fg++HRFvwIjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161060; c=relaxed/simple;
-	bh=qv5EZXkzAd2SZvGPgFWm9nNbl/7fyTpv2P/j8a8e5j4=;
+	s=arc-20240116; t=1780161064; c=relaxed/simple;
+	bh=UwIa17dU3niB6Qowns1XZurxbtBJH7yRhJ7PJyuOf4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZ/0xBCxFQ2P2gwTtlpGavR8X1AzYjtvATZe9qqX6oOS75CJECDb5z15aMNyQ3uBUMM7xDKufa6mf1Z/Jy+/TkFkbSRBkp02KVsLjIdJdpDZl46g8Aq/0NbOLWx6g2HwPBZvkKE8spzO6ySjk/5kY7MK/CGuvV8lEtvqCv7qWvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTYO94Qv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FJHCtqEiialRLsUg5jmpg3hiXpHTLpghuJVZ2xEcnU1V7VEPSr1zoFcioOfbGMdn5uVs67gsbA6IWZlFGl0iiYIj8mTp7AnidfzuwrzCiCm5xxbwUD/gzGm2CSEaUIkZMWelTBv3MscdCHxdVn6xky2JAg63LQqnDuwG4QanEDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Klo+eUlE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTYO94Qv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C987B1F00893;
-	Sat, 30 May 2026 17:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Klo+eUlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6FB1F00893;
+	Sat, 30 May 2026 17:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161059;
-	bh=ywqzY1sHld65+B5O8bTk1TsAi/2cnhcnsqzxWtrjds0=;
+	s=korg; t=1780161063;
+	bh=Vp0e+XUHdrzGjPo8yI2/KVqYOcstNYmOEppJo5OUVso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTYO94Qvbc5+k2AR0VaozkGOvtKKEfQOnRj776p6O5a8I4CubGK3Ih3U1W4Be5oiy
-	 xJ/Gxe1hFaE6ZGno9fwATaqpEeL91lfgimG4pgeGr0LoNmjUqqO42C7Q/CEqu7PKR/
-	 SsjYVE4SAtLA3IFcqg7onVGDpRX8QHdar04zwxeE=
+	b=Klo+eUlEAQpLPLxCv4vA6JbHeQOf+v6FN43l97MwfnlLzevnFgAfv+AGWERns+gy+
+	 hEATm2+MgtdWMZOFKLNfn7sR1ozhNfyd+ZpmqFKqQe5C2mi8nmugFiFL5c/lIW2J5u
+	 pDZ1R6NJeR15zdoPd2ANTVdCA8j9ltBSWY/mildk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 514/969] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-Date: Sat, 30 May 2026 18:00:38 +0200
-Message-ID: <20260530160314.532489092@linuxfoundation.org>
+Subject: [PATCH 6.1 515/969] drm/panel: simple: Correct G190EAN01 prepare timing
+Date: Sat, 30 May 2026 18:00:39 +0200
+Message-ID: <20260530160314.562670305@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,60 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
+[ Upstream commit f1080f82570b797598c1ba7e9c800ae9e94aafc6 ]
 
-The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
-("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
-always correct just the name was wrong.
+The prepare timing specified by the G190EAN01 datasheet should be
+between 30 and 50 ms. Considering it might take some time for the
+LVDS encoder to enable the signal, we should only wait the min.
+required time in the panel driver and not the max. allowed time.
 
-Rename and reorder to maintain version sorting.
-
-Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Patchwork: https://patchwork.freedesktop.org/patch/713717/
-Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 2f7b832fc992 ("drm/panel: simple: Add support for AUO G190EAN01 panel")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260217142528.68613-1-ian.ray@gehealthcare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index e0bd452a9f1e6..4c1c2a77dec98 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -286,10 +286,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
- 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
-+		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
- 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
--	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
--		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 8f04e685a74e9..7b56fc9297212 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -18,8 +18,8 @@
- #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
- #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
- #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
-+#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
--#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
- #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 3f41fd5edc333..316961a86b042 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1099,7 +1099,7 @@ static const struct panel_desc auo_g190ean01 = {
+ 		.height = 301,
+ 	},
+ 	.delay = {
+-		.prepare = 50,
++		.prepare = 30,
+ 		.enable = 200,
+ 		.disable = 110,
+ 		.unprepare = 1000,
 -- 
 2.53.0
 
