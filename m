@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421612E7379;
-	Sat, 30 May 2026 17:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27932E7379;
+	Sat, 30 May 2026 17:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162326; cv=none; b=H+k+FY8x59szu64mgaMp3y9srdWuZ3YZ8QB8OcKLTIZxlzVg1Nv4V0tZHgIejX6qp//JnhVxL5RIrSCpW+jkFxuQI3NtdOb7xbFjkWkay4ZECRnMbv5VhsF4ubc8mVZu2w4fPN6gFCsrm54PDNbTTgYcEg84cf6LrG72BBt1jt0=
+	t=1780162329; cv=none; b=p9U8hMalO3y4qkMYpdHKBCVJgu/UdH9V0jv4z7A64iNzC/8l7JGaFSjFAe6SAD+UUF4IjekmcKDXsaTxFkTiW2x79d+Fjdd2BJmF/1lC3IfAhUr1URKQw6qIl9vvTNMCk7VAHJBBT9QLeDzJhXkTOkl4KGjHs01FsT47gFfY5k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162326; c=relaxed/simple;
-	bh=v1OhRT48KWlgPrT7Jc8GgmS15Uv+gx8LELjCNZIT+5s=;
+	s=arc-20240116; t=1780162329; c=relaxed/simple;
+	bh=mpDcMZHjy6Q5gnDUOIM8iyHxsfIbBcZKxxUOJH+Var4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYbLNYGGyHNFjXbeLropjCgqKZGc1pZ51r4d8SOpn189B0zQH2mWZWGNG8P5GnkC4/i1SGBscLPMjJiTkSLw45H+7gNwnNIf127ExGX+OAGT2Bmeny/yCS840p0K6e4IHXdPAiCp8A83QDkgqh9JOJa6y4rIFcHSHDTxVIvvmNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2Yg4WeD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XkhrLv4nHfBW6xq7pkk+5O8P/SSwRkBpfOOGq2n7he3oySMc7jyddbJHTDU7dweKUh+y9pKERpa+PM6n7wK7v5KuJQJM0Gmx0lBBZRks0LOnRdmYcGdGxn4xSR/ZvE48ggodix5WDdsDC+XG4kSXeSZbPtwg2wQC/fDiLs81P3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVL2Jhdv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2Yg4WeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BE21F00893;
-	Sat, 30 May 2026 17:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVL2Jhdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05761F00893;
+	Sat, 30 May 2026 17:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162325;
-	bh=4BDYuBDEEmXsdlAItaEcUK8qgoA22OaWq1u9iwiUHb8=;
+	s=korg; t=1780162328;
+	bh=cPocOez+RvvE/5Jn6r2t6h1W9jLCXWJh89+q8zR1Vr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2Yg4WeD72aiMkd5SKKHwLVcWNBCr9cYlWzHWdMjzsLotsRw3unTLVBFhFfpOqY+w
-	 kaZA2AqiB1aWxACUTLDxBU3B1+RnKy6Wn7i4sz3S7dlgIVikpAdnawCRzlavLSq8mJ
-	 Lr1OAy0exuwGT5XmRG/5YqZwXLj8dbLL/JkkVKsw=
+	b=pVL2JhdvL0pI2lIHPsB6q40osR6sGXTiUjpCdm6u3QWfUT/ffh19Th6rSLPUBC1W3
+	 Ya5mU+vpUhx8UFkU6JIXyBQE+bxZDqvotEzNWDM2zklCdMOMkX9FY+VPAUnlurrptv
+	 gXGh2m0fDAuWDkfyIa98R/mtpiU/59p6LmdfKtEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.1 887/969] batman-adv: tp_meter: avoid use of uninit sender vars
-Date: Sat, 30 May 2026 18:06:51 +0200
-Message-ID: <20260530160325.192444913@linuxfoundation.org>
+Subject: [PATCH 6.1 888/969] batman-adv: tt: fix negative last_changeset_len
+Date: Sat, 30 May 2026 18:06:52 +0200
+Message-ID: <20260530160325.220093612@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -56,63 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 6c65cf23d4c6170fcf5714c32aa64689718cb142 upstream.
+commit fc92cdfcb295cefa4344d71a527d61b638b7bfc4 upstream.
 
-batadv_tp_recv_ack() and batadv_tp_stop() are only valid for tp_vars in the
-BATADV_TP_SENDER role. When called with a BATADV_TP_RECEIVER role, it
-proceeds to read sender-only members that were never initialized, leading
-to undefined behavior.
+batadv_piv_tt::last_changeset_len len was declared as s16, but the field is
+never intended to hold a negative value. When a value greater than 32767 is
+assigned, it wraps to a negative signed integer.
 
-This can be triggered when a node that is currently acting as a receiver in
-an ongoing tp_meter session receives a malicious ACK packet.
+In batadv_send_my_tt_response(), last_changeset_len is temporarily widened
+to s32. The incorrectly negative s16 value propagates into the s32, causing
+batadv_tt_prepare_tvlv_local_data() to allocate a full sized buffer but
+populates only a small portion of it with the collected changeset. All
+remaining bits are kept uninitialized.
 
-Guard against this by checking tp_vars->role immediately after the
-lookup and bailing out if it is not BATADV_TP_SENDER, before any of
-those members are accessed.
+Using an u16 avoids this type confusion and ensures that no (negative) sign
+extension is performed in batadv_send_my_tt_response().
 
 Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/batman-adv/types.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -647,6 +647,9 @@ static void batadv_tp_recv_ack(struct ba
- 	if (unlikely(!tp_vars))
- 		return;
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -993,7 +993,7 @@ struct batadv_priv_tt {
+ 	 * @last_changeset_len: length of last tt changeset this host has
+ 	 *  generated
+ 	 */
+-	s16 last_changeset_len;
++	u16 last_changeset_len;
  
-+	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
-+		goto out;
-+
- 	if (unlikely(atomic_read(&tp_vars->sending) == 0))
- 		goto out;
- 
-@@ -1080,12 +1083,16 @@ void batadv_tp_stop(struct batadv_priv *
- 	if (!tp_vars) {
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: trying to interrupt an already over connection\n");
--		goto out;
-+		goto out_put_orig_node;
- 	}
- 
-+	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
-+		goto out_put_tp_vars;
-+
- 	batadv_tp_sender_shutdown(tp_vars, return_value);
-+out_put_tp_vars:
- 	batadv_tp_vars_put(tp_vars);
--out:
-+out_put_orig_node:
- 	batadv_orig_node_put(orig_node);
- }
- 
+ 	/**
+ 	 * @last_changeset_lock: lock protecting last_changeset &
 
 
