@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA6D30E853;
-	Sat, 30 May 2026 17:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2279930E853;
+	Sat, 30 May 2026 17:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162391; cv=none; b=rUBKBtfjvoOAE44mRXO19s02B1M70oe6OJbs7FG/217SO+9FcEsmM9NwrYurmODoejBHsHBceA/6kk9yftijL78z23+HkZeynUrwGHAGwUcNixbTJb3i/uxtJjraz7lgbhHjX0ql21302SFVi6LfOmErYKmEobxGo5V//ogF60g=
+	t=1780162395; cv=none; b=YaWgsO/drsDLB0d7VApFoN57OuFUXloNDp6YTJHdd6fm3S8b83LbwMDTNpMncslGptVY/y9L1pdpLzfx0oDi/fcmtp7mDKQb5ca4xZOXqkIJdqgYRAfFublaGG0DKfHkEAfdr9dKD2YRXR49LUkOlOE8DHLLn8HSRWSen/H4Rpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162391; c=relaxed/simple;
-	bh=skqgQQnuG8dbSYbXvoMke6/jiKA3lTEvrBo7ZdH0JN0=;
+	s=arc-20240116; t=1780162395; c=relaxed/simple;
+	bh=bmpgBoC0Vqybztt0DZd0nHPJwIH/vWuHCppOSLBjYHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W955VMsGO1quXm+d5VCY1cdly02RexGohhPc/co7QR9nnfI3BbenOE6o4VdTFNIiEaGNCeydn/ZRLbiBcbqpZfKtFQkJfB5NdmTY6+CUMDWJerZrV+ZpaksawVyUw+TE+dYPFBjM2gPWWVsFcIX5z92QAPOYXo1otGx59xdpxYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpldd44X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JZKcAIChN36WMJh2our3T6mwecVrI1nRn+xo3RgAXc3eyPUX/IHFLSudyA1WUOiH5lwppgFPKStwjzIPXJv9BLwFvD8FbE/xYBuz0xixEMWrSDKMEq0bFS+VV9hFnkXt+OOjRZ1Yj+kIvMaeEEo8Y83mrh145w3P1Y1g+y5Ka8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2kf+8Cl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpldd44X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF3D1F00893;
-	Sat, 30 May 2026 17:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2kf+8Cl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CF21F00893;
+	Sat, 30 May 2026 17:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162390;
-	bh=uX/iARVBZEquKCqMdQsK+BkLCf9C7DPeA+KOdNwJDyQ=;
+	s=korg; t=1780162394;
+	bh=E7c6OL9f5k72e9nzEaY2K9lbItbhCCyYcP4z6UB4EGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fpldd44XYY1H8eqBgNNheH3H5CAlqfmxUtZabBvsDpCq8LaB09NqANeU9GKsnC0hm
-	 ao1g1/P+783mZPB6n2BdRraSgj+ZMLkdWxYBv07ylZmIlg0VkZvMWXts5m2EyXY9tf
-	 oj1ZgsBU11rHV0/NpTW4jT9DqlZaQZY6567grc6g=
+	b=M2kf+8ClQcBuHE2HFKc3XPHm8FFsLtt1OZSYN+9hJ+APiwx2X55hAcT+tFCt/+r0a
+	 whpqPGy5xhkrRdmO4jhfuC14wxFXRB0ejtTHJCpsZ5AB9qqjC8HsJT5hzLOCDEQOgY
+	 /FSfzrn0M+N55mo9RgJehsGPPaM1uiEqCbedawOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 900/969] firmware: arm_ffa: Check for NULL FF-A ID table while driver registration
-Date: Sat, 30 May 2026 18:07:04 +0200
-Message-ID: <20260530160325.564236617@linuxfoundation.org>
+Subject: [PATCH 6.1 909/969] netfilter: ebtables: allow xtables-nft only builds
+Date: Sat, 30 May 2026 18:07:13 +0200
+Message-ID: <20260530160325.822890326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,45 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0a5e695095c557d2380131b613dea4e8d90371be ]
+[ Upstream commit 7ad269787b6615ca56bb161063331991fce51abf ]
 
-The bus match callback assumes that every FF-A driver provides an
-id_table and dereferences it unconditionally. Enforce that contract at
-registration time so a buggy client driver cannot crash the bus during
-match.
+Same patch as previous one, but for ebtables.
 
-Fixes: 92743071464f ("firmware: arm_ffa: Ensure drivers provide a probe function")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-1-8595ae450034@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+To build a kernel that only supports ebtables-nft, the builtin tables
+need to be disabled, i.e.:
+
+CONFIG_BRIDGE_EBT_BROUTE=n
+CONFIG_BRIDGE_EBT_T_FILTER=n
+CONFIG_BRIDGE_EBT_T_NAT=n
+
+The ebtables specific extensions can then be used nftables'
+NFT_COMPAT interface.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/bus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/Kconfig  | 7 +++++++
+ net/bridge/netfilter/Makefile | 2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
-index 5bda5d7ade42d..4ef02f0125ab9 100644
---- a/drivers/firmware/arm_ffa/bus.c
-+++ b/drivers/firmware/arm_ffa/bus.c
-@@ -24,6 +24,8 @@ static int ffa_device_match(struct device *dev, struct device_driver *drv)
+diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
+index 7f304a19ac1bf..104c0125e32e8 100644
+--- a/net/bridge/netfilter/Kconfig
++++ b/net/bridge/netfilter/Kconfig
+@@ -39,6 +39,10 @@ config NF_CONNTRACK_BRIDGE
  
- 	id_table = to_ffa_driver(drv)->id_table;
- 	ffa_dev = to_ffa_dev(dev);
-+	if (!id_table)
-+		return 0;
+ 	  To compile it as a module, choose M here.  If unsure, say N.
  
- 	while (!uuid_is_null(&id_table->uuid)) {
- 		/*
-@@ -107,7 +109,7 @@ int ffa_driver_register(struct ffa_driver *driver, struct module *owner,
- {
- 	int ret;
++# old sockopt interface and eval loop
++config BRIDGE_NF_EBTABLES_LEGACY
++	tristate
++
+ menuconfig BRIDGE_NF_EBTABLES
+ 	tristate "Ethernet Bridge tables (ebtables) support"
+ 	depends on BRIDGE && NETFILTER && NETFILTER_XTABLES
+@@ -55,6 +59,7 @@ if BRIDGE_NF_EBTABLES
+ #
+ config BRIDGE_EBT_BROUTE
+ 	tristate "ebt: broute table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables broute table is used to define rules that decide between
+ 	  bridging and routing frames, giving Linux the functionality of a
+@@ -65,6 +70,7 @@ config BRIDGE_EBT_BROUTE
  
--	if (!driver->probe)
-+	if (!driver->probe || !driver->id_table)
- 		return -EINVAL;
+ config BRIDGE_EBT_T_FILTER
+ 	tristate "ebt: filter table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables filter table is used to define frame filtering rules at
+ 	  local input, forwarding and local output. See the man page for
+@@ -74,6 +80,7 @@ config BRIDGE_EBT_T_FILTER
  
- 	driver->driver.bus = &ffa_bus_type;
+ config BRIDGE_EBT_T_NAT
+ 	tristate "ebt: nat table support"
++	select BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables nat table is used to define rules that alter the MAC
+ 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
+diff --git a/net/bridge/netfilter/Makefile b/net/bridge/netfilter/Makefile
+index 1c9ce49ab6513..b9a1303da9771 100644
+--- a/net/bridge/netfilter/Makefile
++++ b/net/bridge/netfilter/Makefile
+@@ -9,7 +9,7 @@ obj-$(CONFIG_NFT_BRIDGE_REJECT)  += nft_reject_bridge.o
+ # connection tracking
+ obj-$(CONFIG_NF_CONNTRACK_BRIDGE) += nf_conntrack_bridge.o
+ 
+-obj-$(CONFIG_BRIDGE_NF_EBTABLES) += ebtables.o
++obj-$(CONFIG_BRIDGE_NF_EBTABLES_LEGACY) += ebtables.o
+ 
+ # tables
+ obj-$(CONFIG_BRIDGE_EBT_BROUTE) += ebtable_broute.o
 -- 
 2.53.0
 
