@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D2230E847;
-	Sat, 30 May 2026 17:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0173161A3;
+	Sat, 30 May 2026 17:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161566; cv=none; b=qvLbWmIaCdoPW0q2vyK8zYxqSohxCG27KR3h6vjIBGrrjZBANix5mpoEQdMDcV4g9/5lQ4fUvLNF/eF2GE/SeaCjyRJJChWqfFuXbML2ruk44lzcPHqO9JPI81GbTGa4Wttwm4521eZkGX5D+PfknZ7inHOvHIEjha/AM4d+tXY=
+	t=1780161569; cv=none; b=G5OXNWd2uf8s23opp4F09oot7MiGxiI9HogmM2wUjQMhgp1di7eJ47tJUhyhpvK5t96shs8sZVSoWg0BQJJK71Sw1qvJb9F3d2MzMfrxJ620PaywNUoKrw9hC3pZ8KtQ176OZ/bhx+3Z9aTeZ4FwJ9HSJ3GNKpwPd9UEaql/7Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161566; c=relaxed/simple;
-	bh=NQVPyv+3ABIzZAawP3JR29w/V3USXqvh2NKUoyzAKas=;
+	s=arc-20240116; t=1780161569; c=relaxed/simple;
+	bh=yB48RLueYiH1dwLOFbQKNRPvLyHlzx1VIOzyZ+bUM9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6zL/FMyVTKSbSCcTSzb9f9TZMNUSveuG6zjICyjqJ1oWZl057U4/vVURQ+qQ0YFhR0MeBpkY9d0OiP5L0us2oxFHkRIPyGAZ37S8vYmwWlNjNYJ6LjKuP4V53iZ3O9Mfq3GtQ/NrvJ2GWiNJles6NyxwpLRAsxPa4uukmgu9Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akpIOsnv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kOGFh/BDj+W5cEEFYfZa8BCCEK4/wmIA8sEkLZIIidEgsT3JLSPnIOr2Dwpkl3u+j2arycmrQLLSUSSmGnAcaCU8qBLAF5kI6eRPkExl2+yC2XO/vONIZszyBXAM/2AQj3MAQyKxriVmOH1YoS8fgb0a5Z8B72kyvZWgFiVtR0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ok6v70RA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akpIOsnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC13D1F00893;
-	Sat, 30 May 2026 17:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ok6v70RA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD9A1F00893;
+	Sat, 30 May 2026 17:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161565;
-	bh=E/pZUk9fQoJffeZce9Pi5mLHUkVmiW/F/GIgzIYIvtM=;
+	s=korg; t=1780161568;
+	bh=o97UWOb8QhVhpyL2RrRJU9h9oS4jm8hPjUfw1XkrtUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=akpIOsnvHJl4CusUIoKigQgNmlWJSaR+HIJ1WgfJpWZU9CXq0iChq3swaqV63d1Wz
-	 cIW3untBzA9RtoIRzGnIaqr95x0V+vdrTnb8m070B6s5pSXXgQdZ1OpKHIVLtpUaPJ
-	 uj7abWepr7blzI0ho6uNRcHBJAOVJKiVCgsoidME=
+	b=Ok6v70RATBu6QdwwZ0rfDmh4FIZMFNhc9Op+NBN5LBDmvMS4K60OFeU+yjzZEf8OK
+	 YRYOskSrlD/64w91LoEdeyNhSufu9Xfntjstv6RcE5s1o1a1DxqXNKNX15pPSFJ5Q3
+	 LtEHy8ItQgMLcv7EgfJxEIB/mLIAM+H71uNFgHk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <kees@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 634/969] i3c: mipi-i3c-hci: fix IBI payload length calculation for final status
-Date: Sat, 30 May 2026 18:02:38 +0200
-Message-ID: <20260530160317.957865634@linuxfoundation.org>
+Subject: [PATCH 6.1 661/969] clk: qoriq: avoid format string warning
+Date: Sat, 30 May 2026 18:03:05 +0200
+Message-ID: <20260530160318.730615111@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,53 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d35a6db887eeae7c57b719521e39d64f929c6dc3 ]
+[ Upstream commit 096abbb6682ee031a0f5ce9f4c71ead9fa63d31e ]
 
-In DMA mode, the IBI status descriptor encodes the payload using
-CHUNKS (number of chunks) and DATA_LENGTH (valid bytes in the last
-chunk). All preceding chunks are implicitly full-sized.
+clang-22 warns about the use of non-variadic format arguments passed into
+snprintf():
 
-The current code accumulates full chunk sizes for non-final status
-descriptors, but for the final status descriptor it only adds
-DATA_LENGTH. This ignores the contribution of the preceding full
-chunks described by the same final status entry.
+drivers/clk/clk-qoriq.c:925:39: error: diagnostic behavior may be improved by adding the
+      'format(printf, 7, 8)' attribute to the declaration of 'create_mux_common' [-Werror,-Wmissing-format-attribute]
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
+      | __attribute__((format(printf, 7, 8)))
+  911 |                                              struct mux_hwclock *hwc,
+  912 |                                              const struct clk_ops *ops,
+  913 |                                              unsigned long min_rate,
+  914 |                                              unsigned long max_rate,
+  915 |                                              unsigned long pct80_rate,
+  916 |                                              const char *fmt, int idx)
+  917 | {
+  918 |         struct clk_init_data init = {};
+  919 |         struct clk *clk;
+  920 |         const struct clockgen_pll_div *div;
+  921 |         const char *parent_names[NUM_MUX_PARENTS];
+  922 |         char name[32];
+  923 |         int i, j;
+  924 |
+  925 |         snprintf(name, sizeof(name), fmt, idx);
+      |                                              ^
+drivers/clk/clk-qoriq.c:910:28: note: 'create_mux_common' declared here
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
 
-As a result, the computed IBI payload length is truncated whenever
-the final status spans multiple chunks. For example, with a chunk
-size of 4 bytes, CHUNKS=2 and DATA_LENGTH=1 should result in a total
-payload size of 5 bytes, but the current code reports only 1 byte.
+Rework this to pass the 'int idx' as a varargs argument, allowing the
+format string to be verified at the caller location.
 
-Fix the calculation by adding the size of (CHUNKS - 1) full chunks
-plus DATA_LENGTH for the last chunk.
-
-Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260407-i3c-hci-dma-v2-1-a583187b9d22@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 0dfc86b3173f ("clk: qoriq: Move chip-specific knowledge into driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/clk-qoriq.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index e270fcd0f7c38..624d00b853a51 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -636,7 +636,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 		if (!(ibi_status & IBI_LAST_STATUS)) {
- 			ibi_size += chunks * rh->ibi_chunk_sz;
- 		} else {
--			ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			if (chunks) {
-+				ibi_size += (chunks - 1) * rh->ibi_chunk_sz;
-+				ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			}
- 			last_ptr = ptr;
- 			break;
- 		}
+diff --git a/drivers/clk/clk-qoriq.c b/drivers/clk/clk-qoriq.c
+index 5eddb9f0d6bdb..4baec1bf3557f 100644
+--- a/drivers/clk/clk-qoriq.c
++++ b/drivers/clk/clk-qoriq.c
+@@ -905,13 +905,11 @@ static const struct clockgen_pll_div *get_pll_div(struct clockgen *cg,
+ 	return &cg->pll[pll].div[div];
+ }
+ 
+-static struct clk * __init create_mux_common(struct clockgen *cg,
+-					     struct mux_hwclock *hwc,
+-					     const struct clk_ops *ops,
+-					     unsigned long min_rate,
+-					     unsigned long max_rate,
+-					     unsigned long pct80_rate,
+-					     const char *fmt, int idx)
++static struct clk * __init __printf(7, 8)
++create_mux_common(struct clockgen *cg, struct mux_hwclock *hwc,
++		  const struct clk_ops *ops, unsigned long min_rate,
++		  unsigned long max_rate, unsigned long pct80_rate,
++		  const char *fmt, ...)
+ {
+ 	struct clk_init_data init = {};
+ 	struct clk *clk;
+@@ -919,8 +917,11 @@ static struct clk * __init create_mux_common(struct clockgen *cg,
+ 	const char *parent_names[NUM_MUX_PARENTS];
+ 	char name[32];
+ 	int i, j;
++	va_list args;
+ 
+-	snprintf(name, sizeof(name), fmt, idx);
++	va_start(args, fmt);
++	vsnprintf(name, sizeof(name), fmt, args);
++	va_end(args);
+ 
+ 	for (i = 0, j = 0; i < NUM_MUX_PARENTS; i++) {
+ 		unsigned long rate;
 -- 
 2.53.0
 
