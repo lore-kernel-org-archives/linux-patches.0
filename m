@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3080829B799;
-	Sat, 30 May 2026 18:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A721175A6B;
+	Sat, 30 May 2026 18:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164822; cv=none; b=pMRrYRa6jGr3ntmZ2bn6GsECufqgY2yc2wVkNKOVh6NfXm4hTJaLGv4KeSYCQ+3FOk3uCHzmc6HRTuV1x3U651jqseLdIEUQCktdcP/Bfbr2F6ZgOIzHk7Y3UGpBy12oUHZBiMOJwBFLhuS6s9vPbvkoU9EWwAZfsG2oS0SKlzc=
+	t=1780164825; cv=none; b=pvrjmk2Wo6RXUuzhyPkqsxWhYScArNonEFYIJvRpcffeC//G9bsvPAWStvWDvZK3lAC6+bvU7z57DOZJQNE5XCTbwV5ErNrgSG7kXGtpdgnM/188ZidrSQWLahab12g73zxejX9C2kJrGDPklfR7rEJvbXq26wJ4uUSfcOpAyKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164822; c=relaxed/simple;
-	bh=KZvanTeFuommuvsENPU0JA3VW3+dUN2pTq664KNhfio=;
+	s=arc-20240116; t=1780164825; c=relaxed/simple;
+	bh=UAwSrLZn6knZZ1FAJyG4u4+XW+5NVGaoSQ5zjGfpGvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVT964j0VDlcFI98NJKGGPGj+sa0yTcHOyY1D2LB6XDoRrpn8ecB0XjR+e0LPFV42fEkR6jVRthNZiE0rp5Me7Dv6dIXW6TBPPzql35RGLyk8/2D+Taf1+q5dCvaggREES9musdCZAWf5H2M/a8EP6U5bORCG+aRTTZnF6LRnFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPJ6nf/G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bJHhuTNvviKznqnzx2ktHIiKjx6c6GtWQsh1b4AfCEFyqaF4JmWconKyPU2gsOg/pJMfx22d9mRBatQUDSAb3VJqLB+9qZFqsCApqupKRqzf4QoGfzfsh2kr/CfF407Xlf/INbp4g8r420P/NnBQkUrYY4xjcjXB5UvE2qQoWNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rnnmh6LN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPJ6nf/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C501F00898;
-	Sat, 30 May 2026 18:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rnnmh6LN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5C11F00893;
+	Sat, 30 May 2026 18:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164821;
-	bh=jiVAuPLPWdtUPrmPnfpTpNw2zd8zR/JK+rlyYW9hhJc=;
+	s=korg; t=1780164824;
+	bh=5CGIUSmvHf2ttTDkOQXE9QcBzo5ErPPLC5Uw2odlWdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fPJ6nf/G0nZhZ5b86LUoJDcto6tYL9woj03Q+/gVbXoj2r3LZysOUg3V9u+NpEfQE
-	 pDFsCH5miKWFSGT5eDT2MzKORNyFbd4BIdh6aIpRTu4RFSopnUOEZDoSJ/uNBPzPxa
-	 XEVGyiqF/w+GV0z99hb37quxPK/FSmhLsJUGdDnY=
+	b=Rnnmh6LNJNeVuLDfJkRnEqo2Ig5nYydBkAXIu9xL7Ud3Yhml3o8z1+n/xH5MSXDpX
+	 ngIzC9Hux1EAmZFUU/OtLxYdXCT9XiD0vtSDy8hQEqkoiFGIdhpSn3A0AcwhiIWnCd
+	 iTSRTwm843aJsfE77YzTMzasLGEQ4oepsDRBEaog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Sergio Correia <scorreia@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.15 652/776] audit: enforce AUDIT_LOCKED for AUDIT_TRIM and AUDIT_MAKE_EQUIV
-Date: Sat, 30 May 2026 18:06:06 +0200
-Message-ID: <20260530160256.768542947@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 670/776] s390/debug: Reject zero-length input before trimming a newline
+Date: Sat, 30 May 2026 18:06:24 +0200
+Message-ID: <20260530160257.192441767@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,47 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Correia <scorreia@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit f9e1c1324b4d98d591a6f7568fdebf5cf456dfc2 upstream.
+[ Upstream commit c366a7b5ed7564e41345c380285bd3f6cb98971b ]
 
-AUDIT_ADD_RULE and AUDIT_DEL_RULE correctly check for AUDIT_LOCKED
-and return -EPERM, but AUDIT_TRIM and AUDIT_MAKE_EQUIV do not. This
-allows a process with CAP_AUDIT_CONTROL to modify directory tree
-watches and equivalence mappings even when the audit configuration
-has been locked, undermining the purpose of the lock.
+debug_get_user_string() copies the userspace buffer into a newly
+allocated NUL-terminated buffer and then unconditionally looks at
+buffer[user_len - 1] to strip a trailing newline.
 
-Add AUDIT_LOCKED checks to both commands.
+A zero-length write reaches this helper unchanged, so the newline trim
+reads before the start of the allocated buffer.
 
+Reject empty writes before accessing the last input byte.
+
+Fixes: 66a464dbc8e0 ("[PATCH] s390: debug feature changes")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Sergio Correia <scorreia@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Tested-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260417073530.96002-1-pengpeng@iscas.ac.cn
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/audit.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/kernel/debug.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -1430,6 +1430,8 @@ static int audit_receive_msg(struct sk_b
- 		err = audit_list_rules_send(skb, seq);
- 		break;
- 	case AUDIT_TRIM:
-+		if (audit_enabled == AUDIT_LOCKED)
-+			return -EPERM;
- 		audit_trim_trees();
- 		audit_log_common_recv_msg(audit_context(), &ab,
- 					  AUDIT_CONFIG_CHANGE);
-@@ -1442,6 +1444,8 @@ static int audit_receive_msg(struct sk_b
- 		size_t msglen = data_len;
- 		char *old, *new;
+diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
+index 089d91a3cf5a1..1d7b619acdf30 100644
+--- a/arch/s390/kernel/debug.c
++++ b/arch/s390/kernel/debug.c
+@@ -1268,6 +1268,9 @@ static inline char *debug_get_user_string(const char __user *user_buf,
+ {
+ 	char *buffer;
  
-+		if (audit_enabled == AUDIT_LOCKED)
-+			return -EPERM;
- 		err = -EINVAL;
- 		if (msglen < 2 * sizeof(u32))
- 			break;
++	if (!user_len)
++		return ERR_PTR(-EINVAL);
++
+ 	buffer = kmalloc(user_len + 1, GFP_KERNEL);
+ 	if (!buffer)
+ 		return ERR_PTR(-ENOMEM);
+-- 
+2.53.0
+
 
 
