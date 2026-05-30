@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573772FDC5E;
-	Sat, 30 May 2026 17:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83182FDC5E;
+	Sat, 30 May 2026 17:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161966; cv=none; b=BRrEi+QYsyxJFAwjt5pZB/wCz949W8Qq0EFrsvB3dTccr+lcJJ17wwhwoxKgCP+Lgs7ABh2Cy3J5T9Ej4+czWxDZoMhWxVsfk8XbgjodifWctwT55fBHKCJSG7fXRJpgWZ0LQdg9ZoiCHtq5X93RphklSO01JHUwPgf5FYMMFzs=
+	t=1780161969; cv=none; b=mgeUWM+uXMykfRrJ8DyWxPCQI+EFvAgTjnFZ7TlNMCD80uNYUZAkLCXX2kFRzLKVzHx/hJcCExyD3Gri7zJCNhgnsQ6QUj6N87DGi5PhZqFcHjR3LBuVT6CAh8+oyJo3R5JuLahcVvMRVRY1GAiSYM0rnpNpuQbnFiiQQnW+4II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161966; c=relaxed/simple;
-	bh=Yy9LO/AY0WOotlrogN5xfcrR8D0UQFpGjlgGRkpIRgY=;
+	s=arc-20240116; t=1780161969; c=relaxed/simple;
+	bh=O+tEGWlSxZYqmqCYwOJAenVoPe6Mg2A6vZrjGWuPUNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c4ntwdx8WrhyrGD0YYEhsQhvA33xBHBPMIg5YhtWjr4kQRIcudPsS79EF1OTdZDWdmas1rYALib9M5sJcK/8hcgS0u7NAZ4WhTrwWAo7PdDJz8cYDlcDN8dA12fKMnGQs7AM8DtGh5yy2CbjZ+nIA8aXeLck1SKIFBHlzQKQzGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeCTao82; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fz4TYKN+4tgwpWUOdL9y48mbMOx8P2iFEdyNq4CZvyIFKe+k++9Wd/E7a96x149xFqmAcoU5QSsxOsueB6f1H75Vh+1I401oLtBBJopNWFoKwIxh25/iv+HlyDX4cosNbLl0vcJdesrNZ3qMY0pdLVFmMgNAaAS1NCC1jLzyEpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Il/v1dE8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeCTao82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA511F00893;
-	Sat, 30 May 2026 17:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Il/v1dE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E420F1F00893;
+	Sat, 30 May 2026 17:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161965;
-	bh=aTQD/HUSmPdSR4y72vYxXF3LBklaJ7STwiY6ucfzDfs=;
+	s=korg; t=1780161968;
+	bh=pz0fRWX7aPfX+Br3F8I3gxt2qkKR4FdjHpU+/vyi6ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HeCTao82zfhec+CpWumdA9sL4NWKp27HAnyTEGt/ysv+GNHTYGEbArFZp7YMJpy7J
-	 JCT/xh0J2Y+Qy8B7284FJGIEcR+Kznm2LBNyQwcg+srTsuiQOsTB55HjCh9EP8bCA+
-	 tnsDFIF1dEoTCkqwMHOlD40FTnGjZKwL4K0mb2e4=
+	b=Il/v1dE8OTsD37Jsd3YgPPYyc1EYF5yahHTVTPzatgPc9xNdt0styM80EO0hHLkSw
+	 RbgZAPBlOvIvTQU++UnqArczkU1u6ivPmRnsZkG84aWsJZFp7QDM4XkT/03t++cDhn
+	 R0c/GXqb6daIzdBUwwp0Sg+9fGOTCxeGE9ii3W1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 763/969] sctp: discard stale INIT after handshake completion
-Date: Sat, 30 May 2026 18:04:47 +0200
-Message-ID: <20260530160321.638832647@linuxfoundation.org>
+Subject: [PATCH 6.1 781/969] bonding: print churn state via netlink
+Date: Sat, 30 May 2026 18:05:05 +0200
+Message-ID: <20260530160322.164960531@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,51 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 8a92cb475ca90d84db769e4d4383e631ace0d6e5 ]
+[ Upstream commit 4916f2e2f3fc9aef289fcd07949301e5c29094c2 ]
 
-After an association reaches ESTABLISHED, the peer’s init_tag is already
-known from the handshake. Any subsequent INIT with the same init_tag is
-not a valid restart, but a delayed or duplicate INIT.
+Currently, the churn state is printed only in sysfs. Add netlink support
+so users could get the state via netlink.
 
-Drop such INIT chunks in sctp_sf_do_unexpected_init() instead of
-processing them as new association attempts.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/5788c76c1ee122a3ed00189e88dcf9df1fba226c.1777214801.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260224020215.6012-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: c4f050ce06c5 ("bonding: 3ad: implement proper RCU rules for port->aggregator")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/bonding/bond_netlink.c | 9 +++++++++
+ include/uapi/linux/if_link.h       | 2 ++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 80a6b9fc964e5..1685f73602d5e 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -1556,6 +1556,12 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 	/* Tag the variable length parameters.  */
- 	chunk->param_hdr.v = skb_pull(chunk->skb, sizeof(struct sctp_inithdr));
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index 7e47d405d74aa..086233dce9c8d 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -29,6 +29,8 @@ static size_t bond_get_slave_size(const struct net_device *bond_dev,
+ 		nla_total_size(sizeof(u16)) +	/* IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE */
+ 		nla_total_size(sizeof(s32)) +	/* IFLA_BOND_SLAVE_PRIO */
+ 		nla_total_size(sizeof(u16)) +	/* IFLA_BOND_SLAVE_ACTOR_PORT_PRIO */
++		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_SLAVE_AD_CHURN_ACTOR_STATE */
++		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_SLAVE_AD_CHURN_PARTNER_STATE */
+ 		0;
+ }
  
-+	if (asoc->state >= SCTP_STATE_ESTABLISHED) {
-+		/* Discard INIT matching peer vtag after handshake completion (stale INIT). */
-+		if (ntohl(chunk->subh.init_hdr->init_tag) == asoc->peer.i.init_tag)
-+			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-+	}
+@@ -76,6 +78,13 @@ static int bond_fill_slave_info(struct sk_buff *skb,
+ 					IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE,
+ 					ad_port->partner_oper.port_state))
+ 				goto nla_put_failure;
 +
- 	/* Verify the INIT chunk before processing it. */
- 	err_chunk = NULL;
- 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
++			if (nla_put_u8(skb, IFLA_BOND_SLAVE_AD_CHURN_ACTOR_STATE,
++				       ad_port->sm_churn_actor_state))
++				goto nla_put_failure;
++			if (nla_put_u8(skb, IFLA_BOND_SLAVE_AD_CHURN_PARTNER_STATE,
++				       ad_port->sm_churn_partner_state))
++				goto nla_put_failure;
+ 		}
+ 
+ 		if (nla_put_u16(skb, IFLA_BOND_SLAVE_ACTOR_PORT_PRIO,
+diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
+index d255239285841..d674eb4f1a90c 100644
+--- a/include/uapi/linux/if_link.h
++++ b/include/uapi/linux/if_link.h
+@@ -968,6 +968,8 @@ enum {
+ 	IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE,
+ 	IFLA_BOND_SLAVE_PRIO,
+ 	IFLA_BOND_SLAVE_ACTOR_PORT_PRIO,
++	IFLA_BOND_SLAVE_AD_CHURN_ACTOR_STATE,
++	IFLA_BOND_SLAVE_AD_CHURN_PARTNER_STATE,
+ 	__IFLA_BOND_SLAVE_MAX,
+ };
+ 
 -- 
 2.53.0
 
