@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B8123C4F2;
-	Sat, 30 May 2026 18:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504B12857FA;
+	Sat, 30 May 2026 18:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167148; cv=none; b=osYvL7Iqg8/cyNSu10xQyIcdLDsr8IXcWGwASCkrIHCW3KuonmfALVXy0qGVa56F04PTOOxpH9ojaQQoDP1Jidwj/mOxPAvPoNUHfFSTA4Qzg+ZesY7MUa3iK6dGwXaOJlelY5XODORlsgmZtGQYZUqbweW5oJlg33BcnsYkje8=
+	t=1780167153; cv=none; b=FOszsIECGKOOdUsJscBeeslUA0gLw2/yrMDyjpP86DfLv01aMoLi/ZF32Ze1y2yE61bMW+W8o4fJf7X+jkte/wD1eyAD/7fV7CjRVvdvX9rodK4hMZt9UdrBULU35kIc53+9LdzpBKDWUQhXWPPdspC9qN/V7IvEgVuSlWmsEIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167148; c=relaxed/simple;
-	bh=Gks3K5ptxLUnju7e9LkpwEHmghO2+aNAqWgWhvMfbII=;
+	s=arc-20240116; t=1780167153; c=relaxed/simple;
+	bh=ulVuhOJbnQJQOSf04clh6B0l6iCZ6Cb6h4fTxzyF+Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIgckLNFaLcVaBqo9tiqn6DicYc//OakghtIit/rS+d5cB+hhEKFeh/C94DIkjyaf9RWgcI/CdLAs5FkeKxROVhnVF3SHrP/n95BT4T1NGEKLB+52Rg4Q2g5LvFsBZtuj/4O17MC5VZ8Ilo/a21+cr6gfsldrl+k9VB54Uo/X24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE1kRFdd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZVncFJdp2amhWCkOef8flnf+cdPdkrSsSs2qvYcKztQLOVS5ccDoMIsdlYMuyo93YFlXY1DxcJQcfWtWnxwV3WNMYB3FddsMudnIfwXtnPqaVq/yG1htXovqYG7/lispwFdeK6uwhhxoReh4MJkNLtZfe5SrXMw6ddrDeMhBeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJTi0rXo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE1kRFdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA8B1F00893;
-	Sat, 30 May 2026 18:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJTi0rXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B0D1F00893;
+	Sat, 30 May 2026 18:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167147;
-	bh=ryvCJ8ej21G2SL7HizmSqHza1vZxfJPY+EuoHWhDsV8=;
+	s=korg; t=1780167150;
+	bh=SucX90gHg5Xd4Gw3/fJaipG2c/ui+EUQPc+agbyUvmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LE1kRFddFYatC/dIgsLXkKmdYXReixGAWr5u6Ah1N4zpfQu+s50n2C42fErIiP2Gi
-	 j+x3KqGxfFr/pbHf77Xw/jJraXp4qhZ4UZ/BtDB+WzSqidbW/G0wRUixz7F3iDIY4g
-	 /KjujaVuWDDz1jvntADwjrgkgEgOVK6ZxnZH7LVI=
+	b=JJTi0rXogXXca1lmk1YZAdTzIw5Agc+UZ3FHr1RUEFaus0v21U+XlxK2F6FoNBifV
+	 mWlbSs/u53yRq+0PY+Qc7VDZUwt2WKUZ23PJZnKKrG1/8z2MTvelvC8A2pl0RtZT7U
+	 eCI3b8WIH0fiuvdPvj/YwJ0KD8S6kdM44QS+WdhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Walker <johnwalker0@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 542/589] wifi: cfg80211: advance loop vars in cfg80211_merge_profile()
-Date: Sat, 30 May 2026 18:07:03 +0200
-Message-ID: <20260530160238.925359839@linuxfoundation.org>
+	Tom Zanussi <tom.zanussi@linux.intel.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 543/589] tracing: Do not call map->ops->elt_free() if elt_alloc() fails
+Date: Sat, 30 May 2026 18:07:04 +0200
+Message-ID: <20260530160238.948728314@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,52 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Walker <johnwalker0@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 7666dbb1bacc4ba522b96740cba7283d243d16e1 upstream.
+commit 8f0f5c4fb9df0e19a341e0c6ed8dc4fda9124f03 upstream.
 
-cfg80211_merge_profile() reassembles a Multi-BSSID non-transmitted BSS
-profile that has been split across multiple consecutive MBSSID elements.
-Its while-loop calls
+In paths where tracing_map_elt_alloc() failed to allocate objects,
+the map->ops->elt_alloc() call was never successful. In this case,
+map->ops->elt_free() should not be called.
 
-	cfg80211_get_profile_continuation(ie, ielen, mbssid_elem, sub_elem)
-
-but never advances mbssid_elem or sub_elem inside the body.  Each
-iteration therefore searches for a continuation that follows the same
-fixed pair; the helper returns the same next_mbssid; and the same
-next_sub bytes are memcpy()'d into merged_ie at a growing offset until
-the buffer fills.
-
-Advance both mbssid_elem and sub_elem to the just-consumed continuation
-so the next call to cfg80211_get_profile_continuation() searches for a
-further continuation beyond it (or returns NULL when none exists).
-
-A specially-crafted malicious beacon can take advantage of this bug
-to cause the kernel to spend an excessive amount of time in
-cfg80211_merge_profile (up to as much as 2ms per beacon received),
-which could theoretically be abused in some way.
+Link: https://sashiko.dev/#/patchset/20260520223101.34710-1-rosenp%40gmail.com
 
 Cc: stable@vger.kernel.org
-Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
-Signed-off-by: John Walker <johnwalker0@gmail.com>
-Link: https://patch.msgid.link/20260507230720.64783-1-johnwalker0@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Rosen Penev <rosenp@gmail.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2734b629525a ("tracing: Add per-element variable support to tracing_map")
+Link: https://patch.msgid.link/177933895460.108746.5396070821443932634.stgit@devnote2
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/tracing_map.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2176,6 +2176,9 @@ size_t cfg80211_merge_profile(const u8 *
- 		memcpy(merged_ie + copied_len, next_sub->data,
- 		       next_sub->datalen);
- 		copied_len += next_sub->datalen;
-+
-+		mbssid_elem = next_mbssid;
-+		sub_elem = next_sub;
+--- a/kernel/trace/tracing_map.c
++++ b/kernel/trace/tracing_map.c
+@@ -386,13 +386,11 @@ static void tracing_map_elt_init_fields(
  	}
+ }
  
- 	return copied_len;
+-static void tracing_map_elt_free(struct tracing_map_elt *elt)
++static void __tracing_map_elt_free(struct tracing_map_elt *elt)
+ {
+ 	if (!elt)
+ 		return;
+ 
+-	if (elt->map->ops && elt->map->ops->elt_free)
+-		elt->map->ops->elt_free(elt);
+ 	kfree(elt->fields);
+ 	kfree(elt->vars);
+ 	kfree(elt->var_set);
+@@ -400,6 +398,17 @@ static void tracing_map_elt_free(struct
+ 	kfree(elt);
+ }
+ 
++static void tracing_map_elt_free(struct tracing_map_elt *elt)
++{
++	if (!elt)
++		return;
++
++	/* Only objects initialized with alloc_elt() should be passed to free_elt().*/
++	if (elt->map->ops && elt->map->ops->elt_free)
++		elt->map->ops->elt_free(elt);
++	__tracing_map_elt_free(elt);
++}
++
+ static struct tracing_map_elt *tracing_map_elt_alloc(struct tracing_map *map)
+ {
+ 	struct tracing_map_elt *elt;
+@@ -444,7 +453,7 @@ static struct tracing_map_elt *tracing_m
+ 	}
+ 	return elt;
+  free:
+-	tracing_map_elt_free(elt);
++	__tracing_map_elt_free(elt);
+ 
+ 	return ERR_PTR(err);
+ }
 
 
