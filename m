@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65912773DE;
-	Sat, 30 May 2026 18:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB39274FDC;
+	Sat, 30 May 2026 18:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165624; cv=none; b=L84cFN1nJuurKr5L5+pkxP2dTd78Knm2YcNCNqr6b8VI/7pg7Je/TBds1U6ztXlcnElvam3A3Eyf1SGQh9lB38pn1kitsp5q7b+iXCrrCallYl43m2T9awVrWs/51u1Ej0nuyRPfj+PKCELwNeF3F5RW86So9IFZz9JVk4lhbh0=
+	t=1780165628; cv=none; b=LvSmmaz+lgLTVGzamCSpuW+8myDLOv1HxAAmzQ7KBA5z4plrHFjCjG+/7CHJa/CrpXKWbqEOuZfLpR8a91egqs/WvWqydIKTnf1gjGUTZh/EgyiLpxxcQd0BOYMFzMDsCmbv7j1kSDS66iYwDjdzeRP2qobBJVbRFal6DNizZ9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165624; c=relaxed/simple;
-	bh=vTmW0p+96mQRcY504RWoBfmljQh6yaKH+nRCM4DqYYU=;
+	s=arc-20240116; t=1780165628; c=relaxed/simple;
+	bh=PXoMKfh5F8J5YIOSuK58UOsQuzp3TSMC7C5Hb/tECpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6q8DzW+kksncVwF6rOxbvaG87+XolaJo7YGd4GrXimJi4coF8Vf5QZVYIRJ3yC9DPR4pHnHpYCa3teurtn0nKuYwSP9kk+0KutfZbdi3j2/4J2B/OBJh1YvVF0cDSwzfrlUteF3F1eCp8Za0qAvFgv9n/1sRY0EWLNX2ghPD/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfI9XdH2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jyhq0r+Xc7iUcQqFH/Pf6r5Mh3ZjQear0HoVnhdLiLQB4/M8q/z0Gx5OIY2FvyPwLVFYuFijhUhd0bJIuifl79D3uZFPEOlJrbs67x1lltWnrCgOT9l1DSV90Xj7PYwZHadC5QYiamF62OQwLP1qyqNiV0unWUSDkg6REAp5kr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sd/yf6g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfI9XdH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFC61F00893;
-	Sat, 30 May 2026 18:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sd/yf6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A361F00893;
+	Sat, 30 May 2026 18:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165623;
-	bh=hIRkk5PRtZBgHvv45/uKUMqmsYGl0BbacYWF9Ue85IY=;
+	s=korg; t=1780165627;
+	bh=zSwYSijT+ERoIKBf9/cXOuCPWyJe1+tBOyIOCLDLIEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tfI9XdH2IKXWnjpl/UNWvcZDVz9s4YbhDo9ePPp+Ha3lqvaRJIvMMMbOVG5My3ot+
-	 fUovVMNHOVjy1wTS8kR4adaD8s75Kx9KL8suhnnZeT+SoSFhRu0PEqGOs3TtLLKZW2
-	 4eTG6gzvk8chT7EarcOEYh8kVu5I4LahKZ+Sp2lI=
+	b=1sd/yf6gv7ksGhhDlWueoypx+Xj21QldhTjn1Uw7/sqnp1ZxGNoiNsnOAAhEiMIEZ
+	 oqm9tXoUWYMjXruPMAc98+pc3bWJjNtsEWJjtyVbwsfAGct84fxyJDYZmDHUCeEL2B
+	 y6qBWPPd6EgPznNoLjxgLNkxwk6umbXJJxp0J//M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Berk Cem Goksel <berkcgoksel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 132/589] ALSA: caiaq: take a reference on the USB device in create_card()
-Date: Sat, 30 May 2026 18:00:13 +0200
-Message-ID: <20260530160228.246637524@linuxfoundation.org>
+	Leonid Ravich <lravich@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 097/589] IB/mad: Dont call to function that might sleep while in atomic context
+Date: Sat, 30 May 2026 17:59:38 +0200
+Message-ID: <20260530160227.245524783@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,57 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berk Cem Goksel <berkcgoksel@gmail.com>
+From: Leonid Ravich <lravich@gmail.com>
 
-commit 80bb50e2d459213cccff3111d5ef98ed4238c0d5 upstream.
+commit 5c20311d76cbaeb7ed2ecf9c8b8322f8fc4a7ae3 upstream.
 
-The caiaq driver stores a pointer to the parent USB device in
-cdev->chip.dev but never takes a reference on it. The card's
-private_free callback, snd_usb_caiaq_card_free(), can run
-asynchronously via snd_card_free_when_closed() after the USB
-device has already been disconnected and freed, so any access to
-cdev->chip.dev in that path dereferences a freed usb_device.
+Tracepoints are not allowed to sleep, as such the following splat is
+generated due to call to ib_query_pkey() in atomic context.
 
-On top of the refcounting issue, the current card_free implementation
-calls usb_reset_device(cdev->chip.dev). A reset in a free callback
-is inappropriate: the device is going away, the call takes the
-device lock in a teardown context, and the reset races with the
-disconnect path that the callback is already cleaning up after.
+WARNING: CPU: 0 PID: 1888000 at kernel/trace/ring_buffer.c:2492 rb_commit+0xc1/0x220
+CPU: 0 PID: 1888000 Comm: kworker/u9:0 Kdump: loaded Tainted: G           OE    --------- -  - 4.18.0-305.3.1.el8.x86_64 #1
+ Hardware name: Red Hat KVM, BIOS 1.13.0-2.module_el8.3.0+555+a55c8938 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:rb_commit+0xc1/0x220
+ RSP: 0000:ffffa8ac80f9bca0 EFLAGS: 00010202
+ RAX: ffff8951c7c01300 RBX: ffff8951c7c14a00 RCX: 0000000000000246
+ RDX: ffff8951c707c000 RSI: ffff8951c707c57c RDI: ffff8951c7c14a00
+ RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+ R10: ffff8951c7c01300 R11: 0000000000000001 R12: 0000000000000246
+ R13: 0000000000000000 R14: ffffffff964c70c0 R15: 0000000000000000
+ FS:  0000000000000000(0000) GS:ffff8951fbc00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f20e8f39010 CR3: 000000002ca10005 CR4: 0000000000170ef0
+ Call Trace:
+  ring_buffer_unlock_commit+0x1d/0xa0
+  trace_buffer_unlock_commit_regs+0x3b/0x1b0
+  trace_event_buffer_commit+0x67/0x1d0
+  trace_event_raw_event_ib_mad_recv_done_handler+0x11c/0x160 [ib_core]
+  ib_mad_recv_done+0x48b/0xc10 [ib_core]
+  ? trace_event_raw_event_cq_poll+0x6f/0xb0 [ib_core]
+  __ib_process_cq+0x91/0x1c0 [ib_core]
+  ib_cq_poll_work+0x26/0x80 [ib_core]
+  process_one_work+0x1a7/0x360
+  ? create_worker+0x1a0/0x1a0
+  worker_thread+0x30/0x390
+  ? create_worker+0x1a0/0x1a0
+  kthread+0x116/0x130
+  ? kthread_flush_work_fn+0x10/0x10
+  ret_from_fork+0x35/0x40
+ ---[ end trace 78ba8509d3830a16 ]---
 
-Take a reference on the USB device in create_card() with
-usb_get_dev(), drop it with usb_put_dev() in the free callback,
-and remove the usb_reset_device() call.
-
-Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
-Cc: stable@vger.kernel.org
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Link: https://patch.msgid.link/20260413034941.1131465-3-berkcgoksel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 821bf1de45a1 ("IB/MAD: Add recv path trace point")
+Signed-off-by: Leonid Ravich <lravich@gmail.com>
+Link: https://lore.kernel.org/r/Y2t5feomyznrVj7V@leonid-Inspiron-3421
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ kovalev: bp to fix CVE-2022-50472 ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/mad.c |  5 -----
+ include/trace/events/ib_mad.h | 13 ++++---------
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -398,7 +398,7 @@ static void card_free(struct snd_card *c
- 	snd_usb_caiaq_input_free(cdev);
- #endif
- 	snd_usb_caiaq_audio_free(cdev);
--	usb_reset_device(cdev->chip.dev);
-+	usb_put_dev(cdev->chip.dev);
- }
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 19540a13cb84d..e38ae4ac454f6 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -59,9 +59,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
+ 			  struct ib_mad_qp_info *qp_info,
+ 			  struct trace_event_raw_ib_mad_send_template *entry)
+ {
+-	u16 pkey;
+-	struct ib_device *dev = qp_info->port_priv->device;
+-	u8 pnum = qp_info->port_priv->port_num;
+ 	struct ib_ud_wr *wr = &mad_send_wr->send_wr;
+ 	struct rdma_ah_attr attr = {};
  
- static int create_card(struct usb_device *usb_dev,
-@@ -424,7 +424,7 @@ static int create_card(struct usb_device
- 		return err;
+@@ -69,8 +66,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
  
- 	cdev = caiaqdev(card);
--	cdev->chip.dev = usb_dev;
-+	cdev->chip.dev = usb_get_dev(usb_dev);
- 	cdev->chip.card = card;
- 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
- 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+ 	/* These are common */
+ 	entry->sl = attr.sl;
+-	ib_query_pkey(dev, pnum, wr->pkey_index, &pkey);
+-	entry->pkey = pkey;
+ 	entry->rqpn = wr->remote_qpn;
+ 	entry->rqkey = wr->remote_qkey;
+ 	entry->dlid = rdma_ah_get_dlid(&attr);
+diff --git a/include/trace/events/ib_mad.h b/include/trace/events/ib_mad.h
+index 59363a083ecb9..d92691c78cff6 100644
+--- a/include/trace/events/ib_mad.h
++++ b/include/trace/events/ib_mad.h
+@@ -49,7 +49,6 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
+ 		__field(int,            retries_left)
+ 		__field(int,            max_retries)
+ 		__field(int,            retry)
+-		__field(u16,            pkey)
+ 	),
+ 
+ 	TP_fast_assign(
+@@ -89,7 +88,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
+ 		  "hdr : base_ver 0x%x class 0x%x class_ver 0x%x " \
+ 		  "method 0x%x status 0x%x class_specific 0x%x tid 0x%llx " \
+ 		  "attr_id 0x%x attr_mod 0x%x  => dlid 0x%08x sl %d "\
+-		  "pkey 0x%x rpqn 0x%x rqpkey 0x%x",
++		  "rpqn 0x%x rqpkey 0x%x",
+ 		__entry->dev_index, __entry->port_num, __entry->qp_num,
+ 		__entry->agent_priv, be64_to_cpu(__entry->wrtid),
+ 		__entry->retries_left, __entry->max_retries,
+@@ -100,7 +99,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
+ 		be16_to_cpu(__entry->class_specific),
+ 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
+ 		be32_to_cpu(__entry->attr_mod),
+-		be32_to_cpu(__entry->dlid), __entry->sl, __entry->pkey,
++		be32_to_cpu(__entry->dlid), __entry->sl,
+ 		__entry->rqpn, __entry->rqkey
+ 	)
+ );
+@@ -204,7 +203,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
+ 		__field(u16,            wc_status)
+ 		__field(u32,            slid)
+ 		__field(u32,            dev_index)
+-		__field(u16,            pkey)
+ 	),
+ 
+ 	TP_fast_assign(
+@@ -224,9 +222,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
+ 		__entry->slid = wc->slid;
+ 		__entry->src_qp = wc->src_qp;
+ 		__entry->sl = wc->sl;
+-		ib_query_pkey(qp_info->port_priv->device,
+-			      qp_info->port_priv->port_num,
+-			      wc->pkey_index, &__entry->pkey);
+ 		__entry->wc_status = wc->status;
+ 	),
+ 
+@@ -234,7 +229,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
+ 		  "base_ver 0x%02x class 0x%02x class_ver 0x%02x " \
+ 		  "method 0x%02x status 0x%04x class_specific 0x%04x " \
+ 		  "tid 0x%016llx attr_id 0x%04x attr_mod 0x%08x " \
+-		  "slid 0x%08x src QP%d, sl %d pkey 0x%04x",
++		  "slid 0x%08x src QP%d, sl %d",
+ 		__entry->dev_index, __entry->port_num, __entry->qp_num,
+ 		__entry->wc_status,
+ 		__entry->length,
+@@ -244,7 +239,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
+ 		be16_to_cpu(__entry->class_specific),
+ 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
+ 		be32_to_cpu(__entry->attr_mod),
+-		__entry->slid, __entry->src_qp, __entry->sl, __entry->pkey
++		__entry->slid, __entry->src_qp, __entry->sl
+ 	)
+ );
+ 
+-- 
+2.53.0
+
 
 
