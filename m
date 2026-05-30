@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C49A17555;
-	Sat, 30 May 2026 18:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A6C2641C6;
+	Sat, 30 May 2026 18:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165284; cv=none; b=e4WVgGVstkwgfMHlRK2/WyajjDVMUfKUAsEGfexRMHHzc1GwCHhjhZXym7e/vyQn5LUxJnl9Avjzqfm0iSIgN4zpx9dIDQZYksY0u7WG9nb4Egcvb3tMrvfIeOsspATTBD1BWmeVMb9pQzOFNXMiZL4pNHSeQLnqDH/m29AyRHU=
+	t=1780165287; cv=none; b=GjUnRmBaDZVIcvC6fGt4Up5Zd8l4prFnVseN1FQnM3Eajmhd1lcN2w6T49flYD49I1l7416yGRmo+Gunyb3PR0N+Jt/BO8TwaSKM406xdD7ljE5uw0o04hFInxDaXem5+zcs5c16sT5t1uNck4Pq3LKJ6PDKWTQvusyllWw/yw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165284; c=relaxed/simple;
-	bh=VYKjMHRI8mAMehmVLBhqwmrzporoub210zMgzDRo2d0=;
+	s=arc-20240116; t=1780165287; c=relaxed/simple;
+	bh=9FdTAwNprs6qjMD6qbHPcgRtsVu/seDXslU9JMEBUO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDuGYrefp/mcY/xWNnZCGn/KWzIjf4w/3brBxbxGw4nSgFBKA21Jczn/pAGUt7Av2JUUQt8M9VXfqS9btDt9Sa1HKNe85cfWIXRa9R0qtCaSbR7hTd4LMOa0OqKQGtmMlhgZg3xEpPZS8zH2RSm3M7I0C3BVykWLFba8UikDlMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGutkpQC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GIXmCdzLMcyJ9YL+EBDJkNcDklN3JImlv+dhGLIlYrBr8n6YZ9rjmJQdK1ShIHR4hsbQEYy3S7qrDp256nq0x9nYeuwTpZ7YWgKN4BjpFbv0o7sNL00dCCnsDRy5na01vjc7rJ+RApPQAZ9nBvz1B1M7dEtMkErDr4wcwWsgBek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq6gQlzH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGutkpQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDB71F00893;
-	Sat, 30 May 2026 18:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq6gQlzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92391F00893;
+	Sat, 30 May 2026 18:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165283;
-	bh=xerdt+QZjeepIW2OiO6DfYILABdKUHX6zLK3ExOM82Q=;
+	s=korg; t=1780165286;
+	bh=MXeBigRS+2dlS1u9emjK3aDRUIkUXsKIR7lh4mDzzdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGutkpQC9Zy2wWdP7e6XWlsMYvVFVHQVFKjaS1/mSauSO1MOXt1Vza+/yBcBp4is7
-	 DvSd7wHlYJtN4eq/tixlMOkFqp9O1R5wW+YgvUalKPGYY1JijQQ0gg9kR9o9FKF1r/
-	 uLaSyZhLtYBgCgpQlwuNVYgAgf3QoyG0mtUeso6w=
+	b=cq6gQlzHxmCL/EsR9Ev7jPE6Fczgrka6uwHdsG5OPMlYytYRoGZKHviTqGm5X+708
+	 tXJZdrOXeEv343CpvtmSsWjwU1TMpQsZuoqbDDDMtzBgCZpE/q6dP1iezXDQReRg72
+	 +mxwv1EngXKVuXaMT7UnlKgo3yzlMk21Wb8X5vbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Merta <tommerta@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Peng Fan <peng.fan@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/589] ASoC: stm32_sai: fix incorrect BCLK polarity for DSP_A/B, LEFT_J
-Date: Sat, 30 May 2026 17:58:14 +0200
-Message-ID: <20260530160224.926109234@linuxfoundation.org>
+Subject: [PATCH 5.10 014/589] arm64: dts: imx8mq: Set the correct gpu_ahb clock frequency
+Date: Sat, 30 May 2026 17:58:15 +0200
+Message-ID: <20260530160224.954121247@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,62 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Merta <tomasz.merta@arrow.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 0669631dbccd41cf3ca7aa70213fcd8bb41c4b38 ]
+[ Upstream commit 1f99b5d93d99ca17d50b386a674d0ce1f20932d8 ]
 
-The STM32 SAI driver do not set the clock strobing bit (CKSTR) for DSP_A,
-DSP_B and LEFT_J formats, causing data to be sampled on the wrong BCLK
-edge when SND_SOC_DAIFMT_NB_NF is used.
+According to i.MX 8M Quad Reference Manual, GPU_AHB_CLK_ROOT's maximum
+frequency is 400MHz.
 
-Per ALSA convention, NB_NF requires sampling on the rising BCLK edge.
-The STM32MP25 SAI reference manual states that CKSTR=1 is required for
-signals received by the SAI to be sampled on the SCK rising edge.
-Without setting CKSTR=1, the SAI samples on the falling edge, violating
-the NB_NF convention. For comparison, the NXP FSL SAI driver correctly
-sets FSL_SAI_CR2_BCP for DSP_A, DSP_B and LEFT_J, consistent with its
-I2S handling.
-
-This patch adds SAI_XCR1_CKSTR for DSP_A, DSP_B and LEFT_J in
-stm32_sai_set_dai_fmt which was verified empirically with a cs47l35 codec.
-RIGHT_J (LSB) is not investigated and addressed by this patch.
-
-Note: the STM32 I2S driver (stm32_i2s_set_dai_fmt) may have the same issue
-for DSP_A mode, as I2S_CGFR_CKPOL is not set. This has not been verified
-and is left for a separate investigation.
-
-Signed-off-by: Tomasz Merta <tommerta@gmail.com>
-Link: https://patch.msgid.link/20260408084056.20588-1-tommerta@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 45d2c84eb3a2 ("arm64: dts: imx8mq: add GPU node")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_sai_sub.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
-index 1810c43d0833f..962e5606c2c9a 100644
---- a/sound/soc/stm/stm32_sai_sub.c
-+++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -671,6 +671,7 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
- 		break;
- 	/* Left justified */
- 	case SND_SOC_DAIFMT_MSB:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
- 		break;
- 	/* Right justified */
-@@ -678,9 +679,11 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
- 		break;
- 	case SND_SOC_DAIFMT_DSP_A:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSOFF;
- 		break;
- 	case SND_SOC_DAIFMT_DSP_B:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL;
- 		break;
- 	default:
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index 8d0d41973ff54..995cbe6cf0a26 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -1137,7 +1137,7 @@ gpu: gpu@38000000 {
+ 			                         <&clk IMX8MQ_GPU_PLL_OUT>,
+ 			                         <&clk IMX8MQ_GPU_PLL>;
+ 			assigned-clock-rates = <800000000>, <800000000>,
+-			                       <800000000>, <800000000>, <0>;
++			                       <800000000>, <400000000>, <0>;
+ 			power-domains = <&pgc_gpu>;
+ 		};
+ 
 -- 
 2.53.0
 
