@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E56B2E7379;
-	Sat, 30 May 2026 17:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E27230E0DC;
+	Sat, 30 May 2026 17:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162283; cv=none; b=c2VWmXHebIcFxD/AsdLLXRmvj8WKwDNIP8+8pX7A/ffI8JniiieFmRKRrtHRQxECcBEr/ei5DLzx6AIXpgYQAZfpErdbCpS4fGojhzLMCuZMURic6MjaTRthMdlb5JDZRhPT1zFK4jGQ53/ExfHjROQ1Sqy9B5rqoZYPnlKqQs0=
+	t=1780162286; cv=none; b=f6q/NFl1BcXLgD4E/2v+p5+092/XU6/MFUfBuvXY9mnsNH1aAmrZcp1wwqaeeMBWQfdae9/7A+86AwSnVneEEzUvsbwckf24IA6c7lyP4E5s6JJlzBH5Sf1rU5O9SbjOS0VYbzUjqiR5O6l274L7Y31/qOZWwpWXx89KCVbnmYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162283; c=relaxed/simple;
-	bh=YsleyhcKVJ3kE80JIp6VBq4wPkA3vlytittg72D6FGk=;
+	s=arc-20240116; t=1780162286; c=relaxed/simple;
+	bh=Fw5t8tQtNxv24HNhxGn2OIQo81Pa0fH0spdpUvIqZuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaU7AMKfda3+OGe0On3VXJvT0/KsnHy+5oFB3uPNfi8dBmA6HgPSb2pFhW0A7F4cCMNWb8rLNHMyqNV0geWAEY+Ud2keFZ1SwlaMV9dXIWpbb5H2E5PUo4ssHM+gU6zZVRVviSCaMcYUZD0En16wUaqg9WHhMC4i+YOe/Y2m9sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhHRLIpY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h7dGQyvlBtM/yOJYv5e9co5t11NIq4uL5YDDxfzyDwYCBo3j5Ul0CuvY4P5f9qKTm5bksUchSPyTH2GEmlNTRrbPjs+c72wBDZGjL3lS+fXvbwCZ45scuAg77fml94cA1afEplX159cVfep+jMQ0NE1xM0VHrHkgY4ph0zrllBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbAluSJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhHRLIpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D941F00893;
-	Sat, 30 May 2026 17:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbAluSJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B321E1F00893;
+	Sat, 30 May 2026 17:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162282;
-	bh=UKI0GcAOQOkk3qNHQJyey01tOARsk7AODGsOoLxZVA4=;
+	s=korg; t=1780162285;
+	bh=fpfsTEW9JXJqXNcUQuJhVhZtsRs2S6wgPTCwZY435cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhHRLIpYDrRfLjWi9GSXiOknizdMrcBubTw4dUogYAepe0RtVuMTwmDEAHMbnAsl9
-	 vM2H95l0jlOE1Halj1KOeVnhcsxjrs0tl4OofITDdLQvG5ee9WQKkelq3Y6P4pcctc
-	 isEWXmGWWjoLrUMZIngDgdvO5HYjznwffTzc16w8=
+	b=wbAluSJaDT70OoxbvQVWTxBfJu7SpCqxiHe2SzorkNo9v4BrP6x4Vj3FpvsVESf23
+	 DeAuM69aQzpArYSDifCUS1Z1QnsrgSMzuUhcG5x0oGPWKXOenNN3vTd/DQZEO0RsLm
+	 lpP1H4qUH37w+O2ZplribaFhhTiDRnqSR8SfiHeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Ian Ray <ian.ray@gehealthcare.com>
-Subject: [PATCH 6.1 876/969] drm/bridge: megachips: remove bridge when irq request fails
-Date: Sat, 30 May 2026 18:06:40 +0200
-Message-ID: <20260530160324.876304422@linuxfoundation.org>
+	Kyle Farnung <kfarnung@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.1 859/969] wifi: ath11k: clear shared SRNG pointer state on restart
+Date: Sat, 30 May 2026 18:06:23 +0200
+Message-ID: <20260530160324.388541823@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,68 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Kyle Farnung <kfarnung@gmail.com>
 
-commit d45d5c819f2cd0b6b5d76a194a537a5f4aeefecb upstream.
+commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
 
-If devm_request_threaded_irq() fails after drm_bridge_add(), remove the
-bridge before returning.
+LMAC rings reuse the shared rdp/wrp pointer buffers without going
+through the normal SRNG hw-init path that zeros non-LMAC ring
+pointers. After restart, ath11k_hal_srng_clear() can therefore hand
+stale hp/tp state from the previous firmware instance back to the new
+one.
 
-Keep drm_bridge_add() rather than devm_drm_bridge_add(): registration is
-tied to the STDP4028 device while ge_b850v3_register() may complete from
-either I2C probe; devm would not unwind the bridge if the other client's
-probe fails.
+Clear the shared pointer buffers while keeping the allocations in
+place so restart still avoids reallocating SRNG DMA memory, but starts
+with fresh ring-pointer state.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
+Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260430195700.80317-1-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
+Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |   16 +++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-+++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-@@ -302,7 +302,6 @@ static void ge_b850v3_lvds_remove(void)
- 		goto out;
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -1353,14 +1353,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
  
- 	drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
--
- 	ge_b850v3_lvds_ptr = NULL;
- out:
- 	mutex_unlock(&ge_b850v3_lvds_dev_mutex);
-@@ -312,6 +311,7 @@ static int ge_b850v3_register(void)
+ void ath11k_hal_srng_clear(struct ath11k_base *ab)
  {
- 	struct i2c_client *stdp4028_i2c = ge_b850v3_lvds_ptr->stdp4028_i2c;
- 	struct device *dev = &stdp4028_i2c->dev;
-+	int ret;
- 
- 	/* drm bridge initialization */
- 	ge_b850v3_lvds_ptr->bridge.funcs = &ge_b850v3_lvds_funcs;
-@@ -329,11 +329,15 @@ static int ge_b850v3_register(void)
- 	if (!stdp4028_i2c->irq)
- 		return 0;
- 
--	return devm_request_threaded_irq(&stdp4028_i2c->dev,
--			stdp4028_i2c->irq, NULL,
--			ge_b850v3_lvds_irq_handler,
--			IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--			"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
-+	ret = devm_request_threaded_irq(&stdp4028_i2c->dev,
-+					stdp4028_i2c->irq, NULL,
-+					ge_b850v3_lvds_irq_handler,
-+					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
-+	if (ret)
-+		drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
-+
-+	return ret;
- }
- 
- static int stdp4028_ge_b850v3_fw_probe(struct i2c_client *stdp4028_i2c,
+-	/* No need to memset rdp and wrp memory since each individual
+-	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
+-	 * and ath11k_hal_srng_dst_hw_init().
++	/*
++	 * Preserve the shared pointer buffers, but clear the previous
++	 * firmware instance's hp/tp state before handing them back to FW.
++	 * LMAC rings reuse this shared memory without going through the
++	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
+ 	 */
+ 	memset(ab->hal.srng_list, 0,
+ 	       sizeof(ab->hal.srng_list));
+ 	memset(ab->hal.shadow_reg_addr, 0,
+ 	       sizeof(ab->hal.shadow_reg_addr));
++	if (ab->hal.rdp.vaddr)
++		memset(ab->hal.rdp.vaddr, 0,
++		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
++	if (ab->hal.wrp.vaddr)
++		memset(ab->hal.wrp.vaddr, 0,
++		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
+ 	ab->hal.avail_blk_resource = 0;
+ 	ab->hal.current_blk_index = 0;
+ 	ab->hal.num_shadow_reg_configured = 0;
 
 
