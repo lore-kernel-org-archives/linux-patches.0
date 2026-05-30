@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91254332EA7;
-	Sat, 30 May 2026 16:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C46395AE2;
+	Sat, 30 May 2026 16:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159953; cv=none; b=uYOrz8AwOSirm7H77Rwfv0cR9aki2WvgosNZpWPtApZptOFhCr1k3pAv9bMJ27wsOOfcL3OK6nEzDr+92ciHZEbGLEf5GiVYhKveLbLh6sD2RxMM3lli8H/KWIJMdAqO0PgEkcbe07rPzar/YZwW+yKNkcQArSUbNTtnUl7LpaE=
+	t=1780159955; cv=none; b=BokGVWLVcsZrAyPafBhf6Ui2U4ebFMi42PVpCOB69Dli8mZ8Dwnr7noJKV+d+vfArb0nqoEEa5d8OSSbHiZMFGdOY+/tS4Vb+XrbwDaSJGKC0jHTafzZeOLfFQ5blAIv0cINaNNlR6Nesfoi7M0oghbqv2dO3HARJ6KlwwBwQWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159953; c=relaxed/simple;
-	bh=4/wnVLvL4lsmtsneclfu0rCJMJu02qPW5TNdmZsk7lg=;
+	s=arc-20240116; t=1780159955; c=relaxed/simple;
+	bh=YtGnqfCs9aJXvYFVFzr5blna7/gM+CTr7DczFf3VKEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLVbY4GQgylfC78TXKPPJo9qKyIzKqQNs97W2whJI5rPOPBwQlq9BjlSGxStuPjPz6GftQUnnD+FdgdD9XnFdJUZB0f8GKDDtsIJd4f3EXqyBwgogu2p4hSzZmcwt/f4cDkVcZsPmtA8tAjzQfmRBA5DHoA8EUKrgPRvvM+aHgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMxHaPF7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFHf0nsyRAlKl4XOrRF95l/NCLQk4g2zVpk1JGan1YJEbYvafkYBFJj7LwvXoZ0CQzHDR8GwlvCmeSYGqixFES5gxB9h+yBA6DqvM9Ncc4yDy6aC6jfg6ve/nJCDJEXHIb6P/RvpRcCXDRwEqvru+gHqGNPslsI3WDvLe+YYr30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAxw++Vz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMxHaPF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BAB1F00898;
-	Sat, 30 May 2026 16:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAxw++Vz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4A91F00899;
+	Sat, 30 May 2026 16:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159949;
-	bh=YISbciPfmZmGQyss/E/6SgoyNOG/UZQKOXq0IMGwMD8=;
+	s=korg; t=1780159953;
+	bh=2XmM8NLOc5/UYy5/87B6Qi9daJ8Ft0xl5zhrffonvfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMxHaPF7FtU39InHePYc2zBimWJ8ZDYtLl/MkH0xHYSxUHMOngG3qx/UUBgoActXu
-	 QF0T7q7HwHSEuGm3NiuYC9NwCVXvTPrNCUsI6st9EiZ2+8hMRuV+QGBEQ3+PQ5RRGc
-	 fEuE0Sgs7lBRXN99sT4UBu1FepZgPBGtJJSeU4l8=
+	b=SAxw++Vza55bwrMN7FoUUpK3FtRHzRbAy3TqwjTvoRfgEtJ/dnC12Ztz2GxvMDtSH
+	 HcvKXjBcX82zpmz+YjI2Y9rI6+rpulvTZ6aTp3BFo9ose38clM3CDUwUPL7SE6y8zf
+	 QBjJvdXfvml74WiQ8F9r0+U9z1y8eetwVSOUwvS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 205/969] iio: adc: ti-ads7950: use iio_push_to_buffers_with_ts_unaligned()
-Date: Sat, 30 May 2026 17:55:29 +0200
-Message-ID: <20260530160306.138183041@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Longxuan Yu <ylong030@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 206/969] io_uring/poll: fix signed comparison in io_poll_get_ownership()
+Date: Sat, 30 May 2026 17:55:30 +0200
+Message-ID: <20260530160306.162794621@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,59 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Longxuan Yu <ylong030@ucr.edu>
 
-commit 7806c060cceb2d6895efbb6cff2f2f17cf1ec5de upstream.
+commit 326941b22806cbf2df1fbfe902b7908b368cce42 upstream.
 
-Use iio_push_to_buffers_with_ts_unaligned() to avoid unaligned access
-when writing the timestamp in the rx_buf.
+io_poll_get_ownership() uses a signed comparison to check whether
+poll_refs has reached the threshold for the slowpath:
 
-The previous implementation would have been fine on architectures that
-support 4-byte alignment of 64-bit integers but could cause issues on
-architectures that require 8-byte alignment.
+    if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
 
-Fixes: 902c4b2446d4 ("iio: adc: New driver for TI ADS7950 chips")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+atomic_read() returns int (signed). When IO_POLL_CANCEL_FLAG
+(BIT(31)) is set in poll_refs, the value becomes negative in
+signed arithmetic, so the >= 128 comparison always evaluates to
+false and the slowpath is never taken.
+
+Fix this by casting the atomic_read() result to unsigned int
+before the comparison, so that the cancel flag is treated as a
+large positive value and correctly triggers the slowpath.
+
+Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Longxuan Yu <ylong030@ucr.edu>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/3a3508b08bcd7f1bc3beff848ae6e1d73d355043.1775965597.git.ylong030@ucr.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads7950.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ io_uring/poll.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads7950.c
-+++ b/drivers/iio/adc/ti-ads7950.c
-@@ -47,8 +47,6 @@
- #define TI_ADS7950_MAX_CHAN	16
- #define TI_ADS7950_NUM_GPIOS	4
- 
--#define TI_ADS7950_TIMESTAMP_SIZE (sizeof(int64_t) / sizeof(__be16))
--
- /* val = value, dec = left shift, bits = number of bits of the mask */
- #define TI_ADS7950_EXTRACT(val, dec, bits) \
- 	(((val) >> (dec)) & ((1 << (bits)) - 1))
-@@ -105,8 +103,7 @@ struct ti_ads7950_state {
- 	 * DMA (thus cache coherency maintenance) may require the
- 	 * transfer buffers to live in their own cache lines.
- 	 */
--	u16 rx_buf[TI_ADS7950_MAX_CHAN + 2 + TI_ADS7950_TIMESTAMP_SIZE]
--		__aligned(IIO_DMA_MINALIGN);
-+	u16 rx_buf[TI_ADS7950_MAX_CHAN + 2] __aligned(IIO_DMA_MINALIGN);
- 	u16 tx_buf[TI_ADS7950_MAX_CHAN + 2];
- 	u16 single_tx;
- 	u16 single_rx;
-@@ -313,8 +310,10 @@ static irqreturn_t ti_ads7950_trigger_ha
- 	if (ret < 0)
- 		goto out;
- 
--	iio_push_to_buffers_with_timestamp(indio_dev, &st->rx_buf[2],
--					   iio_get_time_ns(indio_dev));
-+	iio_push_to_buffers_with_ts_unaligned(indio_dev, &st->rx_buf[2],
-+					      sizeof(*st->rx_buf) *
-+					      TI_ADS7950_MAX_CHAN,
-+					      iio_get_time_ns(indio_dev));
- 
- out:
- 	mutex_unlock(&st->slock);
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -88,7 +88,7 @@ static bool io_poll_get_ownership_slowpa
+  */
+ static inline bool io_poll_get_ownership(struct io_kiocb *req)
+ {
+-	if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
++	if (unlikely((unsigned int)atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
+ 		return io_poll_get_ownership_slowpath(req);
+ 	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
+ }
 
 
