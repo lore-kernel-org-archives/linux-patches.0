@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A959117555;
-	Sat, 30 May 2026 18:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53161241C8C;
+	Sat, 30 May 2026 18:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165126; cv=none; b=pgogai7L0UawGMBz85lNlMVp+EmKYCm8DHRvhZtuBvntK2E96n8rrb7LECna/KyyLMN1IXQm2JyHlarSC/mXbq77ggMU1eelsVZSWirZFZ3AqrvJwwrJ1yD5XdHAMEzfvqXb85qIuUF+jRJB6bxOFx9lGmQ0YAlcD16qty1Xxzk=
+	t=1780165130; cv=none; b=FjPkXshUf7ur6/MxAcZAPxCaqmD2lDw7j14dhSUxSc3OdLtgrTVWQtYGtczln0sbOE94zDGSHuRIP/Zje26I8x5/8rZXKdOXdp/O2sNBui5xCBWmGd5fdyLjYh6rLYzSsDdnvcFPNwvT7by/RMibql5sZ2/UNMzflDnmA1Xlv1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165126; c=relaxed/simple;
-	bh=O+flBskoc0ZisfX/gCYxR5QzxlsGdKMQfwsW1Faq29Y=;
+	s=arc-20240116; t=1780165130; c=relaxed/simple;
+	bh=KiSpY4MECdDsFrnZLnspBdkOTyotNAAytKTD7FJSeck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvXapjBO73lD0G2P149Hyfeei7hlDDEdFKArSw1d+U3N4C+q4M3vHsjHisNvBUjTdC4TgXmTA7NmkAQuF7nLAcV546hUjhLdgBnXWRPyqkz14VpDgZjzraNWo0O54zZCP2Og1RusYwxCHwTYJkanvjzAoeHZ/skC8+b8h+VIXN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9MLNgWV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YP0EdKlC98XvgmJYfg49IBDGxo4jWzAKdYMksyXmPEWFxlZRzEnaFLqZ1YkvqXgepga0FumrLesgGoc1sTbq/b/xjnq2nZJaxzvCOs724cYIZ/lcTh/zKGsi8IHfyygoqwP4ZvApgzTekwKx6Xo9OWHXUrDLDB6tEmdREdy60AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuAbFrD4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9MLNgWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D9C1F00893;
-	Sat, 30 May 2026 18:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuAbFrD4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6A21F00893;
+	Sat, 30 May 2026 18:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165125;
-	bh=eOCPS+Ca5dXToT3BZ8bIuV7YHNrGTGMTB53Qpm1+RJE=;
+	s=korg; t=1780165129;
+	bh=7ifciCnC27ge/WsO/gzwUMxT6z558VQCm/BVuvmE7+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y9MLNgWVljRXAkRaDlyKogeCRZpLV4RVDG3RbHGBFJHUXVd/jf2fzVWGskHVMrP/m
-	 Q0caqmsaOJRBJxoLBNGcH2kaKWKQ7mnXXHTJj6H1soO6DX0EGMovMmFQlm0gFqWYII
-	 MqE2pWkP1HpgnGLuQqcRzkP9MZI9D4t9bZuSZEuk=
+	b=wuAbFrD4dzSN/IfJeTM53p+vStrifxs8U1bDtEO/X80sQg1oCYtUJEpRW/MlXD3lz
+	 PsrdYtpEjr92BPSGV0RoT0usYznDDgE8gKFh8B3UN3o7QRlzwpNna1MLZLQnPSXkA8
+	 19FIhNVqDly5a/z6iDJBgyVGf8cSU+xP9XW8kvpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salendarsingh Gaud <sgaud@qti.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 758/776] drm/msm/snapshot: fix dumping of the unaligned regions
-Date: Sat, 30 May 2026 18:07:52 +0200
-Message-ID: <20260530160259.334542094@linuxfoundation.org>
+Subject: [PATCH 5.15 759/776] net: dsa: mt7530: sync driver-specific behavior of MT7531 variants
+Date: Sat, 30 May 2026 18:07:53 +0200
+Message-ID: <20260530160259.358265573@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,102 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 76824d2467feb1828b745d6add2541918d7be3da ]
+[ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
 
-The snapshotting code internally aligns data segment to 16 bytes. This
-works fine for DPU code (where most of the regions are aligned), but
-fails for snapshotting of the DSI data (because DSI data region is
-shifted by 4 bytes). Fix the code by removing length alignment and by
-accurately printing last registers in the region. While reworking the
-code also fix the 16x memory overallocation in
-msm_disp_state_dump_regs().
+MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
+most basic properties. Despite that, assisted_learning_on_cpu_port and
+mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
+or EN7581, causing the expected issues on MMIO devices.
 
-Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
-Reported-by: Salendarsingh Gaud <sgaud@qti.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/725449/
-Message-ID: <20260516-msm-fix-dsi-dump-2-v2-1-9e49fb2d240e@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Apply both settings equally also for MT7988 and EN7581 by moving both
+assignments form mt7531_setup() to mt7531_setup_common().
+
+This fixes unwanted flooding of packets due to unknown unicast
+during DA lookup, as well as issues with heterogenous MTU settings.
+
+Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Link: https://patch.msgid.link/89ed7ec6d4fa0395ac53ad2809742bb1ce61ed12.1745290867.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e824e40d0e84 ("net: dsa: mt7530: fix FDB entries not aging out with short timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 24 ++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/net/dsa/mt7530.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index badafcd61998f..e3615a1339ade 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -7,7 +7,7 @@
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 86db6a18c8377..abd61514d3361 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2534,6 +2534,9 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 	struct mt7530_priv *priv = ds->priv;
+ 	int ret, i;
  
- #include "msm_disp_snapshot.h"
- 
--static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *base_addr)
-+static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr)
- {
- 	u32 len_padded;
- 	u32 num_rows;
-@@ -17,11 +17,11 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- 	void __iomem *end_addr;
- 	int i;
- 
--	len_padded = aligned_len * REG_DUMP_ALIGN;
--	num_rows = aligned_len / REG_DUMP_ALIGN;
-+	len_padded = round_up(len, REG_DUMP_ALIGN);
-+	num_rows = DIV_ROUND_UP(len, REG_DUMP_ALIGN);
- 
- 	addr = base_addr;
--	end_addr = base_addr + aligned_len;
-+	end_addr = base_addr + len;
- 
- 	if (!(*reg))
- 		*reg = kvzalloc(len_padded, GFP_KERNEL);
-@@ -49,8 +49,8 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 		void __iomem *base_addr, struct drm_printer *p)
- {
-+	void __iomem *addr, *end_addr;
- 	int i;
--	void __iomem *addr;
- 	u32 num_rows;
- 
- 	if (!dump_addr) {
-@@ -59,6 +59,7 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 	}
- 
- 	addr = base_addr;
-+	end_addr = base_addr + len;
- 	num_rows = len / REG_DUMP_ALIGN;
- 
- 	for (i = 0; i < num_rows; i++) {
-@@ -68,6 +69,17 @@ static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
- 				dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
- 		addr += REG_DUMP_ALIGN;
- 	}
++	ds->assisted_learning_on_cpu_port = true;
++	ds->mtu_enforcement_ingress = true;
 +
-+	if (addr != end_addr) {
-+		drm_printf(p, "0x%lx : %08x",
-+			   (unsigned long)(addr - base_addr),
-+			   dump_addr[i * 4]);
-+		if (addr + 0x4 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 1]);
-+		if (addr + 0x8 < end_addr)
-+			drm_printf(p, " %08x", dump_addr[i * 4 + 2]);
-+		drm_printf(p, "\n");
-+	}
+ 	mt753x_trap_frames(priv);
+ 
+ 	/* Enable and reset MIB counters */
+@@ -2673,9 +2676,6 @@ mt7531_setup(struct dsa_switch *ds)
+ 	if (ret)
+ 		return ret;
+ 
+-	ds->assisted_learning_on_cpu_port = true;
+-	ds->mtu_enforcement_ingress = true;
+-
+ 	return 0;
  }
  
- void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
-@@ -182,7 +194,7 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
- 	va_end(va);
- 
- 	INIT_LIST_HEAD(&new_blk->node);
--	new_blk->size = ALIGN(len, REG_DUMP_ALIGN);
-+	new_blk->size = len;
- 	new_blk->base_addr = base_addr;
- 
- 	msm_disp_state_dump_regs(&new_blk->state, new_blk->size, base_addr);
 -- 
 2.53.0
 
