@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FE434104B;
-	Sat, 30 May 2026 17:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC5339E162;
+	Sat, 30 May 2026 17:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160904; cv=none; b=e3EZIYn8Lr6AcSqwcYUJtTKo3LkRbiIzVMi2k8w2XjZbHPm0tXFP5XwEeibi6JUhc/QtmIDeFtuuZDyBIL/Q+cXrRQc/CAEa2hSqkhL2rsyghr6PbhM05RDF2N/JjkYVflKWX8kbsx/klQhezkwklRtjIuEoJaVv2cWDGyJF1ng=
+	t=1780160907; cv=none; b=VCyaqSfG0eyvQsnf/73aLujWk/DJdjxPlO4kr6T1r8NFrJ82z4I/05/njK5mNsy43UYlm8aZP8pJxDBhAttbtUlJaVHzJHw/kc4/IVtf+GxlhCs66Vgo88G19+KP1j3RaxVL+pREnYsm94Q614UsxOo+cGvpvcwmLdw4fJGmA8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160904; c=relaxed/simple;
-	bh=elrnplen56lBf8XlMhbeI7lhkNgdf1bbhWOZfwDF2zw=;
+	s=arc-20240116; t=1780160907; c=relaxed/simple;
+	bh=C8C7bJJP3PRMgHSM9v2cZeRoOLpJmMPMg2WHeG32bJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBvRD56jEbGSB5snlQvNMJjFQKfGW0P1Gz4oki4KQc+zXj7vO0VahCEn7RUnmOjxffDAHuSHt8+g/qw2XrB33qslejBeST7tzMfFgaUJccaRrkSBWaA2oXClJ6i273+plejY2zKQLT/yB1Hn8yVnc2PsWswXArazEHvtQqcFqPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MM1q08xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Rtx5wCc0e8YRv9ZjVNXBXYFG/1EurmAVVR7lOnQCrm6QyRSlRQjgM9fnX6By8Q0cVgZ3QdZLdUfyy2Fq96INNvzkVh0g+aHnHa0rLijoskGchbHiKwwG538+B44yggmzJXwzB3jlGZc8revd+Am74fNXHFoRjZDwiUThMuLAwaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svGW7dR6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MM1q08xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5438A1F00893;
-	Sat, 30 May 2026 17:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svGW7dR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA0B1F00893;
+	Sat, 30 May 2026 17:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160902;
-	bh=n7w0kJ8haQn5MLVJM3O8N5pJ+UxUqPdOroWIsH/P5kU=;
+	s=korg; t=1780160906;
+	bh=E4Dh6WxIyHIBQN4K5q1V7uN/D3IrYmYvibsH0jyz3Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MM1q08xoyABoDmGkMMpO9Sc9swvCHldQjPNQ/+qI3HR7JAhp3Lzv2hwXtdl5gQvEx
-	 PlRR77h7nc1ByD1gD4Ztgwev2b5ijBGV/HG9fDr9CTiJ9gbMKTN+9tWo+I95HuAf1f
-	 wTtmb4O9BRmLq3r7g0EMOLMMbJVEFdD5mD6XYrwI=
+	b=svGW7dR6k+P7/UpC+5Dir4J2SJIythIxvNlit7ivOariChiae/USbISnL2sKFiduY
+	 zCclWCIXuLkybd0eipzCPQuseQz3ch5f3A+DHRBhn6arfRDhyiVFkJsL6fAQ0XLFK0
+	 pjANWVm8SnmJrYcutr8SzMrtz8bMkNaKj0OvTTuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangshiguang <yangshiguang@xiaomi.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 439/969] debugfs: check for NULL pointer in debugfs_create_str()
-Date: Sat, 30 May 2026 17:59:23 +0200
-Message-ID: <20260530160312.391859831@linuxfoundation.org>
+Subject: [PATCH 6.1 440/969] irqchip/irq-pic32-evic: Address warning related to wrong printf() formatter
+Date: Sat, 30 May 2026 17:59:24 +0200
+Message-ID: <20260530160312.421854638@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,56 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 31de83980d3764d784f79ff1bc93c42b324f4013 ]
+[ Upstream commit 86be659415b0ddefebc3120e309091aa215a9064 ]
 
-Passing a NULL pointer to debugfs_create_str() leads to a NULL pointer
-dereference when the debugfs file is read. Following upstream
-discussions, forbid the creation of debugfs string files with NULL
-pointers. Add a WARN_ON() to expose offending callers and return early.
+This driver is currently only build on 32 bit MIPS systems. When building
+it on x86_64, the following warning occurs:
 
-Fixes: 9af0440ec86e ("debugfs: Implement debugfs_create_str()")
-Reported-by: yangshiguang <yangshiguang@xiaomi.com>
-Closes: https://lore.kernel.org/lkml/2025122221-gag-malt-75ba@gregkh/
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260323085930.88894-2-hanguidong02@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    drivers/irqchip/irq-pic32-evic.c: In function ‘pic32_ext_irq_of_init’:
+    ./include/linux/kern_levels.h:5:25: error: format ‘%d’ expects argument of type
+     ‘int’, but argument 2 has type ‘long unsigned int’ [-Werror=format=]
+
+Update the printf() formatter in preparation for allowing this driver to
+be compiled on all architectures.
+
+Fixes: aaa8666ada780 ("IRQCHIP: irq-pic32-evic: Add support for PIC32 interrupt controller")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260222-irqchip-pic32-v1-1-37f50d1f14af@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-pic32-evic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index b38304b444764..cda3ba59b10f6 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -942,7 +942,7 @@ static const struct file_operations fops_str_wo = {
-  *          directory dentry if set.  If this parameter is %NULL, then the
-  *          file will be created in the root of the debugfs filesystem.
-  * @value: a pointer to the variable that the file should read to and write
-- *         from.
-+ *         from. This pointer and the string it points to must not be %NULL.
-  *
-  * This function creates a file in debugfs with the given name that
-  * contains the value of the variable @value.  If the @mode variable is so
-@@ -960,6 +960,9 @@ static const struct file_operations fops_str_wo = {
- void debugfs_create_str(const char *name, umode_t mode,
- 			struct dentry *parent, char **value)
- {
-+	if (WARN_ON(!value || !*value))
-+		return;
-+
- 	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
- 				   &fops_str_ro, &fops_str_wo);
- }
+diff --git a/drivers/irqchip/irq-pic32-evic.c b/drivers/irqchip/irq-pic32-evic.c
+index 1d9bb28d13e5d..1a72047f3aa2e 100644
+--- a/drivers/irqchip/irq-pic32-evic.c
++++ b/drivers/irqchip/irq-pic32-evic.c
+@@ -198,7 +198,7 @@ static void __init pic32_ext_irq_of_init(struct irq_domain *domain)
+ 
+ 	of_property_for_each_u32(node, pname, prop, p, hwirq) {
+ 		if (i >= ARRAY_SIZE(priv->ext_irqs)) {
+-			pr_warn("More than %d external irq, skip rest\n",
++			pr_warn("More than %zu external irq, skip rest\n",
+ 				ARRAY_SIZE(priv->ext_irqs));
+ 			break;
+ 		}
 -- 
 2.53.0
 
