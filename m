@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1C141A8F;
-	Sat, 30 May 2026 18:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21B441A8F;
+	Sat, 30 May 2026 18:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166215; cv=none; b=CnM2OWSTAd6Czi3wsqnVyC0BzM6EiKE+q2tJaV1TuSyWeOhlWHmY8ESqaA9odBLPUcXlV8R54jaDMe7mPqwAYQk7cTWORqU/gwMBO7bJWpACVl6T2ar7uHnrv3hbfOtHBT1XSEULA2UOkqG+/Fr3Yvei/WcnHb3pAyctffCsajE=
+	t=1780166218; cv=none; b=qoX1d/63+/EvdGgJkSu7mYycGVz2dBbFKW3RUur+yP6oQRANRxk+1bQSBr/IzqwisHRw0SP2r3kpFS4TxOKciKPezBx7MuHgs6lII9jogzNx/5hzfkyMYeH8UnDfvhEmrqM/opp9/qVtTSuWbub2vmEbGuGNJNwSWkx7EJ2L4aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166215; c=relaxed/simple;
-	bh=AjFwXVfeCrxKGRuQg7M+wzqOHMKlcUB7j2ekHXuZ+6E=;
+	s=arc-20240116; t=1780166218; c=relaxed/simple;
+	bh=3yUaBhzFmKRaS4XovfVQSpUCDbHLZi/F50V+LDS2HT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdY40bETxpEbJuCsH+29DT/DeMS5Deo8tfvCjG60VsLU1rHzEVUWGXIiVhfLrEY1dj6KSqVOQHm+Ph5gJEPOWlOZRZY3eRklipS2m3s/gq/nKfv1zh7KEU0qfOBZlDGYM2gC5KKusQjAhc5BVUNBMnGu/bc2swo5+ZM0cUb9ntQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jtuf8Ayd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rlaiiSjGYQZnfjeu2Tk33soHEQxxhwxftQukyU0qNxg2HSNRkkK+yrs2OxFaAhV2+F7BOFf1HwG24CW2mNn9xcrQ5OML4nnhxR51RVZBH/j1T2G6oIt2REl28+BybogxxqH3SOJl/GiSd0yNXAFyhzk634jS2JXa6anMx5UAY5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aq2D1K5y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jtuf8Ayd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE81A1F00893;
-	Sat, 30 May 2026 18:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aq2D1K5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A361F00893;
+	Sat, 30 May 2026 18:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166214;
-	bh=znttBtTI7xZYeJtX3/Tb3mmjJzytZkLqIWDsJwxsvFQ=;
+	s=korg; t=1780166217;
+	bh=pPFF9mq1y8kCNqx+gAhapINshDssy519HE0IKGCyamQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jtuf8AydRPFyhbNfuvCCekaY4iy2XtLJtNotFKuW4P1P4kzdJ/dunFouK+lkNyjKl
-	 x8xSG4v6tc8iyQcbg38MRPBZitF5trYO4xevzRMDnZB4CCrKThHDjYON1cz5UYGAlx
-	 5hGjfEJ0J3Yt/uowPsjeS8UFf3RKH9M2VRc336iU=
+	b=aq2D1K5yE68XOmJ0UUu+gpsMPA/L+1UPRAYxmIPfOKQkPU4KpAw0Ktv1Baez+LAXz
+	 gKHx2gQL9J2ekEUwjvaWDusuL1sX1T5nqxysMJC2VrY203AG6FF5u8XysajknFbOZM
+	 cQQHLuETN88fOS3nBUzRKRZMCbGa5uBVU+0YwnXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Morris <bmorris@anthropic.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 280/589] sctp: revalidate list cursor after sctp_sendmsg_to_asoc() in SCTP_SENDALL
-Date: Sat, 30 May 2026 18:02:41 +0200
-Message-ID: <20260530160232.316789025@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 307/589] netfilter: nft_fwd_netdev: check ttl/hl before forwarding
+Date: Sat, 30 May 2026 18:03:08 +0200
+Message-ID: <20260530160233.022783643@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,76 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Morris <bmorris@anthropic.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit abb5f36771cc4c05899b34000829a787572a8817 upstream.
+[ Upstream commit 1dfd95bdf4d18d263aa8fad06bfb9f4d9c992b18 ]
 
-The SCTP_SENDALL path in sctp_sendmsg() iterates ep->asocs with
-list_for_each_entry_safe(), which caches the next entry in @tmp before
-the loop body runs.  The body calls sctp_sendmsg_to_asoc(), which may
-drop the socket lock inside sctp_wait_for_sndbuf().
+Drop packets if their ttl/hl is too small for forwarding.
 
-While the lock is dropped, another thread can SCTP_SOCKOPT_PEELOFF the
-association cached in @tmp, migrating it to a new endpoint via
-sctp_sock_migrate() (list_del_init() + list_add_tail() to
-newep->asocs), and optionally close the new socket which frees the
-association via kfree_rcu().  The cached @tmp can also be freed by a
-network ABORT for that association, processed in softirq while the
-lock is dropped.
-
-sctp_wait_for_sndbuf() revalidates @asoc (the current entry) on re-lock
-via the "sk != asoc->base.sk" and "asoc->base.dead" checks, but nothing
-revalidates @tmp.  After a successful return, the iterator advances to
-the stale @tmp, yielding either a use-after-free (if the peeled socket
-was closed) or a list-walk onto the new endpoint's list head (type
-confusion of &newep->asocs as a struct sctp_association *).
-
-Both are reachable from CapEff=0; the type-confusion path gives
-controlled indirect call via the outqueue.sched->init_sid pointer.
-
-Fix by re-deriving @tmp from @asoc after sctp_sendmsg_to_asoc()
-returns.  @asoc is known to still be on ep->asocs at that point: the
-only callers that list_del an association from ep->asocs are
-sctp_association_free() (which sets asoc->base.dead) and
-sctp_assoc_migrate() (which changes asoc->base.sk), and
-sctp_wait_for_sndbuf() checks both under the lock before any
-successful return; a tripped check propagates as err < 0 and the loop
-bails before the re-derive.
-
-The SCTP_ABORT path in sctp_sendmsg_check_sflags() returns 0 and the
-loop hits 'continue' before sctp_sendmsg_to_asoc() is ever called, so
-the @tmp cached by list_for_each_entry_safe() still covers the
-lock-held free that ba59fb027307 ("sctp: walk the list of asoc
-safely") was added for.
-
-Fixes: 4910280503f3 ("sctp: add support for snd flag SCTP_SENDALL process in sendmsg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ben Morris <bmorris@anthropic.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260508001455.3137-1-joycathacker@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d32de98ea70f ("netfilter: nft_fwd_netdev: allow to forward packets via neighbour layer")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/netfilter/nft_fwd_netdev.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1988,6 +1988,15 @@ static int sctp_sendmsg(struct sock *sk,
- 				goto out_unlock;
- 
- 			iov_iter_revert(&msg->msg_iter, err);
-+
-+			/* sctp_sendmsg_to_asoc() may have released the socket
-+			 * lock (sctp_wait_for_sndbuf), during which other
-+			 * associations on ep->asocs could have been peeled
-+			 * off or freed.  @asoc itself is revalidated by the
-+			 * base.dead and base.sk checks in sctp_wait_for_sndbuf,
-+			 * so re-derive the cached cursor from it.
-+			 */
-+			tmp = list_next_entry(asoc, asocs);
+diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
+index 7730409f6f091..09aff403884b5 100644
+--- a/net/netfilter/nft_fwd_netdev.c
++++ b/net/netfilter/nft_fwd_netdev.c
+@@ -113,6 +113,11 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
+ 			goto out;
  		}
- 
- 		goto out_unlock;
+ 		iph = ip_hdr(skb);
++		if (iph->ttl <= 1) {
++			verdict = NF_DROP;
++			goto out;
++		}
++
+ 		ip_decrease_ttl(iph);
+ 		neigh_table = NEIGH_ARP_TABLE;
+ 		break;
+@@ -129,6 +134,11 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
+ 			goto out;
+ 		}
+ 		ip6h = ipv6_hdr(skb);
++		if (ip6h->hop_limit <= 1) {
++			verdict = NF_DROP;
++			goto out;
++		}
++
+ 		ip6h->hop_limit--;
+ 		neigh_table = NEIGH_ND_TABLE;
+ 		break;
+-- 
+2.53.0
+
 
 
