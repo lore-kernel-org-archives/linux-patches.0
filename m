@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1CE33FE15;
-	Sat, 30 May 2026 17:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05532263F44;
+	Sat, 30 May 2026 17:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161424; cv=none; b=Pc6qwlMkFbpPt7i9E/KiMmr58T2Go9E+WF7rQFGPyntsL3EXcRDM5LV0tOUbnHbUR71pUdMX+hYyQ/hptuQu5hgxTNnR6vb4MhNmK7pWrh1GAr8hZTte4QNkdMRoZ0pvLIPKzDbcTC4/Vq/R+DcP6qX35Ezg9fyYKcsSH4P5hgI=
+	t=1780161428; cv=none; b=b3ePATA0S2uC60PyWH+8s/7cGTOVKD8ewHPPFwMjZAxR86cw215cMDzSbADAnGnZ4b+LTjpvvUadBVKwrhY3MWvODaf1nM1fTTP4XNh4QJ01d54fzdT0oFeEnj/EcRYLdhlQAq9CiJecLze0Su5SV07fVgSYNHwV3aAppUlLFn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161424; c=relaxed/simple;
-	bh=L9dgEFhSs1xfdWx0N17hdDOCIDb6pO74maiqO2oiHJs=;
+	s=arc-20240116; t=1780161428; c=relaxed/simple;
+	bh=WcSmx/VDILQkBYH4nbf/j4pN9D683wVlG04pPAOz3lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJL5cb9qcmAaV3NTIIfG1feIAQtcmfyuCfbyDeXYpikE8HTo8G8833IsSXVKqF4r8rKKW/venaj7mx6JEUy9FA49N7GmC/hRvB9ooVoMtn7dvOl1fgi3EnpIz61yFWFtap/SQyXnssnL+wXx5Bip+pvNpwOtmh+VhuAI9jOt/hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOEEjst6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SCDV5vv9EYA+lJnpniYvXSeTiQRvLIkDMc2WwlI+FMR/R6EQjFOxDax/vmi9yefe9YQloWFG6RXH5BL7mXbVCGge78VN5u4YVd3pD7S+bl1UBIGJHXPIkPYv/85e2oK6YipSVM3ARJg/+3Gw09lJ6XcZD02/zFbxtA0N0F+LO58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXrRUOfi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOEEjst6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12541F00893;
-	Sat, 30 May 2026 17:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXrRUOfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AA41F00893;
+	Sat, 30 May 2026 17:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161423;
-	bh=fLZV4ZQgk3RJEEdcnuIrRWfxv4ovz5EKbdChZk1AnVk=;
+	s=korg; t=1780161426;
+	bh=NSl6baiCiSIG1hNYw+FI2eDIcCWTndjhDiy6aWzRGp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wOEEjst6WDejHHJa/h3vbdLQ8IktOi5gu8aKnef5oPM6o65qxcbz1mBnNE/Sc1P74
-	 QjfYKHWhtV2PL7qlhA7riydjL3jr5Yn27rYPdaeQnI5yuxapqpV6PH8LrumHf/cdmU
-	 Zsy41PmMRIRyIg5YyriJwNBUKYjk08DDMlHw3IpM=
+	b=IXrRUOfiwnnDagrXewr5T/8C6x5FYI0QhFFUVcqkbDAeR4l4vLOnjULYxIxg7mz2Y
+	 njyT4btRX1ALae4Vt9+DNGAsgluSSgCCBzOfUrm4toYC9P9hPl8BKGssf2MLLsDFGT
+	 Tf6kYumr8QGk21VFAglyDJLA6M13BstXzYUK5jIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michal Luczaj <mhal@rbox.co>,
+	=?UTF-8?q?=E9=92=B1=E4=B8=80=E9=93=AD?= <yimingqian591@gmail.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Martin KaFai Lau <martin.lau@linux.dev>,
-	Michal Luczaj <mhal@rbox.co>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 619/969] bpf, sockmap: Fix af_unix iter deadlock
-Date: Sat, 30 May 2026 18:02:23 +0200
-Message-ID: <20260530160317.528753371@linuxfoundation.org>
+Subject: [PATCH 6.1 620/969] bpf, sockmap: Fix af_unix null-ptr-deref in proto update
+Date: Sat, 30 May 2026 18:02:24 +0200
+Message-ID: <20260530160317.560142071@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -48,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -56,94 +57,195 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 4d328dd695383224aa750ddee6b4ad40c0f8d205 ]
+[ Upstream commit dca38b7734d2ea00af4818ff3ae836fab33d5d5a ]
 
-bpf_iter_unix_seq_show() may deadlock when lock_sock_fast() takes the fast
-path and the iter prog attempts to update a sockmap. Which ends up spinning
-at sock_map_update_elem()'s bh_lock_sock():
+unix_stream_connect() sets sk_state (`WRITE_ONCE(sk->sk_state,
+TCP_ESTABLISHED)`) _before_ it assigns a peer (`unix_peer(sk) = newsk`).
+sk_state == TCP_ESTABLISHED makes sock_map_sk_state_allowed() believe that
+socket is properly set up, which would include having a defined peer. IOW,
+there's a window when unix_stream_bpf_update_proto() can be called on
+socket which still has unix_peer(sk) == NULL.
 
-WARNING: possible recursive locking detected
-test_progs/1393 is trying to acquire lock:
-ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: sock_map_update_elem+0xdb/0x1f0
+         CPU0 bpf                            CPU1 connect
+         --------                            ------------
 
-but task is already holding lock:
-ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
+                                WRITE_ONCE(sk->sk_state, TCP_ESTABLISHED)
+sock_map_sk_state_allowed(sk)
+...
+sk_pair = unix_peer(sk)
+sock_hold(sk_pair)
+                                sock_hold(newsk)
+                                smp_mb__after_atomic()
+                                unix_peer(sk) = newsk
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(slock-AF_UNIX);
-  lock(slock-AF_UNIX);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-4 locks held by test_progs/1393:
- #0: ffff88814b59c790 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x59/0x10d0
- #1: ffff88811ec25fd8 (sk_lock-AF_UNIX){+.+.}-{0:0}, at: bpf_seq_read+0x42c/0x10d0
- #2: ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
- #3: ffffffff85a6a7c0 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x51d/0xb00
-
+BUG: kernel NULL pointer dereference, address: 0000000000000080
+RIP: 0010:unix_stream_bpf_update_proto+0xa0/0x1b0
 Call Trace:
- dump_stack_lvl+0x5d/0x80
- print_deadlock_bug.cold+0xc0/0xce
- __lock_acquire+0x130f/0x2590
- lock_acquire+0x14e/0x2b0
- _raw_spin_lock+0x30/0x40
- sock_map_update_elem+0xdb/0x1f0
- bpf_prog_2d0075e5d9b721cd_dump_unix+0x55/0x4f4
- bpf_iter_run_prog+0x5b9/0xb00
- bpf_iter_unix_seq_show+0x1f7/0x2e0
- bpf_seq_read+0x42c/0x10d0
- vfs_read+0x171/0xb20
- ksys_read+0xff/0x200
- do_syscall_64+0x6b/0x3a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  sock_map_link+0x564/0x8b0
+  sock_map_update_common+0x6e/0x340
+  sock_map_update_elem_sys+0x17d/0x240
+  __sys_bpf+0x26db/0x3250
+  __x64_sys_bpf+0x21/0x30
+  do_syscall_64+0x6b/0x3a0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 2c860a43dd77 ("bpf: af_unix: Implement BPF iterator for UNIX domain socket.")
+Initial idea was to move peer assignment _before_ the sk_state update[1],
+but that involved an additional memory barrier, and changing the hot path
+was rejected.
+Then a NULL check during proto update in unix_stream_bpf_update_proto() was
+considered[2], but the follow-up discussion[3] focused on the root cause,
+i.e. sockmap update taking a wrong lock. Or, more specifically, missing
+unix_state_lock()[4].
+In the end it was concluded that teaching sockmap about the af_unix locking
+would be unnecessarily complex[5].
+Complexity aside, since BPF_PROG_TYPE_SCHED_CLS and BPF_PROG_TYPE_SCHED_ACT
+are allowed to update sockmaps, sock_map_update_elem() taking the unix
+lock, as it is currently implemented in unix_state_lock():
+spin_lock(&unix_sk(s)->lock), would be problematic. unix_state_lock() taken
+in a process context, followed by a softirq-context TC BPF program
+attempting to take the same spinlock -- deadlock[6].
+This way we circled back to the peer check idea[2].
+
+[1]: https://lore.kernel.org/netdev/ba5c50aa-1df4-40c2-ab33-a72022c5a32e@rbox.co/
+[2]: https://lore.kernel.org/netdev/20240610174906.32921-1-kuniyu@amazon.com/
+[3]: https://lore.kernel.org/netdev/7603c0e6-cd5b-452b-b710-73b64bd9de26@linux.dev/
+[4]: https://lore.kernel.org/netdev/CAAVpQUA+8GL_j63CaKb8hbxoL21izD58yr1NvhOhU=j+35+3og@mail.gmail.com/
+[5]: https://lore.kernel.org/bpf/CAAVpQUAHijOMext28Gi10dSLuMzGYh+jK61Ujn+fZ-wvcODR2A@mail.gmail.com/
+[6]: https://lore.kernel.org/bpf/dd043c69-4d03-46fe-8325-8f97101435cf@linux.dev/
+
+Summary of scenarios where af_unix/stream connect() may race a sockmap
+update:
+
+1. connect() vs. bpf(BPF_MAP_UPDATE_ELEM), i.e. sock_map_update_elem_sys()
+
+   Implemented NULL check is sufficient. Once assigned, socket peer won't
+   be released until socket fd is released. And that's not an issue because
+   sock_map_update_elem_sys() bumps fd refcnf.
+
+2. connect() vs BPF program doing update
+
+   Update restricted per verifier.c:may_update_sockmap() to
+
+      BPF_PROG_TYPE_TRACING/BPF_TRACE_ITER
+      BPF_PROG_TYPE_SOCK_OPS (bpf_sock_map_update() only)
+      BPF_PROG_TYPE_SOCKET_FILTER
+      BPF_PROG_TYPE_SCHED_CLS
+      BPF_PROG_TYPE_SCHED_ACT
+      BPF_PROG_TYPE_XDP
+      BPF_PROG_TYPE_SK_REUSEPORT
+      BPF_PROG_TYPE_FLOW_DISSECTOR
+      BPF_PROG_TYPE_SK_LOOKUP
+
+   Plus one more race to consider:
+
+            CPU0 bpf                            CPU1 connect
+            --------                            ------------
+
+                                   WRITE_ONCE(sk->sk_state, TCP_ESTABLISHED)
+   sock_map_sk_state_allowed(sk)
+                                   sock_hold(newsk)
+                                   smp_mb__after_atomic()
+                                   unix_peer(sk) = newsk
+   sk_pair = unix_peer(sk)
+   if (unlikely(!sk_pair))
+      return -EINVAL;
+
+                                                 CPU1 close
+                                                 ----------
+
+                                   skpair = unix_peer(sk);
+                                   unix_peer(sk) = NULL;
+                                   sock_put(skpair)
+   // use after free?
+   sock_hold(sk_pair)
+
+   2.1 BPF program invoking helper function bpf_sock_map_update() ->
+       BPF_CALL_4(bpf_sock_map_update(), ...)
+
+       Helper limited to BPF_PROG_TYPE_SOCK_OPS. Nevertheless, a unix sock
+       might be accessible via bpf_map_lookup_elem(). Which implies sk
+       already having psock, which in turn implies sk already having
+       sk_pair. Since sk_psock_destroy() is queued as RCU work, sk_pair
+       won't go away while BPF executes the update.
+
+   2.2 BPF program invoking helper function bpf_map_update_elem() ->
+       sock_map_update_elem()
+
+       2.2.1 Unix sock accessible to BPF prog only via sockmap lookup in
+             BPF_PROG_TYPE_SOCKET_FILTER, BPF_PROG_TYPE_SCHED_CLS,
+             BPF_PROG_TYPE_SCHED_ACT, BPF_PROG_TYPE_XDP,
+             BPF_PROG_TYPE_SK_REUSEPORT, BPF_PROG_TYPE_FLOW_DISSECTOR,
+             BPF_PROG_TYPE_SK_LOOKUP.
+
+             Pretty much the same as case 2.1.
+
+       2.2.2 Unix sock accessible to BPF program directly:
+             BPF_PROG_TYPE_TRACING, narrowed down to BPF_TRACE_ITER.
+
+             Sockmap iterator (sock_map_seq_ops) is safe: unix sock
+             residing in a sockmap means that the sock already went through
+             the proto update step.
+
+             Unix sock iterator (bpf_iter_unix_seq_ops), on the other hand,
+             gives access to socks that may still be unconnected. Which
+             means iterator prog can race sockmap/proto update against
+             connect().
+
+             BUG: KASAN: null-ptr-deref in unix_stream_bpf_update_proto+0x253/0x4d0
+             Write of size 4 at addr 0000000000000080 by task test_progs/3140
+             Call Trace:
+              dump_stack_lvl+0x5d/0x80
+              kasan_report+0xe4/0x1c0
+              kasan_check_range+0x125/0x200
+              unix_stream_bpf_update_proto+0x253/0x4d0
+              sock_map_link+0x71c/0xec0
+              sock_map_update_common+0xbc/0x600
+              sock_map_update_elem+0x19a/0x1f0
+              bpf_prog_bbbf56096cdd4f01_selective_dump_unix+0x20c/0x217
+              bpf_iter_run_prog+0x21e/0xae0
+              bpf_iter_unix_seq_show+0x1e0/0x2a0
+              bpf_seq_read+0x42c/0x10d0
+              vfs_read+0x171/0xb20
+              ksys_read+0xff/0x200
+              do_syscall_64+0xf7/0x5e0
+              entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+             While the introduced NULL check prevents null-ptr-deref in the
+             BPF program path as well, it is insufficient to guard against
+             a poorly timed close() leading to a use-after-free. This will
+             be addressed in a subsequent patch.
+
+Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
+Closes: https://lore.kernel.org/netdev/ba5c50aa-1df4-40c2-ab33-a72022c5a32e@rbox.co/
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Reported-by: 钱一铭 <yimingqian591@gmail.com>
 Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
 Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
 Signed-off-by: Michal Luczaj <mhal@rbox.co>
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-2-2af6fe97918e@rbox.co
+Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-4-2af6fe97918e@rbox.co
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/unix/unix_bpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -3598,15 +3598,14 @@ static int bpf_iter_unix_seq_show(struct
- 	struct bpf_prog *prog;
- 	struct sock *sk = v;
- 	uid_t uid;
--	bool slow;
- 	int ret;
- 
- 	if (v == SEQ_START_TOKEN)
- 		return 0;
- 
--	slow = lock_sock_fast(sk);
-+	lock_sock(sk);
- 
--	if (unlikely(sk_unhashed(sk))) {
-+	if (unlikely(sock_flag(sk, SOCK_DEAD))) {
- 		ret = SEQ_SKIP;
- 		goto unlock;
+diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
+index bca2d86ba97d8..976e035053e5a 100644
+--- a/net/unix/unix_bpf.c
++++ b/net/unix/unix_bpf.c
+@@ -184,6 +184,9 @@ int unix_stream_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool r
+ 	 */
+ 	if (!psock->sk_pair) {
+ 		sk_pair = unix_peer(sk);
++		if (unlikely(!sk_pair))
++			return -EINVAL;
++
+ 		sock_hold(sk_pair);
+ 		psock->sk_pair = sk_pair;
  	}
-@@ -3616,7 +3615,7 @@ static int bpf_iter_unix_seq_show(struct
- 	prog = bpf_iter_get_info(&meta, false);
- 	ret = unix_prog_seq_show(prog, &meta, v, uid);
- unlock:
--	unlock_sock_fast(sk, slow);
-+	release_sock(sk);
- 	return ret;
- }
- 
+-- 
+2.53.0
+
 
 
