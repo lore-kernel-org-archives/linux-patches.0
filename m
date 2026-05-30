@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2409217704;
-	Sat, 30 May 2026 18:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187C5279DC9;
+	Sat, 30 May 2026 18:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165553; cv=none; b=E4rU38xQVyS/EpXsR5K9gSSdL+XIRHDtJuoPS5loJdqHDzk5IUGppxubGUxBRWdfWclbqtErkK8Old/1Fyf+Y5zlQZojgNSrFuIuZ36qLVni5UttVh0L68BdpIUgakJKzX8zeJ3lk7BY1Ym1hcCqz88l+zYvzaf2Z/JQwumHL24=
+	t=1780165557; cv=none; b=iDb4JY6C6pGpnvSqHAudqvbYr5va0YSfQjcgqvr5f+lsh/dL+0x1daGqStbXG3yjgaAaEQrG+4Y3xS0DBWnxkDopSZaCtJS9+4u00DzRromdhBdUK9bacxeXcc8NYlTTJ72h01e9DvdJLOWfhsrm6YbsedNE9WaJjMhfuJ6AFPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165553; c=relaxed/simple;
-	bh=ZiFc8loYAX/OjX5Yki/z862+xsJfsdcn59QPBgAcPIA=;
+	s=arc-20240116; t=1780165557; c=relaxed/simple;
+	bh=iTuTvCsFc8sr6IA3VQpn4MZ0g1omJ9t4wrV+BcJ+fD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avjWBt+iJmRKG9tjJZq0BmXdvimDAvwsasG6V1qMXc6xHQhTgBzVpCS0muiEtgXlBLAbuYwK3nk3xEF+AFAaha8smDfoT5S0jYGawJ93i7Y/iER3zcfRmqLIwDH3TdDE2om+Vs1FzN+t9uUInoMqAromE1fniUb9E8w8rqSmXYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8BJG1db; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GEH+SiZaR/MtKNlCbYfjC4XrHc0jGz5ajguXZbmhumojQPk9r3iBMb5nU6TM+IpREn0CNGGYxPEyPHo9YIcm4c53mHE869H3dFyOIc3sZBr/oaYK1hFwhoLsfR6gbp7/jLqCn4BIYpdPihe7+eSepH+M/93oc/+CORxzuA0dAiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7qDV8K3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8BJG1db"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140801F00893;
-	Sat, 30 May 2026 18:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7qDV8K3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CED01F00893;
+	Sat, 30 May 2026 18:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165552;
-	bh=lpBdBQ6Wh520vq/vICYgUPd7VRG4sx2lyYIc8v24ZPc=;
+	s=korg; t=1780165556;
+	bh=E/oU0nkpFRvsuVCZCN4yiC14sQRQuKWS2QUVA8QY2Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q8BJG1db8tBReQ9uNTGh+pj7RIgOkHWbZDRrNwiC8+C+79Sq2luLNs/g1APbLl8hR
-	 uzd+fZmYGyyjgixYGQLw/5Vwy6Hiu9jZAqvcjA5pCPZ7MMrCg3Bw64Yc3CNSNkGrkz
-	 pCkHFzl7i+CQ/xf+4q3W3LODGK1fHwZaJd+2gW6M=
+	b=L7qDV8K3nWL+Q2LYPVtbDTrsprdhfBrPMMV74Gs1nixiQPjuISgajhuwQ06qJk2wk
+	 +2X0K2QHkaxEFHcUsFkcphM0cbdwUCVjJRT/U4n5GcX+3vYWqC6U9RJtHxs8CBcD56
+	 MHu2i+UGXzgrZoJZCIHndW5OKAmMjZFMabs2bjto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <cyeaa@connect.ust.hk>,
-	Takashi Iwai <tiwai@suse.de>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/589] ALSA: usb-audio: fix null pointer dereference on pointer cs_desc
-Date: Sat, 30 May 2026 17:59:36 +0200
-Message-ID: <20260530160227.194081368@linuxfoundation.org>
+Subject: [PATCH 5.10 113/589] arm64: dts: imx8mq-librem5-r3: workaround i2c1 issue with 1GHz cpu voltage
+Date: Sat, 30 May 2026 17:59:54 +0200
+Message-ID: <20260530160227.728272219@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <cyeaa@connect.ust.hk>
+From: Martin Kepplinger <martin.kepplinger@puri.sm>
 
-commit b97053df0f04747c3c1e021ecbe99db675342954 upstream.
+[ Upstream commit 1773b8d6697ac8e9380843fe5c13c25e95baa702 ]
 
-The pointer cs_desc return from snd_usb_find_clock_source could
-be null, so there is a potential null pointer dereference issue.
-Fix this by adding a null check before dereference.
+This is a workaround for a hardware bug in the r3 revision that basically would
+stop the system due to traffic on the i2c1 bus. A cpu voltage change would
+trigger such traffic and that's what is avoided in order to work around it.
 
-Signed-off-by: Chengfeng Ye <cyeaa@connect.ust.hk>
-Link: https://lore.kernel.org/r/20211024111736.11342-1-cyeaa@connect.ust.hk
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Fixes: 1dc669fed61a ("ALSA: usb-audio: UAC2: support read-only freq control")
-[ kovalev: bp to fix CVE-2021-47211; added Fixes tag; the null
-  check was added into both UAC2 and UAC3 branches since the
-  older kernel still has the clock source lookup split between
-  snd_usb_find_clock_source() and snd_usb_find_clock_source_v3()
-  (see upstream commit 9ec730052fa2) ]
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: 511f76bf1dce ("arm64: dts: imx8mq-librem5: Bump BUCK1 suspend voltage up to 0.85V")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/clock.c | 6 ++++++
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/sound/usb/clock.c b/sound/usb/clock.c
-index 197a6b7d8ad6f..3d5d4f3aafce4 100644
---- a/sound/usb/clock.c
-+++ b/sound/usb/clock.c
-@@ -646,11 +646,17 @@ static int set_sample_rate_v2v3(struct snd_usb_audio *chip, int iface,
- 		struct uac3_clock_source_descriptor *cs_desc;
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -10,6 +10,12 @@
+ 	compatible = "purism,librem5r3", "purism,librem5", "fsl,imx8mq";
+ };
  
- 		cs_desc = snd_usb_find_clock_source_v3(chip->ctrl_intf, clock);
++&a53_opp_table {
++	opp-1000000000 {
++		opp-microvolt = <1000000>;
++	};
++};
 +
-+		if (!cs_desc)
-+			return 0;
- 		bmControls = le32_to_cpu(cs_desc->bmControls);
- 	} else {
- 		struct uac_clock_source_descriptor *cs_desc;
- 
- 		cs_desc = snd_usb_find_clock_source(chip->ctrl_intf, clock);
-+
-+		if (!cs_desc)
-+			return 0;
- 		bmControls = cs_desc->bmControls;
- 	}
- 
--- 
-2.53.0
-
+ &accel_gyro {
+ 	mount-matrix =  "1",  "0",  "0",
+ 			"0",  "1",  "0",
 
 
