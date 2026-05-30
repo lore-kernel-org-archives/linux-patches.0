@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49AA3A542F;
-	Sat, 30 May 2026 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713593148DA;
+	Sat, 30 May 2026 17:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161245; cv=none; b=gGSB614K7imt470VhKoK+v1fSHiy8oedQxsDttzhS63Vr7QYz6UXavRoITjQE9Vh/3JCoOW16McONyDRCBqMKHJITT3uB1mn1btQ0PpgSTHmp2HBynJ6PakI+Ji3CJpgCwrMKrEr1Qf/RbDkLubFcWwj7qP+PgY/k8n8Y8h9ddQ=
+	t=1780161249; cv=none; b=EqrurVZsliLM4yyBBZ0W7JONKG7zJdvBUBiLnXpBSyybB2KUpnj8OecOFwhRabSOkPh1p66opaaXsqxl/FVVUZvJpGy7Qd/L3WUEx3xA0TCnVccPnjI0NRQ3TdQ1FLD1HzcF4uVdVoeshng1TlFCp40hrP1z18DNgBx8+6XyxZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161245; c=relaxed/simple;
-	bh=RQjjaYWHmZ2lQ1HBYxOG+RWkzCXCD5yxb5oL3oww0bA=;
+	s=arc-20240116; t=1780161249; c=relaxed/simple;
+	bh=1jMxI0neExaElfFNnzqiMtKq/b+A63X/SuEiPGAoFb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ax/8Pt6jwizMcR+8pZZcwNdFRLk2GG/TQ7esHtSiTEcQCLY8onuSeAalDazkz1cFIFtLLWxwJ+dCceqKZ06kMWPJtmZrJh6tDhTMMMmMxDyWZ8qYgK9UKX2c8QbvVfi5/T3YPic4uCvnwp1u8rYV/rsVmfJv48yO+vBiQNexdos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lo9zqrFn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=irVYQJuNUYtIDFjXVJqais6xDzEVCsAFvTn/sF8l69ycPBw1qrd/LCCzzUojz1E1MsRcvzqq9h9y/2w3Q8tdn9xFMTXZD32YCInQr1tQ1TL81AgmeGCSfX2en0OlrRQ7wx1+DJDQpslLC1Da8G90GUozUWCquffHouyC6wYRDbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1M9QZIWP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lo9zqrFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0591F00893;
-	Sat, 30 May 2026 17:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1M9QZIWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672A51F00893;
+	Sat, 30 May 2026 17:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161244;
-	bh=B1W+91P83JOWexRcOzK2NkN5TeX0rYashiHZeiHZf/Q=;
+	s=korg; t=1780161248;
+	bh=x54VOdSP9YS9vI9aoWPQKJHI5JjCH8En0o2mTidoDuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lo9zqrFnNHAGIU/DD84RnXCok5OUzjS042EmmVqzePm1eFdCgvz7t6LFGQE4QBwCD
-	 Hu6QksQGbmCnoc6oKd1leVQ3jzd4T1QINi3+2Un10yooCv0XnO1LXB2yt4cU2YFNuv
-	 NUffooHTrD7Qgy5uNjIK1WyEtmDE63HQewepYXjQ=
+	b=1M9QZIWPya/e7f3XJSsKslXwdxnMtTh3r2Mm4V6pmHA9LXuNPzKREnAFuHh9Te4iY
+	 n4M5jLNuhk3IrIn/LpEPnG6ZdUxRuVPwjBTaLy9JQd4/LtX02soinyaCAvbXNIH9Mq
+	 f2Mck0o49CV55ibuR8y+q8dMwAYQsM5MxIftgUco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Schmidt <alexs@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 537/969] ASoC: qcom: qdsp6: topology: check widget type before accessing data
-Date: Sat, 30 May 2026 18:01:01 +0200
-Message-ID: <20260530160315.197070620@linuxfoundation.org>
+Subject: [PATCH 6.1 538/969] PCI: Enable AtomicOps only if Root Port supports them
+Date: Sat, 30 May 2026 18:01:02 +0200
+Message-ID: <20260530160315.226970443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,47 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit d5bfdd28e0cdd45043ae6e0ac168a451d59283dc ]
+[ Upstream commit 1ae8c4ce157037e266184064a182af9ef9af278b ]
 
-Check widget type before accessing the private data, as this could a
-virtual widget which is no associated with a dsp graph, container and
-module. Accessing witout check could lead to incorrect memory access.
+When inspecting the config space of a Connect-X physical function in an
+s390 system after it was initialized by the mlx5_core device driver, we
+found the function to be enabled to request AtomicOps despite the Root Port
+lacking support for completing them:
 
-Fixes: 36ad9bf1d93d ("ASoC: qdsp6: audioreach: add topology support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  00:00.1 Ethernet controller: Mellanox Technologies MT2894 Family [ConnectX-6 Lx]
+          Subsystem: Mellanox Technologies Device 0002
+          DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+                   AtomicOpsCtl: ReqEn+
+
+On s390 and many virtualized guests, the Endpoint is visible but the Root
+Port is not.  In this case, pci_enable_atomic_ops_to_root() previously
+enabled AtomicOps in the Endpoint even though it can't tell whether the
+Root Port supports them as a completer.
+
+Change pci_enable_atomic_ops_to_root() to fail if there's no Root Port or
+the Root Port doesn't support AtomicOps.
+
+Fixes: 430a23689dea ("PCI: Add pci_enable_atomic_ops_to_root()")
+Reported-by: Alexander Schmidt <alexs@linux.ibm.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+[bhelgaas: commit log, check RP first to simplify flow]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260330-fix_pciatops-v7-2-f601818417e8@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/topology.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/pci.c | 41 ++++++++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
-index 600e39e73b87a..fdb87e585e276 100644
---- a/sound/soc/qcom/qdsp6/topology.c
-+++ b/sound/soc/qcom/qdsp6/topology.c
-@@ -814,14 +814,16 @@ static int audioreach_widget_unload(struct snd_soc_component *scomp,
- 	struct audioreach_container *cont;
- 	struct audioreach_module *mod;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 2cb94c77df780..953646cd759b0 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3910,8 +3910,7 @@ int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size)
+  */
+ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+ {
+-	struct pci_bus *bus = dev->bus;
+-	struct pci_dev *bridge;
++	struct pci_dev *root, *bridge;
+ 	u32 cap, ctl2;
  
--	mod = dobj->private;
--	cont = mod->container;
--
- 	if (w->id == snd_soc_dapm_mixer) {
- 		/* virtual widget */
- 		kfree(dobj->private);
- 		return 0;
+ 	/*
+@@ -3941,35 +3940,35 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+ 		return -EINVAL;
  	}
-+	mod = dobj->private;
-+	if (!mod)
-+		return 0;
-+
-+	cont = mod->container;
  
- 	mutex_lock(&apm->lock);
- 	idr_remove(&apm->modules_idr, mod->instance_id);
+-	while (bus->parent) {
+-		bridge = bus->self;
++	root = pcie_find_root_port(dev);
++	if (!root)
++		return -EINVAL;
+ 
+-		pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2, &cap);
++	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
++	if ((cap & cap_mask) != cap_mask)
++		return -EINVAL;
+ 
++	bridge = pci_upstream_bridge(dev);
++	while (bridge != root) {
+ 		switch (pci_pcie_type(bridge)) {
+-		/* Ensure switch ports support AtomicOp routing */
+ 		case PCI_EXP_TYPE_UPSTREAM:
+-		case PCI_EXP_TYPE_DOWNSTREAM:
+-			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
+-				return -EINVAL;
+-			break;
+-
+-		/* Ensure root port supports all the sizes we care about */
+-		case PCI_EXP_TYPE_ROOT_PORT:
+-			if ((cap & cap_mask) != cap_mask)
+-				return -EINVAL;
+-			break;
+-		}
+-
+-		/* Ensure upstream ports don't block AtomicOps on egress */
+-		if (pci_pcie_type(bridge) == PCI_EXP_TYPE_UPSTREAM) {
++			/* Upstream ports must not block AtomicOps on egress */
+ 			pcie_capability_read_dword(bridge, PCI_EXP_DEVCTL2,
+ 						   &ctl2);
+ 			if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_EGRESS_BLOCK)
+ 				return -EINVAL;
++			fallthrough;
++
++		/* All switch ports need to route AtomicOps */
++		case PCI_EXP_TYPE_DOWNSTREAM:
++			pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2,
++						   &cap);
++			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
++				return -EINVAL;
++			break;
+ 		}
+ 
+-		bus = bus->parent;
++		bridge = pci_upstream_bridge(bridge);
+ 	}
+ 
+ 	pcie_capability_set_word(dev, PCI_EXP_DEVCTL2,
 -- 
 2.53.0
 
