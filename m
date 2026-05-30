@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE0B3BF66D;
-	Sat, 30 May 2026 17:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFCB33F590;
+	Sat, 30 May 2026 17:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162674; cv=none; b=OdieLa4hAHyLZWGswOw23q+IciBWDD5eyXjbybjZ97QoAdnkjrKibGYt9ugle/SCnACRKbjogMb0xjJ9PpIaBnnXLypmY5QlotmLmEYpYdy9JM1LXyeBQLoHF9/8QwDLJRhC+L3w7GS1svLzb0i5pM3xi1HOwjk4ZkPtANi7ysI=
+	t=1780162677; cv=none; b=XU5IFKCR7D9dFH57HIIwNBYI1HJjPQ3PKDQE93fFrJt7M6pjvXeWo3QQj9C5bf1eau+QcIf2aoK5O1nhCFKOuyFwGo0Q8ZLzmKwuGAtoRDXOFWMf/ZFKNLOtEgpndFiFU8AHUFAs8Gt9VgfoiigAjQr3HKb10Co/0TnUKxujPkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162674; c=relaxed/simple;
-	bh=jZJYqZicGrDD56w8Mkl74nNS3Y3hEalccDat48oeCuk=;
+	s=arc-20240116; t=1780162677; c=relaxed/simple;
+	bh=tf4Mzbj4SvfmaWGSoBJHOTrtfNwUPdvb8LOz7T62sIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENAPxQFsvj5KaxK0umPv9Z9FTeA8j+oKofjsoUXHB7X7227g4O2qgVkQH+4CRUHqO9LgiUPlsz4X9nCoJnmqqg0JaY7dJFSAqtQE2kX3H/x1NqnjJyt6cbLwXNwu2+ELj1kPxF/B40zBgp+UFvPVNXV7vQznLCm/mJ9PtlvEI7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsOsNdXl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=slOvzlVkF7dYDy3iJR/lsXMX5Z/dqNG4Kaga7T3gw7V5HyhXMuocoBvFzSigzkE3UfK+6SnEBY2524w3+ObxjMgT1d+6L6tp6aa3w/wv32hXPoaks7JL+4dedxLh2xVvWYK/4h3cVVCUiKMxiTcq1sL4XLIu7XuvTWOfy18Hbug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ticZcsTu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsOsNdXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF51F00893;
-	Sat, 30 May 2026 17:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ticZcsTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DDF1F00893;
+	Sat, 30 May 2026 17:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162672;
-	bh=zAkX0Yw9Ftbdg2ZxYlbM3mRQLCJj5B3/Ua04N9CyguQ=;
+	s=korg; t=1780162676;
+	bh=wjQhOQaua4B5FHilpJpQvBnBFQfGnrrcjAPWkxdMzUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QsOsNdXl8WHODglh0O2dl0ltD9Uvo4jWOLowAI/xcLCxgMfWdaF9pqF5JTNXk0AL1
-	 vDrdERReAoZrxiML+WyeyhB4wfC/wcmDkkvYABQQumVUcR7pB5MAboR31jIt9uS1pY
-	 pk8piht9g9JT4RxaKNmq0icDpnltMyzpHdDt908I=
+	b=ticZcsTuAAoLkRnaRdmXM1aASM3dJI3czGVNpzhCmaE66UCj1FYniFn2AtKh6KfHA
+	 nS7pGFJ6h+2I2GnIFVswdHQ2Nbgx/FoTucZdO7TDYArf+WjWp+pjny5WHLXcSPq1/a
+	 QBkLAi447N6u7bGZkBZzG+MLkHyY9heOUfi3Qxt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Iskhakov Daniil <dish@amicon.ru>,
+	Agalakov Daniil <ade@amicon.ru>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/776] tracing/probe: reject non-closed empty immediate strings
-Date: Sat, 30 May 2026 17:55:43 +0200
-Message-ID: <20260530160241.023595299@linuxfoundation.org>
+Subject: [PATCH 5.15 030/776] e1000: check return value of e1000_read_eeprom
+Date: Sat, 30 May 2026 17:55:44 +0200
+Message-ID: <20260530160241.049747997@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,41 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Agalakov Daniil <ade@amicon.ru>
 
-[ Upstream commit 4346be6577aaa04586167402ae87bbdbe32484a4 ]
+[ Upstream commit d3baa34a470771399c1495bc04b1e26ac15d598e ]
 
-parse_probe_arg() accepts quoted immediate strings and passes the body
-after the opening quote to __parse_imm_string(). That helper currently
-computes strlen(str) and immediately dereferences str[len - 1], which
-underflows when the body is empty and not closed with double-quotation.
+[Why]
+e1000_set_eeprom() performs a read-modify-write operation when the write
+range is not word-aligned. This requires reading the first and last words
+of the range from the EEPROM to preserve the unmodified bytes.
 
-Reject empty non-closed immediate strings before checking for the closing quote.
+However, the code does not check the return value of e1000_read_eeprom().
+If the read fails, the operation continues using uninitialized data from
+eeprom_buff. This results in corrupted data being written back to the
+EEPROM for the boundary words.
 
-Link: https://lore.kernel.org/all/20260401160315.88518-1-pengpeng@iscas.ac.cn/
+Add the missing error checks and abort the operation if reading fails.
 
-Fixes: a42e3c4de964 ("tracing/probe: Add immediate string parameter support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Agalakov Daniil <ade@amicon.ru>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/e1000/e1000_ethtool.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 38fa6cc118daf..47044927a7269 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -362,7 +362,7 @@ static int __parse_imm_string(char *str, char **pbuf, int offs)
- {
- 	size_t len = strlen(str);
- 
--	if (str[len - 1] != '"') {
-+	if (!len || str[len - 1] != '"') {
- 		trace_probe_log_err(offs + len, IMMSTR_NO_CLOSE);
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
+index 0a57172dfcbc4..631165b895b61 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
+@@ -496,14 +496,19 @@ static int e1000_set_eeprom(struct net_device *netdev,
+ 		 */
+ 		ret_val = e1000_read_eeprom(hw, first_word, 1,
+ 					    &eeprom_buff[0]);
++		if (ret_val)
++			goto out;
++
+ 		ptr++;
  	}
+-	if (((eeprom->offset + eeprom->len) & 1) && (ret_val == 0)) {
++	if ((eeprom->offset + eeprom->len) & 1) {
+ 		/* need read/modify/write of last changed EEPROM word
+ 		 * only the first byte of the word is being modified
+ 		 */
+ 		ret_val = e1000_read_eeprom(hw, last_word, 1,
+ 					    &eeprom_buff[last_word - first_word]);
++		if (ret_val)
++			goto out;
+ 	}
+ 
+ 	/* Device's eeprom is always little-endian, word addressable */
+@@ -522,6 +527,7 @@ static int e1000_set_eeprom(struct net_device *netdev,
+ 	if ((ret_val == 0) && (first_word <= EEPROM_CHECKSUM_REG))
+ 		e1000_update_eeprom_checksum(hw);
+ 
++out:
+ 	kfree(eeprom_buff);
+ 	return ret_val;
+ }
 -- 
 2.53.0
 
