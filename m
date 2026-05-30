@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F0E1A9F90;
-	Sat, 30 May 2026 18:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C808231A21;
+	Sat, 30 May 2026 18:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166878; cv=none; b=jY6SlwMBIRuca3aX/6ugo0VcNZ6IH5giV9PT942PxkMoke6PR2hG8log+JTA/DWVXRyZTH00A7ieBkans/o0auzXVTH/fUg2HI5/KE7lQExbIBIWbrl7mqPGnVv13AuKJV8GR1DNkiGoFiIjhgqLcZykDPVuBF6zvaB8Ako5GBM=
+	t=1780166881; cv=none; b=DVn7c//wj5dZz4XdtbypjREXrqoZWO407eI3PPQDqD8t2zSDuraQ5tpdd/yssKGJvqi2tQLSG+s3E3lKvxeBw0YQ59qj9dy9OJuTrfwGVAfb/DFByhDCFOv91fhTzM0Bqs4bVmnxXjBO7N1KuCexARS7Dl80LCkPhbXWHcE+YoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166878; c=relaxed/simple;
-	bh=Bwj8IcuT7tGP6l/XN4MWA10YoNRHmU/vRZcHP9tntD4=;
+	s=arc-20240116; t=1780166881; c=relaxed/simple;
+	bh=mAe+XkT4hAvdSNCV9VnwhgFoYNJdd/+vHzjxMfvG3F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYORkDcBZrILIrUjYk98U9T4/kUxlWpJcms2S/1cyvBytCgqQo7x8zC46U8k3U+nEYTvxirXWdCoJNBorsyG9rP0VMjnD5EfKWwj5Tgk4S2xCG+TRkc1I05Hwnn6Qib1SgSXDxEsur/hajFeFaFoCvRIoILyKJPHHh4NBiykloY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iv0efIOl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AHZ+qp06wI0VwI7zO/q8FFl/iwccNKGlDE41/SWkRxrJfCeevkpdqp18aEn0aIZgGwvVAY3bxzpymPJQWhHBwzpaSgtTrG8aBcGxAaGOF0BjIGrJfRypkR45tgMsDM72D/a5xN/+HXYvRlqucg2EdjCkTzUktEt2ohDK3xBs0rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKr7yyQY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv0efIOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6661A1F00893;
-	Sat, 30 May 2026 18:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKr7yyQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA251F00893;
+	Sat, 30 May 2026 18:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166877;
-	bh=SH4Yb84BIbTJnkIjC5GlWjdKxq1SW4sKIAgNuyLRymQ=;
+	s=korg; t=1780166880;
+	bh=KCv0P8m3TWxE7IMt2/2B/xCWK4Naw1QCXgkkCpBDJKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iv0efIOlOUlSxhD+24D2iZdUBB4+zeyP/jvY4qi4i2MkzTxc2ohe9dN5K5IFp9rVB
-	 PuW7B9aYPR6z76Ze0+ibjKUYWWRKuVScY3zmIEJeOL/+pDjIX/HQoGioTmrQzU7plB
-	 IMZPgZbaOACT+RO4ghVF1oYKQrmIXN37TwHKL1oQ=
+	b=hKr7yyQYQl70fZypxxBBV2G9w2yB9aaDEtBp1ybHF9OJ/yAIb8PXEAwGGdr3IF178
+	 D5SkLE2wqKDBZ1CO5aNsGs0Xp+7ePnhkEWCwtnUNPaTG8WhG7FpPJIWdmURLAc7uxu
+	 rgK3d2TLHz/P+P3W5C4o6RRZ7q3Pde5efQUw8SVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Qingqing Yang <qingqing.yang@broadcom.com>,
+	Boris Sukholitko <boris.sukholitko@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 498/589] flow_dissector: do not dissect PPPoE PFC frames
-Date: Sat, 30 May 2026 18:06:19 +0200
-Message-ID: <20260530160237.705043867@linuxfoundation.org>
+Subject: [PATCH 5.10 499/589] flow_dissector: Do not count vlan tags inside tunnel payload
+Date: Sat, 30 May 2026 18:06:20 +0200
+Message-ID: <20260530160237.728806526@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,95 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Qingqing Yang <qingqing.yang@broadcom.com>
 
-[ Upstream commit d6c19b31a3c1d519fabdcf0aa239e6b6109b9473 ]
+[ Upstream commit 9f87eb4246994e32a4e4ea88476b20ab3b412840 ]
 
-RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
-RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
-PFC for PPPoE sessions, and the flow dissector driver has assumed an
-uncompressed frame until the blamed commit.
+We've met the problem that when there is a vlan tag inside
+GRE encapsulation, the match of num_of_vlans fails.
+It is caused by the vlan tag inside GRE payload has been
+counted into num_of_vlans, which is not expected.
 
-During the review process of that commit [1], support for PFC is
-suggested. However, having a compressed (1-byte) protocol field means
-the subsequent PPP payload is shifted by one byte, causing 4-byte
-misalignment for the network header and an unaligned access exception
-on some architectures.
+One example packet is like this:
+Ethernet II, Src: Broadcom_68:56:07 (00:10:18:68:56:07)
+                   Dst: Broadcom_68:56:08 (00:10:18:68:56:08)
+802.1Q Virtual LAN, PRI: 0, DEI: 0, ID: 100
+Internet Protocol Version 4, Src: 192.168.1.4, Dst: 192.168.1.200
+Generic Routing Encapsulation (Transparent Ethernet bridging)
+Ethernet II, Src: Broadcom_68:58:07 (00:10:18:68:58:07)
+                   Dst: Broadcom_68:58:08 (00:10:18:68:58:08)
+802.1Q Virtual LAN, PRI: 0, DEI: 0, ID: 200
+...
+It should match the (num_of_vlans 1) rule, but it matches
+the (num_of_vlans 2) rule.
 
-The exception can be reproduced by sending a PPPoE PFC frame to an
-ethernet interface of a MIPS board, with RPS enabled, even if no PPPoE
-session is active on that interface:
+The vlan tags inside the GRE or other tunnel encapsulated payload
+should not be taken into num_of_vlans.
+The fix is to stop counting the vlan number when the encapsulation
+bit is set.
 
-$ 0   : 00000000 80c40000 00000000 85144817
-$ 4   : 00000008 00000100 80a75758 81dc9bb8
-$ 8   : 00000010 8087ae2c 0000003d 00000000
-$12   : 000000e0 00000039 00000000 00000000
-$16   : 85043240 80a75758 81dc9bb8 00006488
-$20   : 0000002f 00000007 85144810 80a70000
-$24   : 81d1bda0 00000000
-$28   : 81dc8000 81dc9aa8 00000000 805ead08
-Hi    : 00009d51
-Lo    : 2163358a
-epc   : 805e91f0 __skb_flow_dissect+0x1b0/0x1b50
-ra    : 805ead08 __skb_get_hash_net+0x74/0x12c
-Status: 11000403        KERNEL EXL IE
-Cause : 40800010 (ExcCode 04)
-BadVA : 85144817
-PrId  : 0001992f (MIPS 1004Kc)
-Call Trace:
-[<805e91f0>] __skb_flow_dissect+0x1b0/0x1b50
-[<805ead08>] __skb_get_hash_net+0x74/0x12c
-[<805ef330>] get_rps_cpu+0x1b8/0x3fc
-[<805fca70>] netif_receive_skb_list_internal+0x324/0x364
-[<805fd120>] napi_complete_done+0x68/0x2a4
-[<8058de5c>] mtk_napi_rx+0x228/0xfec
-[<805fd398>] __napi_poll+0x3c/0x1c4
-[<805fd754>] napi_threaded_poll_loop+0x234/0x29c
-[<805fd848>] napi_threaded_poll+0x8c/0xb0
-[<80053544>] kthread+0x104/0x12c
-[<80002bd8>] ret_from_kernel_thread+0x14/0x1c
-
-Code: 02d51821  1060045b  00000000 <8c640000> 3084000f  2c820005  144001a2  00042080  8e220000
-
-To reduce the attack surface and maintain performance, do not process
-PPPoE PFC frames.
-
-[1] https://lore.kernel.org/r/20220630231016.GA392@debian.home
-Fixes: 46126db9c861 ("flow_dissector: Add PPPoE dissectors")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20260415022456.141758-1-qingfang.deng@linux.dev
+Fixes: 34951fcf26c5 ("flow_dissector: Add number of vlan tags dissector")
+Signed-off-by: Qingqing Yang <qingqing.yang@broadcom.com>
+Reviewed-by: Boris Sukholitko <boris.sukholitko@broadcom.com>
+Link: https://lore.kernel.org/r/20220919074808.136640-1-qingqing.yang@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ net/core/flow_dissector.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index c3d64e2d59295..86eb489ee76e0 100644
+index 86eb489ee76e0..10e9d6e47e0a3 100644
 --- a/net/core/flow_dissector.c
 +++ b/net/core/flow_dissector.c
-@@ -1229,16 +1229,13 @@ bool __skb_flow_dissect(const struct net *net,
- 			break;
+@@ -1170,8 +1170,8 @@ bool __skb_flow_dissect(const struct net *net,
+ 			nhoff += sizeof(*vlan);
  		}
  
--		/* least significant bit of the most significant octet
--		 * indicates if protocol field was compressed
-+		/* PFC (compressed 1-byte protocol) frames are not processed.
-+		 * A compressed protocol field has the least significant bit of
-+		 * the most significant octet set, which will fail the following
-+		 * ppp_proto_is_valid(), returning FLOW_DISSECT_RET_OUT_BAD.
- 		 */
- 		ppp_proto = ntohs(hdr->proto);
--		if (ppp_proto & 0x0100) {
--			ppp_proto = ppp_proto >> 8;
--			nhoff += PPPOE_SES_HLEN - 1;
--		} else {
--			nhoff += PPPOE_SES_HLEN;
--		}
-+		nhoff += PPPOE_SES_HLEN;
+-		if (dissector_uses_key(flow_dissector,
+-				       FLOW_DISSECTOR_KEY_NUM_OF_VLANS)) {
++		if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_NUM_OF_VLANS) &&
++		    !(key_control->flags & FLOW_DIS_ENCAPSULATION)) {
+ 			struct flow_dissector_key_num_of_vlans *key_nvs;
  
- 		if (ppp_proto == PPP_IP) {
- 			proto = htons(ETH_P_IP);
+ 			key_nvs = skb_flow_dissector_target(flow_dissector,
 -- 
 2.53.0
 
