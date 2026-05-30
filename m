@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8A341AC7;
-	Sat, 30 May 2026 18:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E243AB291;
+	Sat, 30 May 2026 18:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164271; cv=none; b=HqcDIO7ONKlYZU5qjTpcXiKHnp3oyYBecnmQxsZKtEEyXSo6ZUNvyU5tE3Ca2RdJQEG0hDH8Wr5sAj2Qbx+5WhbSYXSCgdrmXP0f0DVHCUIhE+QgKpIK5U9FJhycykfqeYTgojc2eyVbWKxrENHV2+HnQsex/x2YlaqZv1LHeiI=
+	t=1780164275; cv=none; b=uWj8UZUaAagfvNCb429j/VU9Gfx1fa3gXO85m9FL7PiDMuu7Qw7MVKKBRR1GSuRbq/No+MMTMRrkzmY92ufmCFsgYzf1tQEUAyP8VvILtC1wWRYvisdbsvC2sDnM5ml4EV8r54ErGx4jXkbDrVVxYH9sIR8B2dPg93K+yhibriY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164271; c=relaxed/simple;
-	bh=DYGnMJjaHau73R/5i8QnA34hI0+5LM2/WdRiK6apneE=;
+	s=arc-20240116; t=1780164275; c=relaxed/simple;
+	bh=/9GqUJNeM8upjZFzywJs6p4cI8TOwmGld1oTXqkTILg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kds9ioCd9bETB4vhv3Huchx6JryJws0xRQndWA698yN+e09uaeuz4CU1e/sVj+Rs6zgCPPWLlFJVdp6c5/H+HExmtsqLv1ozHJbePIHG27uVybhqUlICX1qmLpAfr0TZXLQc8PqduOKHfiymiaBfMQcywtP05lpjdL42MNXKyLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iy0YLsNt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q+Jv6Ye8+mWTRy0hjf/dwtR+MkT7iRBbsgiEmj98ODrLNOyI9bUoaepC2cm55X9whhvFntSMLTa26eH3zfgubc5kgwqnAVU82siLtEH/q7VONgk80Ulnhv27UPTLFrBzOiG4i5tpkp6g0+JmI5ZTs7GtS2hsDGiW3nUAHEb6tcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4AstRDr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iy0YLsNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071851F00893;
-	Sat, 30 May 2026 18:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4AstRDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6312B1F00893;
+	Sat, 30 May 2026 18:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164270;
-	bh=UHc8Mk0Tu3bdhLqjKo7Pc5YKzclgjWrqwB9nnfaGxH4=;
+	s=korg; t=1780164274;
+	bh=Ye3/V/mp1UFXuwXg6N7Fi8wBe6rM9ElhMqDPraxtB6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iy0YLsNtYhJ/OOVblOdxn2nwKw6lKMSSPA13/xRaDQj1mtKWGg9PHBayWdzQhpqCa
-	 sQUvOEfXrdjnyT+uKMWM3BOrE0nm3HniAkRYzmMkh2WlOvI6l4iyenibJ6aN7VV+e6
-	 beaP6Nr0XmDCjIoNE4LwFXagcY6bX05rrOW+5OfU=
+	b=I4AstRDrdRgGuJ3lMUKBPMBzLsAdhsr+0HWDK/LQKTEKXk3qezODGegIqfCi3V863
+	 dfbUrmkTJRZ6lzay5le9lWaQqR/+MizqVMxo8TkXmV8M5fC9sOg3Z1lMHyREsAaOn0
+	 DBP8CLuOiY29SAb9EgL0tm8j6cLYNx7UzZlHwB+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <denis.benato@linux.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 505/776] HID: asus: do not abort probe when not necessary
-Date: Sat, 30 May 2026 18:03:39 +0200
-Message-ID: <20260530160253.332515120@linuxfoundation.org>
+Subject: [PATCH 5.15 506/776] mtd: physmap_of_gemini: Fix disabled pinctrl state check
+Date: Sat, 30 May 2026 18:03:40 +0200
+Message-ID: <20260530160253.355454979@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,63 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 7253091766ded0fd81fe8d8be9b8b835495b06e8 ]
+[ Upstream commit b7c0982184b0661f5b1b805f3a56f1bd3757b63e ]
 
-In order to avoid dereferencing a NULL pointer asus_probe is aborted early
-and control of some asus devices is transferred over hid-generic after
-erroring out even when such NULL dereference cannot happen: only early
-abort when the NULL dereference can happen.
+The condition for checking the disabled pinctrl state incorrectly checks
+gf->enabled_state instead of gf->disabled_state. This causes misleading
+error messages and could lead to incorrect behavior when only one of the
+pinctrl states is defined.
 
-Also make the code shorter and more adherent to coding standards
-removing square brackets enclosing single-line if-else statements.
+Fix the condition to properly check gf->disabled_state.
 
-Fixes: d3af6ca9a8c3 ("HID: asus: fix UAF via HID_CLAIMED_INPUT validation")
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 9d3b5086f6d4 ("mtd: physmap_of_gemini: Handle pin control")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ drivers/mtd/maps/physmap-gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 5c7306fb57b1d..df12b75d2fa2b 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1142,22 +1142,17 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	 * were freed during registration due to no usages being mapped,
- 	 * leaving drvdata->input pointing to freed memory.
- 	 */
--	if (!drvdata->input || !(hdev->claimed & HID_CLAIMED_INPUT)) {
--		hid_err(hdev, "Asus input not registered\n");
--		ret = -ENOMEM;
--		goto err_stop_hw;
--	}
--
--	if (drvdata->tp) {
--		drvdata->input->name = "Asus TouchPad";
--	} else {
--		drvdata->input->name = "Asus Keyboard";
--	}
-+	if (drvdata->input && (hdev->claimed & HID_CLAIMED_INPUT)) {
-+		if (drvdata->tp)
-+			drvdata->input->name = "Asus TouchPad";
-+		else
-+			drvdata->input->name = "Asus Keyboard";
+diff --git a/drivers/mtd/maps/physmap-gemini.c b/drivers/mtd/maps/physmap-gemini.c
+index d4a46e159d38f..8d5b791dd08d4 100644
+--- a/drivers/mtd/maps/physmap-gemini.c
++++ b/drivers/mtd/maps/physmap-gemini.c
+@@ -181,7 +181,7 @@ int of_flash_probe_gemini(struct platform_device *pdev,
+ 		dev_err(dev, "no enabled pin control state\n");
  
--	if (drvdata->tp) {
--		ret = asus_start_multitouch(hdev);
--		if (ret)
--			goto err_stop_hw;
-+		if (drvdata->tp) {
-+			ret = asus_start_multitouch(hdev);
-+			if (ret)
-+				goto err_stop_hw;
-+		}
- 	}
- 
- 	return 0;
+ 	gf->disabled_state = pinctrl_lookup_state(gf->p, "disabled");
+-	if (IS_ERR(gf->enabled_state)) {
++	if (IS_ERR(gf->disabled_state)) {
+ 		dev_err(dev, "no disabled pin control state\n");
+ 	} else {
+ 		ret = pinctrl_select_state(gf->p, gf->disabled_state);
 -- 
 2.53.0
 
