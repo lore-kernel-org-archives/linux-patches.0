@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1F6332919;
-	Sat, 30 May 2026 16:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294343242BE;
+	Sat, 30 May 2026 16:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159922; cv=none; b=hZ3xeaKgd4JOebWexo3rtmm3k6OfWoRKXryXwlCyq+bCPvLbsi7O5Kacgw+YXuluLYu0NX71syBzQzUti0Rw7f8udKowHYw0+2hL4vtQgZrnJuAa+agM2Nhl9ERI/ayy+ct79Lckyf5EqUquXCYgiQbSFQS7wVr8MqA1d41BCFM=
+	t=1780159926; cv=none; b=THyD88RGLxXIvTUBfhUJWTM+9GZbofAInfVH/iG86L5SRWyx2uMDGHwjCAR+krYDhqNLEyE2OxNfgj4yxU2FtW3GY0JYji2FZZf7k+o1Hw4Vz3ORuhjyBJKpcbxon9JNG9TiDbIbe5c0KfpSyHJdoaT7FlwvJFIWTAhqFziZ458=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159922; c=relaxed/simple;
-	bh=fk4RgRtgyH2jI+3nZxlKyWoMgR7gEBLjsMhOFZmTHi8=;
+	s=arc-20240116; t=1780159926; c=relaxed/simple;
+	bh=ah3dajg82AHgAwFekjJSYxPudB2M6Oq+HXOrtb+WoF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa6kAq9gln2cQwfmDFRNY9aTaqLXQdboB3MkdCaWfj330WZEWPtrK0mx9C6XgfF6WKdBLDxjuQw8FPvDDR5QK+54TTv0Is0rIATheoijoRRUUDj//Xki66KJa8s0LXCr/egxM/zZBAz8IBiHd7zEobIDaM0UyOA+SRAA9FuMp3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cf/W7w2V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p1pyXPqH2Me9HwEOKCspgpbqJbMbORyd9710AOi/rEqmm1TfiLCTOCwfsMxEucyfM3+Wz0Q85zUachvBROyQK8pivw31a3v1ZmJHTJnXsoN0kp8LLpwxoG0/ZiWzO7b7oRrkuXpKuBx+92EAf0xTvp/sFFCiaNbdfzTMGHKi+uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jW4E20xv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cf/W7w2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210761F00893;
-	Sat, 30 May 2026 16:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jW4E20xv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4811F00898;
+	Sat, 30 May 2026 16:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159921;
-	bh=fR2C+0YF98yB3aIcI4/4g5y/HnLm3etE48p+quQpTRg=;
+	s=korg; t=1780159924;
+	bh=161Z4dm5vUjmJ9/30wlz6xE0OgeJ+1w6w2FyH6FB7vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cf/W7w2VsTKiRl9zer9JIccXM+XVd2XxOChssSo0TTEnG/4m5BmcLQNDL+rqiQxhR
-	 daBrXZrZTUT8x05Trpv+Ym5BtJrWud/Q6xi7V7UnIn/YsJcF53S0qDdfEEp9UYQLLc
-	 CeH2mz+ldftkC7ZGAsaXw1r+CiCk5Ofb5vwxuhV0=
+	b=jW4E20xvhbxS1J6HlsEYb4qqoDmCQMzsMbO0R53prb400Suh0fOYPdLZ2HlWNSmPg
+	 pmjD2CyTMRmmEfozTCC95xNSCEi29mdzNuYh+mUDi2ir10BMGtj2vPZgIMT7u+BfbF
+	 kQSSDgxhRpbPTsvzkbz13AJpB0YDcBIIiA4gdRoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 6.1 167/969] ibmasm: fix heap over-read in ibmasm_send_i2o_message()
-Date: Sat, 30 May 2026 17:54:51 +0200
-Message-ID: <20260530160305.124103776@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Brian Norris <briannorris@chromium.org>,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH 6.1 168/969] firmware: google: framebuffer: Do not mark framebuffer as busy
+Date: Sat, 30 May 2026 17:54:52 +0200
+Message-ID: <20260530160305.149095293@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,72 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 9aad71144fa3682cca3837a06c8623016790e7ec upstream.
+commit f3850d399de3b6142b02315227ef9e772ed0c302 upstream.
 
-The ibmasm_send_i2o_message() function uses get_dot_command_size() to
-compute the byte count for memcpy_toio(), but this value is derived from
-user-controlled fields in the dot_command_header (command_size: u8,
-data_size: u16) and is never validated against the actual allocation size.
-A root user can write a small buffer with inflated header fields, causing
-memcpy_toio() to read up to ~65 KB past the end of the allocation into
-adjacent kernel heap, which is then forwarded to the service processor
-over MMIO.
+Remove the flag IORESOURCE_BUSY flag from coreboot's framebuffer
+resource. It prevents simpledrm from successfully requesting the
+range for its own use; resulting in errors such as
 
-Silently clamping the copy size is not sufficient: if the header fields
-claim a larger size than the buffer, the SP receives a dot command whose
-own header is inconsistent with the I2O message length, which can cause
-the SP to desynchronize. Reject such commands outright by returning
-failure.
+[    2.775430] simple-framebuffer simple-framebuffer.0: [drm] could not acquire memory region [mem 0x80000000-0x80407fff flags 0x80000200]
 
-Validate command_size before calling get_mfa_inbound() to avoid leaking
-an I2O message frame: reading INBOUND_QUEUE_PORT dequeues a hardware
-frame from the controller's free pool, and returning without a
-corresponding set_mfa_inbound() call would permanently exhaust it.
+As with other uses of simple-framebuffer, the simple-framebuffer
+device should only declare it's I/O resources, but not actively use
+them.
 
-Additionally, clamp command_size to I2O_COMMAND_SIZE before the
-memcpy_toio() so the MMIO write stays within the I2O message frame,
-consistent with the clamping already performed by outgoing_message_size()
-for the header field.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260314165805.548293-1-LivelyCarpet87@gmail.com
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 851b4c14532d ("firmware: coreboot: Add coreboot framebuffer driver")
+Acked-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Julius Werner <jwerner@chromium.org>
+Cc: Samuel Holland <samuel@sholland.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: Brian Norris <briannorris@chromium.org>
+Cc: Julius Werner <jwerner@chromium.org>
+Cc: chrome-platform@lists.linux.dev
+Cc: <stable@vger.kernel.org> # v4.18+
+Link: https://patch.msgid.link/20260217155836.96267-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/lowlevel.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/firmware/google/framebuffer-coreboot.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/ibmasm/lowlevel.c
-+++ b/drivers/misc/ibmasm/lowlevel.c
-@@ -19,17 +19,21 @@ static struct i2o_header header = I2O_HE
- int ibmasm_send_i2o_message(struct service_processor *sp)
- {
- 	u32 mfa;
--	unsigned int command_size;
-+	size_t command_size;
- 	struct i2o_message *message;
- 	struct command *command = sp->current_command;
+--- a/drivers/firmware/google/framebuffer-coreboot.c
++++ b/drivers/firmware/google/framebuffer-coreboot.c
+@@ -50,7 +50,7 @@ static int framebuffer_probe(struct core
+ 		return -ENODEV;
  
-+	command_size = get_dot_command_size(command->buffer);
-+	if (command_size > command->buffer_size)
-+		return 1;
-+	if (command_size > I2O_COMMAND_SIZE)
-+		command_size = I2O_COMMAND_SIZE;
-+
- 	mfa = get_mfa_inbound(sp->base_address);
- 	if (!mfa)
- 		return 1;
- 
--	command_size = get_dot_command_size(command->buffer);
--	header.message_size = outgoing_message_size(command_size);
--
-+	header.message_size = outgoing_message_size((unsigned int)command_size);
- 	message = get_i2o_message(sp->base_address, mfa);
- 
- 	memcpy_toio(&message->header, &header, sizeof(struct i2o_header));
+ 	memset(&res, 0, sizeof(res));
+-	res.flags = IORESOURCE_MEM | IORESOURCE_BUSY;
++	res.flags = IORESOURCE_MEM;
+ 	res.name = "Coreboot Framebuffer";
+ 	res.start = fb->physical_address;
+ 	length = PAGE_ALIGN(fb->y_resolution * fb->bytes_per_line);
 
 
