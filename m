@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC93366567;
-	Sat, 30 May 2026 17:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED37532B11D;
+	Sat, 30 May 2026 17:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160532; cv=none; b=ExlBrKF0TfZSuDrU42Rg2QWXpKNjHQCNlvNnjNuo9NBW/VsnnA9W9oRtBUv4lx7GficD1hVnJpH3lFiw+27pCHduysgHTEf//KZdOydqDlQpGOMuyNZ7hgRN71FTk/B1xxigAHcnKsyKi+1EmRz8lAIAn15+iymuw5zxqdkaaWk=
+	t=1780160536; cv=none; b=a6ngqZkFyynlkuuIxCjnqJOJnpLj5qfP0bs4TyilHxpnniJOBYlYE6TUIct3HNe3AB2iU0wvFKtJydH/RdyEG4alwDDalLHEZTh84lSh4OBRQBNWvrCNMpzNrpo2z1Gcu2Plg0ps6G+UyBxr2rX3+ZQWrvqLVYKr3ajK2rkPta4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160532; c=relaxed/simple;
-	bh=IWe57j2BwzCseIT50aSApPf0FT6+sSpRfQnu+C8F1EE=;
+	s=arc-20240116; t=1780160536; c=relaxed/simple;
+	bh=lxIyP4er5hsdwHNPqVK3nOHzShfCspTLcnnAEcbGuss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Up/Ls2gn1S9C9HfUzd3mMxznNpD8ICXG02TEU5EvDmclK7/Anzn54cdbndW5ZB+cJ+K+leTzyDmQ8ji8iMb6lNPGayeDz1nuRxSMSKf6/bzPGNYHCjKTn9WUcpbRZvld4M3+XMm4A24vz78QRsqLfnrEno4ePNECBuLcSDA2ZBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTFXdJ9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=psv3d73JW/c/T2pM4EJ+GTTf18bx7Kb3zxNv1MCk+4TkMf/Pww744vFLhxRyWatNbIxu+k7nrUQPNWTXGBGLuJXTsLr+lOwhZ2RLfg1ISp1WVV9FMkAlM7m5ikwV6IcZNV2nhvS+Vh24nab7dgxKEBNqBeHJ9TGTbQ0a9wWsxdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7e7ynRe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTFXdJ9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681591F00893;
-	Sat, 30 May 2026 17:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7e7ynRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBAE1F00893;
+	Sat, 30 May 2026 17:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160531;
-	bh=pd/nJDIBL5eNMDYEnYsDsJAIqSz3p1QB+1ficqHxUCE=;
+	s=korg; t=1780160534;
+	bh=MQuctCjU3QoFx4HyAMPkwVVuHYkB6pWXrpDHEEdz1O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZTFXdJ9Zn3ZiSV+MoJAnjCawpL39q7pOULm/VZWKzh8AqMmN+Y2GvVEOtnEaL1X2Q
-	 CcmuaPqcDxfaPR4xLtUUh7jvChWLTyehiRUeNjA4KWKLQmiRW+54dAE4CidW3G+1di
-	 z0HUohtC45xpPO7+F+fObii4h7wQMMMUjpdbmsh4=
+	b=I7e7ynReFYewyce9W2zl1mG1LBLngt4atRiI1XmEz1uXw7wsYMZuYWRjzwLuhUP68
+	 Ds90Z30IMbtEv8JxgDvnVXZuP72YLBByWqL9zus3sgM69r2gm0KecKuM9GTm8BqCiZ
+	 zzWPegXQ7lnkmi4WAiCvXk9NMIOAiYA57rSCCCN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Zisen Ye <zisenye@stu.xidian.edu.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 363/969] smb/client: fix out-of-bounds read in symlink_data()
-Date: Sat, 30 May 2026 17:58:07 +0200
-Message-ID: <20260530160310.353792080@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.1 364/969] PCI/AER: Clear only error bits in PCIe Device Status
+Date: Sat, 30 May 2026 17:58:08 +0200
+Message-ID: <20260530160310.380158492@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,39 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zisen Ye <zisenye@stu.xidian.edu.cn>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit d62b8d236fab503c6fec1d3e9a38bea71feaca20 upstream.
+commit a8aeea1bf3c80cc87983689e0118770e019bd4f3 upstream.
 
-Since smb2_check_message() returns success without length validation for
-the symlink error response, in symlink_data() it is possible for
-iov->iov_len to be smaller than sizeof(struct smb2_err_rsp). If the buffer
-only contains the base SMB2 header (64 bytes), accessing
-err->ErrorContextCount (at offset 66) or err->ByteCount later in
-symlink_data() will cause an out-of-bounds read.
+Currently, pcie_clear_device_status() clears the entire PCIe Device Status
+register (PCI_EXP_DEVSTA) by writing back the value read from the register,
+which affects not only the error status bits but also other writable bits.
 
-Link: https://lore.kernel.org/linux-cifs/297d8d9b-adf7-42fd-a1c2-5b1f230032bc@chenxiaosong.com/
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Zisen Ye <zisenye@stu.xidian.edu.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+According to PCIe r7.0, sec 7.5.3.5, this register contains:
+
+  - RW1C error status bits (CED, NFED, FED, URD at bits 0-3): These are the
+    four error status bits that need to be cleared.
+
+  - Read-only bits (AUXPD at bit 4, TRPND at bit 5): Writing to these has
+    no effect.
+
+  - Emergency Power Reduction Detected (bit 6): A RW1C non-error bit
+    introduced in PCIe r5.0 (2019). This is currently the only writable
+    non-error bit in the Device Status register. Unconditionally clearing
+    this bit can interfere with other software components that rely on this
+    power management indication.
+
+  - Reserved bits (RsvdZ): These bits are required to be written as zero.
+    Writing 1s to them (as the current implementation may do) violates the
+    specification.
+
+To prevent unintended side effects, modify pcie_clear_device_status() to
+only write 1s to the four error status bits (CED, NFED, FED, URD), leaving
+the Emergency Power Reduction Detected bit and reserved bits unaffected.
+
+Fixes: ec752f5d54d7 ("PCI/AER: Clear device status bits during ERR_FATAL and ERR_NONFATAL")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260211124624.49656-1-xueshuai@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -239,7 +239,8 @@ smb2_check_message(char *buf, unsigned i
- 	if (len != calc_len) {
- 		/* create failed on symlink */
- 		if (command == SMB2_CREATE_HE &&
--		    shdr->Status == STATUS_STOPPED_ON_SYMLINK)
-+		    shdr->Status == STATUS_STOPPED_ON_SYMLINK &&
-+		    len > calc_len)
- 			return 0;
- 		/* Windows 7 server returns 24 bytes more */
- 		if (calc_len + 24 == len && command == SMB2_OPLOCK_BREAK_HE)
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2396,10 +2396,9 @@ EXPORT_SYMBOL_GPL(pci_set_pcie_reset_sta
+ #ifdef CONFIG_PCIEAER
+ void pcie_clear_device_status(struct pci_dev *dev)
+ {
+-	u16 sta;
+-
+-	pcie_capability_read_word(dev, PCI_EXP_DEVSTA, &sta);
+-	pcie_capability_write_word(dev, PCI_EXP_DEVSTA, sta);
++	pcie_capability_write_word(dev, PCI_EXP_DEVSTA,
++				   PCI_EXP_DEVSTA_CED | PCI_EXP_DEVSTA_NFED |
++				   PCI_EXP_DEVSTA_FED | PCI_EXP_DEVSTA_URD);
+ }
+ #endif
+ 
 
 
