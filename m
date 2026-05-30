@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53161241C8C;
-	Sat, 30 May 2026 18:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925C9233D9E;
+	Sat, 30 May 2026 18:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165130; cv=none; b=FjPkXshUf7ur6/MxAcZAPxCaqmD2lDw7j14dhSUxSc3OdLtgrTVWQtYGtczln0sbOE94zDGSHuRIP/Zje26I8x5/8rZXKdOXdp/O2sNBui5xCBWmGd5fdyLjYh6rLYzSsDdnvcFPNwvT7by/RMibql5sZ2/UNMzflDnmA1Xlv1g=
+	t=1780165133; cv=none; b=P6vU5DNDVqebOBUDWb0tV8QBG+P74zXjd/Wrjq7dt+bkukoXBxba77qw4qbdriNjCxvrWpnbIF/CUdjTsXAAeCaevtXRFwDa+qfndYiTOycTH0tlYrPypTeRYNhn8Nt+3FC5VH9oiaoBHRWGUr3L6COHrkYpesw/sGar31CMR6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165130; c=relaxed/simple;
-	bh=KiSpY4MECdDsFrnZLnspBdkOTyotNAAytKTD7FJSeck=;
+	s=arc-20240116; t=1780165133; c=relaxed/simple;
+	bh=7pg1xd9kdPhgNLzVah67TJE953Ol+gUADWlZm70MXPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YP0EdKlC98XvgmJYfg49IBDGxo4jWzAKdYMksyXmPEWFxlZRzEnaFLqZ1YkvqXgepga0FumrLesgGoc1sTbq/b/xjnq2nZJaxzvCOs724cYIZ/lcTh/zKGsi8IHfyygoqwP4ZvApgzTekwKx6Xo9OWHXUrDLDB6tEmdREdy60AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuAbFrD4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sBaJ3SdHC4WqmnNFbkT2kayXoOfNjm2gKUJMb+IMI60dKZAHobgMC9cfgbDaORm1Mvhv/JRhqyuqRDE3GqvX2r9XdmrGphCN24cZQDNskXYRA8W2V+4YmZXH8oTlVI8SJ0WnkrTzyvcd3J+OO4c+9wsMoT6y7VNi0ECDI3IlEwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nT8dybmN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuAbFrD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6A21F00893;
-	Sat, 30 May 2026 18:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nT8dybmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53B01F00893;
+	Sat, 30 May 2026 18:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165129;
-	bh=7ifciCnC27ge/WsO/gzwUMxT6z558VQCm/BVuvmE7+Y=;
+	s=korg; t=1780165132;
+	bh=O7RcPCj+Qci+4TPmEfjuDcdd72tjUxO9JkxJCDxjDuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuAbFrD4dzSN/IfJeTM53p+vStrifxs8U1bDtEO/X80sQg1oCYtUJEpRW/MlXD3lz
-	 PsrdYtpEjr92BPSGV0RoT0usYznDDgE8gKFh8B3UN3o7QRlzwpNna1MLZLQnPSXkA8
-	 19FIhNVqDly5a/z6iDJBgyVGf8cSU+xP9XW8kvpM=
+	b=nT8dybmNGSMP/+BXh4CWyi0ixoua1ZEuPXamFMrK+MdNbK31704wN8XhBD0e0N7Hj
+	 mbQhkrO8wf8OzjE0Py2o+9/Y7LZ76ZOzx3M04Q1tjIv1wZT1b2oaiFmV9cbCurZiYs
+	 1Dj7j4x7na4OGjhtblBgqf0nUGaMP7U2ZMvpYoKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Golle <daniel@makrotopia.org>,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 759/776] net: dsa: mt7530: sync driver-specific behavior of MT7531 variants
-Date: Sat, 30 May 2026 18:07:53 +0200
-Message-ID: <20260530160259.358265573@linuxfoundation.org>
+Subject: [PATCH 5.15 760/776] net: dsa: mt7530: fix FDB entries not aging out with short timeout
+Date: Sat, 30 May 2026 18:07:54 +0200
+Message-ID: <20260530160259.381465451@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,53 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
+[ Upstream commit e824e40d0e841fab66ab7897d6c7b14dc81c66a7 ]
 
-MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
-most basic properties. Despite that, assisted_learning_on_cpu_port and
-mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
-or EN7581, causing the expected issues on MMIO devices.
+The DSA forwarding selftests bridge_vlan_aware.sh and
+bridge_vlan_unaware.sh configure the bridge with ageing_time set to
+LOW_AGEING_TIME (1000 centiseconds, i.e. 10 seconds) and then run
+learning_test() in lib.sh, which expects a learned FDB entry to be
+removed after ageing_time + 10 seconds. On MT7530/MT7531 the entry
+persisted past the deadline and the "Found FDB record when should
+not" assertion failed.
 
-Apply both settings equally also for MT7988 and EN7581 by moving both
-assignments form mt7531_setup() to mt7531_setup_common().
+With msecs=10000, the algorithm in mt7530_set_ageing_time() finds
+AGE_CNT=0 and AGE_UNIT=9 as the first exact match (starting the
+search from tmp_age_count=0). The per-entry aging counter is
+initialized to AGE_CNT when a MAC address is learned, so with
+AGE_CNT=0 new entries start with a counter value of 0, which the
+hardware treats as "already aged" and never removes, effectively
+disabling aging.
 
-This fixes unwanted flooding of packets due to unknown unicast
-during DA lookup, as well as issues with heterogenous MTU settings.
+Fix this by starting the search from tmp_age_count=1 to ensure
+entries always have a non-zero initial aging counter. For a
+10-second ageing time this yields AGE_CNT=1 and AGE_UNIT=4 instead:
+the timer ticks every 5 seconds and entries are removed after 2
+ticks.
 
-Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
+Starting the search at AGE_CNT=1 raises the minimum representable
+ageing time from 1 to 2 seconds. Without bounds, a stale ageing_time
+of 1 second would now make the loop fall through without setting
+age_count and age_unit, leaving them uninitialized when written to
+the MT7530_AAC hardware register. Set ds->ageing_time_min and
+ds->ageing_time_max so the DSA core validates the range before the
+callback is invoked, and drop the now-redundant range check from
+mt7530_set_ageing_time().
+
+Fixes: ea6d5c924e39 ("net: dsa: mt7530: support setting ageing time")
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Link: https://patch.msgid.link/89ed7ec6d4fa0395ac53ad2809742bb1ce61ed12.1745290867.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e824e40d0e84 ("net: dsa: mt7530: fix FDB entries not aging out with short timeout")
+Link: https://patch.msgid.link/7788ded12dc07b1bce329ec35fa70f4b45f3f9b7.1778766629.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mt7530.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 86db6a18c8377..abd61514d3361 100644
+index abd61514d3361..f0b2510bff15b 100644
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -2534,6 +2534,9 @@ mt7531_setup_common(struct dsa_switch *ds)
- 	struct mt7530_priv *priv = ds->priv;
- 	int ret, i;
+@@ -907,12 +907,16 @@ mt7530_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
+ 	unsigned int age_count;
+ 	unsigned int age_unit;
  
-+	ds->assisted_learning_on_cpu_port = true;
-+	ds->mtu_enforcement_ingress = true;
-+
- 	mt753x_trap_frames(priv);
- 
- 	/* Enable and reset MIB counters */
-@@ -2673,9 +2676,6 @@ mt7531_setup(struct dsa_switch *ds)
- 	if (ret)
- 		return ret;
- 
--	ds->assisted_learning_on_cpu_port = true;
--	ds->mtu_enforcement_ingress = true;
+-	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds */
+-	if (secs < 1 || secs > (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1))
+-		return -ERANGE;
 -
- 	return 0;
- }
+-	/* iterate through all possible age_count to find the closest pair */
+-	for (tmp_age_count = 0; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
++	/* Applied timer is (AGE_CNT + 1) * (AGE_UNIT + 1) seconds.
++	 * The DSA core has already validated the range using
++	 * ds->ageing_time_min and ds->ageing_time_max.
++	 *
++	 * Iterate through all possible age_count values to find the closest
++	 * pair. Start from 1 because the per-entry aging counter is
++	 * initialized to AGE_CNT and a value of 0 means the entry will
++	 * never be aged out.
++	 */
++	for (tmp_age_count = 1; tmp_age_count <= AGE_CNT_MAX; ++tmp_age_count) {
+ 		unsigned int tmp_age_unit = secs / (tmp_age_count + 1) - 1;
+ 
+ 		if (tmp_age_unit <= AGE_UNIT_MAX) {
+@@ -2357,6 +2361,8 @@ mt7530_setup(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	if (priv->id == ID_MT7530) {
+ 		regulator_set_voltage(priv->core_pwr, 1000000, 1000000);
+@@ -2536,6 +2542,8 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 
+ 	ds->assisted_learning_on_cpu_port = true;
+ 	ds->mtu_enforcement_ingress = true;
++	ds->ageing_time_min = 2 * 1000;
++	ds->ageing_time_max = (AGE_CNT_MAX + 1) * (AGE_UNIT_MAX + 1) * 1000;
+ 
+ 	mt753x_trap_frames(priv);
  
 -- 
 2.53.0
