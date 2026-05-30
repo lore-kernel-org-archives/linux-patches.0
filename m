@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBAD3112C1;
-	Sat, 30 May 2026 18:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583333112C1;
+	Sat, 30 May 2026 18:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164437; cv=none; b=d59amE2p8s0JT3d7o3BHpnZQw+LS5cE5296Zp63W6MFX2AM6RdMMTvdI+6N9m9NMsR4IXtStBk+MCR0UJHzokP6KbrSnKQ6rLM9NSMMeQorqmKEQqutrctwPhi9eb4000GmsOs8343R/nxgY0KY/LCLWDVIAqEDCzGSLJs71Pus=
+	t=1780164441; cv=none; b=SAo8xuT6Ui1YEawRTfo+LitDjfuI6sdJIAnl1Aj4CDnAS1ahWVX1qZwVkgFjIZvTgSmTvLSuwqd4XPuoPtxuI2ri5LgsNvv5IvEMiJRZlcg3/G5uwuBh2fcHQKSZEQtrtbQkVBFgP5+VjhO6XbPRIf9scw9YlHijSLonB1WJNqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164437; c=relaxed/simple;
-	bh=cD1JWPSboPp1dX69evqbbti5On1M2EwHJD+BpFxUbmk=;
+	s=arc-20240116; t=1780164441; c=relaxed/simple;
+	bh=ebdq+IzmpPI6BfugIf6skAciFHbSloiBiyt8CxFKVuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jCxLT2oP91bFMQydlN6HtR14FX2wtq07F4f7JRx9IOmVIn6ih7+GUICmYyvgqfP5kFraM36pVNJBhnTUki5bLd8gCmT/vx14azZNEx34ryNQbS0Nte7kmjuZ/iovRCB0WdjfHe9RyfCziuwg9/10SB9QsP84P1inKYLuPcEfnd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkYJJ2Qw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hme2Wf90kF/XFz6qROI0h6kWxmyt2WUtdP4xDl97PcjKY1FzZ5KhWYJCdckmfodLnVYYZ3VkTeCa0iSpefwrdF4lCJnm5AmIHBBtHyBJNCeyWfmbVbgJqcEaXJfeeJrlyY2DPtrGyV+f0otmijHSadQUVuEsJGMlc7qHD28UQXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtxwJkcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkYJJ2Qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF7D1F00893;
-	Sat, 30 May 2026 18:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtxwJkcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A07F1F00893;
+	Sat, 30 May 2026 18:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164436;
-	bh=AsL667w9UkdS9LGS3uni5rfnhGmaZcGO6IH9L8z2hi8=;
+	s=korg; t=1780164440;
+	bh=pXVMHKsLqoPB1tFYWCa1to8cP/tBFDcCkMVcYY7NR4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WkYJJ2QwNWFjNOjFYrpILUcqLQFGM3Z5CObxzLOvk1lz11FE06bzrP86mTsB8p6+l
-	 JLnRWUl8gmHXe7TK/DRLtA0Z7J+YoVP/5wjvMY8yJZUXGcVbRlgVqTg2cEN8+M3fit
-	 ObHTBfsW93p/3y6K26jgEg3B9Pz07FeZ1FVMiZOc=
+	b=RtxwJkcPPaW8KhIc9Ikz85cjFg4+mbHvG9kljLW/z7f8JraLCXGtIHO794taG95m0
+	 3CfK3rro/l1WFUVnQJHJ4VCdYOCJiotTblOhrsULDe4WuJOafZ6pP64YtQOHlZ+Xfh
+	 fcVBKfPIrXWZBwGBybZiks+BRjGW9FTSL2wLnkKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 553/776] PCMCIA: Fix garbled log messages for KERN_CONT
-Date: Sat, 30 May 2026 18:04:27 +0200
-Message-ID: <20260530160254.443380858@linuxfoundation.org>
+Subject: [PATCH 5.15 527/776] tty: hvc_iucv: fix off-by-one in number of supported devices
+Date: Sat, 30 May 2026 18:04:01 +0200
+Message-ID: <20260530160253.837059044@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,57 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit bfeaa6814bd3f9a1f6d525b3b35a03b9a0368961 ]
+[ Upstream commit f2a880e802ad12d1e38039d1334fb1475d0f5241 ]
 
-For years the PCMCIA info messages are messed up by superfluous
-newlines. While f2e6cf76751d ("pcmcia: Convert dev_printk to
-dev_<level>") converted the code to pr_cont(), dev_info enforces a \n
-via vprintk_store setting LOG_NEWLINE, breaking subsequent pr_cont.
+MAX_HVC_IUCV_LINES == HVC_ALLOC_TTY_ADAPTERS == 8.
+This is the number of entries in:
+  static struct hvc_iucv_private *hvc_iucv_table[MAX_HVC_IUCV_LINES];
 
-Fix by logging the device name manually to allow pr_cont to work for
-more readable and not \n distorted logs.
+Sometimes hvc_iucv_table[] is limited by:
+(a)	if (num > hvc_iucv_devices) // for error detection
+or
+(b)	for (i = 0; i < hvc_iucv_devices; i++) // in 2 places
+(so these 2 don't agree; second one appears to be correct to me.)
 
-Fixes: f2e6cf76751d ("pcmcia: Convert dev_printk to dev_<level>")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+hvc_iucv_devices can be 0..8. This is a counter.
+(c)	if (hvc_iucv_devices > MAX_HVC_IUCV_LINES)
+
+If hvc_iucv_devices == 8, (a) allows the code to access hvc_iucv_table[8].
+Oops.
+
+Fixes: 44a01d5ba8a4 ("[S390] s390/hvc_console: z/VM IUCV hypervisor console support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260130072939.1535869-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/hvc/hvc_iucv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index 58782f21a442a..50e8e8522708c 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -188,7 +188,7 @@ static void do_io_probe(struct pcmcia_socket *s, unsigned int base,
- 	int any;
- 	u_char *b, hole, most;
- 
--	dev_info(&s->dev, "cs: IO port probe %#x-%#x:", base, base+num-1);
-+	pr_info("%s: cs: IO port probe %#x-%#x:", dev_name(&s->dev), base, base+num-1);
- 
- 	/* First, what does a floating port look like? */
- 	b = kzalloc(256, GFP_KERNEL);
-@@ -410,8 +410,8 @@ static int do_mem_probe(struct pcmcia_socket *s, u_long base, u_long num,
- 	struct socket_data *s_data = s->resource_data;
- 	u_long i, j, bad, fail, step;
- 
--	dev_info(&s->dev, "cs: memory probe 0x%06lx-0x%06lx:",
--		 base, base+num-1);
-+	pr_info("%s: cs: memory probe 0x%06lx-0x%06lx:",
-+	       dev_name(&s->dev), base, base+num-1);
- 	bad = fail = 0;
- 	step = (num < 0x20000) ? 0x2000 : ((num>>4) & ~0x1fff);
- 	/* don't allow too large steps */
+diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
+index 7d49a872de48a..9551269e106a4 100644
+--- a/drivers/tty/hvc/hvc_iucv.c
++++ b/drivers/tty/hvc/hvc_iucv.c
+@@ -130,7 +130,7 @@ static struct iucv_handler hvc_iucv_handler = {
+  */
+ static struct hvc_iucv_private *hvc_iucv_get_private(uint32_t num)
+ {
+-	if (num > hvc_iucv_devices)
++	if (num >= hvc_iucv_devices)
+ 		return NULL;
+ 	return hvc_iucv_table[num];
+ }
 -- 
 2.53.0
 
