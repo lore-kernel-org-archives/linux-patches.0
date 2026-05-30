@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D6A33A9DA;
-	Sat, 30 May 2026 16:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE703998B1;
+	Sat, 30 May 2026 16:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159937; cv=none; b=Uv2on7oDq/YVTduGfZvm256MqmXhiVKImwzdGTqz1IX2DWYU+jfU3VrzhGje+jCP47WNoQ3h0ZRx2lw9WeAJH65y9y2heRIJeFF3R1ZbYgJssOTQ0G+nf4arOsap1V9dOWdv6Z8DeGcfGhZ9oRF5Pe27vWYjjojoBZBzrK7nO3g=
+	t=1780159941; cv=none; b=XTa7eRI9tRg528jb8xWOugxUtXGkUo2/RFi9EhhQ5l6iyjVuDnuMLBOZqhka1oHqBwVXEgAMGCad7DXBHgzLmosqIAlFypIqYj7VUY0WV5TxxoNFwCNn/efYmrfgn9IqG8FTFIaYgvpMm0ZaCo71LRe3LLzvc20KcyeOhs/MnuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159937; c=relaxed/simple;
-	bh=NV1mt1AOAj6e7PDRI2Wq25y/C9kMqDQ/oL30IKJ9BMA=;
+	s=arc-20240116; t=1780159941; c=relaxed/simple;
+	bh=qxbEeQhPLQk/MYxe5XA9Y2o9ZCAuuJ7hmv6exQPdxkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lClQ6WKbULKaguZQgxDEgmcl+eyKbimGmilincacoO0NzM8wDa2gRJsxTn5MzItGU2InY6n/8Nrz7AlKlFwvYWjv4hYvDbJByuZvrDg39Py2bavG7zZwz7ooBsJiH3cnNHRZe4v2ITGTnqMPQE4TSGeAMVYWN6QJttS4M3wzT8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMkOB3V0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eb5AEWJyogkozNyo21RuS6Xh/5r+MHna114ANJfwguCKpUfsagqPuEIH1X1zpJ33aeDv4dmWEC+Vy8h+Vgr02H+abZKS5ahZzdUUFPUAtq8QFidZLnNdshN8xOhyTgRXZpCM65aF6SFficMtozkTI01eq9bMEVpUiAbySSD4NQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsVnxxbD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMkOB3V0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6136F1F00893;
-	Sat, 30 May 2026 16:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsVnxxbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2B61F00893;
+	Sat, 30 May 2026 16:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159936;
-	bh=pEpufSUKz3kFsQcVKynR3vsoKxHJRTzFP4gaSnpJsQY=;
+	s=korg; t=1780159939;
+	bh=yeYlKKZkbM/oldPESEF3YYr1dVpovXvELnym8Xxb51s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gMkOB3V0Yv2wVl9ryVsufnxaK7JBzKbaQUHlQRwjaRJL3KTAVf3fgLqH9Xkn3+CzV
-	 RhZQu0bn69lrx1dztzREwu6LUL1PAt09kwjTEfJZlrCy2SZqfdCJgsKaRELQCZqK6V
-	 QAlZnZRn7AStqzKy8U9sVb+i7x3FE3LFGEkAq0Jg=
+	b=WsVnxxbD2Hchja8eCX0Pd9LHA3h/6zo99RVEwOw6vhBQPwwIdyqvvxwCAH260MGnV
+	 7iWJiYFyREKn3fC06ALKx85al41swaj3Gu7y9t2ioZlrY+YC1+nXa/N1asAC7Lx+lL
+	 wXSCcWZQS6aPwQTa9jn8FvhoqvonGi604MrImTXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 201/969] parisc: _llseek syscall is only available for 32-bit userspace
-Date: Sat, 30 May 2026 17:55:25 +0200
-Message-ID: <20260530160306.028793359@linuxfoundation.org>
+	Simon Liebold <simonlie@amazon.de>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 202/969] selftests/mqueue: Fix incorrectly named file
+Date: Sat, 30 May 2026 17:55:26 +0200
+Message-ID: <20260530160306.055813975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -49,27 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Simon Liebold <simonlie@amazon.de>
 
-commit da3680f564bd787ce974f9931e6e924d908b3b2a upstream.
+commit 64fac99037689020ad97e472ae898e96ea3616dc upstream.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Commit 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
+intended to increase the timeout for mq_perf_tests from the default
+kselftest limit of 45 seconds to 180 seconds.
+
+Unfortunately, the file storing this information was incorrectly named
+`setting` instead of `settings`, causing the kselftest runner not to
+pick up the limit and keep using the default 45 seconds limit.
+
+Fix this by renaming it to `settings` to ensure that the kselftest
+runner uses the increased timeout of 180 seconds for this test.
+
+Fixes: 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
+Cc: <stable@vger.kernel.org> # 5.10.y
+Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Link: https://lore.kernel.org/r/20260312140200.2224850-1-simonlie@amazon.de
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/syscalls/syscall.tbl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mqueue/{setting => settings} | 0
+ tools/testing/selftests/mqueue/setting  |    1 -
+ tools/testing/selftests/mqueue/settings |    1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename tools/testing/selftests/mqueue/{setting => settings} (100%)
 
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -154,7 +154,7 @@
- # 137 was afs_syscall
- 138	common	setfsuid		sys_setfsuid
- 139	common	setfsgid		sys_setfsgid
--140	common	_llseek			sys_llseek
-+140	32	_llseek			sys_llseek
- 141	common	getdents		sys_getdents			compat_sys_getdents
- 142	common	_newselect		sys_select			compat_sys_select
- 143	common	flock			sys_flock
+--- a/tools/testing/selftests/mqueue/setting
++++ /dev/null
+@@ -1 +0,0 @@
+-timeout=180
+--- /dev/null
++++ b/tools/testing/selftests/mqueue/settings
+@@ -0,0 +1 @@
++timeout=180
 
 
