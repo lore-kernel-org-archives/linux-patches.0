@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9401C5799;
-	Sat, 30 May 2026 17:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B8233F8B4;
+	Sat, 30 May 2026 17:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162484; cv=none; b=FyvVw4W9fEBPxXS15YWqTmwJhMk5lEAFztrTvB4XK2k5o38U03XwQymoGddHDgbt0HNXjEfj9eARin+dRjZgpafswUnNp1Q4M25qelh0a1MAT1DwXa4p6KIV6derB/jMXYZ3BlCHGObE28LPMx67wQaEmPqRdei5YmxBK6gIHoA=
+	t=1780162488; cv=none; b=BlBnj46RqX6Xq2rl529+/qlJARvnNquONZX5XrG4Nry7Rz5wraIBUkIWliTjtuPdUHaJDMlijqfIE7tf3PcYzAarLrYsL/JnPTadFypNShmq3TSEC9ojnkHcb7O4pa+Bd1ZqXaj7nJbggnvnItrk9NReFKzE5TvQxXWyaTvodso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162484; c=relaxed/simple;
-	bh=/ICaCQTD/wCnpFbmj3EAwOYGDeXefu/oqHkiWrYieAA=;
+	s=arc-20240116; t=1780162488; c=relaxed/simple;
+	bh=Xws1MGelZzHqnrVyYLz9LLmWRYjk9YfNrd8OQf4WgSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPGxXX+vujCQWMnMXvO4bWQan3XlZ4ftHz3euAxwMVX1f7PUTs5PvsiRhZYwM/f+WqLAoIvYTe6dDv7/2XmDmuP1evHJyHRrBe+xoCtf+ebp8NgdH3H3Z5PxAXC2U52Xjv/41UxMZq5GZU7Z8py/nHHFqzu/a0AgT2KF2Qw7SUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTe2vcQO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0FQETwq6OdnWmliFEwNO5DcfDlKEEM8mQgBOkjCjJ6fxBjhe8S3ifvaRSMA6VRL+wR/XYJI6vZCa2ECn5YpNQTa4lwQuBxyGqJHoLK4fZAjXV00ExUKAcCAZlXeHZbY4qEJm7XuVISS2URUCAEq8wDhlMBpeZ9nXlRUeokdaBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvfMPvYT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTe2vcQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6B21F00893;
-	Sat, 30 May 2026 17:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvfMPvYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738DB1F00893;
+	Sat, 30 May 2026 17:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162483;
-	bh=qE6mMWjI11g7Q9NLf+ZawOEStacW27Wj5UJZfTGHF+4=;
+	s=korg; t=1780162487;
+	bh=U70d22u6WjTb7K+COQGVYnVO0vvokeXHjj2Ys85lJaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTe2vcQOdnyYro0cnvNWoSqevcU+mqip1C3dpPlO5zbC+7Zpc9tx5d7UYMX5B9FQp
-	 vJ/qZMFxhreU11eGSkrv1jvuFJvLECDjVpbjSEVYFrSTQnaSfF0r4ZbdGMhIluGjNT
-	 hkh9hWO+ldpJcXQDl+2yL/XYgVOSZ7bsZq+MLgBU=
+	b=jvfMPvYT61A/j9bM4pAdohM1sQ5KIN4k9JnBALAljf0rbocUtzJcKH5lY/1WXqTQe
+	 uT/2izYu9CdFIBWXTf82yyUbbxs+fz12HsKstaCvs9bMUZfnw9dGJkH5dORqf9GvqV
+	 tgSGw3s6c0amqAAU7meIoO6vk/NY433dmcOjeDCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 934/969] drm/msm/dsi: dont dump registers past the mapped region
-Date: Sat, 30 May 2026 18:07:38 +0200
-Message-ID: <20260530160326.539232279@linuxfoundation.org>
+Subject: [PATCH 6.1 935/969] drm/msm: Fix iommu_map_sgtable() return value check and avoid WARN
+Date: Sat, 30 May 2026 18:07:39 +0200
+Message-ID: <20260530160326.569252019@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 5b49a46baa853b26dbefa65c6c75dd9ff69f63d4 ]
+[ Upstream commit 55e0f0d1c1a4ee1e46da7da4d443eb3044fb3851 ]
 
-On DSI 6G platforms the IO address space is internally adjusted by
-io_offset. Later this adjusted address might be used for memory dumping.
-However the size that is used for memory dumping isn't adjusted to
-account for the io_offset, leading to the potential access to the
-unmapped region. Lower ctrl_size by the io_offset value to prevent
-access past the mapped area.
+Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
+changed iommu_map_sgtable() to return an ssize_t and negative values
+in error cases, rather than a size_t and a zero.
 
- msm_disp_snapshot_add_block+0x1d4/0x3c8 [msm] (P)
- msm_dsi_host_snapshot+0x4c/0x78 [msm]
- msm_dsi_snapshot+0x28/0x50 [msm]
- msm_disp_snapshot_capture_state+0x74/0x140 [msm]
- msm_disp_snapshot_state_sync+0x60/0x90 [msm]
- _msm_disp_snapshot_work+0x30/0x90 [msm]
- kthread_worker_fn+0xdc/0x460
- kthread+0x120/0x140
+Store the return value in the appropriate type and in case of error,
+return it rather than WARNing.
 
-Fixes: bac2c6a62ed9 ("drm/msm: get rid of msm_iomap_size")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/721747/
-Link: https://lore.kernel.org/r/20260428-msm-fix-dsi-dump-v1-1-5d4cb5ccfac7@oss.qualcomm.com
+Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Patchwork: https://patchwork.freedesktop.org/patch/719685/
+Message-ID: <20260421-iommu_map_sgtable-return-v1-3-fb484c07d2a1@nvidia.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/msm_iommu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 88843505d89c9..a2a6cb3a2262d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1947,6 +1947,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index 0de3612135e96..aa69713ea7f80 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -359,14 +359,15 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+ 		struct sg_table *sgt, size_t len, int prot)
+ {
+ 	struct msm_iommu *iommu = to_msm_iommu(mmu);
+-	size_t ret;
++	ssize_t ret;
  
- 	/* fixup base address by io offset */
- 	msm_host->ctrl_base += cfg->io_offset;
-+	msm_host->ctrl_size -= cfg->io_offset;
+ 	/* The arm-smmu driver expects the addresses to be sign extended */
+ 	if (iova & BIT_ULL(48))
+ 		iova |= GENMASK_ULL(63, 49);
  
- 	ret = devm_regulator_bulk_get_const(&pdev->dev, cfg->num_regulators,
- 					    cfg->regulator_data,
+ 	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
+-	WARN_ON(!ret);
++	if (ret < 0)
++		return ret;
+ 
+ 	return (ret == len) ? 0 : -EINVAL;
+ }
 -- 
 2.53.0
 
