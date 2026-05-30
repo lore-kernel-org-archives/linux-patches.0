@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04876217704;
-	Sat, 30 May 2026 18:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4955217555;
+	Sat, 30 May 2026 18:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165413; cv=none; b=tqUVMY6rm1NnqvOHQsWgY1e7AzRAl7yH3h2MNlLA+/5dIaAdr6p48U+S+NsmValsiMNiY6r9tQSQXA+eFgTDDoq0f5Zvx1FI4JL3xJajYQLR9J3TGHV/H0sow6kIv08qr5BDzTZCM/ldzhpjqIlZZCDMM954/UYWPF4J1K+U0X8=
+	t=1780165416; cv=none; b=mumqmju551aID9y9XNNy3aG2S0PmoM+grHUh3OipYvsM3NojBwg01xtB3WLG/LlsLhg5KI/oFx3r9Nxs+U9x1ipm55aj/pijoHmG/9gh+Sw8aLtdV3TRp6xieCPXvucAEf0QtQ/Qx8hzsBSn/7Q+DBiKvLiGTFFKgdZCs6q/WzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165413; c=relaxed/simple;
-	bh=eGyFDH/DYXJyNAUtL1wKtAzCQyAbJvqsOX41QjZzP60=;
+	s=arc-20240116; t=1780165416; c=relaxed/simple;
+	bh=FiI+gSChpHdU7c5B6InDMyGN7axw/dmIw7Ib7DoY4PE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5/IPr9/GIxsFWG6RZuxWZlL3cgizf5zW8AHZriYCpWadOrA59Uweg5Idgzj8FAjpCneoIKF2cy9YpbWYXGl6ymH3VhoaqmPQDMpGH+YEYiuD+GifnC909HeM+6qEn/ojNzUGvf7dI9BCMm8qDAhhTurk9B22vIVAF1hRt1Ills=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBgJW/FV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lHN4yANg9LTP0jPGQXzZMcWuz6vCE3oyigZvJENj0rY4gobMdmfb/osPtQxYrJeLVgDriZuPJTyyxoj9qjw4ksqpfCkK4FY6E7NRZckktuApsDMWTTUGBslUcFB+mxBG59dz/99N/qTL8eH7AErAioHb94qABfgxaiY2PhD52XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPljWMLk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBgJW/FV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174921F00893;
-	Sat, 30 May 2026 18:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPljWMLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA711F00893;
+	Sat, 30 May 2026 18:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165411;
-	bh=C+17XezcuDUPeJr3jc+0EBGyawi7FcGZ8k880aYjIIY=;
+	s=korg; t=1780165415;
+	bh=gAOOBFggUXr0Glxf0SP7jZGPeZf95oXToiPLB4GqOCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBgJW/FVGy7UVvB9tSLqaHinqJQVMRJxJRCy1OUmnuvWI6GFtaUs6Lp8ERMOPJG3j
-	 4da7DI8ZIGEKxaAMjqzSOlDlp9xFaeErWL+4N4ZGrj8mprRarncWm6fapuhM4DY12z
-	 6/e3m17vxV4YC0qq8+nWdNsGIitTylJhhAtEz/Do=
+	b=rPljWMLkATu5v2/qtB8Kgs0O1g0UeSLn+oAK1TIaD3w2AzkaCW8SiPZZMaLakFTC6
+	 wkCmUrwWqjPiX02/h71RQN8L2QbGn7FDfv7C14bJFm+hjom8/gbUwCJADFUk0k3yF8
+	 +Zcptluz63vsICQOVRYv6vqzn3d1athiXvH206Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com,
-	syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Angel4005 <ooara1337@gmail.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans de Goede <hansg@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ron Economos <re@w6rz.net>,
+	"Pavel Machek (CIP)" <pavel@nabladev.com>,
+	Brett A C Sheffield <bacs@librecast.net>,
+	Mark Brown <broonie@kernel.org>,
+	"Barry K. Nathan" <barryn@pobox.com>,
+	Peter Schneider <pschneider1968@googlemail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Vijayendra Suman <vijayendra.suman@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/589] media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
-Date: Sat, 30 May 2026 17:59:12 +0200
-Message-ID: <20260530160226.468856022@linuxfoundation.org>
+Subject: [PATCH 5.10 072/589] media: uvcvideo: Use heuristic to find stream entity
+Date: Sat, 30 May 2026 17:59:13 +0200
+Message-ID: <20260530160226.496219768@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,300 +65,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 0e2ee70291e64a30fe36960c85294726d34a103e ]
+[ Upstream commit 758dbc756aad429da11c569c0d067f7fd032bcf7 ]
 
-Per UVC 1.1+ specification 3.7.2, units and terminals must have a non-zero
-unique ID.
+Some devices, like the Grandstream GUV3100 webcam, have an invalid UVC
+descriptor where multiple entities share the same ID, this is invalid
+and makes it impossible to make a proper entity tree without heuristics.
 
-```
-Each Unit and Terminal within the video function is assigned a unique
-identification number, the Unit ID (UID) or Terminal ID (TID), contained in
-the bUnitID or bTerminalID field of the descriptor. The value 0x00 is
-reserved for undefined ID,
-```
+We have recently introduced a change in the way that we handle invalid
+entities that has caused a regression on broken devices.
 
-If we add a new entity with id 0 or a duplicated ID, it will be marked
-as UVC_INVALID_ENTITY_ID.
+Implement a new heuristic to handle these devices properly.
 
-In a previous attempt commit 3dd075fe8ebb ("media: uvcvideo: Require
-entities to have a non-zero unique ID"), we ignored all the invalid units,
-this broke a lot of non-compatible cameras. Hopefully we are more lucky
-this time.
-
-This also prevents some syzkaller reproducers from triggering warnings due
-to a chain of entities referring to themselves. In one particular case, an
-Output Unit is connected to an Input Unit, both with the same ID of 1. But
-when looking up for the source ID of the Output Unit, that same entity is
-found instead of the input entity, which leads to such warnings.
-
-In another case, a backward chain was considered finished as the source ID
-was 0. Later on, that entity was found, but its pads were not valid.
-
-Here is a sample stack trace for one of those cases.
-
-[   20.650953] usb 1-1: new high-speed USB device number 2 using dummy_hcd
-[   20.830206] usb 1-1: Using ep0 maxpacket: 8
-[   20.833501] usb 1-1: config 0 descriptor??
-[   21.038518] usb 1-1: string descriptor 0 read error: -71
-[   21.038893] usb 1-1: Found UVC 0.00 device <unnamed> (2833:0201)
-[   21.039299] uvcvideo 1-1:0.0: Entity type for entity Output 1 was not initialized!
-[   21.041583] uvcvideo 1-1:0.0: Entity type for entity Input 1 was not initialized!
-[   21.042218] ------------[ cut here ]------------
-[   21.042536] WARNING: CPU: 0 PID: 9 at drivers/media/mc/mc-entity.c:1147 media_create_pad_link+0x2c4/0x2e0
-[   21.043195] Modules linked in:
-[   21.043535] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:1 Not tainted 6.11.0-rc7-00030-g3480e43aeccf #444
-[   21.044101] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-[   21.044639] Workqueue: usb_hub_wq hub_event
-[   21.045100] RIP: 0010:media_create_pad_link+0x2c4/0x2e0
-[   21.045508] Code: fe e8 20 01 00 00 b8 f4 ff ff ff 48 83 c4 30 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 0f 0b eb e9 0f 0b eb 0a 0f 0b eb 06 <0f> 0b eb 02 0f 0b b8 ea ff ff ff eb d4 66 2e 0f 1f 84 00 00 00 00
-[   21.046801] RSP: 0018:ffffc9000004b318 EFLAGS: 00010246
-[   21.047227] RAX: ffff888004e5d458 RBX: 0000000000000000 RCX: ffffffff818fccf1
-[   21.047719] RDX: 000000000000007b RSI: 0000000000000000 RDI: ffff888004313290
-[   21.048241] RBP: ffff888004313290 R08: 0001ffffffffffff R09: 0000000000000000
-[   21.048701] R10: 0000000000000013 R11: 0001888004313290 R12: 0000000000000003
-[   21.049138] R13: ffff888004313080 R14: ffff888004313080 R15: 0000000000000000
-[   21.049648] FS:  0000000000000000(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
-[   21.050271] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   21.050688] CR2: 0000592cc27635b0 CR3: 000000000431c000 CR4: 0000000000750ef0
-[   21.051136] PKRU: 55555554
-[   21.051331] Call Trace:
-[   21.051480]  <TASK>
-[   21.051611]  ? __warn+0xc4/0x210
-[   21.051861]  ? media_create_pad_link+0x2c4/0x2e0
-[   21.052252]  ? report_bug+0x11b/0x1a0
-[   21.052540]  ? trace_hardirqs_on+0x31/0x40
-[   21.052901]  ? handle_bug+0x3d/0x70
-[   21.053197]  ? exc_invalid_op+0x1a/0x50
-[   21.053511]  ? asm_exc_invalid_op+0x1a/0x20
-[   21.053924]  ? media_create_pad_link+0x91/0x2e0
-[   21.054364]  ? media_create_pad_link+0x2c4/0x2e0
-[   21.054834]  ? media_create_pad_link+0x91/0x2e0
-[   21.055131]  ? _raw_spin_unlock+0x1e/0x40
-[   21.055441]  ? __v4l2_device_register_subdev+0x202/0x210
-[   21.055837]  uvc_mc_register_entities+0x358/0x400
-[   21.056144]  uvc_register_chains+0x1fd/0x290
-[   21.056413]  uvc_probe+0x380e/0x3dc0
-[   21.056676]  ? __lock_acquire+0x5aa/0x26e0
-[   21.056946]  ? find_held_lock+0x33/0xa0
-[   21.057196]  ? kernfs_activate+0x70/0x80
-[   21.057533]  ? usb_match_dynamic_id+0x1b/0x70
-[   21.057811]  ? find_held_lock+0x33/0xa0
-[   21.058047]  ? usb_match_dynamic_id+0x55/0x70
-[   21.058330]  ? lock_release+0x124/0x260
-[   21.058657]  ? usb_match_one_id_intf+0xa2/0x100
-[   21.058997]  usb_probe_interface+0x1ba/0x330
-[   21.059399]  really_probe+0x1ba/0x4c0
-[   21.059662]  __driver_probe_device+0xb2/0x180
-[   21.059944]  driver_probe_device+0x5a/0x100
-[   21.060170]  __device_attach_driver+0xe9/0x160
-[   21.060427]  ? __pfx___device_attach_driver+0x10/0x10
-[   21.060872]  bus_for_each_drv+0xa9/0x100
-[   21.061312]  __device_attach+0xed/0x190
-[   21.061812]  device_initial_probe+0xe/0x20
-[   21.062229]  bus_probe_device+0x4d/0xd0
-[   21.062590]  device_add+0x308/0x590
-[   21.062912]  usb_set_configuration+0x7b6/0xaf0
-[   21.063403]  usb_generic_driver_probe+0x36/0x80
-[   21.063714]  usb_probe_device+0x7b/0x130
-[   21.063936]  really_probe+0x1ba/0x4c0
-[   21.064111]  __driver_probe_device+0xb2/0x180
-[   21.064577]  driver_probe_device+0x5a/0x100
-[   21.065019]  __device_attach_driver+0xe9/0x160
-[   21.065403]  ? __pfx___device_attach_driver+0x10/0x10
-[   21.065820]  bus_for_each_drv+0xa9/0x100
-[   21.066094]  __device_attach+0xed/0x190
-[   21.066535]  device_initial_probe+0xe/0x20
-[   21.066992]  bus_probe_device+0x4d/0xd0
-[   21.067250]  device_add+0x308/0x590
-[   21.067501]  usb_new_device+0x347/0x610
-[   21.067817]  hub_event+0x156b/0x1e30
-[   21.068060]  ? process_scheduled_works+0x48b/0xaf0
-[   21.068337]  process_scheduled_works+0x5a3/0xaf0
-[   21.068668]  worker_thread+0x3cf/0x560
-[   21.068932]  ? kthread+0x109/0x1b0
-[   21.069133]  kthread+0x197/0x1b0
-[   21.069343]  ? __pfx_worker_thread+0x10/0x10
-[   21.069598]  ? __pfx_kthread+0x10/0x10
-[   21.069908]  ret_from_fork+0x32/0x40
-[   21.070169]  ? __pfx_kthread+0x10/0x10
-[   21.070424]  ret_from_fork_asm+0x1a/0x30
-[   21.070737]  </TASK>
-
-Reported-by: syzbot+0584f746fde3d52b4675@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0584f746fde3d52b4675
-Reported-by: syzbot+dd320d114deb3f5bb79b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dd320d114deb3f5bb79b
-Reported-by: Youngjun Lee <yjjuny.lee@samsung.com>
-Fixes: a3fbc2e6bb05 ("media: mc-entity.c: use WARN_ON, validate link pads")
+Reported-by: Angel4005 <ooara1337@gmail.com>
+Closes: https://lore.kernel.org/linux-media/CAOzBiVuS7ygUjjhCbyWg-KiNx+HFTYnqH5+GJhd6cYsNLT=DaA@mail.gmail.com/
+Fixes: 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Co-developed-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Reviewed-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Ron Economos <re@w6rz.net>
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
+Tested-by: Mark Brown <broonie@kernel.org>
+Tested-by: Barry K. Nathan <barryn@pobox.com>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Vijayendra Suman <vijayendra.suman@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 66 +++++++++++++++++++-----------
- drivers/media/usb/uvc/uvcvideo.h   |  2 +
- 2 files changed, 44 insertions(+), 24 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index c2adc6854c540..34e3f04340a23 100644
+index 34e3f04340a23..20a18caf77176 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -412,6 +412,9 @@ struct uvc_entity *uvc_entity_by_id(struct uvc_device *dev, int id)
- {
- 	struct uvc_entity *entity;
+@@ -442,13 +442,26 @@ static struct uvc_entity *uvc_entity_by_reference(struct uvc_device *dev,
  
-+	if (id == UVC_INVALID_ENTITY_ID)
-+		return NULL;
+ static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, int id)
+ {
+-	struct uvc_streaming *stream;
++	struct uvc_streaming *stream, *last_stream;
++	unsigned int count = 0;
+ 
+ 	list_for_each_entry(stream, &dev->streams, list) {
++		count += 1;
++		last_stream = stream;
+ 		if (stream->header.bTerminalLink == id)
+ 			return stream;
+ 	}
+ 
++	/*
++	 * If the streaming entity is referenced by an invalid ID, notify the
++	 * user and use heuristics to guess the correct entity.
++	 */
++	if (count == 1 && id == UVC_INVALID_ENTITY_ID) {
++		dev_warn(&dev->intf->dev,
++			 "UVC non compliance: Invalid USB header. The streaming entity has an invalid ID, guessing the correct one.");
++		return last_stream;
++	}
 +
- 	list_for_each_entry(entity, &dev->entities, list) {
- 		if (entity->id == id)
- 			return entity;
-@@ -1032,14 +1035,27 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 	return ret;
+ 	return NULL;
  }
  
--static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
--		unsigned int num_pads, unsigned int extra_size)
-+static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
-+					       u16 id, unsigned int num_pads,
-+					       unsigned int extra_size)
- {
- 	struct uvc_entity *entity;
- 	unsigned int num_inputs;
- 	unsigned int size;
- 	unsigned int i;
- 
-+	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
-+	if (id == 0) {
-+		dev_err(&dev->intf->dev, "Found Unit with invalid ID 0\n");
-+		id = UVC_INVALID_ENTITY_ID;
-+	}
-+
-+	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
-+	if (uvc_entity_by_id(dev, id)) {
-+		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n", id);
-+		id = UVC_INVALID_ENTITY_ID;
-+	}
-+
- 	extra_size = roundup(extra_size, sizeof(*entity->pads));
- 	if (num_pads)
- 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
-@@ -1049,7 +1065,7 @@ static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
- 	     + num_inputs;
- 	entity = kzalloc(size, GFP_KERNEL);
- 	if (entity == NULL)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	entity->id = id;
- 	entity->type = type;
-@@ -1120,10 +1136,10 @@ static int uvc_parse_vendor_control(struct uvc_device *dev,
- 			break;
- 		}
- 
--		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
--					p + 1, 2*n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
-+					    buffer[3], p + 1, 2 * n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
-@@ -1234,10 +1250,10 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return -EINVAL;
- 		}
- 
--		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
--					1, n + p);
--		if (term == NULL)
--			return -ENOMEM;
-+		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
-+					    buffer[3], 1, n + p);
-+		if (IS_ERR(term))
-+			return PTR_ERR(term);
- 
- 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
- 			term->camera.bControlSize = n;
-@@ -1293,10 +1309,10 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return 0;
- 		}
- 
--		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
--					1, 0);
--		if (term == NULL)
--			return -ENOMEM;
-+		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
-+					    buffer[3], 1, 0);
-+		if (IS_ERR(term))
-+			return PTR_ERR(term);
- 
- 		memcpy(term->baSourceID, &buffer[7], 1);
- 
-@@ -1317,9 +1333,10 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-+					    p + 1, 0);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->baSourceID, &buffer[5], p);
- 
-@@ -1341,9 +1358,9 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->baSourceID, &buffer[4], 1);
- 		unit->processing.wMaxMultiplier =
-@@ -1372,9 +1389,10 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
--		if (unit == NULL)
--			return -ENOMEM;
-+		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
-+					    p + 1, n);
-+		if (IS_ERR(unit))
-+			return PTR_ERR(unit);
- 
- 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index a83995276170b..46ec07ef1ef5a 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -170,6 +170,8 @@
- 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
- 
- 
-+#define UVC_INVALID_ENTITY_ID          0xffff
-+
- /* ------------------------------------------------------------------------
-  * Driver specific constants.
-  */
 -- 
 2.53.0
 
