@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA9224EAB1;
-	Sat, 30 May 2026 18:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5299024EAB1;
+	Sat, 30 May 2026 18:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165231; cv=none; b=RUhUtTSVymlmRZMbN/k/8Y8cvxtAHcbpOb69XUTsvXqjo+wP/gzWuLpMQJMeER2SYCYZ/6ikXBO9eC8YNZe+AQDfqpe4UwUnzW/SLBCc+66ADKuzqmN4lSG0mOEgY/s5/BZ3mecWVd9OYI2J2l/g5MhUn9ef4XHj4Qcx1IZOWLk=
+	t=1780165238; cv=none; b=d1pBN70sFVDRjADx+LH8SSOxhsJEVy88NPLpaM3hsqnA4UNNLpOyx2WXRNzSFM93NHe1k/QkNx2DqRRRAPiToScShglRoMFZkjdK5/U4DvlRxqJWORxy1g0T72iRsth/gi9AGFS+stG7JSemllWJ56doXLs+RWoFjxz2bwXnx1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165231; c=relaxed/simple;
-	bh=OfKZm7VXCLWFSXh5V7tnjjPJKhhTj5se+ApCb7ramvg=;
+	s=arc-20240116; t=1780165238; c=relaxed/simple;
+	bh=1P+/jLpJfTGAiis4arMgapkZ0i15rGVZrbiTQWw2NJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H63OXGiMFNyFhLwiglNGx57jDMRylmYV4jVBNMXwoBXUQzY7JL3Vzz4pvzYIj8N9rmKQvuCcdZLkPULxEFkKrrhYTISIZ7ft0QimhQRPO7J6jylCyyIlS2Ih8lQaGIhqXmBykdB/GzgTR2AB5dSyNZ/QnmEROGi86cgHDaQ5xKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0oPUHDw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z6+kWDycwwq/cuGaJpYvV7Y3Enjc1CKBNA4PvfXPilPlBeMqgmVIAKP/t6sMSrXlaXOk/CbRZRvOuBPvvY/I6D1zAtO+7Gp9cbqNdiOsD9kTp/RantHcANRTskCRVkfS1Fkg+Tvc9L4nQVzCunrYWeBdnXPfCAF2j7HxmfQn1Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qdn4sukh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0oPUHDw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868061F00893;
-	Sat, 30 May 2026 18:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qdn4sukh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265CC1F00893;
+	Sat, 30 May 2026 18:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165230;
-	bh=F13f8o9V+T2Q9vBUWPjFk8UZV/Mx2DFsDcTgSSAuiKw=;
+	s=korg; t=1780165234;
+	bh=ZlM/Ofjo4fJEcqex5HFq0b4hJb0BuJwECrS9gfx3d8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0oPUHDwSgf3MHX5QrA74qliwJ9NhUKxVRcSnk35Rq/wzadPktFu+1gx+WDHIrsme
-	 pgmksDjm03lfZZWs0pWHrK6ubj/NEZzXEi0PS24H78qCQj7tjTkavOrTq13BfIxRxs
-	 G8Vz2bzK3GUJgO4pjVFhmfQP158MG2AuRxtQrx7I=
+	b=Qdn4sukhhFNUIuB8EAEcJtiZ7QIdJE9SvAwrL6UjZqZasu/tDsaWieVjDc2SFnk+2
+	 FgeHdcet5yKoqDn+rzF3ekwiwFmACN35cjbNhOVR84tz22F26p7MbjCbmkNpg88ier
+	 8O7UIkcVn7Qum871hS43gNBgxp2I66OuHNcVA0lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/589] drm/vc4: Protect madv read in vc4_gem_object_mmap() with madv_lock
-Date: Sat, 30 May 2026 17:58:19 +0200
-Message-ID: <20260530160225.057427194@linuxfoundation.org>
+Subject: [PATCH 5.10 019/589] net: sched: act_csum: validate nested VLAN headers
+Date: Sat, 30 May 2026 17:58:20 +0200
+Message-ID: <20260530160225.084295835@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,50 +52,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Ruide Cao <caoruide123@gmail.com>
 
-[ Upstream commit 338c56050d8e892604da97f67bfa8cc4015a955f ]
+[ Upstream commit c842743d073bdd683606cb414eb0ca84465dd834 ]
 
-The mmap callback reads bo->madv without holding madv_lock, racing with
-concurrent DRM_IOCTL_VC4_GEM_MADVISE calls that modify the field under
-the same lock. Add the missing locking to prevent the data race.
+tcf_csum_act() walks nested VLAN headers directly from skb->data when an
+skb still carries in-payload VLAN tags. The current code reads
+vlan->h_vlan_encapsulated_proto and then pulls VLAN_HLEN bytes without
+first ensuring that the full VLAN header is present in the linear area.
 
-Fixes: b9f19259b84d ("drm/vc4: Add the DRM_IOCTL_VC4_GEM_MADVISE ioctl")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-4-92defc940a29@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+If only part of an inner VLAN header is linearized, accessing
+h_vlan_encapsulated_proto reads past the linear area, and the following
+skb_pull(VLAN_HLEN) may violate skb invariants.
+
+Fix this by requiring pskb_may_pull(skb, VLAN_HLEN) before accessing and
+pulling each nested VLAN header. If the header still is not fully
+available, drop the packet through the existing error path.
+
+Fixes: 2ecba2d1e45b ("net: sched: act_csum: Fix csum calc for tagged packets")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/22df2fcb49f410203eafa5d97963dd36089f4ecf.1774892775.git.caoruide123@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_csum.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 9006b9861c90c..437084f7973c6 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -719,12 +719,15 @@ int vc4_mmap(struct file *filp, struct vm_area_struct *vma)
- 		return -EINVAL;
- 	}
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 4fa4fcb842ba7..107dc690de051 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -602,8 +602,12 @@ static int tcf_csum_act(struct sk_buff *skb, const struct tc_action *a,
+ 			protocol = skb->protocol;
+ 			orig_vlan_tag_present = true;
+ 		} else {
+-			struct vlan_hdr *vlan = (struct vlan_hdr *)skb->data;
++			struct vlan_hdr *vlan;
  
-+	mutex_lock(&bo->madv_lock);
- 	if (bo->madv != VC4_MADV_WILLNEED) {
- 		DRM_DEBUG("mmaping of %s BO not allowed\n",
- 			  bo->madv == VC4_MADV_DONTNEED ?
- 			  "purgeable" : "purged");
-+		mutex_unlock(&bo->madv_lock);
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&bo->madv_lock);
- 
- 	/*
- 	 * Clear the VM_PFNMAP flag that was set by drm_gem_mmap(), and set the
++			if (!pskb_may_pull(skb, VLAN_HLEN))
++				goto drop;
++
++			vlan = (struct vlan_hdr *)skb->data;
+ 			protocol = vlan->h_vlan_encapsulated_proto;
+ 			skb_pull(skb, VLAN_HLEN);
+ 			skb_reset_network_header(skb);
 -- 
 2.53.0
 
