@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D68A3242D7;
-	Sat, 30 May 2026 17:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE17C30E829;
+	Sat, 30 May 2026 17:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161489; cv=none; b=UcrEYN8QP5jYU/W05b5G833ssHMPT6BmHd2JlQF7gD4OCZiQPkBNIrMTeU2DHoDOxEhu75jS1WrbRFCM6kVkWnmlmgIIRppbkgXjER/9gZ1VOicnx+Cb7sYTE3d63wyPYU0ZPNc2+3U2OwGnCMnXgNxHz5qG33MGypZiF4sn7sw=
+	t=1780161492; cv=none; b=j+x9OfLrpLyjxb1i+UBAjbp0EYc9aoMDeAEKzaidInCBQ2iaG3yg/tNzri1eP3++1qrbDOpEZsRsRILAbVSfDNv1eDzzWUexFThj/zpGmXxqtk8oVPToMmc/94EQJJ3indpLWZNE+0d9Ath65wp3E+SFczxjN6PBq2sxgElQGEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161489; c=relaxed/simple;
-	bh=r6UgYIcY4oQG3qAHaXp/4ehTYDvwtNhoXnihMYO8V5E=;
+	s=arc-20240116; t=1780161492; c=relaxed/simple;
+	bh=DKHSCYwHwZRIwdRWD7HOxqCvlt00GcBv7uBNdMhn6tQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVd6BWvFqdv1LkrgaIAFvu9evJbfMdXuB+SkY1Zo7wKxrWwSVO1lOPFDz6G4NyIOXUrIEE7KpueZa8pJwJdrb6J69LM/bwObmUx+mY+22bfZsKzKaA7WS326Qlts4ovRbEy8hrjkihfRIy0ZmZjXxeXoWn6HAVfzKLRcV13IBa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbfdW3cw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9wYUjSEdW2eAxSXWtn6ZJZj4LOKQejodrm8FM953H57KRBeAWsWYAcE/iAg19VybuBB9bLg9u0Vgc10U9vZGuIR3JsD7L24M8JCbG9vSjzX6DP/ntkYGivFeLK32ya6NCBvFY7QlyYnHwZ7d0xUyxrUQUs6Iv0T5JiM9VyiYCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keteOori; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbfdW3cw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20471F00893;
-	Sat, 30 May 2026 17:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keteOori"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E211F00893;
+	Sat, 30 May 2026 17:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161488;
-	bh=bwlIo3hNc2gj5YPwM7GEcLOa3tfmfOd/CXFs3UUclnA=;
+	s=korg; t=1780161491;
+	bh=7mztmAQjvCDzaE+TNyX3EWpiCtzVumCR+WkRm9Cxg64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbfdW3cwoZ0RkTB977BOicYBK4ZbujPmHynxlPU+ZPwd/Ivu1VwGMbcWDx4HCHCVY
-	 6F0kKlsykN4WfoVwetWvSjb/6GVOXA+9jk2czprt+CxLD5TiaG1/o9VXN0cKskVLGU
-	 lzJXuHN16wQv6+i6UDyHKDa8V45Qd3ZxhvPyLddg=
+	b=keteOoriLKb+WrzcNIwED9jNYg/lyNPUA3+Mg790d2dcGVti/A9tBqirZbWBpYbn8
+	 FagFSC3tStdJ1aU2/UnqxA2fudZOACF6Kgx++Ed9OqsKIplAqCdmaNXdmWwaAINHeL
+	 w9SKw8ludgprNdNdTdsmPW4QoZbayqzTR1QtTvmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 598/969] dmaengine: mxs-dma: Fix missing return value from of_dma_controller_register()
-Date: Sat, 30 May 2026 18:02:02 +0200
-Message-ID: <20260530160316.935432513@linuxfoundation.org>
+Subject: [PATCH 6.1 632/969] perf expr: Return -EINVAL for syntax error in expr__find_ids()
+Date: Sat, 30 May 2026 18:02:36 +0200
+Message-ID: <20260530160317.903098961@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,34 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ab2bf6d4c0a0152907b18d25c1b118ea5ea779df ]
+[ Upstream commit 3a61fd866ef9aaa1d3158b460f852b74a2df07f4 ]
 
-Propagate the return value of of_dma_controller_register() in probe()
-instead of ignoring it.
+expr__find_ids() propagates the parser return value directly.  For syntax
+errors, the parser can return a positive value, but callers treat it as
+success, e.g., for below case on Arm64 platform:
 
-Fixes: a580b8c5429a6 ("dmaengine: mxs-dma: add dma support for i.MX23/28")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260225-mxsdma-module-v3-2-8f798b13baa6@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  metric expr 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES) for backend_bound
+  parsing metric: 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES)
+  Failure to read '#slots' literal: #slots = nan
+  syntax error
+
+Convert positive parser returns in expr__find_ids() to -EINVAL, as a
+result, the error value will be respected by callers.
+
+Before:
+
+  perf stat -C 5
+  Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Segmentation fault
+
+After:
+
+  perf stat -C 5
+  Failure to read '#slots'Cannot find metric or group `Default'
+
+Fixes: ded80bda8bc9 ("perf expr: Migrate expr ids table to a hashmap")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mxs-dma.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/expr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-index dc147cc2436e9..5d34440b9e127 100644
---- a/drivers/dma/mxs-dma.c
-+++ b/drivers/dma/mxs-dma.c
-@@ -827,6 +827,7 @@ static int mxs_dma_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(mxs_dma->dma_device.dev,
- 			"failed to register controller\n");
-+		return ret;
- 	}
+diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
+index aaacf514dc09c..2afd561a7aab9 100644
+--- a/tools/perf/util/expr.c
++++ b/tools/perf/util/expr.c
+@@ -380,7 +380,8 @@ int expr__find_ids(const char *expr, const char *one,
+ 	if (one)
+ 		expr__del_id(ctx, one);
  
- 	dev_info(mxs_dma->dma_device.dev, "initialized\n");
+-	return ret;
++	/* A positive value means syntax error, convert to -EINVAL */
++	return ret > 0 ? -EINVAL : ret;
+ }
+ 
+ double expr_id_data__value(const struct expr_id_data *data)
 -- 
 2.53.0
 
