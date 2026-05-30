@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DCA2E7389;
-	Sat, 30 May 2026 18:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8F22367DF;
+	Sat, 30 May 2026 18:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167166; cv=none; b=SoB7LvubqhvTNCLBcBnCC3mDQNAcMEpz26fBMeX1abnnX9SuUPTfqno+DBLKm0hZpF3Sp+Ga73Dt4thtKxdGWuEXQ0OIYve86UbN0brN3i5jvTj4quIjyGicC2R77iikWya5eyiVVmseDCPTHNOeNgU5uTpMzTBTd1dDvC5RxqI=
+	t=1780167171; cv=none; b=JdhFadZ/lnN+OASo/dzmVLy8X5yYVubN9RlwmXcz4C5mp2p/oFrGsrAyxy6DIXKHp0fLQwyl0F7HLV0MF92SB0cqaW0t2QKU/Nvmmuzt1UE+A0iLWqhjP2it7NplXLm5txHXJu3RGMmSkR7Jvq9sdwJ1FzUBgvYAPAPw4TQvkQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167166; c=relaxed/simple;
-	bh=FaTihR+UPmeNp4KQU/qrX6xjawvBqpwnpcEZTi/phLY=;
+	s=arc-20240116; t=1780167171; c=relaxed/simple;
+	bh=zEGL+DyYwle50YuZB0f+00c01aeR512oJTvoXXYiuNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhOFb4orgOjb8AAyU6J/9pb5omwH+Ro/ehlVuzpSeZNqT0pTddWeqpz94NatYvPsvPQJmj2VhcrPy2CI2v9yOjyMUIQrxO31p4vYdZzxNPhrwnxFrQBhdulU3fOykMDSNgNGubfgmMdCANAwipRAfy5GU2EwwF3Jgryw0VLmOOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1SU25Ag; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XmlvpQ8SNEHXT8SdQ0pFlPlE2hc66MUP6RCVur+kA3gGVUJNGlGG9hkCu5cS8yVfloSwZYREkTwTJGSnmvl9ymbtJHmXYHtzM33Ptz3VpAvyOR94tckYIDTKLn2jOsNvd1NI5dD+0BmdCN4+Uc1AXLedDeOMpj8pCQ7eDMYFx/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsYuyio/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1SU25Ag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E8C1F00893;
-	Sat, 30 May 2026 18:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsYuyio/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EE01F00893;
+	Sat, 30 May 2026 18:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167165;
-	bh=bbh+Sk1CkPxCDvthpphZ5yKlRHGU6nT3nMCsZPNKSjk=;
+	s=korg; t=1780167168;
+	bh=BiMgWx7ZkCETncGHImSDCe3UdeL4g9QBsQvZCZ2MVS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1SU25AgaRAtG11Nh1Uj/99i9nK+JCXTDmlpqMTxyBcD0ch2qIVINy6/7EuOg5Vq0
-	 heLubFCenyypC51baFh6t9Ki0HpILJm03JsE9vbHEX6FWV9fCCBlnprWCOHP3OcEj5
-	 s/raD7aVaP7baUL3uBwrRxLh9ldlW4yfWPVMmGTo=
+	b=VsYuyio/UJWBAxkp2/IaEgq8PEVyijiTfkm8WnG7y4lTYS9q9FAjMeWu9drDegdVF
+	 2nNNnHa2PkdEgYuI464glGk3WmsmY4BHDjYozkQ6qNe4U6CS2BUkh5FyKTLgX+OqS/
+	 b34iNOc6NFXeOGcx+LYBbzOGk/E4a7BU1Rh7FK5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 537/589] ring-buffer: Fix reporting of missed events in iterator
-Date: Sat, 30 May 2026 18:06:58 +0200
-Message-ID: <20260530160238.806607094@linuxfoundation.org>
+	Andreas Haarmann-Thiemann <eitschman@nebelreich.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 576/589] net: ethernet: cortina: Drop half-assembled SKB
+Date: Sat, 30 May 2026 18:07:37 +0200
+Message-ID: <20260530160239.746969162@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,78 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
 
-commit a254b6d13b0edd6272926674d2afc46d46e496b7 upstream.
+[ Upstream commit b266bacba796ff5c4dcd2ae2fc08aacf7ab39153 ]
 
-When tracing is active while reading the trace file, if the iterator
-reading the buffer detects that the writer has passed the iterator head,
-it will reset and set a "missed events" flag. This flag is passed to the
-output processing to show the user that events were missed:
+In gmac_rx() (drivers/net/ethernet/cortina/gemini.c), when
+gmac_get_queue_page() returns NULL for the second page of a multi-page
+fragment, the driver logs an error and continues — but does not free the
+partially assembled skb that was being assembled via napi_build_skb() /
+napi_get_frags().
 
-  CPU:4 [LOST EVENTS]
+Free the in-progress partially assembled skb via napi_free_frags()
+and increase the number of dropped frames appropriately
+and assign the skb pointer NULL to make sure it is not lingering
+around, matching the pattern already used elsewhere in the driver.
 
-The problem is that the flag is reset after it is checked in
-ring_buffer_iter_dropped(). But the "trace" file iterates over all the CPU
-ring buffers and it will check if they are dropped when figuring out which
-buffer to print next. This prematurely clears the missed_events flag if
-the CPU buffer with the missed events is not the one that is printed next.
-
-On the iteration where the CPU buffer with the missed events is printed,
-the check if it had missed events would return false and the output does
-not show that events were missed.
-
-Do not reset the missed_events flag when checking if there were missed
-events, but instead clear it when moving the iterator head to the next
-event.
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260520220801.4fd09d13@fedora
-Fixes: c9b7a4a72ff64 ("ring-buffer/tracing: Have iterator acknowledge dropped events")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260505-gemini-ethernet-fix-v2-1-997c31d06079@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -4167,6 +4167,7 @@ static void rb_iter_reset(struct ring_bu
- 	iter->head_page = cpu_buffer->reader_page;
- 	iter->head = cpu_buffer->reader_page->read;
- 	iter->next_event = iter->head;
-+	iter->missed_events = 0;
- 
- 	iter->cache_reader_page = iter->head_page;
- 	iter->cache_read = cpu_buffer->read;
-@@ -4776,10 +4777,7 @@ ring_buffer_peek(struct trace_buffer *bu
-  */
- bool ring_buffer_iter_dropped(struct ring_buffer_iter *iter)
- {
--	bool ret = iter->missed_events != 0;
--
--	iter->missed_events = 0;
--	return ret;
-+	return iter->missed_events != 0;
- }
- EXPORT_SYMBOL_GPL(ring_buffer_iter_dropped);
- 
-@@ -4996,7 +4994,7 @@ void ring_buffer_iter_advance(struct rin
- 	unsigned long flags;
- 
- 	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
--
-+	iter->missed_events = 0;
- 	rb_advance_iter(iter);
- 
- 	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index ee51367df6488..642ef6b3eebaf 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1463,6 +1463,11 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
++			if (skb) {
++				napi_free_frags(&port->napi);
++				port->stats.rx_dropped++;
++				skb = NULL;
++			}
+ 			continue;
+ 		}
+ 		page = gpage->page;
+-- 
+2.53.0
+
 
 
