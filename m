@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E753267B05;
-	Sat, 30 May 2026 17:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8658521B191;
+	Sat, 30 May 2026 17:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163014; cv=none; b=U1shFKLefJfRDxbYh2dTDvEtx4YJ7vpI9guOiZWi1e85udSULrnYBq/riJ3xq+B1IdK0b874426js47vMtVp1SPFGbg0YxJOOabRx/2+uVTGuzyNIFhFiQ+ZYhGIKp8VqHWhgBC/gEL4RksLpqbDce5fuPePEg1rVHmmeV/dZr4=
+	t=1780163017; cv=none; b=i+6jp6P/9+M9rZqWRVtzk+MUVd6DnnB4dJNAO4z/rxPG4kKMLYq05H1MAKnukF/rLc6mCbxobWC0ZYYKArxddtOb7ZxGLbwDVhCP9+kh8hv+MZScWmaGEib9jvVEGO2wx3Ur4pp30qozT9CXV0nGR+B9fxvEZkEdFkI6/7QvQYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163014; c=relaxed/simple;
-	bh=1w0SpJEyuNcp25b5DJcsUCgcznsV2CdlX0+sQv+Ju4M=;
+	s=arc-20240116; t=1780163017; c=relaxed/simple;
+	bh=vqlsMw16Sy8neNTLWf6WjqUbOvguk/YplNOcFtwV4Jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OP9+q/6MueNvBqxwPib/Zrp1lcQFWtr5EMYUXB+J9pNqeN4o9PiVgysOjSVe5q/aGbaLsSPXPHzOyKQC+ppr+dCuC7668/0pgljL7ZZMfGhWQq9JVL91FxxNOdh6Y75GOGdAyfwE6rH2CfqOR2bFE5iS8HafBGs8cL3+Cx83/P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zx5WOG2y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=evGAMhpPghq5kwR0HVQhVIQL6d7nOBbnhIcYlH32TjY39meuW04CsKxDI7ogedQbXmdLXg4NFbWHggSiSpbbtgW72PaIozivGJvYtakh+EK9zKphltGpQ4SoWqB4cUuCXYFYZMc8QWTK+s7yGxNqB1JoMs+6lXwGVK/Z5mJYAmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRJg0k7h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zx5WOG2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464DE1F00893;
-	Sat, 30 May 2026 17:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRJg0k7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9461F00893;
+	Sat, 30 May 2026 17:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163012;
-	bh=hWBbE1KteLGjmpdNfC+y1XM0yPX6gE8+ra2nS3FmXOs=;
+	s=korg; t=1780163016;
+	bh=BCh0DlUvPDMy7ERRW9R3KgP1LSCcIN5H3X+YiUzW/Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zx5WOG2yo3RApMI9yPfw4GbN8gdTI4Ih7gdJ9VtR1N3iIme/a/mjPLih/yp/RY7Rs
-	 ZCtsCt3QPdK8bBaM8WKU7WqnYOWhOYzPmKCJuodOQtyF69u2ENxB+SAPHNEr0Fso07
-	 EgMwcqh4rGuBBrCR2Dah2bde6OAlRrbW3yvAkJQ4=
+	b=lRJg0k7h/2xf2Ujz13HY6WzyUagRS8OZNkld6GeuiEZLJjSN/i9DWLy9J4t5eysgv
+	 YCgl5IHgsgHAXt3kIkRu9wUXuSBnUaprgyKagV3cwf6ZiOCbnXOoVIREuLXgjW8a5t
+	 0G12a7sYZxQB4JWRREHnyOPno5xhkagg01n+zvgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Khairul Anuar Romli" <khairul.anuar.romli@altera.com>
+	Sasha Levin <sashal@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Niravkumar L Rabara <nirav.rabara@altera.com>,
-	Mark Brown <broonie@kernel.org>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 130/776] spi: cadence-quadspi: Implement refcount to handle unbind during busy
-Date: Sat, 30 May 2026 17:57:24 +0200
-Message-ID: <20260530160243.744908964@linuxfoundation.org>
+	Paulo Andrade <pandrade@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 131/776] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
+Date: Sat, 30 May 2026 17:57:25 +0200
+Message-ID: <20260530160243.786168891@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,114 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 7446284023e8ef694fb392348185349c773eefb3 ]
+[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
 
-driver support indirect read and indirect write operation with
-assumption no force device removal(unbind) operation. However
-force device removal(removal) is still available to root superuser.
+This script
 
-Unbinding driver during operation causes kernel crash. This changes
-ensure driver able to handle such operation for indirect read and
-indirect write by implementing refcount to track attached devices
-to the controller and gracefully wait and until attached devices
-remove operation completed before proceed with removal operation.
+	#!/usr/bin/bash
 
-Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Reviewed-by: Niravkumar L Rabara <nirav.rabara@altera.com>
-Link: https://patch.msgid.link/8704fd6bd2ff4d37bba4a0eacf5eba3ba001079e.1756168074.git.khairul.anuar.romli@altera.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[Add cqspi defination in cqspi_exec_mem_op and minor context change fixed.]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+	echo 0 > /proc/sys/kernel/randomize_va_space
+
+	echo 'void main(void) {}' > TEST.c
+
+	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
+	gcc -m32 -fcf-protection=branch TEST.c -o test
+
+	bpftrace -e 'uprobe:./test:main {}' -c ./test
+
+"hangs", the probed ./test task enters an endless loop.
+
+The problem is that with randomize_va_space == 0
+get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
+just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
+by the stack vma.
+
+arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
+in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
+vm_unmapped_area() happily returns the high address > TASK_SIZE and then
+get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
+check.
+
+handle_swbp() doesn't report this failure (probably it should) and silently
+restarts the probed insn. Endless loop.
+
+I think that the right fix should change the x86 get_unmapped_area() paths
+to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
+CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
+because ->orig_ax = -1.
+
+But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
+the probed task is 32-bit to make in_ia32_syscall() true.
+
+Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
+Reported-by: Paulo Andrade <pandrade@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |   34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ arch/x86/kernel/uprobes.c |   24 ++++++++++++++++++++++++
+ include/linux/uprobes.h   |    1 +
+ kernel/events/uprobes.c   |   10 +++++++---
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -85,6 +85,8 @@ struct cqspi_st {
- 	bool			use_direct_mode;
- 	struct cqspi_flash_pdata f_pdata[CQSPI_MAX_CHIPSELECT];
- 	bool			wr_completion;
-+	refcount_t		refcount;
-+	refcount_t		inflight_ops;
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -1097,3 +1097,27 @@ bool arch_uretprobe_is_alive(struct retu
+ 	else
+ 		return regs->sp <= ret->stack;
+ }
++
++#ifdef CONFIG_IA32_EMULATION
++unsigned long arch_uprobe_get_xol_area(void)
++{
++	struct thread_info *ti = current_thread_info();
++	unsigned long vaddr;
++
++	/*
++	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
++	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
++	 * vm_unmapped_area_info.high_limit.
++	 *
++	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
++	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
++	 * (falsely) returns true because ->orig_ax == -1.
++	 */
++	if (test_thread_flag(TIF_ADDR32))
++		ti->status |= TS_COMPAT;
++	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++	ti->status &= ~TS_COMPAT;
++
++	return vaddr;
++}
++#endif
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -138,6 +138,7 @@ extern bool arch_uretprobe_is_alive(stru
+ extern bool arch_uprobe_ignore(struct arch_uprobe *aup, struct pt_regs *regs);
+ extern void arch_uprobe_copy_ixol(struct page *page, unsigned long vaddr,
+ 					 void *src, unsigned long len);
++extern unsigned long arch_uprobe_get_xol_area(void);
+ #else /* !CONFIG_UPROBES */
+ struct uprobes_state {
  };
- 
- struct cqspi_driver_platdata {
-@@ -684,6 +686,9 @@ static int cqspi_indirect_read_execute(s
- 	u8 *rxbuf_end = rxbuf + n_rx;
- 	int ret = 0;
- 
-+	if (!refcount_read(&cqspi->refcount))
-+		return -ENODEV;
-+
- 	writel(from_addr, reg_base + CQSPI_REG_INDIRECTRDSTARTADDR);
- 	writel(remaining, reg_base + CQSPI_REG_INDIRECTRDBYTES);
- 
-@@ -826,6 +831,9 @@ static int cqspi_indirect_write_execute(
- 	unsigned int write_bytes;
- 	int ret;
- 
-+	if (!refcount_read(&cqspi->refcount))
-+		return -ENODEV;
-+
- 	writel(to_addr, reg_base + CQSPI_REG_INDIRECTWRSTARTADDR);
- 	writel(remaining, reg_base + CQSPI_REG_INDIRECTWRBYTES);
- 
-@@ -1210,11 +1218,29 @@ static int cqspi_mem_process(struct spi_
- static int cqspi_exec_mem_op(struct spi_mem *mem, const struct spi_mem_op *op)
- {
- 	int ret;
-+	struct cqspi_st *cqspi = spi_controller_get_devdata(mem->spi->controller);
-+
-+	if (refcount_read(&cqspi->inflight_ops) == 0)
-+		return -ENODEV;
-+
-+	if (!refcount_read(&cqspi->refcount))
-+		return -EBUSY;
-+
-+	refcount_inc(&cqspi->inflight_ops);
-+
-+	if (!refcount_read(&cqspi->refcount)) {
-+		if (refcount_read(&cqspi->inflight_ops))
-+			refcount_dec(&cqspi->inflight_ops);
-+		return -EBUSY;
-+	}
- 
- 	ret = cqspi_mem_process(mem, op);
- 	if (ret)
- 		dev_err(&mem->spi->dev, "operation failed with %d\n", ret);
- 
-+	if (refcount_read(&cqspi->inflight_ops) > 1)
-+		refcount_dec(&cqspi->inflight_ops);
-+
- 	return ret;
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1437,6 +1437,12 @@ void uprobe_munmap(struct vm_area_struct
+ 		set_bit(MMF_RECALC_UPROBES, &vma->vm_mm->flags);
  }
  
-@@ -1564,6 +1590,9 @@ static int cqspi_probe(struct platform_d
- 			cqspi->wr_completion = false;
++unsigned long __weak arch_uprobe_get_xol_area(void)
++{
++	/* Try to map as high as possible, this is only a hint. */
++	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++}
++
+ /* Slot allocation for XOL */
+ static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
+ {
+@@ -1452,9 +1458,7 @@ static int xol_add_vma(struct mm_struct
  	}
  
-+	refcount_set(&cqspi->refcount, 1);
-+	refcount_set(&cqspi->inflight_ops, 1);
-+
- 	ret = devm_request_irq(dev, irq, cqspi_irq_handler, 0,
- 			       pdev->name, cqspi);
- 	if (ret) {
-@@ -1613,6 +1642,11 @@ static int cqspi_remove(struct platform_
- {
- 	struct cqspi_st *cqspi = platform_get_drvdata(pdev);
- 
-+	refcount_set(&cqspi->refcount, 0);
-+
-+	if (!refcount_dec_and_test(&cqspi->inflight_ops))
-+		cqspi_wait_idle(cqspi);
-+
- 	cqspi_controller_enable(cqspi, 0);
- 
- 	if (cqspi->rx_chan)
+ 	if (!area->vaddr) {
+-		/* Try to map as high as possible, this is only a hint. */
+-		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
+-						PAGE_SIZE, 0, 0);
++		area->vaddr = arch_uprobe_get_xol_area();
+ 		if (IS_ERR_VALUE(area->vaddr)) {
+ 			ret = area->vaddr;
+ 			goto fail;
 
 
