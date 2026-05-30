@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDAF33E36A;
-	Sat, 30 May 2026 18:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A95351C2F;
+	Sat, 30 May 2026 18:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166396; cv=none; b=sf63VNiRldGha+4xHtMytU+ATdSjb7qAZzoZJuuyg0Jj+39e+dxkqyZkwj9IlmM+h5o9QIAElfUIF8Mzw8+8NCINlefMM4bjBaqQiPk8+A7ewkuf6c+8x41ifO3rYKSYT2WI02k2IVEpsOiaMwAu5VX1gJqNIUYcHzT+krlrJU8=
+	t=1780166399; cv=none; b=MRLeb5h6BdpFXacPWSjc+jCe6EEdYVTqaaPfJz1naj/dwN+x/LBFo1SxKlVr4aVbwl30fRRK/dHysCo7sP5Ht4veO54el7dVOiP+FG01JJpWRGh81kRC7yvqC5iF4ThB8Cl6VyHcsyUSB2YJc3AIPZ0r3XGRCFqDcle55LDvPGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166396; c=relaxed/simple;
-	bh=YAhClOp7z29LB/yc0FvdLusEIuKWdZ4mqLVveEkiSQA=;
+	s=arc-20240116; t=1780166399; c=relaxed/simple;
+	bh=cBi2Vi8nzbrO40JAZg47qlU2UwET7Un9W9VObTewqiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dj8hTNGmUOHZCE3+RzL0MHLrNWgTvdVUuKXA2i1U/ECr7Ot57yfKhl/fYQ9Bacld7LLFqMbL/NDXntx20esBtHxKHA4kWp4fK2ioKZQ83iddm5ikrHVniQU8yaXUp8brzHH9UMhG+IyP2zax3HPzdAQ/eZvHEPtUtAeZYcVcc1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDfGLB76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CO+MPsQu6UFutPygU3x57hPNkNx0+XVZSo/uNvnOffCKIFz4Sj9CaeXY8N7UjtRYa+yru3ducra5DgXNm/V2adiThuR6dgS+H25SiQ9znZPzlJQXfHTdyFatDJ/nlXVSBpTUr+Xjh57SR2ryNE68KkKVLbX59Uo5BG3gQy6mRDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l26LXBzr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDfGLB76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C291F00893;
-	Sat, 30 May 2026 18:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l26LXBzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853BB1F00893;
+	Sat, 30 May 2026 18:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166394;
-	bh=b/1FTEAxKSZAjpVpxExM/rh327ZRpTQ4anyJcMt1FH8=;
+	s=korg; t=1780166398;
+	bh=c8iCrJUKKr8cl84Ien+jukFB7rzRWRK7w98mAhS/AOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDfGLB76Ay6eeBPvxI4VqQoeXEGO8DlK8kYDQCCrqYYzadP9FaSx6I1Uwd7f3sDNX
-	 dd3SrrDbAJz5ets0wCEMbvnqQwALseMtET7MC7ZK2gWYOahcEPWsjOGLzYiTw8B9T5
-	 SAIxlK+bRrZZa3TkwDNzJNkKQXTY6YLGmcNZgGGA=
+	b=l26LXBzrqTaaZW7oBWBmG/RpkWRHl8yRtTmcp73JBHbiKfv1oV68Ai1oTpX9YrrV1
+	 e/FyWKPkl8UMjK45PT8xuBgd1aWzptf0KLW9DemZlB8V8mKknBu/b/UKeOEk4TzzpD
+	 lmH9C9IAlf0XsP3tL7q/r7tX9oI/ccEB963pe+JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 326/589] dm cache: support shrinking the origin device
-Date: Sat, 30 May 2026 18:03:27 +0200
-Message-ID: <20260530160233.488879171@linuxfoundation.org>
+Subject: [PATCH 5.10 327/589] dm cache: fix dirty mapping checking in passthrough mode switching
+Date: Sat, 30 May 2026 18:03:28 +0200
+Message-ID: <20260530160233.513968046@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,193 +53,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit c2662b1544cbd8ea3181381bb899b8e681dfedc7 ]
+[ Upstream commit 322586745bd1a0e5f3559fd1635fdeb4dbd1d6b8 ]
 
-This patch introduces formal support for shrinking the cache origin by
-reducing the cache target length via table reloads. Cache blocks mapped
-beyond the new target length must be clean and are invalidated during
-preresume. If any dirty blocks exist in the area being removed, the
-preresume operation fails without setting the NEEDS_CHECK flag in
-superblock, and the resume ioctl returns EFBIG. The cache device remains
-suspended until a table reload with target length that fits existing
-mappings is performed.
+As mentioned in commit 9b1cc9f251af ("dm cache: share cache-metadata
+object across inactive and active DM tables"), dm-cache assumed table
+reload occurs after suspension, while LVM's table preload breaks this
+assumption. The dirty mapping check for passthrough mode was designed
+around this assumption and is performed during table creation, causing
+the check to fail with preload while metadata updates are ongoing. This
+risks loading dirty mappings into passthrough mode, resulting in data
+loss.
 
-Without this patch, reducing the cache target length could result in
-io errors (RHBZ: 2134334), out-of-bounds memory access to the discard
-bitset, and security concerns regarding data leakage.
+Reproduce steps:
 
-Verification steps:
-
-1. create a cache metadata with some cached blocks mapped to the tail
-   of the origin device. Here we use cache_restore v1.0 to build a
-   metadata with one clean block mapped to the last origin block.
-
-cat <<EOF >> cmeta.xml
-<superblock uuid="" block_size="128" nr_cache_blocks="512" \
-policy="smq" hint_width="4">
-  <mappings>
-    <mapping cache_block="0" origin_block="4095" dirty="false"/>
-  </mappings>
-</superblock>
-EOF
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-cache_restore -i cmeta.xml -o /dev/mapper/cmeta --metadata-version=2
-dmsetup remove cmeta
-
-2. bring up the cache whilst shrinking the cache origin by one block:
+1. Create a writeback cache with zero migration_threshold to produce
+   dirty mappings
 
 dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
-dmsetup create corig --table "0 524160 linear /dev/sdc 262144"
-dmsetup create cache --table "0 524160 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
+dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
+2 migration_threshold 0"
 
-3. check the number of cached data blocks via dmsetup status. It is
-   expected to be zero.
+2. Preload a table in passthrough mode
 
-dmsetup status cache | cut -d ' ' -f 7
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
 
-In addition to the script above, this patch can be verified using the
-"cache/resize" tests in dmtest-python:
+3. Write to the first cache block to make it dirty
 
-./dmtest run --rx cache/resize/shrink_origin --result-set default
+fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
+--direct=1 --size=64k
 
+4. Resume the inactive table. Now it's possible to load the dirty block
+   into passthrough mode.
+
+dmsetup resume cache
+
+Fix by moving the checks to the preresume phase to support table
+preloading. Also remove the unused function dm_cache_metadata_all_clean.
+
+Fixes: 2ee57d587357 ("dm cache: add passthrough mode")
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Stable-dep-of: 322586745bd1 ("dm cache: fix dirty mapping checking in passthrough mode switching")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 72 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 69 insertions(+), 3 deletions(-)
+ drivers/md/dm-cache-metadata.c | 11 -----------
+ drivers/md/dm-cache-metadata.h |  5 -----
+ drivers/md/dm-cache-target.c   | 25 ++++++++-----------------
+ 3 files changed, 8 insertions(+), 33 deletions(-)
 
+diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
+index 2ecd0db0f2945..715ff419b63ba 100644
+--- a/drivers/md/dm-cache-metadata.c
++++ b/drivers/md/dm-cache-metadata.c
+@@ -1749,17 +1749,6 @@ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *
+ 	return r;
+ }
+ 
+-int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result)
+-{
+-	int r;
+-
+-	READ_LOCK(cmd);
+-	r = blocks_are_unmapped_or_clean(cmd, 0, cmd->cache_blocks, result);
+-	READ_UNLOCK(cmd);
+-
+-	return r;
+-}
+-
+ void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd)
+ {
+ 	WRITE_LOCK_VOID(cmd);
+diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
+index 179ed5bf81a3e..79747130a48f7 100644
+--- a/drivers/md/dm-cache-metadata.h
++++ b/drivers/md/dm-cache-metadata.h
+@@ -137,11 +137,6 @@ void dm_cache_dump(struct dm_cache_metadata *cmd);
+  */
+ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *p);
+ 
+-/*
+- * Query method.  Are all the blocks in the cache clean?
+- */
+-int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result);
+-
+ int dm_cache_metadata_needs_check(struct dm_cache_metadata *cmd, bool *result);
+ int dm_cache_metadata_set_needs_check(struct dm_cache_metadata *cmd);
+ void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
 diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index b659fa412a7ad..e7931a8204f48 100644
+index e7931a8204f48..770bccd1fbb98 100644
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -475,6 +475,12 @@ struct cache {
- 	mempool_t migration_pool;
- 
- 	struct bio_set bs;
-+
-+	/*
-+	 * Cache_size entries. Set bits indicate blocks mapped beyond the
-+	 * target length, which are marked for invalidation.
-+	 */
-+	unsigned long *invalid_bitset;
- };
- 
- struct per_bio_data {
-@@ -1988,6 +1994,9 @@ static void __destroy(struct cache *cache)
- 	if (cache->discard_bitset)
- 		free_bitset(cache->discard_bitset);
- 
-+	if (cache->invalid_bitset)
-+		free_bitset(cache->invalid_bitset);
-+
- 	if (cache->copier)
- 		dm_kcopyd_client_destroy(cache->copier);
- 
-@@ -2576,6 +2585,13 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 	}
- 	clear_bitset(cache->discard_bitset, from_dblock(cache->discard_nr_blocks));
- 
-+	cache->invalid_bitset = alloc_bitset(from_cblock(cache->cache_size));
-+	if (!cache->invalid_bitset) {
-+		*error = "could not allocate bitset for invalid blocks";
-+		goto bad;
-+	}
-+	clear_bitset(cache->invalid_bitset, from_cblock(cache->cache_size));
-+
- 	cache->copier = dm_kcopyd_client_create(&dm_kcopyd_throttle);
- 	if (IS_ERR(cache->copier)) {
- 		*error = "could not create kcopyd client";
-@@ -2879,6 +2895,24 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	return 0;
- }
- 
-+static int load_filtered_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
-+				 bool dirty, uint32_t hint, bool hint_valid)
-+{
-+	struct cache *cache = context;
-+
-+	if (from_oblock(oblock) >= from_oblock(cache->origin_blocks)) {
-+		if (dirty) {
-+			DMERR("%s: unable to shrink origin; cache block %u is dirty",
-+			      cache_device_name(cache), from_cblock(cblock));
-+			return -EFBIG;
-+		}
-+		set_bit(from_cblock(cblock), cache->invalid_bitset);
-+		return 0;
-+	}
-+
-+	return load_mapping(context, oblock, cblock, dirty, hint, hint_valid);
-+}
-+
- /*
-  * The discard block size in the on disk metadata is not
-  * neccessarily the same as we're currently using.  So we have to
-@@ -3033,6 +3067,24 @@ static int resize_cache_dev(struct cache *cache, dm_cblock_t new_size)
- 	return 0;
- }
- 
-+static int truncate_oblocks(struct cache *cache)
-+{
-+	uint32_t nr_blocks = from_cblock(cache->cache_size);
-+	uint32_t i;
-+	int r;
-+
-+	for_each_set_bit(i, cache->invalid_bitset, nr_blocks) {
-+		r = dm_cache_remove_mapping(cache->cmd, to_cblock(i));
-+		if (r) {
-+			DMERR_LIMIT("%s: invalidation failed; couldn't update on disk metadata",
-+				    cache_device_name(cache));
-+			return r;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int cache_preresume(struct dm_target *ti)
- {
- 	int r = 0;
-@@ -3057,11 +3109,25 @@ static int cache_preresume(struct dm_target *ti)
+@@ -2540,23 +2540,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
+ 		goto bad;
  	}
  
- 	if (!cache->loaded_mappings) {
-+		/*
-+		 * The fast device could have been resized since the last
-+		 * failed preresume attempt.  To be safe we start by a blank
-+		 * bitset for cache blocks.
-+		 */
-+		clear_bitset(cache->invalid_bitset, from_cblock(cache->cache_size));
+-	if (passthrough_mode(cache)) {
+-		bool all_clean;
+-
+-		r = dm_cache_metadata_all_clean(cache->cmd, &all_clean);
+-		if (r) {
+-			*error = "dm_cache_metadata_all_clean() failed";
+-			goto bad;
+-		}
+-
+-		if (!all_clean) {
+-			*error = "Cannot enter passthrough mode unless all blocks are clean";
+-			r = -EINVAL;
+-			goto bad;
+-		}
+-
++	if (passthrough_mode(cache))
+ 		policy_allow_migrations(cache->policy, false);
+-	}
+ 
+ 	spin_lock_init(&cache->lock);
+ 	bio_list_init(&cache->deferred_bios);
+@@ -2883,6 +2868,12 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
+ 	struct cache *cache = context;
+ 
+ 	if (dirty) {
++		if (passthrough_mode(cache)) {
++			DMERR("%s: cannot enter passthrough mode unless all blocks are clean",
++			      cache_device_name(cache));
++			return -EBUSY;
++		}
 +
- 		r = dm_cache_load_mappings(cache->cmd, cache->policy,
--					   load_mapping, cache);
-+					   load_filtered_mapping, cache);
+ 		set_bit(from_cblock(cblock), cache->dirty_bitset);
+ 		atomic_inc(&cache->nr_dirty);
+ 	} else
+@@ -3120,7 +3111,7 @@ static int cache_preresume(struct dm_target *ti)
+ 					   load_filtered_mapping, cache);
  		if (r) {
  			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			metadata_operation_failed(cache, "dm_cache_load_mappings", r);
-+			if (r != -EFBIG)
-+				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
-+			return r;
-+		}
-+
-+		r = truncate_oblocks(cache);
-+		if (r) {
-+			metadata_operation_failed(cache, "dm_cache_remove_mapping", r);
+-			if (r != -EFBIG)
++			if (r != -EFBIG && r != -EBUSY)
+ 				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
  			return r;
  		}
- 
-@@ -3511,7 +3577,7 @@ static void cache_io_hints(struct dm_target *ti, struct queue_limits *limits)
- 
- static struct target_type cache_target = {
- 	.name = "cache",
--	.version = {2, 2, 0},
-+	.version = {2, 3, 0},
- 	.module = THIS_MODULE,
- 	.ctr = cache_ctr,
- 	.dtr = cache_dtr,
 -- 
 2.53.0
 
