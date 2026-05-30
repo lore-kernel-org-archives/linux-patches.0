@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E3E3469FC;
-	Sat, 30 May 2026 18:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8C825B08A;
+	Sat, 30 May 2026 18:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166687; cv=none; b=BjAjs6Eq1f/Qv//dhOJDsDnpS5tdYCbBTwZkhPphsbWXN6l1x7KnnY0HpFBvOkLPR2iDfhFFU6y15EYH/ZwYVbd0tscZCJ1aJmko3fha7sGSlv1GTc5Ko/Iwm63eOeTXzk4wEYQXjYyFWLz1uQSxAS8qNT6d3Fw6M6WTo1UdcvA=
+	t=1780166690; cv=none; b=QzYJfx2CI5Xtd8M+ctWyo30aR+bHdCr+iCDlCPBoQvxT8UUTzLOyvHM9l6xt9C9ue6dBCH7s0BKP3srGlAKN5E8eCnea7wBokxrD7HvSAdzFd8jNnSM4kSm7hKps3cZHlaf/VFl05lq3GlTOgEKXLI8j09g8i0VCj7ooxD0558I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166687; c=relaxed/simple;
-	bh=fWafcRpAIjiDnZ/QQ0nVLKog2nPQzLTuK0X22sBGrq0=;
+	s=arc-20240116; t=1780166690; c=relaxed/simple;
+	bh=GCFVZunY13Buggl03pyWxs4IBpqkjyvE9fLI8Ow3xv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4QTJMb8abaG4oLS4WNViPxk51ErCXAzoe/aWD6hkNS0huNzNouV7UkEYJhzgVzlyqKoXZWI+Josv3RXwcbU+muQtV2uRYUizgGcnSjEEb+Qtca2N+AavET1+3RQ8chjuB4Ksybcw2FhwMf9yZbMVPgScJMJVjBeeVXzZed6PNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Se0KujH4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lwONCLzMsDBIaAkSJ5fmBLkIgXtvuLB6k/nnuW6OeKI9BiiIgLV3aqrYy+wX5QYPynlPEnl+NmV7MnLfqOKVU27oX1JXicbDzeUgB3LcAInMTdRGe9Tfvdjf28dK/lUwH+bNvCmFcPpmtMEfJMl3qcZjtVxDyEFB2i36oSUkQI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUn0SW7I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Se0KujH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068A11F00893;
-	Sat, 30 May 2026 18:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUn0SW7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2611F00893;
+	Sat, 30 May 2026 18:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166686;
-	bh=LADOyQutXuTuCS1wMVb/xuaegvqb5DavlH/PJBTJNPw=;
+	s=korg; t=1780166689;
+	bh=ZgWNC6/Qel1HI+UuLA0qQSq5DstV/09LjdJ7xN4BBqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Se0KujH4hZ5p0RyBl6w2Nv2WB+cL0FiMrluKVURplZCl4KTclQ09H2jxttXWFgv4c
-	 fOzeJF6l6fdcXTDfazSZ2GKMvFz61XIU8kJNLnqWZscHHotDVAFT0yqZOY8dKmCN8q
-	 4SOVur5aWb0E8vd4DbM/mkDRX/8nKI33lgpK7Ads=
+	b=vUn0SW7IuLEbGe5icsApUB8VAht5qMvlEx0icRvvQ69vc2hF+YSpBCitS3HmdI2Yb
+	 DomOgIxlL2Guqb0Vtgsn2mYGJmZmlt0tSMNWwAZucKrIc2SZG3RxTyDBvHLIsDXl37
+	 ld7hVA4gO0SpfFllUy5YbzAatcab1qajDsMmbtVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Weiming Shi <bestswngs@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 396/589] RDMA/core: Prefer NLA_NUL_STRING
-Date: Sat, 30 May 2026 18:04:37 +0200
-Message-ID: <20260530160235.191643379@linuxfoundation.org>
+Subject: [PATCH 5.10 434/589] netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO
+Date: Sat, 30 May 2026 18:05:15 +0200
+Message-ID: <20260530160236.120494555@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,54 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 6ed3d14fc45d3da6025e7fe4a6a09066856698e2 ]
+[ Upstream commit 2195574dc6d9017d32ac346987e12659f931d932 ]
 
-These attributes are evaluated as c-string (passed to strcmp), but
-NLA_STRING doesn't check for the presence of a \0 terminator.
+nf_osf_match_one() computes ctx->window % f->wss.val in the
+OSF_WSS_MODULO branch with no guard for f->wss.val == 0. A
+CAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a
+subsequent matching TCP SYN divides by zero and panics the kernel.
 
-Either this needs to switch to nla_strcmp() and needs to adjust printf fmt
-specifier to not use plain %s, or this needs to use NLA_NUL_STRING.
+Reject the bogus fingerprint in nfnl_osf_add_callback() above the
+per-option for-loop. f->wss is per-fingerprint, not per-option, so
+the check must run regardless of f->opt_num (including 0). Also
+reject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that
+as "should not happen".
 
-As the code has been this way for long time, it seems to me that userspace
-does include the terminating nul, even tough its not enforced so far, and
-thus NLA_NUL_STRING use is the simpler solution.
+Crash:
+ Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
+ Call Trace:
+ <IRQ>
+  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)
+  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
+  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)
+  nf_hook_slow (net/netfilter/core.c:622)
+  ip_local_deliver (net/ipv4/ip_input.c:265)
+  ip_rcv (include/linux/skbuff.h:1162)
+  __netif_receive_skb_one_core (net/core/dev.c:6181)
+  process_backlog (net/core/dev.c:6642)
+  __napi_poll (net/core/dev.c:7710)
+  net_rx_action (net/core/dev.c:7945)
+  handle_softirqs (kernel/softirq.c:622)
 
-Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
-Link: https://patch.msgid.link/r/20260330122742.13315-1-fw@strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwpm_msg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/core/iwpm_msg.c b/drivers/infiniband/core/iwpm_msg.c
-index 46686990a8271..698ec2e730510 100644
---- a/drivers/infiniband/core/iwpm_msg.c
-+++ b/drivers/infiniband/core/iwpm_msg.c
-@@ -381,9 +381,9 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
- /* netlink attribute policy for the received response to register pid request */
- static const struct nla_policy resp_reg_policy[IWPM_NLA_RREG_PID_MAX] = {
- 	[IWPM_NLA_RREG_PID_SEQ]     = { .type = NLA_U32 },
--	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_NUL_STRING,
- 					.len = IWPM_DEVNAME_SIZE - 1 },
--	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_RREG_ULIB_VER]    = { .type = NLA_U16 },
- 	[IWPM_NLA_RREG_PID_ERR]     = { .type = NLA_U16 }
-@@ -698,7 +698,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index a2d7bfb4c1a69..be9bf079aeddf 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -321,6 +321,10 @@ static int nfnl_osf_add_callback(struct net *net, struct sock *ctnl,
+ 	if (f->opt_num > ARRAY_SIZE(f->opt))
+ 		return -EINVAL;
  
- /* netlink attribute policy for the received request for mapping info */
- static const struct nla_policy resp_mapinfo_policy[IWPM_NLA_MAPINFO_REQ_MAX] = {
--	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_STRING,
-+	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_MAPINFO_ULIB_VER]  = { .type = NLA_U16 }
- };
++	if (f->wss.wc >= OSF_WSS_MAX ||
++	    (f->wss.wc == OSF_WSS_MODULO && f->wss.val == 0))
++		return -EINVAL;
++
+ 	for (i = 0; i < f->opt_num; i++) {
+ 		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
+ 			return -EINVAL;
 -- 
 2.53.0
 
