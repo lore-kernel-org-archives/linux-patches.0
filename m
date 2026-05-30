@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109A33F5A0;
-	Sat, 30 May 2026 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCC8348C5E;
+	Sat, 30 May 2026 18:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164209; cv=none; b=mqw1rVGnmhLmj8jjv14y2UVZgtb6fxy//+0qHWchlGJalkvUh93lLwslFip+4ekpzRnn07rLgswzlnCJxeBI2SGbXVUgdsHgTyLFcplywyea+Np2HdbeCl0gY+4mf73DBkBuAU5f4w72NyQcsbQHdVkCpYASlZdCk8VcAkZFOBQ=
+	t=1780164212; cv=none; b=RdJz2vabB762jhIWwm/90bBMvPnRCn/qUf1QMNg7U5URqXFcySfCKfOUYvUbMQijQcrdkz7sGXRLa+Wblpy1GoBceQhBBfHgTNH6rhWmJMZn575bL62nGXz8TgdpzptFm8dWiM4EX52DLzXcwjNNVA70HHV7Q++jWCw5g+zmZBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164209; c=relaxed/simple;
-	bh=sqDCke8sDrYgXvlYx4bJ9njt8mx72/btgiA17xkcyQc=;
+	s=arc-20240116; t=1780164212; c=relaxed/simple;
+	bh=3kimuW+mIsHB3bEn6CYX0kQcZXeiIsOEGcOL+B5KioM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SSrKq+T41OzzD9e12XPZOyd4zAIWm6GWmSRHdcE3VwbEM6ndbAUIEMTX/AlE3bMcgwCt3g/XM8oz63hFGLjYq0vsxd+K/1bachx7XpVlGKDYsbY6a3StpvTv+7t0hccpNAQPpMAt6m66EquQ3HiiV/Yrvws1ozYTZl3UrzLOIo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlCdrBav; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m4LPAgWYEVH5hBcEYkqSxn3bwbghPwJo9GP3mwKz5Fb2Gbc8h1cdf0VS5Il+NcZVs65bqK/dPFzLiaKjib0eprtfc6oeLsuAz1QazmsMVb6V0lVqQW3eckOlK/JX0oYDXUECSx0GcKTpNHmicxtET6ejC7K+EPcUHgRyc8SYD+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmy2FDPL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlCdrBav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6BF1F00893;
-	Sat, 30 May 2026 18:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmy2FDPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAAC1F00893;
+	Sat, 30 May 2026 18:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164208;
-	bh=TWZhVCKUFsKx7xZijaKKKSeC2KAnE2r3ALVo1rjUw6I=;
+	s=korg; t=1780164211;
+	bh=Q18pZG6tr4Exm7e2ILIC25xPnIstKzX6ymff2npqqFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JlCdrBavmFOP01qB1GUOILadj1X5z2akjJgE5uyCHHLmJzDCZ2nP4LwPLJ8SfC47W
-	 z7M5Q3U8kVOpKMD7/O7+d5n6aIldHHHD+wQ2qEZaVEG0zzHC7dYN+F/Hlj+0UbAaK8
-	 JKHyJS4bHIQXbgBncAhUso5gMG/6SQ/DRWN7AAdQ=
+	b=tmy2FDPLkINpLnVVBCYxBbSvEaj6ubYeXd1yg4opJluTrkUEDA74srlbELNFcIKIC
+	 xln170FhWGG9Yp7/wVIAK8orZ99o9AXqePMAddeSbB00xXGQPFEHJ+KgaK5FnzWXvb
+	 shXmYmkaofbsuesk+gjuxhGqADpp002eNAyDVAZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 486/776] ARM: dts: mediatek: mt7623: fix efuse fallback compatible
-Date: Sat, 30 May 2026 18:03:20 +0200
-Message-ID: <20260530160252.889076873@linuxfoundation.org>
+Subject: [PATCH 5.15 487/776] memory: tegra124-emc: Fix dll_change check
+Date: Sat, 30 May 2026 18:03:21 +0200
+Message-ID: <20260530160252.912555768@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,48 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 5978ff33cc6f0988388a2830dc5cd2ea4e81f36a ]
+[ Upstream commit 9597ab9a8296ab337e6820f8a717ff621078b632 ]
 
-Fix following validation error:
-arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: compatible: 'oneOf' conditional failed, one must be fixed:
-        ['mediatek,mt7623-efuse', 'mediatek,mt8173-efuse'] is too long
-        'mediatek,mt8173-efuse' was expected
-        'mediatek,efuse' was expected
-        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
-arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: Unevaluated properties are not allowed ('compatible' was unexpected)
-        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
+The code checking whether the specified memory timing enables DLL
+in the EMRS register was reversed. DLL is enabled if bit A0 is low.
+Fix the check.
 
-Fixes: 43c7a91b4b3a ("arm: dts: mt7623: add efuse nodes to the mt7623.dtsi file")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 73a7f0a90641 ("memory: tegra: Add EMC (external memory controller) driver")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Link: https://patch.msgid.link/20260126-fix-emc-dllchange-v1-1-47ad3bb63262@nvidia.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/mt7623.dtsi | 2 +-
+ drivers/memory/tegra/tegra124-emc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/mt7623.dtsi b/arch/arm/boot/dts/mt7623.dtsi
-index 64756888fd0d1..3c2064f7e50e2 100644
---- a/arch/arm/boot/dts/mt7623.dtsi
-+++ b/arch/arm/boot/dts/mt7623.dtsi
-@@ -329,7 +329,7 @@ sysirq: interrupt-controller@10200100 {
+diff --git a/drivers/memory/tegra/tegra124-emc.c b/drivers/memory/tegra/tegra124-emc.c
+index 908f8d5392b21..6d5eb7d5b75c2 100644
+--- a/drivers/memory/tegra/tegra124-emc.c
++++ b/drivers/memory/tegra/tegra124-emc.c
+@@ -608,7 +608,7 @@ static int tegra_emc_prepare_timing_change(struct tegra_emc *emc,
  
- 	efuse: efuse@10206000 {
- 		compatible = "mediatek,mt7623-efuse",
--			     "mediatek,mt8173-efuse";
-+			     "mediatek,efuse";
- 		reg = <0 0x10206000 0 0x1000>;
- 		#address-cells = <1>;
- 		#size-cells = <1>;
+ 	if ((last->emc_mode_1 & 0x1) == (timing->emc_mode_1 & 0x1))
+ 		dll_change = DLL_CHANGE_NONE;
+-	else if (timing->emc_mode_1 & 0x1)
++	else if (!(timing->emc_mode_1 & 0x1))
+ 		dll_change = DLL_CHANGE_ON;
+ 	else
+ 		dll_change = DLL_CHANGE_OFF;
 -- 
 2.53.0
 
