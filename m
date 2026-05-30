@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D3529B799;
-	Sat, 30 May 2026 18:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66D931F98D;
+	Sat, 30 May 2026 18:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164881; cv=none; b=p+fuA2PDkM4mxGaQmI36gqSzSGPoxr8v3Rstxrj3AKGQJj4nCFpyHplJejxm+8NlmzT8SBuXb/yy9ONthFMtWYB2FmTyf1lwrNoWzGm83yhpUAeNvIvxufjM1NOU1qXq7MeyXmhemF2sK9XWgl6+di//jDW0qd+IG+grHz9B5bE=
+	t=1780164884; cv=none; b=PpdAl6NOSQ0cHwkKJoLWdPksu4eRDdT/hIZu7A+G+LmJGIgx6hElHav+JOxCoRivCrYIB6nv8Bn4y+xHFMPoE4OF59VbzngPDwzYnQcVjLeHbg8fJsRTf2zsYLoQstWsedlgvFLmSL/P2BfwYaf01jFia79M3zomy/RlAjtXmd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164881; c=relaxed/simple;
-	bh=KO0Hi6G4/uNgQVzQW/8WHwaLN09biZfbnBl2iN+mU0E=;
+	s=arc-20240116; t=1780164884; c=relaxed/simple;
+	bh=WVtqv3iPdX78jQd3ZrAxsFBlsTWgzUhecw6ZplOqu14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTDukWpunPV0wTn3IyPKssYWx7nTLPiIjv96x7pLveL/jB4VW3F4PHvuxIxmgNhhGlJaCFW5Nj3ur7OIm5HHTtKtoTiR6VAzLUTWP7U9BKrIidQlY+oQczzeq9OLFI/u9XyHVUKXOyEGwBqSixZTW7A0SIo1rsye7KjD3X9PoKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7nSo0+x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EDaz5oqFY1pq03D+rF79lim6A+B1AWGhkXa35gxDaG8MDeeVMp+Z2XoKRX8gjcs9q0Li882KlqnbjAZ5Kk8+eaA8Ti1fUEnUT9Eih3Es+XjxO4zC8FfPdUJY3Tl3vzjhg/9zwU/neui7Ff3nhDBPdwrmm2Mh9qeBJsudsRMRO9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUvqEuoJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7nSo0+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95131F00893;
-	Sat, 30 May 2026 18:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUvqEuoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFB41F00893;
+	Sat, 30 May 2026 18:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164880;
-	bh=nTUcuUS6VkMzKaP9l1AO6yuTKEIRHlKQ9ym06PrCcyI=;
+	s=korg; t=1780164883;
+	bh=qEUVOAmUmp9mlDNrBcCV0v50ll/0erij7mAD6zYh83g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q7nSo0+xR9XLCIbFl1I3W7OyMhnQpXowKKow0H5olHNFmspy7yLgS3BG1CgX6EAzF
-	 S7Mj4iEzkhaS1LTukGTv14+XxV7rebv75y3KnVDetFIiVE6nYgXI2wCkzyZTL1qDmW
-	 qL34vVPokwTguxzETvmzsmBWT4LKRqpjnktrxydI=
+	b=VUvqEuoJUInAIRaW8S2jm3DCUlUHdF6NtchMYP/dUAEuPV06r4dZRFNHybZ/5GfAM
+	 NmEd9BJxeisY3jpeV2k9tsWdx3WDpEk3JhXcoDLrKQU3BxS9qiaih0Kj52QU36DHf0
+	 getJzjYE2mLF/ny9QjjYiQ2ihKA493as4z3ylQA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 657/776] ceph: fix a buffer leak in __ceph_setxattr()
-Date: Sat, 30 May 2026 18:06:11 +0200
-Message-ID: <20260530160256.887298066@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 5.15 658/776] powerpc/warp: Fix error handling in pika_dtm_thread
+Date: Sat, 30 May 2026 18:06:12 +0200
+Message-ID: <20260530160256.910641608@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,34 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 5d3cc36b4e77a27ce7b686b7c59c7072bcb3fa8e upstream.
+commit 108d7f951271cbd36ca36efc5e5d106966f5180c upstream.
 
-The old_blob in __ceph_setxattr() can store
-ci->i_xattrs.prealloc_blob value during the retry.
-However, it is never called the ceph_buffer_put()
-for the old_blob object. This patch fixes the issue of
-the buffer leak.
+pika_dtm_thread() acquires client through of_find_i2c_device_by_node()
+but fails to release it in error handling path. This could result in a
+reference count leak, preventing proper cleanup and potentially
+leading to resource exhaustion. Add put_device() to release the
+reference in the error handling path.
+
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 3984114f0562 ("powerpc/warp: Platform fix for i2c change")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116024411.21968-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/xattr.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/platforms/44x/warp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -1233,6 +1233,7 @@ retry:
+--- a/arch/powerpc/platforms/44x/warp.c
++++ b/arch/powerpc/platforms/44x/warp.c
+@@ -261,6 +261,8 @@ static int pika_dtm_thread(void __iomem
+ 		schedule_timeout(HZ);
+ 	}
  
- do_sync:
- 	spin_unlock(&ci->i_ceph_lock);
-+	ceph_buffer_put(old_blob);
- do_sync_unlocked:
- 	if (lock_snap_rwsem)
- 		up_read(&mdsc->snap_rwsem);
++	put_device(&client->dev);
++
+ 	return 0;
+ }
+ 
 
 
