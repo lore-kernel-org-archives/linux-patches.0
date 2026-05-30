@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB61333AD99;
-	Sat, 30 May 2026 18:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DEC3ACA4D;
+	Sat, 30 May 2026 18:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166283; cv=none; b=jyY8wExDJ2+vEOCzIiPgmdAj3RMQtXEfdFmQUw1FOb9zwlofqH+62o3KA8zebUE/m3PRaO0d/M4+K0lNlL6QiUH+lqdG+AfkWD5tCh5ussQQSv3V9Aw0rOtj05XqD+8+0rn/SZEg0WFWiUQsBt2b+r94sDafVjgvjWmdvTxg5ms=
+	t=1780166287; cv=none; b=XzjAi2F8w4th1m9bkkSuGEhHnc5dt00hlLnsHjUmvC+G09pGuaPQmcPQzZiGH0LFfsi+r5Pq3FGR0Nc/tJMTE13I2O8mYz9ZzcD4TIgPyBcLK6+r7yDvyNnR+lvJZ0sYtDsjK9wBq2Gz+U7OSXYKePD/FBY2ilvKr20rB4eFIX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166283; c=relaxed/simple;
-	bh=spRRuw46p67DEPfe5PEVvoWKRDty/gOOnS0vKetKeBs=;
+	s=arc-20240116; t=1780166287; c=relaxed/simple;
+	bh=Z7mEWRqvDIB3Ye5PQxuA1VlGhi9ld4wxIRp23eETF1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJA93ng0XZRdr/rCM5SiDm48mFHsCKAFc4y4pxalbdc/X19SyV4Zk/pVm95zSIdJizUnUg9sbXmB+EHZOPE8f1HLcW8bHfyT1nOMkYvm6pQSYXjJAhAh96khmrxmeLKNxeSk5Ry65ngh38t2mY7+sBQP5Y9z/FLjQbqhkOOWtDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11Gp+w9N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g4FjqufUHnpfcRxb1TSxLeKcFtt6vhezdoCGYbVWqT+snt2s2dG8KOv8VjZRDBjLEh3f3EctPsJeGkPP9doIZKLNJ6SrsVILaDGHXPZTtegzEHFsrQnRoh1dnL23+uPk+T6exhbGe543SZIrXf2wqlt/ijOnNkv/+g6woyZalhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUHbOz8T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11Gp+w9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3C71F00893;
-	Sat, 30 May 2026 18:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUHbOz8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7531F00893;
+	Sat, 30 May 2026 18:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166282;
-	bh=DbsKuYjXEufoy0CPscX3XYaN5u7Q00EUomP9ngpv0Uw=;
+	s=korg; t=1780166286;
+	bh=uZ6MlU11qPf9noqdt3LH2kWec10bo7X4d3T0smtG9K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11Gp+w9NQjZ9OQXdOHDWzDLRVMDlek49ZVzqIylrev9+i6f3l/Rs6xrp0Lz9XFrDh
-	 FEJKU9wMHcb2X31m8h2wc4RHKpNP5S1HbCNibdv5IkqIgO1t8M+e/1U2vUvupAGYm9
-	 hv+PyH6XTJf6iKXlHRVA1s7AT1q5+m5mWElS9/Nc=
+	b=hUHbOz8Tv1xwv808jvDanXzhoZK+u3/mkWTXe6V8ESp7ZEOob0+7/TwU/hgybjmK1
+	 f2UTMN/hEu+rELBNPBN6AXc8GeghT1OMcm4JfkS3SrOhS+MsueLURte/yK08zZC8il
+	 Usez7KxrGhuJ13gvVBg4n5HLbaLSMndAAs8rp6tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 328/589] dm cache metadata: fix memory leak on metadata abort retry
-Date: Sat, 30 May 2026 18:03:29 +0200
-Message-ID: <20260530160233.537782947@linuxfoundation.org>
+Subject: [PATCH 5.10 329/589] dm log: fix out-of-bounds write due to region_count overflow
+Date: Sat, 30 May 2026 18:03:30 +0200
+Message-ID: <20260530160233.562215244@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,119 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 044ca491d4086dc5bf233e9fcb71db52df32f633 ]
+[ Upstream commit c20e36b7631d83e7535877f08af8b0af72c44b1a ]
 
-When failing to acquire the root_lock in dm_cache_metadata_abort because
-the block_manager is read-only, the temporary block_manager created
-outside the root_lock is not properly released, causing a memory leak.
+The local variable region_count in create_log_context() is declared as
+unsigned int (32-bit), but dm_sector_div_up() returns sector_t (64-bit).
+When a device-mapper target has a sufficiently large ti->len with a small
+region_size, the division result can exceed UINT_MAX. The truncated
+value is then used to calculate bitset_size, causing clean_bits,
+sync_bits, and recovering_bits to be allocated far smaller than needed
+for the actual number of regions.
 
-Reproduce steps:
+Subsequent log operations (log_set_bit, log_clear_bit, log_test_bit) use
+region indices derived from the full untruncated region space, causing
+out-of-bounds writes to kernel heap memory allocated by vmalloc.
 
-This can be reproduced by reloading a new table while the metadata
-is read-only. While the second call to dm_cache_metadata_abort is
-caused by lack of support for table preload in dm-cache, mentioned
-in commit 9b1cc9f251af ("dm cache: share cache-metadata object across
-inactive and active DM tables"), it exposes the memory leak in
-dm_cache_metadata_abort when the function is called multiple times.
-Specifically, dm-cache fails to sync the new cache object's mode during
-preresume, creating the reproducer condition.
+This can be reproduced by creating a mirror target whose region_count
+overflows 32 bits:
 
-This issue could also occur through concurrent metadata_operation_failed
-calls due to races in cache mode updates, but the table preload scenario
-below provides a reliable reproducer.
+  dmsetup create bigzero --table '0 8589934594 zero'
+  dmsetup create mymirror --table '0 8589934594 mirror \
+    core 2 2 nosync 2 /dev/mapper/bigzero 0 \
+    /dev/mapper/bigzero 0'
 
-1. Create a cache device with some faulty trailing metadata blocks
+The status output confirms the truncation (sync_count=1 instead of
+4294967297, because 0x100000001 was truncated to 1):
 
-dmsetup create cmeta <<EOF
-0 200 linear /dev/sdc 0
-200 7992 error
-EOF
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 131072 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 1 writethrough smq 0"
+  $ dmsetup status mymirror
+  0 8589934594 mirror 2 254:1 254:1 1/4294967297 ...
 
-2. Suspend and resume the cache to start a new metadata transaction and
-   trigger metadata io errors on the next metadata commit.
+This leads to a kernel crash in core_in_sync:
 
-dmsetup suspend cache
-dmsetup resume cache
+  BUG: scheduling while atomic: (udev-worker)/9150/0x00000000
+  RIP: 0010:core_in_sync+0x14/0x30 [dm_log]
+  CR2: 0000000000000008
+  Fixing recursive fault but reboot is needed!
 
-3. Write to the cache device to update metadata
+Fix by widening the local region_count to sector_t and adding an
+explicit overflow check before the value is assigned to lc->region_count.
 
-fio --filename=/dev/mapper/cache --name test --rw=randwrite --bs=4k \
---randrepeat=0 --direct=1 --size 64k
-
-4. Preload the same table
-
-dmsetup reload cache --table "$(dmsetup table cache)"
-
-5. Resume the new table. This triggers the memory leak.
-
-dmsetup suspend cache
-dmsetup resume cache
-
-kmemleak logs:
-
-<snip>
-unreferenced object 0xffff8880080c2010 (size 16):
-  comm "dmsetup", pid 132, jiffies 4294982580
-  hex dump (first 16 bytes):
-    00 38 b9 07 80 88 ff ff 6a 6b 6b 6b 6b 6b 6b a5 ...
-  backtrace (crc 3118f31c):
-    kmemleak_alloc+0x28/0x40
-    __kmalloc_cache_noprof+0x3d9/0x510
-    dm_block_manager_create+0x51/0x140
-    dm_cache_metadata_abort+0x85/0x320
-    metadata_operation_failed+0x103/0x1e0
-    cache_preresume+0xacd/0xe70
-    dm_table_resume_targets+0xd3/0x320
-    __dm_resume+0x1b/0xf0
-    dm_resume+0x127/0x170
-<snip>
-
-Fixes: 352b837a5541 ("dm cache: Fix ABBA deadlock between shrink_slab and dm_cache_metadata_abort")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-metadata.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/md/dm-log.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index 715ff419b63ba..43d271c358858 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1017,6 +1017,12 @@ static bool cmd_write_lock(struct dm_cache_metadata *cmd)
- 			return;			\
- 	} while(0)
+diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
+index fe3a9473f3387..ade7e9a2b11b1 100644
+--- a/drivers/md/dm-log.c
++++ b/drivers/md/dm-log.c
+@@ -368,7 +368,7 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
  
-+#define WRITE_LOCK_OR_GOTO(cmd, label)		\
-+	do {					\
-+		if (!cmd_write_lock((cmd)))	\
-+			goto label;		\
-+	} while (0)
-+
- #define WRITE_UNLOCK(cmd) \
- 	up_write(&(cmd)->root_lock)
+ 	struct log_c *lc;
+ 	uint32_t region_size;
+-	unsigned int region_count;
++	sector_t region_count;
+ 	size_t bitset_size, buf_size;
+ 	int r;
+ 	char dummy;
+@@ -397,6 +397,10 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
+ 	}
  
-@@ -1815,11 +1821,8 @@ int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
- 	new_bm = dm_block_manager_create(cmd->bdev, DM_CACHE_METADATA_BLOCK_SIZE << SECTOR_SHIFT,
- 					 CACHE_MAX_CONCURRENT_LOCKS);
+ 	region_count = dm_sector_div_up(ti->len, region_size);
++	if (region_count > UINT_MAX) {
++		DMWARN("region count exceeds limit of %u", UINT_MAX);
++		return -EINVAL;
++	}
  
--	WRITE_LOCK(cmd);
--	if (cmd->fail_io) {
--		WRITE_UNLOCK(cmd);
--		goto out;
--	}
-+	/* cmd_write_lock() already checks fail_io with cmd->root_lock held */
-+	WRITE_LOCK_OR_GOTO(cmd, out);
- 
- 	__destroy_persistent_data_objects(cmd, false);
- 	old_bm = cmd->bm;
+ 	lc = kmalloc(sizeof(*lc), GFP_KERNEL);
+ 	if (!lc) {
 -- 
 2.53.0
 
