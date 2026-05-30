@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798DD27A477;
-	Sat, 30 May 2026 17:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C318B27A477;
+	Sat, 30 May 2026 17:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163063; cv=none; b=FLloXxoMOgZEir0hksMVUx4VN9gTnWpE69pFu5SDViQRfpHgWRqYDFRz3duqlORQZjVGiOu8tAmoVYktkR7RhZrzFTrN4q7dthS6yfgUZj1RMAOwxQIq6JaSz8/RvFZO3ykv8f9zwaJLfzqTznzTy7dfxrB+m2a6Uf7iicfpV5s=
+	t=1780163066; cv=none; b=FuH1y63bwio6pEWvLflCfD6HyG7fcdt6SzbAeZrpuqy5dum7I1v44DmA2nmpfsZj6BKhjFnC0t5pr3vYNKdjHMLPKpUgKDdMsa2O6n20bCJ+0PmXL+/dWvqdB2RjDIgdo8EI/o2y4rIQPCoByctCs0lLmMcv2Se06+8vI0kjzxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163063; c=relaxed/simple;
-	bh=RAUgQy0akPH+YgQtXI1FHiLsCDHvu0EgGOAQVYFbQNA=;
+	s=arc-20240116; t=1780163066; c=relaxed/simple;
+	bh=xSUkoqDHqr4PTTAfV790H/F7HGLx1XAihjhoKsACGi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtTeqN7HqMh+rQ+ZcnUO0vX7YuRc6a0kffcTHKYlRwe5n/lPlN9+s5sHnVqNP+djtBhG8e1ySWXFMHdD5vSN40agZ+WZhfiOgPDxt8DPXdSgI5+isgLksYd7A0YYdypspLuDeZUN9sBWxiE4TptPWt7/YsW7JfYM0iiMYdbOyTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwQg8/EF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FXZyzr2fehbAjPVnbtTfMyRCyRXxtlJZo/avI71FDkrvytZGvojp37pgvrWSpzBrdzhx0X5CLOTpWlhzhZ3s1dewJ/xBgarI4P6VrpDfjufRxN7DDi7NOJl0xfhSoqBASXK4HMj6jgAGT/+TPeyTcQr5nGZqdNcnjTss97kxUoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFnbvhSZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwQg8/EF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB351F00893;
-	Sat, 30 May 2026 17:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFnbvhSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F641F00893;
+	Sat, 30 May 2026 17:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163062;
-	bh=pnJ8AQExv4rnuA5SunVrfERB2WIBbwpQm5JOUdq+4oc=;
+	s=korg; t=1780163065;
+	bh=8V4GqtH9xPbfbUY9bODOetdviVCGuIVMfZkIpP4d5aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwQg8/EFxScfU3DPqZoXDkhqy1N8gbn5YqzA55uFCAfpEp+U+XTfF3hV6tTMPd0zg
-	 x3skYr0U/JoHPmlnfCR/lcPyusehG565Zza8ef/TcGl/0y4xDsbxriOWoHlUDWOzkn
-	 k5ccvn5zpkkKeg9bKTOrhgWhZ/0BOLlKDCKVyJbo=
+	b=IFnbvhSZ56xx3Xp2n99AwwR04Kl2HNY56bLaLgwv1T0wgpJl7orpBB+sgVYJc7Ygk
+	 zs1b62mtbpIAM5gxgvMHnFzlbagynNFEJ4Fyi+AhQbjiC6zYZAUWnQqfSQEcN8R7mo
+	 W98npesoP5H4QIa7B92Mx1sUD2lAOqweNIkoeje4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Kees Cook" <keescook@chromium.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Tony Luck <tony.luck@intel.com>,
-	linux-hardening@vger.kernel.org,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 144/776] pstore: inode: Only d_invalidate() is needed
-Date: Sat, 30 May 2026 17:57:38 +0200
-Message-ID: <20260530160244.141751549@linuxfoundation.org>
+	syzbot+d8f72178ab6783a7daea@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
+	Johnny Hao <johnny_haocn@sina.com>
+Subject: [PATCH 5.15 145/776] ALSA: usb-audio: Kill timer properly at removal
+Date: Sat, 30 May 2026 17:57:39 +0200
+Message-ID: <20260530160244.170232546@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a43e0fc5e9134a46515de2f2f8d4100b74e50de3 ]
+[ Upstream commit 0718a78f6a9f04b88d0dc9616cc216b31c5f3cf1 ]
 
-Unloading a modular pstore backend with records in pstorefs would
-trigger the dput() double-drop warning:
+The USB-audio MIDI code initializes the timer, but in a rare case, the
+driver might be freed without the disconnect call.  This leaves the
+timer in an active state while the assigned object is released via
+snd_usbmidi_free(), which ends up with a kernel warning when the debug
+configuration is enabled, as spotted by fuzzer.
 
-  WARNING: CPU: 0 PID: 2569 at fs/dcache.c:762 dput.part.0+0x3f3/0x410
+For avoiding the problem, put timer_shutdown_sync() at
+snd_usbmidi_free(), so that the timer can be killed properly.
+While we're at it, replace the existing timer_delete_sync() at the
+disconnect callback with timer_shutdown_sync(), too.
 
-Using the combo of d_drop()/dput() (as mentioned in
-Documentation/filesystems/vfs.rst) isn't the right approach here, and
-leads to the reference counting problem seen above. Use d_invalidate()
-and update the code to not bother checking for error codes that can
-never happen.
-
-Suggested-by: Alexander Viro <viro@zeniv.linux.org.uk>
-Fixes: 609e28bb139e ("pstore: Remove filesystem records when backend is unregistered")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Reported-by: syzbot+d8f72178ab6783a7daea@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/681c70d7.050a0220.a19a9.00c6.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250519212031.14436-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ The context change is due to the commit 8fa7292fee5c
+("treewide: Switch/rename to timer_delete[_sync]()")
+in v6.15 which is irrelevant to the logic of this patch. ]
+Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: linux-hardening@vger.kernel.org
-[ Minor context change fixed. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/pstore/inode.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ sound/usb/midi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/pstore/inode.c
-+++ b/fs/pstore/inode.c
-@@ -312,7 +312,6 @@ int pstore_put_backend_records(struct ps
- {
- 	struct pstore_private *pos, *tmp;
- 	struct dentry *root;
--	int rc = 0;
- 
- 	root = psinfo_lock_root();
- 	if (!root)
-@@ -322,11 +321,8 @@ int pstore_put_backend_records(struct ps
- 	list_for_each_entry_safe(pos, tmp, &records_list, list) {
- 		if (pos->record->psi == psi) {
- 			list_del_init(&pos->list);
--			rc = simple_unlink(d_inode(root), pos->dentry);
--			if (WARN_ON(rc))
--				break;
--			d_drop(pos->dentry);
--			dput(pos->dentry);
-+			d_invalidate(pos->dentry);
-+			simple_unlink(d_inode(root), pos->dentry);
- 			pos->dentry = NULL;
- 		}
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1530,6 +1530,7 @@ static void snd_usbmidi_free(struct snd_
+ 			snd_usbmidi_in_endpoint_delete(ep->in);
  	}
-@@ -334,7 +330,7 @@ int pstore_put_backend_records(struct ps
- 
- 	inode_unlock(d_inode(root));
- 
--	return rc;
-+	return 0;
+ 	mutex_destroy(&umidi->mutex);
++	timer_shutdown_sync(&umidi->error_timer);
+ 	kfree(umidi);
  }
  
- /*
+@@ -1553,7 +1554,7 @@ void snd_usbmidi_disconnect(struct list_
+ 	spin_unlock_irq(&umidi->disc_lock);
+ 	up_write(&umidi->disc_rwsem);
+ 
+-	del_timer_sync(&umidi->error_timer);
++	timer_shutdown_sync(&umidi->error_timer);
+ 
+ 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i) {
+ 		struct snd_usb_midi_endpoint *ep = &umidi->endpoints[i];
 
 
