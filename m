@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27932E7379;
-	Sat, 30 May 2026 17:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9982E7379;
+	Sat, 30 May 2026 17:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162329; cv=none; b=p9U8hMalO3y4qkMYpdHKBCVJgu/UdH9V0jv4z7A64iNzC/8l7JGaFSjFAe6SAD+UUF4IjekmcKDXsaTxFkTiW2x79d+Fjdd2BJmF/1lC3IfAhUr1URKQw6qIl9vvTNMCk7VAHJBBT9QLeDzJhXkTOkl4KGjHs01FsT47gFfY5k0=
+	t=1780162333; cv=none; b=R+cuanVA2N9ncw2IHwLwg+dycuhynEElRqSr0Axr8HZLCGXrE2tkvAvE+KEh3yNk7SDSqcIROjC7k/dgKNq8wic2nTTLh6mm/+VKzINDTXVu11zSr0qn6CKsNybvbGLChy6S7iNjl+GVOAzt+E+GCVvRGdgS7nqi3e1I6fMKmUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162329; c=relaxed/simple;
-	bh=mpDcMZHjy6Q5gnDUOIM8iyHxsfIbBcZKxxUOJH+Var4=;
+	s=arc-20240116; t=1780162333; c=relaxed/simple;
+	bh=bkp/YjXO0g7C0/uEpd/Bi+uSzTUzG6p4PzyHa9Ez2ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkhrLv4nHfBW6xq7pkk+5O8P/SSwRkBpfOOGq2n7he3oySMc7jyddbJHTDU7dweKUh+y9pKERpa+PM6n7wK7v5KuJQJM0Gmx0lBBZRks0LOnRdmYcGdGxn4xSR/ZvE48ggodix5WDdsDC+XG4kSXeSZbPtwg2wQC/fDiLs81P3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVL2Jhdv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hC7nH/VKzK/e+oaA2ON0+rSLZU3+2lj8YhMgtpviw71u9zlZPxsSlTT3rr/42i1/q/cCmPOxHTXdiiAFzDkp6TaSPGzPX7TQWrfM6Vb1+bHmNMBoRZo7hKMBiG9Cf/dbHPL20ncxQMNlnu4U/OV3a6c1qQD9Wogc2xgyey2a8DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvpaeYs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVL2Jhdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05761F00893;
-	Sat, 30 May 2026 17:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvpaeYs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCAE1F00893;
+	Sat, 30 May 2026 17:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162328;
-	bh=cPocOez+RvvE/5Jn6r2t6h1W9jLCXWJh89+q8zR1Vr0=;
+	s=korg; t=1780162331;
+	bh=DZWF0uJm08rCmV54Q+3jpiFevzW8kthmN3yRwscUAR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pVL2JhdvL0pI2lIHPsB6q40osR6sGXTiUjpCdm6u3QWfUT/ffh19Th6rSLPUBC1W3
-	 Ya5mU+vpUhx8UFkU6JIXyBQE+bxZDqvotEzNWDM2zklCdMOMkX9FY+VPAUnlurrptv
-	 gXGh2m0fDAuWDkfyIa98R/mtpiU/59p6LmdfKtEE=
+	b=YvpaeYs6+VctKcKhtZpeyo3n26CWCewtGhT1VSFVmKUZSA8l+O4NwD//BwbLt3OSk
+	 XTmVqoh3Z3ctK1Jj2cLU/lWNOT8qygG6aUl5w0lNhrY09gZCZ0MnelV5Xma6YmRWcd
+	 E5E7mEeqpA0JNR2uf/s0DNnxtJEETxr2tAbWKS7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.1 888/969] batman-adv: tt: fix negative last_changeset_len
-Date: Sat, 30 May 2026 18:06:52 +0200
-Message-ID: <20260530160325.220093612@linuxfoundation.org>
+Subject: [PATCH 6.1 889/969] batman-adv: tt: fix negative tt_buff_len
+Date: Sat, 30 May 2026 18:06:53 +0200
+Message-ID: <20260530160325.249846209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,20 +52,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit fc92cdfcb295cefa4344d71a527d61b638b7bfc4 upstream.
+commit b64963a2ceeb7529310b6cf253a1e540784422f4 upstream.
 
-batadv_piv_tt::last_changeset_len len was declared as s16, but the field is
-never intended to hold a negative value. When a value greater than 32767 is
+batadv_orig_node::tt_buff_len was declared as s16, but the field is never
+intended to hold a negative value. When a value greater than 32767 is
 assigned, it wraps to a negative signed integer.
 
-In batadv_send_my_tt_response(), last_changeset_len is temporarily widened
-to s32. The incorrectly negative s16 value propagates into the s32, causing
-batadv_tt_prepare_tvlv_local_data() to allocate a full sized buffer but
+In batadv_send_other_tt_response(), tt_buff_len is temporarily widened to
+s32. The incorrectly negative s16 value propagates into the s32, causing
+batadv_tt_prepare_tvlv_global_data() to allocate a full sized buffer but
 populates only a small portion of it with the collected changeset. All
 remaining bits are kept uninitialized.
 
 Using an u16 avoids this type confusion and ensures that no (negative) sign
-extension is performed in batadv_send_my_tt_response().
+extension is performed in batadv_send_other_tt_response().
 
 Cc: stable@kernel.org
 Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
@@ -77,14 +77,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/batman-adv/types.h
 +++ b/net/batman-adv/types.h
-@@ -993,7 +993,7 @@ struct batadv_priv_tt {
- 	 * @last_changeset_len: length of last tt changeset this host has
- 	 *  generated
+@@ -445,7 +445,7 @@ struct batadv_orig_node {
+ 	 * @tt_buff_len: length of the last tt changeset this node received
+ 	 *  from the orig node
  	 */
--	s16 last_changeset_len;
-+	u16 last_changeset_len;
+-	s16 tt_buff_len;
++	u16 tt_buff_len;
  
- 	/**
- 	 * @last_changeset_lock: lock protecting last_changeset &
+ 	/** @tt_buff_lock: lock that protects tt_buff and tt_buff_len */
+ 	spinlock_t tt_buff_lock;
 
 
