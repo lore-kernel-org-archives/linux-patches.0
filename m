@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916D214A62B;
-	Sat, 30 May 2026 17:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C553161A3;
+	Sat, 30 May 2026 17:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161763; cv=none; b=CrlyLD0WMpnzBCibVofifZrqg8mLauL3TPmtIKvw7SkR1v2KBJkc3tDcISsetRUYDMhGZEbw0KNiQxJZtBz2mfV3+Uilo9niDQmS3cQl+/NP59sB4MxSsfnPRKlX8bGpt9amQ+2pMUpybEDmv9tmifF3rZF3Mu+X3U1gps9v9io=
+	t=1780161767; cv=none; b=gNYWp+5yl6tfWPZClxpSRH5Jvqr62BFxwfecOpnJLJOEBoR7r8Bse4EqitFKXPFxQsWe+GYZFvBPb7Hb/UdDgULQOZhmxtS8ixCzRKJqViY8nkeKJcz1abWBVWJCrcNMB6hXc0gpXFeMgEyvqseXiAUTVlIKUtrNO8VKyZ9Aa3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161763; c=relaxed/simple;
-	bh=HK9WRJQhq/vpBB3JNuoY5MrRtbEApV0nxrfsIpLoiNw=;
+	s=arc-20240116; t=1780161767; c=relaxed/simple;
+	bh=5LWKTSfpDDvTunAj5vgUPKWWktivGeOlLwrd5ZhSIik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrcIX0q9ArQFXOVFxj1OPG8o8iYiggVtn3yovwYB0CjnWNHV9FLGP8YxbUVEjdSXpb2U11LtBcFPu0hjAFXZ29hVDLRuUd9hYOVLX9SeLQ1GbphFRANK+sAxSR0a8L8tcp3InOtyPWWOMGOB2QrkTgJrH6MyuIGgu9YBb8BU4D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk3R1ttW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QNOcoG7cPx246F7JFdxDrXvpgYTC5rZKV/dIDXKjx5rdMvQQ7yD/FK21gri/OIwkI9LrnCf2TEuZmrHVSnBjJG0btuqme2W3FuWcgbbwfLoIS+iwCuFY2tdy9iFI1xc8r0v3CvItzzPVDSmh6NISBOl/NwJR1mK/HNSgEE8qcps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbWhjNwc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk3R1ttW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B194D1F00893;
-	Sat, 30 May 2026 17:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbWhjNwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69631F00893;
+	Sat, 30 May 2026 17:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161762;
-	bh=LAxWneVR0aPZjAtivpgZDRDyoxjLDEhrbrs8WXWlqD4=;
+	s=korg; t=1780161766;
+	bh=g0EHwQ+r95DHrZKU04Em0f0pXB1mngC/duZTAWpFDkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qk3R1ttW9QloRC+VYzdZl+LIEMFwPhECABzIUO17Jvh+6GvDIvppoZ/UjUONv1Sul
-	 wUSkK6MNomV/3eyMjuJDnVrRvaAR+Ay08Q5NSfK32xbMq8DpMm2xn1oLKFjDPfLkvz
-	 d0CJaBkGtDqHFgDL+KXyP6Ejcdk46Gn7bnOHRbcM=
+	b=MbWhjNwcdRu6Ac68Nw9WwD58cCLajasMtDjH8pDTH4HOgE8yydHGnnKm0U6u57GYA
+	 IiB2Gv/f5NDzhFEecI6CgZJLBLyeo4iv5qgdCXqEUXWXDwb2yPcKSmbR8nONj8n49t
+	 HNGfCpKvSpzk5uSD2bUKWelE4VGSl4TaVaZfI0hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Lee Jones <lee@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 719/969] nfp: fix swapped arguments in nfp_encode_basic_qdr() calls
-Date: Sat, 30 May 2026 18:04:03 +0200
-Message-ID: <20260530160320.392215564@linuxfoundation.org>
+Subject: [PATCH 6.1 720/969] tipc: fix double-free in tipc_buf_append()
+Date: Sat, 30 May 2026 18:04:04 +0200
+Message-ID: <20260530160320.419978243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,105 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 4078c5611d7585548b249377ebd60c272e410490 ]
+[ Upstream commit d293ca716e7d5dffdaecaf6b9b2f857a33dc3d3a ]
 
-There is a mismatch between the passed arguments and the actual
-nfp_encode_basic_qdr() function parameter names:
+tipc_msg_validate() can potentially reallocate the skb it is validating,
+freeing the old one.  In tipc_buf_append(), it was being called with a
+pointer to a local variable which was a copy of the caller's skb
+pointer.
 
-  static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
-                                  int mode, bool addr40, int isld1,
-                                  int isld0)
-  {
-      ...
+If the skb was reallocated and validation subsequently failed, the error
+handling path would free the original skb pointer, which had already
+been freed, leading to double-free.
 
-But "dest_island" and "cpp_tgt" are swapped at every call-site.
-For example:
+Fix this by checking if head now points to a newly allocated reassembled
+skb.  If it does, reassign *headbuf for later freeing operations.
 
-  return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-                              mode, addr40, isld1, isld0);
-
-As a result, nfp_encode_basic_qdr() receives "dest_island" as CPP target
-type, which is always NFP_CPP_TARGET_QDR(2) for these calls, and "cpp_tgt"
-as the destination island ID, which can accidentally match or be outside
-the valid NFP_CPP_TARGET_* types (e.g. '-1' for any destination).
-
-Since code already worked for years, also add extra pr_warn() to error
-paths in nfp_encode_basic_qdr() to help identify any potential address
-verification failures.
-
-Detected using the static analysis tool - Svace.
-
-Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Link: https://patch.msgid.link/20260422160536.61855-1-aleksei.kodanev@bell-sw.com
+Fixes: d618d09a68e4 ("tipc: enforce valid ratio between skb truesize and contents")
+Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/netronome/nfp/nfpcore/nfp_target.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/tipc/msg.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-index 79470f198a62a..9cf19446657c6 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-@@ -435,12 +435,17 @@ static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 76284fc538ebd..b0bba0feef564 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -177,8 +177,20 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
  
- 	/* Full Island ID and channel bits overlap? */
- 	ret = nfp_decode_basic(addr, &v, cpp_tgt, mode, addr40, isld1, isld0);
--	if (ret)
-+	if (ret) {
-+		pr_warn("%s: decode dest_island failed: %d\n", __func__, ret);
- 		return ret;
-+	}
- 
- 	/* The current address won't go where expected? */
--	if (dest_island != -1 && dest_island != v)
-+	if (dest_island != -1 && dest_island != v) {
-+		pr_warn("%s: dest_island mismatch: current (%d) != decoded (%d)\n",
-+			__func__, dest_island, v);
- 		return -EINVAL;
-+	}
- 
- 	/* If dest_island was -1, we don't care where it goes. */
- 	return 0;
-@@ -493,7 +498,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * the address but we can verify if the existing
- 			 * contents will point to a valid island.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		iid_lsb = addr40 ? 34 : 26;
-@@ -504,7 +509,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 		return 0;
- 	case 1:
- 		if (cpp_tgt == NFP_CPP_TARGET_QDR && !addr40)
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		idx_lsb = addr40 ? 39 : 31;
-@@ -530,7 +535,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * be set before hand and with them select an island.
- 			 * So we need to confirm that it's at least plausible.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		/* Make sure we compare against isldN values
-@@ -551,7 +556,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * iid<1> = addr<30> = channel<0>
- 			 * channel<1> = addr<31> = Index
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		isld[0] &= ~3;
+ 	if (fragid == LAST_FRAGMENT) {
+ 		TIPC_SKB_CB(head)->validated = 0;
+-		if (unlikely(!tipc_msg_validate(&head)))
++
++		/* If the reassembled skb has been freed in
++		 * tipc_msg_validate() because of an invalid truesize,
++		 * then head will point to a newly allocated reassembled
++		 * skb, while *headbuf points to freed reassembled skb.
++		 * In such cases, correct *headbuf for freeing the newly
++		 * allocated reassembled skb later.
++		 */
++		if (unlikely(!tipc_msg_validate(&head))) {
++			if (head != *headbuf)
++				*headbuf = head;
+ 			goto err;
++		}
++
+ 		*buf = head;
+ 		TIPC_SKB_CB(head)->tail = NULL;
+ 		*headbuf = NULL;
 -- 
 2.53.0
 
