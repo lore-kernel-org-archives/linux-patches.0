@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4494C2F90E0;
-	Sat, 30 May 2026 18:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1AA31F98D;
+	Sat, 30 May 2026 18:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164682; cv=none; b=bdhWIP1gHM90LHfzeGme4r05yS1GphLtlXEBSzkqcHoreJXDI9Ko8BNUmsG1ICLBx4xra8JJZkFIJ1tvQaQBlMs8tsfZxVHwozJjXTlKlynRk++vcNas9LssvCT+VBiW2CkhS/JmpCX41vAWeyZTFzIxmSc8C+88QdpndgGUz4o=
+	t=1780164685; cv=none; b=ad8vjf9a7Rfwo9uFDgZuFy/lOPq8v35vjtedsjBAj6jHZKs8KhT/SGejKEamQqDs078Ssf684wMn5env2SZzwdNI65DzIlr359ZF9U2wza47cWFAe5nl99TDuq5/dH0eLUSFg6+QsRWYNIkruJ/W6kBmqwPhVWuXLE/wNY3PQI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164682; c=relaxed/simple;
-	bh=6rYPAtfCdeqoyEn3BfolYc2Bk980i6JMAYY4DkZckuA=;
+	s=arc-20240116; t=1780164685; c=relaxed/simple;
+	bh=SMLtlncMptMnn/OxJqBnN3LTfOL/9XdK6E23J6ZWHsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tmj590AoBdR+3As/lv/F5Ruf3wjQ1ytF2HS4BjNup6B3cM8rGOigDLZdc4DWdu6yQbri5yO7GxpB0m6mPw3wqPH3kGFEk2nlLmNrln8Dc6xU7quF1eujste26LACtNc70seUEII9igrnRbkb67Fj+gU3bD9GsiYGCx1aXUFMPW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y54OxOSt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LX2Y77FP6DRttIF63+Z+G1/eFAxZvBFRfSic6DspXjNl7Af1GNoRClmU7tE03b35pjUA2/NYuwXgJFk1oxvZ2cR39aqAMiLbeM56e4nOMZV19BrnPuE0H6Greo13G5bDG21M2S8hp4biSLyvFCOe67zr80fayX608jYTnriX1LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeS4sYE3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y54OxOSt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874921F00893;
-	Sat, 30 May 2026 18:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeS4sYE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38DA1F00893;
+	Sat, 30 May 2026 18:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164681;
-	bh=b+JTQYMjZBvJ1DQpc8AFOl/P2MApl6LLBu71iYyfIPg=;
+	s=korg; t=1780164684;
+	bh=JvmiFXO+qC5NllzCpXReGkYlIiC5aKCToca03DFczeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y54OxOStDX2IVYOq6O4/w6cYzLqzXQmT2DFqnHxcPtWWDyIMJXAyMJiifZktQTMOe
-	 em8HPCtuVb9myBHhSZXvYcE591OwyVwgZtjp+Xqz8PdtizELhSne+dIEIKqqbP7itB
-	 3d7+0M8/tSHuKtEO0UZDzcpskPeZl+XZOyhSQ+3E=
+	b=oeS4sYE3t86h25mhATfqCPZ0fgxLkltODs726x9lHhVULFkq83jCp8Bt/BBqJ5KVu
+	 MbtQy6xBgkcEY79O0UHnoxxeAYqtUhxJvII9VRNKAkBQ0U0tj4Tn0kWaABi6IkzdHD
+	 BPGmEtX3HTyNun69XX8KBNndoUheS9ss0NQQsTj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Beniamino Galvani <b.galvani@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 628/776] sctp: discard stale INIT after handshake completion
-Date: Sat, 30 May 2026 18:05:42 +0200
-Message-ID: <20260530160256.202508660@linuxfoundation.org>
+Subject: [PATCH 5.15 629/776] ipv4: rename and move ip_route_output_tunnel()
+Date: Sat, 30 May 2026 18:05:43 +0200
+Message-ID: <20260530160256.227667586@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,51 +47,215 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Beniamino Galvani <b.galvani@gmail.com>
 
-[ Upstream commit 8a92cb475ca90d84db769e4d4383e631ace0d6e5 ]
+[ Upstream commit bf3fcbf7e7a08015d3b169bad6281b29d45c272d ]
 
-After an association reaches ESTABLISHED, the peer’s init_tag is already
-known from the handshake. Any subsequent INIT with the same init_tag is
-not a valid restart, but a delayed or duplicate INIT.
+At the moment ip_route_output_tunnel() is used only by bareudp.
+Ideally, other UDP tunnel implementations should use it, but to do so
+the function needs to accept new parameters that are specific for UDP
+tunnels, such as the ports.
 
-Drop such INIT chunks in sctp_sf_do_unexpected_init() instead of
-processing them as new association attempts.
+Prepare for these changes by renaming the function to
+udp_tunnel_dst_lookup() and move it to file
+net/ipv4/udp_tunnel_core.c.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/5788c76c1ee122a3ed00189e88dcf9df1fba226c.1777214801.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Beniamino Galvani <b.galvani@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: aa6c6d9ee064 ("bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/bareudp.c      |  8 +++----
+ include/net/route.h        |  6 -----
+ include/net/udp_tunnel.h   |  6 +++++
+ net/ipv4/route.c           | 48 --------------------------------------
+ net/ipv4/udp_tunnel_core.c | 48 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 58 insertions(+), 58 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index dc758ad0051e0..2f9f24b188520 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -1555,6 +1555,12 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 	/* Tag the variable length parameters.  */
- 	chunk->param_hdr.v = skb_pull(chunk->skb, sizeof(struct sctp_inithdr));
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index bec8a2c8656c0..a2008cdcff707 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -318,8 +318,8 @@ static int bareudp_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	if (!sock)
+ 		return -ESHUTDOWN;
  
-+	if (asoc->state >= SCTP_STATE_ESTABLISHED) {
-+		/* Discard INIT matching peer vtag after handshake completion (stale INIT). */
-+		if (ntohl(chunk->subh.init_hdr->init_tag) == asoc->peer.i.init_tag)
-+			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-+	}
+-	rt = ip_route_output_tunnel(skb, dev, bareudp->net, &saddr, info,
+-				    IPPROTO_UDP, use_cache);
++	rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, &saddr, info,
++				   IPPROTO_UDP, use_cache);
+ 
+ 	if (IS_ERR(rt))
+ 		return PTR_ERR(rt);
+@@ -498,8 +498,8 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
+ 		struct rtable *rt;
+ 		__be32 saddr;
+ 
+-		rt = ip_route_output_tunnel(skb, dev, bareudp->net, &saddr,
+-					    info, IPPROTO_UDP, use_cache);
++		rt = udp_tunnel_dst_lookup(skb, dev, bareudp->net, &saddr,
++					   info, IPPROTO_UDP, use_cache);
+ 		if (IS_ERR(rt))
+ 			return PTR_ERR(rt);
+ 
+diff --git a/include/net/route.h b/include/net/route.h
+index 036e3ee3b856b..d771ceb7b337b 100644
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -128,12 +128,6 @@ static inline struct rtable *__ip_route_output_key(struct net *net,
+ 
+ struct rtable *ip_route_output_flow(struct net *, struct flowi4 *flp,
+ 				    const struct sock *sk);
+-struct rtable *ip_route_output_tunnel(struct sk_buff *skb,
+-				      struct net_device *dev,
+-				      struct net *net, __be32 *saddr,
+-				      const struct ip_tunnel_info *info,
+-				      u8 protocol, bool use_cache);
+-
+ struct dst_entry *ipv4_blackhole_route(struct net *net,
+ 				       struct dst_entry *dst_orig);
+ 
+diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
+index b6af537abdc5a..81fdcecde24d6 100644
+--- a/include/net/udp_tunnel.h
++++ b/include/net/udp_tunnel.h
+@@ -161,6 +161,12 @@ int udp_tunnel6_xmit_skb(struct dst_entry *dst, struct sock *sk,
+ 
+ void udp_tunnel_sock_release(struct socket *sock);
+ 
++struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
++				     struct net_device *dev,
++				     struct net *net, __be32 *saddr,
++				     const struct ip_tunnel_info *info,
++				     u8 protocol, bool use_cache);
 +
- 	/* Verify the INIT chunk before processing it. */
- 	err_chunk = NULL;
- 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
+ struct metadata_dst *udp_tun_rx_dst(struct sk_buff *skb, unsigned short family,
+ 				    __be16 flags, __be64 tunnel_id,
+ 				    int md_size);
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 8cddfeb65872f..4a7789ac0c101 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -2926,54 +2926,6 @@ struct rtable *ip_route_output_flow(struct net *net, struct flowi4 *flp4,
+ }
+ EXPORT_SYMBOL_GPL(ip_route_output_flow);
+ 
+-struct rtable *ip_route_output_tunnel(struct sk_buff *skb,
+-				      struct net_device *dev,
+-				      struct net *net, __be32 *saddr,
+-				      const struct ip_tunnel_info *info,
+-				      u8 protocol, bool use_cache)
+-{
+-#ifdef CONFIG_DST_CACHE
+-	struct dst_cache *dst_cache;
+-#endif
+-	struct rtable *rt = NULL;
+-	struct flowi4 fl4;
+-	__u8 tos;
+-
+-#ifdef CONFIG_DST_CACHE
+-	dst_cache = (struct dst_cache *)&info->dst_cache;
+-	if (use_cache) {
+-		rt = dst_cache_get_ip4(dst_cache, saddr);
+-		if (rt)
+-			return rt;
+-	}
+-#endif
+-	memset(&fl4, 0, sizeof(fl4));
+-	fl4.flowi4_mark = skb->mark;
+-	fl4.flowi4_proto = protocol;
+-	fl4.daddr = info->key.u.ipv4.dst;
+-	fl4.saddr = info->key.u.ipv4.src;
+-	tos = info->key.tos;
+-	fl4.flowi4_tos = RT_TOS(tos);
+-
+-	rt = ip_route_output_key(net, &fl4);
+-	if (IS_ERR(rt)) {
+-		netdev_dbg(dev, "no route to %pI4\n", &fl4.daddr);
+-		return ERR_PTR(-ENETUNREACH);
+-	}
+-	if (rt->dst.dev == dev) { /* is this necessary? */
+-		netdev_dbg(dev, "circular route to %pI4\n", &fl4.daddr);
+-		ip_rt_put(rt);
+-		return ERR_PTR(-ELOOP);
+-	}
+-#ifdef CONFIG_DST_CACHE
+-	if (use_cache)
+-		dst_cache_set_ip4(dst_cache, &rt->dst, fl4.saddr);
+-#endif
+-	*saddr = fl4.saddr;
+-	return rt;
+-}
+-EXPORT_SYMBOL_GPL(ip_route_output_tunnel);
+-
+ /* called with rcu_read_lock held */
+ static int rt_fill_info(struct net *net, __be32 dst, __be32 src,
+ 			struct rtable *rt, u32 table_id, struct flowi4 *fl4,
+diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
+index 1ff5b8e30bb92..4b1785a8cf112 100644
+--- a/net/ipv4/udp_tunnel_core.c
++++ b/net/ipv4/udp_tunnel_core.c
+@@ -207,4 +207,52 @@ struct metadata_dst *udp_tun_rx_dst(struct sk_buff *skb,  unsigned short family,
+ }
+ EXPORT_SYMBOL_GPL(udp_tun_rx_dst);
+ 
++struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
++				     struct net_device *dev,
++				     struct net *net, __be32 *saddr,
++				     const struct ip_tunnel_info *info,
++				     u8 protocol, bool use_cache)
++{
++#ifdef CONFIG_DST_CACHE
++	struct dst_cache *dst_cache;
++#endif
++	struct rtable *rt = NULL;
++	struct flowi4 fl4;
++	__u8 tos;
++
++#ifdef CONFIG_DST_CACHE
++	dst_cache = (struct dst_cache *)&info->dst_cache;
++	if (use_cache) {
++		rt = dst_cache_get_ip4(dst_cache, saddr);
++		if (rt)
++			return rt;
++	}
++#endif
++	memset(&fl4, 0, sizeof(fl4));
++	fl4.flowi4_mark = skb->mark;
++	fl4.flowi4_proto = protocol;
++	fl4.daddr = info->key.u.ipv4.dst;
++	fl4.saddr = info->key.u.ipv4.src;
++	tos = info->key.tos;
++	fl4.flowi4_tos = RT_TOS(tos);
++
++	rt = ip_route_output_key(net, &fl4);
++	if (IS_ERR(rt)) {
++		netdev_dbg(dev, "no route to %pI4\n", &fl4.daddr);
++		return ERR_PTR(-ENETUNREACH);
++	}
++	if (rt->dst.dev == dev) { /* is this necessary? */
++		netdev_dbg(dev, "circular route to %pI4\n", &fl4.daddr);
++		ip_rt_put(rt);
++		return ERR_PTR(-ELOOP);
++	}
++#ifdef CONFIG_DST_CACHE
++	if (use_cache)
++		dst_cache_set_ip4(dst_cache, &rt->dst, fl4.saddr);
++#endif
++	*saddr = fl4.saddr;
++	return rt;
++}
++EXPORT_SYMBOL_GPL(udp_tunnel_dst_lookup);
++
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
