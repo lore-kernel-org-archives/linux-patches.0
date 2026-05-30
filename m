@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CF9263F44;
-	Sat, 30 May 2026 17:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC3C3AB26B;
+	Sat, 30 May 2026 17:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161386; cv=none; b=qSAC0Afz7B70eIcAD9ugCqvrj2MMpPNWXGIfuFlLNGx9dp2IctPhWybf0IZXLHJio5/prR+SAOyCHZ6U7ql1SB3nktpmSn0tvFU2gLZW09ZBqepEpSrxFR2VuGk7fMwXJuy/kjF8tQQIx+s4nfl/gfCnp6FGNmqj6OoN/qjfgtA=
+	t=1780161389; cv=none; b=EG2aTv9ExKfcvJ7wb0/fua1xFLU8Cf9ckU87O1SHl4+Up8KNliuhkDu4vPtA/tCxIDfgz3jBWBVaMhy+Fmfq9s3Srot8BkZ981HRg2anrICSgnGqXUhyR/mpxqZTNSHBUTY1r8s890LT2ld/mmIDGn2wwoCgQz7bPsGRIv8Ae1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161386; c=relaxed/simple;
-	bh=O9xxMjdpqM+QGYCLf5HLMNkDO2p4D+eJ7AQlctlrs30=;
+	s=arc-20240116; t=1780161389; c=relaxed/simple;
+	bh=ib2JD1o2gz1GMwbLBCRUmlj/H1C8ruN0QN+OmE1yj58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a42ZTQKeJa7uld62szdto7YqxWNdbdoc6nUSd1S4d3eEkbvfOxvAyxz6wEFFF3TXY6hkJ1Z9wkF7cJBZ24E7UeO7PDj0L5G3etSE14xDp3OV7pJUV1tZj/k2hT5gdJetMdnMGKvMD5FS+8qH2jYSZ553u9LM4bAalvhRoJJ4sVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyxxnzzC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=krRyn9me3/to2921tcnhDnhDdDMILUHuvHGnUNf6Eb5E8+PsvKB8h8WBAf+DegdpbhatVVMwkZrbtycdGKyROT4aUwU1wAWQI79e2zysWZbBKwWSh/1G7cAjn14ACP3Y9D1+aQqTdGHCAikDolQYneFbEDRgmelDxCkDQmHLC3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXRXp8QE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyxxnzzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFAD1F00893;
-	Sat, 30 May 2026 17:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXRXp8QE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A3A1F00893;
+	Sat, 30 May 2026 17:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161385;
-	bh=/5t7VNJ2fvAJIwvGdZY4UgnEM+iqjCK7BXWL0F39Ii4=;
+	s=korg; t=1780161388;
+	bh=plUBV/Z2e92EZ2o3bmLHFR21bbwsERBnlBeVeAxUOAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uyxxnzzC8w+4UgxwGVwoJGdbrU81tUHBO/oiL37Tp9hJVJXIG9wdtW57+HPbrpICl
-	 uYkG3lU96rr3y4fafpbjsi9mufYqlAT0ONd3sF8mFeDg3dJyyRHb88OXp6WEqLtS30
-	 v5ntL4urERZ/9109oNJtPhHHoWH888aXNdntNclg=
+	b=QXRXp8QEy/wTiDl1KxQeu3cZ8xu5mdm4Mb5xz0TGaNTXMdmvUhUxSAySFdL/rk8MX
+	 epCks7t0dFogGPIbsi/hb43xqXDyw+RRzZ7DdQYCFqCv2gngH2enV5+jG5u8VDUnCw
+	 AdWzP3C8cmQSg3X4vt+xAqbj3lXu9h5AJ75HH0Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 609/969] mtd: spi-nor: Allow post_sfdp hook to return errors
-Date: Sat, 30 May 2026 18:02:13 +0200
-Message-ID: <20260530160317.245967752@linuxfoundation.org>
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>
+Subject: [PATCH 6.1 610/969] mtd: spi-nor: sfdp: introduce smpt_read_dummy fixup hook
+Date: Sat, 30 May 2026 18:02:14 +0200
+Message-ID: <20260530160317.276001739@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,160 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit e570f7872a34dc290014c80c7bad365d6577836b ]
+[ Upstream commit 653f6def567c81f37302f9591ffd54df3e2a11eb ]
 
-Multi die flashes like s25hl02gt need to determine the page_size at
-run-time by querying a configuration register for each die. Since the
-number of dice is determined in an optional SFDP table, SCCR MC, the
-page size configuration must be done in the post_sfdp hook. Allow
-post_sfdp to return errors, as reading the configuration register might
-return errors.
+SMPT contains config detection info that describes opcode, address, and
+dummy cycles to read sector map config. The dummy cycles parameter can
+be SMPT_CMD_READ_DUMMY_IS_VARIABLE and in that case nor->read_dummy
+(initialized as 0) is used. In Infineon flash chips, Read Any Register
+command with variable dummy cycle is defined in SMPT. S25Hx/S28Hx flash
+has 0 dummy cycle by default to read volatile regiters and
+nor->read_dummy can work. S25FS-S flash has 8 dummy cycles so we need a
+hook that can fix dummy cycles with actually used value.
 
-Link: https://lore.kernel.org/r/924ab710f128448ec62537cfbb377336e390043c.1680849425.git.Takahiro.Kuwano@infineon.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Inroduce smpt_read_dummy() in struct spi_nor_fixups. It is called when
+the dummy cycle field in SMPT config detection is 'varialble'.
+
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Tested-by: Marek Vasut <marek.vasut+renesas@mailbox.org> # S25FS512S
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Stable-dep-of: 3620d67b4849 ("mtd: spi-nor: update spi_nor_fixups::post_sfdp() documentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.h      |  2 +-
- drivers/mtd/spi-nor/micron-st.c |  4 +++-
- drivers/mtd/spi-nor/sfdp.c      | 17 ++++++++++++-----
- drivers/mtd/spi-nor/spansion.c  | 12 +++++++++---
- 4 files changed, 25 insertions(+), 10 deletions(-)
+ drivers/mtd/spi-nor/core.h |  3 +++
+ drivers/mtd/spi-nor/sfdp.c | 18 ++++++++++++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 290613fd63ae7..cc70a2092494c 100644
+index cc70a2092494c..4aac34f06c7bb 100644
 --- a/drivers/mtd/spi-nor/core.h
 +++ b/drivers/mtd/spi-nor/core.h
-@@ -424,7 +424,7 @@ struct spi_nor_fixups {
+@@ -407,6 +407,8 @@ struct spi_nor_flash_parameter {
+  *                flash parameters when information provided by the flash_info
+  *                table is incomplete or wrong.
+  * @post_bfpt: called after the BFPT table has been parsed
++ * @smpt_read_dummy: called during SMPT table is being parsed. Used to fix the
++ *                   number of dummy cycles in read register ops.
+  * @post_sfdp: called after SFDP has been parsed (is also called for SPI NORs
+  *             that do not support RDSFDP). Typically used to tweak various
+  *             parameters that could not be extracted by other means (i.e.
+@@ -424,6 +426,7 @@ struct spi_nor_fixups {
  	int (*post_bfpt)(struct spi_nor *nor,
  			 const struct sfdp_parameter_header *bfpt_header,
  			 const struct sfdp_bfpt *bfpt);
--	void (*post_sfdp)(struct spi_nor *nor);
-+	int (*post_sfdp)(struct spi_nor *nor);
++	void (*smpt_read_dummy)(const struct spi_nor *nor, u8 *read_dummy);
+ 	int (*post_sfdp)(struct spi_nor *nor);
  	void (*late_init)(struct spi_nor *nor);
  };
- 
-diff --git a/drivers/mtd/spi-nor/micron-st.c b/drivers/mtd/spi-nor/micron-st.c
-index 3c9681a3f7a33..f8f6e14452d58 100644
---- a/drivers/mtd/spi-nor/micron-st.c
-+++ b/drivers/mtd/spi-nor/micron-st.c
-@@ -127,7 +127,7 @@ static void mt35xu512aba_default_init(struct spi_nor *nor)
- 	nor->params->octal_dtr_enable = micron_st_nor_octal_dtr_enable;
- }
- 
--static void mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
-+static int mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
- {
- 	/* Set the Fast Read settings. */
- 	nor->params->hwcaps.mask |= SNOR_HWCAPS_READ_8_8_8_DTR;
-@@ -145,6 +145,8 @@ static void mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
- 	 * disable it.
- 	 */
- 	nor->params->quad_enable = NULL;
-+
-+	return 0;
- }
- 
- static const struct spi_nor_fixups mt35xu512aba_fixups = {
 diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index 78110387be0b5..6f47982105bd9 100644
+index 6f47982105bd9..66c233db20e8e 100644
 --- a/drivers/mtd/spi-nor/sfdp.c
 +++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -1239,14 +1239,21 @@ static int spi_nor_parse_sccr(struct spi_nor *nor,
-  * Used to tweak various flash parameters when information provided by the SFDP
-  * tables are wrong.
-  */
--static void spi_nor_post_sfdp_fixups(struct spi_nor *nor)
-+static int spi_nor_post_sfdp_fixups(struct spi_nor *nor)
- {
-+	int ret;
-+
- 	if (nor->manufacturer && nor->manufacturer->fixups &&
--	    nor->manufacturer->fixups->post_sfdp)
--		nor->manufacturer->fixups->post_sfdp(nor);
-+	    nor->manufacturer->fixups->post_sfdp) {
-+		ret = nor->manufacturer->fixups->post_sfdp(nor);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	if (nor->info->fixups && nor->info->fixups->post_sfdp)
--		nor->info->fixups->post_sfdp(nor);
-+		return nor->info->fixups->post_sfdp(nor);
-+
-+	return 0;
+@@ -659,6 +659,17 @@ static u8 spi_nor_smpt_addr_nbytes(const struct spi_nor *nor, const u32 settings
+ 	}
  }
  
++static void spi_nor_smpt_read_dummy_fixups(const struct spi_nor *nor,
++					   u8 *read_dummy)
++{
++	if (nor->manufacturer && nor->manufacturer->fixups &&
++	    nor->manufacturer->fixups->smpt_read_dummy)
++		nor->manufacturer->fixups->smpt_read_dummy(nor, read_dummy);
++
++	if (nor->info->fixups && nor->info->fixups->smpt_read_dummy)
++		nor->info->fixups->smpt_read_dummy(nor, read_dummy);
++}
++
  /**
-@@ -1429,7 +1436,7 @@ int spi_nor_parse_sfdp(struct spi_nor *nor)
- 		}
- 	}
- 
--	spi_nor_post_sfdp_fixups(nor);
-+	err = spi_nor_post_sfdp_fixups(nor);
- exit:
- 	kfree(param_headers);
- 	return err;
-diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index 5914a6074a11e..af97e3741f987 100644
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -258,7 +258,7 @@ s25fs256t_post_bfpt_fixup(struct spi_nor *nor,
- 	return cypress_nor_set_page_size(nor);
- }
- 
--static void s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
-+static int s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
+  * spi_nor_smpt_read_dummy() - return the configuration detection command read
+  *			       latency, in clock cycles.
+@@ -671,8 +682,11 @@ static u8 spi_nor_smpt_read_dummy(const struct spi_nor *nor, const u32 settings)
  {
- 	struct spi_nor_flash_parameter *params = nor->params;
+ 	u8 read_dummy = SMPT_CMD_READ_DUMMY(settings);
  
-@@ -267,6 +267,8 @@ static void s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
- 	spi_nor_set_pp_settings(&params->page_programs[SNOR_CMD_PP_1_1_4],
- 				SPINOR_OP_PP_1_1_4_4B,
- 				SNOR_PROTO_1_1_4);
+-	if (read_dummy == SMPT_CMD_READ_DUMMY_IS_VARIABLE)
+-		return nor->read_dummy;
++	if (read_dummy == SMPT_CMD_READ_DUMMY_IS_VARIABLE) {
++		read_dummy = nor->read_dummy;
++		spi_nor_smpt_read_dummy_fixups(nor, &read_dummy);
++	}
 +
-+	return 0;
+ 	return read_dummy;
  }
  
- static void s25fs256t_late_init(struct spi_nor *nor)
-@@ -297,7 +299,7 @@ s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
- 	return cypress_nor_set_page_size(nor);
- }
- 
--static void s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
-+static int s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
- {
- 	struct spi_nor_erase_type *erase_type =
- 					nor->params->erase_map.erase_type;
-@@ -319,6 +321,8 @@ static void s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
- 			break;
- 		}
- 	}
-+
-+	return 0;
- }
- 
- static void s25hx_t_late_init(struct spi_nor *nor)
-@@ -351,7 +355,7 @@ static int cypress_nor_octal_dtr_enable(struct spi_nor *nor, bool enable)
- 			cypress_nor_octal_dtr_dis(nor);
- }
- 
--static void s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
-+static int s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
- {
- 	/*
- 	 * On older versions of the flash the xSPI Profile 1.0 table has the
-@@ -377,6 +381,8 @@ static void s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
- 	 * actual value for that is 4.
- 	 */
- 	nor->params->rdsr_addr_nbytes = 4;
-+
-+	return 0;
- }
- 
- static int s28hx_t_post_bfpt_fixup(struct spi_nor *nor,
 -- 
 2.53.0
 
