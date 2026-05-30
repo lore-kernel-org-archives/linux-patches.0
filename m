@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731A51D63E4;
-	Sat, 30 May 2026 18:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75F9137750;
+	Sat, 30 May 2026 18:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167042; cv=none; b=BgnZ1SOmSi1h22DrXgYdyKYinrAbdXVXcDI78Q3kTsw7Il/ROiyFVaAY2rw48Cu0RL6DI+8P/3ZdEM+H9CtNFTmhb0qj3o42jM8B6P6NCEn63Yir4z3z6OihAydZac9iWy0xrjrLmrnj6SK61AGg/3JYh0cxTqXMk/Gkeh3J8RA=
+	t=1780167046; cv=none; b=UsvX1X8STCmgMbmllXHghkCWxUiaVhp2sTWvkStV+ERq3JF9yHdb6v53hPi0DXhIRa2fGyDSAkmFxKOtaM6HoHY8MjYZPODnS6jHJcu/IPqDNbU8jkS6h80BFI7/j4VLArWUyL3cL5SqN0v0lI6iL0Bi4DASFAqqCyCOG8gBOt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167042; c=relaxed/simple;
-	bh=Y1OlP2K90Sh7FVz0PiMJcfoN5EbD6fNKY0vZ4F+sZws=;
+	s=arc-20240116; t=1780167046; c=relaxed/simple;
+	bh=NYsMaFVPCVA9GypOU/j9yGajSTYxW0oMXwHiumt6Zv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+s9q1dYy33v15mehOvpCJQPgDAhe/nGr6g903UHH1LFWxOCNTy9HJjo1y3IPMVlanCdmg//o6q59e/KNpVpmrZLv8/jOQri+QrPKS7Qk71HLM3Qs9X7dOxYBavHILrpJjvMOgWp3OC4rSLtS6Xa0Icat5MlQbbe73sXab0y9+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MW7x55fx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P1HmfxcHgxo6zy8ghjr23x6SIqXMC8PRpzT6aZYiJeP8KCoPaNH/d/ORf1C7wYElFJn91pT00LbMRNE6R1plQRG9Gu36vHMwtLVUTg4pgJ1kJbpKu+NdpyCV4cEIRsoegYhGPwLY316Q+LwUpjK3KPV7H44mEiTkpepb2d/8DJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aa6AZuV1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MW7x55fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB3B1F00893;
-	Sat, 30 May 2026 18:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aa6AZuV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE21F00893;
+	Sat, 30 May 2026 18:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167041;
-	bh=Lo+Z0VAVrl71Urn8ssbb/81SqrCmNs6NWLtNU9bd+Sg=;
+	s=korg; t=1780167044;
+	bh=GuAm+Pvnmxm/o5G0im2vC9gj/QpwrS7NdrI+zcY2jm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MW7x55fxfeYF6N81vWAI6da4sgGvzBZlmP+WJm93l0rR9hDhtRMzyGONULimjuhbr
-	 c7Zz4v6I9ptNzvOysUIw0UVR9XovyeAiBGiMiQh86A0Yx0a+aTjcs5MD50q13uuRnE
-	 nDPqE3ZFUGgwTgGOc4yuqR5n2skGxYvamOjNOZ/8=
+	b=aa6AZuV170UGBb8wXU4TVJoQRxYTgHLmeOvggnrCq+XcZTlVM/r0IzVI/L9XjPJgk
+	 1YyYU+/vuQCbRLxtdKa/RgR+TqN1QOd3qmJWiWdiumoceGmrYex4LM0x+jn6bEVm3g
+	 GyL6x7XF1F3W01mXHd7lZDEX14zKm93VzgqAiz1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 547/589] RDMA/siw: Reject MPA FPDU length underflow before signed receive math
-Date: Sat, 30 May 2026 18:07:08 +0200
-Message-ID: <20260530160239.050532324@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Ian Ray <ian.ray@gehealthcare.com>
+Subject: [PATCH 5.10 548/589] drm/bridge: megachips: remove bridge when irq request fails
+Date: Sat, 30 May 2026 18:07:09 +0200
+Message-ID: <20260530160239.074207123@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,101 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 0ce1bc9e46ecabe84772bb561e373c0d9876d6f2 upstream.
+commit d45d5c819f2cd0b6b5d76a194a537a5f4aeefecb upstream.
 
-A malicious connected siw peer can send an iWARP FPDU whose MPA length
-field (c_hdr->mpa_len, 16 bit big-endian, peer-controlled) is smaller
-than the fixed DDP/RDMAP header for the announced opcode. Soft-iWARP
-parses the full header in siw_get_hdr() based on iwarp_pktinfo[opcode]
-.hdr_len, but never compares mpa_len against that header length.
+If devm_request_threaded_irq() fails after drm_bridge_add(), remove the
+bridge before returning.
 
-siw_tcp_rx_data() then derives
+Keep drm_bridge_add() rather than devm_drm_bridge_add(): registration is
+tied to the STDP4028 device while ge_b850v3_register() may complete from
+either I2C probe; devm would not unwind the bridge if the other client's
+probe fails.
 
-    srx->fpdu_part_rem = be16_to_cpu(mpa_len) - fpdu_part_rcvd
-                         + MPA_HDR_SIZE;
-
-where fpdu_part_rcvd equals iwarp_pktinfo[opcode].hdr_len at this
-point. For a tagged WRITE (hdr_len 16, MPA_HDR_SIZE 2) the smallest
-on-wire mpa_len of 0 yields fpdu_part_rem = -14, and any mpa_len below
-hdr_len - MPA_HDR_SIZE underflows to a negative int.
-
-The signed value then flows into siw_proc_write()/siw_proc_rresp() as
-
-    bytes = min(srx->fpdu_part_rem, srx->skb_new);
-
-is handed to siw_check_mem() as an int len (whose interval check
-addr + len > mem->va + mem->len is satisfied for a valid base when
-len is negative), and reaches siw_rx_data() -> siw_rx_kva() /
-siw_rx_umem() -> skb_copy_bits() as a signed copy length. The header
-copy branch in skb_copy_bits() promotes that to size_t, producing a
-multi-gigabyte read.
-
-KASAN under a KUnit harness that drives the real kernel TCP receive
-path -- a loopback AF_INET socketpair, the malformed FPDU written via
-kernel_sendmsg, sk_data_ready firing in softirq, tcp_read_sock
-dispatching to siw_tcp_rx_data -- reports:
-
-    BUG: KASAN: use-after-free in skb_copy_bits+0x284/0x480
-    Read of size 4294967295 at addr ffff888...
-    Call Trace:
-     skb_copy_bits
-     siw_rx_kva
-     siw_rx_data
-     siw_check_mem
-     siw_proc_write
-     siw_tcp_rx_data
-     __tcp_read_sock
-     siw_qp_llp_data_ready
-     tcp_data_ready
-     tcp_data_queue
-
-Add the missing invariant at the earliest point where the peer header
-is fully assembled. iwarp_pktinfo[*].hdr_len - MPA_HDR_SIZE is exactly
-the value the siw transmitter uses as the minimum mpa_len for each
-opcode (drivers/infiniband/sw/siw/siw_qp.c:33), so this matches the
-protocol contract. Out-of-range FPDUs terminate the connection with
-TERM_ERROR_LAYER_LLP / LLP_ETYPE_MPA / LLP_ECODE_FPDU_START -- which
-is RFC 5044 Section 8 error code 3 ("Marker and ULPDU Length fields
-do not agree on the start of an FPDU"), the correct framing-error
-class for this inconsistency.
-
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
-Link: https://patch.msgid.link/r/20260513175325.2042630-2-michael.bommarito@gmail.com
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260430195700.80317-1-osama.abdelkader@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |   16 +++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1102,6 +1102,21 @@ static int siw_get_hdr(struct siw_rx_str
- 	}
+--- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
++++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
+@@ -302,7 +302,6 @@ static void ge_b850v3_lvds_remove(void)
+ 		goto out;
  
- 	/*
-+	 * Peer-controlled mpa_len must not underflow srx->fpdu_part_rem
-+	 * in siw_tcp_rx_data(); a negative value flows as a signed copy
-+	 * length into siw_check_mem() and skb_copy_bits().
-+	 */
-+	if (unlikely(be16_to_cpu(c_hdr->mpa_len) + MPA_HDR_SIZE <
-+		     iwarp_pktinfo[opcode].hdr_len)) {
-+		pr_warn_ratelimited("siw: short mpa_len %u for opcode %u (hdr_len %u)\n",
-+				    be16_to_cpu(c_hdr->mpa_len), opcode,
-+				    iwarp_pktinfo[opcode].hdr_len);
-+		siw_init_terminate(rx_qp(srx), TERM_ERROR_LAYER_LLP,
-+				   LLP_ETYPE_MPA, LLP_ECODE_FPDU_START, 0);
-+		return -EINVAL;
-+	}
+ 	drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
+-
+ 	ge_b850v3_lvds_ptr = NULL;
+ out:
+ 	mutex_unlock(&ge_b850v3_lvds_dev_mutex);
+@@ -312,6 +311,7 @@ static int ge_b850v3_register(void)
+ {
+ 	struct i2c_client *stdp4028_i2c = ge_b850v3_lvds_ptr->stdp4028_i2c;
+ 	struct device *dev = &stdp4028_i2c->dev;
++	int ret;
+ 
+ 	/* drm bridge initialization */
+ 	ge_b850v3_lvds_ptr->bridge.funcs = &ge_b850v3_lvds_funcs;
+@@ -329,11 +329,15 @@ static int ge_b850v3_register(void)
+ 	if (!stdp4028_i2c->irq)
+ 		return 0;
+ 
+-	return devm_request_threaded_irq(&stdp4028_i2c->dev,
+-			stdp4028_i2c->irq, NULL,
+-			ge_b850v3_lvds_irq_handler,
+-			IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+-			"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
++	ret = devm_request_threaded_irq(&stdp4028_i2c->dev,
++					stdp4028_i2c->irq, NULL,
++					ge_b850v3_lvds_irq_handler,
++					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
++	if (ret)
++		drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
 +
-+	/*
- 	 * DDP/RDMAP header receive completed. Check if the current
- 	 * DDP segment starts a new RDMAP message or continues a previously
- 	 * started RDMAP message.
++	return ret;
+ }
+ 
+ static int stdp4028_ge_b850v3_fw_probe(struct i2c_client *stdp4028_i2c,
 
 
