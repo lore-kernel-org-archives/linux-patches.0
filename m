@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26C62367DF;
-	Sat, 30 May 2026 18:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DCA2E7389;
+	Sat, 30 May 2026 18:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167162; cv=none; b=KDk9Uwbu42K4zxFGBX3VdwsIhbuD4BckisUfVoXvf25BiP1zTvw2rMKnr69y2D1ILApXa6AlTCVqn/VVT8R1tj7lE97Ts1xKo61jRwayCI/v2K21mnChEhBQ7XSY2zt4RKRVExY8qUfcE3L25nyaDzLMoLu15gYVQuaGTEfHDWQ=
+	t=1780167166; cv=none; b=SoB7LvubqhvTNCLBcBnCC3mDQNAcMEpz26fBMeX1abnnX9SuUPTfqno+DBLKm0hZpF3Sp+Ga73Dt4thtKxdGWuEXQ0OIYve86UbN0brN3i5jvTj4quIjyGicC2R77iikWya5eyiVVmseDCPTHNOeNgU5uTpMzTBTd1dDvC5RxqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167162; c=relaxed/simple;
-	bh=OyvJL6im/TBQ0Le65ZAS3PscCva7xOgYQVVXg18Em4M=;
+	s=arc-20240116; t=1780167166; c=relaxed/simple;
+	bh=FaTihR+UPmeNp4KQU/qrX6xjawvBqpwnpcEZTi/phLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZC+hQMRHcbILJmYsouCTwtKyqWfPkZ9L3YF65sL+9gLu6pR6L1miXp9HuqTAOvcL3ME3VvfvRvL5uHpEKZSShv6RlmSW1ia21aJ9u1wze2GRVWpGpP2+cg+E/dzMQTKzRn3H3WVnHGPcB1YuApdc8qlNINW5w7JAgVa5feI+r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyrKt5LF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qhOFb4orgOjb8AAyU6J/9pb5omwH+Ro/ehlVuzpSeZNqT0pTddWeqpz94NatYvPsvPQJmj2VhcrPy2CI2v9yOjyMUIQrxO31p4vYdZzxNPhrwnxFrQBhdulU3fOykMDSNgNGubfgmMdCANAwipRAfy5GU2EwwF3Jgryw0VLmOOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1SU25Ag; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyrKt5LF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193051F00893;
-	Sat, 30 May 2026 18:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1SU25Ag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E8C1F00893;
+	Sat, 30 May 2026 18:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167161;
-	bh=supnPoYcu5h6bbykFrSK1LPVN382y9TQzaqffemKPCo=;
+	s=korg; t=1780167165;
+	bh=bbh+Sk1CkPxCDvthpphZ5yKlRHGU6nT3nMCsZPNKSjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DyrKt5LFCEXr1gGjva5CI2dpG9/OYCmzMtm6rqlpiRCZ208OdZTpw+GNBJvPU1oMk
-	 lEXZo/NB93dqcV34o5YsOWtqU9YeyyDmCLg5iAsgeD2rfeJ10qwg6ZmoHdDEq4TMKv
-	 65K4YRy6dKlpo8YYN5/UXOi1v/vELsmr7mJc5M/o=
+	b=K1SU25AgaRAtG11Nh1Uj/99i9nK+JCXTDmlpqMTxyBcD0ch2qIVINy6/7EuOg5Vq0
+	 heLubFCenyypC51baFh6t9Ki0HpILJm03JsE9vbHEX6FWV9fCCBlnprWCOHP3OcEj5
+	 s/raD7aVaP7baUL3uBwrRxLh9ldlW4yfWPVMmGTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh R <vigneshr@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 546/589] spi: ti-qspi: fix use-after-free after DMA setup failure
-Date: Sat, 30 May 2026 18:07:07 +0200
-Message-ID: <20260530160239.025432763@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 537/589] ring-buffer: Fix reporting of missed events in iterator
+Date: Sat, 30 May 2026 18:06:58 +0200
+Message-ID: <20260530160238.806607094@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,41 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
+commit a254b6d13b0edd6272926674d2afc46d46e496b7 upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+When tracing is active while reading the trace file, if the iterator
+reading the buffer detects that the writer has passed the iterator head,
+it will reset and set a "missed events" flag. This flag is passed to the
+output processing to show the user that events were missed:
 
-Make sure to clear the DMA channel pointer also if buffer allocation
-fails to avoid passing a pointer to the released channel to the DMA
-engine (or trying to free the channel a second time on late probe errors
-or driver unbind).
+  CPU:4 [LOST EVENTS]
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
+The problem is that the flag is reset after it is checked in
+ring_buffer_iter_dropped(). But the "trace" file iterates over all the CPU
+ring buffers and it will check if they are dropped when figuring out which
+buffer to print next. This prematurely clears the missed_events flag if
+the CPU buffer with the missed events is not the one that is printed next.
 
-Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Vignesh R <vigneshr@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+On the iteration where the CPU buffer with the missed events is printed,
+the check if it had missed events would return false and the output does
+not show that events were missed.
+
+Do not reset the missed_events flag when checking if there were missed
+events, but instead clear it when moving the iterator head to the next
+event.
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260520220801.4fd09d13@fedora
+Fixes: c9b7a4a72ff64 ("ring-buffer/tracing: Have iterator acknowledge dropped events")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ti-qspi.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -873,6 +873,7 @@ static int ti_qspi_probe(struct platform
- 		dev_err(qspi->dev,
- 			"dma_alloc_coherent failed, using PIO mode\n");
- 		dma_release_channel(qspi->rx_chan);
-+		qspi->rx_chan = NULL;
- 		goto no_dma;
- 	}
- 	master->dma_rx = qspi->rx_chan;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4167,6 +4167,7 @@ static void rb_iter_reset(struct ring_bu
+ 	iter->head_page = cpu_buffer->reader_page;
+ 	iter->head = cpu_buffer->reader_page->read;
+ 	iter->next_event = iter->head;
++	iter->missed_events = 0;
+ 
+ 	iter->cache_reader_page = iter->head_page;
+ 	iter->cache_read = cpu_buffer->read;
+@@ -4776,10 +4777,7 @@ ring_buffer_peek(struct trace_buffer *bu
+  */
+ bool ring_buffer_iter_dropped(struct ring_buffer_iter *iter)
+ {
+-	bool ret = iter->missed_events != 0;
+-
+-	iter->missed_events = 0;
+-	return ret;
++	return iter->missed_events != 0;
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_iter_dropped);
+ 
+@@ -4996,7 +4994,7 @@ void ring_buffer_iter_advance(struct rin
+ 	unsigned long flags;
+ 
+ 	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-
++	iter->missed_events = 0;
+ 	rb_advance_iter(iter);
+ 
+ 	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
 
 
