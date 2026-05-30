@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40F431F98D;
-	Sat, 30 May 2026 18:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2055E31F98D;
+	Sat, 30 May 2026 18:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164538; cv=none; b=Dn1PKaM6VVfKwu9awUI0V2QWdZ5yBfEYHDI+Q6oDE1yUHSR4OAnv1WcoiziRgk6B7yCj1Qc4SUBts4RAreDloeUPhNe2CkrE4ExyVLoT/0xdjyc7DNzIRsV9qFv9kTOjr9NVprDntXAYwraKVysYqFEwBKODBRAybDmrBj6ystA=
+	t=1780164542; cv=none; b=Ee4su9P1kAAV1wZNIIyQpEmn9Nk7r/sHmvaHH1jpccJtWo6Gc4armocndJfX9ziZB9szqF5qzEe+Cyh1acl71oSD+HSB7OCKRVLQMJDVcnbQeTGowtqrp3dHVUzyoe1bb7bpdIr/u5O+VPal9uRFW/gLbgxdh6IWUmJfc7ElvZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164538; c=relaxed/simple;
-	bh=KzZ2BcT/GczkJzSNT/0L2PhDIDTsFC9goJDtRoBhq/8=;
+	s=arc-20240116; t=1780164542; c=relaxed/simple;
+	bh=jtd9Tfd0frYLb/Nv5Y6akt1Q+kGD2xATAObzRvL8Aio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KM6vpZDf1q9aH2UxGoFtezfFumps5kb5sllu0mIXBcGWvlD6q7BswlUPL7nEyGNdea3dIvxQH4ZBBXrUkKN08teYaAlCFrX1mmFE6RBT2ER6Bj4lh79uSe6OYqGYmLnjVxybZ2q/cuv8CAABo6u8vO4frmp8U/L8HYIyJhfAWy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBJO7dFe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTCTTiJHpOWO5j5nOrKxR1Uh/SSAzwhPysgaFsXdeNIiCwPcokRAUAxi1JKHzHkX63zxkVch5ftFtMRYu0H0skWoaR6IwW+H1xMTy53tWjmmnIX36RAjcmDNQ96mq9CwpjVX4L+Izz1QfhQSFPEEAbQ+RgISpcfBwyvM6PwNazA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSRgToOp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBJO7dFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82AF1F00893;
-	Sat, 30 May 2026 18:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSRgToOp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EF11F00898;
+	Sat, 30 May 2026 18:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164537;
-	bh=b4xFceBtOxLWNWj6S/UJf3Vm51h/ORr+jdixdxmSkcU=;
+	s=korg; t=1780164541;
+	bh=dYS2Z0nmHF/LRGcEcz2qkT4Ilq1zLROqNQJ2jAx2ezE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBJO7dFe1DVVLbisrNf1x/WZ+CRUREhanqtdyuyY5IxCVBa25GX2E35fjhFgFFjnJ
-	 6rsauyD0qHD0gETK9/pjDQFzD1a/oYLfTVY4mermH7iyGdPaRED4OghdOH3cThOarf
-	 2EkEv+9RhLkir6hhny2zJIiWjRiwUU2iY7/9BhPU=
+	b=fSRgToOptm1VPrd1dN8Jd6MC8vKszIyizvdIQUe+/woK0xv1sUfhs/3kLpNG5VJe3
+	 uh7W194FFZaDy6V+HOEP6kLi6Sfuty9r2auNmFd8oddlSS8HdJx7lUs3HhfYzq5DN8
+	 f1YjvmjzOWr4/Fk6SFmt+YnfQd1WU1vscYOl4aVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 557/776] net/sched: taprio: replace safety precautions with comments
-Date: Sat, 30 May 2026 18:04:31 +0200
-Message-ID: <20260530160254.538641648@linuxfoundation.org>
+Subject: [PATCH 5.15 584/776] net/rds: zero per-item info buffer before handing it to visitors
+Date: Sat, 30 May 2026 18:04:58 +0200
+Message-ID: <20260530160255.171142280@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,94 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2c08a4f898d0a8e08f431709a1ae728a6fddaabd ]
+[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
 
-The WARN_ON_ONCE() checks introduced in commit 13511704f8d7 ("net:
-taprio offload: enforce qdisc to netdev queue mapping") take a small
-toll on performance, but otherwise, the conditions are never expected to
-happen. Replace them with comments, such that the information is still
-conveyed to developers.
+rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
+caller-allocated on-stack u64 buffer to a per-connection visitor and
+then copy the full item_len bytes back to user space via
+rds_info_copy() regardless of how much of the buffer the visitor
+actually wrote.
 
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
+write a subset of their output struct when the underlying
+rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
+and the two GIDs via explicit memsets). Several u32 fields
+(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
+cache_allocs) and the 2-byte alignment hole between sl and
+cache_allocs remain as whatever stack contents preceded the visitor
+call and are then memcpy_to_user()'d out to user space.
+
+struct rds_info_rdma_connection and struct rds6_info_rdma_connection
+are the only rds_info_* structs in include/uapi/linux/rds.h that are
+not marked __attribute__((packed)), so they have a real alignment
+hole. The other info visitors (rds_conn_info_visitor,
+rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
+their packed output struct today and are not known to be vulnerable,
+but a future visitor that adds a conditional write-path would have
+the same bug.
+
+Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
+a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
+binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
+any netdev is sufficient), sendto()'s any peer on the same subnet
+(fails cleanly but installs an rds_connection in the global hash in
+RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
+RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
+bytes of stack garbage including kernel text/data pointers:
+
+    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
+    8..39  00 ...                      gids (memset-zeroed)
+    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
+    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
+    56..59 01 00 08 00                 rdma_mr_size (garbage)
+    60..61 00 00                       tos, sl
+    62..63 00 00                       alignment padding
+    64..67 18 00 00 00                 cache_allocs (garbage)
+
+Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
+and rds_walk_conn_path_info() before invoking the visitor. This
+covers the IPv4/IPv6 IB visitors and hardens all current and future
+visitors against the same class of bug.
+
+No functional change for visitors that fully populate their output.
+
+Changes in v2:
+- retarget at the net tree (subject prefix "[PATCH net v2]",
+  net/rds: prefix in the title)
+- pick up Reviewed-by tags from Sharath Srinivasan and
+  Allison Henderson
+
+Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 105425b1969c ("net/sched: taprio: fix use-after-free in advance_sched() on schedule switch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ net/rds/connection.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 9c86c8ade4853..8924b439c459d 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -432,6 +432,9 @@ static int taprio_enqueue_one(struct sk_buff *skb, struct Qdisc *sch,
- 	return qdisc_enqueue(skb, child, to_free);
- }
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index 98c0d5ff9de9c..cd41f83863c89 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
  
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			  struct sk_buff **to_free)
- {
-@@ -439,11 +442,6 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct Qdisc *child;
- 	int queue;
++			/* Zero the per-item buffer before handing it to the
++			 * visitor so any field the visitor does not write -
++			 * including implicit alignment padding - cannot leak
++			 * stack contents to user space via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no c_lock usage.. */
+ 			if (!visitor(conn, buffer))
+ 				continue;
+@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 			 */
+ 			cp = conn->c_path;
  
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to enqueue skb into the root of a taprio qdisc configured with full offload\n");
--		return qdisc_drop(skb, sch, to_free);
--	}
--
- 	queue = skb_get_queue_mapping(skb);
- 
- 	child = q->qdiscs[queue];
-@@ -489,6 +487,9 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	return taprio_enqueue_one(skb, sch, child, to_free);
- }
- 
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static struct sk_buff *taprio_peek(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
-@@ -498,11 +499,6 @@ static struct sk_buff *taprio_peek(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to peek into the root of a taprio qdisc configured with full offload\n");
--		return NULL;
--	}
--
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	gate_mask = entry ? entry->gate_mask : TAPRIO_ALL_GATES_OPEN;
-@@ -545,6 +541,9 @@ static void taprio_set_budget(struct taprio_sched *q, struct sched_entry *entry)
- 			     atomic64_read(&q->picos_per_byte)));
- }
- 
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
-@@ -554,11 +553,6 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to dequeue from the root of a taprio qdisc configured with full offload\n");
--		return NULL;
--	}
--
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	/* if there's no entry, it means that the schedule didn't
++			/* Zero the per-item buffer for the same reason as
++			 * rds_for_each_conn_info(): any byte the visitor
++			 * does not write (including alignment padding) must
++			 * not leak stack contents via rds_info_copy().
++			 */
++			memset(buffer, 0, item_len);
++
+ 			/* XXX no cp_lock usage.. */
+ 			if (!visitor(cp, buffer))
+ 				continue;
 -- 
 2.53.0
 
