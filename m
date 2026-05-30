@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAD826F288;
-	Sat, 30 May 2026 17:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C393632B11D;
+	Sat, 30 May 2026 17:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160550; cv=none; b=JEaG9cWlIGvVZLca/7t5GXD2PcrlLHptxpYrS6YU0WtjCML3gzxPCLPcjcz4ziXoT507PZl83tf198kv95i3MLPvg0bS8U8mZGapHIdArb9u9Zg38XPAQNadmkCwiw/0Pe+fsz4jWYlUBsT30uOdU8FWQuYXXJE4grZL0NcEDdc=
+	t=1780160554; cv=none; b=bmerVHb6G8NyrcOcTVBCN4reL11akIQbIZYcoSIHhEYoOqGnGV0W194BPXplsMXdbTtBIBCOG9BfwdzstuIAkWgxZpjEcPjA5BpuqgYBJzJqSzLgnHjlyMQWrySyPhYAM6d/jFxzB7XvXUux5tgCbbIXbL/N2/BTrX8pW4XYcRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160550; c=relaxed/simple;
-	bh=j/T9HV/dMLNtDAO0vHvo6Q2r4XGMFd8ewZq6jm3Pj84=;
+	s=arc-20240116; t=1780160554; c=relaxed/simple;
+	bh=vzUUIGLrFrvt9EwCGXJ0Wo+YU4oZmLvgNEvz5l+cVQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeELkMSbJNNK5mmgKnI/BTqgAFf5Uc7rQA0HBMJHMRwuzUnKipB2Xzxvox0vbnNVcs702qSRK9pnWZVIMvoJqIl5Db1/x6WGhej0Ha+s9E0VvmSjvdAyFo4FgtzhXqj6P4lL/bXW7QxnmNxaflO9gJT90lLP0HW2Nk7hhnF5Sk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS/Sru1H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SrW6Z/91BaS8gxlks0C5H2YxX9yoSUOxrH1nWrcdgVgJbVmMokXFFbRx4CnAtlxfv4jumihzdnENyqeB9LoxP/SczvyoEyVYL/Rrns+KYDbA9yFHFETSSKmIhUgVRKNOUnN1GcxDm2hHp9R/sk9O7q/UOs5iK3mL4T9zB43sr7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9str9WF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS/Sru1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9DE1F00893;
-	Sat, 30 May 2026 17:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9str9WF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9791F00893;
+	Sat, 30 May 2026 17:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160549;
-	bh=gV1S7ZZyyDyHzFkKuEjf7hkKBBmun+Oyspby76941s0=;
+	s=korg; t=1780160553;
+	bh=rf/z5SGeXLYaMyKpctK9GL8IeWR1SCBX8gkp2evnfNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oS/Sru1Hrmw1ojXlh58XIMzMETyMNAFM3eYFYs1QqtUcw5bjsX+b3/QpURzioCg+m
-	 fe7NHcy6ZAZay++DaT6bwVYfEjBvdsDlO3EbefeuFYB3iv/ysyXxDlUNksauTiVzTD
-	 Gf04cTckjfJpZbgp3aMzG+ikpsw3Kcrp9g7x0wfs=
+	b=G9str9WFHSpMu+6LM3lWNhkDlyJkLrYg63xfWM+uEoEPADWWC2X7F7uV9G6UoVetE
+	 kPYLsrlT6L5fQ7zNbf5cat0AkejhRZTR+Oon6ePnT4jcgWcGLf2gjRDvJ6ntyHAAZY
+	 iHNxaTd5oRiVOBd3tHy0rx3C+QG2Tx9DYsz+BFNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 367/969] RDMA/mlx4: Fix resource leak on error in mlx4_ib_create_srq()
-Date: Sat, 30 May 2026 17:58:11 +0200
-Message-ID: <20260530160310.457661996@linuxfoundation.org>
+Subject: [PATCH 6.1 368/969] RDMA/ocrdma: Dont NULL deref uctx on errors in ocrdma_copy_pd_uresp()
+Date: Sat, 30 May 2026 17:58:12 +0200
+Message-ID: <20260530160310.483945297@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit c54c7e4cb679c0aaa1cb489b9c3f2cd98e63a44c upstream.
+commit 34fbf48cf3b410d2a6e8c586fa952a36331ca5ba upstream.
 
-Sashiko points out that mlx4_srq_alloc() was not undone during error
-unwind, add the missing call to mlx4_srq_free().
+Sashiko points out that pd->uctx isn't initialized until late in the
+function so all these error flow references are NULL and will crash. Use
+the uctx that isn't NULL.
 
 Cc: stable@vger.kernel.org
-Fixes: 225c7b1feef1 ("IB/mlx4: Add a driver Mellanox ConnectX InfiniBand adapters")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=8
-Link: https://patch.msgid.link/r/11-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Fixes: fe2caefcdf58 ("RDMA/ocrdma: Add driver for Emulex OneConnect IBoE RDMA adapter")
+Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
+Link: https://patch.msgid.link/r/9-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/srq.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/ocrdma/ocrdma_verbs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/hw/mlx4/srq.c
-+++ b/drivers/infiniband/hw/mlx4/srq.c
-@@ -193,13 +193,15 @@ int mlx4_ib_create_srq(struct ib_srq *ib
- 	if (udata)
- 		if (ib_copy_to_udata(udata, &srq->msrq.srqn, sizeof (__u32))) {
- 			err = -EFAULT;
--			goto err_wrid;
-+			goto err_srq;
- 		}
+--- a/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
++++ b/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
+@@ -620,9 +620,9 @@ static int ocrdma_copy_pd_uresp(struct o
  
- 	init_attr->attr.max_wr = srq->msrq.max - 1;
+ ucopy_err:
+ 	if (pd->dpp_enabled)
+-		ocrdma_del_mmap(pd->uctx, dpp_page_addr, PAGE_SIZE);
++		ocrdma_del_mmap(uctx, dpp_page_addr, PAGE_SIZE);
+ dpp_map_err:
+-	ocrdma_del_mmap(pd->uctx, db_page_addr, db_page_size);
++	ocrdma_del_mmap(uctx, db_page_addr, db_page_size);
+ 	return status;
+ }
  
- 	return 0;
- 
-+err_srq:
-+	mlx4_srq_free(dev->dev, &srq->msrq);
- err_wrid:
- 	if (udata)
- 		mlx4_ib_db_unmap_user(ucontext, &srq->db);
 
 
