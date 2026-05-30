@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE714332EA7;
-	Sat, 30 May 2026 17:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6527B1C5799;
+	Sat, 30 May 2026 17:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161522; cv=none; b=K6bL2VDk5IQ77vxyxNYww5Zmo3yZzc4LIzBa4se8TLoLY2I2nIwzikpiE7gUghHUhJ/6JsG4T92QHFqSfrsdrBg/8kNcMVSx6XegobW2+gSumGNOhL9T4w7AI6gC6gfs+JckSGLFPPxiYRROq4nr3D38bphiwowOGuzuS14ilGM=
+	t=1780161527; cv=none; b=WdvDFmSCJ0SaObaiiP3fT97D7QfdTQJZS0c5U4avGWBF5DQ1kG2zHFkwH/+pR2CSAuiaggpYBbZ5z8GpyLuCrvIrbML1CXK8WPRNwaVoJKLqUXhJQgJbDzBM+noXWOCEkYHQkVMtKWcocaOTGK/fCyI3yXmIcdd2+q8xM9qTJEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161522; c=relaxed/simple;
-	bh=MJUxGvldcDn8ptCZuIxmZef5PPmA9uAGU+40HSxPy/k=;
+	s=arc-20240116; t=1780161527; c=relaxed/simple;
+	bh=wELScWMdxFfg8SI0+gO3EYQ7OP174EFZ9jIwck/r5RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPFzmRhTclMOIVFCjSxmfc5eRUBDYXoqCBNGYri676XJGZ0mqOrF8VlFx8io58dS5fErug68jJvEwjJrVT2qvVZ7y3OmaKLorYccPBb4V8FMLl/9YtZkg40kuGGqSgMv5Qg/wfNtznwT2wAJ1Pukvhvq3hDC0vBj7JDY3oaCLHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdqlUVGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CulpHLpiGQ6gUTPsBuXiu4eFlBdqSttlsN+4OfdqFGEitXhp3rDyOlIGmf26YnCteCCeA7Jd8ND/kt7h8jWgabo6SB8uIVmjPqaNbCa99vK8N2+tC6mWynVGJr0BZbyMVuWRCkQ9+SYawAtIwEnLEbYgO9758+FvsRQqr/ELuh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHgv6m19; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdqlUVGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2B51F00893;
-	Sat, 30 May 2026 17:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHgv6m19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D584A1F00893;
+	Sat, 30 May 2026 17:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161521;
-	bh=sJCrK+dIrxxvPjW9lGPOfuExo0yiyZPK02Gnjuy/9EI=;
+	s=korg; t=1780161525;
+	bh=GeAoOcS+3oQRzW/YrXV6+94XIbob8JDov588Le28m/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdqlUVGnkKks0x06z1/OII7SAU4sSUlexaUcgMLB5KTYWfDELE7SFEhDxo3Jq1X0q
-	 SthwJlgzLl43S6Pp6aohBb87HfcZfzlFfAeVLlbQaK4rk5XAKtnVcz3fCSeJ1goryR
-	 93TJfeboSv9IMOdkW07b5jj+Dy3HxtPASj+Ja7uI=
+	b=jHgv6m19Eb6rnoi+jx3v8sY5cMQYS20PTylN25eefagXVE6XbvD56ZsEA9iIiL8GI
+	 K6/y1lx7N9kIxxv0A2/5jh0MQO6fA7KJDVMSJFGVmzmT7GcQsl4OpokvMB9uadO27v
+	 sB7dWDO1lHuXoQSzEGBMsJbcwWhW4FD0SoDsAkb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 649/969] clk: qcom: dispcc-sm8450: use RCG2 ops for DPTX1 AUX clock source
-Date: Sat, 30 May 2026 18:02:53 +0200
-Message-ID: <20260530160318.382887641@linuxfoundation.org>
+Subject: [PATCH 6.1 650/969] scsi: sg: Resolve soft lockup issue when opening /dev/sgX
+Date: Sat, 30 May 2026 18:02:54 +0200
+Message-ID: <20260530160318.414456810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,39 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 141af1be817c42c7f1e1605348d4b1983d319bea ]
+[ Upstream commit d06a310b45e153872033dd0cf19d5a2279121099 ]
 
-The clk_dp_ops are supposed to be used for DP-related clocks with a
-proper MND divier. Use standard RCG2 ops for dptx1_aux_clk_src, the same
-as all other DPTX AUX clocks in this driver.
+The parameter def_reserved_size defines the default buffer size reserved
+for each Sg_fd and should be restricted to a range between 0 and 1,048,576
+(see https://tldp.org/HOWTO/SCSI-Generic-HOWTO/proc.html).  Although the
+function sg_proc_write_dressz enforces this limit, it is possible to bypass
+it by directly modifying the module parameter as shown below, which then
+causes a soft lockup:
 
-Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260112-dp-aux-clks-v1-2-456b0c11b069@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+echo -1 > /sys/module/sg/parameters/def_reserved_size
+exec 4<> /dev/sg0
+
+watchdog: BUG: soft lockup - CPU#5 stuck for 26 seconds! [bash:537]
+Modules loaded:
+CPU: 5 UID: 0 PID: 537 Command: bash, kernel version 6.19.0-rc3+ #134,
+PREEMPT disabled
+Hardware: QEMU Standard PC (i440FX + PIIX, 1996), BIOS version
+1.16.1-2.fc37 dated 04/01/2014
+...
+Call Trace:
+
+  sg_build_reserve+0x5c/0xa0
+  sg_add_sfp+0x168/0x270
+  sg_open+0x16e/0x340
+  chrdev_open+0xbe/0x230
+  do_dentry_open+0x175/0x480
+  vfs_open+0x34/0xf0
+  do_open+0x265/0x3d0
+  path_openat+0x110/0x290
+  do_filp_open+0xc3/0x170
+  do_sys_openat2+0x71/0xe0
+  __x64_sys_openat+0x6d/0xa0
+  do_syscall_64+0x62/0x310
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The fix is to use module_param_cb to validate and reject invalid values
+assigned to def_reserved_size.
+
+Fixes: 6460e75a104d ("[SCSI] sg: fixes for large page_size")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260127062044.3034148-3-yangerkun@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8450.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sg.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
-index e7dd45a2058c1..e7fab9d38f85e 100644
---- a/drivers/clk/qcom/dispcc-sm8450.c
-+++ b/drivers/clk/qcom/dispcc-sm8450.c
-@@ -364,7 +364,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_dp_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index b63f7c09c97a1..a7131500eafe7 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -1614,10 +1614,35 @@ sg_remove_device(struct device *cl_dev, struct class_interface *cl_intf)
+ }
  
+ module_param_named(scatter_elem_sz, scatter_elem_sz, int, S_IRUGO | S_IWUSR);
+-module_param_named(def_reserved_size, def_reserved_size, int,
+-		   S_IRUGO | S_IWUSR);
+ module_param_named(allow_dio, sg_allow_dio, int, S_IRUGO | S_IWUSR);
+ 
++static int def_reserved_size_set(const char *val, const struct kernel_param *kp)
++{
++	int size, ret;
++
++	if (!val)
++		return -EINVAL;
++
++	ret = kstrtoint(val, 0, &size);
++	if (ret)
++		return ret;
++
++	/* limit to 1 MB */
++	if (size < 0 || size > 1048576)
++		return -ERANGE;
++
++	def_reserved_size = size;
++	return 0;
++}
++
++static const struct kernel_param_ops def_reserved_size_ops = {
++	.set	= def_reserved_size_set,
++	.get	= param_get_int,
++};
++
++module_param_cb(def_reserved_size, &def_reserved_size_ops, &def_reserved_size,
++		   S_IRUGO | S_IWUSR);
++
+ MODULE_AUTHOR("Douglas Gilbert");
+ MODULE_DESCRIPTION("SCSI generic (sg) driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
