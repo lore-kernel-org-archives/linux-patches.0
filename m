@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3271274FDC;
-	Sat, 30 May 2026 18:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD4017555;
+	Sat, 30 May 2026 18:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165057; cv=none; b=bRu07B6oMl7K5AIuby19CMjjy1wycQtCDwntiFBEBjjjrakuJPuRN8EITPCSf5OCpmqZveSYQ/OIpY9BRCzxDpIPi9+fJ7qLuB9owyZnX7lR7uX/L64JvJV9vLXL0TdQuAjCP4NsNlaqD9Cl/kMm/uSkhUrrYmFkJWLOpTJ8/bE=
+	t=1780165061; cv=none; b=GOpILq+gn0S+it0RZsESD0pX6dLPjkSDu0bNZ4b2oIjssg+HwAFLUBOt7TqqeGZV0znfZzxuO2LqyOIx7yc80Cm1C6WB/Ti6iBNfnmMGFyFX/kGit4jy1jdREfEvdv58e4jVULJba4y8wjuagN/D+DQfgOatRWj2+eyLXONZqkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165057; c=relaxed/simple;
-	bh=Wc1JgrDw9joBL95HwH4K4Qut3FvYDhtAmX2AQpK3qHo=;
+	s=arc-20240116; t=1780165061; c=relaxed/simple;
+	bh=szKMOBwh7JeVZogPP3bpNKmXIurf4aKGszpxTGUTF68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZu8hmDJsLZkbu0TiykCa+HzmmaBi4r547N2oNzeFXzErbXhoPwn3Qu0nHHmz88efzk/0V092cRDju5TSSf4PGM9ZenlR+VWwye3yM0VHF8oPz+Wr+stD/jhcnkpOwfyynAEqjejiJpa2+uOytPzxZli3D0RvTe4HDqlcG9Eg+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S59t6cFK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QeWE/GEjJrLx/RUz1VuQBFlCHFPQYcR4WY4qZO3SqBQngDeR/Emsv7+lZlXtLQVGR6ddeP9cxFEnkTa+Mvtac+ugoWMdNt3G7Ve+zwPBJwzIfDUAhnDYEp99K1tyV12Xx6cGIieXCeuy5bM2rUop9kWVtfZH6i0LEAqH8P3lNHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxgkXxze; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S59t6cFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72891F00893;
-	Sat, 30 May 2026 18:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxgkXxze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1F51F00893;
+	Sat, 30 May 2026 18:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165056;
-	bh=Oc0bYAPWumeuHSys8o2mYMw7uC8iLlyHo7m+hAdv82s=;
+	s=korg; t=1780165059;
+	bh=OOxXSOMa2tqkJCmHCs5keM3vFUCskjFIsYc+Lutb+dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S59t6cFKObLdVFFNtQloBFs7SylV3hE/NBHm8+qclZZyJ5yOeyrRUNVEWsx+04nlh
-	 G9qbedJfCp/DBkgeevrglNXzyRTTpAiqdDC83aN9IZ/q1Qfj51HdnatCpSDjez6q/h
-	 hczyXebWx/pYeuN1iq/IGA97ggSTQuQa+XKuwXjQ=
+	b=zxgkXxze9yKpmQWuYs8OuPmjiU9nGfjSYJ97w3tS8UavT7gb+GDK3LZp8t7BFegc/
+	 N1160BATb2v8EPgDZ51HGCm+IjV5kBIBxPSY/1hVNhJhgq4UX076QoMQhj9qXnWYSW
+	 hLq8jPd3ezRBnUlnfJ8PBagin34E4H8FrycEAwMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 737/776] netfilter: Make legacy configs user selectable
-Date: Sat, 30 May 2026 18:07:31 +0200
-Message-ID: <20260530160258.846920784@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.15 738/776] netfilter: Exclude LEGACY TABLES on PREEMPT_RT.
+Date: Sat, 30 May 2026 18:07:32 +0200
+Message-ID: <20260530160258.869796529@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,102 +52,333 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6c959fd5e17387201dba3619b2e6af213939a0a7 ]
+[ Upstream commit 9fce66583f06c212e95e4b76dd61d8432ffa56b6 ]
 
-This option makes legacy Netfilter Kconfig user selectable, giving users
-the option to configure iptables without enabling any other config.
+The seqcount xt_recseq is used to synchronize the replacement of
+xt_table::private in xt_replace_table() against all readers such as
+ipt_do_table()
 
-Make the following KConfig entries user selectable:
- * BRIDGE_NF_EBTABLES_LEGACY
- * IP_NF_ARPTABLES
- * IP_NF_IPTABLES_LEGACY
- * IP6_NF_IPTABLES_LEGACY
+To ensure that there is only one writer, the writing side disables
+bottom halves. The sequence counter can be acquired recursively. Only the
+first invocation modifies the sequence counter (signaling that a writer
+is in progress) while the following (recursive) writer does not modify
+the counter.
+The lack of a proper locking mechanism for the sequence counter can lead
+to live lock on PREEMPT_RT if the high prior reader preempts the
+writer. Additionally if the per-CPU lock on PREEMPT_RT is removed from
+local_bh_disable() then there is no synchronisation for the per-CPU
+sequence counter.
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
+The affected code is "just" the legacy netfilter code which is replaced
+by "netfilter tables". That code can be disabled without sacrificing
+functionality because everything is provided by the newer
+implementation. This will only requires the usage of the "-nft" tools
+instead of the "-legacy" ones.
+The long term plan is to remove the legacy code so lets accelerate the
+progress.
+
+Relax dependencies on iptables legacy, replace select with depends on,
+this should cause no harm to existing kernel configs and users can still
+toggle IP{6}_NF_IPTABLES_LEGACY in any case.
+Make EBTABLES_LEGACY, IPTABLES_LEGACY and ARPTABLES depend on
+NETFILTER_XTABLES_LEGACY. Hide xt_recseq and its users,
+xt_register_table() and xt_percpu_counter_alloc() behind
+NETFILTER_XTABLES_LEGACY. Let NETFILTER_XTABLES_LEGACY depend on
+!PREEMPT_RT.
+
+This will break selftest expecing the legacy options enabled and will be
+addressed in a following patch.
+
+Co-developed-by: Florian Westphal <fw@strlen.de>
+Co-developed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/Kconfig |  8 +++++++-
- net/ipv4/netfilter/Kconfig   | 16 ++++++++++++++--
- net/ipv6/netfilter/Kconfig   |  9 ++++++++-
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ net/bridge/netfilter/Kconfig | 10 +++++-----
+ net/ipv4/netfilter/Kconfig   | 24 ++++++++++++------------
+ net/ipv6/netfilter/Kconfig   | 19 +++++++++----------
+ net/netfilter/Kconfig        | 10 ++++++++++
+ net/netfilter/x_tables.c     | 16 +++++++++++-----
+ 5 files changed, 47 insertions(+), 32 deletions(-)
 
 diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
-index 104c0125e32e8..f16bbbbb94817 100644
+index f16bbbbb94817..60f28e4fb5c0a 100644
 --- a/net/bridge/netfilter/Kconfig
 +++ b/net/bridge/netfilter/Kconfig
-@@ -41,7 +41,13 @@ config NF_CONNTRACK_BRIDGE
- 
+@@ -42,8 +42,8 @@ config NF_CONNTRACK_BRIDGE
  # old sockopt interface and eval loop
  config BRIDGE_NF_EBTABLES_LEGACY
--	tristate
-+	tristate "Legacy EBTABLES support"
-+	depends on BRIDGE && NETFILTER_XTABLES
-+	default n
-+	help
-+	 Legacy ebtables packet/frame classifier.
-+	 This is not needed if you are using ebtables over nftables
-+	 (iptables-nft).
+ 	tristate "Legacy EBTABLES support"
+-	depends on BRIDGE && NETFILTER_XTABLES
+-	default n
++	depends on BRIDGE && NETFILTER_XTABLES_LEGACY
++	default	n
+ 	help
+ 	 Legacy ebtables packet/frame classifier.
+ 	 This is not needed if you are using ebtables over nftables
+@@ -65,7 +65,7 @@ if BRIDGE_NF_EBTABLES
+ #
+ config BRIDGE_EBT_BROUTE
+ 	tristate "ebt: broute table support"
+-	select BRIDGE_NF_EBTABLES_LEGACY
++	depends on BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables broute table is used to define rules that decide between
+ 	  bridging and routing frames, giving Linux the functionality of a
+@@ -76,7 +76,7 @@ config BRIDGE_EBT_BROUTE
  
- menuconfig BRIDGE_NF_EBTABLES
- 	tristate "Ethernet Bridge tables (ebtables) support"
+ config BRIDGE_EBT_T_FILTER
+ 	tristate "ebt: filter table support"
+-	select BRIDGE_NF_EBTABLES_LEGACY
++	depends on BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables filter table is used to define frame filtering rules at
+ 	  local input, forwarding and local output. See the man page for
+@@ -86,7 +86,7 @@ config BRIDGE_EBT_T_FILTER
+ 
+ config BRIDGE_EBT_T_NAT
+ 	tristate "ebt: nat table support"
+-	select BRIDGE_NF_EBTABLES_LEGACY
++	depends on BRIDGE_NF_EBTABLES_LEGACY
+ 	help
+ 	  The ebtables nat table is used to define rules that alter the MAC
+ 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
 diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
-index e752a07a871fe..2e540786f9512 100644
+index 2e540786f9512..4cfe4b12bda7c 100644
 --- a/net/ipv4/netfilter/Kconfig
 +++ b/net/ipv4/netfilter/Kconfig
-@@ -12,7 +12,13 @@ config NF_DEFRAG_IPV4
- 
+@@ -13,8 +13,8 @@ config NF_DEFRAG_IPV4
  # old sockopt interface and eval loop
  config IP_NF_IPTABLES_LEGACY
--	tristate
-+	tristate "Legacy IP tables support"
-+	default	n
-+	select NETFILTER_XTABLES
-+	help
-+	  iptables is a legacy packet classifier.
-+	  This is not needed if you are using iptables over nftables
-+	  (iptables-nft).
- 
- config NF_SOCKET_IPV4
- 	tristate "IPv4 socket lookup support"
-@@ -340,7 +346,13 @@ endif # IP_NF_IPTABLES
- 
+ 	tristate "Legacy IP tables support"
+-	default	n
+-	select NETFILTER_XTABLES
++	depends on NETFILTER_XTABLES_LEGACY
++	default	m if NETFILTER_XTABLES_LEGACY
+ 	help
+ 	  iptables is a legacy packet classifier.
+ 	  This is not needed if you are using iptables over nftables
+@@ -190,8 +190,8 @@ config IP_NF_MATCH_TTL
+ # `filter', generic and specific targets
+ config IP_NF_FILTER
+ 	tristate "Packet filtering"
+-	default m if NETFILTER_ADVANCED=n
+-	select IP_NF_IPTABLES_LEGACY
++	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
++	depends on IP_NF_IPTABLES_LEGACY
+ 	help
+ 	  Packet filtering defines a table `filter', which has a series of
+ 	  rules for simple packet filtering at local input, forwarding and
+@@ -228,10 +228,10 @@ config IP_NF_TARGET_SYNPROXY
+ config IP_NF_NAT
+ 	tristate "iptables NAT support"
+ 	depends on NF_CONNTRACK
++	depends on IP_NF_IPTABLES_LEGACY
+ 	default m if NETFILTER_ADVANCED=n
+ 	select NF_NAT
+ 	select NETFILTER_XT_NAT
+-	select IP_NF_IPTABLES_LEGACY
+ 	help
+ 	  This enables the `nat' table in iptables. This allows masquerading,
+ 	  port forwarding and other forms of full Network Address Port
+@@ -271,8 +271,8 @@ endif # IP_NF_NAT
+ # mangle + specific targets
+ config IP_NF_MANGLE
+ 	tristate "Packet mangling"
+-	default m if NETFILTER_ADVANCED=n
+-	select IP_NF_IPTABLES_LEGACY
++	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
++	depends on IP_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `mangle' table to iptables: see the man page for
+ 	  iptables(8).  This table is used for various packet alterations
+@@ -321,7 +321,7 @@ config IP_NF_TARGET_TTL
+ # raw + specific targets
+ config IP_NF_RAW
+ 	tristate  'raw table support (required for NOTRACK/TRACE)'
+-	select IP_NF_IPTABLES_LEGACY
++	depends on IP_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `raw' table to iptables. This table is the very
+ 	  first in the netfilter framework and hooks in at the PREROUTING
+@@ -335,7 +335,7 @@ config IP_NF_SECURITY
+ 	tristate "Security table"
+ 	depends on SECURITY
+ 	depends on NETFILTER_ADVANCED
+-	select IP_NF_IPTABLES_LEGACY
++	depends on IP_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `security' table to iptables, for use
+ 	  with Mandatory Access Control (MAC) policy.
+@@ -347,8 +347,8 @@ endif # IP_NF_IPTABLES
  # ARP tables
  config IP_NF_ARPTABLES
--	tristate
-+	tristate "Legacy ARPTABLES support"
-+	depends on NETFILTER_XTABLES
-+	default n
-+	help
-+	  arptables is a legacy packet classifier.
-+	  This is not needed if you are using arptables over nftables
-+	  (iptables-nft).
- 
- config NFT_COMPAT_ARP
- 	tristate
+ 	tristate "Legacy ARPTABLES support"
+-	depends on NETFILTER_XTABLES
+-	default n
++	depends on NETFILTER_XTABLES_LEGACY
++	default	n
+ 	help
+ 	  arptables is a legacy packet classifier.
+ 	  This is not needed if you are using arptables over nftables
+@@ -364,7 +364,7 @@ config IP_NF_ARPFILTER
+ 	tristate "arptables-legacy packet filtering support"
+ 	select IP_NF_ARPTABLES
+ 	select NETFILTER_FAMILY_ARP
+-	depends on NETFILTER_XTABLES
++	depends on NETFILTER_XTABLES_LEGACY
+ 	help
+ 	  ARP packet filtering defines a table `filter', which has a series of
+ 	  rules for simple ARP packet filtering at local input and
 diff --git a/net/ipv6/netfilter/Kconfig b/net/ipv6/netfilter/Kconfig
-index bc51a77fb6c07..670d23f926e62 100644
+index 670d23f926e62..052f1f53c4dfe 100644
 --- a/net/ipv6/netfilter/Kconfig
 +++ b/net/ipv6/netfilter/Kconfig
-@@ -8,7 +8,14 @@ menu "IPv6: Netfilter Configuration"
- 
+@@ -9,9 +9,8 @@ menu "IPv6: Netfilter Configuration"
  # old sockopt interface and eval loop
  config IP6_NF_IPTABLES_LEGACY
--	tristate
-+	tristate "Legacy IP6 tables support"
-+	depends on INET && IPV6
-+	select NETFILTER_XTABLES
-+	default n
-+	help
-+	  ip6tables is a legacy packet classifier.
-+	  This is not needed if you are using iptables over nftables
-+	  (iptables-nft).
+ 	tristate "Legacy IP6 tables support"
+-	depends on INET && IPV6
+-	select NETFILTER_XTABLES
+-	default n
++	depends on INET && IPV6 && NETFILTER_XTABLES_LEGACY
++	default	m if NETFILTER_XTABLES_LEGACY
+ 	help
+ 	  ip6tables is a legacy packet classifier.
+ 	  This is not needed if you are using iptables over nftables
+@@ -204,8 +203,8 @@ config IP6_NF_TARGET_HL
  
- config NF_SOCKET_IPV6
- 	tristate "IPv6 socket lookup support"
+ config IP6_NF_FILTER
+ 	tristate "Packet filtering"
+-	default m if NETFILTER_ADVANCED=n
+-	select IP6_NF_IPTABLES_LEGACY
++	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
++	depends on IP6_NF_IPTABLES_LEGACY
+ 	tristate
+ 	help
+ 	  Packet filtering defines a table `filter', which has a series of
+@@ -241,8 +240,8 @@ config IP6_NF_TARGET_SYNPROXY
+ 
+ config IP6_NF_MANGLE
+ 	tristate "Packet mangling"
+-	default m if NETFILTER_ADVANCED=n
+-	select IP6_NF_IPTABLES_LEGACY
++	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
++	depends on IP6_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `mangle' table to iptables: see the man page for
+ 	  iptables(8).  This table is used for various packet alterations
+@@ -252,7 +251,7 @@ config IP6_NF_MANGLE
+ 
+ config IP6_NF_RAW
+ 	tristate  'raw table support (required for TRACE)'
+-	select IP6_NF_IPTABLES_LEGACY
++	depends on IP6_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `raw' table to ip6tables. This table is the very
+ 	  first in the netfilter framework and hooks in at the PREROUTING
+@@ -266,7 +265,7 @@ config IP6_NF_SECURITY
+ 	tristate "Security table"
+ 	depends on SECURITY
+ 	depends on NETFILTER_ADVANCED
+-	select IP6_NF_IPTABLES_LEGACY
++	depends on IP6_NF_IPTABLES_LEGACY
+ 	help
+ 	  This option adds a `security' table to iptables, for use
+ 	  with Mandatory Access Control (MAC) policy.
+@@ -277,8 +276,8 @@ config IP6_NF_NAT
+ 	tristate "ip6tables NAT support"
+ 	depends on NF_CONNTRACK
+ 	depends on NETFILTER_ADVANCED
++	depends on IP6_NF_IPTABLES_LEGACY
+ 	select NF_NAT
+-	select IP6_NF_IPTABLES_LEGACY
+ 	select NETFILTER_XT_NAT
+ 	help
+ 	  This enables the `nat' table in ip6tables. This allows masquerading,
+diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
+index fdfda4b6bff67..085ea824c503d 100644
+--- a/net/netfilter/Kconfig
++++ b/net/netfilter/Kconfig
+@@ -756,6 +756,16 @@ config NETFILTER_XTABLES_COMPAT
+ 
+ 	   If unsure, say N.
+ 
++config NETFILTER_XTABLES_LEGACY
++	bool "Netfilter legacy tables support"
++	depends on !PREEMPT_RT
++	help
++	  Say Y here if you still require support for legacy tables. This is
++	  required by the legacy tools (iptables-legacy) and is not needed if
++	  you use iptables over nftables (iptables-nft).
++	  Legacy support is not limited to IP, it also includes EBTABLES and
++	  ARPTABLES.
++
+ comment "Xtables combined modules"
+ 
+ config NETFILTER_XT_MARK
+diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
+index 9c0ec0bbb5699..30af321d6c964 100644
+--- a/net/netfilter/x_tables.c
++++ b/net/netfilter/x_tables.c
+@@ -1339,12 +1339,13 @@ void xt_compat_unlock(u_int8_t af)
+ EXPORT_SYMBOL_GPL(xt_compat_unlock);
+ #endif
+ 
+-DEFINE_PER_CPU(seqcount_t, xt_recseq);
+-EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
+-
+ struct static_key xt_tee_enabled __read_mostly;
+ EXPORT_SYMBOL_GPL(xt_tee_enabled);
+ 
++#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
++DEFINE_PER_CPU(seqcount_t, xt_recseq);
++EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
++
+ static int xt_jumpstack_alloc(struct xt_table_info *i)
+ {
+ 	unsigned int size;
+@@ -1536,6 +1537,7 @@ void *xt_unregister_table(struct xt_table *table)
+ 	return private;
+ }
+ EXPORT_SYMBOL_GPL(xt_unregister_table);
++#endif
+ 
+ #ifdef CONFIG_PROC_FS
+ static void *xt_table_seq_start(struct seq_file *seq, loff_t *pos)
+@@ -1919,6 +1921,7 @@ void xt_proto_fini(struct net *net, u_int8_t af)
+ }
+ EXPORT_SYMBOL_GPL(xt_proto_fini);
+ 
++#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
+ /**
+  * xt_percpu_counter_alloc - allocate x_tables rule counter
+  *
+@@ -1973,6 +1976,7 @@ void xt_percpu_counter_free(struct xt_counters *counters)
+ 		free_percpu((void __percpu *)pcnt);
+ }
+ EXPORT_SYMBOL_GPL(xt_percpu_counter_free);
++#endif
+ 
+ static int __net_init xt_net_init(struct net *net)
+ {
+@@ -2005,8 +2009,10 @@ static int __init xt_init(void)
+ 	unsigned int i;
+ 	int rv;
+ 
+-	for_each_possible_cpu(i) {
+-		seqcount_init(&per_cpu(xt_recseq, i));
++	if (IS_ENABLED(CONFIG_NETFILTER_XTABLES_LEGACY)) {
++		for_each_possible_cpu(i) {
++			seqcount_init(&per_cpu(xt_recseq, i));
++		}
+ 	}
+ 
+ 	xt = kcalloc(NFPROTO_NUMPROTO, sizeof(struct xt_af), GFP_KERNEL);
 -- 
 2.53.0
 
