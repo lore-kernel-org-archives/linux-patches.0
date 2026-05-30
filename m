@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2FC3148DA;
-	Sat, 30 May 2026 17:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024732FDC5E;
+	Sat, 30 May 2026 17:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162143; cv=none; b=hJ94bDr+/jMT0I5e3OhnJYo/ExTJyoq1F7B5yHd3h44o7NhtZRfow7cgggpd68oMwac9wO8XKDkthzTBismeUHevr8ork8k47J+f3d3yRTJcXbl7s7Qj2rdV5RKcREEDhWf4e4pH3ItnpDe0MJ/xrrOEiui7vqpt+YGL2CwyzV8=
+	t=1780162146; cv=none; b=Qyl6dZAIta3A9f/gXkt1a8CfEvN7yBOP3knK5qWajtwin+gw5drrnIGl90K/cpMpgmGzOwhG0BpNeM8E3+cR4qRnJqnJDvhr1+bQ9KkGe5GSDnGVRIzKR1yuyhoK1PX6xraOMKdhP1P8alK5z6Zq7rlZ7ipMezS0aUi5Ck74T3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162143; c=relaxed/simple;
-	bh=b27T23S4cDYQ+UPEOvU0YRx83tZBCcwZrPlHzjXPrdc=;
+	s=arc-20240116; t=1780162146; c=relaxed/simple;
+	bh=bhTVasjP9OZ5aAlsHxbfHMnjGHEzwglFX0KI4Zirdi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ovtzYajV0Hau1bonEGln97/xG+g1gYJ83vamY/W0Nul/i/rr8wy4B62KpgiswfQ+MpepoSjn0aZZSbrXce1Ze9RA1cOSJuJ1lO4b0gsEETDqM3REtQzmlLfDXjT7LyBGD/chdKtrx/fA2VqKCEwrK1aa5wfslwv77avNen9aDg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmAv455p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtBodohxF/G0oMe3mLIC56+zQQg9vbYWTmbjxgGk8A4RywnPGxLnX289RdxP31eTzOv75t5bFD3c0DpODwkJDm/vxDXjpp/BfSTDpeL/WciJUYw6s72mdiVWlqdzsW+ZOs23vimfzpmgSipu3ezZ4rxi9PLet3OFpbvaASlHgP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+kpCr9Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmAv455p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E754E1F00893;
-	Sat, 30 May 2026 17:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+kpCr9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D34B1F00893;
+	Sat, 30 May 2026 17:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162142;
-	bh=Uf01Jm+vwyOPZ/UfbLe1JaVtMlqhkGuGu8Tgxbv4YAQ=;
+	s=korg; t=1780162145;
+	bh=hokq08pwkrQFuBL1XeXh9A8m0xU4O7hd9Gn4L9EOt2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XmAv455pMxNPYTo0KR/AiHa/UlH3V7FW5qZgJtZ1FEKOxSO3GSLLBf/Uw5VHBtJ9l
-	 trw8GLIdVn9T2U4uyCcjdr2rWxxbdoArZY3OXphgjVg+WDLA44aOcncnyDVwGwzAwW
-	 c6x5C7drqU3uoYL34jhIoln2k5YhGPsEQWLlJxoc=
+	b=D+kpCr9ZJONt7VzqK8Zlmi7Ek+07m6Y/66zkN+8rOtqlYyHbHNuwAzXsEccgfbdxR
+	 wrRRdy8rCNOuKeUUzM2ZuI41tT292/TOXA9dBJ5jqAjFzTuTSVItbBeDVipDrlRGqn
+	 fPnB/bSR6jBaugZ2lcEJ08ulvyCVrF5yKVY6OZZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 6.1 826/969] drm/panfrost: Fix wait_bo ioctl leaking positive return from dma_resv_wait_timeout()
-Date: Sat, 30 May 2026 18:05:50 +0200
-Message-ID: <20260530160323.452290195@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 835/969] Revert "x86/vdso: Fix output operand size of RDPID"
+Date: Sat, 30 May 2026 18:05:59 +0200
+Message-ID: <20260530160323.707175408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,47 +43,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+This reverts commit 757a9e78a1c5b824d0a2b7de14c3cd8d841dfbee.
 
-commit 459d75523b71c0ec254d153d8850d0b7008af396 upstream.
-
-dma_resv_wait_timeout() returns a positive 'remaining jiffies' value
-on success, 0 on timeout, and -errno on failure.
-
-panfrost_ioctl_wait_bo() returns this 'long' result from an int-typed
-ioctl handler, so positive values reach userspace as bogus errors.
-Explicitly set ret to 0 on the success path.
-
-Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/fe33f82fded7be1c18e2e0eb2db451d5a738cf39.1776581974.git.gye976@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/include/asm/segment.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -330,6 +330,8 @@ panfrost_ioctl_wait_bo(struct drm_device
- 				    true, timeout);
- 	if (!ret)
- 		ret = timeout ? -ETIMEDOUT : -EBUSY;
-+	else if (ret > 0)
-+		ret = 0;
+diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
+index 7865f180eb087..2e7890dd58a47 100644
+--- a/arch/x86/include/asm/segment.h
++++ b/arch/x86/include/asm/segment.h
+@@ -243,7 +243,7 @@ static inline unsigned long vdso_encode_cpunode(int cpu, unsigned long node)
  
- 	drm_gem_object_put(gem_obj);
+ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
+ {
+-	unsigned long p;
++	unsigned int p;
  
+ 	/*
+ 	 * Load CPU and node number from the GDT.  LSL is faster than RDTSCP
+@@ -253,10 +253,10 @@ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
+ 	 *
+ 	 * If RDPID is available, use it.
+ 	 */
+-	alternative_io ("lsl %[seg],%k[p]",
+-			"rdpid %[p]",
++	alternative_io ("lsl %[seg],%[p]",
++			".byte 0xf3,0x0f,0xc7,0xf8", /* RDPID %eax/rax */
+ 			X86_FEATURE_RDPID,
+-			[p] "=r" (p), [seg] "r" (__CPUNODE_SEG));
++			[p] "=a" (p), [seg] "r" (__CPUNODE_SEG));
+ 
+ 	if (cpu)
+ 		*cpu = (p & VDSO_CPUNODE_MASK);
+-- 
+2.53.0
+
 
 
