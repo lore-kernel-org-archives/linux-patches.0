@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D53629B799;
-	Sat, 30 May 2026 18:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C953C2761;
+	Sat, 30 May 2026 18:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164545; cv=none; b=OhA/zq1DRdfSNm6hgXZprWDWvLLtRIjkRuKubnP/bcDrPShb//+BrK7HfvT8Bwi3TIQI6oDr+1TcpuOZg0nVqu/x1kHTOrTwwm8gak0Q7RcaXBsLdx5VyTN4KqN83UQlMUHjoJoyXPuksl7Tc5zr9oy83AIeqXLu+2Po4sJBy3Q=
+	t=1780164550; cv=none; b=WtBtKNR9x+4/yFfcJhavC2EC/HZD2+ipIF58bKlh6rjIrFBdK7WPe7DpezKtgPDUmkigNpqNLR5iJq1N5xk+oGCdD0oC2FzjhxLU+5KDiG4M3RENPAK1/3kxxI/XfFYNb6ZIyeJ/V0pUclsGWKH7tG4/sqdV8Nbk+bK5trhCqf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164545; c=relaxed/simple;
-	bh=S33dhYzYEiuf+wRH7uWFJFrI8spXNHDddPSOO9QootQ=;
+	s=arc-20240116; t=1780164550; c=relaxed/simple;
+	bh=n2ODU8rRXBPpeH3cYPZUPFtMTLTx4o43TEJoEKEiKvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrecKjsIKLfz0+5UZ0RgHGYJ1MtoiXFIEx6cIXqHtB5Xw9qmIOW+V9Q1Mmb8ul0fxBl2darXyTipkaM4hn1g6lcMQ7itZPTVPKNiLXrBu6YL5JHP/zne9AY+qfWfLQhOA+j0/43/UpeLmbeFY5khWARTAW1McKfxgX2nC8Q47ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weqK1vhH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASK20ncPjIW+zGWU+I6+KdIDriMzOE4BJKBoYSv0wypZQWG4O+qt1aA/Iejsf+6pvNWAJLq/DxJOn+P3Q1nJ8QHsokj3s9kGr/k9oiiGk2NfkIAN+JfVDqIIPbUELbjdIGunueeCqQezoE4oAgJ+RD3r2vvq8VfA4f9Arf1OmcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1aCgjLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weqK1vhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF62F1F00893;
-	Sat, 30 May 2026 18:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1aCgjLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B001F00893;
+	Sat, 30 May 2026 18:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164544;
-	bh=V2+GeR6UMEJ2zjRUH4p5kPbYNNK8JSDBnVOYIs4w3+g=;
+	s=korg; t=1780164547;
+	bh=8GBb+0WFydlACaF6biFDWCm0epNRbDgJ6Y91AhOVioE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weqK1vhHjQRThJrY3+JNv4UaWd6/xz63+yEf8ebqDwdA+ulaP9Ci+wNJcmmV+hPBg
-	 QXixw8KWJsq5yDwMSX0ngcx5N9H8P3XPuoQ4jqK79T4kTuwZ1jgbR7+G5ILtRVg8IW
-	 GgYyJ7uBmLIVDlUUWsAZvFhjDgP+EnXTIi+M6AhE=
+	b=w1aCgjLOdiH29hk5S0hxPGKkvN+hEq3gm5lTCjJ5+mpFT0ASrPZ7nm8UpVi4ASyIK
+	 lL8a497TKBdkxo4HF7orE7rSmAzzHZXRfaIlw6KEe6Z6WP+mqV+vNKb4J/B8qjgnSB
+	 yeT3+CxFMzaZUnvz8Qtc99ludHd1Kdjr6CbEexB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 585/776] net_sched: sch_hhf: annotate data-races in hhf_dump_stats()
-Date: Sat, 30 May 2026 18:04:59 +0200
-Message-ID: <20260530160255.195017733@linuxfoundation.org>
+Subject: [PATCH 5.15 558/776] net/sched: taprio: continue with other TXQs if one dequeue() failed
+Date: Sat, 30 May 2026 18:04:32 +0200
+Message-ID: <20260530160254.563039514@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,90 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a6edf2cd4156b71e07258876b7626692e158f7e8 ]
+[ Upstream commit 1638bbbe4ececa615b273497d347d59ad71060a2 ]
 
-hhf_dump_stats() only runs with RTNL held,
-reading fields that can be changed in qdisc fast path.
+This changes the handling of an unlikely condition to not stop dequeuing
+if taprio failed to dequeue the peeked skb in taprio_dequeue().
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
+I've no idea when this can happen, but the only side effect seems to be
+that the atomic_sub_return() call right above will have consumed some
+budget. This isn't a big deal, since either that made us remain without
+any budget (and therefore, we'd exit on the next peeked skb anyway), or
+we could send some packets from other TXQs.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421143349.4052215-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+I'm making this change because in a future patch I'll be refactoring the
+dequeue procedure to simplify it, and this corner case will have to go
+away.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 105425b1969c ("net/sched: taprio: fix use-after-free in advance_sched() on schedule switch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ net/sched/sch_taprio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 433bddcbc0c72..73cabb4451ce7 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -198,7 +198,8 @@ static struct hh_flow_state *seek_list(const u32 hash,
- 				return NULL;
- 			list_del(&flow->flowchain);
- 			kfree(flow);
--			q->hh_flows_current_cnt--;
-+			WRITE_ONCE(q->hh_flows_current_cnt,
-+				   q->hh_flows_current_cnt - 1);
- 		} else if (flow->hash_id == hash) {
- 			return flow;
- 		}
-@@ -226,7 +227,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
- 	}
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 8924b439c459d..0a4501854e4b2 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -616,7 +616,7 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
  
- 	if (q->hh_flows_current_cnt >= q->hh_flows_limit) {
--		q->hh_flows_overlimit++;
-+		WRITE_ONCE(q->hh_flows_overlimit, q->hh_flows_overlimit + 1);
- 		return NULL;
- 	}
- 	/* Create new entry. */
-@@ -234,7 +235,7 @@ static struct hh_flow_state *alloc_new_hh(struct list_head *head,
- 	if (!flow)
- 		return NULL;
+ 		skb = child->ops->dequeue(child);
+ 		if (unlikely(!skb))
+-			goto done;
++			continue;
  
--	q->hh_flows_current_cnt++;
-+	WRITE_ONCE(q->hh_flows_current_cnt, q->hh_flows_current_cnt + 1);
- 	INIT_LIST_HEAD(&flow->flowchain);
- 	list_add_tail(&flow->flowchain, head);
- 
-@@ -309,7 +310,7 @@ static enum wdrr_bucket_idx hhf_classify(struct sk_buff *skb, struct Qdisc *sch)
- 			return WDRR_BUCKET_FOR_NON_HH;
- 		flow->hash_id = hash;
- 		flow->hit_timestamp = now;
--		q->hh_flows_total_cnt++;
-+		WRITE_ONCE(q->hh_flows_total_cnt, q->hh_flows_total_cnt + 1);
- 
- 		/* By returning without updating counters in q->hhf_arrays,
- 		 * we implicitly implement "shielding" (see Optimization O1).
-@@ -403,7 +404,7 @@ static int hhf_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return NET_XMIT_SUCCESS;
- 
- 	prev_backlog = sch->qstats.backlog;
--	q->drop_overlimit++;
-+	WRITE_ONCE(q->drop_overlimit, q->drop_overlimit + 1);
- 	/* Return Congestion Notification only if we dropped a packet from this
- 	 * bucket.
- 	 */
-@@ -681,10 +682,10 @@ static int hhf_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct tc_hhf_xstats st = {
--		.drop_overlimit = q->drop_overlimit,
--		.hh_overlimit	= q->hh_flows_overlimit,
--		.hh_tot_count	= q->hh_flows_total_cnt,
--		.hh_cur_count	= q->hh_flows_current_cnt,
-+		.drop_overlimit = READ_ONCE(q->drop_overlimit),
-+		.hh_overlimit	= READ_ONCE(q->hh_flows_overlimit),
-+		.hh_tot_count	= READ_ONCE(q->hh_flows_total_cnt),
-+		.hh_cur_count	= READ_ONCE(q->hh_flows_current_cnt),
- 	};
- 
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
+ skb_found:
+ 		qdisc_bstats_update(sch, skb);
 -- 
 2.53.0
 
