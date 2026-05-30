@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02EC33E36A;
-	Sat, 30 May 2026 17:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E343469FC;
+	Sat, 30 May 2026 17:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162587; cv=none; b=toNuEDx4g7U1dhPN61BwgS/9oCcnKVjlFIAycxvM3q5oW4EEJxx82XMfyHE4qVhw7xX88DPn0V1fI891SK8VS6npQRsz0/OleL37LQC/g2mLW0b1yBrmYB4gP/MOD+b/9OisqFbWo9JJD1EjiH2Ai2R/uqZnv39dyDs1RWsPsRc=
+	t=1780162591; cv=none; b=jJLy2imu/FKpu2H4P2qQOCX1/vviHLO/vMikhHcR5/0ysMe9EWiRzSu1+sBCDwVGT56n+ZXp/S+uoWcOh3LdXG+5Hz++Yb230HKKBTi1VI5KI5mVG3DYyKvzVPq1ikFtFOLU8YwjCRlu9NEkna9WMnaJznfbH/MAEVu+NqqKVYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162587; c=relaxed/simple;
-	bh=0LXG9/FsczzDgiNQ9MrAhugRzGxVE1jQNtGGG8ZfV78=;
+	s=arc-20240116; t=1780162591; c=relaxed/simple;
+	bh=UMBBRZJ7eH4DtoInnP0zPYZHX/SkdR7iZLvrIq9tfm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ihzd06Op6nBIX2m2x+I/qO/JGzNWv+0mgCqcWJ07aSh4S0OuS6/NUywdwvIEMy7nmp+ELSomL3Zj7O0h4FbA0SQMP2L+WDC9HGx1xhLq5X84jq2iRec5kAz/CagY5pqHmgy7mpEPIYhCW1KQ+JKyD76/1+NguIsI0Aa5vcZfWC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDq0bmO8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iZmw0AmV68fiHmE9vUb8J2vDgboKCZFHryGCDx0E+4ZtqYlnec2/o5oJ27Nz2ywg+qA6MbpYT4y0qlFbJt6E/bMltAi08oAwI1OD6cMGcAYUySShIYVGDc3AdgHWFhPIov7dGyxkf8jia1ZmC1YquHBQ6a9klmpSZLq3dGal/tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbHSBGya; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDq0bmO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D8A1F00898;
-	Sat, 30 May 2026 17:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbHSBGya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698C91F00893;
+	Sat, 30 May 2026 17:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162586;
-	bh=x797TKxR9Zr4ysf6YPLancIDUlxp26mGDCsGfXv/cyA=;
+	s=korg; t=1780162590;
+	bh=UlYfSna2xdFDdTiJZXmYZqTltDSQLFdNsCjO9+lVKBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDq0bmO8LjgeSoAnh2+xAB1ezDFofQgOfJ9OgGEJFOnwqOS2DxKMjePztdh2W9QuB
-	 3IoB6mWHL8qrcgKODNZqnFv6ehZX6h77d9EXOR53LQUxxLdP2CLHp6Fz61H0SsK2Lk
-	 YSQpP/2FUF4qTvfjDiIXNeagXcsaZ8A1T98JWq5M=
+	b=GbHSBGya7+hooLx7p0v9VEgixK7JbLx18ZF7nsA667CGevwRpWBvKRuSGUHQtMXHN
+	 8BMEsoFgA0RjEHxM7c4JgKG54iXyCUYDW+5gQMpo9LIQ6mb5h+pA7LMrSYohMMp5We
+	 LENDfjguNtaLP+iF9NXl8GVy6Xo0PbTbXogoA8hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 966/969] gpiolib: cdev: use !mem_is_zero() instead of memchr_inv(s, 0, n)
-Date: Sat, 30 May 2026 18:08:10 +0200
-Message-ID: <20260530160327.452345769@linuxfoundation.org>
+Subject: [PATCH 6.1 967/969] gpio: cdev: check if uAPI v2 config attributes are correctly zeroed
+Date: Sat, 30 May 2026 18:08:11 +0200
+Message-ID: <20260530160327.484170208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,68 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit e106b1dd38e723ec2bb2bf57ea9b2aff464b9423 ]
+[ Upstream commit 3e6ccd790ed69bedd3d9626d01dd35cf9821c121 ]
 
-Use the mem_is_zero() helper where possible.
+We check the padding of other uAPI v2 structures but not that of line
+config attributes. For used attributes: check if their padding is
+zeroed, for unused: check if the entire structure is zeroed.
 
-Signed-off-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20241110201706.16614-1-andy.shevchenko@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 3e6ccd790ed6 ("gpio: cdev: check if uAPI v2 config attributes are correctly zeroed")
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20260521-gpio-cdev-attr-padding-check-v3-1-ec3bcbe2e358@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 897d20996a8c6..944aa0c1cd5c7 100644
+index 944aa0c1cd5c7..5d4646f0baacd 100644
 --- a/drivers/gpio/gpiolib-cdev.c
 +++ b/drivers/gpio/gpiolib-cdev.c
-@@ -16,7 +16,6 @@
- #include <linux/hte.h>
- #include <linux/interrupt.h>
- #include <linux/irqreturn.h>
--#include <linux/kernel.h>
- #include <linux/kfifo.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-@@ -25,6 +24,7 @@
- #include <linux/rbtree.h>
- #include <linux/seq_file.h>
- #include <linux/spinlock.h>
-+#include <linux/string.h>
- #include <linux/timekeeping.h>
- #include <linux/uaccess.h>
- #include <linux/workqueue.h>
-@@ -1339,7 +1339,7 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
+@@ -1332,6 +1332,7 @@ static int gpio_v2_line_flags_validate(u64 flags)
+ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
+ 					unsigned int num_lines)
+ {
++	size_t unused_attrs;
+ 	unsigned int i;
+ 	u64 flags;
+ 	int ret;
+@@ -1339,9 +1340,21 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
  	if (lc->num_attrs > GPIO_V2_LINE_NUM_ATTRS_MAX)
  		return -EINVAL;
  
--	if (memchr_inv(lc->padding, 0, sizeof(lc->padding)))
-+	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
++	unused_attrs = GPIO_V2_LINE_NUM_ATTRS_MAX - lc->num_attrs;
++
+ 	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
  		return -EINVAL;
  
++	for (i = 0; i < lc->num_attrs; i++) {
++		if (lc->attrs[i].attr.padding != 0)
++			return -EINVAL;
++	}
++
++	if (unused_attrs) {
++		if (!mem_is_zero(&lc->attrs[lc->num_attrs], unused_attrs * sizeof(*lc->attrs)))
++			return -EINVAL;
++	}
++
  	for (i = 0; i < num_lines; i++) {
-@@ -1781,7 +1781,7 @@ static int linereq_create(struct gpio_device *gdev, void __user *ip)
- 	if ((ulr.num_lines == 0) || (ulr.num_lines > GPIO_V2_LINES_MAX))
- 		return -EINVAL;
- 
--	if (memchr_inv(ulr.padding, 0, sizeof(ulr.padding)))
-+	if (!mem_is_zero(ulr.padding, sizeof(ulr.padding)))
- 		return -EINVAL;
- 
- 	lc = &ulr.config;
-@@ -2541,7 +2541,7 @@ static int lineinfo_get(struct gpio_chardev_data *cdev, void __user *ip,
- 	if (copy_from_user(&lineinfo, ip, sizeof(lineinfo)))
- 		return -EFAULT;
- 
--	if (memchr_inv(lineinfo.padding, 0, sizeof(lineinfo.padding)))
-+	if (!mem_is_zero(lineinfo.padding, sizeof(lineinfo.padding)))
- 		return -EINVAL;
- 
- 	desc = gpiochip_get_desc(cdev->gdev->chip, lineinfo.offset);
+ 		flags = gpio_v2_line_config_flags(lc, i);
+ 		ret = gpio_v2_line_flags_validate(flags);
 -- 
 2.53.0
 
