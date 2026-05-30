@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A619A34104B;
-	Sat, 30 May 2026 17:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F132D42B;
+	Sat, 30 May 2026 17:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160863; cv=none; b=D3juoeh2nNoEbRGUqqSsQ78dKfNxmaWTl+gidz5eZ82WbzE3Wka8I3Fh3sp/ogEAfrR2rUiFVSIVCDQXh1adyp6eBFRsUVRyPFkG4WgLEDzK1mvind2yNt3NiFhtInTIdwxFOdkFbLHkoi+OwMi77vXKY++PnZvQdVc54HFsl/s=
+	t=1780160867; cv=none; b=uIpaqtjmUZIP8We6sy5U/7aJWv7VEfJr40Io3ipBBAKTYFrvmdlNJ0axKbm3dyYP3Na05YdbX8hx8BwNXwRf7fR4Bod/e8qMkEcXLR7xXAh9UZXpECumytD903cR+q8s2GywV2w+6cUPU2MACPL+eLMtHFroyCFtylOrOerNvjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160863; c=relaxed/simple;
-	bh=VSAODh/vCvaKL/apxHWGzql+MBS/hThSMpfb1EA2iW4=;
+	s=arc-20240116; t=1780160867; c=relaxed/simple;
+	bh=m2t1hFx4T+xyp2xizDQ+3FyzOJUCa0QSIl3I161DBKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fKPEaREAnFc4TzBkBCdZQuwamy7YNR2eXHRbVMTp/XhE1ZB/Q8cOIzUq4X+8hFP+kNgzLj4hxioYRS2ns+CuKp4hjYldkxME4Txhn3cUUyXB7q9qg1a9rOhX2XNR/p1vUNwNQavLOkeBYBR9EL75AFjzRA3fQOmUVyV1gjR+i8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceX+D7u+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=srilej8bNQQmNuAZXiW1CfZWD4/I+T2Abt6Bk5HTq5/1l4P22hZT5pdLUl2xi3syROsUxV7rT4v3/5nAX5qLmxjCL8/ZsEzBvTUmatxedyD561VkGgkTIhEFjiev36Cir39UFLL1YG/tU0C223DK5paXklzDfdnN2MLbreJ1tyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN604fZI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceX+D7u+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC111F00893;
-	Sat, 30 May 2026 17:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN604fZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F961F00898;
+	Sat, 30 May 2026 17:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160862;
-	bh=4fP4rPjdh68DrbtL11tY+ZuE2orTBtrhHhq0hdU8ozk=;
+	s=korg; t=1780160866;
+	bh=eHDl/1gWkX9CdgFxpWqx1zCCaUHG1HDGdiZJOa3OctM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ceX+D7u+bEZ1Eky/gpmXxPAhGXaATXvmTk+2Vt6GOsoUfy4RhG2r+V+VYB+ptkiMC
-	 Sl91igc2SBmK0NYPOxkXylETpVniS7sEFNTsJHb+ebBZiJfcvCFdijts+GypnVskmk
-	 n/RRWVXB2Po+TpVjBtZnxdwnRKnIkAbgzJh9giak=
+	b=vN604fZI7ELauYizn0uhe35wEeqSfQxi6hFruyd0ol78uI4b4d9LZBF0m9MCRXGer
+	 s6+KCc0p2Wm5dD2CskadIF4MB5xyJuohZ0DW71I7CplObqPKZE7tsO/xJOKRuCiWsX
+	 YN5Wcc2iP6ZmYdXVSjZHI7z41WSE0GKOxLlrDsf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 456/969] bpf, devmap: Remove unnecessary if check in for loop
-Date: Sat, 30 May 2026 17:59:40 +0200
-Message-ID: <20260530160312.873311922@linuxfoundation.org>
+Subject: [PATCH 6.1 457/969] bpf: Use RCU-safe iteration in dev_map_redirect_multi() SKB path
+Date: Sat, 30 May 2026 17:59:41 +0200
+Message-ID: <20260530160312.900762341@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,45 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 2317dc2c22cc353b699c7d1db47b2fe91f54055c ]
+[ Upstream commit 8ed82f807bb09d2c8455aaa665f2c6cb17bc6a19 ]
 
-The iterator variable dst cannot be NULL and the if check can be removed.
-Remove it and fix the following Coccinelle/coccicheck warning reported
-by itnull.cocci:
+The DEVMAP_HASH branch in dev_map_redirect_multi() uses
+hlist_for_each_entry_safe() to iterate hash buckets, but this function
+runs under RCU protection (called from xdp_do_generic_redirect_map()
+in softirq context). Concurrent writers (__dev_map_hash_update_elem,
+dev_map_hash_delete_elem) modify the list using RCU primitives
+(hlist_add_head_rcu, hlist_del_rcu).
 
-	ERROR: iterator variable bound on line 762 cannot be NULL
+hlist_for_each_entry_safe() performs plain pointer dereferences without
+rcu_dereference(), missing the acquire barrier needed to pair with
+writers' rcu_assign_pointer(). On weakly-ordered architectures (ARM64,
+POWER), a reader can observe a partially-constructed node. It also
+defeats CONFIG_PROVE_RCU lockdep validation and KCSAN data-race
+detection.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20240529101900.103913-2-thorsten.blum@toblux.com
-Stable-dep-of: 8ed82f807bb0 ("bpf: Use RCU-safe iteration in dev_map_redirect_multi() SKB path")
+Replace with hlist_for_each_entry_rcu() using rcu_read_lock_bh_held()
+as the lockdep condition, consistent with the rcu_dereference_check()
+used in the DEVMAP (non-hash) branch of the same functions. Also fix
+the same incorrect lockdep_is_held(&dtab->index_lock) condition in
+dev_map_enqueue_multi(), where the lock is not held either.
+
+Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20260320072645.16731-1-devnexen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 3 ---
- 1 file changed, 3 deletions(-)
+ kernel/bpf/devmap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 5e05732db2368..71025d1311a57 100644
+index 71025d1311a57..c8d8977296bc1 100644
 --- a/kernel/bpf/devmap.c
 +++ b/kernel/bpf/devmap.c
-@@ -759,9 +759,6 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+@@ -636,7 +636,7 @@ int dev_map_enqueue_multi(struct xdp_frame *xdpf, struct net_device *dev_rx,
  		for (i = 0; i < dtab->n_buckets; i++) {
  			head = dev_map_index_hash(dtab, i);
- 			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
--				if (!dst)
--					continue;
--
+ 			hlist_for_each_entry_rcu(dst, head, index_hlist,
+-						 lockdep_is_held(&dtab->index_lock)) {
++						rcu_read_lock_bh_held()) {
+ 				if (!is_valid_dst(dst, xdpf))
+ 					continue;
+ 
+@@ -718,7 +718,6 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+ 	struct bpf_dtab_netdev *dst, *last_dst = NULL;
+ 	int excluded_devices[1+MAX_NEST_DEV];
+ 	struct hlist_head *head;
+-	struct hlist_node *next;
+ 	int num_excluded = 0;
+ 	unsigned int i;
+ 	int err;
+@@ -758,7 +757,7 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+ 	} else { /* BPF_MAP_TYPE_DEVMAP_HASH */
+ 		for (i = 0; i < dtab->n_buckets; i++) {
+ 			head = dev_map_index_hash(dtab, i);
+-			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
++			hlist_for_each_entry_rcu(dst, head, index_hlist, rcu_read_lock_bh_held()) {
  				if (is_ifindex_excluded(excluded_devices, num_excluded,
  							dst->dev->ifindex))
  					continue;
