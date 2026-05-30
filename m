@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAED279DC9;
-	Sat, 30 May 2026 18:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05076282F23;
+	Sat, 30 May 2026 18:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165671; cv=none; b=PrQXb0Lu1Kj5GEwtTm9sy64+x9C+syprriUA9EtbBf61Wtt15zcWo4IClcQ2bm4ObpmjuD6V9j+36NNRy3FIIXyxJxXF/I3/X7zxHQYnjVINyX2EPbPCNWX08DR0avcLZa+QIVFQ7pfdR2W873rdArK0K8fG2/nAK74SAiHFmsk=
+	t=1780165675; cv=none; b=K/dLWl6L/hRcXMDs/awQ8da0zxCqHkXU90Ju5wZcj3BjfFztbdcpPGrafQu7z2QL75Qa1fy2ClEjaH9gryH7CLx2YhCr61F/Q5s4H4m6OGZci5yN0Zy8/rbOarLnp7cnDkH82uJ/nMUvCgAoG9TjWp65BHlAtgXrXil09/mejb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165671; c=relaxed/simple;
-	bh=RxHSd9MX7TKjbZGUHElORCbTH5V3WI+vWsFxOxrCvIg=;
+	s=arc-20240116; t=1780165675; c=relaxed/simple;
+	bh=X6u93wrscSdllV7vinmo3+pp6nlSw7i/zj81U7XHhG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DjVghhmD8aQUItCVuB3eUmzyoa+t3AtPI2JSPjzUqjeDXYSR6KOc2GXRKuJcwb8/7qa/MjD/TxUmr/RskFafKjsufMmDQ7b2/p5A8dXLbrRw7dTr5dxRJWqjn9dz/2MX4ZoezFzF/AcFGoR+CW1B0+BxXNHwUJaipgIGqhFaEPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7HTOqNj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKasK3+B/o5+xsOHP2KMF1Kdsg3gSaQ9PmkwBT7JnYgCwc7lUCihqq4mbVpHBo4UT1Lp/iLAoBqo0EDqTFrzMTvsabxEpUj8TBJs0OX7/pDjN2YlmZ/eG4C3vEa+oBObCpaC43eFLWXqJiBoudVdO9J1BxXfeZuGawXR/rg2/M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFWBv0Pt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7HTOqNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006701F00893;
-	Sat, 30 May 2026 18:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFWBv0Pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4936F1F00893;
+	Sat, 30 May 2026 18:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165670;
-	bh=Pk0zSkUZw95eBrAtd/rbWcZVFL/GfnBRmN4OtVquo3g=;
+	s=korg; t=1780165673;
+	bh=YWrjJfGQbKmvTyJmznZF2IuPMmtVI6bQw943ei9zDhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7HTOqNjuPJ2cCPLQa4pTAFZ+65SEiO017i1NMQ08zfHDYL0DM/lHaSpC9bCoOKx5
-	 CN5MNVjh8+eu+TRvXD6rbDvseXaON7PFrBR1NHcPBZWVRlSPvqhbxMrly8jeDAaIai
-	 LaOt+E3E8DT8WZVy8I3q6B5AZxPkiyxj7LN9Zxko=
+	b=QFWBv0Ptc04agBA23LUw1Il7hG5sgsw+uVMxF9rdjYR0QUYN3OrdDY5WtIqH3YgAk
+	 CQMz6ztlafX5/PO2o4Y0xnJkLO/B0coNAsnEkzHQ6LDO5xJA3hj9I8GY3LckLMa6uS
+	 ahVPGONsyPxk9WLTBV2xq0QSccEsRSMv8dJ6f0Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Bin Lan <lanbincn@139.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/589] padata: Remove comment for reorder_work
-Date: Sat, 30 May 2026 18:00:29 +0200
-Message-ID: <20260530160228.674114872@linuxfoundation.org>
+Subject: [PATCH 5.10 149/589] driver core: Dont let a device probe until its ready
+Date: Sat, 30 May 2026 18:00:30 +0200
+Message-ID: <20260530160228.700082351@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,33 +54,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 82a0302e7167d0b7c6cde56613db3748f8dd806d ]
+[ Upstream commit a2225b6e834a838ae3c93709760edc0a169eb2f2 ]
 
-Remove comment for reorder_work which no longer exists.
+The moment we link a "struct device" into the list of devices for the
+bus, it's possible probe can happen. This is because another thread
+can load the driver at any time and that can cause the device to
+probe. This has been seen in practice with a stack crawl that looks
+like this [1]:
 
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Fixes: 71203f68c774 ("padata: Fix pd UAF once and for all")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Bin Lan <lanbincn@139.com>
+  really_probe()
+  __driver_probe_device()
+  driver_probe_device()
+  __driver_attach()
+  bus_for_each_dev()
+  driver_attach()
+  bus_add_driver()
+  driver_register()
+  __platform_driver_register()
+  init_module() [some module]
+  do_one_initcall()
+  do_init_module()
+  load_module()
+  __arm64_sys_finit_module()
+  invoke_syscall()
+
+As a result of the above, it was seen that device_links_driver_bound()
+could be called for the device before "dev->fwnode->dev" was
+assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
+being called which meant that other devices waiting on our driver's
+sub-nodes were stuck deferring forever.
+
+It's believed that this problem is showing up suddenly for two
+reasons:
+1. Android has recently (last ~1 year) implemented an optimization to
+   the order it loads modules [2]. When devices opt-in to this faster
+   loading, modules are loaded one-after-the-other very quickly. This
+   is unlike how other distributions do it. The reproduction of this
+   problem has only been seen on devices that opt-in to Android's
+   "parallel module loading".
+2. Android devices typically opt-in to fw_devlink, and the most
+   noticeable issue is the NULL "dev->fwnode->dev" in
+   device_links_driver_bound(). fw_devlink is somewhat new code and
+   also not in use by all Linux devices.
+
+Even though the specific symptom where "dev->fwnode->dev" wasn't
+assigned could be fixed by moving that assignment higher in
+device_add(), other parts of device_add() (like the call to
+device_pm_add()) are also important to run before probe. Only moving
+the "dev->fwnode->dev" assignment would likely fix the current
+symptoms but lead to difficult-to-debug problems in the future.
+
+Fix the problem by preventing probe until device_add() has run far
+enough that the device is ready to probe. If somehow we end up trying
+to probe before we're allowed, __driver_probe_device() will return
+-EPROBE_DEFER which will make certain the device is noticed.
+
+In the race condition that was seen with Android's faster module
+loading, we will temporarily add the device to the deferred list and
+then take it off immediately when device_add() probes the device.
+
+Instead of adding another flag to the bitfields already in "struct
+device", instead add a new "flags" field and use that. This allows us
+to freely change the bit from different thread without worrying about
+corrupting nearby bits (and means threads changing other bit won't
+corrupt us).
+
+[1] Captured on a machine running a downstream 6.6 kernel
+[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
+
+Cc: stable@vger.kernel.org
+Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/padata.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/base/core.c    | 15 ++++++++++++++
+ drivers/base/dd.c      | 12 ++++++++++++
+ include/linux/device.h | 44 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 71 insertions(+)
 
-diff --git a/include/linux/padata.h b/include/linux/padata.h
-index 9ca779d7e310e..6f07e12a43819 100644
---- a/include/linux/padata.h
-+++ b/include/linux/padata.h
-@@ -90,7 +90,6 @@ struct padata_cpumask {
-  * @processed: Number of already processed objects.
-  * @cpu: Next CPU to be processed.
-  * @cpumask: The cpumasks in use for parallel and serial workers.
-- * @reorder_work: work struct for reordering.
-  */
- struct parallel_data {
- 	struct padata_shell		*ps;
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 3521d4c00c2e9..a900bde641491 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3008,6 +3008,21 @@ int device_add(struct device *dev)
+ 		fw_devlink_link_device(dev);
+ 	}
+ 
++	/*
++	 * The moment the device was linked into the bus's "klist_devices" in
++	 * bus_add_device() then it's possible that probe could have been
++	 * attempted in a different thread via userspace loading a driver
++	 * matching the device. "ready_to_probe" being unset would have
++	 * blocked those attempts. Now that all of the above initialization has
++	 * happened, unblock probe. If probe happens through another thread
++	 * after this point but before bus_probe_device() runs then it's fine.
++	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
++	 * will notice (under device_lock) that the device is already bound.
++	 */
++	device_lock(dev);
++	dev_set_ready_to_probe(dev);
++	device_unlock(dev);
++
+ 	bus_probe_device(dev);
+ 	if (parent)
+ 		klist_add_tail(&dev->p->knode_parent,
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 1e8318acf6218..0398f2c985b38 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -738,6 +738,18 @@ int driver_probe_device(struct device_driver *drv, struct device *dev)
+ 	if (!device_is_registered(dev))
+ 		return -ENODEV;
+ 
++	/*
++	 * In device_add(), the "struct device" gets linked into the subsystem's
++	 * list of devices and broadcast to userspace (via uevent) before we're
++	 * quite ready to probe. Those open pathways to driver probe before
++	 * we've finished enough of device_add() to reliably support probe.
++	 * Detect this and tell other pathways to try again later. device_add()
++	 * itself will also try to probe immediately after setting
++	 * "ready_to_probe".
++	 */
++	if (!dev_ready_to_probe(dev))
++		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
++
+ 	pr_debug("bus: '%s': %s: matched device %s with driver %s\n",
+ 		 drv->bus->name, __func__, dev_name(dev), drv->name);
+ 
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 047a8f1ef8f28..ff7cae0431abb 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -385,6 +385,21 @@ struct dev_links_info {
+ 	enum dl_dev_state status;
+ };
+ 
++/**
++ * enum struct_device_flags - Flags in struct device
++ *
++ * Each flag should have a set of accessor functions created via
++ * __create_dev_flag_accessors() for each access.
++ *
++ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
++ *		initialization that probe could be called.
++ */
++enum struct_device_flags {
++	DEV_FLAG_READY_TO_PROBE = 0,
++
++	DEV_FLAG_COUNT
++};
++
+ /**
+  * struct device - The basic device structure
+  * @parent:	The device's "parent" device, the device to which it is attached.
+@@ -470,6 +485,7 @@ struct dev_links_info {
+  *		and optionall (if the coherent mask is large enough) also
+  *		for dma allocations.  This flag is managed by the dma ops
+  *		instance from ->dma_supported.
++ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
+  *
+  * At the lowest level, every device in a Linux system is represented by an
+  * instance of struct device. The device structure contains the information
+@@ -580,8 +596,36 @@ struct device {
+ #ifdef CONFIG_DMA_OPS_BYPASS
+ 	bool			dma_ops_bypass : 1;
+ #endif
++
++	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
+ };
+ 
++#define __create_dev_flag_accessors(accessor_name, flag_name) \
++static inline bool dev_##accessor_name(const struct device *dev) \
++{ \
++	return test_bit(flag_name, dev->flags); \
++} \
++static inline void dev_set_##accessor_name(struct device *dev) \
++{ \
++	set_bit(flag_name, dev->flags); \
++} \
++static inline void dev_clear_##accessor_name(struct device *dev) \
++{ \
++	clear_bit(flag_name, dev->flags); \
++} \
++static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
++{ \
++	assign_bit(flag_name, dev->flags, value); \
++} \
++static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
++{ \
++	return test_and_set_bit(flag_name, dev->flags); \
++}
++
++__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
++
++#undef __create_dev_flag_accessors
++
+ /**
+  * struct device_link - Device link representation.
+  * @supplier: The device on the supplier end of the link.
 -- 
 2.53.0
 
