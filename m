@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9123E344D80;
-	Sat, 30 May 2026 17:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82732E7379;
+	Sat, 30 May 2026 17:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162360; cv=none; b=MbWMT5YnAsgbZ3Ai9bh/a7I7ajz7aDQXEstPaUjy41rfXF1ShM3PpgiFHx89M+r0Q7ja/BpmMEYjJIEIwZRm9HQ8mg2kDef4aysLLjQbeHXOQnsjhZtraAyhQDy0be3wpDZp/6uhbBOWftwQOxGQ6x/0LGkVGZs/fGAj2m+KMMk=
+	t=1780162363; cv=none; b=phz/hI0hWXQEUmpalf1P18h0cECQoTcDvy+NX+QiZNzeg3SbZb5pehfdizSUUcOYIKULJchE22jHlHv0MlxfSpnLWX+pCt3Hq+YgUhSa4UH2P7U/f+qpW9hZum8KLgyfLxyNSiX0iZeNg0y7k5rjNXSoeuc/P+MHcR310TYbaeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162360; c=relaxed/simple;
-	bh=E+plqgqkKj5VFzydXFE+mjMERPKs1yzILO4jUHv2kE4=;
+	s=arc-20240116; t=1780162363; c=relaxed/simple;
+	bh=Gg2v05oG4ncMhXt/+hZy1MuYZLjzy1tADmRQ43febT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXGqCac3S/lPSeUA2Q9kLZNlhv1dAM3BMRhp9O533bqxj8ExbDdlw9YWcm3vT34s8to0laslSKvWQMzIOa8bK2V+xESmV2BjdUOKjyT1Gkb3PXNqB52oAnaEfwZ2kBhET78+yUxWGF2g5igRz2q5nAQv4T9k2NJUseSQTsE+haU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0mKFUxo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFKyjd/XpC1HrKRdeZzjmJDkwSijiyLCe/1Z2R0/Yq5CJOJ/dmT3iEFK0ZN/jvOYnkHAdmlzuumW1u1NxRe2l+jKLBfbt+tmTMldR6td9j6d10bwxltQ8COKALSvIvlGfm18C//oExnmTIOiJCvRqXmZ7a2zRFCiGzvdMINI4AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvVbp5Pv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0mKFUxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54101F00893;
-	Sat, 30 May 2026 17:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvVbp5Pv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A95C1F00893;
+	Sat, 30 May 2026 17:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162359;
-	bh=RjEih5NZWNLabGn3x712SQxGP+clpAJHeNnlRbgDbYQ=;
+	s=korg; t=1780162362;
+	bh=YP9IzbTG2ZcMSfS/JXs9t15tadv5Krzj8K83IAw97EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0mKFUxohd8aqY4oJhfoKYrWcaPEn4fzcRna415QT1ZrqS48LK+cvL8g+N18i2LBN
-	 CWWViOXdTI5GkUBedrHk2r8gApIZWz0EpFpcX1yrYglcGFVLvHYM7Z2EljSsQLpeBB
-	 uJtp3fwOdUqXm32IQrVz2QKafxOZtaQslzMJ7vHg=
+	b=lvVbp5Pvjm1uw0C+p8686I8UnbcJo5tNCLdZt0gDPGl5g5E3EvUha6JGmC2P8xWW4
+	 9Dwwij/zmx5TtbYX+mRd92ANNqOzuGQiAX+NvWJqANZVSVtEc7RogYEKA/+8NYQcbZ
+	 nP1CYE1yXkdULZGp8/+bDjEbw2FwQ+AFD9p+lDNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 861/969] ixgbevf: fix use-after-free in VEPA multicast source pruning
-Date: Sat, 30 May 2026 18:06:25 +0200
-Message-ID: <20260530160324.446745735@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 897/969] hwmon: (pmbus/adm1266) register the nvmem device after pmbus_do_probe()
+Date: Sat, 30 May 2026 18:07:01 +0200
+Message-ID: <20260530160325.477378362@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,62 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 5d49b568c188dc77199d8d2b959c91da8cc27cf1 upstream.
+commit 6af713af91d5c34ec049eb3cc2c5b3f5eba953b8 upstream.
 
-ixgbevf_clean_rx_irq() prunes frames whose source MAC matches the VF's
-own address (VEPA multicast workaround) by freeing the skb and
-continuing to the next descriptor:
+adm1266_probe() calls adm1266_config_nvmem() -- which goes on to
+devm_nvmem_register() and exposes adm1266_nvmem_read() to userspace --
+before pmbus_do_probe() has initialised the per-client PMBus state.
 
-    dev_kfree_skb_irq(skb);
-    continue;
+Same latent hazard as the gpio_chip one fixed in the previous patch:
+once the nvmem device is registered, gpiolib's nvmem char-dev / sysfs
+interface is reachable, and any concurrent read triggers
+adm1266_nvmem_read() -> adm1266_nvmem_read_blackbox(), which issues
+PMBus traffic that races pmbus_do_probe()'s own device accesses with
+no serialisation.
 
-The skb pointer is declared outside the while loop and persists across
-iterations.  Because the continue skips the "skb = NULL" reset at the
-bottom of the loop, the next iteration enters the "else if (skb)" path
-and calls ixgbevf_add_rx_frag() on the freed skb, dereferencing
-skb_shinfo(skb)->nr_frags - a use-after-free in NAPI softirq context.
+Move adm1266_config_nvmem() down past pmbus_do_probe() so the nvmem
+device isn't reachable from userspace until the PMBus state the
+nvmem accessors depend on is fully initialised.
 
-The sibling driver iavf already handles this correctly by nulling the
-pointer before continuing.  Apply the same pattern here.
-
-I do not have ixgbevf hardware; the bug was found by static analysis
-(scan_drop_continue_loops.py + semgrep drop_continue_in_loop, multi-tool
-corroboration with the highest score in the scan).  The UAF was confirmed
-under KASAN by loading a test module that reproduces the exact code
-pattern (alloc skb, kfree_skb, then read skb_shinfo(skb)->nr_frags):
-
-  BUG: KASAN: slab-use-after-free in ixgbevf_uaf_test_init+0x100/0x1000
-  Read of size 8 at addr 000000006163ae78 by task insmod/30
-  freed 208-byte region [000000006163adc0, 000000006163ae90)
-
-QEMU emulates igb (82576) but not ixgbe (82599), and the igbvf VF
-driver does not include the VEPA source pruning path, so a full
-end-to-end reproduction with emulated hardware was not possible.
-
-Fixes: bad17234ba70 ("ixgbevf: Change receive model to use double buffered page based receives")
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-8-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-5-e425e4f88139@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/pmbus/adm1266.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -1225,6 +1225,7 @@ static int ixgbevf_clean_rx_irq(struct i
- 		    ether_addr_equal(rx_ring->netdev->dev_addr,
- 				     eth_hdr(skb)->h_source)) {
- 			dev_kfree_skb_irq(skb);
-+			skb = NULL;
- 			continue;
- 		}
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -472,14 +472,14 @@ static int adm1266_probe(struct i2c_clie
+ 	if (ret < 0)
+ 		return ret;
  
+-	ret = adm1266_config_nvmem(data);
+-	if (ret < 0)
+-		return ret;
+-
+ 	ret = pmbus_do_probe(client, &data->info);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = adm1266_config_nvmem(data);
++	if (ret < 0)
++		return ret;
++
+ 	ret = adm1266_config_gpio(data);
+ 	if (ret < 0)
+ 		return ret;
 
 
