@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FBE3546F6;
-	Sat, 30 May 2026 18:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB27F32F770;
+	Sat, 30 May 2026 18:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166180; cv=none; b=SXN0HCvv73NmyEUYPBgxR9UdnDOS6EhqkpsdBj8TyyUH/GU1vH3mdGex4C2Xtsl8dMC56bJfYWCSdfH7zuYTsp+LtPmEb08lAAi25nXYDRKCPna68KQepjsBRwQobPp9wTMdx6QJF1DFfJT6p7qvW+/o2aHdPY14UO+CdUvRnp0=
+	t=1780166183; cv=none; b=gcombI6cDBRqmatUDuwep4K4dEoF7ZpJCjHcOr//h5t8tPjWIyuk/8payUFHvihdqqPAUKGHbSs1PKXXjnBQKz4EUk956sozb8R2tje8j4pqDqXfWGQ4lHQBSyVj/Ck5pdJKjX+SEGB9pZ6YgLc7bFeZw3QROo9IFbE5wakWUMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166180; c=relaxed/simple;
-	bh=vvOpxwn72xueN0A0V4KqAvEP9Buk7iNT3HN++L5pwoc=;
+	s=arc-20240116; t=1780166183; c=relaxed/simple;
+	bh=0e/54nhLfQrUsCUPEug3RozNbLHHG0o5bmA073OjIE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m+arbGbBLDoL8BVQ4W4DQBORzHvwRaCf6jIWB9rCv1tSwgEBpLxJKVF47T6izjnWNuwhbar7bUaHs1t2A6xQFrLPiQLB1FFXmk2TsihigRoUwRV5QpVJ/A4UeygDnLK7vfWw4S0mfgnRfSs4XCHX1BGx6jMKFdCm4UsM3iXMXYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da9J51C4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uKdhWLOL9xHVihKYc8S3Mz8kSSFooK9GSzZ4cR0kJr0zrOc9cSrWVLmXVcXuabUyu7tyF3uYSkgzMk0it2tg8BkZ2UuqySHn4K7L9eD2Oc2YnAtq2mbZ6NbD1E4NZ6HfZeaSw8ay0VxI02TEwbQFnh7XsVQ6CDHP7aweiu4OM5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opwZgvcm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da9J51C4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6781F00893;
-	Sat, 30 May 2026 18:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opwZgvcm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89CD1F00893;
+	Sat, 30 May 2026 18:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166179;
-	bh=gydkaJ05FDCM0EmAst5+RK755V2j7fEXQQQd4eHeQF0=;
+	s=korg; t=1780166182;
+	bh=QjBRePMqksVOW2eXBc664vvqNrTbp2tCN87a6nJmY7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=da9J51C4Drm+tm3uq5+8frMM2hvaspFG0P4xxnq6aft5KJDy5bIZxfHH2fPsqclpc
-	 LcZzEyTq2xAZSgXx2C+Fes3/psj05PZac//ilkynqh8htIEsFIjVbRGRiduYrIJ2KE
-	 LJeo9DKyAO9WtOtsZxEnpuCDZtR0YWp0dnW0fSiE=
+	b=opwZgvcmozwwSlarQfP3JD/hPOh8TFZqwqvZfQI87n7yLC8DrvO1nSFAD9et++pkv
+	 vPpkpW3c3PPRks/XqClTyePfm4uRigzox0u0lBAIrKGayiFU5BsSALHZ+iTNwdtpxw
+	 OepgghKJtlmOQvv36dY3txEF9qTWFfjldH7IPQUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 297/589] irqchip/irq-pic32-evic: Address warning related to wrong printf() formatter
-Date: Sat, 30 May 2026 18:02:58 +0200
-Message-ID: <20260530160232.773326773@linuxfoundation.org>
+Subject: [PATCH 5.10 298/589] locking: Fix rwlock support in <linux/spinlock_up.h>
+Date: Sat, 30 May 2026 18:02:59 +0200
+Message-ID: <20260530160232.799987636@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,49 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 86be659415b0ddefebc3120e309091aa215a9064 ]
+[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
 
-This driver is currently only build on 32 bit MIPS systems. When building
-it on x86_64, the following warning occurs:
+Architecture support for rwlocks must be available whether or not
+CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
+arch_{read,write}_{lock,trylock,unlock}() macros such that these become
+visbile if CONFIG_DEBUG_SPINLOCK=n.
 
-    drivers/irqchip/irq-pic32-evic.c: In function ‘pic32_ext_irq_of_init’:
-    ./include/linux/kern_levels.h:5:25: error: format ‘%d’ expects argument of type
-     ‘int’, but argument 2 has type ‘long unsigned int’ [-Werror=format=]
+This patch prepares for converting do_raw_{read,write}_trylock() into
+inline functions. Without this patch that conversion triggers a build
+failure for UP architectures, e.g. arm-ep93xx. I used the following
+kernel configuration to build the kernel for that architecture:
 
-Update the printf() formatter in preparation for allowing this driver to
-be compiled on all architectures.
+	CONFIG_ARCH_MULTIPLATFORM=y
+	CONFIG_ARCH_MULTI_V7=n
+	CONFIG_ATAGS=y
+	CONFIG_MMU=y
+	CONFIG_ARCH_MULTI_V4T=y
+	CONFIG_CPU_LITTLE_ENDIAN=y
+	CONFIG_ARCH_EP93XX=y
 
-Fixes: aaa8666ada780 ("IRQCHIP: irq-pic32-evic: Add support for PIC32 interrupt controller")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260222-irqchip-pic32-v1-1-37f50d1f14af@redhat.com
+Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-pic32-evic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/spinlock_up.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/irqchip/irq-pic32-evic.c b/drivers/irqchip/irq-pic32-evic.c
-index 34c4b4ffacd15..5c40ec5e55f1d 100644
---- a/drivers/irqchip/irq-pic32-evic.c
-+++ b/drivers/irqchip/irq-pic32-evic.c
-@@ -199,7 +199,7 @@ static void __init pic32_ext_irq_of_init(struct irq_domain *domain)
+diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
+index 0ac9112c1bbe3..a406655c1fbd1 100644
+--- a/include/linux/spinlock_up.h
++++ b/include/linux/spinlock_up.h
+@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 	lock->slock = 1;
+ }
  
- 	of_property_for_each_u32(node, pname, prop, p, hwirq) {
- 		if (i >= ARRAY_SIZE(priv->ext_irqs)) {
--			pr_warn("More than %d external irq, skip rest\n",
-+			pr_warn("More than %zu external irq, skip rest\n",
- 				ARRAY_SIZE(priv->ext_irqs));
- 			break;
- 		}
+-/*
+- * Read-write spinlocks. No debug version.
+- */
+-#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
+-
+ #else /* DEBUG_SPINLOCK */
+ #define arch_spin_is_locked(lock)	((void)(lock), 0)
+ /* for sched/core.c and kernel_lock.c: */
+@@ -69,4 +59,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 
+ #define arch_spin_is_contended(lock)	(((void)(lock), 0))
+ 
++/*
++ * Read-write spinlocks. No debug version.
++ */
++#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
++
+ #endif /* __LINUX_SPINLOCK_UP_H */
 -- 
 2.53.0
 
