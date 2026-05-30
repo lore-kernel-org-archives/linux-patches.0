@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4293E344DB9;
-	Sat, 30 May 2026 17:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBB134389F;
+	Sat, 30 May 2026 17:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162909; cv=none; b=TD+gOPAzAf3THSN5N87rtAmRhSrF5AIx3WcV9uimm/in+RwVKTM+UHpLKs3lzemw43RucQxc78FEthuuhJ5CrMCZ4cR2QrLtnH/vyyPxW1g1hxTVHpKdtGQGEtn/62PzcRTFtD6W7xDmOWS+g/qFT60A/YYtgdkOebbI58q58oo=
+	t=1780162912; cv=none; b=ndQajvceQnleCSy84w/C0rThgEbs/FwYywR1kdVm3m+iwAmj5XGiZaSLxZkLWCgenLlSHuHvmkIHvmDABy6xZAcJP8CLl4AWkKF0Z3gSbG6/SqL1YUtjAiPkl8Ic/9NDJ3dd1ur0MqlAvF2ydzikudMN7Ry45lCc8aBnzbr4s2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162909; c=relaxed/simple;
-	bh=MAnqoueTO10EyOePDvLHXpAhjKetS//dH2NUiPY2cWo=;
+	s=arc-20240116; t=1780162912; c=relaxed/simple;
+	bh=PUFNBAIZVLmmjao4lL76rSKg5ZBXN83Wqi10VUktMSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K107+eCq5Q85FHkPnS96nGi16r3PxkwUA8dkMLZoHs10Zp4YMA27/gIX3O5iLIUwdXSJXM0wMcus8TMvnbalDL+DiCzj3OmW/e7FHfP0lmCsQYx476FBfAVK/LuvLAZdJvWYgyliaiUzS5Js0PzMoD5iuNHEeaA6QwhpRuxVqHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWiBzJYJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AF3yC3gqlTTkvGXGhohR5qAi2AKNuguXdhRGm7ZVDdnotYknGd9JQecG1N+BBv9/2eJraSfoEyrQA6TLBdweL/n5LC4HB3zaq2taknmquT0puyL/VLartIAt5vFQZMpSWx1zbP4cYiDKYNptnTeDSan7f1zF3Pv0jc9uicaA9SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtkLTCBA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWiBzJYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880BB1F00893;
-	Sat, 30 May 2026 17:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtkLTCBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19931F00893;
+	Sat, 30 May 2026 17:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162908;
-	bh=uiAJKHz/0geWoCcPR02d//luAYK7wtt6Q29letolaPk=;
+	s=korg; t=1780162911;
+	bh=s/ySWKrgQLeT0N3c30N7+eP9E01l2iGoCzXJQVkQqec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TWiBzJYJLaLJlC7JrbP94kN7f/B6WewNHt+FjrXe8auUL8u7T4j+KOzD9q2CX8gbn
-	 jB7KRpz5f+slvChbr8SDGY/8Xgj/mCCAzxS+ycx6SqDUcCH4jEEABYmouJX8G8XfE5
-	 5NSLG3eOzNZ2tWikJYbCgAAT6Zb1rv+sDQQWmr+g=
+	b=AtkLTCBAPcjaxo2HNyJayQc1ptde3ucaUp/jWtqBFTxvvtxoCnw26hAIF/p5uU09l
+	 LmIYFSjZ0YW5sneuLtqoTO+IrN17ZMSxKeXwo/rQK5BrDO30DXQ+jZlMMy31YwNUDx
+	 sfnqcyUBbhezajXULx6MIDrlziaPfZbpVIbrH5RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/776] PCI/ACPI: Restrict program_hpx_type2() to AER bits
-Date: Sat, 30 May 2026 17:56:52 +0200
-Message-ID: <20260530160242.874858913@linuxfoundation.org>
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 5.15 099/776] netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
+Date: Sat, 30 May 2026 17:56:53 +0200
+Message-ID: <20260530160242.901406982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,206 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 9abf79c8d7b40db0e5a34aa8c744ea60ff9a3fcf upstream.
+commit 07ace0bbe03b3d8e85869af1dec5e4087b1d57b8 upstream.
 
-Previously program_hpx_type2() applied PCIe settings unconditionally,
-which could incorrectly change bits like Extended Tag Field Enable and
-Enable Relaxed Ordering.
+pipapo relies on kmalloc(0) returning ZERO_SIZE_PTR (i.e., not NULL
+but pointer is invalid).
 
-When _HPX was added to ACPI r3.0, the intent of the PCIe Setting
-Record (Type 2) in sec 6.2.7.3 was to configure AER registers when the
-OS does not own the AER Capability:
+Rework this to not call slab allocator when we'd request a 0-byte
+allocation.
 
-  The PCI Express setting record contains ... [the AER] Uncorrectable
-  Error Mask, Uncorrectable Error Severity, Correctable Error Mask
-  ... to be used when configuring registers in the Advanced Error
-  Reporting Extended Capability Structure ...
-
-  OSPM [1] will only evaluate _HPX with Setting Record – Type 2 if
-  OSPM is not controlling the PCI Express Advanced Error Reporting
-  capability.
-
-ACPI r3.0b, sec 6.2.7.3, added more AER registers, including registers
-in the PCIe Capability with AER-related bits, and the restriction that
-the OS use this only when it owns PCIe native hotplug:
-
-  ... when configuring PCI Express registers in the Advanced Error
-  Reporting Extended Capability Structure *or PCI Express Capability
-  Structure* ...
-
-  An OS that has assumed ownership of native hot plug but does not
-  ... have ownership of the AER register set must use ... the Type 2
-  record to program the AER registers ...
-
-  However, since the Type 2 record also includes register bits that
-  have functions other than AER, the OS must ignore values ... that
-  are not applicable.
-
-Restrict program_hpx_type2() to only the intended purpose:
-
-  - Apply settings only when OS owns PCIe native hotplug but not AER,
-
-  - Only touch the AER-related bits (Error Reporting Enables) in Device
-    Control
-
-  - Don't touch Link Control at all, since nothing there seems AER-related,
-    but log _HPX settings for debugging purposes
-
-Note that Read Completion Boundary is now configured elsewhere, since it is
-unrelated to _HPX.
-
-[1] Operating System-directed configuration and Power Management
-
-Fixes: 40abb96c51bb ("[PATCH] pciehp: Fix programming hotplug parameters")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260129175237.727059-3-haakon.bugge@oracle.com
-[ Conflict in drivers/pci.h because the context has changed. ]
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[Keerthana: In older stable branches (v6.6 and earlier), the allocation logic in
+pipapo_clone() still relies on `src->rules` rather than `src->rules_alloc`
+(introduced in v6.9 via 9f439bd6ef4f). Consequently, the previously
+backported INT_MAX clamping check uses `src->rules`. This patch correctly
+moves that `src->rules > (INT_MAX / ...)` check inside the new
+`if (src->rules > 0)` block]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c | 59 +++++++++++++++++-------------------------
- drivers/pci/pci.h      |  3 +++
- drivers/pci/pcie/aer.c |  3 ---
- 3 files changed, 27 insertions(+), 38 deletions(-)
+ net/netfilter/nft_set_pipapo.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index 268ca998443af..5e86038f2ea5f 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -245,21 +245,6 @@ static acpi_status decode_type1_hpx_record(union acpi_object *record,
- 	return AE_OK;
- }
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -525,6 +525,8 @@ static struct nft_pipapo_elem *pipapo_ge
+ 	int i;
  
--static bool pcie_root_rcb_set(struct pci_dev *dev)
--{
--	struct pci_dev *rp = pcie_find_root_port(dev);
--	u16 lnkctl;
--
--	if (!rp)
--		return false;
--
--	pcie_capability_read_word(rp, PCI_EXP_LNKCTL, &lnkctl);
--	if (lnkctl & PCI_EXP_LNKCTL_RCB)
--		return true;
--
--	return false;
--}
--
- /* _HPX PCI Express Setting Record (Type 2) */
- struct hpx_type2 {
- 	u32 revision;
-@@ -285,6 +270,7 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- {
- 	int pos;
- 	u32 reg32;
-+	const struct pci_host_bridge *host;
+ 	m = priv->clone;
++	if (m->bsize_max == 0)
++		return ret;
  
- 	if (!hpx)
- 		return;
-@@ -292,6 +278,15 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
- 	if (!pci_is_pcie(dev))
- 		return;
+ 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
+ 	if (!res_map) {
+@@ -1365,14 +1367,20 @@ static struct nft_pipapo_match *pipapo_c
+ 		       src->bsize * sizeof(*dst->lt) *
+ 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
  
-+	host = pci_find_host_bridge(dev->bus);
+-		if (src->rules > (INT_MAX / sizeof(*src->mt)))
+-			goto out_mt;
++		if (src->rules > 0) {
++			if (src->rules > (INT_MAX / sizeof(*src->mt)))
++				goto out_mt;
 +
-+	/*
-+	 * Only do the _HPX Type 2 programming if OS owns PCIe native
-+	 * hotplug but not AER.
-+	 */
-+	if (!host->native_pcie_hotplug || host->native_aer)
-+		return;
-+
- 	if (hpx->revision > 1) {
- 		pci_warn(dev, "PCIe settings rev %d not supported\n",
- 			 hpx->revision);
-@@ -299,33 +294,27 @@ static void program_hpx_type2(struct pci_dev *dev, struct hpx_type2 *hpx)
++			dst->mt = kvmalloc_array(src->rules, sizeof(*src->mt),
++						 GFP_KERNEL);
++			if (!dst->mt)
++				goto out_mt;
+ 
+-		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL);
+-		if (!dst->mt)
+-			goto out_mt;
++			memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
++		} else {
++			dst->mt = NULL;
++		}
+ 
+-		memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
+ 		src++;
+ 		dst++;
  	}
- 
- 	/*
--	 * Don't allow _HPX to change MPS or MRRS settings.  We manage
--	 * those to make sure they're consistent with the rest of the
--	 * platform.
-+	 * We only allow _HPX to program DEVCTL bits related to AER, namely
-+	 * PCI_EXP_DEVCTL_CERE, PCI_EXP_DEVCTL_NFERE, PCI_EXP_DEVCTL_FERE,
-+	 * and PCI_EXP_DEVCTL_URRE.
-+	 *
-+	 * The rest of DEVCTL is managed by the OS to make sure it's
-+	 * consistent with the rest of the platform.
- 	 */
--	hpx->pci_exp_devctl_and |= PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ;
--	hpx->pci_exp_devctl_or &= ~(PCI_EXP_DEVCTL_PAYLOAD |
--				    PCI_EXP_DEVCTL_READRQ);
-+	hpx->pci_exp_devctl_and |= ~PCI_EXP_AER_FLAGS;
-+	hpx->pci_exp_devctl_or &= PCI_EXP_AER_FLAGS;
- 
- 	/* Initialize Device Control Register */
- 	pcie_capability_clear_and_set_word(dev, PCI_EXP_DEVCTL,
- 			~hpx->pci_exp_devctl_and, hpx->pci_exp_devctl_or);
- 
--	/* Initialize Link Control Register */
-+	/* Log if _HPX attempts to modify Link Control Register */
- 	if (pcie_cap_has_lnkctl(dev)) {
--
--		/*
--		 * If the Root Port supports Read Completion Boundary of
--		 * 128, set RCB to 128.  Otherwise, clear it.
--		 */
--		hpx->pci_exp_lnkctl_and |= PCI_EXP_LNKCTL_RCB;
--		hpx->pci_exp_lnkctl_or &= ~PCI_EXP_LNKCTL_RCB;
--		if (pcie_root_rcb_set(dev))
--			hpx->pci_exp_lnkctl_or |= PCI_EXP_LNKCTL_RCB;
--
--		pcie_capability_clear_and_set_word(dev, PCI_EXP_LNKCTL,
--			~hpx->pci_exp_lnkctl_and, hpx->pci_exp_lnkctl_or);
-+		if (hpx->pci_exp_lnkctl_and != 0xffff ||
-+		    hpx->pci_exp_lnkctl_or != 0)
-+			pci_info(dev, "_HPX attempts Link Control setting (AND %#06x OR %#06x)\n",
-+				 hpx->pci_exp_lnkctl_and,
-+				 hpx->pci_exp_lnkctl_or);
- 	}
- 
- 	/* Find Advanced Error Reporting Enhanced Capability */
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 4a8f499d278be..adae3e04c8c30 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -11,6 +11,9 @@
- 
- #define PCI_VSEC_ID_INTEL_TBT	0x1234	/* Thunderbolt */
- 
-+#define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
-+				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
-+
- extern const unsigned char pcie_link_speed[];
- extern bool pci_early_dump;
- 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index a8bec1c3c769a..9b86df5b82359 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -214,9 +214,6 @@ void pcie_ecrc_get_policy(char *str)
- }
- #endif	/* CONFIG_PCIE_ECRC */
- 
--#define	PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
--				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
--
- int pcie_aer_is_native(struct pci_dev *dev)
- {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
--- 
-2.53.0
-
 
 
