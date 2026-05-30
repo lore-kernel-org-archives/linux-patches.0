@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF64026738C;
-	Sat, 30 May 2026 18:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FF03AB26B;
+	Sat, 30 May 2026 18:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166372; cv=none; b=OHVfOtuUDyfzMLxOSR2drMPhdrgSdFYRMPRh5YZ+7k4JeIEuxBovNbzAifbDw8csFcWDDy77w6kE7haOiwY4O8/RgK8MhJgAEo/hh6gQY7YlFYCFB/RCPvtpLKi419g5m/Mbs36IFDqbspMX5yjsNQ5WLIwlDneT0EaYSLF7BDE=
+	t=1780166375; cv=none; b=kqlQlpIEx73quDoOZvHgjoiVi5z2IdVHnee6psWG3TWz3NE/fmv28dqIriRg6V+ya+LX1XKkreeIGh2j3PyR7iFSzUOLOd9iVYZpbMdgJo3U42tgEjVyaHYh+6TAt1B9I+iCdf/ClooXirshavn+WrSu75X/+WREh1/SwdVolJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166372; c=relaxed/simple;
-	bh=VG2lvgonPhEpB9oDWGUu9FVH3V5XzCCFQpkBlQE8I6Q=;
+	s=arc-20240116; t=1780166375; c=relaxed/simple;
+	bh=bn/MBHM4Qg11luQmNo+nS1B36bgt2JGZyXvQHnpFpc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ShAfzaxlNGtJUGV24tG1wmGDLCT9fjdajJH7QbagGZLjDDqSx1zFdAs1myePjk0nNzYqi23J/B7kbvDzu2HNk0sx6/vvpEaRX6auDq/GngRom7jzOAEqjQZavddodcPgOY+/pq3p0dAQGxWI3fp1tSnwLr9+X584gQzQBtuZ69g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCCE89ez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHO9gqxzS0NePU3pUiOaaeo+vBVkWm2aQyXqKWnyqZjGVvUTplKWpkYCEllKXStHRGi9rLQbKibXnCgPE87gIc2wZ5hMJ9EmBa45aZYuKetFES0vsGIXrDb3ay/HTENiT5+LAgmEvOJuE3NLXsAfwU+ZhjRvfGgVX1S+Srj45W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruxwiDoe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCCE89ez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B931F00893;
-	Sat, 30 May 2026 18:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruxwiDoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930491F00893;
+	Sat, 30 May 2026 18:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166370;
-	bh=9U3CoSY0fjuXZbBBMAYaNSY/fU76HRCmnaThbSRDBl4=;
+	s=korg; t=1780166374;
+	bh=3Q9gYBEIXBYnAp83GMLGLvIoOorDmgCP8GqDwgicvPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YCCE89ezJQgk8GazbBVw3bAcPTL/q3tceC6CxsUTuzns9viujl0+qAVqsp6m8AdIN
-	 7M/VxWHeiD4rOXC6h8fOy8bfX/C1m8StTYx31B6Qmm9w5xkRSaCLjxPaKl5nK2BRDe
-	 2V9qkyyK6csrzfDIt8PQIee6zaoRQSl4gmMIJfvU=
+	b=ruxwiDoeZ2DzFP1ZMj68q+jEv3dh16m4zThOtAOaNNbWMXQNQTfpIAjq13s9K02OW
+	 9aHtiS1KwldK6/CdcJSrWBqOaWOyf/BW7AltNlaiKIWMt6J0oi0pfGPasIW/HRsw1G
+	 27O0s+o41xOlws1JWeJvY4KGv1idCrmKBOqbuR5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shuah Khan <shuah@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 352/589] selftest: memcg: skip memcg_sock test if address family not supported
-Date: Sat, 30 May 2026 18:03:53 +0200
-Message-ID: <20260530160234.117141135@linuxfoundation.org>
+Subject: [PATCH 5.10 353/589] PCI: tegra194: Use devm_gpiod_get_optional() to parse "nvidia,refclk-select"
+Date: Sat, 30 May 2026 18:03:54 +0200
+Message-ID: <20260530160234.142279878@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,77 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 2d028f3e4bbbfd448928a8d3d2814b0b04c214f4 ]
+[ Upstream commit f62bc7917de1374dce86a852ffba8baf9cb7a56a ]
 
-The test_memcg_sock test in memcontrol.c sets up an IPv6 socket and send
-data over it to consume memory and verify that memory.stat.sock and
-memory.current values are close.
+The GPIO DT property "nvidia,refclk-select", to select the PCIe reference
+clock is optional. Use devm_gpiod_get_optional() to get it.
 
-On systems where IPv6 isn't enabled or not configured to support
-SOCK_STREAM, the test_memcg_sock test always fails.  When the socket()
-call fails, there is no way we can test the memory consumption and verify
-the above claim.  I believe it is better to just skip the test in this
-case instead of reporting a test failure hinting that there may be
-something wrong with the memcg code.
-
-Link: https://lkml.kernel.org/r/20260311200526.885899-1-longman@redhat.com
-Fixes: 5f8f019380b8 ("selftests: cgroup/memcontrol: add basic test for socket accounting")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Michal Koutný <mkoutny@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-7-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_memcontrol.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
-index c19a97dd02d49..07ce722b2533b 100644
---- a/tools/testing/selftests/cgroup/test_memcontrol.c
-+++ b/tools/testing/selftests/cgroup/test_memcontrol.c
-@@ -833,8 +833,11 @@ static int tcp_server(const char *cgroup, void *arg)
- 	saddr.sin6_port = htons(srv_args->port);
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index ba9fcb39ca90d..ee8f25c07f2e1 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1135,9 +1135,9 @@ static int tegra_pcie_dw_parse_dt(struct tegra_pcie_dw *pcie)
+ 		return err;
+ 	}
  
- 	sk = socket(AF_INET6, SOCK_STREAM, 0);
--	if (sk < 0)
-+	if (sk < 0) {
-+		/* Pass back errno to the ctl_fd */
-+		write(ctl_fd, &errno, sizeof(errno));
- 		return ret;
-+	}
- 
- 	if (setsockopt(sk, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) < 0)
- 		goto cleanup;
-@@ -964,6 +967,12 @@ static int test_memcg_sock(const char *root)
- 			goto cleanup;
- 		close(args.ctl[0]);
- 
-+		/* Skip if address family not supported by protocol */
-+		if (err == EAFNOSUPPORT) {
-+			ret = KSFT_SKIP;
-+			goto cleanup;
-+		}
-+
- 		if (!err)
- 			break;
- 		if (err != EADDRINUSE)
+-	pcie->pex_refclk_sel_gpiod = devm_gpiod_get(pcie->dev,
+-						    "nvidia,refclk-select",
+-						    GPIOD_OUT_HIGH);
++	pcie->pex_refclk_sel_gpiod = devm_gpiod_get_optional(pcie->dev,
++							     "nvidia,refclk-select",
++							     GPIOD_OUT_HIGH);
+ 	if (IS_ERR(pcie->pex_refclk_sel_gpiod)) {
+ 		int err = PTR_ERR(pcie->pex_refclk_sel_gpiod);
+ 		const char *level = KERN_ERR;
 -- 
 2.53.0
 
