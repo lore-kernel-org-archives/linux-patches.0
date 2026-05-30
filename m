@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B3D31F98D;
-	Sat, 30 May 2026 18:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE7E29B799;
+	Sat, 30 May 2026 18:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164888; cv=none; b=XiQBj/9HZOpouvmICgl90rHzr6XBwk+B/Acb9HKuYc4zPqcT9x4TlxBcc2wubM9nwsSF79G8u8mSO0JWXiFH7vBOxDfSvWuZwV2Q6wrPuW3IGz4KFXppqVDp51vTDoyGPr0G5YE94TY+BL2khrd6nkVgl973Cj7BNseqIBMoM4Q=
+	t=1780164891; cv=none; b=Zf9EEaWwDZj0+f+ONX4KhB2j3z5t+SCqFbwZLqsiQeFx8i+qz7Q7v4qIDTabTax9le3weXBQMMjO0rNpbjdx99gFjpcGLV/4oJQRyl+4CHeEJ0Nk8zrvKdOmPNkJMvi6aialTRUeGQP0J73gtzYhTotEwTJkFrCYWmFBIkQCOXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164888; c=relaxed/simple;
-	bh=syGcVg9utqcM5uPljr7iUZsaSwasvkdsxnHDbWbuO/I=;
+	s=arc-20240116; t=1780164891; c=relaxed/simple;
+	bh=+AAfeS6dr4Og/oTKn6nPZUfKJCghsb/dBv4YtJVolcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWIR2rbrWRerWyNY9s6i9Bcm9baQO3P6th7Z0SOpWUeAUE+AI7GdnrBIRzkPjJtnaMjJuW4q+uKvdqvP4RlsZLnpJdgsbJ4vLUzwkx8K3F+n5quWMIH+puaXUzO/7kU5VPSf21QggZ89zgf32IyMnjhkA0474POpb8k3OlSlbKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff2M0Bxd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i5FF+FbIsMD+t5JEZ/+Zh1mGzCSFGnjE9k6yrTtXi1duZDSKuoezpSYN05rgFgvk3e+TGXIKVRXJnE1vGGZlMtIUUpt5i37aGY+yYP7YC51pGH+yK9aD+aYjBauruAEgVW3CkSqzdwwG4JlwODFQ9y0d5VZqvpCdSD/qVnNYVys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWxEcHgw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff2M0Bxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728571F00893;
-	Sat, 30 May 2026 18:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWxEcHgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B423D1F00893;
+	Sat, 30 May 2026 18:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164887;
-	bh=JAa9SvfbCK90SyJk7XIJtFb6o15doLdJHeN9uKIw5d8=;
+	s=korg; t=1780164890;
+	bh=ynYYAvzS7+qKxo0hvuMC3+2K3tFRt5dYiG5PycIs/NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ff2M0BxdbQTqfBa96dwS72rWIIgXeVflX+vWsJMuiAllfV0FJgZNhpHbZ5zX6ubSZ
-	 Lts1YjCBapxvwgeadu8afHw6SZIOAVy1noU97/XxVI6dxHUHzHhdLCV8IOWxoUZM1T
-	 N+IN1cSsZJAPQ1YqdSqXd8yl0Holc8WjeLtftyH8=
+	b=vWxEcHgwlDmujXaEXhawqSknL2BWbXxRdXG4XQw7tq310/cRirbH2cblwR47KffZI
+	 KBspLXXFtRBbrL0K6Jxi3PV20u067Qqpz5wVtxTAmbbSmjnHug3lVLnE56vkirDGoa
+	 J6l3xiUTBCqgOqcRFeFMRmB+/4CGBHJFatjNK4lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 659/776] libceph: Fix potential out-of-bounds access in osdmap_decode()
-Date: Sat, 30 May 2026 18:06:13 +0200
-Message-ID: <20260530160256.934067074@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 650/776] netfilter: nft_ct: fix missing expect put in obj eval
+Date: Sat, 30 May 2026 18:06:04 +0200
+Message-ID: <20260530160256.722610988@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,41 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit 35d0ed82d03e5ee77ea4f31f20e29562a7721649 upstream.
+commit 19f94b6fee75b3ef7fbc06f3745b9a771a8a19a4 upstream.
 
-When decoding osd_state and osd_weight from an incoming osdmap in
-osdmap_decode(), both are decoded for each osd, i.e., map->max_osd
-times. The ceph_decode_need() check only accounts for
-sizeof(*map->osd_weight) once. This can potentially result in an
-out-of-bounds memory access if the incoming message is corrupted such
-that the max_osd value exceeds the actual content of the osdmap message.
+nft_ct_expect_obj_eval() allocates an expectation and may call
+nf_ct_expect_related(), but never drops its local reference.
 
-This patch fixes the issue by changing the corresponding part in the
-ceph_decode_need() check to account for
-map->max_osd*sizeof(*map->osd_weight).
+Add nf_ct_expect_put(exp) before return to balance allocation.
 
+Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
 Cc: stable@vger.kernel.org
-Fixes: dcbc919a5dc8 ("libceph: switch osdmap decoding to use ceph_decode_entity_addr")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_ct.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1689,7 +1689,7 @@ static int osdmap_decode(void **p, void
- 	ceph_decode_need(p, end, 3*sizeof(u32) +
- 			 map->max_osd*(struct_v >= 5 ? sizeof(u32) :
- 						       sizeof(u8)) +
--				       sizeof(*map->osd_weight), e_inval);
-+			 map->max_osd*sizeof(*map->osd_weight), e_inval);
- 	if (ceph_decode_32(p) != map->max_osd)
- 		goto e_inval;
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -1299,6 +1299,8 @@ static void nft_ct_expect_obj_eval(struc
  
+ 	if (nf_ct_expect_related(exp, 0) != 0)
+ 		regs->verdict.code = NF_DROP;
++
++	nf_ct_expect_put(exp);
+ }
+ 
+ static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
 
 
