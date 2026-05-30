@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C172274FDC;
-	Sat, 30 May 2026 18:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E870917555;
+	Sat, 30 May 2026 18:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165190; cv=none; b=HI1di8FSr3idhhYylvX7bqFmD2WN20xyXdGlS7LMdOB54FTnDiMjm5/Opda0qCBNvptRJOUv0nyS5ID26FnebvvkVAVffs7S6inyi2O7mGn+sKMPWS2qzPI78jJwc9yF92iuy4XxQtgwQ0iXARb19n6LWO44OHcseq6BSygirio=
+	t=1780165193; cv=none; b=SFIAuD48gBdRRkh7GuRjN59iCM2FawsQ5BjEVeVsrycJdekqz7w2K8XGrWX7cqscDQNtokFG57mC0FKgpsTLLRO+N4KIitXXrW67TqGdsDFqGToDs5ZXPx+bJT62BY1yhA/QKKbW+MwhPS6FZotv97YDrzQHXq7dkqLq8JrvfE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165190; c=relaxed/simple;
-	bh=LTn3/gkg+vO34+e9VKg3/FfJRvI27PggI0VgnU3Dap4=;
+	s=arc-20240116; t=1780165193; c=relaxed/simple;
+	bh=bFF7g0SHRfvbUYdb6L66TOAtETH7/JlOuQ6Qm2EqSwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApsU12D96FGbdWZdyYFbk2WQwpgaLH1OnBMaS/m/jhW3PosTwOlev5vskpusU8chmM7ZzzVbyKJXEIAkSBlwig5/9kL4Jobd3cglbOmvP6uoCb9NkxvAxnR71iuN0S0Hq5GWMHNeAzP5t9cuwmBu5eUCu4rgf8f/RVv2UjoMi1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pg/qYPxT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e52/rxHGCaeTJnL7jP5H11GdsQLf6BXug0qEziPBdWaZkOt4vLkR7/l7He+FXVHRdnGP0s8aCw6r3UTZlEqEmXPjZ+ln8/DrURm7A3u/B2SZEu2+/oDUASqqf4snKLCKjKT94mtD9zrt/fiV7W/nId/uhF2weTfvKlQrfDcKNSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUhbSPN5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pg/qYPxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFD91F00893;
-	Sat, 30 May 2026 18:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUhbSPN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AC01F00893;
+	Sat, 30 May 2026 18:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165189;
-	bh=xq/GWCd5c/XxmW9675B+UPh8h9WUHJVjsk2SK3pjhZM=;
+	s=korg; t=1780165192;
+	bh=V8B3qC7KTxCqD9n6xJtGla6jKlpkXRgn+Pl7T6w0VHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pg/qYPxTzoy6+2VgL+F87ggcI+jrK6I+ePdOZOuj4ckAtw9go99veZRXDenMxh6iV
-	 7TIZ6JBUVdgnMc2C0+RJxQa+z2Z2k1Uct0etfQ7EIzKLN1eJYORe+HEysEF/9kPLYf
-	 MwqEZ8mCzZ9GOAIlQxFj/iuNKUMvGI8WlH08mFNQ=
+	b=hUhbSPN5KISXV8ZSfQUHTo9tWW5277K1za4xDnkHGyNjzG5yYwZnsorpLsame6v5E
+	 A3X/ccUVroixq6BGzBPyOVyWgjm6QRfWYwmbcMHhwGPRIlmF4In3T2xq7j4jnux4pX
+	 PZGrecuffL6xuzZEJqXV8dB2bg0x+SAOw/rjKVJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 775/776] gpio: cdev: check if uAPI v2 config attributes are correctly zeroed
-Date: Sat, 30 May 2026 18:08:09 +0200
-Message-ID: <20260530160259.729481435@linuxfoundation.org>
+Subject: [PATCH 5.15 776/776] net: mana: validate rx_req_idx to prevent out-of-bounds array access
+Date: Sat, 30 May 2026 18:08:10 +0200
+Message-ID: <20260530160259.752242011@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,57 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Aditya Garg <gargaditya@linux.microsoft.com>
 
-[ Upstream commit 3e6ccd790ed69bedd3d9626d01dd35cf9821c121 ]
+[ Upstream commit b809d0409991b75a6cff846a5ac27c3062953f84 ]
 
-We check the padding of other uAPI v2 structures but not that of line
-config attributes. For used attributes: check if their padding is
-zeroed, for unused: check if the entire structure is zeroed.
+In mana_hwc_rx_event_handler(), rx_req_idx is derived from
+sge->address in DMA-coherent memory. In Confidential VMs
+(SEV-SNP/TDX), this memory is shared unencrypted and HW can modify
+WQE contents at any time. No bounds check exists on rx_req_idx,
+which can lead to an out-of-bounds access into reqs[].
 
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20260521-gpio-cdev-attr-padding-check-v3-1-ec3bcbe2e358@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Add bounds check on rx_req_idx in mana_hwc_rx_event_handler() before
+using it to index the reqs[] array.
+
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/20260520051553.857120-1-gargaditya@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/microsoft/mana/hw_channel.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 58ad8328bedc2..b1e4571401c9a 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1011,6 +1011,7 @@ static int gpio_v2_line_flags_validate(u64 flags)
- static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 					unsigned int num_lines)
- {
-+	size_t unused_attrs;
- 	unsigned int i;
- 	u64 flags;
- 	int ret;
-@@ -1018,9 +1019,21 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 	if (lc->num_attrs > GPIO_V2_LINE_NUM_ATTRS_MAX)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+index 91b1af1d72eb8..f2542bb9254fc 100644
+--- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
++++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+@@ -206,6 +206,12 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
+ 	rq_base_addr = hwc_rxq->msg_buf->mem_info.dma_handle;
+ 	rx_req_idx = (sge->address - rq_base_addr) / hwc->max_req_msg_size;
  
-+	unused_attrs = GPIO_V2_LINE_NUM_ATTRS_MAX - lc->num_attrs;
-+
- 	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
- 		return -EINVAL;
- 
-+	for (i = 0; i < lc->num_attrs; i++) {
-+		if (lc->attrs[i].attr.padding != 0)
-+			return -EINVAL;
++	if (rx_req_idx >= hwc_rxq->msg_buf->num_reqs) {
++		dev_err(hwc->dev, "HWC RX: wrong rx_req_idx=%llu, num_reqs=%u\n",
++			rx_req_idx, hwc_rxq->msg_buf->num_reqs);
++		return;
 +	}
 +
-+	if (unused_attrs) {
-+		if (!mem_is_zero(&lc->attrs[lc->num_attrs], unused_attrs * sizeof(*lc->attrs)))
-+			return -EINVAL;
-+	}
-+
- 	for (i = 0; i < num_lines; i++) {
- 		flags = gpio_v2_line_config_flags(lc, i);
- 		ret = gpio_v2_line_flags_validate(flags);
+ 	rx_req = &hwc_rxq->msg_buf->reqs[rx_req_idx];
+ 	resp = (struct gdma_resp_hdr *)rx_req->buf_va;
+ 
 -- 
 2.53.0
 
