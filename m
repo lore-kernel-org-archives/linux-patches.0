@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8FB32BF24;
-	Sat, 30 May 2026 16:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7C432BF24;
+	Sat, 30 May 2026 16:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160228; cv=none; b=nZa8RYZBET/zrVP0AL6fes+X1mlIsgBdExY3ZkAem49nfi/CFPAf0atA+VTIeXLAN5Ts3YW+38W7PaYod42VFgGAxE1Eoq+CXO2Ubu17ozekaCOQKbfsL6zuERzZddlbHy4qWH+7/bXp4HAnp9AZ+n4X4ifGxGXRyB2zNtPs6go=
+	t=1780160231; cv=none; b=YxTSds3vLp5+A30X8EE2+iKZ1jL1guRIDGiOKbgOSSFKP24RVpBzpGFapiECfyRp4NbZJLPYD6cN2/3DjNY6WjgImUIFel1P0nwWRk2dOqig8pxNcgPykgSbidhy4YvXofvqZDjIrkFbAS0Ynr6THn7/huYsiE6qQmGTW5wy1Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160228; c=relaxed/simple;
-	bh=0O6DABNiT4JjYfnL/ipKss5UtZCvj2JlQu1y2ocCnwA=;
+	s=arc-20240116; t=1780160231; c=relaxed/simple;
+	bh=+Ty66//CuJElMKyAldqD70OeYfpl5B/3nErHpHQyPAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4HueKNT6wMBMqtddfsZcIHMCY9osFT7kdxFBWOYpRHgeiMBPf6pKUuUVC/2WyF/nybPY1LGa5RD06yNb8nZYnic/vHiSG5Utcice4ic6BtAlICs4j/CadB2/wzQfWF7d4sbgc4oeVvuuiN0pMfln6o+mQq1qByYsjB/UgVvXNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqtdjc1B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s8BxKy2yyybf1yOoUySD1DO0xpIIhyAPJ7d4ovcXLLWGJaOs7qG/XigiOpMzT9URgEEn77gc5l4JTCW1+qqC9j9lJ4noLEXjGHGcOzHvZzg+Hg3/zBr9AuK3/y3JLCAeojmsH2SjyiuhM54KIJ8htei08puyBBz8WG7MsUQ3VBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plAVjEfe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqtdjc1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B331F00893;
-	Sat, 30 May 2026 16:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plAVjEfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8C61F00893;
+	Sat, 30 May 2026 16:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160227;
-	bh=cLVdB4zD0M9wJh+j/KEIVoaPqHd2swoLoXHsf07cF50=;
+	s=korg; t=1780160230;
+	bh=0NpthxVCdsy2MRPX9Tzd9fDF4XM4FrIAjdpt8hKmjmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqtdjc1BVU0Nm5Dttjctp1iypT2MKNEiLGZ1OFhvUOeoJHDyfpZHCskc13Ow9uW3f
-	 x3jTegkDIvBppRyIJkI1eWEWX1qkB8NgWauzcoaqbQDFEvY1fuEj46Zqsj80j7Qdrz
-	 BCp1Jlw9OtLDXPACODOTXbfoOTtqRC8aQ34DrLQk=
+	b=plAVjEfePzf1ZN5kW/GAfTXQXwPsLvEDdYkYCzgdmhXwipDDRYfaPiGuTGp88GYMG
+	 r0RH+tlLE6LduNJdmkK6M6e9eNGqoXLxdCIW6c/oG2hZpaJfOlI4M1S93Cx888cxaZ
+	 QAbG1riQPz7BK2R76KivWyZysmU5hdmeKrp8ewUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
 	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.1 281/969] ipmi: Check event message buffer response for bad data
-Date: Sat, 30 May 2026 17:56:45 +0200
-Message-ID: <20260530160308.231296481@linuxfoundation.org>
+Subject: [PATCH 6.1 282/969] ipmi:si: Return state to normal if message allocation fails
+Date: Sat, 30 May 2026 17:56:46 +0200
+Message-ID: <20260530160308.255895001@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <corey@minyard.net>
 
-commit 36920f30e78e69df01f9691c470b6f3ba8aebf98 upstream.
+commit 09dd798270ff582d7309f285d4aaf5dbebae01cb upstream.
 
-The event message buffer response data size got checked later when
-processing, but check it right after the response comes back.  It
-appears some BMCs may return an empty message instead of an error
-when fetching events.
+There were places where nothing would get started if a message
+allocation failed, so the driver needs to return to normal state.
 
-There are apparently some new BMCs that make this error, so we need to
-compensate.
-
-Reported-by: Matt Fleming <mfleming@cloudflare.com>
-Closes: https://lore.kernel.org/lkml/20260415115930.3428942-1-matt@readmodwrite.com/
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 --- a/drivers/char/ipmi/ipmi_si_intf.c
 +++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -625,7 +625,13 @@ static void handle_transaction_done(stru
- 		 */
- 		msg = smi_info->curr_msg;
- 		smi_info->curr_msg = NULL;
--		if (msg->rsp[2] != 0) {
-+		/*
-+		 * It appears some BMCs, with no event data, return no
-+		 * data in the message and not a 0x80 error as the
-+		 * spec says they should.  Shut down processing if
-+		 * the data is not the right length.
-+		 */
-+		if (msg->rsp[2] != 0 || msg->rsp_size != 19) {
- 			/* Error getting event, probably done. */
- 			msg->done(msg);
+@@ -481,15 +481,19 @@ retry:
+ 	} else if (smi_info->msg_flags & RECEIVE_MSG_AVAIL) {
+ 		/* Messages available. */
+ 		smi_info->curr_msg = alloc_msg_handle_irq(smi_info);
+-		if (!smi_info->curr_msg)
++		if (!smi_info->curr_msg) {
++			smi_info->si_state = SI_NORMAL;
+ 			return;
++		}
  
+ 		start_getting_msg_queue(smi_info);
+ 	} else if (smi_info->msg_flags & EVENT_MSG_BUFFER_FULL) {
+ 		/* Events available. */
+ 		smi_info->curr_msg = alloc_msg_handle_irq(smi_info);
+-		if (!smi_info->curr_msg)
++		if (!smi_info->curr_msg) {
++			smi_info->si_state = SI_NORMAL;
+ 			return;
++		}
+ 
+ 		start_getting_events(smi_info);
+ 	} else if (smi_info->msg_flags & OEM_DATA_AVAIL &&
 
 
