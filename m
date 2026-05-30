@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDED350A05;
-	Sat, 30 May 2026 17:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694F4350A05;
+	Sat, 30 May 2026 17:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161372; cv=none; b=DtEoDAS/OeLKQWM1pTGBxH+m4CBKhyEDN65xnxvL0V3jg5T4A+xtA6n4zWXtmR0P3GXUFgehygbb0IWmosvmXznFg5QYJRj9dgpUzs8q3Ow2gA4153h2Maemkdur5U4KC2VUUzcmOmDqUR54pejYtpkb2YPyygJFk58dDzIvIHs=
+	t=1780161375; cv=none; b=ZXwjbVTCRVsMBlb5GX6C3ceCZsa8I+7Ir/6w172PxlEC5rJAf5FP5Hty5pGxLHnW8qSW3WDRuDSjVj+Op7zp31/5pXhRAfUVFvgkySqTUKmQA0cx+90NpFg6STngRkweA0EY3Z7DPaV4J3e2qjZQ/Aek9LUt7dI0U5LijydSBDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161372; c=relaxed/simple;
-	bh=xWzKgDdNRpVC4EpdF0WCE5UgcI0ucTJ9XcOrVsODosw=;
+	s=arc-20240116; t=1780161375; c=relaxed/simple;
+	bh=5F1GJcDDMf1DDpe+EjyGhWm43LtippPszM+Jj+ocYXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kufWfkVoQIjXFNyGOQcrz6ownGzRssVPo2kmtz+wILzqh8qUQ8cOhD5H/N+YbnAjw1mklDNqBl64IIvg78KYw5TGrR89QdAPmRA4YhFliheFsBLVHFmwM6oAPfi/STFbMLV0zDaFoUG0x5eI5PkyNoB96Df/YvwnqIhjrABvbpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4oa1vKd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CPL5XqU5C2lnON8tMckM1IiLSxnClYzJkAzJDS2izAb5Ndvzcz5AUvxAtnCegjGZkITLKohSykE89l5vbDTCuvZoc4Oh8YeprZlsZJ3cAAFNux3EONWHqYUdGuJlGYGkSmmnPNW7R+OL4Ir9eEUQYr0nNxGJtvkr2qDo3TisoeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2ppIrWy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4oa1vKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B513A1F00893;
-	Sat, 30 May 2026 17:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2ppIrWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBFA1F00893;
+	Sat, 30 May 2026 17:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161370;
-	bh=czLuF9PU/B2aown5nJ0G6Z8PZ6sHFDq1BULMKkFK0A0=;
+	s=korg; t=1780161374;
+	bh=8qS1VrhKIwKQvcKk+0Mh4CIgZyQobi227iuJc1Viz0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g4oa1vKdA25qzvBXRfExLdFEdaiELsfz21L7qSZihUymvDpQqmY5a4DssUj6+rsWD
-	 Ivnqkc4WGabJIcBfGOkusBJqRyh6gYWPQUv12j/uwjrtEt2T6hz7PlvEU+Z4AAlk8r
-	 CwE9Q+eB+S26nsYG1WP7uVy6WX/VRw7ORAKpFZ7s=
+	b=S2ppIrWy+RQwIIEUoqN+GhBHbsmg2Nz9oup01nwyWr1xXV4OSKxnTSA84wcrYycbI
+	 ywznIa7CrGEf3TRIXM3PPALBVqawZWGxMMpabVpy088CNeF6N4nLQCbd+vzA35CigY
+	 SyTQ2KGk+rf/yxRDb1DVcNlr1W7ORqyErfZVJWPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 574/969] memory: tegra30-emc: Fix dll_change check
-Date: Sat, 30 May 2026 18:01:38 +0200
-Message-ID: <20260530160316.253014149@linuxfoundation.org>
+Subject: [PATCH 6.1 565/969] ktest: Honor empty per-test option overrides
+Date: Sat, 30 May 2026 18:01:29 +0200
+Message-ID: <20260530160315.994487480@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,51 +51,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 0a93f2355cf4922ad2399dbef5ea1049fef116d4 ]
+[ Upstream commit a2de57a3c8192dcd67cccaff6c341b93748d799b ]
 
-The code checking whether the specified memory timing enables DLL
-in the EMRS register was reversed. DLL is enabled if bit A0 is low.
-Fix the check.
+A per-test override can clear an inherited default option by assigning an
+empty value, but __set_test_option() still used option_defined() to decide
+whether a per-test key existed. That turned an empty per-test assignment
+back into "fall back to the default", so tests still could not clear
+inherited settings.
 
-Fixes: e34212c75a68 ("memory: tegra: Introduce Tegra30 EMC driver")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Link: https://patch.msgid.link/20260126-fix-emc-dllchange-v1-2-47ad3bb63262@nvidia.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+For example:
+
+  DEFAULTS
+  (...)
+  LOG_FILE = /tmp/ktest-empty-override.log
+  CLEAR_LOG = 1
+  ADD_CONFIG = /tmp/.config
+
+  TEST_START
+  TEST_TYPE = build
+  BUILD_TYPE = nobuild
+  ADD_CONFIG =
+
+This would run the test with ADD_CONFIG[1] = /tmp/.config
+
+Fix by checking whether the per-test key exists before falling back. If it
+does exist but is empty, treat it as unset for that test and stop the
+fallback chain there.
+
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-4-565d412f4925@suse.com
+Fixes: 22c37a9ac49d ("ktest: Allow tests to undefine default options")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/tegra30-emc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/ktest/ktest.pl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/memory/tegra/tegra30-emc.c b/drivers/memory/tegra/tegra30-emc.c
-index 1ea3792beb86d..fb09e8a463bd5 100644
---- a/drivers/memory/tegra/tegra30-emc.c
-+++ b/drivers/memory/tegra/tegra30-emc.c
-@@ -554,14 +554,14 @@ static int emc_prepare_timing_change(struct tegra_emc *emc, unsigned long rate)
- 	emc->emc_cfg = readl_relaxed(emc->regs + EMC_CFG);
- 	emc_dbg = readl_relaxed(emc->regs + EMC_DBG);
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index d752c4bd0d8b3..28eebfa32621d 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -4106,7 +4106,8 @@ sub __set_test_option {
  
--	if (emc->dll_on == !!(timing->emc_mode_1 & 0x1))
-+	if (emc->dll_on == !(timing->emc_mode_1 & 0x1))
- 		dll_change = DLL_CHANGE_NONE;
--	else if (timing->emc_mode_1 & 0x1)
-+	else if (!(timing->emc_mode_1 & 0x1))
- 		dll_change = DLL_CHANGE_ON;
- 	else
- 		dll_change = DLL_CHANGE_OFF;
+     my $option = "$name\[$i\]";
  
--	emc->dll_on = !!(timing->emc_mode_1 & 0x1);
-+	emc->dll_on = !(timing->emc_mode_1 & 0x1);
+-    if (option_defined($option)) {
++    if (exists($opt{$option})) {
++	return undef if (!option_defined($option));
+ 	return $opt{$option};
+     }
  
- 	if (timing->data[80] && !readl_relaxed(emc->regs + EMC_ZCAL_INTERVAL))
- 		emc->zcal_long = true;
+@@ -4114,7 +4115,8 @@ sub __set_test_option {
+ 	if ($i >= $test &&
+ 	    $i < $test + $repeat_tests{$test}) {
+ 	    $option = "$name\[$test\]";
+-	    if (option_defined($option)) {
++	    if (exists($opt{$option})) {
++		return undef if (!option_defined($option));
+ 		return $opt{$option};
+ 	    }
+ 	}
 -- 
 2.53.0
 
