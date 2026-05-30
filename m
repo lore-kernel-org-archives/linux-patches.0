@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C386344DB9;
-	Sat, 30 May 2026 17:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AFC33F590;
+	Sat, 30 May 2026 17:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162816; cv=none; b=MYW1Tjy3H7yxdYxyfEdCpfVV/KaB2TeYCTdTEDH2+SYHCpEh/ozVRjGm5Gz/+BNlD5nLMyLmRlRJa3oDvhm+RLo5wqwQjfGQHmmVDJ+o7wE0MX3/6+5J2Cdk+Tcsx48zgiiCDpG7HNkNFA2/+mB+K3WKCpT9S1A/6xChunXR8dg=
+	t=1780162819; cv=none; b=r8fgIyHhhUwGkB5iO+Fc9GP11oHduPPK1AkcOeWSERsTVtVDicXg+aujLIH+ctPGtQMS11Q3cLiXEC/tTQx5SdYSRioFFPJJhcLBbhtH8B61Dn3gO3tiZcFXSq91nEJcALMmZdXJ7z6VLbQwRp6o3uKXQevmBVB9bo2DIonp+iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162816; c=relaxed/simple;
-	bh=jK/IO2jeHF36cZLk+DkOgz86vV70usBAznlEgMxkapQ=;
+	s=arc-20240116; t=1780162819; c=relaxed/simple;
+	bh=tH91ro3EK4Fm+hjC1ZahDnIBrTbSon8eA2msbbzIki0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfrXu9qez9aRtaSjuFiQnFtArfI01hGJkWKtsl+1NuZ5eKOZzHxp9aE0w1J28PicCQpfGn2REKp8DKK8WocQZzM7thhMcmNM/DdmYEMw6tpJL4IgHghLmnmgLwWyB/mpzn9N+I7iPT6aKUSfrGNiIOLBs5q0dWS4dVbgi5bwTUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYbjDFKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uvvpakboMAZWf+qJWsyX7lf+ph5TwzBoUAZZlPJPnCDv+wVNiMZZy42RI5+L7e69yYjt35qw+9BKu+PykfmkqpNXXpWGVi+shJtXsQ9YlmJQauPPz3BmV8FYoNBvVpyZkzebu74eVJ0HZyq51mMUGdjtsOGvFbi0639k+1YuF2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xad6yFzR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYbjDFKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7771F00893;
-	Sat, 30 May 2026 17:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xad6yFzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F631F00893;
+	Sat, 30 May 2026 17:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162815;
-	bh=Td4mYUc+JPYmzyi8SfutpOqzY2/ss7sn7+TDnMBID8s=;
+	s=korg; t=1780162818;
+	bh=N3rx0C/bYnmbIoVLMFwPT07bejCuF73O9IGoVlTrRC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYbjDFKo7sjrKEA5ItWJvIXrrDj3BvPOt7mu+bEVy5zhxzUlYMUglgpJQoJVfPVmu
-	 uu7jmPzpCvrM1PoA8IRe3l7O6y5gmmkksVcetnwDJKqJn7ifXc6Hdb6NMeyo4PvpQU
-	 IAxF1Q/AO0DX+QtpUQPj1nITkvpNfe2nvesiu+Pw=
+	b=Xad6yFzRiR3Ei9Svj5s6yJJ0g1+arpaz07gf+eRhv0jLV1MiWKBmdgLipqbnTWQip
+	 I56R/HCXY1aDiuRJtg0ODLOHhvDjSwqGgyHR1MiETUxBL3oI9uWy8RVzsSDlyTiS1Y
+	 Za+tHbjwCPlKcL5waLkSibee/S3RxhjDtFsBa5qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/776] netfilter: conntrack: add missing netlink policy validations
-Date: Sat, 30 May 2026 17:55:56 +0200
-Message-ID: <20260530160241.388771356@linuxfoundation.org>
+Subject: [PATCH 5.15 033/776] xfrm_user: fix info leak in build_mapping()
+Date: Sat, 30 May 2026 17:55:47 +0200
+Message-ID: <20260530160241.133349483@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,62 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit f900e1d77ee0ef87bfb5ab3fe60f0b3d8ad5ba05 ]
+[ Upstream commit 1beb76b2053b68c491b78370794b8ff63c8f8c02 ]
 
-Hyunwoo Kim reports out-of-bounds access in sctp and ctnetlink.
+struct xfrm_usersa_id has a one-byte padding hole after the proto
+field, which ends up never getting set to zero before copying out to
+userspace.  Fix that up by zeroing out the whole structure before
+setting individual variables.
 
-These attributes are used by the kernel without any validation.
-Extend the netlink policies accordingly.
-
-Quoting the reporter:
-  nlattr_to_sctp() assigns the user-supplied CTA_PROTOINFO_SCTP_STATE
-  value directly to ct->proto.sctp.state without checking that it is
-  within the valid range. [..]
-
-  and: ... with exp->dir = 100, the access at
-  ct->master->tuplehash[100] reads 5600 bytes past the start of a
-  320-byte nf_conn object, causing a slab-out-of-bounds read confirmed by
-  UBSAN.
-
-Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
-Fixes: a258860e01b8 ("netfilter: ctnetlink: add full support for SCTP to ctnetlink")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 3a2dfbe8acb1 ("xfrm: Notify changes in UDP encapsulation via netlink")
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c    | 2 +-
- net/netfilter/nf_conntrack_proto_sctp.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index def356f828cd8..da00a770ca6d6 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3486,7 +3486,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index dcf433894951d..7e09ab9c34af8 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3592,6 +3592,7 @@ static int build_mapping(struct sk_buff *skb, struct xfrm_state *x,
  
- #if IS_ENABLED(CONFIG_NF_NAT)
- static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
--	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
-+	[CTA_EXPECT_NAT_DIR]	= NLA_POLICY_MAX(NLA_BE32, IP_CT_DIR_REPLY),
- 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
- };
- #endif
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 7ffd698497f2a..90458799324ec 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -600,7 +600,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
- }
+ 	um = nlmsg_data(nlh);
  
- static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
--	[CTA_PROTOINFO_SCTP_STATE]	    = { .type = NLA_U8 },
-+	[CTA_PROTOINFO_SCTP_STATE]	    = NLA_POLICY_MAX(NLA_U8,
-+							 SCTP_CONNTRACK_HEARTBEAT_SENT),
- 	[CTA_PROTOINFO_SCTP_VTAG_ORIGINAL]  = { .type = NLA_U32 },
- 	[CTA_PROTOINFO_SCTP_VTAG_REPLY]     = { .type = NLA_U32 },
- };
++	memset(&um->id, 0, sizeof(um->id));
+ 	memcpy(&um->id.daddr, &x->id.daddr, sizeof(um->id.daddr));
+ 	um->id.spi = x->id.spi;
+ 	um->id.family = x->props.family;
 -- 
 2.53.0
 
