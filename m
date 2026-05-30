@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF337340293;
-	Sat, 30 May 2026 17:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D337D33E36A;
+	Sat, 30 May 2026 17:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161823; cv=none; b=kUmYxZubAU7YaDYLOtoyd6bggzVM3Zgn9ANYpX01GVAsS1HtcENZRgVR3V04Ah4+6NvuoNb5zo5COYzrYnos+lMsy4vQi8i3eZgu9dZnSySWcLwimhkKHv3GDwMSigIiKJyfRg5LRhupVcTa5pHe8ChEPUuHq2RlYkkZarVyLyA=
+	t=1780161826; cv=none; b=FpBPHRFUZ3pUr17czLmITqosEh1GKMRJT8aFdRatcmTRIYRGDolktz2OUvqtYRsNJNTf6JSwb6CLdVgrjfF1qgFs9J/ezmfx9QHYdg55CQTvjEW6sgEkPXI6jQ8DqY8zFmwmJEsTK+KXifmzFcRMEw/gI0lss4F2Q/HVBb4Hod8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161823; c=relaxed/simple;
-	bh=SIIsNrtTEMh+Qw+ORh0OHRCCjNIxI3mOUUczk5cM1HE=;
+	s=arc-20240116; t=1780161826; c=relaxed/simple;
+	bh=Yp9oXmhQ/0eiWQFs4VtugDu2BC4ezIlzhyDxdxB2xCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQ3p8+PS1ZcomN5hxP2y+hQbXgNiCpKLEfI5BEdDYNUxFfMLN6vZVdiWzQdEl6Do0HQXoBvSB5z8/Q1NbN7ZuVd2hbON6xuBuC595zWWCOL1oT7n2ri0AqS/C+zzvu7OTHlcPeZx4y4Pa5PLS/+uCxKHW6QYbzNR9mig57olpGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gb+Fa/6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ICWqxLE49w9Ff4LicqeP0k3TirLQjQFneqsWgS25xV9W9hFWmyNk7dpAZG2kns3TFvHFekmrbiYY6AvaBqe3xfE4Bwf53Z9L0xAcbW6k+rx12ohCtEHCYifBUGLU9w2e9rfWEvKYDQnH/evZijSmVZr4RptV3g7WiLRyCGmzspE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4NAIPMd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gb+Fa/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B731F00893;
-	Sat, 30 May 2026 17:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4NAIPMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D91F00893;
+	Sat, 30 May 2026 17:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161822;
-	bh=wf/dlg6fSIVZTjcj2GvMmV9zAT0pu807dTvf+BVwyK8=;
+	s=korg; t=1780161825;
+	bh=bHFi3QHOP4LiyCEK/FA6JS/W9ShNPNIgpd/s4N956LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2gb+Fa/6PF2vbPZSgKx5V6Wv61Kpt9OBGfZgbQ29vhXPuaaZ92kb/55RSy5CmvLM0
-	 PwxCRKXoQb9GIpcyd7NSqqyRLXZ5CBMv5CliP5LAAXjRF282j3LFLkGr/vU4XdEKLh
-	 Lch40QHLgGzg4Lnqk633KKZklyu1+8YdlyfsUU+8=
+	b=T4NAIPMdljVEeaHzjrd34a5a4NFGfiutZeLU9nTGsmndyGqFoStpl/SHwnQkiTJGC
+	 J87l7oXyUhVu/+wFkOmEmyFzXwosOWc36JmHfqOac5KjN81wlSa56hQ7ceYmZ05qEv
+	 rCUAjeRhdOOfVIeLR56XlTi6bCPjYvPXKMK0jcaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 730/969] mailbox: mailbox-test: make data_ready a per-instance variable
-Date: Sat, 30 May 2026 18:04:14 +0200
-Message-ID: <20260530160320.702876657@linuxfoundation.org>
+Subject: [PATCH 6.1 739/969] netfilter: xt_policy: fix strict mode inbound policy matching
+Date: Sat, 30 May 2026 18:04:23 +0200
+Message-ID: <20260530160320.959530950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,71 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-[ Upstream commit 6e937f4e769e60947909e3525965f0137b9039e8 ]
+[ Upstream commit 4b2b4d7d4e203c92db8966b163edfacb1f0e1e29 ]
 
-While not the default case, multiple tests can be run simultaneously.
-Then, data_ready being a global variable will be overwritten and the
-per-instance lock will not help. Turn the global variable into a
-per-instance one to avoid this problem.
+match_policy_in() walks sec_path entries from the last transform to the
+first one, but strict policy matching needs to consume info->pol[] in
+the same forward order as the rule layout.
 
-Fixes: e339c80af95e ("mailbox: mailbox-test: don't rely on rx_buffer content to signal data ready")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Derive the strict-match policy position from the number of transforms
+already consumed so that multi-element inbound rules are matched
+consistently.
+
+Fixes: c4b885139203 ("[NETFILTER]: x_tables: replace IPv4/IPv6 policy match by address family independant version")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/netfilter/xt_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 41efe64976598..113858fe168c3 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -27,8 +27,6 @@
- #define MBOX_HEXDUMP_MAX_LEN	(MBOX_HEXDUMP_LINE_LEN *		\
- 				 (MBOX_MAX_MSG_LEN / MBOX_BYTES_PER_LINE))
+diff --git a/net/netfilter/xt_policy.c b/net/netfilter/xt_policy.c
+index cb6e8279010a4..b5fa65558318f 100644
+--- a/net/netfilter/xt_policy.c
++++ b/net/netfilter/xt_policy.c
+@@ -63,7 +63,7 @@ match_policy_in(const struct sk_buff *skb, const struct xt_policy_info *info,
+ 		return 0;
  
--static bool mbox_data_ready;
--
- struct mbox_test_device {
- 	struct device		*dev;
- 	void __iomem		*tx_mmio;
-@@ -41,6 +39,7 @@ struct mbox_test_device {
- 	spinlock_t		lock;
- 	struct mutex		mutex;
- 	wait_queue_head_t	waitq;
-+	bool			data_ready;
- 	struct fasync_struct	*async_queue;
- 	struct dentry		*root_debugfs_dir;
- };
-@@ -161,7 +160,7 @@ static bool mbox_test_message_data_ready(struct mbox_test_device *tdev)
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&tdev->lock, flags);
--	data_ready = mbox_data_ready;
-+	data_ready = tdev->data_ready;
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
- 	return data_ready;
-@@ -226,7 +225,7 @@ static ssize_t mbox_test_message_read(struct file *filp, char __user *userbuf,
- 	*(touser + l) = '\0';
- 
- 	memset(tdev->rx_buffer, 0, MBOX_MAX_MSG_LEN);
--	mbox_data_ready = false;
-+	tdev->data_ready = false;
- 
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
-@@ -296,7 +295,7 @@ static void mbox_test_receive_message(struct mbox_client *client, void *message)
- 				     message, MBOX_MAX_MSG_LEN);
- 		memcpy(tdev->rx_buffer, message, MBOX_MAX_MSG_LEN);
- 	}
--	mbox_data_ready = true;
-+	tdev->data_ready = true;
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
- 	wake_up_interruptible(&tdev->waitq);
+ 	for (i = sp->len - 1; i >= 0; i--) {
+-		pos = strict ? i - sp->len + 1 : 0;
++		pos = strict ? sp->len - i - 1 : 0;
+ 		if (pos >= info->len)
+ 			return 0;
+ 		e = &info->pol[pos];
 -- 
 2.53.0
 
