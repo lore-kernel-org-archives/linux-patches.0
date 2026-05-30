@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA911A9F90;
-	Sat, 30 May 2026 18:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C011D63E4;
+	Sat, 30 May 2026 18:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166925; cv=none; b=FNELSggJ2IhD9x5c1TVmvq9nkQyGOtpYNIGMCnDeSz/QBv801oYAv9/y4x/RWZnyxo3d14RXbB9r0pR5dY1i3n8IukShBILeEZYxXQcGumVRQhb02a2a5y2zXxyKwcsdfZaidR2mw9dn0RBQxyCmvHeZFiD8WxqSTOgR6eJxzXE=
+	t=1780166928; cv=none; b=WnMxkLIw51zq+PHZkGroy8MvPkp7lWs3ak/O30HTea+J5sWIlxWNh8rnnJw1JyazSGAAsHF7o8Jwxx1gHTuGxbp1yajFs1yMOt8V6zA0YvUxbdbAhxFqFUNcFdRO8++nn7h0hDhIwv8sRUqY4dLmPv8E4o5CKAw7/cPK2rS494g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166925; c=relaxed/simple;
-	bh=RNZ2zNhJ+MGsfcFcKTef4f2QReI0O2p75G0cR7JWybg=;
+	s=arc-20240116; t=1780166928; c=relaxed/simple;
+	bh=PBE5uI2dwkrTYxrnhMYN0ZscoWfDmfiSL+iZhhEExU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6GtSyK3jqwuV56BMxj3N5i4gWxE4zqtfeYB6WqYteUMlXeUoYfO9LwLIOpPB0UGeXgm89RnmZzwi+5aXiApaddY3c7LFChXfjmBwUGwwCoNtV78VHqriOqlXifOvG1T0CAt5zlFO4LhAA6wVJSoX1rjuT3R287I5KRQrFhbQcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDe/laQT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I8RX4d7lVXcBB99oLtVGLtpFTgQupaJZ4fcaVqPl89ztt/A+EaFCxZ5jJQdKXRzHX/1idKg8pZxnqEyM5rxsnJ/xh+nBTWFXdh3C2uNI9wa0sp5KqwB7w004fdYTGURGyvtCmdffap4+cIq3BBFaayHibJKxF5HukNdeINkSzhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qg7nO2YY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDe/laQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1EF1F00893;
-	Sat, 30 May 2026 18:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qg7nO2YY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A221F00893;
+	Sat, 30 May 2026 18:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166924;
-	bh=xD/tNhQ0cNs9J2vC/l6KUe5ZI77jvLYU8GObShNkuis=;
+	s=korg; t=1780166927;
+	bh=rNl6pBTLmTazntDWs6Au4EJlP0qkLGfz6aYxfM4W210=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aDe/laQTDMF03dSkYERl8eD+K2JsKQXdVYWG6TcHuehLSB8HyWp0IHnFT1kfOe67V
-	 6bFI/lYv848iL5BSQPsBYonks72rslReXoqxbRNi7thQNeoifCi/x9yCQmMPXDM2sO
-	 NTORk2xF7/XCcjkFQsvBYE35ioP9h0U6AjdrAI60=
+	b=qg7nO2YYLLh1Rl2xdxGV5O/CiZ0Xxmvsn8scwLCvt+FMudgdyGhP4Vg3obkP5/flI
+	 XAU7NDOhJfo0sXcCjOTuNxZuDZ5w1ecnKP9mzbkxvaGwmM3HC91qv73q864vDi0MqC
+	 KHaMBIQ2Iry7WUIroGXZDNHutgDH3B1OI4ZEQFCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 473/589] net: sched: sch_netem: Refactor code in 4-state loss generator
-Date: Sat, 30 May 2026 18:05:54 +0200
-Message-ID: <20260530160237.081970411@linuxfoundation.org>
+	Zoran Ilievski <goodboy@rexbytes.com>,
+	Sukhdeep Singh <sukhdeeps@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 506/589] net: atlantic: preserve PCI wake-from-D3 on shutdown when WOL enabled
+Date: Sat, 30 May 2026 18:06:27 +0200
+Message-ID: <20260530160237.900959359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,89 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Zoran Ilievski <goodboy@rexbytes.com>
 
-[ Upstream commit cb3ef7b00042479277cda7871d899378ad91f081 ]
+commit 2c308cf34284420963607d677d576a2b4124d8bd upstream.
 
-Fixed comments to match description with variable names and
-refactored code to match the convention as per [1].
+The shutdown handler aq_pci_shutdown() unconditionally calls
+pci_wake_from_d3(pdev, false), clearing the PCI PME_En bit even when
+wake-on-LAN has been configured. While aq_nic_shutdown() correctly
+programs the NIC firmware via aq_nic_set_power() to listen for magic
+packets, the PCI subsystem will not propagate the resulting PME wake
+event from D3, so the system never wakes after poweroff.
 
-To match the convention mapping is done as follows:
-State 3 - LOST_IN_BURST_PERIOD
-State 4 - LOST_IN_GAP_PERIOD
+WOL from suspend (S3) is unaffected because aq_suspend_common() does
+not touch pci_wake_from_d3() and relies on the PM core's wake
+configuration via device_may_wakeup().
 
-[1] S. Salsano, F. Ludovici, A. Ordine, "Definition of a general
-and intuitive loss model for packet networks and its implementation
-in the Netem module in the Linux kernel"
+This affects all atlantic-supported NICs (AQC107/108/111/112/113);
+users have reported that WOL works if the atlantic driver is never
+loaded, but breaks once it has run its shutdown path.
 
-Fixes: a6e2fe17eba4 ("sch_netem: replace magic numbers with enumerate")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 732b463449fd ("net/sched: netem: fix probability gaps in 4-state loss model")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Pass the configured WOL state to pci_wake_from_d3() instead of a
+literal false, so the PCI PME_En bit is preserved when the user has
+armed WOL via ethtool.
+
+Fixes: 90869ddfefeb ("net: aquantia: Implement pci shutdown callback")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zoran Ilievski <goodboy@rexbytes.com>
+Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
+Link: https://patch.msgid.link/20260511064002.1857-1-goodboy@rexbytes.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 951156d7e5485..cbd7f3032fccf 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -210,17 +210,17 @@ static bool loss_4state(struct netem_sched_data *q)
- 	 * next state and if the next packet has to be transmitted or lost.
- 	 * The four states correspond to:
- 	 *   TX_IN_GAP_PERIOD => successfully transmitted packets within a gap period
--	 *   LOST_IN_BURST_PERIOD => isolated losses within a gap period
--	 *   LOST_IN_GAP_PERIOD => lost packets within a burst period
--	 *   TX_IN_GAP_PERIOD => successfully transmitted packets within a burst period
-+	 *   LOST_IN_GAP_PERIOD => isolated losses within a gap period
-+	 *   LOST_IN_BURST_PERIOD => lost packets within a burst period
-+	 *   TX_IN_BURST_PERIOD => successfully transmitted packets within a burst period
- 	 */
- 	switch (clg->state) {
- 	case TX_IN_GAP_PERIOD:
- 		if (rnd < clg->a4) {
--			clg->state = LOST_IN_BURST_PERIOD;
-+			clg->state = LOST_IN_GAP_PERIOD;
- 			return true;
- 		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		} else if (clg->a1 + clg->a4 < rnd) {
- 			clg->state = TX_IN_GAP_PERIOD;
-@@ -229,24 +229,24 @@ static bool loss_4state(struct netem_sched_data *q)
- 		break;
- 	case TX_IN_BURST_PERIOD:
- 		if (rnd < clg->a5) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		} else {
- 			clg->state = TX_IN_BURST_PERIOD;
- 		}
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -380,7 +380,7 @@ static void aq_pci_shutdown(struct pci_d
+ 	pci_disable_device(pdev);
  
- 		break;
--	case LOST_IN_GAP_PERIOD:
-+	case LOST_IN_BURST_PERIOD:
- 		if (rnd < clg->a3)
- 			clg->state = TX_IN_BURST_PERIOD;
- 		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
- 			clg->state = TX_IN_GAP_PERIOD;
- 		} else if (clg->a2 + clg->a3 < rnd) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		}
- 		break;
--	case LOST_IN_BURST_PERIOD:
-+	case LOST_IN_GAP_PERIOD:
- 		clg->state = TX_IN_GAP_PERIOD;
- 		break;
+ 	if (system_state == SYSTEM_POWER_OFF) {
+-		pci_wake_from_d3(pdev, false);
++		pci_wake_from_d3(pdev, self->aq_hw->aq_nic_cfg->wol);
+ 		pci_set_power_state(pdev, PCI_D3hot);
  	}
--- 
-2.53.0
-
+ }
 
 
