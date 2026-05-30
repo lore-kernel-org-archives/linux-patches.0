@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C62329E79;
-	Sat, 30 May 2026 18:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD7639478D;
+	Sat, 30 May 2026 18:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166106; cv=none; b=pkyjIuZeYQLzOjfyycZNj89rz4fZwGg3Pgm9q027oB4B5Es1uVYBv41ijJ1Ab0PLQwS+XLCJiaPC2pWZS1YWYE7vReOmjcJY6dJhuAncZVUMgVlocuhEaeEqeBK3BgtHA4FcW+AdgCEOV9FYvX7hJavoMxtQeqPMUmyN5fuxCQc=
+	t=1780166110; cv=none; b=IGxcCOIssrEkUrbhLqUAYQ99mLfNftxaezox0BZDuG8N7GP3VttRO+d1k/ARQrTALnPAcNDzqBQtmll0YJIicYbMAqaFzJD1CdazOSoC/UWzOtL5j/0y9C6mBXiva6e/pogxXP9RA9mb9VYSDfxxAGWfnzKViKH3uSfmyheRo1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166106; c=relaxed/simple;
-	bh=VjmjjAI+i78YksGawcCa/6kc5950uHPpGejyDhBDFvU=;
+	s=arc-20240116; t=1780166110; c=relaxed/simple;
+	bh=StJnOftMZqMech7GgFjDUfdNW9/BASmXun0YYrLmh3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qay54SFxWFuvQNYQz/3WZ2p1bouXfawgL/CenTamV4icOw8iBaEsbxqlHOvEtOq7I67/G8YTYaA3Y7oOLwFO+a1QR+1ob+iSMdZnuNSBZrhnmUCmVtdNYFqqU2wbIB9jNXKHPdr4d895dGk0fF+EA5FqwkU/f0L9h+KSkmzI1vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USS8cszW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QBM/ZYwyKcX/8RzD/Sk1U979U6XloV6+8zzXOmyVDiybjaPNMYAAaj2FxYGIX450e1qFNdqrecdHsxrpYqwgLZ7KUNQY4mvRyLmWLHTyMIaX/Bw6MeGfNu/Y/3dxtGdXHAWLfjCl+VuE0Pkxt1SwVPEUYq0qCuNILfCd2nn2tdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1R2ha4ax; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USS8cszW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EC01F00893;
-	Sat, 30 May 2026 18:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R2ha4ax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6DF1F00893;
+	Sat, 30 May 2026 18:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166105;
-	bh=JVAEPmWOYz4xO2WBFBwEIUmUciCnMRNRouTsDl7UNmM=;
+	s=korg; t=1780166108;
+	bh=azqkgn3KgdlUA9UX8ozhtvWH99OEKwd97Q3jFlEubNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USS8cszWKp0oyWbYFeSdaAlxi3q5GJvtreOHU4SdviZjvWUhuMKSN2sMsqjv692Rx
-	 RpkCCiGQQuj5PBN0B1IvQyijf+XGcswzFgkH2OYcVeCVQyER44zK0BkDR535FVQOhd
-	 g5EHjx9fYK+gzfYxEpXMxXUMaeNplLSK4VBTplwQ=
+	b=1R2ha4axO4WFl90jcvj0cmzEIS0MX4jVMf0WKTODIeXS5Iw1rusEQ/UJ4ODaMzv4d
+	 I1nMu0xF0cIw9LNqgXqOoEWXXa/uFjqblUvwG70Y7VeDRGD4Keh9JuzHDVghuriwu9
+	 r8ZT4uGyGKcXaKqpqgh5rndKA8QAUe8CmbRR49IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>
-Subject: [PATCH 5.10 274/589] drm/gem: Fix inconsistent plane dimension calculation in drm_gem_fb_init_with_funcs()
-Date: Sat, 30 May 2026 18:02:35 +0200
-Message-ID: <20260530160232.175451425@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 275/589] drm/radeon: add missing revision check for CI
+Date: Sat, 30 May 2026 18:02:36 +0200
+Message-ID: <20260530160232.199708002@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -44,62 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 3d4c2268bd7243c3780fe32bf24ff876da272acf upstream.
+commit 17223816498f7b117d138d18eb0eba63604dc74e upstream.
 
-drm_gem_fb_init_with_funcs() computes sub-sampled plane dimensions
-using plain integer division:
+The memory level workarounds only apply to revision 0 SKUs.
 
-  unsigned int width  = mode_cmd->width  / (i ? info->hsub : 1);
-  unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
-
-However, the ioctl-level framebuffer_check() in drm_framebuffer.c uses
-drm_format_info_plane_width/height() which round up dimensions via
-DIV_ROUND_UP(). This inconsistency corrupts the subsequent GEM object
-size check for certain pixel format and dimension combinations.
-
-For example, with NV12 (vsub=2) and a 1-pixel-tall framebuffer the
-GEM size validation path sees height=0 instead of height=1. The
-expression (height - 1) then wraps to UINT_MAX as an unsigned int,
-causing min_size to overflow and wrap back to a small value. A tiny
-GEM object therefore passes the size guard, yet when the GPU accesses
-the chroma plane it will read or write memory beyond the object's
-bounds.
-
-Fix by replacing the open-coded divisions with drm_format_info_plane_width()
-and drm_format_info_plane_height(), which use DIV_ROUND_UP() and match
-the calculation already used in framebuffer_check().
-
-Fixes: 4c3dbb2c312c ("drm: Add GEM backed framebuffer library")
-Cc: stable@vger.kernel.org # v4.14+
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260420013637.457751-1-ashutoshdesai993@gmail.com
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
+Fixes: 127e056e2a82 ("drm/radeon: fix mclk vddc configuration for cards for hawaii")
+Fixes: 21b8a369046f ("drm/radeon: fix dram timing for certain hawaii boards")
+Fixes: 90b2fee35cb9 ("drm/radeon: fix dpm mc init for certain hawaii boards")
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4d8dcc14311515077062b5740f39f427075de5c9)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_framebuffer_helper.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/ci_dpm.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
-+++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
-@@ -159,8 +159,8 @@ int drm_gem_fb_init_with_funcs(struct dr
- 		return -EINVAL;
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -2490,7 +2490,8 @@ static void ci_register_patching_mc_arb(
  
- 	for (i = 0; i < info->num_planes; i++) {
--		unsigned int width = mode_cmd->width / (i ? info->hsub : 1);
--		unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
-+		unsigned int width = drm_format_info_plane_width(info, mode_cmd->width, i);
-+		unsigned int height = drm_format_info_plane_height(info, mode_cmd->height, i);
- 		unsigned int min_size;
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		if ((memory_clock > 100000) && (memory_clock <= 125000)) {
+ 			tmp2 = (((0x31 * engine_clock) / 125000) - 1) & 0xff;
+ 			*dram_timimg2 &= ~0x00ff0000;
+@@ -3331,7 +3332,8 @@ static int ci_populate_all_memory_levels
+ 	pi->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
  
- 		objs[i] = drm_gem_object_lookup(file, mode_cmd->handles[i]);
+ 	if ((dpm_table->mclk_table.count >= 2) &&
+-	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1))) {
++	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		pi->smc_state_table.MemoryLevel[1].MinVddc =
+ 			pi->smc_state_table.MemoryLevel[0].MinVddc;
+ 		pi->smc_state_table.MemoryLevel[1].MinVddcPhases =
+@@ -4528,7 +4530,8 @@ static int ci_register_patching_mc_seq(s
+ 
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		for (i = 0; i < table->last; i++) {
+ 			if (table->last >= SMU7_DISCRETE_MC_REGISTER_ARRAY_SIZE)
+ 				return -EINVAL;
 
 
