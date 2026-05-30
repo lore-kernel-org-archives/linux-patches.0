@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE122EF652;
-	Sat, 30 May 2026 18:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F18313E34;
+	Sat, 30 May 2026 18:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166093; cv=none; b=cffr4Hv05BkzJLHxCgZ6b8fOBkuU7BLkHPlfRuKOFiQRVX4ie4tHvLdR14fpGsCAcDhG4l2I8amULXjLlnSvAUsfHRSZlPC7H/LrFFL34+bZQtkw/CWQCtvBgZ+9jLjGji3XIE9k4TvxC0ieOOnNntd5Yxt48wwSLNV28foqISc=
+	t=1780166096; cv=none; b=R3NLoNPEiVM4WETGsRGKBH8s+rhOIOVgzMThVxfpC/0dxHqR5OeKmqGAyoxJ4jm9jT2aqSqAm1szD/lzUZ5mNLmxT5htILebWVCDeG+dXRA+7xHX1KsrZsJgFknR0ziS0VmAQIoJLZ38pWEKHtr4blIWnEEUF7detdrY6pyptso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166093; c=relaxed/simple;
-	bh=xz8KBB3laHtWQ8zripPPa656JX4Hy/YN/1X5vpi9Ev0=;
+	s=arc-20240116; t=1780166096; c=relaxed/simple;
+	bh=n4L4sQuFvfrWIE1Tgw/SU1lNHqDJWs3TuWM2wH2m2Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbPo0W60GTqvGOSolDm3SoSxuw5HMBCU0fqo1H9Bh+Eal384K1VPZrQ6UD6in9FwlROfpFCmg3ihYKST4pq31yLETHUhhNtMeJ7NNyq9gcyxlFx0tKz6iHFvSpNG9/T/VA37zI2qHselkPIU+PkaPf4EaryRFqE4/lmU4a9/J4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9bm2ncl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e3W3y6oHHR+YT+O+mrUzm8fqR/V+SKAnaDuOR4fMBqNmjX6PuCOHyBSDHFgip0k996V3oFUaT7nEv+LXdfacYFVmP6utHXl7LZqSuGCG9NOil4Pg34lgND5p879hXIpXdWePNT4tsf4d6ShRldoH3lHc7l//VDdTS5EsecWNWh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dd0672A/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9bm2ncl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804DE1F00893;
-	Sat, 30 May 2026 18:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dd0672A/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA32F1F00893;
+	Sat, 30 May 2026 18:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166092;
-	bh=wJZoLATgYQ/Iuq8aJTBzz5Ah8Rp+MhAj6pYLqs51guw=;
+	s=korg; t=1780166095;
+	bh=UuRAdDo0/Y2s2+8MQvRob9mpDWWMOEfYcLgrzb27PoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G9bm2ncluTq5OvSZBqNPLkFDZ+Sye7fb9qvPyltAO0RL4pZ67WHFCRsYjgIveZ/3K
-	 sJYbNVjj5hyidM6wUiPueMKaYezItiDxSG1YsG4agB0voyIczB2YIw8rYFbw2zXpmW
-	 8oJXLu+kxKG+2YKvTLKpuppUxEVfEn4wSoxT3N88=
+	b=Dd0672A/T4QXsAMnhTwJsyVG/46Wvzf6PZ/5Gp1D3ctlT+C0jRD8oS4eGuximqK5O
+	 AIVIRvMeqEpIstZ5fXmLzl0UCZrfliXqX0RgbQiSqvX+2N0LthTazGxhtDc80gN3Bu
+	 ulXK4+APZwY6mp7t5LfuTYGuJ+gu8KT5OZ4PlpQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuanhong Guo <gch981213@gmail.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 270/589] spi: mtk-nor: fix controller deregistration
-Date: Sat, 30 May 2026 18:02:31 +0200
-Message-ID: <20260530160232.079658724@linuxfoundation.org>
+Subject: [PATCH 5.10 271/589] spi: imx: fix runtime pm leak on probe deferral
+Date: Sat, 30 May 2026 18:02:32 +0200
+Message-ID: <20260530160232.103493809@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,41 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 76336f24934621db286cabb20b483773ee01dcaa upstream.
+commit a1d50a37d3b1df84f536a982f692371039df4a48 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Make sure to balance the runtime PM usage count before returning on
+probe failure (e.g. probe deferral) so that the controller can be
+suspended when a driver is later bound.
 
-Fixes: 881d1ee9fe81 ("spi: add support for mediatek spi-nor controller")
-Cc: stable@vger.kernel.org	# 5.7
-Cc: Chuanhong Guo <gch981213@gmail.com>
+Fixes: 43b6bf406cd0 ("spi: imx: fix runtime pm support for !CONFIG_PM")
+Cc: stable@vger.kernel.org	# 5.10
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-3-johan@kernel.org
+Link: https://patch.msgid.link/20260421125632.1537235-1-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mtk-nor.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi-mtk-nor.c
-+++ b/drivers/spi/spi-mtk-nor.c
-@@ -835,7 +835,7 @@ static int mtk_nor_probe(struct platform
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_get_noresume(&pdev->dev);
- 
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret < 0)
- 		goto err_probe;
- 
-@@ -861,6 +861,8 @@ static int mtk_nor_remove(struct platfor
- 	struct spi_controller *ctlr = dev_get_drvdata(&pdev->dev);
- 	struct mtk_nor *sp = spi_controller_get_devdata(ctlr);
- 
-+	spi_unregister_controller(ctlr);
-+
- 	pm_runtime_disable(&pdev->dev);
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1764,6 +1764,7 @@ out_bitbang_start:
+ out_runtime_pm_put:
+ 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
+ 	pm_runtime_disable(spi_imx->dev);
++	pm_runtime_put_noidle(spi_imx->dev);
  	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 
+ 	clk_disable_unprepare(spi_imx->clk_ipg);
 
 
