@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC9030E0DC;
-	Sat, 30 May 2026 17:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC6A352027;
+	Sat, 30 May 2026 17:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163862; cv=none; b=R7a0tz4RNzq7AF9F9eoWZvW3bG34wYZ9a/Xet2Lzr3LEj/tPLqigDKIP7cTJJxbOEYDL6F1c3GUrCbwtACNyFGl45hcGlR8fs1tvbikDPS28ETrldDmD8CGOrVMsKwmUNZyxKRwlmiEOLlbVSowW0azjevVYIpyoAs/Ry+RCrGo=
+	t=1780163866; cv=none; b=mE8RT6vnCXD/mdCOCpvl1aG7SmAGBZDy8duqpAXEpzPxTDGWmxiq+ZzO07/yBHnTedZo8SwcnJWH0hZzCzzeDs7HPLhYxa7NFjSErw6gnHBJNlaAZZ+9OsKZEr4lMt9WbFxcv9sZ7OqcTNVahhw4z7mRJvVIgLMXYRHT0El89yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163862; c=relaxed/simple;
-	bh=LztCx2l3P/J1Mmo/p0uP/1Q5JjCxMA0l1a1V57k+V9g=;
+	s=arc-20240116; t=1780163866; c=relaxed/simple;
+	bh=FyxGDZ8Rc9LZrq2vLmxS4JQ/5QOygSVjz5BVUvkBb70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6TL2TjvwnVfdtBEXGKwWXnGfu8B1tRzqRSVjZu/TuT1Vtu5hKWvcrJzvrRLywcoJhQ/yWxTMqIa7wlKjG+nz1DEaS/ATRmlpHa++fAUDwe+IRPzFP8rMy7/uP8x5QozC1EoLA1FAxWMNOmQC+6wmJxLZkSkXthZQPOnh1v2Vag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1InHqGnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=preur1ez0YpwxSXc7+MyydmahjU/uGdFnj8XXhfz5sLP720+92e+OYVmVX9AExv7cjMYpD6ZeLX4SwayMTs3qFrISETNJQtrfRWAvi46yqnppve8UAATcSp4ywJ4LcLH9ZBEupgsuycJhYGxrvQlnhiYhsZQRvMFvwLiaenA+lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwydmZDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1InHqGnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1151C1F00893;
-	Sat, 30 May 2026 17:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwydmZDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B03A1F00893;
+	Sat, 30 May 2026 17:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163861;
-	bh=AEVQCHLetR8H8cCBpzk2zDuHYI8jBNiKbKRIyEz0R+U=;
+	s=korg; t=1780163865;
+	bh=nALtJp+MFsfwtGd4K4Gz8v5URs2FC72knv/Q1D5jaYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1InHqGnfrmTj2mx/i7I117M1h/pz6eH+jrchLdLNtFXHhirjqKJWJe/HCHeOiPxjV
-	 MKf/HT5mONtEJo0OgpDHurUDhbsCPfvLGqY20L8GnxCb0ac57ct46P5nbGBfpdTiGN
-	 fjytAK4iS8exExJF4oPrhH/hwck6gtse2T8p2ZvU=
+	b=CwydmZDj5bOht1fx8JQDxu08DW5/ZEQqkrBcdJoSclqlJYIPsPO+wfDp/X5flKlRo
+	 aNUBHRyNyGRKL0H+1mwLABhQSd6EF0p7T+cxZWtHIkrUzu3/dcZMPHmE590JVx29QT
+	 pVXQCe+v07UnOw7/1MMqIBKTIC2jo2Y4LXBhG4Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 384/776] bcache: fix uninitialized closure object
-Date: Sat, 30 May 2026 18:01:38 +0200
-Message-ID: <20260530160250.434988050@linuxfoundation.org>
+	Hyungjung Joo <jhj140711@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 385/776] fs/omfs: reject s_sys_blocksize smaller than OMFS_DIR_START
+Date: Sat, 30 May 2026 18:01:39 +0200
+Message-ID: <20260530160250.460095922@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,42 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: HyungJung Joo <jhj140711@gmail.com>
 
-commit 20a8e451ec1c7e99060b1bbaaad03ce88c39ddb8 upstream.
+[ Upstream commit 0621c385fda1376e967f37ccd534c26c3e511d14 ]
 
-In the previous patch ("bcache: fix cached_dev.sb_bio use-after-free and
-crash"), we adopted a simple modification suggestion from AI to fix the
-use-after-free.
+omfs_fill_super() rejects oversized s_sys_blocksize values (> PAGE_SIZE),
+but it does not reject values smaller than OMFS_DIR_START (0x1b8 = 440).
 
-But in actual testing, we found an extreme case where the device is
-stopped before calling bch_write_bdev_super().
+Later, omfs_make_empty() uses
 
-At this point, struct closure sb_write has not been initialized yet.
-For this patch, we ensure that sb_bio has been completed via
-sb_write_mutex.
+    sbi->s_sys_blocksize - OMFS_DIR_START
 
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Signed-off-by: Coly Li <colyli@fnnas.com>
-Link: https://patch.msgid.link/20260403042135.2221247-1-colyli@fnnas.com
-Fixes: fec114a98b87 ("bcache: fix cached_dev.sb_bio use-after-free and crash")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+as the length argument to memset().  Since s_sys_blocksize is u32,
+a crafted filesystem image with s_sys_blocksize < OMFS_DIR_START causes
+an unsigned underflow there, wrapping to a value near 2^32.  That drives
+a ~4 GiB memset() from bh->b_data + OMFS_DIR_START and overwrites kernel
+memory far beyond the backing block buffer.
+
+Add the corresponding lower-bound check alongside the existing upper-bound
+check in omfs_fill_super(), so that malformed images are rejected during
+superblock validation before any filesystem data is processed.
+
+Fixes: a3ab7155ea21 ("omfs: add directory routines")
+Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
+Link: https://patch.msgid.link/20260317054827.1822061-1-jhj140711@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/omfs/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1382,7 +1382,8 @@ static void cached_dev_free(struct closu
- 	 * The sb_bio is embedded in struct cached_dev, so we must
- 	 * ensure no I/O is in progress.
- 	 */
--	closure_sync(&dc->sb_write);
-+	down(&dc->sb_write_mutex);
-+	up(&dc->sb_write_mutex);
+diff --git a/fs/omfs/inode.c b/fs/omfs/inode.c
+index 2a0e83236c011..9773846daa4bc 100644
+--- a/fs/omfs/inode.c
++++ b/fs/omfs/inode.c
+@@ -515,6 +515,12 @@ static int omfs_fill_super(struct super_block *sb, void *data, int silent)
+ 		goto out_brelse_bh;
+ 	}
  
- 	if (dc->sb_disk)
- 		put_page(virt_to_page(dc->sb_disk));
++	if (sbi->s_sys_blocksize < OMFS_DIR_START) {
++		printk(KERN_ERR "omfs: sysblock size (%d) is too small\n",
++			sbi->s_sys_blocksize);
++		goto out_brelse_bh;
++	}
++
+ 	if (sbi->s_blocksize < sbi->s_sys_blocksize ||
+ 	    sbi->s_blocksize > OMFS_MAX_BLOCK_SIZE) {
+ 		printk(KERN_ERR "omfs: block size (%d) is out of range\n",
+-- 
+2.53.0
+
 
 
