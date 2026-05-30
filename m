@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43782F8EB5;
-	Sat, 30 May 2026 16:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E042F8EB5;
+	Sat, 30 May 2026 16:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159223; cv=none; b=YS7hlO6BoxIICf9VpTPxTuZiFAzRWOCkJWiseqhZohHxd6k/Ntzmf/UfaJ+ATwXJ9NVPNEJm5u5Em0Zkv6MJKbVN5mU1626baKeDfZJW4PifSCfi0hGlraIBHG6svcT2gKupwo4n8NLHmwn7MjJXb7gDXJKSMMiCwjCVkC2JutY=
+	t=1780159238; cv=none; b=fblk6BbQd9o/WAOBCaUP4l5RVd2TerUKeQgtHzxDl6Xyvg8H2XuDhnK751GXGcKHjEgXMyI3VMIDjwVAo5cPkSU395aiLG1xgpR4qkxuwcVZgbz8JxkK9DGet9lJ66G2bMpyM87/P4B6j+BBiwtRTyOp0vGwHn6kTYLSUTs1Xvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159223; c=relaxed/simple;
-	bh=tbLLDzcH4iZWiKr7WwcyI8gKyYcIp9u/DvO1rf1TJ7w=;
+	s=arc-20240116; t=1780159238; c=relaxed/simple;
+	bh=fcN116/G3648b16ILvnjcB/M+amZRbw71cX+w2LaI/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOXJ+PE2EfQBJ7Mp9Fcwu+ZG5RUKufhb1Ghh5f9/oCow/5B2dfMNyGmy3aDv8Sg3zNnrtxj7GcqHImvJF7ol6a8M33TAfKaqVkWpSz6Z6IiZj5empM/3FNYCXU/kWmiMrUB2Xk1eB4VHQqdBP6R1nybrZhTBewCjPrdxLs3crHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCjpo4hx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OYAddp4gvkay1OQewxQGz2CkpfjssCwFigqFyTS/HbLznR9/F44q1Qk0vhiehFOce/uoR5IncQO2hiD6aLGrG1cn15f5zKmKqF+hZoU6esezbgR5xNeHE2twEBTT4VJt3nT2M5TYV23iJ4KrfJ47q7aOXFc92KoeoZRUiMXSC4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF3707r4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCjpo4hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AA61F00893;
-	Sat, 30 May 2026 16:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF3707r4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E60A1F00893;
+	Sat, 30 May 2026 16:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159222;
-	bh=zOAfvMZN/xvD8QKSTQLhy2ZzAlUVcHhPPVkTMYkwTMk=;
+	s=korg; t=1780159237;
+	bh=VY6cWUKIwpqcLG1VxgIV/jtsnrAj9c8hCCxZTdloJA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCjpo4hx7mMlkqrZKipihy9yn1jnA9YvoYQ+65s63IpDlnM+ohbm3rclo63J0ThZD
-	 xlqcE2pjS9D+DqTCm8fm4dYiFkrwxgvy3xOabN3fVfN/AaPG4IZanvgj7yGqrfBnHE
-	 6WMld380H2NBsY7ogxI+xPC0MOp0UeVAXBR1v1pU=
+	b=oF3707r41ntW6/SKyZ4WM0sA5TVPXLVzdyQD2rhnL+qYMrWB9KtOrZvWpYj47AzxC
+	 1j65zAPSBYKYshO/q5xhXL7M4XmkkZ88LtcY8fEs9rN6gU6/ESClhqfKBe1AFclDXn
+	 WS/l3Epmtq34kvTqztEFOkk1iVWlcy4Oy82RMnmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/969] Revert "net: ethernet: xscale: Check for PTP support properly"
-Date: Sat, 30 May 2026 17:53:54 +0200
-Message-ID: <20260530160303.351568961@linuxfoundation.org>
+Subject: [PATCH 6.1 111/969] Revert "net: ixp4xx_eth: convert to ndo_hwtstamp_get() and ndo_hwtstamp_set()"
+Date: Sat, 30 May 2026 17:53:55 +0200
+Message-ID: <20260530160303.378764110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -49,49 +49,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 5195b10c34b8993194ad12ad7d8f54d861be084b.
+This reverts commit a94d5447f6bf827bc29be2520ca636685bbc29e6.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xscale/ixp4xx_eth.c | 5 ++++-
- drivers/net/ethernet/xscale/ptp_ixp46x.c | 3 ---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/xscale/ixp4xx_eth.c | 61 +++++++++++++-----------
+ 1 file changed, 32 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/ethernet/xscale/ixp4xx_eth.c b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-index aa6d30dd35c38..a5e03e66cfd38 100644
+index a5e03e66cfd38..3b0c5f177447b 100644
 --- a/drivers/net/ethernet/xscale/ixp4xx_eth.c
 +++ b/drivers/net/ethernet/xscale/ixp4xx_eth.c
-@@ -395,12 +395,15 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
+@@ -386,20 +386,16 @@ static void ixp_tx_timestamp(struct port *port, struct sk_buff *skb)
+ 	__raw_writel(TX_SNAPSHOT_LOCKED, &regs->channel[ch].ch_event);
+ }
+ 
+-static int ixp4xx_hwtstamp_set(struct net_device *netdev,
+-			       struct kernel_hwtstamp_config *cfg,
+-			       struct netlink_ext_ack *extack)
++static int hwtstamp_set(struct net_device *netdev, struct ifreq *ifr)
+ {
++	struct hwtstamp_config cfg;
+ 	struct ixp46x_ts_regs *regs;
+ 	struct port *port = netdev_priv(netdev);
  	int ret;
  	int ch;
  
-+	if (!cpu_is_ixp46x())
-+		return -EOPNOTSUPP;
-+
- 	if (!netif_running(netdev))
- 		return -EINVAL;
+-	if (!cpu_is_ixp46x())
+-		return -EOPNOTSUPP;
+-
+-	if (!netif_running(netdev))
+-		return -EINVAL;
++	if (copy_from_user(&cfg, ifr->ifr_data, sizeof(cfg)))
++		return -EFAULT;
  
  	ret = ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
  	if (ret)
--		return -EOPNOTSUPP;
-+		return ret;
- 
+@@ -408,10 +404,10 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
  	ch = PORT2CHANNEL(port);
  	regs = port->timesync_regs;
-diff --git a/drivers/net/ethernet/xscale/ptp_ixp46x.c b/drivers/net/ethernet/xscale/ptp_ixp46x.c
-index b8953745a9f2e..9abbdb71e629f 100644
---- a/drivers/net/ethernet/xscale/ptp_ixp46x.c
-+++ b/drivers/net/ethernet/xscale/ptp_ixp46x.c
-@@ -243,9 +243,6 @@ static struct ixp_clock ixp_clock;
  
- int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc_index)
+-	if (cfg->tx_type != HWTSTAMP_TX_OFF && cfg->tx_type != HWTSTAMP_TX_ON)
++	if (cfg.tx_type != HWTSTAMP_TX_OFF && cfg.tx_type != HWTSTAMP_TX_ON)
+ 		return -ERANGE;
+ 
+-	switch (cfg->rx_filter) {
++	switch (cfg.rx_filter) {
+ 	case HWTSTAMP_FILTER_NONE:
+ 		port->hwts_rx_en = 0;
+ 		break;
+@@ -427,45 +423,39 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
+ 		return -ERANGE;
+ 	}
+ 
+-	port->hwts_tx_en = cfg->tx_type == HWTSTAMP_TX_ON;
++	port->hwts_tx_en = cfg.tx_type == HWTSTAMP_TX_ON;
+ 
+ 	/* Clear out any old time stamps. */
+ 	__raw_writel(TX_SNAPSHOT_LOCKED | RX_SNAPSHOT_LOCKED,
+ 		     &regs->channel[ch].ch_event);
+ 
+-	return 0;
++	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
+ }
+ 
+-static int ixp4xx_hwtstamp_get(struct net_device *netdev,
+-			       struct kernel_hwtstamp_config *cfg)
++static int hwtstamp_get(struct net_device *netdev, struct ifreq *ifr)
  {
--	if (!cpu_is_ixp46x())
--		return -ENODEV;
--
- 	*regs = ixp_clock.regs;
- 	*phc_index = ptp_clock_index(ixp_clock.ptp_clock);
++	struct hwtstamp_config cfg;
+ 	struct port *port = netdev_priv(netdev);
  
+-	if (!cpu_is_ixp46x())
+-		return -EOPNOTSUPP;
+-
+-	if (!netif_running(netdev))
+-		return -EINVAL;
+-
+-	cfg->flags = 0;
+-	cfg->tx_type = port->hwts_tx_en ? HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
++	cfg.flags = 0;
++	cfg.tx_type = port->hwts_tx_en ? HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
+ 
+ 	switch (port->hwts_rx_en) {
+ 	case 0:
+-		cfg->rx_filter = HWTSTAMP_FILTER_NONE;
++		cfg.rx_filter = HWTSTAMP_FILTER_NONE;
+ 		break;
+ 	case PTP_SLAVE_MODE:
+-		cfg->rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_SYNC;
++		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_SYNC;
+ 		break;
+ 	case PTP_MASTER_MODE:
+-		cfg->rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ;
++		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ;
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(1);
+ 		return -ERANGE;
+ 	}
+ 
+-	return 0;
++	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
+ }
+ 
+ static int ixp4xx_mdio_cmd(struct mii_bus *bus, int phy_id, int location,
+@@ -987,6 +977,21 @@ static void eth_set_mcast_list(struct net_device *dev)
+ }
+ 
+ 
++static int eth_ioctl(struct net_device *dev, struct ifreq *req, int cmd)
++{
++	if (!netif_running(dev))
++		return -EINVAL;
++
++	if (cpu_is_ixp46x()) {
++		if (cmd == SIOCSHWTSTAMP)
++			return hwtstamp_set(dev, req);
++		if (cmd == SIOCGHWTSTAMP)
++			return hwtstamp_get(dev, req);
++	}
++
++	return phy_mii_ioctl(dev->phydev, req, cmd);
++}
++
+ /* ethtool support */
+ 
+ static void ixp4xx_get_drvinfo(struct net_device *dev,
+@@ -1371,11 +1376,9 @@ static const struct net_device_ops ixp4xx_netdev_ops = {
+ 	.ndo_stop = eth_close,
+ 	.ndo_start_xmit = eth_xmit,
+ 	.ndo_set_rx_mode = eth_set_mcast_list,
+-	.ndo_eth_ioctl = phy_do_ioctl_running,
++	.ndo_eth_ioctl = eth_ioctl,
+ 	.ndo_set_mac_address = eth_mac_addr,
+ 	.ndo_validate_addr = eth_validate_addr,
+-	.ndo_hwtstamp_get = ixp4xx_hwtstamp_get,
+-	.ndo_hwtstamp_set = ixp4xx_hwtstamp_set,
+ };
+ 
+ static struct eth_plat_info *ixp4xx_of_get_platdata(struct device *dev)
 -- 
 2.53.0
 
