@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AD1137750;
-	Sat, 30 May 2026 18:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2351A9F90;
+	Sat, 30 May 2026 18:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166905; cv=none; b=XAmyOXIg4dG9JPZ4beEBM1fxGSEJfyI6yOx8LhQXGpwgmiNhQu+fM7aj+uJOjOmjuISITOrdkfYYfud6QCqvGdVCSzMpfEP6GYSGsf2fU24gfLjuHcq+Upj9fZ9pJbFvQfv4l/qEinNMwhc9Z+cvSwRDvd1Dc7OLxAp0tp1ATCc=
+	t=1780166908; cv=none; b=Bvk09Fh/19oR0rB0lT2bd/Vx/Bg1YadJ0XSB0cKfbDwB7AHk5dYL8M4fBa5F7AeIBuOTnDDvL+ZqPAP2B4C+gUFHbV8WanYD3QndunCLk0XZ4p/OA25ayHMAH7HPzqvtFaj1U0dzaQRXPJnhfHQ4BEzfN6cHGNtIW0PuCWX07+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166905; c=relaxed/simple;
-	bh=JvJnreCv/txBqyxPLnd0lT0uDgm+iju/bhLVWNUj3xk=;
+	s=arc-20240116; t=1780166908; c=relaxed/simple;
+	bh=KAMSRPS+2envXYAO3notUJw70ZLBgV/38CsSKKvybxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhusioLS5ASaz3EZIZNmtpy7kZt/69j2DigB1FwgyF5O9e0OC8mVKOPyYsLbtTxwt0eTM/K6mI0ktOL7AcOl3eO919q44XeJxARzecaw3umJ+ZYec0QEcnFImgA/B3p0BwE2w0Cw4UYF9x6YkfZgBoSQIam2iAV0W+tHT+IgTS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZqAgRsA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uTKXocIax3ApNKZbXvELDBEyYvQ2iig0AgrS+dEuOfwL3QuvpOa0oU+0J6iOQvhN35k1EjPJ50HMPYSIovhTwiynewpOkrNY1tvUue+DSp5hwx222aO8gxYymzixHbFmK97n7WqwbpKOHU0oJu/tcBkQvT+nk1c2kAMzXeuOhiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgFLlg03; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZqAgRsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B201F00893;
-	Sat, 30 May 2026 18:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgFLlg03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5AE1F00893;
+	Sat, 30 May 2026 18:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166904;
-	bh=NrooeZmy7kCfcfdUgUq0nkkWeIbith0LbWlTh146sxs=;
+	s=korg; t=1780166907;
+	bh=4KZR1/OBwBzbNF/8iYPZEcqNK1tcd5D0FseNNkDTIDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZqAgRsA+dxkeKPcTHi9rOkvd+mEJcl8WAuDMa2KuYmNXgTiPy2GDNktQNGTN1ZBE
-	 lfJDHJzn0Daa5z6pRI7tC4IgqDH+LxtlyTlvRLh+BBOY6q1a8HcA3lyXjBO6raW6Oh
-	 5ACq4MfdSTz0jBlCrJMuFccqBr4PioQr3oGRre9M=
+	b=tgFLlg03KrNFbDZDZyXpmpEj5TvLkYMH9ttjkTuMKSG3wGX23DJdqcN9dEhL4abSc
+	 Pt+eCcPFlh9SL3iXqaFLgt2W1vGMRAA7wR2/WxqYmUbLGEwafD0ISB4vuR42cENZIz
+	 ciLKsbRkN+Chom/9El1kbJ84IPl0Mov79OEuQ4r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 477/589] net: sched: choke: remove unused variables in struct choke_sched_data
-Date: Sat, 30 May 2026 18:05:58 +0200
-Message-ID: <20260530160237.179624802@linuxfoundation.org>
+Subject: [PATCH 5.10 478/589] net/sched: sch_choke: annotate data-races in choke_dump_stats()
+Date: Sat, 30 May 2026 18:05:59 +0200
+Message-ID: <20260530160237.206206115@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,40 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 38af11717b386560f10f2891350933fc5200aeea ]
+[ Upstream commit d3aeb889dcbd78e95f500d383799a23d949796e0 ]
 
-The variable "other" in the struct choke_sched_data is not used. Remove it.
+choke_dump_stats() only runs with RTNL held.
+It reads fields that can be changed in qdisc fast path.
+Add READ_ONCE()/WRITE_ONCE() annotations.
 
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260423062839.2524324-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d3aeb889dcbd ("net/sched: sch_choke: annotate data-races in choke_dump_stats()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_choke.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/sched/sch_choke.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
-index f3805bee995bb..e38cf34287018 100644
+index e38cf34287018..7283f96dead62 100644
 --- a/net/sched/sch_choke.c
 +++ b/net/sched/sch_choke.c
-@@ -60,7 +60,6 @@ struct choke_sched_data {
- 		u32	forced_drop;	/* Forced drops, qavg > max_thresh */
- 		u32	forced_mark;	/* Forced marks, qavg > max_thresh */
- 		u32	pdrop;          /* Drops due to queue limits */
--		u32	other;          /* Drops due to drop() calls */
- 		u32	matched;	/* Drops to flow match */
- 	} stats;
+@@ -229,7 +229,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  
-@@ -464,7 +463,6 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 		.early	= q->stats.prob_drop + q->stats.forced_drop,
- 		.marked	= q->stats.prob_mark + q->stats.forced_mark,
- 		.pdrop	= q->stats.pdrop,
--		.other	= q->stats.other,
- 		.matched = q->stats.matched,
+ 		/* Draw a packet at random from queue and compare flow */
+ 		if (choke_match_random(q, skb, &idx)) {
+-			q->stats.matched++;
++			WRITE_ONCE(q->stats.matched, q->stats.matched + 1);
+ 			choke_drop_by_idx(sch, idx, to_free);
+ 			goto congestion_drop;
+ 		}
+@@ -241,11 +241,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			qdisc_qstats_overlimit(sch);
+ 			if (use_harddrop(q) || !use_ecn(q) ||
+ 			    !INET_ECN_set_ce(skb)) {
+-				q->stats.forced_drop++;
++				WRITE_ONCE(q->stats.forced_drop,
++					   q->stats.forced_drop + 1);
+ 				goto congestion_drop;
+ 			}
+ 
+-			q->stats.forced_mark++;
++			WRITE_ONCE(q->stats.forced_mark,
++				   q->stats.forced_mark + 1);
+ 		} else if (++q->vars.qcount) {
+ 			if (red_mark_probability(p, &q->vars, q->vars.qavg)) {
+ 				q->vars.qcount = 0;
+@@ -253,11 +255,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 				qdisc_qstats_overlimit(sch);
+ 				if (!use_ecn(q) || !INET_ECN_set_ce(skb)) {
+-					q->stats.prob_drop++;
++					WRITE_ONCE(q->stats.prob_drop,
++					           q->stats.prob_drop + 1);
+ 					goto congestion_drop;
+ 				}
+ 
+-				q->stats.prob_mark++;
++				WRITE_ONCE(q->stats.prob_mark,
++					   q->stats.prob_mark + 1);
+ 			}
+ 		} else
+ 			q->vars.qR = red_random(p);
+@@ -272,7 +276,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return NET_XMIT_SUCCESS;
+ 	}
+ 
+-	q->stats.pdrop++;
++	WRITE_ONCE(q->stats.pdrop, q->stats.pdrop + 1);
+ 	return qdisc_drop(skb, sch, to_free);
+ 
+ congestion_drop:
+@@ -460,10 +464,12 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct choke_sched_data *q = qdisc_priv(sch);
+ 	struct tc_choke_xstats st = {
+-		.early	= q->stats.prob_drop + q->stats.forced_drop,
+-		.marked	= q->stats.prob_mark + q->stats.forced_mark,
+-		.pdrop	= q->stats.pdrop,
+-		.matched = q->stats.matched,
++		.early	= READ_ONCE(q->stats.prob_drop) +
++			  READ_ONCE(q->stats.forced_drop),
++		.marked	= READ_ONCE(q->stats.prob_mark) +
++			  READ_ONCE(q->stats.forced_mark),
++		.pdrop	= READ_ONCE(q->stats.pdrop),
++		.matched = READ_ONCE(q->stats.matched),
  	};
  
+ 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
