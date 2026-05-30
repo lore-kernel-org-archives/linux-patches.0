@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E8C26C385;
-	Sat, 30 May 2026 16:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38FF30E853;
+	Sat, 30 May 2026 16:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159576; cv=none; b=gdJNiy0dRLs4RvyopGwISAmvx7pvdbQzYptXh1wm9pl509fUDUs1KX6uH0Ko4eBZmVsXNf6SXxMxXra22rpghTXRjqs/CJJgxIJrfCvZyiKJOduUPWjh4j2iarz55WRYylrAYmKelvlpZa5McOnWbf//Fre8Yd8u3HBQgniSQCQ=
+	t=1780159593; cv=none; b=WWj7aAcjR0BExkF/vsUOujdMUhi4FDW6jganOEjyFaYpUPlakALo3sN/dNnTkyouC7v5bZdXTnlapFrCC0XK1ystr4qOAdoWmK+Bvt5OdQkv4+RS1sqLdDSvkGYg6l3sytjqzzIYQ8iau9JcZlXz+pgabaSoRDqiHsCzc381b9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159576; c=relaxed/simple;
-	bh=F7U2kWALLN9gOw65+5uQqrDiE98b03hgR4l8UU4RTuk=;
+	s=arc-20240116; t=1780159593; c=relaxed/simple;
+	bh=+pVl0Q40Oz2b99Y3IVU4IpNXIhveJnA74txKUyzpJzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlL6UqySNKdzMIDeR6Ni8B8giAUDVEfJUZ2/fbpCTllHMJy1PfKzoYnw7Cf+o7r4IecbAICY8Fv1V+0ZIKgidwSXfXN8HKVe0OO51wRN1MVzG+pODfC9z+q0brzC79jjPy2tQr/C+PzBwiYNpaG4Z2fL29ekOBgXTAYIpu28gWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP+kQKMO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IyLuyk/BUgSD3GzvfFRdJleVxIm8uPz8WbnH8i8xRMmX0Gst+UTJ+4hAoeakKD8YgdFkk/jh1UW0f32MiQQIsUQKMjPawizftIePbOqCpB8w6wq6Vb9HGZne2h/e+8JwnJfZEodg25keH8kNDJni4nEzN3yd5txUvkvIsh3thk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7vnkUru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP+kQKMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC8B1F00898;
-	Sat, 30 May 2026 16:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7vnkUru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAC21F00893;
+	Sat, 30 May 2026 16:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159575;
-	bh=dadfFw4O9atwIs/IXqmrmxOTonsEuPgBzH0oFP3ga1w=;
+	s=korg; t=1780159591;
+	bh=nPICpTJ+r+Jy2iQhuc1ftVJnzlOh1IeZIPJzwc3gupk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CP+kQKMOVSkmVps/SFJO5LlGmv4l2WTihQMl03fpUlrCNLZSn5GWR7UtAL0lRKZXZ
-	 CPveCStKRJ/U/1F31n+PwQVZyGiMewFnFKM3rbiz1Ivm07cvHCX7sGu1icZhv/5t5Q
-	 qbVt6hziKobOOgdKIPibj3QcgHTmoZNHf45vEShY=
+	b=r7vnkUrurbSZkz43pDJ8z16zxONkuV1Gdv9kqK5BED0kGKUduTmVJMSDu/OT0f/Le
+	 2I8OAhXv1yTH2gRvU2x4mj8eNsufjSF3QSCJXhsKJvdLrT6CEZiptA9+r2sR6bPofx
+	 htVLOt/sv3rv10WfZL2A9s2Vzx7ACU++eUXtJ96g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 104/969] bcache: fix cached_dev.sb_bio use-after-free and crash
-Date: Sat, 30 May 2026 17:53:48 +0200
-Message-ID: <20260530160303.192985802@linuxfoundation.org>
+	Gurpreet Shergill <giki.shergill@proton.me>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Li hongliang <1468888505@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 095/969] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
+Date: Sat, 30 May 2026 17:53:39 +0200
+Message-ID: <20260530160302.954447360@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,73 +47,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit fec114a98b8735ee89c75216c45a78e28be0f128 upstream.
+[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
 
-In our production environment, we have received multiple crash reports
-regarding libceph, which have caught our attention:
+If cloning the second stateful expression in the element via GFP_ATOMIC
+fails, then the first stateful expression remains in place without being
+released.
 
-```
-[6888366.280350] Call Trace:
-[6888366.280452]  blk_update_request+0x14e/0x370
-[6888366.280561]  blk_mq_end_request+0x1a/0x130
-[6888366.280671]  rbd_img_handle_request+0x1a0/0x1b0 [rbd]
-[6888366.280792]  rbd_obj_handle_request+0x32/0x40 [rbd]
-[6888366.280903]  __complete_request+0x22/0x70 [libceph]
-[6888366.281032]  osd_dispatch+0x15e/0xb40 [libceph]
-[6888366.281164]  ? inet_recvmsg+0x5b/0xd0
-[6888366.281272]  ? ceph_tcp_recvmsg+0x6f/0xa0 [libceph]
-[6888366.281405]  ceph_con_process_message+0x79/0x140 [libceph]
-[6888366.281534]  ceph_con_v1_try_read+0x5d7/0xf30 [libceph]
-[6888366.281661]  ceph_con_workfn+0x329/0x680 [libceph]
-```
+   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
+     comm "softirq", pid 0, jiffies 4294931867
+     hex dump (first 16 bytes on cpu 3):
+       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+     backtrace (crc 0):
+       pcpu_alloc_noprof+0x453/0xd80
+       nft_counter_clone+0x9c/0x190 [nf_tables]
+       nft_expr_clone+0x8f/0x1b0 [nf_tables]
+       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
+       nft_rhash_update+0x236/0x11c0 [nf_tables]
+       nft_dynset_eval+0x11f/0x670 [nf_tables]
+       nft_do_chain+0x253/0x1700 [nf_tables]
+       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
+       nf_hook_slow+0xaa/0x1e0
+       ip_local_deliver+0x209/0x330
 
-After analyzing the coredump file, we found that the address of
-dc->sb_bio has been freed. We know that cached_dev is only freed when it
-is stopped.
-
-Since sb_bio is a part of struct cached_dev, rather than an alloc every
-time.  If the device is stopped while writing to the superblock, the
-released address will be accessed at endio.
-
-This patch hopes to wait for sb_write to complete in cached_dev_free.
-
-It should be noted that we analyzed the cause of the problem, then tell
-all details to the QWEN and adopted the modifications it made.
-
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Fixes: cafe563591446 ("bcache: A block layer cache")
-Cc: stable@vger.kernel.org # 3.10+
-Signed-off-by: Coly Li <colyli@fnnas.com>
-Link: https://patch.msgid.link/20260322134102.480107-1-colyli@fnnas.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
+Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/super.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     |  4 ++--
+ net/netfilter/nft_dynset.c        | 10 +++++++++-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1368,6 +1368,13 @@ static void cached_dev_free(struct closu
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 38c74f9fcce22..dafa0a32e6e1d 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -838,6 +838,8 @@ void *nft_set_elem_init(const struct nft_set *set,
+ 			u64 timeout, u64 expiration, gfp_t gfp);
+ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[]);
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr);
+ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index fb3d529ebf5ab..0c42242826387 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6025,8 +6025,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 	}
+ }
  
- 	mutex_unlock(&bch_register_lock);
+-static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+-				      struct nft_set_elem_expr *elem_expr)
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr)
+ {
+ 	struct nft_expr *expr;
+ 	u32 size;
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 953aba871f45c..5f58ac874005a 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
+ 				 const struct nft_set_ext *ext)
+ {
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
++	struct nft_ctx ctx = {
++		.net	= read_pnet(&priv->set->net),
++		.family	= priv->set->table->family,
++	};
+ 	struct nft_expr *expr;
+ 	int i;
  
-+	/*
-+	 * Wait for any pending sb_write to complete before free.
-+	 * The sb_bio is embedded in struct cached_dev, so we must
-+	 * ensure no I/O is in progress.
-+	 */
-+	closure_sync(&dc->sb_write);
+ 	for (i = 0; i < priv->num_exprs; i++) {
+ 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
+ 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
+-			return -1;
++			goto err_out;
+ 
+ 		elem_expr->size += priv->expr_array[i]->ops->size;
+ 	}
+ 
+ 	return 0;
++err_out:
++	nft_set_elem_expr_destroy(&ctx, elem_expr);
 +
- 	if (dc->sb_disk)
- 		put_page(virt_to_page(dc->sb_disk));
++	return -1;
+ }
  
+ static void *nft_dynset_new(struct nft_set *set, const struct nft_expr *expr,
+-- 
+2.53.0
+
 
 
