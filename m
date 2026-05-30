@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854D134BA42;
-	Sat, 30 May 2026 17:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173583148DA;
+	Sat, 30 May 2026 17:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160966; cv=none; b=PjkS1CUNe4aB5Cs8IEluXTmqgwJCErE+9P7UcgqCLyS/ap7UXigVSFn9Y+NV7TY/iUmH3w5BURrqFMcg09qxYyBxxFCkgfyHJCxgmU+6tRPj27TgHZsAbWLUEPNGirBg+vBM+ojQ7MRNRCovfOv2lgqxNvgTJ9q2toSEhCzbA3o=
+	t=1780160970; cv=none; b=GNodBc+V6moA3PKkLye6svUg+X4MTpkBrORLc8Ofo3BrrJRx20nqOA8WJG3qZcZ2y82MF88bquOcOYwvXpa+P4hW6uoxr+N7qYzn3lUVXB6OWMWJZIEbwwzMXjAgagqh5/i9IzjZRAYiQN8nHTR6sAu8TMWE7+dWFFVn8G3KSHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160966; c=relaxed/simple;
-	bh=pIoiKTl8wL6PRMnn1jdAjiBPMD4HlsvEGlx7FnCKljA=;
+	s=arc-20240116; t=1780160970; c=relaxed/simple;
+	bh=mo/zsIrGd+3008a3NgqBFPVLZQnvUWgPI8qQktVYIyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX+rrcgne/5rfNHG/ikmbTW5kEpZ2M4Jdo2jWPjNQLTUB6modaBx40B4tGE/9CLXb1QttpAU7lM11cArYAyjwwkraP0XecQJMGFuywP1WjW0PYMmGQJ2ItfHmzHdh3MRm/pPLnZ+GDgjeVJTTz3Jb2oZmQUTtvOWghqgozG6dpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2p8YIqS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TyRpkl3OHlohKVPRuBBppB/L6BZHTKSDVxKTQc/VA5eyJx5bjDktlY7o86p8Qo1lE1njsP+/1JH7dZxAfyBByzUEdHXNKmpxAE454YEjaIRTQEUbx52//ZyTMcTJ+ljN5Lh/sF5Tjvw/3QYHDRdMCkHWTQa9a8FRA+6ZV5xgWGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI5fI6GP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2p8YIqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8EF1F00893;
-	Sat, 30 May 2026 17:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI5fI6GP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CFC1F00893;
+	Sat, 30 May 2026 17:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160965;
-	bh=DstBsNC4yKgDnNl4TnchrEwS/NJPj2C5XtDHEI3jabo=;
+	s=korg; t=1780160968;
+	bh=6n6iMU+QJ6EVaYbJ+dWH33GcOEk8r3s5oFTmmePDLV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r2p8YIqSD+iylJSIQEQQMQQ4+nIJR4RqtSMgni3Zg1mbsjKoSzZBFPTx9PjhmjsvI
-	 8o9ZoS9Fz4Bc6Vzw6B5EiYpBdJZrSx0K3cBGPdF0M0r+C3nI4h61jO2htG4O2GUWeT
-	 nXjFjJAataMmxNM9AhPBKl/38+r4VWAEPkQTdEmU=
+	b=ZI5fI6GP/0aBPYWJ4A6LDmblYa4GS5ARQIHcR/LfDU0Zn8obrZ9OE9klx6J0QEOHB
+	 XhlvFE6ZUeEsgUWs7zu8R3I0ZUdPoA+EedPegyyzx2qRHWla24iBRPYrhYhh2t2Vhb
+	 qgJsu+FQWeoRIvECo8RBOpPHCBRx6y27TgYFXPq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Rissanen <jonathan.rissanen@axis.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 486/969] Bluetooth: hci_ldisc: Clear HCI_UART_PROTO_INIT on error
-Date: Sat, 30 May 2026 18:00:10 +0200
-Message-ID: <20260530160313.727887868@linuxfoundation.org>
+Subject: [PATCH 6.1 487/969] Bluetooth: fix locking in hci_conn_request_evt() with HCI_PROTO_DEFER
+Date: Sat, 30 May 2026 18:00:11 +0200
+Message-ID: <20260530160313.755903442@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,47 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Rissanen <jonathan.rissanen@axis.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 68d39ea5e0adc9ecaea1ce8abd842ec972eb8718 ]
+[ Upstream commit 5c7209a341ff2ac338b2b0375c34a307b37c9ac2 ]
 
-When hci_register_dev() fails in hci_uart_register_dev()
-HCI_UART_PROTO_INIT is not cleared before calling hu->proto->close(hu)
-and setting hu->hdev to NULL. This means incoming UART data will reach
-the protocol-specific recv handler in hci_uart_tty_receive() after
-resources are freed.
+When protocol sets HCI_PROTO_DEFER, hci_conn_request_evt() calls
+hci_connect_cfm(conn) without hdev->lock. Generally hci_connect_cfm()
+assumes it is held, and if conn is deleted concurrently -> UAF.
 
-Clear HCI_UART_PROTO_INIT with a write lock before calling
-hu->proto->close() and setting hu->hdev to NULL. The write lock ensures
-all active readers have completed and no new reader can enter the
-protocol recv path before resources are freed.
+Only SCO and ISO set HCI_PROTO_DEFER and only for defer setup listen,
+and HCI_EV_CONN_REQUEST is not generated for ISO.  In the non-deferred
+listening socket code paths, hci_connect_cfm(conn) is called with
+hdev->lock held.
 
-This allows the protocol-specific recv functions to remove the
-"HCI_UART_REGISTERED" guard without risking a null pointer dereference
-if hci_register_dev() fails.
+Fix by holding the lock.
 
-Fixes: 5df5dafc171b ("Bluetooth: hci_uart: Fix another race during initialization")
-Signed-off-by: Jonathan Rissanen <jonathan.rissanen@axis.com>
+Fixes: 70c464256310 ("Bluetooth: Refactor connection request handling")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ldisc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_event.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index 2752857dbccf3..f86ac94d53a4e 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -694,6 +694,9 @@ static int hci_uart_register_dev(struct hci_uart *hu)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 31606454c7c81..d572ce3061cf9 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3365,8 +3365,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
  
- 	if (hci_register_dev(hdev) < 0) {
- 		BT_ERR("Can't register HCI device");
-+		percpu_down_write(&hu->proto_lock);
-+		clear_bit(HCI_UART_PROTO_INIT, &hu->flags);
-+		percpu_up_write(&hu->proto_lock);
- 		hu->proto->close(hu);
- 		hu->hdev = NULL;
- 		hci_free_dev(hdev);
+ 	memcpy(conn->dev_class, ev->dev_class, 3);
+ 
+-	hci_dev_unlock(hdev);
+-
+ 	if (ev->link_type == ACL_LINK ||
+ 	    (!(flags & HCI_PROTO_DEFER) && !lmp_esco_capable(hdev))) {
+ 		struct hci_cp_accept_conn_req cp;
+@@ -3400,7 +3398,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 		hci_connect_cfm(conn, 0);
+ 	}
+ 
+-	return;
+ unlock:
+ 	hci_dev_unlock(hdev);
+ }
 -- 
 2.53.0
 
