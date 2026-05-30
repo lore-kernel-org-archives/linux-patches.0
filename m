@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A150430E847;
-	Sat, 30 May 2026 17:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED31130E829;
+	Sat, 30 May 2026 17:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161692; cv=none; b=kDj4QfAQ0+gYrhWWuPK8Vyuq4kg5RCAMNjLxxwHrfKp+AiBFFRU8kBRoBitUYfJ3mSzFlj2pmyTJHQ6gu/LVRqC6gDYLQre1M4tdQCp4W2Tezg/SqXQqW65b6baL9zVhw1tj63Cxd2V80+8VlObv/58xrRCBqC2RfWAn5zsImPo=
+	t=1780161696; cv=none; b=ScgtFcPtBXJuwWmXqXIYflOCgcf3V/1HH4fCZtoUraMxMUYN1epbPw0MLjfsKg/ov7YoPnw8uk3W+bUTO+bKYv0gNKFcbVm3qQmUmL0k0dpFkneJTF9noQvGtcYPLJNHzjSTM6xrKMG65LzYAhggN0PaLKroyM3YEosT8UEq7Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161692; c=relaxed/simple;
-	bh=B6vgtDk8qK1SsQIL8RtnXM+8hISzJBG6dXsFH0LGDcs=;
+	s=arc-20240116; t=1780161696; c=relaxed/simple;
+	bh=QXfoZkVb1CQ5eVukMK5PgkbXaaYQrNrQsKlAV9yIFX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D/Wh+/YC+5on3jmzsrfTGUUO/qrvkDKZJL7oIaVOqtKVq+vSqOma9AmuTKc3lnCl6PUKXwnQZoLQKMZnYXoZjTs1RNTRE2ly7yJqYammhrbnxkEk404GQWADMwmlD+szuE8IOQWnJfhnasBAQ29C2vNKgcoavSYBa7VgpN032PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+gQbDj/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rpl5eIOQly7n9KELuABx4vynSK5G1bP/QaieivvdkjJR//uGY/rCauBtfNi1Ytlxu73tEoMxeAn6NFUsm00jA7ETndVO4c6eDqAdTztH+KNIUOG/HDkykeHVo+XxOTA/UDAUkzSd7F/XO7o6ELwZoXBWpyeme2kyHtS5vJFzE/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6hxig5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+gQbDj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FF11F00893;
-	Sat, 30 May 2026 17:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6hxig5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2BD1F00893;
+	Sat, 30 May 2026 17:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161691;
-	bh=qq3THpyNWC1UlgmdSq/tnuQ8n+9pJ4EEymKRRgMzhi4=;
+	s=korg; t=1780161694;
+	bh=MXQ6kJknd19HOSF2DqtuYAXB4jzlVg33qkfll7/j+ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K+gQbDj/uR1gJT071p5zMI+7al/N0KrhFIiqLmCyJK83m0wxVaUdW9lhAPmS9H74r
-	 80uXUB3qSq74TJOeSdr09TR014PTOCQAgBh5uOjCMezP13LwY/nxXThhCxWJ2cPaEk
-	 KrcRagQp0NkKGwNjJxp5vRCgUqlxqyKDFz9oV6UM=
+	b=M6hxig5qms/3sr3tsPnyaIy32WeizBaPRTWZJ806NpMdrxvh9buytSsabla0tMa+M
+	 kjWh7v1ZbnxnqpeoQSP1UqsCYP9CcAzrugqE5CiYzDvQ8YJnnLUw5P+vwUQTq/GnSk
+	 By0uUvIHeRIR8d27Yvoym05g4QVT6mI/27VdsVTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 669/969] drm/i915: Constify watermark state checker
-Date: Sat, 30 May 2026 18:03:13 +0200
-Message-ID: <20260530160318.962686319@linuxfoundation.org>
+Subject: [PATCH 6.1 670/969] drm/i915: Extract intel_dbuf_mdclk_cdclk_ratio_update()
+Date: Sat, 30 May 2026 18:03:14 +0200
+Message-ID: <20260530160318.992459100@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,56 +46,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Gustavo Sousa <gustavo.sousa@intel.com>
 
-[ Upstream commit 487a2db8bc4eb79c53c9ff8fca65a7fc8350df6c ]
+[ Upstream commit 66a0e0681392420b326f00ba732e6bda099eda29 ]
 
-The skl+ wm state checker has no reason to modify the crtc state,
-so make it const.
+As of Xe2LPD, it is now possible to select the source of the MDCLK
+as either the CD2XCLK or the CDCLK PLL.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231004155607.7719-6-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Previous display IPs were hardcoded to use the CD2XCLK. For those, the
+ratio between MDCLK and CDCLK remained constant, namely 2. For Xe2LPD,
+when we select the CDCLK PLL as the source, the ratio will vary
+according to the squashing configuration (since the cd2x divisor is
+fixed for all supported configurations).
+
+To help the transition to supporting changes in the ratio, extract the
+function intel_dbuf_mdclk_cdclk_ratio_update() from the existing logic
+and call it using 2 as hardcoded ratio. Upcoming changes will use that
+function for updates in the ratio due to CDCLK changes.
+
+Bspec: 50057, 69445, 49213, 68868
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240312163639.172321-5-gustavo.sousa@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Stable-dep-of: a97c88a176b6 ("drm/i915/wm: Verify the correct plane DDB entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_watermark.c | 2 +-
- drivers/gpu/drm/i915/display/skl_watermark.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/skl_watermark.c | 30 +++++++++++++-------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
-index a7adf02476f6a..b6951881c0570 100644
+index b6951881c0570..e553192e12b76 100644
 --- a/drivers/gpu/drm/i915/display/skl_watermark.c
 +++ b/drivers/gpu/drm/i915/display/skl_watermark.c
-@@ -3014,7 +3014,7 @@ void skl_wm_sanitize(struct drm_i915_private *i915)
+@@ -3346,6 +3346,21 @@ int intel_dbuf_init(struct drm_i915_private *i915)
+ 	return 0;
  }
  
- void intel_wm_state_verify(struct intel_crtc *crtc,
--			   struct intel_crtc_state *new_crtc_state)
-+			   const struct intel_crtc_state *new_crtc_state)
++static void intel_dbuf_mdclk_cdclk_ratio_update(struct drm_i915_private *i915,
++						u8 ratio,
++						bool joined_mbus)
++{
++	enum dbuf_slice slice;
++
++	if (joined_mbus)
++		ratio *= 2;
++
++	for_each_dbuf_slice(i915, slice)
++		intel_de_rmw(i915, DBUF_CTL_S(slice),
++			     DBUF_MIN_TRACKER_STATE_SERVICE_MASK,
++			     DBUF_MIN_TRACKER_STATE_SERVICE(ratio - 1));
++}
++
+ /*
+  * Configure MBUS_CTL and all DBUF_CTL_S of each slice to join_mbus state before
+  * update the request state of all DBUS slices.
+@@ -3353,8 +3368,7 @@ int intel_dbuf_init(struct drm_i915_private *i915)
+ static void update_mbus_pre_enable(struct intel_atomic_state *state)
  {
- 	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
- 	struct skl_hw_state {
-diff --git a/drivers/gpu/drm/i915/display/skl_watermark.h b/drivers/gpu/drm/i915/display/skl_watermark.h
-index 7a5a4e67cd738..d1a1fe322e869 100644
---- a/drivers/gpu/drm/i915/display/skl_watermark.h
-+++ b/drivers/gpu/drm/i915/display/skl_watermark.h
-@@ -42,7 +42,7 @@ void skl_wm_get_hw_state(struct drm_i915_private *i915);
- void skl_wm_sanitize(struct drm_i915_private *i915);
+ 	struct drm_i915_private *i915 = to_i915(state->base.dev);
+-	u32 mbus_ctl, dbuf_min_tracker_val;
+-	enum dbuf_slice slice;
++	u32 mbus_ctl;
+ 	const struct intel_dbuf_state *dbuf_state =
+ 		intel_atomic_get_new_dbuf_state(state);
  
- void intel_wm_state_verify(struct intel_crtc *crtc,
--			   struct intel_crtc_state *new_crtc_state);
-+			   const struct intel_crtc_state *new_crtc_state);
+@@ -3365,24 +3379,18 @@ static void update_mbus_pre_enable(struct intel_atomic_state *state)
+ 	 * TODO: Implement vblank synchronized MBUS joining changes.
+ 	 * Must be properly coordinated with dbuf reprogramming.
+ 	 */
+-	if (dbuf_state->joined_mbus) {
++	if (dbuf_state->joined_mbus)
+ 		mbus_ctl = MBUS_HASHING_MODE_1x4 | MBUS_JOIN |
+ 			MBUS_JOIN_PIPE_SELECT_NONE;
+-		dbuf_min_tracker_val = DBUF_MIN_TRACKER_STATE_SERVICE(3);
+-	} else {
++	else
+ 		mbus_ctl = MBUS_HASHING_MODE_2x2 |
+ 			MBUS_JOIN_PIPE_SELECT_NONE;
+-		dbuf_min_tracker_val = DBUF_MIN_TRACKER_STATE_SERVICE(1);
+-	}
  
- void skl_watermark_ipc_init(struct drm_i915_private *i915);
- void skl_watermark_ipc_update(struct drm_i915_private *i915);
+ 	intel_de_rmw(i915, MBUS_CTL,
+ 		     MBUS_HASHING_MODE_MASK | MBUS_JOIN |
+ 		     MBUS_JOIN_PIPE_SELECT_MASK, mbus_ctl);
+ 
+-	for_each_dbuf_slice(i915, slice)
+-		intel_de_rmw(i915, DBUF_CTL_S(slice),
+-			     DBUF_MIN_TRACKER_STATE_SERVICE_MASK,
+-			     dbuf_min_tracker_val);
++	intel_dbuf_mdclk_cdclk_ratio_update(i915, 2, dbuf_state->joined_mbus);
+ }
+ 
+ void intel_dbuf_pre_plane_update(struct intel_atomic_state *state)
 -- 
 2.53.0
 
