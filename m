@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D571234389F;
-	Sat, 30 May 2026 17:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8A72E7379;
+	Sat, 30 May 2026 17:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162811; cv=none; b=Xy6V6DXNF1WbM5KisALXtyFnKXXs3yiAwqSHqYqp6Gcs7l61emD0QJCUpHHESCN8i7TThws6K+0lbyofZuM94LE8iSYtlCpmXvrYy1VjCK+VzX4amsOLHNcd5kRHHKqqadNj3PIqoGW8Qhc1BHSlIqsxNCG3LDTakbs0K+JERNw=
+	t=1780162813; cv=none; b=GG88i/ahLFKMi3e3HxJqDbg/vtsRF5EWG90xdEVSxnzosagBaOLdec/UkWnCQInL62AlPimKPRE8L1U2uSaEqXOxP7YZ7ioLjn0hxF62PCn9iFbR5qGKq0mTU09JFk1rAISGJPzspsiD2CYEfwaR6YbLoexT6g4v42csg/pd1b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162811; c=relaxed/simple;
-	bh=uWSOaAhzCRbjYkupHuS2xMs07+ogJixBQy+7E+PByAw=;
+	s=arc-20240116; t=1780162813; c=relaxed/simple;
+	bh=ob3I+h753WRpWvlvQplWuw4yJ5dcZLXauqepdmssAbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfxFYmO0wM6v7cNMgQvdFAZmbF9ErXtg2S3m2uSBXmGa4zw8q9rmjTMDrMqp55Q5T0M8I8spMJ5Z+c/lLNvBkd79Mq7HXyilVA1miF7I42T/77hvIi5s5qg6gyxySAiOH0s7nfxat7IptftW6M5wIsaSa4trFCCydNKYaxW2xUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMq8NEtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hv72AI/3Bq0hqS/9AKmyD6cOqtzNYKLEgaNXYBtdFBH/bfqa74vWnxbbmfNQjscu+2g62I+ms2CsNAdaTBwkXo7PeCches8R18Y0JHDA/Pv0Vdl2LxHzjq8qWfGlYWG8rqt2+kvLxr9MO8e/4vgeaPosnp8FQ2Hu6hC/WFcR3I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kL3V+QYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMq8NEtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB20E1F00893;
-	Sat, 30 May 2026 17:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kL3V+QYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC521F00898;
+	Sat, 30 May 2026 17:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162808;
-	bh=xSYm5TNgvDjGbtr+fgR+hVJxxCvrOHw6cQCMCxV/dpM=;
+	s=korg; t=1780162811;
+	bh=pIinjg6STCPaemDyMCO9ferLnNEkGEENNtPtlMkYiEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMq8NEtZ6qz2LRQGQacQ2qH/w3i3sSGY5BVr1vMP1ygHYLgbwABYeu1Az4eSp1YDU
-	 SbZSGGVM3jvUazE8+bSetjoLPZFOIeO6jBtnbJdvMaIkl4RNdWBP/hFOz5jBdReRkn
-	 tjQKh+XaBo+WQHXUrHkoZQyVskrOSYcX6kdzAnXw=
+	b=kL3V+QYkEBtrJ8x1r51NDE8tXU6kmoe4HgaB/pmXzCY/CfaHu66vXGiUBtcZNwG3d
+	 gOjZZdCekFOKh1dTS8MwiMaLzBpL5Ek1M6VjAXAnPHWci05KCVtDnm2QadoZtArqc1
+	 Xy/XN2nw4BqmdajOLBGM7ksYC20AlchuxqLhV0PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/776] perf/x86/intel/uncore: Skip discovery table for offline dies
-Date: Sat, 30 May 2026 17:55:54 +0200
-Message-ID: <20260530160241.332439820@linuxfoundation.org>
+Subject: [PATCH 5.15 041/776] i3c: fix uninitialized variable use in i2c setup
+Date: Sat, 30 May 2026 17:55:55 +0200
+Message-ID: <20260530160241.359570855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Jamie Iles <quic_jiles@quicinc.com>
 
-[ Upstream commit 7b568e9eba2fad89a696f22f0413d44cf4a1f892 ]
+[ Upstream commit 6cbf8b38dfe3aabe330f2c356949bc4d6a1f034f ]
 
-This warning can be triggered if NUMA is disabled and the system
-boots with fewer CPUs than the number of CPUs in die 0.
+Commit 31b9887c7258 ("i3c: remove i2c board info from i2c_dev_desc")
+removed the boardinfo from i2c_dev_desc to decouple device enumeration from
+setup but did not correctly lookup the i2c_dev_desc to store the new
+device, instead dereferencing an uninitialized variable.
 
-WARNING: CPU: 9 PID: 7257 at uncore.c:1157 uncore_pci_pmu_register+0x136/0x160 [intel_uncore]
+Lookup the device that has already been registered by address to store
+the i2c client device.
 
-Currently, the discovery table continues to be parsed even if all CPUs
-in the associated die are offline.  This can lead to an array overflow
-at "pmu->boxes[die] = box" in uncore_pci_pmu_register(), which may
-trigger the warning above or cause other issues.
-
-Fixes: edae1f06c2cd ("perf/x86/intel/uncore: Parse uncore discovery tables")
-Reported-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-3-zide.chen@intel.com
+Fixes: 31b9887c7258 ("i3c: remove i2c board info from i2c_dev_desc")
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Jamie Iles <quic_jiles@quicinc.com>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20220308134226.1042367-1-quic_jiles@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_discovery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index c8e1f9f0b466d..be7a63808462e 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -303,7 +303,7 @@ bool intel_uncore_has_discovery_tables(void)
- 				     (val & UNCORE_DISCOVERY_DVSEC2_BIR_MASK) * UNCORE_DISCOVERY_BIR_STEP;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index dee694024f280..5df943d25cf0a 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2199,8 +2199,13 @@ static int i3c_master_i2c_adapter_init(struct i3c_master_controller *master)
+ 	 * We silently ignore failures here. The bus should keep working
+ 	 * correctly even if one or more i2c devices are not registered.
+ 	 */
+-	list_for_each_entry(i2cboardinfo, &master->boardinfo.i2c, node)
++	list_for_each_entry(i2cboardinfo, &master->boardinfo.i2c, node) {
++		i2cdev = i3c_master_find_i2c_dev_by_addr(master,
++							 i2cboardinfo->base.addr);
++		if (WARN_ON(!i2cdev))
++			continue;
+ 		i2cdev->dev = i2c_new_client_device(adap, &i2cboardinfo->base);
++	}
  
- 			die = get_device_die_id(dev);
--			if (die < 0)
-+			if ((die < 0) || (die >= uncore_max_dies()))
- 				continue;
- 
- 			parse_discovery_table(dev, die, bar_offset, &parsed);
+ 	return 0;
+ }
 -- 
 2.53.0
 
