@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36B739D3D9;
-	Sat, 30 May 2026 16:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1237B33F5A3;
+	Sat, 30 May 2026 16:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159870; cv=none; b=p8pHr2/Tk/v3T4IX2Qk+tlLqFX6ZtYhyI+IIiOkHHxZXrfFKuqz5VupaONb6yZRR7FHLoW13pnh9pT9P7WcbUUxMu6U38Du2wopH2HdgcDvnwURhhdYoWnaDtEtqANgUxE9lPcYYBTmmOZRqfo1zd4QrE/eMBehA2/VKU4rqVsQ=
+	t=1780159871; cv=none; b=CKcKlPZEDG2rC2Q+Nh5nRxnB9VnGd74klqoxj0reP3Mwu1cKSWzr4W95jHYRmkgkrpkSHlDdtXkHZUGhzvGunKJrQggL5wM3dntuwtT4hdUuvG+36xucWSgf4sF4xvTSUeu2qs6KmlO4evUQzBAMHeJAfDs2ukyYAm98/y0VX68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159870; c=relaxed/simple;
-	bh=H2pLUPfVDn3HKBcXNCHCUdgHz8RbYehOX7TASwr26h8=;
+	s=arc-20240116; t=1780159871; c=relaxed/simple;
+	bh=xDB/74RosMhiLsM3d2Bn9g8dZlfW0snTP1y/fR+k9Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUgZa/S44436kVG/P+ZQW7tkzLGThhRQuBD9VzEKQDVa9bl6eJVkGgXpU6PM5FBFNEf2VrskpzIxvm697EMIZJbWRz3pgmQXxBLNeliVDX6iPYEGyXap1CwIN8sCWdyNj3UDFhY7QgIQiqPBXVtLlMmJ/CnvyKSNJdpfeRAjRsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euUPLmPb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XhfUMoqXa6ZjjTw83wb8/C5ilM2CE/4MJq0n1iPc4nb6agTz22tLIOevfKA+ga0BsZORPevuKheJ3MpOZI1MEfly66EUlzY3SoEYiCPkjFzeTWSnKb4Kx+5kkgKa8XF27xU5nB7+cSrBXicJYigWyNq6TtG6qiixcYFOUMSjc+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBB3rgw8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euUPLmPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D171F00893;
-	Sat, 30 May 2026 16:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBB3rgw8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0C21F00898;
+	Sat, 30 May 2026 16:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159861;
-	bh=k0YmWC46Jm7Sj4tBgWKR1ofcxKbZwbiKdfxjFn0j6Lw=;
+	s=korg; t=1780159870;
+	bh=ZNmlmXOQjq6iDIIEnjv6rWB7ZptFc8VIY+PZwnk6k/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euUPLmPbQIaj+vuGFF5l7OUrsERuVugXWygriEQSWUOeyx/jb51shawfInndSnWqS
-	 49fCd7sbICQBPPoONQai1ziWNR0b7sLE56XTdtTJuM93n5C92V5SFwA46YfVsPETBA
-	 E8RrA6BSlOqB1hok7tD3m6jho7qwHXkSLqiuBuTQ=
+	b=OBB3rgw8aWDdyYE1p/RFhOVun0OsJpZFdnpDMwZNSrfTVS8zpKL3d5lE7sK1NBuu+
+	 0KPyvZFwzQYHmylZrSMpcJacuQ+2snAJl2tilUW6lCMU1l+C6bnNG1OwAiHLsmQtuu
+	 c44sdsHyE4YW5aNrNt8YWU/wSLW4jGbhhSTrYy6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 181/969] um: drivers: call kernel_strrchr() explicitly in cow_user.c
-Date: Sat, 30 May 2026 17:55:05 +0200
-Message-ID: <20260530160305.491009732@linuxfoundation.org>
+	Yiming Qian <yimingqian591@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.1 183/969] crypto: pcrypt - Fix handling of MAY_BACKLOG requests
+Date: Sat, 30 May 2026 17:55:07 +0200
+Message-ID: <20260530160305.541864246@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,57 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 91e901c65b4da02a6fd543e3f0049829ae9645b7 upstream.
+commit 915b692e6cb723aac658c25eb82c58fd81235110 upstream.
 
-Building ARCH=um on glibc >= 2.43 fails:
+MAY_BACKLOG requests can return EBUSY.  Handle them by checking
+for that value and filtering out EINPROGRESS notifications.
 
-  arch/um/drivers/cow_user.c: error: implicit declaration of
-  function 'strrchr' [-Wimplicit-function-declaration]
-
-glibc 2.43's C23 const-preserving strrchr() macro does not survive
-UML's global -Dstrrchr=kernel_strrchr remap from arch/um/Makefile.
-Call kernel_strrchr() directly in cow_user.c so the source no longer
-depends on the -D rewrite.
-
-Fixes: 2c51a4bc0233 ("um: fix strrchr() problems")
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260408070102.2325572-1-michael.bommarito@gmail.com
-[remove unnecessary 'extern']
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Fixes: 5a1436beec57 ("crypto: pcrypt - call the complete function on error")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/cow_user.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ crypto/pcrypt.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/um/drivers/cow_user.c
-+++ b/arch/um/drivers/cow_user.c
-@@ -15,6 +15,12 @@
- #include "cow.h"
- #include "cow_sys.h"
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -69,6 +69,9 @@ static void pcrypt_aead_done(struct cryp
+ 	struct pcrypt_request *preq = aead_request_ctx(req);
+ 	struct padata_priv *padata = pcrypt_request_padata(preq);
  
-+/*
-+ * arch/um/Makefile remaps strrchr to kernel_strrchr; call the kernel
-+ * name directly to avoid glibc >= 2.43's C23 strrchr macro.
-+ */
-+char *kernel_strrchr(const char *, int);
++	if (err == -EINPROGRESS)
++		return;
 +
- #define PATH_LEN_V1 256
+ 	padata->info = err;
  
- /* unsigned time_t works until year 2106 */
-@@ -153,7 +159,7 @@ static int absolutize(char *to, int size
- 			   errno);
- 		return -1;
- 	}
--	slash = strrchr(from, '/');
-+	slash = kernel_strrchr(from, '/');
- 	if (slash != NULL) {
- 		*slash = '\0';
- 		if (chdir(from)) {
+ 	padata_do_serial(padata);
+@@ -82,7 +85,7 @@ static void pcrypt_aead_enc(struct padat
+ 
+ 	ret = crypto_aead_encrypt(req);
+ 
+-	if (ret == -EINPROGRESS)
++	if (ret == -EINPROGRESS || ret == -EBUSY)
+ 		return;
+ 
+ 	padata->info = ret;
+@@ -133,7 +136,7 @@ static void pcrypt_aead_dec(struct padat
+ 
+ 	ret = crypto_aead_decrypt(req);
+ 
+-	if (ret == -EINPROGRESS)
++	if (ret == -EINPROGRESS || ret == -EBUSY)
+ 		return;
+ 
+ 	padata->info = ret;
 
 
