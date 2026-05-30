@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0C03AEB5C;
-	Sat, 30 May 2026 17:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450693BD25E;
+	Sat, 30 May 2026 17:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163803; cv=none; b=MuRv2Ix3Wad11DODLf0jXB2Zs3n8KT1iLzchCeZbrdVeq9fCAGHTfYuBW2hgEQd9q894CuYvcPalHX3mQMS7LvDHa2F2tuUZZbXNCRTMcTI/ENtHz3X1vbE9VTHoCWE2FSJ0pmciGTNxRpyZBqNcc1ZluRE5Y8UwZ/aXPSKToZ8=
+	t=1780163806; cv=none; b=FHm8oLmfEj5AalpJyh1Xs2L45kCmJMJare7X+lsZ27qbpRKHGyUoODBBRIKqN64EThV0ncIxGB7W1YJgK5GbqHVy6KmSNNe7FDCnGdb3eEdE5uKwM4WDTRoMTreYMB09IBLyrkQ2GdLL00sgYp2+v2Nij8iDDCos/opve5UrSsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163803; c=relaxed/simple;
-	bh=vdXD4nuqPjTDTT9HBBUZURPueE4q+5ZJDVRr3gx60AE=;
+	s=arc-20240116; t=1780163806; c=relaxed/simple;
+	bh=3MWriIasgZW+VwIIQAIfug5I1Di3lXqQ/B6AV4VloF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxogrN/RRV19CXfxk46hz7x7WqWsBZF96yVSk7RwA3FWhxJ1PowlHrRgb8DzgnDKCyigrn4n+TA4moe3ZA31Wf66A2cInwDM2CWQGzZXJCiGM68TbXemNyCUhacF9sPbpKJ/VnsF5qrm+C4fbqM5gGAaVyYsik7iII6f11TZa6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYxn42Bk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=d/A3Y0si8DuYr54Njt54ekTulWl7+ZnJ1k6iFTTcGmYUeTTUAxYRi3BEOO/09KcABSflzwO2uXvh0PDtLSDZ20ioZVP3a8UEUgH2d0+EAYemuYf3UK9NAUeDSmVfvcycFB6MqSfHjrxppjQ7nqdc7NOiJf+z5azZDC8nUqbLQNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HOHGSbU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYxn42Bk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14811F00893;
-	Sat, 30 May 2026 17:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HOHGSbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB71F00893;
+	Sat, 30 May 2026 17:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163801;
-	bh=PDZlJZLQ4Axl2xP27eHBk5Eql+GZsZTtnquVhFzZCzU=;
+	s=korg; t=1780163804;
+	bh=yzVDEE5gqx+l05KxZbs65I16f7D8z1bB8gW0H+ZhiR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hYxn42Bk5yqSWL7lYsZduNFmkgWHYmwp1+G3+lLp7NiHbqx51W8n3SIUg/mTrl0VR
-	 oHFY9fxHijhCKmWYNILfvbbvVC685Olpp4BqKI0ZUzJLtG5Hur1+Nbr3o5muVgeYUz
-	 maFaolVGu6hcNWPJfCbkFdsuSV0x4fKL/Ig04R+w=
+	b=2HOHGSbUvjqaPvmBGa84EKvszytVRo3i2nfoKsTcGyCobceuXMTYx2ebJGykllx4X
+	 vg8dmNNcjQ41PbKFKihBDhheciVTFsLdOIRnihdXkTdYkX4flJ96aI0vXyE/23TGvG
+	 onWFbeqMJ+XrkG9ivIFRulkJKJPLPbUArr9dZs34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 359/776] media: dib8000: avoid division by 0 in dib8000_set_dds()
-Date: Sat, 30 May 2026 18:01:13 +0200
-Message-ID: <20260530160249.854031753@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 368/776] drm/radeon: add missing revision check for CI
+Date: Sat, 30 May 2026 18:01:22 +0200
+Message-ID: <20260530160250.063053870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,53 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit dde3c37af95cd6fa301c4906f33d627bc9dd874c upstream.
+commit 17223816498f7b117d138d18eb0eba63604dc74e upstream.
 
-In dib8000_set_dds(), 1 << 26 (67108864) divided by e.g. 1 apparently can't
-fit into 16-bit variable unit_khz_dds_val, being truncated to 0; this will
-cause division by 0 while calling dprintk() with debugging enabled (via the
-module parameter).  Use s32 instead of s16 to declare the variable, getting
-rid of the cast to u16 in the *else* branch as well...
+The memory level workarounds only apply to revision 0 SKUs.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
+Fixes: 127e056e2a82 ("drm/radeon: fix mclk vddc configuration for cards for hawaii")
+Fixes: 21b8a369046f ("drm/radeon: fix dram timing for certain hawaii boards")
+Fixes: 90b2fee35cb9 ("drm/radeon: fix dpm mc init for certain hawaii boards")
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4d8dcc14311515077062b5740f39f427075de5c9)
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/dib8000.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/ci_dpm.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/media/dvb-frontends/dib8000.c
-+++ b/drivers/media/dvb-frontends/dib8000.c
-@@ -2694,7 +2694,7 @@ static void dib8000_viterbi_state(struct
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -2469,7 +2469,8 @@ static void ci_register_patching_mc_arb(
  
- static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
- {
--	s16 unit_khz_dds_val;
-+	s32 unit_khz_dds_val;
- 	u32 abs_offset_khz = abs(offset_khz);
- 	u32 dds = state->cfg.pll->ifreq & 0x1ffffff;
- 	u8 invert = !!(state->cfg.pll->ifreq & (1 << 25));
-@@ -2715,7 +2715,7 @@ static void dib8000_set_dds(struct dib80
- 			dds = (1<<26) - dds;
- 	} else {
- 		ratio = 2;
--		unit_khz_dds_val = (u16) (67108864 / state->cfg.pll->internal);
-+		unit_khz_dds_val = 67108864 / state->cfg.pll->internal;
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		if ((memory_clock > 100000) && (memory_clock <= 125000)) {
+ 			tmp2 = (((0x31 * engine_clock) / 125000) - 1) & 0xff;
+ 			*dram_timimg2 &= ~0x00ff0000;
+@@ -3310,7 +3311,8 @@ static int ci_populate_all_memory_levels
+ 	pi->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
  
- 		if (offset_khz < 0)
- 			unit_khz_dds_val *= -1;
+ 	if ((dpm_table->mclk_table.count >= 2) &&
+-	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1))) {
++	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		pi->smc_state_table.MemoryLevel[1].MinVddc =
+ 			pi->smc_state_table.MemoryLevel[0].MinVddc;
+ 		pi->smc_state_table.MemoryLevel[1].MinVddcPhases =
+@@ -4507,7 +4509,8 @@ static int ci_register_patching_mc_seq(s
+ 
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		for (i = 0; i < table->last; i++) {
+ 			if (table->last >= SMU7_DISCRETE_MC_REGISTER_ARRAY_SIZE)
+ 				return -EINVAL;
 
 
