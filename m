@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1771C5799;
-	Sat, 30 May 2026 17:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF9B332EA7;
+	Sat, 30 May 2026 17:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161552; cv=none; b=nlR+Ipg4OBPYkOchUPN8jr+Zhq6akZHXRmatZ230ZxZldFNb5qvENACjAekkNAmy5ARNp+74Ah6i2Nn7W3Oe+L/iDd3xd7X3GcmNbnoGJa+6Aod8nGUT63kF5yWS6wcpsukkECseoZE5QTpsXr0MLmii2jHTk+pOtUQy5GqwYqg=
+	t=1780161556; cv=none; b=QYZ7AO4Ek6GfxTrSAzdBND6gpgWwVP21onkXZMhR8K+zIDlvjqKE3mS/tHpA4EKy3kZQgmU6al2GsJcMxZECIw8RPLaZSBtPeqShm+rIWXeIaZotc7w37jKB763l4byuocmj9q3mneZ1+UexFAZv3D0Xm8ZdKLQpvsXT7S/Axlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161552; c=relaxed/simple;
-	bh=vX2c9eed4xLLY7tgZypCclzlx33G3lLgxJD0w617Gos=;
+	s=arc-20240116; t=1780161556; c=relaxed/simple;
+	bh=jxGq+DwIgxh4TvRp5zHihxj+o4TVa+MRfoZAlpMU4n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEnQCtMYnjO2XXqF8LMRJn+L/cpaPKxD85CMODGgeZmm16Rz8k+5Rv1/a7ibQbYo/8ejP0vhmVk/2lwVgaf/6vLTFUmEG1JfCCpPhoUtSlBG/FRIl7ihUmFGQeHWVdalJNdzKfElMBAZndJJ9IXpr7s4OMURSKskVmuBjMIFM1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAoHXBRv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m4vV9lcxWC7jWuF3se+Dzt+LOFGt1cPY8ZhwIVX3pHYu8UMkflAXAfc4KEvTybdhMRM0QoFlcjB9gHcqjopJ+oEeE8+Ny3n8iIll756M1u81lYPl8UljfhA90p/KwaelGnXhzNrKQlBEHCD8LMsV1siMNW37dZ0C5RZ2Ja0GKgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi+MEMKj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAoHXBRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417CE1F00893;
-	Sat, 30 May 2026 17:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi+MEMKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCB01F00893;
+	Sat, 30 May 2026 17:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161551;
-	bh=cqeGGlXEj/n+zzIEMI+jr+1vDApcioGKRQbiY6fVByU=;
+	s=korg; t=1780161555;
+	bh=7HFluPO6psEQInoEYemFvUChktAnI23XMqz5Uf20Ul8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAoHXBRvSZa6wblQ2qNIDKn4/3PJ6WZRowdNbcSIpPZNLahIO4RvN9G1yLabFTtNW
-	 r3BwgmlCzB3ZDFECAO0jPiDLYINd7vSK9cPtn457Iaaf6AyI5j7/ZXMqmEUn48OCoV
-	 r3QWzL48UZubFHEjKPaLUgXUeQfAFYy6ucZTJR/g=
+	b=Mi+MEMKjdzHe5ECCoxetdMkDyzSSzzfZdBeWW+pTb9Z57Ofl2tQ2yIWm/oiBcskG8
+	 JHDKvP2lXnqRSY1BgdzSq6g2Ogc4Ot1xKd+rxkVVRWxT9+fM1ehmwfk8tpLQwELVuT
+	 j59H5dm0RZmAygsyfu/7jwVUZqn2XVNZHaW0yVWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 657/969] clk: qcom: dispcc-sm8250: Enable parents for pixel clocks
-Date: Sat, 30 May 2026 18:03:01 +0200
-Message-ID: <20260530160318.616527275@linuxfoundation.org>
+Subject: [PATCH 6.1 658/969] clk: imx: imx6q: Fix device node reference leak in pll6_bypassed()
+Date: Sat, 30 May 2026 18:03:02 +0200
+Message-ID: <20260530160318.645828698@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,46 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit acf7a91d0b0e9e3ef374944021de62062125b7e4 ]
+[ Upstream commit 4b84d496c804b470124cd3a08e928df6801d8eae ]
 
-Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-clocks are enabled during clock operations, preventing potential
-stability issues during display configuration.
+The function pll6_bypassed() calls of_parse_phandle_with_args()
+but never calls of_node_put() to release the reference, causing
+a memory leak.
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-9-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this by adding proper cleanup calls on all exit paths.
+
+Fixes: 3cc48976e9763 ("clk: imx6q: handle ENET PLL bypass")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20260203-clk-imx6q-v3-1-6cd2696bb371@gmail.com
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx6q.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index b7d3d3bd1f2af..eb46f1fb8a3a1 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -564,7 +564,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -578,7 +578,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- 		.name = "disp_cc_mdss_pclk1_clk_src",
- 		.parent_data = disp_cc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
+diff --git a/drivers/clk/imx/clk-imx6q.c b/drivers/clk/imx/clk-imx6q.c
+index de36f58d551c0..b14c1606466d7 100644
+--- a/drivers/clk/imx/clk-imx6q.c
++++ b/drivers/clk/imx/clk-imx6q.c
+@@ -233,8 +233,11 @@ static bool pll6_bypassed(struct device_node *node)
+ 			return false;
+ 
+ 		if (clkspec.np == node &&
+-		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS)
++		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS) {
++			of_node_put(clkspec.np);
+ 			break;
++		}
++		of_node_put(clkspec.np);
+ 	}
+ 
+ 	/* PLL6 bypass is not part of the assigned clock list */
+@@ -244,6 +247,9 @@ static bool pll6_bypassed(struct device_node *node)
+ 	ret = of_parse_phandle_with_args(node, "assigned-clock-parents",
+ 					 "#clock-cells", index, &clkspec);
+ 
++	if (!ret)
++		of_node_put(clkspec.np);
++
+ 	if (clkspec.args[0] != IMX6QDL_CLK_PLL6)
+ 		return true;
+ 
 -- 
 2.53.0
 
