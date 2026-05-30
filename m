@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B382304BCB;
-	Sat, 30 May 2026 17:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FDD304BCB;
+	Sat, 30 May 2026 17:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163387; cv=none; b=SrXgPnPt1Gwk/opOLezcwCx3OmokNy7EFTbzSof2rfMLpFMXv5aoTh3VqrFy73UYHkXPOiLoKwOwoUydiN1EAjmdQb3DvonapVpdEch4WEudPV+eVWb+ebc/DDIqO/2nHORkb5f5SMJykeqw5Vyg2hwjt4q9aYnuVsq2siNVk04=
+	t=1780163390; cv=none; b=Rpvx9ZhPgPF4CcRZS3vgrWmUU1M3srxF5KrSwhwQx0q4vuCSOlX77tQuwZTxY4vJetComQmWfx8i2K2Geety7zJI5lh1SbQBK2GA61u9fj1GGaJyJUe0l1RCZxd/pkqUaPxjoiGwBN8nVDMeMQnO1kTMiCUrDj6Vst6p3WqE/ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163387; c=relaxed/simple;
-	bh=Gu6onoC0YavmA7GIH9V9quoBGKzI3QVwPc0C6xvkj+g=;
+	s=arc-20240116; t=1780163390; c=relaxed/simple;
+	bh=QCJ3qo2uSCQai/Gv1qigeX2zhcLW5wo6gn/xmYtNj1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuDyRFXBZsC0ltPR7LFU69A/G9s6fFel6Z2IlFZtdUO7TVLAtO9OI8mb+f/9zGFEuGCaCLWAyNYgFfe+x5mxLdR8diYIqDU/KLedKQROx1HgsCKXAHLF0aWQWYETTjn83g93RR6AdXtcbWMDMNX1XuFdvM22zlNqKHsHyTc2lxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI1QBG9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MzpYnHR7hMvoqauVUG7+aQA/h6Nuswfe549CJkn/tcf0oh+sQxo2teWc3WaQFIyg7SxuGwT6pn8fyV5qzkGKwbD0peCG0SHs4NsN3QxBo1gEVeeaIHQwHRcjK52Gx3hCfchI9eSffjzCq0i4skum92VPhAdpYEoyUETcJYjLRgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BgyUS22; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI1QBG9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622F31F00893;
-	Sat, 30 May 2026 17:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BgyUS22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8881F00893;
+	Sat, 30 May 2026 17:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163386;
-	bh=DWgOk7n88mjSe8TKkcn1r3JOMW4LXYj0aM4KmIOnd8U=;
+	s=korg; t=1780163389;
+	bh=ZaKoy+VeADy27dUhKYQjIG8hbKZvPW0ythV0o6enWPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BI1QBG9tOXUFqVtOfyIWlXGGyOGkZAhssGnkpyKtzlb1dbqnL6gFipRBr17QegX2i
-	 cQkgwkYQ/Naw7CtEg1u3voY9KiQ/KW7f6K3Y/witadRdGUETehQKxfMbYdRnjpXnBV
-	 p+ytnLze5x7XrQQjLrh98ECa7f8lYRqlPQalVW/M=
+	b=2BgyUS22/3hJ6fWduJkac56k/HAXqFpuYc/GA/AcOJPtB9prKt/itueiEGHycRTB9
+	 /r6v0sbIhSGJTzsxgvtxUFucNFbOWbIO870Wzvds+w7McO826Ghe+r1NnmkNnbkeP/
+	 v9Zy+Fnb78jUBXS+mdQSg/MxEIS02kXU9RYArbi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 243/776] mtd: docg3: fix use-after-free in docg3_release()
-Date: Sat, 30 May 2026 17:59:17 +0200
-Message-ID: <20260530160246.811467450@linuxfoundation.org>
+	Sohei Koyama <skoyama@ddn.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 244/776] ext4: fix missing brelse() in ext4_xattr_inode_dec_ref_all()
+Date: Sat, 30 May 2026 17:59:18 +0200
+Message-ID: <20260530160246.839562574@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,53 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Sohei Koyama <skoyama@ddn.com>
 
-[ Upstream commit ca19808bc6fac7e29420d8508df569b346b3e339 ]
+commit 77d059519382bd66283e6a4e83ee186e87e7708f upstream.
 
-In docg3_release(), the docg3 pointer is obtained from
-cascade->floors[0]->priv before the loop that calls
-doc_release_device() on each floor. doc_release_device() frees the
-docg3 struct via kfree(docg3) at line 1881. After the loop,
-docg3->cascade->bch dereferences the already-freed pointer.
+The commit c8e008b60492 ("ext4: ignore xattrs past end")
+introduced a refcount leak in when block_csum is false.
 
-Fix this by accessing cascade->bch directly, which is equivalent
-since docg3->cascade points back to the same cascade struct, and
-is already available as a local variable. This also removes the
-now-unused docg3 local variable.
+ext4_xattr_inode_dec_ref_all() calls ext4_get_inode_loc() to
+get iloc.bh, but never releases it with brelse().
 
-Fixes: c8ae3f744ddc ("lib/bch: Rework a little bit the exported function names")
+Fixes: c8e008b60492 ("ext4: ignore xattrs past end")
+Signed-off-by: Sohei Koyama <skoyama@ddn.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: James Kim <james010kim@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260406074830.8480-1-skoyama@ddn.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/docg3.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ext4/xattr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/devices/docg3.c b/drivers/mtd/devices/docg3.c
-index 25a7df6448028..7de576404b14f 100644
---- a/drivers/mtd/devices/docg3.c
-+++ b/drivers/mtd/devices/docg3.c
-@@ -2041,7 +2041,6 @@ static int __init docg3_probe(struct platform_device *pdev)
- static void docg3_release(struct platform_device *pdev)
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1112,7 +1112,7 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
  {
- 	struct docg3_cascade *cascade = platform_get_drvdata(pdev);
--	struct docg3 *docg3 = cascade->floors[0]->priv;
- 	int floor;
- 
- 	doc_unregister_sysfs(pdev, cascade);
-@@ -2049,7 +2048,7 @@ static void docg3_release(struct platform_device *pdev)
- 		if (cascade->floors[floor])
- 			doc_release_device(cascade->floors[floor]);
- 
--	bch_free(docg3->cascade->bch);
-+	bch_free(cascade->bch);
+ 	struct inode *ea_inode;
+ 	struct ext4_xattr_entry *entry;
+-	struct ext4_iloc iloc;
++	struct ext4_iloc iloc = { .bh = NULL };
+ 	bool dirty = false;
+ 	unsigned int ea_ino;
+ 	int err;
+@@ -1207,6 +1207,8 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
+ 			ext4_warning_inode(parent,
+ 					   "handle dirty metadata err=%d", err);
+ 	}
++
++	brelse(iloc.bh);
  }
  
- #ifdef CONFIG_OF
--- 
-2.53.0
-
+ /*
 
 
