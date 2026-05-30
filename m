@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B1E237713;
-	Sat, 30 May 2026 17:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDDA2628D;
+	Sat, 30 May 2026 17:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163703; cv=none; b=TSK6RoM6WxVyoWL7IdR11K+8ekpgUvXusVit4VpL7lNsFlTVGs/PLyqrY8cbliTGYFK0RWpqeMJcrYXqgSM/tET1H/WtWkS8mfMeUntkSzfPP4asutwgTb7Ox+9EMIWlbUzYsNHnqlSXqT3kQiAKfo4GVqJYqyE6S8VJpfXPWBM=
+	t=1780163705; cv=none; b=KmCwtS/oag4Ier/LXqv7siiPst75SoLjhm/f9mb9fWIGzKwY/r97akpqQ9b5YGB03mHzYCuTaX5Tsn2xpoB4CEmpAydVKOFd8EAZQcFvoo6+RhGn8HVg1qlsh9aWb2EZVKrvEnAW611pdFi2yz9VSYtVGrMpXv2SXNShJTUE408=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163703; c=relaxed/simple;
-	bh=oaCOTwLql6BFDu6iVasWzksz97Q8PoX4vvRm1TDP2Y0=;
+	s=arc-20240116; t=1780163705; c=relaxed/simple;
+	bh=SEyp8eeqA4TDjN4cy6ZGFsAI2cFbr31qtLMfFawDwYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLpeqx2hH3YQbfFMIPtU30huco4RmR05/5cLIlklkn60LxAZMomeePvg7h8QhF7bjiZcCgxgj098yKeZ9olc4g61tOHXN8oRfb47G0OZZPk13OM5NpjBzAJvExFuLKVQqoqM4rwLRKJkbdZLoLsf/h2rDkWW72xAXy0Opg0pUUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxM2Y2sM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ixi7VywTj7HDE01rmdOw+GV2o492XNIImI1oxr6/w1lnyvySf7nrbuVYX+U+H7CRPYiiNbiGqja7MCJ+Zqj25jGya9O+lh77XcV/4MjVOryt4lwQzEqL3WOWyFYrc7FRiuLXjzRCUjQIO2wuhiUz1+7wRJDDRCMx+0gmh1x4RWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTCUswbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxM2Y2sM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73161F00898;
-	Sat, 30 May 2026 17:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTCUswbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C99C1F00893;
+	Sat, 30 May 2026 17:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163701;
-	bh=Wn0X/tdyjrz03LqMJfanNN6edkgm++jUW+XhUOyX8E4=;
+	s=korg; t=1780163704;
+	bh=+O9M9zYEU59O3u9j4wZDvzR4qkAJl5lGWD3/i9zL8AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fxM2Y2sMjEWKoeBL8WG4kbWJLpGIqpW6pQvpYDVwnib/m9V66V0gi6Pn8GDjdgyL1
-	 OB5JfFC5IBmHD4heYxcjG4pAsPu4ueMPBiKw0hBRLq2WEqkFBWn7bPwIyLNiXphFtC
-	 Az29Ms2Uwz473UxP07scqQQ3BvtnuZdlfVFFkjHk=
+	b=iTCUswbbOC9XHfmBaJsBXca3YTCru56QvizcSimhu0QpqyCwpNwSFR2WDna1ntf3x
+	 o2ZIdcsmgkPtSIXdOlf27fKnQ1ORArRJZokKhRMv4iNnodeJsE7tbdtPN+J+JmZIzF
+	 OPC3gK8AWV9nR7X2qkl+GJ3G78MPzLFJSV+MR7nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 337/776] RDMA/hns: Fix unlocked call to hns_roce_qp_remove()
-Date: Sat, 30 May 2026 18:00:51 +0200
-Message-ID: <20260530160249.282252112@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.15 338/776] s390/debug: Reject zero-length input in debug_input_flush_fn()
+Date: Sat, 30 May 2026 18:00:52 +0200
+Message-ID: <20260530160249.307998753@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-commit 0c99acbc8b6c6dd526ae475a48ee1897b61072fb upstream.
+commit e14622a7584f9608927c59a7d6ae4a0999dc545e upstream.
 
-Sashiko points out that hns_roce_qp_remove() requires the caller to hold
-locks.  The error flow in hns_roce_create_qp_common() doesn't hold those
-locks for the error unwind so it risks corrupting memory.
+debug_input_flush_fn() always copies one byte from the userspace buffer
+with copy_from_user() regardless of the supplied write length. A
+zero-length write therefore reads one byte beyond the caller's buffer.
+If the stale byte happens to be '-' or a digit the debug log is
+silently flushed. With an unmapped buffer the call returns -EFAULT.
 
-Grab the same locks the other two callers use.
+Reject zero-length writes before copying from userspace.
 
-Cc: stable@vger.kernel.org
-Fixes: e088a685eae9 ("RDMA/hns: Support rq record doorbell for the user space")
-Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=9
-Link: https://patch.msgid.link/r/15-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Cc: stable@vger.kernel.org # v5.10+
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/s390/kernel/debug.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -1052,6 +1052,7 @@ static int hns_roce_create_qp_common(str
- 	struct hns_roce_ib_create_qp_resp resp = {};
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	struct hns_roce_ib_create_qp ucmd = {};
-+	unsigned long flags;
- 	int ret;
+--- a/arch/s390/kernel/debug.c
++++ b/arch/s390/kernel/debug.c
+@@ -1444,6 +1444,11 @@ static int debug_input_flush_fn(debug_in
+ 	char input_buf[1];
+ 	int rc = user_len;
  
- 	mutex_init(&hr_qp->mutex);
-@@ -1135,7 +1136,13 @@ static int hns_roce_create_qp_common(str
- 	return 0;
- 
- err_flow_ctrl:
-+	spin_lock_irqsave(&hr_dev->qp_list_lock, flags);
-+	hns_roce_lock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
-+			  init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
- 	hns_roce_qp_remove(hr_dev, hr_qp);
-+	hns_roce_unlock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
-+			    init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
-+	spin_unlock_irqrestore(&hr_dev->qp_list_lock, flags);
- err_store:
- 	free_qpc(hr_dev, hr_qp);
- err_qpc:
++	if (!user_len) {
++		rc = -EINVAL;
++		goto out;
++	}
++
+ 	if (user_len > 0x10000)
+ 		user_len = 0x10000;
+ 	if (*offset != 0) {
 
 
