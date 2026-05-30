@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15632E92B3;
-	Sat, 30 May 2026 16:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9589B332EA7;
+	Sat, 30 May 2026 16:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160305; cv=none; b=aISr0V9GBvU+HpvyqRET1ILWJuWFGBKO2QMerLA7J8itQTnePuwH6LhBNk62V3KMmZABeKc/h8FnnTut7QBnTxaMfLGVh600x20DIHk+dJi+SBekIib90Fd4nfPbPf37Kt3xKOG9DubI/z/PPPoGapkdqHH11Bfx7RB7/TaIA7w=
+	t=1780160308; cv=none; b=tPBMkbwGUC8L1D8Ckl41A872cTf5kPfbW1K6KVJF28tjMh34jCNg04DgPSzTouS1j2neQDXYkwK2BkmGvEpu5mNUrpTAE9ngm3nkx9CRmS8ooRsfjWyVzS2xTVxVlqnCZlahyoaybakC4cp1vt1iNUk40slVkxzPOVUOwlLhSnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160305; c=relaxed/simple;
-	bh=NIf7+V54M/i4hvFiIAPxnk7OrkInf9V6C7pcxPi5n/c=;
+	s=arc-20240116; t=1780160308; c=relaxed/simple;
+	bh=4G7CSZgeSMg1JDyz5sV4G9h2z1up7S9AOTT2NDDTv3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHu37B0EPtEnhUVMile3R5Y4wV6L+SAEym1et4xvCO7kJAGe7n/wkLxDmffDZVl2k1E4tKb6BMo/2t4SRt47pYU6d0nYXsZW/iwbOaEbk4+UBEgi/6ewHFJtMOIlXn7Ov6Dj6p7Dnm7o3BN1b7MWIS0CgJZDfFpMBG1bL2NFqTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxQCWYh2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=egyK6mkUhDoyWTmuN1XDrN3ZGdI+6v33aoP1NbVr8U7Nn8nW0a4nk60XCF4kOtyfZnKNdKyylOaA/T70e0YuOq0kn8e7v0MZy4eq72naR5evKch2nrZORq6WJjueNeOM506vzccG45yRbT5AgxK3+FAbL8GPOpGtaB+PRW2kXs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jq87hT2W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxQCWYh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256811F00893;
-	Sat, 30 May 2026 16:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jq87hT2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB80A1F00893;
+	Sat, 30 May 2026 16:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160303;
-	bh=jCTLugJUK47HrA3Nh+KMVmqtglDIwH3jw1j2vuvQAxw=;
+	s=korg; t=1780160307;
+	bh=90bHmQYEzCNk5AS72t2hoH8C+HK3BlmgeuAjfjv/m9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxQCWYh2/WfInugu7MyG70Enr9fwPAQIc/jbJZAUrMuyWVO8CmZvlVT6YOw3GbX4f
-	 oobs7aswrXfibkm5351IrA3knj02jk8g7JJkKk3sESPahJlIT+wv2OrYhgMZ0MVHf4
-	 nomkmXN4/p4iSssL7h+F0DLYe4TQIiT2ZQ5BSptg=
+	b=jq87hT2WvzYJ/gUzkzyDvB2L2r24qpMytTj4n7qc0TzSBpIAbJtomqjE29/tkzatq
+	 iT2iYysSTCqQ4Zb6OPkqegWqfZKg+8ny0IoVAjduP7lq3zxxYvQITu75KQ3iyrs+f7
+	 KE0clyr97b8R12cRInUj04oZB4FvS+mKvKQBoVrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Yen <leon.yen@mediatek.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.1 300/969] wifi: mt76: mt7921: fix a potential clc buffer length underflow
-Date: Sat, 30 May 2026 17:57:04 +0200
-Message-ID: <20260530160308.720888713@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 301/969] wifi: b43legacy: enforce bounds check on firmware key index in RX path
+Date: Sat, 30 May 2026 17:57:05 +0200
+Message-ID: <20260530160308.745529976@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,39 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 5373f8b19e568b5c217832b9bbef165bd2b2df14 upstream.
+commit a035766f970bde2d4298346a31a80685be5c0205 upstream.
 
-The buf_len is used to limit the iterations for retrieving the country
-power setting and may underflow under certain conditions due to changes
-in the power table in CLC.
+Same fix as b43: the firmware-controlled key index in b43legacy_rx()
+can exceed dev->max_nr_keys. The existing B43legacy_WARN_ON is
+non-enforcing in production builds, allowing an out-of-bounds read of
+dev->key[].
 
-This underflow leads to an almost infinite loop or an invalid power
-setting resulting in driver initialization failure.
+Make the check enforcing by dropping the frame for invalid indices.
 
+Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
 Cc: stable@vger.kernel.org
-Fixes: fa6ad88e023d ("wifi: mt76: mt7921: fix country count limitation for CLC")
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20251009020158.1923429-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-2-tristmd@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/broadcom/b43legacy/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -1054,6 +1054,9 @@ int __mt7921_mcu_set_clc(struct mt7921_d
- 		u16 len = le16_to_cpu(rule->len);
- 		u16 offset = len + sizeof(*rule);
+--- a/drivers/net/wireless/broadcom/b43legacy/xmit.c
++++ b/drivers/net/wireless/broadcom/b43legacy/xmit.c
+@@ -476,7 +476,8 @@ void b43legacy_rx(struct b43legacy_wldev
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43legacy_kidx_to_raw(dev, keyidx);
+-		B43legacy_WARN_ON(keyidx >= dev->max_nr_keys);
++		if (B43legacy_WARN_ON(keyidx >= dev->max_nr_keys))
++			goto drop;
  
-+		if (buf_len < offset)
-+			break;
-+
- 		pos += offset;
- 		buf_len -= offset;
- 		if (rule->alpha2[0] != alpha2[0] ||
+ 		if (dev->key[keyidx].algorithm != B43legacy_SEC_ALGO_NONE) {
+ 			/* Remove PROTECTED flag to mark it as decrypted. */
 
 
