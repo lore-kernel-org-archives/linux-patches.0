@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C90E21E098;
-	Sat, 30 May 2026 18:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B684C233D9E;
+	Sat, 30 May 2026 18:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165043; cv=none; b=rCOizuH4si7EY3xxb8tOyqnf8c1ZKgLv3diqOOBrKVPzMAy//fbEa4hQMjR/Z6k4Z52gtbkpWlHHG59OtjJldMARvHKQNpDAaJV66o5bGY4zmmYRMHEML4so5uyw87LgQJ7r4tO6aWCaiKmGtxWnYgDXFoT4mEkGjgz5etu+gic=
+	t=1780165046; cv=none; b=DoPipez74LxhGtrjWa4Vom63HOL493rLfwi26zD0t6zNRqs/XfQEZmjJM0annr1/xfAN/7qyRozigXgj9b0UjBr3gyNFDXl3WoEWYXCj1tq9oS/AbZgYqKkKFYuariBAkIgoK4lAQxXNsvS0fszVWvBIDCa7WLcKnM+jyfDqDDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165043; c=relaxed/simple;
-	bh=FDqthi/u8iGKA0XQqz0b/KeEg38YIAi7Juz7aqtO0d4=;
+	s=arc-20240116; t=1780165046; c=relaxed/simple;
+	bh=yY9ZO0V1k892pR8/kRNUhPkaF/XKhg/d5Ec5dSQJpco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vb1W/+h1agWCurIQ9aKpGhZgAutW3UK+Nam0a/Bbp00IYjU1g3y2LEsXW5Mcr9//J8F4f6jW+KutsW6Avz+k7w+7H8SbImKYmr9kRnHel5QPPFPKRjLK7LHGgN+mBRX4igJzWS7/NzhPCED//E7AiseSWMcpBBHujrSc5KLGkvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWL2Mbbd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPTfISvpVnQn0EEkSSVay4v9ISriUt+G0dKu+wSmAYa2G78OxYq9pjj5k2/NFR6Npp4q+sl0USDj+0JoXn0mly/493R4UGCPL8yNUQWcAxYYfXndIHNuYMCGSN+PXYAXrRuCRD5tpLM2QI66j7Ro8er9cZLe+eXy5dpzPTGOpxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAE/PfRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWL2Mbbd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7076A1F00893;
-	Sat, 30 May 2026 18:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAE/PfRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CD61F00893;
+	Sat, 30 May 2026 18:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165042;
-	bh=9ipaV19h4T7ZX4cX8uI2rOYPWuF/4+Wm7tqzdIBKKdE=;
+	s=korg; t=1780165045;
+	bh=4OeTYEJwpYbBzz8bmOe4U0s/qa4URnWZIjXRONxj6Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nWL2MbbdTr0w7qahC+hhO7enoh/lwviARu+jmMjl4xnDHoeVKaFlW0HUJgsYcNlVk
-	 WBwS4MzeQab2lAq/gKLcvl1EGR0b+SMR7ne329RA9t0F7fpKHh9+rXPfuo5Ta70Gf1
-	 qG3fLZ/P5LXGT7GGc5GIWojCP5+bgjWG0D+eJuNE=
+	b=VAE/PfRFdYJioPaVqgiR7HEs3qxwJ8Qcr8LAfJ1F66p9F5DFsY2ZXsUI5jsXNwIVQ
+	 xF81EBxBvSiQvx0UTZBtf5ovy9EYim1hf0vuFKjwq3bKgFJ+OYLMMghp+qpgryD4aP
+	 KxtE78oKo9a4WyGsMIxrHXoxoioTqSTy7iGbB72o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 734/776] netfilter: ebtables: allow xtables-nft only builds
-Date: Sat, 30 May 2026 18:07:28 +0200
-Message-ID: <20260530160258.776113663@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 717/776] hwmon: (pmbus/adm1266) reject implausible blackbox record_count
+Date: Sat, 30 May 2026 18:07:11 +0200
+Message-ID: <20260530160258.349492360@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,84 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 7ad269787b6615ca56bb161063331991fce51abf ]
+commit 4afca954622d672ea65ed961bed01cf91caa034e upstream.
 
-Same patch as previous one, but for ebtables.
+adm1266_nvmem_read_blackbox() loops over a record_count that comes
+straight from byte 3 of the BLACKBOX_INFO response.  The destination
+buffer is data->dev_mem, sized for the nvmem cell's declared 2048
+bytes (ADM1266_BLACKBOX_MAX_RECORDS * ADM1266_BLACKBOX_SIZE = 32 * 64).
+A device that reports a record_count greater than 32 -- whether due
+to firmware bugs, bus corruption, or a non-responsive slave returning
+0xff -- would walk read_buff past the end of the dev_mem allocation
+on the trailing iterations.
 
-To build a kernel that only supports ebtables-nft, the builtin tables
-need to be disabled, i.e.:
+Cap record_count at ADM1266_BLACKBOX_MAX_RECORDS (introduced here)
+before entering the loop and return -EIO on any larger value, so a
+malformed BLACKBOX_INFO response cannot drive the loop out of bounds.
 
-CONFIG_BRIDGE_EBT_BROUTE=n
-CONFIG_BRIDGE_EBT_T_FILTER=n
-CONFIG_BRIDGE_EBT_T_NAT=n
-
-The ebtables specific extensions can then be used nftables'
-NFT_COMPAT interface.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-3-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/Kconfig  | 7 +++++++
- net/bridge/netfilter/Makefile | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/adm1266.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
-index 7f304a19ac1bf..104c0125e32e8 100644
---- a/net/bridge/netfilter/Kconfig
-+++ b/net/bridge/netfilter/Kconfig
-@@ -39,6 +39,10 @@ config NF_CONNTRACK_BRIDGE
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -46,6 +46,7 @@
  
- 	  To compile it as a module, choose M here.  If unsure, say N.
+ #define ADM1266_BLACKBOX_OFFSET		0
+ #define ADM1266_BLACKBOX_SIZE		64
++#define ADM1266_BLACKBOX_MAX_RECORDS	32
  
-+# old sockopt interface and eval loop
-+config BRIDGE_NF_EBTABLES_LEGACY
-+	tristate
-+
- menuconfig BRIDGE_NF_EBTABLES
- 	tristate "Ethernet Bridge tables (ebtables) support"
- 	depends on BRIDGE && NETFILTER && NETFILTER_XTABLES
-@@ -55,6 +59,7 @@ if BRIDGE_NF_EBTABLES
- #
- config BRIDGE_EBT_BROUTE
- 	tristate "ebt: broute table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables broute table is used to define rules that decide between
- 	  bridging and routing frames, giving Linux the functionality of a
-@@ -65,6 +70,7 @@ config BRIDGE_EBT_BROUTE
+ #define ADM1266_PMBUS_BLOCK_MAX		255
  
- config BRIDGE_EBT_T_FILTER
- 	tristate "ebt: filter table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables filter table is used to define frame filtering rules at
- 	  local input, forwarding and local output. See the man page for
-@@ -74,6 +80,7 @@ config BRIDGE_EBT_T_FILTER
+@@ -362,6 +363,8 @@ static int adm1266_nvmem_read_blackbox(s
+ 		return -EIO;
  
- config BRIDGE_EBT_T_NAT
- 	tristate "ebt: nat table support"
-+	select BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables nat table is used to define rules that alter the MAC
- 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
-diff --git a/net/bridge/netfilter/Makefile b/net/bridge/netfilter/Makefile
-index 1c9ce49ab6513..b9a1303da9771 100644
---- a/net/bridge/netfilter/Makefile
-+++ b/net/bridge/netfilter/Makefile
-@@ -9,7 +9,7 @@ obj-$(CONFIG_NFT_BRIDGE_REJECT)  += nft_reject_bridge.o
- # connection tracking
- obj-$(CONFIG_NF_CONNTRACK_BRIDGE) += nf_conntrack_bridge.o
+ 	record_count = buf[3];
++	if (record_count > ADM1266_BLACKBOX_MAX_RECORDS)
++		return -EIO;
  
--obj-$(CONFIG_BRIDGE_NF_EBTABLES) += ebtables.o
-+obj-$(CONFIG_BRIDGE_NF_EBTABLES_LEGACY) += ebtables.o
- 
- # tables
- obj-$(CONFIG_BRIDGE_EBT_BROUTE) += ebtable_broute.o
--- 
-2.53.0
-
+ 	for (index = 0; index < record_count; index++) {
+ 		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
 
 
