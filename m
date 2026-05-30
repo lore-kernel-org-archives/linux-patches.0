@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827BC21B191;
-	Sat, 30 May 2026 18:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEB033E36A;
+	Sat, 30 May 2026 18:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166589; cv=none; b=OhC7UqwRJNgHNCVvMK2+D21PwjXJ/b2H6+lvAer1NXs283rUFrtI5N3QNtA24Y2F7lr7Vxzpt+Xj9Jw3pz8OdmHS6Hs+JheFSXo/zvLy+Oque72JiFXcUSrYmSocp6d2bDyo+Tan0f+1FDyUlhaBXWvKlTfxx5oI/D2ieYu/w7k=
+	t=1780166592; cv=none; b=DVGijpYZX7FC0HXmlfd/mwH4zCsJ1r0LyYT4BpJi47goaFWQLS4c+LITu1RVrFAgi1rXVdSpCrF8NiotIjOkqPTcukmWRgTzIY4tVOTE8EdyK+ZC7obMYJA9SPAjTMNOoGLr+xFyqmreP7t/dJ7CzpNCYGJQWal8VJ7PNVMhL08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166589; c=relaxed/simple;
-	bh=WoRhqSShPtfgTO4DK1RbVTLt2lvT2MGr8Dn5vC3FcjA=;
+	s=arc-20240116; t=1780166592; c=relaxed/simple;
+	bh=MGxR21G4YOis9zUho2pdaJVkIXeqwrRsh8Qk955TGk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ajiWcpaxWlYhYOGrY4/spegogUAl1vKL5JBGLDq2pCdba1zj870pji/VBeXwm/GLfnBTWMwV7UpdxuhOqo6Oz26acP1zwd1lzEOFjd8XNhKuuIsC9iato+PE6dUTsoTVes2C8WpRNzBLChtRPVos716o6GuXSNd8XSFCWgfnhcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gslduudb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Zs0bsje0h3XHu3vSEvAT6iDr7I97HC6ofCX726BHCO6MSOjA9eGFz4/OMDt0NzldaC8fqBOSUYS6yeeKU5dQ3trZDaQGzIPENS9PwuAntJCDRqEx6XvqIdkRcIqyXH++8aWloGFEcn2Yf9DlG0srYQ1UpCld9D3LDFp5jiQgW9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmZTo+Np; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gslduudb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCA81F00893;
-	Sat, 30 May 2026 18:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmZTo+Np"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0741D1F00893;
+	Sat, 30 May 2026 18:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166588;
-	bh=Jx06TU3E+52iBsVE7xqSSuEEATAktUyQpcyTy6b/NTU=;
+	s=korg; t=1780166591;
+	bh=BG+uihWVNRb/hbjBP7aJs9d7u2s2Y03+dRkfKsFvPzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gslduudbZgDsVV2MHdAHZXhSOdf3e57LUXGEmB7OQ1WM5BUuHIE4tE5aUnDbS6Zw/
-	 wCz3Dsx509W+OS9IQiA7oil48T1IEFsuWfxaI+X8FZNMeMRx768suppdt5wEVHeS3U
-	 3DQ85MWZK0zsgfmRUblyAg4gNLfJ5ZM3UDhoYaXs=
+	b=dmZTo+Np0/vGqZxUdpayja4togysnWc/F5BanAzy+7mmppsUL5HxOTOjP1U3A5L3y
+	 V6R91FVcnhiEXPFKXwVrFy0+sBL05JKb9tLUH9hyXWxf0qQm80yoxTTHPtwRZw/GNR
+	 XbdIV1BsaOxmX7vZsJba0CY/zYUk3YyK1lV1b1zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Dudu Lu <phx0fer@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 411/589] PCMCIA: Fix garbled log messages for KERN_CONT
-Date: Sat, 30 May 2026 18:04:52 +0200
-Message-ID: <20260530160235.558574269@linuxfoundation.org>
+Subject: [PATCH 5.10 412/589] net/sched: sch_cake: fix NAT destination port not being updated in cake_update_flowkeys
+Date: Sat, 30 May 2026 18:04:53 +0200
+Message-ID: <20260530160235.581286166@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,50 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit bfeaa6814bd3f9a1f6d525b3b35a03b9a0368961 ]
+[ Upstream commit f9e40664706927d7ae22a448a3383e23c38a4c0b ]
 
-For years the PCMCIA info messages are messed up by superfluous
-newlines. While f2e6cf76751d ("pcmcia: Convert dev_printk to
-dev_<level>") converted the code to pr_cont(), dev_info enforces a \n
-via vprintk_store setting LOG_NEWLINE, breaking subsequent pr_cont.
+cake_update_flowkeys() is supposed to update the flow dissector keys
+with the NAT-translated addresses and ports from conntrack, so that
+CAKE's per-flow fairness correctly identifies post-NAT flows as
+belonging to the same connection.
 
-Fix by logging the device name manually to allow pr_cont to work for
-more readable and not \n distorted logs.
+For the source port, this works correctly:
+    keys->ports.src = port;
 
-Fixes: f2e6cf76751d ("pcmcia: Convert dev_printk to dev_<level>")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+But for the destination port, the assignment is reversed:
+    port = keys->ports.dst;
+
+This means the NAT destination port is never updated in the flow keys.
+As a result, when multiple connections are NATed to the same destination,
+CAKE treats them as separate flows because the original (pre-NAT)
+destination ports differ. This breaks CAKE's NAT-aware flow isolation
+when using the "nat" mode.
+
+The bug was introduced in commit b0c19ed6088a ("sch_cake: Take advantage
+of skb->hash where appropriate") which refactored the original direct
+assignment into a compare-and-conditionally-update pattern, but wrote
+the destination port update backwards.
+
+Fix by reversing the assignment direction to match the source port
+pattern.
+
+Fixes: b0c19ed6088a ("sch_cake: Take advantage of skb->hash where appropriate")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260413110041.44704-1-phx0fer@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/sch_cake.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index ab487edec2e5b..9b3ff50cfdc6a 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -188,7 +188,7 @@ static void do_io_probe(struct pcmcia_socket *s, unsigned int base,
- 	int any;
- 	u_char *b, hole, most;
- 
--	dev_info(&s->dev, "cs: IO port probe %#x-%#x:", base, base+num-1);
-+	pr_info("%s: cs: IO port probe %#x-%#x:", dev_name(&s->dev), base, base+num-1);
- 
- 	/* First, what does a floating port look like? */
- 	b = kzalloc(256, GFP_KERNEL);
-@@ -410,8 +410,8 @@ static int do_mem_probe(struct pcmcia_socket *s, u_long base, u_long num,
- 	struct socket_data *s_data = s->resource_data;
- 	u_long i, j, bad, fail, step;
- 
--	dev_info(&s->dev, "cs: memory probe 0x%06lx-0x%06lx:",
--		 base, base+num-1);
-+	pr_info("%s: cs: memory probe 0x%06lx-0x%06lx:",
-+	       dev_name(&s->dev), base, base+num-1);
- 	bad = fail = 0;
- 	step = (num < 0x20000) ? 0x2000 : ((num>>4) & ~0x1fff);
- 	/* don't allow too large steps */
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index edf9a6e328d22..96bd0d36d8c12 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -619,7 +619,7 @@ static bool cake_update_flowkeys(struct flow_keys *keys,
+ 		}
+ 		port = rev ? tuple.src.u.all : tuple.dst.u.all;
+ 		if (port != keys->ports.dst) {
+-			port = keys->ports.dst;
++			keys->ports.dst = port;
+ 			upd = true;
+ 		}
+ 	}
 -- 
 2.53.0
 
