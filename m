@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C231D263F44;
-	Sat, 30 May 2026 17:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A78D263F44;
+	Sat, 30 May 2026 17:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161856; cv=none; b=HTnymavOLgkUwpqWgBvKkoUnW5aqQ6sulEIeBTFMe4wBiFK3jOlyEogvfsT/NUz+GOLRuXOoRDSpdGOHtQzFQCbILI1qPmzpnRoFk/BgwlIopWYAAzpf3wAEqtY4hTVJu2jQCuAnxKJaPApymkv5IO7qXqk2+2TFEXFdAC1iVRY=
+	t=1780161861; cv=none; b=c6kLiBftovgMX26FVE8yKOlnIpn12xOgHNb/Ja78nRWhkYf5TWAzaUiLNy05kcCV6vs7Hqx26KP4vGYoBOKFzbJUT581U5ErGMNZ2RtQwtO2Rk+wl7VbDirb+Zbdag2WD8Ot4Wj0THKxEGsXmzS6ZY17g+A759j+UkEGBzeiH2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161856; c=relaxed/simple;
-	bh=OQGO2ehjQ/jS9SCazKUXS6YpJVdrGgUE0X8HjTD98bE=;
+	s=arc-20240116; t=1780161861; c=relaxed/simple;
+	bh=n/EBHAeJjMJRMjfEKCTSmijm2/5kylPwkW8Mt9RLUQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBXHqJ4KEA1zzoLkllVfuGOMdWqjiglziQ1Ja5QTwrr9PGUusg4Y+/WSGGraiKoYId8Dc/cu5M2QOPUX/aJ7ZGoA7JEEdBVGOZpqM7k8+q29BBqUJNf9U2YUGG36eYhyewiocChD/MPcmTZrtrrBm2w5+Qp92Wnvb791RUU6ALo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zytG0L7W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LHii2GnKY9PYFkIA5Xwrdo47SK263G39+99sScc7bTe7C9F3/x/ZdEH6kAH3vfznF+U0w7DxGVohPXLx/+QmLf3XD8qkEirga4q6GHHuoW1PT4hCgLUb1i+vE279niIy4l0VcrN6oh3lAaTA1nClyuI2k1m7qaafCUaUDzs6SXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=squ3Tqmy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zytG0L7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116291F00893;
-	Sat, 30 May 2026 17:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="squ3Tqmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA851F00893;
+	Sat, 30 May 2026 17:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161855;
-	bh=SXt+vD/Hq0EL7/wPfzHFBNbptmG2bf+25IIwqMhjLmc=;
+	s=korg; t=1780161859;
+	bh=rezWjxoYb6p6wg5GmqDfcg/6ve1SZid+7gJ4Bm6XrGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zytG0L7WsmGgHjkMuxIa1dIO2lPgJyvDIHAMt7i1GgxtQFvu4rLRnl1KzWRsqXNv2
-	 vuO+8zXEj9x0xmD8BbsUqvUSaSVTNYT4Qv+p+MwBZ9vVFJJnyiTfDJAsGT14GqqPsO
-	 kZKTJLUdGnq6L/RCQ8qEVm/K5hMGKLyB/5aVHToI=
+	b=squ3TqmyxuKvX7Rmtv4pa8OZRqq4oBBEpSHFOAezV0n1ZKuR0CyRIszizhV/axnbC
+	 8G5S2d1pc3WQKQkv0myzWAOTunJVDCX3q99ZfHi7L8DI8owPYcEMjNa55m+jUWt+Z0
+	 tkAadioXN2B659ZhmexcmXlYsEi9ys20xXlnXRRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Mark Harmstone <mark@harmstone.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 748/969] net/sched: netem: validate slot configuration
-Date: Sat, 30 May 2026 18:04:32 +0200
-Message-ID: <20260530160321.215209281@linuxfoundation.org>
+Subject: [PATCH 6.1 731/969] btrfs: fix double-decrement of bytes_may_use in submit_one_async_extent()
+Date: Sat, 30 May 2026 18:04:15 +0200
+Message-ID: <20260530160320.730703450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,84 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Mark Harmstone <mark@harmstone.com>
 
-[ Upstream commit 01801c359a74737b9b1aa28568b60374d857241a ]
+[ Upstream commit 82323b1a7088b7a5c3e528a5d634bff447fa286f ]
 
-Reject slot configurations that have no defensible meaning:
+submit_one_async_extent() calls btrfs_reserve_extent(), which decrements
+bytes_may_use. If the call btrfs_create_io_em() fails, we jump to
+out_free_reserve, which calls extent_clear_unlock_delalloc().
 
-  - negative min_delay or max_delay
-  - min_delay greater than max_delay
-  - negative dist_delay or dist_jitter
-  - negative max_packets or max_bytes
+Because we're specifying EXTENT_DO_ACCOUNTING, i.e.
+EXTENT_CLEAR_META_RESV | EXTENT_CLEAR_DATA_RESV, this decreases
+bytes_may_use again. This can lead to problems later on, as an initial
+write can fail only for the writeback to silently ENOSPC.
 
-Negative or out-of-order delays underflow in get_slot_next(),
-producing garbage intervals. Negative limits trip the per-slot
-accounting (packets_left/bytes_left <= 0) on the first packet of
-every slot, defeating the rate-limiting half of the slot feature.
+Fix this by replacing EXTENT_DO_ACCOUNTING with EXTENT_CLEAR_META_RESV.
+This parallels a4fe134fc1d8eb ("btrfs: fix a double release on reserved
+extents in cow_one_range()"), which is the same fix in cow_one_range().
 
-Note that dist_jitter has been silently coerced to its absolute
-value by get_slot() since the feature was introduced; rejecting
-negatives here converts that silent coercion into -EINVAL. The
-abs() can be removed in a follow-up.
-
-Fixes: 836af83b54e3 ("netem: support delivering packets in delayed time slots")
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-5-stephen@networkplumber.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 151a41bc46df ("Btrfs: fix what bits we clear when erroring out from delalloc")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Mark Harmstone <mark@harmstone.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 288df378321d9..adb2bab79c87c 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -815,6 +815,29 @@ static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- 	return 0;
- }
- 
-+static int validate_slot(const struct nlattr *attr, struct netlink_ext_ack *extack)
-+{
-+	const struct tc_netem_slot *c = nla_data(attr);
-+
-+	if (c->min_delay < 0 || c->max_delay < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot delay");
-+		return -EINVAL;
-+	}
-+	if (c->min_delay > c->max_delay) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "slot min delay greater than max delay");
-+		return -EINVAL;
-+	}
-+	if (c->dist_delay < 0 || c->dist_jitter < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative dist delay");
-+		return -EINVAL;
-+	}
-+	if (c->max_packets < 0 || c->max_bytes < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot limit");
-+		return -EINVAL;
-+	}
-+	return 0;
-+}
-+
- static void get_slot(struct netem_sched_data *q, const struct nlattr *attr)
- {
- 	const struct tc_netem_slot *c = nla_data(attr);
-@@ -1027,6 +1050,12 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 			goto table_free;
- 	}
- 
-+	if (tb[TCA_NETEM_SLOT]) {
-+		ret = validate_slot(tb[TCA_NETEM_SLOT], extack);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 6a5364b466be1..3cdda1e4ad79e 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1069,7 +1069,7 @@ static int submit_one_async_extent(struct btrfs_inode *inode,
+ 	extent_clear_unlock_delalloc(inode, start, end,
+ 				     NULL, EXTENT_LOCKED | EXTENT_DELALLOC |
+ 				     EXTENT_DELALLOC_NEW |
+-				     EXTENT_DEFRAG | EXTENT_DO_ACCOUNTING,
++				     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV,
+ 				     PAGE_UNLOCK | PAGE_START_WRITEBACK |
+ 				     PAGE_END_WRITEBACK | PAGE_SET_ERROR);
+ 	free_async_extent_pages(async_extent);
 -- 
 2.53.0
 
