@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EFA34104B;
-	Sat, 30 May 2026 17:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B382304BCB;
+	Sat, 30 May 2026 17:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163383; cv=none; b=cGsjTkAz32vYfeuBPvq/IZ/JS1Ve8Y541RK3WVK0d/2IYVWLSZwFJaaq09f7SqtzkHMWVgr2SqTpGksHAsCmDHIZdC/x3jmuOy7bmGeBbfcbPHfyD/mbkeHAdb+opgZtTpxCDSt24++T0TBj1nCpJ10LNXNTfbVdhhAC+nAeCII=
+	t=1780163387; cv=none; b=SrXgPnPt1Gwk/opOLezcwCx3OmokNy7EFTbzSof2rfMLpFMXv5aoTh3VqrFy73UYHkXPOiLoKwOwoUydiN1EAjmdQb3DvonapVpdEch4WEudPV+eVWb+ebc/DDIqO/2nHORkb5f5SMJykeqw5Vyg2hwjt4q9aYnuVsq2siNVk04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163383; c=relaxed/simple;
-	bh=k5ZFZYiRBUZfkCBkZ8j+RjpUntWE4ugwvEh+IXUkeUI=;
+	s=arc-20240116; t=1780163387; c=relaxed/simple;
+	bh=Gu6onoC0YavmA7GIH9V9quoBGKzI3QVwPc0C6xvkj+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qztl54HN7DkMEQ69wn7oIy8YMUH2TNZgl/m54LacOQQaJqltpGRE8/v80uao2dPFAExMwAN3ml3Jx6jiPZUp5Ha6wVv3HkFBcwy1ZwoOnIRe25RWADAn15BrJGUMl1d/IJog+cYcrEC13TqUJ7SATB2MkR87kQaXBLcMqLGjip4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSb52A6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BuDyRFXBZsC0ltPR7LFU69A/G9s6fFel6Z2IlFZtdUO7TVLAtO9OI8mb+f/9zGFEuGCaCLWAyNYgFfe+x5mxLdR8diYIqDU/KLedKQROx1HgsCKXAHLF0aWQWYETTjn83g93RR6AdXtcbWMDMNX1XuFdvM22zlNqKHsHyTc2lxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI1QBG9t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSb52A6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F331F00893;
-	Sat, 30 May 2026 17:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI1QBG9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622F31F00893;
+	Sat, 30 May 2026 17:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163382;
-	bh=wAbeyVtbtstWfWAdfvFatYmfZCgv0ypDRgb6iRhve7Y=;
+	s=korg; t=1780163386;
+	bh=DWgOk7n88mjSe8TKkcn1r3JOMW4LXYj0aM4KmIOnd8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSb52A6rkW/bMFn4gXxSW2Nl5tB/xAow5qkNV8d5gX0ZF3dQIsiCejtpbqdyfclSt
-	 bdhSrHHFBCw8VmkkTDB75Oa8RtUT8L73JRMKDAyYWA4a5AuZFYIjwAQSirDTYlk6X9
-	 EFfSXQcI23dYxhzwtfWzlsU4avXOl5IUnzAL1KnA=
+	b=BI1QBG9tOXUFqVtOfyIWlXGGyOGkZAhssGnkpyKtzlb1dbqnL6gFipRBr17QegX2i
+	 cQkgwkYQ/Naw7CtEg1u3voY9KiQ/KW7f6K3Y/witadRdGUETehQKxfMbYdRnjpXnBV
+	 p+ytnLze5x7XrQQjLrh98ECa7f8lYRqlPQalVW/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	James Kim <james010kim@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/776] mtd: docg3: Convert to platform remove callback returning void
-Date: Sat, 30 May 2026 17:59:16 +0200
-Message-ID: <20260530160246.786443876@linuxfoundation.org>
+Subject: [PATCH 5.15 243/776] mtd: docg3: fix use-after-free in docg3_release()
+Date: Sat, 30 May 2026 17:59:17 +0200
+Message-ID: <20260530160246.811467450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,70 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: James Kim <james010kim@gmail.com>
 
-[ Upstream commit eb0cec77d534413a800ec20944a2b1e37cfecdcf ]
+[ Upstream commit ca19808bc6fac7e29420d8508df569b346b3e339 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+In docg3_release(), the docg3 pointer is obtained from
+cascade->floors[0]->priv before the loop that calls
+doc_release_device() on each floor. doc_release_device() frees the
+docg3 struct via kfree(docg3) at line 1881. After the loop,
+docg3->cascade->bch dereferences the already-freed pointer.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Fix this by accessing cascade->bch directly, which is equivalent
+since docg3->cascade points back to the same cascade struct, and
+is already available as a local variable. This also removes the
+now-unused docg3 local variable.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: c8ae3f744ddc ("lib/bch: Rework a little bit the exported function names")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Kim <james010kim@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-5-u.kleine-koenig@pengutronix.de
-Stable-dep-of: ca19808bc6fa ("mtd: docg3: fix use-after-free in docg3_release()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/devices/docg3.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mtd/devices/docg3.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/mtd/devices/docg3.c b/drivers/mtd/devices/docg3.c
-index 27c08f22dec8c..25a7df6448028 100644
+index 25a7df6448028..7de576404b14f 100644
 --- a/drivers/mtd/devices/docg3.c
 +++ b/drivers/mtd/devices/docg3.c
-@@ -2038,7 +2038,7 @@ static int __init docg3_probe(struct platform_device *pdev)
-  *
-  * Returns 0
-  */
--static int docg3_release(struct platform_device *pdev)
-+static void docg3_release(struct platform_device *pdev)
+@@ -2041,7 +2041,6 @@ static int __init docg3_probe(struct platform_device *pdev)
+ static void docg3_release(struct platform_device *pdev)
  {
  	struct docg3_cascade *cascade = platform_get_drvdata(pdev);
- 	struct docg3 *docg3 = cascade->floors[0]->priv;
-@@ -2050,7 +2050,6 @@ static int docg3_release(struct platform_device *pdev)
+-	struct docg3 *docg3 = cascade->floors[0]->priv;
+ 	int floor;
+ 
+ 	doc_unregister_sysfs(pdev, cascade);
+@@ -2049,7 +2048,7 @@ static void docg3_release(struct platform_device *pdev)
+ 		if (cascade->floors[floor])
  			doc_release_device(cascade->floors[floor]);
  
- 	bch_free(docg3->cascade->bch);
--	return 0;
+-	bch_free(docg3->cascade->bch);
++	bch_free(cascade->bch);
  }
  
  #ifdef CONFIG_OF
-@@ -2068,7 +2067,7 @@ static struct platform_driver g3_driver = {
- 	},
- 	.suspend	= docg3_suspend,
- 	.resume		= docg3_resume,
--	.remove		= docg3_release,
-+	.remove_new	= docg3_release,
- };
- 
- module_platform_driver_probe(g3_driver, docg3_probe);
 -- 
 2.53.0
 
