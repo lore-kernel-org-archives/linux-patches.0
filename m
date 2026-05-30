@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F85217704;
-	Sat, 30 May 2026 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D042E7390;
+	Sat, 30 May 2026 18:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165344; cv=none; b=MiH39xSyIyad4GU1/Kcl5cfECJZfb6jl2F3vSCy2/3LAmaE9bSh8klzG93e4qCI3ytIgzYnNoh3xdfBY9DjGaDjru1tPRyBt31GRR1geoGgsV3hZJkb2nO0Jx4ovpuZ8dm0MG4wAEDsKVxmNfQJnoEUd9azHBl6l7dprQJHk6gw=
+	t=1780165348; cv=none; b=BjPZBh68FMqgfBwXDxKtdzNmpQU1dcZ3MQJUnA41frJ1a/UZh5Zqj3Ef8oozhS6CvRpEerZrPgzG/Sh6Ecmu0ocB38ueny6d4WjZL1Vw/R6M8XNYmTJHah1cZJDvncj/ynmJRmQy3fBbb+weAUxnLG+fYi8Qxz8RNdv4Tk9+aHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165344; c=relaxed/simple;
-	bh=v/hK87NwVpJ8UpPmuf7LuVJ2XrBD3lHhKxOj9ZqSwww=;
+	s=arc-20240116; t=1780165348; c=relaxed/simple;
+	bh=JGTOA3uf9k3LlkA5xcWA6ZReFo5NarkANtyUV2WbBFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSafG2etvtCPQL9U2x6Q3poSaAkzYM0hm0WgYrSOBRGMW9MRDPFU7ReToBRYnIBQyYEOdypcd+yzIr7HpU3iFxeC6cgrB9JXgPb2U9RaAvORwyxRPeIVto7q8CFgGc6tJYCWLRORkkYNJ5Y6FPHYZlgvQR3AO/r94rOsLdr3NsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3zn+3q4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=muOBlb66723OTCZLlkIocfFoqcn/mT1kVVmFCh8FTLR/28bD9vmcYSIvRxw7AJYQ2RWmR5EOrHT7JPpQT0s9doc4xWX32KlcvOInagCD+Wc92icHBYx8tETYGnXQd2jX/c0qAigDBB0lUXLvsnFtwh1h4PlemSszs9WkqhHk4SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH90pamc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3zn+3q4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132221F00893;
-	Sat, 30 May 2026 18:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH90pamc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAFF1F00893;
+	Sat, 30 May 2026 18:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165343;
-	bh=/wVRaw3IklSJu5RStWUFCQN/3+wQZNBMBPhAOdrYdpI=;
+	s=korg; t=1780165347;
+	bh=ru3tUJJi8r2cz8ZAkCIVptTrd7zYFA0IjQ5buyw3DIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l3zn+3q4oDnlEgMKx/R68M+/3uFbXETH1MaWVLwJUVO2B9gSFj1UIar4OEmYSZDS5
-	 TGGtKoWabLtXtB8viIo0ighbxbpXKEqVhZsJaT3wPP03jnEw/2PewAc692JX8yHLQM
-	 OLFE2quYB2Fv54dMZON6+G9W8Q7McSgpdQx3ZTFY=
+	b=iH90pamcom86Ep4FZSaOvwE77jdA5B3hvbZc87CWB8KoO4FuiYhnsTrw/y8YG0pGM
+	 OtPSIwUvp6TB3jHWSRnl0rCQo4t8tcWYlJh6nXzbbt1liebIuRk1QeWHkL+jLZcOnN
+	 5dOxxjKTsOEp6NAWxFq9JM2jovXfRNziq+/OI1o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Thierry Escande <thierry.escande@linux.intel.com>,
-	Samuel Ortiz <sameo@linux.intel.com>,
+	Clemens Ladisch <clemens@ladisch.de>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
 	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 050/589] NFC: digital: Bounds check NFC-A cascade depth in SDD response handler
-Date: Sat, 30 May 2026 17:58:51 +0200
-Message-ID: <20260530160225.906268473@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 051/589] ALSA: fireworks: bound device-supplied status before string array lookup
+Date: Sat, 30 May 2026 17:58:52 +0200
+Message-ID: <20260530160225.932037672@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,56 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 46ce8be2ced389bccd84bcc04a12cf2f4d0c22d1 upstream.
+commit 07704bbf36f57e4379e4cadf96410dab14621e3b upstream.
 
-The NFC-A anti-collision cascade in digital_in_recv_sdd_res() appends 3
-or 4 bytes to target->nfcid1 on each round, but the number of cascade
-rounds is controlled entirely by the peer device.  The peer sets the
-cascade tag in the SDD_RES (deciding 3 vs 4 bytes) and the
-cascade-incomplete bit in the SEL_RES (deciding whether another round
-follows).
+The status field in an EFW response is a 32-bit value supplied by the
+firewire device.  efr_status_names[] has 17 entries so a status value
+outside that range goes off into the weeds when looking at the %s value.
 
-ISO 14443-3 limits NFC-A to three cascade levels and target->nfcid1 is
-sized accordingly (NFC_NFCID1_MAXSIZE = 10), but nothing in the driver
-actually enforces this.  This means a malicious peer can keep the
-cascade running, writing past the heap-allocated nfc_target with each
-round.
+Even worse, the status could return EFR_STATUS_INCOMPLETE which is
+0x80000000, and is obviously not in that array of potential strings.
 
-Fix this by rejecting the response when the accumulated UID would exceed
-the buffer.
+Fix this up by properly bounding the index against the array size and
+printing "unknown" if it's not recognized.
 
-Commit e329e71013c9 ("NFC: nci: Bounds check struct nfc_target arrays")
-fixed similar missing checks against the same field on the NCI path.
-
-Cc: Simon Horman <horms@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Thierry Escande <thierry.escande@linux.intel.com>
-Cc: Samuel Ortiz <sameo@linux.intel.com>
-Fixes: 2c66daecc409 ("NFC Digital: Add NFC-A technology support")
+Cc: Clemens Ladisch <clemens@ladisch.de>
+Cc: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Fixes: bde8a8f23bbe ("ALSA: fireworks: Add transaction and some commands")
 Cc: stable <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026040913-figure-seducing-bd3f@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://patch.msgid.link/2026040953-astute-camera-1aa1@gregkh
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/digital_technology.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/firewire/fireworks/fireworks_command.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/nfc/digital_technology.c
-+++ b/net/nfc/digital_technology.c
-@@ -424,6 +424,12 @@ static void digital_in_recv_sdd_res(stru
- 		size = 4;
- 	}
- 
-+	if (target->nfcid1_len + size > NFC_NFCID1_MAXSIZE) {
-+		PROTOCOL_ERR("4.7.2.1");
-+		rc = -EPROTO;
-+		goto exit;
-+	}
+--- a/sound/firewire/fireworks/fireworks_command.c
++++ b/sound/firewire/fireworks/fireworks_command.c
+@@ -151,10 +151,13 @@ efw_transaction(struct snd_efw *efw, uns
+ 	    (be32_to_cpu(header->category) != category) ||
+ 	    (be32_to_cpu(header->command) != command) ||
+ 	    (be32_to_cpu(header->status) != EFR_STATUS_OK)) {
++		u32 st = be32_to_cpu(header->status);
 +
- 	memcpy(target->nfcid1 + target->nfcid1_len, sdd_res->nfcid1 + offset,
- 	       size);
- 	target->nfcid1_len += size;
+ 		dev_err(&efw->unit->device, "EFW command failed [%u/%u]: %s\n",
+ 			be32_to_cpu(header->category),
+ 			be32_to_cpu(header->command),
+-			efr_status_names[be32_to_cpu(header->status)]);
++			st < ARRAY_SIZE(efr_status_names) ?
++				efr_status_names[st] : "unknown");
+ 		err = -EIO;
+ 		goto end;
+ 	}
 
 
