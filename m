@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7016D17555;
-	Sat, 30 May 2026 18:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8ACF21ADC7;
+	Sat, 30 May 2026 18:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165477; cv=none; b=msrtUPrwvE6Y/LiCLLQCTjfFqeUrCXmf1T53YiN0lTZkiK1Kq7v4GTm5ln4Qmbcnv/qnb0x9vW4rBIDhYCcD0qSaSB1E/Niiph2icpPadZQJOPnF62GdMnynceybG7aLzUBYMEojUtAaA6ExM4gB6iFXX4OewdK+BP+7lpf+76A=
+	t=1780165480; cv=none; b=CJFIeCgSn9LnPwDXfH6VdlpqiHom7+V3Y8jTz3PtuzwWbc6LgpGQhESzmufrRHpODgoZr/rkXK+2BHrSSKzOzRtMXZnr7sLiujs+d11eptrXXy0xUS7DOrWU/vsU8Q3kmxexjhSXXPYYo+mLWwFV8qP5bSH/8kL5E8My18PbWA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165477; c=relaxed/simple;
-	bh=SNgIyiLvDdLKa6blhu6T3WxnWH8XxqDs/8dbIDZNn04=;
+	s=arc-20240116; t=1780165480; c=relaxed/simple;
+	bh=wFA9Qi71l+DtOqFZQYE1u5uWxXo2szxOPiQw/go5DE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKt4uHqD0nqLLrEXScQ8F+upcFpmOWZJapZasrTLHdO/UP8oqEzCF7giw03PqgIJIzP76uzcl0syF4lI63Itms9YWlIolqr0ZkM5/n9LWS9FULTyEgEzj0hkP4RVu99lpvgX47SuRdozixRhw0az0HzLTf2zlQuhd2lFa80IxJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8q/MCnu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qhzp2a/WlD2s8TWiv/i6A1WfBfDTF/7OOrtkqrVkxwhDql7Ooof8SLDbjSJ0BNNEkG0VquWz3gkNBor6xseV+7/AGVKVFxCokd4gMgASNf6lgIUyFWh3dxN3zupRoDk36N/ueySZ1tZufm+HTLCaJjQoea7mqnO8D5QEI2LB754=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0D0d6qph; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8q/MCnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42641F00893;
-	Sat, 30 May 2026 18:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0D0d6qph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B1B1F00893;
+	Sat, 30 May 2026 18:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165476;
-	bh=hfxtN2CurQXz63Z5kEtpPLNpusuZG9nD/Mv++0h/uwk=;
+	s=korg; t=1780165479;
+	bh=2fMr5pmn6k8qf5/UBWi2e9nO1D8tlHJtKP0lSqUPQgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o8q/MCnuOMhmQSxD6T8ZvKh7iJ+1jxxoMiw6/SRMQDI9KijckMHcewxq57AFxy/J3
-	 f1z9VoqLQe8mZvnBxYbClMfTs/rpvtxdaMEV0g3Q4fOgZEccwuUedx7ezLPLJPEt7g
-	 +gMsYPY+CmCb8pW4Xcz+AqQd/Q1WdGQX+kO8UT5M=
+	b=0D0d6qphjQbxTI4t6VyzX8q4S4hsmsgNMWI7q/IowFshYcf+mhzTQB6ocOx8fZFOH
+	 mv7QcBNQmnBETl72IDfyrcwFBhgc5wDMIKw8rPldhGO642pRg/wvg0dV2ckqISH7gb
+	 LOfdAJjtWBXzjJxNL+qbyPp8z/NbsfRcMBp3h0Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Li hongliang <1468888505@139.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/589] ipv6: add NULL checks for idev in SRv6 paths
-Date: Sat, 30 May 2026 17:59:30 +0200
-Message-ID: <20260530160227.025783704@linuxfoundation.org>
+Subject: [PATCH 5.10 090/589] drm/amd/display: Add null checker before passing variables
+Date: Sat, 30 May 2026 17:59:31 +0200
+Message-ID: <20260530160227.055687089@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,57 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 06413793526251870e20402c39930804f14d59c0 ]
+commit 8092aa3ab8f7b737a34b71f91492c676a843043a upstream.
 
-__in6_dev_get() can return NULL when the device has no IPv6 configuration
-(e.g. MTU < IPV6_MIN_MTU or after NETDEV_UNREGISTER).
+Checks null pointer before passing variables to functions.
 
-Add NULL checks for idev returned by __in6_dev_get() in both
-seg6_hmac_validate_skb() and ipv6_srh_rcv() to prevent potential NULL
-pointer dereferences.
+This fixes 3 NULL_RETURNS issues reported by Coverity.
 
-Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260316073301.106643-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: cdaae8371aa9 ("drm/amd/display: Handle GPU reset for DC block")
+Fixes: dcd5fb82ffb4 ("drm/amd/display: Fix reference counting for struct dc_sink.")
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+[ kovalev: bp to fix CVE-2024-43902; added Fixes tags ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c   | 4 ++++
- net/ipv6/seg6_hmac.c | 2 ++
- 2 files changed, 6 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index cdad9019c77c4..dfa0fb3d6c35f 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -361,6 +361,10 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
- 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index c22783b882067..bd15de4dee75e 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1778,7 +1778,8 @@ static int dm_suspend(void *handle)
+ 		mutex_lock(&dm->dc_lock);
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
  
- 	idev = __in6_dev_get(skb->dev);
-+	if (!idev) {
-+		kfree_skb(skb);
-+		return -1;
-+	}
+-		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		if (dm->cached_dc_state)
++			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
  
- 	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
- 	if (accept_seg6 > idev->cnf.seg6_enabled)
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index f82fcd8908e14..b52985c867c29 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -245,6 +245,8 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
- 	struct inet6_dev *idev;
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
  
- 	idev = __in6_dev_get(skb->dev);
-+	if (!idev)
-+		return false;
+@@ -5396,7 +5397,8 @@ static void create_eml_sink(struct amdgpu_dm_connector *aconnector)
+ 		aconnector->dc_sink = aconnector->dc_link->local_sink ?
+ 		aconnector->dc_link->local_sink :
+ 		aconnector->dc_em_sink;
+-		dc_sink_retain(aconnector->dc_sink);
++		if (aconnector->dc_sink)
++			dc_sink_retain(aconnector->dc_sink);
+ 	}
+ }
  
- 	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+@@ -6575,7 +6577,8 @@ static int amdgpu_dm_connector_get_modes(struct drm_connector *connector)
+ 				drm_add_modes_noedid(connector, 640, 480);
+ 	} else {
+ 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
+-		amdgpu_dm_connector_add_common_modes(encoder, connector);
++		if (encoder)
++			amdgpu_dm_connector_add_common_modes(encoder, connector);
+ 	}
+ 	amdgpu_dm_fbc_init(connector);
  
 -- 
 2.53.0
