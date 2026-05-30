@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA682FDC5E;
-	Sat, 30 May 2026 18:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7B12FDC5E;
+	Sat, 30 May 2026 18:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165978; cv=none; b=a4YXZnHdLYDrZRxJy/iE0FhMdIbIntnpSOhF40PBZISv+V5jR7qn4z8fgU7S2Q6udfVuQWuXTuQuooZUu06Mtx8rrXOb0XP/ogMZNNS4jII+rgQMH/GtC9Pw07BhHLYquMuzOI+P6xkBz6Cz+tci7PBtLbnNlmiskZP6L9MQvvs=
+	t=1780165981; cv=none; b=vGFEXhDJbS3s24OJkok1NB23n1PN6pH/vh+GscJUw2xmJ7eScy5QztgvFuhb2oNF1Xxi6D4zvirK7C2oeXnyEtdLT8I+YiyBjzlXgKMBz32NoIczvAayN5RC2gUHRWotn1a+RH/sTyTJPTdcE3nXm/O8G/AUB72WkyD+mp9BZNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165978; c=relaxed/simple;
-	bh=KJSBItJ51c7sRbsUs8G4S7WUKRqYANqReEySzfi5Sto=;
+	s=arc-20240116; t=1780165981; c=relaxed/simple;
+	bh=rkjo4mnr0zVeA5WfY3RIterRSVH3F/WIxwVOgJ62ILs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kT/P/Z69ew4zjt136Sf8k1YfqLw39gvUlUnZ/whM7JkQe4MuuYnEHDSnPGdUldn8G4mpWCdIYcxxHoLkwdd3fhq4fE47vQEMZcaJ4kfQzhKjxeQxkJyIsBu85EY1xj92ZPb/zxtWTi2TpiYfrLyyzneUR3TpUGvNVT9O6w9yxQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrtImTXw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEjm2/UjrIDPbIWAXxIdUu7FtDKmuFeyBWrkQ6E1L1ttAj7jjY2dUzhRpP4MWTyqbAeHUWHGdy1zMR+X5Lbyzfg3s46TtRq7n+aig8vW3WVYcqQDwqfBpFEnrUl2jGSlTjK6D5m0EpidGLsqGdXvwFBuWf4RTLk9K5T+Iz/j9h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg2X/tyT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrtImTXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745F61F00893;
-	Sat, 30 May 2026 18:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg2X/tyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08A91F00893;
+	Sat, 30 May 2026 18:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165977;
-	bh=e4xIu/zbXXVfNKuLIYm2LgN0Wo93WZXHCayqOgcztcw=;
+	s=korg; t=1780165980;
+	bh=QRrPfySsjqSMa03rka/IH1Ov38B2PYWQrTJfUAcacxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MrtImTXwLJv2f4V0Jrw7ygbRZJpjWJffr5lcWax8pJPyj1ndvP108xugqqQ9ljKL9
-	 iCVAeK1skhwlHOGRKLVYlwgV3b3uPkSW1qB49WyQbh6sdaEOr6/Zh+ROxF3E8OhfKo
-	 8RJa8tRscVJSHkfA11de3VjipntNGLdPw40LRH2A=
+	b=dg2X/tyTgoj1omgPWno42sjEJWD4AHjccdxAauy79e1OYvoJRGo0BO5Bhyss8mX84
+	 FCFTfW6qCvJLLA3kIKSDmXyTRUb41puIOgkf/MhMKiu2H3cbAjT5Mwv2DFiCdVhqR+
+	 oEZadkI9DH4Ej951pxZ14IC3zss5JtgBLH8OYCq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Xiao Liu <lx24@stu.ynu.edu.cn>,
-	Nan Li <tonanli66@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 237/589] net/rds: handle zerocopy send cleanup before the message is queued
-Date: Sat, 30 May 2026 18:01:58 +0200
-Message-ID: <20260530160231.226236835@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 238/589] parisc: Fix IRQ leak in LASI driver
+Date: Sat, 30 May 2026 18:01:59 +0200
+Message-ID: <20260530160231.253040174@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -58,87 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nan Li <tonanli66@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 44b550d88b267320459d518c0743a241ab2108fa upstream.
+commit 37b0dc5e279f35036fb638d1e187197b6c05a76d upstream.
 
-A zerocopy send can fail after user pages have been pinned but before
-the message is attached to the sending socket.
+When request_irq() succeeds but gsc_common_setup() fails later,
+the IRQ is never released. Fix this by adding proper error handling
+with goto labels to ensure resources are released in LIFO order.
 
-The purge path currently infers zerocopy state from rm->m_rs, so an
-unqueued message can be cleaned up as if it owned normal payload pages.
-However, zerocopy ownership is really determined by the presence of
-op_mmp_znotifier, regardless of whether the message has reached the
-socket queue.
+Detected by Smatch:
+  drivers/parisc/lasi.c:216 lasi_init_chip() warn: 'lasi->gsc_irq.irq'
+from request_irq() not released on lines: 207.
 
-Capture op_mmp_znotifier up front in rds_message_purge() and use it as
-the cleanup discriminator. If the message is already associated with a
-socket, keep the existing completion path. Otherwise, drop the pinned
-page accounting directly and release the notifier before putting the
-payload pages.
-
-This keeps early send failure cleanup consistent with the zerocopy
-lifetime rules without changing the normal queued completion path.
-
-Fixes: 0cebaccef3ac ("rds: zerocopy Tx support.")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/d2ea98a6313d5467bac00f7c9fef8c7acddb9258.1777550074.git.tonanli66@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202604180957.4QdAIxP6-lkp@intel.com/
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/message.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/parisc/lasi.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -129,24 +129,34 @@ static void rds_rm_zerocopy_callback(str
-  */
- static void rds_message_purge(struct rds_message *rm)
- {
-+	struct rds_znotifier *znotifier;
- 	unsigned long i, flags;
--	bool zcopy = false;
-+	bool zcopy;
+--- a/drivers/parisc/lasi.c
++++ b/drivers/parisc/lasi.c
+@@ -196,8 +196,7 @@ static int __init lasi_init_chip(struct
  
- 	if (unlikely(test_bit(RDS_MSG_PAGEVEC, &rm->m_flags)))
- 		return;
- 
- 	spin_lock_irqsave(&rm->m_rs_lock, flags);
-+	znotifier = rm->data.op_mmp_znotifier;
-+	rm->data.op_mmp_znotifier = NULL;
-+	zcopy = !!znotifier;
-+
- 	if (rm->m_rs) {
- 		struct rds_sock *rs = rm->m_rs;
- 
--		if (rm->data.op_mmp_znotifier) {
--			zcopy = true;
--			rds_rm_zerocopy_callback(rs, rm->data.op_mmp_znotifier);
-+		if (znotifier) {
-+			rds_rm_zerocopy_callback(rs, znotifier);
- 			rds_wake_sk_sleep(rs);
--			rm->data.op_mmp_znotifier = NULL;
- 		}
- 		sock_put(rds_rs_to_sk(rs));
- 		rm->m_rs = NULL;
-+	} else if (znotifier) {
-+		/*
-+		 * Zerocopy can fail before the message is queued on the
-+		 * socket, so there is no rs to carry the notification.
-+		 */
-+		mm_unaccount_pinned_pages(&znotifier->z_mmp);
-+		kfree(rds_info_from_znotifier(znotifier));
+ 	ret = request_irq(lasi->gsc_irq.irq, gsc_asic_intr, 0, "lasi", lasi);
+ 	if (ret < 0) {
+-		kfree(lasi);
+-		return ret;
++		goto err_free;
  	}
- 	spin_unlock_irqrestore(&rm->m_rs_lock, flags);
  
+ 	/* enable IRQ's for devices below LASI */
+@@ -206,8 +205,7 @@ static int __init lasi_init_chip(struct
+ 	/* Done init'ing, register this driver */
+ 	ret = gsc_common_setup(dev, lasi);
+ 	if (ret) {
+-		kfree(lasi);
+-		return ret;
++		goto err_irq;
+ 	}    
+ 
+ 	gsc_fixup_irqs(dev, lasi, lasi_choose_irq);
+@@ -220,6 +218,12 @@ static int __init lasi_init_chip(struct
+ 	chassis_power_off = lasi_power_off;
+ 	
+ 	return ret;
++
++err_irq:
++	free_irq(lasi->gsc_irq.irq, lasi);
++err_free:
++	kfree(lasi);
++	return ret;
+ }
+ 
+ static struct parisc_device_id lasi_tbl[] __initdata = {
 
 
