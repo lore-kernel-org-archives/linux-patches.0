@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75F9137750;
-	Sat, 30 May 2026 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A881D63E4;
+	Sat, 30 May 2026 18:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167046; cv=none; b=UsvX1X8STCmgMbmllXHghkCWxUiaVhp2sTWvkStV+ERq3JF9yHdb6v53hPi0DXhIRa2fGyDSAkmFxKOtaM6HoHY8MjYZPODnS6jHJcu/IPqDNbU8jkS6h80BFI7/j4VLArWUyL3cL5SqN0v0lI6iL0Bi4DASFAqqCyCOG8gBOt8=
+	t=1780167049; cv=none; b=KUrt/KfZg9oa7NYdFgrXs//YOMNx/uUN/+eiLiF5BlSVkLYI+6moLqigEK5MW/MUwp+L9Yt1l76+uQxbuMcplnknZAk+VLR98uYZOCu1rgg2gV9i8LQpoZ8OcF4Zsoz79Hy8cTrqisibAyKDTZxDoIJRsYbthgEFntp9Q9+lkNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167046; c=relaxed/simple;
-	bh=NYsMaFVPCVA9GypOU/j9yGajSTYxW0oMXwHiumt6Zv8=;
+	s=arc-20240116; t=1780167049; c=relaxed/simple;
+	bh=fdpevyAWfNA3Vi9sf4aRuqCyuPA8bJSLh5ONpqR/ZzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1HmfxcHgxo6zy8ghjr23x6SIqXMC8PRpzT6aZYiJeP8KCoPaNH/d/ORf1C7wYElFJn91pT00LbMRNE6R1plQRG9Gu36vHMwtLVUTg4pgJ1kJbpKu+NdpyCV4cEIRsoegYhGPwLY316Q+LwUpjK3KPV7H44mEiTkpepb2d/8DJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aa6AZuV1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gPArmhi7lsOMH0oEKKK3SeViB9VksD1a4xPd3xClFJdZJpsGI0ZxngT7KdccZKpGcRIPzIUJZOKygzHCjcp1KoQudFZQNYq/0OXnX9E7UyttaCPqVbWE8V6+Q2avfi+sWAhnTmzqtXgvk6yRaWLh/vRrSpMZnhxEufi6MU0JGoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ix0aT3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aa6AZuV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE21F00893;
-	Sat, 30 May 2026 18:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ix0aT3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D3D1F00893;
+	Sat, 30 May 2026 18:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167044;
-	bh=GuAm+Pvnmxm/o5G0im2vC9gj/QpwrS7NdrI+zcY2jm0=;
+	s=korg; t=1780167048;
+	bh=kgLTZeswgZeGcd12QlzJDUmlGNn++9RII/iB1leLdow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aa6AZuV170UGBb8wXU4TVJoQRxYTgHLmeOvggnrCq+XcZTlVM/r0IzVI/L9XjPJgk
-	 1YyYU+/vuQCbRLxtdKa/RgR+TqN1QOd3qmJWiWdiumoceGmrYex4LM0x+jn6bEVm3g
-	 GyL6x7XF1F3W01mXHd7lZDEX14zKm93VzgqAiz1E=
+	b=2ix0aT3WZJS5ygEYpGGK0nAJFM8u51gq1VggkPJMcm2R0+FmzWvjfuqv4Pg3yYmrM
+	 tvtP0/VUQunPIQgQZ0YDXb5ecb4dWvoF1d1KNWM+JgXAru3GUT7MTiMZD/dL/J6jQp
+	 4fU1R58z8Q50hdjvO9XH0452n/OSGpkD7YN3jrmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Ian Ray <ian.ray@gehealthcare.com>
-Subject: [PATCH 5.10 548/589] drm/bridge: megachips: remove bridge when irq request fails
-Date: Sat, 30 May 2026 18:07:09 +0200
-Message-ID: <20260530160239.074207123@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 549/589] drm/amd/display: Fix integer overflow in bios_get_image()
+Date: Sat, 30 May 2026 18:07:10 +0200
+Message-ID: <20260530160239.098486259@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,68 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit d45d5c819f2cd0b6b5d76a194a537a5f4aeefecb upstream.
+commit cd86529ec61474a38c3837fb7823790a7c3f8cce upstream.
 
-If devm_request_threaded_irq() fails after drm_bridge_add(), remove the
-bridge before returning.
+[Why&How]
+The bounds check in bios_get_image() computes 'offset + size' using
+unsigned 32-bit arithmetic before comparing against bios_size. If a
+VBIOS image contains a near-UINT32_MAX offset the addition wraps to a
+small value, the comparison passes, and the function returns a wild
+pointer past the VBIOS mapping.
 
-Keep drm_bridge_add() rather than devm_drm_bridge_add(): registration is
-tied to the STDP4028 device while ge_b850v3_register() may complete from
-either I2C probe; devm would not unwind the bridge if the other client's
-probe fails.
+Additionally, the comparison uses '<' (strict), which incorrectly
+rejects the valid exact-fit case where offset + size == bios_size.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: fcfa0ddc18ed ("drm/bridge: Drivers for megachips-stdpxxxx-ge-b850v3-fw (LVDS-DP++)")
+Fix both issues by restructuring the check to avoid the addition
+entirely: first reject if offset alone exceeds bios_size, then check
+size against the remaining space (bios_size - offset). This eliminates
+the overflow and correctly permits exact-fit accesses.
+
+Assisted-by: GitHub Copilot:claude-opus-4.6
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d40fb392af659c4a02b560319f226842f6ec1a95)
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260430195700.80317-1-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |   16 +++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-+++ b/drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c
-@@ -302,7 +302,6 @@ static void ge_b850v3_lvds_remove(void)
- 		goto out;
- 
- 	drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
--
- 	ge_b850v3_lvds_ptr = NULL;
- out:
- 	mutex_unlock(&ge_b850v3_lvds_dev_mutex);
-@@ -312,6 +311,7 @@ static int ge_b850v3_register(void)
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
+@@ -37,10 +37,13 @@ uint8_t *bios_get_image(struct dc_bios *
+ 	uint32_t offset,
+ 	uint32_t size)
  {
- 	struct i2c_client *stdp4028_i2c = ge_b850v3_lvds_ptr->stdp4028_i2c;
- 	struct device *dev = &stdp4028_i2c->dev;
-+	int ret;
- 
- 	/* drm bridge initialization */
- 	ge_b850v3_lvds_ptr->bridge.funcs = &ge_b850v3_lvds_funcs;
-@@ -329,11 +329,15 @@ static int ge_b850v3_register(void)
- 	if (!stdp4028_i2c->irq)
- 		return 0;
- 
--	return devm_request_threaded_irq(&stdp4028_i2c->dev,
--			stdp4028_i2c->irq, NULL,
--			ge_b850v3_lvds_irq_handler,
--			IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--			"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
-+	ret = devm_request_threaded_irq(&stdp4028_i2c->dev,
-+					stdp4028_i2c->irq, NULL,
-+					ge_b850v3_lvds_irq_handler,
-+					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					"ge-b850v3-lvds-dp", ge_b850v3_lvds_ptr);
-+	if (ret)
-+		drm_bridge_remove(&ge_b850v3_lvds_ptr->bridge);
+-	if (bp->bios && offset + size < bp->bios_size)
+-		return bp->bios + offset;
+-	else
++	if (!bp->bios)
+ 		return NULL;
 +
-+	return ret;
++	if (offset > bp->bios_size || size > bp->bios_size - offset)
++		return NULL;
++
++	return bp->bios + offset;
  }
  
- static int stdp4028_ge_b850v3_fw_probe(struct i2c_client *stdp4028_i2c,
+ #include "reg_helper.h"
 
 
