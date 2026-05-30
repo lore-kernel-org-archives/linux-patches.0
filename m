@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC6A352027;
-	Sat, 30 May 2026 17:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FA7332EA7;
+	Sat, 30 May 2026 17:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163866; cv=none; b=mE8RT6vnCXD/mdCOCpvl1aG7SmAGBZDy8duqpAXEpzPxTDGWmxiq+ZzO07/yBHnTedZo8SwcnJWH0hZzCzzeDs7HPLhYxa7NFjSErw6gnHBJNlaAZZ+9OsKZEr4lMt9WbFxcv9sZ7OqcTNVahhw4z7mRJvVIgLMXYRHT0El89yg=
+	t=1780163869; cv=none; b=Sn/KWwjIxPB1mmUOSwcqvvL70/JvCWOFe/Ge5SflGwY4ZRnMLQAcigGq57u2aL3GegtyJxAtKepYTsWmCjqfdeLaco6p+LWkYHMwNmeHQlj6yUpSaxT46jW1dg3XU/DNJhCd4tzKvmn+oq8/tb7hAFbKt19Of5FQg2d2nKi6hgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163866; c=relaxed/simple;
-	bh=FyxGDZ8Rc9LZrq2vLmxS4JQ/5QOygSVjz5BVUvkBb70=;
+	s=arc-20240116; t=1780163869; c=relaxed/simple;
+	bh=5m3WYXif7NtGOJmAwdpPJ4aajzbC+golriBFZRTP1cU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=preur1ez0YpwxSXc7+MyydmahjU/uGdFnj8XXhfz5sLP720+92e+OYVmVX9AExv7cjMYpD6ZeLX4SwayMTs3qFrISETNJQtrfRWAvi46yqnppve8UAATcSp4ywJ4LcLH9ZBEupgsuycJhYGxrvQlnhiYhsZQRvMFvwLiaenA+lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwydmZDj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WVVEoTul35z8LZXuNHHFisX56betUxpVvk1MRlyRNYB0MeOXDSyUu3t9ucI5jqojt0/w9uTwVE+1babRTwdKp+pDC1WpiT0cHwkcpFmQB9k6TmbbL9Gg6j9vsRep7HVUVswmb4ZliveRtG5qK42Egt9X3L5wJo6BLxe72NztT6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MKBOCVJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwydmZDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B03A1F00893;
-	Sat, 30 May 2026 17:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MKBOCVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43711F00893;
+	Sat, 30 May 2026 17:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163865;
-	bh=nALtJp+MFsfwtGd4K4Gz8v5URs2FC72knv/Q1D5jaYY=;
+	s=korg; t=1780163868;
+	bh=oLc/qX6sIKVJEMSQqXJfEpelueygEV8D7xiVsKh/baY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwydmZDj5bOht1fx8JQDxu08DW5/ZEQqkrBcdJoSclqlJYIPsPO+wfDp/X5flKlRo
-	 aNUBHRyNyGRKL0H+1mwLABhQSd6EF0p7T+cxZWtHIkrUzu3/dcZMPHmE590JVx29QT
-	 pVXQCe+v07UnOw7/1MMqIBKTIC2jo2Y4LXBhG4Dk=
+	b=1MKBOCVJuueFZqOIdoc26rtkzgp3LUTt87a9IXz/5L6m9sLJaTg12kuPcjwHizGwK
+	 XS1CsSsnjpbpyiv6ezbyZ+fhK8APbl21PiJB16NVS8fU2R3/SIeZSQ05dlslZRc6Rf
+	 MVQ+Sm/FILSQiiUPaB1FIjEh/SLYkyR1l88NLc9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 385/776] fs/omfs: reject s_sys_blocksize smaller than OMFS_DIR_START
-Date: Sat, 30 May 2026 18:01:39 +0200
-Message-ID: <20260530160250.460095922@linuxfoundation.org>
+Subject: [PATCH 5.15 386/776] drbd: Balance RCU calls in drbd_adm_dump_devices()
+Date: Sat, 30 May 2026 18:01:40 +0200
+Message-ID: <20260530160250.481664448@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,59 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyungJung Joo <jhj140711@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 0621c385fda1376e967f37ccd534c26c3e511d14 ]
+[ Upstream commit 2b31e86387e60b3689339f0f0fbb4d3623d9d494 ]
 
-omfs_fill_super() rejects oversized s_sys_blocksize values (> PAGE_SIZE),
-but it does not reject values smaller than OMFS_DIR_START (0x1b8 = 440).
+Make drbd_adm_dump_devices() call rcu_read_lock() before
+rcu_read_unlock() is called. This has been detected by the Clang
+thread-safety analyzer.
 
-Later, omfs_make_empty() uses
-
-    sbi->s_sys_blocksize - OMFS_DIR_START
-
-as the length argument to memset().  Since s_sys_blocksize is u32,
-a crafted filesystem image with s_sys_blocksize < OMFS_DIR_START causes
-an unsigned underflow there, wrapping to a value near 2^32.  That drives
-a ~4 GiB memset() from bh->b_data + OMFS_DIR_START and overwrites kernel
-memory far beyond the backing block buffer.
-
-Add the corresponding lower-bound check alongside the existing upper-bound
-check in omfs_fill_super(), so that malformed images are rejected during
-superblock validation before any filesystem data is processed.
-
-Fixes: a3ab7155ea21 ("omfs: add directory routines")
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Link: https://patch.msgid.link/20260317054827.1822061-1-jhj140711@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Tested-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: a55bbd375d18 ("drbd: Backport the "status" command")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260326214054.284593-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/omfs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/block/drbd/drbd_nl.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/omfs/inode.c b/fs/omfs/inode.c
-index 2a0e83236c011..9773846daa4bc 100644
---- a/fs/omfs/inode.c
-+++ b/fs/omfs/inode.c
-@@ -515,6 +515,12 @@ static int omfs_fill_super(struct super_block *sb, void *data, int silent)
- 		goto out_brelse_bh;
+diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
+index 69184cf17b6ad..6d2093c2c51b7 100644
+--- a/drivers/block/drbd/drbd_nl.c
++++ b/drivers/block/drbd/drbd_nl.c
+@@ -3424,8 +3424,10 @@ int drbd_adm_dump_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 			cb->args[0] = (long)resource;
+ 		}
  	}
- 
-+	if (sbi->s_sys_blocksize < OMFS_DIR_START) {
-+		printk(KERN_ERR "omfs: sysblock size (%d) is too small\n",
-+			sbi->s_sys_blocksize);
-+		goto out_brelse_bh;
-+	}
-+
- 	if (sbi->s_blocksize < sbi->s_sys_blocksize ||
- 	    sbi->s_blocksize > OMFS_MAX_BLOCK_SIZE) {
- 		printk(KERN_ERR "omfs: block size (%d) is out of range\n",
+@@ -3674,8 +3676,10 @@ int drbd_adm_dump_peer_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 		}
+ 		cb->args[0] = (long)resource;
+ 	}
 -- 
 2.53.0
 
