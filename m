@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97703403F3;
-	Sat, 30 May 2026 16:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC25632D42B;
+	Sat, 30 May 2026 16:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160377; cv=none; b=us2fCjBY733d5obHZFfABfVOveNZ86Rd8Z1pqjn3B3Rjubwb+HSMxerVn2fhH8yLOdpSfYW1jCi0rbJWVUjacBAbzqSO3sdMf8z57GqHoD3/PhqaNRG7ZCFyiuEggRAcEeP0/BpHaFbzLwomOcJqbX9tE7LAAG6YKqGJyFrDFow=
+	t=1780160381; cv=none; b=NGePF7XfBDTTyociERGzEHoU+Q4oW646M7/2GkV8BykWuuGSMjAZDx8cJv4uWqJ9DHu5RcNxHqESFWxNgn66ZTUCNzXDl3mYZApvAozfJ/ON52g7gE84G8gt2IInSVTItYnni+kE8WyCijdWIIbfgY3hiRQvReRnaaimA1ICNRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160377; c=relaxed/simple;
-	bh=AGUTEzE30Ns87dEg4h6MRtAA/7vPE4mH/my/uajNUcM=;
+	s=arc-20240116; t=1780160381; c=relaxed/simple;
+	bh=xDhOaPWH4ItygZIQ2ei1o4QjIllavad101dOJzvZAHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMSwgximDXVNR9V+RGp1x6zh3CwuWWNKGk2xTI1S2wiu4crsQeQgGRaTg4cwv0Ucq/nt3ekH88ooZJl7RXbGVsiEEvsDstH2yC4V7pZXDXtUL5GNc3L3SnsmEc0d1RKcYKMB89/drOVl7pGJ9TVC0+n8d1sSS1odxF2gnIlBWoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gucBkNEt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hAdavEUEkYUj3Ra6Fl2/EwH9A36CS/YVaBE9hWuGy4y8UPIzC3VyIUfhZtxf0yVSoRsAHh5RU43IqBnbtkUrIwYe48+VwxScyE0T6/KNC+vkTqxe9rdD/Is2tHYUPV+7E1e9iBCoeRBC/0+2Z9GBERw8sA4jmimdHAtsIsc+1Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNG7Y9KS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gucBkNEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95881F00893;
-	Sat, 30 May 2026 16:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNG7Y9KS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65121F00893;
+	Sat, 30 May 2026 16:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160376;
-	bh=LRqWn8DZWjvCYwLZ3iF/FVWJvk00njRxh0nLWFwBlhk=;
+	s=korg; t=1780160380;
+	bh=GTru09v5ZRFJ8/4czUbefH2PbGBuSbh6lobYP43P9CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gucBkNEtHABMB6Ml2UREQkJzikk1LB6esdUESVgPWRx7xgOfiu/aXP4MRtyRIuys6
-	 3fmsNrDpVA2zDNoqyLf4O7HoIZ8n8mm5DrdaDDlc3VDLFowQ6kJEmEtlDG7WNCdrC9
-	 7myzTm7c5UnPimlRhlmnF4C9auoWcIbwTrvEGs2E=
+	b=VNG7Y9KSu7ztxk03VOoKCFjmI7o8ezDVCvCCDTCMVA9ku284hawsOn4LVi+U0qAsn
+	 LSvzKX7tBqvOAMq5dJRG+yqwZRoZFMnz1kxhEkVkx+766CAMVISlr+eIbn0LmEdznI
+	 ZnnKs8SSZKxIPiAwHykNWbiLYNMAGvL/JyKgMCEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 322/969] fanotify: fix false positive on permission events
-Date: Sat, 30 May 2026 17:57:26 +0200
-Message-ID: <20260530160309.293115966@linuxfoundation.org>
+	Kai Zen <kai.aizen.dev@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 323/969] net: rtnetlink: zero ifla_vf_broadcast to avoid stack infoleak in rtnl_fill_vfinfo
+Date: Sat, 30 May 2026 17:57:27 +0200
+Message-ID: <20260530160309.317345235@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,86 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Kai Zen <kai.aizen.dev@gmail.com>
 
-commit 7746e3bd4cc19b5092e00d32d676e329bfcb6900 upstream.
+commit 4b9e327991815e128ad3af75c3a04630a63ce3e0 upstream.
 
-fsnotify_get_mark_safe() may return false for a mark on an unrelated group,
-which results in bypassing the permission check.
+rtnl_fill_vfinfo() declares struct ifla_vf_broadcast on the stack
+without initialisation:
 
-Fix by skipping over detached marks that are not in the current group.
+	struct ifla_vf_broadcast vf_broadcast;
 
-CC: stable@vger.kernel.org
-Fixes: abc77577a669 ("fsnotify: Provide framework for dropping SRCU lock in ->handle_event")
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260410144950.156160-1-mszeredi@redhat.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+The struct contains a single fixed 32-byte field:
+
+	/* include/uapi/linux/if_link.h */
+	struct ifla_vf_broadcast {
+		__u8 broadcast[32];
+	};
+
+The function then copies dev->broadcast into it using dev->addr_len
+as the length:
+
+	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
+
+On Ethernet devices (the overwhelming majority of SR-IOV NICs)
+dev->addr_len is 6, so only the first 6 bytes of broadcast[] are
+written. The remaining 26 bytes retain whatever was previously on
+the kernel stack. The full struct is then handed to userspace via:
+
+	nla_put(skb, IFLA_VF_BROADCAST,
+		sizeof(vf_broadcast), &vf_broadcast)
+
+leaking up to 26 bytes of uninitialised kernel stack per VF per
+RTM_GETLINK request, repeatable.
+
+The other vf_* structs in the same function are explicitly zeroed
+for exactly this reason - see the memset() calls for ivi,
+vf_vlan_info, node_guid and port_guid a few lines above.
+vf_broadcast was simply missed when it was added.
+
+Reachability: any unprivileged local process can open AF_NETLINK /
+NETLINK_ROUTE without capabilities and send RTM_GETLINK with an
+IFLA_EXT_MASK attribute carrying RTEXT_FILTER_VF. The kernel walks
+each VF and emits IFLA_VF_BROADCAST, leaking 26 bytes of stack per
+VF per request. Stack residue at this call site can include return
+addresses and transient sensitive data; KASAN with stack
+instrumentation, or KMSAN, will flag the nla_put() when reproduced.
+
+Zero the on-stack struct before the partial memcpy, matching the
+existing pattern used for the other vf_* structs in the same
+function.
+
+Fixes: 75345f888f70 ("ipoib: show VF broadcast address")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kai Zen <kai.aizen.dev@gmail.com>
+Link: https://patch.msgid.link/3c506e8f936e52b57620269b55c348af05d413a2.1777557228.git.kai.aizen.dev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c             |    2 +-
- fs/notify/mark.c                 |   18 +++++++++++-------
- include/linux/fsnotify_backend.h |    1 +
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ net/core/rtnetlink.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -398,7 +398,7 @@ static struct fsnotify_mark *fsnotify_fi
- 	return hlist_entry_safe(node, struct fsnotify_mark, obj_list);
- }
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -1346,6 +1346,7 @@ static noinline_for_stack int rtnl_fill_
+ 		port_guid.vf = ivi.vf;
  
--static struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
-+struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
- {
- 	struct hlist_node *node = NULL;
- 
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -380,9 +380,6 @@ EXPORT_SYMBOL_GPL(fsnotify_put_mark);
-  */
- static bool fsnotify_get_mark_safe(struct fsnotify_mark *mark)
- {
--	if (!mark)
--		return true;
--
- 	if (refcount_inc_not_zero(&mark->refcnt)) {
- 		spin_lock(&mark->lock);
- 		if (mark->flags & FSNOTIFY_MARK_FLAG_ATTACHED) {
-@@ -423,15 +420,22 @@ bool fsnotify_prepare_user_wait(struct f
- 	int type;
- 
- 	fsnotify_foreach_iter_type(type) {
-+		struct fsnotify_mark *mark = iter_info->marks[type];
-+
- 		/* This can fail if mark is being removed */
--		if (!fsnotify_get_mark_safe(iter_info->marks[type])) {
--			__release(&fsnotify_mark_srcu);
--			goto fail;
-+		while (mark && !fsnotify_get_mark_safe(mark)) {
-+			if (mark->group == iter_info->current_group) {
-+				__release(&fsnotify_mark_srcu);
-+				goto fail;
-+			}
-+			/* This is a mark in an unrelated group, skip */
-+			mark = fsnotify_next_mark(mark);
-+			iter_info->marks[type] = mark;
- 		}
- 	}
- 
- 	/*
--	 * Now that both marks are pinned by refcount in the inode / vfsmount
-+	 * Now that all marks are pinned by refcount in the inode / vfsmount / etc
- 	 * lists, we can drop SRCU lock, and safely resume the list iteration
- 	 * once userspace returns.
- 	 */
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -820,6 +820,7 @@ static inline void fsnotify_clear_sb_mar
- }
- extern void fsnotify_get_mark(struct fsnotify_mark *mark);
- extern void fsnotify_put_mark(struct fsnotify_mark *mark);
-+struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark);
- extern void fsnotify_finish_user_wait(struct fsnotify_iter_info *iter_info);
- extern bool fsnotify_prepare_user_wait(struct fsnotify_iter_info *iter_info);
- 
+ 	memcpy(vf_mac.mac, ivi.mac, sizeof(ivi.mac));
++	memset(&vf_broadcast, 0, sizeof(vf_broadcast));
+ 	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
+ 	vf_vlan.vlan = ivi.vlan;
+ 	vf_vlan.qos = ivi.qos;
 
 
