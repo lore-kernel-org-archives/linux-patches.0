@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1D73C199A;
-	Sat, 30 May 2026 18:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EF13C5522;
+	Sat, 30 May 2026 18:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165754; cv=none; b=SD2xDgMQhmrDWtsU7GYooA1V8oed/C2mhY46CFAFJiHefuthpebCYZttAgR6JD1vR7Ckoi+SrDJg7cWp3XoChRPq9Q12dp0uyFztqLGJ1jR4hiU39HSyf/BRgecO5lwGaiVVOWSIlvdh7bnSowlN5/0s76lwp/i4WLnP4R8xe+Y=
+	t=1780165757; cv=none; b=gRbI1QVmWILl5lc0dF4mHLtPGx97xz3qpUvbeUK2HPUxasnNk7Iftw94Yjw58KuR/wHQnbKVElaKbsA190OB4Tp8N5S1UlTIPNRl0aJhG5QhghBAsHSPhsue8Awk8ECo3u4giHScFeWFvPvD5WHgtOEF/4ixU90tYqJq5C04J7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165754; c=relaxed/simple;
-	bh=YLYNJoO2BtxQfI1Gfs28/yO8jnViWlJdFbO5nH2Sm3M=;
+	s=arc-20240116; t=1780165757; c=relaxed/simple;
+	bh=PfxHOYXUA2JDLdu4D5W5P/gBAHLdDKwCVrSvioov5bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XO1W4Q1orP7+rgQqQX3Ds0tiSN9SN73b/tSz7LITaa27HDaehQ/hXn57QOIyp/IqoW5Ak35dmGXQ66kYzgNQYJOLyUzgrsl1w24EFzhZzuUGjFY/Y2OEnacE1RlaGiR1VTEOiEi6hbXq5tUwEp7dC9pjsdMCjLU3Kpi1LZKaWEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piad7gs1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IvIEhkimLJKIeyp/mXrumm/ZVoU2HYn6MrmT3gy1KCaZTB8l4/YyK74jF9DOQ/Dkay1H2ohA6qnNBUNF0OjKTcvTGsoWGYmqq6Fpesrvt8U/kJBbRQrBTNL9SBQoznSEftA3WKFHRJn1ATyWXm3zMEf9ks3uexgMSDii3lk+Qzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jc7EV1fW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piad7gs1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3041F00893;
-	Sat, 30 May 2026 18:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jc7EV1fW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5810F1F00893;
+	Sat, 30 May 2026 18:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165752;
-	bh=vuZ1fE1UWQ+B+l3GopNYAiuJsN1vcEPc/dtDaQTlJPY=;
+	s=korg; t=1780165756;
+	bh=nZOr3TOTE0QL8QM7Bt2zKoJ4jMRPcyQKygqkXBRbMek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=piad7gs1O74rJn77StpMaCFJrBxqWj94lLBg6ioEotzDWRiX+QxjrHgg0ISqKTAXr
-	 4Y/FC+GJdq9Ti+DKKmGPC81FcTBw8dRNcspFFJRIQb6tsyfFdhSBChDENNz5XPvxcX
-	 45m/HZkBEP/lwdOxgkaZv6E24FpvCSemKHFkPv1U=
+	b=Jc7EV1fWBT/AJZstOAm0YiFtcBsYzMCPnQr0KLOi7gZ33Zjf4NojfSgJV2slCMZkr
+	 A/uV/dWP23cbJaSzrY9sYcbGPd6fHuPafN+3yjwyJzhVR5DT6tK5PFeSNx43kPUe58
+	 KUUy8IP+tD6QeAsTAtl4jzbR5yb45ML/jSr+3L14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruijie Li <ruijieli51@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 170/589] net/smc: avoid early lgr access in smc_clc_wait_msg
-Date: Sat, 30 May 2026 18:00:51 +0200
-Message-ID: <20260530160229.266141571@linuxfoundation.org>
+	hkbinbin <hkbinbinbin@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.10 171/589] RDMA/rxe: Validate pad and ICRC before payload_size() in rxe_rcv
+Date: Sat, 30 May 2026 18:00:52 +0200
+Message-ID: <20260530160229.294639190@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,49 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruijie Li <ruijieli51@gmail.com>
+From: hkbinbin <hkbinbinbin@gmail.com>
 
-commit 5a8db80f721deee8e916c2cfdee78decda02ce4f upstream.
+commit 7244491dab347f648e661da96dc0febadd9daec3 upstream.
 
-A CLC decline can be received while the handshake is still in an early
-stage, before the connection has been associated with a link group.
+rxe_rcv() currently checks only that the incoming packet is at least
+header_size(pkt) bytes long before payload_size() is used.
 
-The decline handling in smc_clc_wait_msg() updates link-group level sync
-state for first-contact declines, but that state only exists after link
-group setup has completed. Guard the link-group update accordingly and
-keep the per-socket peer diagnosis handling unchanged.
+However, payload_size() subtracts both the attacker-controlled BTH pad
+field and RXE_ICRC_SIZE from pkt->paylen:
 
-This preserves the existing sync_err handling for established link-group
-contexts and avoids touching link-group state before it is available.
+  payload_size = pkt->paylen - offset[RXE_PAYLOAD] - bth_pad(pkt)
+                 - RXE_ICRC_SIZE
 
-Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/08c68a5c817acf198cce63d22517e232e8d60718.1776850759.git.ruijieli51@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This means a short packet can still make payload_size() underflow even
+if it includes enough bytes for the fixed headers. Simply requiring
+header_size(pkt) + RXE_ICRC_SIZE is not sufficient either, because a
+packet with a forged non-zero BTH pad can still leave payload_size()
+negative and pass an underflowed value to later receive-path users.
+
+Fix this by validating pkt->paylen against the full minimum length
+required by payload_size(): header_size(pkt) + bth_pad(pkt) +
+RXE_ICRC_SIZE.
+
+Cc: stable@vger.kernel.org
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://patch.msgid.link/r/20260401121907.1468366-1-hkbinbinbin@gmail.com
+Signed-off-by: hkbinbin <hkbinbinbin@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_clc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_recv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -440,8 +440,8 @@ int smc_clc_wait_msg(struct smc_sock *sm
- 		dclc = (struct smc_clc_msg_decline *)clcm;
- 		reason_code = SMC_CLC_DECL_PEERDECL;
- 		smc->peer_diagnosis = ntohl(dclc->peer_diagnosis);
--		if (((struct smc_clc_msg_decline *)buf)->hdr.typev2 &
--						SMC_FIRST_CONTACT_MASK) {
-+		if ((dclc->hdr.typev2 & SMC_FIRST_CONTACT_MASK) &&
-+		    smc->conn.lgr) {
- 			smc->conn.lgr->sync_err = 1;
- 			smc_lgr_terminate_sched(smc->conn.lgr);
- 		}
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -364,7 +364,8 @@ void rxe_rcv(struct sk_buff *skb)
+ 	pkt->qp = NULL;
+ 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
+ 
+-	if (unlikely(skb->len < header_size(pkt)))
++	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
++		       RXE_ICRC_SIZE))
+ 		goto drop;
+ 
+ 	err = hdr_check(pkt);
 
 
