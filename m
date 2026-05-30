@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928111D63E4;
-	Sat, 30 May 2026 18:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0911D63E4;
+	Sat, 30 May 2026 18:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166942; cv=none; b=VUrynQLVaef1+FKMXutgooYeBYfFX9UbFzUGvfqb06/aFiiElOcduL8wb0man4EGohrqxMN9MbB9kHiXZsZF0mHILlqwOz5ajp2EM8SxwqV/LVVZ3zpjfkU0sbupmIOQKH9MSENr3SFT8bZNlcG/v5tT1h61UF+/56t6FBcitA0=
+	t=1780166945; cv=none; b=ExcO2N2+I/zyLSEXX3VJLe2JIOb9xqIqIJuw0XnwoM4BfG9lM/BpigEGVLlYkALAB7loogOskS5IiXfB3mXza7rIpkOb0lrStYF+AiL1/AQEuKeZIQokLtnDWDzoRyENYxcZ0BDbtZwsPOxEVCL5cSKAc2a8Sa7Vm6CQv1oUxoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166942; c=relaxed/simple;
-	bh=zD4XbFJn7XQV2YsoLWOJspI1G1iAnOBw1EUdY+zd5Mg=;
+	s=arc-20240116; t=1780166945; c=relaxed/simple;
+	bh=tvLy1joiFq13cKuqyeqRBOpzNBJPdtdG8OVOmEgIdo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHNc7gtPBsjhkfuktDK9T4cc7iUrNrWZVm5VksLQCPO2RORFYt7YkzstxhD2mTi3z4uCztdcMHwckxe9ROMeRKViCsjFPN5vwH97OcdsbrqJJCrVJ5wze0Hb+BbCDME3cEo6fXV84w02G5QQhZhulCtWxgybRf7EjFmaHG1zE/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW1rsLEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=clr4nY6EkwYrdzX2Sy6iONBzpYAcJ+v4QLd6dIVGZdfFUTJgjUo48g/i1sgmopktljVEBxThyFHtJpMz9jyuRbBTQZFfP7n//81sTWEFF3+AKZ3J7wBqzjVH48flVTCgLsUCIKa3GBVnxTVlrwl1mo9AAjU9rYcXBEFxaTyVOwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc4KmvxZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW1rsLEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFE81F00893;
-	Sat, 30 May 2026 18:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc4KmvxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7351F00893;
+	Sat, 30 May 2026 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166941;
-	bh=vhGYLc1xlKB7P1Tohphm9cCdJquCm95dyD6/T2+fSzc=;
+	s=korg; t=1780166944;
+	bh=3/SSfQRMLFLMSA9Ka9823zh7z0uv5R2lMUTOqO2oFys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oW1rsLEoHZ3KNV8JVxx1mlgZQDhoBUTxykI124DOAFZi1SrjLbweiHv0KNyagSMb0
-	 CM/V7Zd60qu7YcoZtz6cQ3BbylM/J/wcrQWaiMg57YpvcytpvqAzSLf/MKu8N5yOnr
-	 OfRd6uT/NJQCKObetppw6ELSXLcGNbgcBf/qF+bI=
+	b=vc4KmvxZNXZKWLzNNov8lOvhTv8Eab9nQvuua3ur75+GlCMRbCdovSxgEECnVkI09
+	 mQimyP5yhA3vdtAsWT3kCrmCZCaCcf/uPBrvj0qF+mvMjnE7ngv8q551wqu8PvM1zV
+	 zKmaIou8HENJ1ghxpWsb6vG+5K8/dNbVdlrdcRa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Subject: [PATCH 5.10 518/589] drm/gma500/oaktrail_hdmi: fix i2c adapter leak on setup
-Date: Sat, 30 May 2026 18:06:39 +0200
-Message-ID: <20260530160238.239874674@linuxfoundation.org>
+	Nicholas Carlini <nicholas@carlini.com>
+Subject: [PATCH 5.10 519/589] io-wq: check that the predecessor is hashed in io_wq_remove_pending()
+Date: Sat, 30 May 2026 18:06:40 +0200
+Message-ID: <20260530160238.264578864@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,32 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-commit 950953f774b3f69da6f413e045ef075e1f3da2df upstream.
+io_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled
+work was the tail of its hash bucket. When doing this, it checks whether
+the preceding entry in acct->work_list has the same hash value, but
+never checks that the predecessor is hashed at all. io_get_work_hash()
+is simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash
+bits are never set for non-hashed work, so it returns 0. Thus, when a
+hashed bucket-0 work is cancelled while a non-hashed work is its list
+predecessor, the check spuriously passes and a pointer to the non-hashed
+io_kiocb is stored in wq->hash_tail[0].
 
-Make sure to drop the reference taken to the I2C adapter (and its
-module) when setting up HDMI to allow the adapter to be deregistered.
+Because non-hashed work is dequeued via the fast path in
+io_get_next_work(), which never touches hash_tail[], the stale pointer
+is never cleared. Therefore, after the non-hashed io_kiocb completes and
+is freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The
+io_wq is per-task (tctx->io_wq) and survives ring open/close, so the
+dangling pointer persists for the lifetime of the task; the next hashed
+bucket-0 enqueue dereferences it in io_wq_insert_work() and
+wq_list_add_after() writes through freed memory.
 
-Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
-Cc: stable@vger.kernel.org	# 3.3
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260508144446.59722-2-johan@kernel.org
+Add the missing io_wq_is_hashed() check so a non-hashed predecessor
+never inherits a hash_tail[] slot.
+
+Cc: stable@vger.kernel.org # 5.7+
+Fixes: 204361a77f40 ("io-wq: fix hang after cancelling pending hashed work")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io-wq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
-@@ -576,6 +576,7 @@ static int oaktrail_hdmi_get_modes(struc
- 	} else {
- 		edid = (struct edid *)raw_edid;
- 		/* FIXME ? edid = drm_get_edid(connector, i2c_adap); */
-+		i2c_put_adapter(i2c_adap);
- 	}
- 
- 	if (edid) {
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1014,7 +1014,8 @@ static inline void io_wqe_remove_pending
+ 	if (io_wq_is_hashed(work) && work == wqe->hash_tail[hash]) {
+ 		if (prev)
+ 			prev_work = container_of(prev, struct io_wq_work, list);
+-		if (prev_work && io_get_work_hash(prev_work) == hash)
++		if (prev_work && io_wq_is_hashed(prev_work) &&
++		    io_get_work_hash(prev_work) == hash)
+ 			wqe->hash_tail[hash] = prev_work;
+ 		else
+ 			wqe->hash_tail[hash] = NULL;
 
 
