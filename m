@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9C921ADC7;
-	Sat, 30 May 2026 18:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54602282F23;
+	Sat, 30 May 2026 18:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165793; cv=none; b=M1JuCiP+Vi7BIxfybKMp6OJJ/vQ3YitIRDgqlsN3BmxZXrCDuw8weDHDf24tQnXfe8VP1q4eBhehxDwkjx6wSAtc9K6e1EOLpIIr63WEUvd3VaAeYIZLs/sQFVlPS3W6kqGkZKPQuucIi7ZsmdRT6B1pL6YGnuCIwDlY5zTxirM=
+	t=1780165797; cv=none; b=IQuY0UvG6dn2Ga8FAcPSWiR700NcLz6FIUOkOOpdzSRk7x3dG/Ds6ZC5tyoa3ggLTBic2X7jH3fsAbL0aj+LkYr9C1l8v0/G9l49lmFzR8W9hbnO43etc/D9lZ2Il9rJJ0+yi4iBIPr/3ANCWtaVzmLixrNJNVX2/FmBbStjfFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165793; c=relaxed/simple;
-	bh=+y0eA0GRTCphf8J5M+aqWXzbf5BzY9jIrzLWfXkQ/D4=;
+	s=arc-20240116; t=1780165797; c=relaxed/simple;
+	bh=5Mvsz75bNFM5HcVLJOONB3gjCtV/APBT7v1JPI3DvlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhT+lNw15U9hque6CZ3iuE94lYmbfYReNXdM3Suj+87j4ER7cAOyRNwgjpDX4V+vStInxNw4j+fs2vYWnr7odjOdCLomeNLSMiqRQ9yPOR54akIQxg2qaFMSk/g+6fOnAk03bz86nNie0FyFeytYxY4AcxHGE5pI7cKe6ICTZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHRtQa1s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZE3GOBxSukORObZL4PswzwXKjA1k6iffV8yh1g7HDrhGEc8hGvWSciBSLT+l4lvTQ6q0Mr4y3N59xxDtf+zZ4uaoY010Mmj7X0+vZcBs1tXtZtfxLUQrdwmeaC83/7JLwStocGUay9QzuKHUzDd+5pX5YzCWUCHuVADSdFJ4IT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIxqYoYb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHRtQa1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178051F00893;
-	Sat, 30 May 2026 18:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIxqYoYb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BDC1F00893;
+	Sat, 30 May 2026 18:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165792;
-	bh=i+/rs5xxoeWAP4j4kczU8fqXX6zmyZJ1IdzN0sVjdpk=;
+	s=korg; t=1780165796;
+	bh=Iq25MBno3DtJJahEOkluKnCQvAGGWpt0JY/56bbt+nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHRtQa1s3v0WOmVl7BNDFNC+5lm4tBWjnV67ogrpetp7w4EBLi2ZWQ69PKyRM4YXP
-	 nTJw6dajCP5u+mODOhsHk8/e0Iq9gUszjHPtHKbzceB7+imEqh2+2x/dvzjEKqX6Fq
-	 pu7nTgv5VakJ90p1kzbkd1xj38ICk/wNBTLxjqGE=
+	b=CIxqYoYbzUdjq+rLI0iHPlyNUERWKwAwt4aHD/scPFAXC3XzJ5fray5OxsqaqOhrv
+	 /I4FKq/jC2aOaE7JveB79vfjyOB4jOanKVuDvuHD1ggY+39Z+kJrB1etjLp1l466JI
+	 vkanm3ggLsUjXZ0ae0EDwi0f23679mNeOvHP7aEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sohei Koyama <skoyama@ddn.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 184/589] ext4: fix missing brelse() in ext4_xattr_inode_dec_ref_all()
-Date: Sat, 30 May 2026 18:01:05 +0200
-Message-ID: <20260530160229.725251015@linuxfoundation.org>
+	FengWei Shih <dannyshih@synology.com>,
+	Chia-Ming Chang <chiamingc@synology.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 5.10 185/589] md/raid5: fix soft lockup in retry_aligned_read()
+Date: Sat, 30 May 2026 18:01:06 +0200
+Message-ID: <20260530160229.751524818@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,49 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohei Koyama <skoyama@ddn.com>
+From: Chia-Ming Chang <chiamingc@synology.com>
 
-commit 77d059519382bd66283e6a4e83ee186e87e7708f upstream.
+commit 7f9f7c697474268d9ef9479df3ddfe7cdcfbbffc upstream.
 
-The commit c8e008b60492 ("ext4: ignore xattrs past end")
-introduced a refcount leak in when block_csum is false.
+When retry_aligned_read() encounters an overlapped stripe, it releases
+the stripe via raid5_release_stripe() which puts it on the lockless
+released_stripes llist. In the next raid5d loop iteration,
+release_stripe_list() drains the stripe onto handle_list (since
+STRIPE_HANDLE is set by the original IO), but retry_aligned_read()
+runs before handle_active_stripes() and removes the stripe from
+handle_list via find_get_stripe() -> list_del_init(). This prevents
+handle_stripe() from ever processing the stripe to resolve the
+overlap, causing an infinite loop and soft lockup.
 
-ext4_xattr_inode_dec_ref_all() calls ext4_get_inode_loc() to
-get iloc.bh, but never releases it with brelse().
+Fix this by using __release_stripe() with temp_inactive_list instead
+of raid5_release_stripe() in the failure path, so the stripe does not
+go through the released_stripes llist. This allows raid5d to break out
+of its loop, and the overlap will be resolved when the stripe is
+eventually processed by handle_stripe().
 
-Fixes: c8e008b60492 ("ext4: ignore xattrs past end")
-Signed-off-by: Sohei Koyama <skoyama@ddn.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
 Cc: stable@vger.kernel.org
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260406074830.8480-1-skoyama@ddn.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: FengWei Shih <dannyshih@synology.com>
+Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
+Link: https://lore.kernel.org/linux-raid/20260402061406.455755-1-chiamingc@synology.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/raid5.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1108,7 +1108,7 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
- {
- 	struct inode *ea_inode;
- 	struct ext4_xattr_entry *entry;
--	struct ext4_iloc iloc;
-+	struct ext4_iloc iloc = { .bh = NULL };
- 	bool dirty = false;
- 	unsigned int ea_ino;
- 	int err;
-@@ -1202,6 +1202,8 @@ ext4_xattr_inode_dec_ref_all(handle_t *h
- 			ext4_warning_inode(parent,
- 					   "handle dirty metadata err=%d", err);
- 	}
-+
-+	brelse(iloc.bh);
- }
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6349,7 +6349,13 @@ static int  retry_aligned_read(struct r5
+ 		}
  
- /*
+ 		if (!add_stripe_bio(sh, raid_bio, dd_idx, 0, 0)) {
+-			raid5_release_stripe(sh);
++			int hash;
++
++			spin_lock_irq(&conf->device_lock);
++			hash = sh->hash_lock_index;
++			__release_stripe(conf, sh,
++					 &conf->temp_inactive_list[hash]);
++			spin_unlock_irq(&conf->device_lock);
+ 			conf->retry_read_aligned = raid_bio;
+ 			conf->retry_read_offset = scnt;
+ 			return handled;
 
 
