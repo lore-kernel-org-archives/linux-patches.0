@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893DD233D9E;
-	Sat, 30 May 2026 18:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB977233D9E;
+	Sat, 30 May 2026 18:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165095; cv=none; b=Pi4UNnFzpDZ8DKj8960HMwG+0OCjI8+pUb1Fasd19qYF3GvSaBG77p49BrOjL0O7X+lmWtX2xb6g7LuMBxNS76oGEFQ1rlWKF1H6XKHMNrFe6BHJRHKJQhesZzagaxF1BKKFhvk739sxYiGIU8PKF+5mNZR+vsTJNxuzAVQp/oM=
+	t=1780165098; cv=none; b=AEujARwjGmRcrvISm+UlKwxehliJ1VXOMo6C2VBmCGg2x/w1ohqkODI80In3ebGfwMxIWA5ksIbfxv662aJhFz7oxGu1t8ECRUiHOKo/VeKdaW3otTJnZAOQH6rGXjJ8CF7GeBsGPPj0HIYugf7205MPpDLkj3vVuA2lhCy31HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165095; c=relaxed/simple;
-	bh=eiEWH06mLJPrYNbMYsI7/igL6ok7wBkUvMVGpnefNKg=;
+	s=arc-20240116; t=1780165098; c=relaxed/simple;
+	bh=KMQV6ZX0jCjdA5o87g4L6mCchDYr8rM28ROF81u9QyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlwCzvNpz7Xv14tN3Y2AZCV1W7UYJTiKnZdyewv10zaFfhu5O6xhGhSvd7qnxDIWDe2pqwQfhfR5K9zplSUy+gu+MJ8Aatre3cL7rpCsHsw4p3pc00BbX0MOzQpN86hrhUf3+1dyR1TS1grZgDnEKTA11wLOs5Qe/dqMESsY194=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdcXKVz4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y7r//lIuaam1SfIWNuJlMVQxvX92C3u5IpZxXUT9l6xVmWSQFJUghwXx9W8PH0SyrQymXKON7qCt4hvYnzOqmqocP2q/ovNTh7SV2PuoRddz/ocbIt0xRCJk/i6QhWEUc8xsmuXR3sfpZLOEEGsYesldRyr74lkYMPyma0fJBi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxyvNpiC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdcXKVz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D681F00893;
-	Sat, 30 May 2026 18:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxyvNpiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6601F00893;
+	Sat, 30 May 2026 18:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165094;
-	bh=MaO3MbL/0/CK12TJkS1bmTpTDjTdbb+Uh0BeTvD34uY=;
+	s=korg; t=1780165097;
+	bh=YQPExy/OOuBrqv/LmqrsfauBrQt2OpcOC4CgyWOcBbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdcXKVz4TLbgc5dbLKbJ0xY0QT2HZPyhVm2BScvnBuJFna2QqUH3JRKAKPaHJ81ls
-	 NnAwMaTg0qjCSGyMzv4TGYUERiNBCEbhhIgwL2ptN5nQbt73fWPMK/DrSwltxVw+jn
-	 PuHVFnR/VtfhUvYKfdOrNtjJZ0IHAwxT9DAk7ff4=
+	b=VxyvNpiCoPjJ+Bm+VtXhTMErATbrre0tAuNM0IpW/8SrTZl7jRhIHnfOE1v7nsrva
+	 mfabfcygFPazq+/jyrKaWQxNV05r3cu6Vwo/dNwLwLOhhRNTJjml+hjvmxRWy7ZAtz
+	 /9R49YHm0Zen0CZozu0G4pIzAHvgjOeNmjSJ8FvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 747/776] irqchip/ath79-cpu: Remove unused function
-Date: Sat, 30 May 2026 18:07:41 +0200
-Message-ID: <20260530160259.080371637@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 719/776] hwmon: (pmbus/adm1266) bounce blackbox records through a protocol-sized buffer
+Date: Sat, 30 May 2026 18:07:13 +0200
+Message-ID: <20260530160258.396898948@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,46 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 0fa10fb77069fb67aa51384868ef3702b7791465 ]
+commit 43cae21424ff8e33894a0f86c6b80b840c049fd7 upstream.
 
-ath79_cpu_irq_init() was part of the legacy pre-OF code that got removed a
-while back.
+adm1266_pmbus_block_xfer() copies the device-supplied block payload
+into the caller-provided buffer using the device-supplied length:
 
-Remove it to get rid of a missing prototype warning, reported by the kernel test
-robot.
+	memcpy(data_r, &msgs[1].buf[1], msgs[1].buf[0]);
 
-[ tglx: Fix the subject prefix. Sigh ... ]
+The helper does not know how large data_r is and trusts the device to
+return at most one record's worth of bytes.  adm1266_nvmem_read_blackbox()
+violates that contract: it advances read_buff inside data->dev_mem in
+ADM1266_BLACKBOX_SIZE (64-byte) strides while the helper is willing to
+write up to ADM1266_PMBUS_BLOCK_MAX (255) bytes.  A device that returns
+more than 64 bytes on the trailing record (read_buff offset 1984 in
+the 2048-byte dev_mem allocation) overflows dev_mem by up to 191 bytes
+before the post-call
 
-Fixes: 51fa4f8912c0 ("MIPS: ath79: drop legacy IRQ code")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260506085522.1210143-1-rosenp@gmail.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202412011509.kGQkDr1y-lkp@intel.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	if (ret != ADM1266_BLACKBOX_SIZE)
+		return -EIO;
+
+can reject the response.
+
+Contain the fix in the caller without changing the helper signature:
+read each record into a 255-byte local bounce buffer that matches the
+helper's maximum output, validate the returned length, and only then
+copy exactly ADM1266_BLACKBOX_SIZE bytes into the dev_mem slot.
+
+Fixes: 407dc802a9c0 ("hwmon: (pmbus/adm1266) Add Block process call")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-5-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-ath79-cpu.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-ath79-cpu.c b/drivers/irqchip/irq-ath79-cpu.c
-index 923e4bba37767..9b7273a7f8ced 100644
---- a/drivers/irqchip/irq-ath79-cpu.c
-+++ b/drivers/irqchip/irq-ath79-cpu.c
-@@ -85,10 +85,3 @@ static int __init ar79_cpu_intc_of_init(
- }
- IRQCHIP_DECLARE(ar79_cpu_intc, "qca,ar7100-cpu-intc",
- 		ar79_cpu_intc_of_init);
--
--void __init ath79_cpu_irq_init(unsigned irq_wb_chan2, unsigned irq_wb_chan3)
--{
--	irq_wb_chan[2] = irq_wb_chan2;
--	irq_wb_chan[3] = irq_wb_chan3;
--	mips_cpu_irq_init();
--}
--- 
-2.53.0
-
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -350,6 +350,7 @@ static void adm1266_init_debugfs(struct
+ 
+ static int adm1266_nvmem_read_blackbox(struct adm1266_data *data, u8 *read_buff)
+ {
++	u8 record[ADM1266_PMBUS_BLOCK_MAX];
+ 	int record_count;
+ 	char index;
+ 	u8 buf[I2C_SMBUS_BLOCK_MAX];
+@@ -367,13 +368,14 @@ static int adm1266_nvmem_read_blackbox(s
+ 		return -EIO;
+ 
+ 	for (index = 0; index < record_count; index++) {
+-		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
++		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, record);
+ 		if (ret < 0)
+ 			return ret;
+ 
+ 		if (ret != ADM1266_BLACKBOX_SIZE)
+ 			return -EIO;
+ 
++		memcpy(read_buff, record, ADM1266_BLACKBOX_SIZE);
+ 		read_buff += ADM1266_BLACKBOX_SIZE;
+ 	}
+ 
 
 
