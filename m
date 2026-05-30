@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190DD32F770;
-	Sat, 30 May 2026 18:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EE827E05E;
+	Sat, 30 May 2026 18:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165645; cv=none; b=bpRzhzjitbe3K0/kKW5UBeE2C0yqN2WV7VPBS5BpyJZLj/VVdKCGCMlzxul0nR0F6WvOYdEbnhNw2I9/HR72du2tYC/+OxRSv1eVuLvh6k2Vh1VTRkEcybLbh8D2jGYOorG23szHtqQq9OxK4QT4AQu0rDeAYQ9R9KP8yJdhWqA=
+	t=1780165648; cv=none; b=cpseC5a6NzL3AI0C9y2SEStto1Np4XsOugW9Kn6FClRDVQjwGRGYGi4wNwURFpaR/cr3l72b2ibMLmsyJ7y0g5vHZu/t1CSWq3yriauLQ7ZHoAc2b1g+H0MmgeTZcBA9UEh9+WOkuHFr2u/AvW2lIMqTcPwAxchuQiDmD4cZifk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165645; c=relaxed/simple;
-	bh=Q2VmVXcubRTelGNuFKNDggD6Lc11fpnswtee5pvz/Zs=;
+	s=arc-20240116; t=1780165648; c=relaxed/simple;
+	bh=RSVHDFyafrPotO6f5tOad1go6yqPm7D13AHU80JJiaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yt37rmvdin42IiQ7j3gNRzA4JKsMzDJ80Po3Yd6ZCeNUyy3wUMv5xtmX7TajKnlNGJcDz7JSZEOj1NVNzzyMvtIvRTlDrRL9NLH3jc9JZYGXUvHJzd1sKND74KQcLKuuB9UgqkPfGInudx2t3jKwH0k6xI7Uvc0py19le0UDIGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTjWnwIJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+ayz3Z5iYeOefkJgx1BOkbYGsEQk+WMyKA2LXRLXeznplbAgt5PGhXhewFVjXQp93135etIECYNefZ0ItXtQZ8sMqrcGdWA3bQlUZ0Ss0jLrJdDsEVaUDm0eAoHjozsDMIxRJGT0QDEBEhYeTn0XhhoHumej+ejztHTSlc6ifg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oi++MJ4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTjWnwIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7CA1F00893;
-	Sat, 30 May 2026 18:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oi++MJ4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98CF1F00893;
+	Sat, 30 May 2026 18:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165644;
-	bh=+Q2opuzckbnOG6haB4YKUptlfqJVFUA9/zCaxgPskZ0=;
+	s=korg; t=1780165647;
+	bh=xpuBm4q+SzTTWltQTWYvoXiS9IKspH0xGtSUB5c1Uig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTjWnwIJcVGT0pm/MhAq89VSgbnYv9Tx6d2NAibskoQJFh/vDY2dIgKCFAHanL4dA
-	 kh7P+6yncDJLJvw6tHjjtIr+P7pgM1kAyoTnCWNHN6q5FFwNH5QuHZJixePLc3+d9q
-	 IYuCRMcfWW8Hg1Ls4gag2VvITNfZTCF3L1iNRxW4=
+	b=oi++MJ4x/UKzUcH5q5CAwxZXjPy+JVbsb6PHHh1IiEd6pkmzRA1jB4ncdlLPQnP45
+	 +f9qnLMLi2xpicXuBrpgPcC0x0DLHBOol4NremdsKi7c1GQ/Vg5MEAIp9s4iNPNuLB
+	 hhZDrVkEXmgEhqPE6bhx1zngeLqvEeQHPzsmZ+vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
+	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/589] rxrpc: Fix key quota calculation for multitoken keys
-Date: Sat, 30 May 2026 17:59:42 +0200
-Message-ID: <20260530160227.359961685@linuxfoundation.org>
+Subject: [PATCH 5.10 102/589] xfrm: clear trailing padding in build_polexpire()
+Date: Sat, 30 May 2026 17:59:43 +0200
+Message-ID: <20260530160227.395857382@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,60 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
 
-[ Upstream commit bdbfead6d38979475df0c2f4bad2b19394fe9bdc ]
+[ Upstream commit 71a98248c63c535eaa4d4c22f099b68d902006d0 ]
 
-In the rxrpc key preparsing, every token extracted sets the proposed quota
-value, but for multitoken keys, this will overwrite the previous proposed
-quota, losing it.
+build_expire() clears the trailing padding bytes of struct
+xfrm_user_expire after setting the hard field via memset_after(),
+but the analogous function build_polexpire() does not do this for
+struct xfrm_user_polexpire.
 
-Fix this by adding to the proposed quota instead.
+The padding bytes after the __u8 hard field are left
+uninitialized from the heap allocation, and are then sent to
+userspace via netlink multicast to XFRMNLGRP_EXPIRE listeners,
+leaking kernel heap memory contents.
 
-Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
-Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-2-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ dropped hunk for rxrpc_preparse_xdr_yfs_rxgk() ]
+Add the missing memset_after() call, matching build_expire().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+[ replaced `memset_after()` macro with equivalent manual `memset()` call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/key.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_user.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -108,7 +108,7 @@ static int rxrpc_preparse_xdr_rxkad(stru
- 		return -EKEYREJECTED;
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3290,6 +3290,8 @@ static int build_polexpire(struct sk_buf
+ 		return err;
+ 	}
+ 	upe->hard = !!hard;
++	/* clear the padding bytes */
++	memset(&upe->hard + 1, 0, sizeof(*upe) - offsetofend(typeof(*upe), hard));
  
- 	plen = sizeof(*token) + sizeof(*token->kad) + tktlen;
--	prep->quotalen = datalen + plen;
-+	prep->quotalen += datalen + plen;
- 
- 	plen -= sizeof(*token);
- 	token = kzalloc(sizeof(*token), GFP_KERNEL);
-@@ -718,6 +718,7 @@ static int rxrpc_preparse(struct key_pre
- 	memcpy(&kver, prep->data, sizeof(kver));
- 	prep->data += sizeof(kver);
- 	prep->datalen -= sizeof(kver);
-+	prep->quotalen = 0;
- 
- 	_debug("KEY I/F VERSION: %u", kver);
- 
-@@ -755,7 +756,7 @@ static int rxrpc_preparse(struct key_pre
- 		goto error;
- 
- 	plen = sizeof(*token->kad) + v1->ticket_length;
--	prep->quotalen = plen + sizeof(*token);
-+	prep->quotalen += plen + sizeof(*token);
- 
- 	ret = -ENOMEM;
- 	token = kzalloc(sizeof(*token), GFP_KERNEL);
+ 	nlmsg_end(skb, nlh);
+ 	return 0;
 
 
