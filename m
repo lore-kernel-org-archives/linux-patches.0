@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850AA3242D7;
-	Sat, 30 May 2026 17:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916D214A62B;
+	Sat, 30 May 2026 17:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161759; cv=none; b=dQsyZ29OtBw+HhFkUmUioO/xfsjGMSesdBYw+qBS2LgQMydvHD0wd1vo/tprGQ9iKcKBNThHURDSfrZNr8Y0Ad67v25ZPJIzII9LZUxXf/JFzO1D9DzMEqbjYMKjodiFiX+RuuKsXMLbSpC5azjh6Ld9m5IWWYyN/ybsZhldrsg=
+	t=1780161763; cv=none; b=CrlyLD0WMpnzBCibVofifZrqg8mLauL3TPmtIKvw7SkR1v2KBJkc3tDcISsetRUYDMhGZEbw0KNiQxJZtBz2mfV3+Uilo9niDQmS3cQl+/NP59sB4MxSsfnPRKlX8bGpt9amQ+2pMUpybEDmv9tmifF3rZF3Mu+X3U1gps9v9io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161759; c=relaxed/simple;
-	bh=S+d6QV1Kg8Mg8VxtLE9DNwWy6PFK9h01aZt0De2S6FU=;
+	s=arc-20240116; t=1780161763; c=relaxed/simple;
+	bh=HK9WRJQhq/vpBB3JNuoY5MrRtbEApV0nxrfsIpLoiNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u33rHA+NuTZh3l9J+YzAcnVwMbpKJeNf5KGQQD4vH149YqSFIBxeuZkiV0z2VKvCMjFlTTI5sOYiwHTOJ6HOb+U706OHZVjnNcwydlR7S1am6p9w8PiE47i3kJCJZo0Hs0yeC6TdywIB7wQB4JRqjc9+RQO8TlD1xyIJ87fsBEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/Kg2hbJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NrcIX0q9ArQFXOVFxj1OPG8o8iYiggVtn3yovwYB0CjnWNHV9FLGP8YxbUVEjdSXpb2U11LtBcFPu0hjAFXZ29hVDLRuUd9hYOVLX9SeLQ1GbphFRANK+sAxSR0a8L8tcp3InOtyPWWOMGOB2QrkTgJrH6MyuIGgu9YBb8BU4D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk3R1ttW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/Kg2hbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F2F1F00893;
-	Sat, 30 May 2026 17:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk3R1ttW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B194D1F00893;
+	Sat, 30 May 2026 17:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161758;
-	bh=n6DU13sWffU616/kFSpA1GXHp9qswuzcVcwx+cOUs/Y=;
+	s=korg; t=1780161762;
+	bh=LAxWneVR0aPZjAtivpgZDRDyoxjLDEhrbrs8WXWlqD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/Kg2hbJpHBRLvuNuLoFJaHk2fnfkG1ZhwTdcDpQ93eaBdC5ko76VDYyCRZy9iIUv
-	 rorJAgULR44Pxch0zGehxnKDjegZJ7YHIohZchLmgIDmFPheVIXTG9E628Aq43XX5T
-	 5gJg87pHFQmFQGiNv3tKMoMEYpvJYc0NhG0BkShc=
+	b=Qk3R1ttW9QloRC+VYzdZl+LIEMFwPhECABzIUO17Jvh+6GvDIvppoZ/UjUONv1Sul
+	 wUSkK6MNomV/3eyMjuJDnVrRvaAR+Ay08Q5NSfK32xbMq8DpMm2xn1oLKFjDPfLkvz
+	 d0CJaBkGtDqHFgDL+KXyP6Ejcdk46Gn7bnOHRbcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdulkader Alrezej <alrazj.abdulkader@gmail.com>,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 718/969] net: dsa: realtek: rtl8365mb: fix mode mask calculation
-Date: Sat, 30 May 2026 18:04:02 +0200
-Message-ID: <20260530160320.365174764@linuxfoundation.org>
+Subject: [PATCH 6.1 719/969] nfp: fix swapped arguments in nfp_encode_basic_qdr() calls
+Date: Sat, 30 May 2026 18:04:03 +0200
+Message-ID: <20260530160320.392215564@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,42 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 0c078021d3861966614d5e594ee03587f0c9e74d ]
+[ Upstream commit 4078c5611d7585548b249377ebd60c272e410490 ]
 
-The RTL8365MB_DIGITAL_INTERFACE_SELECT_MODE_MASK macro was shifting
-the 4-bit mask (0xF) by only (_extint % 2) bits instead of
-(_extint % 2) * 4. This caused the mask to overlap with the adjacent
-nibble when configuring odd-numbered external interfaces, selecting
-the wrong bits entirely.
+There is a mismatch between the passed arguments and the actual
+nfp_encode_basic_qdr() function parameter names:
 
-Align the shift calculation with the existing ...MODE_OFFSET macro.
+  static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+                                  int mode, bool addr40, int isld1,
+                                  int isld0)
+  {
+      ...
 
-Fixes: 4af2950c50c8 ("net: dsa: realtek-smi: add rtl8365mb subdriver for RTL8365MB-VC")
-Signed-off-by: Abdulkader Alrezej <alrazj.abdulkader@gmail.com>
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://patch.msgid.link/400a6387-a444-4576-af6d-26be5410bce3@yahoo.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+But "dest_island" and "cpp_tgt" are swapped at every call-site.
+For example:
+
+  return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
+                              mode, addr40, isld1, isld0);
+
+As a result, nfp_encode_basic_qdr() receives "dest_island" as CPP target
+type, which is always NFP_CPP_TARGET_QDR(2) for these calls, and "cpp_tgt"
+as the destination island ID, which can accidentally match or be outside
+the valid NFP_CPP_TARGET_* types (e.g. '-1' for any destination).
+
+Since code already worked for years, also add extra pr_warn() to error
+paths in nfp_encode_basic_qdr() to help identify any potential address
+verification failures.
+
+Detected using the static analysis tool - Svace.
+
+Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Link: https://patch.msgid.link/20260422160536.61855-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/netronome/nfp/nfpcore/nfp_target.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index c22e69ab0deb1..97673ccb7ac79 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -212,7 +212,7 @@
- 		 (_extint) == 2 ? RTL8365MB_DIGITAL_INTERFACE_SELECT_REG1 : \
- 		 0x0)
- #define   RTL8365MB_DIGITAL_INTERFACE_SELECT_MODE_MASK(_extint) \
--		(0xF << (((_extint) % 2)))
-+		(0xF << (((_extint) % 2) * 4))
- #define   RTL8365MB_DIGITAL_INTERFACE_SELECT_MODE_OFFSET(_extint) \
- 		(((_extint) % 2) * 4)
+diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
+index 79470f198a62a..9cf19446657c6 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
+@@ -435,12 +435,17 @@ static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
  
+ 	/* Full Island ID and channel bits overlap? */
+ 	ret = nfp_decode_basic(addr, &v, cpp_tgt, mode, addr40, isld1, isld0);
+-	if (ret)
++	if (ret) {
++		pr_warn("%s: decode dest_island failed: %d\n", __func__, ret);
+ 		return ret;
++	}
+ 
+ 	/* The current address won't go where expected? */
+-	if (dest_island != -1 && dest_island != v)
++	if (dest_island != -1 && dest_island != v) {
++		pr_warn("%s: dest_island mismatch: current (%d) != decoded (%d)\n",
++			__func__, dest_island, v);
+ 		return -EINVAL;
++	}
+ 
+ 	/* If dest_island was -1, we don't care where it goes. */
+ 	return 0;
+@@ -493,7 +498,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * the address but we can verify if the existing
+ 			 * contents will point to a valid island.
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		iid_lsb = addr40 ? 34 : 26;
+@@ -504,7 +509,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 		return 0;
+ 	case 1:
+ 		if (cpp_tgt == NFP_CPP_TARGET_QDR && !addr40)
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		idx_lsb = addr40 ? 39 : 31;
+@@ -530,7 +535,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * be set before hand and with them select an island.
+ 			 * So we need to confirm that it's at least plausible.
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		/* Make sure we compare against isldN values
+@@ -551,7 +556,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * iid<1> = addr<30> = channel<0>
+ 			 * channel<1> = addr<31> = Index
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		isld[0] &= ~3;
 -- 
 2.53.0
 
