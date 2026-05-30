@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C1C320CAD;
-	Sat, 30 May 2026 17:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68331320CAD;
+	Sat, 30 May 2026 17:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163981; cv=none; b=WaxrZTkTWZCHmXvvs4+rK4lDCLp8KV/UdmBBKZUzZOZKVi+/brs797Fq4koJog+GiSYDNpxZuYF7pdXhMeYkLN1TN492wW+HRIDcHfT5/Ym9sG0MF3wVMyoTvaz3mORiOpW/JotBdPrBTRUdRT58vApY7zBLpp2AnwDdw1D4/+Q=
+	t=1780163984; cv=none; b=qWk5Qc/AmM1VC7axvbVa/W6gwdUpaECViE9XqFjxxtcFVbdgcU1ipNIcRHs6npS9xpuktzD55VgKncZWTnrkxR0tN/8+oDmd9bWRQhaH67+eOPdygi8spd26ZZvDRB2kOJCtFcubojAZThf4vemjJGvh/Ik7y7A3K0drfOgtngc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163981; c=relaxed/simple;
-	bh=pFEqJGHwE/HD/TUDUb0ZR9GQBIp+goHrV4z/JWy5VLQ=;
+	s=arc-20240116; t=1780163984; c=relaxed/simple;
+	bh=78uM4y8CmzupPSR1p5u1aGi740pwwocNFjHlOhjB5S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JuBOadEo1Rk8XLCn0znmCO/yeGZM1kpN5YvN5QTaF8O6BOO+KoEa+UIF8I/6YAZzhCe7nUCaviM++gYNyyTsdXAXraDlawUhX0BhoBA6N0Q3ShkaUCJzlrWYZTZGj6N+Odi62vE47BEM8pQf5discnqBMy10C/KBAbhhGczP86M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9N0OZN7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mNqCtgpsHtVgZP5QQr/TF1KE3GFmspQmc2zeIavLi8doTmCWHDL+lR++tUEDiEY0WBdZ2TStq88V6GbArgAE8sQAM21jg7rEr38GotBXaNeUhQauA38RemSDB+ppmOyjtnUsNDk2ZhCVIxIxDg58Ose0wI94WYRVRspPv8iwncE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1PtKKWd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9N0OZN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2CF1F00893;
-	Sat, 30 May 2026 17:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1PtKKWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFAB1F00893;
+	Sat, 30 May 2026 17:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163980;
-	bh=7kBbzPKP+sO6rEAVjJA+qf6MKJFs1pyyAx6t0G4niZc=;
+	s=korg; t=1780163983;
+	bh=DXTqSRluvgtSPtNJoUeBUepQ53XdgzOPmypfymjDpA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y9N0OZN7Zu+okH9QBVmL6MRu/+GAwhM5Y0zWrC/xwGfHItF+cnBjGTHVQhXKCTnLH
-	 y0RQN2Gks/ypYGsid8w3gtux1Ly3jNzLrZ10mcB7p23w1hAcHp40QtUW2+JP22Kyhc
-	 woKxvsefLg+VBeKUJHEf5/OqsM8Pz8k12ebFtwiI=
+	b=Y1PtKKWdJURUKaukXkIArCPLAt6IXCVuvJq2USmHXaI4ilR3imF0cyP/tuJWktJnu
+	 ZJCj9wHDrO/iNRyUI9DlFASWylnpaTvXiwedoAcBKgj4EtVtWdZO0PEaLSyxxvYQh8
+	 s7dYkY9kFSx8diYGFbOp6SsangzRLJ6gMJ3mPk8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 419/776] net/rds: Optimize rds_ib_laddr_check
-Date: Sat, 30 May 2026 18:02:13 +0200
-Message-ID: <20260530160251.298507941@linuxfoundation.org>
+Subject: [PATCH 5.15 393/776] locking: Fix rwlock support in <linux/spinlock_up.h>
+Date: Sat, 30 May 2026 18:01:47 +0200
+Message-ID: <20260530160250.647672994@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -48,191 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 236f718ac885965fa886440b9898dfae185c9733 ]
+[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
 
-rds_ib_laddr_check() creates a CM_ID and attempts to bind the address
-in question to it. This in order to qualify the allegedly local
-address as a usable IB/RoCE address.
+Architecture support for rwlocks must be available whether or not
+CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
+arch_{read,write}_{lock,trylock,unlock}() macros such that these become
+visbile if CONFIG_DEBUG_SPINLOCK=n.
 
-In the field, ExaWatcher runs rds-ping to all ports in the fabric from
-all local ports. This using all active ToS'es. In a full rack system,
-we have 14 cell servers and eight db servers. Typically, 6 ToS'es are
-used. This implies 528 rds-ping invocations per ExaWatcher's "RDSinfo"
-interval.
+This patch prepares for converting do_raw_{read,write}_trylock() into
+inline functions. Without this patch that conversion triggers a build
+failure for UP architectures, e.g. arm-ep93xx. I used the following
+kernel configuration to build the kernel for that architecture:
 
-Adding to this, each rds-ping invocation creates eight sockets and
-binds the local address to them:
+	CONFIG_ARCH_MULTIPLATFORM=y
+	CONFIG_ARCH_MULTI_V7=n
+	CONFIG_ATAGS=y
+	CONFIG_MMU=y
+	CONFIG_ARCH_MULTI_V4T=y
+	CONFIG_CPU_LITTLE_ENDIAN=y
+	CONFIG_ARCH_EP93XX=y
 
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 3
-bind(3, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 4
-bind(4, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 5
-bind(5, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 6
-bind(6, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 7
-bind(7, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 8
-bind(8, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 9
-bind(9, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 10
-bind(10, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-
-So, at every interval ExaWatcher executes rds-ping's, 4224 CM_IDs are
-allocated, considering this full-rack system. After the a CM_ID has
-been allocated, rdma_bind_addr() is called, with the port number being
-zero. This implies that the CMA will attempt to search for an un-used
-ephemeral port. Simplified, the algorithm is to start at a random
-position in the available port space, and then if needed, iterate
-until an un-used port is found.
-
-The book-keeping of used ports uses the idr system, which again uses
-slab to allocate new struct idr_layer's. The size is 2092 bytes and
-slab tries to reduce the wasted space. Hence, it chooses an order:3
-allocation, for which 15 idr_layer structs will fit and only 1388
-bytes are wasted per the 32KiB order:3 chunk.
-
-Although this order:3 allocation seems like a good space/speed
-trade-off, it does not resonate well with how it used by the CMA. The
-combination of the randomized starting point in the port space (which
-has close to zero spatial locality) and the close proximity in time of
-the 4224 invocations of the rds-ping's, creates a memory hog for
-order:3 allocations.
-
-These costly allocations may need reclaims and/or compaction. At
-worst, they may fail and produce a stack trace such as (from uek4):
-
-[<ffffffff811a72d5>] __inc_zone_page_state+0x35/0x40
-[<ffffffff811c2e97>] page_add_file_rmap+0x57/0x60
-[<ffffffffa37ca1df>] remove_migration_pte+0x3f/0x3c0 [ksplice_6cn872bt_vmlinux_new]
-[<ffffffff811c3de8>] rmap_walk+0xd8/0x340
-[<ffffffff811e8860>] remove_migration_ptes+0x40/0x50
-[<ffffffff811ea83c>] migrate_pages+0x3ec/0x890
-[<ffffffff811afa0d>] compact_zone+0x32d/0x9a0
-[<ffffffff811b00ed>] compact_zone_order+0x6d/0x90
-[<ffffffff811b03b2>] try_to_compact_pages+0x102/0x270
-[<ffffffff81190e56>] __alloc_pages_direct_compact+0x46/0x100
-[<ffffffff8119165b>] __alloc_pages_nodemask+0x74b/0xaa0
-[<ffffffff811d8411>] alloc_pages_current+0x91/0x110
-[<ffffffff811e3b0b>] new_slab+0x38b/0x480
-[<ffffffffa41323c7>] __slab_alloc+0x3b7/0x4a0 [ksplice_s0dk66a8_vmlinux_new]
-[<ffffffff811e42ab>] kmem_cache_alloc+0x1fb/0x250
-[<ffffffff8131fdd6>] idr_layer_alloc+0x36/0x90
-[<ffffffff8132029c>] idr_get_empty_slot+0x28c/0x3d0
-[<ffffffff813204ad>] idr_alloc+0x4d/0xf0
-[<ffffffffa051727d>] cma_alloc_port+0x4d/0xa0 [rdma_cm]
-[<ffffffffa0517cbe>] rdma_bind_addr+0x2ae/0x5b0 [rdma_cm]
-[<ffffffffa09d8083>] rds_ib_laddr_check+0x83/0x2c0 [ksplice_6l2xst5i_rds_rdma_new]
-[<ffffffffa05f892b>] rds_trans_get_preferred+0x5b/0xa0 [rds]
-[<ffffffffa05f09f2>] rds_bind+0x212/0x280 [rds]
-[<ffffffff815b4016>] SYSC_bind+0xe6/0x120
-[<ffffffff815b4d3e>] SyS_bind+0xe/0x10
-[<ffffffff816b031a>] system_call_fastpath+0x18/0xd4
-
-To avoid these excessive calls to rdma_bind_addr(), we optimize
-rds_ib_laddr_check() by simply checking if the address in question has
-been used before. The rds_rdma module keeps track of addresses
-associated with IB devices, and the function rds_ib_get_device() is
-used to determine if the address already has been qualified as a valid
-local address. If not found, we call the legacy rds_ib_laddr_check(),
-now renamed to rds_ib_laddr_check_cm().
-
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260408080420.540032-2-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ebf71dd4aff4 ("net/rds: Restrict use of RDS/IB to the initial network namespace")
+Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib.c      | 20 ++++++++++++++++++--
- net/rds/ib.h      |  1 +
- net/rds/ib_rdma.c |  2 +-
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ include/linux/spinlock_up.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/net/rds/ib.c b/net/rds/ib.c
-index 24c9a9005a6fb..dbc63493ade70 100644
---- a/net/rds/ib.c
-+++ b/net/rds/ib.c
-@@ -403,8 +403,8 @@ static void rds6_ib_ic_info(struct socket *sock, unsigned int len,
-  * allowed to influence which paths have priority.  We could call userspace
-  * asserting this policy "routing".
-  */
--static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
--			      __u32 scope_id)
-+static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
-+				 __u32 scope_id)
- {
- 	int ret;
- 	struct rdma_cm_id *cm_id;
-@@ -489,6 +489,22 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
- 	return ret;
+diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
+index 0ac9112c1bbe3..a406655c1fbd1 100644
+--- a/include/linux/spinlock_up.h
++++ b/include/linux/spinlock_up.h
+@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 	lock->slock = 1;
  }
  
-+static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
-+			      __u32 scope_id)
-+{
-+	struct rds_ib_device *rds_ibdev = NULL;
-+
-+	if (ipv6_addr_v4mapped(addr)) {
-+		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
-+		if (rds_ibdev) {
-+			rds_ib_dev_put(rds_ibdev);
-+			return 0;
-+		}
-+	}
-+
-+	return rds_ib_laddr_check_cm(net, addr, scope_id);
-+}
-+
- static void rds_ib_unregister_client(void)
- {
- 	ib_unregister_client(&rds_ib_client);
-diff --git a/net/rds/ib.h b/net/rds/ib.h
-index 2ba71102b1f1f..d6c1197731c1c 100644
---- a/net/rds/ib.h
-+++ b/net/rds/ib.h
-@@ -384,6 +384,7 @@ void rds_ib_cm_connect_complete(struct rds_connection *conn,
- 	__rds_ib_conn_error(conn, KERN_WARNING "RDS/IB: " fmt)
+-/*
+- * Read-write spinlocks. No debug version.
+- */
+-#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
+-
+ #else /* DEBUG_SPINLOCK */
+ #define arch_spin_is_locked(lock)	((void)(lock), 0)
+ /* for sched/core.c and kernel_lock.c: */
+@@ -69,4 +59,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
  
- /* ib_rdma.c */
-+struct rds_ib_device *rds_ib_get_device(__be32 ipaddr);
- int rds_ib_update_ipaddr(struct rds_ib_device *rds_ibdev,
- 			 struct in6_addr *ipaddr);
- void rds_ib_add_conn(struct rds_ib_device *rds_ibdev, struct rds_connection *conn);
-diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
-index 30fca2169aa7a..468fd60d818ff 100644
---- a/net/rds/ib_rdma.c
-+++ b/net/rds/ib_rdma.c
-@@ -47,7 +47,7 @@ struct rds_ib_dereg_odp_mr {
+ #define arch_spin_is_contended(lock)	(((void)(lock), 0))
  
- static void rds_ib_odp_mr_worker(struct work_struct *work);
- 
--static struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
-+struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
- {
- 	struct rds_ib_device *rds_ibdev;
- 	struct rds_ib_ipaddr *i_ipaddr;
++/*
++ * Read-write spinlocks. No debug version.
++ */
++#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
++
+ #endif /* __LINUX_SPINLOCK_UP_H */
 -- 
 2.53.0
 
