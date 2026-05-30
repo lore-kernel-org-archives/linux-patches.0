@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02554217704;
-	Sat, 30 May 2026 18:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B6121ADC7;
+	Sat, 30 May 2026 18:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165457; cv=none; b=IYkJ67wlZtZztFSxnTcM8P4nYk+0kusIFhnu4FYiXeOh8mC/+8feVdN85COXLKr+rGdHVgifFmtHKlv4G6RPIfm06wOjEbn0F9a31Xnlrgowi37BW4CZIRd1GRK9Nfs2WgbUbfivBfXFdTIuNMoEAkuihvVLAU4gsanIbI/6Bbc=
+	t=1780165460; cv=none; b=eWE3WU9YZX8bKjN9BVgMA+oUMAjOY99E1+EWeCX2mKlyIkPMbhdmjxuFxWNNvMQRB4rMMep6YQT10emE0yW5Pp/z0UaVu6zcNkmAzRMzhkILcGYGRCcxALWFrS1YCTBWN78T7YtwKW1JOTSLtuKc8IqX/JeCmtVbowwPe8P106g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165457; c=relaxed/simple;
-	bh=Z7+2yrgls0k5KK6kqOtSTXZ4glx7qAgXkd8SDcv0pWM=;
+	s=arc-20240116; t=1780165460; c=relaxed/simple;
+	bh=e4YUgNhu8pVFDiNy8AR/mHd53Pt750qw+Gbu+2g+mqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RH/kKq99Xjf+NZkUxV6KUnuDOWjXc3m1997FAVTiAJuq60TMrOgCLNIP+joxvfdNLGByP04MwuARIO7vTXbPfoGLD8bB8Qh2s0ebb/UMbiik6Ufk+YYAU2fb57RwdDLzmw73IV07FCkI5ssVkxP+p9IgJr2eJQ6zkstwfxk1dws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5EPRJ7r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ewCwRyVdx80J8xQuuKpt42J6RfzsXqIrLKrM7VEA/Zc0wlmO2dc//yuwpOE/xpMLk03+V/YOew7S0fflMugfh/zh5+2yaVV1psojdD9lm8wRvJtctgRfFu1xVCodsS+AYJHASRCnJhMv/MYTg4DJB9FEOs9AeSk5sEK9moSpRLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiFlLKyK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5EPRJ7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4604F1F00893;
-	Sat, 30 May 2026 18:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiFlLKyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA931F00893;
+	Sat, 30 May 2026 18:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165455;
-	bh=shejnwcA7C/2AmLS4eTdTFqOeNkmB7N0Iy0s8gooZJs=;
+	s=korg; t=1780165459;
+	bh=AmmjzoYGUkINjTU9ciJjQ77710EQUWa14rJ8Fbnmrzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z5EPRJ7r/kiCJWTYFUh6wmv2ExYoeZvZ6E69cd7G6q2O9v/hdXM84VX51PJBvP7ZI
-	 jqr1viOFLkSnNgZffqxKHTjkwF9efTqWdBydX//do+ax10gB4udMjqd+S/CJ56/wIK
-	 cKPrxFQQMf1ceeIWg6S8UXq/D+Z4YYllFi7AJqBE=
+	b=jiFlLKyK7mh1ZuzhlsDgbDN3nt2Oz5F2KYwLD2raPhumknYsL9aHhEw0HPIsYHJIP
+	 kyiQfMKeum9SpjWYkVAaYX20vw6UAOBySmGnWxppmAq5xRlDBqM/wheCS7/BfQ2mas
+	 jIDDL9hcFJJlhXWjNbkdlBUMIF0gJdqK8Lhm2+sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
-	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 083/589] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
-Date: Sat, 30 May 2026 17:59:24 +0200
-Message-ID: <20260530160226.841368418@linuxfoundation.org>
+	Cezar Bulinaru <cbulinaru@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 084/589] net: tap: NULL pointer derefence in dev_parse_header_protocol when skb->dev is null
+Date: Sat, 30 May 2026 17:59:25 +0200
+Message-ID: <20260530160226.874986870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,87 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Cezar Bulinaru <cbulinaru@gmail.com>
 
-commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
+commit 4f61f133f354853bc394ec7d6028adb9b02dd701 upstream.
 
-In hackrf driver, the following race condition occurs:
-```
-		CPU0						CPU1
-hackrf_probe()
-  kzalloc(); // alloc hackrf_dev
-  ....
-  v4l2_device_register();
-  ....
-						fd = sys_open("/path/to/dev"); // open hackrf fd
-						....
-  v4l2_device_unregister();
-  ....
-  kfree(); // free hackrf_dev
-  ....
-						sys_ioctl(fd, ...);
-						  v4l2_ioctl();
-						    video_is_registered() // UAF!!
-						....
-						sys_close(fd);
-						  v4l2_release() // UAF!!
-						    hackrf_video_release()
-						      kfree(); // DFB!!
-```
+Fixes a NULL pointer derefence bug triggered from tap driver.
+When tap_get_user calls virtio_net_hdr_to_skb the skb->dev is null
+(in tap.c skb->dev is set after the call to virtio_net_hdr_to_skb)
+virtio_net_hdr_to_skb calls dev_parse_header_protocol which
+needs skb->dev field to be valid.
 
-When a V4L2 or video device is unregistered, the device node is removed so
-new open() calls are blocked.
+The line that trigers the bug is in dev_parse_header_protocol
+(dev is at offset 0x10 from skb and is stored in RAX register)
+  if (!dev->header_ops || !dev->header_ops->parse_protocol)
+  22e1:   mov    0x10(%rbx),%rax
+  22e5:	  mov    0x230(%rax),%rax
 
-However, file descriptors that are already open-and any in-flight I/O-do
-not terminate immediately; they remain valid until the last reference is
-dropped and the driver's release() is invoked.
+Setting skb->dev before the call in tap.c fixes the issue.
 
-Therefore, freeing device memory on the error path after hackrf_probe()
-has registered dev it will lead to a race to use-after-free vuln, since
-those already-open handles haven't been released yet.
+BUG: kernel NULL pointer dereference, address: 0000000000000230
+RIP: 0010:virtio_net_hdr_to_skb.constprop.0+0x335/0x410 [tap]
+Code: c0 0f 85 b7 fd ff ff eb d4 41 39 c6 77 cf 29 c6 48 89 df 44 01 f6 e8 7a 79 83 c1 48 85 c0 0f 85 d9 fd ff ff eb b7 48 8b 43 10 <48> 8b 80 30 02 00 00 48 85 c0 74 55 48 8b 40 28 48 85 c0 74 4c 48
+RSP: 0018:ffffc90005c27c38 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff888298f25300 RCX: 0000000000000010
+RDX: 0000000000000005 RSI: ffffc90005c27cb6 RDI: ffff888298f25300
+RBP: ffffc90005c27c80 R08: 00000000ffffffea R09: 00000000000007e8
+R10: ffff88858ec77458 R11: 0000000000000000 R12: 0000000000000001
+R13: 0000000000000014 R14: ffffc90005c27e08 R15: ffffc90005c27cb6
+FS:  0000000000000000(0000) GS:ffff88858ec40000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000230 CR3: 0000000281408006 CR4: 00000000003706e0
+Call Trace:
+ tap_get_user+0x3f1/0x540 [tap]
+ tap_sendmsg+0x56/0x362 [tap]
+ ? get_tx_bufs+0xc2/0x1e0 [vhost_net]
+ handle_tx_copy+0x114/0x670 [vhost_net]
+ handle_tx+0xb0/0xe0 [vhost_net]
+ handle_tx_kick+0x15/0x20 [vhost_net]
+ vhost_worker+0x7b/0xc0 [vhost]
+ ? vhost_vring_call_reset+0x40/0x40 [vhost]
+ kthread+0xfa/0x120
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x1f/0x30
 
-And since release() free memory too, race to use-after-free and
-double-free vuln occur.
-
-To prevent this, if device is registered from probe(), it should be
-modified to free memory only through release() rather than calling
-kfree() directly.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
-Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
-Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Signed-off-by: Cezar Bulinaru <cbulinaru@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ kovalev: bp to fix CVE-2022-50073 ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/tap.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -1488,7 +1488,7 @@ static int hackrf_probe(struct usb_inter
- 	if (ret) {
- 		dev_err(dev->dev,
- 			"Failed to register as video device (%d)\n", ret);
--		goto err_v4l2_device_unregister;
-+		goto err_v4l2_device_put;
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 16fa0e3e752ab..18f19fc66c64f 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -703,11 +703,22 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 	skb_reset_mac_header(skb);
+ 	skb->protocol = eth_hdr(skb)->h_proto;
+ 
++	rcu_read_lock();
++	tap = rcu_dereference(q->tap);
++	if (!tap) {
++		kfree_skb(skb);
++		rcu_read_unlock();
++		return total_len;
++	}
++	skb->dev = tap->dev;
++
+ 	if (vnet_hdr_len) {
+ 		err = virtio_net_hdr_to_skb(skb, &vnet_hdr,
+ 					    tap_is_little_endian(q));
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto err_kfree;
++		}
  	}
- 	dev_info(dev->dev, "Registered as %s\n",
- 		 video_device_node_name(&dev->rx_vdev));
-@@ -1517,8 +1517,9 @@ static int hackrf_probe(struct usb_inter
- 	return 0;
- err_video_unregister_device_rx:
- 	video_unregister_device(&dev->rx_vdev);
--err_v4l2_device_unregister:
--	v4l2_device_unregister(&dev->v4l2_dev);
-+err_v4l2_device_put:
-+	v4l2_device_put(&dev->v4l2_dev);
-+	return ret;
- err_v4l2_ctrl_handler_free_tx:
- 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
- err_v4l2_ctrl_handler_free_rx:
+ 
+ 	skb_probe_transport_header(skb);
+@@ -717,8 +728,6 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+ 
+-	rcu_read_lock();
+-	tap = rcu_dereference(q->tap);
+ 	/* copy skb_ubuf_info for callback when skb has no error */
+ 	if (zerocopy) {
+ 		skb_shinfo(skb)->destructor_arg = msg_control;
+@@ -729,14 +738,8 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 		uarg->callback(uarg, false);
+ 	}
+ 
+-	if (tap) {
+-		skb->dev = tap->dev;
+-		dev_queue_xmit(skb);
+-	} else {
+-		kfree_skb(skb);
+-	}
++	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
+-
+ 	return total_len;
+ 
+ err_kfree:
+-- 
+2.53.0
+
 
 
