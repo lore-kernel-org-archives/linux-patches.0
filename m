@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EA533B6C4;
-	Sat, 30 May 2026 17:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C7633E36A;
+	Sat, 30 May 2026 17:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162050; cv=none; b=p95SrX90UP8KW4lg3kLinuYWZM9Q+FfSvmvpsE3lOzxToiOrWM28BLjJy+xpV+daMNiQJQCTRGjy9Ub13K/Hmpz1S7y/6eN3UhozJnL2Rx0eeJxYlE0vnAh1Ta99zTQUv/2iqAAm6XUzrjPGJb4+TIRVJkjJgJ+qxZ/j9kStLXA=
+	t=1780162053; cv=none; b=ji1FB+IEf7ZBj4x/moFWET+6teEvQM3zL89zYfY7Pst8aUdvX/4pVxy4Jnl5S7qlb8AmNfNmfChiRb4gTpaAgrhgs9MrmNjY56nvUhidtz1ZvI/pBf7/keroKMkr3H1QO6it8bIdpdgXCH7qMncDLE/1pUbf5c8kOZceUwElGf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162050; c=relaxed/simple;
-	bh=V/N336eT59zEDCosXHogBq6ID7FInx5VZ2q+evavxCA=;
+	s=arc-20240116; t=1780162053; c=relaxed/simple;
+	bh=/+V3/2GRayl2Fjl4bTPj90YOtCjgFPMDQf9AZ+ES5Fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncPR+yLMNy3vpxCZ8PvQYQA4DOYZCg8cvzRTRU/p3UBBn8NpcR+UGwoB0gaZd9THp62NmZpS7GRs1wFiIyGA3IKQetsFrAj5GXx8mMnrj7LyRCZfjG16r66GAD+EIITaZk5xy72WBQ4Gl+zIYQ3M7kd/mS1B3oGUgP/NbBPVioA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfXQU3ML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D4Gw9UdG5RG7idM1+3AIpiGkAFbAfPsnxgwtCz8jM4VcWp9inA4sXzgtLlrwEIH5Zm0M4UW3FKOoni3N3R3kuQO5i3uCSzlSFdeYEcg6m9b4XUI4f2JHncbt3FiH+3vocG+Cg/N78NPJnHZdnu2yqDWGWrE2OfCxAFMhWqJVtnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4Gd8kd5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfXQU3ML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F871F00893;
-	Sat, 30 May 2026 17:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4Gd8kd5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B001F00893;
+	Sat, 30 May 2026 17:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162048;
-	bh=eiFyP+4+feldYwqgjcoX2BVMyh2xvYBTpFnZFv4GQuc=;
+	s=korg; t=1780162052;
+	bh=VfZp4mNj/Z7uckElyz0qWp9HABMawbfg5VHei9opVu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IfXQU3ML+LNAnPhIIVRQrq2aGnN3on41h0ZAk1EIaRmU8EhdliwX2f768b3/eyUNB
-	 /UUdCuVK7LYaJWbzwbPKiJXbGL3Eu7HqhxWyyQ/QVQIfVxeBP7ejb2woWnHmoqsQ/C
-	 4tiIHPrIjQXpMscufxkzFEoOziL/miC59GAHVPiU=
+	b=y4Gd8kd5N35g5TzuEG7Tco76QPC/H8uEapiv4YGLS0wO9hGjXOGZ5P0k3ka4KTU0J
+	 Zlr2PSJdnpdjd1ONjsPnSiSRaDAYq2CxQJxiQ3hRaC96Qt69b4B/I8nnJz+VPfhH0i
+	 UbkXbRRGz+FSz6KzjYcChnLZ+LcsCtg4dg72qgTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Matt Vollrath <tactii@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 806/969] i40e: Cleanup PTP pins on probe failure
-Date: Sat, 30 May 2026 18:05:30 +0200
-Message-ID: <20260530160322.889040130@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 807/969] netfilter: nf_conntrack_sip: get helper before allocating expectation
+Date: Sat, 30 May 2026 18:05:31 +0200
+Message-ID: <20260530160322.916931038@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,73 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit 678b713ece1e853f11e670a84cb887c35e1381b7 upstream.
+commit eb6317739b1ea3ab28791e1f91b24781905fa815 upstream.
 
-PTP pin structs are allocated early in probe, but never cleaned up.
+process_register_request() allocates an expectation and then checks
+whether a conntrack helper is available. If helper lookup fails, the
+function returns early and the allocated expectation is left behind.
 
-Fix this by calling i40e_ptp_free_pins in the error path.
+Reorder the code to fetch and validate helper before calling
+nf_ct_expect_alloc(). This keeps the logic simpler and removes the leak
+path while preserving existing behavior.
 
-To support this, i40e_ptp_free_pins is added to the header and
-pin_config is correctly nullified after being freed.
-
-This has been an issue since i40e_ptp_alloc_pins was introduced.
-
-Fixes: 1050713026a08 ("i40e: add support for PTP external synchronization clock")
-Reported-by: Kohei Enju <kohei@enjuk.jp>
+Fixes: e14575fa7529 ("netfilter: nf_conntrack: use rcu accessors where needed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-2-a5ea4dc837a9@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h      |    1 +
- drivers/net/ethernet/intel/i40e/i40e_main.c |    1 +
- drivers/net/ethernet/intel/i40e/i40e_ptp.c  |    3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_sip.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -1289,6 +1289,7 @@ void i40e_ptp_restore_hw_time(struct i40
- void i40e_ptp_init(struct i40e_pf *pf);
- void i40e_ptp_stop(struct i40e_pf *pf);
- int i40e_ptp_alloc_pins(struct i40e_pf *pf);
-+void i40e_ptp_free_pins(struct i40e_pf *pf);
- int i40e_update_adq_vsi_queues(struct i40e_vsi *vsi, int vsi_offset);
- int i40e_is_vsi_uplink_mode_veb(struct i40e_vsi *vsi);
- int i40e_get_partition_bw_setting(struct i40e_pf *pf);
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16227,6 +16227,7 @@ err_vsis:
- 	i40e_clear_interrupt_scheme(pf);
- 	kfree(pf->vsi);
- err_switch_setup:
-+	i40e_ptp_free_pins(pf);
- 	i40e_reset_interrupt_capability(pf);
- 	del_timer_sync(&pf->service_timer);
- err_mac_addr:
---- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-@@ -947,12 +947,13 @@ int i40e_ptp_get_ts_config(struct i40e_p
-  *
-  * Release memory allocated for PTP pins.
-  **/
--static void i40e_ptp_free_pins(struct i40e_pf *pf)
-+void i40e_ptp_free_pins(struct i40e_pf *pf)
- {
- 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
- 		kfree(pf->ptp_pins);
- 		kfree(pf->ptp_caps.pin_config);
- 		pf->ptp_pins = NULL;
-+		pf->ptp_caps.pin_config = NULL;
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1367,6 +1367,10 @@ static int process_register_request(stru
+ 		goto store_cseq;
  	}
- }
  
++	helper = rcu_dereference(nfct_help(ct)->helper);
++	if (!helper)
++		return NF_DROP;
++
+ 	exp = nf_ct_expect_alloc(ct);
+ 	if (!exp) {
+ 		nf_ct_helper_log(skb, ct, "cannot alloc expectation");
+@@ -1377,10 +1381,6 @@ static int process_register_request(stru
+ 	if (sip_direct_signalling)
+ 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
+ 
+-	helper = rcu_dereference(nfct_help(ct)->helper);
+-	if (!helper)
+-		return NF_DROP;
+-
+ 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
+ 			  saddr, &daddr, proto, NULL, &port);
+ 	exp->timeout.expires = sip_timeout * HZ;
 
 
