@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59590263F44;
-	Sat, 30 May 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DA82FDC5E;
+	Sat, 30 May 2026 17:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161900; cv=none; b=DEJlN6lYkvcTnokAAgzhdNJR12c5/mGH+IiHaQ8iEnNCgj/P533LDFo0N0OWsL3oeLJQglFmO/HNmO6ZuikpHsjrfm0B0ZsGcyKDj3Pn1VKFt1cpoXM9X/95hMJa0QA6x50gGzomleRR1HOxUrQfBlPRHyR3pgSjAS3tAIBkJk0=
+	t=1780161903; cv=none; b=hfvrRAP1Du9VfVt8zhzJ/YN1VSMD3K0D/+jvt6TCnbonSQKW69Jg/10NLKKZSrbXBumvsPSWO7/iMw0N4fuiqyT65N8VM3pzLtyfyC7hMTFAqI4GIDQtZ3QfyMQ2KWp3z+Kq/5087zfyGuHX1bu9xbDbubD+i8zJuGzs/XvCFFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161900; c=relaxed/simple;
-	bh=HcrIldPu+YPVG702srQA4iqQ128R5LXoe7KJSaK0UPE=;
+	s=arc-20240116; t=1780161903; c=relaxed/simple;
+	bh=fIl6UAHa3T8FmZDP9Ob7KP+NSXGbrhRuSloX3+KzFWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4bcCfzGatq3v1aG4IeU3c6CWTcypHPqGjrlgtf2N2zPBL0bg1WkS09U/FfZul17a/G1oYpgrmiXcxyUaKvgiYgdZzJNdFn2YMG3TyEA3MTt131xtsjQlDHAAB2sNr8PUpBH0AwG75xo/RKMz5gKmQcyW4ROSfRsarO5qE47wrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0UouiV3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CR9B5LDYDGH+sSEV2f5kNfs08yVQmlA5Tpe/uqar5oSPpxSBIheFdsDiaThw10ytT4h1brFphrj7RRSQyzxsnEHljuyP0iTRieon6dQ6ZcLGC/AplUVaxvCO+kb4AMng2nmDG6T8EkLEJi1FsrJ3mWZ64cL6cY7noyJz82wLago=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V43lKNim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0UouiV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AEA1F00893;
-	Sat, 30 May 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V43lKNim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDE61F00893;
+	Sat, 30 May 2026 17:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161899;
-	bh=6YzQ/hMf7KEDDQqlfZVSV/6JbJwADLC8TS8pEyYSHZw=;
+	s=korg; t=1780161902;
+	bh=tgaHcKgkSLzmti6byjalz1ztYvAGRcusND8qD2GMTAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0UouiV3XIispF4t9Irtkv/LzAX+imWHxObRJmmeB5gd1jd5217J0mitWZZmw6EoF
-	 Hr0CyxKRRNeoVmEJqumIKdSvhcamsWESLzxNUQjHvTK/yMer00pAiZwQvsGzXgoGJV
-	 O1SxooXqIDk9Lu05FT/3e4WY5XinsgsP8wiSvu7E=
+	b=V43lKNimFx8Kr0lS2VG35c7I6jz1O1pomiL8naRcJ35xRPn1Uu5IXwJj4cVci9Yr8
+	 qDmp4j5XVaPYsmcLlIb/48mIztU+BOFv0YH6HFUujVphWQkJowPshJlLbTX+BpAUMA
+	 oliw/6YQNAR27yQM9ROZTkTLgn+OoHVtrBzm79Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"William A. Kennington III" <william@wkennington.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Heiko Schocher <hs@nabladev.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 759/969] net: mctp i2c: check length before marking flow active
-Date: Sat, 30 May 2026 18:04:43 +0200
-Message-ID: <20260530160321.524804176@linuxfoundation.org>
+Subject: [PATCH 6.1 760/969] net: phy: dp83869: fix setting CLK_O_SEL field.
+Date: Sat, 30 May 2026 18:04:44 +0200
+Message-ID: <20260530160321.553865764@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,88 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William A. Kennington III <william@wkennington.com>
+From: Heiko Schocher <hs@nabladev.com>
 
-[ Upstream commit 4ca07b9239bd0478ae586632a2ed72be37ed8407 ]
+[ Upstream commit 46f74a3f7d57d9cc0110b09cbc8163fa0a01afa2 ]
 
-Currently, mctp_i2c_get_tx_flow_state() is called before the packet length
-sanity check. This function marks a new flow as active in the MCTP core.
+Table 7-121 in datasheet says we have to set register 0xc6
+to value 0x10 before CLK_O_SEL can be modified. No more infos
+about this field found in datasheet. With this fix, setting
+of CLK_O_SEL field in IO_MUX_CFG register worked through dts
+property "ti,clk-output-sel" on a DP83869HMRGZR.
 
-If the sanity check fails, mctp_i2c_xmit() returns early without calling
-mctp_i2c_lock_nest(). This results in a mismatched locking state: the
-flow is active, but the I2C bus lock was never acquired for it.
-
-When the flow is later released, mctp_i2c_release_flow() will see the
-active state and queue an unlock marker. The TX thread will then
-decrement midev->i2c_lock_count from 0, causing it to underflow to -1.
-
-This underflow permanently breaks the driver's locking logic, allowing
-future transmissions to occur without holding the I2C bus lock, leading
-to bus collisions and potential hardware hangs.
-
-Move the mctp_i2c_get_tx_flow_state() call to after the length sanity
-check to ensure we only transition the flow state if we are actually
-going to proceed with the transmission and locking.
-
-Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
-Signed-off-by: William A. Kennington III <william@wkennington.com>
-Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260423074741.201460-1-william@wkennington.com
+Signed-off-by: Heiko Schocher <hs@nabladev.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 01db923e8377 ("net: phy: dp83869: Add TI dp83869 phy")
+Link: https://patch.msgid.link/20260425031339.3318-1-hs@nabladev.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 4 ++--
- net/sched/cls_flower.c      | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/phy/dp83869.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 2eeccc3b70eff..cf0947b64a123 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -461,8 +461,6 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
- 	u8 *pecp;
- 	int rc;
+diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
+index b924f98b23973..35202f2e1d3dc 100644
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -31,6 +31,7 @@
+ #define DP83869_RGMIICTL	0x0032
+ #define DP83869_STRAP_STS1	0x006e
+ #define DP83869_RGMIIDCTL	0x0086
++#define DP83869_ANA_PLL_PROG_PI	0x00c6
+ #define DP83869_RXFCFG		0x0134
+ #define DP83869_RXFPMD1		0x0136
+ #define DP83869_RXFPMD2		0x0137
+@@ -802,12 +803,22 @@ static int dp83869_config_init(struct phy_device *phydev)
+ 		dp83869_config_port_mirroring(phydev);
  
--	fs = mctp_i2c_get_tx_flow_state(midev, skb);
--
- 	hdr = (void *)skb_mac_header(skb);
- 	/* Sanity check that packet contents matches skb length,
- 	 * and can't exceed MCTP_I2C_BUFSZ
-@@ -474,6 +472,8 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
- 		return;
- 	}
- 
-+	fs = mctp_i2c_get_tx_flow_state(midev, skb);
+ 	/* Clock output selection if muxing property is set */
+-	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK)
++	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK) {
++		/*
++		 * Table 7-121 in datasheet says we have to set register 0xc6
++		 * to value 0x10 before CLK_O_SEL can be modified.
++		 */
++		ret = phy_write_mmd(phydev, DP83869_DEVADDR,
++				    DP83869_ANA_PLL_PROG_PI, 0x10);
++		if (ret)
++			return ret;
 +
- 	if (skb_tailroom(skb) >= 1) {
- 		/* Linear case with space, we can just append the PEC */
- 		skb_put(skb, 1);
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index a40a9e84c75f4..fd8c2f0f3256e 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -537,6 +537,7 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 		       struct netlink_ext_ack *extack)
- {
- 	struct cls_fl_head *head = fl_head_dereference(tp);
-+	struct fl_flow_mask *mask;
+ 		ret = phy_modify_mmd(phydev,
+ 				     DP83869_DEVADDR, DP83869_IO_MUX_CFG,
+ 				     DP83869_IO_MUX_CFG_CLK_O_SEL_MASK,
+ 				     dp83869->clk_output_sel <<
+ 				     DP83869_IO_MUX_CFG_CLK_O_SEL_SHIFT);
++	}
  
- 	*last = false;
- 
-@@ -553,11 +554,12 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 	list_del_rcu(&f->list);
- 	spin_unlock(&tp->lock);
- 
--	*last = fl_mask_put(head, f->mask);
-+	mask = f->mask;
- 	if (!tc_skip_hw(f->flags))
- 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
- 	tcf_unbind_filter(tp, &f->res);
- 	__fl_put(f);
-+	*last = fl_mask_put(head, mask);
- 
- 	return 0;
- }
+ 	if (phy_interface_is_rgmii(phydev)) {
+ 		ret = phy_write_mmd(phydev, DP83869_DEVADDR, DP83869_RGMIIDCTL,
 -- 
 2.53.0
 
