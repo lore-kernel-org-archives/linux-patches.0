@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23012F25E4;
-	Sat, 30 May 2026 16:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520452F25E4;
+	Sat, 30 May 2026 16:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158303; cv=none; b=CjGfF/vQT/ZRyQcRoo311d2VTFrVaAvP3lzUE9IWlwD2d9V3PoTtTxy6AhKZ015seC4OHsmtSnxbXrI1wsBo/EEKhdzfa5up56+xwKtXI4bYMU874mQlq47NJvTt0kF5Ua3qROgzJGIq7KPJS5Q0/Wai+jUSeYm7PSo4DVRj/5o=
+	t=1780158316; cv=none; b=Q/u4RRmLmGe7382pzSHiMqcycw2ox7PHGc/XDMY7QmSrnqAK0Md1C4ryzTZ9rekCd3H03pcA0quuaDIN2MYr8Xmid3EaVxAcFMAGejYvi0G1EUeePfVrF9O7+2odAOkOarWbQx0otiNUgCUeFbp2lxyOgsxatSQS1wQsCj9v3gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158303; c=relaxed/simple;
-	bh=+/oE9t8fzmCGK6KyVzx4hQMSrFoTDjuo0baUEu7B5BE=;
+	s=arc-20240116; t=1780158316; c=relaxed/simple;
+	bh=w+CBrRGobN1qrj5QUzUsU15jW2bJPUn+8rEVy162Yjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHERC4ZTPhgCcZ/tertT42dQqKEtqK0zQ+oAmEPhe5aH3fS5Fh9G1starAl7C8X1kmTT8eWOlPnf6T/0uOnounDcp92UT5ZeBJ50m7PgED7FOeYo7CnDMXUYaLwD/etzLT5V65knJOVt2UddT8gyjwC0QKE9ShL9romEDPRmrwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASt/I/4p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFrSNdQtIjQzh8lJpFHhRCR/34hAVusw13Wg9IdCuEwLNoHwEi/zI9cC7TkGh8C/oupqeFUqkQ0KKKup6i703I65lKWOM0rLYRf1Z5ZqU8T3a+GxrFL2cWu+gjyXP4o/xzWnMRqo5Ea3tpvlhlu6qwhuuY+e+ooZ8+Z78VQgD6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4N76Ga6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASt/I/4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFD81F00893;
-	Sat, 30 May 2026 16:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4N76Ga6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83C11F00893;
+	Sat, 30 May 2026 16:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158302;
-	bh=rl/9zkno4epqR2kjCQcf8EF5A5uaOhjSdg8LtStHbls=;
+	s=korg; t=1780158315;
+	bh=nrFQlPHMw2vtZUw6wpnATPgXay1fTtn4aYr+Bh3aq2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ASt/I/4piDggS8NWqbmKT5e//reqj20h9MZh2qEZqebEHyl5SNY/SghOY/njDIgaB
-	 umq30tceOAyzTDbclq0kOSP2Rprl2qhOGkRFXPQ5Wa6PTuNKtBPDMEE7eV4beeEu+p
-	 QtvERrUXXUl+j4vNUnoiCYIoA/gIugQRbjBFAo8c=
+	b=y4N76Ga6NcDCE9XC+qkw2BCuAQLLi/TWhzt+41XHmDmX58o8rlya050/fU0bsVWzR
+	 eMyRkC0WvCiCWnh/wV/I4HdwQMwY/OwETr6/4VvtW7PFmkjznLTnwK27iTFtbMPGoq
+	 Ya/181M52HFzZ18S4Qr7eo4iw90bSgplSMtdi0Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Nicholas Carlini <nicholas@carlini.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/969] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
-Date: Sat, 30 May 2026 17:52:12 +0200
-Message-ID: <20260530160300.712690852@linuxfoundation.org>
+Subject: [PATCH 6.1 032/969] eventpoll: defer struct eventpoll free to RCU grace period
+Date: Sat, 30 May 2026 17:52:36 +0200
+Message-ID: <20260530160301.321008520@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,47 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
+[ Upstream commit 07712db80857d5d09ae08f3df85a708ecfc3b61f ]
 
-If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
-super block and fsid assignment will lead to a crash.
+In certain situations, ep_free() in eventpoll.c will kfree the epi->ep
+eventpoll struct while it still being used by another concurrent thread.
+Defer the kfree() to an RCU callback to prevent UAF.
 
-Use file_inode(file)->i_sb to always get btrfs_sb.
-
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/btrfs.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/eventpoll.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index 31847ccae4936..8054ce54807de 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -760,12 +760,15 @@ TRACE_EVENT(btrfs_sync_file,
- 	),
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index f20a35775cf66..f6038819fe79f 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -225,6 +225,9 @@ struct eventpoll {
+ 	 */
+ 	refcount_t refcount;
  
- 	TP_fast_assign(
--		const struct dentry *dentry = file->f_path.dentry;
--		const struct inode *inode = d_inode(dentry);
-+		struct dentry *dentry = file_dentry(file);
-+		struct inode *inode = file_inode(file);
-+		struct dentry *parent = dget_parent(dentry);
-+		struct inode *parent_inode = d_inode(parent);
++	/* used to defer freeing past ep_get_upwards_depth_proc() RCU walk */
++	struct rcu_head rcu;
++
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	/* used to track busy poll napi_id */
+ 	unsigned int napi_id;
+@@ -708,7 +711,8 @@ static void ep_free(struct eventpoll *ep)
+ 	mutex_destroy(&ep->mtx);
+ 	free_uid(ep->user);
+ 	wakeup_source_unregister(ep->ws);
+-	kfree(ep);
++	/* ep_get_upwards_depth_proc() may still hold epi->ep under RCU */
++	kfree_rcu(ep, rcu);
+ }
  
--		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
-+		dput(parent);
-+		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
- 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
--		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
-+		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
- 		__entry->datasync	= datasync;
- 		__entry->root_objectid	=
- 				 BTRFS_I(inode)->root->root_key.objectid;
+ /*
 -- 
 2.53.0
 
