@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF41304BCB;
-	Sat, 30 May 2026 17:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C59341AC7;
+	Sat, 30 May 2026 17:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163459; cv=none; b=t7rITrKGCh+v9CGWlAQSCXgIPgt7cnCegdxx5dSxL5PZQfaN11aHYCz11CzpNwh4SMmkAM5sU8vWxYfbo985dHLnElod2Uv0YwdMU2fxbpgSc98i5umCgknP68fEa/vsClB0lIcycxk3jhQ7r6QpMqIuSphqaySy23N8xNgmKfI=
+	t=1780163462; cv=none; b=YnM9FArSjhx0dGL4LlDOSCqEYZ3mGmkxd+JcHULFCoLpQcIuykqJbuww6RN3WmflcoBaavP9NsRNmGSoJT1e/UBlG9Zgd7ijryKL2/RCPULDLi1i6TQyPC2/Wo78KyAiOltHnEoZnkkshw7sSdITi6FFYa40v+oyusSPL2hG3mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163459; c=relaxed/simple;
-	bh=l8Rp/2e12lOGXHS4eHNyJ/6usCVF3g2dG1mVHKxaxrk=;
+	s=arc-20240116; t=1780163462; c=relaxed/simple;
+	bh=31bf+vrSLiyi7gPpFooDMIWt80GxMnpgJaRbEcUClZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Au3OwbwUCNYO97nnGW1yKdL2eYsvFsQZDiLMi/OJiZDs1wxtFV3/redH2p+kzuXLL74DNP+99v0Vc6IJnCLc4zkm8woNfTkCYWqUxVt98rve3hmyU5GQrumcqlC1HSu7s4Vxuvz+5pZhHWv+WONdzvNgm+vmhh+8byhGCpoLxgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MH60mlZd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KTCMWXId265gUu6nxatSIPA5kLwOEMtGP3fc5cwQNEEMgjChVcapZe2JaFGHXox1qxLy+8m++rZHpBmxy75hn0VhfYGyROa5cdZ4E5OY2klbYnyvLSZAphyq6R/+5o5+yfYswkowvx42S5o9MyPaVNS6BuGTZ59Z6R73LavLYmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0wwe5UZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MH60mlZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F359F1F00893;
-	Sat, 30 May 2026 17:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0wwe5UZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DEF1F00893;
+	Sat, 30 May 2026 17:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163458;
-	bh=vIugvuZ7wokATplNFA9eT3pxzOCh2tRyn9YF4IMQUdo=;
+	s=korg; t=1780163461;
+	bh=8bVtsaH0stdXCBXoqomRAcnLAnkB0dImmB3thhhvmGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MH60mlZdZjvlWkvqQsp/XW6ZNgCDHPK9zhxjtbiaVIWhCrFJwDRODLcaJkObd3TZ2
-	 gnNo7fGK9wJkFiX7zNTrzhocCE+kQ4jcPrxKzv6ya4rAdhisJ3QsYnLyW6KQ4eA94U
-	 0qPmuyMV7Cb6lPQ2AWRCD76EStkLMIGmFoj9P/Cc=
+	b=X0wwe5UZ/W13+Kfl6wdp/o7eub7kKodWtSF6YUFpr+kk7Q0MMrmrnxM3ynhYRwCeT
+	 5bWSiW3TVcDAF9p8P3PavDPTg1KKsuEll2nEGSCI0olclrx2I27u0t8LKGM3T5ES67
+	 jZbN1jIw4T+ZYM6HBBJLCDJZp3piHoctm5OSsf3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 235/776] KVM: SVM: Explicitly mark vmcb01 dirty after modifying VMCB intercepts
-Date: Sat, 30 May 2026 17:59:09 +0200
-Message-ID: <20260530160246.605151194@linuxfoundation.org>
+Subject: [PATCH 5.15 236/776] KVM: nSVM: Ensure AVIC is inhibited when restoring a vCPU to guest mode
+Date: Sat, 30 May 2026 17:59:10 +0200
+Message-ID: <20260530160246.628949472@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,42 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit d5bde6113aed8315a2bfe708730b721be9c2f48b upstream.
+commit 24f7d36b824b65cf1a2db3db478059187b2a37b0 upstream.
 
-When reacting to an intercept update, explicitly mark vmcb01's intercepts
-dirty, as KVM always initially operates on vmcb01, and nested_svm_vmexit()
-isn't guaranteed to mark VMCB_INTERCEPTS as dirty.  I.e. if L2 is active,
-KVM will modify the intercepts for L1, but might not mark them as dirty
-before the next VMRUN of L1.
+On nested VMRUN, KVM ensures AVIC is inhibited by requesting
+KVM_REQ_APICV_UPDATE, triggering a check of inhibit reasons, finding
+APICV_INHIBIT_REASON_NESTED, and disabling AVIC.
 
-Fixes: 116a0a23676e ("KVM: SVM: Add clean-bit for intercetps, tsc-offset and pause filter count")
+However, when KVM_SET_NESTED_STATE is performed on a vCPU not in guest
+mode with AVIC enabled, KVM_REQ_APICV_UPDATE is not requested, and AVIC
+is not inhibited.
+
+Request KVM_REQ_APICV_UPDATE in the KVM_SET_NESTED_STATE path if AVIC is
+active, similar to the nested VMRUN path.
+
+Fixes: f44509f849fe ("KVM: x86: SVM: allow AVIC to co-exist with a nested guest running")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260218230958.2877682-2-seanjc@google.com
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260224225017.3303870-1-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -128,11 +128,13 @@ void recalc_intercepts(struct vcpu_svm *
- 	struct vmcb_control_area *c, *h, *g;
- 	unsigned int i;
+@@ -1407,6 +1407,9 @@ static int svm_set_nested_state(struct k
+ 		goto out_free;
  
--	vmcb_mark_dirty(svm->vmcb, VMCB_INTERCEPTS);
-+	vmcb_mark_dirty(svm->vmcb01.ptr, VMCB_INTERCEPTS);
  
- 	if (!is_guest_mode(&svm->vcpu))
- 		return;
- 
-+	vmcb_mark_dirty(svm->vmcb, VMCB_INTERCEPTS);
++	if (kvm_vcpu_apicv_active(vcpu))
++		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
 +
- 	c = &svm->vmcb->control;
- 	h = &svm->vmcb01.ptr->control;
- 	g = &svm->nested.ctl;
+ 	kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+ 	ret = 0;
+ out_free:
 
 
