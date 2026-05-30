@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC6E3148DA;
-	Sat, 30 May 2026 17:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093AB481DD;
+	Sat, 30 May 2026 17:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161068; cv=none; b=goTJ+7pD1RfXg07HqCZCp0/zODbZNr+/mzNWBCwyKIsSF0IH+3WSTgNLTef1xjXQHwWBmNDVycOwmFFszrS5yriFCPx9Gg7DltmDjgUT+ewSjiBjmOvNJaaRdZM1u9vNwIar00TyttQrjl75DWU3r3l5CykxKFFwffwqm2D7a34=
+	t=1780161070; cv=none; b=M2cQUEORMjYFVC51FIy8/CqKy+GcPfim+7MJE5EoSGPSVwPnLl6CKyQwL4uGWHRsz2jiNxcEmmpx9SIO0jxp8a6+oWQj8l2ybNRXSIgDvX63pJAbJc5343Sz9MqYHg5pKI4gzk7ddtmR+QVotMd/uL/4/qPFLD6txeHg2ctncNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161068; c=relaxed/simple;
-	bh=r0uLe61Svk6lg+3C5gD5oQWInXo4HZVM0c1tFSEmw3s=;
+	s=arc-20240116; t=1780161070; c=relaxed/simple;
+	bh=Cfkw71OWm858J9vRyUQ4IHt12MzCWQKuGgvoZiGDT4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sJYGehwOrK/QR+RDeeeEM3uQqDinbfq6VP6RxQhjesXvAisXaWscs9nwrydLWma6adGRIP/RYxzTU+Y7ZuI0BdL2vUwvC4LIdp3zrApjqr6hcIJFwTLGkxyyNNXRWEg39aWPSycU/sO/ua+Xk5iEGVQDavNSI7Oa9URAybYHmkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGoXW69K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=C/CpEIMV+b7AusSze19pZi68SdY8rbRo6Evz2hCPuJDCzJQ8/IcQMhiq1aSAg+nTkZqPY+nKXv5dFMzqlDFwPlTNJGIoYneUtRCRicdB7G7iCBplqUNjlHXlLtGEDLy/6MCob13mdfIo/h87xVgxHQnJdaXUCGA6A3kSXdp3n7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ub+aD1gu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGoXW69K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFF61F00893;
-	Sat, 30 May 2026 17:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ub+aD1gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503FD1F00893;
+	Sat, 30 May 2026 17:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161066;
-	bh=u/yf47YIxIcniCsfFrp+v+ytZN5+KKIgy5EaodlJvT8=;
+	s=korg; t=1780161069;
+	bh=+nWyy9T6nsmuC/xtVXvanDyAfOEiQddTqHknjAUFqRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XGoXW69KR0SmPEUoguJ+FpavQRiESU3vzCzghbMx+xqb4M57J+pfrDZigoLj9gqBE
-	 VEwTCsAgDlIeGxJl3F1X0FqGX06T97AXw3ZMnP/5oul08mS4CMSi0fufXQHMDeCuxq
-	 qgkVGLZH3ESRKqrf2Q/krUcRZPT93xa213/ZkUwo=
+	b=Ub+aD1guJ8q5/dkad7MaXgoZLEg5lslr1xny8L4bQyPZOShibCLCNrQzAKLB1WCfy
+	 GoT3KilAYiLx1gxXErAUPS4Grb4bH0vpwL778A/atHvzGJHszKJtptCo5KMbqxS8OZ
+	 kMoJ9qV4d7uGOffLVICBBFCQBKe0AxIfrs9IkBBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 516/969] ALSA: core: Validate compress device numbers without dynamic minors
-Date: Sat, 30 May 2026 18:00:40 +0200
-Message-ID: <20260530160314.590904343@linuxfoundation.org>
+Subject: [PATCH 6.1 517/969] drm/amd/pm/ci: Use highest MCLK on CI when MCLK DPM is disabled
+Date: Sat, 30 May 2026 18:00:41 +0200
+Message-ID: <20260530160314.620662877@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 796e119e9b14763be905ad0d023c71a14bc2e931 ]
+[ Upstream commit 894f0d34d66cb47fe718fe2ae5c18729d22c5218 ]
 
-Without CONFIG_SND_DYNAMIC_MINORS, ALSA reserves only two fixed minors
-for compress devices on each card: comprD0 and comprD1.
+When MCLK DPM is disabled for any reason, populate the MCLK
+table with the highest MCLK DPM level, so that the ASIC can
+use the highest possible memory clock to get good performance
+even when MCLK DPM is disabled.
 
-snd_find_free_minor() currently computes the compress minor as
-type + dev without validating dev first, so device numbers greater than
-1 spill into the HWDEP minor range instead of failing registration.
-
-ASoC passes rtd->id to snd_compress_new(), so this can happen on real
-non-dynamic-minor builds.
-
-Add a dedicated fixed-minor check for SNDRV_DEVICE_TYPE_COMPRESS in
-snd_find_free_minor() and reject out-of-range device numbers with
--EINVAL before constructing the minor.
-
-Also remove the stale TODO in compress_offload.c that still claims
-multiple compress nodes are missing.
-
-Fixes: 3eafc959b32f ("ALSA: core: add support for compressed devices")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260325-alsa-compress-static-minors-v1-1-0628573bee1c@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 7 -------
- sound/core/sound.c            | 7 +++++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index 243acad89fd3b..f1140a6bc996d 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -40,13 +40,6 @@
- #define COMPR_CODEC_CAPS_OVERFLOW
- #endif
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+index 9b8974e89145d..20419da731993 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+@@ -1323,6 +1323,14 @@ static int ci_populate_all_memory_levels(struct pp_hwmgr *hwmgr)
+ 			return result;
+ 	}
  
--/* TODO:
-- * - add substream support for multiple devices in case of
-- *	SND_DYNAMIC_MINORS is not used
-- * - Multiple node representation
-- *	driver should be able to register multiple nodes
-- */
--
- struct snd_compr_file {
- 	unsigned long caps;
- 	struct snd_compr_stream stream;
-diff --git a/sound/core/sound.c b/sound/core/sound.c
-index df5571d986295..f3bb0adf37cce 100644
---- a/sound/core/sound.c
-+++ b/sound/core/sound.c
-@@ -219,9 +219,16 @@ static int snd_find_free_minor(int type, struct snd_card *card, int dev)
- 	case SNDRV_DEVICE_TYPE_RAWMIDI:
- 	case SNDRV_DEVICE_TYPE_PCM_PLAYBACK:
- 	case SNDRV_DEVICE_TYPE_PCM_CAPTURE:
-+		if (snd_BUG_ON(!card))
-+			return -EINVAL;
-+		minor = SNDRV_MINOR(card->number, type + dev);
-+		break;
- 	case SNDRV_DEVICE_TYPE_COMPRESS:
- 		if (snd_BUG_ON(!card))
- 			return -EINVAL;
-+		if (dev < 0 ||
-+		    dev >= SNDRV_MINOR_HWDEP - SNDRV_MINOR_COMPRESS)
-+			return -EINVAL;
- 		minor = SNDRV_MINOR(card->number, type + dev);
- 		break;
- 	default:
++	if (data->mclk_dpm_key_disabled && dpm_table->mclk_table.count) {
++		/* Populate the table with the highest MCLK level when MCLK DPM is disabled */
++		for (i = 0; i < dpm_table->mclk_table.count - 1; i++) {
++			levels[i] = levels[dpm_table->mclk_table.count - 1];
++			levels[i].DisplayWatermark = PPSMC_DISPLAY_WATERMARK_HIGH;
++		}
++	}
++
+ 	smu_data->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
+ 
+ 	dev_id = adev->pdev->device;
 -- 
 2.53.0
 
