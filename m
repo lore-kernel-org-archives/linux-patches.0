@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1F234889F;
-	Sat, 30 May 2026 16:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537FE344DBB;
+	Sat, 30 May 2026 16:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157841; cv=none; b=TePrdq3SYKI56YNWYNNfVPz49U/UjeyAZxW/eF6NsGlSZUqaaQ6ASvlLs2ntMt0QMFN3Yd6ZTl32Tu3ykkoMG330VDtgkLC2JJsleHUXFjbRLAzZAmwXLT2PooZ2fXjtr51Rsxx8kmP5DfgpRMIGjatGdXWUzhwyL9jjg7U/Scc=
+	t=1780157849; cv=none; b=FD7OH/fgesG0Ft4d2ecBAn+X7dT88/mtjLVDr0L0DWpdOfLq1cgh2abLuo/iZdThuWoUlmMyZPWC8junlSO2oqXnAY/tKSoy9QngvhVCDFs/YKc1f7EUCJkZKIP2Dk77lB0LjWTgAeibQfPKHU7fgUOF6SwIZdoR3nVpzxbB3TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157841; c=relaxed/simple;
-	bh=cOS8ZbdyfwUrLtbHgp2TAtVT9SlwrCwc2lgzupu3Dsk=;
+	s=arc-20240116; t=1780157849; c=relaxed/simple;
+	bh=bgw3f38TNlhjbSmBVkQ3/gMpvJE4g9iZCBG0Y8D6fpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QM15Ox56yOWd3i/4O1HDlM+YN639SppJXpsJduenc3wBGCkW37vmjX7jCESRdosQxxwk0ECBEt10lR5TtCTFzEstkYF0gWZjGAecdyf8zKUVc8uuZ8LqxceIdLPvNLcWAkUstwVr2hCZmPESuWMWwCB+HLZLLfaAa4zOnMoCeKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2hUnL9e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YSt/+GKQhllDUjc9Jl1vHVhkR96XHYPTtHenMF7h0mgy0d7WgeDFRYXKoPw3tsibus2L3vi0NdGa0dbZYxkewkERUT6QzIjTIgY2ibaAcjPfw+Psshm3q78CutliIv22b7O1eCCbFTxYu53FdZ1Twg078LXKDWiD4iT+J9WmzP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dASO9Hhy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2hUnL9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EDE1F00899;
-	Sat, 30 May 2026 16:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dASO9Hhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6221F00893;
+	Sat, 30 May 2026 16:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157835;
-	bh=jRSECdF9ndTRbrYRr69vTGNExW6FA8HuirdwvO0jBos=;
+	s=korg; t=1780157847;
+	bh=sUcT3ALUaYDJ9AjehzREr3Nb6yVKtcm1ACKgJ/5Oi7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2hUnL9eo85w1WkPNouVSb7sjxBMB/ONLVE13E7/tXdcUWWRuIpkU03pA7TtjcJgu
-	 C0wYLyUk+KT5jDGEX5mnbHEZoL2kB5tzAQq0bz7GE1TbACBsuwhGUtKZ7KZ4Cb6E2g
-	 pUQMPppxSGisWGx+iglMjCQjXUbMykcOlZy4fF6g=
+	b=dASO9HhyY5E9piKA0H1iuEfNXzwenQy0DuzsesMrsnoFaBnWSKeLM81GVsRJMZ8IA
+	 KnBd9ySQCw+NFCO8fb6kprijIKWpv+FXfIZIDwosW6ecp+aqDkjbiE5uz5EZE4HaXT
+	 lfQWJSkmRvr+M1OX2NgKGVUQgP2LMAUbLrEcLnjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?C=C3=A9sar=20Montoya?= <sprit152009@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/776] wifi: wl1251: validate packet IDs before indexing tx_frames
-Date: Sat, 30 May 2026 17:55:21 +0200
-Message-ID: <20260530160240.436961325@linuxfoundation.org>
+Subject: [PATCH 5.15 005/776] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg0xxx
+Date: Sat, 30 May 2026 17:55:19 +0200
+Message-ID: <20260530160240.384004100@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,55 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: César Montoya <sprit152009@gmail.com>
 
-[ Upstream commit 0fd56fad9c56356e7fa7a7c52e7ecbf807a44eb0 ]
+[ Upstream commit 2f388b4e8fdd6b0f27cafd281658daacfd85807e ]
 
-wl1251_tx_packet_cb() uses the firmware completion ID directly to index
-the fixed 16-entry wl->tx_frames[] array. The ID is a raw u8 from the
-completion block, and the callback does not currently verify that it
-fits the array before dereferencing it.
+The HP Pavilion 15-eg0xxx with subsystem ID 0x103c87cb uses a Realtek
+ALC287 codec with a mute LED wired to GPIO pin 4 (mask 0x10). The
+existing ALC287_FIXUP_HP_GPIO_LED fixup already handles this correctly,
+but the subsystem ID was missing from the quirk table.
 
-Reject completion IDs that fall outside wl->tx_frames[] and keep the
-existing NULL check in the same guard. This keeps the fix local to the
-trust boundary and avoids touching the rest of the completion flow.
+GPIO pin confirmed via manual hda-verb testing:
+  hda-verb SET_GPIO_MASK 0x10
+  hda-verb SET_GPIO_DIRECTION 0x10
+  hda-verb SET_GPIO_DATA 0x10
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260323080845.40033-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: César Montoya <sprit152009@gmail.com>
+Link: https://patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wl1251/tx.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
-index 5771f61392efb..7f406c086ca56 100644
---- a/drivers/net/wireless/ti/wl1251/tx.c
-+++ b/drivers/net/wireless/ti/wl1251/tx.c
-@@ -402,12 +402,14 @@ static void wl1251_tx_packet_cb(struct wl1251 *wl,
- 	int hdrlen;
- 	u8 *frame;
- 
--	skb = wl->tx_frames[result->id];
--	if (skb == NULL) {
--		wl1251_error("SKB for packet %d is NULL", result->id);
-+	if (unlikely(result->id >= ARRAY_SIZE(wl->tx_frames) ||
-+		     wl->tx_frames[result->id] == NULL)) {
-+		wl1251_error("invalid packet id %u", result->id);
- 		return;
- 	}
- 
-+	skb = wl->tx_frames[result->id];
-+
- 	info = IEEE80211_SKB_CB(skb);
- 
- 	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK) &&
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 38fda5dbd75ba..9cb5705577f72 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9354,6 +9354,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
