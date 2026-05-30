@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677651DE4EF;
-	Sat, 30 May 2026 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314A81DE4EF;
+	Sat, 30 May 2026 16:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159069; cv=none; b=hcaHjMQLilg6UYhNWkp9lZGeSjzEGbPkHjFHspSwk1Gq2sR9MQncf3bivVpsvW/WnWOXeBsD+eJ9AcR96QzEfqpQ0DypOjSH9QU6h0pCF4HTL55ifY/pJzxTbQ5S/dWOy5lQ7lsRX542Vaxh4r2NGSuIxsMqYIOeL1S4FAHqWCw=
+	t=1780159086; cv=none; b=IpG41UFMFfYYPAjdcGw566GTbefs+ILHW/CHpUpWxoC7MAPb5lm1p+X3TTkzW9BI6KjGq79ETpl1wWKYqvi38dfziA1exKan8B9JbBO1QGKjLHEqmMfzpeM5fK1MRPOQh/fO9l/IZ5RfFZjSTl70+qNWauSshSmRKxy4dd69e40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159069; c=relaxed/simple;
-	bh=TaTNHgOgRLbMwyiR7VeeMbexdnfQhvhNPPb4zIP64nI=;
+	s=arc-20240116; t=1780159086; c=relaxed/simple;
+	bh=bxdxVJhNOQH5YGXn/QnSxTM4XIW//9QDH98rs9etwEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqTsS/ReI11VudKEBfKNCoZahNY7Byv5rKiahVzosJ/CmCdT3DYypTsZODGrg0XFM6bfjb/Tj2LWELYhoK+F9raILbWfq/ORig/ODCRlyLc1RI4zNL6Skb8FVRL9r86Z8Fo9grwKKdrxF/zZGNeb3HNRn4taFRYOoxHgHUd1i5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtDHI6bJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r6LWHsW5FMtPqtljnu8wmDV9Bsg7512pZVa0LiNug/hlaOc83a59g38eUXJsSrRGQUqHAR4EYvPDCK9XwJ6QwWOjPHOD1wsbfjxKrz4ZzmrEbzUSjUo6iVulvwvfPE39UJl+lvrm1J4ZFObjJtXSYNi80+d71L90p8SUHs9Dfkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYUxNnV3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtDHI6bJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD411F00893;
-	Sat, 30 May 2026 16:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYUxNnV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862DD1F00893;
+	Sat, 30 May 2026 16:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159068;
-	bh=1oxgLL+ZKDozYFcmRtpEeA5GrecWpt1jsFKWjVyjApM=;
+	s=korg; t=1780159084;
+	bh=ke9M0qJ+lRZMS+YELa5ZnoFoIoNp2jlUXrm8XrY8WrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtDHI6bJnqIewJHF4lBPM2wR2j8rXcvfdXP2ua+tN2U2OdmDXA9M2BtzpDO95SpiD
-	 ppiYtA21K3XTHaaGSd+65xB8INnwp8ECuV20mOzNVeakKMfCDUHFjjaLYM7M6Zv9Yz
-	 K6vKMSYOgQ3fracombJo2dCQggC3XC4VAs61Bhz8=
+	b=JYUxNnV3pQX9RmW9rkoUVbeVm+hZM/+2gjud431M+XRK7Iu0PKBgUW7iuzkpjfG7E
+	 sb6XdmaROUzfjo5HbT+UxZjCYCMFnhxKpzFfnHRuZLMej7K8P3pzRauZ2Zf+zq6Ozv
+	 8JkjxPaP4EVHC6bn/oJkbrRwSUukpWdzCikva4YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 069/969] usb: gadget: renesas_usb3: validate endpoint index in standard request handlers
-Date: Sat, 30 May 2026 17:53:13 +0200
-Message-ID: <20260530160302.276456444@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 070/969] ksmbd: validate EaNameLength in smb2_get_ea()
+Date: Sat, 30 May 2026 17:53:14 +0200
+Message-ID: <20260530160302.301811276@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,48 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit f880aac8a57ebd92abfa685d45424b2998ac1059 upstream.
+commit 66751841212c2cc196577453c37f7774ff363f02 upstream.
 
-The GET_STATUS and SET/CLEAR_FEATURE handlers extract the endpoint
-number from the host-supplied wIndex without any sort of validation.
-Fix this up by validating the number of endpoints actually match up with
-the number the device has before attempting to dereference a pointer
-based on this math.
+smb2_get_ea() reads ea_req->EaNameLength from the client request and
+passes it directly to strncmp() as the comparison length without
+verifying that the length of the name really is the size of the input
+buffer received.
 
-This is just like what was done in commit ee0d382feb44 ("usb: gadget:
-aspeed_udc: validate endpoint index for ast udc") for the aspeed driver.
+Fix this up by properly checking the size of the name based on the value
+received and the overall size of the request, to prevent a later
+strncmp() call to use the length as a "trusted" size of the buffer.
+Without this check, uninitialized heap values might be slowly leaked to
+the client.
 
-Fixes: 746bfe63bba3 ("usb: gadget: renesas_usb3: add support for Renesas USB3.0 peripheral controller")
-Cc: stable <stable@kernel.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
-Link: https://patch.msgid.link/2026040647-sincerity-untidy-b104@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/renesas_usb3.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/gadget/udc/renesas_usb3.c
-+++ b/drivers/usb/gadget/udc/renesas_usb3.c
-@@ -1628,6 +1628,10 @@ static bool usb3_std_req_get_status(stru
- 		break;
- 	case USB_RECIP_ENDPOINT:
- 		num = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
-+		if (num >= usb3->num_usb3_eps) {
-+			stall = true;
-+			break;
-+		}
- 		usb3_ep = usb3_get_ep(usb3, num);
- 		if (usb3_ep->halt)
- 			status |= 1 << USB_ENDPOINT_HALT;
-@@ -1740,7 +1744,8 @@ static bool usb3_std_req_feature_endpoin
- 	struct renesas_usb3_ep *usb3_ep;
- 	struct renesas_usb3_request *usb3_req;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4390,6 +4390,11 @@ static int smb2_get_ea(struct ksmbd_work
  
--	if (le16_to_cpu(ctrl->wValue) != USB_ENDPOINT_HALT)
-+	if ((le16_to_cpu(ctrl->wValue) != USB_ENDPOINT_HALT) ||
-+	    (num >= usb3->num_usb3_eps))
- 		return true;	/* stall */
- 
- 	usb3_ep = usb3_get_ep(usb3, num);
+ 		ea_req = (struct smb2_ea_info_req *)((char *)req +
+ 						     le16_to_cpu(req->InputBufferOffset));
++
++		if (le32_to_cpu(req->InputBufferLength) <
++		    offsetof(struct smb2_ea_info_req, name) +
++		    ea_req->EaNameLength)
++			return -EINVAL;
+ 	} else {
+ 		/* need to send all EAs, if no specific EA is requested*/
+ 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
 
 
