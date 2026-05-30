@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63581137750;
-	Sat, 30 May 2026 18:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49E3137750;
+	Sat, 30 May 2026 18:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166891; cv=none; b=H2zvbMO1aNDlQ3F8EmArSOGfaQL3PQMJz+SdwfdVEN7PbVNlc7fQZTs7Z6TkNrMIlOGNlCQahVTuHkCiesMJVjQAAMqBW5sb+LE45YCCojWjeNpXaBBAmw7EB6oY/B4OYyeMWLeoFChb99UsTYr5uUHHcNC93y8NHTEIyZvDKsY=
+	t=1780166894; cv=none; b=a/T91YMg4NdmZpgrk+BSasa0/OBls8Ydmen3J2Shzi3G7AP0gMBxITnrWdqtjh5AH6fqGVH9xVYS5YtWhnxDcDgdcgm5t92zIF7XyLIA/v6U9FeW6x/Sgqe7GV/cR+ZmdLJeBXZY3cd4AL/8dlfskiPoUQRB2UgvhkmAib0WDcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166891; c=relaxed/simple;
-	bh=itqMjwH9jYiiEo3QEjYWioKn0mUaC3BBAFSYabVh9yI=;
+	s=arc-20240116; t=1780166894; c=relaxed/simple;
+	bh=lSyj0XMSp3AcIWK8cuHibfvTGd/JBkHRcNUYX7lcpkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWRRQ07xSwjdcY4LandA0ii9m1h8HVgnQnKq1gAYan4kQyYg7P4Rskb9MYkwdwaWTEHRpKEGQSKWsx2ixh47ioi87mwOFyimRmLUeJeGYKggq+WLUUGFVZ2+JBI8CKV73570LRlexnL/s2BykeCb3tWG/Uqe4hqm0J16LjivGEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fw9NN1x4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OelsUYkujuKigd10j9i3WL/0MeBj0WgGFvTZ6DdftMrO99eQrhlK/CakHabwqkFiVrk+h/OSmketT2JAF8lh+HfMmduugWHdE6jGRnhQALjkScUEiSE+hLRpQj153pUUgXCyT2h2xtdCfYs/NGb7Rg+sQfmM5CTfnABMr3dgmzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHYEpHml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fw9NN1x4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94931F00893;
-	Sat, 30 May 2026 18:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHYEpHml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B3B1F00893;
+	Sat, 30 May 2026 18:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166890;
-	bh=PAWkkhIBRiBipuke4HJcw7S2XCa4UFa8RZxM78E9+PE=;
+	s=korg; t=1780166893;
+	bh=ZIsR/Ylsr8QP5sm0ydf5qZVNfsj5Zkc51082cTxUTTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fw9NN1x4ybys4bMLelV/ZI6WbDSNS+7tu/b1pLOQ8oNV/9LnMPZ6d+Q5SIwnshv9t
-	 tMFWw/njeThbnSwMbtbDOXqtAx0SgGoof09tNvoNbnhqVPKxtcFc1vooA82Q9THB3P
-	 4ipvHGcShLEto5hAqtChf1sazibdjNPaeAwxOYd4=
+	b=RHYEpHmlJk6uw3fBhuLglNXnH3ii3BkXyJeK2lGJWs2deunocAdnDGa0eOyMpAMBM
+	 a28W3qjKJumx4cASuSmilzpSguNTlYjxzSqBh7wNs4bFe/DdCSeU56NmcdBbnnwgVR
+	 yK0sDcu5HtnvCMd8ZWdALaAaZ6bgOWmjZZ0c+GmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 502/589] alarmtimer: Check RTC features instead of ops
-Date: Sat, 30 May 2026 18:06:23 +0200
-Message-ID: <20260530160237.803519870@linuxfoundation.org>
+Subject: [PATCH 5.10 476/589] net/sched: netem: validate slot configuration
+Date: Sat, 30 May 2026 18:05:57 +0200
+Message-ID: <20260530160237.155124828@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,43 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit e09784a8a751e539dffc94d43bc917b0ac1e934a ]
+[ Upstream commit 01801c359a74737b9b1aa28568b60374d857241a ]
 
-RTC drivers used to leave .set_alarm() NULL in order to signal the RTC
-device doesn't support alarms. The drivers are now clearing the
-RTC_FEATURE_ALARM bit for that purpose in order to keep the rtc_class_ops
-structure const. So now, .set_alarm() is set unconditionally and this
-possibly causes the alarmtimer code to select an RTC device that doesn't
-support alarms.
+Reject slot configurations that have no defensible meaning:
 
-Test RTC_FEATURE_ALARM instead of relying on ops->set_alarm to determine
-whether alarms are available.
+  - negative min_delay or max_delay
+  - min_delay greater than max_delay
+  - negative dist_delay or dist_jitter
+  - negative max_packets or max_bytes
 
-Fixes: 7ae41220ef58 ("rtc: introduce features bitfield")
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20210511014516.563031-1-alexandre.belloni@bootlin.com
+Negative or out-of-order delays underflow in get_slot_next(),
+producing garbage intervals. Negative limits trip the per-slot
+accounting (packets_left/bytes_left <= 0) on the first packet of
+every slot, defeating the rate-limiting half of the slot feature.
+
+Note that dist_jitter has been silently coerced to its absolute
+value by get_slot() since the feature was introduced; rejecting
+negatives here converts that silent coercion into -EINVAL. The
+abs() can be removed in a follow-up.
+
+Fixes: 836af83b54e3 ("netem: support delivering packets in delayed time slots")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-5-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/alarmtimer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/kernel/time/alarmtimer.c b/kernel/time/alarmtimer.c
-index 771b31018517a..976974edb355d 100644
---- a/kernel/time/alarmtimer.c
-+++ b/kernel/time/alarmtimer.c
-@@ -92,7 +92,7 @@ static int alarmtimer_rtc_add_device(struct device *dev,
- 	if (rtcdev)
- 		return -EBUSY;
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 64542c9c15340..3e3bced82c564 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -815,6 +815,29 @@ static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
+ 	return 0;
+ }
  
--	if (!rtc->ops->set_alarm)
-+	if (!test_bit(RTC_FEATURE_ALARM, rtc->features))
- 		return -1;
- 	if (!device_may_wakeup(rtc->dev.parent))
- 		return -1;
++static int validate_slot(const struct nlattr *attr, struct netlink_ext_ack *extack)
++{
++	const struct tc_netem_slot *c = nla_data(attr);
++
++	if (c->min_delay < 0 || c->max_delay < 0) {
++		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot delay");
++		return -EINVAL;
++	}
++	if (c->min_delay > c->max_delay) {
++		NL_SET_ERR_MSG_ATTR(extack, attr, "slot min delay greater than max delay");
++		return -EINVAL;
++	}
++	if (c->dist_delay < 0 || c->dist_jitter < 0) {
++		NL_SET_ERR_MSG_ATTR(extack, attr, "negative dist delay");
++		return -EINVAL;
++	}
++	if (c->max_packets < 0 || c->max_bytes < 0) {
++		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot limit");
++		return -EINVAL;
++	}
++	return 0;
++}
++
+ static void get_slot(struct netem_sched_data *q, const struct nlattr *attr)
+ {
+ 	const struct tc_netem_slot *c = nla_data(attr);
+@@ -1030,6 +1053,12 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			goto table_free;
+ 	}
+ 
++	if (tb[TCA_NETEM_SLOT]) {
++		ret = validate_slot(tb[TCA_NETEM_SLOT], extack);
++		if (ret)
++			goto table_free;
++	}
++
+ 	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
 -- 
 2.53.0
 
