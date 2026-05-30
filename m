@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C72175A6B;
-	Sat, 30 May 2026 18:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2529B799;
+	Sat, 30 May 2026 18:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164833; cv=none; b=mmwHVwTJ2x6eMCFVxqiQFH3qdX4//uwMo1Bk9M3fBpgwgan0nAM2zR3THqworkHI4Wh0lBOPlsDcrixdFbMQh4WfoYo4VtmwoZ9lSBqcD1JNmBFrPmFhSpKAadxOF/SKHUFbfaSSMQl4ZjBKFMAc1ylsCc1/sirbu+plLGQ64MA=
+	t=1780164837; cv=none; b=YO5UQWv65AnpwWiJJy9vU5JfblWtfqjB7j47oEEw6J1xyljteSqSO5u8WYtudSDfnGBQcq0CC1s+5zaeh+L6iG7X0gzHnbP/4DkpUPzVcS5OxWr5hfugYn05+2BLkmxqqSZXofnNTioKknAumErQasx0eUlYME7jufx/tniB8lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164833; c=relaxed/simple;
-	bh=eeVZ3EL1N2YmryYXUhcl3wRvkrtLfFQWMG7ommm/lVU=;
+	s=arc-20240116; t=1780164837; c=relaxed/simple;
+	bh=kIgVHe34m7UeluDIB4TJ8GAvnPNsed6nYz1nM3rEo7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YL+UrgYzYGIgi/jDQFHF7FzPhXgYMxg+bk28jIrBYX3OXnFJvfN8iaiwvTWcxaC+q0jQj+ekmnjdZ2iLdaVO4q4Ku085PPpXli3lwuQc0T96M4hpPjfEwNSIo6uwezpRq6wrmHamVEmOqF5XYpGZpUn+T71q+6KqXCYfKx/+uzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3hHWk+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OxyU6YRe8MosTK89Vf9mAHUodhJTqmDUTqJwvfmccThxat4dQdOju6Jo5nPTc/kqKj+yeFisPnBYH62hkLlPr3l16eAvKy67SKclFze6RFjr3Ukr79w+hWn9uCJoAyEMrgCs0J0byhxWPpUINB0Ieg6CGNd83HXy2DGTaku1imc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scZR4DwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3hHWk+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF841F00893;
-	Sat, 30 May 2026 18:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scZR4DwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DB41F00893;
+	Sat, 30 May 2026 18:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164832;
-	bh=utdQaEgyZcLvOyqCcncqEZiL6nSHLx9cEP/LbTbu6lQ=;
+	s=korg; t=1780164835;
+	bh=9zSd4RbMpdAI29F8E/gNT06NRA0CVwI94Ow10QK3RIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3hHWk+Rw/layB+te423JPIGVH7BvSwYr75CzqE4yXtE0C6Jk0LSfceU/DwQdCXxe
-	 DRNXAAeQi1veseIFT0PhgjoHTEWtJm7c0sJiVl2VRtMk3Otje7s2CLq+VkOGOZH7jq
-	 lQJclq9t1jz2+7QgR9fKiRdKhitIzMBn/iZnmWWA=
+	b=scZR4DwL1V9tkMu8OCU7y1TZ9QIqQeqahwyxCL8nWC57Sb0tnO5d24WlyKDlXyQ0S
+	 vixFN06CWgI0b5l10tuLeJArnLfHYR3FkUpVX3h0nHUuhvZEIyp2yr2B/65YSa57FO
+	 s/4plxrr8poE/dCDASmfAuNQyo9mWC+k7bAQZBJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>,
+	syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 672/776] net: dsa: sja1105: fix kasan out-of-bounds warning in sja1105_table_delete_entry()
-Date: Sat, 30 May 2026 18:06:26 +0200
-Message-ID: <20260530160257.240117873@linuxfoundation.org>
+Subject: [PATCH 5.15 673/776] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Sat, 30 May 2026 18:06:27 +0200
+Message-ID: <20260530160257.264259282@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,49 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 5f2b28b79d2d1946ee36ad8b3dc0066f73c90481 ]
+[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
 
-There are actually 2 problems:
-- deleting the last element doesn't require the memmove of elements
-  [i + 1, end) over it. Actually, element i+1 is out of bounds.
-- The memmove itself should move size - i - 1 elements, because the last
-  element is out of bounds.
+When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
+station exists but not whether it is actually a TDLS station. This
+allows the operation to proceed for non-TDLS stations, causing
+unintended side effects like modifying channel context and HT
+protection before failing.
 
-The out-of-bounds element still remains out of bounds after being
-accessed, so the problem is only that we touch it, not that it becomes
-in active use. But I suppose it can lead to issues if the out-of-bounds
-element is part of an unmapped page.
+Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
+any side effects occur, to ensure the operation is only allowed for
+actual TDLS peers.
 
-Fixes: 6666cebc5e30 ("net: dsa: sja1105: Add support for VLAN operations")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250318115716.2124395-4-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
+Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_static_config.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_static_config.c b/drivers/net/dsa/sja1105/sja1105_static_config.c
-index baba204ad62f6..2ac91fe2a79bc 100644
---- a/drivers/net/dsa/sja1105/sja1105_static_config.c
-+++ b/drivers/net/dsa/sja1105/sja1105_static_config.c
-@@ -1921,8 +1921,10 @@ int sja1105_table_delete_entry(struct sja1105_table *table, int i)
- 	if (i > table->entry_count)
- 		return -ERANGE;
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index c2d7479c119af..d25dfeb347f24 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1380,7 +1380,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
  
--	memmove(entries + i * entry_size, entries + (i + 1) * entry_size,
--		(table->entry_count - i) * entry_size);
-+	if (i + 1 < table->entry_count) {
-+		memmove(entries + i * entry_size, entries + (i + 1) * entry_size,
-+			(table->entry_count - i - 1) * entry_size);
-+	}
- 
- 	table->entry_count--;
- 
+ 		mutex_lock(&local->sta_mtx);
+ 		sta = sta_info_get(sdata, peer);
+-		if (!sta) {
++		if (!sta || !sta->sta.tdls) {
+ 			mutex_unlock(&local->sta_mtx);
+ 			ret = -ENOLINK;
+ 			break;
 -- 
 2.53.0
 
