@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D827D3A0E97;
-	Sat, 30 May 2026 16:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91254332EA7;
+	Sat, 30 May 2026 16:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159948; cv=none; b=dYaflZEfoQHS1O/3wiHsMWv5uol91br+kt1SI+/R9Qir+MLnsuhTyx0jrsiwA0ccibDa11a91or3H9E2t0KId3y5TE8ge01WGH5JJECX7BLDa8NUJSMg86XiJORLbxBLUmLUSPHd+OQ8ywffZxN8kLHGnsykIbEIltBC08TQCzs=
+	t=1780159953; cv=none; b=uYOrz8AwOSirm7H77Rwfv0cR9aki2WvgosNZpWPtApZptOFhCr1k3pAv9bMJ27wsOOfcL3OK6nEzDr+92ciHZEbGLEf5GiVYhKveLbLh6sD2RxMM3lli8H/KWIJMdAqO0PgEkcbe07rPzar/YZwW+yKNkcQArSUbNTtnUl7LpaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159948; c=relaxed/simple;
-	bh=XoNYS8kruxBu63AD9GJPDN6OEdvjRYUFT5sMS3vvqMM=;
+	s=arc-20240116; t=1780159953; c=relaxed/simple;
+	bh=4/wnVLvL4lsmtsneclfu0rCJMJu02qPW5TNdmZsk7lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWug2coFaFu0NYh0BrRDJ6ihsddp0KVzmlBSTY8yGpUjIVc9eP9KKPnzbxoffULPdW3lSnGm2ilKJAPzjyFg2YPzjXuj294kkWzqYeaM8YjvPXOHXCJ9AQbUKEdYyXRl5x33Rmw3DRqBiXChsPk/VbJXD7+TMbFxwib6gp9Q0DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nT2QhszC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLVbY4GQgylfC78TXKPPJo9qKyIzKqQNs97W2whJI5rPOPBwQlq9BjlSGxStuPjPz6GftQUnnD+FdgdD9XnFdJUZB0f8GKDDtsIJd4f3EXqyBwgogu2p4hSzZmcwt/f4cDkVcZsPmtA8tAjzQfmRBA5DHoA8EUKrgPRvvM+aHgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMxHaPF7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nT2QhszC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDEB1F00898;
-	Sat, 30 May 2026 16:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMxHaPF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BAB1F00898;
+	Sat, 30 May 2026 16:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159946;
-	bh=OiGfotliX04Qhco/rsR72mVBi7mViJom2m72FNMLYOE=;
+	s=korg; t=1780159949;
+	bh=YISbciPfmZmGQyss/E/6SgoyNOG/UZQKOXq0IMGwMD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nT2QhszCVW7rhB6wB7r9slHSHvep6oVhvauPQ80QUCJ8nJ0b3oC/WNasHePhksEPA
-	 HKZzeUlE2M+VIr/rxK+4mOpatiT+Ubkhx+2hwmkI8TPF3pPtDMSqMVPhx3CzQoLhAL
-	 3No7JtoKEKlEPtIcVP3WgmoOKSg56oByu5Heh4KI=
+	b=qMxHaPF7FtU39InHePYc2zBimWJ8ZDYtLl/MkH0xHYSxUHMOngG3qx/UUBgoActXu
+	 QF0T7q7HwHSEuGm3NiuYC9NwCVXvTPrNCUsI6st9EiZ2+8hMRuV+QGBEQ3+PQ5RRGc
+	 fEuE0Sgs7lBRXN99sT4UBu1FepZgPBGtJJSeU4l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 204/969] io_uring/timeout: check unused sqe fields
-Date: Sat, 30 May 2026 17:55:28 +0200
-Message-ID: <20260530160306.111744203@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 205/969] iio: adc: ti-ads7950: use iio_push_to_buffers_with_ts_unaligned()
+Date: Sat, 30 May 2026 17:55:29 +0200
+Message-ID: <20260530160306.138183041@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,41 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 484ae637a3e3d909718de7c07afd3bb34b6b8504 upstream.
+commit 7806c060cceb2d6895efbb6cff2f2f17cf1ec5de upstream.
 
-Zero check unused SQE fields addr3 and pad2 for timeout and timeout
-update requests. They're not needed now, but could be used sometime
-in the future.
+Use iio_push_to_buffers_with_ts_unaligned() to avoid unaligned access
+when writing the timestamp in the rx_buf.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The previous implementation would have been fine on architectures that
+support 4-byte alignment of 64-bit integers but could cause issues on
+architectures that require 8-byte alignment.
+
+Fixes: 902c4b2446d4 ("iio: adc: New driver for TI ADS7950 chips")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/adc/ti-ads7950.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -394,6 +394,8 @@ int io_timeout_remove_prep(struct io_kio
+--- a/drivers/iio/adc/ti-ads7950.c
++++ b/drivers/iio/adc/ti-ads7950.c
+@@ -47,8 +47,6 @@
+ #define TI_ADS7950_MAX_CHAN	16
+ #define TI_ADS7950_NUM_GPIOS	4
  
- 	if (unlikely(req->flags & (REQ_F_FIXED_FILE | REQ_F_BUFFER_SELECT)))
- 		return -EINVAL;
-+	if (sqe->addr3 || sqe->__pad2[0])
-+		return -EINVAL;
- 	if (sqe->buf_index || sqe->len || sqe->splice_fd_in)
- 		return -EINVAL;
+-#define TI_ADS7950_TIMESTAMP_SIZE (sizeof(int64_t) / sizeof(__be16))
+-
+ /* val = value, dec = left shift, bits = number of bits of the mask */
+ #define TI_ADS7950_EXTRACT(val, dec, bits) \
+ 	(((val) >> (dec)) & ((1 << (bits)) - 1))
+@@ -105,8 +103,7 @@ struct ti_ads7950_state {
+ 	 * DMA (thus cache coherency maintenance) may require the
+ 	 * transfer buffers to live in their own cache lines.
+ 	 */
+-	u16 rx_buf[TI_ADS7950_MAX_CHAN + 2 + TI_ADS7950_TIMESTAMP_SIZE]
+-		__aligned(IIO_DMA_MINALIGN);
++	u16 rx_buf[TI_ADS7950_MAX_CHAN + 2] __aligned(IIO_DMA_MINALIGN);
+ 	u16 tx_buf[TI_ADS7950_MAX_CHAN + 2];
+ 	u16 single_tx;
+ 	u16 single_rx;
+@@ -313,8 +310,10 @@ static irqreturn_t ti_ads7950_trigger_ha
+ 	if (ret < 0)
+ 		goto out;
  
-@@ -466,6 +468,8 @@ static int __io_timeout_prep(struct io_k
- 	unsigned flags;
- 	u32 off = READ_ONCE(sqe->off);
+-	iio_push_to_buffers_with_timestamp(indio_dev, &st->rx_buf[2],
+-					   iio_get_time_ns(indio_dev));
++	iio_push_to_buffers_with_ts_unaligned(indio_dev, &st->rx_buf[2],
++					      sizeof(*st->rx_buf) *
++					      TI_ADS7950_MAX_CHAN,
++					      iio_get_time_ns(indio_dev));
  
-+	if (sqe->addr3 || sqe->__pad2[0])
-+		return -EINVAL;
- 	if (sqe->buf_index || sqe->len != 1 || sqe->splice_fd_in)
- 		return -EINVAL;
- 	if (off && is_timeout_link)
+ out:
+ 	mutex_unlock(&st->slock);
 
 
