@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EB22690D5;
-	Sat, 30 May 2026 17:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527834104B;
+	Sat, 30 May 2026 17:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160627; cv=none; b=uSSp8zlJc29CMjsY9vDo0ktWL+q2sD3r+nkS1Y3kAbank9hpjNmI9ej1oW/YOEG1G5PksnHZnZstRFSB737vw+Ei/1W9rRpXxE92LpLgDISh49Z9oZqG6iEN84cVEXMvp51AvEzZ7Pf0SHLk1bkI6uTLd5h1UACpwI8Yx2q2ktY=
+	t=1780160630; cv=none; b=aITxo3fS2jgakfgQuz/fvfSS+pkLuulf+GFkxMfhlAbBDaLccufr0P77GTQ4txSJyBqVPWLYaTAuRDT8nzbpXTKGhQvYeR5LqJgyop+SvvZpaahiQWya+zWeJ9aSTGVLQwL/2/4kiCieI41ky4Rl1jeYNYbcgHy4iY/VxslBbYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160627; c=relaxed/simple;
-	bh=4YC/to4BWP8nP5AHyApC4h7pqG/95qq4YpZ3e13lmm8=;
+	s=arc-20240116; t=1780160630; c=relaxed/simple;
+	bh=kUduNelLNLaVErVoG/kjQjj65YSjDpQawoCL2hVOnAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEwpLl9O72PjpxdM/R30iA0skHlYoD6+FvQpqalqMW5p+yWSyeV31GEhMLi5c2bruBEZPJMCmsVLJPnLWFLrrPoZCtGKap9T8/pDaVhVDcspY2/FMp0w+Cirh2ciM31khDKZQU6INNoC9p9qA0lXyTajWrYPlhFUZSSjl+USlQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu4p39Uj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ECtSzTFUhVCYMSC8cEFUuZyI16S5nPBpPhfsA+FPXYFK0OIOpU5UWBpkFdasnAgSxPXTVzsYiDR8D738VS1q8wGaI42e4dBdlAekCHW3/XzSvr3GeppMuFdr4R/hVpWwiLf+czk6FqZX7xsAePDpEl8erwQZoe+zl4C7hqdF2x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuDxcV82; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu4p39Uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08F21F00893;
-	Sat, 30 May 2026 17:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuDxcV82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEDA1F00893;
+	Sat, 30 May 2026 17:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160626;
-	bh=bgCGHeDtp/xwGkx7kU1UEcBFb/3r6hSTQOlXQSGtsHE=;
+	s=korg; t=1780160629;
+	bh=xB3Osb8xCKKfCwRmg3EWIdIjt+vr0GAjOFxjaoK6o5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gu4p39UjBXxFyrBhmtx6VE1G210I7JUdolwzYpG03eN+2YyrKZ9H5M+kRp4vsKag4
-	 k2ycwZZcy8UgLoIFIZ+lDh0CX47l3J70DdbtdQ2N+9VgOrgsqVusj3WNMuY/muErvv
-	 37ZsryqyrImvrUgglkyrL5UNqvVMB115O7XMzZjY=
+	b=tuDxcV82U2I9KYmS0Bu3HR7zVHPskAokNKqb2HhlWlBZaVmLOT69aQE3fRB8C7uBQ
+	 dbMUdOSYxDwqR6LZOP2UsV9yoo3+yVgid2XN6qk5zI3nmbYLHzHuFcW/ZcOpVgrgLp
+	 LTLHmh/QO4iWWlvZKWol92tULrjsV+q4F5V46o2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 371/969] mptcp: use MPJoinSynAckHMacFailure for SynAck HMAC failure
-Date: Sat, 30 May 2026 17:58:15 +0200
-Message-ID: <20260530160310.561340756@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 389/969] media: rc: streamzap: Error handling in probe
+Date: Sat, 30 May 2026 17:58:33 +0200
+Message-ID: <20260530160311.047746269@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,45 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit c4a99a921949cddc590b22bb14eeb23dffcc3ba6 upstream.
+commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
 
-In subflow_finish_connect(), HMAC validation of the server's HMAC
-in SYN/ACK + MP_JOIN increments MPTCP_MIB_JOINACKMAC ("HMAC was
-wrong on ACK + MP_JOIN") on failure. The function processes the
-SYN/ACK, not the ACK; the matching MPTCP_MIB_JOINSYNACKMAC counter
-("HMAC was wrong on SYN/ACK + MP_JOIN") exists but is not
-incremented anywhere in the tree.
+If submitting the URB fails, the device will be unusable.
+Probe() must fail.
 
-The mirror site on the server, subflow_syn_recv_sock(), already
-uses JOINACKMAC correctly for ACK HMAC failure. Use JOINSYNACKMAC
-at the SYN/ACK validation site so each counter reflects the packet
-whose HMAC actually failed.
-
-Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
+Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-1-b70118df778e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/streamzap.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -469,7 +469,7 @@ static void subflow_finish_connect(struc
- 			 subflow->backup);
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -219,9 +219,8 @@ static void streamzap_callback(struct ur
+ 	case -ESHUTDOWN:
+ 		/*
+ 		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+ 		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
+ 		return;
+ 	default:
+ 		break;
+@@ -358,11 +357,16 @@ static int streamzap_probe(struct usb_in
  
- 		if (!subflow_thmac_valid(subflow)) {
--			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINACKMAC);
-+			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKMAC);
- 			subflow->reset_reason = MPTCP_RST_EMPTCP;
- 			goto do_reset;
- 		}
+ 	usb_set_intfdata(intf, sz);
+ 
+-	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
++	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
++	if (retval < 0) {
+ 		dev_err(sz->dev, "urb submit failed\n");
++		goto rc_submit_fail;
++	}
+ 
+ 	return 0;
+-
++rc_submit_fail:
++	rc_free_device(sz->rdev);
++	usb_set_intfdata(intf, NULL);
+ rc_dev_fail:
+ 	usb_free_urb(sz->urb_in);
+ free_buf_in:
 
 
