@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4752F6184;
-	Sat, 30 May 2026 18:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8947621B191;
+	Sat, 30 May 2026 18:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166638; cv=none; b=eKUeO9pghEsj0W3A4EDL8NiUVa6hw9w1VFnl/xWoNkmKhlNJDvYkM89CLeenrlzpgn8UlokGOQScDWfoPvcrPfLSE+t6qlH3fWlXRB9EAdeumE7yNiF3Jz2eaBDhEcQEIUtT8TgvhL7YTfteNPMDZvH0rc2seez5rWkmXNnMdPM=
+	t=1780166641; cv=none; b=XeDFQtgq6kGHjLyth2lGN73z0bWnpDq7eiE3H6Z/9tErEe0Vj4tMQNMOufFcWLe94470HVpHH/HnNLNWOKK2Q4KNs2f2xzoJtBc1RDy45S79CzMLZYfk6SPhUOhjbs3i6MDqilbNjTWoZrW8gDjNfD1ytfi04WaTCq1fcTaFp78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166638; c=relaxed/simple;
-	bh=o/y9YV2fWscdt5cXFT+C9uoFTmXQdVvyMVCzbTYQq6g=;
+	s=arc-20240116; t=1780166641; c=relaxed/simple;
+	bh=kFbdbcEcaLxhaW9v2t9I2DL3X9yitGZb1M8kzJddvYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSu8mz8Ji/xOjDtmAALhQod3q1ARXpxB6vBTotbQrxVZ0+L6jKHDWSq2bfLbtJfpgarQP17A+bEbYojrTm6JPq/+kCb4Z7BLzGOM7CO9ylmgS+gRU/ujkJyZ8mYJayVLwc7G/YDeR8mvOqVZ/8OHci3LPG7VRl3RfAG1vWVMomM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9E7MC+J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jqCHlfVLHrf1dPidVQBiJNfd1REo1MuH+FuoeNSfRTe6TO95w9bcia1HMpP3t3kCSJXlrirH08no3gqVEP2Xnbia7WNNU2dMPnoNS7wBptKoxtIXhYLMbsHn0KQMzV2iefLNQaB2y4PYe07W970SLKXH0hDHS3+lVWoJ4vewrUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRZTVmh+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9E7MC+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7661F00893;
-	Sat, 30 May 2026 18:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRZTVmh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4FC1F00893;
+	Sat, 30 May 2026 18:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166636;
-	bh=x7xDhp13WdsUAr18ECb1RAvkjofdp73Fbu/5YDRu8U8=;
+	s=korg; t=1780166640;
+	bh=N75BHeP60Y0uhRIEx1KLTk6KzEIBVhDuigY1qmqGBQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9E7MC+Jszt6ug5DlJz4JOHvz8/gsvjVPj6OyIV2QgZ4vhgIGLrryowjIxnd5weV6
-	 il3KEn8UXHPd43g1EApsFBQ5FwYhJdJkDw2hE58WyyD/K7EmTdh3SvgFRv2vN0WTxa
-	 SK+Leuj3X+Tr1rLAtG5igICT/7RnVTrKfExX+nCY=
+	b=SRZTVmh+H6hksx1xedbRBZIUDkwvOnZ1Vb9szaGT3EfiSV4v+VLmeptXtBaWpzCAQ
+	 PKjd/Kd5FRytIXYFUDHXNAKOYDh+GLv5N6U2DjXv8uURmQi1lxRoSieF+1nE9RGhcu
+	 3zdtA8zaVL4s9CIjp6K8j+wMOV/XJrbNP1qDp9g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Val Packett <val@packett.cool>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 425/589] e1000e: Unroll PTP in probe error handling
-Date: Sat, 30 May 2026 18:05:06 +0200
-Message-ID: <20260530160235.897494333@linuxfoundation.org>
+Subject: [PATCH 5.10 399/589] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
+Date: Sat, 30 May 2026 18:04:40 +0200
+Message-ID: <20260530160235.265831936@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,39 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit aa3f7fe409350857c25d050482a2eef2cfd69b58 ]
+[ Upstream commit 8c522da70f0c2e5148c4c13ccb1c64cca57a6fdb ]
 
-If probe fails after registering the PTP clock and its delayed work,
-these resources must be released.
+mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
+As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
+registration") introduced a callback to ensure the RCG is off upon init.
+However, the fix depends on all shared RCGs being marked as such in code.
 
-This was not an issue until a 2016 fix moved the e1000e_ptp_init() call
-before the jump to err_register.
+For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
+unlike the same clock in the SC7180 code. This was causing display to
+frequently fail to initialize after rebooting on the Surface Pro X.
+Fix by using shared ops for this clock.
 
-Fixes: aa524b66c5ef ("e1000e: don't modify SYSTIM registers during SIOCSHWTSTAMP ioctl")
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-12-686c33c9828d@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260312112321.370983-8-val@packett.cool
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/dispcc-sm8250.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 902ada6a3b06c..8f1c6f08be00e 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -7642,6 +7642,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- err_register:
- 	if (!(adapter->flags & FLAG_HAS_AMT))
- 		e1000e_release_hw_control(adapter);
-+	e1000e_ptp_remove(adapter);
- err_eeprom:
- 	if (hw->phy.ops.check_reset_block && !hw->phy.ops.check_reset_block(hw))
- 		e1000_phy_hw_reset(&adapter->hw);
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index bbdd27946bf1f..4e29004a7e44b 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -446,7 +446,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
 -- 
 2.53.0
 
