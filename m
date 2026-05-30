@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA70137750;
-	Sat, 30 May 2026 18:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334B22E7398;
+	Sat, 30 May 2026 18:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167011; cv=none; b=lMgnK1lEflg5F+6bLSV3ASsmuAxG4Emod87cKD5nwZd3q20KJ2ZXSxq6ttlMnkM8JhpOoDh0CBNr0Xt9dMjh8o55i2GM4x6T97pmWg5ViodKoH79dIpO6dUfZQfM18xrte7R1q62YhiLUXyavHJP0XUdyqgyFP/h5juPg97hbwc=
+	t=1780167015; cv=none; b=eWjxFRP/NRD/Ji8rMZqq3AMT+Y9cq4GRTwOblUaQtHVSJtt3VPHPKZuA+3qoF1OMf9bZOAfW/MUUEcB/SIc19fwfnDexjeBhxnXu7Up/jSJUJ6r+2WmY0GBUCzBcRJXbMSZrbZHQO6lK4d+adbxfbZn7QnoUFuQZsqP0Lkb4R30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167011; c=relaxed/simple;
-	bh=Ik0ow9buupzsKQkD7yK9oO01Gs+SKRQE91/HzG5Wi2w=;
+	s=arc-20240116; t=1780167015; c=relaxed/simple;
+	bh=WdGqgQX3dClS3bivieZgsT1VGX8nGB6xWOX+1dUS3HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unA+yp5+27VJDy5L+924CVjtRCz6cmlab9bddBpEEXFKVvYbDSvKHIbaBDJuHqjUaiqoCRTiOMXsEJd8TEHgeV3DO+iUe4Rggr5u8da+faw1DsOruAPGE/IkonSwP+8RCVZotbGr06eZHEOKsz2xMMDqRe+tPudhbmn03KoJOkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkGPVR8R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lnAhU/l4PKatxa6U8x3MjZEH4Tfx+45rEFX4+um3BNzHLS6l5SnxDfT6Akv53uue/K1lI5NuRz7VBb6W1vYXdB/TVL/PnAmOvby3UnQxeTQBw9/l7XDeFIJ4d84LC28Un3O1d3tR6vCTA4kR3iLdUJNF+cyHu8oDD6UnKseHACk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssqiMWVg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkGPVR8R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2471F00893;
-	Sat, 30 May 2026 18:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssqiMWVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761A61F00893;
+	Sat, 30 May 2026 18:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167010;
-	bh=kPRTiJMqBdL7X2/YbnBF2SrspX+0hpLuchrPGjjmQWA=;
+	s=korg; t=1780167014;
+	bh=kGMBCKbCLBv6g5CXYSbRQa0SHsfLPljZ7TxUwJ+2nWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KkGPVR8Rga5wg0H8p3BQUQnl1ylW7kD6AVkk17w200opxtBd/gIh1FvRbia+zYgOg
-	 wsqqgoL13xN3eH8zjfTOMrVT+Of0IYO4OwxQcjGFwuThTg4V//siGlSI1R5+oa0Z0o
-	 vBi3NV7gUcWYXbAothTiSR6uxKBeYX3UlNuY4O3w=
+	b=ssqiMWVg76L2h6Qbb8XnUoaTPWxtA3/sDR9MzQvLSxwlT3nPIIT4lFonubw3e03xY
+	 qq7oXa1DgtfAofhybq/Oi3dZSeUfak2+uFn4j87QS9hIuG9dSYWjo1dBafPRjmYjB9
+	 sRCVsvigbqrIterr1HzQpnKwnMAyCr+x1yqNor/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Nan Li <tonanli66@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 536/589] netfilter: ipset: stop hash:* range iteration at end
-Date: Sat, 30 May 2026 18:06:57 +0200
-Message-ID: <20260530160238.781181025@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 509/589] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
+Date: Sat, 30 May 2026 18:06:30 +0200
+Message-ID: <20260530160237.976046703@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,136 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nan Li <tonanli66@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 0d3a282ab5f165fc207ff49ea5b6ad8f54616bd6 upstream.
+commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
 
-The following hash set variants:
+snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
+descriptor size before using baAssocJackID[], but the descriptor walker can
+still return a class-specific endpoint descriptor whose bLength exceeds the
+remaining bytes in the endpoint-extra scan.
 
-hash:ip,mark
-hash:ip,port
-hash:ip,port,ip
-hash:ip,port,net
+That leaves later flexible-array reads bounded by bLength, but not by the
+remaining bytes in the endpoint-extra scan.
 
-iterate IPv4 ranges with a 32-bit iterator.
+Stop walking when bLength is zero or
+extends past the remaining endpoint-extra scan.
 
-The iterator must stop once the last address in the requested range has
-been processed. Advancing it once more can move the traversal state past
-the end of the request, so a later retry may continue from an unintended
-position.
-
-Handle the iterator increment explicitly at the end of the loop and stop
-once the upper bound has been processed. This keeps the existing retry
-behaviour intact for valid ranges while preventing traversal from
-continuing past the original boundary.
-
-Fixes: 48596a8ddc46 ("netfilter: ipset: Fix adding an IPv4 range containing more than 2^31 addresses")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_ipmark.c    |    6 +++++-
- net/netfilter/ipset/ip_set_hash_ipport.c    |    5 ++++-
- net/netfilter/ipset/ip_set_hash_ipportip.c  |    5 ++++-
- net/netfilter/ipset/ip_set_hash_ipportnet.c |    5 ++++-
- 4 files changed, 17 insertions(+), 4 deletions(-)
+ sound/usb/midi.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_hash_ipmark.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipmark.c
-@@ -149,7 +149,7 @@ hash_ipmark4_uadt(struct ip_set *set, st
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1906,15 +1906,17 @@ static struct usb_ms_endpoint_descriptor
+ 	while (extralen > 3) {
+ 		struct usb_ms_endpoint_descriptor *ms_ep =
+ 				(struct usb_ms_endpoint_descriptor *)extra;
++		int length = ms_ep->bLength;
  
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++, i++) {
-+	for (; ip <= ip_to; i++) {
- 		e.ip = htonl(ip);
- 		if (i > IPSET_MAX_RANGE) {
- 			hash_ipmark4_data_next(&h->next, &e);
-@@ -161,6 +161,10 @@ hash_ipmark4_uadt(struct ip_set *set, st
- 			return ret;
- 
- 		ret = 0;
+-		if (ms_ep->bLength > 3 &&
++		if (!length || length > extralen)
++			break;
 +
-+		if (ip == ip_to)
-+			break;
-+		ip++;
++		if (length > 3 &&
+ 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
+ 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
+ 			return ms_ep;
+-		if (!extra[0])
+-			break;
+-		extralen -= extra[0];
+-		extra += extra[0];
++		extralen -= length;
++		extra += length;
  	}
- 	return ret;
- }
---- a/net/netfilter/ipset/ip_set_hash_ipport.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipport.c
-@@ -174,7 +174,7 @@ hash_ipport4_uadt(struct ip_set *set, st
- 
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
- 						       : port;
- 		for (; p <= port_to; p++, i++) {
-@@ -191,6 +191,9 @@ hash_ipport4_uadt(struct ip_set *set, st
- 
- 			ret = 0;
- 		}
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
- }
---- a/net/netfilter/ipset/ip_set_hash_ipportip.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipportip.c
-@@ -181,7 +181,7 @@ hash_ipportip4_uadt(struct ip_set *set,
- 
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
- 						       : port;
- 		for (; p <= port_to; p++, i++) {
-@@ -198,6 +198,9 @@ hash_ipportip4_uadt(struct ip_set *set,
- 
- 			ret = 0;
- 		}
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
- }
---- a/net/netfilter/ipset/ip_set_hash_ipportnet.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipportnet.c
-@@ -273,7 +273,7 @@ hash_ipportnet4_uadt(struct ip_set *set,
- 		p = port;
- 		ip2 = ip2_from;
- 	}
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		e.ip = htonl(ip);
- 		for (; p <= port_to; p++) {
- 			e.port = htons(p);
-@@ -297,6 +297,9 @@ hash_ipportnet4_uadt(struct ip_set *set,
- 			ip2 = ip2_from;
- 		}
- 		p = port;
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
+ 	return NULL;
  }
 
 
