@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6301B217704;
-	Sat, 30 May 2026 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D0125B0B3;
+	Sat, 30 May 2026 18:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165527; cv=none; b=rK88Wkacd4F6QPX/VUP7aXMM+TJXSA59Ibw2ZU1lkJe/FQxnKXKSovSQAPKLfWDOa0ane4aTDmKCbY+4whEZk/A24H/d7A1yco87ZdYX/zc+gw2AgqDVzn9cEIj4cY9YhmgWF0oJyPFi6wm/uDxzILisvOKw1FAbEkIDywfVhqo=
+	t=1780165531; cv=none; b=RI9fRcu8bhyUyqDArAGMJkQwcJTs8SWVDrE8i39VKaLa7J6m1XiYYlADybnE1AKKvc3AgcUY2D4zZMmcCm0Pf8lNr/OOrgl2c9ea5iivEKBveApMZ0X/GYvqupOroEIQJ/O8yl/G9w5EOcjdcKznbqjidG2VHaAQJEcm6VKRc0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165527; c=relaxed/simple;
-	bh=dY75Bae0KNjbxnrmQi8ffxB9kb53nQc1iJ2VV9vfsHw=;
+	s=arc-20240116; t=1780165531; c=relaxed/simple;
+	bh=Schzmzdn//zX7xb0PgYshWvKNoOCMC5hV0YiDmjuBuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5tu09H9Dcv2/T1tg/GUgH3463MKj/H3ud7UvMAiQiyfzYFoKvNxOsOrMCts48ZBM1NigNOvKReVWGTsRTW0qQntBdfcB613RgDcO03W5uH4poEfl7SNU/hmBYEpBKUcG5kz2j60K6wtzvsPI6bkx9qNFwNrlgTfr9uoiU9T9xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFzwBa54; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X4RhXvm8OqHEGro3ph/VudT1/T4XpLMg0xrq/4YJe2m1gCLGF3wKPcs0A06A242cm65+ezkQnnEmeLBidKjsV77MXeGW2WnvIBusPO0ppdCcoYXcdt6v3rDHckdABeppoJ0Vdi4zSNtzoH+M+fGAPSBxLCyHo2q7jPL+/KePvLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q50wjiyP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFzwBa54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92F21F00893;
-	Sat, 30 May 2026 18:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q50wjiyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1D01F00893;
+	Sat, 30 May 2026 18:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165526;
-	bh=lllKGFvNTN4ipEVTBfZrIRVA0jeaCp8jvmClGkmCqkg=;
+	s=korg; t=1780165529;
+	bh=Ge+t+1/ypj0lZause7s5iI9Tg2mot+z/hGFk3Gbc87E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFzwBa54HMgb8KOB1nFrbxCkBzDt1VRsHjWdpCg1RSgCtyBlRYIhnP4Qv71r7z4WK
-	 xci7WZTxX2yyEG8CEQlnfA2XKDLvE8zMzZ56JEhu0Ot4aTOsuiONpIUYw7cf4AG7K3
-	 U1JzvK2LJmCiUOz+vBMox15Q+2KOBatEToGR1xRE=
+	b=Q50wjiyPQsQtGMAcqkoFv8bcYM86AIhmnzAw3Mv3YTvi/L4+VdPs8fPvfmn4NGQzS
+	 1YKoUXX7/zrQjzGz93dVEVvrKxkOgis5FYsvfxrpsIhDGGTIbbsoG9mwCpJyTzMJzO
+	 eKmLV6IvevD1NpFLTeEMWfmsA6qygxcM+P/5KH28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	syzbot+62c1793956716ea8b28a@syzkaller.appspotmail.com,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/589] ocfs2: fix out-of-bounds write in ocfs2_write_end_inline
-Date: Sat, 30 May 2026 17:59:46 +0200
-Message-ID: <20260530160227.503340257@linuxfoundation.org>
+Subject: [PATCH 5.10 106/589] rxrpc: reject undecryptable rxkad response tickets
+Date: Sat, 30 May 2026 17:59:47 +0200
+Message-ID: <20260530160227.531449629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -58,74 +62,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit 7bc5da4842bed3252d26e742213741a4d0ac1b14 ]
+[ Upstream commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 ]
 
-KASAN reports a use-after-free write of 4086 bytes in
-ocfs2_write_end_inline, called from ocfs2_write_end_nolock during a
-copy_file_range splice fallback on a corrupted ocfs2 filesystem mounted on
-a loop device.  The actual bug is an out-of-bounds write past the inode
-block buffer, not a true use-after-free.  The write overflows into an
-adjacent freed page, which KASAN reports as UAF.
+rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
+parses the buffer as plaintext without checking whether
+crypto_skcipher_decrypt() succeeded.
 
-The root cause is that ocfs2_try_to_write_inline_data trusts the on-disk
-id_count field to determine whether a write fits in inline data.  On a
-corrupted filesystem, id_count can exceed the physical maximum inline data
-capacity, causing writes to overflow the inode block buffer.
+A malformed RESPONSE can therefore use a non-block-aligned ticket
+length, make the decrypt operation fail, and still drive the ticket
+parser with attacker-controlled bytes.
 
-Call trace (crash path):
+Check the decrypt result and abort the connection with RXKADBADTICKET
+when ticket decryption fails.
 
-   vfs_copy_file_range (fs/read_write.c:1634)
-     do_splice_direct
-       splice_direct_to_actor
-         iter_file_splice_write
-           ocfs2_file_write_iter
-             generic_perform_write
-               ocfs2_write_end
-                 ocfs2_write_end_nolock (fs/ocfs2/aops.c:1949)
-                   ocfs2_write_end_inline (fs/ocfs2/aops.c:1915)
-                     memcpy_from_folio     <-- KASAN: write OOB
-
-So add id_count upper bound check in ocfs2_validate_inode_block() to
-alongside the existing i_size check to fix it.
-
-Link: https://lkml.kernel.org/r/20260403063830.3662739-1-joseph.qi@linux.alibaba.com
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: syzbot+62c1793956716ea8b28a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=62c1793956716ea8b28a
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted `rxrpc_abort_conn()` call to existing `goto other_error` error-handling pattern ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/rxrpc/rxkad.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1429,6 +1429,16 @@ int ocfs2_validate_inode_block(struct su
- 			goto bail;
- 		}
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -941,8 +941,13 @@ static int rxkad_decrypt_ticket(struct r
+ 	sg_init_one(&sg[0], ticket, ticket_len);
+ 	skcipher_request_set_callback(req, 0, NULL, NULL);
+ 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
+-	crypto_skcipher_decrypt(req);
++	ret = crypto_skcipher_decrypt(req);
+ 	skcipher_request_free(req);
++	if (ret < 0) {
++		abort_code = RXKADBADTICKET;
++		ret = -EPROTO;
++		goto other_error;
++	}
  
-+		if (le16_to_cpu(data->id_count) >
-+		    ocfs2_max_inline_data_with_xattr(sb, di)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: inline data id_count %u exceeds max %d\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 le16_to_cpu(data->id_count),
-+					 ocfs2_max_inline_data_with_xattr(sb, di));
-+			goto bail;
-+		}
-+
- 		if (le64_to_cpu(di->i_size) > le16_to_cpu(data->id_count)) {
- 			rc = ocfs2_error(sb,
- 					 "Invalid dinode #%llu: inline data i_size %llu exceeds id_count %u\n",
+ 	p = ticket;
+ 	end = p + ticket_len;
 
 
