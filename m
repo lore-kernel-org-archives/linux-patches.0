@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A78D263F44;
-	Sat, 30 May 2026 17:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95817334695;
+	Sat, 30 May 2026 17:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161861; cv=none; b=c6kLiBftovgMX26FVE8yKOlnIpn12xOgHNb/Ja78nRWhkYf5TWAzaUiLNy05kcCV6vs7Hqx26KP4vGYoBOKFzbJUT581U5ErGMNZ2RtQwtO2Rk+wl7VbDirb+Zbdag2WD8Ot4Wj0THKxEGsXmzS6ZY17g+A759j+UkEGBzeiH2k=
+	t=1780161863; cv=none; b=HHVjj5lpGAQCZx3/bZuTzrxvvgaNNGdqhL9Lok5CbYWbvx9jkD7gGKxq4boEF0Z0k9yj4Kx9Bew8OMUttdatQ1cUOb5CZzHs6g7a6e9QTUTykDtBTocjXbLdwSBegvYoOsgopyaAOJhYNd9Z7kcxYI3Dl8ofvR+iSl5NCfy+D28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161861; c=relaxed/simple;
-	bh=n/EBHAeJjMJRMjfEKCTSmijm2/5kylPwkW8Mt9RLUQo=;
+	s=arc-20240116; t=1780161863; c=relaxed/simple;
+	bh=81RrSrxcVfxzgnIwjWtSdPXmCoy6EvXbtAh6ffNEmBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHii2GnKY9PYFkIA5Xwrdo47SK263G39+99sScc7bTe7C9F3/x/ZdEH6kAH3vfznF+U0w7DxGVohPXLx/+QmLf3XD8qkEirga4q6GHHuoW1PT4hCgLUb1i+vE279niIy4l0VcrN6oh3lAaTA1nClyuI2k1m7qaafCUaUDzs6SXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=squ3Tqmy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n1zmgKvti8AD6af1g09CHGVD2ImB5O8PEqCKOkoarUdhSRleUwTsFR90qkBC36vyuVtzCMwH8UXkwNK5bjVygsYDXgw5mTCMQVo0+l5BifO/+a+CKvRXCeBGyobWSmZF3+9F8OSdYldXB+WEoupkEdGohxNRFzKulpGxg+hMGyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrC3iUkW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="squ3Tqmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA851F00893;
-	Sat, 30 May 2026 17:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrC3iUkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88EB1F00893;
+	Sat, 30 May 2026 17:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161859;
-	bh=rezWjxoYb6p6wg5GmqDfcg/6ve1SZid+7gJ4Bm6XrGE=;
+	s=korg; t=1780161862;
+	bh=WWBn0cMIvhMtqhM8gEX9cjOAnVEGY6LUOTIYz76cuTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=squ3TqmyxuKvX7Rmtv4pa8OZRqq4oBBEpSHFOAezV0n1ZKuR0CyRIszizhV/axnbC
-	 8G5S2d1pc3WQKQkv0myzWAOTunJVDCX3q99ZfHi7L8DI8owPYcEMjNa55m+jUWt+Z0
-	 tkAadioXN2B659ZhmexcmXlYsEi9ys20xXlnXRRk=
+	b=WrC3iUkWBJy6aMb3+4yQY4MqjBBQixibaMtXSGh4yGKazX8+AsGhSNRw5NxvXT52l
+	 5rMQcG7JK9kL0UsAVeZxL8CGOeg6FpCNVeXsm4BzLHLVNuTRtYD1U5ieNaimc34uIQ
+	 DoIYyk+aiUdqtmHbl2Unpt+Hvw8kQWs6NJbbOEUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 731/969] btrfs: fix double-decrement of bytes_may_use in submit_one_async_extent()
-Date: Sat, 30 May 2026 18:04:15 +0200
-Message-ID: <20260530160320.730703450@linuxfoundation.org>
+Subject: [PATCH 6.1 749/969] net/sched: netem: fix slot delay calculation overflow
+Date: Sat, 30 May 2026 18:04:33 +0200
+Message-ID: <20260530160321.242762995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,45 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 82323b1a7088b7a5c3e528a5d634bff447fa286f ]
+[ Upstream commit 51e94e1e2fef351c74d69eb53666df808d26af95 ]
 
-submit_one_async_extent() calls btrfs_reserve_extent(), which decrements
-bytes_may_use. If the call btrfs_create_io_em() fails, we jump to
-out_free_reserve, which calls extent_clear_unlock_delalloc().
+get_slot_next() computes a random delay between min_delay and
+max_delay using:
 
-Because we're specifying EXTENT_DO_ACCOUNTING, i.e.
-EXTENT_CLEAR_META_RESV | EXTENT_CLEAR_DATA_RESV, this decreases
-bytes_may_use again. This can lead to problems later on, as an initial
-write can fail only for the writeback to silently ENOSPC.
+  get_random_u32() * (max_delay - min_delay) >> 32
 
-Fix this by replacing EXTENT_DO_ACCOUNTING with EXTENT_CLEAR_META_RESV.
-This parallels a4fe134fc1d8eb ("btrfs: fix a double release on reserved
-extents in cow_one_range()"), which is the same fix in cow_one_range().
+This overflows signed 64-bit arithmetic when the delay range exceeds
+approximately 2.1 seconds (2^31 nanoseconds), producing a negative
+result that effectively disables slot-based pacing. This is a
+realistic configuration for WAN emulation (e.g., slot 1s 5s).
 
-Fixes: 151a41bc46df ("Btrfs: fix what bits we clear when erroring out from delalloc")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Use mul_u64_u32_shr() which handles the widening multiply without
+overflow.
+
+Fixes: 0a9fe5c375b5 ("netem: slotting with non-uniform distribution")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-6-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 6a5364b466be1..3cdda1e4ad79e 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1069,7 +1069,7 @@ static int submit_one_async_extent(struct btrfs_inode *inode,
- 	extent_clear_unlock_delalloc(inode, start, end,
- 				     NULL, EXTENT_LOCKED | EXTENT_DELALLOC |
- 				     EXTENT_DELALLOC_NEW |
--				     EXTENT_DEFRAG | EXTENT_DO_ACCOUNTING,
-+				     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV,
- 				     PAGE_UNLOCK | PAGE_START_WRITEBACK |
- 				     PAGE_END_WRITEBACK | PAGE_SET_ERROR);
- 	free_async_extent_pages(async_extent);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index adb2bab79c87c..2c47bd8dba647 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -647,9 +647,8 @@ static void get_slot_next(struct netem_sched_data *q, u64 now)
+ 
+ 	if (!q->slot_dist)
+ 		next_delay = q->slot_config.min_delay +
+-				(get_random_u32() *
+-				 (q->slot_config.max_delay -
+-				  q->slot_config.min_delay) >> 32);
++			mul_u64_u32_shr(q->slot_config.max_delay - q->slot_config.min_delay,
++					get_random_u32(), 32);
+ 	else
+ 		next_delay = tabledist(q->slot_config.dist_delay,
+ 				       (s32)(q->slot_config.dist_jitter),
 -- 
 2.53.0
 
