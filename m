@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4659F1B87C0;
-	Sat, 30 May 2026 18:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2461B87C0;
+	Sat, 30 May 2026 18:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166547; cv=none; b=n59XFVnKoKLn5GCImPwGuDoXZw9lRrglEmJRjSfw1H6Fq26buHWY8QuWo/NaaiEKnS8JzexXITqfqRQ03C3f+SFWYhfUFGgo9qoTiBC5iN9QVNnFICF7em9/E2Tvcpo14wbZmpcy07JkNWpmBQurQx6TNlPgrlqlF7PgFn/igkU=
+	t=1780166550; cv=none; b=A9JnBqmixGWDt1gKVGT8Bgz7hmYFrfwj10Nh+XSnLfBdvsHXo1feBrImnVXvdCQQ8b8Nw0PzydQHW8Ldttylixjb/CydPKAc/P8Xmzozwg4rSTL0ddtMyQrRv/96+n0QOjtblALtTQhRIheXwY9Ln/CMA4P6bPHeF/swDrdfdl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166547; c=relaxed/simple;
-	bh=my5cB2PoejEGoFLWmc6+ssPXxtmEjvZAlshDtwRK+ao=;
+	s=arc-20240116; t=1780166550; c=relaxed/simple;
+	bh=e+b7Q+Vh/xI0oCKKAP7HwHWxPzq5sv+i3+LW4c/UH40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sgTvGEmBYCClEUD974Cy9mZSbmbAQqr2weTnFo9jskuluM4GzeP1F/lwrSRJ/JDPou2woi8L4jWe4st5U+gW+urISQ/1Yjqf0cA4ehAepHpd0+G5JqprNfH8epOhuGcDEcFfg1w070jrb8WEweZ3X1bN8Gkuq6eV7ZOFUQWynXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjRSfkTp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EaTfQiTfvOPekOvFL2M5oiWCbAuMLE+lY/cPwo3wXNYfC+dGf+P9/dN0sgpxIqs87Dtj31PLgVrvjhmWbQk7VtJSKVF60NDH4pU5SU8aJijRCnstS3oSjfvlEhf/NlaLoO1HWUY7M525VFAqzBRaTUsh4Pvv63II0YJ00moS7c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QPDRlo9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjRSfkTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA941F00893;
-	Sat, 30 May 2026 18:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QPDRlo9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53FE1F00893;
+	Sat, 30 May 2026 18:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166545;
-	bh=vldivRbONLcfQ1Pze3aos30OyfqkjprcvzDMczMb6yA=;
+	s=korg; t=1780166549;
+	bh=3ifX0w4erz93bkXjhPirIooM56erkzOeJACV7T4Rgnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BjRSfkTpDkx1v45eHwz18L9Lx0/7bFyK5asjKlG6wKvCCv2ftFWPuZUsHFAJXcTPs
-	 wZChliqNvXQWg6EB4TSNIPP/QzJ5UKpmuZhxKNUXLcH3R69jMHb2Wm+sHmTt8mzoNl
-	 TLzmRP5yqEX3eqlNgUkNCD1b7IYy+EItqezGgn+Q=
+	b=2QPDRlo9VMYsoLSnVDBgd0LsSlqIhg9qYK5yEPaNszGRB1hzg+nuxdX5etbihCAA9
+	 PiY4KGBTAi3UjQB5Pa4OMmPDIiv6XWhuRXz6j3IlNe+ZwT3w7YD9kQJ83nlG4rMgwE
+	 Err108pH6ByJQVb9jHvYmIBo3TW6rTDu1sUHwjbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 395/589] platform/x86: dell_rbu: avoid uninit value usage in packet_size_write()
-Date: Sat, 30 May 2026 18:04:36 +0200
-Message-ID: <20260530160235.168140739@linuxfoundation.org>
+Subject: [PATCH 5.10 360/589] ARM: dts: mediatek: mt7623: fix efuse fallback compatible
+Date: Sat, 30 May 2026 18:04:01 +0200
+Message-ID: <20260530160234.311075021@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,54 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit f8fd138c2363c0e2d3235c32bfb4fb5c6474e4ae ]
+[ Upstream commit 5978ff33cc6f0988388a2830dc5cd2ea4e81f36a ]
 
-Ensure the temp value has been properly parsed from the user-provided
-buffer and initialized to be used in later operations.  While at it,
-prefer a convenient kstrtoul() helper.
+Fix following validation error:
+arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: compatible: 'oneOf' conditional failed, one must be fixed:
+        ['mediatek,mt7623-efuse', 'mediatek,mt8173-efuse'] is too long
+        'mediatek,mt8173-efuse' was expected
+        'mediatek,efuse' was expected
+        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
+arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: ad6ce87e5bd4 ("[PATCH] dell_rbu: changes in packet update mechanism")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260403134240.604837-1-pchelkin@ispras.ru
-[ij: add include]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 43c7a91b4b3a ("arm: dts: mt7623: add efuse nodes to the mt7623.dtsi file")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell_rbu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/mt7623.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell_rbu.c b/drivers/platform/x86/dell_rbu.c
-index 68a860a97f319..39c6013cad342 100644
---- a/drivers/platform/x86/dell_rbu.c
-+++ b/drivers/platform/x86/dell_rbu.c
-@@ -30,6 +30,7 @@
- #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+diff --git a/arch/arm/boot/dts/mt7623.dtsi b/arch/arm/boot/dts/mt7623.dtsi
+index c267fc1f83579..290527c9711ec 100644
+--- a/arch/arm/boot/dts/mt7623.dtsi
++++ b/arch/arm/boot/dts/mt7623.dtsi
+@@ -329,7 +329,7 @@ sysirq: interrupt-controller@10200100 {
  
- #include <linux/init.h>
-+#include <linux/kstrtox.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-@@ -617,9 +618,12 @@ static ssize_t packet_size_write(struct file *filp, struct kobject *kobj,
- 				 char *buffer, loff_t pos, size_t count)
- {
- 	unsigned long temp;
-+
-+	if (kstrtoul(buffer, 10, &temp))
-+		return -EINVAL;
-+
- 	spin_lock(&rbu_data.lock);
- 	packet_empty_list();
--	sscanf(buffer, "%lu", &temp);
- 	if (temp < 0xffffffff)
- 		rbu_data.packetsize = temp;
- 
+ 	efuse: efuse@10206000 {
+ 		compatible = "mediatek,mt7623-efuse",
+-			     "mediatek,mt8173-efuse";
++			     "mediatek,efuse";
+ 		reg = <0 0x10206000 0 0x1000>;
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
 -- 
 2.53.0
 
