@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932B434389F;
-	Sat, 30 May 2026 17:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA788344DB9;
+	Sat, 30 May 2026 17:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163053; cv=none; b=CJQE7B4wbtz+P9Bg+12+7gkF0cEDmN7z4iTme/0N4g44cIuQs/PvJlm0XWMIaznPOO5Q+0V3t7J9e5csLwyqJ9L4ebM8DKFpjUtxbT5nHOBvsyCsJKf16N5v5ZEenK9PdBKE3vq6z5zEbJ2rYiqXr5ikpq6pyDzr45/IOJkJ5Q4=
+	t=1780163056; cv=none; b=lxsvnFKaJpaX2pqWZ2ogfT/PxyEBS0VxYPDChiTTOJmS8d4EeXMbAE5uYuuCmuS3xRMdNLgu7YW30tj/0Q1AQ38lj8AbPRw+cyMAeyzMfGfIMnDhJTvU9o3T3TRHcQNYfpmwVDxafe1WKPMW5LeRR66/sCwx1wuQyAQJ5UJc0+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163053; c=relaxed/simple;
-	bh=K8+/MpFnI/1Ivl0s2Tc5Edx6QqWorKbhqhpysmbulOc=;
+	s=arc-20240116; t=1780163056; c=relaxed/simple;
+	bh=lA21nnBqZPiiDCxXLJBdYZEfH9ZS/xFsK7VpDEhXJ+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q77RFdFWFHgWXGBsvZW44bknvM3lq5/VquV6DaB08M7r/befP6UOyiQg4YjaCmjDWZNHwBQWgSn6Q7G6Gye3D1b/Cu93B9D78IeXnPUDCa2tWfWGd2AguOj+jWDKR5MDNxyq/D3Xk8fy+BYYRvS++4jXjJJn0I1f14iEES0ipdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V38TyJ9B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gECmCnk2TxSjulm+/8/Z+D0dGabYAr4aflTc4n0A8MBeuKIHxC4QjTkBJzS9gI0/pr0iGgvERvNwYnvuRvqlUApSWCNk5ISu8doxOTLmyArGToDVm7SVnrqsOWwXcIwtxVmvsVRkDe94TtjpU/2ecn8hL7g0y2uqQ1fHaYlfSlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXxFdayV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V38TyJ9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D7D1F00893;
-	Sat, 30 May 2026 17:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXxFdayV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2839E1F00893;
+	Sat, 30 May 2026 17:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163052;
-	bh=RB36YaaBUtEz1n5tTHh4dxFkPIzDF7uQsbRKGb6w/nM=;
+	s=korg; t=1780163055;
+	bh=HRgZiS/OCVE9BTxpDW2VWdjttsXDI1jir019sMLCoBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V38TyJ9BHogeuLfdB8js+wqC/6kNdu6w3QhTqgmdMcKqFXJuiD2ceRK13FYHl2sp9
-	 Z9Gfr5+rww7E9X5tQqDC23FkV88NqXUw8Ww4QAuZR46Hg+7glocXgZ847DzZuoNmv2
-	 M2s6drEOufwt/K14jGva31dpQewLKp0+Myim89Sc=
+	b=OXxFdayVWbE45zHpDufLZdD88ss8nrnbV0+mqT22U3/1ZsWS9KAeY+CSzvqOwPBrn
+	 ZQTqCemeNuOM2qQM7dAf1WmgIFj6+nxncVlual04b2aDjxWpY675ITmHy6qi4R90pP
+	 aLaf90e/RhwYrWsPDW/ibLcfeV7Lk8UD5uCviKxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Leon Chen <leonchen.oss@139.com>
-Subject: [PATCH 5.15 141/776] nvmet: always initialize cqe.result
-Date: Sat, 30 May 2026 17:57:35 +0200
-Message-ID: <20260530160244.061798642@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Furong Xu <0x1207@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 142/776] net: stmmac: fix TSO DMA API usage causing oops
+Date: Sat, 30 May 2026 17:57:36 +0200
+Message-ID: <20260530160244.089568445@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,61 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit cd0c1b8e045a8d2785342b385cb2684d9b48e426 ]
+[ Upstream commit 4c49f38e20a57f8abaebdf95b369295b153d1f8e ]
 
-The spec doesn't mandate that the first two double words (aka results)
-for the command queue entry need to be set to 0 when they are not
-used (not specified). Though, the target implemention returns 0 for TCP
-and FC but not for RDMA.
+Commit 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap
+for non-paged SKB data") moved the assignment of tx_skbuff_dma[]'s
+members to be later in stmmac_tso_xmit().
 
-Let's make RDMA behave the same and thus explicitly initializing the
-result field. This prevents leaking any data from the stack.
+The buf (dma cookie) and len stored in this structure are passed to
+dma_unmap_single() by stmmac_tx_clean(). The DMA API requires that
+the dma cookie passed to dma_unmap_single() is the same as the value
+returned from dma_map_single(). However, by moving the assignment
+later, this is not the case when priv->dma_cap.addr64 > 32 as "des"
+is offset by proto_hdr_len.
 
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ Ignored the fabrics-cmd-auth.c, it was introduced in commit:db1312dd9548
-("nvmet: implement basic In-Band Authentication") ]
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+This causes problems such as:
+
+  dwc-eth-dwmac 2490000.ethernet eth0: Tx DMA map failed
+
+and with DMA_API_DEBUG enabled:
+
+  DMA-API: dwc-eth-dwmac 2490000.ethernet: device driver tries to +free DMA memory it has not allocated [device address=0x000000ffffcf65c0] [size=66 bytes]
+
+Fix this by maintaining "des" as the original DMA cookie, and use
+tso_des to pass the offset DMA cookie to stmmac_tso_allocator().
+
+Full details of the crashes can be found at:
+https://lore.kernel.org/all/d8112193-0386-4e14-b516-37c2d838171a@nvidia.com/
+https://lore.kernel.org/all/klkzp5yn5kq5efgtrow6wbvnc46bcqfxs65nz3qy77ujr5turc@bwwhelz2l4dw/
+
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Reported-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap for non-paged SKB data")
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/E1tJXcx-006N4Z-PC@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ The context change is due to the commit 041cc86b3653
+("net: stmmac: Enable TSO on VLANs") in v6.11 which is irrelevant to
+the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c        |    1 +
- drivers/nvme/target/fabrics-cmd.c |    6 ------
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -932,6 +932,7 @@ bool nvmet_req_init(struct nvmet_req *re
- 	req->metadata_sg_cnt = 0;
- 	req->transfer_len = 0;
- 	req->metadata_len = 0;
-+	req->cqe->result.u64 = 0;
- 	req->cqe->status = 0;
- 	req->cqe->sq_head = 0;
- 	req->ns = NULL;
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -187,9 +187,6 @@ static void nvmet_execute_admin_connect(
- 	if (status)
- 		goto out;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4034,9 +4034,9 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	int tmp_pay_len = 0, first_tx;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
++	dma_addr_t tso_des, des;
+ 	u8 proto_hdr_len, hdr;
+ 	u32 pay_len, mss;
+-	dma_addr_t des;
+ 	int i;
  
--	/* zero out initial completion result, assign values as needed */
--	req->cqe->result.u32 = 0;
--
- 	if (c->recfmt != 0) {
- 		pr_warn("invalid connect version (%d).\n",
- 			le16_to_cpu(c->recfmt));
-@@ -255,9 +252,6 @@ static void nvmet_execute_io_connect(str
- 	if (status)
- 		goto out;
+ 	tx_q = &priv->tx_queue[queue];
+@@ -4120,14 +4120,15 @@ static netdev_tx_t stmmac_tso_xmit(struc
  
--	/* zero out initial completion result, assign values as needed */
--	req->cqe->result.u32 = 0;
--
- 	if (c->recfmt != 0) {
- 		pr_warn("invalid connect version (%d).\n",
- 			le16_to_cpu(c->recfmt));
+ 		/* If needed take extra descriptors to fill the remaining payload */
+ 		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
++		tso_des = des;
+ 	} else {
+ 		stmmac_set_desc_addr(priv, first, des);
+ 		tmp_pay_len = pay_len;
+-		des += proto_hdr_len;
++		tso_des = des + proto_hdr_len;
+ 		pay_len = 0;
+ 	}
+ 
+-	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
++	stmmac_tso_allocator(priv, tso_des, tmp_pay_len, (nfrags == 0), queue);
+ 
+ 	/* In case two or more DMA transmit descriptors are allocated for this
+ 	 * non-paged SKB data, the DMA buffer address should be saved to
 
 
