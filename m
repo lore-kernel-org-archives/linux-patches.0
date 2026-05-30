@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690062E7389;
-	Sat, 30 May 2026 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B85C4315F;
+	Sat, 30 May 2026 18:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167193; cv=none; b=iiaphfPMdNoKRRyk4kSBgibAiHwyKAA5LtUXPhBNluCgtcRTilibiJvcdllLei2vPRyD3fiF8RkBzrzfUXgJMYKXAM3ZgaMi8T3FIx4rAubNLQ3oLaUdi+pK+L5CinjRBPDeNig6OfLWccEsOHjv6De+LNbaB4sU+JxRRxWpE4Q=
+	t=1780167196; cv=none; b=phxYimBWSqlkk8kw/1bWnpQz4W+Z8sX+N67+5VMKRGvmeP3w4KRHlKgVw3sz2szuxNJU8wOh0wp4iGMXkfTPaYICGU+x4nsh1i8Vd7c03jgAGGNgvDTUXYH5bxJdVVXhdlwU7vYQBviEt3blFQMm9TMLwBHhut1pi8WiBewRAiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167193; c=relaxed/simple;
-	bh=T11FWqIN+YW1HLs5Ju+fiZ1cjt8twpeb0sbN0GpVbcU=;
+	s=arc-20240116; t=1780167196; c=relaxed/simple;
+	bh=wI/TQX/d0bif79gpHKLmVnfvqZIeE9eIWdv01TLTXAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJ0h1P+xVLhiEgvlb6x2J3hDHesoAF47yzqtNXQbfdy0RzamJzSqe4WYgJFaOrY5kKkWWpLL0czQFnWkWiyQZCHEmdqJe8NFou6CiPHDDxjEIP3PFKJ+H2KOgSaEKSfSxUais8Oer8Hp1f57gJG6lJ6mYZk4azrLmvP3BHg9QL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OC9gHyIc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TTtWYEaMFBAIZl0YGN7IiwfqANfvTc9WUSBOnXe9SSZuB+LDumWbBhrW848/XD6diMIqk+SN7o/88J0BTJCnvGveD7hrFcLTNM+ekU3BWXZnveAOmHU89y3Uw0O5r5zLeJ/RyLfAOH65aPxCfXz9nXz8DIlMnG9fqFJd5opu2E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf6A7GJx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OC9gHyIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709D71F00893;
-	Sat, 30 May 2026 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf6A7GJx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FF91F00893;
+	Sat, 30 May 2026 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167192;
-	bh=OS7KxnuOLu5AejDWjJIubTSK+oKHCh+hYQ5EnAh4iw8=;
+	s=korg; t=1780167195;
+	bh=k9gHuoEeYdPKNbGPlw4ePF7KBmcEmj1EbzPBlyuMtcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OC9gHyIcWFPUGBKpNTgXKh/6tKfilXsKxv389p+zS6SH4HhWyRP4BtTPbL2PE69TK
-	 EastQZTzN3z9xaJVCD69zsq14rogQleBdYuji5tJbWVnwDIWy4b5aXHWTme3eSUqPh
-	 kjircoL9tK5Eu3FWqvPLaPXRxFjY+1osV88jCdwo=
+	b=nf6A7GJxRAVRzDPpf/oASlq+z/py8AUeQDaxLNZv/YR2OZXyeeNa4aaXA5g+hXefz
+	 IcXKV87Nk3kmRFfAAfN9nNICjOrgu4v3ZgKw9IFNZmwWaNognIHaRSuL7f7F73sGtA
+	 /Fqv0UYbrV63Rv2RQv5kPK+VvU4g0lMb5IpQiKEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 578/589] net: ethernet: cs89x0: remove stale CONFIG_MACH_MX31ADS reference
-Date: Sat, 30 May 2026 18:07:39 +0200
-Message-ID: <20260530160239.794105045@linuxfoundation.org>
+Subject: [PATCH 5.10 579/589] HID: quirks: really enable the intended work around for appledisplay
+Date: Sat, 30 May 2026 18:07:40 +0200
+Message-ID: <20260530160239.817638556@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
 
-[ Upstream commit 36a8d04a8293afcb9304cf0cd3741f67698f2a1a ]
+[ Upstream commit 5f90dcfa8dc32a488581b78e575cdd7808ba5c78 ]
 
-The legacy ARM board file for MACH_MX31ADS was removed in commit
-c93197b0041d ("ARM: imx: Remove i.MX31 board files"), but a reference
-to it remained in the cs89x0 driver. Drop this unused code.
+Commit c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for
+appledisplay") intends to add a quirk for kernels built with Apple Cinema
+Display support, but it refers to the non-existing config option
+CONFIG_APPLEDISPLAY, whereas the config option for Apple Cinema Display
+support is named CONFIG_USB_APPLEDISPLAY.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Fixes: c93197b0041d ("ARM: imx: Remove i.MX31 board files")
-Link: https://patch.msgid.link/20260509023732.42256-1-enelsonmoore@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Refer to the intended config option CONFIG_USB_APPLEDISPLAY in the ifdef
+directive.
+
+Fixes: c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for appledisplay")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cirrus/cs89x0.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/hid/hid-quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cirrus/cs89x0.c b/drivers/net/ethernet/cirrus/cs89x0.c
-index 33ace33070593..77af8ace4d7b1 100644
---- a/drivers/net/ethernet/cirrus/cs89x0.c
-+++ b/drivers/net/ethernet/cirrus/cs89x0.c
-@@ -1270,7 +1270,6 @@ static const struct net_device_ops net_ops = {
- 
- static void __init reset_chip(struct net_device *dev)
- {
--#if !defined(CONFIG_MACH_MX31ADS)
- 	struct net_local *lp = netdev_priv(dev);
- 	unsigned long reset_start_time;
- 
-@@ -1297,7 +1296,6 @@ static void __init reset_chip(struct net_device *dev)
- 	while ((readreg(dev, PP_SelfST) & INIT_DONE) == 0 &&
- 	       time_before(jiffies, reset_start_time + 2))
- 		;
--#endif /* !CONFIG_MACH_MX31ADS */
- }
- 
- /* This is the real probe routine.
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 84a9c9e761bcd..3a7b231759098 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -222,7 +222,7 @@ static const struct hid_device_id hid_quirks[] = {
+  * used as a driver. See hid_scan_report().
+  */
+ static const struct hid_device_id hid_have_special_driver[] = {
+-#if IS_ENABLED(CONFIG_APPLEDISPLAY)
++#if IS_ENABLED(CONFIG_USB_APPLEDISPLAY)
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
 -- 
 2.53.0
 
