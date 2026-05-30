@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D4D32BF24;
-	Sat, 30 May 2026 16:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A00E1CAA6C;
+	Sat, 30 May 2026 16:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159973; cv=none; b=Mx/jumAGa9dnqO6FW0REQBRtN7lOIJyoosK1l+rzArejNJ4O9deR1tD6112a9u0EhHRT3nsKeC3fd7tdEoThxjRNeOe/WgyGvDGDPi3vENE/btFyIJeVtbdud482Up5oDqqnCjTJeQ/ATPx9bo3XE56jFa4cGiisgP/VPmEmOwQ=
+	t=1780159977; cv=none; b=CDmjW59WJ3OwyjWIxIjptjdfQiBlsKkSy1whcMqEhqRvHLIsg3ao3dLB5/xmFf7ipOBizPyWhPud/5o60B7GIoF63tTx+T87u8nfshMpaNUtgy12Uhw049NyXb6j/furQ/PM2ewrC6QgaUDTZWkCB7hBJkYMxiyK4BXq8gDRGT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159973; c=relaxed/simple;
-	bh=DrtqvhdBfDUKnk2vm1tvTEk0YJ3tPDXIXFfI8v7wl60=;
+	s=arc-20240116; t=1780159977; c=relaxed/simple;
+	bh=7qzfipE4iFuTEjf0LUFHOEYZd/gxysp/fd7V3Z03eKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iEhR6f10BB73SCvOrHMX+7XzQhkA+AB9WHAoNbMz7aUb3ABKGcZgXrIaSK7OXfxaSnzkax6QuubI9yb5OneOjxRVb2X59vKjjK1xxxeVVD626iE72wqZ2ZuKmnQUKdBdZBZ5yYuKQz580Y7A/vmmaFXtJETT2Xfv0kmJeOxsaB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHaWsMz5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bbvBbvFrC3CasH2b2zDAlGCuhBZyPWCsD24aQQxuSdTTmnBefaG52h48HAlGiNGpg/ERrTqI6VkJYJPfk1dFTOQYzAY5U9Tl0Uy8d9Wfe02uPFED+8BWG7EI6XacfZz81Nh72RPVPfX5u1h9Tf0sti9uZP7GaxqGDdNVIv9wlqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvrst9kK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHaWsMz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCA81F00893;
-	Sat, 30 May 2026 16:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvrst9kK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390941F00893;
+	Sat, 30 May 2026 16:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159972;
-	bh=qiWKqoa0S/XqICVvxr9GdFMNXhRTnmPX1WxCbCLEOfE=;
+	s=korg; t=1780159976;
+	bh=s1y6cT+rDAzuYcWFSkSp9nVvejf2SPlgE+/RMBr+sNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHaWsMz5u3BFxNP5SZ9q0PzG7xzIDULeCGlxVTP52Nqf7nYHvIp1V+hmHEpISq2ZM
-	 MBRsj3qr8BtBNfDmYGrBzWTUED4bV5kDen8v4L7D8pPUr807KcjQbpdZit4e959oym
-	 iJWbK4OgQsw39YDPNPo/hnjJQUX88TJqH7LuWYVI=
+	b=lvrst9kKN5z3NoW8EX/HfAvxI/bGzBogcfDcahy8+dR+0VAgm+q8lbywTcnz5DE8p
+	 wav1Lg0wm7waBYr4aceEyEiN8Z3atMUT5rLUv8z671XV+mfyLeqVOKL1COsIL7+wpM
+	 oEWKHPsdZ8gzia8XDdDf8rWCNb2TJxKHJVASAsUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 193/969] ext2: reject inodes with zero i_nlink and valid mode in ext2_iget()
-Date: Sat, 30 May 2026 17:55:17 +0200
-Message-ID: <20260530160305.805829944@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 211/969] ALSA: 6fire: Fix input volume change detection
+Date: Sat, 30 May 2026 17:55:35 +0200
+Message-ID: <20260530160306.290497247@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,105 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 25947cc5b2374cd5bf627fe3141496444260d04f upstream.
+commit dc88eef8f55e85e92d016cdf7e291f5560efd79b upstream.
 
-ext2_iget() already rejects inodes with i_nlink == 0 when i_mode is
-zero or i_dtime is set, treating them as deleted. However, the case of
-i_nlink == 0 with a non-zero mode and zero dtime slips through. Since
-ext2 has no orphan list, such a combination can only result from
-filesystem corruption - a legitimate inode deletion always sets either
-i_dtime or clears i_mode before freeing the inode.
+usb6fire_control_input_vol_put() stores the analog capture volume
+as a signed offset in rt->input_vol[] (-15..+15), but it compares
+the cached value against the user-visible mixer value (0..30)
+before subtracting 15.
 
-A crafted image can exploit this gap to present such an inode to the
-VFS, which then triggers WARN_ON inside drop_nlink() (fs/inode.c) via
-ext2_unlink(), ext2_rename() and ext2_rmdir():
+This mixes two domains in the change detection path. Since the
+runtime is zero-initialized, the visible default is 15; writing 0
+right after probe is ignored, while writing 15 is reported as a
+change even though the cached value remains 0.
 
-WARNING: CPU: 3 PID: 609 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 3 UID: 0 PID: 609 Comm: syz-executor Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_unlink+0x26c/0x300 fs/ext2/namei.c:295
- vfs_unlink+0x2fc/0x9b0 fs/namei.c:4477
- do_unlinkat+0x53e/0x730 fs/namei.c:4541
- __x64_sys_unlink+0xc6/0x110 fs/namei.c:4587
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Normalize the user value before comparing it with the cached offset.
 
-WARNING: CPU: 0 PID: 646 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 0 UID: 0 PID: 646 Comm: syz.0.17 Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_rename+0x35e/0x850 fs/ext2/namei.c:374
- vfs_rename+0xf2f/0x2060 fs/namei.c:5021
- do_renameat2+0xbe2/0xd50 fs/namei.c:5178
- __x64_sys_rename+0x7e/0xa0 fs/namei.c:5223
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-WARNING: CPU: 0 PID: 634 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 0 UID: 0 PID: 634 Comm: syz-executor Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_rmdir+0xca/0x110 fs/ext2/namei.c:311
- vfs_rmdir+0x204/0x690 fs/namei.c:4348
- do_rmdir+0x372/0x3e0 fs/namei.c:4407
- __x64_sys_unlinkat+0xf0/0x130 fs/namei.c:4577
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Extend the existing i_nlink == 0 check to also catch this case,
-reporting the corruption via ext2_error() and returning -EFSCORRUPTED.
-This rejects the inode at load time and prevents it from reaching any
-of the namei.c paths.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 06bb4e743501 ("ALSA: snd-usb-6fire: add analog input volume control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20260404152011.2590197-1-kovalev@altlinux.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260416-alsa-6fire-input-volume-change-detection-v1-1-ec78299168df@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/inode.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ sound/usb/6fire/control.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -1419,9 +1419,17 @@ struct inode *ext2_iget (struct super_bl
- 	 * the test is that same one that e2fsck uses
- 	 * NeilBrown 1999oct15
- 	 */
--	if (inode->i_nlink == 0 && (inode->i_mode == 0 || ei->i_dtime)) {
--		/* this inode is deleted */
--		ret = -ESTALE;
-+	if (inode->i_nlink == 0) {
-+		if (inode->i_mode == 0 || ei->i_dtime) {
-+			/* this inode is deleted */
-+			ret = -ESTALE;
-+		} else {
-+			ext2_error(sb, __func__,
-+				   "inode %lu has zero i_nlink with mode 0%o and no dtime, "
-+				   "filesystem may be corrupt",
-+				   ino, inode->i_mode);
-+			ret = -EFSCORRUPTED;
-+		}
- 		goto bad_inode;
+--- a/sound/usb/6fire/control.c
++++ b/sound/usb/6fire/control.c
+@@ -290,15 +290,17 @@ static int usb6fire_control_input_vol_pu
+ 		struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
++	int vol0 = ucontrol->value.integer.value[0] - 15;
++	int vol1 = ucontrol->value.integer.value[1] - 15;
+ 	int changed = 0;
+ 
+-	if (rt->input_vol[0] != ucontrol->value.integer.value[0]) {
+-		rt->input_vol[0] = ucontrol->value.integer.value[0] - 15;
++	if (rt->input_vol[0] != vol0) {
++		rt->input_vol[0] = vol0;
+ 		rt->ivol_updated &= ~(1 << 0);
+ 		changed = 1;
  	}
- 	inode->i_blocks = le32_to_cpu(raw_inode->i_blocks);
+-	if (rt->input_vol[1] != ucontrol->value.integer.value[1]) {
+-		rt->input_vol[1] = ucontrol->value.integer.value[1] - 15;
++	if (rt->input_vol[1] != vol1) {
++		rt->input_vol[1] = vol1;
+ 		rt->ivol_updated &= ~(1 << 1);
+ 		changed = 1;
+ 	}
 
 
