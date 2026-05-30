@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F9E4315F;
-	Sat, 30 May 2026 18:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8DE2E7389;
+	Sat, 30 May 2026 18:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167183; cv=none; b=fFlFKMDlbZCO6bSZZd1TKJ1H0kYNe7HCvsFahZ7ktntUWme1hK8/eV1sBMGLmO2Vk1honh0QCkPVBWUqBjKEboHweMlNSBlOlJgr4uHYeI2O1XiokdQcxuttVwLuKQi/0SMBkqNPy0avQ7C+lPSdFNxjnJyAenacYmYsCC8CaHI=
+	t=1780167186; cv=none; b=jo8sQx3rtMxJgj7PH9nVDEjTmworAj6vWaVxHrqu51sBuXAZWjyx2sIjOdXAIxd1mvGWWUYNnYd7wyl006rbi/9tgHl7jfMOEWJZDKYcFyYwzL2SZr3eqxYjjDzYTAQbaAJABKjpr3qnQM37LbcGKhiSZGvC3LnMZGAnjdbSd/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167183; c=relaxed/simple;
-	bh=tvjELscSXHPJQVYW1z1BWEuhBePtyLHtjaLrX3U4o04=;
+	s=arc-20240116; t=1780167186; c=relaxed/simple;
+	bh=5c+mUAmKYH7lPhtVds1ezuHVKXxkGCE4mONym8SUwZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ketGBmGSJyy+VVs+L5vztVE6l3ksuj39l3+u3at1rZO7hxNX4gHr73lUATXVcZO0RmJQZvTG1TDSq5+Qt0YER3CzYXeFGwl5INCjNV3nBo5JgB+Vsp1IjwEhPbPSv7TICc8Cb8xU4in8ksmMCQ09QVLc6S80Up3hOAaksF2Rwck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PU3fp5dA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SOHWlaAvzlBhYq5LpGRviqt4OEhWQVK0tYzR++VXFdxPoofbmJjHWb8xAcTRm8iiAvmHZXN4PEp73Z0JEpQTYMHzWl1e4/8HkVDKwWeCmbD3E5WAHk6CyzsXVVSf7KjyhssIRsJI6OgY5J26yNtpVukW+6Hwz9im4UhYaiC+w5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEtWmj51; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU3fp5dA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533F51F00893;
-	Sat, 30 May 2026 18:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEtWmj51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB941F00893;
+	Sat, 30 May 2026 18:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167182;
-	bh=iEFrDjN8gTIErD/1WFMUBNbNzy0dO84HM/iim7nnE/8=;
+	s=korg; t=1780167185;
+	bh=64K7rWFtG6GpsGAQqiOclbLGvLPQ1dH9EYd0W15R8s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PU3fp5dAmWmE1sJyNYi8cUHCaXMVwF4WOAioqYytlak+Ob/aapFNzScYYzuiNhYlF
-	 wKoyhDe14CrtdcmEoeM5y3UQvbReYEL2d+zvL1MkmB4WN5WSlL8AQOhZUDmXAhw+Vj
-	 apdU/OY1LGiCZabD56yEc4Ud6q8c1CrQHMS6150g=
+	b=nEtWmj51bRykbeHcWugFlSZ3B0UJSZVmNlchPnOqjyLynOyOAEgnavgFEIsNLNSYZ
+	 MbQ9B2FaC4iWNhNTpmL3eQH6a34QUebvqCvIZY0cDmfEPG5dFaiqhHXlqc57se6vGL
+	 OTWGOSEVsaOScfI3/x3y4EJFIBcUaZ5KEUumVtpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	John Efstathiades <john.efstathiades@pebblebay.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 588/589] gpio: cdev: check if uAPI v2 config attributes are correctly zeroed
-Date: Sat, 30 May 2026 18:07:49 +0200
-Message-ID: <20260530160240.038032650@linuxfoundation.org>
+Subject: [PATCH 5.10 589/589] net: usb: lan78xx: Fix double free issue with interrupt buffer allocation
+Date: Sat, 30 May 2026 18:07:50 +0200
+Message-ID: <20260530160240.062963614@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,57 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 3e6ccd790ed69bedd3d9626d01dd35cf9821c121 ]
+[ Upstream commit 03819abbeb11117dcbba40bfe322b88c0c88a6b6 ]
 
-We check the padding of other uAPI v2 structures but not that of line
-config attributes. For used attributes: check if their padding is
-zeroed, for unused: check if the entire structure is zeroed.
+In lan78xx_probe(), the buffer `buf` was being freed twice: once
+implicitly through `usb_free_urb(dev->urb_intr)` with the
+`URB_FREE_BUFFER` flag and again explicitly by `kfree(buf)`. This caused
+a double free issue.
 
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20260521-gpio-cdev-attr-padding-check-v3-1-ec3bcbe2e358@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+To resolve this, reordered `kmalloc()` and `usb_alloc_urb()` calls to
+simplify the initialization sequence and removed the redundant
+`kfree(buf)`.  Now, `buf` is allocated after `usb_alloc_urb()`, ensuring
+it is correctly managed by  `usb_fill_int_urb()` and freed by
+`usb_free_urb()` as intended.
+
+Fixes: a6df95cae40b ("lan78xx: Fix memory allocation bug")
+Cc: John Efstathiades <john.efstathiades@pebblebay.com>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241116130558.1352230-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context. Make the function usb_alloc_urb() call before
+kmalloc(). ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/usb/lan78xx.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index e1bdcd345328b..a4446d7baa390 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -925,6 +925,7 @@ static int gpio_v2_line_flags_validate(u64 flags)
- static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 					unsigned int num_lines)
- {
-+	size_t unused_attrs;
- 	unsigned int i;
- 	u64 flags;
- 	int ret;
-@@ -932,9 +933,21 @@ static int gpio_v2_line_config_validate(struct gpio_v2_line_config *lc,
- 	if (lc->num_attrs > GPIO_V2_LINE_NUM_ATTRS_MAX)
- 		return -EINVAL;
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index f0643d9d8ff94..af0622e942584 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -4057,29 +4057,30 @@ static int lan78xx_probe(struct usb_interface *intf,
  
-+	unused_attrs = GPIO_V2_LINE_NUM_ATTRS_MAX - lc->num_attrs;
+ 	period = ep_intr->desc.bInterval;
+ 	maxp = usb_maxpacket(dev->udev, dev->pipe_intr, 0);
+-	buf = kmalloc(maxp, GFP_KERNEL);
+-	if (!buf) {
 +
- 	if (!mem_is_zero(lc->padding, sizeof(lc->padding)))
- 		return -EINVAL;
++	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
++	if (!dev->urb_intr) {
+ 		ret = -ENOMEM;
+ 		goto out3;
+ 	}
  
-+	for (i = 0; i < lc->num_attrs; i++) {
-+		if (lc->attrs[i].attr.padding != 0)
-+			return -EINVAL;
-+	}
+-	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
+-	if (!dev->urb_intr) {
++	buf = kmalloc(maxp, GFP_KERNEL);
++	if (!buf) {
+ 		ret = -ENOMEM;
+-		goto out4;
+-	} else {
+-		usb_fill_int_urb(dev->urb_intr, dev->udev,
+-				 dev->pipe_intr, buf, maxp,
+-				 intr_complete, dev, period);
+-		dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
++		goto free_urbs;
+ 	}
+ 
++	usb_fill_int_urb(dev->urb_intr, dev->udev,
++			 dev->pipe_intr, buf, maxp,
++			 intr_complete, dev, period);
++	dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
 +
-+	if (unused_attrs) {
-+		if (!mem_is_zero(&lc->attrs[lc->num_attrs], unused_attrs * sizeof(*lc->attrs)))
-+			return -EINVAL;
-+	}
-+
- 	for (i = 0; i < num_lines; i++) {
- 		flags = gpio_v2_line_config_flags(lc, i);
- 		ret = gpio_v2_line_flags_validate(flags);
+ 	dev->maxpacket = usb_maxpacket(dev->udev, dev->pipe_out, 1);
+ 
+ 	/* Reject broken descriptors. */
+ 	if (dev->maxpacket == 0) {
+ 		ret = -ENODEV;
+-		goto out5;
++		goto free_urbs;
+ 	}
+ 
+ 	/* driver requires remote-wakeup capability during autosuspend. */
+@@ -4087,7 +4088,7 @@ static int lan78xx_probe(struct usb_interface *intf,
+ 
+ 	ret = lan78xx_phy_init(dev);
+ 	if (ret < 0)
+-		goto out5;
++		goto free_urbs;
+ 
+ 	ret = register_netdev(netdev);
+ 	if (ret != 0) {
+@@ -4109,10 +4110,8 @@ static int lan78xx_probe(struct usb_interface *intf,
+ 
+ out6:
+ 	phy_disconnect(netdev->phydev);
+-out5:
++free_urbs:
+ 	usb_free_urb(dev->urb_intr);
+-out4:
+-	kfree(buf);
+ out3:
+ 	lan78xx_unbind(dev, intf);
+ out2:
 -- 
 2.53.0
 
