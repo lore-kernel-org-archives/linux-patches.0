@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F25721E098;
-	Sat, 30 May 2026 18:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864D426738C;
+	Sat, 30 May 2026 18:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166005; cv=none; b=QtmZzXz94Dd5wwc41AhdTwkDT3xcy5vw04yqzBUrJ8oCUaGwJ2IU5eB26cuPn5M8V2dY79kM5kHrsytdNxyetr+xWI7dwAD/0PxC0oynudYqo+Qj04NcO7E3weMUxXulFbeDvnBcSRfcyYY+2kBLJiEKAewqWIhflWYlmGzn5Q8=
+	t=1780166008; cv=none; b=CrK7dTgSLVce8OeLzptgaHhQ+vdZzrKIvAXqnbq+vsb7DnBMyQdKQjgBDfviBYpubJcjRt0zED012Ap/rfG4fQGFiCSWL1spRHQlxQgbsJ8j00pVY/uxHJTkfv6NO+5UL1nmByHlug2p3FICt4liQXkEoXlqFCV9A6m6bjpKPCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166005; c=relaxed/simple;
-	bh=uDDd97ObWryXMKIoqL7vMSFfl6C7BP7K7bn9+zzI83s=;
+	s=arc-20240116; t=1780166008; c=relaxed/simple;
+	bh=I4HaCpQhHN7XysMq+jssh7SDjE5ZO7s5kolfH0AIipQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZpvDQEDg+hGrm0APYFI5t2naP5B5ly9cZ4uan6KqCwT6OuGttyGh/4jV9+QUhFJk+tTQk+ESsbsZWVcG+jiO3GnsH/XctT+byyH4dqb71QFdWnTcLBQK6gvwyNwgpxpw8F19Dp596ul3vBRp5/yhyVoRET42/ukRCQ7hO23J4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCtn1Jix; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ai4EyHv57OAu2Exw85yfvbXan+LZ7YNHzlOZd4BCgugS7HY2cX4TigpW6Dd5Dtaz6EtsNs1ZJIJTCkOFPDPpL0oHzelnrsfmEt89pjNEzN1Nxp/leoU7Wm2977YxTtwAYIcZHkPuPp18jv+RzSQjagDlB0g9ygqLPNcyUjtoBLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCObz9DC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCtn1Jix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC081F00893;
-	Sat, 30 May 2026 18:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCObz9DC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90531F00893;
+	Sat, 30 May 2026 18:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166004;
-	bh=3mq5SRH8t0cyn3Vv6aag1SGRJlc7hIBpCh89Nlzdyoo=;
+	s=korg; t=1780166007;
+	bh=bLY2+ts2GSvSkAuFNqbNFNrzse2mgW76oH3JHN9tezk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCtn1Jixn+ci3Ov2ccqY5Gn7ZvST9tkmK1madzQ5i7ldZDuT6hmjRrZ1UjxNZQW3M
-	 PCn7N/bzNFAzWOpqQEE59Ld8AUrPKn++wdp9hp6S3LC/Np91sJSk62TUIY0dNvdeT1
-	 UDhY7fVXH+il1Swj9W1CNWD2Ar7D9JjzI3CIZeLo=
+	b=iCObz9DCw3ijVaTBH02BI6ZAeabUnZ63M2kfZKHCcdE9SmZBqJrab2uZ75m6lUodB
+	 cCCYJjzMeBezCY0OLZBSfq+PkSG78+ClQasl9WCYXQwo8OHcUnCyXxPJ6t1DxvtqIg
+	 xKXr5Om8CwOrBknLKhM8Qsg26ZTRG4yTk3grVqGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5de83f57cd8531f55596@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 217/589] wifi: rsi: fix kthread lifetime race between self-exit and external-stop
-Date: Sat, 30 May 2026 18:01:38 +0200
-Message-ID: <20260530160230.680558838@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Vincent Danjean <vdanjean@debian.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 5.10 218/589] wifi: ath5k: do not access array OOB
+Date: Sat, 30 May 2026 18:01:39 +0200
+Message-ID: <20260530160230.711425125@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,50 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit db57a1aa54ff68669781976e4edb045e09e2b65b upstream.
+commit d748603f12baff112caa3ab7d39f50100f010dbd upstream.
 
-RSI driver use both self-exit(kthread_complete_and_exit) and external-stop
-(kthread_stop) when killing a kthread. Generally, kthread_stop() is called
-first, and in this case, no particular issues occur.
+Vincent reports:
+> The ath5k driver seems to do an array-index-out-of-bounds access as
+> shown by the UBSAN kernel message:
+> UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath5k/base.c:1741:20
+> index 4 is out of range for type 'ieee80211_tx_rate [4]'
+> ...
+> Call Trace:
+>  <TASK>
+>  dump_stack_lvl+0x5d/0x80
+>  ubsan_epilogue+0x5/0x2b
+>  __ubsan_handle_out_of_bounds.cold+0x46/0x4b
+>  ath5k_tasklet_tx+0x4e0/0x560 [ath5k]
+>  tasklet_action_common+0xb5/0x1c0
 
-However, in rare instances where kthread_complete_and_exit() is called
-first and then kthread_stop() is called, a UAF occurs because the kthread
-object, which has already exited and been freed, is accessed again.
+It is real. 'ts->ts_final_idx' can be 3 on 5212, so:
+   info->status.rates[ts->ts_final_idx + 1].idx = -1;
+with the array defined as:
+   struct ieee80211_tx_rate rates[IEEE80211_TX_MAX_RATES];
+while the size is:
+   #define IEEE80211_TX_MAX_RATES  4
+is indeed bogus.
 
-Therefore, to prevent this with minimal modification, you must remove
-kthread_stop() and change the code to wait until the self-exit operation
-is completed.
+Set this 'idx = -1' sentinel only if the array index is less than the
+array size. As mac80211 will not look at rates beyond the size
+(IEEE80211_TX_MAX_RATES).
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+5de83f57cd8531f55596@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69e5d03b.a00a0220.1bd0ca.0064.GAE@google.com/
-Fixes: 4c62764d0fc2 ("rsi: improve kernel thread handling to fix kernel panic")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://patch.msgid.link/20260422173846.37640-1-aha310510@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Note: The effect of the OOB write is negligible. It just overwrites the
+next member of info->status, i.e. ack_signal.
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reported-by: Vincent Danjean <vdanjean@debian.org>
+Link: https://lore.kernel.org/all/aQYUkIaT87ccDCin@eldamar.lan
+Closes: https://bugs.debian.org/1119093
+Fixes: 6d7b97b23e11 ("ath5k: fix tx status reporting issues")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251209100459.2253198-1-jirislaby@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_common.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath5k/base.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/rsi/rsi_common.h
-+++ b/drivers/net/wireless/rsi/rsi_common.h
-@@ -70,12 +70,11 @@ static inline int rsi_create_kthread(str
- 	return 0;
- }
+--- a/drivers/net/wireless/ath/ath5k/base.c
++++ b/drivers/net/wireless/ath/ath5k/base.c
+@@ -1693,7 +1693,8 @@ ath5k_tx_frame_completed(struct ath5k_hw
+ 	}
  
--static inline int rsi_kill_thread(struct rsi_thread *handle)
-+static inline void rsi_kill_thread(struct rsi_thread *handle)
- {
- 	atomic_inc(&handle->thread_done);
- 	rsi_set_event(&handle->event);
--
--	return kthread_stop(handle->task);
-+	wait_for_completion(&handle->completion);
- }
+ 	info->status.rates[ts->ts_final_idx].count = ts->ts_final_retry;
+-	info->status.rates[ts->ts_final_idx + 1].idx = -1;
++	if (ts->ts_final_idx + 1 < IEEE80211_TX_MAX_RATES)
++		info->status.rates[ts->ts_final_idx + 1].idx = -1;
  
- void rsi_mac80211_detach(struct rsi_hw *hw);
+ 	if (unlikely(ts->ts_status)) {
+ 		ah->stats.ack_fail++;
 
 
