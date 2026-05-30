@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40EE21B191;
-	Sat, 30 May 2026 18:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E7025B08A;
+	Sat, 30 May 2026 18:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166658; cv=none; b=R90loHLk6jZjbARNELAxeR/tmv8PyFjSqATAq8jTYJDfPC5RHHcEzlfP00piH2ZT6EKscGYhSzmeLeL38irhdruOQOwYz2fDtMRBmOQUVRPXTOXWn0kDc3irQtTu+nFIrdazogiBTj4kw4V09o2J7SPCy/4nytC8TrAFU2JVjMI=
+	t=1780166662; cv=none; b=MoLVBf+g2yROCt7nEyg/CUlqw8ly+MVdnDw2j3iRzrykgr5sNDIOKfpi6dqmxwJZDgDqELaG+O9ToPM7MQ0X+KhMFJ8GLys346TAFtkZMsAn+Dl58mL6dWmNoqxkaezLgLc0VgnI43+deZucdvhAi1++BFLPAWi/PCIHPQQJcnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166658; c=relaxed/simple;
-	bh=/IifuXT7PkGLH0l3TKelaEuHUjO38ayCjyUSOyXbK1c=;
+	s=arc-20240116; t=1780166662; c=relaxed/simple;
+	bh=ToYk+MnYRTX1F6ZhnYDigdVoGUjnwUd5YyV3YMxRHQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRmu60QrrAOu0UInOt7aYpaWDKC0CA1psuME1pGmCkIcQhSnm9w3gJm75Dm/k50Sxbnki7stLJuyJxlR+xgDT3JAPSj7LX9a4cQ5/XQiKjbKQrm+REqf8Yx52BilAUxHuYcyDipdTpSpqJFS/7ZhfrIdspiWEdoK3oMd6fuqBoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEGSJRfN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jV2VZallK5zeq003QOS/LGx+dKThy3FswOd7t+1g1/DpuV8gws3E1uW7MzdFFr8d6mNXP7QbmSCRFkzyNZhWd/sFK+JxSVgAH7QO61jdOgg5HszzQiXiPJx5j2O8ZDCGUlmyCs9887eg5wnevA6Fp9YXR0OXZe91M9HWav2587g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zrj3mjkH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEGSJRfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48DE1F00893;
-	Sat, 30 May 2026 18:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zrj3mjkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0911F00893;
+	Sat, 30 May 2026 18:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166657;
-	bh=51ExX0907vHrzHiz6BVSIMRlYRY7cQEevQZcDI/ucAM=;
+	s=korg; t=1780166660;
+	bh=PNcpHB8b7a7pEl60EwV+UvwwP+sK6BlYS6HC8W02G+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wEGSJRfNXfTyvemH9WB8eQHini6u9m4/04CyGlDjjYT22DKSDorI992Uf1wrzMHRB
-	 UUdZThUtNeGMDC7a/tXymJAlH5MMtCeOzU9quMoKsETzunTuM1CbzI5AWSUsMhimuw
-	 qTs/O+kjNydgbkljWtEwuYPgS2OKjLJ8oM1FPG3Q=
+	b=Zrj3mjkHF1oufdNqGcu2eyJ0m44tf+1uOkMBUjv3q1QFY4iI8gIlxvc6Zmmm/cyg5
+	 W4BC5mBerlWt040aId3OaaOsPeeEZMXY09vMSER4ElKxn9VPoaX6t6cDdMd/R2j0r2
+	 kuGddU+aAcoRrNAAxojKBWs8x7ArZK9o8zi+oPeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 430/589] flow_dissector: Add PPPoE dissectors
-Date: Sat, 30 May 2026 18:05:11 +0200
-Message-ID: <20260530160236.022190710@linuxfoundation.org>
+Subject: [PATCH 5.10 431/589] pppoe: drop PFC frames
+Date: Sat, 30 May 2026 18:05:12 +0200
+Message-ID: <20260530160236.046475783@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,176 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wojciech Drewek <wojciech.drewek@intel.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 46126db9c86110e5fc1e369b9bb89735ddefdae4 ]
+[ Upstream commit cc1ff87bce1ccd38410ab10960f576dcd17db679 ]
 
-Allow to dissect PPPoE specific fields which are:
-- session ID (16 bits)
-- ppp protocol (16 bits)
-- type (16 bits) - this is PPPoE ethertype, for now only
-  ETH_P_PPP_SES is supported, possible ETH_P_PPP_DISC
-  in the future
+RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
+RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
+PFC for PPPoE sessions, and the current PPPoE driver assumes an
+uncompressed (2-byte) protocol field. However, the generic PPP layer
+function ppp_input() is not aware of the negotiation result, and still
+accepts PFC frames.
 
-The goal is to make the following TC command possible:
+If a peer with a broken implementation or an attacker sends a frame with
+a compressed (1-byte) protocol field, the subsequent PPP payload is
+shifted by one byte. This causes the network header to be 4-byte
+misaligned, which may trigger unaligned access exceptions on some
+architectures.
 
-  # tc filter add dev ens6f0 ingress prio 1 protocol ppp_ses \
-      flower \
-        pppoe_sid 12 \
-        ppp_proto ip \
-      action drop
+To reduce the attack surface, drop PPPoE PFC frames. Introduce
+ppp_skb_is_compressed_proto() helper function to be used in both
+ppp_generic.c and pppoe.c to avoid open-coding.
 
-Note that only PPPoE Session is supported.
-
-Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Acked-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: cc1ff87bce1c ("pppoe: drop PFC frames")
+Fixes: 7fb1b8ca8fa1 ("ppp: Move PFC decompression to PPP generic layer")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260415022456.141758-2-qingfang.deng@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ppp_defs.h     | 14 ++++++++++
- include/net/flow_dissector.h | 13 +++++++++
- net/core/flow_dissector.c    | 53 +++++++++++++++++++++++++++++++-----
- 3 files changed, 73 insertions(+), 7 deletions(-)
+ drivers/net/ppp/ppp_generic.c |  2 +-
+ drivers/net/ppp/pppoe.c       |  8 +++++++-
+ include/linux/ppp_defs.h      | 16 ++++++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index a15b3eebb6d62..262d9be4f449e 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -2108,7 +2108,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+  */
+ static void __ppp_decompress_proto(struct sk_buff *skb)
+ {
+-	if (skb->data[0] & 0x01)
++	if (ppp_skb_is_compressed_proto(skb))
+ 		*(u8 *)skb_push(skb, 1) = 0x00;
+ }
+ 
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index d7f50b835050d..75114c630b1a7 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -425,7 +425,7 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb_mac_header_len(skb) < ETH_HLEN)
+ 		goto drop;
+ 
+-	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
++	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
+ 		goto drop;
+ 
+ 	ph = pppoe_hdr(skb);
+@@ -435,6 +435,12 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->len < len)
+ 		goto drop;
+ 
++	/* skb->data points to the PPP protocol header after skb_pull_rcsum.
++	 * Drop PFC frames.
++	 */
++	if (ppp_skb_is_compressed_proto(skb))
++		goto drop;
++
+ 	if (pskb_trim_rcsum(skb, len))
+ 		goto drop;
+ 
 diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
-index 9d2b388fae1a4..b7e57fdbd4139 100644
+index b7e57fdbd4139..b1d1f46d7d3be 100644
 --- a/include/linux/ppp_defs.h
 +++ b/include/linux/ppp_defs.h
-@@ -11,4 +11,18 @@
+@@ -8,6 +8,7 @@
+ #define _PPP_DEFS_H_
+ 
+ #include <linux/crc-ccitt.h>
++#include <linux/skbuff.h>
  #include <uapi/linux/ppp_defs.h>
  
  #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
-+
+@@ -25,4 +26,19 @@ static inline bool ppp_proto_is_valid(u16 proto)
+ 	return !!((proto & 0x0101) == 0x0001);
+ }
+ 
 +/**
-+ * ppp_proto_is_valid - checks if PPP protocol is valid
-+ * @proto: PPP protocol
++ * ppp_skb_is_compressed_proto - checks if PPP protocol in a skb is compressed
++ * @skb: skb to check
 + *
-+ * Assumes proto is not compressed.
-+ * Protocol is valid if the value is odd and the least significant bit of the
-+ * most significant octet is 0 (see RFC 1661, section 2).
++ * Check if the PPP protocol field is compressed (the least significant
++ * bit of the most significant octet is 1). skb->data must point to the PPP
++ * protocol header.
++ *
++ * Return: Whether the PPP protocol field is compressed.
 + */
-+static inline bool ppp_proto_is_valid(u16 proto)
++static inline bool ppp_skb_is_compressed_proto(const struct sk_buff *skb)
 +{
-+	return !!((proto & 0x0101) == 0x0001);
++	return unlikely(skb->data[0] & 0x01);
 +}
 +
  #endif /* _PPP_DEFS_H_ */
-diff --git a/include/net/flow_dissector.h b/include/net/flow_dissector.h
-index 6826309631cb3..af0918a676211 100644
---- a/include/net/flow_dissector.h
-+++ b/include/net/flow_dissector.h
-@@ -277,6 +277,18 @@ struct flow_dissector_key_num_of_vlans {
- 	u8 num_of_vlans;
- };
- 
-+/**
-+ * struct flow_dissector_key_pppoe:
-+ * @session_id: pppoe session id
-+ * @ppp_proto: ppp protocol
-+ * @type: pppoe eth type
-+ */
-+struct flow_dissector_key_pppoe {
-+	__be16 session_id;
-+	__be16 ppp_proto;
-+	__be16 type;
-+};
-+
- enum flow_dissector_key_id {
- 	FLOW_DISSECTOR_KEY_CONTROL, /* struct flow_dissector_key_control */
- 	FLOW_DISSECTOR_KEY_BASIC, /* struct flow_dissector_key_basic */
-@@ -307,6 +319,7 @@ enum flow_dissector_key_id {
- 	FLOW_DISSECTOR_KEY_CT, /* struct flow_dissector_key_ct */
- 	FLOW_DISSECTOR_KEY_HASH, /* struct flow_dissector_key_hash */
- 	FLOW_DISSECTOR_KEY_NUM_OF_VLANS, /* struct flow_dissector_key_num_of_vlans */
-+	FLOW_DISSECTOR_KEY_PPPOE, /* struct flow_dissector_key_pppoe */
- 
- 	FLOW_DISSECTOR_KEY_MAX,
- };
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 146f24c53c660..c3d64e2d59295 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -891,6 +891,11 @@ bool bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
- 	return result == BPF_OK;
- }
- 
-+static bool is_pppoe_ses_hdr_valid(struct pppoe_hdr hdr)
-+{
-+	return hdr.ver == 1 && hdr.type == 1 && hdr.code == 0;
-+}
-+
- /**
-  * __skb_flow_dissect - extract the flow_keys struct and return it
-  * @net: associated network namespace, derived from @skb if NULL
-@@ -1211,26 +1216,60 @@ bool __skb_flow_dissect(const struct net *net,
- 			struct pppoe_hdr hdr;
- 			__be16 proto;
- 		} *hdr, _hdr;
-+		u16 ppp_proto;
-+
- 		hdr = __skb_header_pointer(skb, nhoff, sizeof(_hdr), data, hlen, &_hdr);
- 		if (!hdr) {
- 			fdret = FLOW_DISSECT_RET_OUT_BAD;
- 			break;
- 		}
- 
--		nhoff += PPPOE_SES_HLEN;
--		switch (hdr->proto) {
--		case htons(PPP_IP):
-+		if (!is_pppoe_ses_hdr_valid(hdr->hdr)) {
-+			fdret = FLOW_DISSECT_RET_OUT_BAD;
-+			break;
-+		}
-+
-+		/* least significant bit of the most significant octet
-+		 * indicates if protocol field was compressed
-+		 */
-+		ppp_proto = ntohs(hdr->proto);
-+		if (ppp_proto & 0x0100) {
-+			ppp_proto = ppp_proto >> 8;
-+			nhoff += PPPOE_SES_HLEN - 1;
-+		} else {
-+			nhoff += PPPOE_SES_HLEN;
-+		}
-+
-+		if (ppp_proto == PPP_IP) {
- 			proto = htons(ETH_P_IP);
- 			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
--			break;
--		case htons(PPP_IPV6):
-+		} else if (ppp_proto == PPP_IPV6) {
- 			proto = htons(ETH_P_IPV6);
- 			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
--			break;
--		default:
-+		} else if (ppp_proto == PPP_MPLS_UC) {
-+			proto = htons(ETH_P_MPLS_UC);
-+			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
-+		} else if (ppp_proto == PPP_MPLS_MC) {
-+			proto = htons(ETH_P_MPLS_MC);
-+			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
-+		} else if (ppp_proto_is_valid(ppp_proto)) {
-+			fdret = FLOW_DISSECT_RET_OUT_GOOD;
-+		} else {
- 			fdret = FLOW_DISSECT_RET_OUT_BAD;
- 			break;
- 		}
-+
-+		if (dissector_uses_key(flow_dissector,
-+				       FLOW_DISSECTOR_KEY_PPPOE)) {
-+			struct flow_dissector_key_pppoe *key_pppoe;
-+
-+			key_pppoe = skb_flow_dissector_target(flow_dissector,
-+							      FLOW_DISSECTOR_KEY_PPPOE,
-+							      target_container);
-+			key_pppoe->session_id = hdr->hdr.sid;
-+			key_pppoe->ppp_proto = htons(ppp_proto);
-+			key_pppoe->type = htons(ETH_P_PPP_SES);
-+		}
- 		break;
- 	}
- 	case htons(ETH_P_TIPC): {
 -- 
 2.53.0
 
