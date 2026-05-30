@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6D433E36A;
-	Sat, 30 May 2026 17:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EA533B6C4;
+	Sat, 30 May 2026 17:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162046; cv=none; b=E1ELIKiKFr+6izZVYFNNTYHfSBn3+6pHlQLe3FuPddqgeejrs8K9QlxKTAJQinhrBZckLcDjHcpqakgukFQJR75Ktbb2eDmkQ0XvOSpiXKonbKfYH9kigNQW2qXePWKoxjtjGDRrRYecgb2jHXIouq4Bj0prxmN/FcPjOQN8Ql8=
+	t=1780162050; cv=none; b=p95SrX90UP8KW4lg3kLinuYWZM9Q+FfSvmvpsE3lOzxToiOrWM28BLjJy+xpV+daMNiQJQCTRGjy9Ub13K/Hmpz1S7y/6eN3UhozJnL2Rx0eeJxYlE0vnAh1Ta99zTQUv/2iqAAm6XUzrjPGJb4+TIRVJkjJgJ+qxZ/j9kStLXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162046; c=relaxed/simple;
-	bh=dktG7vUzhn3jPisHLNDNKPJhE3DwuzFy527jxitmfBY=;
+	s=arc-20240116; t=1780162050; c=relaxed/simple;
+	bh=V/N336eT59zEDCosXHogBq6ID7FInx5VZ2q+evavxCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pafTJ2wIORV/hJKrNFXNMsbuniZfcIsXQZrpTdHM0GRrmGRogDXY+PcLPolzRS9aNysQoSRnsOJFjl+Ig55nuy8r9+s5MIwUy6Bj4E5Q/of3VgdMGYGmqFZWucHWYbS0Fubr7CJyNbaGrFjTzIWRSXsZZ0rLspNUz6JHDp3snOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+mceqYL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ncPR+yLMNy3vpxCZ8PvQYQA4DOYZCg8cvzRTRU/p3UBBn8NpcR+UGwoB0gaZd9THp62NmZpS7GRs1wFiIyGA3IKQetsFrAj5GXx8mMnrj7LyRCZfjG16r66GAD+EIITaZk5xy72WBQ4Gl+zIYQ3M7kd/mS1B3oGUgP/NbBPVioA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfXQU3ML; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+mceqYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DA61F00893;
-	Sat, 30 May 2026 17:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfXQU3ML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F871F00893;
+	Sat, 30 May 2026 17:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162045;
-	bh=fzo9zuoEKTIMrGQhyY9bDcuxKrKsAvpKjBz9lSVgTL4=;
+	s=korg; t=1780162048;
+	bh=eiFyP+4+feldYwqgjcoX2BVMyh2xvYBTpFnZFv4GQuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+mceqYLTkq1911W8hXAAiJxQHEh0Pb9A6BxGGEbC8I5MG39vWbFD//k6kwUuxkkC
-	 AtnpPH6t9ig0eni0MOQ3ao3KhYytcxVu9msi3urXAMC/M6McIUR4GmFJPJs5nkiZc/
-	 8C1XtGhR39S6Ds1deaRNVQDfrymYQYFUlC3PPMM0=
+	b=IfXQU3ML+LNAnPhIIVRQrq2aGnN3on41h0ZAk1EIaRmU8EhdliwX2f768b3/eyUNB
+	 /UUdCuVK7LYaJWbzwbPKiJXbGL3Eu7HqhxWyyQ/QVQIfVxeBP7ejb2woWnHmoqsQ/C
+	 4tiIHPrIjQXpMscufxkzFEoOziL/miC59GAHVPiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 805/969] crypto: af_alg - Cap AEAD AD length to 0x80000000
-Date: Sat, 30 May 2026 18:05:29 +0200
-Message-ID: <20260530160322.859980917@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Matt Vollrath <tactii@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 806/969] i40e: Cleanup PTP pins on probe failure
+Date: Sat, 30 May 2026 18:05:30 +0200
+Message-ID: <20260530160322.889040130@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,31 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit e4c06479d7059888adf2f22bc1ebcf053bf691a2 upstream.
+commit 678b713ece1e853f11e670a84cb887c35e1381b7 upstream.
 
-In order to prevent arithmetic overflows when checking the TX
-buffer size, cap the associated data length to 0x80000000.
+PTP pin structs are allocated early in probe, but never cleaned up.
 
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: 400c40cf78da ("crypto: algif - add AEAD support")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix this by calling i40e_ptp_free_pins in the error path.
+
+To support this, i40e_ptp_free_pins is added to the header and
+pin_config is correctly nullified after being freed.
+
+This has been an issue since i40e_ptp_alloc_pins was introduced.
+
+Fixes: 1050713026a08 ("i40e: add support for PTP external synchronization clock")
+Reported-by: Kohei Enju <kohei@enjuk.jp>
+Cc: stable@vger.kernel.org
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Kohei Enju <kohei@enjuk.jp>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-2-a5ea4dc837a9@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/af_alg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e.h      |    1 +
+ drivers/net/ethernet/intel/i40e/i40e_main.c |    1 +
+ drivers/net/ethernet/intel/i40e/i40e_ptp.c  |    3 ++-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -475,6 +475,8 @@ static int af_alg_cmsg_send(struct msghd
- 			if (cmsg->cmsg_len < CMSG_LEN(sizeof(u32)))
- 				return -EINVAL;
- 			con->aead_assoclen = *(u32 *)CMSG_DATA(cmsg);
-+			if (con->aead_assoclen >= 0x80000000u)
-+				return -EINVAL;
- 			break;
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -1289,6 +1289,7 @@ void i40e_ptp_restore_hw_time(struct i40
+ void i40e_ptp_init(struct i40e_pf *pf);
+ void i40e_ptp_stop(struct i40e_pf *pf);
+ int i40e_ptp_alloc_pins(struct i40e_pf *pf);
++void i40e_ptp_free_pins(struct i40e_pf *pf);
+ int i40e_update_adq_vsi_queues(struct i40e_vsi *vsi, int vsi_offset);
+ int i40e_is_vsi_uplink_mode_veb(struct i40e_vsi *vsi);
+ int i40e_get_partition_bw_setting(struct i40e_pf *pf);
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -16227,6 +16227,7 @@ err_vsis:
+ 	i40e_clear_interrupt_scheme(pf);
+ 	kfree(pf->vsi);
+ err_switch_setup:
++	i40e_ptp_free_pins(pf);
+ 	i40e_reset_interrupt_capability(pf);
+ 	del_timer_sync(&pf->service_timer);
+ err_mac_addr:
+--- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
+@@ -947,12 +947,13 @@ int i40e_ptp_get_ts_config(struct i40e_p
+  *
+  * Release memory allocated for PTP pins.
+  **/
+-static void i40e_ptp_free_pins(struct i40e_pf *pf)
++void i40e_ptp_free_pins(struct i40e_pf *pf)
+ {
+ 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
+ 		kfree(pf->ptp_pins);
+ 		kfree(pf->ptp_caps.pin_config);
+ 		pf->ptp_pins = NULL;
++		pf->ptp_caps.pin_config = NULL;
+ 	}
+ }
  
- 		default:
 
 
