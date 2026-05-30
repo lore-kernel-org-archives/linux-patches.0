@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C364C223DC6;
-	Sat, 30 May 2026 17:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1DB351C2F;
+	Sat, 30 May 2026 17:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163176; cv=none; b=Xgi9zqCzdaZYzRtumiCcYJyQWp9OhrN657wGL1azSR0veYz0h8rpTutlNYwifyXFpXqBQX5SGvkNALp6Rmb89dgtD6RG2qlMlPRiCxolpNKsnXUS6M1xgAUvxgiEIbxVukqLS/IXz+90IQ6xanVBUVTLN5KwLTNpzRgIXg1VoFo=
+	t=1780163180; cv=none; b=GPm602ytGp19yIrToSo1e9u7puqcyLSqcM0apKWL0R8N/5ccYqVikpaXbedWo/EgmolzFZqe7fuJ+6AIHH9XhdjGL6Dh7h3xZcayj7VnWk6njVxjOiTdMFGhMtZiIHjvcXmnujkIyhiszhLWVzW77HbmdCheGPdoB4dhWsrr4jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163176; c=relaxed/simple;
-	bh=krFK53l77oo/a1ZxlOzR4TGfvCD58u3HrSliXOBUgMo=;
+	s=arc-20240116; t=1780163180; c=relaxed/simple;
+	bh=ft2OHsOUCAx8YnT8l3YVbTLmP40aRlm/a9DDl4bVSyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKti9ul4J4krpsNybKopqdwpITqKXD5O+fmMuWZoJ8bdGk5n+05UDwsaYKZZnk9JzweVLIwMp62xjFIP4a9vEhvJ0Tku8Liuu5BuCBwvO1lAXbkOmJpOfUYdQMfdd/6q+TDCteU3t/MGj7YuL0dkhDkg6Zl1lLGfaKHfNN/pCy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLR2FHZn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D63eoWgwtKY50OCThBLmgseoNwNJM3STuz59zQFAH995x5nYhW+66tRnLLCZf6AbgX9GO5RlMiLEPz+/RCyVQatIeCskhqnT06bUdWtPWdaSh2kLzDl8xb5z4yKdTXDfXM1/5E/jJWNgnyWp/Cm2yiJ/pmhugXsEozoOMrwPlVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Td4qn//T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLR2FHZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1379A1F00893;
-	Sat, 30 May 2026 17:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Td4qn//T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3171F00893;
+	Sat, 30 May 2026 17:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163175;
-	bh=PTISUM+ESGvFjLBRWrTmMIHQGQ2+PhIJ4TfcNa1I5TU=;
+	s=korg; t=1780163179;
+	bh=sqyhx11KLmW71fOa9ZAQkbdFFZDOmT18C5hOU10EXl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLR2FHZnemC9Qup/66QMs1gBsPEpRbxrFy44dqrqSqf3uH4T8BfmmY44MHjRR4jn7
-	 65sK2ae74l6VuSGjivRFtg3ESypGL/FWvK6gIxE++qDRKDs+OELy06Ed1+ipqiwknZ
-	 hNdf9IqfM3hR+8FIyCTsiO15wd+NsVXxboroTk44=
+	b=Td4qn//T2IGiLOioE14zVTl20un5X/QSzY7SLReKm5RoCU+tZfZWTJY/YomM+W4g2
+	 0WcZsb7gznJgd5X1an42qJMdUu3vMZbGZICot1XeHCEzxeerN7KX3mUePCOtliocz/
+	 dGbWpIh5qQg24jjUzDZyTq3LOoJZRYMH2Yulq8YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 5.15 179/776] tty: n_gsm: fix flow control handling in tx path
-Date: Sat, 30 May 2026 17:58:13 +0200
-Message-ID: <20260530160245.125617544@linuxfoundation.org>
+	syzbot+f02665daa2abeef4a947@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 180/776] ALSA: usb-audio: fix race condition to UAF in snd_usbmidi_free
+Date: Sat, 30 May 2026 17:58:14 +0200
+Message-ID: <20260530160245.149166489@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,35 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 59ff0680ecbfec742b1e0381e7cc46b41eb06647 upstream.
+commit 9f2c0ac1423d5f267e7f1d1940780fc764b0fee3 upstream.
 
-The current implementation constipates all transmission paths during flow
-control except for flow control frames. However, these may not be located
-at the beginning of the transmission queue of the control channel.
-Ensure that flow control frames in the transmission queue for the control
-channel are always handled even if constipated by skipping through other
-messages.
+The previous commit 0718a78f6a9f ("ALSA: usb-audio: Kill timer properly at
+removal") patched a UAF issue caused by the error timer.
 
-Fixes: 0af021678d5d ("tty: n_gsm: fix deadlock and link starvation in outgoing data path")
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20220707113223.3685-3-daniel.starke@siemens.com
+However, because the error timer kill added in this patch occurs after the
+endpoint delete, a race condition to UAF still occurs, albeit rarely.
+
+Additionally, since kill-cleanup for urb is also missing, freed memory can
+be accessed in interrupt context related to urb, which can cause UAF.
+
+Therefore, to prevent this, error timer and urb must be killed before
+freeing the heap memory.
+
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+f02665daa2abeef4a947@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f02665daa2abeef4a947
+Fixes: 0718a78f6a9f ("ALSA: usb-audio: Kill timer properly at removal")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -897,7 +897,7 @@ static int gsm_data_kick(struct gsm_mux
- 	/* Serialize control messages and control channel messages first */
- 	list_for_each_entry_safe(msg, nmsg, &gsm->tx_ctrl_list, list) {
- 		if (gsm->constipated && !gsm_is_flow_ctrl_msg(msg))
--			return -EAGAIN;
-+			continue;
- 		ret = gsm_send_packet(gsm, msg);
- 		switch (ret) {
- 		case -ENOSPC:
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1522,15 +1522,14 @@ static void snd_usbmidi_free(struct snd_
+ {
+ 	int i;
+ 
++	if (!umidi->disconnected)
++		snd_usbmidi_disconnect(&umidi->list);
++
+ 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i) {
+ 		struct snd_usb_midi_endpoint *ep = &umidi->endpoints[i];
+-		if (ep->out)
+-			snd_usbmidi_out_endpoint_delete(ep->out);
+-		if (ep->in)
+-			snd_usbmidi_in_endpoint_delete(ep->in);
++		kfree(ep->out);
+ 	}
+ 	mutex_destroy(&umidi->mutex);
+-	timer_shutdown_sync(&umidi->error_timer);
+ 	kfree(umidi);
+ }
+ 
 
 
