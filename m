@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14922EF652;
-	Sat, 30 May 2026 18:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F140E41A8F;
+	Sat, 30 May 2026 18:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166062; cv=none; b=niM2RAGSGePQ0CNGJU23bnch9CuBPHlghLr40Kh51N0x97UArONMwTyFWf6CjuPtj8MpEFdWFILrjfY/+spgGUc0/hnBwE/WaFX4mgiI4QytZWbhjnc9yurdc/yEvsiMMr/AHyTKI7ssIwuPfOJivSNhmf+0fL75gcgsn6M7Kdo=
+	t=1780166066; cv=none; b=ITjwOHBME5Bc9DRPReAhzJVl/bE9apDgtoSBmjHQ47koUWCsL/3UYhRocuA3oLIw2ENuYWH7hsBtk2mw8Tse950YcOAtBc1vMDVO1RUjXnjhxwhDvnHUZgKNxg2+4acDyRyfbmGgpmgyICzo29OSDcVfm4jF76sPm2flADJ6m/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166062; c=relaxed/simple;
-	bh=n80SMFPG/5y3Q4wAYjH4zUVCpVFnE/yfas4VDZ2lWzU=;
+	s=arc-20240116; t=1780166066; c=relaxed/simple;
+	bh=kQVo4Ak8r3p2c9SpcIAC5xHAiwOK9VNlNZ5Xknau64U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ua+JZBupYcxJeO3Dq3WlpN/ukopKUTa74/5KeMBvCaUEXkp4ZnHKj8jrCBF7MhTLJVwf7q96lW9f5MqIysJjkYBGTH9PL9UouoE5VZ9u6XfGiwDufvWwVp2yS5vkeprl3hzbGwv+wJbPGck8Oj8F/7/WYN1dRiCaoVeVzFFYfko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8WP/bwO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VEDibPzM0uOs7O+7buPmXYj3nz0PWq4B7/VLeOcG3dK0mZAMjjqL2CCFxI+khHp/Q/49Wp3sR7RhNnY8jyc0ofG5s9MtcoRBjLWpW0dY37gwSPIxG2AhRAclRR6ju41tBjGy1yllMNmMVBk/sLqtZ3sjQhULztS0M2rydaW8dHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0A7C+3v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8WP/bwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66671F00893;
-	Sat, 30 May 2026 18:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0A7C+3v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCB31F00893;
+	Sat, 30 May 2026 18:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166061;
-	bh=Ihap1q5ounk3sTkg1toP4xjOvqds2pLbBALoYuPpFNw=;
+	s=korg; t=1780166064;
+	bh=AnQG9t+ET2Y/kwNb4gXS3qjuzFhTGPibQ7tl91hfzZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8WP/bwORyD7zkB1cBZS6w1dnlPtB2NFxOZFxAT8Hh0hphy/PH5PjeM4LOOD0hEyh
-	 Rz7OjkV4SDITqEQiqoQNazo7H6tr8B1vuAlODnEJYcv7fGjbL/xbjCewN26x1YpFER
-	 8ZPEeFwisCGPDmMAeevnM11fmn+pQOJlzDNvEXT8=
+	b=l0A7C+3vjMNfVDZaQFOokvx5NfgWtP+kz9G9NS8Dzyvk6bZav5yCvid9hvX/VU357
+	 NX80s+lHf9TzhHuPlVXBygBj585P5iPlT66zEqufudc9lrHvYdGPpvshWYV236Euj0
+	 HmXH70Rw1NhrLVB6KUZKZt5hGFe2b/4cHBQAPry4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 262/589] RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path
-Date: Sat, 30 May 2026 18:02:23 +0200
-Message-ID: <20260530160231.849609491@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 263/589] media: uvcvideo: Enable VB2_DMABUF for metadata stream
+Date: Sat, 30 May 2026 18:02:24 +0200
+Message-ID: <20260530160231.873363839@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -49,33 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit e38e86995df27f1f854063dab1f0c6a513db3faf upstream.
+commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
 
-Sashiko points out that pvrdma_uar_free() is already called within
-pvrdma_dealloc_ucontext(), so calling it before triggers a double free.
+The UVC driver has two video streams, one for the frames and another one
+for the metadata. Both streams share most of the codebase, but only the
+data stream declares support for DMABUF transfer mode.
+
+I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
+and the frames looked correct.
+
+This patch announces the support for DMABUF for the metadata stream.
+This is useful for apps/HALs that only want to support DMABUF.
 
 Cc: stable@vger.kernel.org
-Fixes: 29c8d9eba550 ("IB: Add vmw_pvrdma driver")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/10-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_queue.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-+++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-@@ -350,7 +350,7 @@ int pvrdma_alloc_ucontext(struct ib_ucon
- 	uresp.qp_tab_size = vdev->dsr->caps.max_qp;
- 	ret = ib_copy_to_udata(udata, &uresp, sizeof(uresp));
- 	if (ret) {
--		pvrdma_uar_free(vdev, &context->uar);
-+		/* pvrdma_dealloc_ucontext() also frees the UAR */
- 		pvrdma_dealloc_ucontext(&context->ibucontext);
- 		return -EFAULT;
+--- a/drivers/media/usb/uvc/uvc_queue.c
++++ b/drivers/media/usb/uvc/uvc_queue.c
+@@ -222,7 +222,7 @@ int uvc_queue_init(struct uvc_video_queu
+ 	int ret;
+ 
+ 	queue->queue.type = type;
+-	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
++	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+ 	queue->queue.drv_priv = queue;
+ 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
+ 	queue->queue.mem_ops = &vb2_vmalloc_memops;
+@@ -235,7 +235,6 @@ int uvc_queue_init(struct uvc_video_queu
+ 		queue->queue.ops = &uvc_meta_queue_qops;
+ 		break;
+ 	default:
+-		queue->queue.io_modes |= VB2_DMABUF;
+ 		queue->queue.ops = &uvc_queue_qops;
+ 		break;
  	}
 
 
