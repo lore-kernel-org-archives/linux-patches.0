@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EDF304BCB;
-	Sat, 30 May 2026 17:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7694304BCB;
+	Sat, 30 May 2026 17:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163446; cv=none; b=WkuVOTd6b4JGh9iirVc+raQ9EBFYDsuRox3r+OUcTT017yXGO4W10N0LaS+G6VogfdSpMvL7S/oGdnBUsLXETU/oPQ6lOa/bkCGHxHUZOaEl/85XyUkuiPVM6bdY/Day4fXTRgl71jBpAp3jzsZNQGr3DbQ14Mu0BumWPTYcyYk=
+	t=1780163449; cv=none; b=f1v5JvbKsAIkYTVJbBJ/gkn1me/3XWNr52D27+rzkzIDnPJ1QQKw9yjqW4WqHdAbV2OMj/C81MO6980MfgiH8vPJQA7NiwZ/18YesovJJ1IYopi1rA+sexoISYz1hw1s9BIby2UH5yge3ORs81WciIAufadmgE20L80I8nUyulE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163446; c=relaxed/simple;
-	bh=EqJ1yYXdpKd7nEeZrKLvDBiGghoeYWAX+pu5e2wq4kg=;
+	s=arc-20240116; t=1780163449; c=relaxed/simple;
+	bh=elBKwq7aKBhwfC7rOeaF3mr05kBfbUpeeCtyXaU4cC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf2Rf4I++8e9BggECPz7H5H+yW/Ikc87BPQTayKGDZwndTuGtubEhOw50H4KfrjyL8n/n1FO1zXAHVd2579e3jhNKf9/f2Lt9xPmcY+aTDA7bBVinVR1pxYNZQTKG4Db8F79HKj5xXmcXfbwhoG+zCei0A5+kGTFBDXSF2hesss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WN5unPdC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9LPMqbUwsanqnSH7S2kgtVDpRUIJvSNkAwaE4k+rr0xXFIfM9fVwOYTyUWTF4sn47qnoUmP8s0bk7FKoi0YsAT/gUkm0vt9D/OEMyU77El79XSZkQgZhGXPNOiHeJGvvmIln+ukOa9m6XGV1d4IJUqb3mEEuNvXP1HNIT0lxKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkb1E2kQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WN5unPdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFD21F00898;
-	Sat, 30 May 2026 17:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkb1E2kQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D301F00893;
+	Sat, 30 May 2026 17:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163445;
-	bh=g02kjeOMie9lCOd24LkUgQ10rV0UIt+9LcGQoy5v5co=;
+	s=korg; t=1780163448;
+	bh=1CT9uzq54xWQMGdveHdb6R99jb/b+5KLJH7m4h1UJL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WN5unPdCPEUU/vGN18yM+YsPwKiKq15wQomJwfzmVZEzrH2YK7apK7+Duq9f8Dsvy
-	 ACGcA+Jr69ar31u7z70QhNu0DXA8cQY5/G4ViTxde5+qBdJYkAsUmPrZ2bzShECSzj
-	 pkgPOyMrsus+7N2fHUsJHNywtRbx4N9WecYdrU1U=
+	b=fkb1E2kQnNFoS0NfpPw1NJngP6/E+MJD6Y+F4+mBVxrg1/whByhOdEhdKt2FT9za7
+	 odKNrwaOe9Xn7jHSICkzr0MHgaAL7VtUc4v0X4OifXB4lEn7MlD2gcuQ1U+TwOPv4N
+	 EoRhUPoLOg0mVPkH3xTwXu8MW+D0XWJE2KtNQ7QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Gaertner <tob.gaertner@me.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 259/776] ntfs3: add buffer boundary checks to run_unpack()
-Date: Sat, 30 May 2026 17:59:33 +0200
-Message-ID: <20260530160247.230570758@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 232/776] KVM: nSVM: Sync NextRIP to cached vmcb12 after VMRUN of L2
+Date: Sat, 30 May 2026 17:59:06 +0200
+Message-ID: <20260530160246.525613842@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,51 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Gaertner <tob.gaertner@me.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit b62567bca47408e6739dee75f02a2113548af875 upstream.
+commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
 
-run_unpack() checks `run_buf < run_last` at the top of the while loop
-but then reads size_size and offset_size bytes via run_unpack_s64()
-without verifying they fit within the remaining buffer.  A crafted NTFS
-image with truncated run data in an MFT attribute triggers an OOB heap
-read of up to 15 bytes when the filesystem is mounted.
+After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
+fields written by the CPU from vmcb02 to the cached vmcb12. This is
+because the cached vmcb12 is used as the authoritative copy of some of
+the controls, and is the payload when saving/restoring nested state.
 
-Add boundary checks before each run_unpack_s64() call to ensure the
-declared field size does not exceed the remaining buffer.
+NextRIP is also written by the CPU (in some cases) after VMRUN, but is
+not sync'd to the cached vmcb12. As a result, it is corrupted after
+save/restore (replaced by the original value written by L1 on nested
+VMRUN). This could cause problems for both KVM (e.g. when injecting a
+soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
+an instruction).
 
-Found by fuzzing with a source-patched harness (LibAFL + QEMU).
+Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
+after completing interrupts (not in nested_sync_control_from_vmcb02()),
+as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
 
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tobias Gaertner <tob.gaertner@me.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+CC: stable@vger.kernel.org
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/run.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/svm/svm.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -916,6 +916,9 @@ int run_unpack(struct runs_tree *run, st
- 		if (size_size > 8)
- 			return -EINVAL;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3952,6 +3952,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
+ 	if (is_guest_mode(vcpu))
+ 		return EXIT_FASTPATH_NONE;
  
-+		if (run_buf + size_size > run_last)
-+			return -EINVAL;
++	/*
++	 * Update the cache after completing interrupts to get an accurate
++	 * NextRIP, e.g. when re-injecting a soft interrupt.
++	 *
++	 * FIXME: Rework svm_get_nested_state() to not pull data from the
++	 *        cache (except for maybe int_ctl).
++	 */
++	if (is_guest_mode(vcpu))
++		svm->nested.ctl.next_rip = svm->vmcb->control.next_rip;
 +
- 		len = run_unpack_s64(run_buf, size_size, 0);
- 		/* Skip size_size. */
- 		run_buf += size_size;
-@@ -928,6 +931,9 @@ int run_unpack(struct runs_tree *run, st
- 		else if (offset_size <= 8) {
- 			s64 dlcn;
+ 	return svm_exit_handlers_fastpath(vcpu);
+ }
  
-+			if (run_buf + offset_size > run_last)
-+				return -EINVAL;
-+
- 			/* Initial value of dlcn is -1 or 0. */
- 			dlcn = (run_buf[offset_size - 1] & 0x80) ? (s64)-1 : 0;
- 			dlcn = run_unpack_s64(run_buf, offset_size, dlcn);
 
 
