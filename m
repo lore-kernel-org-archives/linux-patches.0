@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE0434A3D6;
-	Sat, 30 May 2026 16:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533413ACA7C;
+	Sat, 30 May 2026 16:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158883; cv=none; b=p5L+w4FxDaHzBenBcNeWaHwcbNSl84LTm5u9M8mKpaC0zt6wfAPbcY9jrSpt4yKTb60DgeauNI+g4Zs5shyMnDzDZkCKc2d+6gR0g0vjbCeWssnpXZXu6hvAZlRGm2jRcPITcMuC+naubsfelJf4Eyxs8fUylW8ntnqrtI9QZlQ=
+	t=1780158900; cv=none; b=KzlleWVR1mkZ14B9WoJnPLzkIrGr4GaBNYjafAjbc4zG/GVvVElqlHL4x8eQQLK4wQObhT4U4ifX6MKFwWCCg0sD9qn/10Re5gv76DIjavbmw2GW+C44BFaolz46GHGwluTD3O7SL7PUMqkdoDPhrcTTAfRtcA3UQ7y88M7kaUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158883; c=relaxed/simple;
-	bh=/L+Oy5QheLn2Y9FkXkToo/2OD1LnsGv04316lfgAtKw=;
+	s=arc-20240116; t=1780158900; c=relaxed/simple;
+	bh=l1+5B1YWKpyhN0MYrppD+ITWPFkl2Wq2reAbUf3BEvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mL6uqJFbH9SK1pwAvn9yNmsyxnF4gBY39cjoMW5ZdrBzyVwR9TozmO226P8szUiUPiC0Um4IWR9BVmy6ERBGL4wLViz0SdEXTXLfO2Twx9MFpgWFdDeo1/WKWMrGJeQZdsGB3THeXuK60IaPAzXO/jGOylg9hT/jn1Xuzht7hzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bqmyg33/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p6W++TW/QnEJ8X74gC74QBETSyqzZKxqjxhTwlQUB6/hs3TXga4vRJuVTZeHSBDzYaEq9B1H+iOfXl/3kqolWu6Fus88tvkftsUZ67cFZzhnGp7Tiy8VL4D+o5uh9U8w/+RK0rGmNKPn7CWcwhoulZphtmS4xM2J0tFf8W3RgdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fk7Wy0Ai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bqmyg33/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8573C1F00893;
-	Sat, 30 May 2026 16:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fk7Wy0Ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573DC1F00898;
+	Sat, 30 May 2026 16:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158880;
-	bh=b8mdUK4ZoVhAmDhmaOYVN3rwNjTAY+mOJ4bk0WWE/Uw=;
+	s=korg; t=1780158898;
+	bh=46+50Ru8lQfeTgKF3dvVrh3Rq750BST5w5suVa0xHlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bqmyg33/nnZQu6U7aEiFRjEkoaZ8YoDY5o9YKPSwRDlX7CHEliX21zG2tp4ghJLJs
-	 eZW7vuOLC4ig9iR1Hz65NtS8UAwaEyF0GDFFXQ7SA9xqJjpA7IIs9E2x7iwECVCAFn
-	 lQgICRxttNTbJwrooh9GOAd7WWD+o8N6HF79CAnU=
+	b=fk7Wy0Aic1ahMN9pq/a3++UqpIyfRtyQzlCC2q2euV/ztUuhKwfVm8gu7D0KfzhLz
+	 KcJ2+y417Xy8E85n7o+wQs1f5Z/QzpfcqN7vgeDSQzPZoG7Uevb7gtPNis8Y5vddIc
+	 818qv2KNH29rr6XklH+ilIwGasplm/nJcgmsVZkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejas Bharambe <tejas.bharambe@outlook.com>,
-	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
+	ZhengYuan Huang <gality369@gmail.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -37,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jun Piao <piaojun@huawei.com>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 085/969] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
-Date: Sat, 30 May 2026 17:53:29 +0200
-Message-ID: <20260530160302.690353434@linuxfoundation.org>
+Subject: [PATCH 6.1 086/969] ocfs2: handle invalid dinode in ocfs2_group_extend
+Date: Sat, 30 May 2026 17:53:30 +0200
+Message-ID: <20260530160302.715239281@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -58,33 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejas Bharambe <tejas.bharambe@outlook.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
+commit 4a1c0ddc6e7bcf2e9db0eeaab9340dcfe97f448f upstream.
 
-filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
-as documented in mm/filemap.c:
+[BUG]
+kernel BUG at fs/ocfs2/resize.c:308!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:ocfs2_group_extend+0x10aa/0x1ae0 fs/ocfs2/resize.c:308
+Code: 8b8520ff ffff83f8 860f8580 030000e8 5cc3c1fe
+Call Trace:
+ ...
+ ocfs2_ioctl+0x175/0x6e0 fs/ocfs2/ioctl.c:869
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
+ x64_sys_call+0x1144/0x26a0 arch/x86/include/generated/asm/syscalls_64.h:17
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x93/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ ...
 
-  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
+[CAUSE]
+ocfs2_group_extend() assumes that the global bitmap inode block
+returned from ocfs2_inode_lock() has already been validated and
+BUG_ONs when the signature is not a dinode. That assumption is too
+strong for crafted filesystems because the JBD2-managed buffer path
+can bypass structural validation and return an invalid dinode to the
+resize ioctl.
 
-When this happens, a concurrent munmap() can call remove_vma() and free
-the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
-becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
-dereferences it -- a use-after-free.
+[FIX]
+Validate the dinode explicitly in ocfs2_group_extend(). If the global
+bitmap buffer does not contain a valid dinode, report filesystem
+corruption with ocfs2_error() and fail the resize operation instead of
+crashing the kernel.
 
-Fix this by saving ip_blkno as a plain integer before calling
-filemap_fault(), and removing vma from the trace event. Since
-ip_blkno is copied by value before the lock can be dropped, it
-remains valid regardless of what happens to the vma or inode
-afterward.
-
-Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
-Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
-Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
-Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lkml.kernel.org/r/20260401092303.3709187-1-gality369@gmail.com
+Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -96,63 +107,27 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/mmap.c        |    7 +++----
- fs/ocfs2/ocfs2_trace.h |   10 ++++------
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ fs/ocfs2/resize.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/mmap.c
-+++ b/fs/ocfs2/mmap.c
-@@ -30,7 +30,8 @@
+--- a/fs/ocfs2/resize.c
++++ b/fs/ocfs2/resize.c
+@@ -295,9 +295,13 @@ int ocfs2_group_extend(struct inode * in
  
- static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
- {
--	struct vm_area_struct *vma = vmf->vma;
-+	unsigned long long ip_blkno =
-+		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
- 	sigset_t oldset;
- 	vm_fault_t ret;
+ 	fe = (struct ocfs2_dinode *)main_bm_bh->b_data;
  
-@@ -38,11 +39,9 @@ static vm_fault_t ocfs2_fault(struct vm_
- 	ret = filemap_fault(vmf);
- 	ocfs2_unblock_signals(&oldset);
+-	/* main_bm_bh is validated by inode read inside ocfs2_inode_lock(),
+-	 * so any corruption is a code bug. */
+-	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
++	/* JBD-managed buffers can bypass validation, so treat this as corruption. */
++	if (!OCFS2_IS_VALID_DINODE(fe)) {
++		ret = ocfs2_error(main_bm_inode->i_sb,
++				  "Invalid dinode #%llu\n",
++				  (unsigned long long)OCFS2_I(main_bm_inode)->ip_blkno);
++		goto out_unlock;
++	}
  
--	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
--			  vma, vmf->page, vmf->pgoff);
-+	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
- 	return ret;
- }
--
- static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
- 			struct buffer_head *di_bh, struct page *page)
- {
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -1248,22 +1248,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
- 
- TRACE_EVENT(ocfs2_fault,
- 	TP_PROTO(unsigned long long ino,
--		 void *area, void *page, unsigned long pgoff),
--	TP_ARGS(ino, area, page, pgoff),
-+		 void *page, unsigned long pgoff),
-+	TP_ARGS(ino, page, pgoff),
- 	TP_STRUCT__entry(
- 		__field(unsigned long long, ino)
--		__field(void *, area)
- 		__field(void *, page)
- 		__field(unsigned long, pgoff)
- 	),
- 	TP_fast_assign(
- 		__entry->ino = ino;
--		__entry->area = area;
- 		__entry->page = page;
- 		__entry->pgoff = pgoff;
- 	),
--	TP_printk("%llu %p %p %lu",
--		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
-+	TP_printk("%llu %p %lu",
-+		  __entry->ino, __entry->page, __entry->pgoff)
- );
- 
- /* End of trace events for fs/ocfs2/mmap.c. */
+ 	if (le16_to_cpu(fe->id2.i_chain.cl_cpg) !=
+ 		ocfs2_group_bitmap_size(osb->sb, 0,
 
 
