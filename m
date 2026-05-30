@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB3B33A9DA;
-	Sat, 30 May 2026 17:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86B33A9DA;
+	Sat, 30 May 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162428; cv=none; b=t3E8aZ1V92h71JjQ7Gc4DOwJFsa7vQgVvveJOGZGvemRiLuOh53ptYDECqYezpuS8l+eIfP2JH1IxD6m/3GPWc0iTM13T/g6kM3qnlXWwWAZfoNtKAg82Db2t9XK/gdXrPqoMOnAYnqIfSsUbXlb0ZDSxLmMAmFbCcDaMGX8wL0=
+	t=1780162433; cv=none; b=WsweDuwvLj5/44qqfRPstAgOvtQdv7PL0iLifa8UTUQ27QDpcHauylsrIdnxe/dzTW/Aiyw3nJyx4POvtOP1M+t1MPHj+w5NDID0gTXo+xp9GhQz2++a6ReN8rKEUp+c6+NyIAR75ckUGXqtEiF0jD0ouqlRLV9eM7CfuVT2mxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162428; c=relaxed/simple;
-	bh=CELVMKlXoPoU02QU/nhuDJYpiXoNViyi7XNoYPaqVA8=;
+	s=arc-20240116; t=1780162433; c=relaxed/simple;
+	bh=HjEOZy8InILKwYVU+iR5qkJrS50PJGjxqOfK5WId5RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDVDranLrNNjVs2HYCXqzGKWdY6Trol9rY182fSRLWtBneGR5bykWxzKNMA99mIw1VYdR3Q8FMUcK4XX/GK2oRO/wHzIvNG87EUkOa/RHugM5159uyr5kVLu90PYLh0LRpR5/pW3AfI9GfQoP6S2rRbhPI53A6FDHAgIXqRphqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxVyvTyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvAa1PRjF9PxfqU3IEzfRhY1BNfVnTr1tzeAMT4Lvi/mpzXG7d77uy1OqayV9lbsy9YM8y35zpI0MAr+nRAMSJQFE1gydc+OqsbdDwDVGTU1zF7T63r6MSZLAHGPOEGTgBiRkPcN3esmHAGNJfumf/CC1l5ERfHPowgI3UopTgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h93PLgbh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxVyvTyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30581F00893;
-	Sat, 30 May 2026 17:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h93PLgbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2579A1F00893;
+	Sat, 30 May 2026 17:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162427;
-	bh=R3uIP4THabFYL2conYFNOKgg2pDAYK//AqhgjOQJKd4=;
+	s=korg; t=1780162430;
+	bh=5lqv+UIvyU89UigqBQDWU8ZdIHZdf7iruKyH2OHNHTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JxVyvTypD23BBM2qB0PdnGI29ExxCZGHYbrLa95QEdCG+n8jzDPsJXGayrDW0Kwq+
-	 OKQUHAbqE7++Ozi0iNwch1ynxNcrBb2Cm6t8586u0Qzb9qt8hiVBoFAl+Fy9YxmLnX
-	 2ScZ4EleLghn7sHUbV55ZmjnFrhiS2PsJIYaHP6k=
+	b=h93PLgbhDacc13XIXmWhrwQvTIRsp+6FckS6D8thUpbnvCJqUNLa9vWsuxqTHyJ9S
+	 uTNVfuUMjHZJl66ouehRqnXe/JVEr6AOY7C7FbFgXNGw40MfhPij+kzEG+ZDeUMtzR
+	 FtCq7Q/lSOy4BdSkRS3/MpBOomn+pFXXboIqqYpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 901/969] firmware: arm_ffa: Skip free_pages on RX buffer alloc failure
-Date: Sat, 30 May 2026 18:07:05 +0200
-Message-ID: <20260530160325.593018001@linuxfoundation.org>
+Subject: [PATCH 6.1 919/969] netfilter: bridge: eb_tables: close module init race
+Date: Sat, 30 May 2026 18:07:23 +0200
+Message-ID: <20260530160326.114571211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 09527e2c534911619d7e098729711100290bc3e1 ]
+[ Upstream commit 27414ff1b287ea9a2a11675149ec28e05539f3cc ]
 
-If the RX buffer allocation fails in ffa_init(), the error path jumps to
-free_pages even though no buffer has been allocated yet. Route that case
-directly to free_drv_info so the cleanup path is only used after at
-least one RX/TX buffer allocation has succeeded.
+sashiko reports for unrelated patch:
+ Does the core ebtables initialization in ebtables.c suffer from a similar race?
+ Once nf_register_sockopt() completes, the sockopts are exposed globally.
 
-Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
-Link: https://patch.msgid.link/20260428-ffa_fixes-v2-2-8595ae450034@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+sockopt has to be registered last, just like in ip/ip6/arptables.
+
+Fixes: 5b53951cfc85 ("netfilter: ebtables: use net_generic infra")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index e1e278d431e97..f7c72fcc9b5e3 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -816,7 +816,7 @@ static int __init ffa_init(void)
- 	drv_info->rx_buffer = alloc_pages_exact(RXTX_BUFFER_SIZE, GFP_KERNEL);
- 	if (!drv_info->rx_buffer) {
- 		ret = -ENOMEM;
--		goto free_pages;
-+		goto free_drv_info;
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index ec286e54229b7..ca426e49ea1a1 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -2583,19 +2583,20 @@ static int __init ebtables_init(void)
+ {
+ 	int ret;
+ 
+-	ret = xt_register_target(&ebt_standard_target);
++	ret = register_pernet_subsys(&ebt_net_ops);
+ 	if (ret < 0)
+ 		return ret;
+-	ret = nf_register_sockopt(&ebt_sockopts);
++
++	ret = xt_register_target(&ebt_standard_target);
+ 	if (ret < 0) {
+-		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
  	}
  
- 	drv_info->tx_buffer = alloc_pages_exact(RXTX_BUFFER_SIZE, GFP_KERNEL);
+-	ret = register_pernet_subsys(&ebt_net_ops);
++	ret = nf_register_sockopt(&ebt_sockopts);
+ 	if (ret < 0) {
+-		nf_unregister_sockopt(&ebt_sockopts);
+ 		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
