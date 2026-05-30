@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B5721B191;
-	Sat, 30 May 2026 18:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA663C2B80;
+	Sat, 30 May 2026 18:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166503; cv=none; b=YEZrlS02HEXav1fXcTT0RKOCnxklEbzGia6Adw++xZgt+hoc7Wj7rXIBLkm1b5FOrmpvkR/diUXNZhBeBhl1j5XfZ8C0Um0PUlTCDzk7MZOYJTuWWGtjQLfNwa2a9NpZuC6AhbHfa7sr06nD5xvhh7tcwBO32IF5IPPiOsIMAt0=
+	t=1780166507; cv=none; b=M95D7TPbgSmGMtNtHVZyxCKbhuMab4OKTUdnMeO31xg22i/Z9jHxFfr4gq1VXgf55v4WOlMJzH/6qFZK1PSxzrRc7W6xTTN/Z0fPmV0jO/xUJMd7ZOzJ/RAhUXDxXIuOiW8H1R5pRkOYLrWdLdfGf+AxVMYfC6tjWKwH9xm+Emk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166503; c=relaxed/simple;
-	bh=rmzAyI2VGjrIwrZQzMXUZ7M88m5VhiLJ7B8HQgcoeOI=;
+	s=arc-20240116; t=1780166507; c=relaxed/simple;
+	bh=SlyHKpEXo+j9DLWQNmhcKL0ySh393yuCOghd+B7iySc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TjvlYhctmq9SLvsKzgkHtLMbLA8PYEUFwiBEW8yJ2qw/dRls2mPJLtCOVV5GjWXl7lviCpOd05pbt5gzQqflSL5Sb1a/40RRTSIefHgGNQBIuO/911KHNYjSV8kMakDi4N8br2h0WNyy+KCuoeHRqH26gGYY95xszQUe42Jp9D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9rTCNpT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=R81wnZDdVgmwAOUOSS/cbNH/u8KPFPmaRLrFUPe/0clheL3r1Vwu1/gimT9GMcGSb66SvIpy/uV/WT69n6UTkiaUU0R3/+irFL8SfaU0Xi8Gm3n/Ah4wlerTTLWRf3mZOM92AeK0grdJpctsj0vKBcOEF1lZ2uoJCqooCE+BnW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1o8MFfC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9rTCNpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1171F00893;
-	Sat, 30 May 2026 18:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1o8MFfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CEC1F00898;
+	Sat, 30 May 2026 18:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166499;
-	bh=kZ1iqC3ci2Z+VAOqJztskUdvmydjdVFR/Csn9Kq51Kc=;
+	s=korg; t=1780166502;
+	bh=+oFXpa4B8kFe/r4kZX5RdLNd3fIJT+UPazuLLI4CJw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X9rTCNpTr01CrIySoJtiXZZ2DZCnuLb2mZdrTx68bZ8C5DEAD2yzhukjKmroNqvAO
-	 SDVNWrN4bxexQmyRgd1s4XWLb5Yp5N83KqhSDvGHZy3IXtSinO52hkiwClFwUb+zY3
-	 b3sYii8jajjHPraakUXaDlPBLbnau8wv8MqhgK0c=
+	b=m1o8MFfC8kCQjJK7PSJHbHuiyTiKEIjuf7hFOAOEbGd+ZUQ9Xr515zfqSwr35yfW6
+	 YevQOIP9zLl1pLUlE7CCIMsKOqj6VLBAFpWneiP2x1o6Y3VY9JboTPZpLO0KGpzChf
+	 GfsfZZyifZ5OP1W0CAfvweUz04yM+d7zyFPGIy4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Ahelenia=20Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 390/589] platform/surface: surfacepro3_button: Drop wakeup source on remove
-Date: Sat, 30 May 2026 18:04:31 +0200
-Message-ID: <20260530160235.050735582@linuxfoundation.org>
+Subject: [PATCH 5.10 391/589] tty: hvc: remove HVC_IUCV_MAGIC
+Date: Sat, 30 May 2026 18:04:32 +0200
+Message-ID: <20260530160235.074242971@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,36 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: наб <nabijaczleweli@nabijaczleweli.xyz>
 
-[ Upstream commit 1410a228ab2d36fe2b383415a632ae12048d4f3a ]
+[ Upstream commit eef7381d8134f249dc17138bb1794c249aff7f5a ]
 
-The wakeup source added by device_init_wakeup() in surface_button_add()
-needs to be dropped during driver removal, so update the driver to do
-that.
+According to Greg, in the context of magic numbers as defined in
+magic-number.rst, "the tty layer should not need this and I'll gladly
+take patches"
 
-Fixes: 19351f340765 ("platform/x86: surfacepro3: Support for wakeup from suspend-to-idle")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4368848.1IzOArtZ34@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This stretches that definition slightly, since it multiplexes it with
+the terminal number as a constant offset, but is equivalent
+
+Acked-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
+Ref: https://lore.kernel.org/linux-doc/YyMlovoskUcHLEb7@kroah.com/
+Link: https://lore.kernel.org/r/8c8a2c9dfc1bfbe6ef3f3237368e483865fc1c29.1663288066.git.nabijaczleweli@nabijaczleweli.xyz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f2a880e802ad ("tty: hvc_iucv: fix off-by-one in number of supported devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/surfacepro3_button.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/hvc/hvc_iucv.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/surfacepro3_button.c b/drivers/platform/x86/surfacepro3_button.c
-index d8afed5db94c5..17d3fc81aa6e7 100644
---- a/drivers/platform/x86/surfacepro3_button.c
-+++ b/drivers/platform/x86/surfacepro3_button.c
-@@ -245,6 +245,7 @@ static int surface_button_remove(struct acpi_device *device)
- {
- 	struct surface_button *button = acpi_driver_data(device);
+diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
+index 796fbff623f6e..d76dff7eec521 100644
+--- a/drivers/tty/hvc/hvc_iucv.c
++++ b/drivers/tty/hvc/hvc_iucv.c
+@@ -29,7 +29,6 @@
  
-+	device_init_wakeup(&device->dev, false);
- 	input_unregister_device(button->input);
- 	kfree(button);
- 	return 0;
+ 
+ /* General device driver settings */
+-#define HVC_IUCV_MAGIC		0xc9e4c3e5
+ #define MAX_HVC_IUCV_LINES	HVC_ALLOC_TTY_ADAPTERS
+ #define MEMPOOL_MIN_NR		(PAGE_SIZE / sizeof(struct iucv_tty_buffer)/4)
+ 
+@@ -131,9 +130,9 @@ static struct iucv_handler hvc_iucv_handler = {
+  */
+ static struct hvc_iucv_private *hvc_iucv_get_private(uint32_t num)
+ {
+-	if ((num < HVC_IUCV_MAGIC) || (num - HVC_IUCV_MAGIC > hvc_iucv_devices))
++	if (num > hvc_iucv_devices)
+ 		return NULL;
+-	return hvc_iucv_table[num - HVC_IUCV_MAGIC];
++	return hvc_iucv_table[num];
+ }
+ 
+ /**
+@@ -1119,8 +1118,8 @@ static int __init hvc_iucv_alloc(int id, unsigned int is_console)
+ 	priv->is_console = is_console;
+ 
+ 	/* allocate hvc device */
+-	priv->hvc = hvc_alloc(HVC_IUCV_MAGIC + id, /*		  PAGE_SIZE */
+-			      HVC_IUCV_MAGIC + id, &hvc_iucv_ops, 256);
++	priv->hvc = hvc_alloc(id, /*		 PAGE_SIZE */
++			      id, &hvc_iucv_ops, 256);
+ 	if (IS_ERR(priv->hvc)) {
+ 		rc = PTR_ERR(priv->hvc);
+ 		goto out_error_hvc;
+@@ -1424,7 +1423,7 @@ static int __init hvc_iucv_init(void)
+ 
+ 	/* register the first terminal device as console
+ 	 * (must be done before allocating hvc terminal devices) */
+-	rc = hvc_instantiate(HVC_IUCV_MAGIC, IUCV_HVC_CON_IDX, &hvc_iucv_ops);
++	rc = hvc_instantiate(0, IUCV_HVC_CON_IDX, &hvc_iucv_ops);
+ 	if (rc) {
+ 		pr_err("Registering HVC terminal device as "
+ 		       "Linux console failed\n");
 -- 
 2.53.0
 
