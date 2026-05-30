@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC2217555;
-	Sat, 30 May 2026 18:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438E9219303;
+	Sat, 30 May 2026 18:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165393; cv=none; b=lLnJDizVM14YqXNclpFFfFcE+nHTj8nEelja4kEEIH8zYyiy074o6padTgzNYcQNXFpa10PkRdJjX4niXToYUTQ0F8H6woYCCEiY7c6QBRBQsVGXO9NOUPkU2ogpkJJg+KSucXYlrNHQN9BZJaC7KD9a2MNRJUZsYhblokJgUXI=
+	t=1780165396; cv=none; b=FQohIiJMK7YcRbvt6NsZBjrB1BWMn33IXXzEzmT/I230wlOI6b6pVLpT5zPkjCBgx1ZoXC2npKZXqs0EewS/PJXgQK+6K3fqZAT9P4gnkBOs/AksIPfdM8dWc0D1DhHiuu+Z9U9s8QNGZrXdlfe83otCLUalpVcTgnnPBm9qezU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165393; c=relaxed/simple;
-	bh=nVIFzcIOWR84q1siXK/a/D5VU1gVBoQqylF7jg3FifQ=;
+	s=arc-20240116; t=1780165396; c=relaxed/simple;
+	bh=d/mppMHivmdJ9ZbJhLhTvpbnQ/7c2z+uh2tXKYx/jRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdjWhbYLvefJoiXfh+h0+JXtM8PCsfdS0qp3EbA1OtZj1OGwMhQ9kvL5vdxWD2WtWb3Q72ITkcwoQI1DjZmK/cOLToMp4J2r8/+8kYZ2I1n3q2V1PTk+aOFSWsHfidBo6Te0D5iyuGYiaNMhMPb3EcjTYbTF2EgnkXnDlMwWBRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qftBosh8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=umhpiYK5Z/txUOziJyb8+6BvTAJvJumoVH0+C826sRrCyerK93sztBKvlFt4evp/fMr04HmBspnVCo/sWVgKFLAe5blPGyuff7tXiMNaR4mCXXPbeo8uP28d8BRqi04qgbxvWbwZA8CGAu5ofkqKZCmjWM6Wue4SIYw5I8kc2Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjQ+583J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qftBosh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3D11F00893;
-	Sat, 30 May 2026 18:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjQ+583J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887011F00893;
+	Sat, 30 May 2026 18:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165391;
-	bh=mUhNpJPNBNRnUszO5HTDcN9Y9ZBqG2b2Idgn1ceZzeY=;
+	s=korg; t=1780165395;
+	bh=JC0XqhC97qH070ulm3oA5Pcxnhq0ERifZSqbDpxioKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qftBosh8PoTi0KFh/Lsu9hViq8V7qAYw0QMMf70pzvJ8ANML8LyztwDcrdI3+yEtC
-	 npR7h9r/GQQHh9wD0/U6SR/cLWSvunXxRNYYRuzIPXQph2QJhSoa+Zdawy8Xec9e7u
-	 DwNb0+/l4WK9rvIQW+X7pQu8/cXkaqxXorr+8mxA=
+	b=YjQ+583Jnt55+iAO0xkpWpNCQ//DP3A1fBS+JX6tYHu/BMUTbP3JEpkA2rnJfPp/M
+	 AZ5lnWGwLc+35h4OiOCMUVsApvdhU/GdrIGg5WGUY7ex08mH7P2w/qP/nLNeor+lhW
+	 H4axr8aEe22PeqirgptZp/ansCkigTEk2V5Udo/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Klara Modin <klarasmodin@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/589] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
-Date: Sat, 30 May 2026 17:58:36 +0200
-Message-ID: <20260530160225.509476941@linuxfoundation.org>
+Subject: [PATCH 5.10 036/589] MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
+Date: Sat, 30 May 2026 17:58:37 +0200
+Message-ID: <20260530160225.537167195@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,122 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-[ Upstream commit 4c71fd099513bfa8acab529b626e1f0097b76061 ]
+commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
 
-A use-after-free / refcount underflow is possible when the heartbeat
-worker and intel_engine_park_heartbeat() race to release the same
-engine->heartbeat.systole request.
+Owing to Config4.MMUSizeExt and VTLB/FTLB MMU features later MIPSr2+
+cores can have more than 64 TLB entries.  Therefore allocate an array
+for uniquification instead of placing too an small array on the stack.
 
-The heartbeat worker reads engine->heartbeat.systole and calls
-i915_request_put() on it when the request is complete, but clears
-the pointer in a separate, non-atomic step. Concurrently, a request
-retirement on another CPU can drop the engine wakeref to zero, triggering
-__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
-timer is pending at that point, cancel_delayed_work() returns true and
-intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
-and calls i915_request_put() on it again, causing a refcount underflow:
-
-```
-<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
-<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
-...
-<4> [487.222707] Call Trace:
-<4> [487.222711]  <TASK>
-<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
-<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
-<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
-<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
-<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
-<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
-<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
-<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
-<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
-<4> [487.226625]  engine_retire+0x122/0x180 [i915]
-<4> [487.227037]  process_one_work+0x239/0x760
-<4> [487.227060]  worker_thread+0x200/0x3f0
-<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
-<4> [487.227075]  kthread+0x10d/0x150
-<4> [487.227083]  ? __pfx_kthread+0x10/0x10
-<4> [487.227092]  ret_from_fork+0x3d4/0x480
-<4> [487.227099]  ? __pfx_kthread+0x10/0x10
-<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
-<4> [487.227141]  </TASK>
-```
-
-Fix this by replacing the non-atomic pointer read + separate clear with
-xchg() in both racing paths. xchg() is a single indivisible hardware
-instruction that atomically reads the old pointer and writes NULL. This
-guarantees only one of the two concurrent callers obtains the non-NULL
-pointer and performs the put, the other gets NULL and skips it.
-
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
-Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
-Cc: <stable@vger.kernel.org> # v5.5+
-Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
-(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
+Co-developed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v6.17+: 9f048fa48740: MIPS: mm: Prevent a TLB shutdown on initial uniquification
+Cc: stable@vger.kernel.org # v6.17+
+Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Tested-by: Klara Modin <klarasmodin@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+[ Use memblock_free(__pa(...), ...) for 5.10.y. ]
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gt/intel_engine_heartbeat.c  | 26 +++++++++++++------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ arch/mips/mm/tlb-r4k.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-index 5067d0524d4b5..780e29fa4aeeb 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-@@ -70,10 +70,12 @@ static void heartbeat(struct work_struct *wrk)
- 	/* Just in case everything has gone horribly wrong, give it a kick */
- 	intel_engine_flush_submission(engine);
- 
--	rq = engine->heartbeat.systole;
--	if (rq && i915_request_completed(rq)) {
--		i915_request_put(rq);
--		engine->heartbeat.systole = NULL;
-+	rq = xchg(&engine->heartbeat.systole, NULL);
-+	if (rq) {
-+		if (i915_request_completed(rq))
-+			i915_request_put(rq);
-+		else
-+			engine->heartbeat.systole = rq;
- 	}
- 
- 	if (!intel_engine_pm_get_if_awake(engine))
-@@ -153,8 +155,11 @@ static void heartbeat(struct work_struct *wrk)
- unlock:
- 	mutex_unlock(&ce->timeline->mutex);
- out:
--	if (!next_heartbeat(engine))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (!next_heartbeat(engine)) {
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
- 	intel_engine_pm_put(engine);
- }
- 
-@@ -168,8 +173,13 @@ void intel_engine_unpark_heartbeat(struct intel_engine_cs *engine)
- 
- void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
+diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
+index d9a5ede8869bd..8bc98c311ca62 100644
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -12,6 +12,7 @@
+ #include <linux/init.h>
+ #include <linux/sched.h>
+ #include <linux/smp.h>
++#include <linux/memblock.h>
+ #include <linux/mm.h>
+ #include <linux/hugetlb.h>
+ #include <linux/export.h>
+@@ -512,17 +513,26 @@ static int r4k_vpn_cmp(const void *a, const void *b)
+  * Initialise all TLB entries with unique values that do not clash with
+  * what we have been handed over and what we'll be using ourselves.
+  */
+-static void r4k_tlb_uniquify(void)
++static void __ref r4k_tlb_uniquify(void)
  {
--	if (cancel_delayed_work(&engine->heartbeat.work))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (cancel_delayed_work(&engine->heartbeat.work)) {
-+		struct i915_request *rq;
+-	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
+ 	int tlbsize = current_cpu_data.tlbsize;
++	bool use_slab = slab_is_available();
+ 	int start = num_wired_entries();
++	phys_addr_t tlb_vpn_size;
++	unsigned long *tlb_vpns;
+ 	unsigned long vpn_mask;
+ 	int cnt, ent, idx, i;
+ 
+ 	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
+ 	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
+ 
++	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
++	tlb_vpns = (use_slab ?
++		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
++		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
++	if (WARN_ON(!tlb_vpns))
++		return; /* Pray local_flush_tlb_all() is good enough. */
 +
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
+ 	htw_stop();
+ 
+ 	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
+@@ -575,6 +585,10 @@ static void r4k_tlb_uniquify(void)
+ 	tlbw_use_hazard();
+ 	htw_start();
+ 	flush_micro_tlb();
++	if (use_slab)
++		kfree(tlb_vpns);
++	else
++		memblock_free(__pa(tlb_vpns), tlb_vpn_size);
  }
  
- void intel_engine_init_heartbeat(struct intel_engine_cs *engine)
+ /*
 -- 
 2.53.0
 
