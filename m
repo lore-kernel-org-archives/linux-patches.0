@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBA91A9F90;
-	Sat, 30 May 2026 18:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B4814A60F;
+	Sat, 30 May 2026 18:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166736; cv=none; b=fBc2SwSbJaUseEqoYw0rxIjBO7d+/54DsRgeBiOU08xBPxfO4++unUFFOAb2zzaYf842uRnZio7pYdP1EFK2dp3AVn0mfvYu0qQamadBXMS1Vwe4q9CZrtGh+2na/hO/NjKchZ4C/FpyVpN30bOuR8r7rUmntBfsPJmgZekhSPQ=
+	t=1780166739; cv=none; b=a5OPXBj5RJBUqYGG6dPleMRxl2Vyt0hXaw18F65qxgGtLouOtvtLWu7fZN0Ij0eAjuFURio4qxTiL7sdQk6dChz+FYJpuKzo0qcKv6wlkce2zk7HdgC2avJL2psd9Q/vYp/KzPC35Viop1VHQPUM7x/k4mj+dPEPH3q+VUSe8YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166736; c=relaxed/simple;
-	bh=6INpQ6jhk61GXIy4EN05QhJv8nz5xwVHghJTCKwLMvg=;
+	s=arc-20240116; t=1780166739; c=relaxed/simple;
+	bh=KXBV+hFkwlr/uM47tM5bmt85IImYrTPIBtLf1nZ76F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/rQF+KPsCy7Ag8ZIt+8BKkrPumko/8oi1NihnUG19g+DHJ85+a7k6UPa7lDjYWHayo7TQaIFJ1LGFaOmTAIQ1KfxWXqBi8SwZNJoejkvTuIJZl0+2o8mwkzNdwKoEpW404m+NE8D2A6dzC1XInqSGnbW9mJDi7rC6IZzagt9Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG1aOAGV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kR7Lta3BNTcTOcw+wS4lnu6neOSqi1+FYwlFuIOoCTwrZQXvOPzwVS/9WBSZbbk+MBCXe14qX/D0QSqslvo/Tge9pJjq2hLWq1yiHcYU2mY+9/KOoDg9+fGk/TEK+f8lt89XTWFc+q+9TVvhxZn9QA0/LySeXanl6grcaHXq5AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thaCVbcK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG1aOAGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884731F00893;
-	Sat, 30 May 2026 18:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thaCVbcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92D31F00893;
+	Sat, 30 May 2026 18:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166735;
-	bh=iEv06bDItEwyiL+A5ksbpRxmmH7Cz5Un8IGlJ9htn2w=;
+	s=korg; t=1780166738;
+	bh=MJuzegkXvfK5JeAUxfhI17AlzW/5fxKjZyzrQVqn2AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QG1aOAGVa2FKPzZ7dN8VmU+Q95ltZMw6e9tjs5Z/QHPutskQ/h4KTR2iBiXazvKhP
-	 HK4lXGb03e4UV2dT8ZttyclsQxoEBXz9XPS8lLQjYKzujc/MGLSAdX59rx1SNCaYzV
-	 4JnTOz9aAeYvBDw422LhFwDZq/Cbb/qLgMzbvJA4=
+	b=thaCVbcKPfw3wH5F8CX/DJcdBTT6mhj1zz8Lt0+SYfxDb0Fv0qI1qy2ewk0QSBbg4
+	 X4K0hcqwBzdsqts8+qWzvq+vo0pl+g0so1R0hLFeJ0rxIbAmt0VeyIQFBwynbWSq7d
+	 7B83GXjd5uoNDue4PHpJvvGmrELDgb6TQjhDAfJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Pighin <anthony.pighin@nokia.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Taegyu Kim <tmk5904@psu.edu>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 455/589] rtc: abx80x: Disable alarm feature if no interrupt attached
-Date: Sat, 30 May 2026 18:05:36 +0200
-Message-ID: <20260530160236.640272749@linuxfoundation.org>
+Subject: [PATCH 5.10 456/589] fbdev: offb: fix PCI device reference leak on probe failure
+Date: Sat, 30 May 2026 18:05:37 +0200
+Message-ID: <20260530160236.667209066@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,49 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Pighin (Nokia) <anthony.pighin@nokia.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 0fedce7244e4b85c049ce579c87e298a1b0b811d ]
+[ Upstream commit 869b93ba04088713596e68453c1146f52f713290 ]
 
-Commit 795cda8338ea ("rtc: interface: Fix long-standing race when setting
-alarm") exposed an issue where the rtc-abx80x driver does not clear the
-alarm feature bit, but instead relies on the set_alarm operation to return
-invalid.
+offb_init_nodriver() gets a referenced PCI device with pci_get_device().
+If pci_enable_device() fails, the function returns without dropping that
+reference.
 
-For example, when a RTC_UIE_ON ioctl is handled, it should abort at the
-feature validation. Instead, it proceeds to the rtc_timer_enqueue(),
-which used to return an error from the set_alarm call. However,
-following the race condition handling, which likely should not be
-discarding predecing errors, a success condition is returned to the
-ioctl() caller. This results in (for example):
-    hwclock: select() to /dev/rtc0 to wait for clock tick timed out
+Release the PCI device reference before returning from the
+pci_enable_device() failure path.
 
-Notwithstanding the validity of the race condition handling, if an interrupt
-wasn't specified, or could not be attached, the driver should clear the
-alarm feature bit.
-
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Anthony Pighin <anthony.pighin@nokia.com>
-Link: https://patch.msgid.link/BN0PR08MB69510928028C933749F4139383D1A@BN0PR08MB6951.namprd08.prod.outlook.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 5bda8f7b5468 ("video: fbdev: offb: Call pci_enable_device() before using the PCI VGA device")
+Co-developed-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Co-developed-by: Taegyu Kim <tmk5904@psu.edu>
+Signed-off-by: Taegyu Kim <tmk5904@psu.edu>
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/offb.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index 034b314fb3ec9..8d15a68eedb81 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -843,6 +843,8 @@ static int abx80x_probe(struct i2c_client *client,
- 			client->irq = 0;
+diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
+index 4501e848a36f2..593aad22248e6 100644
+--- a/drivers/video/fbdev/offb.c
++++ b/drivers/video/fbdev/offb.c
+@@ -643,8 +643,13 @@ static void __init offb_init_nodriver(struct device_node *dp, int no_real_node)
+ 			vid = be32_to_cpup(vidp);
+ 			did = be32_to_cpup(didp);
+ 			pdev = pci_get_device(vid, did, NULL);
+-			if (!pdev || pci_enable_device(pdev))
++			if (!pdev)
+ 				return;
++
++			if (pci_enable_device(pdev)) {
++				pci_dev_put(pdev);
++				return;
++			}
  		}
- 	}
-+	if (client->irq <= 0)
-+		clear_bit(RTC_FEATURE_ALARM, priv->rtc->features);
- 
- 	err = rtc_add_group(priv->rtc, &rtc_calib_attr_group);
- 	if (err) {
+ #endif
+ 		/* kludge for valkyrie */
 -- 
 2.53.0
 
