@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11F3148DA;
-	Sat, 30 May 2026 17:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEB23191D0;
+	Sat, 30 May 2026 17:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160973; cv=none; b=EeMlEFWBwwcyC6e8m+iHbuYeIVa1mu0dzChXYWVNSR1GTnzKbiraEwqWQIcwU+QLbJjMrBy98i1HYSJPx0/+93Y5F6Y/aY1lo67VScCoIKwDf7jw2KDhnciDNYtFCIwqT1WB96NwxaafvCFBYdQhV5TLa/4Fl5rRAZQqAYz03P0=
+	t=1780160976; cv=none; b=d60qxA7fWtVKzJgB5Yxa5l+xI2EPBMDJCxbxsXndBtuKLyzPMGw5PTjebM0SBOtVTPKQk5BLjVTRsqwK3oodvfR3DqzRspq/ys/1zStBcKkgGHdBmEuPYnR5Sxweu6TEdVfWuj8XSanSD+/01WEJW2ma6ZF5ad0bsxBqnFkMy+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160973; c=relaxed/simple;
-	bh=5l9QIreEBsmU71KrBzpZ6Xc3nnGVrvIwcfWpAWIVWc8=;
+	s=arc-20240116; t=1780160976; c=relaxed/simple;
+	bh=2QrWKbR3dNZLNGzzsfW3xzYTMDpFzEpxzMad+KAkbbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FoFaoOVQUT5j9XVlN45hBvr2V/DFfa2RTLHvBj3RAza6MX04s4RwNCelOlKeJF54lN+SSWqTmSYd5SpY0vZYlimLCosCrfWJUEUmMj35f2ZJHJ7hT5PB1NGhU5+kfbpdzNk67S6WUSWGwFgmi9zFPlSfLpMj0x8Wil3Pv/MMFZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADbv9aai; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z1i/vlr4CExckWaKYxE5B936onRtPkwaJaU/QmWJ2hNHARhtSb7XXoiArl2C78/VymFJsV8N6cNz4iaqYQCkh4LNV4tCc1ACH+WhFWzaRVFed9Gzol9mo/TWoFsxdlxfJvAFrBIB2DvBPhgTeeLGuWHkRQVifZTlkwlaZQe9I1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YE2hy+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADbv9aai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F27B1F00893;
-	Sat, 30 May 2026 17:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YE2hy+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA981F00893;
+	Sat, 30 May 2026 17:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160971;
-	bh=/bfe0zEDjRKWrbnfZ8wZd8y12b4Fmif7RGeNY0u/6fQ=;
+	s=korg; t=1780160975;
+	bh=ORmaUHakZjU1rqGYbuyHOvjfIUiTPbAdUpzX/inJ3A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADbv9aaiWeRHJzI5z5OgyhFc62yYSckbFMX3I/9cZQ9PzvpaJjkBL75besgpbZD9B
-	 H8lQqI4tiiAYhKuPEJbP91H1Ff8J7ioIdNpUjOBmkv8/uX+eGC5hBMPUqLSu9BLfXL
-	 yuG6XEK8ENVatV0dopEV+Twk9qZWDV0r78r8Tc10=
+	b=0YE2hy+L3URa4JYkf9sEtjf4txnPySd5WHcNvfgVcfYjMUYFaNw0MaIClWF8o4dR2
+	 D107hmyKagLYFcAR5lViTDd9v0DPbCd+rhM/6jBB1rjVC0l7GQtoYFz/FIQChuwQDn
+	 UhsE9FjRkK7ySzzgogdSHouT3JfBghAoDpY+tyT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 488/969] Bluetooth: l2cap: Add missing chan lock in l2cap_ecred_reconf_rsp
-Date: Sat, 30 May 2026 18:00:12 +0200
-Message-ID: <20260530160313.785016084@linuxfoundation.org>
+Subject: [PATCH 6.1 489/969] sctp: fix missing encap_port propagation for GSO fragments
+Date: Sat, 30 May 2026 18:00:13 +0200
+Message-ID: <20260530160313.814653513@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,46 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 42776497cdbc9a665b384a6dcb85f0d4bd927eab ]
+[ Upstream commit bf6f95ae3b8b2638c0e1d6d802d50983ce5d0f45 ]
 
-l2cap_ecred_reconf_rsp() calls l2cap_chan_del() without holding
-l2cap_chan_lock(). Every other l2cap_chan_del() caller in the file
-acquires the lock first. A remote BLE device can send a crafted
-L2CAP ECRED reconfiguration response to corrupt the channel list
-while another thread is iterating it.
+encap_port in SCTP_INPUT_CB(skb) is used by sctp_vtag_verify() for
+SCTP-over-UDP processing. In the GSO case, it is only set on the head
+skb, while fragment skbs leave it 0.
 
-Add l2cap_chan_hold() and l2cap_chan_lock() before l2cap_chan_del(),
-and l2cap_chan_unlock() and l2cap_chan_put() after, matching the
-pattern used in l2cap_ecred_conn_rsp() and l2cap_conn_del().
+This results in fragment skbs seeing encap_port == 0, breaking
+SCTP-over-UDP connections.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix it by propagating encap_port from the head skb cb when initializing
+fragment skbs in sctp_inq_pop().
+
+Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/ea65ed61b3598d8b4940f0170b9aa1762307e6c3.1776017631.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/sctp/inqueue.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 56fbf8d2769c6..21f63ca434e3f 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6461,7 +6461,13 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
- 		if (chan->ident != cmd->ident)
- 			continue;
+diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
+index f5a7d5a387555..a024c08432471 100644
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -201,6 +201,7 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
  
-+		l2cap_chan_hold(chan);
-+		l2cap_chan_lock(chan);
-+
- 		l2cap_chan_del(chan, ECONNRESET);
-+
-+		l2cap_chan_unlock(chan);
-+		l2cap_chan_put(chan);
+ 			cb->chunk = head_cb->chunk;
+ 			cb->af = head_cb->af;
++			cb->encap_port = head_cb->encap_port;
+ 		}
  	}
  
- 	return 0;
 -- 
 2.53.0
 
