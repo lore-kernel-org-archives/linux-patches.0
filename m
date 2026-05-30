@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C434104B;
-	Sat, 30 May 2026 17:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A21349CCF;
+	Sat, 30 May 2026 17:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163377; cv=none; b=SJm+guhDS+ZXrV7LDEHT6LhWQNacQ7n3CB8PgTf7PoH1Zu0dUyirbDYGExEPU9IIrk5/KFbkNG4MUzbFeo/kFyaVl4hBVJHbqJOtrTuVKO0vqEBpMl68iWDg2nVvxDzNOrevpGqxfSAhcyOg2P0SEWQR2s/9fcAu/U3mFRI4ApA=
+	t=1780163380; cv=none; b=qFP5p8jtJMCG6oEW/DVpRkraN4rl/vFBWls61c0iUHZeW9wT8ZkxTrpAsZMLGE/E741hfap3GDyrri12Ro2iHhC4rfhI2WSoXOGkxsp/FuqtVukM7yicE6tnXOxzzMAvNIpwwpd59hWReJ/9zGlo/yvVzFf/rdx1J2DQ9T8DJ3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163377; c=relaxed/simple;
-	bh=eYsB0TP20xMEtN4QvOtR2j+iRIQ6R60YeTo0ZhpPHAA=;
+	s=arc-20240116; t=1780163380; c=relaxed/simple;
+	bh=rO598c8ZtJVx2zIQ2l/qDSXdsXaAvd6bqXYdIxoJtso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6eCrtbdhXB9FRvyp0GLyfBh5n+cLwXVeZnt7bgmdusae5y2YpDzSFv/BY8QtT4NWdderX4tf6O9eWbHXNf3Wo3fP6J1N+cH9pKly+P4EYUK8Bsg6zMMN4sgPlc48xJtdXd2viAsgcQSu6nGIrN2C2YkPFOrHlazlo099BKGV8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trlAbQqz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gh9LhFOkp87ypJsPVlVPESrrCfVoR4hdBRtmCx+GIdWtojEkhO8PhkAsezy6e6ry8Anuu3E9Iu/zn1IQtdOXNg27S/ZwHbYGbfUJKFOnkqwcG1hN2OEalGlVSLoUWWVuIROyKB8sFXY7bcK0NTkTnavbbCV/gz3YSXRk7fRFDhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TctVfBL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trlAbQqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2631F00893;
-	Sat, 30 May 2026 17:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TctVfBL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31CB1F00893;
+	Sat, 30 May 2026 17:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163376;
-	bh=joNV/H4aVe019ONANTVsP3n9lG5q+uxYwhy6Nk6HsiE=;
+	s=korg; t=1780163379;
+	bh=f6IWJivzao6wNUUwmYxzvXs7IJ1AQbHwHhYtNBnaI0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trlAbQqz57BZVr4522Nx7ylT/UW7KAua0IBrX/EL9v/Jxi8XuFERDbEmTAMLAVCTP
-	 tYaoM1xh90K3XCervQ4PDLzaEnSKi3VvDxCBOVaJLemXEihU3LB0Qsu7o80zYXgVzK
-	 1KXtdKfLPI8rd7IW+qmKDY7q0n2GyKxZesm2BfEY=
+	b=TctVfBL/1KE6zVvIkjgdTwcDIWpoI8pWYKbVmZBvTx6HUzgR5R4vcdjZWwjrWHEtO
+	 CVRfEu2b1gYFWUTGfY+IzH5L6vll/7O3EaI+GbK48KfymYZiRkVKPYIIU3eii9LfvX
+	 hlnruaE71+mQItae+usRrWNvij9XtgTjpRil5WFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ben Hutchings <ben@decadent.org.uk>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/776] io_uring/poll: fix EPOLL_URING_WAKE sometimes not being honored
-Date: Sat, 30 May 2026 17:59:14 +0200
-Message-ID: <20260530160246.734881731@linuxfoundation.org>
+Subject: [PATCH 5.15 241/776] io_uring/poll: fix backport of io_poll_add() changes
+Date: Sat, 30 May 2026 17:59:15 +0200
+Message-ID: <20260530160246.759511121@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,50 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Rather than do the masking  only when we jump straight to execution,
-mark it as EPOLLONESHOT regardless. This ensures it doesn't get lost.
-And just kill the poll entry upfront, if marked. This is an optimization
-in later kernels, but it's actually required on the older kernels to
-note the EPOLL_URING_WAKE mask correctly.
+The 5.15/5.10 backport of 84230ad2d2af had a few issues, due to the
+older poll base. Notably return value handling __io_arm_poll_handler()
+and in return __io_poll_add() as well. Fix them up.
 
-Fixes: ccf06b5a981c ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Fixes: 349ef5d2e7bf ("io_uring/poll: correctly handle io_poll_add() return value on update")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ io_uring/io_uring.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 38decfc1a914a..4f1dda7d68c22 100644
+index 4f1dda7d68c22..cb54ebda0a8a7 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -5794,14 +5794,19 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
- 	if (mask && !(mask & poll->events))
- 		return 0;
+@@ -6144,26 +6144,22 @@ static int __io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (!ret && ipt.error)
+ 		req_set_fail(req);
+ 	ret = ret ?: ipt.error;
+-	if (ret > 0) {
++	if (ret)
+ 		__io_req_complete(req, issue_flags, ret, 0);
+-		return ret;
+-	}
+-	return 0;
++	return ret;
+ }
  
-+	/*
-+	 * If we trigger a multishot poll off our own wakeup path,
-+	 * disable multishot as there is a circular dependency between
-+	 * CQ posting and triggering the event.
-+	 */
-+	if (mask & EPOLL_URING_WAKE)
-+		poll->events |= EPOLLONESHOT;
-+
- 	if (io_poll_get_ownership(req)) {
--		/*
--		 * If we trigger a multishot poll off our own wakeup path,
--		 * disable multishot as there is a circular dependency between
--		 * CQ posting and triggering the event.
--		 */
--		if (mask & EPOLL_URING_WAKE)
--			poll->events |= EPOLLONESHOT;
-+		if (mask && poll->events & EPOLLONESHOT) {
-+			list_del_init(&poll->wait.entry);
-+			smp_store_release(&poll->head, NULL);
-+		}
+ static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
+ {
+-	int ret;
+-
+-	ret = __io_poll_add(req, issue_flags);
+-	return ret < 0 ? ret : 0;
++	__io_poll_add(req, issue_flags);
++	return 0;
+ }
  
- 		__io_poll_execute(req, mask);
+ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_ring_ctx *ctx = req->ctx;
+ 	struct io_kiocb *preq;
+-	int ret2, ret = 0;
++	int ret2 = -ECANCELED, ret = 0;
+ 
+ 	io_ring_submit_lock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
+ 
+@@ -6194,7 +6190,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
+ 		preq->result = ret2;
+ 
  	}
+-	if (preq->result < 0)
++	if (ret2 < 0)
+ 		req_set_fail(preq);
+ 	io_req_complete(preq, preq->result);
+ out:
 -- 
 2.53.0
 
