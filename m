@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0577346E55;
-	Sat, 30 May 2026 17:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C434104B;
+	Sat, 30 May 2026 17:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163373; cv=none; b=qfInH16Pj9sytSbz2+/feitiYk1H5qkvbNI6fXuHiUXa4x3krtccThWsi5PK33kj0b22emcI538JgezygWwDfZ4Ur7pj/k/SuwR/rdQFC+xI0lnIRU6iFepcF/gNpTVTfCb5AbMQ9bewuOh04+19MTbBkfIZxkrbwOEadN0nviw=
+	t=1780163377; cv=none; b=SJm+guhDS+ZXrV7LDEHT6LhWQNacQ7n3CB8PgTf7PoH1Zu0dUyirbDYGExEPU9IIrk5/KFbkNG4MUzbFeo/kFyaVl4hBVJHbqJOtrTuVKO0vqEBpMl68iWDg2nVvxDzNOrevpGqxfSAhcyOg2P0SEWQR2s/9fcAu/U3mFRI4ApA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163373; c=relaxed/simple;
-	bh=v9C+CnXuon2zysMfIWvlX1q/1uDzMcI4p48B8IT8pcM=;
+	s=arc-20240116; t=1780163377; c=relaxed/simple;
+	bh=eYsB0TP20xMEtN4QvOtR2j+iRIQ6R60YeTo0ZhpPHAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tkEZIJ35rGuRDXIiQDUCGt6aULckyNawi5bRycstat6NN1hD8buhICshgrws20/5gLuYw6Q7Ydn7awreVzsyPNYK8hCEDwHFLKSJQmfjvU9lDAr2sugboys/iV2Oh5ghsRojooJduWcH3S/mDG043FUbp8cXbWujCYfM3DuMS9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0zOEoc5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6eCrtbdhXB9FRvyp0GLyfBh5n+cLwXVeZnt7bgmdusae5y2YpDzSFv/BY8QtT4NWdderX4tf6O9eWbHXNf3Wo3fP6J1N+cH9pKly+P4EYUK8Bsg6zMMN4sgPlc48xJtdXd2viAsgcQSu6nGIrN2C2YkPFOrHlazlo099BKGV8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trlAbQqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0zOEoc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B071F00893;
-	Sat, 30 May 2026 17:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trlAbQqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2631F00893;
+	Sat, 30 May 2026 17:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163372;
-	bh=vdNbfytVZmzbAJWNxkONcqjyRIOFxV79QOFEGDBJK9E=;
+	s=korg; t=1780163376;
+	bh=joNV/H4aVe019ONANTVsP3n9lG5q+uxYwhy6Nk6HsiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k0zOEoc50ucaz57LOY8RrTJGgvpZ+J7FEI2dPafrFFpNjhnMjssrWhee/IBvpkdtD
-	 1WHJMaUPYoz0ZyeprYrgPeTYlbtRqjag/Y/eCmigBKbPM5/J4aQP36uePveNaiI498
-	 ev8rHIMQ8IVe5zz8TiYn9SpkYVaEU5tqULVzLYv8=
+	b=trlAbQqz57BZVr4522Nx7ylT/UW7KAua0IBrX/EL9v/Jxi8XuFERDbEmTAMLAVCTP
+	 tYaoM1xh90K3XCervQ4PDLzaEnSKi3VvDxCBOVaJLemXEihU3LB0Qsu7o80zYXgVzK
+	 1KXtdKfLPI8rd7IW+qmKDY7q0n2GyKxZesm2BfEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 239/776] KVM: nSVM: Add missing consistency check for nCR3 validity
-Date: Sat, 30 May 2026 17:59:13 +0200
-Message-ID: <20260530160246.708192373@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 240/776] io_uring/poll: fix EPOLL_URING_WAKE sometimes not being honored
+Date: Sat, 30 May 2026 17:59:14 +0200
+Message-ID: <20260530160246.734881731@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,53 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit b71138fcc362c67ebe66747bb22cb4e6b4d6a651 upstream.
+Rather than do the masking  only when we jump straight to execution,
+mark it as EPOLLONESHOT regardless. This ensures it doesn't get lost.
+And just kill the poll entry upfront, if marked. This is an optimization
+in later kernels, but it's actually required on the older kernels to
+note the EPOLL_URING_WAKE mask correctly.
 
->From the APM Volume #2, 15.25.4 (24593—Rev. 3.42—March 2024):
-
-  When VMRUN is executed with nested paging enabled (NP_ENABLE = 1), the
-  following conditions are considered illegal state combinations, in
-  addition to those mentioned in “Canonicalization and Consistency Checks”:
-      • Any MBZ bit of nCR3 is set.
-      • Any G_PAT.PA field has an unsupported type encoding or any
-        reserved field in G_PAT has a nonzero value.
-
-Add the consistency check for nCR3 being a legal GPA with no MBZ bits
-set.  Note, the G_PAT.PA check is being handled separately[*].
-
-Link: https://lore.kernel.org/kvm/20260205214326.1029278-3-jmattson@google.com [*]
-Fixes: 4b16184c1cca ("KVM: SVM: Initialize Nested Nested MMU context on VMRUN")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-16-yosry@kernel.org
-[sean: capture everything in CC(), massage changelog formatting]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccf06b5a981c ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/io_uring.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -256,6 +256,10 @@ static bool nested_vmcb_check_controls(s
- 	if (CC((control->nested_ctl & SVM_NESTED_CTL_NP_ENABLE) && !npt_enabled))
- 		return false;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 38decfc1a914a..4f1dda7d68c22 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5794,14 +5794,19 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
+ 	if (mask && !(mask & poll->events))
+ 		return 0;
  
-+	if (CC((control->nested_ctl & SVM_NESTED_CTL_NP_ENABLE) &&
-+	       !kvm_vcpu_is_legal_gpa(vcpu, control->nested_cr3)))
-+		return false;
++	/*
++	 * If we trigger a multishot poll off our own wakeup path,
++	 * disable multishot as there is a circular dependency between
++	 * CQ posting and triggering the event.
++	 */
++	if (mask & EPOLL_URING_WAKE)
++		poll->events |= EPOLLONESHOT;
 +
- 	if (CC(!nested_svm_check_bitmap_pa(vcpu, control->msrpm_base_pa,
- 					   MSRPM_SIZE)))
- 		return false;
+ 	if (io_poll_get_ownership(req)) {
+-		/*
+-		 * If we trigger a multishot poll off our own wakeup path,
+-		 * disable multishot as there is a circular dependency between
+-		 * CQ posting and triggering the event.
+-		 */
+-		if (mask & EPOLL_URING_WAKE)
+-			poll->events |= EPOLLONESHOT;
++		if (mask && poll->events & EPOLLONESHOT) {
++			list_del_init(&poll->wait.entry);
++			smp_store_release(&poll->head, NULL);
++		}
+ 
+ 		__io_poll_execute(req, mask);
+ 	}
+-- 
+2.53.0
+
 
 
