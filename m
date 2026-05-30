@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4575481DD;
-	Sat, 30 May 2026 17:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B02481DD;
+	Sat, 30 May 2026 17:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161161; cv=none; b=mErDzo0ZWZl2x+UUAsFfzYNMLbJHgd9TQ5hPtdjamxTWVw4WEmSOm4soxEmRJeKACpKA9XvfhmJjhXs8ngaKM3sm6sUZPaAd5NFDcWhU/jsqebJ2lnu9jyEwzCmqv/liw9VizKPHV8CplrwVblCPjRgXzv8/E8au/MoBK4hkuEM=
+	t=1780161165; cv=none; b=dGqRmyUFX5GKOn2PiIV9oHyn75TE3D+nJejYozyYqyBmNNvJ7Q/yRc93Riuzv1mZhrUnIhmjWsNkA8jCyJxHUqKde+9yYRN9KBfcJwO7vN7udao0QrWr/hYSOvyEdR00q1AV0hOH4mN+7vS+cnciRYi64arigp3XUhClxKOBHuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161161; c=relaxed/simple;
-	bh=OqjKkIxnfb3pt6RFQ+OfP7U5T/lYojDnVIPp/evMZJ8=;
+	s=arc-20240116; t=1780161165; c=relaxed/simple;
+	bh=mFK/yRUL/SMGOsJge6ywwWye8HRfAFlYDkYt3gaLYJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TH584qx7sVa42zeaAL3NePqmS6GzhLyRcNtCGpc4U6w3cXhHSAeVuYk4sXPxLf6ILiXKmZ3IrOaJxmFS6MT9LBSLtItjnMM1KZdYiljfwIqOYumoYf9QesfkwVU/gsEe58HQ6jLXYKdGdAmM9tMw7eAlxd9HYczRPoWWaUzO52g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mu0508GE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h8XhFBZ0AXobTslwGzVtVNM+pcqIPUZDNQ3a7gc3gcLGNJwFMEvKDTagvo2kTQZgusdlq6dt0uqAFGRJHQ3ZfRyhw4YqQfRqX5uRRpQf6dhSBFzHy3zgY2+pjFFEL7GSrn1p755Z5E3q5ZvuAfwwxW9ZqRPJv/4UVC9PsynHTUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmS3QDUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mu0508GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138831F00893;
-	Sat, 30 May 2026 17:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmS3QDUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2551F00893;
+	Sat, 30 May 2026 17:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161160;
-	bh=54y7Xkm0TMuTc4TatSifThrfkcyS2ZdoaH1MR8XAblk=;
+	s=korg; t=1780161164;
+	bh=okwa1ADeQY4i8I2yTEOUfgzTkErzLstpKxamhq4ik9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mu0508GEikEcF64r1vu0jeTEuAe4tuGpn1O+ynaTYWPw3b0L7jQA40oHdOm5UD+pO
-	 ZHCIO/W3Vf6KTx1QxbeYjisH2F8mtjtLjGipW0F1ymNT475VOhZ5HKQuJBTqMetQVy
-	 dnmlL/VHBD4U273uKPH2YgN0fq/toQrXFZwf+JXo=
+	b=SmS3QDUS5z4D0ph1wiftdV1c/Lg3CgcAJEs4XSrcSHbB6mNeSvi+6f5wnC6Z8jFOf
+	 pIcrJejRK/3vmfuyc+mOfvUcCWOAER7bnAi2i6iasEbtcckt2BYsmjvQKQWqlIO+a7
+	 W4P3xcZ8OzlBv3ZgKXfrl1pIHVCYPSEtzeDrcxKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	V sujith kumar Reddy <Vsujithkumar.Reddy@amd.com>,
+	Paul Olaru <paul.olaru@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 544/969] ASoC: SOF: amd: Fix for reading position updates from stream box.
-Date: Sat, 30 May 2026 18:01:08 +0200
-Message-ID: <20260530160315.393594011@linuxfoundation.org>
+Subject: [PATCH 6.1 545/969] ASoC: SOF: Prepare ipc_msg_data to be used with compress API
+Date: Sat, 30 May 2026 18:01:09 +0200
+Message-ID: <20260530160315.422339776@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,106 +55,240 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: V sujith kumar Reddy <Vsujithkumar.Reddy@amd.com>
+From: Daniel Baluta <daniel.baluta@nxp.com>
 
-[ Upstream commit aae7e412b0ec0378e392b18c50b612dae09cdb74 ]
+[ Upstream commit 1b905942d6cd182b7ef14e9f095178376d3847e6 ]
 
-By default the position updates are read from dsp box when streambox
-size is not defined.if the streambox size is defined to some value
-then position updates can be read from the streambox.
+Make second parameter of ipc_msg_data generic
+in order to be able to support compressed streams.
 
-Signed-off-by: V sujith kumar Reddy <Vsujithkumar.Reddy@amd.com>
-Link: https://lore.kernel.org/r/20221123121911.3446224-2-vsujithkumar.reddy@amd.corp-partner.google.com
+This patch doesn't hold any functional change.
+
+With this case we can use ipc_msg_data, to retrieve information from
+DSP for both PCM/Compress API.
+
+Reviewed-by: Paul Olaru <paul.olaru@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20230117122533.201708-2-daniel.baluta@oss.nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 2c4fdd055f92 ("ASoC: SOF: compress: return the configured codec from get_params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp-common.c |  1 +
- sound/soc/sof/amd/acp-ipc.c    | 30 +++++++++++++++++++++++++++++-
- sound/soc/sof/amd/acp.h        |  4 ++++
- 3 files changed, 34 insertions(+), 1 deletion(-)
+ sound/soc/sof/amd/acp-ipc.c            | 5 +++--
+ sound/soc/sof/amd/acp.h                | 3 ++-
+ sound/soc/sof/intel/hda-ipc.c          | 5 +++--
+ sound/soc/sof/intel/hda.h              | 2 +-
+ sound/soc/sof/ipc3.c                   | 4 ++--
+ sound/soc/sof/mediatek/mt8186/mt8186.c | 2 +-
+ sound/soc/sof/mediatek/mt8195/mt8195.c | 2 +-
+ sound/soc/sof/ops.h                    | 4 ++--
+ sound/soc/sof/sof-priv.h               | 6 ++++--
+ sound/soc/sof/stream-ipc.c             | 6 ++++--
+ 10 files changed, 23 insertions(+), 16 deletions(-)
 
-diff --git a/sound/soc/sof/amd/acp-common.c b/sound/soc/sof/amd/acp-common.c
-index 27b95187356e5..150e042e40392 100644
---- a/sound/soc/sof/amd/acp-common.c
-+++ b/sound/soc/sof/amd/acp-common.c
-@@ -76,6 +76,7 @@ struct snd_sof_dsp_ops sof_acp_common_ops = {
- 	/*IPC */
- 	.send_msg		= acp_sof_ipc_send_msg,
- 	.ipc_msg_data		= acp_sof_ipc_msg_data,
-+	.set_stream_data_offset = acp_set_stream_data_offset,
- 	.get_mailbox_offset	= acp_sof_ipc_get_mailbox_offset,
- 	.get_window_offset      = acp_sof_ipc_get_window_offset,
- 	.irq_thread		= acp_sof_ipc_irq_thread,
 diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
-index dd030566e3725..dd6e53c63407f 100644
+index dd6e53c63407f..5d8a1b603c052 100644
 --- a/sound/soc/sof/amd/acp-ipc.c
 +++ b/sound/soc/sof/amd/acp-ipc.c
-@@ -192,13 +192,41 @@ int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_pcm_substream *sub
+@@ -187,14 +187,15 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
+ }
+ EXPORT_SYMBOL_NS(acp_sof_ipc_irq_thread, SND_SOC_SOF_AMD_COMMON);
+ 
+-int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream,
++int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_sof_pcm_stream *sps,
+ 			 void *p, size_t sz)
  {
  	unsigned int offset = sdev->dsp_box.offset;
  
--	if (!substream || !sdev->stream_box.size)
-+	if (!substream || !sdev->stream_box.size) {
+-	if (!substream || !sdev->stream_box.size) {
++	if (!sps || !sdev->stream_box.size) {
  		acp_mailbox_read(sdev, offset, p, sz);
-+	} else {
-+		struct acp_dsp_stream *stream = substream->runtime->private_data;
-+
-+		if (!stream)
-+			return -ESTRPIPE;
-+
-+		acp_mailbox_read(sdev, stream->posn_offset, p, sz);
-+	}
+ 	} else {
++		struct snd_pcm_substream *substream = sps->substream;
+ 		struct acp_dsp_stream *stream = substream->runtime->private_data;
  
- 	return 0;
- }
- EXPORT_SYMBOL_NS(acp_sof_ipc_msg_data, SND_SOC_SOF_AMD_COMMON);
- 
-+int acp_set_stream_data_offset(struct snd_sof_dev *sdev,
-+			       struct snd_pcm_substream *substream,
-+			       size_t posn_offset)
-+{
-+	struct acp_dsp_stream *stream = substream->runtime->private_data;
-+
-+	/* check for unaligned offset or overflow */
-+	if (posn_offset > sdev->stream_box.size ||
-+	    posn_offset % sizeof(struct sof_ipc_stream_posn) != 0)
-+		return -EINVAL;
-+
-+	stream->posn_offset = sdev->stream_box.offset + posn_offset;
-+
-+	dev_dbg(sdev->dev, "pcm: stream dir %d, posn mailbox offset is %zu",
-+		substream->stream, stream->posn_offset);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_NS(acp_set_stream_data_offset, SND_SOC_SOF_AMD_COMMON);
-+
- int acp_sof_ipc_get_mailbox_offset(struct snd_sof_dev *sdev)
- {
- 	const struct sof_amd_acp_desc *desc = get_chip_info(sdev->pdata);
+ 		if (!stream)
 diff --git a/sound/soc/sof/amd/acp.h b/sound/soc/sof/amd/acp.h
-index b1414ac1ea985..b5bbdedb66697 100644
+index b5bbdedb66697..ce5f32341ad2b 100644
 --- a/sound/soc/sof/amd/acp.h
 +++ b/sound/soc/sof/amd/acp.h
-@@ -144,6 +144,7 @@ struct acp_dsp_stream {
- 	int stream_tag;
- 	int active;
- 	unsigned int reg_offset;
-+	size_t posn_offset;
- };
+@@ -12,6 +12,7 @@
+ #define __SOF_AMD_ACP_H
  
- struct sof_amd_acp_desc {
-@@ -205,6 +206,9 @@ int acp_dsp_block_read(struct snd_sof_dev *sdev, enum snd_sof_fw_blk_type blk_ty
+ #include "../sof-priv.h"
++#include "../sof-audio.h"
+ 
+ #define ACP_MAX_STREAM	8
+ 
+@@ -204,7 +205,7 @@ int acp_dsp_block_read(struct snd_sof_dev *sdev, enum snd_sof_fw_blk_type blk_ty
+ 
+ /* IPC callbacks */
  irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context);
- int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream,
+-int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream,
++int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_sof_pcm_stream *sps,
  			 void *p, size_t sz);
-+int acp_set_stream_data_offset(struct snd_sof_dev *sdev,
-+			       struct snd_pcm_substream *substream,
-+			       size_t posn_offset);
- int acp_sof_ipc_send_msg(struct snd_sof_dev *sdev,
- 			 struct snd_sof_ipc_msg *msg);
- int acp_sof_ipc_get_mailbox_offset(struct snd_sof_dev *sdev);
+ int acp_set_stream_data_offset(struct snd_sof_dev *sdev,
+ 			       struct snd_pcm_substream *substream,
+diff --git a/sound/soc/sof/intel/hda-ipc.c b/sound/soc/sof/intel/hda-ipc.c
+index 9b3667c705e47..96f909441b44e 100644
+--- a/sound/soc/sof/intel/hda-ipc.c
++++ b/sound/soc/sof/intel/hda-ipc.c
+@@ -342,12 +342,13 @@ int hda_dsp_ipc_get_window_offset(struct snd_sof_dev *sdev, u32 id)
+ }
+ 
+ int hda_ipc_msg_data(struct snd_sof_dev *sdev,
+-		     struct snd_pcm_substream *substream,
++		     struct snd_sof_pcm_stream *sps,
+ 		     void *p, size_t sz)
+ {
+-	if (!substream || !sdev->stream_box.size) {
++	if (!sps || !sdev->stream_box.size) {
+ 		sof_mailbox_read(sdev, sdev->dsp_box.offset, p, sz);
+ 	} else {
++		struct snd_pcm_substream *substream = sps->substream;
+ 		struct hdac_stream *hstream = substream->runtime->private_data;
+ 		struct sof_intel_hda_stream *hda_stream;
+ 
+diff --git a/sound/soc/sof/intel/hda.h b/sound/soc/sof/intel/hda.h
+index 9acd21901e68c..cea36d3bef81f 100644
+--- a/sound/soc/sof/intel/hda.h
++++ b/sound/soc/sof/intel/hda.h
+@@ -645,7 +645,7 @@ int hda_dsp_stream_spib_config(struct snd_sof_dev *sdev,
+ 			       int enable, u32 size);
+ 
+ int hda_ipc_msg_data(struct snd_sof_dev *sdev,
+-		     struct snd_pcm_substream *substream,
++		     struct snd_sof_pcm_stream *sps,
+ 		     void *p, size_t sz);
+ int hda_set_stream_data_offset(struct snd_sof_dev *sdev,
+ 			       struct snd_pcm_substream *substream,
+diff --git a/sound/soc/sof/ipc3.c b/sound/soc/sof/ipc3.c
+index 60b96b0c2412f..1607e3602e22a 100644
+--- a/sound/soc/sof/ipc3.c
++++ b/sound/soc/sof/ipc3.c
+@@ -847,7 +847,7 @@ static void ipc3_period_elapsed(struct snd_sof_dev *sdev, u32 msg_id)
+ 	}
+ 
+ 	stream = &spcm->stream[direction];
+-	ret = snd_sof_ipc_msg_data(sdev, stream->substream, &posn, sizeof(posn));
++	ret = snd_sof_ipc_msg_data(sdev, stream, &posn, sizeof(posn));
+ 	if (ret < 0) {
+ 		dev_warn(sdev->dev, "failed to read stream position: %d\n", ret);
+ 		return;
+@@ -882,7 +882,7 @@ static void ipc3_xrun(struct snd_sof_dev *sdev, u32 msg_id)
+ 	}
+ 
+ 	stream = &spcm->stream[direction];
+-	ret = snd_sof_ipc_msg_data(sdev, stream->substream, &posn, sizeof(posn));
++	ret = snd_sof_ipc_msg_data(sdev, stream, &posn, sizeof(posn));
+ 	if (ret < 0) {
+ 		dev_warn(sdev->dev, "failed to read overrun position: %d\n", ret);
+ 		return;
+diff --git a/sound/soc/sof/mediatek/mt8186/mt8186.c b/sound/soc/sof/mediatek/mt8186/mt8186.c
+index 181189e00e020..d727751e83ef6 100644
+--- a/sound/soc/sof/mediatek/mt8186/mt8186.c
++++ b/sound/soc/sof/mediatek/mt8186/mt8186.c
+@@ -489,7 +489,7 @@ static snd_pcm_uframes_t mt8186_pcm_pointer(struct snd_sof_dev *sdev,
+ 	}
+ 
+ 	stream = &spcm->stream[substream->stream];
+-	ret = snd_sof_ipc_msg_data(sdev, stream->substream, &posn, sizeof(posn));
++	ret = snd_sof_ipc_msg_data(sdev, stream, &posn, sizeof(posn));
+ 	if (ret < 0) {
+ 		dev_warn(sdev->dev, "failed to read stream position: %d\n", ret);
+ 		return 0;
+diff --git a/sound/soc/sof/mediatek/mt8195/mt8195.c b/sound/soc/sof/mediatek/mt8195/mt8195.c
+index ac96ea07e591b..040e9a003c060 100644
+--- a/sound/soc/sof/mediatek/mt8195/mt8195.c
++++ b/sound/soc/sof/mediatek/mt8195/mt8195.c
+@@ -525,7 +525,7 @@ static snd_pcm_uframes_t mt8195_pcm_pointer(struct snd_sof_dev *sdev,
+ 	}
+ 
+ 	stream = &spcm->stream[substream->stream];
+-	ret = snd_sof_ipc_msg_data(sdev, stream->substream, &posn, sizeof(posn));
++	ret = snd_sof_ipc_msg_data(sdev, stream, &posn, sizeof(posn));
+ 	if (ret < 0) {
+ 		dev_warn(sdev->dev, "failed to read stream position: %d\n", ret);
+ 		return 0;
+diff --git a/sound/soc/sof/ops.h b/sound/soc/sof/ops.h
+index 55d43adb6a295..3c86f2df2179a 100644
+--- a/sound/soc/sof/ops.h
++++ b/sound/soc/sof/ops.h
+@@ -449,10 +449,10 @@ static inline int snd_sof_load_firmware(struct snd_sof_dev *sdev)
+ 
+ /* host DSP message data */
+ static inline int snd_sof_ipc_msg_data(struct snd_sof_dev *sdev,
+-				       struct snd_pcm_substream *substream,
++				       struct snd_sof_pcm_stream *sps,
+ 				       void *p, size_t sz)
+ {
+-	return sof_ops(sdev)->ipc_msg_data(sdev, substream, p, sz);
++	return sof_ops(sdev)->ipc_msg_data(sdev, sps, p, sz);
+ }
+ /* host side configuration of the stream's data offset in stream mailbox area */
+ static inline int
+diff --git a/sound/soc/sof/sof-priv.h b/sound/soc/sof/sof-priv.h
+index 3d70b57e4864d..85b84e09e1e8a 100644
+--- a/sound/soc/sof/sof-priv.h
++++ b/sound/soc/sof/sof-priv.h
+@@ -20,6 +20,8 @@
+ #include <uapi/sound/sof/fw.h>
+ #include <sound/sof/ext_manifest.h>
+ 
++struct snd_sof_pcm_stream;
++
+ /* Flag definitions used in sof_core_debug (sof_debug module parameter) */
+ #define SOF_DBG_ENABLE_TRACE	BIT(0)
+ #define SOF_DBG_RETAIN_CTX	BIT(1)	/* prevent DSP D3 on FW exception */
+@@ -240,7 +242,7 @@ struct snd_sof_dsp_ops {
+ 
+ 	/* host read DSP stream data */
+ 	int (*ipc_msg_data)(struct snd_sof_dev *sdev,
+-			    struct snd_pcm_substream *substream,
++			    struct snd_sof_pcm_stream *sps,
+ 			    void *p, size_t sz); /* mandatory */
+ 
+ 	/* host side configuration of the stream's data offset in stream mailbox area */
+@@ -743,7 +745,7 @@ int sof_block_read(struct snd_sof_dev *sdev, enum snd_sof_fw_blk_type blk_type,
+ 		   u32 offset, void *dest, size_t size);
+ 
+ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
+-		     struct snd_pcm_substream *substream,
++		     struct snd_sof_pcm_stream *sps,
+ 		     void *p, size_t sz);
+ int sof_set_stream_data_offset(struct snd_sof_dev *sdev,
+ 			       struct snd_pcm_substream *substream,
+diff --git a/sound/soc/sof/stream-ipc.c b/sound/soc/sof/stream-ipc.c
+index 5f1ceeea893a5..13e44501d4420 100644
+--- a/sound/soc/sof/stream-ipc.c
++++ b/sound/soc/sof/stream-ipc.c
+@@ -19,6 +19,7 @@
+ 
+ #include "ops.h"
+ #include "sof-priv.h"
++#include "sof-audio.h"
+ 
+ struct sof_stream {
+ 	size_t posn_offset;
+@@ -26,12 +27,13 @@ struct sof_stream {
+ 
+ /* Mailbox-based Generic IPC implementation */
+ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
+-		     struct snd_pcm_substream *substream,
++		     struct snd_sof_pcm_stream *sps,
+ 		     void *p, size_t sz)
+ {
+-	if (!substream || !sdev->stream_box.size) {
++	if (!sps || !sdev->stream_box.size) {
+ 		snd_sof_dsp_mailbox_read(sdev, sdev->dsp_box.offset, p, sz);
+ 	} else {
++		struct snd_pcm_substream *substream = sps->substream;
+ 		struct sof_stream *stream = substream->runtime->private_data;
+ 
+ 		/* The stream might already be closed */
 -- 
 2.53.0
 
