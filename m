@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A99261B9E;
-	Sat, 30 May 2026 17:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B03261B9E;
+	Sat, 30 May 2026 17:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163600; cv=none; b=NP9SIiS2cjvumkX3MPsGN7TJ122jL5BldaxmD7Lv6IOEOMmkWCmdnW1fLNUUngmM79OBGlB+qobM7k7O7fP7vyeYjf7PHwlqL/H6SwkxnfKL/T92CrsiIQ0vDPTymRvr81bXSwtsJcWrtQHwl7ooaJQlZ4wflYYf0iKIyROFe00=
+	t=1780163603; cv=none; b=ac8YhREiy9JPATYYD6D9jzgL/rn3ZLFSi2fl2OspDpZSrfxoxQN28JrIEE1MPC2MOH40rPT7KExQ0KUbk8wHXtvZ35inRNjr2uZYk0jjaP/DheAWT8KsBNEkyk1KIIOgL4cIp1P2tuFfDMiZynLZuWJGofmMMneXgaL9Yzt6470=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163600; c=relaxed/simple;
-	bh=nUSIcGIz9qykFq1snfpFAlEdQGh5+dQ0tFdENS50Atk=;
+	s=arc-20240116; t=1780163603; c=relaxed/simple;
+	bh=Xoha3fasvNkwbb3Wb2ZAboaO4J8Jds4TSvo2m0R7kJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z94+yXfjE35KUa4+45HGlIe1NJxOLn9xlJ0QCOuMfAlHT+DQ8SDCuT6Tn78zh7wLCzwl3pTUUNDPU9QQeRaMXWqo9vx3dySrqs6TezKi6Ib3Q1dxMzmNfGRZt63atIVi3Y3EBhgUI6m8gBL3xKJtZcroEP4cufuSCULMP1GtKMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPeoSpcx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GDlUAc55KENpCt/3Jh8yK3l7nzcHj1XU5ruICoGHZnH1Xi5+0FZos9PmN/SKu34MgkPhz9l+89bzCEVb+eIygzo9A+7JO4u4+JU+4nwY6XQ/bPzUL6COfjFRQrXQNS/iaAzDXLozyd1XFS1HZdxCK8A9tH0slNaIMuIJ2gtZLYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgrasAGK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPeoSpcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C571F00893;
-	Sat, 30 May 2026 17:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgrasAGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BABF1F00893;
+	Sat, 30 May 2026 17:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163598;
-	bh=zpJC14mk2NHHFvuxBsfjIpCh7xSw2Vu6D0EejRwXW94=;
+	s=korg; t=1780163602;
+	bh=7eiOOwr0oobY/aEemP0eDylSy40NTJlEKAV9kPVfDRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPeoSpcxm98ffHszemVbv1UknR8Bj+7Y8wJfIUEFhEngWnAleHdZmaf1psoJ6NGUA
-	 Tq72gyR5Bygt6RZLDoOUae9R73V3RvAEn1sD6ZErd3SssMh0El295AnOwOs0aoskb1
-	 OBliLKM78dKEYIgnZguhiNXtHQV9FtwviB2ikkMk=
+	b=qgrasAGK7+CLsaYmU3NvKV1PxK43lZCyLM2MabrpEEpL1UJU4GfS7LMpWUmiHiBcI
+	 l8w1GEyfpuaqgGYZt+9WBuwrRXeHvXRaZJ3iuVPmMZZkv/9o2xXEfIypwZZ58DSkED
+	 fnIEIA3nXxOOQDmtdO6/ktbAjLGFY/L04gYGnYMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 307/776] spi: zynqmp-gqspi: fix controller deregistration
-Date: Sat, 30 May 2026 18:00:21 +0200
-Message-ID: <20260530160248.499815440@linuxfoundation.org>
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.15 308/776] fanotify: fix false positive on permission events
+Date: Sat, 30 May 2026 18:00:22 +0200
+Message-ID: <20260530160248.525237947@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,44 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
+commit 7746e3bd4cc19b5092e00d32d676e329bfcb6900 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+fsnotify_get_mark_safe() may return false for a mark on an unrelated group,
+which results in bypassing the permission check.
 
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
-Cc: stable@vger.kernel.org	# 4.2
-Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix by skipping over detached marks that are not in the current group.
+
+CC: stable@vger.kernel.org
+Fixes: abc77577a669 ("fsnotify: Provide framework for dropping SRCU lock in ->handle_event")
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20260410144950.156160-1-mszeredi@redhat.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/notify/fsnotify.c             |    2 +-
+ fs/notify/mark.c                 |   18 +++++++++++-------
+ include/linux/fsnotify_backend.h |    1 +
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1183,7 +1183,7 @@ static int zynqmp_qspi_probe(struct plat
- 	ctlr->dev.of_node = np;
- 	ctlr->auto_runtime_pm = true;
+--- a/fs/notify/fsnotify.c
++++ b/fs/notify/fsnotify.c
+@@ -398,7 +398,7 @@ static struct fsnotify_mark *fsnotify_fi
+ 	return hlist_entry_safe(node, struct fsnotify_mark, obj_list);
+ }
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spi_register_controller failed\n");
- 		goto clk_dis_all;
-@@ -1224,6 +1224,8 @@ static void zynqmp_qspi_remove(struct pl
+-static struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
++struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
+ {
+ 	struct hlist_node *node = NULL;
  
- 	pm_runtime_get_sync(&pdev->dev);
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -380,9 +380,6 @@ EXPORT_SYMBOL_GPL(fsnotify_put_mark);
+  */
+ static bool fsnotify_get_mark_safe(struct fsnotify_mark *mark)
+ {
+-	if (!mark)
+-		return true;
+-
+ 	if (refcount_inc_not_zero(&mark->refcnt)) {
+ 		spin_lock(&mark->lock);
+ 		if (mark->flags & FSNOTIFY_MARK_FLAG_ATTACHED) {
+@@ -423,15 +420,22 @@ bool fsnotify_prepare_user_wait(struct f
+ 	int type;
  
-+	spi_unregister_controller(xqspi->ctlr);
+ 	fsnotify_foreach_iter_type(type) {
++		struct fsnotify_mark *mark = iter_info->marks[type];
 +
- 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
+ 		/* This can fail if mark is being removed */
+-		if (!fsnotify_get_mark_safe(iter_info->marks[type])) {
+-			__release(&fsnotify_mark_srcu);
+-			goto fail;
++		while (mark && !fsnotify_get_mark_safe(mark)) {
++			if (mark->group == iter_info->current_group) {
++				__release(&fsnotify_mark_srcu);
++				goto fail;
++			}
++			/* This is a mark in an unrelated group, skip */
++			mark = fsnotify_next_mark(mark);
++			iter_info->marks[type] = mark;
+ 		}
+ 	}
  
- 	pm_runtime_disable(&pdev->dev);
+ 	/*
+-	 * Now that both marks are pinned by refcount in the inode / vfsmount
++	 * Now that all marks are pinned by refcount in the inode / vfsmount / etc
+ 	 * lists, we can drop SRCU lock, and safely resume the list iteration
+ 	 * once userspace returns.
+ 	 */
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -820,6 +820,7 @@ static inline void fsnotify_clear_sb_mar
+ }
+ extern void fsnotify_get_mark(struct fsnotify_mark *mark);
+ extern void fsnotify_put_mark(struct fsnotify_mark *mark);
++struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark);
+ extern void fsnotify_finish_user_wait(struct fsnotify_iter_info *iter_info);
+ extern bool fsnotify_prepare_user_wait(struct fsnotify_iter_info *iter_info);
+ 
 
 
