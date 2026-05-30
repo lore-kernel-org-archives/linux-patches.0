@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867E733F8B4;
-	Sat, 30 May 2026 17:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA6D30E853;
+	Sat, 30 May 2026 17:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162388; cv=none; b=VqV/YnC0YPllepUdnx5MsFdGz35U63bioS8G03DhyZ1c/3y1lt9YCAThJoe+4OZgRWNPRae3cg5hejsdsNdjJQuovSwQU8P5FqW3QGbRFhEUkC7gUOwOUA1fsOG733dnzNBTDEcFca3nqXE+2V5lRDbWob59WtAQMyvsndqT5+k=
+	t=1780162391; cv=none; b=rUBKBtfjvoOAE44mRXO19s02B1M70oe6OJbs7FG/217SO+9FcEsmM9NwrYurmODoejBHsHBceA/6kk9yftijL78z23+HkZeynUrwGHAGwUcNixbTJb3i/uxtJjraz7lgbhHjX0ql21302SFVi6LfOmErYKmEobxGo5V//ogF60g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162388; c=relaxed/simple;
-	bh=WySRyabm3OBxgSwOcsDl4RsZHfKuZlauCEQ9FGrT1D0=;
+	s=arc-20240116; t=1780162391; c=relaxed/simple;
+	bh=skqgQQnuG8dbSYbXvoMke6/jiKA3lTEvrBo7ZdH0JN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnvq8+AYDKQL5Hyrkbd3qwh+ntX95QoXDS9iNh0r43Ap5/npp4CA6umhga5rOpzubhqHAVtlbqDvU9Bhah43AEIM+2P4s3Al9ZAUZDQ2/rMK9koaeJAro8aXLiE1O1zaCZilN7YweqRWnyWEjKBN/n7LOQwvkW8Ys0wzgohDk1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HN34mrqz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W955VMsGO1quXm+d5VCY1cdly02RexGohhPc/co7QR9nnfI3BbenOE6o4VdTFNIiEaGNCeydn/ZRLbiBcbqpZfKtFQkJfB5NdmTY6+CUMDWJerZrV+ZpaksawVyUw+TE+dYPFBjM2gPWWVsFcIX5z92QAPOYXo1otGx59xdpxYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpldd44X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HN34mrqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65241F00893;
-	Sat, 30 May 2026 17:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpldd44X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF3D1F00893;
+	Sat, 30 May 2026 17:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162387;
-	bh=CZxNFKGgCqrX6lAuE12/ztOZXSDohrbccO3uYxM07O4=;
+	s=korg; t=1780162390;
+	bh=uX/iARVBZEquKCqMdQsK+BkLCf9C7DPeA+KOdNwJDyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HN34mrqzHuDoqcvHalr4vhFG8C/rQMfvs36gWyDUsEX2aFlLRNd8oAhLTwf8YH/a5
-	 xm8+EVEj6SxrFloBP4io6yYfk4Vac4hMehhjuAUZdzfS+7Mmlhsb4QVebV6iFylDxZ
-	 ILzmxtI7cF70M6ukY9vjjmiO3b1ggGmp1e2y0+ms=
+	b=fpldd44XYY1H8eqBgNNheH3H5CAlqfmxUtZabBvsDpCq8LaB09NqANeU9GKsnC0hm
+	 ao1g1/P+783mZPB6n2BdRraSgj+ZMLkdWxYBv07ylZmIlg0VkZvMWXts5m2EyXY9tf
+	 oj1ZgsBU11rHV0/NpTW4jT9DqlZaQZY6567grc6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 857/969] vsock/vmci: fix UAF when peer resets connection during handshake
-Date: Sat, 30 May 2026 18:06:21 +0200
-Message-ID: <20260530160324.334563519@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 900/969] firmware: arm_ffa: Check for NULL FF-A ID table while driver registration
+Date: Sat, 30 May 2026 18:07:04 +0200
+Message-ID: <20260530160325.564236617@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,64 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minh Nguyen <minhnguyen.080505@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
+[ Upstream commit 0a5e695095c557d2380131b613dea4e8d90371be ]
 
-vmci_transport_recv_connecting_server() returned err = 0 for a peer
-RST in its default switch arm:
+The bus match callback assumes that every FF-A driver provides an
+id_table and dereferences it unconditionally. Enforce that contract at
+registration time so a buggy client driver cannot crash the bus during
+match.
 
-	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
-
-That made vmci_transport_recv_listen() skip vsock_remove_pending(),
-leaving the pending socket on the listener's pending_links with
-sk_state = TCP_CLOSE while destroy: still dropped the explicit
-reference taken before schedule_delayed_work().
-
-One second later vsock_pending_work() observed is_pending=true and
-performed full cleanup: vsock_remove_pending() then the two trailing
-sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
-the socket, and the second wrote into the freed object:
-
-  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
-  Write of size 4 at addr ffff88800b1cac80 by task kworker
-  Workqueue: events vsock_pending_work
-
-Treat peer RST like any other unexpected packet type (err = -EINVAL).
-All destroy: arms now return err < 0, so vmci_transport_recv_listen()
-removes pending from pending_links synchronously and
-vsock_pending_work() takes the is_pending=false / !rejected branch,
-dropping only its own work reference.  This also closes the
-multi-packet race Sashiko reported on v2: pending is removed from
-the list before any subsequent packet can find it.
-
-The pre-existing sk_acceptq_removed() gap on the err < 0 path of
-vmci_transport_recv_listen() that Sashiko also noted is not
-introduced or changed by this patch.
-
-Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
-Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 92743071464f ("firmware: arm_ffa: Ensure drivers provide a probe function")
+Link: https://patch.msgid.link/20260428-ffa_fixes-v2-1-8595ae450034@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vmci_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/bus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1156,7 +1156,7 @@ vmci_transport_recv_connecting_server(st
- 		/* Close and cleanup the connection. */
- 		vmci_transport_send_reset(pending, pkt);
- 		skerr = EPROTO;
--		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
-+		err = -EINVAL;
- 		goto destroy;
- 	}
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index 5bda5d7ade42d..4ef02f0125ab9 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -24,6 +24,8 @@ static int ffa_device_match(struct device *dev, struct device_driver *drv)
  
+ 	id_table = to_ffa_driver(drv)->id_table;
+ 	ffa_dev = to_ffa_dev(dev);
++	if (!id_table)
++		return 0;
+ 
+ 	while (!uuid_is_null(&id_table->uuid)) {
+ 		/*
+@@ -107,7 +109,7 @@ int ffa_driver_register(struct ffa_driver *driver, struct module *owner,
+ {
+ 	int ret;
+ 
+-	if (!driver->probe)
++	if (!driver->probe || !driver->id_table)
+ 		return -EINVAL;
+ 
+ 	driver->driver.bus = &ffa_bus_type;
+-- 
+2.53.0
+
 
 
