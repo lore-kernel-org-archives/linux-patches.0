@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864D426738C;
-	Sat, 30 May 2026 18:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE394313E34;
+	Sat, 30 May 2026 18:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166008; cv=none; b=CrK7dTgSLVce8OeLzptgaHhQ+vdZzrKIvAXqnbq+vsb7DnBMyQdKQjgBDfviBYpubJcjRt0zED012Ap/rfG4fQGFiCSWL1spRHQlxQgbsJ8j00pVY/uxHJTkfv6NO+5UL1nmByHlug2p3FICt4liQXkEoXlqFCV9A6m6bjpKPCE=
+	t=1780166011; cv=none; b=f3yshDYrjXo2qKx7aWye8vqj/c6e3vnGDrYg/jaOylYGbTS7VpXXNSWEGXluH1dMfnZ/vY463qrQ54DGM3IuzjV8fFL/D6Ka/RKf3snuOsVpKVYYycDxZyoPStqTLr3lHfH5822eB6ePfS8rzlMCKeJv0nWCJo61vUudShFg2Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166008; c=relaxed/simple;
-	bh=I4HaCpQhHN7XysMq+jssh7SDjE5ZO7s5kolfH0AIipQ=;
+	s=arc-20240116; t=1780166011; c=relaxed/simple;
+	bh=g1UNX3TRNPXaJd7jjjI3NBOJtfzJ/wgQsoZeg/4ajNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ai4EyHv57OAu2Exw85yfvbXan+LZ7YNHzlOZd4BCgugS7HY2cX4TigpW6Dd5Dtaz6EtsNs1ZJIJTCkOFPDPpL0oHzelnrsfmEt89pjNEzN1Nxp/leoU7Wm2977YxTtwAYIcZHkPuPp18jv+RzSQjagDlB0g9ygqLPNcyUjtoBLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCObz9DC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OK0tcLsva04g2JeQ+Dmck+mYGckeAlQe0bjirne+vL1L/Nc9dopMi7fh0chbC3swKaVtLlfpLMXQaAHfrqfz7WktiozsO/vtpEPGiqzdKYeOq/sBzarzNnXq3wpstPMuVWY2DaSVdrzqJYCEhF9ltrbaqDQ5eVNUeGghK0H3PjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmuEYMqm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCObz9DC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90531F00893;
-	Sat, 30 May 2026 18:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmuEYMqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8CF1F00893;
+	Sat, 30 May 2026 18:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166007;
-	bh=bLY2+ts2GSvSkAuFNqbNFNrzse2mgW76oH3JHN9tezk=;
+	s=korg; t=1780166010;
+	bh=NfokzXqhml0YHlCxz9WD4Wzb829sP76NNa43NgqTWPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCObz9DCw3ijVaTBH02BI6ZAeabUnZ63M2kfZKHCcdE9SmZBqJrab2uZ75m6lUodB
-	 cCCYJjzMeBezCY0OLZBSfq+PkSG78+ClQasl9WCYXQwo8OHcUnCyXxPJ6t1DxvtqIg
-	 xKXr5Om8CwOrBknLKhM8Qsg26ZTRG4yTk3grVqGI=
+	b=CmuEYMqm54qJNYPAXr6Dfd2B2Ix0GQrp6IpFRgvg5fDFdRz6c6NbA6GLaIY3qMaU/
+	 DL7njwDZYAKAgF3NwEFqHeD0uKIFJXk01+rWOUHNiqU3Nn521HkU0fJ4DaoFxnacaC
+	 oa4dSaoaiuJ0s9AcJIQ/d3RvpSMNqXlCEiidKGrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Vincent Danjean <vdanjean@debian.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 218/589] wifi: ath5k: do not access array OOB
-Date: Sat, 30 May 2026 18:01:39 +0200
-Message-ID: <20260530160230.711425125@linuxfoundation.org>
+	Shivam Kalra <shivamkalra98@zohomail.in>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 209/589] ACPI: video: force native backlight on HP OMEN 16 (8A44)
+Date: Sat, 30 May 2026 18:01:30 +0200
+Message-ID: <20260530160230.448273916@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,63 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Shivam Kalra <shivamkalra98@zohomail.in>
 
-commit d748603f12baff112caa3ab7d39f50100f010dbd upstream.
+commit 4b506ea5351a1f5937ac632a4a5c35f6f796cc41 upstream.
 
-Vincent reports:
-> The ath5k driver seems to do an array-index-out-of-bounds access as
-> shown by the UBSAN kernel message:
-> UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath5k/base.c:1741:20
-> index 4 is out of range for type 'ieee80211_tx_rate [4]'
-> ...
-> Call Trace:
->  <TASK>
->  dump_stack_lvl+0x5d/0x80
->  ubsan_epilogue+0x5/0x2b
->  __ubsan_handle_out_of_bounds.cold+0x46/0x4b
->  ath5k_tasklet_tx+0x4e0/0x560 [ath5k]
->  tasklet_action_common+0xb5/0x1c0
+The HP OMEN 16 Gaming Laptop (board name 8A44) has a mux-less hybrid
+GPU configuration with AMD Rembrandt (Radeon 680M) and NVIDIA GA104
+(RTX 3070 Ti). The internal eDP panel is wired to the AMD iGPU.
 
-It is real. 'ts->ts_final_idx' can be 3 on 5212, so:
-   info->status.rates[ts->ts_final_idx + 1].idx = -1;
-with the array defined as:
-   struct ieee80211_tx_rate rates[IEEE80211_TX_MAX_RATES];
-while the size is:
-   #define IEEE80211_TX_MAX_RATES  4
-is indeed bogus.
+When Nouveau loads without GSP firmware, the ACPI video backlight
+device (acpi_video0) gets registered alongside the native AMD
+backlight (amdgpu_bl2). In this state, writes to amdgpu_bl2 update
+the software brightness value but fail to change the physical panel
+brightness.
 
-Set this 'idx = -1' sentinel only if the array index is less than the
-array size. As mac80211 will not look at rates beyond the size
-(IEEE80211_TX_MAX_RATES).
+Force native backlight to prevent acpi_video0 from registering.
+Confirmed that booting with acpi_backlight=native resolves the
+issue.
 
-Note: The effect of the OOB write is negligible. It just overwrites the
-next member of info->status, i.e. ack_signal.
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reported-by: Vincent Danjean <vdanjean@debian.org>
-Link: https://lore.kernel.org/all/aQYUkIaT87ccDCin@eldamar.lan
-Closes: https://bugs.debian.org/1119093
-Fixes: 6d7b97b23e11 ("ath5k: fix tx status reporting issues")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209100459.2253198-1-jirislaby@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Shivam Kalra <shivamkalra98@zohomail.in>
+Link: https://patch.msgid.link/20260426-omen-16-backlight-fix-v1-1-62364f268ea6@zohomail.in
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath5k/base.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/video_detect.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/wireless/ath/ath5k/base.c
-+++ b/drivers/net/wireless/ath/ath5k/base.c
-@@ -1693,7 +1693,8 @@ ath5k_tx_frame_completed(struct ath5k_hw
- 	}
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -154,6 +154,14 @@ static const struct dmi_system_id video_
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "VPCEH3U1E"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* HP OMEN Gaming Laptop 16-n0xxx */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
++		},
++	},
  
- 	info->status.rates[ts->ts_final_idx].count = ts->ts_final_retry;
--	info->status.rates[ts->ts_final_idx + 1].idx = -1;
-+	if (ts->ts_final_idx + 1 < IEEE80211_TX_MAX_RATES)
-+		info->status.rates[ts->ts_final_idx + 1].idx = -1;
- 
- 	if (unlikely(ts->ts_status)) {
- 		ah->stats.ack_fail++;
+ 	/*
+ 	 * These models have a working acpi_video backlight control, and using
 
 
