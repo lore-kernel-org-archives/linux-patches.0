@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967D9320CAD;
-	Sat, 30 May 2026 17:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3837346E55;
+	Sat, 30 May 2026 17:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163502; cv=none; b=qu7p6PqZXiDZK0l54IGsLobRnlqK39yz0aEhXeaSxLkPw3psck2UD/afHFXjSd3iok1iUZI+gtDXX7gIh4HBaApveYQ1jwM3Y59/EzIFwBjsaAYbUpwZGtFMXDkhMISD832RQrBTqK4n7MTZhhMsZrj3JbsvvXB6CAlukh0vOoI=
+	t=1780163505; cv=none; b=ccRoVRfy/fJIDyVPc8pUuFIOwkikxe//WT3nXn9+AjCvLvsopFOHDoKC62nlomYicB1kDIrhvpFbu6aHcsQJJ9FXlybHHTosnIZ1Ri2hZOGCELCwlqHm37j48JLouQFTbAoIUXPKz5wQMDKWbyLRsSO6ElEYM/5iiHAuIE/Ys8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163502; c=relaxed/simple;
-	bh=JgPDRw1vDu26HIx8x2TAWzX49IPnZsrCxxLhhKUqg9A=;
+	s=arc-20240116; t=1780163505; c=relaxed/simple;
+	bh=9lDoUSY0LoMa/qIGjPZXW7BlrNwiG51nLEn6FoOjWsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcKCn9dnCgmiTo3ZHiNpFLNnvNEhQVJSjQXRod99af2m6fhcZIRSiCQpjz0HDUFbOaEyRVSohLtamM5nsvpm2TOdq1JDZvALNDJrwgCUoYDC4ec5Y2EtrIpTN/tIcxshKcISxqIRAiHhlosoQEIwAxtkvb8LyZTPDDe6VYfwkks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iveo8e8b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGAuKMtnJotQI3iKwBP7gzalgHptaMdtgM8Os3CWISOO9tBvvRl0slMuwZtc9B3I8Rlw3/qG3YnQkyJiV1ceNsVFJb58b01Ny/hnBF7MwYUc+EOq4NEVEYmvbXAqjtPcDk0X+6YHkIDlEzNJ8aeY0H7vdRQfF8CDm9FLzVwOqWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8a3djFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iveo8e8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8FF1F00893;
-	Sat, 30 May 2026 17:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8a3djFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320251F00893;
+	Sat, 30 May 2026 17:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163501;
-	bh=+HwFabfDFiaj47k/1UWvqBhuJaPPoIQo4Ig/lcqEaEs=;
+	s=korg; t=1780163504;
+	bh=JA30y6Ct5xtFx9N222i7wiCtakH30chbK6gATq5HPZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iveo8e8b2wXhKuwJhzyx3opZRfbWaT8g267Q0/ycb7ug7uP36KXQwkhzLHMEGOSto
-	 72cqdUiKd87pWgcjuedo5iV9gqI/FnK4/t8mQRoirJ5rfOGtd3tI/Bgo7maRuEgC1L
-	 1dOvFFXof9Aq1XoV7LJS5XlOpRwiL2TI6stk2CoU=
+	b=K8a3djFzxNJ63900sIfZCX8Po921Ug5AWQjnUJy5iMSnh9tM7+m0FWIffYZ3QYk7G
+	 tJsd/WKOkV6zqQ0DH6ko5k+k0s5iJkLogtddyKxAiqViJeYfPts11pTX/fj66QJp/A
+	 9Cv6B3RRh8oGlXHg3lh6ZRYrCoIZ93nRUQDE/WCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kalra <shivamkalra98@zohomail.in>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 278/776] ACPI: video: force native backlight on HP OMEN 16 (8A44)
-Date: Sat, 30 May 2026 17:59:52 +0200
-Message-ID: <20260530160247.743784360@linuxfoundation.org>
+	addy ke <addy.ke@rock-chips.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 279/776] spi: rockchip: fix controller deregistration
+Date: Sat, 30 May 2026 17:59:53 +0200
+Message-ID: <20260530160247.767519712@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,49 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kalra <shivamkalra98@zohomail.in>
+From: Johan Hovold <johan@kernel.org>
 
-commit 4b506ea5351a1f5937ac632a4a5c35f6f796cc41 upstream.
+commit 53e7a16070feb7d1d4d81a583eaac5e25048b9c3 upstream.
 
-The HP OMEN 16 Gaming Laptop (board name 8A44) has a mux-less hybrid
-GPU configuration with AMD Rembrandt (Radeon 680M) and NVIDIA GA104
-(RTX 3070 Ti). The internal eDP panel is wired to the AMD iGPU.
+Make sure to deregister the controller before freeing underlying
+resources like DMA channels during driver unbind.
 
-When Nouveau loads without GSP firmware, the ACPI video backlight
-device (acpi_video0) gets registered alongside the native AMD
-backlight (amdgpu_bl2). In this state, writes to amdgpu_bl2 update
-the software brightness value but fail to change the physical panel
-brightness.
-
-Force native backlight to prevent acpi_video0 from registering.
-Confirmed that booting with acpi_backlight=native resolves the
-issue.
-
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Shivam Kalra <shivamkalra98@zohomail.in>
-Link: https://patch.msgid.link/20260426-omen-16-backlight-fix-v1-1-62364f268ea6@zohomail.in
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 64e36824b32b ("spi/rockchip: add driver for Rockchip RK3xxx SoCs integrated SPI")
+Cc: stable@vger.kernel.org	# 3.17
+Cc: addy ke <addy.ke@rock-chips.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260324082326.901043-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-rockchip.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -154,6 +154,14 @@ static const struct dmi_system_id video_
- 		DMI_MATCH(DMI_PRODUCT_NAME, "VPCEH3U1E"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 /* HP OMEN Gaming Laptop 16-n0xxx */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
-+		},
-+	},
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -917,7 +917,7 @@ static int rockchip_spi_probe(struct pla
+ 		break;
+ 	}
  
- 	/*
- 	 * These models have a working acpi_video backlight control, and using
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Failed to register controller\n");
+ 		goto err_free_dma_rx;
+@@ -953,6 +953,8 @@ static int rockchip_spi_remove(struct pl
+ 	clk_disable_unprepare(rs->spiclk);
+ 	clk_disable_unprepare(rs->apb_pclk);
+ 
++	spi_unregister_controller(ctlr);
++
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
