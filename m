@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025ED3112C1;
-	Sat, 30 May 2026 18:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9B93191D0;
+	Sat, 30 May 2026 18:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164532; cv=none; b=JqQtEEx9U5cSbAD2p/6BpFhu/aStGnNbbh+j6PDgI0kmlFP/Qh6LkkFIXOAqjPiELzbCVcXjS1421BsvKNXSHbmAmKJJDwisi5aIyVZvcFsxj8CHGKZHQ0kzFdSSwgyfKni9MrCey0B3oleJz/xJT9oJtZ3mkU7DLe8xYV3BA3A=
+	t=1780164535; cv=none; b=nf/uFpvpSHqN7gApe1+lwlt/iYZWvNgqBEymw4O7MshBOJh9AlZ6yaTuCTXyB8ziDdmsfFX2csHftDPes8xFw6mjKNxuzyAx7a+ybmd9KQAHbuuxq2rZO9yvsG3JZBgqbmgsoSMgQSLgHWrBLKT6GLGsfvlXHe14h5hl1SbYVzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164532; c=relaxed/simple;
-	bh=Ug4mMcHjI4sK5EmgznIzJ/BSgjSpfbYffrs5igO1VO0=;
+	s=arc-20240116; t=1780164535; c=relaxed/simple;
+	bh=p671LR28dbrt0TD0MTJXYK5uu4O/KnkcLbX6/Ih3n1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/a5tj5wF9vVAT3KyA9C1csblnKhQnrYG3pnbsvkHzmH6jSs4KVhcyBE/8zB7W8jMO9TYGe47Fy5uakw5DSiDEiDZUPB/YpiQ0qJc1JvjxvK1hdqA3OJUBHywFw6WiBZWgTgFKfR/kOiSFzoJBQOHPgUu6WZzR7+BV7TPMAEv40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bi2HUb6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tUhkpSy0ZqFIenfsegr4C0eqMlQtbV2Oa/PYwaguxNwWjCKA+qySe5Eb8zHdQSGnRMfBIyjXXIX7uXPfh5Gg5yQ898UGzJ1mY/wK8CTTDgBqAJqpbZY8mu09qV2ioD08gVXXz4YDQdEZg4yBp1E0VA3Vk6c0RybzpNuFFr1oEak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5LLF4JG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bi2HUb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A0B1F00893;
-	Sat, 30 May 2026 18:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5LLF4JG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909701F00893;
+	Sat, 30 May 2026 18:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164530;
-	bh=znEzxapq7vlFKktfBDIGeGU9lNo5r1sGctN1FAffqsw=;
+	s=korg; t=1780164534;
+	bh=BbyE6iEFmsLqBv/MPTxq+/w8cO0yvRXZFRz6iYcdpIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bi2HUb6eo9ggXijg/xWBTM0G/JEGrqfUl3KaRsnR8IuLUmWbsDoUTClgiXVmQApO
-	 m3OiEcF76jtYseCy4UuYn1Qk/E+da/I7Sp8V8nnatLQ7P3nyikLWOrOJC9iQjJEVRr
-	 2d9LODH81UTqIB/dSfPozoM/Qdxs9DY/r+6pWzIc=
+	b=s5LLF4JGa9IztVrZ9YHREqbeHspAyDo1deXFBpWpXk+pt45DGTeJE5iYKvpHPpbvA
+	 RGUHuVtJeIdR+cZBxyZ7PLdHcekDUOH+ofV2Zm4wk9SSJ/5irYn8czA4/EZkW9Wxts
+	 khF4Z4cUXvSfXokWHIM+GTyoy0YdY73d9MZkejiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 582/776] ksmbd: destroy tree_conn_ida in ksmbd_session_destroy()
-Date: Sat, 30 May 2026 18:04:56 +0200
-Message-ID: <20260530160255.125688803@linuxfoundation.org>
+Subject: [PATCH 5.15 583/776] ksmbd: scope conn->binding slowpath to bound sessions only
+Date: Sat, 30 May 2026 18:04:57 +0200
+Message-ID: <20260530160255.149057278@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,69 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit c049ee14eb4343b69b6f7755563f961f5e153423 ]
+[ Upstream commit b0da97c034b6107d14e537e212d4ce8b22109a58 ]
 
-When per-session tree_conn_ida was converted from a dynamically
-allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
-removed from ksmbd_session_destroy() but no matching ida_destroy()
-was added.  The session is therefore freed with the IDA's backing
-xarray still intact.
+When the binding SESSION_SETUP sets conn->binding = true, the flag stays
+set after the call so that the global session lookup in
+ksmbd_session_lookup_all() can find the session, which was not added to
+conn->sessions. Because the flag is connection-wide, the global lookup
+path will also resolve any other session by id if asked.
 
-The kernel IDA API expects ida_init() and ida_destroy() to be paired
-over an object's lifetime, so add the missing cleanup before the
-enclosing session is freed.
+Tighten the global lookup so that the returned session must have this
+connection registered in its channel xarray (sess->ksmbd_chann_list).
+The channel entry is installed by the existing binding_session path in
+ntlm_authenticate()/krb5_authenticate() when a SESSION_SETUP completes
+successfully, so this condition is a strict equivalent of "this
+connection has been accepted as a channel of this session". Connections
+that have not bound to a given session cannot reach it via the global
+table.
 
-Also move ida_init() to right after the session is allocated so that
-it is always paired with the destroy call even on the early error
-paths of __session_create() (ksmbd_init_file_table() or
-__init_smb2_session() failures), both of which jump to the error
-label and invoke ksmbd_session_destroy() on a partially initialised
-session.
+The existing conn->binding gate for entering the slowpath is preserved
+so that non-binding connections keep the fast-path-only behavior, and
+the session->state check is unchanged.
 
-No leak has been observed in testing; this is a pairing fix to match
-the IDA lifetime rules, not a response to a reproduced regression.
-
-Fixes: d40012a83f87 ("cifsd: declare ida statically")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/mgmt/user_session.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ksmbd/mgmt/user_session.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ksmbd/mgmt/user_session.c b/fs/ksmbd/mgmt/user_session.c
-index 8bd18610547d9..23a0662bbfd32 100644
+index 23a0662bbfd32..b6b6572d402d3 100644
 --- a/fs/ksmbd/mgmt/user_session.c
 +++ b/fs/ksmbd/mgmt/user_session.c
-@@ -153,6 +153,7 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
- 	free_channel_list(sess);
- 	kfree(sess->Preauth_HashValue);
- 	ksmbd_release_id(&session_ida, sess->id);
-+	ida_destroy(&sess->tree_conn_ida);
- 	kfree(sess);
- }
+@@ -301,8 +301,13 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
+ 	struct ksmbd_session *sess;
  
-@@ -382,6 +383,8 @@ static struct ksmbd_session *__session_create(int protocol)
- 	if (!sess)
- 		return NULL;
- 
-+	ida_init(&sess->tree_conn_ida);
-+
- 	if (ksmbd_init_file_table(&sess->file_table))
- 		goto error;
- 
-@@ -399,8 +402,6 @@ static struct ksmbd_session *__session_create(int protocol)
- 	if (ret)
- 		goto error;
- 
--	ida_init(&sess->tree_conn_ida);
--
- 	down_write(&sessions_table_lock);
- 	hash_add(sessions_table, &sess->hlist, sess->id);
- 	up_write(&sessions_table_lock);
+ 	sess = ksmbd_session_lookup(conn, id);
+-	if (!sess && conn->binding)
++	if (!sess && conn->binding) {
+ 		sess = ksmbd_session_lookup_slowpath(id);
++		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
++			ksmbd_user_session_put(sess);
++			sess = NULL;
++		}
++	}
+ 	if (sess && sess->state != SMB2_SESSION_VALID) {
+ 		ksmbd_user_session_put(sess);
+ 		sess = NULL;
 -- 
 2.53.0
 
