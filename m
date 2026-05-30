@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6276223DC6;
-	Sat, 30 May 2026 18:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E10629B799;
+	Sat, 30 May 2026 18:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164866; cv=none; b=NLqZhZQ5nV4S9y8Q/MlRaZ0x50Bge6sIpoOtDBr+BmWMlsz6uWm7h3Hae3CCMqjQsq6wn9iYOqiUUgCEkfaL6jnfU7SvXcC/VYeQgrMU5ZLvuHYHUXXfGLPMJiQlK4zyFQiIl+xzLGcsj0UHKKTk4s1cWw12UWJK0DtQ/SGCoFk=
+	t=1780164871; cv=none; b=MPuRl9VQAVwD2zbNwnyC2lrIj0RjQcubI2ZpndQoYfd1kNBS0kUr9MQBE1NrDdrdeLz1xm1VKS+CcAdGNY9b1Q6GCKEet+0pLOh4xsIzo0rwmHS8duEtFFLPacOdDqCOyWpLnbgwVPc+unAxk/Sfsdf0CaHgP9q4XxDOmJ0F9OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164866; c=relaxed/simple;
-	bh=1Qb1vXFSYh5rq6nXhVWYZES14X1QBZQYwmFatMcuah8=;
+	s=arc-20240116; t=1780164871; c=relaxed/simple;
+	bh=6o/m6NwFufGvZ/IReU/0/DpIRMwK7d3LU/Jz1xMdGmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ew6kcQAhUUoQuSIY5iITLc3LqSEuXTgBj2hi/DpGhJvKNye2eWMUO2jwcXW3kS2kfzItl7mmgattcK3yi2u57WmktQqvr31v5yIvlWJlUa2x2EqBFrylZM3bRBRB3ziu4w5nFavf+QLAKZ9S7UKeXL3Da/GJK3X2vPGvEXBqesY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzBEDPeD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gWcdZJ8MVfxNApDZvmXs58YMcIpz2XzlXRPh9918VrnJ9aHZxK1Vn3UlPl0rG3GsOB/WAQ2xzwuNbNZM4eke5NaoxLPZfZ9Qh1X6Ctr0GRWgTv7ix9U2hkvyJKIXM838DKotzeKE7gDZ5oXRyjT6obatjccaGRrmLfVGT5o6/zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FArwyfn2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzBEDPeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB841F00898;
-	Sat, 30 May 2026 18:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FArwyfn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90461F00893;
+	Sat, 30 May 2026 18:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164865;
-	bh=KVYM9AVvCP0vXUgpyoQGfafq9TkHBhAp2zQxoP9zWq0=;
+	s=korg; t=1780164870;
+	bh=zgBaQA+VGY2GCO65TvAPJ0cZk+xBkzkjnt1+0L26MEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TzBEDPeDCpDg5rQdQ8R3zcLiOpZa0MyffnsDjrI/hQzizi8ZuuxzDuGun5/iSuY1c
-	 odAc/iHQhb+wgcWyHdg/Q23HXLmUBqHNCbapSDLdZxybi8oSZhQ7no6tZqbTgxEQgs
-	 YRRGkrTwLxI9JsqL/2YM4ERJQHL4bRHLlqZNNoCY=
+	b=FArwyfn2nkCGEicxkgJeRAWhfvqiCwriSXH92A1V4f3gmHN94Pwb++8x7qoyXgOQ6
+	 jdlQ4C5mK3uNh3auuAEwS1z/EUJUt4qTugwniknH66hZnPJji9ZMqQxno2yp7T9IdS
+	 LSj0L5YAE9gl9cZtDzYQcXuM9KaXdTY0OqRG5PGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 681/776] ALSA: asihpi: Fix potential OOB array access at reading cache
-Date: Sat, 30 May 2026 18:06:35 +0200
-Message-ID: <20260530160257.467219036@linuxfoundation.org>
+	Qiang Ma <maqianga@uniontech.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 654/776] KVM: x86: Fix Xen hypercall tracepoint argument assignment
+Date: Sat, 30 May 2026 18:06:08 +0200
+Message-ID: <20260530160256.815644399@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,37 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 7b7d6572145c1dab2dd9bfb550b188e5f0ff3c3f upstream.
+commit 2b72f1674e427c56e3772c5ccf785fdda2138820 upstream.
 
-find_control() to retrieve a cached info accesses the array with the
-given index blindly, which may lead to an OOB array access.
-Add a sanity check for avoiding it.
+TRACE_EVENT(kvm_xen_hypercall) stores a5 in __entry->a4 instead of
+__entry->a5.
 
-Link: https://sashiko.dev/#/patchset/20260511230121.28606-1-rosenp%40gmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260515085606.242284-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+That overwrites the recorded a4 argument and leaves a5 unset in the
+trace entry. Fix the typo so both arguments are captured correctly.
+
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Link: https://patch.msgid.link/20260512015313.1685784-1-maqianga@uniontech.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/asihpi/hpicmn.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/trace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/asihpi/hpicmn.c
-+++ b/sound/pci/asihpi/hpicmn.c
-@@ -276,6 +276,12 @@ static short find_control(u16 control_in
- 		return 0;
- 	}
+--- a/arch/x86/kvm/trace.h
++++ b/arch/x86/kvm/trace.h
+@@ -133,7 +133,7 @@ TRACE_EVENT(kvm_xen_hypercall,
+ 		__entry->a2 = a2;
+ 		__entry->a3 = a3;
+ 		__entry->a4 = a4;
+-		__entry->a4 = a5;
++		__entry->a5 = a5;
+ 	),
  
-+	if (control_index >= p_cache->control_count) {
-+		HPI_DEBUG_LOG(VERBOSE, "control_index out of bounce %d\n",
-+			control_index);
-+		return 0;
-+	}
-+
- 	*pI = p_cache->p_info[control_index];
- 	if (!*pI) {
- 		HPI_DEBUG_LOG(VERBOSE, "Uncached Control %d\n",
+ 	TP_printk("nr 0x%lx a0 0x%lx a1 0x%lx a2 0x%lx a3 0x%lx a4 0x%lx a5 %lx",
 
 
