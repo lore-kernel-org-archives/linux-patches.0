@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D45832937A;
-	Sat, 30 May 2026 16:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18AD341AC7;
+	Sat, 30 May 2026 16:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158587; cv=none; b=pVywzC0cPIUTSyzOFjrdjqM+Ve582T7r/J+XXSAAtc6Y1sUBjn9cA06/sxLM5GY8rIY/KpIcLsTvYvWx8uN92t//VUR4hYsYu6uTblJqaWMCWEaCsY51MWNQfhWWLwq9Mk8QZwT1E1Idj4/GRSk1mhhT3ZXny3Zp3T+rHMoFpLg=
+	t=1780158604; cv=none; b=gD2M+Dm3GjfyZe0BrAKvlvjfXk8eXdvt8Mh8qEifZUtagahvK5gBbVALheJcSwfWQGOu6dJ/8TXMDLK2oZH7q7ukXSooQkNFn2ZAwI4AGfKWLEakSqwtb1G1p71L/SCKYJKm0voZrY8Fn/ts0Z8nZyyl8sr+ozr2v8t0jmLwRDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158587; c=relaxed/simple;
-	bh=vf4ToYmF4BoujjSdZNchFx8nhUk3+1Vy7NKE7YArqGM=;
+	s=arc-20240116; t=1780158604; c=relaxed/simple;
+	bh=UzU5xDU7jf/o48X/Ru8zOI/jPy3n5JU4CLd7JXC/qWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/AQ9a3KAgY2p6wGgcyXvaOiCfo8AtfA09Uj4lxhhubZhpR7VqZsfi77CNobbcC2temyPlRN2WoF6dixuhHtvDRev4z6ns7yJYTHrE/KJuwV8008fzh4WToyk93xdTiyxQwpCq2jTJBby1DEr3JEEBiET/j8v80fdWhTesJhdZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPNFrjm9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rpEiliZEF6023Awzr35SeKkl/oyQgVfGcrjHXrcWVcNyXGETX1/0KzGu2edGvWQVXqW2C1DZ4vNsXgDcebH1cs1XNnlr1MYxc+FWLi4zCxR9yp4V/oTpiVgAWSPbFeQfRG5C5fbH/9xaar7NAazByNG2/f9VsGLGn3M+BnFHYtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvTSPjUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPNFrjm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDF41F00893;
-	Sat, 30 May 2026 16:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvTSPjUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550B61F00893;
+	Sat, 30 May 2026 16:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158586;
-	bh=UP02N3Glkl39GEuFH/ZhLhIWnPH8k57PKM8vtYw/XRc=;
+	s=korg; t=1780158603;
+	bh=Me787vzMqrdxInjAhc/Bgi/55lcV/Xh42ThcvThCn+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wPNFrjm9qY/3QQEpCk4OClfzahmfQTSAaEETsyYSujy9L3oq09EzEgn7ENfC8n/WO
-	 R+0J5L8i9enkGPnMINE+t545IWkGxXnabKhrv005/lnqn0WiU8ioX/By85OfJLyPPY
-	 hTTgmpJGhJ3A+4x741XN1kiHzLyEMWVbpGFVtCWM=
+	b=cvTSPjUa2CA66ah/U7zvwhFdgE6Qu957d+eysTSyddbCf5OMM+qxu7XM9xuKx7+F7
+	 T896OY82Axj7pkkjlKSbDZ6uZ1i4K+NAfGvl8covCQcezcwiAGAxyy8LOtwz//wcNl
+	 3wS+ECJ+gvVOURaZckttiKgSKBnZHwG+LV/kK6EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/969] nfc: s3fwrn5: allocate rx skb before consuming bytes
-Date: Sat, 30 May 2026 17:52:40 +0200
-Message-ID: <20260530160301.424244416@linuxfoundation.org>
+Subject: [PATCH 6.1 037/969] dt-bindings: net: Fix Tegra234 MGBE PTP clock
+Date: Sat, 30 May 2026 17:52:41 +0200
+Message-ID: <20260530160301.449174193@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,59 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 5c14a19d5b1645cce1cb1252833d70b23635b632 ]
+[ Upstream commit fb22b1fc5bca3c0aad95388933497ceb30f1fb26 ]
 
-s3fwrn82_uart_read() reports the number of accepted bytes to the serdev
-core. The current code consumes bytes into recv_skb and may already
-deliver a complete frame before allocating a fresh receive buffer.
+The PTP clock for the Tegra234 MGBE device is incorrectly named
+'ptp-ref' and should be 'ptp_ref'. This is causing the following
+warning to be observed on Tegra234 platforms that use this device:
 
-If that alloc_skb() fails, the callback returns 0 even though it has
-already consumed bytes, and it leaves recv_skb as NULL for the next
-receive callback. That breaks the receive_buf() accounting contract and
-can also lead to a NULL dereference on the next skb_put_u8().
+ ERR KERN tegra-mgbe 6800000.ethernet eth0: Invalid PTP clock rate
+ WARNING KERN tegra-mgbe 6800000.ethernet eth0: PTP init failed
 
-Allocate the receive skb lazily before consuming the next byte instead.
-If allocation fails, return the number of bytes already accepted.
+Although this constitutes an ABI breakage in the binding for this
+device, PTP support has clearly never worked and so fix this now
+so we can correct the device-tree for this device. Note that the
+MGBE driver still supports the legacy 'ptp-ref' clock name and so
+older/existing device-trees will still work, but given that this
+is not the correct name, there is no point to advertise this in the
+binding.
 
-Fixes: 3f52c2cb7e3a ("nfc: s3fwrn5: Support a UART interface")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260402042148.65236-1-pengpeng@iscas.ac.cn
+Fixes: 189c2e5c7669 ("dt-bindings: net: Add Tegra234 MGBE")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260401102941.17466-3-jonathanh@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/s3fwrn5/uart.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/net/nvidia,tegra234-mgbe.yaml         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nfc/s3fwrn5/uart.c b/drivers/nfc/s3fwrn5/uart.c
-index 82ea35d748a5d..dde1a87ed1e47 100644
---- a/drivers/nfc/s3fwrn5/uart.c
-+++ b/drivers/nfc/s3fwrn5/uart.c
-@@ -59,6 +59,12 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
- 	size_t i;
- 
- 	for (i = 0; i < count; i++) {
-+		if (!phy->recv_skb) {
-+			phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
-+			if (!phy->recv_skb)
-+				return i;
-+		}
-+
- 		skb_put_u8(phy->recv_skb, *data++);
- 
- 		if (phy->recv_skb->len < S3FWRN82_NCI_HEADER)
-@@ -70,9 +76,7 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
- 
- 		s3fwrn5_recv_frame(phy->common.ndev, phy->recv_skb,
- 				   phy->common.mode);
--		phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
--		if (!phy->recv_skb)
--			return 0;
-+		phy->recv_skb = NULL;
- 	}
- 
- 	return i;
+diff --git a/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml b/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
+index 2bd3efff2485e..215f14d1897d2 100644
+--- a/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
++++ b/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
+@@ -42,7 +42,7 @@ properties:
+       - const: mgbe
+       - const: mac
+       - const: mac-divider
+-      - const: ptp-ref
++      - const: ptp_ref
+       - const: rx-input-m
+       - const: rx-input
+       - const: tx
+@@ -133,7 +133,7 @@ examples:
+                  <&bpmp TEGRA234_CLK_MGBE0_RX_PCS_M>,
+                  <&bpmp TEGRA234_CLK_MGBE0_RX_PCS>,
+                  <&bpmp TEGRA234_CLK_MGBE0_TX_PCS>;
+-        clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++        clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+                       "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+                       "rx-pcs", "tx-pcs";
+         resets = <&bpmp TEGRA234_RESET_MGBE0_MAC>,
 -- 
 2.53.0
 
