@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA8E3546F6;
-	Sat, 30 May 2026 17:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874F5395AEA;
+	Sat, 30 May 2026 17:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161458; cv=none; b=jMn8m5gXA/oxZ84f++AZsTb5r1s1X36+5SeOjoEHo3LuU4CE0Tm0woJHi8Yze5bbbH+knbORVzHDTDNnoiUb8cy1DLTAQtMGWRlXJ8gPwgiZhgWSSQxCsrrbWjGw0uh+hPnIlQNJZPUUzsZnZIPswcg0+audY0oOtLUQPEC7x2s=
+	t=1780161462; cv=none; b=qTgVB5iHdjNV+f1Qr3ToM90FMgkjnTMvq+2GONPxOe+3yds9SuhOH2hOSY0hcXEtJP+mgKXzDjzMo8WoyYWXTuh5gPXN3PmsuQTCvQuS2PqmsqhWnEbQke4OqN+++RSoaVE87ums8vTFqk9ZzCeucr9XyWU9I5Pz/czvjqG5NM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161458; c=relaxed/simple;
-	bh=EUj0R/KVWSx1+G2OT3nNiVSkcJDOQTrr6S/ydQJTwww=;
+	s=arc-20240116; t=1780161462; c=relaxed/simple;
+	bh=DIoRYWgjYTwRvFsBaGtO78BpHO0TrbmfSw4RLv63LRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDtom3HJ500chIM0NLCfPJKubqthCsH3pRJFZ3jZzHxy+Ow2xISznUGaWeuNQX9Vtx1Sddee+DwJ2zZY/aV4N5sLO2PE1jylhLn6LNc3MDZOiyevmWx1OMm0ngmWHKs9WuCDIml5CzPlQrxW5DxQ8L+/myqEL8+aWqTwPhafO8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7JQnNxe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZMjDX0pKyw+SsDdog6jUdAR2gaj+5t9ZEbwt87OhR5ZyijHGwqcWOJzYBiWk4z+6wx12ziX0mM6qey/NG29I5FwKM/BXeXIoN2rIkULbnxJ6xjS9MvokPU9UXtVe5BmGfC0baSGKi/ejSlN7J9eGeP8yzw0vHknA/0byNvqiM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALizdpsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7JQnNxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D581F00893;
-	Sat, 30 May 2026 17:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALizdpsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78A31F00893;
+	Sat, 30 May 2026 17:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161457;
-	bh=hJ+KSwxFJrSKiAwmfUtpR4opjLulPjKgOEmIGwO0h/A=;
+	s=korg; t=1780161461;
+	bh=7/nUO3n4wN6lJTwNfpJX1z9REDeW9ShZhMOSyVW0Lvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7JQnNxeolqZVtwsxBpJpo1lBTm4Jci1uA3ouvd0Lm1Y4nu607rkitVb/7m6yOK2K
-	 KwrSksXpO9pjfOgsc5ANdjmFMlaYwRZvbYSEKzZ+I+OsJHCZoyp656waZWeZ8fS1se
-	 NuotF0+ApLb69nYucWLz9O9ktWuwfYSQ3UsQpuAM=
+	b=ALizdpswpC6+3cmcJmgG+Bx5mu7A4HE7LdiVw1zuOo4t1V7FI8p6Rtq6zREiZruwn
+	 z+0C2lXzRJVLKxMmWLw3R35wUtaP6cIDWyfram47EilvbvL7u7f8JHN+qLCqc7bjye
+	 P2FW+Es5C40pgngGYx/BLKsUoL3PmAnEIbzgxBCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 628/969] pinctrl: cy8c95x0: Avoid returning positive values to user space
-Date: Sat, 30 May 2026 18:02:32 +0200
-Message-ID: <20260530160317.790657913@linuxfoundation.org>
+Subject: [PATCH 6.1 629/969] perf branch: Avoid incrementing NULL
+Date: Sat, 30 May 2026 18:02:33 +0200
+Message-ID: <20260530160317.818256745@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5ad32c3607cf241a1a2680cabd64cbcd757227aa ]
+[ Upstream commit c969a9d7bbf46f983c4a48566b3b2f7340b02296 ]
 
-When probe fails due to unclear interrupt status register, it returns
-a positive number instead of the proper error code. Fix this accordingly.
+If the entry is NULL the value is meaningless so early return NULL to
+avoid an increment of NULL. This was happening in calls from
+has_stitched_lbr when running the "perf record LBR tests". The return
+value isn't used in that case, so returning NULL as no effect.
 
-Fixes: e6cbbe42944d ("pinctrl: Add Cypress cy8c95x0 support")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202602271847.vVWkqLBD-lkp@intel.com/
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 42bbabed09ce ("perf tools: Add hw_idx in struct branch_stack")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-cy8c95x0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/branch.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
-index 01f3c74f3dfa4..e4e8f744d27cb 100644
---- a/drivers/pinctrl/pinctrl-cy8c95x0.c
-+++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
-@@ -1216,7 +1216,7 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
- 	/* Read IRQ status register to clear all pending interrupts */
- 	ret = cy8c95x0_irq_pending(chip, pending_irqs);
- 	if (ret)
--		return dev_err_probe(dev, ret, "failed to clear irq status register\n");
-+		return dev_err_probe(dev, -EBUSY, "failed to clear irq status register\n");
+diff --git a/tools/perf/util/branch.h b/tools/perf/util/branch.h
+index dca75cad96f68..c99b389fac1e1 100644
+--- a/tools/perf/util/branch.h
++++ b/tools/perf/util/branch.h
+@@ -66,6 +66,9 @@ static inline struct branch_entry *perf_sample__branch_entries(struct perf_sampl
+ {
+ 	u64 *entry = (u64 *)sample->branch_stack;
  
- 	/* Mask all interrupts */
- 	bitmap_fill(chip->irq_mask, MAX_LINE);
++	if (entry == NULL)
++		return NULL;
++
+ 	entry++;
+ 	if (sample->no_hw_idx)
+ 		return (struct branch_entry *)entry;
 -- 
 2.53.0
 
