@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904F22690D5;
-	Sat, 30 May 2026 17:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68CE481DD;
+	Sat, 30 May 2026 17:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160455; cv=none; b=pMmyBuxLuD+bsyBqQENNI543X+hMQUQ1cB+yb7Tqoxsk2f3+e2+ZkXm3BZiaG1PSNbQvo5I4SibX0oIJkl37Qg1K/abmb9gLioXfwhLDLsLtcHPSiQidAHrXt6BpNRWuMg8c3aJ28XgUWwn/5czDLTDz+tBtThhhUlcS+pd/NPw=
+	t=1780160458; cv=none; b=gmqSD/FPgvFgorArLKxtXdNhszriJMRGrMfRH2+RBOK3zvANojIVwoBi4vVESmnwKK1AMSM2Lnhs8Zp6jGFN10Br4hgrBhJL5UvJN/1LneeTvgfrqGW1CCr0oz2meY9Ygt8My0x/2HphOzZv++PMYD9Pejd9Sap98cAXii27mVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160455; c=relaxed/simple;
-	bh=GsyXctFylgGr6aqrg1UIh9Jqrqr81qPi45ihQriatSQ=;
+	s=arc-20240116; t=1780160458; c=relaxed/simple;
+	bh=xEPccIyVkoJEugpAxL9NyDDMBvHL5SPrSoWePEQnLhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PVk1DYgSZs1EFDjcE7VGxvKt4E4IYzr0wLw3zacIqDK0Y5+/sipGg+tO+/pnI9UfniJsin868Qx/Aj3Q3tXKdJ5qBmZG0hxsUW2VuFGsUETmu1mkyUHcGipxC1L7DQ8KM41hJAnTD7IdKnnIoKVUXySXpmDni0r2V+r413o7z4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0rz6FIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LWB7iS+rDEMDAZ2EnTFAZUHV+WU0sp7nTt38brLDcF5kD7AvluM0m618/2RX/42ff0dtykz6BSZwzGTGM1KF06Ke1hVEGkWudQCSq77UPSRDHX+OsxFK5do8AFsUsZIqKjXQj+ZULUymn2Eyfmr+hOAkfP6RTZ6IycUuyGMVMUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWN4N7Aj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0rz6FIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0F71F00893;
-	Sat, 30 May 2026 17:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWN4N7Aj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33631F00893;
+	Sat, 30 May 2026 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160454;
-	bh=cvXicJNhpT6skuxq2wUPKdvKRN8baWdB/zq1iVfIhV0=;
+	s=korg; t=1780160457;
+	bh=Bzex0ePy/W5uvX3yzbbaHObR6MrGuJE1zFGpsnCDvfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0rz6FIUIIET9zafG0qr7pKzKLK1tVCHd4e3k05IiUlyIx/pHwiTERgp1SRZpbWeU
-	 XxB/aGfStAVNuDjaINGm31LHUNDs//m614F8Fz4pSHHof5vhC/9yBlLQqlLTCWQJPG
-	 R/1BSI/mvbTWq8RnIRC8H4n0SOFw6cyLyLPoBoo4=
+	b=xWN4N7AjWzIcL4CVS/BT0V+ZSL5hOYuM0S575MRhgdObwwDvqC1XqjR55VJYHb128
+	 5k+YTFdNmKqSWIOZF86qD34+I12ne2Kxyyy2Y9YS+FvE0wY4ZKQgDyVfE9ccjJ8ps4
+	 qwj0MV/HJVv4NcDkhmku26bDr6VQDsqcf3Tuhai0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 312/969] ALSA: firewire-tascam: Do not drop unread control events
-Date: Sat, 30 May 2026 17:57:16 +0200
-Message-ID: <20260530160309.031371710@linuxfoundation.org>
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 313/969] powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o
+Date: Sat, 30 May 2026 17:57:17 +0200
+Message-ID: <20260530160309.055084503@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,47 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit 0749daa8eb5ab90334aaad3b0671efd7150d43b1 upstream.
+commit b3a97f9484080c6e71db9e803e3cc1bb372a9bc7 upstream.
 
-tscm_hwdep_read_queue() copies as many queued control events as fit in
-the userspace buffer. When the buffer is smaller than the current
-contiguous queue segment, length is rounded down to the number of bytes
-that can be copied.
+KASAN instrumentation is intended to be disabled for the kexec core
+code, but the existing Makefile entry misses the object suffix. As a
+result, the flag is not applied correctly to core_$(BITS).o.
 
-However, after copying that shortened length, the code advances pull_pos
-to the original tail_pos, marking the whole contiguous segment as
-consumed. Any events between the copied portion and tail_pos are lost.
+So when KASAN is enabled, kexec_copy_flush and copy_segments in
+kexec/core_64.c are instrumented, which can result in accesses to
+shadow memory via normal address translation paths. Since these run
+with the MMU disabled, such accesses may trigger page faults
+(bad_page_fault) that cannot be handled in the kdump path, ultimately
+causing a hang and preventing the kdump kernel from booting. The same
+is true for kexec as well, since the same functions are used there.
 
-Limit tail_pos to the position after the entries actually copied before
-updating pull_pos. When the whole segment fits, this is equivalent to the
-old tail_pos update; when the buffer is smaller, the remaining events
-stay queued for the next read.
+Update the entry to include the “.o” suffix so that KASAN
+instrumentation is properly disabled for this object file.
 
-Fixes: a8c0d13267a4 ("ALSA: firewire-tascam: notify events of change of state for userspace applications")
+Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address sanitization in kexec paths")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/1dee8891-8bcc-46b4-93f3-fc3a774abd5b@linux.ibm.com/
 Cc: stable@vger.kernel.org
-Suggested-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Co-developed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260503-alsa-firewire-tascam-read-queue-v2-1-126c6efd7642@gmail.com
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260407124349.1698552-1-sourabhjain@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/tascam/tascam-hwdep.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kexec/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/firewire/tascam/tascam-hwdep.c
-+++ b/sound/firewire/tascam/tascam-hwdep.c
-@@ -73,6 +73,7 @@ static long tscm_hwdep_read_queue(struct
- 			length = rounddown(remained, sizeof(*entries));
- 		if (length == 0)
- 			break;
-+		tail_pos = head_pos + length / sizeof(*entries);
- 
- 		spin_unlock_irq(&tscm->lock);
- 		if (copy_to_user(pos, &entries[head_pos], length))
+--- a/arch/powerpc/kexec/Makefile
++++ b/arch/powerpc/kexec/Makefile
+@@ -14,4 +14,4 @@ GCOV_PROFILE_core_$(BITS).o := n
+ KCOV_INSTRUMENT_core_$(BITS).o := n
+ UBSAN_SANITIZE_core_$(BITS).o := n
+ KASAN_SANITIZE_core.o := n
+-KASAN_SANITIZE_core_$(BITS) := n
++KASAN_SANITIZE_core_$(BITS).o := n
 
 
