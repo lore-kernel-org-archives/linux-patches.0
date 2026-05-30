@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF812FDC5E;
-	Sat, 30 May 2026 18:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DED23392B;
+	Sat, 30 May 2026 18:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164117; cv=none; b=AZD941hVWyOe64W1E2Y1LtS6QleZpic2tA5ZPXh9bjVx97+QR1EoLZ6T9k/OIBMeUvBhkATT/F/ghbgdCOHrOzE8BBv/W3vivk3ZfF8g6Ea+RNI8qqnWijVQBfNRYJ/Mblry44Uhxde5xQtR0y5OipxOdQX0hK/zXBvkS85obrk=
+	t=1780164121; cv=none; b=k46AYGMrUC5XaHwn+X8qjJnvDsJ0gIDgK8hI96cgmp2QB/n5KfNVBCEdUMbD1gjRlEPukMWpOqEjhSZY1XcugJgfqh1ziwveHwFjAae8bUyGPZhi5DyyD6QDlo1s1ma87SZnDJFe7QcMddk4htwpfOlNMZIuylMg8Fro4Aw/LT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164117; c=relaxed/simple;
-	bh=ZKg8rZ/qxUD1h4E2w9sdygxGjQpROeiRqK6L0Wkzb4c=;
+	s=arc-20240116; t=1780164121; c=relaxed/simple;
+	bh=ysZmQVUEBH7ERh/XrmS+uwpOoYtaaqRk8/Dn5xVMiUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwYsEUnkwd7B8Y5xxPxoHi2CzbC6dD3sj4UPAfOWoAFsT2nyMf/phaCJADFNaBfLJ8zzpex+naZA+Y7h3YTtwSmQVHLk+2G8rjVWMzofdFs7gwa61zEpMEuycGj4zTcgYmP0iX8yjv1xBXXQ6vSk/whHWNSHH1ft7leDcTTYxLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7IrqWqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GbEROxybPRU0GvGL2XaBWYaep2+QfPJjQTFNW4C10Ma81961a/9VEv7pspiCK2m46WVSHIxHL1WoKwEzRLcNhnr9FRvcnJdzDv3QF+CzsdDR5mta5TRyJrLLQelDSByDGpj8HZ4hQ7BS1c6F3FIIznm6aMgWdLUZ68SvkZ+xxP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcZqlwrb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7IrqWqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC461F00893;
-	Sat, 30 May 2026 18:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcZqlwrb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856651F00893;
+	Sat, 30 May 2026 18:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164116;
-	bh=H9cAvW/jKARapq2NyZtrWaSNP57LAauZx4pNNcrBERs=;
+	s=korg; t=1780164120;
+	bh=VbNf0q8EHb1RO3XqN/5HxttXoTymyf7r19FJEZs8YDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7IrqWqhVW3WKs8eErRydU8IkMeOL5s85p8ZmAQu/5ARE8u0Dk/Rm0UMr6IMH7SkE
-	 FbYd6jC3nyzWpYp73w3/sewMLvYhjFm8r9Y6VSN4PoC3ARt2xbHkbBilCbT4B1oxz4
-	 t77OIyGBX0wr/YLOml0V5vdf0D5+N7apTlAX8izg=
+	b=IcZqlwrbVHs/BaP0Z1/qB0ULyE0fKsN9Xm9TwO9DBXqPqzJ++E2u4zVrO/jj7pvlY
+	 DGJnyfDnc8PNBEG8DBwi4R7EBQCmOTuQqtoM/5CJyBZQnFeh1IetBtz6t2dEwEEcNo
+	 3O1hAFKeVVTbbnohqitlkzZzqTi51CbOZKudMeBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sander Vanheule <sander@svanheule.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 458/776] drm/msm/a6xx: Fix HLSQ register dumping
-Date: Sat, 30 May 2026 18:02:52 +0200
-Message-ID: <20260530160252.206239392@linuxfoundation.org>
+Subject: [PATCH 5.15 431/776] ASoC: sti: Return errors from regmap_field_alloc()
+Date: Sat, 30 May 2026 18:02:25 +0200
+Message-ID: <20260530160251.576874423@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Sander Vanheule <sander@svanheule.net>
 
-[ Upstream commit c289a6db9ba6cb974f0317da142e4f665d589566 ]
+[ Upstream commit 272aabef50bc3fe58edd26de000f4cdd41bdbe60 ]
 
-Fix the bitfield offset of HLSQ_READ_SEL state-type bitfield.  Otherwise
-we are always reading TP state when we wanted SP or HLSQ state.
+When regmap_field_alloc() fails, it can return an error. Specifically,
+it will return PTR_ERR(-ENOMEM) when the allocation returns a NULL
+pointer. The code then uses these allocations with a simple NULL check:
 
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Suggested-by: Connor Abbott <cwabbott0@gmail.com>
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714236/
-Message-ID: <20260325184043.1259312-1-robin.clark@oss.qualcomm.com>
+    if (player->clk_sel) {
+        // May dereference invalid pointer (-ENOMEM)
+        err = regmap_field_write(player->clk_sel, ...);
+    }
+
+Ensure initialization fails by forwarding the errors from
+regmap_field_alloc(), thus avoiding the use of the invalid pointers.
+
+Fixes: 76c2145ded6b ("ASoC: sti: Add CPU DAI driver for playback")
+Signed-off-by: Sander Vanheule <sander@svanheule.net>
+Link: https://patch.msgid.link/20260220152634.480766-2-sander@svanheule.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sti/uniperif_player.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 61d0bb8c2fe0b..b25395af39b29 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -642,7 +642,7 @@ static void a6xx_get_crashdumper_hlsq_registers(struct msm_gpu *gpu,
- 	u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
- 	int i, regcount = 0;
+diff --git a/sound/soc/sti/uniperif_player.c b/sound/soc/sti/uniperif_player.c
+index dd9013c476649..e5c4e5245b255 100644
+--- a/sound/soc/sti/uniperif_player.c
++++ b/sound/soc/sti/uniperif_player.c
+@@ -1029,7 +1029,12 @@ static int uni_player_parse_dt_audio_glue(struct platform_device *pdev,
+ 	}
  
--	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, regs->val1);
-+	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, (regs->val1 & 0xff) << 8);
+ 	player->clk_sel = regmap_field_alloc(regmap, regfield[0]);
++	if (IS_ERR(player->clk_sel))
++		return PTR_ERR(player->clk_sel);
++
+ 	player->valid_sel = regmap_field_alloc(regmap, regfield[1]);
++	if (IS_ERR(player->valid_sel))
++		return PTR_ERR(player->valid_sel);
  
- 	for (i = 0; i < regs->count; i += 2) {
- 		u32 count = RANGE(regs->registers, i);
+ 	return 0;
+ }
 -- 
 2.53.0
 
