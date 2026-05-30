@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C09EEA8;
-	Sat, 30 May 2026 17:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB93EEA8;
+	Sat, 30 May 2026 17:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161097; cv=none; b=tHn99ALD8TuszO9MM4r/NwwFnSkEpWRthY7vAAT5+RzuGFDGY07B5mHjJOeyUaThWH4QL96d0LU+a9oGWuhkkMWr+LJabdznNKZjA5MuIi0WZNzLrMMxw0ZQ7BmV8It3zmvCnryqOZuyR6XEOBTxZTAs4RlOkjLn49co1ngZUN8=
+	t=1780161101; cv=none; b=KX7yUgWRuaIiH7x+SoUCyqc/As8BYS+O5EHmuthJdmx7Tma21DheA+Hw97yP6NbximrHab0RN80mLfWciQHblyRN2lvA9jtoMJmYTkty1v1P3JSdqEeSh96lzsD3MzZpslfMqWeujgristrP4jntEjH0evQWzCbEYLErOpZAvIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161097; c=relaxed/simple;
-	bh=X557aFJjD7wunDvJXwn1nDwfoP2PSFI+JxmTzgQK6bc=;
+	s=arc-20240116; t=1780161101; c=relaxed/simple;
+	bh=5tQuf2rS3jKXSjbEuti2qPVEcD3PtlarbPnt57Mea2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dB/KJI9VjdGWvFp/dCmBmIo4YPnRxrvoN1nnMJz+QOn+wkSKrFc/CyHVsy8ytuOGcvZlIuEfAkTOXdCyrPRHFw8/5/JjGZU05JyiwOO2n9QOqpdwuxXkhgqfj9lgINXNqb8SsvcqKv3dQ9BTpUSQhWlCuL5qkzmfM/FVuG4PEi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OO3W9n2f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMUFYQoE6nIZf3cX2pDSo1MBqzs2YM/E8W+WVBgwqRf4NuqFWXoTm5ZYmm7rsISrtcyZmU9mmIA2w+eVhAYyyav975HaroVXc2UFS25MAeO2aqUoOEPJ98CugHbx9k7CqFlILInY9FcvXdkcPBDZEZRrRyjp+QMLupHv1HQhBBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxCTeu6I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OO3W9n2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2201F00893;
-	Sat, 30 May 2026 17:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxCTeu6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7921F00893;
+	Sat, 30 May 2026 17:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161096;
-	bh=SF7JJ9ylhNK54OxfIFHpcXEVD1/Hli/heFZhpT5bx8Y=;
+	s=korg; t=1780161100;
+	bh=krvPUFtgG5tzNH/hu4EL/QF5eXgxNElja8GFetFb7rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OO3W9n2fMHsUtcxbUcVf+Y7Lu3yDYDZ1NSNHPELX/pdCaLKeODAigpkcVIIwexv8x
-	 /KIg9Vm7MKO3g2xGOBR4++nKZWrEa2b9IYYcFd1vGNCFOhxr/nrm7SBNyuQ1PTeLhO
-	 zMrhHpbS7ede4DA6nhMxl8S6iQSJTL4bBVLy1E4I=
+	b=kxCTeu6I49vgOAMzRpHfw+0PPQzIq+Kadq6BChma2zP4lQ5pqnIfg0F4lLgzTKY8N
+	 3xxRYgmhV84NnUrTU7mNXQZTnzWFLwSvQfg/tTlIo0nHEZCK7U6hbRCVfGDzcqTBHy
+	 ZhdMfCxhNaWlBGZiwMPWPQupBMqqsxGJDFMajR8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
+	Lei Huang <huanglei@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 524/969] ALSA: hda/realtek: Whitespace fix
-Date: Sat, 30 May 2026 18:00:48 +0200
-Message-ID: <20260530160314.823854155@linuxfoundation.org>
+Subject: [PATCH 6.1 525/969] ALSA: hda/realtek: fix code style (ERROR: else should follow close brace })
+Date: Sat, 30 May 2026 18:00:49 +0200
+Message-ID: <20260530160314.853753977@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,35 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit 72cea3a3175b50a4875b3c112fb13df20c6218a5 ]
+[ Upstream commit d1888bf848ade6a9e71c7ba516fd215aa1bd8d65 ]
 
-Remove an erroneous whitespace.
+Fix checkpatch code style errors:
+
+  ERROR: else should follow close brace '}'
+  #2300: FILE: sound/hda/codecs/realtek/alc269.c:2300:
+  +       }
+  +       else
 
 Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20230704044619.19343-6-luke@ljones.dev
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Link: https://patch.msgid.link/20260331075405.78148-1-huanglei814@163.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: d1888bf848ad ("ALSA: hda/realtek: fix code style (ERROR: else should follow close brace '}')")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 0889dfd80fa44..9bda2f43394cb 100644
+index 9bda2f43394cb..7b4fd95c66f9b 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -6040,7 +6040,7 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+@@ -6040,9 +6040,9 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
  		struct alc_spec *spec = codec->spec;
  		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
  		alc255_set_default_jack_type(codec);
--	} 
-+	}
- 	else
+-	}
+-	else
++	} else {
  		alc_fixup_headset_mode(codec, fix, action);
++	}
  }
+ 
+ static void alc288_update_headset_jack_cb(struct hda_codec *codec,
 -- 
 2.53.0
 
