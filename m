@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F417825B08A;
-	Sat, 30 May 2026 18:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4752F6184;
+	Sat, 30 May 2026 18:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166634; cv=none; b=ji+j8MYM/d8DSENAqNtP5M7Y4GzoCjYuIO6V+yG+uytL4s3nMHrhB/A2MGEE+I//OJEMYWf6k3sKdX/0deQ9OERujT5+WxImJ/3H2XOwnpAeSp6Gb4tevdPO6vbPPfjnW6h0C5q/hxcDq6YCyXmOBnE+btc2LHPtkMEXGqeO0Iw=
+	t=1780166638; cv=none; b=eKUeO9pghEsj0W3A4EDL8NiUVa6hw9w1VFnl/xWoNkmKhlNJDvYkM89CLeenrlzpgn8UlokGOQScDWfoPvcrPfLSE+t6qlH3fWlXRB9EAdeumE7yNiF3Jz2eaBDhEcQEIUtT8TgvhL7YTfteNPMDZvH0rc2seez5rWkmXNnMdPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166634; c=relaxed/simple;
-	bh=n/qzWarChJXi0Xnt/NPPpHF6LCIzGUB2HElIbg6SSck=;
+	s=arc-20240116; t=1780166638; c=relaxed/simple;
+	bh=o/y9YV2fWscdt5cXFT+C9uoFTmXQdVvyMVCzbTYQq6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7BKea4sAEM6yiJ6eqi5fVo3Mj/R+TnBI80cMG6ha/nrGW6oaQUPRyiy/wQTQKdX9dzGEW3iZEL48AJSUPlkSpmPBtnOeAQgiKdvMRV4hfwByMOcZKfnaWGOpj8DOIr2f+8a1YrE5WeMdeTBGD8bWysl1XvQl7pb3DxIGjbi8lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5z9uEz7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qSu8mz8Ji/xOjDtmAALhQod3q1ARXpxB6vBTotbQrxVZ0+L6jKHDWSq2bfLbtJfpgarQP17A+bEbYojrTm6JPq/+kCb4Z7BLzGOM7CO9ylmgS+gRU/ujkJyZ8mYJayVLwc7G/YDeR8mvOqVZ/8OHci3LPG7VRl3RfAG1vWVMomM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9E7MC+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5z9uEz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3CD1F00893;
-	Sat, 30 May 2026 18:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9E7MC+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7661F00893;
+	Sat, 30 May 2026 18:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166633;
-	bh=K4qWCZ7jbdGy6TjhULLb8rrv04DNQqlxofWDGSddas8=;
+	s=korg; t=1780166636;
+	bh=x7xDhp13WdsUAr18ECb1RAvkjofdp73Fbu/5YDRu8U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c5z9uEz7HUS/wbgTg46USJSq1YrxlGPen7Yyc7GzXiyldhsYlkaj+y9jOGvU7IP+H
-	 E4QFQuVxcq1pUC01abWMpGL1tXHinupygy1epj5dkqaBuVPFPE/vVlnBHXvAyOKapG
-	 IEZ172MtGLKrAU8G7sQzJLuKk02gCWomGrOwQKf0=
+	b=W9E7MC+Jszt6ug5DlJz4JOHvz8/gsvjVPj6OyIV2QgZ4vhgIGLrryowjIxnd5weV6
+	 il3KEn8UXHPd43g1EApsFBQ5FwYhJdJkDw2hE58WyyD/K7EmTdh3SvgFRv2vN0WTxa
+	 SK+Leuj3X+Tr1rLAtG5igICT/7RnVTrKfExX+nCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Matt Vollrath <tactii@gmail.com>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 424/589] i40e: dont advertise IFF_SUPP_NOFCS
-Date: Sat, 30 May 2026 18:05:05 +0200
-Message-ID: <20260530160235.872968238@linuxfoundation.org>
+Subject: [PATCH 5.10 425/589] e1000e: Unroll PTP in probe error handling
+Date: Sat, 30 May 2026 18:05:06 +0200
+Message-ID: <20260530160235.897494333@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,51 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Matt Vollrath <tactii@gmail.com>
 
-[ Upstream commit a24162f18825684ad04e3a5d0531f8a50d679347 ]
+[ Upstream commit aa3f7fe409350857c25d050482a2eef2cfd69b58 ]
 
-i40e advertises IFF_SUPP_NOFCS, allowing users to use the SO_NOFCS
-socket option. However, this option is silently ignored, as the driver
-does not check skb->no_fcs, and always enables FCS insertion offload.
+If probe fails after registering the PTP clock and its delayed work,
+these resources must be released.
 
-Fix this by removing the advertisement of IFF_SUPP_NOFCS.
+This was not an issue until a 2016 fix moved the e1000e_ptp_init() call
+before the jump to err_register.
 
-This behavior can be reproduced with a simple AF_PACKET socket:
-
-  import socket
-  s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW)
-  s.setsockopt(socket.SOL_SOCKET, 43, 1) # SO_NOFCS
-  s.bind(("eth0", 0))
-  s.send(b'\xff' * 64)
-
-Previously, send() succeeds but the driver ignores SO_NOFCS.
-With this change, send() fails with -EPROTONOSUPPORT, as expected.
-
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Fixes: aa524b66c5ef ("e1000e: don't modify SYSTIM registers during SIOCSHWTSTAMP ioctl")
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-9-686c33c9828d@intel.com
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-12-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 3d3816de72ec8..56bbaefbcbb7a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -13192,7 +13192,6 @@ static int i40e_config_netdev(struct i40e_vsi *vsi)
- 	netdev->neigh_priv_len = sizeof(u32) * 4;
- 
- 	netdev->priv_flags |= IFF_UNICAST_FLT;
--	netdev->priv_flags |= IFF_SUPP_NOFCS;
- 	/* Setup netdev TC information */
- 	i40e_vsi_config_netdev_tc(vsi, vsi->tc_config.enabled_tc);
- 
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 902ada6a3b06c..8f1c6f08be00e 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -7642,6 +7642,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ err_register:
+ 	if (!(adapter->flags & FLAG_HAS_AMT))
+ 		e1000e_release_hw_control(adapter);
++	e1000e_ptp_remove(adapter);
+ err_eeprom:
+ 	if (hw->phy.ops.check_reset_block && !hw->phy.ops.check_reset_block(hw))
+ 		e1000_phy_hw_reset(&adapter->hw);
 -- 
 2.53.0
 
