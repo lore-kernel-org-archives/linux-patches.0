@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46C32D42B;
-	Sat, 30 May 2026 16:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A186A33F5A3;
+	Sat, 30 May 2026 16:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160125; cv=none; b=LW9lIq+M5zzmuw7ySdlJydwiV9Aq4aJBvZM2jRj966y/DFH6V+4BoLBP5IXSwj1eMC5Ncy8fgWzN3dXD1zqztRVzl+lK0CARD6qePJF4QmLcIRoAmA0t9waqOaGUpRh0EIIUo2rPq2xzK/L25wanwcpqiSE0NLt/YhXKpsV16NE=
+	t=1780160128; cv=none; b=GYM3X06azAf+jGQNKO3K5tOQogYap9dM1TYaFR4x1jVvZoH2yUT2BduMl7TIUYWhjAsZUGTB9teVl9KZO8BuT4SB6C4XEcybiNmoZHsRnVj3qmqRAdIWF/Cho7PZYxiawNKDi84hiYVXM4TLWjXVzcERi5f85dV0wTr82D14t1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160125; c=relaxed/simple;
-	bh=LKOsiptLFBqj99yUXIWEninQOGVn4X2emxXKqp3MCqc=;
+	s=arc-20240116; t=1780160128; c=relaxed/simple;
+	bh=ibsf9Eo6uBrY3uMjb4hOUysJwNPfPgwgoqJCnOcR9bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCETzNwGhcsjqFOenyiUOqQPDx7SvouErZ61EC++kuh06XByAsSVGS1jatZza9BkO4EEMsQEjHAY466mqFU/K8ySLBOT0+4A2utYRI4g1aWA/4ME42RklMjFJFrAYvHWBd0OoT4wXZBfwQZkgUzeJxr3+P/WCap4DP0v2/j1PfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hipx+y1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LAsjOvYaP2ueiBXdcULoGDeo2DkgIHt3iBWc6rmvgYRpYXzaaoaYiUbN+i0d7net8OKVcObVrzRuvPHbKEVtK/VpnR/XZ2t8PBT+AB2bRRHKgtSSvdXx6Ia/dE9ZalFNAZTKAysBcr4q8IbvSHnagAUWGLpWyO+FFTFt/cAeigM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlMgKWLl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hipx+y1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6401F00893;
-	Sat, 30 May 2026 16:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlMgKWLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DE11F00893;
+	Sat, 30 May 2026 16:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160124;
-	bh=Obib9rezElJJKtKckU6HF4/Ji0Y+0UVXzQNtOUkGyik=;
+	s=korg; t=1780160127;
+	bh=CvcmLLx8aWGPFGJSbnqE4y4GvSbybhazEoIoP7MC66s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hipx+y1o8O5c7jO3SnRScZmcyY00PUD33msS1mijwAdCQ7q+WPA478EY1yHuOMEY2
-	 yqx0L/anWkUcfdugj+UnqjqE+Aa3TAF8T0Va0lY6KKBNSI+UqGh8Dlm54o623qhIIB
-	 y0iNk3P29pCnoXeAEnJh6LAc3p3499hXRoVuHC8c=
+	b=LlMgKWLlj30xXqturhjyn5UzgSCsW7gqzPLQGmjjxOdBD9/hv0tbqdMLoSorgTfmy
+	 EDw8FEXWxh/+vRcmm0rHP7PA5BtbksXjzeVmvaWtnAGocBHDfQ4n5jLFJJVpc6M73/
+	 qpaW0gzH594Lp+xW/KBY2UjF3tI/08j6+7/hQFdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Zhenzhong Wu <jt26wzz@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 251/969] tcp: call sk_data_ready() after listener migration
-Date: Sat, 30 May 2026 17:56:15 +0200
-Message-ID: <20260530160307.399451429@linuxfoundation.org>
+	Yiyang Chen <cyyzero16@gmail.com>,
+	Balbir Singh <bsingharora@gmail.com>,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Fan Yu <fan.yu9@zte.com.cn>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 252/969] taskstats: set version in TGID exit notifications
+Date: Sat, 30 May 2026 17:56:16 +0200
+Message-ID: <20260530160307.429544782@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,69 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenzhong Wu <jt26wzz@gmail.com>
+From: Yiyang Chen <cyyzero16@gmail.com>
 
-commit 3864c6ba1e041bc75342353a70fa2a2c6f909923 upstream.
+commit 16c4f0211aaa1ec1422b11b59f64f1abe9009fc0 upstream.
 
-When inet_csk_listen_stop() migrates an established child socket from
-a closing listener to another socket in the same SO_REUSEPORT group,
-the target listener gets a new accept-queue entry via
-inet_csk_reqsk_queue_add(), but that path never notifies the target
-listener's waiters. A nonblocking accept() still works because it
-checks the queue directly, but poll()/epoll_wait() waiters and
-blocking accept() callers can also remain asleep indefinitely.
+delay accounting started populating taskstats records with a valid version
+field via fill_pid() and fill_tgid().
 
-Call READ_ONCE(nsk->sk_data_ready)(nsk) after a successful migration
-in inet_csk_listen_stop().
+Later, commit ad4ecbcba728 ("[PATCH] delay accounting taskstats interface
+send tgid once") changed the TGID exit path to send the cached
+signal->stats aggregate directly instead of building the outgoing record
+through fill_tgid().  Unlike fill_tgid(), fill_tgid_exit() only
+accumulates accounting data and never initializes stats->version.
 
-However, after inet_csk_reqsk_queue_add() succeeds, the ref acquired
-in reuseport_migrate_sock() is effectively transferred to
-nreq->rsk_listener. Another CPU can then dequeue nreq via accept()
-or listener shutdown, hit reqsk_put(), and drop that listener ref.
-Since listeners are SOCK_RCU_FREE, wrap the post-queue_add()
-dereferences of nsk in rcu_read_lock()/rcu_read_unlock(), which also
-covers the existing sock_net(nsk) access in that path.
+As a result, TGID exit notifications can reach userspace with version == 0
+even though PID exit notifications and TASKSTATS_CMD_GET replies carry a
+valid taskstats version.
 
-The reqsk_timer_handler() path does not need the same changes for two
-reasons: half-open requests become readable only after the final ACK,
-where tcp_child_process() already wakes the listener; and once nreq is
-visible via inet_ehash_insert(), the success path no longer touches
-nsk directly.
+This is easy to reproduce with `tools/accounting/getdelays.c`.
 
-Fixes: 54b92e841937 ("tcp: Migrate TCP_ESTABLISHED/TCP_SYN_RECV sockets in accept queues.")
-Cc: stable@vger.kernel.org
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Zhenzhong Wu <jt26wzz@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260422024554.130346-2-jt26wzz@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+I have a small follow-up patch for that tool which:
+
+1. increases the receive buffer/message size so the pid+tgid
+   combined exit notification is not dropped/truncated
+
+2. prints `stats->version`.
+
+With that patch, the reproducer is:
+
+  Terminal 1:
+    ./getdelays -d -v -l -m 0
+
+  Terminal 2:
+    taskset -c 0 python3 -c 'import threading,time; t=threading.Thread(target=time.sleep,args=(0.1,)); t.start(); t.join()'
+
+That produces both PID and TGID exit notifications for the same
+process.  The PID exit record reports a valid taskstats version, while
+the TGID exit record reports `version 0`.
+
+
+This patch (of 2):
+
+Set stats->version = TASKSTATS_VERSION after copying the cached TGID
+aggregate into the outgoing netlink payload so all taskstats records are
+self-describing again.
+
+Link: https://lkml.kernel.org/r/ba83d934e59edd431b693607de573eb9ca059309.1774810498.git.cyyzero16@gmail.com
+Fixes: ad4ecbcba728 ("[PATCH] delay accounting taskstats interface send tgid once")
+Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Cc: Fan Yu <fan.yu9@zte.com.cn>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/taskstats.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1429,16 +1429,19 @@ void inet_csk_listen_stop(struct sock *s
- 			if (nreq) {
- 				refcount_set(&nreq->rsk_refcnt, 1);
+--- a/kernel/taskstats.c
++++ b/kernel/taskstats.c
+@@ -656,6 +656,7 @@ void taskstats_exit(struct task_struct *
+ 		goto err;
  
-+				rcu_read_lock();
- 				if (inet_csk_reqsk_queue_add(nsk, nreq, child)) {
- 					__NET_INC_STATS(sock_net(nsk),
- 							LINUX_MIB_TCPMIGRATEREQSUCCESS);
- 					reqsk_migrate_reset(req);
-+					READ_ONCE(nsk->sk_data_ready)(nsk);
- 				} else {
- 					__NET_INC_STATS(sock_net(nsk),
- 							LINUX_MIB_TCPMIGRATEREQFAILURE);
- 					reqsk_migrate_reset(nreq);
- 					__reqsk_free(nreq);
- 				}
-+				rcu_read_unlock();
+ 	memcpy(stats, tsk->signal->stats, sizeof(*stats));
++	stats->version = TASKSTATS_VERSION;
  
- 				/* inet_csk_reqsk_queue_add() has already
- 				 * called inet_child_forget() on failure case.
+ send:
+ 	send_cpu_listeners(rep_skb, listeners);
 
 
