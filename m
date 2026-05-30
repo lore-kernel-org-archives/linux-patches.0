@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD3F32D42B;
-	Sat, 30 May 2026 17:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3C6481DD;
+	Sat, 30 May 2026 17:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160763; cv=none; b=GzIGz9rUkpBMFpwTpqd4B7DkP0TO3+X+Dx88r9CPCxovrFpwwT3EJYRHQY4fvO6J+ovb80l1z32KWE8yTyBAhZMOnHZQd8wKs/PQs1qZj86xiZxbsUejzw6ESTFLyD8e2CDFnWlw5sA3RCI3ACYLMjvdD4drDn8e9BepQEnOnkc=
+	t=1780160768; cv=none; b=Q5kTdlgBd3KpPaiktVPqzChz1gSSiqKpYKy75VfnsVqvZ7vpI/nbxokQz7X0ZvtR+4VkTAsjJ8O7iEATxYNyOXBX/nvO2qdELyeAUOg9A1Yqkp4VLfV/31Ig4ncZ9k3BoLMtsZKe9kyDL2IDJSyASecKvnnc/PmIB8lBfCmid3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160763; c=relaxed/simple;
-	bh=0dtlA36WnvNCnxYzcjrMG2rZNUd0lyz83Q53hdCuGJ0=;
+	s=arc-20240116; t=1780160768; c=relaxed/simple;
+	bh=sQPAVjCDOoyZXKpRrpk/jmYaZV/BXiW8cn2zDvAZXlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkIpyyEUcraEhMlUSgEGg99uR2ZZmMFTQ8lNCv8X4CAb839nQzUa1oNXLQe4uVnUeVGZFggudzZ3/JmLphgSp7v6+g4yhx70J9OPLv6VXVF9alM2pHlYJ+i7izdu/SS6LEyz4xWYXjIL7eQfihhSy3O50IZgCV0pYVcvoO8jGKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RamkycTk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6F29SYJaPqcmQtL5bqIgPV29o3tdsYJi18XAnb/VRrDXUffUU3hb23w3HTgaaGT0qnJdMGX7ma4m4Q3yT1xbBRSHgbf4Hb7Bht2TBRql07cdikR34vUKPGS6+4cr8Zxk3+4BLLhhYiOpQAZ9V5fY861vukuimWZNVjkaoI6gTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Phxfy4UC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RamkycTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC601F00893;
-	Sat, 30 May 2026 17:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Phxfy4UC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBC61F00893;
+	Sat, 30 May 2026 17:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160762;
-	bh=JBh6e5+m3KvnPSWUniNWs/yf7jFyOdplMMrjXOpWbPE=;
+	s=korg; t=1780160766;
+	bh=xXP6T1k3YdbdP2U2tinSLKA+H5xOw67piZdfi5srxok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RamkycTkXu6vNXuNXysbQEZjw3ZW7kKSrvwKjkE41H35FDfZ3MFLuBloflJhbAlBT
-	 20z9VtckE8mkBKj9PiEYRKgIZW7SGogBMyppQHztebQNM6Z2tejDd5s/pj8vdQ3YCK
-	 9IMwBrfWYWneWxE8vXLLpNtDvT/Ijyy4c14tRIHQ=
+	b=Phxfy4UCU3V29bSxcFNmGS99BvSclg7Tmj18vv0yuJQwl/G6jdqx94OfWRqtiCQzE
+	 EvH783WI9T/DlRWoV6zrMzYICo6t7tw3Yue18/lN0N8m2BoIXugH4iTrcuebfXfZG7
+	 Udjv4c6tjdNWLfGvy6t+Kq4p5PbNJA6yN8E7R5Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 427/969] vsock/virtio: fix accept queue count leak on transport mismatch
-Date: Sat, 30 May 2026 17:59:11 +0200
-Message-ID: <20260530160312.051256173@linuxfoundation.org>
+	SDL <sdl@nppct.ru>,
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 428/969] drm/amdgpu/vcn3: Avoid overflow on msg bound check
+Date: Sat, 30 May 2026 17:59:12 +0200
+Message-ID: <20260530160312.076939887@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,54 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 52bcb57a4e8a0865a76c587c2451906342ae1b2d upstream.
+commit e6e9faba8100628990cccd13f0f044a648c303cf upstream.
 
-virtio_transport_recv_listen() calls sk_acceptq_added() before
-vsock_assign_transport(). If vsock_assign_transport() fails or
-selects a different transport, the error path returns without
-calling sk_acceptq_removed(), permanently incrementing
-sk_ack_backlog.
+As pointed out by SDL, the previous condition may be vulnerable to
+overflow.
 
-After approximately backlog+1 such failures, sk_acceptq_is_full()
-returns true, causing the listener to reject all new connections.
-
-Fix by moving sk_acceptq_added() to after the transport validation,
-matching the pattern used by vmci_transport and hyperv_transport.
-
-Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260413131409.19022-1-phx0fer@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Cc: Luigi Leonardi <leonardi@redhat.com>
+Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
+Cc: SDL <sdl@nppct.ru>
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit db00257ac9e4a51eb2515aaea161a019f7125e10)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1259,8 +1259,6 @@ virtio_transport_recv_listen(struct sock
- 		return -ENOMEM;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1844,6 +1844,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
  
--	sk_acceptq_added(sk);
--
- 	lock_sock_nested(child, SINGLE_DEPTH_NESTING);
+ 	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
+ 		uint32_t offset, size, *create;
++		uint64_t buf_end;
  
- 	child->sk_state = TCP_ESTABLISHED;
-@@ -1282,6 +1280,7 @@ virtio_transport_recv_listen(struct sock
- 		return ret;
- 	}
+ 		if (msg[0] != RDECODE_MESSAGE_CREATE)
+ 			continue;
+@@ -1851,7 +1852,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 		offset = msg[1];
+ 		size = msg[2];
  
-+	sk_acceptq_added(sk);
- 	if (virtio_transport_space_update(child, skb))
- 		child->sk_write_space(child);
- 
+-		if (size < 4 || offset + size > end - addr) {
++		if (size < 4 || check_add_overflow(offset, size, &buf_end) ||
++		    buf_end > end - addr) {
+ 			DRM_ERROR("VCN message buffer exceeds BO bounds!\n");
+ 			r = -EINVAL;
+ 			goto out;
 
 
