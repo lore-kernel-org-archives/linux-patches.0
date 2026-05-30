@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E423C343D;
-	Sat, 30 May 2026 18:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634433AB26B;
+	Sat, 30 May 2026 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166512; cv=none; b=pdWu53U5HbhEzKyWb/5o9tEYG5Ir7OizDKpW6EPwSoowYrO2BrcgrN1rlggNAtJ9ZXSpyDKalgD0AMAN4eUT4xmQIhu7elv/gceZl7Lt9qdPEGJCtuz1ml2IpnZ+rSBoIli08BE8qrP6zGu6pD1Q8xiX2uUIllq/2o2/nl/uv6k=
+	t=1780166514; cv=none; b=pY73U9hb35CManHd1QeJFgEhZsSRkQtXxVEa8FDqPYrxNe3ljbOcz0NPUdqoiHcW98dPkeTZTk3i2Y1AZjwGePtv54quu99PigptxNPItw0qJ1Z62sPQ2aD4Sck2OXpGBoowhJd9Ti4WJeDMepUVkhxBU+Ha6pp6V/IvFxMo0vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166512; c=relaxed/simple;
-	bh=QSOX1jV/eq5ZkNMOaUd3B+J5yF88TmSrJcHUuT/m4rQ=;
+	s=arc-20240116; t=1780166514; c=relaxed/simple;
+	bh=711tM16cQT1zH9bIvsh9xgHA0nH/geET11cdShpVBnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfLVsmsuxtbsA465/Ct6cHuJNAcMpF1482T3cMcYJg9ArSZilTbC10xJrJmpwEPO4RYm4OpxptP60Y4p5gUjkqbNF6QxAatf/mHgBtrE8UXYG0XuhVxvvuQkjVKnaNNjD0Fpwb3C7HEaPmp9YkbJVvO+KEHVHidIcMpd5ePQ4Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAjIomon; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2BRywxOnu0E6pWCepd8kxtGDQl/CjF9mcRop9nrtxIO+i/Ovb3JLjWGt+H4I6Pxh/O1O9GKpE3toEG2ax2Lqt2ILxAgAKxwy4mKT1KZnL4upKpeUQtzHx4WOngkPE2HIiMIEyVpK0yrhdKqxgxDdzGAx1fuxSVzmk4GQNagaEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j15k1Pgq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAjIomon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B72B1F00893;
-	Sat, 30 May 2026 18:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j15k1Pgq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E29A1F00899;
+	Sat, 30 May 2026 18:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166506;
-	bh=P7NJVw61F+WwddHCt8qXWiShCHzcl8Tbue7iWYCfkMI=;
+	s=korg; t=1780166512;
+	bh=u6VxJKyAMcXFt3wvSGjQ0+nrKvOVZvWN47lBLZkoIM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAjIomonaN7Irq0EzEf55qfyfSg38heEUs+T7R100n6BuNhEwbAf/qK+uBCr6Hd5M
-	 gfOGTE1TwZcf8+rDI6eWP7XgrfcBFuiRFxhfQz+DJZcKBQDb5fiHre6P7Cefx69p03
-	 BcBHCaL40cNV3G3ftOznOVhxegvDm3xBuwfvqTBQ=
+	b=j15k1PgqQcJogkmRk/WrMiUamV1+pS8w4tX0cqXpKnuv3VWbCOGtXqCg1IAyAGxm2
+	 izmNGFAZeXUoBhybx5i3kOzHyTaLxycSLg1ywfEwuwDSEdmxSveQmqQT84Y948ATZC
+	 jbFg1KRMu+J2fcUS4Uc0xn5xzv668tqGdEG5zDGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Anna Schumaker <anna.schumkaer@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/589] tty: hvc_iucv: fix off-by-one in number of supported devices
-Date: Sat, 30 May 2026 18:04:33 +0200
-Message-ID: <20260530160235.098036501@linuxfoundation.org>
+Subject: [PATCH 5.10 394/589] nfs/blocklayout: Fix compilation error (`make W=1`) in bl_write_pagelist()
+Date: Sat, 30 May 2026 18:04:35 +0200
+Message-ID: <20260530160235.144316340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,48 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f2a880e802ad12d1e38039d1334fb1475d0f5241 ]
+[ Upstream commit f83c8dda456ce4863f346aa26d88efa276eda35d ]
 
-MAX_HVC_IUCV_LINES == HVC_ALLOC_TTY_ADAPTERS == 8.
-This is the number of entries in:
-  static struct hvc_iucv_private *hvc_iucv_table[MAX_HVC_IUCV_LINES];
+Clang compiler is not happy about set but unused variable
+(when dprintk() is no-op):
 
-Sometimes hvc_iucv_table[] is limited by:
-(a)	if (num > hvc_iucv_devices) // for error detection
-or
-(b)	for (i = 0; i < hvc_iucv_devices; i++) // in 2 places
-(so these 2 don't agree; second one appears to be correct to me.)
+.../blocklayout/blocklayout.c:384:9: error: variable 'count' set but not used [-Werror,-Wunused-but-set-variable]
 
-hvc_iucv_devices can be 0..8. This is a counter.
-(c)	if (hvc_iucv_devices > MAX_HVC_IUCV_LINES)
+Remove a leftover from the previous cleanup.
 
-If hvc_iucv_devices == 8, (a) allows the code to access hvc_iucv_table[8].
-Oops.
-
-Fixes: 44a01d5ba8a4 ("[S390] s390/hvc_console: z/VM IUCV hypervisor console support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260130072939.1535869-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3a6fd1f004fc ("pnfs/blocklayout: remove read-modify-write handling in bl_write_pagelist")
+Acked-by: Anna Schumaker <anna.schumkaer@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/hvc/hvc_iucv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/blocklayout/blocklayout.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
-index d76dff7eec521..c031f8947a935 100644
---- a/drivers/tty/hvc/hvc_iucv.c
-+++ b/drivers/tty/hvc/hvc_iucv.c
-@@ -130,7 +130,7 @@ static struct iucv_handler hvc_iucv_handler = {
-  */
- static struct hvc_iucv_private *hvc_iucv_get_private(uint32_t num)
- {
--	if (num > hvc_iucv_devices)
-+	if (num >= hvc_iucv_devices)
- 		return NULL;
- 	return hvc_iucv_table[num];
- }
+diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
+index a853711bcad27..145608a373193 100644
+--- a/fs/nfs/blocklayout/blocklayout.c
++++ b/fs/nfs/blocklayout/blocklayout.c
+@@ -404,14 +404,13 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
+ 	sector_t isect, extent_length = 0;
+ 	struct parallel_io *par = NULL;
+ 	loff_t offset = header->args.offset;
+-	size_t count = header->args.count;
+ 	struct page **pages = header->args.pages;
+ 	int pg_index = header->args.pgbase >> PAGE_SHIFT;
+ 	unsigned int pg_len;
+ 	struct blk_plug plug;
+ 	int i;
+ 
+-	dprintk("%s enter, %zu@%lld\n", __func__, count, offset);
++	dprintk("%s enter, %u@%lld\n", __func__, header->args.count, offset);
+ 
+ 	/* At this point, header->page_aray is a (sequential) list of nfs_pages.
+ 	 * We want to write each, and if there is an error set pnfs_error
+@@ -453,7 +452,6 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
+ 		}
+ 
+ 		offset += pg_len;
+-		count -= pg_len;
+ 		isect += (pg_len >> SECTOR_SHIFT);
+ 		extent_length -= (pg_len >> SECTOR_SHIFT);
+ 	}
 -- 
 2.53.0
 
