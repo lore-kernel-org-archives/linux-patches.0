@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2BE3AA182;
-	Sat, 30 May 2026 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FC0341AB8;
+	Sat, 30 May 2026 17:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162265; cv=none; b=QQwUkTiZ5fQfe0pxN0f1PvmIpSILELZK/vtcrziM3gJI9TfbX3HsUoxQA8MA2MS3dWnYz2Vk3ZLY/E2pc1dA3ULZrXUrDqKAuxH4Ue62wBwc74KLln08PETL+QY2V/whXpdp2DbnSxrIL5B2HPEP1mDCjyjCkszqhtE01cY5Rzc=
+	t=1780162267; cv=none; b=cKC34FQqchtPgBxI9inEFt2kv8frRt7WEro7U6AWuZ40vAp48su0LmiDTWfBkDfIp6ucjdNsHrMVKlPD9Ys1nGIZKTV+DK7Tryi1qbotNKeAOrWsPl1H5PG1F3ttekW6e+MrfUWJ8qGGZIEX/pZ1ddr9sBSDE8xehe1Pr/x3ggM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162265; c=relaxed/simple;
-	bh=g43dq6gd9GH/JJhiS6rZshDnZ74e+nKWtJi6YYx4nyY=;
+	s=arc-20240116; t=1780162267; c=relaxed/simple;
+	bh=/nA3tn9ShRcRzSB6O51XXGOF8m2mCok5y3dOwNpcLkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hv4lHW5GKA23QZKQCXuHOFgk3CR4FgkA9TWHUL8re1Dm8qLiDqMoBbQmuSVyNzmkzPnaqKJuJpEaa5t9kZMPbTwIKdlAIaqn2fggnZLimT36UmuH4+H37F5b6gDpsnj0bi0TcKFA15a9e8bJjnXtmk4dE//ryURrKPspi6w2HC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6wlFaTj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RBnlenJjFnFoiEFMs7fCSKiBF7Z4++ca71ZC9yY04ARX3t39WR9deobgkS45vuUweicHeZnJQ8cEiBNCfX88bymNMMzyqqPq9/YCBqKbT3CpmrnsBDRGJECy8CpQaT7Fg9Lujc5dy1bjaV7N5sZPFHHkaiRh+MQOspB2/GRPfqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cmw1ZUNO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6wlFaTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B4C1F00893;
-	Sat, 30 May 2026 17:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cmw1ZUNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34C91F00898;
+	Sat, 30 May 2026 17:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162262;
-	bh=yQDlyMZ9eZgCwQ0tIX+p4ZMBw+DzHrPDJlIFtkhXQzc=;
+	s=korg; t=1780162265;
+	bh=GGspNVWzEfWxPxgK5329GrV29na5yP/1Xk+cP9H2eQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6wlFaTjIAHRW9dImC2EbDFi9Zs69fs0mHNWvUWoKinXU+dwQOza6/VBLS9WVkA7H
-	 ELN1RiE5B+0XPB3JkIIPbLvYsnArsb2CrCLof9mIFCHrNA7MM7rPxvQB2ldJ+/CT7G
-	 E77A0tfWOKUn09eCUTMqFp0u+m8cTnEszjo86tG0=
+	b=Cmw1ZUNOaJo/1tWu3EhMxs92isbz8bGvqAHfyaIUtD4d2iOsiuN+Y9O/6kYrXhXwy
+	 QoTWb0VHJNpGWJQhbyIbfpItOZHGQs6riQZf1MWSj/hJ027ZpSYnZrQxBhr/CTMqqy
+	 HoVTJ+fiKvFxTU/6DO4imLICvzvi9HSprIUg/VDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh R <vigneshr@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 870/969] spi: ti-qspi: fix use-after-free after DMA setup failure
-Date: Sat, 30 May 2026 18:06:34 +0200
-Message-ID: <20260530160324.707413108@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.1 871/969] RDMA/siw: Reject MPA FPDU length underflow before signed receive math
+Date: Sat, 30 May 2026 18:06:35 +0200
+Message-ID: <20260530160324.735609152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,41 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
+commit 0ce1bc9e46ecabe84772bb561e373c0d9876d6f2 upstream.
 
-The driver falls back to PIO mode if DMA setup fails during probe.
+A malicious connected siw peer can send an iWARP FPDU whose MPA length
+field (c_hdr->mpa_len, 16 bit big-endian, peer-controlled) is smaller
+than the fixed DDP/RDMAP header for the announced opcode. Soft-iWARP
+parses the full header in siw_get_hdr() based on iwarp_pktinfo[opcode]
+.hdr_len, but never compares mpa_len against that header length.
 
-Make sure to clear the DMA channel pointer also if buffer allocation
-fails to avoid passing a pointer to the released channel to the DMA
-engine (or trying to free the channel a second time on late probe errors
-or driver unbind).
+siw_tcp_rx_data() then derives
 
-This issue was flagged by Sashiko when reviewing a devres allocation
-conversion patch.
+    srx->fpdu_part_rem = be16_to_cpu(mpa_len) - fpdu_part_rcvd
+                         + MPA_HDR_SIZE;
 
-Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Vignesh R <vigneshr@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+where fpdu_part_rcvd equals iwarp_pktinfo[opcode].hdr_len at this
+point. For a tagged WRITE (hdr_len 16, MPA_HDR_SIZE 2) the smallest
+on-wire mpa_len of 0 yields fpdu_part_rem = -14, and any mpa_len below
+hdr_len - MPA_HDR_SIZE underflows to a negative int.
+
+The signed value then flows into siw_proc_write()/siw_proc_rresp() as
+
+    bytes = min(srx->fpdu_part_rem, srx->skb_new);
+
+is handed to siw_check_mem() as an int len (whose interval check
+addr + len > mem->va + mem->len is satisfied for a valid base when
+len is negative), and reaches siw_rx_data() -> siw_rx_kva() /
+siw_rx_umem() -> skb_copy_bits() as a signed copy length. The header
+copy branch in skb_copy_bits() promotes that to size_t, producing a
+multi-gigabyte read.
+
+KASAN under a KUnit harness that drives the real kernel TCP receive
+path -- a loopback AF_INET socketpair, the malformed FPDU written via
+kernel_sendmsg, sk_data_ready firing in softirq, tcp_read_sock
+dispatching to siw_tcp_rx_data -- reports:
+
+    BUG: KASAN: use-after-free in skb_copy_bits+0x284/0x480
+    Read of size 4294967295 at addr ffff888...
+    Call Trace:
+     skb_copy_bits
+     siw_rx_kva
+     siw_rx_data
+     siw_check_mem
+     siw_proc_write
+     siw_tcp_rx_data
+     __tcp_read_sock
+     siw_qp_llp_data_ready
+     tcp_data_ready
+     tcp_data_queue
+
+Add the missing invariant at the earliest point where the peer header
+is fully assembled. iwarp_pktinfo[*].hdr_len - MPA_HDR_SIZE is exactly
+the value the siw transmitter uses as the minimum mpa_len for each
+opcode (drivers/infiniband/sw/siw/siw_qp.c:33), so this matches the
+protocol contract. Out-of-range FPDUs terminate the connection with
+TERM_ERROR_LAYER_LLP / LLP_ETYPE_MPA / LLP_ECODE_FPDU_START -- which
+is RFC 5044 Section 8 error code 3 ("Marker and ULPDU Length fields
+do not agree on the start of an FPDU"), the correct framing-error
+class for this inconsistency.
+
+Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Link: https://patch.msgid.link/r/20260513175325.2042630-2-michael.bommarito@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ti-qspi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/siw/siw_qp_rx.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -875,6 +875,7 @@ static int ti_qspi_probe(struct platform
- 		dev_err(qspi->dev,
- 			"dma_alloc_coherent failed, using PIO mode\n");
- 		dma_release_channel(qspi->rx_chan);
-+		qspi->rx_chan = NULL;
- 		goto no_dma;
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -1102,6 +1102,21 @@ static int siw_get_hdr(struct siw_rx_str
  	}
- 	master->dma_rx = qspi->rx_chan;
+ 
+ 	/*
++	 * Peer-controlled mpa_len must not underflow srx->fpdu_part_rem
++	 * in siw_tcp_rx_data(); a negative value flows as a signed copy
++	 * length into siw_check_mem() and skb_copy_bits().
++	 */
++	if (unlikely(be16_to_cpu(c_hdr->mpa_len) + MPA_HDR_SIZE <
++		     iwarp_pktinfo[opcode].hdr_len)) {
++		pr_warn_ratelimited("siw: short mpa_len %u for opcode %u (hdr_len %u)\n",
++				    be16_to_cpu(c_hdr->mpa_len), opcode,
++				    iwarp_pktinfo[opcode].hdr_len);
++		siw_init_terminate(rx_qp(srx), TERM_ERROR_LAYER_LLP,
++				   LLP_ETYPE_MPA, LLP_ECODE_FPDU_START, 0);
++		return -EINVAL;
++	}
++
++	/*
+ 	 * DDP/RDMAP header receive completed. Check if the current
+ 	 * DDP segment starts a new RDMAP message or continues a previously
+ 	 * started RDMAP message.
 
 
