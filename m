@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AFC33F590;
-	Sat, 30 May 2026 17:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B3C2E7379;
+	Sat, 30 May 2026 17:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162819; cv=none; b=r8fgIyHhhUwGkB5iO+Fc9GP11oHduPPK1AkcOeWSERsTVtVDicXg+aujLIH+ctPGtQMS11Q3cLiXEC/tTQx5SdYSRioFFPJJhcLBbhtH8B61Dn3gO3tiZcFXSq91nEJcALMmZdXJ7z6VLbQwRp6o3uKXQevmBVB9bo2DIonp+iw=
+	t=1780162823; cv=none; b=ml0YaURQ47UtJ5My12+2XYhs+53FlWeWc4ljWcaplfHZ7GSwA+z6OFRWcU4YDF6h1PQ4/VQHDBihCsIZnmLfVMVFD5O1TWVubvsp5eSwk09HEQsm9mmPcDl+DBcGZj+DGZeze9GRRKPI2Vl916OdQaqcDY5A2j6tS/lyv+ZSt+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162819; c=relaxed/simple;
-	bh=tH91ro3EK4Fm+hjC1ZahDnIBrTbSon8eA2msbbzIki0=;
+	s=arc-20240116; t=1780162823; c=relaxed/simple;
+	bh=O0u/K6W3SckqUkVtrLmF69cm1pnIsoKRuYCuYcQSZEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvvpakboMAZWf+qJWsyX7lf+ph5TwzBoUAZZlPJPnCDv+wVNiMZZy42RI5+L7e69yYjt35qw+9BKu+PykfmkqpNXXpWGVi+shJtXsQ9YlmJQauPPz3BmV8FYoNBvVpyZkzebu74eVJ0HZyq51mMUGdjtsOGvFbi0639k+1YuF2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xad6yFzR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sePAOqI6lqcUlSvDe4OwHfubnhiPPmFi4Q2RrLewE2ll/fqeySR7I7srWfshFSYxdKPhE0frUmOq89Uk9y4tTI6NaYuPRLGrafBIY+KsQ6vHgceKgMrKWu2qP5eXXOQ2yXp8a4M7V5FbnVm8FJ7YcH7TXPfC+jg+QIjg6OjgJFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2sY77Mr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xad6yFzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F631F00893;
-	Sat, 30 May 2026 17:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2sY77Mr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2221F00893;
+	Sat, 30 May 2026 17:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162818;
-	bh=N3rx0C/bYnmbIoVLMFwPT07bejCuF73O9IGoVlTrRC4=;
+	s=korg; t=1780162821;
+	bh=8B2bKfnp3yxaoYEtGtfGHuEEPHPr4pxCuVhD4BAj52Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xad6yFzRiR3Ei9Svj5s6yJJ0g1+arpaz07gf+eRhv0jLV1MiWKBmdgLipqbnTWQip
-	 I56R/HCXY1aDiuRJtg0ODLOHhvDjSwqGgyHR1MiETUxBL3oI9uWy8RVzsSDlyTiS1Y
-	 Za+tHbjwCPlKcL5waLkSibee/S3RxhjDtFsBa5qc=
+	b=s2sY77MrZaRG9GwcRse5XLivB08r2mg6ScrdQf895qlNwozHuQrja03/a9AQH5k0E
+	 fRKybOxhlSJp3Nj7h/DzSDWZIpx4tHMdiO1q7Pil0qKGNVNNMjRpWm67xJBIqHLT7j
+	 jL7Yio7N9NpqZjQKzUoVgaJKRLMsqJo1PUyL+AKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/776] xfrm_user: fix info leak in build_mapping()
-Date: Sat, 30 May 2026 17:55:47 +0200
-Message-ID: <20260530160241.133349483@linuxfoundation.org>
+	=?UTF-8?q?Daniel=20Br=C3=A1t?= <danek.brat@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 066/776] usb: storage: Expand range of matched versions for VL817 quirks entry
+Date: Sat, 30 May 2026 17:56:20 +0200
+Message-ID: <20260530160242.024417151@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,51 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Daniel Brát <danek.brat@gmail.com>
 
-[ Upstream commit 1beb76b2053b68c491b78370794b8ff63c8f8c02 ]
+commit 609865ab3d5d803556f628e221ecd3d06aed9f30 upstream.
 
-struct xfrm_usersa_id has a one-byte padding hole after the proto
-field, which ends up never getting set to zero before copying out to
-userspace.  Fix that up by zeroing out the whole structure before
-setting individual variables.
+Expands range of matched bcdDevice values for the VL817 quirk entry.
+This is based on experience with Axagon EE35-GTR rev1 3.5" HDD
+enclosure, which reports its bcdDevice as 0x0843, but presumably other
+vendors using this IC in their products may set it to any other value.
 
-Fixes: 3a2dfbe8acb1 ("xfrm: Notify changes in UDP encapsulation via netlink")
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Daniel Brát <danek.brat@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260402172433.5227-1-danek.brat@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/storage/unusual_devs.h |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index dcf433894951d..7e09ab9c34af8 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3592,6 +3592,7 @@ static int build_mapping(struct sk_buff *skb, struct xfrm_state *x,
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -2339,10 +2339,11 @@ UNUSUAL_DEV(  0x2027, 0xa001, 0x0000, 0x
+ 		US_FL_SCM_MULT_TARG ),
  
- 	um = nlmsg_data(nlh);
- 
-+	memset(&um->id, 0, sizeof(um->id));
- 	memcpy(&um->id.daddr, &x->id.daddr, sizeof(um->id.daddr));
- 	um->id.spi = x->id.spi;
- 	um->id.family = x->props.family;
--- 
-2.53.0
-
+ /*
+- * Reported by DocMAX <mail@vacharakis.de>
+- * and Thomas Weißschuh <linux@weissschuh.net>
++ * Reported by DocMAX <mail@vacharakis.de>,
++ * Thomas Weißschuh <linux@weissschuh.net>
++ * and Daniel Brát <danek.brat@gmail.com>
+  */
+-UNUSUAL_DEV( 0x2109, 0x0715, 0x9999, 0x9999,
++UNUSUAL_DEV( 0x2109, 0x0715, 0x0000, 0x9999,
+ 		"VIA Labs, Inc.",
+ 		"VL817 SATA Bridge",
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 
 
