@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F0739A7FE;
-	Sat, 30 May 2026 18:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7176C29B799;
+	Sat, 30 May 2026 18:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164875; cv=none; b=O5IJ8PaB+VqWER+jtUShvv7nBsGUmICxkXQsRIsuF4IlfWsEn41LllmqC5FwALYdLXQixTSkLdHOfUPsCc+ISLhjg2J5c4NslrKsgEk7VDsT/byLSV7W8MpPohSL1pn7M9knaDd/srarzf6ciRa0ga17T3DwTt6vHtplb0gqdfE=
+	t=1780164878; cv=none; b=AakdbNPuDoJF0oETiWu+yCS1QC/LCA/UpnplASJgkhqeVqALP3crxpnKBeVKZE9JSpuCGvLvIY7i6EoSRfMAcs8iQOFasA+uByTQV3HBVkm4dYbXZLSAzsItPNbtWgHT07GhrqkxE+Op5ullZWtnJoWglmrNLCnNr/P40PWUXXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164875; c=relaxed/simple;
-	bh=NrDPHBLhhnATMa9i7/ya7YPwp0irFZGtgsVgBjidekQ=;
+	s=arc-20240116; t=1780164878; c=relaxed/simple;
+	bh=3E9yV216PKf85Y9Cs8yaOJac/V9Tmf45IgQrsuScl7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiznYaCdLzOtMkwlxjFRXHjVJPqunKOpqznMYiva48MEPDUo0AdUEiJniD8x3aFGflHlEq7pTXrdQnDXdBJmhFn3N4k13cXoKyPKqpyl043Oihzr0OLTWifV5lfCG2sELsd7HG6O3wJoo5Bnh/K9e/msyLm+e1P+M6LqP0skbbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGTQ4uVE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nGEXX1lp+SCXeFQnR8SQzW4yY+NaCvZ9UiI1dN1gLlBDsSqK7pRvobqkYfvlZ1PbE/fBP7McJkJZkuAI5jWJHEnIJRFDZGHyB0BIDi7NXX1Fi9tG7OvVWjibPpa+vRN8Gj5jit1/d5tpitLk6AwsQT10QM5qN/dCyd7Kxk8XXyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQc8yMwF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGTQ4uVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98FD1F00893;
-	Sat, 30 May 2026 18:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQc8yMwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18B31F00893;
+	Sat, 30 May 2026 18:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164874;
-	bh=OLg/12j21sdTCxb88/P3AqB82SBDe0diaKiCwARerhk=;
+	s=korg; t=1780164877;
+	bh=AyzFN4K/NAsSzoRrKbD5NewFIeM6e4pTO7silTl59Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QGTQ4uVEGR0ZmX17DR8wYyu4bF8SrlmR/OwUtDW1jBuGOZTMckbg+d2tICO9jB1dq
-	 /dR6FFUQVDcR4bLwioUpwJo2ay+nTlbtja1r+qwRwZJv5HLWlUgEEgIYKZ/EvtP6Z1
-	 ve0Oj+reN3jGzjyFksIAM/+IkYAzUqwRtRN9yiiE=
+	b=zQc8yMwFxNETz6XvqtAkh9ilbA2wu0Wv3wnYjyQsUE7dQhjnLJTDNTq9HWARJNiHo
+	 4Th3EkAmNgKMti8BWT1dE0R1W/XuBJ9Rw6pJdgjTSPfePila904VkfU9VjxrjGaPRq
+	 Fm+r1WycKicCCNvQw3QVXnUcWE6Q6stMC7Za9TsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DeepChirp <DeepChirp@outlook.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 5.15 655/776] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
-Date: Sat, 30 May 2026 18:06:09 +0200
-Message-ID: <20260530160256.839620773@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 656/776] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
+Date: Sat, 30 May 2026 18:06:10 +0200
+Message-ID: <20260530160256.864229978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,61 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
+commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
 
-For RGB, set dynamic_range to CTA or VESA based on
-crtc_state->limited_color_range so sinks apply correct
-quantization. YCbCr remains limited (CTA) range.
-(DP v1.4, Table 5-1)
+snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
+descriptor size before using baAssocJackID[], but the descriptor walker can
+still return a class-specific endpoint descriptor whose bLength exceeds the
+remaining bytes in the endpoint-extra scan.
 
-v2:
-- Added Reported-by and Tested-by tags
+That leaves later flexible-array reads bounded by bLength, but not by the
+remaining bytes in the endpoint-extra scan.
 
-v3:
-- Add back YCbCr comment(Suraj)
+Stop walking when bLength is zero or
+extends past the remaining endpoint-extra scan.
 
-Cc: stable@vger.kernel.org #v5.8+
-Reported-by: DeepChirp <DeepChirp@outlook.com>
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
-Tested-by: DeepChirp <DeepChirp@outlook.com>
-Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
-Assisted-by: GitHub-Copilot:GPT-5.4
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/usb/midi.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -1540,8 +1540,13 @@ static void intel_dp_compute_vsc_colorim
- 	drm_WARN_ON(&dev_priv->drm,
- 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1974,15 +1974,17 @@ static struct usb_ms_endpoint_descriptor
+ 	while (extralen > 3) {
+ 		struct usb_ms_endpoint_descriptor *ms_ep =
+ 				(struct usb_ms_endpoint_descriptor *)extra;
++		int length = ms_ep->bLength;
  
--	/* all YCbCr are always limited range */
--	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
-+	/* All YCbCr formats are always limited range. */
-+	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
-+		vsc->dynamic_range = crtc_state->limited_color_range ?
-+			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
-+	else
-+		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
+-		if (ms_ep->bLength > 3 &&
++		if (!length || length > extralen)
++			break;
 +
- 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
++		if (length > 3 &&
+ 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
+ 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
+ 			return ms_ep;
+-		if (!extra[0])
+-			break;
+-		extralen -= extra[0];
+-		extra += extra[0];
++		extralen -= length;
++		extra += length;
+ 	}
+ 	return NULL;
  }
- 
 
 
