@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D246219303;
-	Sat, 30 May 2026 18:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615C717555;
+	Sat, 30 May 2026 18:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165447; cv=none; b=fvrm6CS9omPPdaad14J+bOo6dhSBHaYzIvjR7P1vhIU7praKb/IDZy+8wK1Jhvl4QkmO+RtE0eqxAMJQhS0xsnPHMBlfGeDILQH7BOX4wEgNV19ftUJs/WYDqRRZ+qxbCm2mQ28NSw0VrfdtGZFxVIEuHDCzRytdORVEAusjD3o=
+	t=1780165450; cv=none; b=TpGxbWDFczyBf0csE2buuoySqXfH5aKUziOQs+X0PfHmKOkYYUHFfmyQrupF27IeHFC7emw0o/OSNazMfLVgSgEOFZuAg9lu2JCghkhYPM8ev8zU0HzYKzIsQDKgdZe8QpRulMY7lXVqGFrqlteqZ4uiI+oUVmOhpijoJGhNAUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165447; c=relaxed/simple;
-	bh=VIfMYOtH61bNFQsVCqs4YpPD+jRYLzZu9hb7lx0uLg4=;
+	s=arc-20240116; t=1780165450; c=relaxed/simple;
+	bh=EFf2e5EOavPIvKjkih3yRXPl3pjdEMA1KEQNVe3NxUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBuDmQBR2x5IzXRgz+3tk/y1cBdFLaX+TC4MB+t+ppyVMfP9TRGJOA3ljZz5XORyqGEoB0444aMl/dTHaOC3qcRft7HjpI8po16YEz6u4VNaaILR4fREjdqiJ5OPOHK6lvPc0UyL75+jPSJNency0Iiv0B/SsZVW39um0GFM5xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVK5ir63; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWqU+C15hoDZFW4ajGTPADf43tlhAYTnqZ2Pa8wj3HBZOo0vZ4mua8hXLKLK+6aaOSXyLY8F2fahMXhpuWOyudA9DKijK40xv6XkDIphAhVZBPd8kauMewhZV3AvxoK0jiXdPRVu2l7pWquK75HaxDGBw+H45Rjq+BeSsszs0Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk0XEBat; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVK5ir63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631C01F00893;
-	Sat, 30 May 2026 18:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk0XEBat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52B11F00893;
+	Sat, 30 May 2026 18:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165446;
-	bh=iypEiWAOs5Qg3ura7e2kzMzEkhHN8a2AAVnaLc1jP50=;
+	s=korg; t=1780165449;
+	bh=AIRNdpSFv7zHD6o3UP0YUDTS6SRRJKFTaxhvZLHXPN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVK5ir63LQF4AlPURIZpqwnhUl6Jay22ZGKuu5s5cOGoQJHPgCUOiCuG3irQgWDmW
-	 o/KnDpKrRnbVZczCMZ+9oU+azbZOyKkX+zDczQact758fdpXC0QA/Hu//IhZLg9md3
-	 rSbouCXYvG0WSS8jzixfp86jasFx2kZV8QjYrCu0=
+	b=tk0XEBatTK2C56nRhqRapog6v5PkpYlVzZ+FyF+T6eY8r9p+SHaZlbQngHjZMG573
+	 WHrMKkHrncAqV556ZR054TSFanrA9s6b/eYB+Zl9KooX3ze5FVBmFAvC+L/3uJvOpc
+	 gCpcWQmLjz57nlEyAHCUIbEurUan7t7ntgXsPCA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejas Bharambe <tejas.bharambe@outlook.com>,
-	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 063/589] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
-Date: Sat, 30 May 2026 17:59:04 +0200
-Message-ID: <20260530160226.255180869@linuxfoundation.org>
+	syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 5.10 081/589] nilfs2: fix NULL i_assoc_inode dereference in nilfs_mdt_save_to_shadow_map
+Date: Sat, 30 May 2026 17:59:22 +0200
+Message-ID: <20260530160226.785153237@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -58,101 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejas Bharambe <tejas.bharambe@outlook.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
+commit 4a4e0328edd9e9755843787d28f16dd4165f8b48 upstream.
 
-filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
-as documented in mm/filemap.c:
+The DAT inode's btree node cache (i_assoc_inode) is initialized lazily
+during btree operations. However, nilfs_mdt_save_to_shadow_map()
+assumes i_assoc_inode is already initialized when copying dirty pages
+to the shadow map during GC.
 
-  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
+If NILFS_IOCTL_CLEAN_SEGMENTS is called immediately after mount before
+any btree operation has occurred on the DAT inode, i_assoc_inode is
+NULL leading to a general protection fault.
 
-When this happens, a concurrent munmap() can call remove_vma() and free
-the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
-becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
-dereferences it -- a use-after-free.
+Fix this by calling nilfs_attach_btree_node_cache() on the DAT inode
+in nilfs_dat_read() at mount time, ensuring i_assoc_inode is always
+initialized before any GC operation can use it.
 
-Fix this by saving ip_blkno as a plain integer before calling
-filemap_fault(), and removing vma from the trace event. Since
-ip_blkno is copied by value before the lock can be dropped, it
-remains valid regardless of what happens to the vma or inode
-afterward.
-
-Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
-Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
-Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
-Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b4093b1f24ad789bf37
+Tested-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Fixes: e897be17a441 ("nilfs2: fix lockdep warnings in page operations for btree nodes")
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/mmap.c        |    7 +++----
- fs/ocfs2/ocfs2_trace.h |   10 ++++------
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ fs/nilfs2/dat.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ocfs2/mmap.c
-+++ b/fs/ocfs2/mmap.c
-@@ -32,7 +32,8 @@
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -515,6 +515,9 @@ int nilfs_dat_read(struct super_block *s
+ 	if (err)
+ 		goto failed;
  
- static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
- {
--	struct vm_area_struct *vma = vmf->vma;
-+	unsigned long long ip_blkno =
-+		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
- 	sigset_t oldset;
- 	vm_fault_t ret;
- 
-@@ -40,11 +41,9 @@ static vm_fault_t ocfs2_fault(struct vm_
- 	ret = filemap_fault(vmf);
- 	ocfs2_unblock_signals(&oldset);
- 
--	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
--			  vma, vmf->page, vmf->pgoff);
-+	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
- 	return ret;
- }
--
- static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
- 			struct buffer_head *di_bh, struct page *page)
- {
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -1248,22 +1248,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
- 
- TRACE_EVENT(ocfs2_fault,
- 	TP_PROTO(unsigned long long ino,
--		 void *area, void *page, unsigned long pgoff),
--	TP_ARGS(ino, area, page, pgoff),
-+		 void *page, unsigned long pgoff),
-+	TP_ARGS(ino, page, pgoff),
- 	TP_STRUCT__entry(
- 		__field(unsigned long long, ino)
--		__field(void *, area)
- 		__field(void *, page)
- 		__field(unsigned long, pgoff)
- 	),
- 	TP_fast_assign(
- 		__entry->ino = ino;
--		__entry->area = area;
- 		__entry->page = page;
- 		__entry->pgoff = pgoff;
- 	),
--	TP_printk("%llu %p %p %lu",
--		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
-+	TP_printk("%llu %p %lu",
-+		  __entry->ino, __entry->page, __entry->pgoff)
- );
- 
- /* End of trace events for fs/ocfs2/mmap.c. */
++	err = nilfs_attach_btree_node_cache(dat);
++	if (err)
++		goto failed;
+ 	err = nilfs_read_inode_common(dat, raw_inode);
+ 	if (err)
+ 		goto failed;
 
 
