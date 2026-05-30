@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520452F25E4;
-	Sat, 30 May 2026 16:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE85F348C4E;
+	Sat, 30 May 2026 16:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158316; cv=none; b=Q/u4RRmLmGe7382pzSHiMqcycw2ox7PHGc/XDMY7QmSrnqAK0Md1C4ryzTZ9rekCd3H03pcA0quuaDIN2MYr8Xmid3EaVxAcFMAGejYvi0G1EUeePfVrF9O7+2odAOkOarWbQx0otiNUgCUeFbp2lxyOgsxatSQS1wQsCj9v3gw=
+	t=1780158331; cv=none; b=I6IOGV98giH2KzN2pknkjSKQIhTUN6E/wUy1kKQnGPy+bleA61rOpDml+SXy98TGRloOsKR9rMihBIC+84EWHTb1Nq5MoNxBlISEL7+L1R+EZK760PaveVcUub+Vt+awpg0SpJqfrti9GPyDGkip7hfviDqE0tGXCorP461CZqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158316; c=relaxed/simple;
-	bh=w+CBrRGobN1qrj5QUzUsU15jW2bJPUn+8rEVy162Yjs=;
+	s=arc-20240116; t=1780158331; c=relaxed/simple;
+	bh=g+77wZFkFPwza8jiyQfgfCaF90SETTuxLSswJoiewF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFrSNdQtIjQzh8lJpFHhRCR/34hAVusw13Wg9IdCuEwLNoHwEi/zI9cC7TkGh8C/oupqeFUqkQ0KKKup6i703I65lKWOM0rLYRf1Z5ZqU8T3a+GxrFL2cWu+gjyXP4o/xzWnMRqo5Ea3tpvlhlu6qwhuuY+e+ooZ8+Z78VQgD6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4N76Ga6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=diLVYWyo2OGOnW2FvZG0WYyhCtNsivEj5wJJjaI9Pr8FesmR2pIro7dj13Iaz0dydeKkmImFlJZ7BHzWX6VTrvyBXeAIPMK2V2aNaot1fX0kzP8d0xKWZJeiJz67zUbR7FnLZ1lrO+wxcBJwYj1Cb0iV0GezdrGD8Y1woGTdPzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmoKoBsh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4N76Ga6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83C11F00893;
-	Sat, 30 May 2026 16:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmoKoBsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AB31F00898;
+	Sat, 30 May 2026 16:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158315;
-	bh=nrFQlPHMw2vtZUw6wpnATPgXay1fTtn4aYr+Bh3aq2I=;
+	s=korg; t=1780158329;
+	bh=SkIyCN8RdIhZZrYdJAgo/wxJLvEue1FC7iZ+fmoWWkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y4N76Ga6NcDCE9XC+qkw2BCuAQLLi/TWhzt+41XHmDmX58o8rlya050/fU0bsVWzR
-	 eMyRkC0WvCiCWnh/wV/I4HdwQMwY/OwETr6/4VvtW7PFmkjznLTnwK27iTFtbMPGoq
-	 Ya/181M52HFzZ18S4Qr7eo4iw90bSgplSMtdi0Z8=
+	b=xmoKoBsh//GOMsiIgEAUn6siZ3QG5FOwi4n4ZK4moClvC5+5jkHMDEsub17ZsiD1G
+	 6Ng/dc4/Angykvj8Hez9mt4Nq7xkvq+cYAh4y8Xpuz8NRDpD1J3BkcV8wWkR3VJgvQ
+	 DU92EWRj5QNWfg7LXxUKy7v9HvRzU5Mwr/PIzBQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/969] eventpoll: defer struct eventpoll free to RCU grace period
-Date: Sat, 30 May 2026 17:52:36 +0200
-Message-ID: <20260530160301.321008520@linuxfoundation.org>
+Subject: [PATCH 6.1 041/969] xsk: tighten UMEM headroom validation to account for tailroom and min frame
+Date: Sat, 30 May 2026 17:52:45 +0200
+Message-ID: <20260530160301.552488452@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,52 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 07712db80857d5d09ae08f3df85a708ecfc3b61f ]
+[ Upstream commit a315e022a72d95ef5f1d4e58e903cb492b0ad931 ]
 
-In certain situations, ep_free() in eventpoll.c will kfree the epi->ep
-eventpoll struct while it still being used by another concurrent thread.
-Defer the kfree() to an RCU callback to prevent UAF.
+The current headroom validation in xdp_umem_reg() could leave us with
+insufficient space dedicated to even receive minimum-sized ethernet
+frame. Furthermore if multi-buffer would come to play then
+skb_shared_info stored at the end of XSK frame would be corrupted.
 
-Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+HW typically works with 128-aligned sizes so let us provide this value
+as bare minimum.
+
+Multi-buffer setting is known later in the configuration process so
+besides accounting for 128 bytes, let us also take care of tailroom space
+upfront.
+
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Fixes: 99e3a236dd43 ("xsk: Add missing check on user supplied headroom size")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://patch.msgid.link/20260402154958.562179-2-maciej.fijalkowski@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/xdp/xdp_umem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index f20a35775cf66..f6038819fe79f 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -225,6 +225,9 @@ struct eventpoll {
- 	 */
- 	refcount_t refcount;
+diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
+index 02207e852d796..561290f9e68b5 100644
+--- a/net/xdp/xdp_umem.c
++++ b/net/xdp/xdp_umem.c
+@@ -196,7 +196,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	if (!unaligned_chunks && chunks_rem)
+ 		return -EINVAL;
  
-+	/* used to defer freeing past ep_get_upwards_depth_proc() RCU walk */
-+	struct rcu_head rcu;
-+
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	/* used to track busy poll napi_id */
- 	unsigned int napi_id;
-@@ -708,7 +711,8 @@ static void ep_free(struct eventpoll *ep)
- 	mutex_destroy(&ep->mtx);
- 	free_uid(ep->user);
- 	wakeup_source_unregister(ep->ws);
--	kfree(ep);
-+	/* ep_get_upwards_depth_proc() may still hold epi->ep under RCU */
-+	kfree_rcu(ep, rcu);
- }
+-	if (headroom >= chunk_size - XDP_PACKET_HEADROOM)
++	if (headroom > chunk_size - XDP_PACKET_HEADROOM -
++		       SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) - 128)
+ 		return -EINVAL;
  
- /*
+ 	umem->size = size;
 -- 
 2.53.0
 
