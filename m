@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4976621E098;
-	Sat, 30 May 2026 17:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53354320CAD;
+	Sat, 30 May 2026 17:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163945; cv=none; b=k7lvu9CALPEPPylEAPgWvzpbr2H05IWp+lKVbbAe/6sUuMKdFX9MA3ap8wiNYpRIrUQH2GUdjSlj4xqU3U/mFhISG527tyyDpRp9bQBW/B9GwTgG2H4pqCv5l97frMWDckU3xgqwWFwM5HAHTP20iQsf2WBdd/fxvOcBCAC5GdY=
+	t=1780163948; cv=none; b=jXxS1Bfcq6bD1M+haWSqLZU6TUtDQAOEo7bAZruobGvw6WkdSXP7X/MWZWF4XfEcJuT0EfCxhBJTvF4X8PpplMohs1QNQTLVq6NpVN7oISWKf+nnKZaApDVCnY8JKNm+6lu6EwnVJajWeaVJ+0D56irmNMsUepW/vDDWUBqTZv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163945; c=relaxed/simple;
-	bh=YQtiPbhujKNqUWSsh5GtmifLnEAXiThkqm50GFSijQA=;
+	s=arc-20240116; t=1780163948; c=relaxed/simple;
+	bh=CsrpRdWi5u4/0dvUeF7aubNjPjQdC6pCAK4Fah6vCpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UB3/+xHMQbm56XajUBId3yrbOfx3h6erytLbjw/q2bE3S040JtsUP7CiidTJXfTwtUGxWgYYRuRWGlKRj2Hzf3AYlEM81ifOY0KzLG3aCSHWy53mwAIduR8ghcfWrgzY2OUuaUCDd+XxZH1WYlJUb2CeKetLFT+dOD0NKHh3FBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iv+kL6N1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sNE4osgI8l2Sz4taKn7XfUqLXHCiLvBU1oBvy9XvaWVhsqKVP3F0uieaGjKiQ++JEtjiFc+tt8cqDRC8/VtfdpMdkd6AxA2/Bb56Hue9Y/R/QPEUk87OBw18gxM6R+IbuKDdaAdzU0G+yNAuGxFJ8C3M3ofKym1j4QNbRsC/ekw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBMtPCgv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv+kL6N1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5015E1F00893;
-	Sat, 30 May 2026 17:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBMtPCgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992E71F00893;
+	Sat, 30 May 2026 17:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163943;
-	bh=m8CzFJS/IbuZg4nadZ+zN6/JmWUbo2+sJ2NNqT/Nujk=;
+	s=korg; t=1780163947;
+	bh=cleHq9yNTBCTcBzN+3Cgmx6d7hIPcQZgh5tPz+vbmhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iv+kL6N1mpozuSzgY+r28f/l7ECynnAOSiEJCOaKkolLb/KoQz2t/S1CDEMat8dG1
-	 zTWl9qpeLaSHI5ewnOrN6M1nODB63sBBcQTnrMME+O3E8cs/K+LOQOQrNbE/3kNt3o
-	 NMgWt3qJ28sBegbwnDexXcf0iAO10iD3VYjvUJZ8=
+	b=PBMtPCgvndIc0BtBdfyNRiT5shPE8LQciHYmZ/VHRVui4PB3qMfe0TeUBurWX3VPl
+	 r9QRrbCGzB9oxLrydHPA+udEAy0riF6reIVA42EYCLnOCTgKwvAu4FnGOPiLPi9Bjz
+	 A/HUMAZiX0XOu5XcA0nYGkUq4GtiUgeFtREvpLvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 409/776] wifi: brcmfmac: Fix error pointer dereference
-Date: Sat, 30 May 2026 18:02:03 +0200
-Message-ID: <20260530160251.062601748@linuxfoundation.org>
+Subject: [PATCH 5.15 392/776] irqchip/irq-pic32-evic: Address warning related to wrong printf() formatter
+Date: Sat, 30 May 2026 18:01:46 +0200
+Message-ID: <20260530160250.623163521@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,84 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit dd8592fc6007a451c3e4b9025de365e39de8178a ]
+[ Upstream commit 86be659415b0ddefebc3120e309091aa215a9064 ]
 
-The function brcmf_chip_add_core() can return an error pointer and is
-not checked. Add checks for error pointer.
+This driver is currently only build on 32 bit MIPS systems. When building
+it on x86_64, the following warning occurs:
 
-Detected by Smatch:
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1010 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
+    drivers/irqchip/irq-pic32-evic.c: In function ‘pic32_ext_irq_of_init’:
+    ./include/linux/kern_levels.h:5:25: error: format ‘%d’ expects argument of type
+     ‘int’, but argument 2 has type ‘long unsigned int’ [-Werror=format=]
 
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1013 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
+Update the printf() formatter in preparation for allowing this driver to
+be compiled on all architectures.
 
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1016 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1019 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1022 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-Fixes: cb7cf7be9eba7 ("brcmfmac: make chip related functions host interface independent")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260217023043.73631-1-ethantidmore06@gmail.com
-[add missing wifi: prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: aaa8666ada780 ("IRQCHIP: irq-pic32-evic: Add support for PIC32 interrupt controller")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260222-irqchip-pic32-v1-1-37f50d1f14af@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/broadcom/brcm80211/brcmfmac/chip.c   | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/irqchip/irq-pic32-evic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-index 1ee49f9e325db..d4a3992323796 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -986,18 +986,33 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
+diff --git a/drivers/irqchip/irq-pic32-evic.c b/drivers/irqchip/irq-pic32-evic.c
+index 1d9bb28d13e5d..1a72047f3aa2e 100644
+--- a/drivers/irqchip/irq-pic32-evic.c
++++ b/drivers/irqchip/irq-pic32-evic.c
+@@ -198,7 +198,7 @@ static void __init pic32_ext_irq_of_init(struct irq_domain *domain)
  
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_CHIPCOMMON,
- 					   SI_ENUM_BASE_DEFAULT, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_SDIO_DEV,
- 					   BCM4329_CORE_BUS_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_INTERNAL_MEM,
- 					   BCM4329_CORE_SOCRAM_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_ARM_CM3,
- 					   BCM4329_CORE_ARM_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_80211, 0x18001000, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 	} else if (socitype == SOCI_AI) {
- 		ci->iscoreup = brcmf_chip_ai_iscoreup;
+ 	of_property_for_each_u32(node, pname, prop, p, hwirq) {
+ 		if (i >= ARRAY_SIZE(priv->ext_irqs)) {
+-			pr_warn("More than %d external irq, skip rest\n",
++			pr_warn("More than %zu external irq, skip rest\n",
+ 				ARRAY_SIZE(priv->ext_irqs));
+ 			break;
+ 		}
 -- 
 2.53.0
 
