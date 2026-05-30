@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A30223DC6;
-	Sat, 30 May 2026 18:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912FF29B799;
+	Sat, 30 May 2026 18:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164735; cv=none; b=oDdj25738dd1uABZ5MLtgBLlX53dutqektKiWLZk5ZtPb61dJ6dfHiOPD24FLOg3oYG/HuxzoxupW0fQvgLyGTpdqy2e1deT02vB4mPiW0fNw4EIeHLy4s9rdXYxTGSjztVZ4u6l8ixDdTJoLxltx7s0wVB1Gsff8xO/fzz/nW8=
+	t=1780164738; cv=none; b=WU1GmdYqvLMgGr5cVFhzOaMg25plh7S8AHonPbXG9mOzhsohvXmD8TnymkBDxJ6IyXmc6VpJx2/UEMJ7aFhaWybPhSpqVIFLcFWlkJY+1SwLY6bEe0MSMz0K8kDuQktfemWd9qmLkfLLvShGO8Bcs+lYUmuHo1d4VzCv+mYGZVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164735; c=relaxed/simple;
-	bh=jnYLcPqIx3ilxE0Z22XADADlVD96uHQOgfO+ACN4q1E=;
+	s=arc-20240116; t=1780164738; c=relaxed/simple;
+	bh=r+coENhw9eTv4zwDxs2wcqzQD3pT1BuAKU56nsIWuy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxMZyCctM+WLJnf0oorVw5eIb+B/O9JFNqlPWnJcgTKQ6SRqgpNe58qfrmzzXX/IkcORYVvJ431kSnOT1KEiEqwQZiRcNdqndRzVqchJd4aIffaYyJXALUy3ztd1Ypy9YzQau/Q7FgLyX1GKekxTiY+wIwdR1nXsjI7HvMukU5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zx2WMJn6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VWwaul8yF2Dpkf1J0gugCQsUMWXhRB/d63lXK4j46x5G4rAqdmdPQp5BXIUJa7yzwrzqizWFhZios0GYkyYv3hOmQJ2NollLVz4xzp8v3h0pGEXDQsboa7UIrfThah3xvjSk7zXdZkjPuD0rrVHFRRaSqTOCtZ+kSI75w+LNg9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOKiEFUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zx2WMJn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC6B1F00893;
-	Sat, 30 May 2026 18:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOKiEFUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65521F00893;
+	Sat, 30 May 2026 18:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164734;
-	bh=8zmcrcAo/ggfJxiRlTQrZk7wednHot94QmLWw/HJPXc=;
+	s=korg; t=1780164737;
+	bh=udNSU2eP26no6qnMc0vjJ1s7C6wLdD/6EXCZV+TsVUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zx2WMJn6VtZDgO1DmK/rA+pKQ93TqF84KM1I0Ez4YgIJGdLjRMPthAgtlzjSLzpU1
-	 XkfusZyOE7YMOdy3dpmtFgVI8iT8ITHpuNOONtgm/96RF7wSbHSAqYrxK2tRKrZPNF
-	 M3oUFsJahx+s2WI5JYbijUsxYAIEUaQX79wSaZY0=
+	b=tOKiEFUK5Yu3Za4Os6GVNHHYyviXoC1zEtWS1HtKPX/3+ZJfIaLkuCjY5xil9pHWe
+	 Fbp2fbdAJFvgax8YsOQ4SPeoVCHGCmJpl0cgjjsLLTiKUKK2oAELwUiRz/7n7W6Kna
+	 HbuhRYqcGff3NlS9zUsU/k6khtmE2Ii3f7+zltlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 643/776] SUNRPC: Do not dereference non-socket transports in sysfs
-Date: Sat, 30 May 2026 18:05:57 +0200
-Message-ID: <20260530160256.561305345@linuxfoundation.org>
+Subject: [PATCH 5.15 644/776] flow_dissector: do not dissect PPPoE PFC frames
+Date: Sat, 30 May 2026 18:05:58 +0200
+Message-ID: <20260530160256.584127661@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,222 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 421ab1be43bd015ffe744f4ea25df4f19d1ce6fe ]
+[ Upstream commit d6c19b31a3c1d519fabdcf0aa239e6b6109b9473 ]
 
-Do not cast the struct xprt to a sock_xprt unless we know it is a UDP or
-TCP transport. Otherwise the call to lock the mutex will scribble over
-whatever structure is actually there. This has been seen to cause hard
-system lockups when the underlying transport was RDMA.
+RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
+RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
+PFC for PPPoE sessions, and the flow dissector driver has assumed an
+uncompressed frame until the blamed commit.
 
-Fixes: b49ea673e119 ("SUNRPC: lock against ->sock changing during sysfs read")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+During the review process of that commit [1], support for PFC is
+suggested. However, having a compressed (1-byte) protocol field means
+the subsequent PPP payload is shifted by one byte, causing 4-byte
+misalignment for the network header and an unaligned access exception
+on some architectures.
+
+The exception can be reproduced by sending a PPPoE PFC frame to an
+ethernet interface of a MIPS board, with RPS enabled, even if no PPPoE
+session is active on that interface:
+
+$ 0   : 00000000 80c40000 00000000 85144817
+$ 4   : 00000008 00000100 80a75758 81dc9bb8
+$ 8   : 00000010 8087ae2c 0000003d 00000000
+$12   : 000000e0 00000039 00000000 00000000
+$16   : 85043240 80a75758 81dc9bb8 00006488
+$20   : 0000002f 00000007 85144810 80a70000
+$24   : 81d1bda0 00000000
+$28   : 81dc8000 81dc9aa8 00000000 805ead08
+Hi    : 00009d51
+Lo    : 2163358a
+epc   : 805e91f0 __skb_flow_dissect+0x1b0/0x1b50
+ra    : 805ead08 __skb_get_hash_net+0x74/0x12c
+Status: 11000403        KERNEL EXL IE
+Cause : 40800010 (ExcCode 04)
+BadVA : 85144817
+PrId  : 0001992f (MIPS 1004Kc)
+Call Trace:
+[<805e91f0>] __skb_flow_dissect+0x1b0/0x1b50
+[<805ead08>] __skb_get_hash_net+0x74/0x12c
+[<805ef330>] get_rps_cpu+0x1b8/0x3fc
+[<805fca70>] netif_receive_skb_list_internal+0x324/0x364
+[<805fd120>] napi_complete_done+0x68/0x2a4
+[<8058de5c>] mtk_napi_rx+0x228/0xfec
+[<805fd398>] __napi_poll+0x3c/0x1c4
+[<805fd754>] napi_threaded_poll_loop+0x234/0x29c
+[<805fd848>] napi_threaded_poll+0x8c/0xb0
+[<80053544>] kthread+0x104/0x12c
+[<80002bd8>] ret_from_kernel_thread+0x14/0x1c
+
+Code: 02d51821  1060045b  00000000 <8c640000> 3084000f  2c820005  144001a2  00042080  8e220000
+
+To reduce the attack surface and maintain performance, do not process
+PPPoE PFC frames.
+
+[1] https://lore.kernel.org/r/20220630231016.GA392@debian.home
+Fixes: 46126db9c861 ("flow_dissector: Add PPPoE dissectors")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260415022456.141758-1-qingfang.deng@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/xprt.h     |  3 ++
- include/linux/sunrpc/xprtsock.h |  1 -
- net/sunrpc/sysfs.c              | 55 ++++++++++++++++-----------------
- net/sunrpc/xprtsock.c           | 26 ++++++++++++++--
- 4 files changed, 54 insertions(+), 31 deletions(-)
+ net/core/flow_dissector.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/sunrpc/xprt.h b/include/linux/sunrpc/xprt.h
-index 955ea4d7af0b2..eef5e87c03b43 100644
---- a/include/linux/sunrpc/xprt.h
-+++ b/include/linux/sunrpc/xprt.h
-@@ -139,6 +139,9 @@ struct rpc_xprt_ops {
- 	void		(*rpcbind)(struct rpc_task *task);
- 	void		(*set_port)(struct rpc_xprt *xprt, unsigned short port);
- 	void		(*connect)(struct rpc_xprt *xprt, struct rpc_task *task);
-+	int		(*get_srcaddr)(struct rpc_xprt *xprt, char *buf,
-+				       size_t buflen);
-+	unsigned short	(*get_srcport)(struct rpc_xprt *xprt);
- 	int		(*buf_alloc)(struct rpc_task *task);
- 	void		(*buf_free)(struct rpc_task *task);
- 	void		(*prepare_request)(struct rpc_rqst *req);
-diff --git a/include/linux/sunrpc/xprtsock.h b/include/linux/sunrpc/xprtsock.h
-index 3eb0079669c50..38284f25eddfd 100644
---- a/include/linux/sunrpc/xprtsock.h
-+++ b/include/linux/sunrpc/xprtsock.h
-@@ -10,7 +10,6 @@
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 164de39fd262c..7ab80767d94c3 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1239,16 +1239,13 @@ bool __skb_flow_dissect(const struct net *net,
+ 			break;
+ 		}
  
- int		init_socket_xprt(void);
- void		cleanup_socket_xprt(void);
--unsigned short	get_srcport(struct rpc_xprt *);
+-		/* least significant bit of the most significant octet
+-		 * indicates if protocol field was compressed
++		/* PFC (compressed 1-byte protocol) frames are not processed.
++		 * A compressed protocol field has the least significant bit of
++		 * the most significant octet set, which will fail the following
++		 * ppp_proto_is_valid(), returning FLOW_DISSECT_RET_OUT_BAD.
+ 		 */
+ 		ppp_proto = ntohs(hdr->proto);
+-		if (ppp_proto & 0x0100) {
+-			ppp_proto = ppp_proto >> 8;
+-			nhoff += PPPOE_SES_HLEN - 1;
+-		} else {
+-			nhoff += PPPOE_SES_HLEN;
+-		}
++		nhoff += PPPOE_SES_HLEN;
  
- #define RPC_MIN_RESVPORT	(1U)
- #define RPC_MAX_RESVPORT	(65535U)
-diff --git a/net/sunrpc/sysfs.c b/net/sunrpc/sysfs.c
-index 33e8fb85ce4f4..e643dd8748a29 100644
---- a/net/sunrpc/sysfs.c
-+++ b/net/sunrpc/sysfs.c
-@@ -97,7 +97,7 @@ static ssize_t rpc_sysfs_xprt_dstaddr_show(struct kobject *kobj,
- 		return 0;
- 	ret = sprintf(buf, "%s\n", xprt->address_strings[RPC_DISPLAY_ADDR]);
- 	xprt_put(xprt);
--	return ret + 1;
-+	return ret;
- }
- 
- static ssize_t rpc_sysfs_xprt_srcaddr_show(struct kobject *kobj,
-@@ -105,33 +105,31 @@ static ssize_t rpc_sysfs_xprt_srcaddr_show(struct kobject *kobj,
- 					   char *buf)
- {
- 	struct rpc_xprt *xprt = rpc_sysfs_xprt_kobj_get_xprt(kobj);
--	struct sockaddr_storage saddr;
--	struct sock_xprt *sock;
--	ssize_t ret = -1;
-+	size_t buflen = PAGE_SIZE;
-+	ssize_t ret = -ENOTSOCK;
- 
- 	if (!xprt || !xprt_connected(xprt)) {
--		xprt_put(xprt);
--		return -ENOTCONN;
-+		ret = -ENOTCONN;
-+	} else if (xprt->ops->get_srcaddr) {
-+		ret = xprt->ops->get_srcaddr(xprt, buf, buflen);
-+		if (ret > 0) {
-+			if (ret < buflen - 1) {
-+				buf[ret] = '\n';
-+				ret++;
-+				buf[ret] = '\0';
-+			}
-+		}
- 	}
--
--	sock = container_of(xprt, struct sock_xprt, xprt);
--	mutex_lock(&sock->recv_mutex);
--	if (sock->sock == NULL ||
--	    kernel_getsockname(sock->sock, (struct sockaddr *)&saddr) < 0)
--		goto out;
--
--	ret = sprintf(buf, "%pISc\n", &saddr);
--out:
--	mutex_unlock(&sock->recv_mutex);
- 	xprt_put(xprt);
--	return ret + 1;
-+	return ret;
- }
- 
- static ssize_t rpc_sysfs_xprt_info_show(struct kobject *kobj,
--					struct kobj_attribute *attr,
--					char *buf)
-+					struct kobj_attribute *attr, char *buf)
- {
- 	struct rpc_xprt *xprt = rpc_sysfs_xprt_kobj_get_xprt(kobj);
-+	unsigned short srcport = 0;
-+	size_t buflen = PAGE_SIZE;
- 	ssize_t ret;
- 
- 	if (!xprt || !xprt_connected(xprt)) {
-@@ -139,7 +137,11 @@ static ssize_t rpc_sysfs_xprt_info_show(struct kobject *kobj,
- 		return -ENOTCONN;
- 	}
- 
--	ret = sprintf(buf, "last_used=%lu\ncur_cong=%lu\ncong_win=%lu\n"
-+	if (xprt->ops->get_srcport)
-+		srcport = xprt->ops->get_srcport(xprt);
-+
-+	ret = snprintf(buf, buflen,
-+		       "last_used=%lu\ncur_cong=%lu\ncong_win=%lu\n"
- 		       "max_num_slots=%u\nmin_num_slots=%u\nnum_reqs=%u\n"
- 		       "binding_q_len=%u\nsending_q_len=%u\npending_q_len=%u\n"
- 		       "backlog_q_len=%u\nmain_xprt=%d\nsrc_port=%u\n"
-@@ -147,14 +149,11 @@ static ssize_t rpc_sysfs_xprt_info_show(struct kobject *kobj,
- 		       xprt->last_used, xprt->cong, xprt->cwnd, xprt->max_reqs,
- 		       xprt->min_reqs, xprt->num_reqs, xprt->binding.qlen,
- 		       xprt->sending.qlen, xprt->pending.qlen,
--		       xprt->backlog.qlen, xprt->main,
--		       (xprt->xprt_class->ident == XPRT_TRANSPORT_TCP) ?
--		       get_srcport(xprt) : 0,
-+		       xprt->backlog.qlen, xprt->main, srcport,
- 		       atomic_long_read(&xprt->queuelen),
--		       (xprt->xprt_class->ident == XPRT_TRANSPORT_TCP) ?
--				xprt->address_strings[RPC_DISPLAY_PORT] : "0");
-+		       xprt->address_strings[RPC_DISPLAY_PORT]);
- 	xprt_put(xprt);
--	return ret + 1;
-+	return ret;
- }
- 
- static ssize_t rpc_sysfs_xprt_state_show(struct kobject *kobj,
-@@ -201,7 +200,7 @@ static ssize_t rpc_sysfs_xprt_state_show(struct kobject *kobj,
- 	}
- 
- 	xprt_put(xprt);
--	return ret + 1;
-+	return ret;
- }
- 
- static ssize_t rpc_sysfs_xprt_switch_info_show(struct kobject *kobj,
-@@ -220,7 +219,7 @@ static ssize_t rpc_sysfs_xprt_switch_info_show(struct kobject *kobj,
- 		      xprt_switch->xps_nunique_destaddr_xprts,
- 		      atomic_long_read(&xprt_switch->xps_queuelen));
- 	xprt_switch_put(xprt_switch);
--	return ret + 1;
-+	return ret;
- }
- 
- static ssize_t rpc_sysfs_xprt_dstaddr_store(struct kobject *kobj,
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 07acc6845ce29..a829da4bbb09e 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1677,7 +1677,7 @@ static int xs_get_srcport(struct sock_xprt *transport)
- 	return port;
- }
- 
--unsigned short get_srcport(struct rpc_xprt *xprt)
-+static unsigned short xs_sock_srcport(struct rpc_xprt *xprt)
- {
- 	struct sock_xprt *sock = container_of(xprt, struct sock_xprt, xprt);
- 	unsigned short ret = 0;
-@@ -1687,7 +1687,25 @@ unsigned short get_srcport(struct rpc_xprt *xprt)
- 	mutex_unlock(&sock->recv_mutex);
- 	return ret;
- }
--EXPORT_SYMBOL(get_srcport);
-+
-+static int xs_sock_srcaddr(struct rpc_xprt *xprt, char *buf, size_t buflen)
-+{
-+	struct sock_xprt *sock = container_of(xprt, struct sock_xprt, xprt);
-+	union {
-+		struct sockaddr sa;
-+		struct sockaddr_storage st;
-+	} saddr;
-+	int ret = -ENOTCONN;
-+
-+	mutex_lock(&sock->recv_mutex);
-+	if (sock->sock) {
-+		ret = kernel_getsockname(sock->sock, &saddr.sa);
-+		if (ret >= 0)
-+			ret = snprintf(buf, buflen, "%pISc", &saddr.sa);
-+	}
-+	mutex_unlock(&sock->recv_mutex);
-+	return ret;
-+}
- 
- static unsigned short xs_next_srcport(struct sock_xprt *transport, unsigned short port)
- {
-@@ -2678,6 +2696,8 @@ static const struct rpc_xprt_ops xs_udp_ops = {
- 	.rpcbind		= rpcb_getport_async,
- 	.set_port		= xs_set_port,
- 	.connect		= xs_connect,
-+	.get_srcaddr		= xs_sock_srcaddr,
-+	.get_srcport		= xs_sock_srcport,
- 	.buf_alloc		= rpc_malloc,
- 	.buf_free		= rpc_free,
- 	.send_request		= xs_udp_send_request,
-@@ -2700,6 +2720,8 @@ static const struct rpc_xprt_ops xs_tcp_ops = {
- 	.rpcbind		= rpcb_getport_async,
- 	.set_port		= xs_set_port,
- 	.connect		= xs_connect,
-+	.get_srcaddr		= xs_sock_srcaddr,
-+	.get_srcport		= xs_sock_srcport,
- 	.buf_alloc		= rpc_malloc,
- 	.buf_free		= rpc_free,
- 	.prepare_request	= xs_stream_prepare_request,
+ 		if (ppp_proto == PPP_IP) {
+ 			proto = htons(ETH_P_IP);
 -- 
 2.53.0
 
