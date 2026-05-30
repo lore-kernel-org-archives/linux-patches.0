@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E93D30676E;
-	Sat, 30 May 2026 17:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FEC2E7379;
+	Sat, 30 May 2026 17:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162336; cv=none; b=AgSdckj21rKQ+bxbu8DM/hHQRotZrUHSvI6p+JEQlWv7//uPGGvBIDboV8kglAdcmZCJ7ZT9Hjyb2yc+gdl1pm7OPnOZvlu0co7LhEQBHsP7YSAD3VUfX6BcFTrfdFvojvmy+t+gBi6wcLjZpsGA4cS3lGPGQZvg7nv80i14MWE=
+	t=1780162339; cv=none; b=CljD1PMXWnDPpLN3x4/hTdc8NU2OV1NXLFRRMUj3W1IuvGsOtGs6csOU97R1C6kcSt1qc6P6k/EnZoXmba0srx9oTh+T94TST/6StjQTxbJBsaBlKNd5CjxuWL1vctogg0oyv21we168re5JmcBE0nll2hqlNXgPdJN2QYZzHvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162336; c=relaxed/simple;
-	bh=KJwSiIpnPv6101oGrLqUEGQ3uqs6Q4E3pxH81GU5HL8=;
+	s=arc-20240116; t=1780162339; c=relaxed/simple;
+	bh=RoptnGs2RpJaJ+YDXPdFusHsg5W14nl0iHPHC7Z3cig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rE788u3wHIHK+B9HEZK5PK2n3jXMYoOPrep/L1xDgBhUii0nwu3VnUmL4ng10fb3aTkICDBl+KCV33wrGwWWcb7bOe7PB8iF1WnUmvnPJKz4evQ1yuRHV9H8nglkruc7oo9N81lh8KcCJj4kG9yuRlxTw5FN6XM+KLFwo8zoKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ip3VIqon; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=duXWHH04LNClSc5p1t06OTsEM5N47SFQiOychhgYFoj7l0sIjp21ZyuubBSiUq3NG7yfW2DCNWIXgPdpyGCfrSptcCQZCk8fv4m4uCvD5gbM91QywP6oi+Op0PXKCU6+HeW0Lo9pbcbQDDfKTIeYzSQtgPNwoRZNe/flYyRccMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrHxxDWl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ip3VIqon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC1B1F00893;
-	Sat, 30 May 2026 17:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrHxxDWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67B81F00893;
+	Sat, 30 May 2026 17:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162335;
-	bh=eYEYQcd9jYLIEFqmWYAbjDpMbalK4ZgImvlZaTlvwz0=;
+	s=korg; t=1780162338;
+	bh=pbUiKbDE+dvqxK81sDuJn3YktqpC5HU6FExS6ee6GqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ip3VIqonunJa/J/7FoYFV2Wsynzpiub8te6ZChqc/HBim4yhVcJdKa/EF75VV3jj4
-	 GCFXp0F1Sb1bNC93ckoIALoCQnhMN57bAhkdoo1tUCyIZrTA02p6M47/76wMly4idm
-	 Ncqjsqjtp2IswSpoPKIO6zdBGRlKAO2f/diYuy+Q=
+	b=LrHxxDWlgB9aiVsAAv1sHc2JYDZnFdKFn+Dnm6W0YVXaHXZG/6EgMAmLY8/7voYov
+	 ceBUxlJAWtttQtznBqCMRaHf/TYAPz5YU5eAPSjTGRn+pB/OvMpIN8y2494U0YVZ2h
+	 7S1qRWGWHO+was3jWEhZhwpnSRhT2DZ2MMirZ42c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 890/969] hwmon: (pmbus/adm1266) seed timestamp from the real-time clock
-Date: Sat, 30 May 2026 18:06:54 +0200
-Message-ID: <20260530160325.281488991@linuxfoundation.org>
+Subject: [PATCH 6.1 891/969] hwmon: (pmbus/adm1266) reject implausible blackbox record_count
+Date: Sat, 30 May 2026 18:06:55 +0200
+Message-ID: <20260530160325.308597467@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,43 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit b86095e3d7dcf2bf80c747349a35912a87a85098 upstream.
+commit 4afca954622d672ea65ed961bed01cf91caa034e upstream.
 
-adm1266_set_rtc() seeds the chip's SET_RTC register from
-ktime_get_seconds(), which returns CLOCK_MONOTONIC -- i.e. seconds
-since the host last booted, not seconds since the Unix epoch.
+adm1266_nvmem_read_blackbox() loops over a record_count that comes
+straight from byte 3 of the BLACKBOX_INFO response.  The destination
+buffer is data->dev_mem, sized for the nvmem cell's declared 2048
+bytes (ADM1266_BLACKBOX_MAX_RECORDS * ADM1266_BLACKBOX_SIZE = 32 * 64).
+A device that reports a record_count greater than 32 -- whether due
+to firmware bugs, bus corruption, or a non-responsive slave returning
+0xff -- would walk read_buff past the end of the dev_mem allocation
+on the trailing iterations.
 
-The chip stamps that value into every blackbox record it captures.
-Userspace reading those timestamps back expects wall-clock seconds:
-that's what the SET_RTC frame layout documents (datasheet Rev. D,
-Table 84) and what every other consumer of "seconds since epoch"
-assumes.  Seeding from CLOCK_MONOTONIC gives blackbox records a
-timestamp that is only meaningful within a single boot of the host
-and silently resets to small values on every reboot.
-
-Switch to ktime_get_real_seconds() so the seed matches what the
-register is documented to hold.
+Cap record_count at ADM1266_BLACKBOX_MAX_RECORDS (introduced here)
+before entering the loop and return -EIO on any larger value, so a
+malformed BLACKBOX_INFO response cannot drive the loop out of bounds.
 
 Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-1-1c1ea1349cfe@nexthop.ai
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-3-1c1ea1349cfe@nexthop.ai
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/adm1266.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/hwmon/pmbus/adm1266.c
 +++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -434,7 +434,7 @@ static int adm1266_set_rtc(struct adm126
- 	char write_buf[6];
- 	int i;
+@@ -46,6 +46,7 @@
  
--	kt = ktime_get_seconds();
-+	kt = ktime_get_real_seconds();
+ #define ADM1266_BLACKBOX_OFFSET		0
+ #define ADM1266_BLACKBOX_SIZE		64
++#define ADM1266_BLACKBOX_MAX_RECORDS	32
  
- 	memset(write_buf, 0, sizeof(write_buf));
+ #define ADM1266_PMBUS_BLOCK_MAX		255
  
+@@ -362,6 +363,8 @@ static int adm1266_nvmem_read_blackbox(s
+ 		return -EIO;
+ 
+ 	record_count = buf[3];
++	if (record_count > ADM1266_BLACKBOX_MAX_RECORDS)
++		return -EIO;
+ 
+ 	for (index = 0; index < record_count; index++) {
+ 		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
 
 
