@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45BA3191D0;
-	Sat, 30 May 2026 17:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF06A3148DA;
+	Sat, 30 May 2026 17:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161049; cv=none; b=fk/oGsGNM8iBRpgTuGCMk2u9TyWMbpjvWefBPnIsSeoa4I91uWQi8IMxMIc74S7VVglPpfNuU9IpRLParlRRTij80aawe6+pNPKisHNTgVUpILlQZKa1EraqVfrEZvzMCDkxTCI3ffWLgwE+PWe8RmgebdFhv96Nww/sYtC/x/s=
+	t=1780161052; cv=none; b=OPGAXg1K3+hm+xl/lZEDLOc3khCGCbVQHRXsmN12T+Qqk2V8PeLA22ZD6SHyNiV63Uh/52PARTuNoyYQOrDg3Jcbf5l8uAdMuB27PN39ZS4ZRqZj5MYinBTnZ7qkpScJXmxxCB874gC1P9eb/3hC7B3YmHdkv7lr4FQh5gikTK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161049; c=relaxed/simple;
-	bh=2BDkywFzFhLnecd4U24lQfpnSNukOACnbjy2+Jb8vQY=;
+	s=arc-20240116; t=1780161052; c=relaxed/simple;
+	bh=eA2LAAmzMx6RFyZEgkxp7f0H0ie/s7KnRMXdJK7tdt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eX8c4GIOMOUKcfcr9XWCi1hzSVaMJ0LyTGxAtQIaA5tLA+GHVYF4i1qvch86BbpG5OKMzBqP3+Ki00/1JgHGoiPI0TrKOUalmlt4vYSwL0eXTaJYcf4l6DF3GyUF6b6C8MwLUjKh7mWpGd6UseGdroCmWCvHTFyZVSiDM9fjWfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrErXivb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OJH6lA86XyMrtKAZs3AqzB6eZtgpkGDOOxL2V4VmQ4LKJyEz1zVEN8CrjhDvScl7PnBDhz4kt/RRwAtFpr5CoOCYGmFCXpvEwxOCMagDfWXsSFKj6vwetzLov24GrUYGt2TsrQ51pxhlItdnWpVHxjhzVmyBj85P5fE4OZDhByM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHZwTqLY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrErXivb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7FF1F00893;
-	Sat, 30 May 2026 17:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHZwTqLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269F31F00893;
+	Sat, 30 May 2026 17:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161048;
-	bh=U9lLW0BNiVfhKwMDjpqJQ7k1GUpVvpzxqnAha2G+epA=;
+	s=korg; t=1780161051;
+	bh=Uiv9YqIhEdJrf335en/8i5kWcJ0zIWWxUa/Xqf+eOiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zrErXivbE9YUj3JFrWLAlLw5EAlWjzqynrJlehWvIE9f7ieom+ksAUph+4/zztVeL
-	 VCQNPsJjGwNMxTvBh4yXK7+F/YsHCbeCYjz0hoWMqF5HGpfbT/u+03CnmR4EiSzIgW
-	 RqKeCgTozelS4OLZhJkizTItZ8sbEUdQlxgY38KU=
+	b=rHZwTqLYuXBvjpezU54cVbOpoUspXdENhK3enn2t85oi8rbu2eU7+Pd1SM7q2JqRP
+	 jQ6YiiVEQHYzajAFUIod4STrtdpkdkPBZBHpt+1qXRNdetLnU/5CFVU5JJq56gX70C
+	 rhVY9qawXd4D6H9T2bVWNkM0Ibmm0+GGsF4oQFmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 511/969] drm/amdgpu/gfx10: look at the right prop for gfx queue priority
-Date: Sat, 30 May 2026 18:00:35 +0200
-Message-ID: <20260530160314.445186786@linuxfoundation.org>
+Subject: [PATCH 6.1 512/969] spi: hisi-kunpeng: prevent infinite while() loop in hisi_spi_flush_fifo
+Date: Sat, 30 May 2026 18:00:36 +0200
+Message-ID: <20260530160314.475055739@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,42 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 355d96cdec5c61fd83f7eb54f1a28e38809645d6 ]
+[ Upstream commit 9f61daf2c2debe9f5cf4e1a4471e56a89a6fe45a ]
 
-Look at hqd_queue_priority rather than hqd_pipe_priority.
-In practice, it didn't matter as both were always set for
-kernel queues, but that will change in the future.
+The hisi_spi_flush_fifo()'s inner while loop that lacks any timeout
+mechanism. Maybe the hardware never becomes empty, the loop will spin
+forever, causing the CPU to hang.
 
-Fixes: b07d1d73b09e ("drm/amd/amdgpu: Enable high priority gfx queue")
-Reviewed-by：Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by adding a inner_limit based on loops_per_jiffy. The inner loop
+now exits after approximately one jiffy if the FIFO remains non-empty, logs
+a ratelimited warning, and breaks out of the outer loop. Additionally, add
+a cpu_relax() inside the busy loop to improve power efficiency.
+
+Fixes: c770d8631e18 ("spi: Add HiSilicon SPI Controller Driver for Kunpeng SoCs")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/d834ce28172886bfaeb9c8ca00cfd9bf1c65d5a1.1773889292.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-hisi-kunpeng.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 48462beddccf0..8953f093b9617 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -6411,7 +6411,7 @@ static void gfx_v10_0_gfx_mqd_set_priority(struct amdgpu_device *adev,
- 	/* set up default queue priority level
- 	 * 0x0 = low priority, 0x1 = high priority
- 	 */
--	if (prop->hqd_pipe_priority == AMDGPU_GFX_PIPE_PRIO_HIGH)
-+	if (prop->hqd_queue_priority == AMDGPU_GFX_QUEUE_PRIORITY_MAXIMUM)
- 		priority = 1;
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index 54730e93fba45..06c8893243b7d 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -198,8 +198,18 @@ static void hisi_spi_flush_fifo(struct hisi_spi *hs)
+ 	unsigned long limit = loops_per_jiffy << 1;
  
- 	tmp = RREG32_SOC15(GC, 0, mmCP_GFX_HQD_QUEUE_PRIORITY);
+ 	do {
+-		while (hisi_spi_rx_not_empty(hs))
++		unsigned long inner_limit = loops_per_jiffy;
++
++		while (hisi_spi_rx_not_empty(hs) && --inner_limit) {
+ 			readl(hs->regs + HISI_SPI_DOUT);
++			cpu_relax();
++		}
++
++		if (!inner_limit) {
++			dev_warn_ratelimited(hs->dev, "RX FIFO flush timeout\n");
++			break;
++		}
++
+ 	} while (hisi_spi_busy(hs) && limit--);
+ }
+ 
 -- 
 2.53.0
 
