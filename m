@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59B340A6F;
-	Sat, 30 May 2026 18:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046EE340A6F;
+	Sat, 30 May 2026 18:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164394; cv=none; b=Y1VmL8GfxEW6sS8UMOP6xrmGdS9IOMK/5EoIpJSxYRfCST1u36BZRBiZG92mxFipvqQXaXOGZAo+tOYVHJJEews+c+DSOmvrdfg7xzUG32O59iFr6BWZnA91kwhn4tUqvmhqT2bL7FkGyeR2Wh/cLfl6mpwKAyO1TD17Q522N4Y=
+	t=1780164397; cv=none; b=kgn0aVguthzx1qOGkg504bU+DtGyLpyHgDyy9cFAF1LS3TL+e6Uzo2rSTve7uau+7cGAABF1H/+VHSA2imwQRTgd/xPXUDXGb0kTG0RTOnSPat0xZe+lL/a13JMk+Z68ouTDhESUGGEpWaVCwq6GSki1dl0KsVhmlZYPJNBOX2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164394; c=relaxed/simple;
-	bh=aR6e976NrV2tTuN0RWZZ5Jx/TOYLg6igjMPLWbLy1+c=;
+	s=arc-20240116; t=1780164397; c=relaxed/simple;
+	bh=tx9NIDoJyVQTEEUZh/lZwchHAJqjSTMMSNNWC73RGiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAzVCNnbD3RwFmJRc0via+wTb9cw4d0uOPkS1/yattjTUEZRIaUPd/Jq/noEZnGp1pLGbUg5tXYDtG9l7k5mcdTjqw1SMOgkmyttR24x3Cku8/pWEsumrlXd1ZRXemFjPwP6NqzcYaw7HpKnFgpLA3uOnhxWr6g/HNyNg6lXbhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdnJjGt0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yiy4oR5pPq9xWWsEBowtDxtavLBQ5oc0dZRpL5pPfSL2ct2enRSjjHxUUjT2hikVJi5aCk+0i0ZYKXtK97ukDi+DZvFpriSpYfgX1Dd7LtyShqv3h6muxj8u2O2ocOLqcCbeZ3g6XbWDflelGkX628Oqzcuj3d3eFOEeETynJJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0PtRaW4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdnJjGt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10FF1F00893;
-	Sat, 30 May 2026 18:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0PtRaW4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156FB1F00893;
+	Sat, 30 May 2026 18:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164393;
-	bh=FMwC9xL8TyUNStGzADIrOu/aG6K0+I+zCVmJegjKmOA=;
+	s=korg; t=1780164396;
+	bh=ccg/QF3/5m1rKYwL65f72sgtuZBoobF8hIhY9Zb2kb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdnJjGt0ECSO/cHHYw+rBPasU4UW2CIXPkd28wkSeqWv5Grp4nwl6BZgHvWOejxve
-	 moS+dKW7SPMHWMGHYk0nWC2asXKxd3LVtesgy+6Uu51aykWyos1ev/9XBx5JDqx+ob
-	 8Cn5Hlz+qTuCOtz5vFm5RCwty9faMIptoTcA3gWA=
+	b=h0PtRaW48Swurn47RTPjQPn0N2MBwVwqdvrAEBbM4pElfev81ASL3JSks+C7zHaaK
+	 e3T/mwIqvu7NVV10AC9Ta0cCffFleiULZKuEK4z0MAw4NZdSeID1Heul5D8GCgtbMt
+	 dxoRwV7jFomI4nwYx9CZ7JuBDqqrsMNKe4rP+JPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 542/776] clk: qcom: dispcc-sm8250: Enable parents for pixel clocks
-Date: Sat, 30 May 2026 18:04:16 +0200
-Message-ID: <20260530160254.188122832@linuxfoundation.org>
+Subject: [PATCH 5.15 525/776] leds: lgm-sso: Remove duplicate assignments for priv->mmap
+Date: Sat, 30 May 2026 18:03:59 +0200
+Message-ID: <20260530160253.790418265@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,46 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit acf7a91d0b0e9e3ef374944021de62062125b7e4 ]
+[ Upstream commit 7186d0330c3f3e86de577687a82f4ebd96dcb5ac ]
 
-Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-clocks are enabled during clock operations, preventing potential
-stability issues during display configuration.
+Remove duplicate assignment of priv->mmap in intel_sso_led_probe().
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-9-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: fba8a6f2263b ("leds: lgm-sso: Fix clock handling")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260226033048.3715915-1-nichen@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/leds/blink/leds-lgm-sso.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index d9c68d1b90900..2adb38ada9bfb 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -559,7 +559,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -573,7 +573,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- 		.name = "disp_cc_mdss_pclk1_clk_src",
- 		.parent_data = disp_cc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
+diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
+index fd8b7573285ad..45045c2a26574 100644
+--- a/drivers/leds/blink/leds-lgm-sso.c
++++ b/drivers/leds/blink/leds-lgm-sso.c
+@@ -808,8 +808,6 @@ static int intel_sso_led_probe(struct platform_device *pdev)
+ 
+ 	priv->fpid_clkrate = clk_get_rate(priv->clocks[1].clk);
+ 
+-	priv->mmap = syscon_node_to_regmap(dev->of_node);
+-
+ 	priv->mmap = syscon_node_to_regmap(dev->of_node);
+ 	if (IS_ERR(priv->mmap)) {
+ 		dev_err(dev, "Failed to map iomem!\n");
 -- 
 2.53.0
 
