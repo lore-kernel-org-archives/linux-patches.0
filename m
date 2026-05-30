@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE7349CCF;
-	Sat, 30 May 2026 16:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F1B348C5E;
+	Sat, 30 May 2026 16:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159137; cv=none; b=HYBYBCCb+wh6rpv6G3cKRuY/17b5cS2e3RKZ14pKBvJkwR4vLzNKIjjSZlw9p6injkfyiUhk3jlSLjhx06+18E9iY8wqCdy4FAZMIA7GVRdvYzOiU5FZ5kr/sZthXvhgtRy97ImJfiVArnRC1m9LabqH2mKbuoRBlGuvxzlyVyQ=
+	t=1780159152; cv=none; b=e0zTQ/Eii3MYDnfBeUYsexKXrNpdIQGsL29K6D9uuAhXLpdir7G0NJbka4TJCVVO5qPWN1iwXh/z7qEC/LRV67re9GItLeUrFVrhyPyk/rS5QAFhWPVgabAqWI554yaIhON4IbbAwpWzj1df4ze0v2HU7PIr/wR0Htq/4cAhGmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159137; c=relaxed/simple;
-	bh=i68g4yOTjEqvVVqmj+9P4Krh64t2p9f+am9rqziRScM=;
+	s=arc-20240116; t=1780159152; c=relaxed/simple;
+	bh=aYVIN9wGwC9w5YTBkxzgdxl7hlIP2ct2KpC9t4q5Js8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9IQBfOscUx0ILCMscc7wR5BpTHfrF78pdLTcgj+fBhr6tEigZO0u7dMYh6gMRy29bOKSynH6TdqCgvjySMJgYU7CIbWZ2Rck8+UO4x9XLCjDy9DlrJbS/cAEHpbpnDftIBiz/ydm2BX3rkl9mVJjsFCxmK2rTo+tNpSd3TvwK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/osELQS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EOsRZyImSayhz39lXZOA76WaWPYkjEc7ZpC9WYx09/cL4ITMcB2aY6kCRScA3lSQWjv/94j74Dugb5SzJMviVcoKm3S2KE4+/XGmB2UJti1mhoG3jA+y+dIc9hDKOIzZx/NqouMW2W0S3fDHA96vzqca5P36x+ZC1gF/cJs1IC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3KPhCBV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/osELQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92411F00893;
-	Sat, 30 May 2026 16:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3KPhCBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AB91F00893;
+	Sat, 30 May 2026 16:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159133;
-	bh=SjLwDYdXQJ9Qu3rS4F6mA+21RgsRJqnkIcLz5GJ968U=;
+	s=korg; t=1780159150;
+	bh=YxluW7DsdfupGkLPhaclml5Nu0IcJJEnSjFXWXCSDfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/osELQSTND7BVBl9Y+MSRF+HPbcMw5+10XZ4uR5r4BJlSwj5Fv+OkinDUIxe+5rt
-	 wIoWBA9Ku50PmzNv/2Ug1LDJpvo3OA29V2v5t/JZoHv1cxT+nQOeUN0talvejLC5z7
-	 X8dmCsQczmsRUkTDu6UkYfqtczPZn5n/dTJrETZ4=
+	b=C3KPhCBVTj/qwuJjAj/7SjcmjvV1ClSuyFqYTztG/0Iy0xkKB7wyv8+VXv0iTqPbm
+	 pQO8bH688T4VMSYVpmwN3tlnNLS3Igcj/mhwTfssuXdTwQNcnIeIYf9WyD1pmaUXyA
+	 eBJjoP3VMjm4yuJVcnU5ld7TAwjn+oStQLAeDeMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/969] rxrpc: proc: size address buffers for %pISpc output
-Date: Sat, 30 May 2026 17:53:40 +0200
-Message-ID: <20260530160302.982131678@linuxfoundation.org>
+	syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 105/969] media: as102: fix to not free memory after the device is registered in as102_usb_probe()
+Date: Sat, 30 May 2026 17:53:49 +0200
+Message-ID: <20260530160303.219438887@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -57,155 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 ]
+commit 8bd29dbe03fc5b0f039ab2395ff37b64236d2f0c upstream.
 
-The AF_RXRPC procfs helpers format local and remote socket addresses into
-fixed 50-byte stack buffers with "%pISpc".
+In as102_usb driver, the following race condition occurs:
+```
+		CPU0						CPU1
+as102_usb_probe()
+  kzalloc(); // alloc as102_dev_t
+  ....
+  usb_register_dev();
+						fd = sys_open("/path/to/dev"); // open as102 fd
+						....
+  usb_deregister_dev();
+  ....
+  kfree(); // free as102_dev_t
+  ....
+						sys_close(fd);
+						  as102_release() // UAF!!
+						    as102_usb_release()
+						      kfree(); // DFB!!
+```
 
-That is too small for the longest current-tree IPv6-with-port form the
-formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
-dotted-quad tail not only for v4mapped addresses, but also for ISATAP
-addresses via ipv6_addr_is_isatap().
+When a USB character device registered with usb_register_dev() is later
+unregistered (via usb_deregister_dev() or disconnect), the device node is
+removed so new open() calls fail. However, file descriptors that are
+already open do not go away immediately: they remain valid until the last
+reference is dropped and the driver's .release() is invoked.
 
-As a result, a case such as
+In as102, as102_usb_probe() calls usb_register_dev() and then, on an
+error path, does usb_deregister_dev() and frees as102_dev_t right away.
+If userspace raced a successful open() before the deregistration, that
+open FD will later hit as102_release() --> as102_usb_release() and access
+or free as102_dev_t again, occur a race to use-after-free and
+double-free vuln.
 
-  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
+The fix is to never kfree(as102_dev_t) directly once usb_register_dev()
+has succeeded. After deregistration, defer freeing memory to .release().
 
-is possible with the current formatter. That is 50 visible characters, so
-51 bytes including the trailing NUL, which does not fit in the existing
-char[50] buffers used by net/rxrpc/proc.c.
+In other words, let release() perform the last kfree when the final open
+FD is closed.
 
-Size the buffers from the formatter's maximum textual form and switch the
-call sites to scnprintf().
-
-Changes since v1:
-- correct the changelog to cite the actual maximum current-tree case
-  explicitly
-- frame the proof around the ISATAP formatting path instead of the earlier
-  mapped-v4 example
-
-Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted address accessors and variable declarations ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=47321e8fd5a4c84088db
+Fixes: cd19f7d3e39b ("[media] as102: fix leaks at failure paths in as102_usb_probe()")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/proc.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/media/usb/as102/as102_usb_drv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
-index 245418943e01c..47d36554ad311 100644
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -10,6 +10,10 @@
- #include <net/af_rxrpc.h>
- #include "ar-internal.h"
- 
-+#define RXRPC_PROC_ADDRBUF_SIZE \
-+	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
-+	 sizeof(":12345"))
-+
- static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
- 	[RXRPC_CONN_UNUSED]			= "Unused  ",
- 	[RXRPC_CONN_CLIENT]			= "Client  ",
-@@ -55,7 +59,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	unsigned long timeout = 0;
- 	rxrpc_seq_t tx_hard_ack, rx_hard_ack;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == &rxnet->calls) {
- 		seq_puts(seq,
-@@ -72,7 +76,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 	if (rx) {
- 		local = READ_ONCE(rx->local);
- 		if (local)
--			sprintf(lbuff, "%pISpc", &local->srx.transport);
-+			scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 		else
- 			strcpy(lbuff, "no_local");
- 	} else {
-@@ -81,7 +85,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 
- 	peer = call->peer;
- 	if (peer)
--		sprintf(rbuff, "%pISpc", &peer->srx.transport);
-+		scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
- 	else
- 		strcpy(rbuff, "no_connection");
- 
-@@ -152,7 +156,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_connection *conn;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == &rxnet->conn_proc_list) {
- 		seq_puts(seq,
-@@ -171,9 +175,9 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 		goto print;
- 	}
- 
--	sprintf(lbuff, "%pISpc", &conn->params.local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->params.local->srx.transport);
- 
--	sprintf(rbuff, "%pISpc", &conn->params.peer->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->params.peer->srx.transport);
- print:
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %4x %08x %s %3u"
-@@ -210,7 +214,7 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_peer *peer;
- 	time64_t now;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -223,9 +227,9 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- 
- 	peer = list_entry(v, struct rxrpc_peer, hash_link);
- 
--	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
- 
--	sprintf(rbuff, "%pISpc", &peer->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
- 
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
-@@ -335,7 +339,7 @@ const struct seq_operations rxrpc_peer_seq_ops = {
- static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_local *local;
--	char lbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -346,7 +350,7 @@ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- 
- 	local = hlist_entry(v, struct rxrpc_local, link);
- 
--	sprintf(lbuff, "%pISpc", &local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %3u %3u\n",
--- 
-2.53.0
-
+--- a/drivers/media/usb/as102/as102_usb_drv.c
++++ b/drivers/media/usb/as102/as102_usb_drv.c
+@@ -405,7 +405,9 @@ static int as102_usb_probe(struct usb_in
+ failed_dvb:
+ 	as102_free_usb_stream_buffer(as102_dev);
+ failed_stream:
++	usb_set_intfdata(intf, NULL);
+ 	usb_deregister_dev(intf, &as102_usb_class_driver);
++	return ret;
+ failed:
+ 	usb_put_dev(as102_dev->bus_adap.usb_dev);
+ 	usb_set_intfdata(intf, NULL);
 
 
