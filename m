@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9F6267B05;
-	Sat, 30 May 2026 17:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B21267B05;
+	Sat, 30 May 2026 17:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162986; cv=none; b=lgB7gdy/3EBL7vesRGtmKD9Wi5Mi3+LNoMR9BIU/RA1GUxugb2lwOAHeA8UlvriwNEpAcmBPKO8Qk9trjlzCvH1rpc4i5qDseRHTd3MBhGKjU7TLNit0OYcP71lTZziuvZcJlGvgNhuGObLwEHybx4pq1pbQZL77TkX5Qr14ZT0=
+	t=1780162990; cv=none; b=lSCwxsQAhURBFBD4Q9tSSjfeDgl06PljljSqHH2e/98m5kv06W9y+lcjepwrOl/+Yn8IjXiOI/SrkvwRgNpglE5STZmTxhfrK5VGSAQCzdSJHW8cE/o8Lt2zNzKRLlEc+aRgCgVQLUunJQxNpIYo8cRYtEuz6pe3Y31VLXYM7EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162986; c=relaxed/simple;
-	bh=sAj0ejJO63wkDKOp7UlQ3MlEdFtPQde4ycMgxNONf7I=;
+	s=arc-20240116; t=1780162990; c=relaxed/simple;
+	bh=qfpLXBnzMjudIxViUzcD4VDU69rVrYogadW7TGnl6Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpRlQSfpEnGxmEh3YOOpEIPt7+aLl0pKbTTV6kLdJ08Iy794E+uLyeEu/2ywPFVWB8ePggdT24qfpvsz0N5TNNGbA2eBDrAnW1+rG2Xm1SGKO1PK07gQNWg+GbOvApmzLcX4hIv8NWY5m5VW+qvIaFea941XxbWQ0kDzKT9cEus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZL5CMIGx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jlReSiij0T3agW2qlNiS4fqzHwTh1E/Q2RYPshtY8/jlBcJPH2YDa6bQuWofR15WtaSJNNDQXQ0AjTL3LBldJnf7VtMjnKOmsKooxalz8uHMoOpJmOH2lLf4+PHd63gMAkKOZvkjRFH/Cw6O/EHY4D1sed9297TS01ycnxmie38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTKZCLWj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZL5CMIGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A681F00893;
-	Sat, 30 May 2026 17:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTKZCLWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473A31F00893;
+	Sat, 30 May 2026 17:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162985;
-	bh=OzHTgPIJcm9VcINgvctTCzEsA4h+9I2Iv8QcWgg7kbU=;
+	s=korg; t=1780162989;
+	bh=QUgee3/O+JisQ/hDfTMC4E0tSXnf+ftZYjhBOrCIFmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZL5CMIGx/8uWxMTcrcrIzjWaUFwPmNF8ZGyCe8gZ0KSpSHspTUqgLNUsTj2BpoOaz
-	 kr7+6hZRjNM/zdhgwxMLdv7AvRz9HHRj4Wgpg/Tv8TNzNGnx5iLAn7VA4aJkqLSOQu
-	 srjeYHsVUmHiXUfG9FfQWe8mawODj4ARko1EhyOA=
+	b=wTKZCLWjIlDhxWfv8eYgVOUrELs/RbZFLeBnRva1wD8KFSkJqS79EkE2TazqAOmKH
+	 KajhR71BHkN7Sv18YKawuOcp7fm+7B0MGdPXBFmg4WzJxMtkiTyRDmTlrxaXdlF8sp
+	 snlyxqYLdANGgDbNaVBfQ5x9/804wF3+HranNyVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 123/776] wifi: iwlwifi: read txq->read_ptr under lock
-Date: Sat, 30 May 2026 17:57:17 +0200
-Message-ID: <20260530160243.555609118@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 5.15 124/776] blk-mq: use quiesced elevator switch when reinitializing queues
+Date: Sat, 30 May 2026 17:57:18 +0200
+Message-ID: <20260530160243.581252463@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,46 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit c2ace6300600c634553657785dfe5ea0ed688ac2 upstream.
+[ Upstream commit 8237c01f1696bc53c470493bf1fe092a107648a6 ]
 
-If we read txq->read_ptr without lock, we can read the same
-value twice, then obtain the lock, and reclaim from there
-to two different places, but crucially reclaim the same
-entry twice, resulting in the WARN_ONCE() a little later.
-Fix that by reading txq->read_ptr under lock.
+The hctx's run_work may be racing with the elevator switch when
+reinitializing hardware queues. The queue is merely frozen in this
+context, but that only prevents requests from allocating and doesn't
+stop the hctx work from running. The work may get an elevator pointer
+that's being torn down, and can result in use-after-free errors and
+kernel panics (example below). Use the quiesced elevator switch instead,
+and make the previous one static since it is now only used locally.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.bf4c62196504.I978a7ca56c6bd6f1bf42c15aa923ba03366a840b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Change read_ptr definition according to commit
-413be839bfca9("wifi: iwlwifi: add a validity check of queue_id in iwl_txq_reclaim"). ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+  nvme nvme0: resetting controller
+  nvme nvme0: 32/0/0 default/read/poll queues
+  BUG: kernel NULL pointer dereference, address: 0000000000000008
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 80000020c8861067 P4D 80000020c8861067 PUD 250f8c8067 PMD 0
+  Oops: 0000 [#1] SMP PTI
+  Workqueue: kblockd blk_mq_run_work_fn
+  RIP: 0010:kyber_has_work+0x29/0x70
+
+...
+
+  Call Trace:
+   __blk_mq_do_dispatch_sched+0x83/0x2b0
+   __blk_mq_sched_dispatch_requests+0x12e/0x170
+   blk_mq_sched_dispatch_requests+0x30/0x60
+   __blk_mq_run_hw_queue+0x2b/0x50
+   process_one_work+0x1ef/0x380
+   worker_thread+0x2d/0x3e0
+
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20220927155652.3260724-1-kbusch@fb.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Adjust context ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/queue/tx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/blk-mq.c   |    6 +++---
+ block/blk.h      |    3 +--
+ block/elevator.c |    4 ++--
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-@@ -1524,7 +1524,7 @@ void iwl_txq_reclaim(struct iwl_trans *t
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3732,14 +3732,14 @@ static bool blk_mq_elv_switch_none(struc
+ 
+ 	mutex_lock(&q->sysfs_lock);
+ 	/*
+-	 * After elevator_switch_mq, the previous elevator_queue will be
++	 * After elevator_switch, the previous elevator_queue will be
+ 	 * released by elevator_release. The reference of the io scheduler
+ 	 * module get by elevator_get will also be put. So we need to get
+ 	 * a reference of the io scheduler module here to prevent it to be
+ 	 * removed.
+ 	 */
+ 	__module_get(qe->type->elevator_owner);
+-	elevator_switch_mq(q, NULL);
++	elevator_switch(q, NULL);
+ 	mutex_unlock(&q->sysfs_lock);
+ 
+ 	return true;
+@@ -3764,7 +3764,7 @@ static void blk_mq_elv_switch_back(struc
+ 	kfree(qe);
+ 
+ 	mutex_lock(&q->sysfs_lock);
+-	elevator_switch_mq(q, t);
++	elevator_switch(q, t);
+ 	mutex_unlock(&q->sysfs_lock);
+ }
+ 
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -189,8 +189,7 @@ void blk_account_io_done(struct request
+ 
+ void blk_insert_flush(struct request *rq);
+ 
+-int elevator_switch_mq(struct request_queue *q,
+-			      struct elevator_type *new_e);
++int elevator_switch(struct request_queue *q, struct elevator_type *new_e);
+ void __elevator_exit(struct request_queue *, struct elevator_queue *);
+ int elv_register_queue(struct request_queue *q, bool uevent);
+ void elv_unregister_queue(struct request_queue *q);
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -581,7 +581,7 @@ void elv_unregister(struct elevator_type
+ }
+ EXPORT_SYMBOL_GPL(elv_unregister);
+ 
+-int elevator_switch_mq(struct request_queue *q,
++static int elevator_switch_mq(struct request_queue *q,
+ 			      struct elevator_type *new_e)
  {
- 	struct iwl_txq *txq = trans->txqs.txq[txq_id];
- 	int tfd_num = iwl_txq_get_cmd_index(txq, ssn);
--	int read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
-+	int read_ptr;
- 	int last_to_free;
+ 	int ret;
+@@ -719,7 +719,7 @@ void elevator_init_mq(struct request_que
+  * need for the new one. this way we have a chance of going back to the old
+  * one, if the new one fails init for some reason.
+  */
+-static int elevator_switch(struct request_queue *q, struct elevator_type *new_e)
++int elevator_switch(struct request_queue *q, struct elevator_type *new_e)
+ {
+ 	int err;
  
- 	/* This function is not meant to release cmd queue*/
-@@ -1532,6 +1532,7 @@ void iwl_txq_reclaim(struct iwl_trans *t
- 		return;
- 
- 	spin_lock_bh(&txq->lock);
-+	read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
- 
- 	if (!test_bit(txq_id, trans->txqs.queue_used)) {
- 		IWL_DEBUG_TX_QUEUES(trans, "Q %d inactive - ignoring idx %d\n",
 
 
