@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09228217704;
-	Sat, 30 May 2026 18:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C584217704;
+	Sat, 30 May 2026 18:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165266; cv=none; b=bDEqEdDHYqktEmGSeCWX/2Kes4MojWclA2DPABMbhe6ScsVEDVvov27dDu3iIcG9PACLvwSZfF5XYMElpi1xVZJ/IH/7OItRJEucgM14oj1BOcViFpiweaEvFRUEmB3HASszyUbURZwHmkS5f3SD4eVwBXEHUzWFRIeknev0hw4=
+	t=1780165269; cv=none; b=KDB3b+gOwDM4CrI6tNYril2o3Ml4cHxEbfzYDaW86pMVQ+UtsuHwKtYxbU2ZwtDBZReHpIizE+JRrN/iNP0jztVsfoDTI2wPf+o3xQZOHpAXRI5btvwAVIQuPMghaELZRqBv1IU7Sng0BqgFNoyr1lUHDoKlxIGAbAWpJeLo0IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165266; c=relaxed/simple;
-	bh=rkFDNr+jDyeMAEphaSOUOdVWZJucGeoX81m687pXZMY=;
+	s=arc-20240116; t=1780165269; c=relaxed/simple;
+	bh=w0McELRg1S5hKSlO92G526FUE34vJa9MXv8q0G1TV4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLoAw4wmH+0oncDmuAiu5u7egRuOxnLtjPeWGwCnFIJNo9NKGZ0IX19qwd+OeygTdzc2KoWuP4Gm9O8SoQ5BLB+I7AmUWyhNq1ejTRoZt8XWZSAZVP+onfug0Y19ku+iTOv0tOnEZYf6KDGPy2W/2Stsxop6icjIjf7P0ROpj74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v324qf0N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnrazWaOoSYSLevsB/o2nHomiq68zg5sUm9Yxg06IG2VYFNhHYZW90w//qxMjwZoGcP/dysmYPtNKs63TYEfYCVSQZnOM2l4y3XLxBrrLuUSE2i8vwxc429SOQzaqFiEfjqH96QN++pIr+Kdst1x7KNRL5WAInBBT0fmjdmYR0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlsBYwFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v324qf0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBBB1F00893;
-	Sat, 30 May 2026 18:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlsBYwFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99CE1F00893;
+	Sat, 30 May 2026 18:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165264;
-	bh=y6a2uhl8aYWeJ2zpe05Unp+PmfiAxz3s7rBDvc6EmJk=;
+	s=korg; t=1780165268;
+	bh=dEAUYBguE3RKG4B+OGnqukhhgmef9Qg0/kANRwxN2T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v324qf0NBhGSZA+jzOeJWu0EurVyRqWYUbop4JGJ9Sb4PDrchp38U5hgtYIbk/IPn
-	 Zw3EAxCC8m1UTqtSPSBtgfs3tQQi5LVfaJAYss7oI6xH7K8+AnEyIaajdUtgRQ2rtN
-	 +tPzOD+vlDmEcM4PNzFGzLtr8ei8KqptHiEkwrro=
+	b=XlsBYwFbiBHxEMmmMJ+iRA3nOVyzmFCpr1T67DNbfXYKGViTjKLDOTkNO1iRGUybT
+	 GL9jumEF5dqNqIC2RgR/zWEgvebm8wlNGY8XIYxkReyn8GciuSKxRS06yTGnarxEIM
+	 AS1bspnJr5uzUNMcIQyMyZyZr6fSzObQimsPfv9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Steffen Klassert <steffen.klassert@secunet.com>,
-	Florian Westphal <fw@strlen.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/589] xfrm: Wait for RCU readers during policy netns exit
-Date: Sat, 30 May 2026 17:58:28 +0200
-Message-ID: <20260530160225.295450347@linuxfoundation.org>
+Subject: [PATCH 5.10 028/589] xfrm_user: fix info leak in build_mapping()
+Date: Sat, 30 May 2026 17:58:29 +0200
+Message-ID: <20260530160225.322332048@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,41 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Klassert <steffen.klassert@secunet.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 069daad4f2ae9c5c108131995529d5f02392c446 ]
+[ Upstream commit 1beb76b2053b68c491b78370794b8ff63c8f8c02 ]
 
-xfrm_policy_fini() frees the policy_bydst hash tables after flushing the
-policy work items and deleting all policies, but it does not wait for
-concurrent RCU readers to leave their read-side critical sections first.
+struct xfrm_usersa_id has a one-byte padding hole after the proto
+field, which ends up never getting set to zero before copying out to
+userspace.  Fix that up by zeroing out the whole structure before
+setting individual variables.
 
-The policy_bydst tables are published via rcu_assign_pointer() and are
-looked up through rcu_dereference_check(), so netns teardown must also
-wait for an RCU grace period before freeing the table memory.
-
-Fix this by adding synchronize_rcu() before freeing the policy hash tables.
-
-Fixes: e1e551bc5630 ("xfrm: policy: prepare policy_bydst hash for rcu lookups")
+Fixes: 3a2dfbe8acb1 ("xfrm: Notify changes in UDP encapsulation via netlink")
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/xfrm/xfrm_user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index c4ebfaa0b2ed0..56956abd38180 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -4166,6 +4166,8 @@ static void xfrm_policy_fini(struct net *net)
- #endif
- 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index a55f8fe3e052f..ab79a739b3638 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3493,6 +3493,7 @@ static int build_mapping(struct sk_buff *skb, struct xfrm_state *x,
  
-+	synchronize_rcu();
-+
- 	WARN_ON(!list_empty(&net->xfrm.policy_all));
+ 	um = nlmsg_data(nlh);
  
- 	for (dir = 0; dir < XFRM_POLICY_MAX; dir++) {
++	memset(&um->id, 0, sizeof(um->id));
+ 	memcpy(&um->id.daddr, &x->id.daddr, sizeof(um->id.daddr));
+ 	um->id.spi = x->id.spi;
+ 	um->id.family = x->props.family;
 -- 
 2.53.0
 
