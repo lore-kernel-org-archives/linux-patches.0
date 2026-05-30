@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1649186334;
-	Sat, 30 May 2026 18:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD29786334;
+	Sat, 30 May 2026 18:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166775; cv=none; b=uXZWTC1ZIjtBfgZyrjVEfBezxCnXULG06hHKIHEBkmEBNDjcuo69IsC0Qpd8BqSGWJbRLLKdIjPdZ+qEvUSuw/JBZREVcdCwtqfZ81Y+JXDuuHfCvAXZJ4h2RmciLY4tQrn+VRCAn3ay6/XjLWkmTi7YMZ2/8oiBfFMI2PqtWUs=
+	t=1780166777; cv=none; b=qlc1SlH9de3FNougqvuYR+oCOi1E2jgbWxQhgKJrTIXQi7SoD0NfNCXeuD9Agwe+Fu8p08J2QrBypXlW+EGQSZ1jcj+BnNnvgq/W5G3PrEMqQdjt/r7Lu/x04R+Sk1cpxWHdporVWeJryCzzB7q/LfHKeqgtwuk6eSJcJZrF0tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166775; c=relaxed/simple;
-	bh=auKAtR+2rE/KgQ1n3h5FDCnD8qYgdT5/UnBcwTU5cTs=;
+	s=arc-20240116; t=1780166777; c=relaxed/simple;
+	bh=IhUtb+0YMPoZlt6ZtF0VNzeModHREL1ZKD9kaaMq+Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4LMKjp6Z/r49ShtoG1bBcQ7ChaRn0z7HZsjSm4JbeiXGe5Ibpsjp5ZrkF5LEaI0qQIAiOxVEBC0RQwOQ3kvwzeH2G9+dQCf8ZT/HLtCNOfMRY/45En9fRZ9ESVki/DT5p3TmE8e4wj+g0Nr/u+rxdCh50i5WTrRGMDDYXf0JVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3mUGUVe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UbYnLQtNXBhSPJZvuJFue1Yarjc//bxj7IoOMQoCxJnU675Vf6LZW3z4LbZHVJVGhIoXP/9HCybG/dPdVRcUx441HkMTE8uXIfH5cm6j/N4sux/YyobULHksXLzSyshJXVhTZ0uKgOneklYQATMav6NzmIAj/CRzxy40FcGPhBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEf6O12N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3mUGUVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A981F00893;
-	Sat, 30 May 2026 18:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEf6O12N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A591F00893;
+	Sat, 30 May 2026 18:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166773;
-	bh=LvICR0KcuMJEjbe3jHrtOE3ckf92sfvKU9ME9TGzlss=;
+	s=korg; t=1780166776;
+	bh=BIGbg9VF8EDOXq18+K/76R4xgdOnL1FzSJhoiPr6+tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3mUGUVeow790QhUY7h0Ksi7wI3RCAbnswLKAVduj9JDzHzIS3zKzpMQO4abH+6Ye
-	 VAqix3uvK4lb+ufB4WNRJF99X9Z9rXxfePcIrgyVdwsgFu81b0Y8k/UXc6csujiK0s
-	 ulxms8JQHVNsPqHxdbqMSfHncygcmOv1+JNi5vIU=
+	b=uEf6O12NDZjfzT9Kd6lexPYz6kUzy0HC80ZeWGu+ftKqBq8sp/V+dRx47BOMNA0wx
+	 V59mGwkzy+XTIqaGyVON0QlYWuI6Av6OR8cJ5elDz5sld/N6qUMV3bfW3ZNKTsjqnG
+	 G/IU24Fxq+OJLg5oid87G8fyPKqfLQ+jVeYzWwoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 466/589] netfilter: arp_tables: fix IEEE1394 ARP payload parsing
-Date: Sat, 30 May 2026 18:05:47 +0200
-Message-ID: <20260530160236.908307330@linuxfoundation.org>
+Subject: [PATCH 5.10 467/589] drm/amdgpu/gfx6: Support harvested SI chips with disabled TCCs (v2)
+Date: Sat, 30 May 2026 18:05:48 +0200
+Message-ID: <20260530160236.932975901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,130 +46,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 1e8e3f449b1e73b73a843257635b9c50f0cc0f0a ]
+[ Upstream commit fe2b84f9228e2a0903221a4d0d8c350b018e9c0c ]
 
-Weiming Shi says:
+This commit fixes amdgpu to work on the Radeon HD 7870 XT
+which has never worked with the Linux open source drivers before.
 
-"arp_packet_match() unconditionally parses the ARP payload assuming two
-hardware addresses are present (source and target). However,
-IPv4-over-IEEE1394 ARP (RFC 2734) omits the target hardware address
-field, and arp_hdr_len() already accounts for this by returning a
-shorter length for ARPHRD_IEEE1394 devices.
+Some boards have "harvested" chips, meaning that some parts of
+the chip are disabled and fused, and it's sold for cheaper and
+under a different marketing name.
+On a harvested chip, any of the following can be disabled:
+- CUs (Compute Units)
+- RBs (Render Backend, aka. ROP)
+- Memory channels (ie. the chip has a lower bandwidth)
+- TCCs (ie. less L2 cache)
 
-As a result, on IEEE1394 interfaces arp_packet_match() advances past a
-nonexistent target hardware address and reads the wrong bytes for both
-the target device address comparison and the target IP address. This
-causes arptables rules to match against garbage data, leading to
-incorrect filtering decisions: packets that should be accepted may be
-dropped and vice versa.
+Handle chips with harvested TCCs by patching the registers
+that configure how TCCs are mapped.
 
-The ARP stack in net/ipv4/arp.c (arp_create and arp_process) already
-handles this correctly by skipping the target hardware address for
-ARPHRD_IEEE1394. Apply the same pattern to arp_packet_match()."
+If some TCCs are disabled, we need to make sure that
+the disabled TCCs are not used, and the remaining TCCs
+are used optimally.
 
-Mangle the original patch to always return 0 (no match) in case user
-matches on the target hardware address which is never present in
-IEEE1394.
+TCP_CHAN_STEER_LO/HI control which TCC is used by TCP channels.
+TCP_ADDR_CONFIG.NUM_TCC_BANKS controls how many channels are used.
 
-Note that this returns 0 (no match) for either normal and inverse match
-because matching in the target hardware address in ARPHRD_IEEE1394 has
-never been supported by arptables. This is intentional, matching on the
-target hardware address should never evaluate true for ARPHRD_IEEE1394.
+Note that the TCC configuration is highly relevant to performance.
+Suboptimal configuration (eg. CHAN_STEER=0) can significantly
+reduce gaming performance.
 
-Moreover, adjust arpt_mangle to drop the packet too as AI suggests:
+For optimal performance:
+- Rely on the CHAN_STEER from the golden registers table,
+  only skip disabled TCCs but keep the mapping order.
+- Limit NUM_TCC_BANKS to number of active TCCs to avoid thrashing,
+  which performs better than using the same TCC twice.
 
-In arpt_mangle, the logic assumes a standard ARP layout. Because
-IEEE1394 (FireWire) omits the target hardware address, the linear
-pointer arithmetic miscalculates the offset for the target IP address.
-This causes mangling operations to write to the wrong location, leading
-to packet corruption. To ensure safety, this patch drops packets
-(NF_DROP) when mangling is requested for these fields on IEEE1394
-devices, as the current implementation cannot correctly map the FireWire
-ARP payload.
+v2:
+- Also consider CGTS_USER_TCC_DISABLE for disabled TCCs.
 
-This omits both mangling target hardware and IP address. Even if IP
-address mangling should be possible in IEEE1394, this would require
-to adjust arpt_mangle offset calculation, which has never been
-supported.
-
-Based on patch from Weiming Shi <bestswngs@gmail.com>.
-
-Fixes: 6752c8db8e0c ("firewire net, ipv4 arp: Extend hardware address and remove driver-level packet inspection.")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://bugs.freedesktop.org/show_bug.cgi?id=60879
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2664
+Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 00218d15528fab9f6b31241fe5904eea4fcaa30d)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arp_tables.c  | 18 +++++++++++++++---
- net/ipv4/netfilter/arpt_mangle.c |  8 ++++++++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index 5823e89b8a734..d5f3b6260da0c 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -110,13 +110,25 @@ static inline int arp_packet_match(const struct arphdr *arphdr,
- 	arpptr += dev->addr_len;
- 	memcpy(&src_ipaddr, arpptr, sizeof(u32));
- 	arpptr += sizeof(u32);
--	tgt_devaddr = arpptr;
--	arpptr += dev->addr_len;
-+
-+	if (IS_ENABLED(CONFIG_FIREWIRE_NET) && dev->type == ARPHRD_IEEE1394) {
-+		if (unlikely(memchr_inv(arpinfo->tgt_devaddr.mask, 0,
-+					sizeof(arpinfo->tgt_devaddr.mask))))
-+			return 0;
-+
-+		tgt_devaddr = NULL;
-+	} else {
-+		tgt_devaddr = arpptr;
-+		arpptr += dev->addr_len;
-+	}
- 	memcpy(&tgt_ipaddr, arpptr, sizeof(u32));
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index d447b2416b98b..5e23c717279d6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -1568,6 +1568,71 @@ static void gfx_v6_0_setup_spi(struct amdgpu_device *adev)
+ 	mutex_unlock(&adev->grbm_idx_mutex);
+ }
  
- 	if (NF_INVF(arpinfo, ARPT_INV_SRCDEVADDR,
- 		    arp_devaddr_compare(&arpinfo->src_devaddr, src_devaddr,
--					dev->addr_len)) ||
-+					dev->addr_len)))
-+		return 0;
++/**
++ * gfx_v6_0_setup_tcc() - setup which TCCs are used
++ *
++ * @adev: amdgpu_device pointer
++ *
++ * Verify whether the current GPU has any TCCs disabled,
++ * which can happen when the GPU is harvested and some
++ * memory channels are disabled, reducing the memory bus width.
++ * For example, on the Radeon HD 7870 XT (Tahiti LE).
++ *
++ * If some TCCs are disabled, we need to make sure that
++ * the disabled TCCs are not used, and the remaining TCCs
++ * are used optimally.
++ *
++ * TCP_CHAN_STEER_LO/HI control which TCC is used by TCP channels.
++ * TCP_ADDR_CONFIG.NUM_TCC_BANKS controls how many channels are used.
++ *
++ * For optimal performance:
++ * - Rely on the CHAN_STEER from the golden registers table,
++ *   only skip disabled TCCs but keep the mapping order.
++ * - Limit NUM_TCC_BANKS to number of active TCCs to avoid thrashing,
++ *   which performs better than using the same TCC twice.
++ */
++static void gfx_v6_0_setup_tcc(struct amdgpu_device *adev)
++{
++	u32 i, tcc, tcp_addr_config, num_active_tcc = 0;
++	u64 chan_steer, patched_chan_steer = 0;
++	const u32 num_max_tcc = adev->gfx.config.max_texture_channel_caches;
++	const u32 dis_tcc_mask =
++		amdgpu_gfx_create_bitmask(num_max_tcc) &
++		(REG_GET_FIELD(RREG32(mmCGTS_TCC_DISABLE),
++			       CGTS_TCC_DISABLE, TCC_DISABLE) |
++		 REG_GET_FIELD(RREG32(mmCGTS_USER_TCC_DISABLE),
++			       CGTS_USER_TCC_DISABLE, TCC_DISABLE));
 +
-+	if (tgt_devaddr &&
- 	    NF_INVF(arpinfo, ARPT_INV_TGTDEVADDR,
- 		    arp_devaddr_compare(&arpinfo->tgt_devaddr, tgt_devaddr,
- 					dev->addr_len)))
-diff --git a/net/ipv4/netfilter/arpt_mangle.c b/net/ipv4/netfilter/arpt_mangle.c
-index a4e07e5e9c118..f65dd339208e8 100644
---- a/net/ipv4/netfilter/arpt_mangle.c
-+++ b/net/ipv4/netfilter/arpt_mangle.c
-@@ -40,6 +40,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
- 	}
- 	arpptr += pln;
- 	if (mangle->flags & ARPT_MANGLE_TDEV) {
-+		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
-+			     skb->dev->type == ARPHRD_IEEE1394))
-+			return NF_DROP;
++	/* When no TCC is disabled, the golden registers table already has optimal TCC setup */
++	if (!dis_tcc_mask)
++		return;
 +
- 		if (ARPT_DEV_ADDR_LEN_MAX < hln ||
- 		   (arpptr + hln > skb_tail_pointer(skb)))
- 			return NF_DROP;
-@@ -47,6 +51,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
- 	}
- 	arpptr += hln;
- 	if (mangle->flags & ARPT_MANGLE_TIP) {
-+		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
-+			     skb->dev->type == ARPHRD_IEEE1394))
-+			return NF_DROP;
++	/* Each 4-bit nibble contains the index of a TCC used by all TCPs */
++	chan_steer = RREG32(mmTCP_CHAN_STEER_LO) | ((u64)RREG32(mmTCP_CHAN_STEER_HI) << 32ull);
 +
- 		if (ARPT_MANGLE_ADDR_LEN_MAX < pln ||
- 		   (arpptr + pln > skb_tail_pointer(skb)))
- 			return NF_DROP;
++	/* Patch the TCP to TCC mapping to skip disabled TCCs */
++	for (i = 0; i < num_max_tcc; ++i) {
++		tcc = (chan_steer >> (u64)(4 * i)) & 0xf;
++
++		if (!((1 << tcc) & dis_tcc_mask)) {
++			/* Copy enabled TCC indices to the patched register value. */
++			patched_chan_steer |= (u64)tcc << (u64)(4 * num_active_tcc);
++			++num_active_tcc;
++		}
++	}
++
++	WARN_ON(num_active_tcc != num_max_tcc - hweight32(dis_tcc_mask));
++
++	/* Patch number of TCCs used by TCPs */
++	tcp_addr_config = REG_SET_FIELD(RREG32(mmTCP_ADDR_CONFIG),
++					TCP_ADDR_CONFIG, NUM_TCC_BANKS,
++					num_active_tcc - 1);
++
++	WREG32(mmTCP_ADDR_CONFIG, tcp_addr_config);
++	WREG32(mmTCP_CHAN_STEER_HI, upper_32_bits(patched_chan_steer));
++	WREG32(mmTCP_CHAN_STEER_LO, lower_32_bits(patched_chan_steer));
++}
++
+ static void gfx_v6_0_config_init(struct amdgpu_device *adev)
+ {
+ 	adev->gfx.config.double_offchip_lds_buf = 0;
+@@ -1726,6 +1791,7 @@ static void gfx_v6_0_constants_init(struct amdgpu_device *adev)
+ 	gfx_v6_0_tiling_mode_table_init(adev);
+ 
+ 	gfx_v6_0_setup_rb(adev);
++	gfx_v6_0_setup_tcc(adev);
+ 
+ 	gfx_v6_0_setup_spi(adev);
+ 
 -- 
 2.53.0
 
