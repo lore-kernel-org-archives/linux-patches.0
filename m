@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBDC2FDC5E;
-	Sat, 30 May 2026 18:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782852FDC5E;
+	Sat, 30 May 2026 18:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165895; cv=none; b=Ut/Mz7qZjBBtSBtQGZ9yio3uC8g/UGUwMUaAgY98uLfALT+1ldL1TRijtV09OAr/2sEoBCQfQKrXf4P09/h8XF1hXeEz/nVLjaJ5vlkQ3381Z6r9DJk9qUxtD2W7a+6zDvXb+1dYTu5uuo0J1Nyfu28nEFo1W+HFM+atCO/pN6s=
+	t=1780165899; cv=none; b=ujnA+Gnb+ZZOVwSixI6U4vm17tAhdw+q3kLmsyG4tL6IyCFkfsrB9Bcq9BUo7pAQihomiaIrcrl7ByfGFiKCYdmicJ/sTlhsO+LWBMrFS1l7PQH7kYVDIky9UlEESpMrSPRVdhfU0NrwUzil6ByHYUrOmrLvnKkf7OWcKMaooSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165895; c=relaxed/simple;
-	bh=QQ6BZwGUOnDsBLdmqE5Fa5M3xnD2gytcrJ8wwNV4V6g=;
+	s=arc-20240116; t=1780165899; c=relaxed/simple;
+	bh=BnyjMCAAwabDy1hnGDhrLXkSSwu7S/tbSYptzXftJKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0enQmwu/qFhjOBJUGCh3EHkj0CVyFUeTTPAJrUr9bDAWs5tvfvXis+71LqlWRb/EYagff0JdbcuYgC/BUrlCjXwpyHOfbV7KgI8oxti1aXZQ0YiP4Czh6kgRj65smRwznFUvncml980nyaBwVtPGC/+ViTZA5Es3p5WDMJf6FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJtUIGvF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RVkw7gnTymcEMbiaUL5tvGI+3AfzRpX2Pgk0BzChNvBS9Ht7Ft4nISrQJitbQSpEokVv5f9ODJRDiCP1+XrSmcYfk8y+NzGhOUdxPQufVO1rN8BkI6eo8JYavLtzjmwTxdkB0UmkviSgRzNzox5ynGTLj5cUAlXRwI5gmHBx+So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHyZzGEH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJtUIGvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313D71F00893;
-	Sat, 30 May 2026 18:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHyZzGEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758C71F00893;
+	Sat, 30 May 2026 18:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165894;
-	bh=jtfa9lQfUE1vyYfQfNlEZwvUImA5Z+OFsP7j8nb19jc=;
+	s=korg; t=1780165898;
+	bh=MKd1Z+WozyWvO8/NSGLTx9GuIYw0A7Gphy5TMfTFUG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LJtUIGvF0rY3afu9VEndNB4R7ZGBXCaf10orRQqp0/58QxTrp22q7zv3m2K8fl60w
-	 m06m7+x8tGCVvOugwAHjZDupSe4r8jtnkqKhlVfnMA2gG+m85shet3kt9FHbC0RF90
-	 DCknBvSvJVxM+SmTI2nlpgrenWdb+JzPwuVk5M5I=
+	b=PHyZzGEHNT/RnQMjEV1CConx8I8tsTB+DH8plpUIILrbnz5KPTe8e21Y70rUmHp9J
+	 uDvvo5YcgKem/RaVxkaeZqm3ZLvDW/HxvktdKlKT0hOAzrhlNQXy/VBZsi6vuUt541
+	 xJsIMxm3cBk9bSwdELS8zRAb3K4DzrsRFUeQD5+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 180/589] KVM: nSVM: Clear GIF on nested #VMEXIT(INVALID)
-Date: Sat, 30 May 2026 18:01:01 +0200
-Message-ID: <20260530160229.617844127@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 181/589] io_uring/poll: fix EPOLL_URING_WAKE sometimes not being honored
+Date: Sat, 30 May 2026 18:01:02 +0200
+Message-ID: <20260530160229.644724641@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,33 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit f85a6ce06e4a0d49652f57967a649ab09e06287c upstream.
+Rather than do the masking  only when we jump straight to execution,
+mark it as EPOLLONESHOT regardless. This ensures it doesn't get lost.
+And just kill the poll entry upfront, if marked. This is an optimization
+in later kernels, but it's actually required on the older kernels to
+note the EPOLL_URING_WAKE mask correctly.
 
-According to the APM, GIF is set to 0 on any #VMEXIT, including
-an #VMEXIT(INVALID) due to failed consistency checks. Clear GIF on
-consistency check failures.
-
-Fixes: 3d6368ef580a ("KVM: SVM: Add VMRUN handler")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-11-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccf06b5a981c ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -532,6 +532,7 @@ int nested_svm_vmrun(struct vcpu_svm *sv
- 		vmcb12->control.exit_code_hi = -1u;
- 		vmcb12->control.exit_info_1  = 0;
- 		vmcb12->control.exit_info_2  = 0;
-+		svm_set_gif(svm, false);
- 		goto out;
- 	}
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index dea1fb22c0efb..7cb4eeefd3cf4 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5647,14 +5647,19 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
+ 	if (mask && !(mask & poll->events))
+ 		return 0;
  
++	/*
++	 * If we trigger a multishot poll off our own wakeup path,
++	 * disable multishot as there is a circular dependency between
++	 * CQ posting and triggering the event.
++	 */
++	if (mask & EPOLL_URING_WAKE)
++		poll->events |= EPOLLONESHOT;
++
+ 	if (io_poll_get_ownership(req)) {
+-		/*
+-		 * If we trigger a multishot poll off our own wakeup path,
+-		 * disable multishot as there is a circular dependency between
+-		 * CQ posting and triggering the event.
+-		 */
+-		if (mask & EPOLL_URING_WAKE)
+-			poll->events |= EPOLLONESHOT;
++		if (mask && poll->events & EPOLLONESHOT) {
++			list_del_init(&poll->wait.entry);
++			smp_store_release(&poll->head, NULL);
++		}
+ 
+ 		__io_poll_execute(req, mask);
+ 	}
+-- 
+2.53.0
+
 
 
