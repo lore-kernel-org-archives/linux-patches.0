@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20D9320CAD;
-	Sat, 30 May 2026 17:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA46E320CAD;
+	Sat, 30 May 2026 17:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163762; cv=none; b=MU4IAg/Id7tDPL1rpyyTotOFgw3mI4DfIeXq2e0yAAtnm2Rib3OMKZnTU6U1end7fNpENxO2I1HQFhglYIggNT/NSTtTe3tivhtPx7e4af0MMLOqur9OGzz7u5t6QDMeVKQmRV9/rnU5/YE0fCZ+Pv4Wqoqc3mk52TiEsMuNkMo=
+	t=1780163765; cv=none; b=Z19Tl+f+T7gxTTPEeWzrXDqnvakkGQlcLXZbPNb/NuvxfbFJ3owBi25uSQ85DrpUwM9iVtKotIORvrBhVEhYdCP4HBOV+XqO62l4/2UMak8mx5qBaEqhYmBWLcjGE7ZhfYG1I1UjLUByZOM6na4KRPEvYrlc8HC6s/fKFb9jVJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163762; c=relaxed/simple;
-	bh=I3E7qfSw0dWHGK+2PE0jVklTme0kd68Eq18wb6qLGyo=;
+	s=arc-20240116; t=1780163765; c=relaxed/simple;
+	bh=QIh08nLp8MQD3iPzKhGxa+OeNffFaY3CMhnuVZfeYrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYT5GR4cRPGnhCedT+D8u69MHDvCwIWn6WPXZNWtZcutIb1FiJGtNdZNxiQvyDsRBn5cdOwPtnOWRZX9RYk+huHfhz9JwjFYtkFQz40rKJCJtmzUL0ha/C/K6x8K8nB3LKkrX804lAXyLIb0/R2MENDI8MHQwgPPj5yWTpdT8dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQ7Z94Bn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4v4+HYyKSPhL7jEpfl0P6Sf52+AuNPXHlY59FD4rlBxWqQ0SXHxYKF4/CZ3XXG9uPpEmAW0Ytm1TFhNYCndSZ7wXX9NF6c3nEjV5KoCvHPY35cCuKTRnLlrMkgfNd2jvj7eK8b1hhbrrH1/+w/DLJcIrjpl3Ry9YnnMwofd4pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGN87XaY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQ7Z94Bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B0D1F00893;
-	Sat, 30 May 2026 17:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGN87XaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0E41F00893;
+	Sat, 30 May 2026 17:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163761;
-	bh=5VZj25ApfdOKPq70i3cRDn7LJH3yuwQ4FiVBYocfakk=;
+	s=korg; t=1780163764;
+	bh=gla8xJIS7vCvCxrqbhwp3BIIq/QOhC/AjUPM9WH2HlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQ7Z94Bn5WKSnzzoRHVqIQlAwO2IT448po7Qs5X20uaVxGxFiKpZS616WZHMG8i3g
-	 /zPPLNc5SRxLCajoHOdgH85OWq26Wvnrn/Ur9YKs/C5YpTF/wYZEx2cn0H5ec105f2
-	 RAq4WswuZpOi+7qlZtjgkeirMXdqmiLM3J0F4iB4=
+	b=NGN87XaYENoLG8LYgDHVtLekPrnNYp0ftPJim2M14zOufc1Iiy7dZN0+xyiN7RAq8
+	 jzmfomVtAb6nzbBJS7fb46Mj9g7+d1QnYAcrM0bOgVY3xwli9Nx151+cMhQncWbRJE
+	 cmtSR1idA3Eik/1cBSF9nJ57f0xRobUKz9U1HkDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 327/776] dm-thin: fix metadata refcount underflow
-Date: Sat, 30 May 2026 18:00:41 +0200
-Message-ID: <20260530160249.022739984@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 354/776] regulator: max77650: fix OF node reference imbalance
+Date: Sat, 30 May 2026 18:01:08 +0200
+Message-ID: <20260530160249.731125827@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,55 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 09a65adc7d8bbfce06392cb6d375468e2728ead5 upstream.
+commit 2edaf5f7ada0ab5c9ec1f0836bd19779a8d85262 upstream.
 
-There's a bug in dm-thin in the function rebalance_children. If the
-internal btree node has one entry, the code tries to copy all btree
-entries from the node's child to the node itself and then decrement the
-child's reference count.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-If the child node is shared (it has reference count > 1), we won't free
-it, so there would be two pointers to each of the grandchildren nodes.
-But the reference counts of the grandchildren is not increased, thus the
-reference count doesn't match the number of pointers that point to the
-grandchildren. This results in "device mapper: space map common: unable
-to decrement block" errors.
+Fix this by using the intended helper for reusing OF nodes.
 
-Fix this bug by incrementing reference counts on the grandchildren if the
-btree node is shared.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 3241b1d3e0aa ("dm: add persistent data library")
-Cc: stable@vger.kernel.org
+Fixes: bcc61f1c44fd ("regulator: max77650: add regulator support")
+Cc: stable@vger.kernel.org	# 5.1
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260408073055.5183-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-btree-remove.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/regulator/max77650-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/persistent-data/dm-btree-remove.c
-+++ b/drivers/md/persistent-data/dm-btree-remove.c
-@@ -415,12 +415,20 @@ static int rebalance_children(struct sha
+--- a/drivers/regulator/max77650-regulator.c
++++ b/drivers/regulator/max77650-regulator.c
+@@ -339,7 +339,7 @@ static int max77650_regulator_probe(stru
+ 	parent = dev->parent;
  
- 	if (le32_to_cpu(n->header.nr_entries) == 1) {
- 		struct dm_block *child;
-+		int is_shared;
- 		dm_block_t b = value64(n, 0);
+ 	if (!dev->of_node)
+-		dev->of_node = parent->of_node;
++		device_set_of_node_from_dev(dev, parent);
  
-+		r = dm_tm_block_is_shared(info->tm, b, &is_shared);
-+		if (r)
-+			return r;
-+
- 		r = dm_tm_read_lock(info->tm, b, &btree_node_validator, &child);
- 		if (r)
- 			return r;
- 
-+		if (is_shared)
-+			inc_children(info->tm, dm_block_data(child), vt);
-+
- 		memcpy(n, dm_block_data(child),
- 		       dm_bm_block_size(dm_tm_get_bm(info->tm)));
- 
+ 	rdescs = devm_kcalloc(dev, MAX77650_REGULATOR_NUM_REGULATORS,
+ 			      sizeof(*rdescs), GFP_KERNEL);
 
 
