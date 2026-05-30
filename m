@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E0C17555;
-	Sat, 30 May 2026 18:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7483F17555;
+	Sat, 30 May 2026 18:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165494; cv=none; b=Jr49zu/ck0WQZq0SCmJDX5yBoAlfStFzr8muAS/A6+pGW0DDzyTOa9n+SI4q5oXIrGTz1VoOetaf5Eq4Zjtpvx5qbPO6AATDs4NYFOYNUb4uJQM+tR7Ycz8D5c2WuXgChAj742P4cvRndeXVtHPJJe6qt0wGsci7yaVGp12tA0k=
+	t=1780165497; cv=none; b=YldOop+BhmpnljzLx7xKgmr67q+ZaYMgmvlQxEWqScp4RePdpQh0cpcu4tCgc3B8NdQ/1yWjL/FDao5hEvyU4Qu+NRL84ivrtY+mLn8DcUgUzlP0FSu+0jYVS6twgFft2T0XUJHT49TF2Q6ZbEf+g6U6llLeu37MNGZTf3DACak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165494; c=relaxed/simple;
-	bh=BjlifChOd3kGMEwlDu66fe+lC7cVJ8uPBuyZlqpnbxk=;
+	s=arc-20240116; t=1780165497; c=relaxed/simple;
+	bh=C58atzpYPE360QQE4BguFKXhb80ShZ2T4Hn9jBcGnPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd0zFkLTyWWBa7rwPJAnIdnLtwYVXjT0FCetKaJqO3o3AfUMnQymRcmoPRlqxDMy989OLD3i4yucQVMu/GtdukRWst5qn4S0UOxLFikhTp2Ewttjw2yEiA/YwBuAG9gmGzSakYsijcpaNGfuqLMHa77KNnliiqHQCwV8DOWm/PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/gYzE3W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BIbckTWt2P3P13evsuSpIEBiLpLnaFbVW4yCv1US+8wy7lKJNpAPzMhC3LPwmjKHbUHkf7oBVlByhlodDVvwwsH7Ex8Q39RO3Ufz9hAPaHgA/Y1VMiUr5z9AQ5LGfURyEF0rOms7RTgPGvTVrlJ3JxnpHy9puCywBfNHr/6RR/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZypNYVyc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/gYzE3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7254C1F00893;
-	Sat, 30 May 2026 18:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZypNYVyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99CC1F00893;
+	Sat, 30 May 2026 18:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165493;
-	bh=YRO1fblf2gBs5NioQQUM63HXz/DrVX50odqcNA0NHlg=;
+	s=korg; t=1780165496;
+	bh=X04e7vKrO5U5bLJJ7d5HGbInkjDCHS4Auc5+oGR0/0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/gYzE3W/XjwTyd8Qej9uAVSOyShZeSBEe2cmthzQ2uTXtoBXxR8ZKzAuPuajYeD7
-	 6ZHQlAFM4eIgqniTaYv9wOIQFppZB/tnjQPLn8VL09uPpCgaXFGS6WSRoZ4UW4XJs6
-	 jfdjCAAPQGLLGJ3AejGM0ksTLgqOeDe6YerFm1YM=
+	b=ZypNYVycDl66KP2Lpy5CQvuCVvCfwb6r07O3CB75kyZIO52IixAtjujQ/XTiSl8of
+	 MZDvUfDF1cGUFVOhj9AxW7WY5lRQhDwdPZvjjh4aZrbvLrnmlKk4zu0nCHjqJyDNFQ
+	 kCR2fHVqe2SJkinA2JaG/ckhecHg39RRhBa2w7gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 065/589] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
-Date: Sat, 30 May 2026 17:59:06 +0200
-Message-ID: <20260530160226.307728475@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 066/589] ACPI: property: Constify stubs for CONFIG_ACPI=n case
+Date: Sat, 30 May 2026 17:59:07 +0200
+Message-ID: <20260530160226.334699224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,71 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
+commit 5c1a72a0fbe1b02c3ce0537f85f92ea935e0beec upstream.
 
-Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
-WARN is comically trivially to trigger from userspace, e.g. by doing:
+There is a few stubs that left untouched during constification of
+the fwnode related APIs. Constify three more stubs here.
 
-  struct kvm_enc_region range = {
-          .addr = 0,
-          .size = -1ul,
-  };
-
-  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
-
-Note, the checks in sev_mem_enc_register_region() that presumably exist to
-verify the incoming address+size are completely worthless, as both "addr"
-and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
-than ULONG_MAX.  That wart will be cleaned up in the near future.
-
-	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
-		return -EINVAL;
-
-Opportunistically add a comment to explain why the code calculates the
-number of pages the "hard" way, e.g. instead of just shifting @ulen.
-
-Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Tested-by: Liam Merwick <liam.merwick@oracle.com>
-Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8b9d6802583a ("ACPI: Constify acpi_bus helper functions, switch to macros")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/linux/acpi.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -338,10 +338,16 @@ static struct page **sev_pin_memory(stru
- 	if (ulen == 0 || uaddr + ulen < uaddr)
- 		return ERR_PTR(-EINVAL);
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 9c184dbceba47..c5b51d8dcbe18 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -753,7 +753,7 @@ static inline bool is_acpi_device_node(struct fwnode_handle *fwnode)
+ 	return false;
+ }
  
--	/* Calculate number of pages. */
-+	/*
-+	 * Calculate the number of pages that need to be pinned to cover the
-+	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
-+	 * doesn't require the incoming address+size to be page aligned!
-+	 */
- 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
- 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 	npages = (last - first + 1);
-+	if (npages > INT_MAX)
-+		return ERR_PTR(-EINVAL);
+-static inline struct acpi_device *to_acpi_device_node(struct fwnode_handle *fwnode)
++static inline struct acpi_device *to_acpi_device_node(const struct fwnode_handle *fwnode)
+ {
+ 	return NULL;
+ }
+@@ -763,12 +763,12 @@ static inline bool is_acpi_data_node(struct fwnode_handle *fwnode)
+ 	return false;
+ }
  
- 	locked = sev->pages_locked + npages;
- 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-@@ -350,9 +356,6 @@ static struct page **sev_pin_memory(stru
- 		return ERR_PTR(-ENOMEM);
- 	}
+-static inline struct acpi_data_node *to_acpi_data_node(struct fwnode_handle *fwnode)
++static inline struct acpi_data_node *to_acpi_data_node(const struct fwnode_handle *fwnode)
+ {
+ 	return NULL;
+ }
  
--	if (WARN_ON_ONCE(npages > INT_MAX))
--		return ERR_PTR(-EINVAL);
--
- 	/* Avoid using vmalloc for smaller buffers. */
- 	size = npages * sizeof(struct page *);
- 	if (size > PAGE_SIZE)
+-static inline bool acpi_data_node_match(struct fwnode_handle *fwnode,
++static inline bool acpi_data_node_match(const struct fwnode_handle *fwnode,
+ 					const char *name)
+ {
+ 	return false;
+-- 
+2.53.0
+
 
 
