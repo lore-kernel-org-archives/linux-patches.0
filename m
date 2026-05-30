@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B1841A8F;
-	Sat, 30 May 2026 18:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1CE2FDC5E;
+	Sat, 30 May 2026 18:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165985; cv=none; b=VwxyT/Rz3lWnymF1nRaWKOGBQ1uDz9C3vD/EaDuipQWv4nOEhLwgPCq5ybJr4UBkMdUmckH3Y87MS2FXv74J3pvZDdmo9m8uaOm9LEi5JIzCpMlgAxAY1Z3LwE7uGypcfiPXoafdfrd/2EXdZK4/lWENAokrMWT8rZb04onQFgA=
+	t=1780165988; cv=none; b=T4AQcO7/Vlqd58uyEzlTbomPYnpSYH/uzjp1sV2bgYZqyx9pV1ZB7ZojGXbIeV/+blxjNZ4y01NvoEswEmtBR9dS0KZn5MubtSdJ+aFcA9wWr0VgUJu3YImQ0vqrRyDKK9eweAFLg+RGi5ZErqXGZ06hwKSO/QYm/CTn5V67418=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165985; c=relaxed/simple;
-	bh=YNa7/OVthe1/wPHFguGNMqTr0MGYQHVjhAbxgxaAOFc=;
+	s=arc-20240116; t=1780165988; c=relaxed/simple;
+	bh=uidpBeyYosrboiLO4COHdfh9Rpd/TF2qDyqnMQZOKwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9Nt3aGkD+083G+epPZdAUSLCFHz6MC7jRGBAhnMuJJgQjwD4ZVmlUsM/uphr9kNoxV81rw/yETEU9PMrqkY6Y/8pjWntvgIjX0+Zw7Ka2jjxsoBd0ervDmZy9RQUnX3yTu6Oqr1806vEUvJhR3hDbfmpl2KS2xcx9ZLwqxL5gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKNq2dEc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A3hTtBWOMfZtLB28cXDWtSD/DYCPUnf9l83pRQ61wro3z/3KkdXh1ZYeuxaTe+iW9R4SGfbUlPmcyHQ1usuMqg4uaL8Rh3CrwsFlTbx5B4D9Ivh5dcDDtcrcOt+YrDno+BpcUTpYB8LJk3zDHxLEQodWVWKuZ/E8tIV4kU/4v5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIbLqAWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKNq2dEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B251F00893;
-	Sat, 30 May 2026 18:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIbLqAWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC911F00893;
+	Sat, 30 May 2026 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165983;
-	bh=+r/PgIhIYEf0M+T24hcYrBmkPjTmXRUIDq/TMdOEcts=;
+	s=korg; t=1780165987;
+	bh=9Bu5+QhPn3soPaEWeXRPD5vc0vpSeWJy05t9PtvCA7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CKNq2dEcUgvAGUJmgPACB/Qp4DMiUmlV9pzQ6lzukk2yGP9c1uTAq8nDZeStC+pjM
-	 wlj+zbdEdYlBGijo/60ght5VNa2ODWUJbTIos/wQXmtOVuwWYx3FjoL2gXQMQ/Jcy/
-	 0fj/iEL3CN22KU9UX5LYdzqX0PjmahLssfXrs+Y0=
+	b=RIbLqAWD12EpWuVPB45S4eLZ2vj0ZfxsqoUk2T3bYXvZ9PnGH3kXo6KmT33J5g4w5
+	 5caXxNxWkLCZL+Tp/z+lJRjX+7IhUniM2Dhr+DAYxIfnMMvd3t7RDWLQyQFCFjw8+p
+	 PWB/+t06MVQnpshRLr8iJsmrZkh5W634fkHYE6W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/589] ipmi:ssif: Fix a shutdown race
-Date: Sat, 30 May 2026 18:01:33 +0200
-Message-ID: <20260530160230.538936285@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 239/589] hv_sock: fix ARM64 support
+Date: Sat, 30 May 2026 18:02:00 +0200
+Message-ID: <20260530160231.280218701@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,52 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 
-It was possible for the SSIF thread to stop and quit before the
-kthread_stop() call because ssif->stopping was set before the
-stop.  So only exit the SSIF thread is kthread_should_stop()
-returns true.
+commit b31681206e3f527970a7c7ed807fbf6a028fc25b upstream.
 
-In the mainstream kernel this was fixed in 6bd0eb6d759b ("ipmi:ssif:
-Fix a shutdown race").  However, that requires a fix in kernel
-version 6.1 has a fix to kthread stop to cause interruptible waits
-to return -ERESTARTSYS on a stop.  This has not been backported to
-older kernels, and that would probably be a bad idea.  But it means
-that the mainstrem kernel fix for this will not work.
+VMBUS ring buffers must be page aligned. Therefore, the current value of
+24K presents a challenge on ARM64 kernels (with 64K pages). So, use
+VMBUS_RING_SIZE() to ensure they are always aligned and large enough to
+hold all of the relevant data.
 
-Instead, wait for kthread_should_stop() to return true before exiting
-the thread.
-
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 77ffe33363c0 ("hv_sock: use HV_HYP_PAGE_SIZE for Hyper-V communication")
+Tested-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260428125339.13963-1-hamzamahfooz@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/vmw_vsock/hyperv_transport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index a811b5bdba259..42cbf761fa749 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -522,6 +522,16 @@ static int ipmi_ssif_thread(void *data)
- 		}
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -366,10 +366,10 @@ static void hvs_open_connection(struct v
+ 	} else {
+ 		sndbuf = max_t(int, sk->sk_sndbuf, RINGBUFFER_HVS_SND_SIZE);
+ 		sndbuf = min_t(int, sndbuf, RINGBUFFER_HVS_MAX_SIZE);
+-		sndbuf = ALIGN(sndbuf, HV_HYP_PAGE_SIZE);
++		sndbuf = VMBUS_RING_SIZE(sndbuf);
+ 		rcvbuf = max_t(int, sk->sk_rcvbuf, RINGBUFFER_HVS_RCV_SIZE);
+ 		rcvbuf = min_t(int, rcvbuf, RINGBUFFER_HVS_MAX_SIZE);
+-		rcvbuf = ALIGN(rcvbuf, HV_HYP_PAGE_SIZE);
++		rcvbuf = VMBUS_RING_SIZE(rcvbuf);
  	}
  
-+	/*
-+	 * The thread can break out of the loop if stopping is set,
-+	 * and this can be before kthread_stop() gets called and thus
-+	 * kthread_should_stop() will not be set.  This can cause
-+	 * spinning calling this function and other bad things.  So
-+	 * wait for kthread_should_stop() to be set.
-+	 */
-+	while (!kthread_should_stop())
-+		msleep_interruptible(1);
-+
- 	return 0;
- }
- 
--- 
-2.53.0
-
+ 	ret = vmbus_open(chan, sndbuf, rcvbuf, NULL, 0, hvs_channel_cb,
 
 
