@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9D93148DA;
-	Sat, 30 May 2026 17:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CD833F8A2;
+	Sat, 30 May 2026 17:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161231; cv=none; b=FD5qVrDS2bXLP+htKLhKcczK214x2itkMNFnSfUUgvlTP/K6N/7AhpH6aXT2uiM8+xQmAFSSCq3qMKsNDTCgNQgNGyYu8itD2Af/HgKlqipMEMrGbMNPMg3WI870AcL0BfwN3QO7qKR+5S7wH0YmhK8PAejJyzx1Yk5umb7Pgro=
+	t=1780161234; cv=none; b=Lp8AvUJxXh8ZBN2g7lBdyt2yRIrwxaV2HV6Wh+qEfnu+HkL0W9EM7PV1kuJkyQOCrqyNuZOpzpUfbXnjJMshQ/6gviDUd09UdNLWtcGSnwb4r0E2BgBaAs38yfSvF4MuyRJB5kjvz7eCc+7QE4j6z2+gYlxyBigltK9ky2F2WA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161231; c=relaxed/simple;
-	bh=e1FoCwN6zW+BbEJm+Ix8TTAhuBoUtH/eNDvKgG+n1RI=;
+	s=arc-20240116; t=1780161234; c=relaxed/simple;
+	bh=mdSf650pbY2RE55QNkmg9eqjdOoXW/feUtQRMhp0Pis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrqhVP0ecgdZFXrRuyP1MX+dfBtZR734cZtUExQqgLfvjFA83T6yji+/A0P1AkQYaiDe2f6kreH2IxThT4TS5hbYazpbioPJu7xIJegY2HLpwUhhVSkvvqRNegokSQhGzrYuh1DJRVLr6Rr2Ts7dtLGpQTubqwn80sUT8WuCY/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUu1yLP9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jka/9AE/MDDuTXe/uH7N8CfBNK+FfF5+oXOGp3MLqSpg56Dx2egw/QP6LeN9CEu9oFBUIEsk7BarLoehfgxYuIb/8B+Wyss3u7SwVPvZGUqLP15tghnm6DZ6TSYapI17dLFSeyhNCzFm1A1IvdI+CpjdkfAUKaCaKxAEsd5/WhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkBv0MGP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUu1yLP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B5D1F00893;
-	Sat, 30 May 2026 17:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkBv0MGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E511F00893;
+	Sat, 30 May 2026 17:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161230;
-	bh=4zvXf9xdHpOMVULEqDE1aoWSLUei/qcOp5llj/2zn3A=;
+	s=korg; t=1780161233;
+	bh=cFMLg1FuTO8L+QGP5/XiNEPHT5Ig58YdCQ3VEp0Z3Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sUu1yLP9ua1d6xODqla1N835ePGzfMv/bnspU6yAbFcJM6CfuEB4jWLsKvSQ7dWak
-	 UST4GkYUGfnXCCdxhZpWtQKvdIk34foR2CfWVKhgOfDbSz4sCNuzrH046CN5sdH9vH
-	 oxMa/xcz4wfnG6ai2XI26bYhgoafy9wMsFS8ZXHk=
+	b=KkBv0MGPM4HnSdrZNij8XMDCGU0d3vSIOHuMixTyeo2rmJY+D0eplhcq86A023wEm
+	 gEq0nGXPozMMjMIOt3FOg+m9QkBpLLAn/tsg0ugW2RYXUzcLBKKbXckNuiQRZqIYvm
+	 fMaKjfGFFBP0MsQ9LRD2nhWIrJeqRpMPt933dpak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 562/969] dm cache: fix missing return in invalidate_committeds error path
-Date: Sat, 30 May 2026 18:01:26 +0200
-Message-ID: <20260530160315.905861333@linuxfoundation.org>
+Subject: [PATCH 6.1 563/969] gfs2: Call unlock_new_inode before d_instantiate
+Date: Sat, 30 May 2026 18:01:27 +0200
+Message-ID: <20260530160315.934717518@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,49 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 8c0ee19db81f0fa1ff25fd75b22b17c0cc2acde3 ]
+[ Upstream commit 2ff7cf7e0640ff071ebc5c7e3dc2df024a7c91e6 ]
 
-In passthrough mode, dm-cache defers write submission until after
-metadata commit completes via the invalidate_committed() continuation.
-On commit error, invalidate_committed() calls invalidate_complete() to
-end the bio and free the migration struct, after which it should return
-immediately.
+As Neil Brown describes in detail in the link referenced below, new
+inodes must be unlocked before they can be instantiated.
 
-The patch 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-omitted this early return, causing execution to fall through into the
-success path on error. This results in use-after-free on the migration
-struct in the subsequent calls.
+An even better fix is to use d_instantiate_new(), which combines
+d_instantiate() and unlock_new_inode().
 
-Fix by adding the missing return after the invalidate_complete() call.
-
-Fixes: 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/dm-devel/adjMq6T5RRjv_uxM@stanley.mountain/
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 3d36e57ff768 ("gfs2: gfs2_create_inode rework")
+Reported-by: syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-fsdevel/177153754005.8396.8777398743501764194@noble.neil.brown.name/
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/gfs2/inode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index cd48cefe0409a..e47033fc53106 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1502,8 +1502,10 @@ static void invalidate_committed(struct work_struct *ws)
- 	struct bio *bio = mg->overwrite_bio;
- 	struct per_bio_data *pb = get_per_bio_data(bio);
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 3048e3ca4b382..c291b9382e994 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -779,7 +779,7 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 		goto fail_gunlock4;
  
--	if (mg->k.input)
-+	if (mg->k.input) {
- 		invalidate_complete(mg, false);
-+		return;
-+	}
+ 	mark_inode_dirty(inode);
+-	d_instantiate(dentry, inode);
++	d_instantiate_new(dentry, inode);
+ 	/* After instantiate, errors should result in evict which will destroy
+ 	 * both inode and iopen glocks properly. */
+ 	if (file) {
+@@ -791,7 +791,6 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	gfs2_glock_dq_uninit(ghs + 1);
+ 	gfs2_glock_put(io_gl);
+ 	gfs2_qa_put(dip);
+-	unlock_new_inode(inode);
+ 	return error;
  
- 	init_continuation(&mg->k, invalidate_completed);
- 	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
+ fail_gunlock4:
 -- 
 2.53.0
 
