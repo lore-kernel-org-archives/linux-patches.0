@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8878731CA4E;
-	Sat, 30 May 2026 16:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0350331CA4E;
+	Sat, 30 May 2026 16:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159689; cv=none; b=B/qOC9O2Y4aH+5MykCxdvAU4HD5NH7kucN/9r5QB2T8wr36iyfRgdIZXDyNZPG4qg4K2L2MREdxUB3dDxhgu13nyJ/Wept4eEHt67f8cnt99ehRKZCPGjG762NKAJmH03s0zlWIV+/YchQsbeB2mhprXkGPqmscKXKu04dzuPiM=
+	t=1780159706; cv=none; b=DyWgIHCOBc/o4wLzWRo52bhvr5SZmIuJfmx1XMSRSSFwF6+u/uA/cwr8lvHy+27gceouaWm08Six6l91kOhYekBzf4qExyCBb/lCaqqAo4deRGeWjKHsPlqZWwkTe4NeVgV2zIpLjx6iHWOk48UEv5jixtrXsc0udYAkBH+9Swg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159689; c=relaxed/simple;
-	bh=GhBor5lytKllvJZkSPyObLNLlfzFDbdWqycqlD0Kbwg=;
+	s=arc-20240116; t=1780159706; c=relaxed/simple;
+	bh=2RS8hP7rtdeUXmGsBkS0xVsDR+xMeqIYhCYv6g8QEDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yf+fBf97XaF35SzxBXmG78eXu0fj3zBhIX7FDc0BS/2YQeN+YUQ9V+nhcU6b9eexzcISTIFv92rgbsYaeTtgRgFP19IXq3YScO1k4P6l2uRpTa5eFpGLkbBG4D4FVU17kKJF4xedMhtohuoT+Cy3i4onLoYgYfDyGoHjXaf7tqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l10etE/z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASfj14nlupFK977zQ2a8zn2ReuoGoAuI6ndfqDNnN37PrlSB/0LmIaNjJMrIhUs22XoxdqtbphTIJYw8PgcpF86whJsnHZzW0tMuCUoLYndwaubVjwMhgtUxk7wEkVR0MNHrHhy0tDBGweFjH4bes2/qiJs6hVFfL3ajJrxyv34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiS0c/an; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l10etE/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0C01F00893;
-	Sat, 30 May 2026 16:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiS0c/an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263AD1F00893;
+	Sat, 30 May 2026 16:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159688;
-	bh=RSlFhueRHTCSxE+ttrXiRrB5OX5Yr2fskV05vrGhn+o=;
+	s=korg; t=1780159704;
+	bh=kzddMWggutwMdq6qle8KC/KctyKPsPdPLaaRoEeoxrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l10etE/zNmzWmCCygWDaxBTF5dxn+STs5AAakNjmc/Ps3ss6+82qXIr3iGb7tTAGQ
-	 yUddUQg3ZVwzk6Q+JOz3vYj0w8/zNF1SU0aCmy5vzWpnIt7vHilDT0DZY16suF+GRY
-	 4x9ru1wMRA6EcF0m39HjV/XRjqYrNi9sqfFk8mRQ=
+	b=jiS0c/anQvZrKyvDlWhUKkdU6yBb8ScO6l3PJi3X+PLGl3HBc5yAZkU687qU0Sb3q
+	 B+FuLPF6LZaU7V4wHzE0RHjr3uJ+qVdtchEQKmdEHzttcoC/+EMmL4nJTq2Hu7JWqt
+	 GcoCQ9J/XV4aSzNgZItb+v1mgXujtacgtwzDpkz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Steve Capper <steve.capper@arm.com>,
-	Will Deacon <will@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.1 140/969] arm64: mm: fix VA-range sanity check
-Date: Sat, 30 May 2026 17:54:24 +0200
-Message-ID: <20260530160304.428023129@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 141/969] rxrpc: Fix anonymous key handling
+Date: Sat, 30 May 2026 17:54:25 +0200
+Message-ID: <20260530160304.453510938@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,102 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: David Howells <dhowells@redhat.com>
 
-commit ab9b4008092c86dc12497af155a0901cc1156999 upstream.
+[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
 
-Both create_mapping_noalloc() and update_mapping_prot() sanity-check
-their 'virt' parameter, but the check itself doesn't make much sense.
-The condition used today appears to be a historical accident.
+In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
+be substituted for a NULL key pointer, but the variable this is done with
+is subsequently not used.
 
-The sanity-check condition:
+Fix this by using "key" rather than "rx->key" when filling in the
+connection parameters.
 
-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
+Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
+doesn't use sendmsg() directly and so bypasses the issue.  Further,
+AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
+in that manner works.  Since this hasn't been noticed to this point, it
+might be better just to remove the "key" variable and the code that sets it
+- and, arguably, rxrpc_init_client_call_security() would be a better place
+to handle it.
 
-... can only be true for the KASAN shadow region or the module region,
-and there's no reason to exclude these specifically for creating and
-updateing mappings.
-
-When arm64 support was first upstreamed in commit:
-
-  c1cc1552616d0f35 ("arm64: MMU initialisation")
-
-... the condition was:
-
-	if (virt < VMALLOC_START) {
-		[ ... warning here ... ]
-		return;
-	}
-
-At the time, VMALLOC_START was the lowest kernel address, and this was
-checking whether 'virt' would be translated via TTBR1.
-
-Subsequently in commit:
-
-  14c127c957c1c607 ("arm64: mm: Flip kernel VA space")
-
-... the condition was changed to:
-
-	if ((virt >= VA_START) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
-
-This appear to have been a thinko. The commit moved the linear map to
-the bottom of the kernel address space, with VMALLOC_START being at the
-halfway point. The old condition would warn for changes to the linear
-map below this, and at the time VA_START was the end of the linear map.
-
-Subsequently we cleaned up the naming of VA_START in commit:
-
-  77ad4ce69321abbe ("arm64: memory: rename VA_START to PAGE_END")
-
-... keeping the erroneous condition as:
-
-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
-
-Correct the condition to check against the start of the TTBR1 address
-space, which is currently PAGE_OFFSET. This simplifies the logic, and
-more clearly matches the "outside kernel range" message in the warning.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Steve Capper <steve.capper@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20230615102628.1052103-1-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/rxrpc/sendmsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -451,7 +451,7 @@ static phys_addr_t pgd_pgtable_alloc(int
- static void __init create_mapping_noalloc(phys_addr_t phys, unsigned long virt,
- 				  phys_addr_t size, pgprot_t prot)
- {
--	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-+	if (virt < PAGE_OFFSET) {
- 		pr_warn("BUG: not creating mapping for %pa at 0x%016lx - outside kernel range\n",
- 			&phys, virt);
- 		return;
-@@ -478,7 +478,7 @@ void __init create_pgd_mapping(struct mm
- static void update_mapping_prot(phys_addr_t phys, unsigned long virt,
- 				phys_addr_t size, pgprot_t prot)
- {
--	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-+	if (virt < PAGE_OFFSET) {
- 		pr_warn("BUG: not updating mapping for %pa at 0x%016lx - outside kernel range\n",
- 			&phys, virt);
- 		return;
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -624,7 +624,7 @@ rxrpc_new_client_call_for_sendmsg(struct
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.local		= rx->local;
+-	cp.key			= rx->key;
++	cp.key			= key;
+ 	cp.security_level	= rx->min_sec_level;
+ 	cp.exclusive		= rx->exclusive | p->exclusive;
+ 	cp.upgrade		= p->upgrade;
 
 
