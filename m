@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8658521B191;
-	Sat, 30 May 2026 17:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E4C33F8A4;
+	Sat, 30 May 2026 17:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163017; cv=none; b=i+6jp6P/9+M9rZqWRVtzk+MUVd6DnnB4dJNAO4z/rxPG4kKMLYq05H1MAKnukF/rLc6mCbxobWC0ZYYKArxddtOb7ZxGLbwDVhCP9+kh8hv+MZScWmaGEib9jvVEGO2wx3Ur4pp30qozT9CXV0nGR+B9fxvEZkEdFkI6/7QvQYo=
+	t=1780163020; cv=none; b=C3562uUnj2MqYe6xGO/dEtNFmQdqIhuwLPASKqhvvP9Ztmi3eRkxdtIHk1mJ0RNA4+DIQ346ZCceRvk5qywzTUDQMDgGBlbaYyV1ps7g1iU34IAeqRqi3ZrlU2u6bc/qUiLVD+qfdMiqRH+zPsSsBnyGlzD/mbURxJiiSwvsNys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163017; c=relaxed/simple;
-	bh=vqlsMw16Sy8neNTLWf6WjqUbOvguk/YplNOcFtwV4Jc=;
+	s=arc-20240116; t=1780163020; c=relaxed/simple;
+	bh=52rnjJBW4zrC4lSH0ZNbR3BsC/FMQ5F+WUhGmNl4VFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evGAMhpPghq5kwR0HVQhVIQL6d7nOBbnhIcYlH32TjY39meuW04CsKxDI7ogedQbXmdLXg4NFbWHggSiSpbbtgW72PaIozivGJvYtakh+EK9zKphltGpQ4SoWqB4cUuCXYFYZMc8QWTK+s7yGxNqB1JoMs+6lXwGVK/Z5mJYAmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRJg0k7h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q6/09ZmyG2dfFzmUSHb+NbG8oCwq5UOLrtjwWlfbPgxvWmNOEyi/IkWtv142u0HLZPa+5iQI6Snx+Yw2f1zHhpUm1CHv3fGaKKPcSHJ6YoIcaeqSiK24j2ahZzDWf17R0td8+TuP53rNDl5B0qGr4tnNa+oxGTGRsVHdqmEH3vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2IElQUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRJg0k7h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9461F00893;
-	Sat, 30 May 2026 17:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2IElQUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63751F00893;
+	Sat, 30 May 2026 17:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163016;
-	bh=BCh0DlUvPDMy7ERRW9R3KgP1LSCcIN5H3X+YiUzW/Wo=;
+	s=korg; t=1780163019;
+	bh=3XUnQKXkT3Z05RodphU4P3ZMT9KiM2YE8YtHyhpimDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRJg0k7h/2xf2Ujz13HY6WzyUagRS8OZNkld6GeuiEZLJjSN/i9DWLy9J4t5eysgv
-	 YCgl5IHgsgHAXt3kIkRu9wUXuSBnUaprgyKagV3cwf6ZiOCbnXOoVIREuLXgjW8a5t
-	 0G12a7sYZxQB4JWRREHnyOPno5xhkagg01n+zvgQ=
+	b=b2IElQUdSk2Y6ZBtCrU5CHnXPOICMErj2mR8zNDVFEF7FByPsWze7lvLpdrpH29aK
+	 yxG4Tygp5XFU+lK2sHMOM+71eO9gsvN+quB38HeifWUruAn5euRDyJ7O2erBuBbcIt
+	 JeRkQhcuChlSKnOkNFBmcEVk/qWy8hwqtfxKD41k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Andrade <pandrade@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 131/776] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
-Date: Sat, 30 May 2026 17:57:25 +0200
-Message-ID: <20260530160243.786168891@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 5.15 132/776] btrfs: send: check for inline extents in range_is_hole_in_parent()
+Date: Sat, 30 May 2026 17:57:26 +0200
+Message-ID: <20260530160243.812822630@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,126 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
+[ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
 
-This script
+Before accessing the disk_bytenr field of a file extent item we need
+to check if we are dealing with an inline extent.
+This is because for inline extents their data starts at the offset of
+the disk_bytenr field. So accessing the disk_bytenr
+means we are accessing inline data or in case the inline data is less
+than 8 bytes we can actually cause an invalid
+memory access if this inline extent item is the first item in the leaf
+or access metadata from other items.
 
-	#!/usr/bin/bash
-
-	echo 0 > /proc/sys/kernel/randomize_va_space
-
-	echo 'void main(void) {}' > TEST.c
-
-	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
-	gcc -m32 -fcf-protection=branch TEST.c -o test
-
-	bpftrace -e 'uprobe:./test:main {}' -c ./test
-
-"hangs", the probed ./test task enters an endless loop.
-
-The problem is that with randomize_va_space == 0
-get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
-just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
-by the stack vma.
-
-arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
-in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
-vm_unmapped_area() happily returns the high address > TASK_SIZE and then
-get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
-check.
-
-handle_swbp() doesn't report this failure (probably it should) and silently
-restarts the probed insn. Endless loop.
-
-I think that the right fix should change the x86 get_unmapped_area() paths
-to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
-CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
-because ->orig_ax = -1.
-
-But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
-the probed task is 32-bit to make in_ia32_syscall() true.
-
-Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
-Reported-by: Paulo Andrade <pandrade@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
+Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ Avoid leaking the path by using { ret = 0; goto out; } instead of
+returning directly. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/uprobes.c |   24 ++++++++++++++++++++++++
- include/linux/uprobes.h   |    1 +
- kernel/events/uprobes.c   |   10 +++++++---
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ fs/btrfs/send.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -1097,3 +1097,27 @@ bool arch_uretprobe_is_alive(struct retu
- 	else
- 		return regs->sp <= ret->stack;
- }
-+
-+#ifdef CONFIG_IA32_EMULATION
-+unsigned long arch_uprobe_get_xol_area(void)
-+{
-+	struct thread_info *ti = current_thread_info();
-+	unsigned long vaddr;
-+
-+	/*
-+	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
-+	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
-+	 * vm_unmapped_area_info.high_limit.
-+	 *
-+	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
-+	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
-+	 * (falsely) returns true because ->orig_ax == -1.
-+	 */
-+	if (test_thread_flag(TIF_ADDR32))
-+		ti->status |= TS_COMPAT;
-+	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
-+	ti->status &= ~TS_COMPAT;
-+
-+	return vaddr;
-+}
-+#endif
---- a/include/linux/uprobes.h
-+++ b/include/linux/uprobes.h
-@@ -138,6 +138,7 @@ extern bool arch_uretprobe_is_alive(stru
- extern bool arch_uprobe_ignore(struct arch_uprobe *aup, struct pt_regs *regs);
- extern void arch_uprobe_copy_ixol(struct page *page, unsigned long vaddr,
- 					 void *src, unsigned long len);
-+extern unsigned long arch_uprobe_get_xol_area(void);
- #else /* !CONFIG_UPROBES */
- struct uprobes_state {
- };
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -1437,6 +1437,12 @@ void uprobe_munmap(struct vm_area_struct
- 		set_bit(MMF_RECALC_UPROBES, &vma->vm_mm->flags);
- }
- 
-+unsigned long __weak arch_uprobe_get_xol_area(void)
-+{
-+	/* Try to map as high as possible, this is only a hint. */
-+	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
-+}
-+
- /* Slot allocation for XOL */
- static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
- {
-@@ -1452,9 +1458,7 @@ static int xol_add_vma(struct mm_struct
- 	}
- 
- 	if (!area->vaddr) {
--		/* Try to map as high as possible, this is only a hint. */
--		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
--						PAGE_SIZE, 0, 0);
-+		area->vaddr = arch_uprobe_get_xol_area();
- 		if (IS_ERR_VALUE(area->vaddr)) {
- 			ret = area->vaddr;
- 			goto fail;
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -5892,6 +5892,10 @@ static int range_is_hole_in_parent(struc
+ 		extent_end = btrfs_file_extent_end(path);
+ 		if (extent_end <= start)
+ 			goto next;
++		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE) {
++			ret = 0;
++			goto out;
++		}
+ 		if (btrfs_file_extent_disk_bytenr(leaf, fi) == 0) {
+ 			search_start = extent_end;
+ 			goto next;
 
 
