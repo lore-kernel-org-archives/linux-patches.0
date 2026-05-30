@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CF130E847;
-	Sat, 30 May 2026 17:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D495830E847;
+	Sat, 30 May 2026 17:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161702; cv=none; b=WdebnypB5QPQ7tazrgzoSx6vZD8kTxf2GdNXR8S4S+SCkan0LpEAtKIAcNhsUADfRyv5s8WtWq62bonQm90CFFIVAacoPtBpd2Smub2d8xp/+8NJCxp6p5NgL+LFsKdibVtneJGb59YInQd3zo4w06mNnSVmfL7Tgvb4bcG02po=
+	t=1780161705; cv=none; b=FoAqxl7VLNVg50rUKZzI8W9EhCS1JJHIJylVDI1yeTNZC/ovFzipkRC08rTdgVPRS3qZ3O2iz6nlnPVtDfAlR3B7J10kr5qDUIR9h2f/aZ+/akJN5Nv42V9Mb3FQ26jR2O4gUMmelbEOWpyFxEy+YiR6IVfLTOjPHhBTR4z/6HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161702; c=relaxed/simple;
-	bh=MlkNM0wwhQHVZsYyraD+dwiHZoauqyAip+Cfkg+Zh/4=;
+	s=arc-20240116; t=1780161705; c=relaxed/simple;
+	bh=tH/lHhkRbYTIbS0xd2P5ghglVlJdjLT8bSui6ZIWbVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=emapJWfr4gb4PIpKdZQeK6U/uDuN6sui75SuExltAi8FVoOdwRqtoZemCDgD58wsUFqqlokU5E68OeaQM0dqZrvZbFdxVqP1jwTQYlA2e8L6MRgspiOVc+m/6wlkWrcUaPjgAWnqBUZ/WPi/T7fNAc/pM1YxJDV+rLFfJVNvezM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgpGYGAN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTQ2E9MLgdvypml5v3dLsRoJgM2QwNtjvm/qQMVDYablyH1wGlANLC3SDTGfPIvSkjHQXVGuKkGC5b4ilLFsGBktvdiNtcO3zqMxoeoy8MVOCWgy5xDc33fd/jbf15XpTMJJtl4JrdGz6oBUBy792UpfaOe9uOba0cF3FupVj68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owAX/YcS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgpGYGAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF18D1F00893;
-	Sat, 30 May 2026 17:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owAX/YcS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D381F00893;
+	Sat, 30 May 2026 17:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161701;
-	bh=7BInkI+tNlcPG4W6MIyM7ULrA4ZWbnR6MA+jmdyJ0Yg=;
+	s=korg; t=1780161704;
+	bh=q8vEPTD6u8f0xqW7W4Bf7AgrlVGhVUqMwcslY88TgpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgpGYGANrqSLBzdh37QMQbG5duGOcXPB+SjXd7LpsYft36mA924ppHSEIGBoBvYRt
-	 ZDMEYk2Eim2Op0rq8I7crFPA536mm6qq89vZ1VoeXbq/7sa/TDqodFEF0rx5vjwskh
-	 4zGGn3SYi7Bdntkw9cQm33Af9QDMAya6TLG/glz4=
+	b=owAX/YcSlckpMueVRDyVbbMGO6Vonr0+YwIAIuYQBa/IOWMdOrR0TDB5a3FvJ9pAF
+	 c4bvqMSINq+RffqXAEnukXJcf858sqkshCIs6vRfmtYeeV8WXOKev2G0qS8Fl0DC4G
+	 D5dQgoI2+PgKKiWRPOad1M/1SRMsoZoeuvBf7Ljo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	T Pratham <t-pratham@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 672/969] drm/i915/wm: Verify the correct plane DDB entry
-Date: Sat, 30 May 2026 18:03:16 +0200
-Message-ID: <20260530160319.048682592@linuxfoundation.org>
+Subject: [PATCH 6.1 673/969] crypto: sa2ul - Fix AEAD fallback algorithm names
+Date: Sat, 30 May 2026 18:03:17 +0200
+Message-ID: <20260530160319.076458332@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,46 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: T Pratham <t-pratham@ti.com>
 
-[ Upstream commit a97c88a176b6b8d116f4d3f508f3bd02bc77b462 ]
+[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
 
-Actually verify the DDB entry for the plane we're looking
-at instead of always verifying the cursor DDB.
+For authenc AEAD algorithms, sa2ul is trying to register very specific
+-ce version as a fallback. This causes registration failure on SoCs
+which do not have ARMv8-CE enabled/available. Change the fallback
+algorithm from the specific driver name to generic algorithm name so
+that the kernel can allocate any available fallback.
 
-Fixes: 7d4561722c3b ("drm/i915: Tweak plane ddb allocation tracking")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260324134843.2364-5-ville.syrjala@linux.intel.com
-Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
-(cherry picked from commit f002f7c7439de18117a31ca84dc87a59719c3dd6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
+Signed-off-by: T Pratham <t-pratham@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_watermark.c | 4 ++--
+ drivers/crypto/sa2ul.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
-index 2a60aa3fedf82..965d8e762883f 100644
---- a/drivers/gpu/drm/i915/display/skl_watermark.c
-+++ b/drivers/gpu/drm/i915/display/skl_watermark.c
-@@ -3118,8 +3118,8 @@ void intel_wm_state_verify(struct intel_crtc *crtc,
- 		}
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index e7efebf8127f0..2677062d33b8b 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1774,13 +1774,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha1",
+-				"authenc(hmac(sha1-ce),cbc(aes-ce))");
++				"authenc(hmac(sha1),cbc(aes))");
+ }
  
- 		/* DDB */
--		hw_ddb_entry = &hw->ddb[PLANE_CURSOR];
--		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[PLANE_CURSOR];
-+		hw_ddb_entry = &hw->ddb[plane->id];
-+		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[plane->id];
+ static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha256",
+-				"authenc(hmac(sha256-ce),cbc(aes-ce))");
++				"authenc(hmac(sha256),cbc(aes))");
+ }
  
- 		if (!skl_ddb_entry_equal(hw_ddb_entry, sw_ddb_entry)) {
- 			drm_err(&i915->drm,
+ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
 -- 
 2.53.0
 
