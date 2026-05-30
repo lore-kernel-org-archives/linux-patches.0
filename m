@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921F32FDC5E;
-	Sat, 30 May 2026 18:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D3523392B;
+	Sat, 30 May 2026 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164054; cv=none; b=OydNY1HL4OunwLgUPYj+qFgCjBtbIyMAXB2vd/CjL9x4egB7ZhYGTHj4FXGFgUuqsoX4sN4kedX+VelDd30ubXi7MkMY34kaqVoMjz0nIGNdmLihIdbs6ZISg0ZnHEkRtKpMSJ5yFm17TGr06Wwl9LHIcFpPxhuA39oCA4tMhtQ=
+	t=1780164056; cv=none; b=Qg2Qcs5YPI3J1/xKsXMZgw6z8Mu8mX8Xj28fSFlGKic2MqybvcebfJiLce9eVxmdNR7GwsyKIgy8N7X9bUXHRErwD9Vc1EPzMUuchfkntP3xEfAI+aJv9whRr6WtTD3hFxEbBAE4se80b/W1ATkwkaTVV+p9ERnlKShYlBN5y9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164054; c=relaxed/simple;
-	bh=itoob14x5U4Ou5aa60OPAz2PVYnR2PO1PBsPomG4Apg=;
+	s=arc-20240116; t=1780164056; c=relaxed/simple;
+	bh=5WJySYb7bOKX5raVbouiXQRX4ideDiYTTAdhaZsABXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOZzbZr8r2l/SDDctcNSxcG9hDxjQHS1uxgiU04aNYtSD/iX8FpLhn7vr4Xb8UrO9Z10zXKYjzbYdcHy7BEFPPv9f3Yf+Lv8Xd8yURH3xw7aB38L7Ep5K+gHKrroeBF1Nt/0OBp1DJMR+vjXJMLqUxAtL6gXiCZqVfzwZpEmm8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGwgNPga; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZ4ff7+KRBRUBCcxj1xCxDFJBlAmekN4bZCV0L54DOu0xd9vCKtxl87t74agTEz9vf9Z1BNyxcvUFjpgIGwTiCzFCLu+6J0WwtOSzk55FBV34C+Mnkkv9+Sc/L/IVN/j6T5zV2M/7RDHWSkWvlQNlQMx3ObsQnrNuEP6VECQwl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1pBvkI4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGwgNPga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7651F00893;
-	Sat, 30 May 2026 18:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1pBvkI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D6F1F00893;
+	Sat, 30 May 2026 18:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164052;
-	bh=TbC3UXcJ6aHicxoOrlpurk/EDs8t7jW4+xc8U7NNomc=;
+	s=korg; t=1780164055;
+	bh=jcNnOKTk73zoCXZ67udO6eREKz/OuPK336Gp0ATr2pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGwgNPgaqE26z1HicaMr/6y7mXIURBh70HCCUgsnZfIA9liHD9gdJal7U6pYrtjgG
-	 A1aZBwDZ06cTjk5Y3u1DOOwVXSYm3INDWLGycyizIwMOGGEFQujOtjBBS0W2SHgaDJ
-	 mTUjsU+t49Csj6giKOdrfSqGJkCxaia8sMy/Dr2c=
+	b=I1pBvkI4rthKkj5htxuvLd33zQGdw2Ko0HeLFnU0WzPTjE76HVqEnoujSz6b781ab
+	 sMl28Obmpub4DqqES2Oomyz2guPNmjOVk6zrHy9W/c5O06mjmc2nX58j22sxrpSQqd
+	 P/+RbI1STe2V++asKA6Wde4hxdUCMhqcqN243y0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/776] spi: fsl-qspi: Use reinit_completion() for repeated operations
-Date: Sat, 30 May 2026 18:02:35 +0200
-Message-ID: <20260530160251.813885995@linuxfoundation.org>
+Subject: [PATCH 5.15 442/776] drm/sun4i: Fix resource leaks
+Date: Sat, 30 May 2026 18:02:36 +0200
+Message-ID: <20260530160251.836565835@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,53 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 981b080a79724738882b0af1c5bb7ade30d94f24 ]
+[ Upstream commit 127367ad2e0f4870de60c6d719ae82ecf68d674c ]
 
-The driver currently calls init_completion() during every spi_mem_op.
-Tchnically it may work, but it's not the recommended pattern.
+Three clocks are not being released in devm_regmap_init_mmio() error
+path.
 
-According to the kernel documentation: Calling init_completion() on
-the same completion object twice is most likely a bug as it
-re-initializes the queue to an empty queue and enqueued tasks could
-get "lost" - use reinit_completion() in that case, but be aware of
-other races.
+Add proper goto and set ret to the error code.
 
-So moves the initial initialization to probe function and uses
-reinit_completion() for subsequent operations.
-
-Fixes: 84d043185dbe ("spi: Add a driver for the Freescale/NXP QuadSPI controller")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20260304-spi-nxp-v2-3-cd7d7726a27e@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8270249fbeaf0 ("drm/sun4i: backend: Create regmap after access is possible")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260226163836.10335-1-ethantidmore06@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-qspi.c | 3 ++-
+ drivers/gpu/drm/sun4i/sun4i_backend.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index 46ae46a944c5c..2ff26027aafd2 100644
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -607,7 +607,7 @@ static int fsl_qspi_do_op(struct fsl_qspi *q, const struct spi_mem_op *op)
- 	void __iomem *base = q->iobase;
- 	int err = 0;
+diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
+index a812de372437b..5f0b58be6afb8 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_backend.c
++++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
+@@ -879,7 +879,8 @@ static int sun4i_backend_bind(struct device *dev, struct device *master,
+ 						     &sun4i_backend_regmap_config);
+ 	if (IS_ERR(backend->engine.regs)) {
+ 		dev_err(dev, "Couldn't create the backend regmap\n");
+-		return PTR_ERR(backend->engine.regs);
++		ret = PTR_ERR(backend->engine.regs);
++		goto err_disable_ram_clk;
+ 	}
  
--	init_completion(&q->c);
-+	reinit_completion(&q->c);
- 
- 	/*
- 	 * Always start the sequence at the same index since we update
-@@ -913,6 +913,7 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_disable_clk;
- 
-+	init_completion(&q->c);
- 	ret = devm_request_irq(dev, ret,
- 			fsl_qspi_irq_handler, 0, pdev->name, q);
- 	if (ret) {
+ 	list_add_tail(&backend->engine.list, &drv->engine_list);
 -- 
 2.53.0
 
