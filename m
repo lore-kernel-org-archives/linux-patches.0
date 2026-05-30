@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2631A9F90;
-	Sat, 30 May 2026 18:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D1715E5BB;
+	Sat, 30 May 2026 18:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166986; cv=none; b=RyK7S/JjocvWLNsTX5abMAZq54KSZAqBoeQdfakAANMitRWSIW12mtEPSRQJv+MeHqHiUOxQUXDrvPXSL4x/Ww/f8exp5MTCEZgkuf2D+u1CdAottHv8qxXj1D+WzXTUszY9wPG68alDptMsooGPTS+jg+QIAYWN912VVmc0Rss=
+	t=1780166990; cv=none; b=NzxV2ZXgHUM8mxhpRTYcXuPFhnS//08UPZ8yfJLBwMSlMPSvefI8ww4/t0MdS5MlBMOCz/PwgPG4f29Bbjn1RDH7eG8OesJdT3owsRC+4w6w8PbLpO/XocXGyvzbWzISPmOuIh24I/JcHXP9MJ4gbIYZjf5iuOvsV9XZ5MFPQOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166986; c=relaxed/simple;
-	bh=UEFBKSwECs9gHZVDQz7+ezdQWUP2tvj+xsJrWLRKSoA=;
+	s=arc-20240116; t=1780166990; c=relaxed/simple;
+	bh=NPTwiQubVp5dtDEelyiVy2+pfrCt2G+qtFe3u8iAIV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgQTFAdbmmyuy4XBqx3txSeQHy9OfT7qk/c4CeA7oU4cPwOFiCb9JgCL6EGpcjTKkpYgo0YBdZBqK6M8vYxP8A7FcwImY4L7vfUhvqDEwArzzqgkMk0xbmxp5MOhferPAPMxZn3Giw2jU/7aylycNfFOgzsXAkGV9TYpZq/qGl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIMWfGTZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C5xAvKSGJInOpLTjOXlo+7eo45sQxypoIwl7cLZi+/YLsjmOqFb1GGDZkhZO2mtploDnGxkiXjDMrORyIZ1x2NCFvom7GpeCXeZM7J2t15NGe/sPOQvagdncW88iN6dHBx+w2c0qHcUcOgnNOvkXmhriiH2898CV2O4W1ziruyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ordAVN8w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIMWfGTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172831F00893;
-	Sat, 30 May 2026 18:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ordAVN8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653A91F00893;
+	Sat, 30 May 2026 18:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166985;
-	bh=N5YIrPBPBBHNzEKHfVd9pkjKeekcUlUAgeamKcIfNHY=;
+	s=korg; t=1780166989;
+	bh=d6w1KNO4AEQcQ4jJUx4YT5Cv3dmt2XWtuAlYgJmoukE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AIMWfGTZMQH8bWMQlbV0l/23ydrW6R6mXqHl2u9fhbdb7P2fj2SXtvG3xjUoXv5yg
-	 IkZ02RLQhKOsh3Vi7HodebUY4M/SAQY8FzGJX6ouVEvEB+oyepa3HO4z75Zglq/Pcf
-	 2xn94HKK8uelClACcGG82ZzKFuZkYDaNcTlc/7bY=
+	b=ordAVN8wATN/NyrOKmCJYj4ci/GkghfouiuF+rR7JWJ1WSBioa0IB6YEZognY0Uit
+	 TU05fmuQ7PXLPjpHgG+YfGh41ALOWnVPscsxIUv9kdR7UTzqA3WP8Wl7c/W6zYOsDM
+	 NhpBeiSi0UN9Kki5HRz7zN1EDk9jP8RdSs1i1l1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 530/589] ALSA: asihpi: Fix potential OOB array access at reading cache
-Date: Sat, 30 May 2026 18:06:51 +0200
-Message-ID: <20260530160238.640325469@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 531/589] Bluetooth: bnep: Fix UAF read of dev->name
+Date: Sat, 30 May 2026 18:06:52 +0200
+Message-ID: <20260530160238.662247811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -49,37 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jann Horn <jannh@google.com>
 
-commit 7b7d6572145c1dab2dd9bfb550b188e5f0ff3c3f upstream.
+commit 59e932ded949fa6f0340bf7c6d7818f962fa4fd2 upstream.
 
-find_control() to retrieve a cached info accesses the array with the
-given index blindly, which may lead to an OOB array access.
-Add a sanity check for avoiding it.
+bnep_add_connection() needs to keep holding the bnep_session_sem while
+reading dev->name (just like bnep_get_connlist() does); otherwise the
+bnep_session() thread can concurrently free the net_device, which can for
+example be triggered by a concurrent bnep_del_connection().
 
-Link: https://sashiko.dev/#/patchset/20260511230121.28606-1-rosenp%40gmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260515085606.242284-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+(This UAF is fairly uninteresting from a security perspective;
+calling bnep_add_connection() requires passing a capable(CAP_NET_ADMIN)
+check. It also requires completely tearing down a netdev during a fairly
+tight race window.)
+
+Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/asihpi/hpicmn.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bluetooth/bnep/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/asihpi/hpicmn.c
-+++ b/sound/pci/asihpi/hpicmn.c
-@@ -276,6 +276,12 @@ static short find_control(u16 control_in
- 		return 0;
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -638,8 +638,8 @@ int bnep_add_connection(struct bnep_conn
+ 		goto failed;
  	}
  
-+	if (control_index >= p_cache->control_count) {
-+		HPI_DEBUG_LOG(VERBOSE, "control_index out of bounce %d\n",
-+			control_index);
-+		return 0;
-+	}
-+
- 	*pI = p_cache->p_info[control_index];
- 	if (!*pI) {
- 		HPI_DEBUG_LOG(VERBOSE, "Uncached Control %d\n",
+-	up_write(&bnep_session_sem);
+ 	strcpy(req->device, dev->name);
++	up_write(&bnep_session_sem);
+ 	return 0;
+ 
+ failed:
 
 
