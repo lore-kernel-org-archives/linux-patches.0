@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F546219303;
-	Sat, 30 May 2026 18:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD571217704;
+	Sat, 30 May 2026 18:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165338; cv=none; b=TQ6BDX7rgldDxQ5pglWmX9pKJnxSnGXL+XAd2oyHbdSF1MYDjQT/iEcvXYVy2GETY/ljhn+wfHqmxjpar/vLAFhCxO/6taHIl0zVJLNNweRFkVt387eckWQoGh/FiCU0Svw+gfiCNyKjtrvaLoNk8ZDtpYxtl+O12XWStshZldY=
+	t=1780165341; cv=none; b=tMn1cnKvIaUnJ0BtrNVdt24jMhM3hlEY7Q2u2PoH9Zuq/CiRb+eKDOktoqXvQHFCuY9GK+bWKAGI1sWLrC/nVzxw3U13t85E9Fl2Nd8G8RqxxUESWY68EpVsyd3LV0/B/FK16IiS2aG1/yRTpkH7PJUA2GeQMnUXNnF6blB0ucs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165338; c=relaxed/simple;
-	bh=56+UWgFkz6O5Ru7Ag/plZec5JtEitiYTSjvST7om9Q0=;
+	s=arc-20240116; t=1780165341; c=relaxed/simple;
+	bh=VsMlua7Zhg8Khdp8unEXCobO29SUabs2cNiVkMYqROo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPt9Ct3+9SpgHunFGfmdi8ekB8E3fbyghWqoFXmnbFNspX/RBhYp1EQM8uJ0RKzlvNBcYk+c/SCKk3M7sBwpHAbwoYVz3H8GN1rPW+SvsKk6CIMzENM/tdno7JLe+5zo4hS9Ah2ZRoAVpO8dPjn2F0ukqmDDa7/BNLrfvhUeO2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1UeO6fh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a8DRinPhliLjX2/SD6Z3d/Zt8yEyFtWAeSVN6U++9dpxyP5kiSoHuvRoGrYCTlkNpOlebPd1fK0BERO7JQVcA2GFU6lYAsW4YWSEbcLqtXvkuXpMSfuzDSCPyXYsK+W5H68wBvtg6FT/rxBE0jUTxIFR1OSGTsdfoQY1xkjXd+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tqsYzED; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1UeO6fh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7382E1F00893;
-	Sat, 30 May 2026 18:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tqsYzED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6A51F00893;
+	Sat, 30 May 2026 18:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165337;
-	bh=vWdNMl4gPPZdX7m+DiaXkLBxooIh+UJQSd6p+KB0pOQ=;
+	s=korg; t=1780165340;
+	bh=OMZbssX6DK42YdhZnv1Apj5l8p+nsiL/kxtwCPgOIeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1UeO6fhWwqBZLTV5jUx93GZ+HDR1oz/Y8cR1SmCqSm7gpNawesAk375zthP5H5TK
-	 rN6JIpRNyQGZgqtOSA5vdJMCX2KwNdQSZVFteuybPdM7SLaQvGJh11CGSgdGFAaljI
-	 vK2+kQcbiCs65Qw5EEXMUKc5OXGEYlei8sMcpw2k=
+	b=2tqsYzEDohNuiyepgKUjqLW+/tQZ0cryTlh5AkqAh1vRTtUrYuMvioXkLd9zyM5N3
+	 PeWjVjTHgiKFe394vDgYAVqvLmY0lVNfJE52wQVbrVHDKPqr0LZA+GiCEzQUS1JDfq
+	 LVKvnCab4fnVDKFSgcrIxnFv9E7L55N4YRB7bmws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/589] netfilter: ip6t_eui64: reject invalid MAC header for all packets
-Date: Sat, 30 May 2026 17:58:32 +0200
-Message-ID: <20260530160225.401254377@linuxfoundation.org>
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 049/589] net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()
+Date: Sat, 30 May 2026 17:58:50 +0200
+Message-ID: <20260530160225.880891083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,51 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
+commit 600dc40554dc5ad1e6f3af51f700228033f43ea7 upstream.
 
-`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
-and compares it with the low 64 bits of the IPv6 source address.
+A malicious USB device claiming to be a CDC Phonet modem can overflow
+the skb_shared_info->frags[] array by sending an unbounded sequence of
+full-page bulk transfers.
 
-The existing guard only rejects an invalid MAC header when
-`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
-can still reach `eth_hdr(skb)` even when the MAC header is not valid.
+Drop the skb and increment the length error when the frag limit is
+reached.  This matches the same fix that commit f0813bcd2d9d ("net:
+wwan: t7xx: fix potential skb->frags overflow in RX path") did for the
+t7xx driver.
 
-Fix this by removing the `par->fragoff != 0` condition so that packets
-with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
-
-Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026041134-dreamboat-buddhism-d1ec@gregkh
+Fixes: 87cf65601e17 ("USB host CDC Phonet network interface driver")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/ip6t_eui64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/usb/cdc-phonet.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
-index d704f7ed300c2..da69a27e8332c 100644
---- a/net/ipv6/netfilter/ip6t_eui64.c
-+++ b/net/ipv6/netfilter/ip6t_eui64.c
-@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	unsigned char eui64[8];
- 
- 	if (!(skb_mac_header(skb) >= skb->head &&
--	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
--	    par->fragoff != 0) {
-+	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
- 		par->hotdrop = true;
- 		return false;
- 	}
--- 
-2.53.0
-
+--- a/drivers/net/usb/cdc-phonet.c
++++ b/drivers/net/usb/cdc-phonet.c
+@@ -157,11 +157,16 @@ static void rx_complete(struct urb *req)
+ 						PAGE_SIZE);
+ 				page = NULL;
+ 			}
+-		} else {
++		} else if (skb_shinfo(skb)->nr_frags < MAX_SKB_FRAGS) {
+ 			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+ 					page, 0, req->actual_length,
+ 					PAGE_SIZE);
+ 			page = NULL;
++		} else {
++			dev_kfree_skb_any(skb);
++			pnd->rx_skb = NULL;
++			skb = NULL;
++			dev->stats.rx_length_errors++;
+ 		}
+ 		if (req->actual_length < PAGE_SIZE)
+ 			pnd->rx_skb = NULL; /* Last fragment */
 
 
