@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FDB2EF652;
-	Sat, 30 May 2026 18:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3281F41A8F;
+	Sat, 30 May 2026 18:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166121; cv=none; b=kGNlhOY7oyb/3PA/01aWmV7Cr2YmGxwPzR1dzLbAZtTNCfC4943/C5xeNsqODockK9YlPmTWv5O5qeJwx0TSyHfxzCKRjo0uFwr0u1gYE4Te4AW7obhHC8UEXy2O0P3ABAvY+WN3W++tNoF1FviX0DGDvgwvtncJ2phTQXlJs24=
+	t=1780166123; cv=none; b=ppvhG0VlhGEJq1mFg4cmsrXmZfV/WA50r4BWyBk0BOhACPkxOf7fVaVoScW9HGnvBbslyD97oYXDYaKYBuUXCyMM4zEhsU5LFb5zfFl/f0oGh/yTYkCt/8Rgx542+27ehReWwOW+rM0Zyc9AFXKnWB6CEBYTI/tBpk4qVXdUf0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166121; c=relaxed/simple;
-	bh=Kgod9urKiV8JdnvTKm0lMOr/km27qtuCVmuC0RvOG5U=;
+	s=arc-20240116; t=1780166123; c=relaxed/simple;
+	bh=he6XtE8Mj9HvPVSpDLU8P+q5Gs7xXSBRQ7kNkGp9X64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkyGv8DJXHdAP+DEcT9CC2wRExF3H6OpQZ5lvfGRKbf7kAoKc2jGTXPcUXIIEc6O40Z4lFiKvKyUSNOOO/qwMVS8Kvpl5AEMEWcO8U2sMC2x5ge/EThkR22aMtgyqbAstDrEjea2WE++V2r84Q+4hr+bcv8YymEPYKjJ+ylHMb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOzVXMG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qCcDYBv0KkkTpIhsynIhzzgF2ysaPTR7wxPytQ253zboU2pDMUV3TjkBnNihT9D3+lUHoMjWf6RO3jjZu5CUo9Yawe+0aZA9oCeSejk8K1j2V5+kK3/x1L+PKY8JyiAyh+KpcM68MmBkfWJ5aroWw0lRfydmqk8gh5gzDr0sHUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK49kpSd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOzVXMG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4A71F00893;
-	Sat, 30 May 2026 18:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK49kpSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3AF1F00893;
+	Sat, 30 May 2026 18:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166115;
-	bh=7xoiUtlQgKW4fWryIi3OHbDEaxAqmaWKDTeqDjzDB78=;
+	s=korg; t=1780166122;
+	bh=mzJtdakt6+Zmu2M9zzcz9T76m7/9jK52oAHcdAMVHUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOzVXMG2g8rqQ5mrSa5yvRvu0SMZNhfMMvmVyj6Z+M+vQCX2I/jhLTFreCcis0wMl
-	 XWHRJQ5nFlr8AesUdbxg8l/WnKDbjG8S+OfxjybEjpTJ/c1rLwUrZcSTAoOP+xbu1J
-	 M69us1aBgj3sj6wdhGiQBkyl2X+4NwEm/p15qvhk=
+	b=VK49kpSdbY8q6uImOV3rWLB5iRV7CPQTk4hBOkMOjrqWROdfZ0ixwuYUgtKvq+xMO
+	 JJqNTMcfjhC7ChspPV+aqs+Ot2od+uzWYLlrFss+JQGyhe1jYLB/E1h75/yR9y4NAU
+	 qjIPgR7JKuw2ZLh9R7BA7P60bLHs77hUYa+EnXr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
-	Johan Hovold <johan@kernel.org>,
+	Joseph Salisbury <joseph.salisbury@oracle.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 244/589] spi: topcliff-pch: fix use-after-free on unbind
-Date: Sat, 30 May 2026 18:02:05 +0200
-Message-ID: <20260530160231.411962903@linuxfoundation.org>
+Subject: [PATCH 5.10 246/589] ASoC: fsl_easrc: fix comment typo
+Date: Sat, 30 May 2026 18:02:07 +0200
+Message-ID: <20260530160231.462889841@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Joseph Salisbury <joseph.salisbury@oracle.com>
 
-commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
+commit 804dce6c73fdfa44184ee4e8b09abad7f5da408f upstream.
 
-Give the driver a chance to flush its queue before releasing the DMA
-buffers on driver unbind
+The file contains a spelling error in a source comment (funciton).
 
-Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
-Cc: stable@vger.kernel.org	# 3.1
-Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
+Typos in comments reduce readability and make text searches less reliable
+for developers and maintainers.
+
+Replace 'funciton' with 'function' in the affected comment. This is a
+comment-only cleanup and does not change behavior.
+
+Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+Link: https://patch.msgid.link/20260316180545.144032-1-joseph.salisbury@oracle.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-topcliff-pch.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_easrc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-topcliff-pch.c
-+++ b/drivers/spi/spi-topcliff-pch.c
-@@ -1426,9 +1426,6 @@ static int pch_spi_pd_remove(struct plat
- 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
- 		__func__, plat_dev->id, board_dat->pdev->irq);
- 
--	if (use_dma)
--		pch_free_dma_buf(board_dat, data);
--
- 	/* check for any pending messages; no action is taken if the queue
- 	 * is still full; but at least we tried.  Unload anyway */
- 	count = 500;
-@@ -1452,6 +1449,9 @@ static int pch_spi_pd_remove(struct plat
- 		free_irq(board_dat->pdev->irq, data);
- 	}
- 
-+	if (use_dma)
-+		pch_free_dma_buf(board_dat, data);
-+
- 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
- 	spi_unregister_master(data->master);
- 
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -1286,7 +1286,7 @@ static int fsl_easrc_request_context(int
+ /*
+  * Release the context
+  *
+- * This funciton is mainly doing the revert thing in request context
++ * This function is mainly doing the revert thing in request context
+  */
+ static void fsl_easrc_release_context(struct fsl_asrc_pair *ctx)
+ {
 
 
