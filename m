@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38FF30E853;
-	Sat, 30 May 2026 16:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4163403F3;
+	Sat, 30 May 2026 16:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159593; cv=none; b=WWj7aAcjR0BExkF/vsUOujdMUhi4FDW6jganOEjyFaYpUPlakALo3sN/dNnTkyouC7v5bZdXTnlapFrCC0XK1ystr4qOAdoWmK+Bvt5OdQkv4+RS1sqLdDSvkGYg6l3sytjqzzIYQ8iau9JcZlXz+pgabaSoRDqiHsCzc381b9s=
+	t=1780159611; cv=none; b=Gu3L5d3wBAWQLS0a/UkcqdpciNqPOITGG4Tqm4ym8lTQJyY2D9kaQVtm8s16sdfpzqP+DSIIW2sjGRVDjeuSTxcu+I9tyX6XmqOE46MKYsoUCS9sONM67IXEbQ9EVxzA7h8xIxP4PTTaIDJ+fa1RAXRUdeSvHZhkVhPgj+dIzhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159593; c=relaxed/simple;
-	bh=+pVl0Q40Oz2b99Y3IVU4IpNXIhveJnA74txKUyzpJzU=;
+	s=arc-20240116; t=1780159611; c=relaxed/simple;
+	bh=vBcs0cpkL2FlAD6mkeQUzyvTk/LwfCdVgq2NCXEY/iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IyLuyk/BUgSD3GzvfFRdJleVxIm8uPz8WbnH8i8xRMmX0Gst+UTJ+4hAoeakKD8YgdFkk/jh1UW0f32MiQQIsUQKMjPawizftIePbOqCpB8w6wq6Vb9HGZne2h/e+8JwnJfZEodg25keH8kNDJni4nEzN3yd5txUvkvIsh3thk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7vnkUru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hpEZCyUvSr8BBpzHu7GX0TjUrUCM4DjT6b8/XczhC9mgY+VYIwMz0it/sfilKYTShSIdjSmIHBR+YLv8Rh+TTbWlWkNfyINphVsJjAgSJYAwwMpedXY/FAJcIegpDOPmxdAeNxPootmHyVskR/ZF0lAsSW4crjKg+DabwOhzXeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCY9KH9v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7vnkUru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAC21F00893;
-	Sat, 30 May 2026 16:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCY9KH9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E571F00893;
+	Sat, 30 May 2026 16:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159591;
-	bh=nPICpTJ+r+Jy2iQhuc1ftVJnzlOh1IeZIPJzwc3gupk=;
+	s=korg; t=1780159609;
+	bh=hshnHYQ44Hw/oe/ij6HytY9UPRaRAw2CwYor9utt4J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7vnkUrurbSZkz43pDJ8z16zxONkuV1Gdv9kqK5BED0kGKUduTmVJMSDu/OT0f/Le
-	 2I8OAhXv1yTH2gRvU2x4mj8eNsufjSF3QSCJXhsKJvdLrT6CEZiptA9+r2sR6bPofx
-	 htVLOt/sv3rv10WfZL2A9s2Vzx7ACU++eUXtJ96g=
+	b=oCY9KH9vwtofSO6JuuFJOaqxCZoEmo3VZCXwi6JECa2SQlRpQycycAjmxonweXu2R
+	 oNa5aqI6KE0VexXZEDOmgTnHJbuH3QGkIb8KJdNPh7rnFHN2QjvLOg/PAs4QAbDQX2
+	 PAtOlNHH1Vn5TsdDVvylWPudwJpxGYreDqSYGD2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gurpreet Shergill <giki.shergill@proton.me>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Li hongliang <1468888505@139.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/969] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
-Date: Sat, 30 May 2026 17:53:39 +0200
-Message-ID: <20260530160302.954447360@linuxfoundation.org>
+Subject: [PATCH 6.1 127/969] rxrpc: reject undecryptable rxkad response tickets
+Date: Sat, 30 May 2026 17:54:11 +0200
+Message-ID: <20260530160304.076791932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,112 +56,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
+[ Upstream commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 ]
 
-If cloning the second stateful expression in the element via GFP_ATOMIC
-fails, then the first stateful expression remains in place without being
-released.
+rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
+parses the buffer as plaintext without checking whether
+crypto_skcipher_decrypt() succeeded.
 
-   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
-     comm "softirq", pid 0, jiffies 4294931867
-     hex dump (first 16 bytes on cpu 3):
-       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-     backtrace (crc 0):
-       pcpu_alloc_noprof+0x453/0xd80
-       nft_counter_clone+0x9c/0x190 [nf_tables]
-       nft_expr_clone+0x8f/0x1b0 [nf_tables]
-       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
-       nft_rhash_update+0x236/0x11c0 [nf_tables]
-       nft_dynset_eval+0x11f/0x670 [nf_tables]
-       nft_do_chain+0x253/0x1700 [nf_tables]
-       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
-       nf_hook_slow+0xaa/0x1e0
-       ip_local_deliver+0x209/0x330
+A malformed RESPONSE can therefore use a non-block-aligned ticket
+length, make the decrypt operation fail, and still drive the ticket
+parser with attacker-controlled bytes.
 
-Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
-Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Check the decrypt result and abort the connection with RXKADBADTICKET
+when ticket decryption fails.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted `rxrpc_abort_conn()` call to existing `goto other_error` error-handling pattern ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     |  4 ++--
- net/netfilter/nft_dynset.c        | 10 +++++++++-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ net/rxrpc/rxkad.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 38c74f9fcce22..dafa0a32e6e1d 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -838,6 +838,8 @@ void *nft_set_elem_init(const struct nft_set *set,
- 			u64 timeout, u64 expiration, gfp_t gfp);
- int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
- 			    struct nft_expr *expr_array[]);
-+void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
-+			       struct nft_set_elem_expr *elem_expr);
- void nft_set_elem_destroy(const struct nft_set *set, void *elem,
- 			  bool destroy_expr);
- void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index fb3d529ebf5ab..0c42242826387 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6025,8 +6025,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
- 	}
- }
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -1013,8 +1013,13 @@ static int rxkad_decrypt_ticket(struct r
+ 	sg_init_one(&sg[0], ticket, ticket_len);
+ 	skcipher_request_set_callback(req, 0, NULL, NULL);
+ 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
+-	crypto_skcipher_decrypt(req);
++	ret = crypto_skcipher_decrypt(req);
+ 	skcipher_request_free(req);
++	if (ret < 0) {
++		abort_code = RXKADBADTICKET;
++		ret = -EPROTO;
++		goto other_error;
++	}
  
--static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
--				      struct nft_set_elem_expr *elem_expr)
-+void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
-+			       struct nft_set_elem_expr *elem_expr)
- {
- 	struct nft_expr *expr;
- 	u32 size;
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index 953aba871f45c..5f58ac874005a 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
- 				 const struct nft_set_ext *ext)
- {
- 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
-+	struct nft_ctx ctx = {
-+		.net	= read_pnet(&priv->set->net),
-+		.family	= priv->set->table->family,
-+	};
- 	struct nft_expr *expr;
- 	int i;
- 
- 	for (i = 0; i < priv->num_exprs; i++) {
- 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
- 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
--			return -1;
-+			goto err_out;
- 
- 		elem_expr->size += priv->expr_array[i]->ops->size;
- 	}
- 
- 	return 0;
-+err_out:
-+	nft_set_elem_expr_destroy(&ctx, elem_expr);
-+
-+	return -1;
- }
- 
- static void *nft_dynset_new(struct nft_set *set, const struct nft_expr *expr,
--- 
-2.53.0
-
+ 	p = ticket;
+ 	end = p + ticket_len;
 
 
