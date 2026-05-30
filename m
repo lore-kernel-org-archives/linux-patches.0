@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6EA233952;
-	Sat, 30 May 2026 18:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44077137750;
+	Sat, 30 May 2026 18:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167059; cv=none; b=ikte4Se2UaPdpALJjQJi0D6CWPA2qZaIHjbLfABOsfEU57/bjRq8aihgXAa9xY/wopTpDYxRsaQ/78NKX2iVlpx8nsV+Hatjw2+S2HZ7IgeAaB+ldJWI1Lxndz3wjOI/4BmpbMnWidio1+Whino3H6jM4U4CuF1RWlZ/9bNHda0=
+	t=1780167062; cv=none; b=PnPf9E9I/c03IIbcGSpT2OevVKmnmf2ayiSiP19rExRofbu3UcX6TtcTrvLYuC7N8UClycgvgO4ifdmYojdsSYmmx+4aezbVE9nMC/hSSweuwLcs0PV/NCRmiVZ+87/je1iJCtf5QOVfj6sZBMgnTAFZKFY33NoWkQVCUzBzYH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167059; c=relaxed/simple;
-	bh=x6OU6Q+XuteVbYkpei0dpuU8Da11Hw2qRhnx4TvYdp8=;
+	s=arc-20240116; t=1780167062; c=relaxed/simple;
+	bh=WPdrJK96+PMuqiUFy+5E3sE/37AVgtylyRsY7kqVIKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTUDfSgUvQr/vcEnb/nCQC14BHgPKT+E4uxXqS+v6hBQgUqDLyNXjrxVweJnY8NND+YjH5AbXMLejoRV5eGtHgGa8Yn4BaYsEA9RL0gPDjYIUFS9RmMSbBKcvC1KpYdBMpR4uyl/Rf6ue2vNWrEBiLxiJyVYP4jk8rjV5tEd8FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/4oUJxV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o7tc2+h1NVdGVAj69LDSVlsLBs5R7TIE7GB6JF1ZNPqy1uJYp410lqG0Yo3J+Y3KqbhkRlEXwKSJGAnv2O5c/y32zqOUjN/wtqkPe8cZ73nbfU8IBrPENUHfOuY7Vt9/zr8LBd0Neymm/VzPg0EtLQGmYBwBLDVBvkAjeVoqMrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqWw+fM9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/4oUJxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8ED1F00893;
-	Sat, 30 May 2026 18:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqWw+fM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D79D1F00893;
+	Sat, 30 May 2026 18:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167057;
-	bh=eur3NQ/Gf41OgTTCFUJOwlkmQevgv/FU29dYbrsttQ4=;
+	s=korg; t=1780167061;
+	bh=MJMU5qlDeFj6TlMF88fIfcEClN39AhZqyj+Kvt0P0yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r/4oUJxViuJPzvIgr2GvX3EWi4ENd2ziQFHYouGf+HYpV1wfq5h/gZffWlCT13OrN
-	 yfG/4G72hY54yqn+PC5a9PR16HCORLGEf1iHbRjE1fciMUcg4WS1L/k2q77+KeEXXc
-	 dLdjSsgCF+IgFCoNa5KrhQ6IAqE45Kh8LtjFAbaA=
+	b=MqWw+fM95r982Cy3lW5+ULWmgy+Q2c/Zd/g2NU2WI+o6V2pjzXaRcrmkn+h6FE13x
+	 CAtYAZD8QTLX4+VJEt12fQhCD7ODpin53hkP/b9kzCPDgt5OwOF9NaHoGEVzdLJFWi
+	 kaMyn6niPdA2xOmYgoUcrLUrWwOFt33dtAOKYVBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,10 +32,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 552/589] batman-adv: dat: handle forward allocation error
-Date: Sat, 30 May 2026 18:07:13 +0200
-Message-ID: <20260530160239.170877241@linuxfoundation.org>
+Subject: [PATCH 5.10 553/589] batman-adv: fix fragment reassembly length accounting
+Date: Sat, 30 May 2026 18:07:14 +0200
+Message-ID: <20260530160239.194112738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,42 +57,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Ruide Cao <caoruide123@gmail.com>
 
-commit 2d8826a2d3657cea66fb0370f9e521575a673871 upstream.
+commit 9cd3f16c320bfdadd4509358122368deb56a5741 upstream.
 
-batadv_dat_forward_data() calls pskb_copy_for_clone() to duplicate an skb
-for each DHT candidate, but does not check the return value before passing
-it to batadv_send_skb_prepare_unicast_4addr(). That function dereferences
-the skb unconditionally, so a failed allocation triggers a NULL pointer
-dereference.
+batman-adv keeps a running payload length for queued fragments and uses it
+to validate a fragment chain before reassembly.
 
-Skip forwarding to the current DHT candidate on allocation failure.
+That accounting currently allows the accumulated fragment length to be
+truncated during updates. As a result, malformed fragment chains can
+bypass the intended validation and drive reassembly with inconsistent
+length state, leading to a local denial of service.
 
+Fix the accounting by storing the accumulated length in a length-typed
+field and rejecting update overflows before the existing validation logic
+runs.
+
+The fix was verified against the original reproducer and against valid
+fragment reassembly paths.
+
+Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
 Cc: stable@kernel.org
-Fixes: 785ea1144182 ("batman-adv: Distributed ARP Table - create DHT helper functions")
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/fragmentation.c |   23 +++++++++++++++++------
+ net/batman-adv/types.h         |    2 +-
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -701,6 +701,9 @@ static bool batadv_dat_forward_data(stru
- 			goto free_orig;
+--- a/net/batman-adv/fragmentation.c
++++ b/net/batman-adv/fragmentation.c
+@@ -17,6 +17,7 @@
+ #include <linux/lockdep.h>
+ #include <linux/minmax.h>
+ #include <linux/netdevice.h>
++#include <linux/overflow.h>
+ #include <linux/skbuff.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+@@ -82,9 +83,9 @@ void batadv_frag_purge_orig(struct batad
+  *
+  * Return: the maximum size of payload that can be fragmented.
+  */
+-static int batadv_frag_size_limit(void)
++static size_t batadv_frag_size_limit(void)
+ {
+-	int limit = BATADV_FRAG_MAX_FRAG_SIZE;
++	size_t limit = BATADV_FRAG_MAX_FRAG_SIZE;
  
- 		tmp_skb = pskb_copy_for_clone(skb, GFP_ATOMIC);
-+		if (!tmp_skb)
-+			goto free_neigh;
+ 	limit -= sizeof(struct batadv_frag_packet);
+ 	limit *= BATADV_FRAG_MAX_FRAGMENTS;
+@@ -145,7 +146,9 @@ static bool batadv_frag_insert_packet(st
+ 	struct batadv_frag_packet *frag_packet;
+ 	u8 bucket;
+ 	u16 seqno, hdr_size = sizeof(struct batadv_frag_packet);
++	bool overflow = false;
+ 	bool ret = false;
++	size_t data_len;
+ 
+ 	/* Linearize packet to avoid linearizing 16 packets in a row when doing
+ 	 * the later merge. Non-linear merge should be added to remove this
+@@ -155,6 +158,7 @@ static bool batadv_frag_insert_packet(st
+ 		goto err;
+ 
+ 	frag_packet = (struct batadv_frag_packet *)skb->data;
++	data_len = skb->len - hdr_size;
+ 	seqno = ntohs(frag_packet->seqno);
+ 	bucket = seqno % BATADV_FRAG_BUFFER_COUNT;
+ 
+@@ -173,7 +177,7 @@ static bool batadv_frag_insert_packet(st
+ 	spin_lock_bh(&chain->lock);
+ 	if (batadv_frag_init_chain(chain, seqno)) {
+ 		hlist_add_head(&frag_entry_new->list, &chain->fragment_list);
+-		chain->size = skb->len - hdr_size;
++		chain->size = data_len;
+ 		chain->timestamp = jiffies;
+ 		chain->total_size = ntohs(frag_packet->total_size);
+ 		ret = true;
+@@ -190,7 +194,11 @@ static bool batadv_frag_insert_packet(st
+ 		if (frag_entry_curr->no < frag_entry_new->no) {
+ 			hlist_add_before(&frag_entry_new->list,
+ 					 &frag_entry_curr->list);
+-			chain->size += skb->len - hdr_size;
 +
- 		if (!batadv_send_skb_prepare_unicast_4addr(bat_priv, tmp_skb,
- 							   cand[i].orig_node,
- 							   packet_subtype)) {
++			if (check_add_overflow(chain->size, data_len,
++					       &chain->size))
++				overflow = true;
++
+ 			chain->timestamp = jiffies;
+ 			ret = true;
+ 			goto out;
+@@ -203,13 +211,16 @@ static bool batadv_frag_insert_packet(st
+ 	/* Reached the end of the list, so insert after 'frag_entry_last'. */
+ 	if (likely(frag_entry_last)) {
+ 		hlist_add_behind(&frag_entry_new->list, &frag_entry_last->list);
+-		chain->size += skb->len - hdr_size;
++
++		if (check_add_overflow(chain->size, data_len, &chain->size))
++			overflow = true;
++
+ 		chain->timestamp = jiffies;
+ 		ret = true;
+ 	}
+ 
+ out:
+-	if (chain->size > batadv_frag_size_limit() ||
++	if (overflow || chain->size > batadv_frag_size_limit() ||
+ 	    chain->total_size != ntohs(frag_packet->total_size) ||
+ 	    chain->total_size > batadv_frag_size_limit()) {
+ 		/* Clear chain if total size of either the list or the packet
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -304,7 +304,7 @@ struct batadv_frag_table_entry {
+ 	u16 seqno;
+ 
+ 	/** @size: accumulated size of packets in list */
+-	u16 size;
++	size_t size;
+ 
+ 	/** @total_size: expected size of the assembled packet */
+ 	u16 total_size;
 
 
