@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8CD263F44;
-	Sat, 30 May 2026 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A6D263F44;
+	Sat, 30 May 2026 17:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161444; cv=none; b=oVyEnBFmUJuEL6w3X7wSKOFjWSsHxw2d+qPD0CSW+ECDPoOTFRphonQekgVryH6B4QkgvjgrGnJ9+ml73Yl4wWZWCs6USUyHAfBnixdPVC9D8Vh47Ss84kBrjiWr8vLt9DTZNzDcVSaCeuHhZBHFQZ+R528QH/dPpC6ZS/b0+fo=
+	t=1780161448; cv=none; b=UQj2zds40I7/oE4VG3IDmIzhmc/n8rObP093j+EdhzH8/AYXDmZ9rlD4y3aerD0+W+4SoaWhXqB93iC4Hc3cmT2b8bVxVF0ovJe8vJi6CfERxa3thbEkB+6C2M8IlnDbm67M/oOE6v1WRDr9gNhhxJi89ZsmCOfmgZwy7XbEt3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161444; c=relaxed/simple;
-	bh=H4Fva58wXg5I3DGPmHWIgIbuieLDikxcVWVLGS2K4Y4=;
+	s=arc-20240116; t=1780161448; c=relaxed/simple;
+	bh=PUmChrO0zhVyMQDt0Vgbjm0+fLQh01T0ar/rI6D7Tlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvJkxQV/eaVcuGG3ZsC2H3LIcjCtuoArQe6kdA3YK4cYbRRxUj1FfM0GCDb+iv6LAR2OUuZmoZMqBtiaqPK9/eMUxigPCgn6IeJw+34wZaqYi00aksPf3YoWyswua3UwQAc83z8zP56cp+8sPIfIPj92luO2L1tu/IHL7tbm7/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egYGGEJd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHQpT6f/eKMTOobPJNvN3GBIrt11yLY34BVXUbD0sOPmrPeVHjEfvxtZ8C/T96zVs1CR46iH5sme1B6QBtiimyQEDKQKA94G9E6f1zT48Jg4e357/V8p6SOEwIvYKvkqrG8oyWLrxVkfyEbm8i0PS+NOSwrdiws3G2FWQ0kArOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Urct9U5P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egYGGEJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06601F00893;
-	Sat, 30 May 2026 17:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Urct9U5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BFE1F00893;
+	Sat, 30 May 2026 17:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161443;
-	bh=d1paDe/LO9pMQrXGPS0QJw8HdFPhMYY1/hTKQFBctS0=;
+	s=korg; t=1780161446;
+	bh=CMXhVPYnPLqVRPfe+7U1MD5HmqD8PoOhUqUdM13PBqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egYGGEJdJ5dbgkkBxnelu1+ehUXqp6o84zFyuq2Fzmye6FsvV7HMANlgyIWJ74AhQ
-	 XGlv1iioRhyMQa3NLQotyKOaYBA1up3z7QeHzOpCWANFEh6ENw/kfsbTZU7f/AYrQq
-	 mjhlROuGVLhFT8bJpoGzK2FV+HOax5XzjHbOnrNI=
+	b=Urct9U5PSj7TH+Lyjl9fVAA5hAIcTv5mBCkLpzmBYtCtZ0db4hxezB0I1DEB43NmP
+	 2viUJC2UwN6dBrN7Hus/nWYZNvSnZ3hPGk35+JFwXneXbzILNH0Vyj/EOFZHchLsXd
+	 0Kf4P9w5k5byqR5Z465FYkpfd8MBNdejTXfEjLiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 625/969] pinctrl: pinctrl-pic32: Fix resource leak
-Date: Sat, 30 May 2026 18:02:29 +0200
-Message-ID: <20260530160317.705472567@linuxfoundation.org>
+Subject: [PATCH 6.1 626/969] pinctrl: cy8c95x0: remove duplicate error message
+Date: Sat, 30 May 2026 18:02:30 +0200
+Message-ID: <20260530160317.734516345@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,70 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fe5560688f3ba98364c7de7b4f8dc240ffd1ff75 ]
+[ Upstream commit 970dacb3b9f0fedbbbcfd7dbf1f4f22340b3f359 ]
 
-Fix three possible resource leaks by using the devres version of
-clk_prepare_enable(). Also, update error message accordingly.
+The pin control core is covered to report any error via message.
+The devm_request_threaded_irq() already prints an error message.
+Remove the duplicates.
 
-Detected by Smatch:
-drivers/pinctrl/pinctrl-pic32.c:2211 pic32_pinctrl_probe() warn:
-'pctl->clk' from clk_prepare_enable() not released on lines: 2208.
+While at it, drop the info message as the same information about
+an IRQ in use can be retrieved differently.
 
-drivers/pinctrl/pinctrl-pic32.c:2274 pic32_gpio_probe() warn:
-'bank->clk' from clk_prepare_enable() not released on lines: 2264,2272.
-
-Fixes: 2ba384e6c3810 ("pinctrl: pinctrl-pic32: Add PIC32 pin control driver")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
+Stable-dep-of: 5ad32c3607cf ("pinctrl: cy8c95x0: Avoid returning positive values to user space")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-pic32.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ drivers/pinctrl/pinctrl-cy8c95x0.c | 21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-pic32.c b/drivers/pinctrl/pinctrl-pic32.c
-index 37acfdfc2cae0..ee9082a499c5f 100644
---- a/drivers/pinctrl/pinctrl-pic32.c
-+++ b/drivers/pinctrl/pinctrl-pic32.c
-@@ -2162,16 +2162,10 @@ static int pic32_pinctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(pctl->reg_base))
- 		return PTR_ERR(pctl->reg_base);
+diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
+index f7c8ae9808133..c60886d804ce0 100644
+--- a/drivers/pinctrl/pinctrl-cy8c95x0.c
++++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
+@@ -1206,6 +1206,7 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
+ {
+ 	struct gpio_irq_chip *girq = &chip->gpio_chip.irq;
+ 	DECLARE_BITMAP(pending_irqs, MAX_LINE);
++	struct device *dev = chip->dev;
+ 	int ret;
  
--	pctl->clk = devm_clk_get(&pdev->dev, NULL);
-+	pctl->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(pctl->clk)) {
- 		ret = PTR_ERR(pctl->clk);
--		dev_err(&pdev->dev, "clk get failed\n");
+ 	mutex_init(&chip->irq_lock);
+@@ -1232,17 +1233,9 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
+ 	girq->handler = handle_simple_irq;
+ 	girq->threaded = true;
+ 
+-	ret = devm_request_threaded_irq(chip->dev, irq,
+-					NULL, cy8c95x0_irq_handler,
+-					IRQF_ONESHOT | IRQF_SHARED,
+-					dev_name(chip->dev), chip);
+-	if (ret) {
+-		dev_err(chip->dev, "failed to request irq %d\n", irq);
 -		return ret;
 -	}
+-	dev_info(chip->dev, "Registered threaded IRQ\n");
 -
--	ret = clk_prepare_enable(pctl->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "clk enable failed\n");
-+		dev_err(&pdev->dev, "Failed to get and enable clock\n");
- 		return ret;
- 	}
+-	return 0;
++	return devm_request_threaded_irq(dev, irq, NULL, cy8c95x0_irq_handler,
++					 IRQF_ONESHOT | IRQF_SHARED,
++					 dev_name(chip->dev), chip);
+ }
  
-@@ -2227,16 +2221,10 @@ static int pic32_gpio_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
+ static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
+@@ -1258,11 +1251,7 @@ static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
+ 	pd->owner = THIS_MODULE;
  
--	bank->clk = devm_clk_get(&pdev->dev, NULL);
-+	bank->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(bank->clk)) {
- 		ret = PTR_ERR(bank->clk);
--		dev_err(&pdev->dev, "clk get failed\n");
--		return ret;
--	}
+ 	chip->pctldev = devm_pinctrl_register(chip->dev, pd, chip);
+-	if (IS_ERR(chip->pctldev))
+-		return dev_err_probe(chip->dev, PTR_ERR(chip->pctldev),
+-			"can't register controller\n");
 -
--	ret = clk_prepare_enable(bank->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "clk enable failed\n");
-+		dev_err(&pdev->dev, "Failed to get and enable clock\n");
- 		return ret;
- 	}
+-	return 0;
++	return PTR_ERR_OR_ZERO(chip->pctldev);
+ }
  
+ static int cy8c95x0_detect(struct i2c_client *client,
 -- 
 2.53.0
 
