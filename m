@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86B33A9DA;
-	Sat, 30 May 2026 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B4A1C5799;
+	Sat, 30 May 2026 17:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162433; cv=none; b=WsweDuwvLj5/44qqfRPstAgOvtQdv7PL0iLifa8UTUQ27QDpcHauylsrIdnxe/dzTW/Aiyw3nJyx4POvtOP1M+t1MPHj+w5NDID0gTXo+xp9GhQz2++a6ReN8rKEUp+c6+NyIAR75ckUGXqtEiF0jD0ouqlRLV9eM7CfuVT2mxg=
+	t=1780162435; cv=none; b=oWUJB/J1iAoluusxIxNFEOEHEdJlykNyZ/2VeApn4R3wihXGwSMKO6GsuQoCagO/atxck0zzFsXT7vvX+zCITT3vQ5QqJNkuRBC1bTn31v7N8LssNtW5Y3URCO0VQsrNBCSF5U1V7v/Uy1dLgp0COAEBEcZYbEojdSfqDhgnnmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162433; c=relaxed/simple;
-	bh=HjEOZy8InILKwYVU+iR5qkJrS50PJGjxqOfK5WId5RA=;
+	s=arc-20240116; t=1780162435; c=relaxed/simple;
+	bh=dFOT1xrpY/ZrOeF22Z4jfv835nvtI+etdY8Kt6d1EA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvAa1PRjF9PxfqU3IEzfRhY1BNfVnTr1tzeAMT4Lvi/mpzXG7d77uy1OqayV9lbsy9YM8y35zpI0MAr+nRAMSJQFE1gydc+OqsbdDwDVGTU1zF7T63r6MSZLAHGPOEGTgBiRkPcN3esmHAGNJfumf/CC1l5ERfHPowgI3UopTgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h93PLgbh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZUgn49HOqxiGWBCUgwJ8/6cDhFvMDXTm+Sg3UnUNlCh2bp65qn7Uwf750AGix8V+ouHkl4ElXFXkt9smAm/I57f0AZvl+x6bG5mmLu1E2b0yyiZ0FQGEAOpO1u7y6yfKztZqzJ365cZ7dJJGeU5MuaWux85WsMfg9ChE84DDH1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0djUT0d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h93PLgbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2579A1F00893;
-	Sat, 30 May 2026 17:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0djUT0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BB41F00893;
+	Sat, 30 May 2026 17:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162430;
-	bh=5lqv+UIvyU89UigqBQDWU8ZdIHZdf7iruKyH2OHNHTk=;
+	s=korg; t=1780162434;
+	bh=8Zk+kCsLlv3dJsiy+1Id3Gp+AtRcRTyKS3qAYZv16cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h93PLgbhDacc13XIXmWhrwQvTIRsp+6FckS6D8thUpbnvCJqUNLa9vWsuxqTHyJ9S
-	 uTNVfuUMjHZJl66ouehRqnXe/JVEr6AOY7C7FbFgXNGw40MfhPij+kzEG+ZDeUMtzR
-	 FtCq7Q/lSOy4BdSkRS3/MpBOomn+pFXXboIqqYpI=
+	b=V0djUT0dRbkxD63ryOPqzjccnPI/eDXeEgAwr2jAmLGX19SGc3xdpgsCNQz31S80P
+	 afsh/bOq/qKLzSgdOcVFv9Q4sZRAQsLMuxnK71mezWbFOav8FlYJNTdYeT46Xs6zTU
+	 c0g/ey8AO9xn9+V9yktd2fHHJCJhP9/0fBiD3g+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Damiano Melotti <melotti@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 919/969] netfilter: bridge: eb_tables: close module init race
-Date: Sat, 30 May 2026 18:07:23 +0200
-Message-ID: <20260530160326.114571211@linuxfoundation.org>
+Subject: [PATCH 6.1 920/969] tcp: Fix imbalanced icsk_accept_queue count.
+Date: Sat, 30 May 2026 18:07:24 +0200
+Message-ID: <20260530160326.142330329@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,53 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 27414ff1b287ea9a2a11675149ec28e05539f3cc ]
+[ Upstream commit 7eca3292cac7c26dad4c236f51ba225c39a0523f ]
 
-sashiko reports for unrelated patch:
- Does the core ebtables initialization in ebtables.c suffer from a similar race?
- Once nf_register_sockopt() completes, the sockopts are exposed globally.
+When TCP socket migration happens in reqsk_timer_handler(),
+@sk_listener will be updated with the new listener.
 
-sockopt has to be registered last, just like in ip/ip6/arptables.
+When we call __inet_csk_reqsk_queue_drop(), the listener must
+be the one stored in req->rsk_listener.
 
-Fixes: 5b53951cfc85 ("netfilter: ebtables: use net_generic infra")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The cited commit accidentally replaced oreq->rsk_listener with
+sk_listener, leading to imbalanced icsk_accept_queue count.
+
+Let's pass the correct listener to __inet_csk_reqsk_queue_drop().
+
+Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260506035954.1563147-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/inet_connection_sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index ec286e54229b7..ca426e49ea1a1 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -2583,19 +2583,20 @@ static int __init ebtables_init(void)
- {
- 	int ret;
- 
--	ret = xt_register_target(&ebt_standard_target);
-+	ret = register_pernet_subsys(&ebt_net_ops);
- 	if (ret < 0)
- 		return ret;
--	ret = nf_register_sockopt(&ebt_sockopts);
-+
-+	ret = xt_register_target(&ebt_standard_target);
- 	if (ret < 0) {
--		xt_unregister_target(&ebt_standard_target);
-+		unregister_pernet_subsys(&ebt_net_ops);
- 		return ret;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index dc32a3d8ef874..a275ab5321a96 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1112,7 +1112,7 @@ static void reqsk_timer_handler(struct timer_list *t)
  	}
  
--	ret = register_pernet_subsys(&ebt_net_ops);
-+	ret = nf_register_sockopt(&ebt_sockopts);
- 	if (ret < 0) {
--		nf_unregister_sockopt(&ebt_sockopts);
- 		xt_unregister_target(&ebt_standard_target);
-+		unregister_pernet_subsys(&ebt_net_ops);
- 		return ret;
- 	}
+ drop:
+-	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
++	__inet_csk_reqsk_queue_drop(oreq->rsk_listener, oreq, true);
+ 	reqsk_put(oreq);
+ }
  
 -- 
 2.53.0
