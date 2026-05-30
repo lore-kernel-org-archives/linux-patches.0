@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE153264DC;
-	Sat, 30 May 2026 16:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DB231CA4E;
+	Sat, 30 May 2026 16:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159727; cv=none; b=eejOmBEqnOi1W98vVSSPtY0rsotaUGgeed6k+HFyZ5aOQ8gK0XNa722MvK+uUUjF+5jw0QH0z5DELoSO9aFf9Tq/U0akiWUyjIVxzExHEOtrOHV1O/JpcbQga/xaMsEOMFRxkr2V4ep/8ofmG5MFwzveLYcr2OlfizW9OMy4X5A=
+	t=1780159731; cv=none; b=L5UxamEbXB/E+pry5t2Mn1cCfw6uyTjWWiKjl15epuaXYQGadd7ZAS+HrU476P1bhoRKqOVR68ZDfFYprg6Ab1JkhwKsh3TEADssR8rwLXmQSB1OwSKu2D5duSvJ4BDpvgIyx0sXUPwSic8m+/Oc4WQiqrY2aOhUGcvptoZwnBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159727; c=relaxed/simple;
-	bh=t1AH/+aKbaXktDkZVW/K5dGW6gBdeqgTlSidHpLaH9I=;
+	s=arc-20240116; t=1780159731; c=relaxed/simple;
+	bh=U2YcytsTetBmKM4OIrXD/L6obXsGyQhsyjyb0Bg9Wa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5vGUZZ7mrdMFQ0FTJ7/RhRFWZ6XHJLhfVcBi/IsXEW5KrrueYZZpWYjc1h0Tfj1QG0Stfr2JhOL6bFOdmSwaFWJhISteTdSbZ3X1vK44nFWaFiRDZKwank45uBjRAkUC+RBaS558NxkzSJUA1maIo9yQVeKCAS9eNGpSfqQRzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kt3rWiCC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UKCddauugUmTgXkiCR8zjn0WeR3Cd6EYqCzo1i8daV+tL4/cFxKJlWwTkMO/9WbllnfRoHxW5XdpyA4wRKHSliCHPj+R/y1eob3y1AYOItag+zW5ApuAxZuljEtUxqhGIrUlfstDaxunc/3/2cLvOjrr/UuvO42fg9oTZQkqpUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMrfWnyc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kt3rWiCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1AD1F00893;
-	Sat, 30 May 2026 16:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMrfWnyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943A41F00893;
+	Sat, 30 May 2026 16:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159726;
-	bh=sgcJ6qG7d3AOtb13v2xjBJG/hUtFESCb1Yq5EGV/kOI=;
+	s=korg; t=1780159730;
+	bh=gBKQFULGp16q5iiBPBW3sl1xanjjAr5/wznT0k6C0E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kt3rWiCCbjC/ESDx9cHupYgFxY82HZc2cRyEHjhNCHNiBGbcZY4oTxpOtZR34d0+r
-	 vqcAFyYDbQqRXzVZBTSKVt56avi5Pop6mBiDx+8qw7BSC7SiWq3kMJU9GG0Z6/2Ie9
-	 J+EuJ/23xRYOCuOlZouLgmPa4Baq48EDRC8PowkE=
+	b=xMrfWnycG8M8JeBQBu3fVHlYAs7neoxcLsgjI0deBmB4X7Ucruvdl9p4dNiaJBXgh
+	 3ZOtLbMf6AAIOHxZzwsCqzvDVujvla9ty/jyhqZQmlizUYk80iGBLmo5LHH0yHF4KS
+	 vEVYrbl0nVqoG5QAp2iD34mmk7nCieoSGTBZ75uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/969] KVM: x86: Use __DECLARE_FLEX_ARRAY() for UAPI structures with VLAs
-Date: Sat, 30 May 2026 17:54:12 +0200
-Message-ID: <20260530160304.103541843@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 146/969] smb: server: fix active_num_conn leak on transport allocation failure
+Date: Sat, 30 May 2026 17:54:30 +0200
+Message-ID: <20260530160304.588634201@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,151 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2619da73bb2f10d88f7e1087125c40144fdf0987 ]
+commit 6551300dc452ac16a855a83dbd1e74899542d3b3 upstream.
 
-Commit 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with
-flexible-array members") broke the userspace API for C++.
+Commit 77ffbcac4e56 ("smb: server: fix leak of active_num_conn in
+ksmbd_tcp_new_connection()") addressed the kthread_run() failure
+path.  The earlier alloc_transport() == NULL path in the same
+function has the same leak, is reachable pre-authentication via any
+TCP connect to port 445, and was empirically reproduced on UML
+(ARCH=um, v7.0-rc7): a small number of forced allocation failures
+were sufficient to put ksmbd into a state where every subsequent
+connection attempt was rejected for the remainder of the boot.
 
-These structures ending in VLAs are typically a *header*, which can be
-followed by an arbitrary number of entries. Userspace typically creates
-a larger structure with some non-zero number of entries, for example in
-QEMU's kvm_arch_get_supported_msr_feature():
+ksmbd_kthread_fn() increments active_num_conn before calling
+ksmbd_tcp_new_connection() and discards the return value, so when
+alloc_transport() returns NULL the socket is released and -ENOMEM
+returned without decrementing the counter.  Each such failure
+permanently consumes one slot from the max_connections pool; once
+cumulative failures reach the cap, atomic_inc_return() hits the
+threshold on every subsequent accept and every new connection is
+rejected.  The counter is only reset by module reload.
 
-    struct {
-        struct kvm_msrs info;
-        struct kvm_msr_entry entries[1];
-    } msr_data = {};
+An unauthenticated remote attacker can drive the server toward the
+memory pressure that makes alloc_transport() fail by holding open
+connections with large RFC1002 lengths up to MAX_STREAM_PROT_LEN
+(0x00FFFFFF); natural transient allocation failures on a loaded
+host produce the same drift more slowly.
 
-While that works in C, it fails in C++ with an error like:
- flexible array member 'kvm_msrs::entries' not at end of 'struct msr_data'
+Mirror the existing rollback pattern in ksmbd_kthread_fn(): on the
+alloc_transport() failure path, decrement active_num_conn gated on
+server_conf.max_connections.
 
-Fix this by using __DECLARE_FLEX_ARRAY() for the VLA, which uses [0]
-for C++ compilation.
+Repro details: with the patch reverted, forced alloc_transport()
+NULL returns leaked counter slots and subsequent connection
+attempts -- including legitimate connects issued after the
+forced-fail window had closed -- were all rejected with "Limit the
+maximum number of connections".  With this patch applied, the same
+connect sequence produces no rejections and the counter cycles
+cleanly between zero and one on every accept.
 
-Fixes: 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with flexible-array members")
+Fixes: 0d0d4680db22 ("ksmbd: add max connections parameter")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Link: https://patch.msgid.link/3abaf6aefd6e5efeff3b860ac38421d9dec908db.camel@infradead.org
-[sean: tag for stable@]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ applied `__DECLARE_FLEX_ARRAY(char, name)` change directly instead of inside missing `#ifdef __KERNEL__` else branch ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/uapi/asm/kvm.h |   12 ++++++------
- include/uapi/linux/kvm.h        |   11 ++++++-----
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ fs/smb/server/transport_tcp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/uapi/asm/kvm.h
-+++ b/arch/x86/include/uapi/asm/kvm.h
-@@ -198,13 +198,13 @@ struct kvm_msrs {
- 	__u32 nmsrs; /* number of msrs in entries */
- 	__u32 pad;
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -199,6 +199,8 @@ static int ksmbd_tcp_new_connection(stru
+ 	t = alloc_transport(client_sk);
+ 	if (!t) {
+ 		sock_release(client_sk);
++		if (server_conf.max_connections)
++			atomic_dec(&active_num_conn);
+ 		return -ENOMEM;
+ 	}
  
--	struct kvm_msr_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_msr_entry, entries);
- };
- 
- /* for KVM_GET_MSR_INDEX_LIST */
- struct kvm_msr_list {
- 	__u32 nmsrs; /* number of msrs in entries */
--	__u32 indices[];
-+	__DECLARE_FLEX_ARRAY(__u32, indices);
- };
- 
- /* Maximum size of any access bitmap in bytes */
-@@ -241,7 +241,7 @@ struct kvm_cpuid_entry {
- struct kvm_cpuid {
- 	__u32 nent;
- 	__u32 padding;
--	struct kvm_cpuid_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_cpuid_entry, entries);
- };
- 
- struct kvm_cpuid_entry2 {
-@@ -263,7 +263,7 @@ struct kvm_cpuid_entry2 {
- struct kvm_cpuid2 {
- 	__u32 nent;
- 	__u32 padding;
--	struct kvm_cpuid_entry2 entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_cpuid_entry2, entries);
- };
- 
- /* for KVM_GET_PIT and KVM_SET_PIT */
-@@ -394,7 +394,7 @@ struct kvm_xsave {
- 	 * the contents of CPUID leaf 0xD on the host.
- 	 */
- 	__u32 region[1024];
--	__u32 extra[];
-+	__DECLARE_FLEX_ARRAY(__u32, extra);
- };
- 
- #define KVM_MAX_XCRS	16
-@@ -522,7 +522,7 @@ struct kvm_pmu_event_filter {
- 	__u32 fixed_counter_bitmap;
- 	__u32 flags;
- 	__u32 pad[4];
--	__u64 events[];
-+	__DECLARE_FLEX_ARRAY(__u64, events);
- };
- 
- #define KVM_PMU_EVENT_ALLOW 0
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -11,6 +11,7 @@
- #include <linux/const.h>
- #include <linux/types.h>
- #include <linux/compiler.h>
-+#include <linux/stddef.h>
- #include <linux/ioctl.h>
- #include <asm/kvm.h>
- 
-@@ -556,7 +557,7 @@ struct kvm_coalesced_mmio {
- 
- struct kvm_coalesced_mmio_ring {
- 	__u32 first, last;
--	struct kvm_coalesced_mmio coalesced_mmio[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_coalesced_mmio, coalesced_mmio);
- };
- 
- #define KVM_COALESCED_MMIO_MAX \
-@@ -635,7 +636,7 @@ struct kvm_clear_dirty_log {
- /* for KVM_SET_SIGNAL_MASK */
- struct kvm_signal_mask {
- 	__u32 len;
--	__u8  sigset[];
-+	__DECLARE_FLEX_ARRAY(__u8, sigset);
- };
- 
- /* for KVM_TPR_ACCESS_REPORTING */
-@@ -1242,7 +1243,7 @@ struct kvm_irq_routing_entry {
- struct kvm_irq_routing {
- 	__u32 nr;
- 	__u32 flags;
--	struct kvm_irq_routing_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_irq_routing_entry, entries);
- };
- 
- #endif
-@@ -1362,7 +1363,7 @@ struct kvm_dirty_tlb {
- 
- struct kvm_reg_list {
- 	__u64 n; /* number of regs */
--	__u64 reg[];
-+	__DECLARE_FLEX_ARRAY(__u64, reg);
- };
- 
- struct kvm_one_reg {
-@@ -2183,7 +2184,7 @@ struct kvm_stats_desc {
- 	__u16 size;
- 	__u32 offset;
- 	__u32 bucket_size;
--	char name[];
-+	__DECLARE_FLEX_ARRAY(char, name);
- };
- 
- #define KVM_GET_STATS_FD  _IO(KVMIO,  0xce)
 
 
