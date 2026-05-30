@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972BF33F8A2;
-	Sat, 30 May 2026 17:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5B72BE65B;
+	Sat, 30 May 2026 17:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163106; cv=none; b=Uqaq67FVlBFa0q+6n0zYJoE3x+jnJfsW0TS1aOSAL4+QMbxHwoWsVYCkc3Fe9SuwfA6C1Y0Tce3dHG6VNxCYQsh4tVkQMEswOSVPsisWeXnH3HeJoBHJzw2f2hjN/77Wt+SOKDrmSdLOqhV8PCusOmMo+U6ddwf8lzz2IbAbI6k=
+	t=1780163109; cv=none; b=E4R/zTcnFeQ8fPcDGhAN6bj2XbMDTle75NtZDC80KHxgVI9SYdlkCTEA7rvXBmdXxm1uQmsxU7HgjYmqTCxmcDwkM7gzcJ4JEy4uhniMZXrdNQ3E5CRLnCrBRThEBHtY77o1SmpxMLDMCQRuCEriHAkrkp80l19rMZok7avRyh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163106; c=relaxed/simple;
-	bh=a35hfQEFGCRu2z5EKFLZEDIKYd1tVzZTA3/tbkpyT+w=;
+	s=arc-20240116; t=1780163109; c=relaxed/simple;
+	bh=efzooQAI5L+tl+R8pke7d5NbZ911hQTacNrv1sJi04Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6ZN6gvzmrMpwBjh0jpce5JSasVaIY2G/ytP0gcCaY1pEPnDG3StYIECk9SQ2EWu5A1fGz8DnK6aWvH+DcmCmfPLu6TnATtd6D3bRrF0dskaSehGGq6lnSpe1H3AD7BRgSNqlBZVw6T5C5xYWYDdo7SpB3XmZlvHBsTjQ5cGNWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAeHeEAC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SvTG2P9MXnUxkHSIvAOqyCIpzb3WrKhKeGWizI2eN4fNLdJqSY8/nY/rAUoQfx5oYo9o/AhD7X5l9hY88Orjwe326wD7D5P9rGEOFb24b0QaO93uO7c7XZ6lhdbbLuPxHCXQfUWr8zBaOJr8skrDv1gSb6Z9rO298aFCydRpW24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIbWUxdo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAeHeEAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFBA1F00893;
-	Sat, 30 May 2026 17:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIbWUxdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B8E1F00893;
+	Sat, 30 May 2026 17:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163105;
-	bh=0lZIkks0Vv3nr9Jm6ZTMOVMZ3frievWaBACBvtGKtl8=;
+	s=korg; t=1780163108;
+	bh=StUhpVulYQAyn5pBXJncFQuz9OhbAFy34YMumyqsPfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bAeHeEACRnuH/KIu5ExQqcKc6iWzLzeHfwgjb3DpOIiez3eEsgMxV5lwxj3xQSqqU
-	 v4KN0suyvLiU6tCBlYTGMhZXALlpwEP+H8GxaqzeA9J8Ykj7hxHbOW57NYJar8ahJv
-	 NH3azfxuwNXbD5XfmX4onXI3QX4Wz0kgfuVMBLVk=
+	b=JIbWUxdoW0YQ4/rCEmMz9qDv/8mjm4W6dj5z0ztD686iLFZZLLJPS73GIM1fssYJm
+	 L/41b7R5KNrzZ+jaKZdKZl9FQxR9arLdrHJEfu/5jtgqM4YBZoNZXeGV8gz25m2wYt
+	 GALSn1BkqAOxFpD9jAlo03lPWaVcF4bjNffmHvXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faith <faith@zellic.io>,
-	Pumpkin Chang <pumpkin@devco.re>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jay Wang <wanjay@amazon.com>
-Subject: [PATCH 5.15 156/776] rxrpc: Fix recvmsg() unconditional requeue
-Date: Sat, 30 May 2026 17:57:50 +0200
-Message-ID: <20260530160244.500264469@linuxfoundation.org>
+	hongnanli <hongnan.li@linux.alibaba.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 112/776] fs/ocfs2: fix comments mentioning i_mutex
+Date: Sat, 30 May 2026 17:57:06 +0200
+Message-ID: <20260530160243.257016949@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,113 +59,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: hongnanli <hongnan.li@linux.alibaba.com>
 
-[ Upstream commit 2c28769a51deb6022d7fbd499987e237a01dd63a ]
+[ Upstream commit 137cebf9432eae024d0334953ed92a2a78619b52 ]
 
-If rxrpc_recvmsg() fails because MSG_DONTWAIT was specified but the call
-at the front of the recvmsg queue already has its mutex locked, it
-requeues the call - whether or not the call is already queued.  The call
-may be on the queue because MSG_PEEK was also passed and so the call was
-not dequeued or because the I/O thread requeued it.
+inode->i_mutex has been replaced with inode->i_rwsem long ago.  Fix
+comments still mentioning i_mutex.
 
-The unconditional requeue may then corrupt the recvmsg queue, leading to
-things like UAFs or refcount underruns.
-
-Fix this by only requeuing the call if it isn't already on the queue -
-and moving it to the front if it is already queued.  If we don't queue
-it, we have to put the ref we obtained by dequeuing it.
-
-Also, MSG_PEEK doesn't dequeue the call so shouldn't call
-rxrpc_notify_socket() for the call if we didn't use up all the data on
-the queue, so fix that also.
-
-Fixes: 540b1c48c37a ("rxrpc: Fix deadlock between call creation and sendmsg/recvmsg")
-Reported-by: Faith <faith@zellic.io>
-Reported-by: Pumpkin Chang <pumpkin@devco.re>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: stable@vger.kernel.org
-[Adapted to 5.15: use write_lock_bh/write_unlock_bh, trace_rxrpc_call
- directly for see-call tracing, 5.15 trace enum naming convention, and
- added entries to both plain enum and EM() macro list.]
-Signed-off-by: Jay Wang <wanjay@amazon.com>
+Link: https://lkml.kernel.org/r/20220214031314.100094-1-hongnan.li@linux.alibaba.com
+Signed-off-by: hongnanli <hongnan.li@linux.alibaba.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: b02da26a992d ("ocfs2: fix possible deadlock between unlink and dio_end_io_write")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    8 ++++++++
- net/rxrpc/recvmsg.c          |   22 ++++++++++++++++++----
- 2 files changed, 26 insertions(+), 4 deletions(-)
+ fs/ocfs2/alloc.c               |    2 +-
+ fs/ocfs2/aops.c                |    2 +-
+ fs/ocfs2/cluster/nodemanager.c |    2 +-
+ fs/ocfs2/dir.c                 |    4 ++--
+ fs/ocfs2/file.c                |    4 ++--
+ fs/ocfs2/inode.c               |    2 +-
+ fs/ocfs2/localalloc.c          |    6 +++---
+ fs/ocfs2/namei.c               |    2 +-
+ fs/ocfs2/ocfs2.h               |    4 ++--
+ fs/ocfs2/quota_global.c        |    2 +-
+ fs/ocfs2/xattr.c               |    2 +-
+ 11 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -93,9 +93,13 @@ enum rxrpc_call_trace {
- 	rxrpc_call_put_notimer,
- 	rxrpc_call_put_timer,
- 	rxrpc_call_put_userid,
-+	rxrpc_call_put_recvmsg_peek_nowait,
- 	rxrpc_call_queued,
- 	rxrpc_call_queued_ref,
- 	rxrpc_call_release,
-+	rxrpc_call_see_recvmsg_requeue,
-+	rxrpc_call_see_recvmsg_requeue_first,
-+	rxrpc_call_see_recvmsg_requeue_move,
- 	rxrpc_call_seen,
- };
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -5986,7 +5986,7 @@ bail:
+ 	return status;
+ }
  
-@@ -291,9 +295,13 @@ enum rxrpc_tx_point {
- 	EM(rxrpc_call_put_notimer,		"PnT") \
- 	EM(rxrpc_call_put_timer,		"PTM") \
- 	EM(rxrpc_call_put_userid,		"Pus") \
-+	EM(rxrpc_call_put_recvmsg_peek_nowait,	"PpN") \
- 	EM(rxrpc_call_queued,			"QUE") \
- 	EM(rxrpc_call_queued_ref,		"QUR") \
- 	EM(rxrpc_call_release,			"RLS") \
-+	EM(rxrpc_call_see_recvmsg_requeue,	"SrQ") \
-+	EM(rxrpc_call_see_recvmsg_requeue_first,"SrF") \
-+	EM(rxrpc_call_see_recvmsg_requeue_move,	"SrM") \
- 	E_(rxrpc_call_seen,			"SEE")
+-/* Expects you to already be holding tl_inode->i_mutex */
++/* Expects you to already be holding tl_inode->i_rwsem */
+ int __ocfs2_flush_truncate_log(struct ocfs2_super *osb)
+ {
+ 	int status;
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2324,7 +2324,7 @@ static int ocfs2_dio_end_io_write(struct
  
- #define rxrpc_transmit_traces \
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -607,7 +607,8 @@ try_again:
+ 	down_write(&oi->ip_alloc_sem);
  
- 		if (after(call->rx_top, call->rx_hard_ack) &&
- 		    call->rxtx_buffer[(call->rx_hard_ack + 1) & RXRPC_RXTX_BUFF_MASK])
--			rxrpc_notify_socket(call);
-+			if (!(flags & MSG_PEEK))
-+				rxrpc_notify_socket(call);
- 		break;
- 	default:
- 		ret = 0;
-@@ -642,11 +643,24 @@ error_unlock_call:
- error_requeue_call:
- 	if (!(flags & MSG_PEEK)) {
- 		write_lock_bh(&rx->recvmsg_lock);
--		list_add(&call->recvmsg_link, &rx->recvmsg_q);
--		write_unlock_bh(&rx->recvmsg_lock);
-+		if (list_empty(&call->recvmsg_link)) {
-+			list_add(&call->recvmsg_link, &rx->recvmsg_q);
-+			trace_rxrpc_call(call->debug_id,
-+					 rxrpc_call_see_recvmsg_requeue,
-+					 refcount_read(&call->ref),
-+					 __builtin_return_address(0), NULL);
-+			write_unlock_bh(&rx->recvmsg_lock);
-+		} else if (list_is_first(&call->recvmsg_link, &rx->recvmsg_q)) {
-+			write_unlock_bh(&rx->recvmsg_lock);
-+			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_first);
-+		} else {
-+			list_move(&call->recvmsg_link, &rx->recvmsg_q);
-+			write_unlock_bh(&rx->recvmsg_lock);
-+			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_move);
-+		}
- 		trace_rxrpc_recvmsg(call, rxrpc_recvmsg_requeue, 0, 0, 0, 0);
- 	} else {
--		rxrpc_put_call(call, rxrpc_call_put);
-+		rxrpc_put_call(call, rxrpc_call_put_recvmsg_peek_nowait);
- 	}
- error_no_call:
- 	release_sock(&rx->sk);
+-	/* Delete orphan before acquire i_mutex. */
++	/* Delete orphan before acquire i_rwsem. */
+ 	if (dwc->dw_orphaned) {
+ 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+ 
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -689,7 +689,7 @@ static struct config_group *o2nm_cluster
+ 	struct o2nm_node_group *ns = NULL;
+ 	struct config_group *o2hb_group = NULL, *ret = NULL;
+ 
+-	/* this runs under the parent dir's i_mutex; there can be only
++	/* this runs under the parent dir's i_rwsem; there can be only
+ 	 * one caller in here at a time */
+ 	if (o2nm_single_cluster)
+ 		return ERR_PTR(-ENOSPC);
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -1979,7 +1979,7 @@ bail_nolock:
+ }
+ 
+ /*
+- * NOTE: this should always be called with parent dir i_mutex taken.
++ * NOTE: this should always be called with parent dir i_rwsem taken.
+  */
+ int ocfs2_find_files_on_disk(const char *name,
+ 			     int namelen,
+@@ -2026,7 +2026,7 @@ int ocfs2_lookup_ino_from_name(struct in
+  * Return -EEXIST if the directory contains the name
+  * Return -EFSCORRUPTED if found corruption
+  *
+- * Callers should have i_mutex + a cluster lock on dir
++ * Callers should have i_rwsem + a cluster lock on dir
+  */
+ int ocfs2_check_dir_for_entry(struct inode *dir,
+ 			      const char *name,
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -270,7 +270,7 @@ int ocfs2_update_inode_atime(struct inod
+ 
+ 	/*
+ 	 * Don't use ocfs2_mark_inode_dirty() here as we don't always
+-	 * have i_mutex to guard against concurrent changes to other
++	 * have i_rwsem to guard against concurrent changes to other
+ 	 * inode fields.
+ 	 */
+ 	inode->i_atime = current_time(inode);
+@@ -1068,7 +1068,7 @@ static int ocfs2_extend_file(struct inod
+ 	/*
+ 	 * The alloc sem blocks people in read/write from reading our
+ 	 * allocation until we're done changing it. We depend on
+-	 * i_mutex to block other extend/truncate calls while we're
++	 * i_rwsem to block other extend/truncate calls while we're
+ 	 * here.  We even have to hold it for sparse files because there
+ 	 * might be some tail zeroing.
+ 	 */
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -713,7 +713,7 @@ bail:
+ /*
+  * Serialize with orphan dir recovery. If the process doing
+  * recovery on this orphan dir does an iget() with the dir
+- * i_mutex held, we'll deadlock here. Instead we detect this
++ * i_rwsem held, we'll deadlock here. Instead we detect this
+  * and exit early - recovery will wipe this inode for us.
+  */
+ static int ocfs2_check_orphan_recovery_state(struct ocfs2_super *osb,
+--- a/fs/ocfs2/localalloc.c
++++ b/fs/ocfs2/localalloc.c
+@@ -606,7 +606,7 @@ out:
+ 
+ /*
+  * make sure we've got at least bits_wanted contiguous bits in the
+- * local alloc. You lose them when you drop i_mutex.
++ * local alloc. You lose them when you drop i_rwsem.
+  *
+  * We will add ourselves to the transaction passed in, but may start
+  * our own in order to shift windows.
+@@ -636,7 +636,7 @@ int ocfs2_reserve_local_alloc_bits(struc
+ 
+ 	/*
+ 	 * We must double check state and allocator bits because
+-	 * another process may have changed them while holding i_mutex.
++	 * another process may have changed them while holding i_rwsem.
+ 	 */
+ 	spin_lock(&osb->osb_lock);
+ 	if (!ocfs2_la_state_enabled(osb) ||
+@@ -1029,7 +1029,7 @@ enum ocfs2_la_event {
+ /*
+  * Given an event, calculate the size of our next local alloc window.
+  *
+- * This should always be called under i_mutex of the local alloc inode
++ * This should always be called under i_rwsem of the local alloc inode
+  * so that local alloc disabling doesn't race with processes trying to
+  * use the allocator.
+  *
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -485,7 +485,7 @@ leave:
+ 		ocfs2_free_alloc_context(meta_ac);
+ 
+ 	/*
+-	 * We should call iput after the i_mutex of the bitmap been
++	 * We should call iput after the i_rwsem of the bitmap been
+ 	 * unlocked in ocfs2_free_alloc_context, or the
+ 	 * ocfs2_delete_inode will mutex_lock again.
+ 	 */
+--- a/fs/ocfs2/ocfs2.h
++++ b/fs/ocfs2/ocfs2.h
+@@ -369,7 +369,7 @@ struct ocfs2_super
+ 	struct delayed_work		la_enable_wq;
+ 
+ 	/*
+-	 * Must hold local alloc i_mutex and osb->osb_lock to change
++	 * Must hold local alloc i_rwsem and osb->osb_lock to change
+ 	 * local_alloc_bits. Reads can be done under either lock.
+ 	 */
+ 	unsigned int local_alloc_bits;
+@@ -444,7 +444,7 @@ struct ocfs2_super
+ 	atomic_t			osb_tl_disable;
+ 	/*
+ 	 * How many clusters in our truncate log.
+-	 * It must be protected by osb_tl_inode->i_mutex.
++	 * It must be protected by osb_tl_inode->i_rwsem.
+ 	 */
+ 	unsigned int truncated_clusters;
+ 
+--- a/fs/ocfs2/quota_global.c
++++ b/fs/ocfs2/quota_global.c
+@@ -36,7 +36,7 @@
+  * should be obeyed by all the functions:
+  * - any write of quota structure (either to local or global file) is protected
+  *   by dqio_sem or dquot->dq_lock.
+- * - any modification of global quota file holds inode cluster lock, i_mutex,
++ * - any modification of global quota file holds inode cluster lock, i_rwsem,
+  *   and ip_alloc_sem of the global quota file (achieved by
+  *   ocfs2_lock_global_qf). It also has to hold qinfo_lock.
+  * - an allocation of new blocks for local quota file is protected by
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -7208,7 +7208,7 @@ out:
+  * Used for reflink a non-preserve-security file.
+  *
+  * It uses common api like ocfs2_xattr_set, so the caller
+- * must not hold any lock expect i_mutex.
++ * must not hold any lock expect i_rwsem.
+  */
+ int ocfs2_init_security_and_acl(struct inode *dir,
+ 				struct inode *inode,
 
 
