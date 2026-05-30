@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E902F6184;
-	Sat, 30 May 2026 18:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A3C2773DE;
+	Sat, 30 May 2026 18:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166570; cv=none; b=GA1ttvo4RLTwn9vz43qQxtNIQd7h5scn4SZqyBNcMmNGerBKP2KJiD3sx78Gy5kiJJ0jotcNkPiG+5P3++h8oqeurqFXmQnfBJHqYBLzQtOND7fG5c3AFEfuI/BYTB/jJXKRN/ZzcOraMvaz9/tl5d8MHg2CmqzZcC2zeRUU110=
+	t=1780166573; cv=none; b=eFaFEt6Z5FbtHNj9sqEqWE0JZjMgGznHFLT2YsQr0ABFMO5InuenFXwEb94Lt48zjyQqcNrapMNWDPiIc/ZBSAjAvxuI9homVodWkfNdfK3t0R8+bqUdfD8db9DrL1naDvqning5MeLAgGWDRmkcrOPL3wZyiry9yE34i7zEqA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166570; c=relaxed/simple;
-	bh=pqPBd1MJlSa/N3TLyUhWq+TH2nBiC61TOSYqwjqcP9k=;
+	s=arc-20240116; t=1780166573; c=relaxed/simple;
+	bh=UtzTUWLd0H/w438HwFgx/JTxnJxiaGiK+PawH2zWJ+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYeci52uF5vLjA0sPIAUwFfPjGJmHZ3jmZvOGQZcd0Y/WD2sew3IZ3OygdQI1R2ZEgc00PU/HGLsXCgSlRgk0QplpD2kAv9NEw8sa5QrTl8t+Che3IyuhC9u5rzaJc7r0mM5RRSCoFpDFfVUz9nNWZT5hW+ZZU/k8PM8SYsJ1yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ECfZxh9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hZrHeZJ4WLYKe4T5j6uLGtCCYyKMs0Nqys8sPqK446Z7/C+rhB4RF7c/zG2uCkkjtmtrbAVQtDh3+zrJjKEC3jhsTKayIyNL7RsBSynWCUjF0SNQ7gX2ox6mglqs8H+/jb06fJSimu78EHjOP6ekAuoBTX7li6bxTsLAabQ+1t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v29k6Plu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ECfZxh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530411F00893;
-	Sat, 30 May 2026 18:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v29k6Plu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D7C1F00893;
+	Sat, 30 May 2026 18:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166569;
-	bh=VdPGrbLWrdSI6bPjJHQeo8HZVg10C4tWvplZDqr4ws4=;
+	s=korg; t=1780166572;
+	bh=uu7TnpWCT9PKVWffHzFK/3kJ6lVzCcGl/RlrBBYzXcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ECfZxh96zQkxXy23NPI0wuHshzPzxREtLnAugIdTxLlQIA2c9KHqJK1ROA2HaTsg
-	 GDLJHjwuLUHg9kr7ElcYx5zfmpb8PxQZE7Gdsd8sbYPWoI55HheMncVpNVtaz4nUO+
-	 i7TU5tJGRmfcB8tcgWtzjF7xLbSQe+ZHN3W5XGMk=
+	b=v29k6Plu9x380wk9GwlMWzRWKrACot0z6AaVqWTkOreLu8KczSHOyUqXYgyadzAGT
+	 PVP7k9Ibe10QHsf4RFn/Rw0K5gQQ/uL4Q1ep3ltmCBhn2gTFQogd5dfjdD2EoxMcgL
+	 8xraRptnz1c73Ecso0V7e8XhZVl5qSyMl6WhSuoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 397/589] scsi: sg: Resolve soft lockup issue when opening /dev/sgX
-Date: Sat, 30 May 2026 18:04:38 +0200
-Message-ID: <20260530160235.216712070@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Val Packett <val@packett.cool>
+Subject: [PATCH 5.10 406/589] dt-bindings: clock: qcom,dispcc-sc7180: Define MDSS resets
+Date: Sat, 30 May 2026 18:04:47 +0200
+Message-ID: <20260530160235.437264076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,98 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit d06a310b45e153872033dd0cf19d5a2279121099 ]
+[ Upstream commit fc6e29d42872680dca017f2e5169eefe971f8d89 ]
 
-The parameter def_reserved_size defines the default buffer size reserved
-for each Sg_fd and should be restricted to a range between 0 and 1,048,576
-(see https://tldp.org/HOWTO/SCSI-Generic-HOWTO/proc.html).  Although the
-function sg_proc_write_dressz enforces this limit, it is possible to bypass
-it by directly modifying the module parameter as shown below, which then
-causes a soft lockup:
+The MDSS resets have so far been left undescribed. Fix that.
 
-echo -1 > /sys/module/sg/parameters/def_reserved_size
-exec 4<> /dev/sg0
-
-watchdog: BUG: soft lockup - CPU#5 stuck for 26 seconds! [bash:537]
-Modules loaded:
-CPU: 5 UID: 0 PID: 537 Command: bash, kernel version 6.19.0-rc3+ #134,
-PREEMPT disabled
-Hardware: QEMU Standard PC (i440FX + PIIX, 1996), BIOS version
-1.16.1-2.fc37 dated 04/01/2014
-...
-Call Trace:
-
-  sg_build_reserve+0x5c/0xa0
-  sg_add_sfp+0x168/0x270
-  sg_open+0x16e/0x340
-  chrdev_open+0xbe/0x230
-  do_dentry_open+0x175/0x480
-  vfs_open+0x34/0xf0
-  do_open+0x265/0x3d0
-  path_openat+0x110/0x290
-  do_filp_open+0xc3/0x170
-  do_sys_openat2+0x71/0xe0
-  __x64_sys_openat+0x6d/0xa0
-  do_syscall_64+0x62/0x310
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The fix is to use module_param_cb to validate and reject invalid values
-assigned to def_reserved_size.
-
-Fixes: 6460e75a104d ("[SCSI] sg: fixes for large page_size")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260127062044.3034148-3-yangerkun@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 75616da71291 ("dt-bindings: clock: Introduce QCOM sc7180 display clock bindings")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Tested-by: Val Packett <val@packett.cool> # sc7180-ecs-liva-qc710
+Link: https://lore.kernel.org/r/20260120-topic-7180_dispcc_bcr-v1-1-0b1b442156c3@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: b0bc6011c549 ("clk: qcom: dispcc-sc7180: Add missing MDSS resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sg.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ include/dt-bindings/clock/qcom,dispcc-sc7180.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
-index b24e80a9c8cac..3c06c035b85c0 100644
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -1647,10 +1647,35 @@ sg_remove_device(struct device *cl_dev, struct class_interface *cl_intf)
- }
+diff --git a/include/dt-bindings/clock/qcom,dispcc-sc7180.h b/include/dt-bindings/clock/qcom,dispcc-sc7180.h
+index b9b51617a335d..0705103060748 100644
+--- a/include/dt-bindings/clock/qcom,dispcc-sc7180.h
++++ b/include/dt-bindings/clock/qcom,dispcc-sc7180.h
+@@ -6,6 +6,7 @@
+ #ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SC7180_H
+ #define _DT_BINDINGS_CLK_QCOM_DISP_CC_SC7180_H
  
- module_param_named(scatter_elem_sz, scatter_elem_sz, int, S_IRUGO | S_IWUSR);
--module_param_named(def_reserved_size, def_reserved_size, int,
--		   S_IRUGO | S_IWUSR);
- module_param_named(allow_dio, sg_allow_dio, int, S_IRUGO | S_IWUSR);
++/* Clocks */
+ #define DISP_CC_PLL0				0
+ #define DISP_CC_PLL0_OUT_EVEN			1
+ #define DISP_CC_MDSS_AHB_CLK			2
+@@ -40,7 +41,11 @@
+ #define DISP_CC_MDSS_VSYNC_CLK_SRC		31
+ #define DISP_CC_XO_CLK				32
  
-+static int def_reserved_size_set(const char *val, const struct kernel_param *kp)
-+{
-+	int size, ret;
+-/* DISP_CC GDSCR */
++/* Resets */
++#define DISP_CC_MDSS_CORE_BCR			0
++#define DISP_CC_MDSS_RSCC_BCR			1
 +
-+	if (!val)
-+		return -EINVAL;
-+
-+	ret = kstrtoint(val, 0, &size);
-+	if (ret)
-+		return ret;
-+
-+	/* limit to 1 MB */
-+	if (size < 0 || size > 1048576)
-+		return -ERANGE;
-+
-+	def_reserved_size = size;
-+	return 0;
-+}
-+
-+static const struct kernel_param_ops def_reserved_size_ops = {
-+	.set	= def_reserved_size_set,
-+	.get	= param_get_int,
-+};
-+
-+module_param_cb(def_reserved_size, &def_reserved_size_ops, &def_reserved_size,
-+		   S_IRUGO | S_IWUSR);
-+
- MODULE_AUTHOR("Douglas Gilbert");
- MODULE_DESCRIPTION("SCSI generic (sg) driver");
- MODULE_LICENSE("GPL");
++/* GDSCs */
+ #define MDSS_GDSC				0
+ 
+ #endif
 -- 
 2.53.0
 
