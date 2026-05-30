@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52077223DC6;
-	Sat, 30 May 2026 17:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5554A32BF24;
+	Sat, 30 May 2026 17:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163190; cv=none; b=aNHz+d7E/NI0oszwnBLmBVyYhqbpyNumhgUeSDnQu8EQNXtgIDqKFChcL2JgraAujsGARUlfhMNo5DcOVK+5LhwEGSQtlY9OWAGa1LMYR69B64fUF644kiUBvMAmWGhvKvVrvEZRxQwGxzbPpe1xShG18+7FXUPAmqn6aDgQGLs=
+	t=1780163193; cv=none; b=K+kcpdTdMjZoNoV5Qe09ZvR4vN2xRh2G7kYBsaYk3SdY1TFEmvEwV17zGanT6Up4UArja3NFWa2H86AzS9XocW3wz20fwI9U9IaT67mvAPitqOvwis4pG2pavvpQ69YY4cp/562rSCTmnTVAyzfvJsjP49gVvKEGPdUsPplbCVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163190; c=relaxed/simple;
-	bh=2v9+f6Je98sA5ZpbrDSS+6dCb24Rni7qclTwfQgMV5s=;
+	s=arc-20240116; t=1780163193; c=relaxed/simple;
+	bh=kYHgJ3fSEhuv3voU21bCaXkiXiZA0MYN8J1fl+lSuRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=StG90wUp294n6Dj4qSOrUtPiinFDMavDgZb9EZ5aHj7BMp6cUlfEWNVzJl+Fw1ciK67AT7JIRGUfFtP5sBoL8gT+GgaLm3ixNBgH3pCt7waSP4UK2vMqNI8V3RVhMIN8R3ca42wyS2+GBEgrSrgWxWMTtpoU1nFz9BeqxukKY38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4FgByXv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RV6dpjhT1vmQTQQCg0kbtrSXm4S2Wbttf/Bc5qykHTugywIHmZfdNrXo0AZNXyWmlDhb8i1WcTCtzXY4MJmlRYuxdqzNhvbH5taiLkXonguuDXDtdlw2YFNIuyYat3cwKL3uSIhsszBkXQYCyFgapJCEApQXbA/DZP1l+dM5aHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9OGoOgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4FgByXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A121F00893;
-	Sat, 30 May 2026 17:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9OGoOgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCC51F00893;
+	Sat, 30 May 2026 17:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163188;
-	bh=CRsVLYFzgNDOfGkngvI6q5fVA6tz9V2VCMuYf1IONsk=;
+	s=korg; t=1780163192;
+	bh=BX3O1mFErEhRVNsDXPbJO/+twTt+MD+9+Yl7nqRTh8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4FgByXvXkU+3eybZZFTDVzmf3jsulqhCYOIRTJNW2ZfmdcVGCpG2FVCUCw9sRxzU
-	 RV9l43BLPCG2f0KnNn//LwjgGyldEkXDzQjQRqfAD57fYL2psb39kQ3d4S1u3IqEwF
-	 A8Rq3TOxk+mYoNBP6mGmeOs078/rfJ4xFK51Y1H0=
+	b=D9OGoOgFOJZHGIgv4QNNgpoSxDKZ6V5L71il5sZwr4s/lC1yaAjJ4MFAH7J8m70fO
+	 DsqN8SCQ5j+RdqqFSmbIR1tbmrG88/bRLqe/1rSLK7HEXDya0jtDY+wbklag1TabEg
+	 8OJCUUo/DGC6jV/fgOvauldZMlqEzWaItThe6A6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 183/776] ALSA: usb-audio: Fix Audio Advantage Micro II SPDIF switch
-Date: Sat, 30 May 2026 17:58:17 +0200
-Message-ID: <20260530160245.228791701@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 184/776] usb: xhci: Make usb_host_endpoint.hcpriv survive endpoint_disable()
+Date: Sat, 30 May 2026 17:58:18 +0200
+Message-ID: <20260530160245.256065212@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,46 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-commit a9224f26b754b5034719248891ff3c2ea0d11144 upstream.
+commit 25e531b422dc2ac90cdae3b6e74b5cdeb081440d upstream.
 
-snd_microii_spdif_switch_put() returns 0 when the requested
-vendor register value differs from the cached one.
+xHCI hardware maintains its endpoint state between add_endpoint()
+and drop_endpoint() calls followed by successful check_bandwidth().
+So does the driver.
 
-This comparison was inverted by the resume-support conversion,
-so real SPDIF switch toggles are ignored while no-op writes still
-issue SET_CUR and report success.
+Core may call endpoint_disable() during xHCI endpoint life, so don't
+clear host_ep->hcpriv then, because this breaks endpoint_reset().
 
-Return early only when the requested value matches the cached one.
+If a driver calls usb_set_interface(), submits URBs which make host
+sequence state non-zero and calls usb_clear_halt(), the device clears
+its sequence state but xhci_endpoint_reset() bails out. The next URB
+malfunctions: USB2 loses one packet, USB3 gets Transaction Error or
+may not complete at all on some (buggy?) HCs from ASMedia and AMD.
+This is triggered by uvcvideo on bulk video devices.
 
-Fixes: 288673beae6c ("ALSA: usb-audio: Add resume support for MicroII SPDIF ctls")
+The code was copied from ehci_endpoint_disable() but it isn't needed
+here - hcpriv should only be NULL on emulated root hub endpoints.
+It might prevent resetting and inadvertently enabling a disabled and
+dropped endpoint, but core shouldn't try to reset dropped endpoints.
+
+Document xhci requirements regarding hcpriv. They are currently met.
+
+Fixes: 18b74067ac78 ("xhci: Fix use-after-free regression in xhci clear hub TT implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260421-microii-spdif-switch-fix-v1-1-5c50dc28b88f@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260402131342.2628648-26-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci.c |    1 -
+ include/linux/usb.h     |    3 ++-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2066,7 +2066,7 @@ static int snd_microii_spdif_switch_put(
- 	int err;
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3233,7 +3233,6 @@ rescan:
+ 		xhci_dbg(xhci, "endpoint disable with ep_state 0x%x\n",
+ 			 ep->ep_state);
+ done:
+-	host_ep->hcpriv = NULL;
+ 	spin_unlock_irqrestore(&xhci->lock, flags);
+ }
  
- 	reg = ucontrol->value.integer.value[0] ? 0x28 : 0x2a;
--	if (reg != list->kctl->private_value)
-+	if (reg == list->kctl->private_value)
- 		return 0;
- 
- 	kcontrol->private_value = reg;
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -54,7 +54,8 @@ struct ep_device;
+  * @ssp_isoc_ep_comp: SuperSpeedPlus isoc companion descriptor for this endpoint
+  * @urb_list: urbs queued to this endpoint; maintained by usbcore
+  * @hcpriv: for use by HCD; typically holds hardware dma queue head (QH)
+- *	with one or more transfer descriptors (TDs) per urb
++ *	with one or more transfer descriptors (TDs) per urb; must be preserved
++ *	by core while BW is allocated for the endpoint
+  * @ep_dev: ep_device for sysfs info
+  * @extra: descriptors following this endpoint in the configuration
+  * @extralen: how many bytes of "extra" are valid
 
 
