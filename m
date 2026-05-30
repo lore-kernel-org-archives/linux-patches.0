@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63589320CAD;
-	Sat, 30 May 2026 17:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B015130EF7D;
+	Sat, 30 May 2026 17:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163579; cv=none; b=jsW9veebH4mLQjbr8JjiDvgSAgMy21hNTaFmLSaNu4AU98WnSvQUe0e7tT/yzpuuxd2tbxjXD2zGwpMxdsLY6Ox86eWY0vgL4Ouwo//E+mHdEw/3yh6wA2Hs6mq+HF4zhMMynVLFBsRWezya2oTyqSx1dS/AIySW20qGcewJLko=
+	t=1780163582; cv=none; b=pQyVyrVAdZhQqBL6hmvth2E8Yaei9PFjdwIhwnImv1bT/ukL6DIzkQbPuSzDpIDuDle3KJP+I+V5tLUavSOS/MTu9fzhNLeWnyxtWRz/LeNa0Xso6ln/y80dyEhSCyHVO/+d2gchY3JIvfJHSDlHGNXSTf1Gw7Mbq01j0v+mVkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163579; c=relaxed/simple;
-	bh=MRdTwtXI/M8uJg75A5Ld7fDVnEktZqLEAMAPfewTO0Y=;
+	s=arc-20240116; t=1780163582; c=relaxed/simple;
+	bh=R6WwY8n+qNtKbwDblf4+E7w5nNl6ILxeoiCDEokJJI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XC9D96BMBBWWuh3n7N+dNEusFK+g4IjelETdsnNsAf9gBmtK+qLdBuZHlbBwm74gMBppphDXEzt4wjwlMvjT3vSkOnyviZHklvSPxAAfIilcRUTYHeuy3no/aa974q4+w14gKNlKothXLfIrqM+AVK0MdWFXK+sPhIw9guCsmIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smzRwTds; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4OD9ztohHtm8Esvi16YwlWpAIuTrz3uudFzLCs2qhZJHbKtGrpIru8Dc+z6KVOn/WHeTOtsAojQuGWWYle+B/MWkTytAJoceYJUTPVR9a+o17Cg2bDwytylclVCi+fpF9eCiATlDpXxWEFk7kFxtLDRtjU//xTP/b/JVWy1J5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VN6FS4DH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smzRwTds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66FC1F00893;
-	Sat, 30 May 2026 17:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VN6FS4DH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F127F1F00893;
+	Sat, 30 May 2026 17:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163578;
-	bh=GE6BTOateg2O+st+ageyD55D+p/5HjAAdtOQAqVl8II=;
+	s=korg; t=1780163581;
+	bh=mkNt0u6virv9pcKv776FW0RYRCNO9jph9xTdlkwQzyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smzRwTds1e5dI6TmGfC8uILCbbr+h9NQkHEJvuitJ0Rg3Ke2ZiT1xsTOnjg2tASno
-	 mTIVYOhIuQ6TYy8NtS6cvbXdY2ePwYcE9Li4ivkxekFvXt47e+M0X6aOXfvf9mNN6p
-	 mTvz2WoUjKaaWQEIOm7/mDlNUT63kL+8Vc5H4dik=
+	b=VN6FS4DHBrBgGayNBB0exQcocH+2Ske/cR3DjHOUBaPNDKmcIOFChqMbEYQ43VaR5
+	 1MQASv8BkuBAZUxpSVl2XzC/oUlsdNs+u9wG7tOuRi/ZpPFTbwk1Be19C1qvpmquEg
+	 i4ELzqyjPzW+kYKvBh+pYp0dsol1MVIqLoSu//TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pete Zaitcev <zaitcev@redhat.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 293/776] usb: usblp: fix heap leak in IEEE 1284 device ID via short response
-Date: Sat, 30 May 2026 18:00:07 +0200
-Message-ID: <20260530160248.131326810@linuxfoundation.org>
+	stable@kernel.org,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.15 302/776] ipv6: xfrm6: release dst on error in xfrm6_rcv_encap()
+Date: Sat, 30 May 2026 18:00:16 +0200
+Message-ID: <20260530160248.371539347@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,49 +58,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yilin Zhu <zylzyl2333@gmail.com>
 
-commit 7a400c6fe3617e31e690e3f7ca37bb335e0498f3 upstream.
+commit bc0fcb9823cd0894934cf968b525c575833d7078 upstream.
 
-usblp_ctrl_msg() collapses the usb_control_msg() return value to
-0/-errno, discarding the actual number of bytes transferred.  A broken
-printer can complete the GET_DEVICE_ID control transfer short and the
-driver has no way to know.
+xfrm6_rcv_encap() performs an IPv6 route lookup when the skb does not
+already have a dst attached. ip6_route_input_lookup() returns a
+referenced dst entry even when the lookup resolves to an error route.
 
-usblp_cache_device_id_string() reads the 2-byte big-endian length prefix
-from the response and trusts it (clamped only to the buffer bounds).
-The buffer is kmalloc(1024) at probe time. A device that sends exactly
-two bytes (e.g. 0x03 0xFF, claiming a 1023-byte ID) leaves
-device_id_string[2..1022] holding stale kmalloc heap.
+If dst->error is set, xfrm6_rcv_encap() drops the skb without attaching
+the dst to the skb and without releasing the reference returned by the
+lookup. Repeated packets hitting this path therefore leak dst entries.
 
-That stale data is then exposed:
-  - via the ieee1284_id sysfs attribute (sprintf("%s", buf+2), truncated
-    at the first NUL in the stale heap), and
-  - via the IOCNR_GET_DEVICE_ID ioctl, which copy_to_user()s the full
-    claimed length regardless of NULs, up to 1021 bytes of uninitialized
-    heap, with the leak size chosen by the device.
+Release the dst before jumping to the drop path.
 
-Fix this up by just zapping the buffer with zeros before each request
-sent to the device.
-
-Cc: Pete Zaitcev <zaitcev@redhat.com>
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026042002-unicorn-greedily-3c63@gregkh
+Fixes: 0146dca70b87 ("xfrm: add support for UDPv6 encapsulation of ESP")
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usblp.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/xfrm6_protocol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/class/usblp.c
-+++ b/drivers/usb/class/usblp.c
-@@ -1365,6 +1365,7 @@ static int usblp_cache_device_id_string(
- {
- 	int err, length;
+--- a/net/ipv6/xfrm6_protocol.c
++++ b/net/ipv6/xfrm6_protocol.c
+@@ -88,8 +88,10 @@ int xfrm6_rcv_encap(struct sk_buff *skb,
  
-+	memset(usblp->device_id_string, 0, USBLP_DEVICE_ID_SIZE);
- 	err = usblp_get_id(usblp, 0, usblp->device_id_string, USBLP_DEVICE_ID_SIZE - 1);
- 	if (err < 0) {
- 		dev_dbg(&usblp->intf->dev,
+ 		dst = ip6_route_input_lookup(dev_net(skb->dev), skb->dev, &fl6,
+ 					     skb, flags);
+-		if (dst->error)
++		if (dst->error) {
++			dst_release(dst);
+ 			goto drop;
++		}
+ 		skb_dst_set(skb, dst);
+ 	}
+ 
 
 
