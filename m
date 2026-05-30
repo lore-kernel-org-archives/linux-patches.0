@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3CA481DD;
-	Sat, 30 May 2026 17:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F41F34EF07;
+	Sat, 30 May 2026 17:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161077; cv=none; b=aTGoLK8XPFaxjRbar5KQmJBzgh8Z1Fe+6caQhegpfUQuW+ajXH5fbAX+fL6VRK9VMDbRXBRgcU404BE4kV242Bf3t+YKUTRvoJMGz2nsa1JIes8o1L6ELB+8RLsYDkZQ5eUsmD+yaO26LNuy3j8wyzd+xCW1j8MeKwaEaYx92QE=
+	t=1780161080; cv=none; b=BAAfV37cZcc/S2lw8k4JR2dbZ9dWAS+rhUuiE1VA3Vz+Ckk4klSt8bW4+A8/a22xEtxH8hJuR3G+OhIT1nqLrVaZAdXUZnEjBAY7rmdbz560iNQtzlyJhzmrdCkPcDYDTWNo9hm7+ay/cR81RXw1VWLX05//HJEkwES+p1QNsDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161077; c=relaxed/simple;
-	bh=2yPW+C/lIiGBU6dOH8oHn+2c4+Iuo+obuPXS+B9yBKY=;
+	s=arc-20240116; t=1780161080; c=relaxed/simple;
+	bh=iM9RFw5+mc8enV4uteX/YvyujPSD2stbpjKfWYOhgdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFAXsalI/0k/cWHbhRb7umWN//MR07h13l4HoYb2kXv3XI8p41JiiWQ9MwS2eZ1EotfBTCSO63Hx72sUo8iFc8ttKw933vgbMTsUXKBKqgqY4ANuIJp2eN+4mxJV1oMNIYIymTz9l90SAN7uTOKOre15roxWU3ddU+P7ZvJlZ/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9l9ZXAG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MAl3ednh8GzL+l5h0ISvTtN2Xu+/hxJn677ZTgVvGfOt3IfShppqn8KdiFsCDl26PBVcKAIlAB6TrifnONleAU0emCS9wGF4GVMnKMQe/mtHUKMg8SVVxY4ORSCPX2TDJ6lubGSLqPpwxXdaw/BSGWDdOUZVv1EQBoOC4KmZF5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AquqhM8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9l9ZXAG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88231F00893;
-	Sat, 30 May 2026 17:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AquqhM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51161F00893;
+	Sat, 30 May 2026 17:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161076;
-	bh=wqsILtBeSVn8MOalhfDJ4FmncSJ5MSTMlR1YzafODSY=;
+	s=korg; t=1780161079;
+	bh=qE8cw2mJb7g7Pxy/k4GXlv6vlJIWCaPJHtZXa+Pvkdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9l9ZXAGYGjb1v9fCg1a96LuRgq36+47xVpQQY2geHtK92+2JNxaoSzp/kMS5PVvI
-	 Cazmfk3ywYxBocmJrPed79KvY3mmb9/1JP9Qv7cGTAwh+oQHoIjNfIGWRUVV/a2jZE
-	 SaTb0zBvz2ROEwWoCwv4CUvUd3JnbBkAgShC37/8=
+	b=0AquqhM8vMRGY9R22L8JQtiYTd+6c2bQEJmJco2BIKXpBgRvR520DuFhnhGXZJpmz
+	 +24IWU5ypmxsM1i0G+0pULSDNZrPBqlxdXTU8Pw/3TlqtgaHeA/HuFykPm8Sqv0+jl
+	 UhLocJRO98wIvl9+BTiCdNu2pPCEDlrJdUdV6Cvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 501/969] dm cache: fix dirty mapping checking in passthrough mode switching
-Date: Sat, 30 May 2026 18:00:25 +0200
-Message-ID: <20260530160314.162697992@linuxfoundation.org>
+Subject: [PATCH 6.1 519/969] drm/amd/pm/smu7: Fix SMU7 voltage dependency on display clock
+Date: Sat, 30 May 2026 18:00:43 +0200
+Message-ID: <20260530160314.683395158@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,155 +45,194 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 322586745bd1a0e5f3559fd1635fdeb4dbd1d6b8 ]
+[ Upstream commit 0138610c14130425be53423b35336561829965e0 ]
 
-As mentioned in commit 9b1cc9f251af ("dm cache: share cache-metadata
-object across inactive and active DM tables"), dm-cache assumed table
-reload occurs after suspension, while LVM's table preload breaks this
-assumption. The dirty mapping check for passthrough mode was designed
-around this assumption and is performed during table creation, causing
-the check to fail with preload while metadata updates are ongoing. This
-risks loading dirty mappings into passthrough mode, resulting in data
-loss.
+The DCE (display controller engine) requires a minimum voltage
+in order to function correctly, depending on which clock level
+it currently uses.
 
-Reproduce steps:
+Add a new table that contains display clock frequency levels
+and the corresponding required voltages. The clock frequency
+levels are taken from DC (and the old radeon driver's voltage
+dependency table for CI in cases where its values were lower).
+The voltage levels are taken from the following function:
+phm_initializa_dynamic_state_adjustment_rule_settings().
+Furthermore, in case of CI, call smu7_patch_vddc() on the new
+table to account for leakage voltage (like in radeon).
 
-1. Create a writeback cache with zero migration_threshold to produce
-   dirty mappings
+Use the display clock value from amd_pp_display_configuration
+to look up the voltage level needed by the DCE. Send the
+voltage to the SMU via the PPSMC_MSG_VddC_Request command.
 
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
-2 migration_threshold 0"
+The previous implementation of this feature was non-functional
+because it relied on a "dal_power_level" field which was never
+assigned; and it was not at all implemented for CI ASICs.
 
-2. Preload a table in passthrough mode
+I verified this on a Radeon R9 M380 which previously booted to
+a black screen with DC enabled (default since Linux 6.19), but
+now works correctly.
 
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-
-3. Write to the first cache block to make it dirty
-
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-4. Resume the inactive table. Now it's possible to load the dirty block
-   into passthrough mode.
-
-dmsetup resume cache
-
-Fix by moving the checks to the preresume phase to support table
-preloading. Also remove the unused function dm_cache_metadata_all_clean.
-
-Fixes: 2ee57d587357 ("dm cache: add passthrough mode")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 599a7e9fe1b6 ("drm/amd/powerplay: implement smu7 hwmgr to manager asics with smu ip version 7.")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-metadata.c | 11 -----------
- drivers/md/dm-cache-metadata.h |  5 -----
- drivers/md/dm-cache-target.c   | 25 ++++++++-----------------
- 3 files changed, 8 insertions(+), 33 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 88 ++++++++++++++++++-
+ drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h  |  1 +
+ 2 files changed, 86 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index f5b4c996dc05f..e921327caa369 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1748,17 +1748,6 @@ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *
- 	return r;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index d13ab986a5c20..f9454e43e5c63 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -2815,6 +2815,10 @@ static int smu7_patch_dependency_tables_with_leakage(struct pp_hwmgr *hwmgr)
+ 	if (tmp)
+ 		return -EINVAL;
+ 
++	tmp = smu7_patch_vddc(hwmgr, hwmgr->dyn_state.vddc_dependency_on_display_clock);
++	if (tmp)
++		return -EINVAL;
++
+ 	tmp = smu7_patch_vce_vddc(hwmgr, hwmgr->dyn_state.vce_clock_voltage_dependency_table);
+ 	if (tmp)
+ 		return -EINVAL;
+@@ -2898,6 +2902,8 @@ static int smu7_hwmgr_backend_fini(struct pp_hwmgr *hwmgr)
+ {
+ 	kfree(hwmgr->dyn_state.vddc_dep_on_dal_pwrl);
+ 	hwmgr->dyn_state.vddc_dep_on_dal_pwrl = NULL;
++	kfree(hwmgr->dyn_state.vddc_dependency_on_display_clock);
++	hwmgr->dyn_state.vddc_dependency_on_display_clock = NULL;
+ 	kfree(hwmgr->backend);
+ 	hwmgr->backend = NULL;
+ 
+@@ -2968,6 +2974,51 @@ static int smu7_update_edc_leakage_table(struct pp_hwmgr *hwmgr)
+ 	return ret;
  }
  
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result)
--{
--	int r;
--
--	READ_LOCK(cmd);
--	r = blocks_are_unmapped_or_clean(cmd, 0, cmd->cache_blocks, result);
--	READ_UNLOCK(cmd);
--
--	return r;
--}
--
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd)
- {
- 	WRITE_LOCK_VOID(cmd);
-diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
-index b40322bc44cf7..9c970fb8e5717 100644
---- a/drivers/md/dm-cache-metadata.h
-+++ b/drivers/md/dm-cache-metadata.h
-@@ -137,11 +137,6 @@ void dm_cache_dump(struct dm_cache_metadata *cmd);
-  */
- int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *p);
- 
--/*
-- * Query method.  Are all the blocks in the cache clean?
-- */
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result);
--
- int dm_cache_metadata_needs_check(struct dm_cache_metadata *cmd, bool *result);
- int dm_cache_metadata_set_needs_check(struct dm_cache_metadata *cmd);
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index cbc519f4895e1..cd48cefe0409a 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2482,23 +2482,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 		goto bad;
- 	}
- 
--	if (passthrough_mode(cache)) {
--		bool all_clean;
--
--		r = dm_cache_metadata_all_clean(cache->cmd, &all_clean);
--		if (r) {
--			*error = "dm_cache_metadata_all_clean() failed";
--			goto bad;
--		}
--
--		if (!all_clean) {
--			*error = "Cannot enter passthrough mode unless all blocks are clean";
--			r = -EINVAL;
--			goto bad;
--		}
--
-+	if (passthrough_mode(cache))
- 		policy_allow_migrations(cache->policy, false);
--	}
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
-@@ -2824,6 +2809,12 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	struct cache *cache = context;
- 
- 	if (dirty) {
-+		if (passthrough_mode(cache)) {
-+			DMERR("%s: cannot enter passthrough mode unless all blocks are clean",
-+			      cache_device_name(cache));
-+			return -EBUSY;
++static int smu7_init_voltage_dependency_on_display_clock_table(struct pp_hwmgr *hwmgr)
++{
++	struct phm_clock_voltage_dependency_table *table;
++
++	if (!amdgpu_device_ip_get_ip_block(hwmgr->adev, AMD_IP_BLOCK_TYPE_DCE))
++		return 0;
++
++	table = kzalloc(struct_size(table, entries, 4), GFP_KERNEL);
++	if (!table)
++		return -ENOMEM;
++
++	if (hwmgr->chip_id >= CHIP_POLARIS10) {
++		table->entries[0].clk = 38918;
++		table->entries[1].clk = 45900;
++		table->entries[2].clk = 66700;
++		table->entries[3].clk = 113200;
++
++		table->entries[0].v = 700;
++		table->entries[1].v = 740;
++		table->entries[2].v = 800;
++		table->entries[3].v = 900;
++	} else {
++		if (hwmgr->chip_family == AMDGPU_FAMILY_CZ) {
++			table->entries[0].clk = 35200;
++			table->entries[1].clk = 35200;
++			table->entries[2].clk = 46700;
++			table->entries[3].clk = 64300;
++		} else {
++			table->entries[0].clk = 0;
++			table->entries[1].clk = 35200;
++			table->entries[2].clk = 54000;
++			table->entries[3].clk = 62500;
 +		}
 +
- 		set_bit(from_cblock(cblock), cache->dirty_bitset);
- 		atomic_inc(&cache->nr_dirty);
- 	} else
-@@ -3057,7 +3048,7 @@ static int cache_preresume(struct dm_target *ti)
- 					   load_filtered_mapping, cache);
- 		if (r) {
- 			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			if (r != -EFBIG)
-+			if (r != -EFBIG && r != -EBUSY)
- 				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
- 			return r;
- 		}
++		table->entries[0].v = 0;
++		table->entries[1].v = 720;
++		table->entries[2].v = 810;
++		table->entries[3].v = 900;
++	}
++
++	table->count = 4;
++	hwmgr->dyn_state.vddc_dependency_on_display_clock = table;
++	return 0;
++}
++
+ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ {
+ 	struct amdgpu_device *adev = hwmgr->adev;
+@@ -2996,6 +3047,10 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
+ 		smu7_get_elb_voltages(hwmgr);
+ 	}
+ 
++	result = smu7_init_voltage_dependency_on_display_clock_table(hwmgr);
++	if (result)
++		goto fail;
++
+ 	if (hwmgr->pp_table_version == PP_TABLE_V1) {
+ 		smu7_complete_dependency_tables(hwmgr);
+ 		smu7_set_private_data_based_on_pptable_v1(hwmgr);
+@@ -3092,13 +3147,40 @@ static int smu7_force_dpm_highest(struct pp_hwmgr *hwmgr)
+ 	return 0;
+ }
+ 
++static uint32_t smu7_lookup_vddc_from_dispclk(struct pp_hwmgr *hwmgr)
++{
++	const struct amd_pp_display_configuration *cfg = hwmgr->display_config;
++	const struct phm_clock_voltage_dependency_table *vddc_dep_on_dispclk =
++			hwmgr->dyn_state.vddc_dependency_on_display_clock;
++	uint32_t i;
++
++	if (!vddc_dep_on_dispclk || !vddc_dep_on_dispclk->count ||
++	    !cfg || !cfg->num_display || !cfg->display_clk)
++		return 0;
++
++	/* Start from 1 because ClocksStateUltraLow should not be used according to DC. */
++	for (i = 1; i < vddc_dep_on_dispclk->count; ++i)
++		if (vddc_dep_on_dispclk->entries[i].clk >= cfg->display_clk)
++			return vddc_dep_on_dispclk->entries[i].v;
++
++	return vddc_dep_on_dispclk->entries[vddc_dep_on_dispclk->count - 1].v;
++}
++
++static void smu7_apply_minimum_dce_voltage_request(struct pp_hwmgr *hwmgr)
++{
++	uint32_t req_vddc = smu7_lookup_vddc_from_dispclk(hwmgr);
++
++	smum_send_msg_to_smc_with_parameter(hwmgr,
++			PPSMC_MSG_VddC_Request,
++			req_vddc * VOLTAGE_SCALE,
++			NULL);
++}
++
+ static int smu7_upload_dpm_level_enable_mask(struct pp_hwmgr *hwmgr)
+ {
+ 	struct smu7_hwmgr *data = (struct smu7_hwmgr *)(hwmgr->backend);
+ 
+-	if (hwmgr->pp_table_version == PP_TABLE_V1)
+-		phm_apply_dal_min_voltage_request(hwmgr);
+-/* TO DO  for v0 iceland and Ci*/
++	smu7_apply_minimum_dce_voltage_request(hwmgr);
+ 
+ 	if (!data->sclk_dpm_key_disabled) {
+ 		if (data->dpm_level_enable_mask.sclk_dpm_enable_mask)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h b/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
+index ec10643edea3e..dbd2ab50d150e 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
+@@ -634,6 +634,7 @@ struct phm_dynamic_state_info {
+ 	struct phm_clock_voltage_dependency_table *vddci_dependency_on_mclk;
+ 	struct phm_clock_voltage_dependency_table *vddc_dependency_on_mclk;
+ 	struct phm_clock_voltage_dependency_table *mvdd_dependency_on_mclk;
++	struct phm_clock_voltage_dependency_table *vddc_dependency_on_display_clock;
+ 	struct phm_clock_voltage_dependency_table *vddc_dep_on_dal_pwrl;
+ 	struct phm_clock_array                    *valid_sclk_values;
+ 	struct phm_clock_array                    *valid_mclk_values;
 -- 
 2.53.0
 
