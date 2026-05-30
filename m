@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE2F192D97;
-	Sat, 30 May 2026 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5A7331A56;
+	Sat, 30 May 2026 16:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159796; cv=none; b=VODFl2zpNuDxwOjgWCG8hAawC1gNGRV/0TvULcQr2q8dfu1gcysV4+yMrLuVbcRtyqKD3hueDkivOXNZdlBEgBe30yDZX2sFIlR0Dsr0KL880ZpP0kf4FihhhEtjxqAtsvuyFhw0VxrYLVYyfwLkP4JgoD2mBZJFO6tDnMTONkU=
+	t=1780159800; cv=none; b=JYdgPE/bXXKcDGAHrd2Se8gxHC8y7O+JeYQCqF+y7XpbOWa3R7ARwgcNFKLJJ0j0b08EIE9Gmctc0sA6VeKuhM/nsI+KSjVQYZ+lH6F0SWkMAL1kRjkATbDhgmSmga+nVGOJfDNrAg28n8UHXRKnjWNdCTXdA3GLupe0+WqhEn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159796; c=relaxed/simple;
-	bh=+MS4WU4ubUkEyL2qNOs0KqnnZVLaDFfp2yNJtXTpi9A=;
+	s=arc-20240116; t=1780159800; c=relaxed/simple;
+	bh=uENCymiA/Jb3M6jxcDKD9JTLQyV8EhIdl+Sg6fYvVGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbsL+gpvU5na1i/jRbJfO+QCTGXB/ZU4iZHdtVeljkoxbPHsCL9tASQWy8LYGBUtT+6nxoXhg3EOpVk1sVrNJ05sPZ8nX6q3NC8Kpwy/wL59HPbDFlUCBGNVKeT+PtBQDR3FQ7giQuUrhmp3FZCgIk+XG+O+09aNiXLCV7uS7Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm8ktcmL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FrWuQRY1J6MHe2QUYDEcza128IQYqD+j5HeP8LKoWCpANDyMaPnHtOSGfv1eWzor7sFS51BFQ2NX963goBXGLdJXEIzsSnpm1F0sgNFt4vMhuGr+M91/5QESCVsLk4psR38A0L3yYJdoj5Y+irt5ieuc5aMp5Nl4IPUpn5ADVI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygS+UeMj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm8ktcmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4872E1F00893;
-	Sat, 30 May 2026 16:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygS+UeMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBB61F00893;
+	Sat, 30 May 2026 16:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159795;
-	bh=oEp9XgMt7rQZcjLdbMT+EXEE+5IFq4koE3on93ht+y0=;
+	s=korg; t=1780159799;
+	bh=N5YjIgegJqnI1ywj1ru6/hkI2sz/Y4JzU4Pfm3dxM6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lm8ktcmLY9YcbFOYJ3wuG7Sx7kfQGeeHeSFCaB85PX8fOO/EEYAM8HeoJvzyYoqk6
-	 ZWr/9b5gy6oQcekoa8mcqmwA34NXIWnmDId4UVX3+f4q+jF3R6qHuzlgr4wtzYIHjg
-	 9rOcSG62uRQgocii2wzplI3cO43xicHhsTKDPJHM=
+	b=ygS+UeMj1F7CKunEcXeZniu1oGMag11h6snOK6EzUKFzJT9CfBUDs2R3w6WPLIJo6
+	 R8+9IF7aawhUDiQt9jTcYoZCDEgs6n3n9sJMMnnywyztOjfmCdUjXvnQpAV95uGof7
+	 so103BRN2jA0Rt+SU4EOpeKJsalbLCMcM/8/SNU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/969] ASoC: qcom: q6apm: move component registration to unmanaged version
-Date: Sat, 30 May 2026 17:54:17 +0200
-Message-ID: <20260530160304.240820058@linuxfoundation.org>
+	Faith <faith@zellic.io>,
+	Pumpkin Chang <pumpkin@devco.re>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jay Wang <wanjay@amazon.com>
+Subject: [PATCH 6.1 134/969] rxrpc: Fix recvmsg() unconditional requeue
+Date: Sat, 30 May 2026 17:54:18 +0200
+Message-ID: <20260530160304.269157392@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,150 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 6ec1235fc941dac6c011b30ee01d9220ff87e0cd ]
+[ Upstream commit 2c28769a51deb6022d7fbd499987e237a01dd63a ]
 
-q6apm component registers dais dynamically from ASoC toplology, which
-are allocated using device managed version apis. Allocating both
-component and dynamic dais using managed version could lead to incorrect
-free ordering, dai will be freed while component still holding references
-to it.
+If rxrpc_recvmsg() fails because MSG_DONTWAIT was specified but the call
+at the front of the recvmsg queue already has its mutex locked, it
+requeues the call - whether or not the call is already queued.  The call
+may be on the queue because MSG_PEEK was also passed and so the call was
+not dequeued or because the I/O thread requeued it.
 
-Fix this issue by moving component to unmanged version so
-that the dai pointers are only freeded after the component is removed.
+The unconditional requeue may then corrupt the recvmsg queue, leading to
+things like UAFs or refcount underruns.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
-Read of size 8 at addr ffff00084493a6e8 by task kworker/u48:0/3426
-Tainted: [W]=WARN
-Hardware name: LENOVO 21N2ZC5PUS/21N2ZC5PUS, BIOS N42ET57W (1.31 ) 08/08/2024
-Workqueue: pdr_notifier_wq pdr_notifier_work [pdr_interface]
-Call trace:
- show_stack+0x28/0x7c (C)
- dump_stack_lvl+0x60/0x80
- print_report+0x160/0x4b4
- kasan_report+0xac/0xfc
- __asan_report_load8_noabort+0x20/0x34
- snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
- snd_soc_unregister_component_by_driver+0x50/0x88 [snd_soc_core]
- devm_component_release+0x30/0x5c [snd_soc_core]
- devres_release_all+0x13c/0x210
- device_unbind_cleanup+0x20/0x190
- device_release_driver_internal+0x350/0x468
- device_release_driver+0x18/0x30
- bus_remove_device+0x1a0/0x35c
- device_del+0x314/0x7f0
- device_unregister+0x20/0xbc
- apr_remove_device+0x5c/0x7c [apr]
- device_for_each_child+0xd8/0x160
- apr_pd_status+0x7c/0xa8 [apr]
- pdr_notifier_work+0x114/0x240 [pdr_interface]
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
+Fix this by only requeuing the call if it isn't already on the queue -
+and moving it to the front if it is already queued.  If we don't queue
+it, we have to put the ref we obtained by dequeuing it.
 
-Allocated by task 77:
- kasan_save_stack+0x40/0x68
- kasan_save_track+0x20/0x40
- kasan_save_alloc_info+0x44/0x58
- __kasan_kmalloc+0xbc/0xdc
- __kmalloc_node_track_caller_noprof+0x1f4/0x620
- devm_kmalloc+0x7c/0x1c8
- snd_soc_register_dai+0x50/0x4f0 [snd_soc_core]
- soc_tplg_pcm_elems_load+0x55c/0x1eb8 [snd_soc_core]
- snd_soc_tplg_component_load+0x4f8/0xb60 [snd_soc_core]
- audioreach_tplg_init+0x124/0x1fc [snd_q6apm]
- q6apm_audio_probe+0x10/0x1c [snd_q6apm]
- snd_soc_component_probe+0x5c/0x118 [snd_soc_core]
- soc_probe_component+0x44c/0xaf0 [snd_soc_core]
- snd_soc_bind_card+0xad0/0x2370 [snd_soc_core]
- snd_soc_register_card+0x3b0/0x4c0 [snd_soc_core]
- devm_snd_soc_register_card+0x50/0xc8 [snd_soc_core]
- x1e80100_platform_probe+0x208/0x368 [snd_soc_x1e80100]
- platform_probe+0xc0/0x188
- really_probe+0x188/0x804
- __driver_probe_device+0x158/0x358
- driver_probe_device+0x60/0x190
- __device_attach_driver+0x16c/0x2a8
- bus_for_each_drv+0x100/0x194
- __device_attach+0x174/0x380
- device_initial_probe+0x14/0x20
- bus_probe_device+0x124/0x154
- deferred_probe_work_func+0x140/0x220
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
+Also, MSG_PEEK doesn't dequeue the call so shouldn't call
+rxrpc_notify_socket() for the call if we didn't use up all the data on
+the queue, so fix that also.
 
-Freed by task 3426:
- kasan_save_stack+0x40/0x68
- kasan_save_track+0x20/0x40
- __kasan_save_free_info+0x4c/0x80
- __kasan_slab_free+0x78/0xa0
- kfree+0x100/0x4a4
- devres_release_all+0x144/0x210
- device_unbind_cleanup+0x20/0x190
- device_release_driver_internal+0x350/0x468
- device_release_driver+0x18/0x30
- bus_remove_device+0x1a0/0x35c
- device_del+0x314/0x7f0
- device_unregister+0x20/0xbc
- apr_remove_device+0x5c/0x7c [apr]
- device_for_each_child+0xd8/0x160
- apr_pd_status+0x7c/0xa8 [apr]
- pdr_notifier_work+0x114/0x240 [pdr_interface]
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
-
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 540b1c48c37a ("rxrpc: Fix deadlock between call creation and sendmsg/recvmsg")
+Reported-by: Faith <faith@zellic.io>
+Reported-by: Pumpkin Chang <pumpkin@devco.re>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+[Adapted to 6.1: use write_lock_bh/write_unlock_bh, trace_rxrpc_call
+ directly for see-call tracing, and 6.1 trace enum naming convention.]
+Signed-off-by: Jay Wang <wanjay@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/trace/events/rxrpc.h |    4 ++++
+ net/rxrpc/recvmsg.c          |   22 ++++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -746,13 +746,22 @@ static int apm_probe(gpr_device_t *gdev)
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -82,9 +82,13 @@
+ 	EM(rxrpc_call_put_notimer,		"PnT") \
+ 	EM(rxrpc_call_put_timer,		"PTM") \
+ 	EM(rxrpc_call_put_userid,		"Pus") \
++	EM(rxrpc_call_put_recvmsg_peek_nowait,	"PpN") \
+ 	EM(rxrpc_call_queued,			"QUE") \
+ 	EM(rxrpc_call_queued_ref,		"QUR") \
+ 	EM(rxrpc_call_release,			"RLS") \
++	EM(rxrpc_call_see_recvmsg_requeue,	"SrQ") \
++	EM(rxrpc_call_see_recvmsg_requeue_first,"SrF") \
++	EM(rxrpc_call_see_recvmsg_requeue_move,	"SrM") \
+ 	E_(rxrpc_call_seen,			"SEE")
  
- 	q6apm_get_apm_state(apm);
+ #define rxrpc_transmit_traces \
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -607,7 +607,8 @@ try_again:
  
--	ret = devm_snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
-+	ret = snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to get register q6apm: %d\n", ret);
- 		return ret;
+ 		if (after(call->rx_top, call->rx_hard_ack) &&
+ 		    call->rxtx_buffer[(call->rx_hard_ack + 1) & RXRPC_RXTX_BUFF_MASK])
+-			rxrpc_notify_socket(call);
++			if (!(flags & MSG_PEEK))
++				rxrpc_notify_socket(call);
+ 		break;
+ 	default:
+ 		ret = 0;
+@@ -642,11 +643,24 @@ error_unlock_call:
+ error_requeue_call:
+ 	if (!(flags & MSG_PEEK)) {
+ 		write_lock_bh(&rx->recvmsg_lock);
+-		list_add(&call->recvmsg_link, &rx->recvmsg_q);
+-		write_unlock_bh(&rx->recvmsg_lock);
++		if (list_empty(&call->recvmsg_link)) {
++			list_add(&call->recvmsg_link, &rx->recvmsg_q);
++			trace_rxrpc_call(call->debug_id,
++					 rxrpc_call_see_recvmsg_requeue,
++					 refcount_read(&call->ref),
++					 __builtin_return_address(0), NULL);
++			write_unlock_bh(&rx->recvmsg_lock);
++		} else if (list_is_first(&call->recvmsg_link, &rx->recvmsg_q)) {
++			write_unlock_bh(&rx->recvmsg_lock);
++			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_first);
++		} else {
++			list_move(&call->recvmsg_link, &rx->recvmsg_q);
++			write_unlock_bh(&rx->recvmsg_lock);
++			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_move);
++		}
+ 		trace_rxrpc_recvmsg(call, rxrpc_recvmsg_requeue, 0, 0, 0, 0);
+ 	} else {
+-		rxrpc_put_call(call, rxrpc_call_put);
++		rxrpc_put_call(call, rxrpc_call_put_recvmsg_peek_nowait);
  	}
- 
--	return of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	if (ret)
-+		snd_soc_unregister_component(dev);
-+
-+	return ret;
-+}
-+
-+static void apm_remove(gpr_device_t *gdev)
-+{
-+	snd_soc_unregister_component(&gdev->dev);
- }
- 
- struct audioreach_module *q6apm_find_module_by_mid(struct q6apm_graph *graph, uint32_t mid)
-@@ -819,6 +828,7 @@ MODULE_DEVICE_TABLE(of, apm_device_id);
- 
- static gpr_driver_t apm_driver = {
- 	.probe = apm_probe,
-+	.remove = apm_remove,
- 	.gpr_callback = apm_callback,
- 	.driver = {
- 		.name = "qcom-apm",
+ error_no_call:
+ 	release_sock(&rx->sk);
 
 
