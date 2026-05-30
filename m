@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439222FDC5E;
-	Sat, 30 May 2026 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5B433B6C4;
+	Sat, 30 May 2026 17:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162084; cv=none; b=CEUiTGiTiJP4tFz0JT/IrmaVdf+ut+GUkxwJO/d7S92Jhb+8v8DIz+bzuZVqij4jEWWmBGhO8pfzWrT+Jt/u90hzF6HdFcZXA0+XOy3PJEE/wPJ7iWP2SYoJjVyW3XdeEYBxqVe3GhzyuEnVdCcX3Oq073hQsOcZEg4J6b9aOz0=
+	t=1780162087; cv=none; b=DOlIJFCW/b5wiSz1WM/OZokbNOqXZmPj55628AGRlys9obQ58tTFNqe98ysQTf+LxW/c6LAZkXe2L7IlAPD+5O1BfbQCI1BeNkuoPK1x22Vv2jKLD6TY+XfkQSTou7/ZlJrZKHXY4OaSmthHWM9iXAqPPfKoob3/8uqIckCKinU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162084; c=relaxed/simple;
-	bh=zHp/uvuQBa8nwA4OMk3aQMjV/p35JW/r1lZr41qTSzE=;
+	s=arc-20240116; t=1780162087; c=relaxed/simple;
+	bh=aO5MiF+x6vyPj1RK/OFLJMMyZL0BpWIFqVv4OFXu4Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqP8xaM96vcxIEcKE4H3q9T7D0TesJyMv+K3Lk8E+a3O6Za7JVJrLFElQ+yLJjjPlPikFYiRgq00NmzzvO9mHrZkBMt56uq/Bq+47u++AbDIyIVKQMEWuOypkEiHxPyzCht4hO63U/TV7zsQ63Lx46jyYlBK3pY77RNWXZbyMvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tN4Pcb07; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fZPX6c+oL43EJbl8a3MReXfLUefSROl/T63FO04vsYCiIYniSJYftasqMWBbX0nmEhAy20pPrxv+jTMKEBHPrhsl0WFRs2JDLhiIw1gPp9UJ6l0EEgasf7cLRafI/h9KFH8w98as4VuI/UuRRf72sibSqgTTGxfXTEmr+ahuSUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lANKh+mT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tN4Pcb07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8668B1F00893;
-	Sat, 30 May 2026 17:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lANKh+mT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5C01F00893;
+	Sat, 30 May 2026 17:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162083;
-	bh=qr9nwkRbVhG6fPyjA6eQ6gTN4w5tk/zVfN/CzvNcm8c=;
+	s=korg; t=1780162086;
+	bh=+O0b/ioNCRVRVfqquOR91zpkWWnMCdQ6YlA0ua65uEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tN4Pcb07wu+xKxW1AOugM/D/8MXYjxgI1jYqj3PYos32TnBkTZ4qgrRCAL3UOzaXe
-	 gbKm8HSFf5Ll8Txdl7Z27EtBp6OlayKuI1Mykumas2lVxq6/KNTOGB2L+68eh7Vtvj
-	 ypzxgD2uq63fVQvmSY+Gcrk7//LPPgaSyuAzhQ1c=
+	b=lANKh+mTxdKeXfjsg35JGIlwfkY7Lsh0k6Xas+53speI9UCckEOJbtm0W2w2KZ+iK
+	 Wi8nQtEKhOKy1aM5D5wMcuB9qNhoZD1ZoAiQnZnDlJqJCyO/fU0nFqhrA42MvkBw4u
+	 6rp+zYMOPiCEyTaC1qfYsdhPqxaG2SrLJXhzFQnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Ye Bin <yebin10@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 815/969] smb/client: fix possible infinite loop and oob read in symlink_data()
-Date: Sat, 30 May 2026 18:05:39 +0200
-Message-ID: <20260530160323.143026556@linuxfoundation.org>
+	DeepChirp <DeepChirp@outlook.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.1 816/969] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
+Date: Sat, 30 May 2026 18:05:40 +0200
+Message-ID: <20260530160323.171403071@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,44 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 7d9a7f1f96cd617ee9e75bb22217c709038e26b8 upstream.
+commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
 
-On 32-bit architectures, the infinite loop is as follows:
+For RGB, set dynamic_range to CTA or VESA based on
+crtc_state->limited_color_range so sinks apply correct
+quantization. YCbCr remains limited (CTA) range.
+(DP v1.4, Table 5-1)
 
-  len = p->ErrorDataLength == 0xfffffff8
-  u8 *next = p->ErrorContextData + len
-  next == p
+v2:
+- Added Reported-by and Tested-by tags
 
-On 32-bit architectures, the out-of-bounds read is as follows:
+v3:
+- Add back YCbCr comment(Suraj)
 
-  len = p->ErrorDataLength == 0xfffffff0
-  u8 *next = p->ErrorContextData + len
-  next == (u8 *)p - 8
-
-Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org #v5.8+
+Reported-by: DeepChirp <DeepChirp@outlook.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
+Tested-by: DeepChirp <DeepChirp@outlook.com>
+Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
+Assisted-by: GitHub-Copilot:GPT-5.4
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2file.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -48,6 +48,9 @@ static struct smb2_symlink_err_rsp *syml
- 				 __func__, le32_to_cpu(p->ErrorId));
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -1810,8 +1810,13 @@ static void intel_dp_compute_vsc_colorim
+ 	drm_WARN_ON(&dev_priv->drm,
+ 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
  
- 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
-+			if (len > end - ((u8 *)p + sizeof(*p)))
-+				return ERR_PTR(-EINVAL);
+-	/* all YCbCr are always limited range */
+-	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++	/* All YCbCr formats are always limited range. */
++	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
++		vsc->dynamic_range = crtc_state->limited_color_range ?
++			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
++	else
++		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
 +
- 			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
- 		}
- 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
+ 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
+ }
+ 
 
 
