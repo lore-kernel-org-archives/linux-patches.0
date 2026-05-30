@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC5339E162;
-	Sat, 30 May 2026 17:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863AA39B4A6;
+	Sat, 30 May 2026 17:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160907; cv=none; b=VCyaqSfG0eyvQsnf/73aLujWk/DJdjxPlO4kr6T1r8NFrJ82z4I/05/njK5mNsy43UYlm8aZP8pJxDBhAttbtUlJaVHzJHw/kc4/IVtf+GxlhCs66Vgo88G19+KP1j3RaxVL+pREnYsm94Q614UsxOo+cGvpvcwmLdw4fJGmA8U=
+	t=1780160911; cv=none; b=sS1NnmPfac8upTR0YXajeokYOl272J5WKCrM0ei8SKSZMXOVKoAfQyIvUNIuz7CRy49PHqEg+pUZ83b8y3nmFOhtXzNSe7hAG0L1ETFDURUraj+yONtciw411bbf0VtFQW9CwF5DoLWDm32OftUivYL1kl7629SUoN9JX9SAh8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160907; c=relaxed/simple;
-	bh=C8C7bJJP3PRMgHSM9v2cZeRoOLpJmMPMg2WHeG32bJc=;
+	s=arc-20240116; t=1780160911; c=relaxed/simple;
+	bh=wu7sfyoCFtIhn0wkDampejCZP24Dkob5Y4bZgOfQL5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rtx5wCc0e8YRv9ZjVNXBXYFG/1EurmAVVR7lOnQCrm6QyRSlRQjgM9fnX6By8Q0cVgZ3QdZLdUfyy2Fq96INNvzkVh0g+aHnHa0rLijoskGchbHiKwwG538+B44yggmzJXwzB3jlGZc8revd+Am74fNXHFoRjZDwiUThMuLAwaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svGW7dR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F/ETIjKWaMs1L6VHo6Bca3lE/q++UNHQNAQEzWLNkZl5hxhbBgrlUCbLsR59tDWeWkECPhGl5PsbfdMBnafkhLHPyfqm9pMOnLHwQ4pQwGwSuyFnC0nsIHHy/C3kCqMDqUbr+OkhbUCxjcKudFDaqtqSjLlCnRaVQZg/Laoncxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2Oly1qF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svGW7dR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA0B1F00893;
-	Sat, 30 May 2026 17:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2Oly1qF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C2D1F00899;
+	Sat, 30 May 2026 17:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160906;
-	bh=E4Dh6WxIyHIBQN4K5q1V7uN/D3IrYmYvibsH0jyz3Xg=;
+	s=korg; t=1780160910;
+	bh=7bh2VfIYzQxgmQ53Hsriu9vcAxvGSBjo+dkry2WMWuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svGW7dR6k+P7/UpC+5Dir4J2SJIythIxvNlit7ivOariChiae/USbISnL2sKFiduY
-	 zCclWCIXuLkybd0eipzCPQuseQz3ch5f3A+DHRBhn6arfRDhyiVFkJsL6fAQ0XLFK0
-	 pjANWVm8SnmJrYcutr8SzMrtz8bMkNaKj0OvTTuk=
+	b=T2Oly1qFl8/eGoWEranHhhiaq4X/faJ/ofAazI/XjRwQS6XyhzcBT1igCOEM8GClS
+	 GEox07PAzpkL9vc70s+Xi1gqXYlKkMeVUTf8M88XuRMmxr9WVE3h6kenvvZW9h4GE5
+	 QrFJrV/P86Sbr95ayPMQ7NgKc3SCsqbnQma+AGVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Richard Clark <richard.xnu.clark@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 440/969] irqchip/irq-pic32-evic: Address warning related to wrong printf() formatter
-Date: Sat, 30 May 2026 17:59:24 +0200
-Message-ID: <20260530160312.421854638@linuxfoundation.org>
+Subject: [PATCH 6.1 441/969] hrtimers: Update the return type of enqueue_hrtimer()
+Date: Sat, 30 May 2026 17:59:25 +0200
+Message-ID: <20260530160312.450410435@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,49 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Richard Clark <richard.xnu.clark@gmail.com>
 
-[ Upstream commit 86be659415b0ddefebc3120e309091aa215a9064 ]
+[ Upstream commit da7100d3bf7d6f5c49ef493ea963766898e9b069 ]
 
-This driver is currently only build on 32 bit MIPS systems. When building
-it on x86_64, the following warning occurs:
+The return type should be 'bool' instead of 'int' according to the calling
+context in the kernel, and its internal implementation, i.e. :
 
-    drivers/irqchip/irq-pic32-evic.c: In function ‘pic32_ext_irq_of_init’:
-    ./include/linux/kern_levels.h:5:25: error: format ‘%d’ expects argument of type
-     ‘int’, but argument 2 has type ‘long unsigned int’ [-Werror=format=]
+	return timerqueue_add();
 
-Update the printf() formatter in preparation for allowing this driver to
-be compiled on all architectures.
+which is a bool-return function.
 
-Fixes: aaa8666ada780 ("IRQCHIP: irq-pic32-evic: Add support for PIC32 interrupt controller")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260222-irqchip-pic32-v1-1-37f50d1f14af@redhat.com
+[ tglx: Adjust function arguments ]
+
+Signed-off-by: Richard Clark <richard.xnu.clark@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/Z2ppT7me13dtxm1a@MBC02GN1V4Q05P
+Stable-dep-of: f2e388a019e4 ("hrtimer: Reduce trace noise in hrtimer_start()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-pic32-evic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/hrtimer.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-pic32-evic.c b/drivers/irqchip/irq-pic32-evic.c
-index 1d9bb28d13e5d..1a72047f3aa2e 100644
---- a/drivers/irqchip/irq-pic32-evic.c
-+++ b/drivers/irqchip/irq-pic32-evic.c
-@@ -198,7 +198,7 @@ static void __init pic32_ext_irq_of_init(struct irq_domain *domain)
- 
- 	of_property_for_each_u32(node, pname, prop, p, hwirq) {
- 		if (i >= ARRAY_SIZE(priv->ext_irqs)) {
--			pr_warn("More than %d external irq, skip rest\n",
-+			pr_warn("More than %zu external irq, skip rest\n",
- 				ARRAY_SIZE(priv->ext_irqs));
- 			break;
- 		}
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 002b29e566cb3..062dda96e2706 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1096,11 +1096,10 @@ EXPORT_SYMBOL_GPL(hrtimer_forward);
+  * The timer is inserted in expiry order. Insertion into the
+  * red black tree is O(log(n)). Must hold the base lock.
+  *
+- * Returns 1 when the new timer is the leftmost timer in the tree.
++ * Returns true when the new timer is the leftmost timer in the tree.
+  */
+-static int enqueue_hrtimer(struct hrtimer *timer,
+-			   struct hrtimer_clock_base *base,
+-			   enum hrtimer_mode mode)
++static bool enqueue_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
++			    enum hrtimer_mode mode)
+ {
+ 	debug_activate(timer, mode);
+ 	WARN_ON_ONCE(!base->cpu_base->online);
 -- 
 2.53.0
 
