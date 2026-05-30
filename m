@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB35261B9E;
-	Sat, 30 May 2026 17:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B022628D;
+	Sat, 30 May 2026 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163749; cv=none; b=mMrgRXa4GqaDl3BxzKHe5PQ/NeWI4SxE2Ps5UhMInuaIhpqlaNdvfz6dgVhmPsyYbr+9iiiikOfYLf+BrBes6eXAt/mSP9RoIJ9Xb+Rs0uEPgxKqd7UkBQdtCzIfw3KCrXXD80vnAZxj5dv/veSktgzztosbB1TBSxeZeCkpPLE=
+	t=1780163752; cv=none; b=uQ8yPVnMiWhm1hAzd8msdFmmjXp3iXTZfgSKq/j5HnLX2mGZYfX3lHLxDBERmjx7GwtaSjTKN6ei5ZakWqKV26NGHeUiUYodU8qHzd5NW33M4RGAci4vDzKso2bb7ywkVwKAz8Y6ldtMvdJvSoVjX515vMpJrsRDsuWe5iMPVa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163749; c=relaxed/simple;
-	bh=IKzkaAjUlGAD5ly/GvDF5Y7yPPH8+uZbMauo3MRcOe8=;
+	s=arc-20240116; t=1780163752; c=relaxed/simple;
+	bh=yqfoCTlw3CJLOL+ZLDQEvu9ENBKxe4uo5Q0uEJyZz38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fb7NvjW3mQ/rzhFnu5Q1hmi9Y6dn3x01duGrcPyTS8SZ5T/O0tCfWwI1mEBhRP23I33bxdkKE0BXZYfX/ZpQzZndn+O54L7wToIJH3P2vy6pMhUazoXLu0qxCimdlN4KSqK2aUJqZlfQ04IpsIKaGCEdA6mnoKrKDSmiUcMo9xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLGKOzb9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfphZW3YAbfjQrWBiZB7b7jB9TK1kl3l5y1/o4sfA+tnx5ztQpgUPb+2zbyUaH2HFuodFzndO81RpvikfeNlMGbAUp8mj9POQnMofWUM4EHj5Zawc1S8UIl9zazwv20nVB0TomZwTSFirvT05FC2h2C2tjvItkGAWlNOxsCPU3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRoPBuR1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLGKOzb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806911F00893;
-	Sat, 30 May 2026 17:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRoPBuR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE9C1F00893;
+	Sat, 30 May 2026 17:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163748;
-	bh=Yxk1y9n5mscGRLu+gdIGUdYHvyrqWBqG5js6Mq/XxvI=;
+	s=korg; t=1780163751;
+	bh=AK7dXAMU/Nw+ZezqPCdT10t8SgVyWObiIB7qTzFiXls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLGKOzb9sueut+kaBEl3W5pzkKJNv0BluI4fjyDijjkqIK36Cs/f5I6UJBMIi2Wqa
-	 vNx6ybIr7ErDny6XAj/kxwfaNNXiBBP5LOJb3EcEzdf0xhI/iWP3/HDYKL4ON/vdO9
-	 7IC5C2pe+8FkQy4s0pQVfmC2D62iOoRx4vHArOcs=
+	b=QRoPBuR1XIAShI9jt5irOR7N+QVzcjRV6l+8gXnksDrnstD7BcbzNVJ6qf3OoGzAD
+	 LXRyMzpSg3UyH08bwZBzHhs+qlseprE0WdyXeg9WmC6ZC3XsdED0DlROrQUCiE0hqL
+	 q+TP8Flp5UXOzgo7iyBJFsBd5zvQXJPPSAb0+6RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Artem S. Tashkinov" <aros@gmx.com>,
-	Krishna Chomal <krishna.chomal108@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.15 350/776] platform/x86: hp-wmi: Ignore backlight and FnLock events
-Date: Sat, 30 May 2026 18:01:04 +0200
-Message-ID: <20260530160249.625294489@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 351/776] media: uvcvideo: Enable VB2_DMABUF for metadata stream
+Date: Sat, 30 May 2026 18:01:05 +0200
+Message-ID: <20260530160249.651859180@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,49 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
+commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
 
-On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
-directly by the firmware. However, they still trigger WMI events which
-results in "Unknown key code" warnings in dmesg.
+The UVC driver has two video streams, one for the frames and another one
+for the metadata. Both streams share most of the codebase, but only the
+data stream declares support for DMABUF transfer mode.
 
-Add these key codes to the keymap with KE_IGNORE to silence the warnings
-since no software action is needed.
+I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
+and the frames looked correct.
 
-Tested-by: Artem S. Tashkinov <aros@gmx.com>
-Reported-by: Artem S. Tashkinov <aros@gmx.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This patch announces the support for DMABUF for the metadata stream.
+This is useful for apps/HALs that only want to support DMABUF.
+
+Cc: stable@vger.kernel.org
+Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/uvc/uvc_queue.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -166,6 +166,11 @@ static const struct key_entry hp_wmi_key
- 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
- 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
- 	{ KE_KEY, 0x231b,  { KEY_HELP } },
-+	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
-+	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
-+	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
-+	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
-+	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
- 	{ KE_END, 0 }
- };
+--- a/drivers/media/usb/uvc/uvc_queue.c
++++ b/drivers/media/usb/uvc/uvc_queue.c
+@@ -217,7 +217,7 @@ int uvc_queue_init(struct uvc_video_queu
+ 	int ret;
  
+ 	queue->queue.type = type;
+-	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
++	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+ 	queue->queue.drv_priv = queue;
+ 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
+ 	queue->queue.mem_ops = &vb2_vmalloc_memops;
+@@ -230,7 +230,6 @@ int uvc_queue_init(struct uvc_video_queu
+ 		queue->queue.ops = &uvc_meta_queue_qops;
+ 		break;
+ 	default:
+-		queue->queue.io_modes |= VB2_DMABUF;
+ 		queue->queue.ops = &uvc_queue_qops;
+ 		break;
+ 	}
 
 
