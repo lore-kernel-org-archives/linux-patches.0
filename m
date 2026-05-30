@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FD12773DE;
-	Sat, 30 May 2026 18:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D3B344DB9;
+	Sat, 30 May 2026 18:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166615; cv=none; b=pmG6mzyo7S2Gjv8JvWJsGhskeatQU+TuhgdKhsHwRt67R1CreraMTyZMna2Euocef9C4SeTw2uSk5HAWKfqn7WD6joM2UKHrVIUmr6Yd+CVPQjS41xTLY49o142CGRXssJb7kclBKO6PoXJVNqiOdK20jiqQR0cvluPQEwLDAaY=
+	t=1780166618; cv=none; b=AlcDBQnp6UZZieB9F3W7iNX3eSSHMeGriyO3EAlZhr/zayNwyJWRrHQv2peQJciGq/wOQ6TxrQJYOMy20xrzPJZHcAZ9ywEpCcPqdmJRbwP7pdv3eBkU6OV/55BC0nJQ6KoqA0bdR67lhacR1opcYOpeyNoM22SeAnddz6jghtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166615; c=relaxed/simple;
-	bh=yiS5F5rG+1f93if6c+XqVMEI9PSB3SIVruFRdcxpPf8=;
+	s=arc-20240116; t=1780166618; c=relaxed/simple;
+	bh=vlvlUb3xk1qceuyV9hUtiGxfWhk5vtyXF3JDqbxpo+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjRU2M4H1cJHdJJ24QdoHkkvq5/KGIWPfRnYQqe2YrDece9vVm9aUd5znoKFVbqXCllb0bz11wzdZnXg0mDiZwiutBuzUFKFDE+HNWLqTEvuzARUh3C7XxNuMbKpR6xU01AbHQFqwlHmImqFnlzAdSYSJBRpAYh6+6X33BSDrf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoQtHqX5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a46YVR5k5O3/0oUzVPwYSmLYyMd0cc2R+2VVcSWOS+/2YWz/ohiVEQzNss5NuvIU1nOvtgdLDu6QBaPfElb6E4iEyE3643IaMV7h/aA8d/MXyQRVZmCDleqwuibOXnFqD0Suv16BqFlKhndq2/73baG0NCd+jEaTIVK27Kuyf/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrcWaJh2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoQtHqX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68F01F00893;
-	Sat, 30 May 2026 18:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrcWaJh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4751F00893;
+	Sat, 30 May 2026 18:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166614;
-	bh=CO0bfo//mrzBHFN2hUf8VIhGcU5tE89FdrBX4y3SIbo=;
+	s=korg; t=1780166617;
+	bh=LWQfYAPj87ZmUe7/DDKa8Pkt23rXym3RvdPrXPrFJtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NoQtHqX58ybxuLCL3WB1HwfQ2x0MKbWr9hPAVdFKRDWL8BMxgXVjygXDUG5zbVa++
-	 uiKOjo4UtvYkDEwznfqLq+Jr/dFj4oaQXIam2y/HRgdsUa1sBoVk8VSKIl256gvPo5
-	 FpqzdnnxLP7+rMXsMejHHmbcwT0foQHfW2jpoleM=
+	b=TrcWaJh2DHUXxxuqQID5t8yGRKzNMTzoKSs9potDYPbPq8LRlyyJWiMsi7Dxm3VJr
+	 ToOBw/BNLJRgEOp9PbvAOqqfijjmOy4cKLiymixttEG62bHzmyb9Mox8oU7ohixuVv
+	 I6WadDaD1XN8Lk8xWusmC9mQhFYt+tD+zBEKpAaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 418/589] net/sched: taprio: replace safety precautions with comments
-Date: Sat, 30 May 2026 18:04:59 +0200
-Message-ID: <20260530160235.732535362@linuxfoundation.org>
+Subject: [PATCH 5.10 419/589] net/sched: taprio: continue with other TXQs if one dequeue() failed
+Date: Sat, 30 May 2026 18:05:00 +0200
+Message-ID: <20260530160235.755614136@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,92 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 2c08a4f898d0a8e08f431709a1ae728a6fddaabd ]
+[ Upstream commit 1638bbbe4ececa615b273497d347d59ad71060a2 ]
 
-The WARN_ON_ONCE() checks introduced in commit 13511704f8d7 ("net:
-taprio offload: enforce qdisc to netdev queue mapping") take a small
-toll on performance, but otherwise, the conditions are never expected to
-happen. Replace them with comments, such that the information is still
-conveyed to developers.
+This changes the handling of an unlikely condition to not stop dequeuing
+if taprio failed to dequeue the peeked skb in taprio_dequeue().
+
+I've no idea when this can happen, but the only side effect seems to be
+that the atomic_sub_return() call right above will have consumed some
+budget. This isn't a big deal, since either that made us remain without
+any budget (and therefore, we'd exit on the next peeked skb anyway), or
+we could send some packets from other TXQs.
+
+I'm making this change because in a future patch I'll be refactoring the
+dequeue procedure to simplify it, and this corner case will have to go
+away.
 
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 105425b1969c ("net/sched: taprio: fix use-after-free in advance_sched() on schedule switch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ net/sched/sch_taprio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index b3b62ee6093d2..62251ae4f4407 100644
+index 62251ae4f4407..8fe4dea86ad98 100644
 --- a/net/sched/sch_taprio.c
 +++ b/net/sched/sch_taprio.c
-@@ -434,6 +434,9 @@ static int taprio_enqueue_one(struct sk_buff *skb, struct Qdisc *sch,
- 	return qdisc_enqueue(skb, child, to_free);
- }
+@@ -618,7 +618,7 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
  
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			  struct sk_buff **to_free)
- {
-@@ -441,11 +444,6 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct Qdisc *child;
- 	int queue;
+ 		skb = child->ops->dequeue(child);
+ 		if (unlikely(!skb))
+-			goto done;
++			continue;
  
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to enqueue skb into the root of a taprio qdisc configured with full offload\n");
--		return qdisc_drop(skb, sch, to_free);
--	}
--
- 	queue = skb_get_queue_mapping(skb);
- 
- 	child = q->qdiscs[queue];
-@@ -491,6 +489,9 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	return taprio_enqueue_one(skb, sch, child, to_free);
- }
- 
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static struct sk_buff *taprio_peek(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
-@@ -500,11 +501,6 @@ static struct sk_buff *taprio_peek(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to peek into the root of a taprio qdisc configured with full offload\n");
--		return NULL;
--	}
--
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	gate_mask = entry ? entry->gate_mask : TAPRIO_ALL_GATES_OPEN;
-@@ -547,6 +543,9 @@ static void taprio_set_budget(struct taprio_sched *q, struct sched_entry *entry)
- 			     atomic64_read(&q->picos_per_byte)));
- }
- 
-+/* Will not be called in the full offload case, since the TX queues are
-+ * attached to the Qdisc created using qdisc_create_dflt()
-+ */
- static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
-@@ -556,11 +555,6 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
--	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
--		WARN_ONCE(1, "Trying to dequeue from the root of a taprio qdisc configured with full offload\n");
--		return NULL;
--	}
--
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	/* if there's no entry, it means that the schedule didn't
+ skb_found:
+ 		qdisc_bstats_update(sch, skb);
 -- 
 2.53.0
 
