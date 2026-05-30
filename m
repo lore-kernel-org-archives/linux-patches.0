@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA7A25B095;
-	Sat, 30 May 2026 17:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ADF261B9E;
+	Sat, 30 May 2026 17:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163552; cv=none; b=JzkHxJeDmZK67FKes6mBb8rfKCZ5NPDfX3jn/uX0gZ3aKzyZlo5WeAEnsOFJ60ieuaH+9I+zf5nIU+728u3zAvk3H4OA42QPbwMpI31eFIvEg56emlvU9TLwc3FPvtFYMqdCBsr7O4PFjMz867aIJy1M/MFM4tkXdbyLci2zHKU=
+	t=1780163555; cv=none; b=gkHSdHLFKin9HPDr9A3QNxtFSfLM9z8ZUCCrFw6NETaUk4GPpHow+ymntBNJD7m8ZyRhfT8R/j4bE/gUjE001wPd5ypUmUrDeyju4vNwFF/61cmv6kFHtJzEkw/yDnX43b8kG/d9W0NSw47RYI3ZI+TydoBeR+yKQFyFeCuk/+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163552; c=relaxed/simple;
-	bh=E6vT35PAUeKvv/H9yyFTFOO5JYvPII8EnogEWoPDWpM=;
+	s=arc-20240116; t=1780163555; c=relaxed/simple;
+	bh=dLMjPKUrWOEUQYq1X7gQboVPfBQ0+LQx3qaYSDYOEEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uD/H0BfP8pRVD9Qrix17MujqsU4vJtgFYQKneaAMzQfmnqehk8Wf1JuVY83ItPz7a6QTJ2ZeloSxxFTirvSEoG7CW2oy+YzNTgaPGQhjpQTUGIsz3IUrSkuHyZKpcYWgRp4X/9XA7vQSzubiZ+3lwRPK2Qd7kkexdiDDLfi3jlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9aBAV48; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oGTKB+J8xhoR0Q8BLvtL/gVXL5KQqwsLY74q9QGcX2CfP4wa51Jf1jEyD/O6uOWwWNegyrIhJ3yk0ImFqMvtAEF7IPHbyKOEeGWqdEcbaUnhd6zjg73ouSpHZiHQwXoFkCyLVm2U2c3j3+zY48YcDxtAHVBLhwIYJmU6jldf1Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIr11EBW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9aBAV48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9BC1F00893;
-	Sat, 30 May 2026 17:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIr11EBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BBC1F00893;
+	Sat, 30 May 2026 17:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163551;
-	bh=rTOeqTj5NfS4ZSTxHVgl5aG5OYGhFlGyQXPVQR0kWeM=;
+	s=korg; t=1780163554;
+	bh=4lWp+KprSDtIC82REbXzGkRIAgZ2bluQgy9qmW4AiJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9aBAV48uFu8ELjIBg2mqGnHgrUC/mfsIbKJwbv8fTJOHb46vTz0vVxURvtG5Z6gV
-	 anASVQDUE7PDtpo5mDo328HgTqe/XE5wTTFWrkzoVTzORVh3ntl6c1se2D4hsmmvrA
-	 rBNG3ifSo8MtFj90iJltB2Dnof3UMbz7LbpI1aLo=
+	b=BIr11EBWntIyl9FBSQzngMccCpdXDBcgUx7n+c1HiY9pTnrZeLBXEWfD44oV+qNJv
+	 RfedRACNBSQEvsm8cBIACnbKhwvpRuiPfKriputaX/NoixT/ve4SR5buZgJcpGCbK/
+	 1N1YvKqhVd10EpRKeUokuHJUYHHF12sY1xoLFIkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Vincent Danjean <vdanjean@debian.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.15 291/776] wifi: ath5k: do not access array OOB
-Date: Sat, 30 May 2026 18:00:05 +0200
-Message-ID: <20260530160248.080152913@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 264/776] ALSA: caiaq: Fix potentially leftover ep1_in_urb at error path
+Date: Sat, 30 May 2026 17:59:38 +0200
+Message-ID: <20260530160247.363153194@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,63 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit d748603f12baff112caa3ab7d39f50100f010dbd upstream.
+commit 0a7b5221b5b51cc798fcfc3be00d02eade149d69 upstream.
 
-Vincent reports:
-> The ath5k driver seems to do an array-index-out-of-bounds access as
-> shown by the UBSAN kernel message:
-> UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath5k/base.c:1741:20
-> index 4 is out of range for type 'ieee80211_tx_rate [4]'
-> ...
-> Call Trace:
->  <TASK>
->  dump_stack_lvl+0x5d/0x80
->  ubsan_epilogue+0x5/0x2b
->  __ubsan_handle_out_of_bounds.cold+0x46/0x4b
->  ath5k_tasklet_tx+0x4e0/0x560 [ath5k]
->  tasklet_action_common+0xb5/0x1c0
+The previous fix for handling the error from setup_card() missed that
+an internal URB cdev->ep1_in_urb might have been already submitted
+beforehand.  In the normal case, this URB gets killed at the
+disconnection, but in the error path, we didn't do it, hence there can
+be a potential leak.
 
-It is real. 'ts->ts_final_idx' can be 3 on 5212, so:
-   info->status.rates[ts->ts_final_idx + 1].idx = -1;
-with the array defined as:
-   struct ieee80211_tx_rate rates[IEEE80211_TX_MAX_RATES];
-while the size is:
-   #define IEEE80211_TX_MAX_RATES  4
-is indeed bogus.
+Fix it in the error path for setup_card(), too.
 
-Set this 'idx = -1' sentinel only if the array index is less than the
-array size. As mac80211 will not look at rates beyond the size
-(IEEE80211_TX_MAX_RATES).
-
-Note: The effect of the OOB write is negligible. It just overwrites the
-next member of info->status, i.e. ack_signal.
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reported-by: Vincent Danjean <vdanjean@debian.org>
-Link: https://lore.kernel.org/all/aQYUkIaT87ccDCin@eldamar.lan
-Closes: https://bugs.debian.org/1119093
-Fixes: 6d7b97b23e11 ("ath5k: fix tx status reporting issues")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209100459.2253198-1-jirislaby@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260427123819.890185-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath5k/base.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath5k/base.c
-+++ b/drivers/net/wireless/ath/ath5k/base.c
-@@ -1692,7 +1692,8 @@ ath5k_tx_frame_completed(struct ath5k_hw
- 	}
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -514,7 +514,7 @@ static int init_card(struct snd_usb_caia
+ 	card->private_free = card_free;
+ 	err = setup_card(cdev);
+ 	if (err < 0)
+-		return err;
++		goto err_kill_urb;
  
- 	info->status.rates[ts->ts_final_idx].count = ts->ts_final_retry;
--	info->status.rates[ts->ts_final_idx + 1].idx = -1;
-+	if (ts->ts_final_idx + 1 < IEEE80211_TX_MAX_RATES)
-+		info->status.rates[ts->ts_final_idx + 1].idx = -1;
+ 	return 0;
  
- 	if (unlikely(ts->ts_status)) {
- 		ah->stats.ack_fail++;
 
 
