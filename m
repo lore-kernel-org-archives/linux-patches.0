@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF7D3ACF17;
-	Sat, 30 May 2026 17:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27213ACF17;
+	Sat, 30 May 2026 17:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162210; cv=none; b=DS9WP5kyNi/4WoA93bFd8F94NfC0zNzfpE3YLw2P0XgBg83i3MkhxW8CWYHz3BOXdfhGh0ZqmtnAgnDgk8jZCTxzkvSjx5mIn0nzbQyOIVW8o6Dy2B5kiR+pL+WmgJWGWUUvaPRw/JChmfZnc2ZEatSRiHCTCqYCVUhEvUFAdRU=
+	t=1780162213; cv=none; b=XGuIG/eN62xH3wWnI9//Gf0f1OHKA0oYsNqlsokVuxvWCQ+EGpMlFMSZo4A2Sb2lfpaG7DS/o0+xT5+YKZjvHE1QlD+eeM/GHSzo0gkCv/K4KcIJ8hCCkuu1yhpgEpeCvu5sBUnyG3XmW7WJivev+tKtW/dCa/rpITxVLzWINxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162210; c=relaxed/simple;
-	bh=Y7RRJb7rnqE+ehGwdKFcISfqnMkw9zRPflPuU71SFzw=;
+	s=arc-20240116; t=1780162213; c=relaxed/simple;
+	bh=W7Kg75O7H74qMZI2PK/d6ql1pGS3a0AW3zIFr1LcEbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbG4SJQ6gl9xQtF0hrm8yq6j5tMWSmMyWDovKiktuwNjAPB4C9nmzfzrHBC5+GSz4uuIxzkbXtSkpPz/U7SvTnajSJARi3N2pK8vrafm08HR3ijK0uZEsnd+AgMLayrpG1NEv1GTF5u0yIPSTvIvxp0bWUyorBMphjDWicrXW4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzMbngzO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MSxhXrxxjAmOZq21YrCHySDrh6nQqCAANTWr3NoOPb4fEDoJFgxHReRwfKdNgn1GJ3x3sVdJzAzyj8NPKeRcPv0CwQ5NUI6RkGZv/Zkk0uiz0g9USMJS1StdiOOFfu7Wpxixg4MsAb1SiGl2O7HnuyI3GftclQ5gANF2UszIPQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwDxKloV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzMbngzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609021F00893;
-	Sat, 30 May 2026 17:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwDxKloV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD671F00893;
+	Sat, 30 May 2026 17:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162209;
-	bh=sbMamuw/C1I85JMjEyjnHM8dUdkGUCksBcRopl9S51I=;
+	s=korg; t=1780162212;
+	bh=bwmk/SYxaN5Kh6NllNlmW5xu95uL1rmsv/+K7oxPssI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzMbngzOoI/oZONb+oWTUyzVfTZ/1uuuFVcA/4gl8KYCan2K/LVYa6P6Bid58Mb9h
-	 QAY+Iq2lrnNabhLsNbk7iCIVxOwUlN/t/PRq8weP0psaZ9vomgzuZJhw5Q3+4L50dW
-	 4DfzSxbyevxTZgFruxO3bc8Ob09fWgeMyxiF36Wo=
+	b=xwDxKloVYC5jBz8unzIa9lgYok/x+hsfsStZkXdQlk9quUFNfNlfG01f0h09hQiuQ
+	 SZPSfDExMq44+9dXQhl+G24LaLC4IXgsNaGH9RqWrfNRjLsjcrp3SmnPjh0ZYFbfoj
+	 EIqwQoRZzY2Nh76c64uxmDUazUJ+dsPMNEznznwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
+	Nan Li <tonanli66@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 853/969] netfilter: nf_queue: hold bridge skb->dev while queued
-Date: Sat, 30 May 2026 18:06:17 +0200
-Message-ID: <20260530160324.220199042@linuxfoundation.org>
+Subject: [PATCH 6.1 854/969] netfilter: ipset: stop hash:* range iteration at end
+Date: Sat, 30 May 2026 18:06:18 +0200
+Message-ID: <20260530160324.247400127@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -56,90 +56,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Nan Li <tonanli66@gmail.com>
 
-commit e196115ec330a18de415bdb9f5071aa9f08e53ce upstream.
+commit 0d3a282ab5f165fc207ff49ea5b6ad8f54616bd6 upstream.
 
-br_pass_frame_up() rewrites skb->dev from the ingress port to the bridge
-master before queueing bridge LOCAL_IN packets. NFQUEUE only holds
-references on state.in/out and bridge physdevs, so a queued bridge
-packet can retain a freed bridge master in skb->dev until reinjection.
+The following hash set variants:
 
-When the verdict is reinjected later, br_netif_receive_skb() re-enters
-the receive path with skb->dev still pointing at the freed bridge master,
-triggering a use-after-free.
+hash:ip,mark
+hash:ip,port
+hash:ip,port,ip
+hash:ip,port,net
 
-Store skb->dev in the queue entry, hold a reference on it for the queue
-lifetime, and use the saved device when dropping queued packets during
-NETDEV_DOWN handling.
+iterate IPv4 ranges with a 32-bit iterator.
 
-Fixes: ac2863445686 ("netfilter: bridge: add nf_afinfo to enable queuing to userspace")
+The iterator must stop once the last address in the requested range has
+been processed. Advancing it once more can move the traversal state past
+the end of the request, so a later retry may continue from an unintended
+position.
+
+Handle the iterator increment explicitly at the end of the loop and stop
+once the upper bound has been processed. This keeps the existing retry
+behaviour intact for valid ranges while preventing traversal from
+continuing past the original boundary.
+
+Fixes: 48596a8ddc46 ("netfilter: ipset: Fix adding an IPv4 range containing more than 2^31 addresses")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_queue.h |    1 +
- net/netfilter/nf_queue.c         |    4 +++-
- net/netfilter/nfnetlink_queue.c  |    2 ++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_hash_ipmark.c    |    6 +++++-
+ net/netfilter/ipset/ip_set_hash_ipport.c    |    5 ++++-
+ net/netfilter/ipset/ip_set_hash_ipportip.c  |    5 ++++-
+ net/netfilter/ipset/ip_set_hash_ipportnet.c |    5 ++++-
+ 4 files changed, 17 insertions(+), 4 deletions(-)
 
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -12,6 +12,7 @@
- struct nf_queue_entry {
- 	struct list_head	list;
- 	struct sk_buff		*skb;
-+	struct net_device	*skb_dev;
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -60,6 +60,7 @@ static void nf_queue_entry_release_refs(
- 	struct nf_hook_state *state = &entry->state;
+--- a/net/netfilter/ipset/ip_set_hash_ipmark.c
++++ b/net/netfilter/ipset/ip_set_hash_ipmark.c
+@@ -150,7 +150,7 @@ hash_ipmark4_uadt(struct ip_set *set, st
  
- 	/* Release those devices we held, or Alexey will kill me. */
-+	dev_put(entry->skb_dev);
- 	dev_put(state->in);
- 	dev_put(state->out);
- 	if (state->sk)
-@@ -101,6 +102,7 @@ bool nf_queue_entry_get_refs(struct nf_q
- 	if (state->sk && !refcount_inc_not_zero(&state->sk->sk_refcnt))
- 		return false;
+ 	if (retried)
+ 		ip = ntohl(h->next.ip);
+-	for (; ip <= ip_to; ip++, i++) {
++	for (; ip <= ip_to; i++) {
+ 		e.ip = htonl(ip);
+ 		if (i > IPSET_MAX_RANGE) {
+ 			hash_ipmark4_data_next(&h->next, &e);
+@@ -162,6 +162,10 @@ hash_ipmark4_uadt(struct ip_set *set, st
+ 			return ret;
  
-+	dev_hold(entry->skb_dev);
- 	dev_hold(state->in);
- 	dev_hold(state->out);
+ 		ret = 0;
++
++		if (ip == ip_to)
++			break;
++		ip++;
+ 	}
+ 	return ret;
+ }
+--- a/net/netfilter/ipset/ip_set_hash_ipport.c
++++ b/net/netfilter/ipset/ip_set_hash_ipport.c
+@@ -175,7 +175,7 @@ hash_ipport4_uadt(struct ip_set *set, st
  
-@@ -201,11 +203,11 @@ static int __nf_queue(struct sk_buff *sk
+ 	if (retried)
+ 		ip = ntohl(h->next.ip);
+-	for (; ip <= ip_to; ip++) {
++	for (; ip <= ip_to;) {
+ 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
+ 						       : port;
+ 		for (; p <= port_to; p++, i++) {
+@@ -192,6 +192,9 @@ hash_ipport4_uadt(struct ip_set *set, st
  
- 	*entry = (struct nf_queue_entry) {
- 		.skb	= skb,
-+		.skb_dev = skb->dev,
- 		.state	= *state,
- 		.hook_index = index,
- 		.size	= sizeof(*entry) + route_key_size,
- 	};
--
- 	__nf_queue_entry_init_physdevs(entry);
+ 			ret = 0;
+ 		}
++		if (ip == ip_to)
++			break;
++		ip++;
+ 	}
+ 	return ret;
+ }
+--- a/net/netfilter/ipset/ip_set_hash_ipportip.c
++++ b/net/netfilter/ipset/ip_set_hash_ipportip.c
+@@ -182,7 +182,7 @@ hash_ipportip4_uadt(struct ip_set *set,
  
- 	if (!nf_queue_entry_get_refs(entry)) {
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -951,6 +951,8 @@ dev_cmp(struct nf_queue_entry *entry, un
- 	if (physinif == ifindex || physoutif == ifindex)
- 		return 1;
- #endif
-+	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
-+		return 1;
- 	if (entry->state.in)
- 		if (entry->state.in->ifindex == ifindex)
- 			return 1;
+ 	if (retried)
+ 		ip = ntohl(h->next.ip);
+-	for (; ip <= ip_to; ip++) {
++	for (; ip <= ip_to;) {
+ 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
+ 						       : port;
+ 		for (; p <= port_to; p++, i++) {
+@@ -199,6 +199,9 @@ hash_ipportip4_uadt(struct ip_set *set,
+ 
+ 			ret = 0;
+ 		}
++		if (ip == ip_to)
++			break;
++		ip++;
+ 	}
+ 	return ret;
+ }
+--- a/net/netfilter/ipset/ip_set_hash_ipportnet.c
++++ b/net/netfilter/ipset/ip_set_hash_ipportnet.c
+@@ -274,7 +274,7 @@ hash_ipportnet4_uadt(struct ip_set *set,
+ 		p = port;
+ 		ip2 = ip2_from;
+ 	}
+-	for (; ip <= ip_to; ip++) {
++	for (; ip <= ip_to;) {
+ 		e.ip = htonl(ip);
+ 		for (; p <= port_to; p++) {
+ 			e.port = htons(p);
+@@ -298,6 +298,9 @@ hash_ipportnet4_uadt(struct ip_set *set,
+ 			ip2 = ip2_from;
+ 		}
+ 		p = port;
++		if (ip == ip_to)
++			break;
++		ip++;
+ 	}
+ 	return ret;
+ }
 
 
