@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4163403F3;
-	Sat, 30 May 2026 16:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8245C26F288;
+	Sat, 30 May 2026 16:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159611; cv=none; b=Gu3L5d3wBAWQLS0a/UkcqdpciNqPOITGG4Tqm4ym8lTQJyY2D9kaQVtm8s16sdfpzqP+DSIIW2sjGRVDjeuSTxcu+I9tyX6XmqOE46MKYsoUCS9sONM67IXEbQ9EVxzA7h8xIxP4PTTaIDJ+fa1RAXRUdeSvHZhkVhPgj+dIzhM=
+	t=1780159628; cv=none; b=V6nyMXPrzDYkODVV7j0uy1I2ZTMCol4K7ASCeKcWL41ZVxBIgQCQrq9GRTL/MLk8X0LZzxAL7efIs3aW8SUp9DIuiDtEWZG1eTqbhwnTc1ugVG36tbwQOYfmkfkEAJQP3rw0a0NVs5FCw4sS7Z/tfVPIaQVpHn3cB+yWzyf4ZYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159611; c=relaxed/simple;
-	bh=vBcs0cpkL2FlAD6mkeQUzyvTk/LwfCdVgq2NCXEY/iw=;
+	s=arc-20240116; t=1780159628; c=relaxed/simple;
+	bh=M3J8IWEmV5mZGV8CyDrZ9FaOcI/gdAdUTz1hXsj2JOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpEZCyUvSr8BBpzHu7GX0TjUrUCM4DjT6b8/XczhC9mgY+VYIwMz0it/sfilKYTShSIdjSmIHBR+YLv8Rh+TTbWlWkNfyINphVsJjAgSJYAwwMpedXY/FAJcIegpDOPmxdAeNxPootmHyVskR/ZF0lAsSW4crjKg+DabwOhzXeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCY9KH9v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NI8yhbinX9KYUo1v3K9VpKa+M+FtiRtuqpphHateDpmphvWUh803yy5VLtMttJ97mHHjrRTlUxOzvx55I92v8OpBWB56xlrzG5mJyHCdv8cWdIF+dM2Sbu2v+zMQn0G69XcJtpVxaOErxrNCcS0ASK/gN52HSrK9FMhPGWyPa5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzBtceoJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCY9KH9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E571F00893;
-	Sat, 30 May 2026 16:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzBtceoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEA71F00893;
+	Sat, 30 May 2026 16:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159609;
-	bh=hshnHYQ44Hw/oe/ij6HytY9UPRaRAw2CwYor9utt4J0=;
+	s=korg; t=1780159627;
+	bh=B8VuMoZs7GQKiKGVJZpQIBdMhFezdHCCB0+ZfrBPdUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oCY9KH9vwtofSO6JuuFJOaqxCZoEmo3VZCXwi6JECa2SQlRpQycycAjmxonweXu2R
-	 oNa5aqI6KE0VexXZEDOmgTnHJbuH3QGkIb8KJdNPh7rnFHN2QjvLOg/PAs4QAbDQX2
-	 PAtOlNHH1Vn5TsdDVvylWPudwJpxGYreDqSYGD2A=
+	b=DzBtceoJe9xMXPMjfzlt0MwDbIl16jF44dpryxIyOyHrBrFMKOAw+aK5VKox97CuN
+	 nOm2ixlRah/PuQPFQpkcsQwtl1h/m0wqIMK3y7HSxOAm5I/raVLvgbLchuEWZe7EKT
+	 V5vHzvsQN1y8AmlJv9upxxFFh59tLaWsksXtugUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/969] rxrpc: reject undecryptable rxkad response tickets
-Date: Sat, 30 May 2026 17:54:11 +0200
-Message-ID: <20260530160304.076791932@linuxfoundation.org>
+	syzbot+4e7919b09c67ffd198ae@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
+	Robert Garcia <rob_garcia@163.com>
+Subject: [PATCH 6.1 136/969] ALSA: control: Avoid WARN() for symlink errors
+Date: Sat, 30 May 2026 17:54:20 +0200
+Message-ID: <20260530160304.322198915@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -62,60 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 ]
+commit b2e538a9827dd04ab5273bf4be8eb2edb84357b0 upstream.
 
-rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
-parses the buffer as plaintext without checking whether
-crypto_skcipher_decrypt() succeeded.
+Using WARN() for showing the error of symlink creations don't give
+more information than telling that something goes wrong, since the
+usual code path is a lregister callback from each control element
+creation.  More badly, the use of WARN() rather confuses fuzzer as if
+it were serious issues.
 
-A malformed RESPONSE can therefore use a non-block-aligned ticket
-length, make the decrypt operation fail, and still drive the ticket
-parser with attacker-controlled bytes.
+This patch downgrades the warning messages to use the normal dev_err()
+instead of WARN().  For making it clearer, add the function name to
+the prefix, too.
 
-Check the decrypt result and abort the connection with RXKADBADTICKET
-when ticket decryption fails.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted `rxrpc_abort_conn()` call to existing `goto other_error` error-handling pattern ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
+Reported-by: syzbot+4e7919b09c67ffd198ae@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/675664c7.050a0220.a30f1.018c.GAE@google.com
+Link: https://patch.msgid.link/20241209095614.4273-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ Use card->ctl_dev.kobj to keep struct consistent. ]
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxkad.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/core/control_led.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -1013,8 +1013,13 @@ static int rxkad_decrypt_ticket(struct r
- 	sg_init_one(&sg[0], ticket, ticket_len);
- 	skcipher_request_set_callback(req, 0, NULL, NULL);
- 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
--	crypto_skcipher_decrypt(req);
-+	ret = crypto_skcipher_decrypt(req);
- 	skcipher_request_free(req);
-+	if (ret < 0) {
-+		abort_code = RXKADBADTICKET;
-+		ret = -EPROTO;
-+		goto other_error;
-+	}
+--- a/sound/core/control_led.c
++++ b/sound/core/control_led.c
+@@ -688,10 +688,16 @@ static void snd_ctl_led_sysfs_add(struct
+ 			goto cerr;
+ 		led->cards[card->number] = led_card;
+ 		snprintf(link_name, sizeof(link_name), "led-%s", led->name);
+-		WARN(sysfs_create_link(&card->ctl_dev.kobj, &led_card->dev.kobj, link_name),
+-			"can't create symlink to controlC%i device\n", card->number);
+-		WARN(sysfs_create_link(&led_card->dev.kobj, &card->card_dev.kobj, "card"),
+-			"can't create symlink to card%i\n", card->number);
++		if (sysfs_create_link(&card->ctl_dev.kobj, &led_card->dev.kobj,
++				      link_name))
++			dev_err(card->dev,
++				"%s: can't create symlink to controlC%i device\n",
++				 __func__, card->number);
++		if (sysfs_create_link(&led_card->dev.kobj, &card->card_dev.kobj,
++				      "card"))
++			dev_err(card->dev,
++				"%s: can't create symlink to card%i\n",
++				__func__, card->number);
  
- 	p = ticket;
- 	end = p + ticket_len;
+ 		continue;
+ cerr:
 
 
