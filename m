@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C92233D9E;
-	Sat, 30 May 2026 18:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3323A17555;
+	Sat, 30 May 2026 18:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165160; cv=none; b=cskQTQ/0lSIT9tk/U9Fyye7ASg+G2bZv3G2szM7rdobSb/EN8u5LemjKbos8hiDHUYnO3ZlO2gxeodQJ0OKsoGzEkOfs6lU91hszF0rv/pR6lKAsITLjDNUot3L4+1/5OgbboV5gcfcw4yeR4v++CF0rxwBsqfuv9QB2ACFW5SU=
+	t=1780165164; cv=none; b=qrpnGl67irmtNSekVT3uoByk3pAqHXuDv0jB5IEsABDVtRSijUA7Sjl86kSOIAO8Y7QYVNqBnFadLCPTV/rNOTb/MbnQhtM8K1FHwtwWf5V7Hw3f07jEYykb60x1005XQ2DQFwjqlAS6c4+jS26/ltw4+f9c8kZ26RP1B+AcsGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165160; c=relaxed/simple;
-	bh=flN0Fy6w2PKR925sLwN12oyTXwkUvxXZ8o4ztFbEQj0=;
+	s=arc-20240116; t=1780165164; c=relaxed/simple;
+	bh=oNbVAzfeTp71Olbp72Vx8VkIMYpvDIXUmJFRYCRC34Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GJ5Y7c7GTKB/8mMvZ4eErObqtLupeWOfLDuDfr5ocIbYotrzAdqomXG8YRYOiZKOCZHXeeKv2vxUExdr3twZwG/MNVnQrfN7seXxHepbrapQ4F0uTRmrYyfX/n5vGWN6FpmW4OJ3lEdYYgIMPK6uL8bM/ZTCKVvBFfU6UyoAl18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlNLPgzF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hiVkkDYnXABHlomk00kzJyXQhFXDdxJ+r5b/YoOMJZMBd2hw/CXiw+1SEOdQOM0CDf7u47lC01I+3p1xfof1OwAyh7ftARd5qKoErDU3C2aHXpKMxzh+wK2nrX/g/Gxs7Kv8JXtSGcISxnBXaUtc6eW/X7SSK4LcBg2a4TPovcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEei/1kf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlNLPgzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A461F00893;
-	Sat, 30 May 2026 18:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEei/1kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763BF1F00893;
+	Sat, 30 May 2026 18:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165159;
-	bh=xtY7+pJ54HN/D9NDaOKVSOuUDt4VUadunGx/apicezA=;
+	s=korg; t=1780165163;
+	bh=aJQj4UktZ/C0g7WFra54ILAsVGTax52UGw6uR4Kbhn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zlNLPgzFukV2iiLWSv9BxPErQATOhFX0PuUlMoWulMjomoJeMEVWee7q9DWCj95Ui
-	 3peanaR3Z+iFFsUHLfvmsjqsWRodgUOsXoAjad0dzyeGdZj44B28muR5vBHg8ooXzJ
-	 KWgd2zjH5mhnLksK62o38zQjeO8YGf4rGSnRHzeA=
+	b=iEei/1kfiFngZrrxOG+vb7wP0FkzvQESwBhh14/PPSRfF84aX/fITDfvrdI+ABcCn
+	 8PFRfbuO8kwbQ0Y5g1AkVALquXCP/NcVxI6xOmSMSoGVLSXRTcvPK0VSqEe6T/3vc+
+	 nYqfdTylXlZk6AVGM3cwMjSn03OsjOrGGxJCy5e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 767/776] platform/x86: intel-vbtn: Check ACPI_HANDLE() against NULL
-Date: Sat, 30 May 2026 18:08:01 +0200
-Message-ID: <20260530160259.547696022@linuxfoundation.org>
+Subject: [PATCH 5.15 750/776] net: ethernet: cortina: Carry over frag counter
+Date: Sat, 30 May 2026 18:07:44 +0200
+Message-ID: <20260530160259.149501100@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,58 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit a9f305c5a355efeb240d406d378491d9eec02d07 ]
+[ Upstream commit ebd8ec2b309e3a447851b456ccaf8fb39f3661e7 ]
 
-Every platform driver can be forced to match a device that doesn't match
-its list of device IDs because of device_match_driver_override(), so
-platform drivers that rely on the existence of a device's ACPI companion
-object need to verify its presence.
+The gmac_rx() NAPI poll function assembles packets in an
+SKB from a ring buffer.
 
-Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
-platform/x86 intel-vbtn driver.
+If the ring buffer gets completely emptied during a poll cycle,
+we exit gmac_rx(), but the packet is not yet completely
+assembled in the SKB, yet the fragment counter frag_nr is
+reset to zero on the next invocation.
 
-Fixes: 26173179fae1 ("platform/x86: intel-vbtn: Eval VBDL after registering our notifier")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/3426431.aeNJFYEL58@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Solve this by making the RX fragment counter a part of the
+port struct, and carry it over between invocations.
+
+Reset the fragment counter only right after calling
+napi_gro_frags(), on error (after calling napi_free_frags())
+or if stopping the port.
+
+Reset it in some place where not strictly necessary just to
+emphasize what is going on.
+
+This was found by Sashiko during normal patch review.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-3-6c5d20ddc35b@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vbtn.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
-index 4e9d3f25c35d0..0906530b2bad4 100644
---- a/drivers/platform/x86/intel/vbtn.c
-+++ b/drivers/platform/x86/intel/vbtn.c
-@@ -272,12 +272,16 @@ static bool intel_vbtn_has_switches(acpi_handle handle, bool dual_accel)
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index be2b106b4aa27..8cc3cca1f4bd4 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -121,6 +121,7 @@ struct gemini_ethernet_port {
+ 	struct hrtimer		rx_coalesce_timer;
+ 	unsigned int		rx_coalesce_nsecs;
+ 	struct sk_buff		*rx_skb;
++	unsigned int		rx_frag_nr;
  
- static int intel_vbtn_probe(struct platform_device *device)
- {
--	acpi_handle handle = ACPI_HANDLE(&device->dev);
- 	bool dual_accel, has_buttons, has_switches;
- 	struct intel_vbtn_priv *priv;
-+	acpi_handle handle;
- 	acpi_status status;
- 	int err;
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+@@ -1413,6 +1414,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+ 	struct gemini_ethernet *geth = port->geth;
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
++	unsigned int frag_nr = port->rx_frag_nr;
+ 	struct sk_buff *skb = port->rx_skb;
+ 	unsigned int frame_len, frag_len;
+ 	struct gmac_rxdesc *rx = NULL;
+@@ -1426,7 +1428,6 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+-	int frag_nr = 0;
  
-+	handle = ACPI_HANDLE(&device->dev);
-+	if (!handle)
-+		return -ENODEV;
-+
- 	dual_accel = dual_accel_detect();
- 	has_buttons = acpi_has_method(handle, "VBDL");
- 	has_switches = intel_vbtn_has_switches(handle, dual_accel);
+ 	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+@@ -1466,6 +1467,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
+ 				skb = NULL;
++				frag_nr = 0;
+ 			}
+ 			continue;
+ 		}
+@@ -1476,6 +1478,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
+ 				skb = NULL;
++				frag_nr = 0;
+ 			}
+ 
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+@@ -1510,6 +1513,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		if (word3.bits32 & EOF_BIT) {
+ 			napi_gro_frags(&port->napi);
+ 			skb = NULL;
++			frag_nr = 0;
+ 			--budget;
+ 		}
+ 		continue;
+@@ -1518,6 +1522,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		if (skb) {
+ 			napi_free_frags(&port->napi);
+ 			skb = NULL;
++			frag_nr = 0;
+ 		}
+ 
+ 		if (mapping)
+@@ -1527,6 +1532,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	}
+ 
+ 	port->rx_skb = skb;
++	port->rx_frag_nr = frag_nr;
+ 	writew(r, ptr_reg);
+ 	return budget;
+ }
+@@ -1856,6 +1862,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	gmac_stop_dma(port);
+ 	napi_disable(&port->napi);
+ 	port->rx_skb = NULL;
++	port->rx_frag_nr = 0;
+ 
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
