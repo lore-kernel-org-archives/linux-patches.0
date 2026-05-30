@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30133AFAE2;
-	Sat, 30 May 2026 17:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7D93AA182;
+	Sat, 30 May 2026 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162628; cv=none; b=f5haCU9qwOKYcetUWAY0e12gUGd6XGOu7R4z3jb8xbiwwrbZhtTiJVlmR2pOTKCZnEu4EFhFf08ofepVWjxfeTN0M1mWZzTavyPyXajxfjJ4mTu6OrbG8qR3KlSKAVdY7xEJuG7Z8Zi9PmfLrFUIiDNcl3Wju7O1tVgrHW6QT7k=
+	t=1780162631; cv=none; b=tSHV155uyX9XxginoOuZNajj7AOKduuq6LdqHkrK6y1Ic4wfbVZfJ8BOfv6arZ7Uh4t2JMXak6yy4I+XncZyz4vqHzI/TT2+eMZHSzXS/wjooMy0bQKwJjCv+m21DOdG1o17X9898ICWwp91si2dBfWECiuY7yXqLoNUAaxlf0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162628; c=relaxed/simple;
-	bh=uiD8K+wYrqD/SmjhiVmwbHMGqd4M6N4eDvjyFakobWQ=;
+	s=arc-20240116; t=1780162631; c=relaxed/simple;
+	bh=Cr/Ytsi5kDMnl0l79wH7seCcnbox1dP6sEjY2CHECSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHiZWIMBVex+ba+QO1mnr1bN8rtDJD3QQ5Osyb9wyBM725B0zfkT7CO7lfw+gPfEL/c8lJhQ7sx5D3z7TMDqyGKUw3TfxjqdwmZ8sxwSlB5ptsOHxQmTPY05lwq6/imEQ8mPG4z45j15yfKZ1Br4nYYihb7dVVVcw9/fGx1LGIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJxHCtJE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFAj0XsDZOXv9v2V+/yYQXVRzGyXBwhwVhrqUrOj9cJtqalnh4jaXyIUo3l8ZViFcfrtQ+0eR9T2hEpv1wlMvOUYvZAvxNnBJvwcHUBrW4qEFg7TZBkvArkdvXENuWAv8dg6DssLvjvo7rqtzM5Q0iFnC/xWWupgs0MNiDeppFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKoC3vm7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJxHCtJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92841F00893;
-	Sat, 30 May 2026 17:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKoC3vm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9B31F00893;
+	Sat, 30 May 2026 17:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162626;
-	bh=LnuRw32cWOymJufuPKdcXxqEcQcFEExmwpOXG4O4E0Q=;
+	s=korg; t=1780162629;
+	bh=Vgkd4CKvMeed8LhN+8EVVU7Oz9Ml6+UMKq1GTQdvAxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJxHCtJE9O7ukhnR7d8Tz1mKOaLIU4/9+DH4fMSIyTxZ/kjQRN2WdwDn3yz0nZlVt
-	 GRF/nAV5zOEOEqrue9xxfbQVsD2gMBu3Kao6ofXsRq3UrS+v9fxDSb7flJdMxhuc4U
-	 XuX1Eed9PG0eQUPv58BXoIm1KybqeHRlWTsyg70Q=
+	b=hKoC3vm7aXHSxyc9TDNsgLoSZQmosqTfMN4sEPkOnCzIsMtVb0wKlW5j5r8ZQnRsn
+	 OkzGVl34kbEfllHY1CMc73K723q1pJqWAPm/XcKnQw+aFKaXAQvKCfdAZ2So5yssry
+	 f/HEbR7S4nn3Uv1Nf3WEavxr35oKxffb6+zgght8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Wang <yuleopen@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Phil Willoughby <willerz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Peng Fan <peng.fan@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/776] ALSA: usb-audio: Fix quirk flags for NeuralDSP Quad Cortex
-Date: Sat, 30 May 2026 17:55:23 +0200
-Message-ID: <20260530160240.493270302@linuxfoundation.org>
+Subject: [PATCH 5.15 018/776] arm64: dts: imx8mq: Set the correct gpu_ahb clock frequency
+Date: Sat, 30 May 2026 17:55:32 +0200
+Message-ID: <20260530160240.735311284@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,39 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Willoughby <willerz@gmail.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit bc5b4e5ae1a67700a618328217b6a3bd0f296e97 ]
+[ Upstream commit 1f99b5d93d99ca17d50b386a674d0ce1f20932d8 ]
 
-The NeuralDSP Quad Cortex does not support DSD playback. We need
-this product-specific entry with zero quirks because otherwise it
-falls through to the vendor-specific entry which marks it as
-supporting DSD playback.
+According to i.MX 8M Quad Reference Manual, GPU_AHB_CLK_ROOT's maximum
+frequency is 400MHz.
 
-Cc: Yue Wang <yuleopen@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Phil Willoughby <willerz@gmail.com>
-Link: https://patch.msgid.link/20260328080921.3310-1-willerz@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 45d2c84eb3a2 ("arm64: dts: imx8mq: add GPU node")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 33a1a35485721..4cf2f48b401ee 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1863,6 +1863,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
-+		   0), /* Doesn't have the vendor quirk which would otherwise apply */
- 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index e41e1c553bd37..12a33ac9e7543 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -1362,7 +1362,7 @@ gpu: gpu@38000000 {
+ 			                         <&clk IMX8MQ_GPU_PLL_OUT>,
+ 			                         <&clk IMX8MQ_GPU_PLL>;
+ 			assigned-clock-rates = <800000000>, <800000000>,
+-			                       <800000000>, <800000000>, <0>;
++			                       <800000000>, <400000000>, <0>;
+ 			power-domains = <&pgc_gpu>;
+ 		};
+ 
 -- 
 2.53.0
 
