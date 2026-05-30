@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AB830676E;
-	Sat, 30 May 2026 17:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E6F2E7379;
+	Sat, 30 May 2026 17:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162346; cv=none; b=BjyS3hjl/akvSXEUq5mmGC1PxI5HtpJQNpgMwfdnyrH1/jlAcLNUAjEh7m9G6sRYTjbncKB70kEDCRsHPCcYyxCB78k/LBjBE11wjFhDs4QrahkP5wkzm8u0Glo7CpHJA07BwPCNjmHdOIeK1nJP+bdzFCMARBDJwlzoSLUxp7U=
+	t=1780162350; cv=none; b=P4fqP9NFnU9hPzGT48ImJatRcQtz2xlZzz1ql02y57AARN7DE5Y4fZVm40J/sqeY6kjsSA7ttrl5QYuzwxHKBzbbBB4Kg632PlW3uQ/WzxkR4tktZnsETUG8vCzcJWxmqi4xxXn2S/Ab8aslbYUD9ud0yclgpoiIY5siBszs6HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162346; c=relaxed/simple;
-	bh=/5rQ8l8SaQ7VRnJLuAmZI+jdIVccaxJOMPPzau85OV0=;
+	s=arc-20240116; t=1780162350; c=relaxed/simple;
+	bh=eQ3Cye2jnWlltySVwz3+S5prZCxRyOJ3iFnyiLPEw7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XH2drEsKrbX/Uax7aHBk9ZQZfUmvvGp/7DGnaejzRytzolApy8n2Tcfce6mukfDCiNZ8KI5tHroMtl+QyA4BJq08PsV/RZ/d0yR6gVDA6blyDc655UmrKkvrwuhWIbMARlAx3vOR8j95rs7cmBE5TzBqSHdqQyv3KpYGgfzU3LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tnv91tyg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bxxfgWTVYoLWSx8eIR3S1f65fDRuXKNBZYJWKxYxXB0GVZFt2th38gB317ZndJ4Y/htmgwss/dxbmseJ1gpRKgUYeHqdw/dcfFV11b0OLxmjG8B3elljcTxpOtU17XuQS0be7TcB5WgvGj4Fs8KPdwB9ek0FBVwtCZfbsfbWep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIqo4VUV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tnv91tyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2261F00893;
-	Sat, 30 May 2026 17:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIqo4VUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EF31F00893;
+	Sat, 30 May 2026 17:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162345;
-	bh=cd2m8yUZ5G4ISwTqrUo2X1SGuG6j3W2XCxy5IoLvVCg=;
+	s=korg; t=1780162349;
+	bh=/1pYjem+MzQUWKPtwmJAsszbp5Va2b7LtlGZPf9p+gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tnv91tygyANajLn+ANxUzAkW0jCNig9jkAU+2WE3m+u5SPGGhCa2yVyyFSIJfrSrd
-	 wJut/r4cYDIXlZjF4LMBlvT2wqK2xcQb4/51WqAuR6J02O1sEO7Ya1B5rshZRmiF4I
-	 bceuQIs/x4nRaQymmKLGo4S6lQV7M4qrhr4uIGFs=
+	b=DIqo4VUVhYv7OgUuJ7klLPNS1zFvGucLQ3PNM0q5OjSH5+12bZvX53viBAchuTHpI
+	 4/SIWJaWXMO0UlkBSCauajHDACZynFTBNTROCdLyZuA7Qck5c0N7PQpsVC1qdb8o0l
+	 2vHH4KyCGGepgIwgZddu0tKxrxa85aWnOedFUYHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 893/969] hwmon: (pmbus/adm1266) bounce blackbox records through a protocol-sized buffer
-Date: Sat, 30 May 2026 18:06:57 +0200
-Message-ID: <20260530160325.363657403@linuxfoundation.org>
+Subject: [PATCH 6.1 894/969] hwmon: (pmbus/adm1266) cap PDIO scan in get_multiple at ADM1266_PDIO_NR
+Date: Sat, 30 May 2026 18:06:58 +0200
+Message-ID: <20260530160325.390905981@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,67 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 43cae21424ff8e33894a0f86c6b80b840c049fd7 upstream.
+commit d7834d92251baade796812876e95555e2066fa9f upstream.
 
-adm1266_pmbus_block_xfer() copies the device-supplied block payload
-into the caller-provided buffer using the device-supplied length:
+adm1266_gpio_get_multiple() iterates the PDIO portion of the
+caller-supplied mask using
 
-	memcpy(data_r, &msgs[1].buf[1], msgs[1].buf[0]);
+	for_each_set_bit_from(gpio_nr, mask,
+			      ADM1266_GPIO_NR + ADM1266_PDIO_STATUS) {
+		...
+	}
 
-The helper does not know how large data_r is and trusts the device to
-return at most one record's worth of bytes.  adm1266_nvmem_read_blackbox()
-violates that contract: it advances read_buff inside data->dev_mem in
-ADM1266_BLACKBOX_SIZE (64-byte) strides while the helper is willing to
-write up to ADM1266_PMBUS_BLOCK_MAX (255) bytes.  A device that returns
-more than 64 bytes on the trailing record (read_buff offset 1984 in
-the 2048-byte dev_mem allocation) overflows dev_mem by up to 191 bytes
-before the post-call
+where ADM1266_PDIO_STATUS is the PMBus command code (0xE9, i.e. 233),
+not the number of PDIO pins.  The intended upper bound is
+ADM1266_GPIO_NR + ADM1266_PDIO_NR = 25.
 
-	if (ret != ADM1266_BLACKBOX_SIZE)
-		return -EIO;
+gpiolib hands in a mask sized for gc.ngpio (= 25 bits on this chip),
+so the iteration walks find_next_bit() up to 242, reading up to 217
+extra bits (a handful of unsigned-long words: four on 64-bit, seven
+on 32-bit) of whatever lives past the end of the mask in the
+caller's stack.  Any incidental set bit in that range then drives a
+set_bit(gpio_nr, bits) call that writes past the end of the
+caller-supplied bits array too -- both out-of-bounds.
 
-can reject the response.
+Substitute ADM1266_PDIO_NR for the constant so the scan stops at the
+last real PDIO bit.
 
-Contain the fix in the caller without changing the helper signature:
-read each record into a 255-byte local bounce buffer that matches the
-helper's maximum output, validate the returned length, and only then
-copy exactly ADM1266_BLACKBOX_SIZE bytes into the dev_mem slot.
-
-Fixes: 407dc802a9c0 ("hwmon: (pmbus/adm1266) Add Block process call")
+Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-5-1c1ea1349cfe@nexthop.ai
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-1-e425e4f88139@nexthop.ai
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/hwmon/pmbus/adm1266.c
 +++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -350,6 +350,7 @@ static void adm1266_init_debugfs(struct
+@@ -212,7 +212,7 @@ static int adm1266_gpio_get_multiple(str
+ 	status = read_buf[0] + (read_buf[1] << 8);
  
- static int adm1266_nvmem_read_blackbox(struct adm1266_data *data, u8 *read_buff)
- {
-+	u8 record[ADM1266_PMBUS_BLOCK_MAX];
- 	int record_count;
- 	char index;
- 	u8 buf[I2C_SMBUS_BLOCK_MAX];
-@@ -367,13 +368,14 @@ static int adm1266_nvmem_read_blackbox(s
- 		return -EIO;
- 
- 	for (index = 0; index < record_count; index++) {
--		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
-+		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, record);
- 		if (ret < 0)
- 			return ret;
- 
- 		if (ret != ADM1266_BLACKBOX_SIZE)
- 			return -EIO;
- 
-+		memcpy(read_buff, record, ADM1266_BLACKBOX_SIZE);
- 		read_buff += ADM1266_BLACKBOX_SIZE;
+ 	*bits = 0;
+-	for_each_set_bit_from(gpio_nr, mask, ADM1266_GPIO_NR + ADM1266_PDIO_STATUS) {
++	for_each_set_bit_from(gpio_nr, mask, ADM1266_GPIO_NR + ADM1266_PDIO_NR) {
+ 		if (test_bit(gpio_nr - ADM1266_GPIO_NR, &status))
+ 			set_bit(gpio_nr, bits);
  	}
- 
 
 
