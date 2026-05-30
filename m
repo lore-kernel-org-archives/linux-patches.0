@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D273AEB5C;
-	Sat, 30 May 2026 17:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A28D3AFD11;
+	Sat, 30 May 2026 17:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160832; cv=none; b=tjcoSrvX7YXCTB825l3GHi3ZO9GfUyL2lHeyZimAgfEtI4H1lHi7eX+G88IqGbEAj87nqVwr4VN02w/WodQRRmVLUjU7lTTryiG/OHiBeKjY6lqMQn7hcB084BzKiOPumGlc2eZezdIjUyYLXXzaRV4cfQIMxf6N8cl6i8Yy1xI=
+	t=1780160836; cv=none; b=vBgeuWw2XuIXhZdMQLBCsGYfdOK7g7bDQhSC55wdxj8R4P4idfd9ANicVZqWQKZsBBuTNN+1lbKCgmHLdwdf6ZzL9cdO/N+MfvzeV6qGDIzd+yoQeN5ezIQUJaGvoZtpXRgHklcQ9v/gCf2LSeNku6eQAvH0jxiNeGD4Xq1Jj70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160832; c=relaxed/simple;
-	bh=biFCRMYqVMsMgahVvwzCp1EO7I4zX32Ulolw2RtN+t8=;
+	s=arc-20240116; t=1780160836; c=relaxed/simple;
+	bh=Zu6UFIURj7nBAvO6mLXHpRxr+jXWTRbbDvevJTuDp0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8ial6q+V/uVc96V+Ftr+JGowr7BVo8Ip9NzJTEJS0eUGuU83eK05t7+4TI4DZj/q2/b45sS6F6eLb7B/zkcwoHITgcNz1gxwtC3w0UUnxfr0B3T8WOAON3cdozD5rHXsxqm618505H81YH3JzuIz49PJtIABtlx7UQYugqIlbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc9sRizo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rhGP0VPKZpGTbPB8FP1lYtRji1HzdgA4CJnhoz+ocfnJAE3dPy2XEXybSgGXm0fwpImQQblY1WQy4t1SW5pAohHnPvKphBe34F0U9JtIGpXqJ1dKIwmlvlo9llXee7whnde3Jm1CT3nqmpGvLBTJhBN58IWZpnO0GWIylzM6tJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lf2FvjvI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc9sRizo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453DA1F00893;
-	Sat, 30 May 2026 17:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lf2FvjvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7621F00893;
+	Sat, 30 May 2026 17:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160830;
-	bh=Z8I5oZYAt5uz1BsE3AJXBmaSZrtrto4oL+dlfMIccV8=;
+	s=korg; t=1780160835;
+	bh=SMKSPe0UoiRUftRDenKXjn1/8xCbi2aX9vlEc2uMF2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uc9sRizo4fLnBzlPRtyGDvRtic8euyePtrSeB8uEHFJfuO6ziMvvuNh+b38qtTcJv
-	 wGsPx+49airSISpvVW12Qlzqm1WnzQ3XKhYhK2gTtRk2qgp4CZNd9QljZh3f2k3MDl
-	 UyBewMksMuUVXCubL3RbrnTbart+40rKGKs61N5M=
+	b=Lf2FvjvI5kkGoxFM/bCdyNwN2gmgAICNaSsM+OFaP4EWCB5b70/LkFzcO/w6Cxt4p
+	 Gl/rJdxTrkxh0LFus0G5ieCsOh4+cjaVqOGVTz+n4Rt+7DcsZV+7e/7xQJE72nWJot
+	 CM3cRMFyaTNM1EaJ3HkykAokKo+w5c9zUyjXGEkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yun Lu <luyun@kylinos.cn>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/969] bpf: Add CHECKSUM_COMPLETE to bpf test progs
-Date: Sat, 30 May 2026 17:59:32 +0200
-Message-ID: <20260530160312.646740296@linuxfoundation.org>
+Subject: [PATCH 6.1 449/969] bpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap
+Date: Sat, 30 May 2026 17:59:33 +0200
+Message-ID: <20260530160312.674540969@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,115 +55,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit a3cfe84cca28f205761a0450016593b0d728165e ]
+[ Upstream commit 972787479ee73006fddb5e59ab5c8e733810ff42 ]
 
-Add special flag to validate that TC BPF program properly updates
-checksum information in skb.
+The bpf_lwt_xmit_push_encap helper needs to access skb_dst(skb)->dev to
+calculate the needed headroom:
 
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240606145851.229116-1-vadfed@meta.com
-Stable-dep-of: 972787479ee7 ("bpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap")
+	err = skb_cow_head(skb,
+			   len + LL_RESERVED_SPACE(skb_dst(skb)->dev));
+
+But skb->_skb_refdst may not be initialized when the skb is set up by
+bpf_prog_test_run_skb function. Executing bpf_lwt_push_ip_encap function
+in this scenario will trigger null pointer dereference, causing a kernel
+crash as Yinhao reported:
+
+[  105.186365] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  105.186382] #PF: supervisor read access in kernel mode
+[  105.186388] #PF: error_code(0x0000) - not-present page
+[  105.186393] PGD 121d3d067 P4D 121d3d067 PUD 106c83067 PMD 0
+[  105.186404] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[  105.186412] CPU: 3 PID: 3250 Comm: poc Kdump: loaded Not tainted 6.19.0-rc5 #1
+[  105.186423] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  105.186427] RIP: 0010:bpf_lwt_push_ip_encap+0x1eb/0x520
+[  105.186443] Code: 0f 84 de 01 00 00 0f b7 4a 04 66 85 c9 0f 85 47 01 00 00 31 c0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc 48 8b 73 58 48 83 e6 fe <48> 8b 36 0f b7 be ec 00 00 00 0f b7 b6 e6 00 00 00 01 fe 83 e6 f0
+[  105.186449] RSP: 0018:ffffbb0e0387bc50 EFLAGS: 00010246
+[  105.186455] RAX: 000000000000004e RBX: ffff94c74e036500 RCX: ffff94c74874da00
+[  105.186460] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff94c74e036500
+[  105.186463] RBP: 0000000000000001 R08: 0000000000000002 R09: 0000000000000000
+[  105.186467] R10: ffffbb0e0387bd50 R11: 0000000000000000 R12: ffffbb0e0387bc98
+[  105.186471] R13: 0000000000000014 R14: 0000000000000000 R15: 0000000000000002
+[  105.186484] FS:  00007f166aa4d680(0000) GS:ffff94c8b7780000(0000) knlGS:0000000000000000
+[  105.186490] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  105.186494] CR2: 0000000000000000 CR3: 000000015eade001 CR4: 0000000000770ee0
+[  105.186499] PKRU: 55555554
+[  105.186502] Call Trace:
+[  105.186507]  <TASK>
+[  105.186513]  bpf_lwt_xmit_push_encap+0x2b/0x40
+[  105.186522]  bpf_prog_a75eaad51e517912+0x41/0x49
+[  105.186536]  ? kvm_clock_get_cycles+0x18/0x30
+[  105.186547]  ? ktime_get+0x3c/0xa0
+[  105.186554]  bpf_test_run+0x195/0x320
+[  105.186563]  ? bpf_test_run+0x10f/0x320
+[  105.186579]  bpf_prog_test_run_skb+0x2f5/0x4f0
+[  105.186590]  __sys_bpf+0x69c/0xa40
+[  105.186603]  __x64_sys_bpf+0x1e/0x30
+[  105.186611]  do_syscall_64+0x59/0x110
+[  105.186620]  entry_SYSCALL_64_after_hwframe+0x76/0xe0
+[  105.186649] RIP: 0033:0x7f166a97455d
+
+Temporarily add the setting of skb->_skb_refdst before bpf_test_run to resolve the issue.
+
+Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Closes: https://groups.google.com/g/hust-os-kernel-patches/c/8-a0kPpBW2s
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260304094429.168521-2-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       |  2 ++
- net/bpf/test_run.c             | 28 +++++++++++++++++++++++++++-
- tools/include/uapi/linux/bpf.h |  2 ++
- 3 files changed, 31 insertions(+), 1 deletion(-)
+ net/bpf/test_run.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index 216d1f0009791..600b10c50fdd9 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -1286,6 +1286,8 @@ enum {
- #define BPF_F_TEST_RUN_ON_CPU	(1U << 0)
- /* If set, XDP frames will be transmitted after processing */
- #define BPF_F_TEST_XDP_LIVE_FRAMES	(1U << 1)
-+/* If set, apply CHECKSUM_COMPLETE to skb and validate the checksum */
-+#define BPF_F_TEST_SKB_CHECKSUM_COMPLETE	(1U << 2)
- 
- /* type for BPF_ENABLE_STATS */
- enum bpf_stats_type {
 diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 9cbdfb9fd6743..2b8daf1cb6885 100644
+index 2b8daf1cb6885..51259647c65fb 100644
 --- a/net/bpf/test_run.c
 +++ b/net/bpf/test_run.c
-@@ -1099,7 +1099,8 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	void *data;
- 	int ret;
+@@ -1200,6 +1200,21 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		skb->ip_summed = CHECKSUM_COMPLETE;
+ 	}
  
--	if (kattr->test.flags || kattr->test.cpu || kattr->test.batch_size)
-+	if ((kattr->test.flags & ~BPF_F_TEST_SKB_CHECKSUM_COMPLETE) ||
-+	    kattr->test.cpu || kattr->test.batch_size)
- 		return -EINVAL;
- 
- 	if (size < ETH_HLEN)
-@@ -1150,6 +1151,7 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 
- 	skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN);
- 	__skb_put(skb, size);
-+
- 	if (ctx && ctx->ifindex > 1) {
- 		dev = dev_get_by_index(net, ctx->ifindex);
- 		if (!dev) {
-@@ -1185,9 +1187,19 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		__skb_push(skb, hh_len);
- 	if (is_direct_pkt_access)
- 		bpf_compute_data_pointers(skb);
-+
- 	ret = convert___skb_to_skb(skb, ctx);
- 	if (ret)
- 		goto out;
-+
-+	if (kattr->test.flags & BPF_F_TEST_SKB_CHECKSUM_COMPLETE) {
-+		const int off = skb_network_offset(skb);
-+		int len = skb->len - off;
-+
-+		skb->csum = skb_checksum(skb, off, len, 0);
-+		skb->ip_summed = CHECKSUM_COMPLETE;
++	if (prog->type == BPF_PROG_TYPE_LWT_XMIT) {
++		if (!ipv6_bpf_stub) {
++			pr_warn_once("Please test this program with the IPv6 module loaded\n");
++			ret = -EOPNOTSUPP;
++			goto out;
++		}
++#if IS_ENABLED(CONFIG_IPV6)
++		/* For CONFIG_IPV6=n, ipv6_bpf_stub is NULL which is
++		 * handled by the above if statement.
++		 */
++		dst_hold(&net->ipv6.ip6_null_entry->dst);
++		skb_dst_set(skb, &net->ipv6.ip6_null_entry->dst);
++#endif
 +	}
 +
  	ret = bpf_test_run(prog, skb, repeat, &retval, &duration, false);
  	if (ret)
  		goto out;
-@@ -1202,6 +1214,20 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		}
- 		memset(__skb_push(skb, hh_len), 0, hh_len);
- 	}
-+
-+	if (kattr->test.flags & BPF_F_TEST_SKB_CHECKSUM_COMPLETE) {
-+		const int off = skb_network_offset(skb);
-+		int len = skb->len - off;
-+		__wsum csum;
-+
-+		csum = skb_checksum(skb, off, len, 0);
-+
-+		if (csum_fold(skb->csum) != csum_fold(csum)) {
-+			ret = -EBADMSG;
-+			goto out;
-+		}
-+	}
-+
- 	convert_skb_to___skb(skb, ctx);
- 
- 	size = skb->len;
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index 39818b6e0293c..cbdc5299f6bf7 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -1286,6 +1286,8 @@ enum {
- #define BPF_F_TEST_RUN_ON_CPU	(1U << 0)
- /* If set, XDP frames will be transmitted after processing */
- #define BPF_F_TEST_XDP_LIVE_FRAMES	(1U << 1)
-+/* If set, apply CHECKSUM_COMPLETE to skb and validate the checksum */
-+#define BPF_F_TEST_SKB_CHECKSUM_COMPLETE	(1U << 2)
- 
- /* type for BPF_ENABLE_STATS */
- enum bpf_stats_type {
 -- 
 2.53.0
 
