@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCEC25B08A;
-	Sat, 30 May 2026 18:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F73331A56;
+	Sat, 30 May 2026 18:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166435; cv=none; b=HRHPmI6nIzCEF7wmd2jJkSkJX6C/5zMIMFIqOqUcvFJkWrntXvXrjntcHGqTtqU/Q0chIA1kOqs2Qw0FCth7gn0aBL/05gMjgMfx488lClvfH1g3T3x+IB7iT2LsYC8wTAXh4gkT8LqjYOYNHoDUPh+xbRDF5Hhn1Hog/Ch7Owg=
+	t=1780166439; cv=none; b=WmktYb99NzOEkg7FuriLqYQ9CrfSxp/tI1blHRix2DunD5rvGurYMQGEgn56s9c6lOPI76ei1KikQUa92KVAqIwFNcLMhUxeECqvKyX0xF306dC0NZbtxRvDFnvWjBcIVDZA57rXAz34buC+r2KP9cKT6i/Feeloeed0H7mjK0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166435; c=relaxed/simple;
-	bh=gqc1/eD5q76G3TGgKnrW8aI+8l61XI8VRrsy1N2Q87g=;
+	s=arc-20240116; t=1780166439; c=relaxed/simple;
+	bh=Dz4lMF2rSBQU+4qt4+FuVZk286ru49NZxso8Y7BWZ+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q53htsVPGhqx0gJS7Zuoeth0TR8ZV9CASUPYJvL419pCt6aa2L9+dsCN6uS2BT3QrlJDLgs4O9S5qLavQLIVbKXIkYEq1LUL1ODkphC3ahWV7JonOL/wHBc8J1As9DPzGJvxdmZgN0lRXW0gwaFfJpmR/JHTpoItxMbu4Sv6pAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dymGMNqt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvOC56TaaBfnTBqLknWANvvNUrmfPqqVv7epcmL0iRn5aM4UZXe3emTFACrBhRKc2LT4O6p3e12RgCTmHQ53s1CAkrlcXM438Q+cHzdrHeJbK9A9McUg9+ZKh7+T1p/H2Qre58nkljTb54uFZJmnmaEY6s+3kZeqLS277FCGrDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzrhF1GD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dymGMNqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40F21F00893;
-	Sat, 30 May 2026 18:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzrhF1GD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238821F00893;
+	Sat, 30 May 2026 18:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166434;
-	bh=Z7RJv6FzeHGKkk6vivhOHA9XaiDv82IQ/ioYsX+uXx8=;
+	s=korg; t=1780166437;
+	bh=QpvGpSt6FF/2lFExAwCFEuPm5oAzTq7ezIkrG1hOGv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dymGMNqthrdqT8D6U9/O6YCiJEdOqH/RNjkCIyyoYzv5eJL+VRZqFsyFfNZzVkZdv
-	 ozTt4eyLGy3WlArrfRVKpLtAZ4MEZ52zhTLbxQf9Z4aPSQzhbif586Hp5PF8aNxt2g
-	 v42LTTdTr7G/wWYbhAf2woaDtxKOT4Ph9Eg3U30g=
+	b=nzrhF1GD2gozHWQ6ITW626EWvgZX85U3LVaPaBNlKS98wywfVGQcZ7f2uL8y8odx4
+	 SGkekJ2/qLMGtgsa7o/sSL8pooxhUVgQh164LRWChrXpDgzmgknnhr2kKIDGawIEl3
+	 boSah49638O07mCgFzJni7gZAXxEw1nUI2lt0kGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Zanussi <zanussi@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Daniel Hodges <hodgesd@meta.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 373/589] tracing: Rebuild full_name on each hist_field_name() call
-Date: Sat, 30 May 2026 18:04:14 +0200
-Message-ID: <20260530160234.621568704@linuxfoundation.org>
+Subject: [PATCH 5.10 374/589] ima: check return value of crypto_shash_final() in boot aggregate
+Date: Sat, 30 May 2026 18:04:15 +0200
+Message-ID: <20260530160234.646023560@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Daniel Hodges <hodgesd@meta.com>
 
-[ Upstream commit 5ec1d1e97de134beed3a5b08235a60fc1c51af96 ]
+[ Upstream commit 870819434c8dfcc3158033b66e7851b81bb17e21 ]
 
-hist_field_name() uses a static MAX_FILTER_STR_VAL buffer for fully
-qualified variable-reference names, but it currently appends into that
-buffer with strcat() without rebuilding it first. As a result, repeated
-calls append a new "system.event.field" name onto the previous one,
-which can eventually run past the end of full_name.
+The return value of crypto_shash_final() is not checked in
+ima_calc_boot_aggregate_tfm(). If the hash finalization fails, the
+function returns success and a corrupted boot aggregate digest could
+be used for IMA measurements.
 
-Build the name with snprintf() on each call and return NULL if the fully
-qualified name does not fit in MAX_FILTER_STR_VAL.
+Capture the return value and propagate any error to the caller.
 
-Link: https://patch.msgid.link/20260401112224.85582-1-pengpeng@iscas.ac.cn
-Fixes: 067fe038e70f ("tracing: Add variable reference handling to hist triggers")
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Tested-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 76bb28f6126f ("ima: use new crypto_shash API instead of old crypto_hash")
+Signed-off-by: Daniel Hodges <hodgesd@meta.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ security/integrity/ima/ima_crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index f499838d9103f..381d7e3989ada 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1100,12 +1100,14 @@ static const char *hist_field_name(struct hist_field *field,
- 		 field->flags & HIST_FIELD_FL_VAR_REF) {
- 		if (field->system) {
- 			static char full_name[MAX_FILTER_STR_VAL];
-+			int len;
-+
-+			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
-+				       field->system, field->event_name,
-+				       field->name);
-+			if (len >= sizeof(full_name))
-+				return NULL;
+diff --git a/security/integrity/ima/ima_crypto.c b/security/integrity/ima/ima_crypto.c
+index b1e5e7749e416..4ce45910b0fd0 100644
+--- a/security/integrity/ima/ima_crypto.c
++++ b/security/integrity/ima/ima_crypto.c
+@@ -837,7 +837,7 @@ static int ima_calc_boot_aggregate_tfm(char *digest, u16 alg_id,
+ 		}
+ 	}
+ 	if (!rc)
+-		crypto_shash_final(shash, digest);
++		rc = crypto_shash_final(shash, digest);
+ 	return rc;
+ }
  
--			strcat(full_name, field->system);
--			strcat(full_name, ".");
--			strcat(full_name, field->event_name);
--			strcat(full_name, ".");
--			strcat(full_name, field->name);
- 			field_name = full_name;
- 		} else
- 			field_name = field->name;
 -- 
 2.53.0
 
