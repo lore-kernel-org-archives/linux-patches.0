@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E96226738C;
-	Sat, 30 May 2026 18:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DD9351C2F;
+	Sat, 30 May 2026 18:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166308; cv=none; b=O2TZxl5N8/rGFNPCuX33+L38kj62RsZoVQnYHDE58a9dRUVHnrxQVUI7HMwHS0x12Dgq74NEaEJRR03dme2ijV2mt2mT/PHpabAObrQ86dDUaSOSfiUwIgOEIU4Ba3tHnxkxfyCpYwyJX2L5bIeXtLvGQpS/dVjoNAuLsferaTc=
+	t=1780166311; cv=none; b=ap6Mzj41Rong1bYJHar6GnUwYc67MznbQIXtOdN4IALfQGjAgzvrepCiZRlmSLbv6jKyWNMCu9HjyQnLwz+MDbkjtxi6IGp/0rmM1Lil2O/NKNPewM7kuZOS4PrEznlDPrbvMMJqKxhw5ChzxRyK3+wVrLrefcOzwrcNow61yuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166308; c=relaxed/simple;
-	bh=BtOjaUMbRVOOlSsfMfLnuElHMXZtPz1v7TwA5m7T1lI=;
+	s=arc-20240116; t=1780166311; c=relaxed/simple;
+	bh=pu2ujlzRtGOTAiv3fFWsXbAfPabftRROKKIAIa3vpPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bG5BsCVqvgb8RKSnMwbNCF5C/qbdrmJaj5MuWt/eA9dT1WiPziBG1fwPYK1HhHiu+nl1Ey6eryJXv4C2rIy1oBldGz//xz2g5WpHIjU2KFZhhDxLr61dgUkduut0uTpAW6gRR9v10cZfDz80orNRYylnrU1kdHEqq67eCdviBII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUTyvEiT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VuKDikhnN+wt+wgF7X05B7KJ1ViTih6GptdqiJtX+3CqS5Q/7jYUpNrzwB/MiBaCuMxCTdPmE/WO7IGxEVGlUDAVFi+vNwiDsJmeT64VUUcREdieq++JtZOPoKe+XaEiP4wy4oWpJneYiB7Ik/+T6Ei1ePBsignNVJujbdc23v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5l+S6Yu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUTyvEiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728C31F00893;
-	Sat, 30 May 2026 18:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5l+S6Yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC18E1F00893;
+	Sat, 30 May 2026 18:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166307;
-	bh=Ba/2fltFEUvEV4ACbv6/8abZwQ5MGxxkqX41coqsBpk=;
+	s=korg; t=1780166310;
+	bh=p67/AkF7wGfyN0l1WH1NPyM0qPA2QnpCI/tLOByAnAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sUTyvEiTfNNWdRRuzYDMnaOLFbeuOs1APttMyYZ8fRCFjKwJ/Ar0JgsGax+x6/4K+
-	 JXyFFOMdyNjYTUW48PopPRM0dpS+0dqR8zlkp304Odae5wXfTEyK+jY15YBZn2QATC
-	 BFF33SAED2B4IRdDxmelP3Rs3KiGMmRSzA1yBaew=
+	b=D5l+S6YuHlICKzVZ0aYvZ8JOe79ZE+bpSU0LDpPxRwAPPBvKuSlaqFFosu1gM+4Og
+	 CBZruZJXuOrs1Oo0b43JrHaNiBqTxfTkFY/0xt6S6NTVKjzNYJKri/+e0DlxaG5ZzY
+	 qqDFQshPzXObJHm/7dqJj7FkpdL5mvzZ8JVRUxJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Koul <vkoul@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 335/589] ALSA: compress: Drop unused functions
-Date: Sat, 30 May 2026 18:03:36 +0200
-Message-ID: <20260530160233.708664179@linuxfoundation.org>
+Subject: [PATCH 5.10 336/589] ALSA: core: Validate compress device numbers without dynamic minors
+Date: Sat, 30 May 2026 18:03:37 +0200
+Message-ID: <20260530160233.734774134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -46,130 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit fc93c96fe34e10b873fef73e80cee52503f3a679 ]
+[ Upstream commit 796e119e9b14763be905ad0d023c71a14bc2e931 ]
 
-snd_compress_register() and snd_compress_deregister() API functions
-have been never used by in-tree drivers.
-Let's clean up the dead code.
+Without CONFIG_SND_DYNAMIC_MINORS, ALSA reserves only two fixed minors
+for compress devices on each card: comprD0 and comprD1.
 
-Acked-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20210714162424.4412-2-tiwai@suse.de
+snd_find_free_minor() currently computes the compress minor as
+type + dev without validating dev first, so device numbers greater than
+1 spill into the HWDEP minor range instead of failing registration.
+
+ASoC passes rtd->id to snd_compress_new(), so this can happen on real
+non-dynamic-minor builds.
+
+Add a dedicated fixed-minor check for SNDRV_DEVICE_TYPE_COMPRESS in
+snd_find_free_minor() and reject out-of-range device numbers with
+-EINVAL before constructing the minor.
+
+Also remove the stale TODO in compress_offload.c that still claims
+multiple compress nodes are missing.
+
+Fixes: 3eafc959b32f ("ALSA: core: add support for compressed devices")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260325-alsa-compress-static-minors-v1-1-0628573bee1c@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 796e119e9b14 ("ALSA: core: Validate compress device numbers without dynamic minors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/compress_driver.h |  2 -
- sound/core/compress_offload.c   | 68 ---------------------------------
- 2 files changed, 70 deletions(-)
+ sound/core/compress_offload.c | 7 -------
+ sound/core/sound.c            | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/sound/compress_driver.h b/include/sound/compress_driver.h
-index 70cbc5095e725..c74bf9931fb33 100644
---- a/include/sound/compress_driver.h
-+++ b/include/sound/compress_driver.h
-@@ -161,8 +161,6 @@ struct snd_compr {
- };
- 
- /* compress device register APIs */
--int snd_compress_register(struct snd_compr *device);
--int snd_compress_deregister(struct snd_compr *device);
- int snd_compress_new(struct snd_card *card, int device,
- 			int type, const char *id, struct snd_compr *compr);
- 
 diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index c1fec932c49d1..8d1f71a621787 100644
+index 8d1f71a621787..222ea652edf37 100644
 --- a/sound/core/compress_offload.c
 +++ b/sound/core/compress_offload.c
-@@ -47,8 +47,6 @@
-  *	driver should be able to register multiple nodes
-  */
+@@ -40,13 +40,6 @@
+ #define COMPR_CODEC_CAPS_OVERFLOW
+ #endif
  
--static DEFINE_MUTEX(device_mutex);
+-/* TODO:
+- * - add substream support for multiple devices in case of
+- *	SND_DYNAMIC_MINORS is not used
+- * - Multiple node representation
+- *	driver should be able to register multiple nodes
+- */
 -
  struct snd_compr_file {
  	unsigned long caps;
  	struct snd_compr_stream stream;
-@@ -1170,72 +1168,6 @@ int snd_compress_new(struct snd_card *card, int device,
- }
- EXPORT_SYMBOL_GPL(snd_compress_new);
- 
--static int snd_compress_add_device(struct snd_compr *device)
--{
--	int ret;
--
--	if (!device->card)
--		return -EINVAL;
--
--	/* register the card */
--	ret = snd_card_register(device->card);
--	if (ret)
--		goto out;
--	return 0;
--
--out:
--	pr_err("failed with %d\n", ret);
--	return ret;
--
--}
--
--static int snd_compress_remove_device(struct snd_compr *device)
--{
--	return snd_card_free(device->card);
--}
--
--/**
-- * snd_compress_register - register compressed device
-- *
-- * @device: compressed device to register
-- */
--int snd_compress_register(struct snd_compr *device)
--{
--	int retval;
--
--	if (device->name == NULL || device->ops == NULL)
--		return -EINVAL;
--
--	pr_debug("Registering compressed device %s\n", device->name);
--	if (snd_BUG_ON(!device->ops->open))
--		return -EINVAL;
--	if (snd_BUG_ON(!device->ops->free))
--		return -EINVAL;
--	if (snd_BUG_ON(!device->ops->set_params))
--		return -EINVAL;
--	if (snd_BUG_ON(!device->ops->trigger))
--		return -EINVAL;
--
--	mutex_init(&device->lock);
--
--	/* register a compressed card */
--	mutex_lock(&device_mutex);
--	retval = snd_compress_add_device(device);
--	mutex_unlock(&device_mutex);
--	return retval;
--}
--EXPORT_SYMBOL_GPL(snd_compress_register);
--
--int snd_compress_deregister(struct snd_compr *device)
--{
--	pr_debug("Removing compressed device %s\n", device->name);
--	mutex_lock(&device_mutex);
--	snd_compress_remove_device(device);
--	mutex_unlock(&device_mutex);
--	return 0;
--}
--EXPORT_SYMBOL_GPL(snd_compress_deregister);
--
- MODULE_DESCRIPTION("ALSA Compressed offload framework");
- MODULE_AUTHOR("Vinod Koul <vinod.koul@linux.intel.com>");
- MODULE_LICENSE("GPL v2");
+diff --git a/sound/core/sound.c b/sound/core/sound.c
+index b75f78f2c4b8e..93266542e318b 100644
+--- a/sound/core/sound.c
++++ b/sound/core/sound.c
+@@ -213,9 +213,16 @@ static int snd_find_free_minor(int type, struct snd_card *card, int dev)
+ 	case SNDRV_DEVICE_TYPE_RAWMIDI:
+ 	case SNDRV_DEVICE_TYPE_PCM_PLAYBACK:
+ 	case SNDRV_DEVICE_TYPE_PCM_CAPTURE:
++		if (snd_BUG_ON(!card))
++			return -EINVAL;
++		minor = SNDRV_MINOR(card->number, type + dev);
++		break;
+ 	case SNDRV_DEVICE_TYPE_COMPRESS:
+ 		if (snd_BUG_ON(!card))
+ 			return -EINVAL;
++		if (dev < 0 ||
++		    dev >= SNDRV_MINOR_HWDEP - SNDRV_MINOR_COMPRESS)
++			return -EINVAL;
+ 		minor = SNDRV_MINOR(card->number, type + dev);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
