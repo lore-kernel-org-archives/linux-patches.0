@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A06329E79;
-	Sat, 30 May 2026 18:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE87026738C;
+	Sat, 30 May 2026 18:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166025; cv=none; b=Go9ZQkFCyAui2AQ9aE8m6dJ0xri1OsiHNPrCqze1pEQ/MkerFB/+rtyG2mIviO2O20aQJEgCt+IconT+4NcgGDvbUdhO/Wgt8kDTqFeAojtVCvP2fdOwajYWWViaMOhTZyh/jWj7ksHHNK/tUJz2mec3W0CQhbfkS9Pa9akEjS0=
+	t=1780166028; cv=none; b=d4RMy61xbyYKQ+3OSHvliDPivZvv8PhvTwP4VKAdpBtbaaE0Ucyh4Cul10tmVGpFRK2K+VH1w75zurRfVIO3gKf+5ecfLAMVUqzn/itloEfWFP1rm5aQkCuTZ9GKncDrnNfRP8pFJy7i3nG6i8tgbVb2+yGlfDg+zfqdepfodOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166025; c=relaxed/simple;
-	bh=LKfwHGHJIqcaIxcgtPKJS4ZPoOssKXTc4GcVqVe6Fz0=;
+	s=arc-20240116; t=1780166028; c=relaxed/simple;
+	bh=PwUPtg57SmwV4+ZmvietOPDkX8meZ1Es/0nGNj5CEes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jci4jVPt1bO48/k9VYqNTjI7bNj9c+Xt2QmjborhBqKVMrQyM5OFB/JijsNoE8ksZaDRh9wHqb9YznuvFCGQWngKi114MDFvqJfA3pmlj5ZVnPrG3s31uL8Fozwx2wLY+l3JNVWzLiClcxFi/UvtFY7rDpSqXz+iXS1HSjSypq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvW7cO1C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k3oN33DX6MgsjBM23VIJdq1BUs8eFRoy0EhBCdAhvWcNjfW0z93XCmneBASf6tiGpZSehPloSPCea4DUru5EnB2YPDDWFvIlkTtrJqTc2qrS3sV5W8d5/I/DUHQLh7HFTgkW0F2cLjj6Q/w/qTDfnBI78QQh30rcr+W4ZYgbp3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMOpjACW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvW7cO1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADE01F00893;
-	Sat, 30 May 2026 18:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMOpjACW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2281F00893;
+	Sat, 30 May 2026 18:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166024;
-	bh=MVbxjiA5kGzDurtdvhXQQ+UFBc81RnXUWTjG1NqhFbk=;
+	s=korg; t=1780166027;
+	bh=gu9qb1BWU7KHQbUTL7IhWqOf7BxIlKv9tXkP8YqUaxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MvW7cO1C7v7M4Rm3reJdy0oK0cj7K26/Z2sIABj2JmDCkRaKhSOCRHR08dW53skqA
-	 o8GDdDPtFYCu5X606JV3UCwxOs2OGxwMqGHwKoaHFKW9yWQxiG02jLN+o5G0UhMKOR
-	 opqnLBCKIFn4RTFBcUqul8l2255EMFg1TSdYsOlY=
+	b=FMOpjACWMlt438cning+bwR9GpiE3xx+ABnFr7GEQI1SApIzVLnNefyQMgGuofOmz
+	 AMhVYH0tykEm8JKNxtNdy6/kOdToXhGyL3KOjd+7p9c+WHl619ZwT5iQBd7bD4N83N
+	 ntMJq/CibwW1WebeiWQQMCyLEo8AORDVp/9bZEJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 252/589] isofs: validate block number from NFS file handle in isofs_export_iget
-Date: Sat, 30 May 2026 18:02:13 +0200
-Message-ID: <20260530160231.608041055@linuxfoundation.org>
+	Junrui Luo <moonafterrain@outlook.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 5.10 253/589] md/raid10: fix divide-by-zero in setup_geo() with zero far_copies
+Date: Sat, 30 May 2026 18:02:14 +0200
+Message-ID: <20260530160231.633626223@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,54 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 24376458138387fb251e782e624c7776e9826796 upstream.
+commit 9aa6d860b0930e2f72795665c42c44252a558a0c upstream.
 
-isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
-controlled block number (ifid->block or ifid->parent_block) from
-the NFS file handle to isofs_export_iget(), which only rejects
-block == 0 before calling isofs_iget() and ultimately sb_bread().
-A crafted file handle with fh_len sufficient to pass the check
-added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
-fid") can still drive the server to read any in-range block on the
-backing device as if it were an iso_directory_record.  That earlier
-fix was assigned CVE-2025-37780.
+setup_geo() extracts near_copies (nc) and far_copies (fc) from the
+user-provided layout parameter without checking for zero. When fc=0
+with the "improved" far set layout selected, 'geo->far_set_size =
+disks / fc' triggers a divide-by-zero.
 
-sb_bread() on an out-of-range block returns NULL cleanly via the
-EIO path, so there is no memory-safety violation.  For in-range
-reads of adjacent-partition data on the same block device, the
-unrelated bytes end up in iso_inode_info fields that reach the NFS
-client as dentry metadata.  The deployment surface (isofs exported
-over NFS from loop-mounted images) is narrow and requires an
-authenticated NFS peer, but the malformed-file-handle class is
-reportable as hardening next to the existing CVE-2025-37780 fix.
+Validate nc and fc immediately after extraction, returning -1 if
+either is zero.
 
-Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
-the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
-call sites with a single line.
-
-Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
+Fixes: 475901aff158 ("MD RAID10: Improve redundancy for 'far' and 'offset' algorithms (part 1)")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/linux-raid/SYBPR01MB7881A5E2556806CC1D318582AF232@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid10.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
- {
- 	struct inode *inode;
- 
--	if (block == 0)
-+	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
- 		return ERR_PTR(-ESTALE);
- 	inode = isofs_iget(sb, block, offset);
- 	if (IS_ERR(inode))
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3606,6 +3606,8 @@ static int setup_geo(struct geom *geo, s
+ 	nc = layout & 255;
+ 	fc = (layout >> 8) & 255;
+ 	fo = layout & (1<<16);
++	if (!nc || !fc)
++		return -1;
+ 	geo->raid_disks = disks;
+ 	geo->near_copies = nc;
+ 	geo->far_copies = fc;
 
 
