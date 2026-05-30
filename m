@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FA1348C46;
-	Sat, 30 May 2026 16:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9204346A04;
+	Sat, 30 May 2026 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158249; cv=none; b=eDCuRB6c9JJitX/VeasDkSgnYUpQzBFT6Ffw0eG8WlVu85lB5jfuclVlXrt8/pwhWEXgqRzaC7IKQ9vtGQpHD3jSfwM0CDdgf1f3d14kRCAbl6Nm8mAzZ6MZK4LB+Xhd4nP3+7iMUNHxIfoSJalNl6/qj5dxxxgwvTvJohYW84k=
+	t=1780158277; cv=none; b=IokAmruF3F7U8T/c4EzZtJxecgm4KUL5ZaO89VxhIrhAzsxyGkWa/iPwmQoF+N5U/AmrjDFlSg5OPnVi4IddH6dV2JuQtmC9j89FmxXuuPu1g5dbF2u2UrnbXzVlx0GBAHuuCrmBx+LnFyG3qY2Ibi3lh7eldZ6/aOdJAHPLDMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158249; c=relaxed/simple;
-	bh=MEa+POPfIZlCRr7iQjm3DOnUB5eMzVf4SP8NiHKhRn0=;
+	s=arc-20240116; t=1780158277; c=relaxed/simple;
+	bh=FSFc9K3gEXIdgb5uGYN+O+Ai5+jkmXnk+4MCiRcJk44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5ckHoRcUqLhVbWb7EvhJANV3/JUAdUM0mg6W2yTzE4btvzC+oH0WnauptR0mjaJdtJKipoAM2a+gUz5jdE4hnCT79pxU/Bd5JwIjFbgo8VdOa8wb/jVbcVVg8UQ5ghqOlHz9Xbs3Wm3iZQ6T3z/ofROm+vpiEyH/FaeArb8vq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwOr5U20; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=phJQnBGobagKnXstr9zM0BNLvvTcwoEtacgQlh8NmNObyxgQiM0I/uj3B3+r/MhyczKY5FjjTV3yXZOrp48bKd2B3AGRCHlqppQINdvCfK/+FraiXArmlaydlO0bsOYRfyeoSgL1FjpKDqokbUzg5Q+NdQCA+vF1xHiaCTQCWXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjkXfR5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwOr5U20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235AE1F00893;
-	Sat, 30 May 2026 16:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjkXfR5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8710C1F00893;
+	Sat, 30 May 2026 16:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158247;
-	bh=WknNfhVZ6FynkHPO3vEgfrHLyRCrOaE6WZDiXHJXex0=;
+	s=korg; t=1780158276;
+	bh=JkflEZDoHpxmVVgPEKQuDIfhvDOHncDqO13/A6GHYnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwOr5U20mACDRxS3x2lvlMAoo8POgtvC2+2dycODZbV+wI03SM33XeL2yyj4NuWjd
-	 VVmgerjwo6YabP7UGSUfwGqy7wT6FOJuiQg0J6SEEwfD5qatYHB82MVgHS+bkAwoWR
-	 EyDmzqBA+b/I0mNfvszPTHZ6BwQkk0TbT2+Jscfo=
+	b=sjkXfR5COqEzu76Jl+nOApVSM+xofX5fqoFYbV3+w/oEWiV3Hg0Eg+0RT9AK2uIZR
+	 akoIEgOsV4M/0P5K15WGcfWvdshlqZjOw2M3ejTuH9QM7YZ7tU2aroG75K9zd4+xSq
+	 Kk9gJuEJ72TkGtAS5MaVtDWPSFWhcXaccaICGehM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Wang <yuleopen@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Phil Willoughby <willerz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Gilson=20Marquato=20J=C3=BAnior?= <gilsonmandalogo@hotmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/969] ALSA: usb-audio: Fix quirk flags for NeuralDSP Quad Cortex
-Date: Sat, 30 May 2026 17:52:18 +0200
-Message-ID: <20260530160300.865897909@linuxfoundation.org>
+Subject: [PATCH 6.1 016/969] ASoC: amd: yc: Add DMI entry for HP Laptop 15-fc0xxx
+Date: Sat, 30 May 2026 17:52:20 +0200
+Message-ID: <20260530160300.915299164@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -48,45 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phil Willoughby <willerz@gmail.com>
+From: Gilson Marquato Júnior <gilsonmandalogo@hotmail.com>
 
-[ Upstream commit bc5b4e5ae1a67700a618328217b6a3bd0f296e97 ]
+[ Upstream commit 8ec017cf31299c4b6287ebe27afe81c986aeef88 ]
 
-The NeuralDSP Quad Cortex does not support DSD playback. We need
-this product-specific entry with zero quirks because otherwise it
-falls through to the vendor-specific entry which marks it as
-supporting DSD playback.
+The HP Laptop 15-fc0xxx (subsystem ID 0x103c8dc9) has an internal
+DMIC connected to the AMD ACP6x audio coprocessor. Add a DMI quirk
+entry so the internal microphone is properly detected on this model.
 
-Cc: Yue Wang <yuleopen@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Phil Willoughby <willerz@gmail.com>
-Link: https://patch.msgid.link/20260328080921.3310-1-willerz@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested on HP Laptop 15-fc0237ns with Fedora 43 (kernel 6.19.9).
+
+Signed-off-by: Gilson Marquato Júnior <gilsonmandalogo@hotmail.com>
+Link: https://patch.msgid.link/20260330-hp-15-fc0xxx-dmic-v2-v1-1-6dd6f53a1917@hotmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 74828de545e22..23361e78189d0 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2177,6 +2177,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
-+		   0), /* Doesn't have the vendor quirk which would otherwise apply */
- 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index d650091d3f302..c9bc2289d3661 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -45,6 +45,13 @@ static struct snd_soc_card acp6x_card = {
+ };
+ 
+ static const struct dmi_system_id yc_acp_quirk_table[] = {
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HP Laptop 15-fc0xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.53.0
 
