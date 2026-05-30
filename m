@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDDA2628D;
-	Sat, 30 May 2026 17:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B70341AC7;
+	Sat, 30 May 2026 17:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163705; cv=none; b=KmCwtS/oag4Ier/LXqv7siiPst75SoLjhm/f9mb9fWIGzKwY/r97akpqQ9b5YGB03mHzYCuTaX5Tsn2xpoB4CEmpAydVKOFd8EAZQcFvoo6+RhGn8HVg1qlsh9aWb2EZVKrvEnAW611pdFi2yz9VSYtVGrMpXv2SXNShJTUE408=
+	t=1780163709; cv=none; b=RAbYjKIPLY9zBxmjPyc2Uha4AMmdWSSfc8ux7DuYkv+5ZdkkIVAb4I7DFFB/W93uSCy/kSJWyiN9hyDles7Xh6z5vcKqjR3vTcSJfQAi3C5vb604rRqrWLy+QqtUU34IgCKSh0riQKII6HhK68bq9ue738TIxtNpbGmI3ym6aPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163705; c=relaxed/simple;
-	bh=SEyp8eeqA4TDjN4cy6ZGFsAI2cFbr31qtLMfFawDwYE=;
+	s=arc-20240116; t=1780163709; c=relaxed/simple;
+	bh=drW4+MLtI7IamaDzFKQQ7Z+GWsSdzhWt28t7ii2M/EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ixi7VywTj7HDE01rmdOw+GV2o492XNIImI1oxr6/w1lnyvySf7nrbuVYX+U+H7CRPYiiNbiGqja7MCJ+Zqj25jGya9O+lh77XcV/4MjVOryt4lwQzEqL3WOWyFYrc7FRiuLXjzRCUjQIO2wuhiUz1+7wRJDDRCMx+0gmh1x4RWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTCUswbb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=au4RdT+pr+0dUpa4bAbZqOv4HYUfvvmvIXXFb0dzH0R24wOf7uO75Xu9JIQgfJCRR8kwZlIF10VINQ04svSqyVRvTWimZkPV/vntKeMdl0KNksFxC03LuGBsO5RsjNaBhVeF+Tj9x5d+3idTexm4iUcHr2Ey6fLTbYY7zPKFnbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGi5+ne9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTCUswbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C99C1F00893;
-	Sat, 30 May 2026 17:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGi5+ne9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7698B1F00893;
+	Sat, 30 May 2026 17:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163704;
-	bh=+O9M9zYEU59O3u9j4wZDvzR4qkAJl5lGWD3/i9zL8AY=;
+	s=korg; t=1780163708;
+	bh=FHgWuEPI4bqSmSORRBOFYGxCQ3jy1OfBHJKJ+Dv6gFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTCUswbbOC9XHfmBaJsBXca3YTCru56QvizcSimhu0QpqyCwpNwSFR2WDna1ntf3x
-	 o2ZIdcsmgkPtSIXdOlf27fKnQ1ORArRJZokKhRMv4iNnodeJsE7tbdtPN+J+JmZIzF
-	 OPC3gK8AWV9nR7X2qkl+GJ3G78MPzLFJSV+MR7nw=
+	b=AGi5+ne9IgKhwDIrGLm+uWIAfykFmLkrGtemgnatDXNNmUaFKyJi8kuPg0NE7O0tD
+	 Ndg64Yx567sHCLE1Ad92GV1sOprLSvzTxMfF1NghzMaLp5+V3q6+0xR3j5ht/LRuAe
+	 pinNYbB91YG0MNpuhqiBDlYdc1jLUAUVh0GVAOTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 5.15 338/776] s390/debug: Reject zero-length input in debug_input_flush_fn()
-Date: Sat, 30 May 2026 18:00:52 +0200
-Message-ID: <20260530160249.307998753@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 5.15 339/776] PCI/AER: Clear only error bits in PCIe Device Status
+Date: Sat, 30 May 2026 18:00:53 +0200
+Message-ID: <20260530160249.334119394@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,40 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit e14622a7584f9608927c59a7d6ae4a0999dc545e upstream.
+commit a8aeea1bf3c80cc87983689e0118770e019bd4f3 upstream.
 
-debug_input_flush_fn() always copies one byte from the userspace buffer
-with copy_from_user() regardless of the supplied write length. A
-zero-length write therefore reads one byte beyond the caller's buffer.
-If the stale byte happens to be '-' or a digit the debug log is
-silently flushed. With an unmapped buffer the call returns -EFAULT.
+Currently, pcie_clear_device_status() clears the entire PCIe Device Status
+register (PCI_EXP_DEVSTA) by writing back the value read from the register,
+which affects not only the error status bits but also other writable bits.
 
-Reject zero-length writes before copying from userspace.
+According to PCIe r7.0, sec 7.5.3.5, this register contains:
 
-Cc: stable@vger.kernel.org # v5.10+
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+  - RW1C error status bits (CED, NFED, FED, URD at bits 0-3): These are the
+    four error status bits that need to be cleared.
+
+  - Read-only bits (AUXPD at bit 4, TRPND at bit 5): Writing to these has
+    no effect.
+
+  - Emergency Power Reduction Detected (bit 6): A RW1C non-error bit
+    introduced in PCIe r5.0 (2019). This is currently the only writable
+    non-error bit in the Device Status register. Unconditionally clearing
+    this bit can interfere with other software components that rely on this
+    power management indication.
+
+  - Reserved bits (RsvdZ): These bits are required to be written as zero.
+    Writing 1s to them (as the current implementation may do) violates the
+    specification.
+
+To prevent unintended side effects, modify pcie_clear_device_status() to
+only write 1s to the four error status bits (CED, NFED, FED, URD), leaving
+the Emergency Power Reduction Detected bit and reserved bits unaffected.
+
+Fixes: ec752f5d54d7 ("PCI/AER: Clear device status bits during ERR_FATAL and ERR_NONFATAL")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260211124624.49656-1-xueshuai@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/debug.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/pci.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -1444,6 +1444,11 @@ static int debug_input_flush_fn(debug_in
- 	char input_buf[1];
- 	int rc = user_len;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2220,10 +2220,9 @@ EXPORT_SYMBOL_GPL(pci_set_pcie_reset_sta
  
-+	if (!user_len) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (user_len > 0x10000)
- 		user_len = 0x10000;
- 	if (*offset != 0) {
+ void pcie_clear_device_status(struct pci_dev *dev)
+ {
+-	u16 sta;
+-
+-	pcie_capability_read_word(dev, PCI_EXP_DEVSTA, &sta);
+-	pcie_capability_write_word(dev, PCI_EXP_DEVSTA, sta);
++	pcie_capability_write_word(dev, PCI_EXP_DEVSTA,
++				   PCI_EXP_DEVSTA_CED | PCI_EXP_DEVSTA_NFED |
++				   PCI_EXP_DEVSTA_FED | PCI_EXP_DEVSTA_URD);
+ }
+ 
+ /**
 
 
