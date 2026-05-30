@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA25346E55;
-	Sat, 30 May 2026 17:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5513F341AC7;
+	Sat, 30 May 2026 17:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163351; cv=none; b=qe1k+L8FY5Evbgb06673uprnV4opB0c/mG0//AoNi2eocRh2UKWaGoFuxYMNx4o0WTjOqPX34/77unygqcpMmuO9bjrSHcdOM63Z9HpjVEMh9B3ohqRdkmvRbyKfK1Tv/n+/1pNrCh9bnD6hIzx+3S6no2yh3mr3UnL6T7Nyphs=
+	t=1780163354; cv=none; b=sRTI4abBHkIF0Z/w7zyT+3n9ojwxrF28TkmMD5boSx308FhPKpE0mZsy9eSiT4DJb9tPVbZpRNHhSoMPF5ojimjSjbgWOTGxKToOnCniZdOzAGyP3yhYEpiZCyf9XZCwdWNPBgB2AeBLQ48enLDqCY0tRf5AfCIBorix61FXEWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163351; c=relaxed/simple;
-	bh=M3NetrKi7ubpmgXfH0UDvILM/nk3cPFj0yx9w03JcjY=;
+	s=arc-20240116; t=1780163354; c=relaxed/simple;
+	bh=HRa7fc5kPCiMGJtiK1T2Xzg/zKYzTDLhimq0XVu8ky0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/UvC2axtP6V4EIyG8kzzhvo/3fTLF60+c00LBS1HctIxKAXxch9rxaWqB6RmFEozgq/87A4hcTf+VTxLDbUpvyCIq/A/G5QtcG2RVmYAB4j422nibSBgHibOhoHJkC5rTP8gX0bCtdsCXnUNuAGfL2OQjID4a/ohmZaEJZvI1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/ToUOpT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XPc9hDR6Pcj7FYAW6tID2oXjR90iT1ceoH6sidHrwy7jIqersRjGo5+WDkwSyGrsqqjuwYmiIO9AX6fOLHL4LFl/s7DWUH6aV9iQCoMeikOmi6lI9BQDOduJc3najGRlLGmYTRIWznKtNbaP4dw8Q/EZWYO22PVWImPXOtDEclU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvO3PpPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/ToUOpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A7B1F00893;
-	Sat, 30 May 2026 17:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvO3PpPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6237E1F00893;
+	Sat, 30 May 2026 17:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163349;
-	bh=cDyMtiELO3UYBh8GMLP+uZXzTMmFocjORpIdGtgfB2Q=;
+	s=korg; t=1780163353;
+	bh=+O9wfThzQx2k5hoKk5BdkWAfWLzimD1o+BdXy/pXqpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/ToUOpTG/5B4RnyyG2UPaVn+ZXn3YMgDzmnRlwpwfFtCFtFKEBhahYFao8rNHt7i
-	 e3EzHKsKZJHwEIdF4cKVVNSGLNopATT/Gh3GRnd9w9tgaN+kv82MWWaj40CBB0PKJF
-	 sHUokRP/y7GiWIKqU0r/doPaviaS5hl13T/Brn6Q=
+	b=fvO3PpPORzxjggldgRiI8cHB9vEQmD2CgqWu5QC3yiGos0MOQ5N01+eDi3UV18l87
+	 PIVnlNdcKbSDS3BBS2MPXlC7T3xW/CxWL87UqBPGKjAEKa8qspjUDe8rjttaiaZInG
+	 pVFlMYWqKlAriKX86qMcHkXYVEIQ1dS5ICyJ9q70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 201/776] net: strparser: fix skb_head leak in strp_abort_strp()
-Date: Sat, 30 May 2026 17:58:35 +0200
-Message-ID: <20260530160245.705672679@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 5.15 202/776] PCI: endpoint: pci-epf-ntb: Remove duplicate resource teardown
+Date: Sat, 30 May 2026 17:58:36 +0200
+Message-ID: <20260530160245.731819440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -56,54 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit fe72340daaf1af588be88056faf98965f39e6032 upstream.
+commit 3446beddba450c8d6f9aca2f028712ac527fead3 upstream.
 
-When the stream parser is aborted, for example after a message assembly timeout,
-it can still hold a reference to a partially assembled message in
-strp->skb_head.
+epf_ntb_epc_destroy() duplicates the teardown that the caller is
+supposed to do later. This leads to an oops when .allow_link fails or
+when .drop_link is performed. Remove the helper.
 
-That skb is not released in strp_abort_strp(), which leaks the partially
-assembled message and can be triggered repeatedly to exhaust memory.
+Also drop pci_epc_put(). EPC device refcounting is tied to configfs EPC
+group lifetime, and pci_epc_put() in the .drop_link path is sufficient.
 
-Fix this by freeing strp->skb_head and resetting the parser state in the
-abort path. Leave strp_stop() unchanged so final cleanup still happens in
-strp_done() after the work and timer have been synchronized.
-
-Fixes: 43a0c6751a32 ("strparser: Stream parser for messages")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/ade3857a9404999ce9a1c27ec523efc896072678.1775482694.git.rakukuip@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260226084142.2226875-3-den@valinux.co.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/strparser/strparser.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/endpoint/functions/pci-epf-ntb.c |   56 ---------------------------
+ 1 file changed, 2 insertions(+), 54 deletions(-)
 
---- a/net/strparser/strparser.c
-+++ b/net/strparser/strparser.c
-@@ -45,6 +45,14 @@ static void strp_abort_strp(struct strpa
+--- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+@@ -1495,47 +1495,6 @@ err_alloc_peer_mem:
+ }
  
- 	strp->stopped = 1;
+ /**
+- * epf_ntb_epc_destroy_interface() - Cleanup NTB EPC interface
+- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+- * @type: PRIMARY interface or SECONDARY interface
+- *
+- * Unbind NTB function device from EPC and relinquish reference to pci_epc
+- * for each of the interface.
+- */
+-static void epf_ntb_epc_destroy_interface(struct epf_ntb *ntb,
+-					  enum pci_epc_interface_type type)
+-{
+-	struct epf_ntb_epc *ntb_epc;
+-	struct pci_epc *epc;
+-	struct pci_epf *epf;
+-
+-	if (type < 0)
+-		return;
+-
+-	epf = ntb->epf;
+-	ntb_epc = ntb->epc[type];
+-	if (!ntb_epc)
+-		return;
+-	epc = ntb_epc->epc;
+-	pci_epc_remove_epf(epc, epf, type);
+-	pci_epc_put(epc);
+-}
+-
+-/**
+- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
+- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+- *
+- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
+- */
+-static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
+-{
+-	enum pci_epc_interface_type type;
+-
+-	for (type = PRIMARY_INTERFACE; type <= SECONDARY_INTERFACE; type++)
+-		epf_ntb_epc_destroy_interface(ntb, type);
+-}
+-
+-/**
+  * epf_ntb_epc_create_interface() - Create and initialize NTB EPC interface
+  * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+  * @epc: struct pci_epc to which a particular NTB interface should be associated
+@@ -1614,15 +1573,8 @@ static int epf_ntb_epc_create(struct epf
  
-+	if (strp->skb_head) {
-+		kfree_skb(strp->skb_head);
-+		strp->skb_head = NULL;
-+	}
-+
-+	strp->skb_nextp = NULL;
-+	strp->need_bytes = 0;
-+
- 	if (strp->sk) {
- 		struct sock *sk = strp->sk;
+ 	ret = epf_ntb_epc_create_interface(ntb, epf->sec_epc,
+ 					   SECONDARY_INTERFACE);
+-	if (ret) {
++	if (ret)
+ 		dev_err(dev, "SECONDARY intf: Fail to create NTB EPC\n");
+-		goto err_epc_create;
+-	}
+-
+-	return 0;
+-
+-err_epc_create:
+-	epf_ntb_epc_destroy_interface(ntb, PRIMARY_INTERFACE);
  
+ 	return ret;
+ }
+@@ -1887,7 +1839,7 @@ static int epf_ntb_bind(struct pci_epf *
+ 	ret = epf_ntb_init_epc_bar(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to create NTB EPC\n");
+-		goto err_bar_init;
++		return ret;
+ 	}
+ 
+ 	ret = epf_ntb_config_spad_bar_alloc_interface(ntb);
+@@ -1909,9 +1861,6 @@ static int epf_ntb_bind(struct pci_epf *
+ err_bar_alloc:
+ 	epf_ntb_config_spad_bar_free(ntb);
+ 
+-err_bar_init:
+-	epf_ntb_epc_destroy(ntb);
+-
+ 	return ret;
+ }
+ 
+@@ -1927,7 +1876,6 @@ static void epf_ntb_unbind(struct pci_ep
+ 
+ 	epf_ntb_epc_cleanup(ntb);
+ 	epf_ntb_config_spad_bar_free(ntb);
+-	epf_ntb_epc_destroy(ntb);
+ }
+ 
+ #define EPF_NTB_R(_name)						\
 
 
