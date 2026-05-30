@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878FF33A9DA;
-	Sat, 30 May 2026 17:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05BE34B40F;
+	Sat, 30 May 2026 17:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162408; cv=none; b=E5Z1xpcbCWdE7vT9yxYlfavZyp0SR+o3PQv8JHYZIUqHm3SpERSqur/xyEAEJ/GjOi18ByjfowyhJlfCaB2GuJdhOa0w5YuZbgJyvDJZQ85CBLDivf0texfsmy1QSw26mP1MVLWlRk5fVBfBN3s4X3lF6d397FKsxkW7+Y4VnDI=
+	t=1780162412; cv=none; b=OhWXatf15EP3Dfrt9AZOxtNEyBBmx9SbevvGYsmmQIwFeLx5W00Bv+TMsLkf2d4UP7bSAQvMFKd/VwxsIiAWBRIDbE4GNiFgAISICqjvCET1yCzg2aJI11ino9SqjmmYvautU1ILw3deYcq7E8FtVn623tiqha4YDuViVMBnEH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162408; c=relaxed/simple;
-	bh=CZAZ4MWCQQRwxzf8bfKxKCvKCekRpWHmfrmsaXwNZTc=;
+	s=arc-20240116; t=1780162412; c=relaxed/simple;
+	bh=dVwFm+dv22juHv8fnVY6bKGpXC4QdQfAS+qOJPViCeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4n34C7V4jDaPYxyW1/vEVHItDA7eI2T958gdkNslGzWpLCBaFAPhkhg71+yzFgGF7ik8D0LZrmHIFNCls1TRdg4IQhWNlzSomg5U3QURIfYnjEx9lGXL5BjRVDuJokahedy5YbWcrBzY98rsZH9TBeA4rLUP9fajhu/HtnJ4Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIwpyXfF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aqbCHMoBswNNhyivXbqOyBjBXPZszNAyZlGOk6hPnyT2+DEY27pegH8F+1q16P73H0Z0gfPcyVSKP2VDJrISgMhmFY8axYymnW7R2j4E1pH5BR1is73ix2g7VC5S3lm4liUgqXg8yYVLL9O0vfP5BmxKS/R0f0RQinGnLBH0xok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoK9E+ok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIwpyXfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7D61F00898;
-	Sat, 30 May 2026 17:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoK9E+ok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0221F00893;
+	Sat, 30 May 2026 17:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162407;
-	bh=rxGqImZOi4hoG5lPNGJoNop5reS0+zHKuk/32KZjRH0=;
+	s=korg; t=1780162410;
+	bh=gGT/ugDmr/kEQjESQ3B0wbQgoPmsaGKuC/e61j4wyAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIwpyXfFY39oEeCgepRDJOf3Nfcyqbam94oPFFwsbeSKxocTr3kKrW6yH692q7i4o
-	 Z3uGEkwDKDQ/8sIV35AQZUnIv0IIwSWTYjtTpdUs2h7BZhN6rM9nebXLv0E9n38UvZ
-	 xCicIZ/svnzZo+aYeMMP/0+mkMomagQXvz+0PLo0=
+	b=KoK9E+okBEyX/4l6w5A89UPewKiLfJE9qCDZ0btbT65KQUgMqbqTnySdSW2fem9qF
+	 R7rvL1Gv3FPkzL/b4JHWEcf0aLtL0bzC2yg9JiiyuBkwfwXDoIQ3ErhbP+fvh1UZoG
+	 njryG1eyQ2vcj678kxRwIBI+0ROr2Zgoq32edltk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 913/969] netfilter: Exclude LEGACY TABLES on PREEMPT_RT.
-Date: Sat, 30 May 2026 18:07:17 +0200
-Message-ID: <20260530160325.940579248@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 914/969] netfilter: x_tables: add and use xt_unregister_table_pre_exit
+Date: Sat, 30 May 2026 18:07:18 +0200
+Message-ID: <20260530160325.968816848@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,333 +52,347 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9fce66583f06c212e95e4b76dd61d8432ffa56b6 ]
+[ Upstream commit 527d6931473b75d90e38942aae6537d1a527f1fd ]
 
-The seqcount xt_recseq is used to synchronize the replacement of
-xt_table::private in xt_replace_table() against all readers such as
-ipt_do_table()
+Remove the copypasted variants of _pre_exit and add one single
+function in the xtables core.  ebtables is not compatible with
+x_tables and therefore unchanged.
 
-To ensure that there is only one writer, the writing side disables
-bottom halves. The sequence counter can be acquired recursively. Only the
-first invocation modifies the sequence counter (signaling that a writer
-is in progress) while the following (recursive) writer does not modify
-the counter.
-The lack of a proper locking mechanism for the sequence counter can lead
-to live lock on PREEMPT_RT if the high prior reader preempts the
-writer. Additionally if the per-CPU lock on PREEMPT_RT is removed from
-local_bh_disable() then there is no synchronisation for the per-CPU
-sequence counter.
+This is a preparation patch to reduce noise in the followup
+bug fixes.
 
-The affected code is "just" the legacy netfilter code which is replaced
-by "netfilter tables". That code can be disabled without sacrificing
-functionality because everything is provided by the newer
-implementation. This will only requires the usage of the "-nft" tools
-instead of the "-legacy" ones.
-The long term plan is to remove the legacy code so lets accelerate the
-progress.
-
-Relax dependencies on iptables legacy, replace select with depends on,
-this should cause no harm to existing kernel configs and users can still
-toggle IP{6}_NF_IPTABLES_LEGACY in any case.
-Make EBTABLES_LEGACY, IPTABLES_LEGACY and ARPTABLES depend on
-NETFILTER_XTABLES_LEGACY. Hide xt_recseq and its users,
-xt_register_table() and xt_percpu_counter_alloc() behind
-NETFILTER_XTABLES_LEGACY. Let NETFILTER_XTABLES_LEGACY depend on
-!PREEMPT_RT.
-
-This will break selftest expecing the legacy options enabled and will be
-addressed in a following patch.
-
-Co-developed-by: Florian Westphal <fw@strlen.de>
-Co-developed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/Kconfig | 10 +++++-----
- net/ipv4/netfilter/Kconfig   | 24 ++++++++++++------------
- net/ipv6/netfilter/Kconfig   | 19 +++++++++----------
- net/netfilter/Kconfig        | 10 ++++++++++
- net/netfilter/x_tables.c     | 16 +++++++++++-----
- 5 files changed, 47 insertions(+), 32 deletions(-)
+ include/linux/netfilter/x_tables.h        |  1 +
+ include/linux/netfilter_arp/arp_tables.h  |  1 -
+ include/linux/netfilter_ipv4/ip_tables.h  |  1 -
+ include/linux/netfilter_ipv6/ip6_tables.h |  1 -
+ net/ipv4/netfilter/arp_tables.c           |  9 -------
+ net/ipv4/netfilter/arptable_filter.c      |  2 +-
+ net/ipv4/netfilter/ip_tables.c            |  9 -------
+ net/ipv4/netfilter/iptable_filter.c       |  2 +-
+ net/ipv4/netfilter/iptable_mangle.c       |  2 +-
+ net/ipv4/netfilter/iptable_nat.c          |  1 +
+ net/ipv4/netfilter/iptable_raw.c          |  2 +-
+ net/ipv4/netfilter/iptable_security.c     |  2 +-
+ net/ipv6/netfilter/ip6_tables.c           |  9 -------
+ net/ipv6/netfilter/ip6table_filter.c      |  2 +-
+ net/ipv6/netfilter/ip6table_mangle.c      |  2 +-
+ net/ipv6/netfilter/ip6table_nat.c         |  1 +
+ net/ipv6/netfilter/ip6table_raw.c         |  2 +-
+ net/ipv6/netfilter/ip6table_security.c    |  2 +-
+ net/netfilter/x_tables.c                  | 29 +++++++++++++++++++++++
+ 19 files changed, 41 insertions(+), 39 deletions(-)
 
-diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
-index f16bbbbb94817..60f28e4fb5c0a 100644
---- a/net/bridge/netfilter/Kconfig
-+++ b/net/bridge/netfilter/Kconfig
-@@ -42,8 +42,8 @@ config NF_CONNTRACK_BRIDGE
- # old sockopt interface and eval loop
- config BRIDGE_NF_EBTABLES_LEGACY
- 	tristate "Legacy EBTABLES support"
--	depends on BRIDGE && NETFILTER_XTABLES
--	default n
-+	depends on BRIDGE && NETFILTER_XTABLES_LEGACY
-+	default	n
- 	help
- 	 Legacy ebtables packet/frame classifier.
- 	 This is not needed if you are using ebtables over nftables
-@@ -65,7 +65,7 @@ if BRIDGE_NF_EBTABLES
- #
- config BRIDGE_EBT_BROUTE
- 	tristate "ebt: broute table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables broute table is used to define rules that decide between
- 	  bridging and routing frames, giving Linux the functionality of a
-@@ -76,7 +76,7 @@ config BRIDGE_EBT_BROUTE
+diff --git a/include/linux/netfilter/x_tables.h b/include/linux/netfilter/x_tables.h
+index 5897f3dbaf7c3..df2022fe440b0 100644
+--- a/include/linux/netfilter/x_tables.h
++++ b/include/linux/netfilter/x_tables.h
+@@ -310,6 +310,7 @@ struct xt_table *xt_register_table(struct net *net,
+ 				   struct xt_table_info *bootstrap,
+ 				   struct xt_table_info *newinfo);
+ void *xt_unregister_table(struct xt_table *table);
++void xt_unregister_table_pre_exit(struct net *net, u8 af, const char *name);
  
- config BRIDGE_EBT_T_FILTER
- 	tristate "ebt: filter table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables filter table is used to define frame filtering rules at
- 	  local input, forwarding and local output. See the man page for
-@@ -86,7 +86,7 @@ config BRIDGE_EBT_T_FILTER
+ struct xt_table_info *xt_replace_table(struct xt_table *table,
+ 				       unsigned int num_counters,
+diff --git a/include/linux/netfilter_arp/arp_tables.h b/include/linux/netfilter_arp/arp_tables.h
+index a40aaf645fa47..05631a25e6229 100644
+--- a/include/linux/netfilter_arp/arp_tables.h
++++ b/include/linux/netfilter_arp/arp_tables.h
+@@ -53,7 +53,6 @@ int arpt_register_table(struct net *net, const struct xt_table *table,
+ 			const struct arpt_replace *repl,
+ 			const struct nf_hook_ops *ops);
+ void arpt_unregister_table(struct net *net, const char *name);
+-void arpt_unregister_table_pre_exit(struct net *net, const char *name);
+ extern unsigned int arpt_do_table(void *priv, struct sk_buff *skb,
+ 				  const struct nf_hook_state *state);
  
- config BRIDGE_EBT_T_NAT
- 	tristate "ebt: nat table support"
--	select BRIDGE_NF_EBTABLES_LEGACY
-+	depends on BRIDGE_NF_EBTABLES_LEGACY
- 	help
- 	  The ebtables nat table is used to define rules that alter the MAC
- 	  source address (MAC SNAT) or the MAC destination address (MAC DNAT).
-diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
-index 1d0a89a67acf5..ffb1f193a8bd5 100644
---- a/net/ipv4/netfilter/Kconfig
-+++ b/net/ipv4/netfilter/Kconfig
-@@ -13,8 +13,8 @@ config NF_DEFRAG_IPV4
- # old sockopt interface and eval loop
- config IP_NF_IPTABLES_LEGACY
- 	tristate "Legacy IP tables support"
--	default	n
--	select NETFILTER_XTABLES
-+	depends on NETFILTER_XTABLES_LEGACY
-+	default	m if NETFILTER_XTABLES_LEGACY
- 	help
- 	  iptables is a legacy packet classifier.
- 	  This is not needed if you are using iptables over nftables
-@@ -182,8 +182,8 @@ config IP_NF_MATCH_TTL
- # `filter', generic and specific targets
- config IP_NF_FILTER
- 	tristate "Packet filtering"
--	default m if NETFILTER_ADVANCED=n
--	select IP_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  Packet filtering defines a table `filter', which has a series of
- 	  rules for simple packet filtering at local input, forwarding and
-@@ -220,10 +220,10 @@ config IP_NF_TARGET_SYNPROXY
- config IP_NF_NAT
- 	tristate "iptables NAT support"
- 	depends on NF_CONNTRACK
-+	depends on IP_NF_IPTABLES_LEGACY
- 	default m if NETFILTER_ADVANCED=n
- 	select NF_NAT
- 	select NETFILTER_XT_NAT
--	select IP_NF_IPTABLES_LEGACY
- 	help
- 	  This enables the `nat' table in iptables. This allows masquerading,
- 	  port forwarding and other forms of full Network Address Port
-@@ -263,8 +263,8 @@ endif # IP_NF_NAT
- # mangle + specific targets
- config IP_NF_MANGLE
- 	tristate "Packet mangling"
--	default m if NETFILTER_ADVANCED=n
--	select IP_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `mangle' table to iptables: see the man page for
- 	  iptables(8).  This table is used for various packet alterations
-@@ -313,7 +313,7 @@ config IP_NF_TARGET_TTL
- # raw + specific targets
- config IP_NF_RAW
- 	tristate  'raw table support (required for NOTRACK/TRACE)'
--	select IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `raw' table to iptables. This table is the very
- 	  first in the netfilter framework and hooks in at the PREROUTING
-@@ -327,7 +327,7 @@ config IP_NF_SECURITY
- 	tristate "Security table"
- 	depends on SECURITY
- 	depends on NETFILTER_ADVANCED
--	select IP_NF_IPTABLES_LEGACY
-+	depends on IP_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `security' table to iptables, for use
- 	  with Mandatory Access Control (MAC) policy.
-@@ -339,8 +339,8 @@ endif # IP_NF_IPTABLES
- # ARP tables
- config IP_NF_ARPTABLES
- 	tristate "Legacy ARPTABLES support"
--	depends on NETFILTER_XTABLES
--	default n
-+	depends on NETFILTER_XTABLES_LEGACY
-+	default	n
- 	help
- 	  arptables is a legacy packet classifier.
- 	  This is not needed if you are using arptables over nftables
-@@ -356,7 +356,7 @@ config IP_NF_ARPFILTER
- 	tristate "arptables-legacy packet filtering support"
- 	select IP_NF_ARPTABLES
- 	select NETFILTER_FAMILY_ARP
--	depends on NETFILTER_XTABLES
-+	depends on NETFILTER_XTABLES_LEGACY
- 	help
- 	  ARP packet filtering defines a table `filter', which has a series of
- 	  rules for simple ARP packet filtering at local input and
-diff --git a/net/ipv6/netfilter/Kconfig b/net/ipv6/netfilter/Kconfig
-index e087a8e97ba78..276860f65baae 100644
---- a/net/ipv6/netfilter/Kconfig
-+++ b/net/ipv6/netfilter/Kconfig
-@@ -9,9 +9,8 @@ menu "IPv6: Netfilter Configuration"
- # old sockopt interface and eval loop
- config IP6_NF_IPTABLES_LEGACY
- 	tristate "Legacy IP6 tables support"
--	depends on INET && IPV6
--	select NETFILTER_XTABLES
--	default n
-+	depends on INET && IPV6 && NETFILTER_XTABLES_LEGACY
-+	default	m if NETFILTER_XTABLES_LEGACY
- 	help
- 	  ip6tables is a legacy packet classifier.
- 	  This is not needed if you are using iptables over nftables
-@@ -196,8 +195,8 @@ config IP6_NF_TARGET_HL
+diff --git a/include/linux/netfilter_ipv4/ip_tables.h b/include/linux/netfilter_ipv4/ip_tables.h
+index 132b0e4a6d4df..13593391d6058 100644
+--- a/include/linux/netfilter_ipv4/ip_tables.h
++++ b/include/linux/netfilter_ipv4/ip_tables.h
+@@ -26,7 +26,6 @@ int ipt_register_table(struct net *net, const struct xt_table *table,
+ 		       const struct ipt_replace *repl,
+ 		       const struct nf_hook_ops *ops);
  
- config IP6_NF_FILTER
- 	tristate "Packet filtering"
--	default m if NETFILTER_ADVANCED=n
--	select IP6_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	tristate
- 	help
- 	  Packet filtering defines a table `filter', which has a series of
-@@ -233,8 +232,8 @@ config IP6_NF_TARGET_SYNPROXY
+-void ipt_unregister_table_pre_exit(struct net *net, const char *name);
+ void ipt_unregister_table_exit(struct net *net, const char *name);
  
- config IP6_NF_MANGLE
- 	tristate "Packet mangling"
--	default m if NETFILTER_ADVANCED=n
--	select IP6_NF_IPTABLES_LEGACY
-+	default m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `mangle' table to iptables: see the man page for
- 	  iptables(8).  This table is used for various packet alterations
-@@ -244,7 +243,7 @@ config IP6_NF_MANGLE
+ /* Standard entry. */
+diff --git a/include/linux/netfilter_ipv6/ip6_tables.h b/include/linux/netfilter_ipv6/ip6_tables.h
+index 8b8885a73c764..c6d5b927830dd 100644
+--- a/include/linux/netfilter_ipv6/ip6_tables.h
++++ b/include/linux/netfilter_ipv6/ip6_tables.h
+@@ -27,7 +27,6 @@ extern void *ip6t_alloc_initial_table(const struct xt_table *);
+ int ip6t_register_table(struct net *net, const struct xt_table *table,
+ 			const struct ip6t_replace *repl,
+ 			const struct nf_hook_ops *ops);
+-void ip6t_unregister_table_pre_exit(struct net *net, const char *name);
+ void ip6t_unregister_table_exit(struct net *net, const char *name);
+ extern unsigned int ip6t_do_table(void *priv, struct sk_buff *skb,
+ 				  const struct nf_hook_state *state);
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index 564054123772a..9b905c6562313 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -1581,15 +1581,6 @@ int arpt_register_table(struct net *net,
+ 	return ret;
+ }
  
- config IP6_NF_RAW
- 	tristate  'raw table support (required for TRACE)'
--	select IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `raw' table to ip6tables. This table is the very
- 	  first in the netfilter framework and hooks in at the PREROUTING
-@@ -258,7 +257,7 @@ config IP6_NF_SECURITY
- 	tristate "Security table"
- 	depends on SECURITY
- 	depends on NETFILTER_ADVANCED
--	select IP6_NF_IPTABLES_LEGACY
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	help
- 	  This option adds a `security' table to iptables, for use
- 	  with Mandatory Access Control (MAC) policy.
-@@ -269,8 +268,8 @@ config IP6_NF_NAT
- 	tristate "ip6tables NAT support"
- 	depends on NF_CONNTRACK
- 	depends on NETFILTER_ADVANCED
-+	depends on IP6_NF_IPTABLES_LEGACY
- 	select NF_NAT
--	select IP6_NF_IPTABLES_LEGACY
- 	select NETFILTER_XT_NAT
- 	help
- 	  This enables the `nat' table in ip6tables. This allows masquerading,
-diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index 344c287aa3f41..4937f32bcd6e7 100644
---- a/net/netfilter/Kconfig
-+++ b/net/netfilter/Kconfig
-@@ -760,6 +760,16 @@ config NETFILTER_XTABLES_COMPAT
+-void arpt_unregister_table_pre_exit(struct net *net, const char *name)
+-{
+-	struct xt_table *table = xt_find_table(net, NFPROTO_ARP, name);
+-
+-	if (table)
+-		nf_unregister_net_hooks(net, table->ops, hweight32(table->valid_hooks));
+-}
+-EXPORT_SYMBOL(arpt_unregister_table_pre_exit);
+-
+ void arpt_unregister_table(struct net *net, const char *name)
+ {
+ 	struct xt_table *table = xt_find_table(net, NFPROTO_ARP, name);
+diff --git a/net/ipv4/netfilter/arptable_filter.c b/net/ipv4/netfilter/arptable_filter.c
+index 359d00d74095b..382345567a600 100644
+--- a/net/ipv4/netfilter/arptable_filter.c
++++ b/net/ipv4/netfilter/arptable_filter.c
+@@ -43,7 +43,7 @@ static int arptable_filter_table_init(struct net *net)
  
- 	   If unsure, say N.
+ static void __net_exit arptable_filter_net_pre_exit(struct net *net)
+ {
+-	arpt_unregister_table_pre_exit(net, "filter");
++	xt_unregister_table_pre_exit(net, NFPROTO_ARP, "filter");
+ }
  
-+config NETFILTER_XTABLES_LEGACY
-+	bool "Netfilter legacy tables support"
-+	depends on !PREEMPT_RT
-+	help
-+	  Say Y here if you still require support for legacy tables. This is
-+	  required by the legacy tools (iptables-legacy) and is not needed if
-+	  you use iptables over nftables (iptables-nft).
-+	  Legacy support is not limited to IP, it also includes EBTABLES and
-+	  ARPTABLES.
-+
- comment "Xtables combined modules"
+ static void __net_exit arptable_filter_net_exit(struct net *net)
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index a6208efcfccfc..7c6b21f8174a3 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1791,14 +1791,6 @@ int ipt_register_table(struct net *net, const struct xt_table *table,
+ 	return ret;
+ }
  
- config NETFILTER_XT_MARK
+-void ipt_unregister_table_pre_exit(struct net *net, const char *name)
+-{
+-	struct xt_table *table = xt_find_table(net, NFPROTO_IPV4, name);
+-
+-	if (table)
+-		nf_unregister_net_hooks(net, table->ops, hweight32(table->valid_hooks));
+-}
+-
+ void ipt_unregister_table_exit(struct net *net, const char *name)
+ {
+ 	struct xt_table *table = xt_find_table(net, NFPROTO_IPV4, name);
+@@ -1953,7 +1945,6 @@ static void __exit ip_tables_fini(void)
+ }
+ 
+ EXPORT_SYMBOL(ipt_register_table);
+-EXPORT_SYMBOL(ipt_unregister_table_pre_exit);
+ EXPORT_SYMBOL(ipt_unregister_table_exit);
+ EXPORT_SYMBOL(ipt_do_table);
+ module_init(ip_tables_init);
+diff --git a/net/ipv4/netfilter/iptable_filter.c b/net/ipv4/netfilter/iptable_filter.c
+index c03c1a4ea7cab..fb85745793ba5 100644
+--- a/net/ipv4/netfilter/iptable_filter.c
++++ b/net/ipv4/netfilter/iptable_filter.c
+@@ -61,7 +61,7 @@ static int __net_init iptable_filter_net_init(struct net *net)
+ 
+ static void __net_exit iptable_filter_net_pre_exit(struct net *net)
+ {
+-	ipt_unregister_table_pre_exit(net, "filter");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV4, "filter");
+ }
+ 
+ static void __net_exit iptable_filter_net_exit(struct net *net)
+diff --git a/net/ipv4/netfilter/iptable_mangle.c b/net/ipv4/netfilter/iptable_mangle.c
+index 6a51e61b35562..6259bcf178bba 100644
+--- a/net/ipv4/netfilter/iptable_mangle.c
++++ b/net/ipv4/netfilter/iptable_mangle.c
+@@ -95,7 +95,7 @@ static int iptable_mangle_table_init(struct net *net)
+ 
+ static void __net_exit iptable_mangle_net_pre_exit(struct net *net)
+ {
+-	ipt_unregister_table_pre_exit(net, "mangle");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV4, "mangle");
+ }
+ 
+ static void __net_exit iptable_mangle_net_exit(struct net *net)
+diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
+index 12ca666d6e2c1..ca6964b957ead 100644
+--- a/net/ipv4/netfilter/iptable_nat.c
++++ b/net/ipv4/netfilter/iptable_nat.c
+@@ -129,6 +129,7 @@ static int iptable_nat_table_init(struct net *net)
+ static void __net_exit iptable_nat_net_pre_exit(struct net *net)
+ {
+ 	ipt_nat_unregister_lookups(net);
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV4, "nat");
+ }
+ 
+ static void __net_exit iptable_nat_net_exit(struct net *net)
+diff --git a/net/ipv4/netfilter/iptable_raw.c b/net/ipv4/netfilter/iptable_raw.c
+index 33330e13ea18d..c7b91b2042dc6 100644
+--- a/net/ipv4/netfilter/iptable_raw.c
++++ b/net/ipv4/netfilter/iptable_raw.c
+@@ -53,7 +53,7 @@ static int iptable_raw_table_init(struct net *net)
+ 
+ static void __net_exit iptable_raw_net_pre_exit(struct net *net)
+ {
+-	ipt_unregister_table_pre_exit(net, "raw");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV4, "raw");
+ }
+ 
+ static void __net_exit iptable_raw_net_exit(struct net *net)
+diff --git a/net/ipv4/netfilter/iptable_security.c b/net/ipv4/netfilter/iptable_security.c
+index 2b89adc1e5751..81175c20ccbe8 100644
+--- a/net/ipv4/netfilter/iptable_security.c
++++ b/net/ipv4/netfilter/iptable_security.c
+@@ -50,7 +50,7 @@ static int iptable_security_table_init(struct net *net)
+ 
+ static void __net_exit iptable_security_net_pre_exit(struct net *net)
+ {
+-	ipt_unregister_table_pre_exit(net, "security");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV4, "security");
+ }
+ 
+ static void __net_exit iptable_security_net_exit(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index b844e519da1b4..1324413fb29c3 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1797,14 +1797,6 @@ int ip6t_register_table(struct net *net, const struct xt_table *table,
+ 	return ret;
+ }
+ 
+-void ip6t_unregister_table_pre_exit(struct net *net, const char *name)
+-{
+-	struct xt_table *table = xt_find_table(net, NFPROTO_IPV6, name);
+-
+-	if (table)
+-		nf_unregister_net_hooks(net, table->ops, hweight32(table->valid_hooks));
+-}
+-
+ void ip6t_unregister_table_exit(struct net *net, const char *name)
+ {
+ 	struct xt_table *table = xt_find_table(net, NFPROTO_IPV6, name);
+@@ -1960,7 +1952,6 @@ static void __exit ip6_tables_fini(void)
+ }
+ 
+ EXPORT_SYMBOL(ip6t_register_table);
+-EXPORT_SYMBOL(ip6t_unregister_table_pre_exit);
+ EXPORT_SYMBOL(ip6t_unregister_table_exit);
+ EXPORT_SYMBOL(ip6t_do_table);
+ 
+diff --git a/net/ipv6/netfilter/ip6table_filter.c b/net/ipv6/netfilter/ip6table_filter.c
+index 16a38d56b2e54..982900920e730 100644
+--- a/net/ipv6/netfilter/ip6table_filter.c
++++ b/net/ipv6/netfilter/ip6table_filter.c
+@@ -60,7 +60,7 @@ static int __net_init ip6table_filter_net_init(struct net *net)
+ 
+ static void __net_exit ip6table_filter_net_pre_exit(struct net *net)
+ {
+-	ip6t_unregister_table_pre_exit(net, "filter");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV6, "filter");
+ }
+ 
+ static void __net_exit ip6table_filter_net_exit(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_mangle.c b/net/ipv6/netfilter/ip6table_mangle.c
+index 39f0716667131..475361aa81310 100644
+--- a/net/ipv6/netfilter/ip6table_mangle.c
++++ b/net/ipv6/netfilter/ip6table_mangle.c
+@@ -88,7 +88,7 @@ static int ip6table_mangle_table_init(struct net *net)
+ 
+ static void __net_exit ip6table_mangle_net_pre_exit(struct net *net)
+ {
+-	ip6t_unregister_table_pre_exit(net, "mangle");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV6, "mangle");
+ }
+ 
+ static void __net_exit ip6table_mangle_net_exit(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
+index 52d597b16b658..bef2d309369bc 100644
+--- a/net/ipv6/netfilter/ip6table_nat.c
++++ b/net/ipv6/netfilter/ip6table_nat.c
+@@ -131,6 +131,7 @@ static int ip6table_nat_table_init(struct net *net)
+ static void __net_exit ip6table_nat_net_pre_exit(struct net *net)
+ {
+ 	ip6t_nat_unregister_lookups(net);
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV6, "nat");
+ }
+ 
+ static void __net_exit ip6table_nat_net_exit(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_raw.c b/net/ipv6/netfilter/ip6table_raw.c
+index 01def8aa7a2e8..a99879f173b4a 100644
+--- a/net/ipv6/netfilter/ip6table_raw.c
++++ b/net/ipv6/netfilter/ip6table_raw.c
+@@ -52,7 +52,7 @@ static int ip6table_raw_table_init(struct net *net)
+ 
+ static void __net_exit ip6table_raw_net_pre_exit(struct net *net)
+ {
+-	ip6t_unregister_table_pre_exit(net, "raw");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV6, "raw");
+ }
+ 
+ static void __net_exit ip6table_raw_net_exit(struct net *net)
+diff --git a/net/ipv6/netfilter/ip6table_security.c b/net/ipv6/netfilter/ip6table_security.c
+index 66018b169b010..c44834d93fc79 100644
+--- a/net/ipv6/netfilter/ip6table_security.c
++++ b/net/ipv6/netfilter/ip6table_security.c
+@@ -49,7 +49,7 @@ static int ip6table_security_table_init(struct net *net)
+ 
+ static void __net_exit ip6table_security_net_pre_exit(struct net *net)
+ {
+-	ip6t_unregister_table_pre_exit(net, "security");
++	xt_unregister_table_pre_exit(net, NFPROTO_IPV6, "security");
+ }
+ 
+ static void __net_exit ip6table_security_net_exit(struct net *net)
 diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index 650cb725ba271..be786cd704508 100644
+index be786cd704508..6a4bca66a0ae6 100644
 --- a/net/netfilter/x_tables.c
 +++ b/net/netfilter/x_tables.c
-@@ -1339,12 +1339,13 @@ void xt_compat_unlock(u_int8_t af)
- EXPORT_SYMBOL_GPL(xt_compat_unlock);
- #endif
- 
--DEFINE_PER_CPU(seqcount_t, xt_recseq);
--EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
--
- struct static_key xt_tee_enabled __read_mostly;
- EXPORT_SYMBOL_GPL(xt_tee_enabled);
- 
-+#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
-+DEFINE_PER_CPU(seqcount_t, xt_recseq);
-+EXPORT_PER_CPU_SYMBOL_GPL(xt_recseq);
-+
- static int xt_jumpstack_alloc(struct xt_table_info *i)
- {
- 	unsigned int size;
-@@ -1536,6 +1537,7 @@ void *xt_unregister_table(struct xt_table *table)
+@@ -1537,6 +1537,35 @@ void *xt_unregister_table(struct xt_table *table)
  	return private;
  }
  EXPORT_SYMBOL_GPL(xt_unregister_table);
-+#endif
++
++/**
++ * xt_unregister_table_pre_exit - pre-shutdown unregister of a table
++ * @net: network namespace
++ * @af: address family (e.g., NFPROTO_IPV4, NFPROTO_IPV6)
++ * @name: name of the table to unregister
++ *
++ * Unregisters the specified netfilter table from the given network namespace
++ * and also unregisters the hooks from netfilter core: no new packets will be
++ * processed.
++ */
++void xt_unregister_table_pre_exit(struct net *net, u8 af, const char *name)
++{
++	struct xt_pernet *xt_net = net_generic(net, xt_pernet_id);
++	struct xt_table *t;
++
++	mutex_lock(&xt[af].mutex);
++	list_for_each_entry(t, &xt_net->tables[af], list) {
++		if (strcmp(t->name, name) == 0) {
++			mutex_unlock(&xt[af].mutex);
++
++			if (t->ops) /* nat table registers with nat core, t->ops is NULL. */
++				nf_unregister_net_hooks(net, t->ops, hweight32(t->valid_hooks));
++			return;
++		}
++	}
++	mutex_unlock(&xt[af].mutex);
++}
++EXPORT_SYMBOL(xt_unregister_table_pre_exit);
+ #endif
  
  #ifdef CONFIG_PROC_FS
- static void *xt_table_seq_start(struct seq_file *seq, loff_t *pos)
-@@ -1919,6 +1921,7 @@ void xt_proto_fini(struct net *net, u_int8_t af)
- }
- EXPORT_SYMBOL_GPL(xt_proto_fini);
- 
-+#ifdef CONFIG_NETFILTER_XTABLES_LEGACY
- /**
-  * xt_percpu_counter_alloc - allocate x_tables rule counter
-  *
-@@ -1973,6 +1976,7 @@ void xt_percpu_counter_free(struct xt_counters *counters)
- 		free_percpu((void __percpu *)pcnt);
- }
- EXPORT_SYMBOL_GPL(xt_percpu_counter_free);
-+#endif
- 
- static int __net_init xt_net_init(struct net *net)
- {
-@@ -2005,8 +2009,10 @@ static int __init xt_init(void)
- 	unsigned int i;
- 	int rv;
- 
--	for_each_possible_cpu(i) {
--		seqcount_init(&per_cpu(xt_recseq, i));
-+	if (IS_ENABLED(CONFIG_NETFILTER_XTABLES_LEGACY)) {
-+		for_each_possible_cpu(i) {
-+			seqcount_init(&per_cpu(xt_recseq, i));
-+		}
- 	}
- 
- 	xt = kcalloc(NFPROTO_NUMPROTO, sizeof(struct xt_af), GFP_KERNEL);
 -- 
 2.53.0
 
