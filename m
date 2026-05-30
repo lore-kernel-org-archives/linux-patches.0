@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC693BE620;
-	Sat, 30 May 2026 17:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197C734A3C4;
+	Sat, 30 May 2026 17:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162617; cv=none; b=Dt+VG8ADL04nLM9LyoOSLfYVCtp3QQ2ZsDX+/6P/XircSCFSElEP5wvetXWxCNxFdwOuOVw6lsg4g3QwfvEu/hTa+uMeQQU0d+6yk/HEX7kAo55nhtzi2/XoOVXjdSG1JKawUtflsLIbKCTaENs83hn3bZIxQU5PRrj3dZ+RYx8=
+	t=1780162621; cv=none; b=DQSLF4R5AZYXV+PQmSq/tlCiZHQ/s7uxeEgAYu8L727//s7CQPUA5/uR8OEhZwpYsMQuSC2xYM8kS4oQFMhbCPJou13S3bYDrYb0W/QqLF5yA4tQ0X5Z//Ob49oJxq5RVYNuTT/lpgtqg8F68i+o0Gw9JCOI/B7lBz3afkFC6OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162617; c=relaxed/simple;
-	bh=n/CLvyBcoRQj9BVRtQCnd0rI4/IAlofPystjFoEz8VU=;
+	s=arc-20240116; t=1780162621; c=relaxed/simple;
+	bh=agIbeyJ5TT67SIAFQ4fy1Gp3cgVj4HJyQYqSsVny8Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkuL0EgtNICktBRE7fsWyJdF/KjUxAK8CbWSOuitvRGY8eOKTWnSSOPYRz4kh+Gxx4invEKKT74+NgwL8Sce3r+QrMUCICzDSKQYSMxyN4xsokUHS8gig2di0sjaSFPcED4qZV9nRelmEdQASuNPCuFJVViMrRgscne11b/CA08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWzup/Dg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=smZ1wK/7DsvkSIrp1zGDarpeKyBzVLhdIPVwh3OlXyZqa+DWzTJmxeW81Qx1oFn3ZV/0+BZxrhVqK0DoyZx3qOwQycrHUfp8bMlVrRkpp7WaczWTAfgAz6l8kJtxiWFw3ccFYo36YQdlb4tOb4aHXn7nHXu26VHeYINkvGHLlPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMdI9VeY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWzup/Dg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE891F00899;
-	Sat, 30 May 2026 17:36:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMdI9VeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554251F00893;
+	Sat, 30 May 2026 17:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162616;
-	bh=LD+SY7y91lWYPJ0Qf1E0wCr4PoxoSXeG92UTo6r84TQ=;
+	s=korg; t=1780162620;
+	bh=kriqaqFnMvMVoHzImEyqXAnfgHQlxb91e2VaWCypCA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWzup/DgQzkY0T5Dq2et+3PqW6leddgJx2V1vsebDKVmlukyA0/FzYURcDnzKrqgK
-	 FmWD3UV/WAix+Ejdsg+17wWo9t3qVSOT2bQe4p6OkOs+hTY+N/7eIc4uL3qB/oDaM+
-	 we2AE1DRhXTrUdE5GvAbSEMWdNpOfqJipCKVnpEA=
+	b=CMdI9VeY5//gpQakm5kDJ3qk47xMcy19dnSQy2hkSIMw0qaBHaY+xJK4DBwKQekGE
+	 JCvqjm6/dnvz6Szd8wN4lSYJAscTi15tlumiapxdq/I3PY2OwiTQ6piJIEm2zM5l/j
+	 8VteDf0oyKfGuASvDNlFOJvy5cmxDBeDg98l1w4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 954/969] net: dsa: mt7530: preserve VLAN tags on trapped link-local frames
-Date: Sat, 30 May 2026 18:07:58 +0200
-Message-ID: <20260530160327.108779792@linuxfoundation.org>
+Subject: [PATCH 6.1 955/969] net: mana: Fix TOCTOU double-fetch of hwc_msg_id from DMA buffer
+Date: Sat, 30 May 2026 18:07:59 +0200
+Message-ID: <20260530160327.138983564@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,95 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit 3ac85bcfd404b588298c95c6fba8aad4ad334f57 ]
+[ Upstream commit 35f0f0a2536a4d604b4dbad92c85c4a8fdebb870 ]
 
-The BPC, RGAC1 and RGAC2 registers control the handling of link-local
-frames with reserved MAC DAs (01:80:C2:00:00:0x). These frames are
-correctly trapped to the CPU port, but the egress VLAN tag attribute was
-set to MT7530_VLAN_EG_UNTAGGED which causes the switch to strip any
-VLAN tags from trapped frames before they reach the CPU.
+In mana_hwc_rx_event_handler(), resp->response.hwc_msg_id is read from
+DMA-coherent memory and bounds-checked, then mana_hwc_handle_resp()
+re-reads the same field from the same DMA buffer for test_bit() and
+pointer arithmetic.
 
-This causes VLAN-tagged link-local frames (STP BPDUs, LLDP, PTP Peer
-Delay Requests) to arrive at the CPU without their VLAN tag, so they
-are delivered to the base network interface instead of the VLAN
-sub-interface. The DSA local_termination selftest confirms this: all
-link-local protocol tests on VLAN upper interfaces fail.
+DMA-coherent memory is mapped uncacheable on x86 and is shared,
+unencrypted, in Confidential VMs (SEV-SNP/TDX), so each load goes
+directly to host-visible memory. A H/W can modify the value
+between the check and the use, bypassing the bounds validation.
 
-Set the EG_TAG attribute to MT7530_VLAN_EG_DISABLED (system default)
-so that the switch does not modify VLAN tags in trapped frames. This
-way VLAN-tagged frames retain their original tag and are delivered to
-the correct VLAN sub-interface, matching the behavior of non-trapped
-frames which pass through without VLAN tag modification.
+Fix this by reading hwc_msg_id exactly once using READ_ONCE() into a
+stack-local variable in mana_hwc_rx_event_handler(), and passing the
+validated value as a parameter to mana_hwc_handle_resp().
 
-Fixes: 69ddba9d170b ("net: dsa: mt7530: fix handling of all link-local frames")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Link: https://patch.msgid.link/891e0cd34db2a5fe20ceb73283a81fb5f71427ca.1778766629.git.daniel@makrotopia.org
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260514194156.466823-1-ernis@linux.microsoft.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ .../net/ethernet/microsoft/mana/hw_channel.c  | 23 +++++++++++--------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index fc3c97d0df4fc..73eeb6aeac5cc 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -1187,37 +1187,40 @@ static void mt7530_setup_port5(struct dsa_switch *ds, phy_interface_t interface)
- static void
- mt753x_trap_frames(struct mt7530_priv *priv)
- {
--	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress them
--	 * VLAN-untagged.
-+	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress
-+	 * them with the EG_TAG attribute set to disabled (system default)
-+	 * so that any VLAN tags in the frame are not modified by the
-+	 * switch egress VLAN tag processing. This preserves VLAN tags
-+	 * for reception on VLAN sub-interfaces.
- 	 */
- 	mt7530_rmw(priv, MT753X_BPC,
- 		   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
- 			   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
--		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
--			   BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   BPDU_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   TO_CPU_FW_CPU_ONLY);
- 
--	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and egress
--	 * them VLAN-untagged.
-+	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and
-+	 * egress them with EG_TAG disabled.
- 	 */
- 	mt7530_rmw(priv, MT753X_RGAC1,
- 		   R02_BPDU_FR | R02_EG_TAG_MASK | R02_PORT_FW_MASK |
- 			   R01_BPDU_FR | R01_EG_TAG_MASK | R01_PORT_FW_MASK,
--		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   R02_PORT_FW(TO_CPU_FW_CPU_ONLY) | R01_BPDU_FR |
--			   R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   R01_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   TO_CPU_FW_CPU_ONLY);
- 
--	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and egress
--	 * them VLAN-untagged.
-+	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and
-+	 * egress them with EG_TAG disabled.
- 	 */
- 	mt7530_rmw(priv, MT753X_RGAC2,
- 		   R0E_BPDU_FR | R0E_EG_TAG_MASK | R0E_PORT_FW_MASK |
- 			   R03_BPDU_FR | R03_EG_TAG_MASK | R03_PORT_FW_MASK,
--		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   R0E_PORT_FW(TO_CPU_FW_CPU_ONLY) | R03_BPDU_FR |
--			   R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   R03_EG_TAG(MT7530_VLAN_EG_DISABLED) |
- 			   TO_CPU_FW_CPU_ONLY);
+diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+index 8111f181f9572..d429ecdbc5d4f 100644
+--- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
++++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+@@ -75,21 +75,19 @@ static int mana_hwc_post_rx_wqe(const struct hwc_wq *hwc_rxq,
  }
  
+ static void mana_hwc_handle_resp(struct hw_channel_context *hwc, u32 resp_len,
+-				 struct hwc_work_request *rx_req)
++				 struct hwc_work_request *rx_req, u16 msg_id)
+ {
+ 	const struct gdma_resp_hdr *resp_msg = rx_req->buf_va;
+ 	struct hwc_caller_ctx *ctx;
+ 	int err;
+ 
+-	if (!test_bit(resp_msg->response.hwc_msg_id,
+-		      hwc->inflight_msg_res.map)) {
+-		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n",
+-			resp_msg->response.hwc_msg_id);
++	if (!test_bit(msg_id, hwc->inflight_msg_res.map)) {
++		dev_err(hwc->dev, "hwc_rx: invalid msg_id = %u\n", msg_id);
+ 		mana_hwc_post_rx_wqe(hwc->rxq, rx_req);
+ 		return;
+ 	}
+ 
+-	ctx = hwc->caller_ctx + resp_msg->response.hwc_msg_id;
++	ctx = hwc->caller_ctx + msg_id;
+ 	err = mana_hwc_verify_resp_msg(ctx, resp_msg, resp_len);
+ 	if (err)
+ 		goto out;
+@@ -200,6 +198,7 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
+ 	struct gdma_sge *sge;
+ 	u64 rq_base_addr;
+ 	u64 rx_req_idx;
++	u16 msg_id;
+ 	u8 *wqe;
+ 
+ 	if (WARN_ON_ONCE(hwc_rxq->gdma_wq->id != gdma_rxq_id))
+@@ -218,13 +217,17 @@ static void mana_hwc_rx_event_handler(void *ctx, u32 gdma_rxq_id,
+ 	rx_req = &hwc_rxq->msg_buf->reqs[rx_req_idx];
+ 	resp = (struct gdma_resp_hdr *)rx_req->buf_va;
+ 
+-	if (resp->response.hwc_msg_id >= hwc->num_inflight_msg) {
+-		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n",
+-			resp->response.hwc_msg_id);
++	/* Read msg_id once from DMA buffer to prevent TOCTOU:
++	 * DMA memory is shared/unencrypted in CVMs - host can
++	 * modify it between reads.
++	 */
++	msg_id = READ_ONCE(resp->response.hwc_msg_id);
++	if (msg_id >= hwc->num_inflight_msg) {
++		dev_err(hwc->dev, "HWC RX: wrong msg_id=%u\n", msg_id);
+ 		return;
+ 	}
+ 
+-	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req);
++	mana_hwc_handle_resp(hwc, rx_oob->tx_oob_data_size, rx_req, msg_id);
+ 
+ 	/* Can no longer use 'resp', because the buffer is posted to the HW
+ 	 * in mana_hwc_handle_resp() above.
 -- 
 2.53.0
 
