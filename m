@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5554A32BF24;
-	Sat, 30 May 2026 17:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A2432BF24;
+	Sat, 30 May 2026 17:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163193; cv=none; b=K+kcpdTdMjZoNoV5Qe09ZvR4vN2xRh2G7kYBsaYk3SdY1TFEmvEwV17zGanT6Up4UArja3NFWa2H86AzS9XocW3wz20fwI9U9IaT67mvAPitqOvwis4pG2pavvpQ69YY4cp/562rSCTmnTVAyzfvJsjP49gVvKEGPdUsPplbCVY=
+	t=1780163196; cv=none; b=EgVpnxrC+mhag1Pr2leT5T0qQeNMAR01rD03CvjOqg7aTdKf2y1DlDuwgcQDa7vixZ68Yr/sntEhamilW2Mh+H2U+ZH/pi4/aL5Yc+N6X2/15EF+0H7bsjc2bOVkbVt6+oepJfTYTA0SZJTs4Spsn571ECzWojh+8jbx2eTXais=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163193; c=relaxed/simple;
-	bh=kYHgJ3fSEhuv3voU21bCaXkiXiZA0MYN8J1fl+lSuRA=;
+	s=arc-20240116; t=1780163196; c=relaxed/simple;
+	bh=tTHzxbezt1XmT1znHhywdtxytlHcsABJD3apDNdvSVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RV6dpjhT1vmQTQQCg0kbtrSXm4S2Wbttf/Bc5qykHTugywIHmZfdNrXo0AZNXyWmlDhb8i1WcTCtzXY4MJmlRYuxdqzNhvbH5taiLkXonguuDXDtdlw2YFNIuyYat3cwKL3uSIhsszBkXQYCyFgapJCEApQXbA/DZP1l+dM5aHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9OGoOgF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cgo4qRx7GTaf9sEGz8EI6Bat3EmB5hb2hhKoRM1gBwoCxBcC59FvmRuSQ2fy732xyghXIK2SOSZwc7RVB4H/h5FxID2/ZDVDkElZZmLX+/YbNrxWlpIa8sGZH/OXVyZW5ApRCkCv1Obn8SjUvcmLPZAfQklgabCGecDzQ5mm/PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5SpNO84; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9OGoOgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCC51F00893;
-	Sat, 30 May 2026 17:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5SpNO84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192C91F00893;
+	Sat, 30 May 2026 17:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163192;
-	bh=BX3O1mFErEhRVNsDXPbJO/+twTt+MD+9+Yl7nqRTh8A=;
+	s=korg; t=1780163195;
+	bh=1dyhMiGNEGMwa9UnYg6MYBOEDL5v6yAtDvBtWS/62IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9OGoOgFOJZHGIgv4QNNgpoSxDKZ6V5L71il5sZwr4s/lC1yaAjJ4MFAH7J8m70fO
-	 DsqN8SCQ5j+RdqqFSmbIR1tbmrG88/bRLqe/1rSLK7HEXDya0jtDY+wbklag1TabEg
-	 8OJCUUo/DGC6jV/fgOvauldZMlqEzWaItThe6A6U=
+	b=e5SpNO84+Scw/+S5/2TI5UpIv/jatAj9VKnrIDfOhGTzJv29d8ru45I/S4dXF+Ve2
+	 UaSCHHTTiQaQPZr1QRimkTCd8pYxRWh8hFVdAe7XhAFmOl41YKdceVMXxpBct3wwfn
+	 rAqNLfy6xOhzsIgBvcYoqkTWhnca2hq628HCWAsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 184/776] usb: xhci: Make usb_host_endpoint.hcpriv survive endpoint_disable()
-Date: Sat, 30 May 2026 17:58:18 +0200
-Message-ID: <20260530160245.256065212@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 185/776] ALSA: usb-audio: Evaluate packsize caps at the right place
+Date: Sat, 30 May 2026 17:58:19 +0200
+Message-ID: <20260530160245.282426875@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,63 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 25e531b422dc2ac90cdae3b6e74b5cdeb081440d upstream.
+commit 52521e8398839105ef8eb22b3f0993f9b0d11a57 upstream.
 
-xHCI hardware maintains its endpoint state between add_endpoint()
-and drop_endpoint() calls followed by successful check_bandwidth().
-So does the driver.
+We introduced the upper bound checks of the packet sizes by the
+ep->maxframesize for avoiding the URB submission errors.  However, the
+check was applied at an incorrect place in the function
+snd_usb_endpoint_set_params() where ep->maxframesize isn't defined
+yet; the value is defined at a bit later position.  So this ended up
+with a failure at the first run while the second run works.
 
-Core may call endpoint_disable() during xHCI endpoint life, so don't
-clear host_ep->hcpriv then, because this breaks endpoint_reset().
+For fixing it, move the check at the correct place, right after the
+calculation of ep->maxframesize in the same function.
 
-If a driver calls usb_set_interface(), submits URBs which make host
-sequence state non-zero and calls usb_clear_halt(), the device clears
-its sequence state but xhci_endpoint_reset() bails out. The next URB
-malfunctions: USB2 loses one packet, USB3 gets Transaction Error or
-may not complete at all on some (buggy?) HCs from ASMedia and AMD.
-This is triggered by uvcvideo on bulk video devices.
-
-The code was copied from ehci_endpoint_disable() but it isn't needed
-here - hcpriv should only be NULL on emulated root hub endpoints.
-It might prevent resetting and inadvertently enabling a disabled and
-dropped endpoint, but core shouldn't try to reset dropped endpoints.
-
-Document xhci requirements regarding hcpriv. They are currently met.
-
-Fixes: 18b74067ac78 ("xhci: Fix use-after-free regression in xhci clear hub TT implementation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260402131342.2628648-26-mathias.nyman@linux.intel.com
+Fixes: 7fe8dec3f628 ("ALSA: usb-audio: Cap the packet size pre-calculations")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221292
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260410143220.1676344-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    1 -
- include/linux/usb.h     |    3 ++-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3233,7 +3233,6 @@ rescan:
- 		xhci_dbg(xhci, "endpoint disable with ep_state 0x%x\n",
- 			 ep->ep_state);
- done:
--	host_ep->hcpriv = NULL;
- 	spin_unlock_irqrestore(&xhci->lock, flags);
- }
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1388,9 +1388,6 @@ int snd_usb_endpoint_set_params(struct s
+ 		goto unlock;
+ 	}
  
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -54,7 +54,8 @@ struct ep_device;
-  * @ssp_isoc_ep_comp: SuperSpeedPlus isoc companion descriptor for this endpoint
-  * @urb_list: urbs queued to this endpoint; maintained by usbcore
-  * @hcpriv: for use by HCD; typically holds hardware dma queue head (QH)
-- *	with one or more transfer descriptors (TDs) per urb
-+ *	with one or more transfer descriptors (TDs) per urb; must be preserved
-+ *	by core while BW is allocated for the endpoint
-  * @ep_dev: ep_device for sysfs info
-  * @extra: descriptors following this endpoint in the configuration
-  * @extralen: how many bytes of "extra" are valid
+-	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
+-	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
+-
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
+ 	ep->freqshift = INT_MIN;
+@@ -1417,6 +1414,9 @@ int snd_usb_endpoint_set_params(struct s
+ 	ep->maxframesize = ep->maxpacksize / ep->cur_frame_bytes;
+ 	ep->curframesize = ep->curpacksize / ep->cur_frame_bytes;
+ 
++	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
++	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
++
+ 	err = update_clock_ref_rate(chip, ep);
+ 	if (err >= 0) {
+ 		ep->need_setup = false;
 
 
