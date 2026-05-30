@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D92D3112C1;
-	Sat, 30 May 2026 18:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6408C3112C1;
+	Sat, 30 May 2026 18:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164511; cv=none; b=qWiqyAc3HubX8fua8z3RReTM/FoP1Ug4OSVOStefOPwuxeZCm1jA/v/0sphNaNQiizpVTwoQmUj4tVsSzk7PjsJ3j/W5+u2OeUsqj1X7MP5xwsqZJBI+gR/bAzPnvrlABw7YL1GKbbxr7gl2yDHz2XbmTbg1yWYOcbJjxbSlwkA=
+	t=1780164514; cv=none; b=A4N2AvqJPcp1BTyUIhsFdLW7PdJIMaubCP+cmmUlNnLCRwMseMEbTG+ULfM1HxzP+YZ9PZ1kl40rE/JEAx4eV5DGQZF8m/vDXxzUa1Ut029TGAQMs8HjM9wIcFmxYhQR6xtVqWX10jcTXlGCQ13Ni9JyMOa44THryJrlQqm1PN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164511; c=relaxed/simple;
-	bh=rcl7cAI4VQW86Nh0w2xFghy1xJfrSrEz9XN9TpA6XSY=;
+	s=arc-20240116; t=1780164514; c=relaxed/simple;
+	bh=gtccdlUNNoJM23AczSgPUCG9fhIiivLoqdGi8EUciuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RaUKdidt86zV2+7FsWM+6/VAwK/2gvu/L6rE+m4i2XM0eqG0N82+a0qg8FUoQoNK0b5b8qv0zohOUlFDktjYWJZyioEyZf+m90UaVkB+jMgnwAhFKivr21jNtMwIx7a45xYBTlXDE6PfuSGsnlObCGvOfSrUkUuCbI/N+fC0tTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMREq9bA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cytRDRGTaAZ3EvDmhg1Thew8nwS2CxG1OEe4Rky0DnBMi7JAOqL1H9/Dp03B1uhdMqmcgdWCVKXbDnwd2V0xWNzIJzpn8IkhZ1Opi3pVnf5zOlOTJkFSnhX5zUsVZ0TKd6Lpw4uRSLKLWwmy6vC8k+DIIYw0RclLxFRRF0VKTlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSM5uSaV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMREq9bA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6161F00893;
-	Sat, 30 May 2026 18:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSM5uSaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85651F00893;
+	Sat, 30 May 2026 18:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164510;
-	bh=S/vY8unXXtP+I/1ELnPTrRtRz9QmijNy+Qr/SACcTys=;
+	s=korg; t=1780164513;
+	bh=n60nTvxOtj5rB2LApOqX2Hfw2dOFM5R0JoUpTjOKM9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LMREq9bADwr9rbceNL0/wFhFRGuuedR8Xsi8ddCKXP5Hm3FVb0eTSqI3pRJBZjIQf
-	 L1Mkrl93oTcHQ3SgV9Tp6LDc80LfLEC47rmr4M6J3xBpGdwGOpTUoozpabBfd498lH
-	 JY5SgJFmuB/jQQjmeCNXIj8mC04KqqGxSjMP7rPc=
+	b=jSM5uSaV/NkRLqr6UGG2X5smiEbT8kDatbuo5yA++o7JiVTROzElAVa8x0dSLNCE+
+	 PBJZuj80/i0jKfFVV7p2N0u2xIABLlpERIYJKJzibQtzz+5jq0VzHLt/Wkl2GXj1Xq
+	 Fq1KJBUvFaF7fKNV4k9gQ+FH9rjtx7ACc9YxP9Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingnan Zhang <342144303@qq.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 576/776] ipvs: fix MTU check for GSO packets in tunnel mode
-Date: Sat, 30 May 2026 18:04:50 +0200
-Message-ID: <20260530160254.982912193@linuxfoundation.org>
+Subject: [PATCH 5.15 577/776] netfilter: nfnetlink_osf: fix out-of-bounds read on option matching
+Date: Sat, 30 May 2026 18:04:51 +0200
+Message-ID: <20260530160255.006328160@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,95 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingnan Zhang <342144303@qq.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 67bf42cae41d847fd6e5749eb68278ca5d748b25 ]
+[ Upstream commit f5ca450087c3baf3651055e7a6de92600f827af3 ]
 
-Currently, IPVS skips MTU checks for GSO packets by excluding them with
-the !skb_is_gso(skb) condition. This creates problems when IPVS tunnel
-mode encapsulates GSO packets with IPIP headers.
+In nf_osf_match(), the nf_osf_hdr_ctx structure is initialized once
+and passed by reference to nf_osf_match_one() for each fingerprint
+checked. During TCP option parsing, nf_osf_match_one() advances the
+shared ctx->optp pointer.
 
-The issue manifests in two ways:
+If a fingerprint perfectly matches, the function returns early without
+restoring ctx->optp to its initial state. If the user has configured
+NF_OSF_LOGLEVEL_ALL, the loop continues to the next fingerprint.
+However, because ctx->optp was not restored, the next call to
+nf_osf_match_one() starts parsing from the end of the options buffer.
+This causes subsequent matches to read garbage data and fail
+immediately, making it impossible to log more than one match or logging
+incorrect matches.
 
-1. MTU violation after encapsulation:
-   When a GSO packet passes through IPVS tunnel mode, the original MTU
-   check is bypassed. After adding the IPIP tunnel header, the packet
-   size may exceed the outgoing interface MTU, leading to unexpected
-   fragmentation at the IP layer.
+Instead of using a shared ctx->optp pointer, pass the context as a
+constant pointer and use a local pointer (optp) for TCP option
+traversal. This makes nf_osf_match_one() strictly stateless from the
+caller's perspective, ensuring every fingerprint check starts at the
+correct option offset.
 
-2. Fragmentation with problematic IP IDs:
-   When net.ipv4.vs.pmtu_disc=1 and a GSO packet with multiple segments
-   is fragmented after encapsulation, each segment gets a sequentially
-   incremented IP ID (0, 1, 2, ...). This happens because:
-
-   a) The GSO packet bypasses MTU check and gets encapsulated
-   b) At __ip_finish_output, the oversized GSO packet is split into
-      separate SKBs (one per segment), with IP IDs incrementing
-   c) Each SKB is then fragmented again based on the actual MTU
-
-   This sequential IP ID allocation differs from the expected behavior
-   and can cause issues with fragment reassembly and packet tracking.
-
-Fix this by properly validating GSO packets using
-skb_gso_validate_network_len(). This function correctly validates
-whether the GSO segments will fit within the MTU after segmentation. If
-validation fails, send an ICMP Fragmentation Needed message to enable
-proper PMTU discovery.
-
-Fixes: 4cdd34084d53 ("netfilter: nf_conntrack_ipv6: improve fragmentation handling")
-Signed-off-by: Yingnan Zhang <342144303@qq.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Fixes: 1a6a0951fc00 ("netfilter: nfnetlink_osf: add missing fmatch check")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index f82834349ca2c..9e199f00eea73 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -103,6 +103,18 @@ __ip_vs_dst_check(struct ip_vs_dest *dest)
- 	return dest_dst;
- }
- 
-+/* Based on ip_exceeds_mtu(). */
-+static bool ip_vs_exceeds_mtu(const struct sk_buff *skb, unsigned int mtu)
-+{
-+	if (skb->len <= mtu)
-+		return false;
-+
-+	if (skb_is_gso(skb) && skb_gso_validate_network_len(skb, mtu))
-+		return false;
-+
-+	return true;
-+}
-+
- static inline bool
- __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 000a5c280ef96..2207bda442d54 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -64,9 +64,9 @@ struct nf_osf_hdr_ctx {
+ static bool nf_osf_match_one(const struct sk_buff *skb,
+ 			     const struct nf_osf_user_finger *f,
+ 			     int ttl_check,
+-			     struct nf_osf_hdr_ctx *ctx)
++			     const struct nf_osf_hdr_ctx *ctx)
  {
-@@ -112,10 +124,9 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
- 		 */
- 		if (IP6CB(skb)->frag_max_size > mtu)
- 			return true; /* largest fragment violate MTU */
--	}
--	else if (skb->len > mtu && !skb_is_gso(skb)) {
-+	} else if (ip_vs_exceeds_mtu(skb, mtu))
- 		return true; /* Packet size violate MTU size */
--	}
-+
- 	return false;
+-	const __u8 *optpinit = ctx->optp;
++	const __u8 *optp = ctx->optp;
+ 	unsigned int check_WSS = 0;
+ 	int fmatch = FMATCH_WRONG;
+ 	int foptsize, optnum;
+@@ -95,17 +95,17 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+ 	check_WSS = f->wss.wc;
+ 
+ 	for (optnum = 0; optnum < f->opt_num; ++optnum) {
+-		if (f->opt[optnum].kind == *ctx->optp) {
++		if (f->opt[optnum].kind == *optp) {
+ 			__u32 len = f->opt[optnum].length;
+-			const __u8 *optend = ctx->optp + len;
++			const __u8 *optend = optp + len;
+ 
+ 			fmatch = FMATCH_OK;
+ 
+-			switch (*ctx->optp) {
++			switch (*optp) {
+ 			case OSFOPT_MSS:
+-				mss = ctx->optp[3];
++				mss = optp[3];
+ 				mss <<= 8;
+-				mss |= ctx->optp[2];
++				mss |= optp[2];
+ 
+ 				mss = ntohs((__force __be16)mss);
+ 				break;
+@@ -113,7 +113,7 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+ 				break;
+ 			}
+ 
+-			ctx->optp = optend;
++			optp = optend;
+ 		} else
+ 			fmatch = FMATCH_OPT_WRONG;
+ 
+@@ -156,9 +156,6 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+ 		}
+ 	}
+ 
+-	if (fmatch != FMATCH_OK)
+-		ctx->optp = optpinit;
+-
+ 	return fmatch == FMATCH_OK;
  }
  
-@@ -240,7 +251,7 @@ static inline bool ensure_mtu_is_adequate(struct netns_ipvs *ipvs, int skb_af,
- 			return true;
- 
- 		if (unlikely(ip_hdr(skb)->frag_off & htons(IP_DF) &&
--			     skb->len > mtu && !skb_is_gso(skb) &&
-+			     ip_vs_exceeds_mtu(skb, mtu) &&
- 			     !ip_vs_iph_icmp(ipvsh))) {
- 			icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
- 				  htonl(mtu));
 -- 
 2.53.0
 
