@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE8633A9DA;
-	Sat, 30 May 2026 17:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4130E853;
+	Sat, 30 May 2026 17:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162451; cv=none; b=Okgl7jBzYKoCD2KrOrJS+R5HH6i7V90tkQKjvKYRjoGOJpr1RPKpqg7AwqkxcJU5BnevumwtbYeXyvI95rXJbPSaaUvivNCv5vwzyLn1Dr3oLiulc2gSvGUzorZ6pCEE8WPdBtkVK0c3fn8+0f3fRGZJjnvVx70A2AKY4lfTn9c=
+	t=1780162455; cv=none; b=dso23S6gR657MqAocAl+Po0HJuJER5qgmtjwmrmzMpZ3Dr9yj08QQT5ZieL1aW96nl0h18Dctngda26TZlK+qjDmqYrAgTue6f5bS8/YsHR2it5iCErYtwhu+Zy1kyZRbFUI8IRmjpQFJJTIGrA5H1DNFlm47MqLFtZLf5m9gdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162451; c=relaxed/simple;
-	bh=GUR2c42wWP2+P5sMtbFV+KQ/HiLOLmocV/Gajqram7g=;
+	s=arc-20240116; t=1780162455; c=relaxed/simple;
+	bh=AePlaPkjoRMwNjkeFlKlPQdMpxVqG/Pn7tUFkbDlUac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=taP1qZrOfsf1jibD9aa+X/YT0lQ/alU7CznOMffRL53Md6psHkIT35jpdVzQ3wN4AikaaehCHenzD6DE66Sz/C9+oJk8h6k/Ym2mXBdOk5MGEUbilCgUpmioymIG+Y6cbxtJv5lzacpFQHTyIUjqOwMcoocFNJ/6VMxeJy9avaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b49VWAia; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uvQ9e2yFRsVUJWbeNDRL3YTgfdST4vsH6lMNK2xT9msCkCK9+N+JBC9bsQfGUDRUMc+/o+CNAdyCjkayzmeoTh+P1PocIUJxWFp5OIW56BESGyOGp/tr7qvYJkUFX1HF5lmlSsQfRb2USTOuC0SJJmoB61MI5Q+EKPKeFMoH1UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2RJ15au; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b49VWAia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4691F00893;
-	Sat, 30 May 2026 17:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2RJ15au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732F31F00893;
+	Sat, 30 May 2026 17:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162450;
-	bh=Fob5S9rb3eNJzXOlAkamQE+ndU9C9gsY+TiYyC3zwsc=;
+	s=korg; t=1780162454;
+	bh=rxmc86KbjSJlEM8D2iYdnqrBn+kncD2DynhOkJh5Fds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b49VWAiaeD8GgV2n4jKSW/b8QX4m6zaWcFswmMW7VCVbxcg7/VMIdLKVAufvONNnT
-	 6TATPANKVyToHqhWR9bNtwo8oTBgHA20Wpgrfc+sExF1mVDnboyac8qlCd1NlNNO3r
-	 EV6DhDpR6TY5zjd7xtevxxdZCkbGAfaqKs9w5bW8=
+	b=G2RJ15au0XPtndJBcR5LheBePw8FBen70jWrIcjDqny5UM/vwezwFgmAUJLI3K4qb
+	 VGyAl64glYSf16tAgStmeUShdKsiaAa92rWLRbh4E8zs6H1LgT//47AAS8xdL+sNsA
+	 za8rayrmPUTqYVt88jboIQ5tJ0TyVF6MHqR9i+yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 925/969] irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT
-Date: Sat, 30 May 2026 18:07:29 +0200
-Message-ID: <20260530160326.283449466@linuxfoundation.org>
+Subject: [PATCH 6.1 926/969] net: ethernet: cortina: Make RX SKB per-port
+Date: Sat, 30 May 2026 18:07:30 +0200
+Message-ID: <20260530160326.311981516@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,70 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 91840be8f710370607f949a627e070896faeddb8 ]
+[ Upstream commit 06937db21ee311ed07eba47954447245041a982d ]
 
-On PREEMPT_RT, non-HARD irq_work runs in per-CPU kthreads via
-run_irq_workd(), so irq_work_sync() uses rcuwait() to wait for BUSY==0.
+The SKB used to assemble packets from fragments in gmac_rx()
+is static local, but the Gemini has two ethernet ports, meaning
+there can be races between the ports on a bad day if a device
+is using both.
 
-After irq_work_single() clears BUSY via atomic_cmpxchg(), it still
-dereferences @work for irq_work_is_hard() and rcuwait_wake_up().
+Make the RX SKB a per-port variable and carry it over between
+invocations in the port struct instead.
 
-An irq_work_sync() caller on another CPU that enters after BUSY is cleared
-can observe BUSY==0 immediately, return, and free the work before those
-accesses complete — causing a use-after-free.
+Zero the pointer once we call napi_gro_frags(), on error (after
+calling napi_free_frags()) or if the port is stopped.
 
-Fix this by wrapping run_irq_workd() in guard(rcu)() so that the entire
-irq_work_single() execution is within an RCU read-side critical
-section. Then add synchronize_rcu() in irq_work_sync() after
-rcuwait_wait_event() to ensure the caller waits for the RCU grace period
-before returning, preventing premature frees.
+Zero it in some place where not strictly necessary just to
+emphasize what is going on.
 
-Fixes: 810979682ccc ("irq_work: Allow irq_work_sync() to sleep if irq_work() no IRQ support.")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260330073234.303732-1-jiayuan.chen@linux.dev
+This was found by Sashiko during normal patch review.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-2-6c5d20ddc35b@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq_work.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/cortina/gemini.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq_work.c b/kernel/irq_work.c
-index 7afa40fe5cc43..6a286b2681178 100644
---- a/kernel/irq_work.c
-+++ b/kernel/irq_work.c
-@@ -282,6 +282,12 @@ void irq_work_sync(struct irq_work *work)
- 	    !arch_irq_work_has_interrupt()) {
- 		rcuwait_wait_event(&work->irqwait, !irq_work_is_busy(work),
- 				   TASK_UNINTERRUPTIBLE);
-+		/*
-+		 * Ensure irq_work_single() does not access @work
-+		 * after removing IRQ_WORK_BUSY. It is always
-+		 * accessed within a RCU-read section.
-+		 */
-+		synchronize_rcu();
- 		return;
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 729a69007ec47..dbfcbdb8d751a 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -121,6 +121,8 @@ struct gemini_ethernet_port {
+ 	struct napi_struct	napi;
+ 	struct hrtimer		rx_coalesce_timer;
+ 	unsigned int		rx_coalesce_nsecs;
++	struct sk_buff		*rx_skb;
++
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+ 	unsigned int		txq_order;
+@@ -1447,10 +1449,10 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+ 	struct gemini_ethernet *geth = port->geth;
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
++	struct sk_buff *skb = port->rx_skb;
+ 	unsigned int frame_len, frag_len;
+ 	struct gmac_rxdesc *rx = NULL;
+ 	struct gmac_queue_page *gpage;
+-	static struct sk_buff *skb;
+ 	union gmac_rxdesc_0 word0;
+ 	union gmac_rxdesc_1 word1;
+ 	union gmac_rxdesc_3 word3;
+@@ -1504,6 +1506,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 			if (skb) {
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
++				skb = NULL;
+ 			}
+ 
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+@@ -1554,6 +1557,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		port->stats.rx_dropped++;
  	}
  
-@@ -292,6 +298,7 @@ EXPORT_SYMBOL_GPL(irq_work_sync);
- 
- static void run_irq_workd(unsigned int cpu)
- {
-+	guard(rcu)();
- 	irq_work_run_list(this_cpu_ptr(&lazy_list));
++	port->rx_skb = skb;
+ 	writew(r, ptr_reg);
+ 	return budget;
  }
+@@ -1882,6 +1886,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	gmac_disable_tx_rx(netdev);
+ 	gmac_stop_dma(port);
+ 	napi_disable(&port->napi);
++	port->rx_skb = NULL;
  
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
