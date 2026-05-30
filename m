@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6830E2FDC5E;
-	Sat, 30 May 2026 18:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC01B32F770;
+	Sat, 30 May 2026 18:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165998; cv=none; b=GlrArMoACfBu0ngELAK9PaQMdEKh8QH4TJ0B9lP5PUlszP9ycA/aBc8ODALqQXh6NfbRJmXjpZPMOw80z0vHwe0d0y3DbU93xjUO3yA53DKobCKVqHzpxIzexb3iR3757mWqBgyHm0YtBhE+IBkf22CvMUkk6JKOSt6nGqVT9io=
+	t=1780166001; cv=none; b=flLMiy63h52yPpp4aJQOWFoKb16PvyfTMnhE+DOzsFGnwktaBUZCrLIVw0iDyyYgKO0jNB9Merh7PyZt6R5/jHryZVvFh6i9EfIXG6DFdPpTkOsZyxIKjYfCINTyuV81gyKWjUEdRhJZBuyCSXr3D3RslfHbIGEG4sghCHuCZzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165998; c=relaxed/simple;
-	bh=Xxc/+N+5yQyKert0roJlcxCJSlajve5dykK120sX1wo=;
+	s=arc-20240116; t=1780166001; c=relaxed/simple;
+	bh=CKypzkwOFLVsCzUKxKjhGrlMLSAjDdH9Ls/xoTaY1zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0mT8nGarTBt0eGogk9eeojmkt1G1RxSjKavMPiomGWt1VUCgMRvm7JD1/7siFbyLuLS4p/mmobm+SRRP1PLtxvpoxV0adYlSbRZbE1xYeZMV4hrxa2Wnm0ThL/1zoGffI2+sjitu8oQnymCPEjcnnmxeSEX9dgY209tD++phT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWYHRd3e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pndf/2cMzAjYwl7ttSGA+JnCQdaK0pgInPnx2YHGRJ1zIG381qbSiHYNyTW4DCI0tri1HC3MtWv4TcUB1PbNkSM3PITX9BjjggDiNqnR1QOH8Ojnyv38lllupAKrV0ewoszZzsjovOrHl0C0aPnn2KYwItmu1g98f+sxvYDG98Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FR+v+hS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWYHRd3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABADD1F00893;
-	Sat, 30 May 2026 18:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FR+v+hS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3611B1F00893;
+	Sat, 30 May 2026 18:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165997;
-	bh=w1cYTU6WZ7IsiSYBOgC1Ak3iY70TG2v1BUyXxCd5Cqg=;
+	s=korg; t=1780166000;
+	bh=eV7SMFzF4UETOPzu8FiVVv6BzaXj/+nbKNz7d9lOH8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWYHRd3eYRSG4J3i5pGQwQigc8uTo01R3NcaAD7lVKZmV6viIju6QFN2l2b7r3TpH
-	 hArntNfzQwG6myidU/UuHMvLv5cfPvVUD+mw94Zqxsm0vzrV2y4VNPxzC+sSDH0f8D
-	 By3xAudDoR0opLpXtvsXxHdrcYfuDaPRbFmDG45E=
+	b=FR+v+hS4j/udQtjfxgI6EGxLQDSiuYBEGkFQ4aFQtWwmuQ+1Bdm5fj9ixa8RdOnbx
+	 BX8Exppz8RcTYtTFVcRjL30fsxqvoxeGs64rRWCuVjzSbsbtXwaOy7nBAoPXSyiWO2
+	 82BD1MRIbFY5pJUogp/i/IrqtfcXbkmJq3y8q26Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <corey@minyard.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 215/589] ipmi:ssif: NULL thread on error
-Date: Sat, 30 May 2026 18:01:36 +0200
-Message-ID: <20260530160230.622907022@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 216/589] wifi: b43legacy: enforce bounds check on firmware key index in RX path
+Date: Sat, 30 May 2026 18:01:37 +0200
+Message-ID: <20260530160230.650984336@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,39 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit a8aebe93a4938c0ca1941eeaae821738f869be3d upstream.
+commit a035766f970bde2d4298346a31a80685be5c0205 upstream.
 
-Cleanup code was checking the thread for NULL, but it was possibly
-a PTR_ERR() in one spot.
+Same fix as b43: the firmware-controlled key index in b43legacy_rx()
+can exceed dev->max_nr_keys. The existing B43legacy_WARN_ON is
+non-enforcing in production builds, allowing an out-of-bounds read of
+dev->key[].
 
-Spotted with static analysis.
+Make the check enforcing by dropping the frame for invalid indices.
 
-Link: https://sourceforge.net/p/openipmi/mailman/message/59324676/
-Fixes: 75c486cb1bca ("ipmi:ssif: Clean up kthread on errors")
-Cc: <stable@vger.kernel.org> # 91eb7ec72612: ipmi:ssif: Remove unnecessary indention
+Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <corey@minyard.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-2-tristmd@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/broadcom/b43legacy/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index e93846f8f2352..4cbfe1858ab4f 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1910,6 +1910,7 @@ static int ssif_probe(struct i2c_client *client, const struct i2c_device_id *id)
- 					"kssif%4.4x", thread_num);
- 	if (IS_ERR(ssif_info->thread)) {
- 		rv = PTR_ERR(ssif_info->thread);
-+		ssif_info->thread = NULL;
- 		dev_notice(&ssif_info->client->dev,
- 			   "Could not start kernel thread: error %d\n",
- 			   rv);
--- 
-2.53.0
-
+--- a/drivers/net/wireless/broadcom/b43legacy/xmit.c
++++ b/drivers/net/wireless/broadcom/b43legacy/xmit.c
+@@ -476,7 +476,8 @@ void b43legacy_rx(struct b43legacy_wldev
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43legacy_kidx_to_raw(dev, keyidx);
+-		B43legacy_WARN_ON(keyidx >= dev->max_nr_keys);
++		if (B43legacy_WARN_ON(keyidx >= dev->max_nr_keys))
++			goto drop;
+ 
+ 		if (dev->key[keyidx].algorithm != B43legacy_SEC_ALGO_NONE) {
+ 			/* Remove PROTECTED flag to mark it as decrypted. */
 
 
