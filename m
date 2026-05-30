@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB39274FDC;
-	Sat, 30 May 2026 18:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C971E2773DE;
+	Sat, 30 May 2026 18:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165628; cv=none; b=LvSmmaz+lgLTVGzamCSpuW+8myDLOv1HxAAmzQ7KBA5z4plrHFjCjG+/7CHJa/CrpXKWbqEOuZfLpR8a91egqs/WvWqydIKTnf1gjGUTZh/EgyiLpxxcQd0BOYMFzMDsCmbv7j1kSDS66iYwDjdzeRP2qobBJVbRFal6DNizZ9Y=
+	t=1780165631; cv=none; b=uOYPF20cJZthHG0yBZANZxc6KLCIbJFmXd7LS1Unvz74M1qiUEJudpjJ3nhYpBhWla7t4ikeXgszi/54SektZyQGPRFFGDAqpXMhUtgsLIcJ2IBq1/z7ejzGzlb9IE2UDZa1/LGYzeb95SbwB3lD10G0ZVX7++oXg+4rrJkfwJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165628; c=relaxed/simple;
-	bh=PXoMKfh5F8J5YIOSuK58UOsQuzp3TSMC7C5Hb/tECpA=;
+	s=arc-20240116; t=1780165631; c=relaxed/simple;
+	bh=OhkxC7dWqTZ2G6U6sHtMv1KUANU9fSba4HGbqpHBtag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jyhq0r+Xc7iUcQqFH/Pf6r5Mh3ZjQear0HoVnhdLiLQB4/M8q/z0Gx5OIY2FvyPwLVFYuFijhUhd0bJIuifl79D3uZFPEOlJrbs67x1lltWnrCgOT9l1DSV90Xj7PYwZHadC5QYiamF62OQwLP1qyqNiV0unWUSDkg6REAp5kr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sd/yf6g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lwxo6fTcaVbkImQSDJkKe+Po1OUYmbj+OExtSmJHWkAZxpe0YksMuKEcMtKFcsmwKNKQQqx8y0gpp4d7BK1brxhZVmVfaiVdWBPjr4gRIhxyNg8rgsabO+w8k/AS1fr1slHbvjT9ub3o3KB+W0NxGqi5mBQWPsGpJFyj3Ud2HcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybWi8zsG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sd/yf6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A361F00893;
-	Sat, 30 May 2026 18:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybWi8zsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10F61F00893;
+	Sat, 30 May 2026 18:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165627;
-	bh=zSwYSijT+ERoIKBf9/cXOuCPWyJe1+tBOyIOCLDLIEY=;
+	s=korg; t=1780165630;
+	bh=pR7cwve6CON/EOZrWfUXmUblEYIK1iq7PW2FeKrzllU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sd/yf6gv7ksGhhDlWueoypx+Xj21QldhTjn1Uw7/sqnp1ZxGNoiNsnOAAhEiMIEZ
-	 oqm9tXoUWYMjXruPMAc98+pc3bWJjNtsEWJjtyVbwsfAGct84fxyJDYZmDHUCeEL2B
-	 y6qBWPPd6EgPznNoLjxgLNkxwk6umbXJJxp0J//M=
+	b=ybWi8zsGyy6GfOrDQbOh7jzvsbAfZgaESHFRwu81TFmg9tOIFotdcqRYRzMEH7whl
+	 f3rdQ+5EvRowzPgAZ8TEuALx5qNWA7n/rd8SaB5y8fIq+YuBefgjOsMwRisixM5Ffz
+	 xLBiWFPysvROSGmRFld45DUBwQY0qalKKTn5BwGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Ravich <lravich@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/589] IB/mad: Dont call to function that might sleep while in atomic context
-Date: Sat, 30 May 2026 17:59:38 +0200
-Message-ID: <20260530160227.245524783@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 133/589] crypto: ccp: Dont attempt to copy CSR to userspace if PSP command failed
+Date: Sat, 30 May 2026 18:00:14 +0200
+Message-ID: <20260530160228.275223004@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,148 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonid Ravich <lravich@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5c20311d76cbaeb7ed2ecf9c8b8322f8fc4a7ae3 upstream.
+commit abe4a6d6f606113251868c2c4a06ba904bb41eed upstream.
 
-Tracepoints are not allowed to sleep, as such the following splat is
-generated due to call to ib_query_pkey() in atomic context.
+When retrieving the PEK CSR, don't attempt to copy the blob to userspace
+if the firmware command failed.  If the failure was due to an invalid
+length, i.e. the userspace buffer+length was too small, copying the number
+of bytes _firmware_ requires will overflow the kernel-allocated buffer and
+leak data to userspace.
 
-WARNING: CPU: 0 PID: 1888000 at kernel/trace/ring_buffer.c:2492 rb_commit+0xc1/0x220
-CPU: 0 PID: 1888000 Comm: kworker/u9:0 Kdump: loaded Tainted: G           OE    --------- -  - 4.18.0-305.3.1.el8.x86_64 #1
- Hardware name: Red Hat KVM, BIOS 1.13.0-2.module_el8.3.0+555+a55c8938 04/01/2014
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- RIP: 0010:rb_commit+0xc1/0x220
- RSP: 0000:ffffa8ac80f9bca0 EFLAGS: 00010202
- RAX: ffff8951c7c01300 RBX: ffff8951c7c14a00 RCX: 0000000000000246
- RDX: ffff8951c707c000 RSI: ffff8951c707c57c RDI: ffff8951c7c14a00
- RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
- R10: ffff8951c7c01300 R11: 0000000000000001 R12: 0000000000000246
- R13: 0000000000000000 R14: ffffffff964c70c0 R15: 0000000000000000
- FS:  0000000000000000(0000) GS:ffff8951fbc00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f20e8f39010 CR3: 000000002ca10005 CR4: 0000000000170ef0
- Call Trace:
-  ring_buffer_unlock_commit+0x1d/0xa0
-  trace_buffer_unlock_commit_regs+0x3b/0x1b0
-  trace_event_buffer_commit+0x67/0x1d0
-  trace_event_raw_event_ib_mad_recv_done_handler+0x11c/0x160 [ib_core]
-  ib_mad_recv_done+0x48b/0xc10 [ib_core]
-  ? trace_event_raw_event_cq_poll+0x6f/0xb0 [ib_core]
-  __ib_process_cq+0x91/0x1c0 [ib_core]
-  ib_cq_poll_work+0x26/0x80 [ib_core]
-  process_one_work+0x1a7/0x360
-  ? create_worker+0x1a0/0x1a0
-  worker_thread+0x30/0x390
-  ? create_worker+0x1a0/0x1a0
-  kthread+0x116/0x130
-  ? kthread_flush_work_fn+0x10/0x10
-  ret_from_fork+0x35/0x40
- ---[ end trace 78ba8509d3830a16 ]---
+  BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+  BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+  Read of size 2084 at addr ffff898144612e20 by task syz.9.219/21405
 
-Fixes: 821bf1de45a1 ("IB/MAD: Add recv path trace point")
-Signed-off-by: Leonid Ravich <lravich@gmail.com>
-Link: https://lore.kernel.org/r/Y2t5feomyznrVj7V@leonid-Inspiron-3421
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[ kovalev: bp to fix CVE-2022-50472 ]
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  CPU: 14 UID: 0 PID: 21405 Comm: syz.9.219 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
+  Tainted: [U]=USER, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
+   print_address_description ../mm/kasan/report.c:378 [inline]
+   print_report+0xbc/0x260 ../mm/kasan/report.c:482
+   kasan_report+0xa2/0xe0 ../mm/kasan/report.c:595
+   check_region_inline ../mm/kasan/generic.c:-1 [inline]
+   kasan_check_range+0x264/0x2c0 ../mm/kasan/generic.c:200
+   instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+   _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+   _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+   copy_to_user ../include/linux/uaccess.h:236 [inline]
+   sev_ioctl_do_pek_csr+0x31f/0x590 ../drivers/crypto/ccp/sev-dev.c:1872
+   sev_ioctl+0x3a4/0x490 ../drivers/crypto/ccp/sev-dev.c:2562
+   vfs_ioctl ../fs/ioctl.c:51 [inline]
+   __do_sys_ioctl ../fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
+   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe0/0x800 ../arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
+
+WARN if the driver says the command succeeded, but the firmware error code
+says otherwise, as __sev_do_cmd_locked() is expected to return -EIO on any
+firwmware error.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Fixes: e799035609e1 ("crypto: ccp: Implement SEV_PEK_CSR ioctl command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/mad.c |  5 -----
- include/trace/events/ib_mad.h | 13 ++++---------
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 19540a13cb84d..e38ae4ac454f6 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -59,9 +59,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
- 			  struct ib_mad_qp_info *qp_info,
- 			  struct trace_event_raw_ib_mad_send_template *entry)
- {
--	u16 pkey;
--	struct ib_device *dev = qp_info->port_priv->device;
--	u8 pnum = qp_info->port_priv->port_num;
- 	struct ib_ud_wr *wr = &mad_send_wr->send_wr;
- 	struct rdma_ah_attr attr = {};
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -458,7 +458,10 @@ cmd:
  
-@@ -69,8 +66,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PEK_CSR, &data, &argp->error);
  
- 	/* These are common */
- 	entry->sl = attr.sl;
--	ib_query_pkey(dev, pnum, wr->pkey_index, &pkey);
--	entry->pkey = pkey;
- 	entry->rqpn = wr->remote_qpn;
- 	entry->rqkey = wr->remote_qkey;
- 	entry->dlid = rdma_ah_get_dlid(&attr);
-diff --git a/include/trace/events/ib_mad.h b/include/trace/events/ib_mad.h
-index 59363a083ecb9..d92691c78cff6 100644
---- a/include/trace/events/ib_mad.h
-+++ b/include/trace/events/ib_mad.h
-@@ -49,7 +49,6 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		__field(int,            retries_left)
- 		__field(int,            max_retries)
- 		__field(int,            retry)
--		__field(u16,            pkey)
- 	),
+-	 /* If we query the CSR length, FW responded with expected data. */
++	/*
++	 * Firmware will returns the length of the CSR blob (either the minimum
++	 * required length or the actual length written), return it to the user.
++	 */
+ 	input.length = data.len;
  
- 	TP_fast_assign(
-@@ -89,7 +88,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		  "hdr : base_ver 0x%x class 0x%x class_ver 0x%x " \
- 		  "method 0x%x status 0x%x class_specific 0x%x tid 0x%llx " \
- 		  "attr_id 0x%x attr_mod 0x%x  => dlid 0x%08x sl %d "\
--		  "pkey 0x%x rpqn 0x%x rqpkey 0x%x",
-+		  "rpqn 0x%x rqpkey 0x%x",
- 		__entry->dev_index, __entry->port_num, __entry->qp_num,
- 		__entry->agent_priv, be64_to_cpu(__entry->wrtid),
- 		__entry->retries_left, __entry->max_retries,
-@@ -100,7 +99,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		be16_to_cpu(__entry->class_specific),
- 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
- 		be32_to_cpu(__entry->attr_mod),
--		be32_to_cpu(__entry->dlid), __entry->sl, __entry->pkey,
-+		be32_to_cpu(__entry->dlid), __entry->sl,
- 		__entry->rqpn, __entry->rqkey
- 	)
- );
-@@ -204,7 +203,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		__field(u16,            wc_status)
- 		__field(u32,            slid)
- 		__field(u32,            dev_index)
--		__field(u16,            pkey)
- 	),
+ 	if (copy_to_user((void __user *)argp->data, &input, sizeof(input))) {
+@@ -466,6 +469,9 @@ cmd:
+ 		goto e_free_blob;
+ 	}
  
- 	TP_fast_assign(
-@@ -224,9 +222,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		__entry->slid = wc->slid;
- 		__entry->src_qp = wc->src_qp;
- 		__entry->sl = wc->sl;
--		ib_query_pkey(qp_info->port_priv->device,
--			      qp_info->port_priv->port_num,
--			      wc->pkey_index, &__entry->pkey);
- 		__entry->wc_status = wc->status;
- 	),
- 
-@@ -234,7 +229,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		  "base_ver 0x%02x class 0x%02x class_ver 0x%02x " \
- 		  "method 0x%02x status 0x%04x class_specific 0x%04x " \
- 		  "tid 0x%016llx attr_id 0x%04x attr_mod 0x%08x " \
--		  "slid 0x%08x src QP%d, sl %d pkey 0x%04x",
-+		  "slid 0x%08x src QP%d, sl %d",
- 		__entry->dev_index, __entry->port_num, __entry->qp_num,
- 		__entry->wc_status,
- 		__entry->length,
-@@ -244,7 +239,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		be16_to_cpu(__entry->class_specific),
- 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
- 		be32_to_cpu(__entry->attr_mod),
--		__entry->slid, __entry->src_qp, __entry->sl, __entry->pkey
-+		__entry->slid, __entry->src_qp, __entry->sl
- 	)
- );
- 
--- 
-2.53.0
-
++	if (ret || WARN_ON_ONCE(argp->error))
++		goto e_free_blob;
++
+ 	if (blob) {
+ 		if (copy_to_user(input_address, blob, input.length))
+ 			ret = -EFAULT;
 
 
