@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5814832BF24;
-	Sat, 30 May 2026 16:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBEC32D42B;
+	Sat, 30 May 2026 16:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160246; cv=none; b=san0MKp15m0DwgryjZmv1pd9H237QTg8hDoj+ocusRCqJMU2xwCupaf/3IU7+wMoHYq9n2RUWhBczgsGg2ihIVNkDCQhZi74OpBfpsA/H9UCIs+14EyV5UZPvIiniW20uMBGhJ6cqktnqy6tHn3NRi1NZQb4jhVWEyXSZMc0srE=
+	t=1780160250; cv=none; b=i2NsKB8bSn2wPYeO3ukJosPWplp7wwiEbgkCrovZrsTj6VAz6SIb8t6b3Z4TVk8Z+hYpdLgHArK77YPG4vkwOuKsI5LuAYxZQCieV96YGW93W2UaFljI8BzxJ7f0rHPQ3v0M5SR4+Gx1jJ35CmUuJh/cjhKkTbKkz5h3Z1Zbb4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160246; c=relaxed/simple;
-	bh=NJT4+An7P2Zekv5/6orJoK4t7QLyCOX7caeHG9FnsUQ=;
+	s=arc-20240116; t=1780160250; c=relaxed/simple;
+	bh=FNHLphEDBCvHoKCku0ayR00H6HTPAuVzXSnypDoH7mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcyX03yemdg5LO1xh1/eEy8iXao88ozZUvuVgNXJ4aD/bFbZ2AATspkkCHX1xShNdtR9TowfIfJs+ovGfilqkCzCJo1r07QVU1BgNplczH2leZKC4fwSauZronmQ1eMXcAMVJBKdBsxib/fCbYVyCUtuJI3Rk2nXGHgPjqT9DU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr8K52c7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bfv6OHc5Q+1FVEJveuLraIf+jJgE6HJOwtt+NTfl219Ns+hSIWJDgKMZZWUuiBoqMEcXjj6T3gZc8mg2w2iJTMzX4DSj17HU113vAJI9AmKyVPJAOuyBiqFBd2gA4cOv50EcQx80GmBzAZT8QLqLNL0QkZHD84H1a5M1sUZ5Jhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cg1Kpt9J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr8K52c7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F07D1F00893;
-	Sat, 30 May 2026 16:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cg1Kpt9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A71D1F00893;
+	Sat, 30 May 2026 16:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160245;
-	bh=71fZt2PQwPk8Qy9fTHNddi5j5UhRXN9GsmkL0M0wpGU=;
+	s=korg; t=1780160249;
+	bh=KTePyPEEIvz1g3MeT8jsXPT4Q7FtIWaoLgJytcIxtz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gr8K52c7tPtJjq5lzV6JFzWHBZhoH/ZIWD2BueMbYXtSeyx5RIqauEwZs29M0GanV
-	 PDAXj0bk8oF+DS/+U6gbZoQpq5XhxJRlccHWjWwsKa0/9Tx9VNrioG7Pqsm4ANj5Dc
-	 /zXA3eIXkkmf43EAn8L9sG2sxveg0Ya3KfpzfF5c=
+	b=Cg1Kpt9J+x2a95f99fMaQ3w0ZsI28relaP1iul7yU4nVkmGrq+D8DhU5vs6yAQS2q
+	 PuvvHIigIiDYQVPSAT1Zl8haOI9WJZDqPyRp75gcQwbm+l3XKD5cwwjKO3H5qpbJDo
+	 /O/ZjPNrX3lvjkDgVXXVaiiCXtusnos5z/EKNanU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kalra <shivamkalra98@zohomail.in>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 286/969] ACPI: video: force native backlight on HP OMEN 16 (8A44)
-Date: Sat, 30 May 2026 17:56:50 +0200
-Message-ID: <20260530160308.360619774@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 287/969] ASoC: SOF: Dont allow pointer operations on unconfigured streams
+Date: Sat, 30 May 2026 17:56:51 +0200
+Message-ID: <20260530160308.385796510@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,49 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kalra <shivamkalra98@zohomail.in>
+From: Mark Brown <broonie@kernel.org>
 
-commit 4b506ea5351a1f5937ac632a4a5c35f6f796cc41 upstream.
+commit c5b6285aae050ff1c3ea824ca3d88ac4be1e69c8 upstream.
 
-The HP OMEN 16 Gaming Laptop (board name 8A44) has a mux-less hybrid
-GPU configuration with AMD Rembrandt (Radeon 680M) and NVIDIA GA104
-(RTX 3070 Ti). The internal eDP panel is wired to the AMD iGPU.
+When reporting the pointer for a compressed stream we report the current
+I/O frame position by dividing the position by the number of channels
+multiplied by the number of container bytes. These values default to 0 and
+are only configured as part of setting the stream parameters so this allows
+a divide by zero to be configured. Validate that they are non zero,
+returning an error if not
 
-When Nouveau loads without GSP firmware, the ACPI video backlight
-device (acpi_video0) gets registered alongside the native AMD
-backlight (amdgpu_bl2). In this state, writes to amdgpu_bl2 update
-the software brightness value but fail to change the physical panel
-brightness.
-
-Force native backlight to prevent acpi_video0 from registering.
-Confirmed that booting with acpi_backlight=native resolves the
-issue.
-
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Shivam Kalra <shivamkalra98@zohomail.in>
-Link: https://patch.msgid.link/20260426-omen-16-backlight-fix-v1-1-62364f268ea6@zohomail.in
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c1a731c71359 ("ASoC: SOF: compress: Add support for computing timestamps")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260326-asoc-compress-tstamp-params-v1-1-3dc735b3d599@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/sof/compress.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -776,6 +776,14 @@ static const struct dmi_system_id video_
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Z830"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 /* HP OMEN Gaming Laptop 16-n0xxx */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
-+		},
-+	},
+--- a/sound/soc/sof/compress.c
++++ b/sound/soc/sof/compress.c
+@@ -366,6 +366,9 @@ static int sof_compr_pointer(struct snd_
+ 	if (!spcm)
+ 		return -EINVAL;
  
- 	/*
- 	 * Models which have nvidia-ec-wmi support, but should not use it.
++	if (!sstream->channels || !sstream->sample_container_bytes)
++		return -EBUSY;
++
+ 	tstamp->sampling_rate = sstream->sampling_rate;
+ 	tstamp->copied_total = sstream->copied_total;
+ 	tstamp->pcm_io_frames = div_u64(spcm->stream[cstream->direction].posn.dai_posn,
 
 
