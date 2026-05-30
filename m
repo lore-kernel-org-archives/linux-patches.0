@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6417274FDC;
-	Sat, 30 May 2026 18:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C85D279DC9;
+	Sat, 30 May 2026 18:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165584; cv=none; b=h4GoN4nM+oy+LwFF1WZHDD70NYwJLzsOdPhIpa+sJgDBoWVnaxkPNWKXTfbVm0Vw8mRAhcVvn2Xv7z4kNHQYB2dREOISC959D6ZBsI3rteXJ33TYCH4XQ4hsfhUHxqJjceTDRG3G6rERgT5CfqM5+oQc0sJMHM5RG6S2A/W3Zwo=
+	t=1780165588; cv=none; b=uir98uxEW9xlzKAkHFaVl1vHW8XJ3smCopKAn6bEUW0+VnEgOwAzWD83Yyedh70gmBTIi3xeZIwLEeUt9XA3NTsbe2msNNHoq6RRAwS+n6+zmm7qJ/6Rz31Sd8XdYsKoeObzpPuVSC77qXQUptsHJcJVG860pqGJzjR8kQG2iZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165584; c=relaxed/simple;
-	bh=qmnLCE0sX+b2wpOZORLQST2ZMGP82pngkbi8+w5740U=;
+	s=arc-20240116; t=1780165588; c=relaxed/simple;
+	bh=LOLGSp2v0jqdPbIswTDpmbZi9gGXkyeaE27tDGy4vR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czh7nIM71tWgTNMS+I7gnP7yo2YC+1sv0f0cJ5/XuZb7/qNI+c1V4tVTtJxaNVOWwRZIsiUT8wOaa4+xGTehBnaDmlQt+DI9Lhgf0jGLPkQ1gSu4QgggCCzpMYkiaWCRLD7L88v4vPkWd6Kqeupc80d3DmhiMCRRC/cTaTkGvPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRded4xZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WxQvoBMYjToJT3N8Y4T7KirFCTZU5FhDqc1YNn+yvkKzQW32SxnDjAwEqxQ4Ijtf7oi5MELhzq9FULvJTMtAD3UUtLzQWkyjY7KOCjgYh6IoPxrlDdFlik8WeEo68EWmm2/43FylmPqh85W2ojTw3roThP3HnXKxibThLLNR/vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQUd/7Bm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRded4xZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184311F00893;
-	Sat, 30 May 2026 18:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQUd/7Bm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6059E1F00893;
+	Sat, 30 May 2026 18:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165583;
-	bh=QlH9x+8CcJPmYYAddptbowV8K4uGRWk+NYXTesb/0bQ=;
+	s=korg; t=1780165587;
+	bh=nFsz5f2Jv/YkUV3v1O//B9oIp4WJOf2pnaJTUeIzFIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRded4xZ6U3ofUmVmpnZsaIZUYqUQrED4cOSgN2RYPlQ9+d5kOztOf9WMx0F7kQQg
-	 RJpKFF8LnqURSM1+0ydIMy7EMVLMkzHUKk/nVYYGXOpxc00+jJDOLjCPcOR9qKFKBz
-	 Yun79T5fr/17wfTlsbJjihJTWFALbgAdN8XkwuB0=
+	b=rQUd/7BmwyHouTGuGNlMfOowPD2slEG9HiTTTqeXe5AWpzg4GbA82lTwWPzokEovZ
+	 6vBIgcoLyNbut7tIlgnEZEQpLvIC8gxPl6sg5spCBpCB8ZMLNPac8t2ceBI2RQi4pl
+	 xHVZkna+hKQ3lVS/HCZCHDm1GUSW4jy/6l8oHsDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 121/589] drm/amd/display: Do not add -mhard-float to calcs, dsc, and dcn30 FP files for clang
-Date: Sat, 30 May 2026 18:00:02 +0200
-Message-ID: <20260530160227.943828059@linuxfoundation.org>
+Subject: [PATCH 5.10 122/589] scripts/dtc: Remove unused dts_version in dtc-lexer.l
+Date: Sat, 30 May 2026 18:00:03 +0200
+Message-ID: <20260530160227.971184681@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,79 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-This patch is for linux-5.10.y only. It is functionally equivalent to
-upstream commit 7db038d9790e ("drm/amd/display: Do not add
-'-mhard-float' to dml_ccflags for clang"), which was created after all
-files that require '-mhard-float' were moved under the dml folder. In
-linux-5.10.y, which does not contain upstream commits
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
-  b4bab46400a0 ("drm/amd/display: move calcs folder into DML")
-  27e01f10d183 ("drm/amd/display: move FPU associated DSC code to DML folder")
-  40b31e5355ba ("drm/amd/display: Remove FPU flags from DCN30 Makefile")
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in dtc-lexer.lex.c (compiled from
+dtc-lexer.l):
 
-clang-21 or newer errors with
+  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
+    641 | static int dts_version = 1;
+        |            ^
 
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/calcs/dcn_calc_math.o] Error 1
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/calcs/dcn_calcs.o] Error 1
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/calcs/dcn_calc_auto.o] Error 1
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/rc_calc.o] Error 1
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_optc.o] Error 1
-  clang: error: unsupported option '-mhard-float' for target 'x86_64-pc-linux-gnu'
-  make[6]: *** [scripts/Makefile.build:286: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn30/dcn30_resource.o] Error 1
+Remove it to clear up the warning, as it is truly unused.
 
-Apply a functionally equivalent change to prevent adding '-mhard-float'
-with clang for these files.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2156
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/calcs/Makefile |    3 ++-
- drivers/gpu/drm/amd/display/dc/dcn30/Makefile |    4 ++--
- drivers/gpu/drm/amd/display/dc/dsc/Makefile   |    3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+This should apply cleanly to all supported stable branches.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ scripts/dtc/dtc-lexer.l |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/calcs/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/calcs/Makefile
-@@ -26,7 +26,8 @@
- #
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
  
- ifdef CONFIG_X86
--calcs_ccflags := -mhard-float -msse
-+calcs_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
-+calcs_ccflags := $(calcs_ccflags-y) -msse
- endif
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
  
- ifdef CONFIG_PPC64
---- a/drivers/gpu/drm/amd/display/dc/dcn30/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/Makefile
-@@ -32,8 +32,8 @@ DCN30 = dcn30_init.o dcn30_hubbub.o dcn3
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
  
- 
- ifdef CONFIG_X86
--CFLAGS_$(AMDDALPATH)/dc/dcn30/dcn30_resource.o := -mhard-float -msse
--CFLAGS_$(AMDDALPATH)/dc/dcn30/dcn30_optc.o := -mhard-float -msse
-+CFLAGS_$(AMDDALPATH)/dc/dcn30/dcn30_resource.o := $(if $(CONFIG_CC_IS_GCC),-mhard-float) -msse
-+CFLAGS_$(AMDDALPATH)/dc/dcn30/dcn30_optc.o := $(if $(CONFIG_CC_IS_GCC),-mhard-float) -msse
- endif
- 
- ifdef CONFIG_PPC64
---- a/drivers/gpu/drm/amd/display/dc/dsc/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dsc/Makefile
-@@ -3,7 +3,8 @@
- # Makefile for the 'dsc' sub-component of DAL.
- 
- ifdef CONFIG_X86
--dsc_ccflags := -mhard-float -msse
-+dsc_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
-+dsc_ccflags := $(dsc_ccflags-y) -msse
- endif
- 
- ifdef CONFIG_PPC64
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
 
 
