@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0F833E36A;
-	Sat, 30 May 2026 17:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A557F34C9AF;
+	Sat, 30 May 2026 17:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162732; cv=none; b=ZibqPdmYj28WMa8e/x0DY1N2ra2Yoi/9uoAPpBEeKLgNEoSH5JVmbBtxRLL3WII95Qe1AgfZfkAnePHGe1r0CiQSMLrFFINs6A2bASmAiYN2XASnwLcUKnnn0gk1njDPnxnvfipjcp31F26n6wkfrVt/0DrAco7gkn+gasEVZHY=
+	t=1780162735; cv=none; b=f/KgJNrybTqCiqDbiW3nmPCYXAIZp5Dj3K1Vy33RRzfaFonyNzRBNdL+iwHS2L9m7YR3J4xDe/lpwKXp9lBVoVQKIBhQ8maU94q+eCmZoYXD6/ZeHZDqx8VMjr2XcL4Wry19fXxNT9f4OeV19ZnSmTVDpifw6NhTQED6sKmfVr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162732; c=relaxed/simple;
-	bh=2wJQr90a77ugTBPXJ4iNuKSVheQPLriIWW/f/8KDFUs=;
+	s=arc-20240116; t=1780162735; c=relaxed/simple;
+	bh=11ZwSaj2hJLuySz5SY5uC4bYfs4jgJdfMvsMlByHyCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwJj5rQgu4tAQXhE/9vg7abZsAURkf5/Jly/XSe41vgnqExdeVzeABfL2/Ze4t9p2QA5X3RhqPm6Nj9dQzayW0BehKmctDi1QRr5S46WGkV2hNyLTklRkIZAc+AoASYZ9ujpSpLxUTw5UfOJGQoItVAe16pZgmcLsfnWvDgWFjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpYGXXaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HrWqqXKTsXBvdUm4Z5ww1WWMVdUivnKpL9yiyxqbHJXZTWN1iBmF9Og63YNsMPjZo6sn8z8PkKVcE04F3IAIP2pTKAznk361amdRuHITKJxmqI1cwlNna/XbaCnha0CfLjDKGTAXwhezRVGTeqfr0YSPYurrPvXiR+cc8FAhGTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQFqP1A/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpYGXXaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3241F00893;
-	Sat, 30 May 2026 17:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQFqP1A/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F0A1F00893;
+	Sat, 30 May 2026 17:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162731;
-	bh=qtECRxcbEl/6ACkgQ1jZ51h+PjFOtjg6316c9T1yJEw=;
+	s=korg; t=1780162734;
+	bh=bDbEzf0wjhZhjH/5sCDu9KIva8OvyMgNXKJQEJ7aOzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpYGXXaUuutb8zUjK5JRSlKWYpWhPE5kz8uQTuq6jxfpNK9cIc3T1lA0RqKyIdGC0
-	 kuWbRWI4Zx69KXvVp0sTcyMroEFy8MvUxKDbwri37W8O6BxkxF9jGAbdnrhHcHCIqE
-	 EAawSVgyRX/TxuWGT4Tqg5isaXEJTA7tUa9nJ/8k=
+	b=jQFqP1A/c51mh5DxuJqnxtNTl5HD9iTwyV3fjeRD5nbGeirXpVNroLY8xyDEDizzH
+	 4oB2ZjgZ0GjBp7Hvtv9vdUwjL0FsW2uH94IlMOQTg1k/n52qO0Zh9jIf7o6fezPX9R
+	 BoBGgJ1m5KmF7BQ1kH0PYPx8F1uvah5TpebEsDVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/776] MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
-Date: Sat, 30 May 2026 17:56:01 +0200
-Message-ID: <20260530160241.522443736@linuxfoundation.org>
+Subject: [PATCH 5.15 048/776] ALSA: usb-audio: Improve Focusrite sample rate filtering
+Date: Sat, 30 May 2026 17:56:02 +0200
+Message-ID: <20260530160241.550097184@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,383 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-commit 540760b77b8fc49d39d1b2b76196e5ec57711a32 upstream.
+[ Upstream commit 24d2d3c5f94007a5a0554065ab7349bb69e28bcb ]
 
-Before the introduction of the EHINV feature, which lets software mark
-TLB entries invalid, certain older implementations of the MIPS ISA were
-equipped with an analogous bit, as a vendor extension, which however is
-hidden from software and only ever set at reset, and then any software
-write clears it, making the intended TLB entry valid.
+Replace the bLength == 10 max_rate check in
+focusrite_valid_sample_rate() with filtering that also examines the
+bmControls VAL_ALT_SETTINGS bit.
 
-This feature makes it unsafe to read a TLB entry with TLBR, modify the
-page mask, and write the entry back with TLBWI, because this operation
-will implicitly clear the hidden bit and this may create a duplicate
-entry, as with the presence of the hidden bit there is no guarantee all
-the entries across the TLB are unique each.
+When VAL_ALT_SETTINGS is readable, the device uses strict
+per-altsetting rate filtering (only the highest rate pair for that
+altsetting is valid). When it is not readable, all rates up to
+max_rate are valid.
 
-Usually the firmware has already uniquified TLB entries before handing
-control over, in which case we only need to guarantee at bootstrap no
-clash will happen with the VPN2 values chosen in local_flush_tlb_all().
+For devices without the bLength == 10 Format Type descriptor extension
+but with VAL_ALT_SETTINGS readable and multiple altsettings (only seen
+in Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
+convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
 
-However with systems such as Mikrotik RB532 we get handed the TLB as at
-reset, with the hidden bit set across the entries and possibly duplicate
-entries present.  This then causes a machine check exception when page
-sizes are reset in r4k_tlb_uniquify() and prevents the system from
-booting.
+This produces correct rate tables for all tested Focusrite devices
+(all Scarlett 2nd, 3rd, and 4th Gen, Clarett+, and Vocaster) using
+only USB descriptors, allowing QUIRK_FLAG_VALIDATE_RATES to be removed
+for Focusrite in the next commit.
 
-Rewrite the algorithm used in r4k_tlb_uniquify() then such as to avoid
-the reuse of ASID/VPN values across the TLB.  Get rid of global entries
-first as they may be blocking the entire address space, e.g. 16 256MiB
-pages will exhaust the whole address space of a 32-bit CPU and a single
-big page can exhaust the 32-bit compatibility space on a 64-bit CPU.
-
-Details of the algorithm chosen are given across the code itself.
-
-Fixes: 9f048fa48740 ("MIPS: mm: Prevent a TLB shutdown on initial uniquification")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/7e18c1f393a6ecb6fc75dd867a2c4dbe135e3e22.1771594828.git.g@b4.vu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 282 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 228 insertions(+), 54 deletions(-)
+ sound/usb/format.c | 86 +++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 74 insertions(+), 12 deletions(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index ae7436b860b58..da5a9b699b683 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -13,6 +13,7 @@
- #include <linux/sched.h>
- #include <linux/smp.h>
- #include <linux/memblock.h>
-+#include <linux/minmax.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -24,6 +25,7 @@
- #include <asm/hazards.h>
- #include <asm/mmu_context.h>
- #include <asm/tlb.h>
-+#include <asm/tlbdebug.h>
- #include <asm/tlbmisc.h>
- 
- extern void build_tlb_refill_handler(void);
-@@ -501,87 +503,259 @@ static int __init set_ntlb(char *str)
- __setup("ntlb=", set_ntlb);
- 
- 
--/* Comparison function for EntryHi VPN fields.  */
--static int r4k_vpn_cmp(const void *a, const void *b)
-+/* The start bit position of VPN2 and Mask in EntryHi/PageMask registers.  */
-+#define VPN2_SHIFT 13
-+
-+/* Read full EntryHi even with CONFIG_32BIT.  */
-+static inline unsigned long long read_c0_entryhi_native(void)
-+{
-+	return cpu_has_64bits ? read_c0_entryhi_64() : read_c0_entryhi();
-+}
-+
-+/* Write full EntryHi even with CONFIG_32BIT.  */
-+static inline void write_c0_entryhi_native(unsigned long long v)
- {
--	long v = *(unsigned long *)a - *(unsigned long *)b;
--	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
--	return s ? (v != 0) | v >> s : v;
-+	if (cpu_has_64bits)
-+		write_c0_entryhi_64(v);
-+	else
-+		write_c0_entryhi(v);
+diff --git a/sound/usb/format.c b/sound/usb/format.c
+index f33d25a4e4cc7..682adbdf7ee79 100644
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -304,9 +304,37 @@ static bool s1810c_valid_sample_rate(struct audioformat *fp,
  }
  
-+/* TLB entry state for uniquification.  */
-+struct tlbent {
-+	unsigned long long wired:1;
-+	unsigned long long global:1;
-+	unsigned long long asid:10;
-+	unsigned long long vpn:51;
-+	unsigned long long pagesz:5;
-+	unsigned long long index:14;
-+};
-+
  /*
-- * Initialise all TLB entries with unique values that do not clash with
-- * what we have been handed over and what we'll be using ourselves.
-+ * Comparison function for TLB entry sorting.  Place wired entries first,
-+ * then global entries, then order by the increasing VPN/ASID and the
-+ * decreasing page size.  This lets us avoid clashes with wired entries
-+ * easily and get entries for larger pages out of the way first.
-+ *
-+ * We could group bits so as to reduce the number of comparisons, but this
-+ * is seldom executed and not performance-critical, so prefer legibility.
-  */
--static void __ref r4k_tlb_uniquify(void)
-+static int r4k_entry_cmp(const void *a, const void *b)
- {
--	int tlbsize = current_cpu_data.tlbsize;
--	bool use_slab = slab_is_available();
--	int start = num_wired_entries();
--	phys_addr_t tlb_vpn_size;
--	unsigned long *tlb_vpns;
--	unsigned long vpn_mask;
--	int cnt, ent, idx, i;
--
--	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
--	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
-+	struct tlbent ea = *(struct tlbent *)a, eb = *(struct tlbent *)b;
-+
-+	if (ea.wired > eb.wired)
-+		return -1;
-+	else if (ea.wired < eb.wired)
-+		return 1;
-+	else if (ea.global > eb.global)
-+		return -1;
-+	else if (ea.global < eb.global)
-+		return 1;
-+	else if (ea.vpn < eb.vpn)
-+		return -1;
-+	else if (ea.vpn > eb.vpn)
-+		return 1;
-+	else if (ea.asid < eb.asid)
-+		return -1;
-+	else if (ea.asid > eb.asid)
-+		return 1;
-+	else if (ea.pagesz > eb.pagesz)
-+		return -1;
-+	else if (ea.pagesz < eb.pagesz)
-+		return 1;
-+	else
-+		return 0;
-+}
- 
--	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
--	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
--		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
--	if (WARN_ON(!tlb_vpns))
--		return; /* Pray local_flush_tlb_all() is good enough. */
-+/*
-+ * Fetch all the TLB entries.  Mask individual VPN values retrieved with
-+ * the corresponding page mask and ignoring any 1KiB extension as we'll
-+ * be using 4KiB pages for uniquification.
+- * Many Focusrite devices supports a limited set of sampling rates per
+- * altsetting. Maximum rate is exposed in the last 4 bytes of Format Type
+- * descriptor which has a non-standard bLength = 10.
++ * Focusrite devices use rate pairs: 44100/48000, 88200/96000, and
++ * 176400/192000. Return true if rate is in the pair for max_rate.
 + */
-+static void __ref r4k_tlb_uniquify_read(struct tlbent *tlb_vpns, int tlbsize)
++static bool focusrite_rate_pair(unsigned int rate,
++				unsigned int max_rate)
 +{
-+	int start = num_wired_entries();
-+	unsigned long long vpn_mask;
-+	bool global;
-+	int i;
- 
--	htw_stop();
-+	vpn_mask = GENMASK(current_cpu_data.vmbits - 1, VPN2_SHIFT);
-+	vpn_mask |= cpu_has_64bits ? 3ULL << 62 : 1 << 31;
- 
--	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
--		unsigned long vpn;
-+	for (i = 0; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn, mask, asid;
-+		unsigned int pagesz;
- 
- 		write_c0_index(i);
- 		mtc0_tlbr_hazard();
- 		tlb_read();
- 		tlb_read_hazard();
--		vpn = read_c0_entryhi();
--		vpn &= vpn_mask & PAGE_MASK;
--		tlb_vpns[cnt] = vpn;
- 
--		/* Prevent any large pages from overlapping regular ones.  */
--		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
--		mtc0_tlbw_hazard();
--		tlb_write_indexed();
--		tlbw_use_hazard();
-+		global = !!(read_c0_entrylo0() & ENTRYLO_G);
-+		entryhi = read_c0_entryhi_native();
-+		mask = read_c0_pagemask();
-+
-+		asid = entryhi & cpu_asid_mask(&current_cpu_data);
-+		vpn = (entryhi & vpn_mask & ~mask) >> VPN2_SHIFT;
-+		pagesz = ilog2((mask >> VPN2_SHIFT) + 1);
-+
-+		tlb_vpns[i].global = global;
-+		tlb_vpns[i].asid = global ? 0 : asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+		tlb_vpns[i].wired = i < start;
-+		tlb_vpns[i].index = i;
- 	}
-+}
- 
--	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+/*
-+ * Write unique values to all but the wired TLB entries each, using
-+ * the 4KiB page size.  This size might not be supported with R6, but
-+ * EHINV is mandatory for R6, so we won't ever be called in that case.
-+ *
-+ * A sorted table is supplied with any wired entries at the beginning,
-+ * followed by any global entries, and then finally regular entries.
-+ * We start at the VPN and ASID values of zero and only assign user
-+ * addresses, therefore guaranteeing no clash with addresses produced
-+ * by UNIQUE_ENTRYHI.  We avoid any VPN values used by wired or global
-+ * entries, by increasing the VPN value beyond the span of such entry.
-+ *
-+ * When a VPN/ASID clash is found with a regular entry we increment the
-+ * ASID instead until no VPN/ASID clash has been found or the ASID space
-+ * has been exhausted, in which case we increase the VPN value beyond
-+ * the span of the largest clashing entry.
-+ *
-+ * We do not need to be concerned about FTLB or MMID configurations as
-+ * those are required to implement the EHINV feature.
-+ */
-+static void __ref r4k_tlb_uniquify_write(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	unsigned long long asid, vpn, vpn_size, pagesz;
-+	int widx, gidx, idx, sidx, lidx, i;
- 
--	write_c0_pagemask(PM_DEFAULT_MASK);
-+	vpn_size = 1ULL << (current_cpu_data.vmbits - VPN2_SHIFT);
-+	pagesz = ilog2((PM_4K >> VPN2_SHIFT) + 1);
-+
-+	write_c0_pagemask(PM_4K);
- 	write_c0_entrylo0(0);
- 	write_c0_entrylo1(0);
- 
--	idx = 0;
--	ent = tlbsize;
--	for (i = start; i < tlbsize; i++)
--		while (1) {
--			unsigned long entryhi, vpn;
-+	asid = 0;
-+	vpn = 0;
-+	widx = 0;
-+	gidx = 0;
-+	for (sidx = 0; sidx < tlbsize && tlb_vpns[sidx].wired; sidx++)
-+		;
-+	for (lidx = sidx; lidx < tlbsize && tlb_vpns[lidx].global; lidx++)
-+		;
-+	idx = gidx = sidx + 1;
-+	for (i = sidx; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn_pagesz = 0;
- 
--			entryhi = UNIQUE_ENTRYHI(ent);
--			vpn = entryhi & vpn_mask & PAGE_MASK;
-+		while (1) {
-+			if (WARN_ON(vpn >= vpn_size)) {
-+				dump_tlb_all();
-+				/* Pray local_flush_tlb_all() will cope.  */
-+				return;
-+			}
- 
--			if (idx >= cnt || vpn < tlb_vpns[idx]) {
--				write_c0_entryhi(entryhi);
--				write_c0_index(i);
--				mtc0_tlbw_hazard();
--				tlb_write_indexed();
--				ent++;
--				break;
--			} else if (vpn == tlb_vpns[idx]) {
--				ent++;
--			} else {
-+			/* VPN must be below the next wired entry.  */
-+			if (widx < sidx && vpn >= tlb_vpns[widx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[widx].vpn +
-+					   (1ULL << tlb_vpns[widx].pagesz)));
-+				asid = 0;
-+				widx++;
-+				continue;
-+			}
-+			/* VPN must be below the next global entry.  */
-+			if (gidx < lidx && vpn >= tlb_vpns[gidx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[gidx].vpn +
-+					   (1ULL << tlb_vpns[gidx].pagesz)));
-+				asid = 0;
-+				gidx++;
-+				continue;
-+			}
-+			/* Try to find a free ASID so as to conserve VPNs.  */
-+			if (idx < tlbsize && vpn == tlb_vpns[idx].vpn &&
-+			    asid == tlb_vpns[idx].asid) {
-+				unsigned long long idx_pagesz;
-+
-+				idx_pagesz = tlb_vpns[idx].pagesz;
-+				vpn_pagesz = max(vpn_pagesz, idx_pagesz);
-+				do
-+					idx++;
-+				while (idx < tlbsize &&
-+				       vpn == tlb_vpns[idx].vpn &&
-+				       asid == tlb_vpns[idx].asid);
-+				asid++;
-+				if (asid > cpu_asid_mask(&current_cpu_data)) {
-+					vpn += vpn_pagesz;
-+					asid = 0;
-+					vpn_pagesz = 0;
-+				}
-+				continue;
-+			}
-+			/* VPN mustn't be above the next regular entry.  */
-+			if (idx < tlbsize && vpn > tlb_vpns[idx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[idx].vpn +
-+					   (1ULL << tlb_vpns[idx].pagesz)));
-+				asid = 0;
- 				idx++;
-+				continue;
- 			}
-+			break;
- 		}
- 
-+		entryhi = (vpn << VPN2_SHIFT) | asid;
-+		write_c0_entryhi_native(entryhi);
-+		write_c0_index(tlb_vpns[i].index);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+
-+		tlb_vpns[i].asid = asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+
-+		asid++;
-+		if (asid > cpu_asid_mask(&current_cpu_data)) {
-+			vpn += 1ULL << pagesz;
-+			asid = 0;
-+		}
++	switch (max_rate) {
++	case 48000:  return rate == 44100 || rate == 48000;
++	case 96000:  return rate == 88200 || rate == 96000;
++	case 192000: return rate == 176400 || rate == 192000;
++	default:     return true;
 +	}
 +}
 +
 +/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
-+static void __ref r4k_tlb_uniquify(void)
-+{
-+	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
-+	phys_addr_t tlb_vpn_size;
-+	struct tlbent *tlb_vpns;
++ * Focusrite devices report all supported rates in a single clock
++ * source but only a subset is valid per altsetting.
++ *
++ * Detection uses two descriptor features:
++ *
++ * 1. Format Type descriptor bLength == 10: non-standard extension
++ *    with max sample rate in bytes 6..9.
++ *
++ * 2. bmControls VAL_ALT_SETTINGS readable bit: when set, the device
++ *    only supports the highest rate pair for that altsetting, and when
++ *    clear, all rates up to max_rate are valid.
++ *
++ * For devices without the bLength == 10 extension but with
++ * VAL_ALT_SETTINGS readable and multiple altsettings (only seen in
++ * Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
++ * convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
+  */
+ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
+ 					struct audioformat *fp,
+@@ -314,8 +342,10 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
+ {
+ 	struct usb_interface *iface;
+ 	struct usb_host_interface *alts;
++	struct uac2_as_header_descriptor *as;
+ 	unsigned char *fmt;
+ 	unsigned int max_rate;
++	bool val_alt;
+ 
+ 	iface = usb_ifnum_to_if(chip->dev, fp->iface);
+ 	if (!iface)
+@@ -327,26 +357,58 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
+ 	if (!fmt)
+ 		return true;
+ 
++	as = snd_usb_find_csint_desc(alts->extra, alts->extralen,
++				     NULL, UAC_AS_GENERAL);
++	if (!as)
++		return true;
 +
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
++	val_alt = uac_v2v3_control_is_readable(as->bmControls,
++					       UAC2_AS_VAL_ALT_SETTINGS);
 +
-+	htw_stop();
+ 	if (fmt[0] == 10) { /* bLength */
+ 		max_rate = combine_quad(&fmt[6]);
+ 
+-		/* Validate max rate */
+-		if (max_rate != 48000 &&
+-		    max_rate != 96000 &&
+-		    max_rate != 192000 &&
+-		    max_rate != 384000) {
+-
++		if (val_alt)
++			return focusrite_rate_pair(rate, max_rate);
 +
-+	r4k_tlb_uniquify_read(tlb_vpns, tlbsize);
++		/* No val_alt: rates fall through from higher */
++		switch (max_rate) {
++		case 192000:
++			if (rate == 176400 || rate == 192000)
++				return true;
++			fallthrough;
++		case 96000:
++			if (rate == 88200 || rate == 96000)
++				return true;
++			fallthrough;
++		case 48000:
++			return (rate == 44100 || rate == 48000);
++		default:
+ 			usb_audio_info(chip,
+ 				"%u:%d : unexpected max rate: %u\n",
+ 				fp->iface, fp->altsetting, max_rate);
+-
+ 			return true;
+ 		}
++	}
+ 
+-		return rate <= max_rate;
++	if (!val_alt)
++		return true;
 +
-+	sort(tlb_vpns, tlbsize, sizeof(*tlb_vpns), r4k_entry_cmp, NULL);
++	/* Multi-altsetting device with val_alt but no max_rate
++	 * in the format descriptor. Use Focusrite convention:
++	 * alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
++	 */
++	if (iface->num_altsetting <= 2)
++		return true;
 +
-+	r4k_tlb_uniquify_write(tlb_vpns, tlbsize);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
++	switch (fp->altsetting) {
++	case 1:		max_rate = 48000; break;
++	case 2:		max_rate = 96000; break;
++	case 3:		max_rate = 192000; break;
++	default:	return true;
+ 	}
+ 
+-	return true;
++	return focusrite_rate_pair(rate, max_rate);
+ }
+ 
+ /*
 -- 
 2.53.0
 
