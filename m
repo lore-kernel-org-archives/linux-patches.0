@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8947621B191;
-	Sat, 30 May 2026 18:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82DB3469FC;
+	Sat, 30 May 2026 18:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166641; cv=none; b=XeDFQtgq6kGHjLyth2lGN73z0bWnpDq7eiE3H6Z/9tErEe0Vj4tMQNMOufFcWLe94470HVpHH/HnNLNWOKK2Q4KNs2f2xzoJtBc1RDy45S79CzMLZYfk6SPhUOhjbs3i6MDqilbNjTWoZrW8gDjNfD1ytfi04WaTCq1fcTaFp78=
+	t=1780166644; cv=none; b=fIiZAcxSnD0co9I3bIo8CWmWQYwaR1Yq0IUHRE1H8NECr3wP/RmrCnGPqMiEeEQ/u5fa9R8MMzjPDvF9N8m5ArQXaGFc54y2gt5er4MFTM+QnF7kIg4hr5DYru1tzfDCYtDckVRS05f3aP4RhJvGdnTKooVAt1QAMxL5ZKqzNhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166641; c=relaxed/simple;
-	bh=kFbdbcEcaLxhaW9v2t9I2DL3X9yitGZb1M8kzJddvYg=;
+	s=arc-20240116; t=1780166644; c=relaxed/simple;
+	bh=fAZAgAOTUHXYbzy+Dq52RT53jP9j2M2DbbkLHXCze5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqCHlfVLHrf1dPidVQBiJNfd1REo1MuH+FuoeNSfRTe6TO95w9bcia1HMpP3t3kCSJXlrirH08no3gqVEP2Xnbia7WNNU2dMPnoNS7wBptKoxtIXhYLMbsHn0KQMzV2iefLNQaB2y4PYe07W970SLKXH0hDHS3+lVWoJ4vewrUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRZTVmh+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LERqJAAI0UVwpGJ1gj1OE23xQ93h+GgdmYD6ea8YpjX244VMqHIoNyeS/0Cx7gS+glNVeLfZAUawzsQsrb253sOnX3a99zIGC1fzxtJmuFQ1XOqpu7ecCSRuYmTXBbgEp0zWYXpi/VNaPhs+bJOSZrYnoSkwWYf6Wxy4aaMo044=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2C1eCQE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRZTVmh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4FC1F00893;
-	Sat, 30 May 2026 18:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2C1eCQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218C11F00893;
+	Sat, 30 May 2026 18:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166640;
-	bh=N75BHeP60Y0uhRIEx1KLTk6KzEIBVhDuigY1qmqGBQg=;
+	s=korg; t=1780166643;
+	bh=AMi4GasxxehWMRjvqDTnuaPMLU3Cq3+Ik5eGkK9vlEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SRZTVmh+H6hksx1xedbRBZIUDkwvOnZ1Vb9szaGT3EfiSV4v+VLmeptXtBaWpzCAQ
-	 PKjd/Kd5FRytIXYFUDHXNAKOYDh+GLv5N6U2DjXv8uURmQi1lxRoSieF+1nE9RGhcu
-	 3zdtA8zaVL4s9CIjp6K8j+wMOV/XJrbNP1qDp9g4=
+	b=x2C1eCQEmoGQWz8QA/HqEPQgnw/amtrkWZxomPMAV8DlDFb4g9jzzmEmZiCtbqf1B
+	 j3xbdcRwzEM8qFnW3WszfnbP86Toeuibixd5RpMq6xI019w5KWrX5c7bALSKkw37PS
+	 S7BAVsfSquUCaG+W4IguH9LC22cSTKNS6Di6zZY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Joe Damato <joe@dama.to>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 399/589] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
-Date: Sat, 30 May 2026 18:04:40 +0200
-Message-ID: <20260530160235.265831936@linuxfoundation.org>
+Subject: [PATCH 5.10 426/589] ipv6: fix possible UAF in icmpv6_rcv()
+Date: Sat, 30 May 2026 18:05:07 +0200
+Message-ID: <20260530160235.922548777@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,43 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8c522da70f0c2e5148c4c13ccb1c64cca57a6fdb ]
+[ Upstream commit f996edd7615e686ada141b7f3395025729ff8ccb ]
 
-mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
-As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-registration") introduced a callback to ensure the RCG is off upon init.
-However, the fix depends on all shared RCGs being marked as such in code.
+Caching saddr and daddr before pskb_pull() is problematic
+since skb->head can change.
 
-For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
-unlike the same clock in the SC7180 code. This was causing display to
-frequently fail to initialize after rebooting on the Surface Pro X.
-Fix by using shared ops for this clock.
+Remove these temporary variables:
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-8-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+- We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr
+  when net_dbg_ratelimited() is called in the slow path.
+
+- Avoid potential future misuse after pskb_pull() call.
+
+Fixes: 4b3418fba0fe ("ipv6: icmp: include addresses in debug messages")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260416103505.2380753-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/icmp.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index bbdd27946bf1f..4e29004a7e44b 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -446,7 +446,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 65846f4451894..35e99974aa882 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -867,7 +867,6 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 	struct net *net = dev_net(skb->dev);
+ 	struct net_device *dev = icmp6_dev(skb);
+ 	struct inet6_dev *idev = __in6_dev_get(dev);
+-	const struct in6_addr *saddr, *daddr;
+ 	struct icmp6hdr *hdr;
+ 	u8 type;
+ 	bool success = false;
+@@ -894,12 +893,10 @@ static int icmpv6_rcv(struct sk_buff *skb)
  
+ 	__ICMP6_INC_STATS(dev_net(dev), idev, ICMP6_MIB_INMSGS);
+ 
+-	saddr = &ipv6_hdr(skb)->saddr;
+-	daddr = &ipv6_hdr(skb)->daddr;
+-
+ 	if (skb_checksum_validate(skb, IPPROTO_ICMPV6, ip6_compute_pseudo)) {
+ 		net_dbg_ratelimited("ICMPv6 checksum failed [%pI6c > %pI6c]\n",
+-				    saddr, daddr);
++				    &ipv6_hdr(skb)->saddr,
++				    &ipv6_hdr(skb)->daddr);
+ 		goto csum_error;
+ 	}
+ 
+@@ -972,7 +969,8 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 			break;
+ 
+ 		net_dbg_ratelimited("icmpv6: msg of unknown type [%pI6c > %pI6c]\n",
+-				    saddr, daddr);
++				    &ipv6_hdr(skb)->saddr,
++				    &ipv6_hdr(skb)->daddr);
+ 
+ 		/*
+ 		 * error of unknown type.
 -- 
 2.53.0
 
