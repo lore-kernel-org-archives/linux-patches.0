@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8072632B11D;
-	Sat, 30 May 2026 17:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD3F32D42B;
+	Sat, 30 May 2026 17:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160759; cv=none; b=MX61NQPPLChpo+04/JMKLmmMul0zNY4P9vkuyBUTEK8GqLD37BIlt6snfNjjkP4AI8tUyEeo7X0b5+eaDtumO61BoHhmYeUbiDOG5G8DKW2g1w+xv3dwSDR8uOvy5/rNSLFsj1VmXkZ0YLRApOMvPdoEtb6cFflzlf+EpFZPHrY=
+	t=1780160763; cv=none; b=GzIGz9rUkpBMFpwTpqd4B7DkP0TO3+X+Dx88r9CPCxovrFpwwT3EJYRHQY4fvO6J+ovb80l1z32KWE8yTyBAhZMOnHZQd8wKs/PQs1qZj86xiZxbsUejzw6ESTFLyD8e2CDFnWlw5sA3RCI3ACYLMjvdD4drDn8e9BepQEnOnkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160759; c=relaxed/simple;
-	bh=vAFCwv2LnHASzWaZ2F5q6L+20YbBGz2uOQFsIM0Gvsk=;
+	s=arc-20240116; t=1780160763; c=relaxed/simple;
+	bh=0dtlA36WnvNCnxYzcjrMG2rZNUd0lyz83Q53hdCuGJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b624ycmqTfdpJwT7rY/eSgi4JBT83K1c1/bUFZyutW3dgwmTGSCXbD6bMhGyn7R05sAORivn9niowDBpAAOsK/YxlNfK+BD2KV2t9HcKXTUECI4CeCBHoGnRlJJq/8xx8ZOKfh+0eHRmH3pC9Qjt8lM55rl+msI0RoGrKYygywo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEoM2SDf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jkIpyyEUcraEhMlUSgEGg99uR2ZZmMFTQ8lNCv8X4CAb839nQzUa1oNXLQe4uVnUeVGZFggudzZ3/JmLphgSp7v6+g4yhx70J9OPLv6VXVF9alM2pHlYJ+i7izdu/SS6LEyz4xWYXjIL7eQfihhSy3O50IZgCV0pYVcvoO8jGKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RamkycTk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEoM2SDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A937F1F00893;
-	Sat, 30 May 2026 17:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RamkycTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC601F00893;
+	Sat, 30 May 2026 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160758;
-	bh=PHBCsMo3v1WVIRvuVGk99hJTnBMtWL/jBgitcrHjLHo=;
+	s=korg; t=1780160762;
+	bh=JBh6e5+m3KvnPSWUniNWs/yf7jFyOdplMMrjXOpWbPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NEoM2SDfVZ9T3WfW9HLORJKbk48SOaKMgNeU1hcQUQ6CK+U8s/HJlosnhI5QEKg2y
-	 ck1YWsH+aXf5G9eZLj8vClCgJ5VFbNPghwYqWTPThX2YkvD71owhYQUQUl7O/u2ekJ
-	 kgoUeCZo0gAQBWPPXzt6fE0nTjsfdgcZrdLksCSU=
+	b=RamkycTkXu6vNXuNXysbQEZjw3ZW7kKSrvwKjkE41H35FDfZ3MFLuBloflJhbAlBT
+	 20z9VtckE8mkBKj9PiEYRKgIZW7SGogBMyppQHztebQNM6Z2tejDd5s/pj8vdQ3YCK
+	 9IMwBrfWYWneWxE8vXLLpNtDvT/Ijyy4c14tRIHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dudu Lu <phx0fer@gmail.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH 6.1 426/969] vsock: fix buffer size clamping order
-Date: Sat, 30 May 2026 17:59:10 +0200
-Message-ID: <20260530160312.024226059@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 427/969] vsock/virtio: fix accept queue count leak on transport mismatch
+Date: Sat, 30 May 2026 17:59:11 +0200
+Message-ID: <20260530160312.051256173@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,50 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-commit d114bfdc9b76bf93b881e195b7ec957c14227bab upstream.
+commit 52bcb57a4e8a0865a76c587c2451906342ae1b2d upstream.
 
-In vsock_update_buffer_size(), the buffer size was being clamped to the
-maximum first, and then to the minimum. If a user sets a minimum buffer
-size larger than the maximum, the minimum check overrides the maximum
-check, inverting the constraint.
+virtio_transport_recv_listen() calls sk_acceptq_added() before
+vsock_assign_transport(). If vsock_assign_transport() fails or
+selects a different transport, the error path returns without
+calling sk_acceptq_removed(), permanently incrementing
+sk_ack_backlog.
 
-This breaks the intended socket memory boundaries by allowing the
-vsk->buffer_size to grow beyond the configured vsk->buffer_max_size.
+After approximately backlog+1 such failures, sk_acceptq_is_full()
+returns true, causing the listener to reject all new connections.
 
-Fix this by checking the minimum first, and then the maximum. This
-ensures the buffer size never exceeds the buffer_max_size.
+Fix by moving sk_acceptq_added() to after the transport validation,
+matching the pattern used by vmci_transport and hyperv_transport.
 
-Fixes: b9f2b0ffde0c ("vsock: handle buffer_size sockopts in the core")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/180118C5-8BCF-4A63-A305-4EE53A34AB9C@doyensec.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260413131409.19022-1-phx0fer@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Cc: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1680,12 +1680,12 @@ static void vsock_update_buffer_size(str
- 				     const struct vsock_transport *transport,
- 				     u64 val)
- {
--	if (val > vsk->buffer_max_size)
--		val = vsk->buffer_max_size;
--
- 	if (val < vsk->buffer_min_size)
- 		val = vsk->buffer_min_size;
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1259,8 +1259,6 @@ virtio_transport_recv_listen(struct sock
+ 		return -ENOMEM;
+ 	}
  
-+	if (val > vsk->buffer_max_size)
-+		val = vsk->buffer_max_size;
-+
- 	if (val != vsk->buffer_size &&
- 	    transport && transport->notify_buffer_size)
- 		transport->notify_buffer_size(vsk, &val);
+-	sk_acceptq_added(sk);
+-
+ 	lock_sock_nested(child, SINGLE_DEPTH_NESTING);
+ 
+ 	child->sk_state = TCP_ESTABLISHED;
+@@ -1282,6 +1280,7 @@ virtio_transport_recv_listen(struct sock
+ 		return ret;
+ 	}
+ 
++	sk_acceptq_added(sk);
+ 	if (virtio_transport_space_update(child, skb))
+ 		child->sk_write_space(child);
+ 
 
 
