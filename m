@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE6D2690D5;
-	Sat, 30 May 2026 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4753534104B;
+	Sat, 30 May 2026 17:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160699; cv=none; b=t5K2UIYrhvyvwjpfzxIgZ+K4zig64ossIuPyLvV2Q3d13hFlcwILD2OX9bGLTtKAep4bBo2lIgCPhE1Xa+SykkDW8wNeo1ruNkK1eAIn6GkCZD70N2Oxx7YrJ8DYoj7nKkGNg060JTUUNBq1weTC6V6OfZhdvEpVzo9LasX/KlM=
+	t=1780160702; cv=none; b=a6wEhpynGpgXkeqKlIimlMcMsoLnCruxNmGlIzPo+4/yH+cj073R6wGoeyCwMEEZFLfOAgJ1eLvSPE2dpSMdNwSl/2Qhb0ofNuQt5a8gLrshEdL//eX2J8GSq1So+eRR3k7Herm/6d783fKIQz8/xy+CVmxnPzzK9aG1a0Yghtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160699; c=relaxed/simple;
-	bh=CN8BV1dr/DFNvW70ObHzjSIVk5mDZaP9hLCTfkNz17k=;
+	s=arc-20240116; t=1780160702; c=relaxed/simple;
+	bh=XRSXKstmwwB6IwzxFxoPGpgRXhP1p1SnAcGOj7cPUHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiNzo/HKMiZ9aW+crIOqt3WEnVy2g/t9KADGtduYMFXL/ZjUNxuBZ/dHFdlT1P0fSImgKCgQ8GRX/z/IHlpXILAytrBvzXyb0Yqukl+JWUgEy9+Fi7EcN45nKradz7dgAQHcJPW9cnrINv+S1a5G088tifsdt/7K3LJgvVly0Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjk6WEHe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XmMRwwEXv8P31grDKMgvzg+vWPQNZoGif1O2K6U3Sy1ZPbw/ANun2gCGsnS+T7SJ+1+3+ILKSzSnJ1IHJIy5TC646FxnvDcdaaDj4pOBSKDG/uZYxIHxyCGhqmw2WNeYHKooYwJx7VPqX3KWELWxfegyi+DKYhqgAKgApSAmEAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep9xegoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjk6WEHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B131F00893;
-	Sat, 30 May 2026 17:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep9xegoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6DF1F00893;
+	Sat, 30 May 2026 17:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160698;
-	bh=C6oIQOoMBbc2Sor4MHromC4jdFd6+8H4FEXEEEfSvug=;
+	s=korg; t=1780160701;
+	bh=cRPCkRXGcFacZJdk/vd+pkTxIX62dJ+hgszmAJWdv3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rjk6WEHev6xFQBMhvrR/08dGXBDuDBj8aZN1MaP/qkLtNNlQrqLyBHhY/00LP5z3I
-	 B7PcgVA2SltxmvxHzBMoNvDh9jUspx/95nymtM8WJJ2CAnai/BPB5Y8Ep9zxGoKX4P
-	 22BHE3+hnq5E7rvwx5uWHgvPLmtv0YGY/DkmwRdo=
+	b=ep9xegoKZVYbeltmevtu2jjowCihT2mFm647axcX+rJTMy285rMlmGXpxOAtjJ0W8
+	 Wa/EVZewEo04tfr2Upr840fq8Fqw7JqrKufdlEiT+zKYv1bGitECPoka0/hzsqGR22
+	 7VUqzGTaQ8/p/6HcztSY/AANdI/K27s+jw19qYmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 369/969] RDMA/rxe: Reject unknown opcodes before ICRC processing
-Date: Sat, 30 May 2026 17:58:13 +0200
-Message-ID: <20260530160310.509326249@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 403/969] drm/amdgpu: Add bounds checking to ib_{get,set}_value
+Date: Sat, 30 May 2026 17:58:47 +0200
+Message-ID: <20260530160311.416057991@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,100 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 4c6f86d85d03cdb33addce86aa69aa795ca6c47a upstream.
+commit 66085e206431ef88ce36f53c1f53d570790ccc9e upstream.
 
-Even after applying commit 7244491dab34 ("RDMA/rxe: Validate pad and ICRC
-before payload_size() in rxe_rcv"), a single unauthenticated UDP packet
-can still trigger panic.  That patch handled payload_size() underflow only
-for valid opcodes with short packets, not for packets carrying an unknown
-opcode.  The unknown-opcode OOB read described below predates that commit
-and reaches back to the initial Soft RoCE driver.
+The uvd/vce/vcn code accesses the IB at predefined offsets without
+checking that the IB is large enough. Check the bounds here. The caller
+is responsible for making sure it can handle arbitrary return values.
 
-The check added there reads
+Also make the idx a uint32_t to prevent overflows causing the condition
+to fail.
 
-    pkt->paylen < header_size(pkt) + bth_pad(pkt) + RXE_ICRC_SIZE
-
-where header_size(pkt) expands to rxe_opcode[pkt->opcode].length.  The
-rxe_opcode[] array has 256 entries but is only populated for defined IB
-opcodes; any other entry (for example opcode 0xff) is zero-initialized, so
-length == 0 and the check degenerates to
-
-    pkt->paylen < 0 + bth_pad(pkt) + RXE_ICRC_SIZE
-
-which does not constrain pkt->paylen enough.  rxe_icrc_hdr() then computes
-
-    rxe_opcode[pkt->opcode].length - RXE_BTH_BYTES
-
-which underflows when length == 0 and passes a huge value to rxe_crc32(),
-causing an out-of-bounds read of the skb payload.
-
-Reproduced on v7.0-rc7 with that fix applied, QEMU/KVM with
-CONFIG_RDMA_RXE=y and CONFIG_KASAN=y, after
-
-    rdma link add rxe0 type rxe netdev eth0
-
-A single 48-byte UDP packet to port 4791 with BTH opcode=0xff and
-QPN=IB_MULTICAST_QPN triggers:
-
-    BUG: KASAN: slab-out-of-bounds in crc32_le+0x115/0x170
-    Read of size 1 at addr ...
-    The buggy address is located 0 bytes to the right of
-     allocated 704-byte region
-    Call Trace:
-     crc32_le+0x115/0x170
-     rxe_icrc_hdr.isra.0+0x226/0x300
-     rxe_icrc_check+0x13f/0x3a0
-     rxe_rcv+0x6e1/0x16e0
-     rxe_udp_encap_recv+0x20a/0x320
-     udp_queue_rcv_one_skb+0x7ed/0x12c0
-
-Subsequent packets with the same shape fault on unmapped memory and panic
-the kernel.  The trigger requires only module load and "rdma link add"; no
-QP, no connection, and no authentication.
-
-Fix this by rejecting packets whose opcode has no rxe_opcode[] entry,
-detected via the zero mask or zero length, before any length arithmetic
-runs.
-
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260414111555.3386793-1-michael.bommarito@gmail.com
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/rxe/rxe_recv.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/sw/rxe/rxe_recv.c
-+++ b/drivers/infiniband/sw/rxe/rxe_recv.c
-@@ -322,6 +322,17 @@ void rxe_rcv(struct sk_buff *skb)
- 	pkt->qp = NULL;
- 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+@@ -392,15 +392,18 @@ void amdgpu_debugfs_ring_init(struct amd
  
-+	/*
-+	 * Unknown opcodes have a zero-initialized rxe_opcode[] entry, so
-+	 * both mask and length are 0.  Reject them before any length math:
-+	 * rxe_icrc_hdr() would otherwise compute length - RXE_BTH_BYTES
-+	 * and pass the underflowed value to rxe_crc32(), producing an
-+	 * out-of-bounds read.
-+	 */
-+	if (unlikely(!rxe_opcode[pkt->opcode].mask ||
-+		     !rxe_opcode[pkt->opcode].length))
-+		goto drop;
-+
- 	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
- 		       RXE_ICRC_SIZE))
- 		goto drop;
+ int amdgpu_ring_init_mqd(struct amdgpu_ring *ring);
+ 
+-static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, int idx)
++static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, uint32_t idx)
+ {
+-	return ib->ptr[idx];
++	if (idx < ib->length_dw)
++		return ib->ptr[idx];
++	return 0;
+ }
+ 
+-static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, int idx,
++static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, uint32_t idx,
+ 				       uint32_t value)
+ {
+-	ib->ptr[idx] = value;
++	if (idx < ib->length_dw)
++		ib->ptr[idx] = value;
+ }
+ 
+ int amdgpu_ib_get(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 
 
