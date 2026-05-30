@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAA3C277F;
-	Sat, 30 May 2026 18:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABF13C277F;
+	Sat, 30 May 2026 18:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165836; cv=none; b=pLzPx8WUg6UPx9TTIIFZ6x3h6p5Kpcju0u1b3Ljtkj8ddKg3FckNQLB2qrFL19eDREyiVQnMpyo2vd1CjDoCdOj4iX5976QFtanXmwXp2GuZf+VZrjDIispS3U73kW8/LL/I1IK5wR2Z3OhP9TLSoDITeLjh7f+9us5/9VoUudM=
+	t=1780165840; cv=none; b=cIOUKE3fJtEPpS5jpMG/IOJsnOb1uNRPb4kwCcQVSCg6gUao8XGqI8F54I6ORyfrAhUNdns34PsxZqjTQMu6lBzWqcKwW533hsb/ut/RZhnTYOhQ2WXvQMYgAklN1W2//9xypGw4OH7gGOmg8eB9AUCPUHxEoJH+/1f5DgbeG0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165836; c=relaxed/simple;
-	bh=BO5GS9185n20hO+/L81CSaqh1dStgvYFKEkKhPOSf5E=;
+	s=arc-20240116; t=1780165840; c=relaxed/simple;
+	bh=6C2ET5+hU8/kuNYRKdMZOIJjo1LZBehjsbmsWRahkOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhpT+rK3RGVBTzKvDOuyBr73qE1mrpNvHYesv+JvfbPW2zU4X0RXRaIXzfyq4P0CO4fjPfaN6DYvZOLZCWR0+M9BdjLMggJWxvCMTJZZXWpmNfHf37aVB1LhdSHN8bhvUFgUmPXXuxRUnVfjHACZdvJyPGzfDJ8lpOi0ryoHWew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unKdG0nq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sGZZ/MIs7LmHou2tyuuWq2si5oadPFNsoRCqgveHhol3KdoJlT+waNkSBala8HKd5xfgcowMg9tJ07i42JGC9WhT9QcfEqizveGuixFHDQLTU/eoys+G8owtEmCGggbtSYQgv9fo+pnyqzC+EPNCYBQfuDTQp+QU5oM12a5ZkT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Htgkf1q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unKdG0nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A5E1F00893;
-	Sat, 30 May 2026 18:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Htgkf1q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB6E1F00893;
+	Sat, 30 May 2026 18:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165835;
-	bh=UGYD8tiHPKMGN8xMYcZVhhHx8zJ96yknijdnU1mc3wo=;
+	s=korg; t=1780165839;
+	bh=SW9astYTSrEqMUYR1Tn2nS1IVfHCG9/1iyNGUFDwT68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unKdG0nqr2oNdjhECeUkBn/eanU6FLjDY4phHJHaa8zXgia6EzQVrJjY3acfL7cZX
-	 8/3Ra0cElUGkvHY5YYNTbNzGxvEfQ9jy4K+4ncw1FpZ2wCD3duhiC3whKE0EkGwaXr
-	 fwQFrFGm5h4CrT9je/ALw5raw1fzYsc5mS2BX3/o=
+	b=2Htgkf1qFwXB5TPMeGKk6PMi+S3tlohshNo4ArLtC5+WzJmgkJ8KbAQ5AysG2SM6X
+	 +ZLhALEIpV/imjB4PENkk+YgOH5NqL04nhGc60qUr0ARarXzeZQwzvFv2qFNtmaHwu
+	 sWZmLtnVkbI8uMXZ0noiaytT9uadQfwUzgcwHN7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.10 196/589] crypto: authencesn - reject short ahash digests during instance creation
-Date: Sat, 30 May 2026 18:01:17 +0200
-Message-ID: <20260530160230.059316202@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.10 197/589] driver core: Add kernel-doc for DEV_FLAG_COUNT enum value
+Date: Sat, 30 May 2026 18:01:18 +0200
+Message-ID: <20260530160230.087528869@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -58,60 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yucheng Lu <kanolyc@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 5db6ef9847717329f12c5ea8aba7e9f588a980c0 upstream.
+commit 5b484311507b5d403c1f7a45f6aa3778549e268b upstream.
 
-authencesn requires either a zero authsize or an authsize of at least
-4 bytes because the ESN encrypt/decrypt paths always move 4 bytes of
-high-order sequence number data at the end of the authenticated data.
+Even though nobody should use this value (except when declaring the
+"flags" bitmap), kernel-doc still gets upset that it's not documented.
+It reports:
 
-While crypto_authenc_esn_setauthsize() already rejects explicit
-non-zero authsizes in the range 1..3, crypto_authenc_esn_create()
-still copied auth->digestsize into inst->alg.maxauthsize without
-validating it.  The AEAD core then initialized the tfm's default
-authsize from that value.
+  WARNING: ../include/linux/device.h:519
+  Enum value 'DEV_FLAG_COUNT' not described in enum 'struct_device_flags'
 
-As a result, selecting an ahash with digest size 1..3, such as
-cbcmac(cipher_null), exposed authencesn instances whose default
-authsize was invalid even though setauthsize() would have rejected the
-same value.  AF_ALG could then trigger the ESN tail handling with a
-too-short tag and hit an out-of-bounds access.
+Add the description of DEV_FLAG_COUNT.
 
-Reject authencesn instances whose ahash digest size is in the invalid
-non-zero range 1..3 so that no tfm can inherit an unsupported default
-authsize.
-
-Fixes: f15f05b0a5de ("crypto: ccm - switch to separate cbcmac driver")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a2225b6e834a ("driver core: Don't let a device probe until it's ready")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Closes: https://lore.kernel.org/f318cd43-81fd-48b9-abf7-92af85f12f91@infradead.org
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260413195910.1.I23aca74fe2d3636a47df196a80920fecb2643220@changeid
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/authencesn.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/device.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/crypto/authencesn.c
-+++ b/crypto/authencesn.c
-@@ -400,6 +400,11 @@ static int crypto_authenc_esn_create(str
- 	auth = crypto_spawn_ahash_alg(&ctx->auth);
- 	auth_base = &auth->base;
- 
-+	if (auth->digestsize > 0 && auth->digestsize < 4) {
-+		err = -EINVAL;
-+		goto err_free_inst;
-+	}
-+
- 	err = crypto_grab_skcipher(&ctx->enc, aead_crypto_instance(inst),
- 				   crypto_attr_alg_name(tb[2]), 0, mask);
- 	if (err)
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -393,6 +393,7 @@ struct dev_links_info {
+  *
+  * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
+  *		initialization that probe could be called.
++ * @DEV_FLAG_COUNT: Number of defined struct_device_flags.
+  */
+ enum struct_device_flags {
+ 	DEV_FLAG_READY_TO_PROBE = 0,
 
 
