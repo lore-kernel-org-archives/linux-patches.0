@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC25632D42B;
-	Sat, 30 May 2026 16:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C01932BF24;
+	Sat, 30 May 2026 16:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160381; cv=none; b=NGePF7XfBDTTyociERGzEHoU+Q4oW646M7/2GkV8BykWuuGSMjAZDx8cJv4uWqJ9DHu5RcNxHqESFWxNgn66ZTUCNzXDl3mYZApvAozfJ/ON52g7gE84G8gt2IInSVTItYnni+kE8WyCijdWIIbfgY3hiRQvReRnaaimA1ICNRU=
+	t=1780160385; cv=none; b=BwiPibXOzm21QaYCV/BsnxlO8mx0YUy+af1gQNFCESUruqFtBEaFNGZxEK+kNvzbNMgH5G2gVlTZ3uS9hcF7Pw4MKCKFJZ2FyPk6uwHEcIyPXW7UfRervR/zvsfXPmdyTZw4RS+75jJL+7RE9cpnDaNKUUJuRKz1x4Px0svGHNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160381; c=relaxed/simple;
-	bh=xDhOaPWH4ItygZIQ2ei1o4QjIllavad101dOJzvZAHo=;
+	s=arc-20240116; t=1780160385; c=relaxed/simple;
+	bh=TzfUeY+FoCNnREGcOhoGkOpQ0ra4nGmLbJQlFUM54MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAdavEUEkYUj3Ra6Fl2/EwH9A36CS/YVaBE9hWuGy4y8UPIzC3VyIUfhZtxf0yVSoRsAHh5RU43IqBnbtkUrIwYe48+VwxScyE0T6/KNC+vkTqxe9rdD/Is2tHYUPV+7E1e9iBCoeRBC/0+2Z9GBERw8sA4jmimdHAtsIsc+1Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNG7Y9KS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdcK/uGjoIcaXxoEVP3GyxUn9AI3gKlQtD/oL/HRZJ1Gf6b81hnqP576Ka30WlwlRGQhjHE61iyha4tglttk8G+nMcuZXwmmHkqrqlXHh8cJh24Dej82cPjaPSDsCm9/gy6JZhdNQEbUPFn3Waq6QEYhqF1OFY+q5PRmfL5mFgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yE+yPxYC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNG7Y9KS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65121F00893;
-	Sat, 30 May 2026 16:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yE+yPxYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C77F1F00893;
+	Sat, 30 May 2026 16:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160380;
-	bh=GTru09v5ZRFJ8/4czUbefH2PbGBuSbh6lobYP43P9CY=;
+	s=korg; t=1780160384;
+	bh=ZVsApRoxsHy6mc0nHH6nFZL87gCzJAuzjkoThdgy0mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNG7Y9KSu7ztxk03VOoKCFjmI7o8ezDVCvCCDTCMVA9ku284hawsOn4LVi+U0qAsn
-	 LSvzKX7tBqvOAMq5dJRG+yqwZRoZFMnz1kxhEkVkx+766CAMVISlr+eIbn0LmEdznI
-	 ZnnKs8SSZKxIPiAwHykNWbiLYNMAGvL/JyKgMCEs=
+	b=yE+yPxYCJCI3RrjUsfpuA0Euk3EETv5XqW5mm7Cx4nNwiKAkk933QwXh/5i6w9qRa
+	 MNcCFimArb1ZGc2cH2UDXQ8X5HFSWX3GkbxGs8HNI9CE3Jl5zfpDYSdHS/hxKS96Uz
+	 94UrqtfbGvrVGAoC5yNtmtrveENEMU3yFyjdB6Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Zen <kai.aizen.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 323/969] net: rtnetlink: zero ifla_vf_broadcast to avoid stack infoleak in rtnl_fill_vfinfo
-Date: Sat, 30 May 2026 17:57:27 +0200
-Message-ID: <20260530160309.317345235@linuxfoundation.org>
+	Pete Zaitcev <zaitcev@redhat.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 306/969] usb: usblp: fix uninitialized heap leak via LPGETSTATUS ioctl
+Date: Sat, 30 May 2026 17:57:10 +0200
+Message-ID: <20260530160308.877560317@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,74 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Zen <kai.aizen.dev@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4b9e327991815e128ad3af75c3a04630a63ce3e0 upstream.
+commit b38e53cbfb9d84732e5984fbd73e128d592415c5 upstream.
 
-rtnl_fill_vfinfo() declares struct ifla_vf_broadcast on the stack
-without initialisation:
+Just like in a previous problem in this driver, usblp_ctrl_msg() will
+collapse the usb_control_msg() return value to 0/-errno, discarding the
+actual number of bytes transferred.
 
-	struct ifla_vf_broadcast vf_broadcast;
+Ideally that short command should be detected and error out, but many
+printers are known to send "incorrect" responses back so we can't just
+do that.
 
-The struct contains a single fixed 32-byte field:
+statusbuf is kmalloc(8) at probe time and never filled before the first
+LPGETSTATUS ioctl.
 
-	/* include/uapi/linux/if_link.h */
-	struct ifla_vf_broadcast {
-		__u8 broadcast[32];
-	};
+usblp_read_status() requests 1 byte. If a malicious printer responds
+with zero bytes, *statusbuf is one byte of stale kmalloc heap,
+sign-extended into the local int status, which the LPGETSTATUS path then
+copy_to_user()s directly to the ioctl caller.
 
-The function then copies dev->broadcast into it using dev->addr_len
-as the length:
+Fix this all by just zapping out the memory buffer when allocated at
+probe time.  If a later call does a short read, the data will be
+identical to what the device sent it the last time, so there is no
+"leak" of information happening.
 
-	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
-
-On Ethernet devices (the overwhelming majority of SR-IOV NICs)
-dev->addr_len is 6, so only the first 6 bytes of broadcast[] are
-written. The remaining 26 bytes retain whatever was previously on
-the kernel stack. The full struct is then handed to userspace via:
-
-	nla_put(skb, IFLA_VF_BROADCAST,
-		sizeof(vf_broadcast), &vf_broadcast)
-
-leaking up to 26 bytes of uninitialised kernel stack per VF per
-RTM_GETLINK request, repeatable.
-
-The other vf_* structs in the same function are explicitly zeroed
-for exactly this reason - see the memset() calls for ivi,
-vf_vlan_info, node_guid and port_guid a few lines above.
-vf_broadcast was simply missed when it was added.
-
-Reachability: any unprivileged local process can open AF_NETLINK /
-NETLINK_ROUTE without capabilities and send RTM_GETLINK with an
-IFLA_EXT_MASK attribute carrying RTEXT_FILTER_VF. The kernel walks
-each VF and emits IFLA_VF_BROADCAST, leaking 26 bytes of stack per
-VF per request. Stack residue at this call site can include return
-addresses and transient sensitive data; KASAN with stack
-instrumentation, or KMSAN, will flag the nla_put() when reproduced.
-
-Zero the on-stack struct before the partial memcpy, matching the
-existing pattern used for the other vf_* structs in the same
-function.
-
-Fixes: 75345f888f70 ("ipoib: show VF broadcast address")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kai Zen <kai.aizen.dev@gmail.com>
-Link: https://patch.msgid.link/3c506e8f936e52b57620269b55c348af05d413a2.1777557228.git.kai.aizen.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Pete Zaitcev <zaitcev@redhat.com>
+Assisted-by: gkh_clanker_t1000
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/2026042011-shredder-savage-48c6@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usblp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1346,6 +1346,7 @@ static noinline_for_stack int rtnl_fill_
- 		port_guid.vf = ivi.vf;
+--- a/drivers/usb/class/usblp.c
++++ b/drivers/usb/class/usblp.c
+@@ -1166,7 +1166,7 @@ static int usblp_probe(struct usb_interf
+ 	}
  
- 	memcpy(vf_mac.mac, ivi.mac, sizeof(ivi.mac));
-+	memset(&vf_broadcast, 0, sizeof(vf_broadcast));
- 	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
- 	vf_vlan.vlan = ivi.vlan;
- 	vf_vlan.qos = ivi.qos;
+ 	/* Allocate buffer for printer status */
+-	usblp->statusbuf = kmalloc(STATUS_BUF_SIZE, GFP_KERNEL);
++	usblp->statusbuf = kzalloc(STATUS_BUF_SIZE, GFP_KERNEL);
+ 	if (!usblp->statusbuf) {
+ 		retval = -ENOMEM;
+ 		goto abort;
 
 
