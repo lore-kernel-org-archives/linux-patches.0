@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34711219303;
-	Sat, 30 May 2026 18:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B907219303;
+	Sat, 30 May 2026 18:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165611; cv=none; b=H+NZjSsG0sYL1azygtHlQy4/fxKTNdNrTG8o5Y4wbu2tKgnWRRWVXHByG1ZXDe0XqPEHMVDJfEptyZabsVXipv5S6g+PV1jB5VWLKaSaMDjPP4miRvLTG7hKdNOAV+RphQZlmN6CV97vWaeH0Lfy1IlVtlbE2seSYnit/H78HXI=
+	t=1780165614; cv=none; b=vAgEmSyngyh00Kv+IvHqFOVfLrCqME/nhUa6w4f5MyyQvoLZffKIDePzieYxfNMVdtTjdg0M1GR4dVU6JcLihOJ+CXLKhWSm1jMEQk9pY3QwINiQ5HFh7Nld0BURfoCWUeZTvJoS5uDjsffTy0Fp6GgDlCCCf8SPsm/q7vRMgH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165611; c=relaxed/simple;
-	bh=YWT4zbADFAl4Zoucz0Y0++DgSaQjKXaCZbe5Xmx0BZ0=;
+	s=arc-20240116; t=1780165614; c=relaxed/simple;
+	bh=A3mqkrx/mFOJjt9TUqD+TnVUe88r0qn7yuuNKK97X84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QR9EGpZLBGs+wF7qVf7tFXzF0i7lbCRLAAx2dFYaHVoWeaxeyzxN4hzOjX/91azhTMjvXVInzy4kYaZOUsO9czEfkLAFImQPazeJuKha42WxFC42vMCEfbOLnqADg1dkZREwXYEbvwMCPhT5trK80CeuZsvGNv5KDOBlEHsL1Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9fnqDGM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T4isXg0HVhbfbMSNqoSm2T437pA7EnsKExeD0iPQLjnyp9FCrTWmBJFa0K3z09IKUm3I/6GX6rZc2ElTPXHIt7sMhn/8fhHVKV0X/bQkOO4NhjzazlbZ7l/6MuLbTmbbTr1+8LCKw10WZhuBHLlPFiRMtsnDckLAaQ64HNDtakM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAD0s1xH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9fnqDGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3F11F00893;
-	Sat, 30 May 2026 18:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAD0s1xH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B2F1F00893;
+	Sat, 30 May 2026 18:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165610;
-	bh=Q6SI9IZu3vycVVwWXTyCMUVIZgjOrSU+V8ds0Ys5xy0=;
+	s=korg; t=1780165613;
+	bh=ykYhWK55qvT7wpifCRTYGPnIEwK7yH1oNAHB9RpeqSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9fnqDGMA528YmXogNt8cRV3FSiaABQVIPBKKdQU8dfwm/smbXLmuuPEYP5YSAuIC
-	 6nlqa13JNBZM2fW9tp8E5pyO5OZEJRTRbnOwMJyyvHJpN1kzTXpMXI94y+xko2dDAr
-	 QkdxA2uC7qt+Sjw7EttrJXDlW/aY7Y5PY07RvmHo=
+	b=yAD0s1xH5dj39CHVf4cFC+aNl8z4OGYyuR0wQmRdEKsiZrlPxta8o5ZVNTXzwC9mi
+	 JK/cQ5uC3HDr7RuaL0EvuKO+wV43ykDI8vXqydL0aJyxuoPWmJ2Zkc70oFWn0pFsUH
+	 f7K5SqHTSHsAtUYUNZXHe/FHYjl27fqprYtqy8Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/589] rxrpc: Fix anonymous key handling
-Date: Sat, 30 May 2026 18:00:09 +0200
-Message-ID: <20260530160228.136131778@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zijun Hu <nightu@northwestern.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 129/589] fuse: reject oversized dirents in page cache
+Date: Sat, 30 May 2026 18:00:10 +0200
+Message-ID: <20260530160228.164344445@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,51 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Samuel Page <sam@bynar.io>
 
-[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
+commit 51a8de6c50bf947c8f534cd73da4c8f0a13e7bed upstream.
 
-In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
-be substituted for a NULL key pointer, but the variable this is done with
-is subsequently not used.
+fuse_add_dirent_to_cache() computes a serialized dirent size from the
+server-controlled namelen field and copies the dirent into a single
+page-cache page. The existing logic only checks whether the dirent fits
+in the remaining space of the current page and advances to a fresh page
+if not. It never checks whether the dirent itself exceeds PAGE_SIZE.
 
-Fix this by using "key" rather than "rx->key" when filling in the
-connection parameters.
+As a result, a malicious FUSE server can return a dirent with
+namelen=4095, producing a serialized record size of 4120 bytes. On 4 KiB
+page systems this causes memcpy() to overflow the cache page by 24 bytes
+into the following kernel page.
 
-Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
-doesn't use sendmsg() directly and so bypasses the issue.  Further,
-AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
-in that manner works.  Since this hasn't been noticed to this point, it
-might be better just to remove the "key" variable and the code that sets it
-- and, arguably, rxrpc_init_client_call_security() would be a better place
-to handle it.
+Reject dirents that cannot fit in a single page before copying them into
+the readdir cache.
 
-Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
-Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 69e34551152a ("fuse: allow caching readdir")
+Cc: stable@vger.kernel.org # v6.16+
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Zijun Hu <nightu@northwestern.edu>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20260420090139.662772-1-mszeredi@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/sendmsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/readdir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -641,7 +641,7 @@ rxrpc_new_client_call_for_sendmsg(struct
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -41,6 +41,10 @@ static void fuse_add_dirent_to_cache(str
+ 	unsigned int offset;
+ 	void *addr;
  
- 	memset(&cp, 0, sizeof(cp));
- 	cp.local		= rx->local;
--	cp.key			= rx->key;
-+	cp.key			= key;
- 	cp.security_level	= rx->min_sec_level;
- 	cp.exclusive		= rx->exclusive | p->exclusive;
- 	cp.upgrade		= p->upgrade;
++	/* Dirent doesn't fit in readdir cache page?  Skip caching. */
++	if (reclen > PAGE_SIZE)
++		return;
++
+ 	spin_lock(&fi->rdc.lock);
+ 	/*
+ 	 * Is cache already completed?  Or this entry does not go at the end of
 
 
