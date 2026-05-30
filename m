@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6F421E098;
-	Sat, 30 May 2026 17:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B2521E098;
+	Sat, 30 May 2026 17:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163889; cv=none; b=sU9LWoxfQ4BFDEyli/oFYhXNQnMXMBh6RqfV+tD0h9TxSybwt6rEuX3IWZcr2IAe7Vb8jfP758Tsw0SzhT6/hV2IHbQ8owpEjx4WQK60UhHQEyze0vBmG5SLHMpvtStuHhr1JrYFhXp23xkdWfhCOMrC1v4lkrnKHgv2JeZVxEk=
+	t=1780163893; cv=none; b=uj+BB38CKbERNgF6OK8k0O5OdQVKpMsbVd+L9ENvXPBq7ytBeUhVl+CTJj8pzJ08z4Acryi5V/PNSkmQm/dbuWPD8W7jdMWjG0xdAKnrJYvWd4jhfQM7/RRt9FOKy53Arzk4nhwItpqkrJcZYA5X4qJpwjE8Ky7OqvfQz278R7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163889; c=relaxed/simple;
-	bh=dAD/H9xzKhkiNAwBDNNf0S121vyBrkOaJZIvUeLRta0=;
+	s=arc-20240116; t=1780163893; c=relaxed/simple;
+	bh=z52UjLNRVw/BsM+L3pCd5HNEu4jKVk6fuup0GDXfkX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtSyzIQIe2A9X4hKxDkbOt0pZkBoN7W8CGwU7dUWSKoRw6MCh1ubabbZzxctTj3Gqgg5GHmo9gxuFWkXkyN9vpJXLr0WfQ7FNwd1RYnz0sRiF3bf14rStfG47BrXq8xjUoWXp/RcHbbr4qs3799mWanca6xWP7YWyA4vlDd1viY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIkh08IV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1AeQlhi/Nzy00sak282jltrgzi9hAdyO7bqcqnAreR2XUOUyo2BThMa9ZKlwQH6YDr7HTrWDYs/cRa2Ep+Vw/UA0aaOazlMBrdU9/i8TPmphUYuTth3EVpuVh2P/DBYOcUV0jvMs0qPA64lSu6orJ3bNhF9YQ7ZHaenQLG6b9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXwobqlp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIkh08IV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5A21F00893;
-	Sat, 30 May 2026 17:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXwobqlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6572C1F00893;
+	Sat, 30 May 2026 17:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163888;
-	bh=TxrikGxm0ECXqbP8ft98UDWCL6YoBSQCFxORNrm1mj4=;
+	s=korg; t=1780163892;
+	bh=XrLC/EgkLJ9YFeTfnRHeyWrfTdLtex1iHlf7nGNhs5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIkh08IVhbpm2eBVqhcVxD08tZDBZeC7xPyH5LvQvtS/e3D9Q/jvML0Q1dxoFrVeZ
-	 viwT/OH6qnRnozQTdyH3crbrvkp3oq4eg3Ds2fm8tMocaW7Vm0rV9/hJDvkutKsZYa
-	 gcvreXC4GagrdeTgw6B+CFiapPQSm7LOiHWtx9ZI=
+	b=UXwobqlpiNzcI0A8Deg3uVc2ljJqfk3TsMcQkQpBM4HcHjP7TEpjPfLdsu5/fL6kE
+	 pGNXYlBHP+AqDPWVNs9aHv8CPGtd6N224ayIYurCDxXQKUbRiJ5jnE3hLMVTEnxGMj
+	 UV/FwG+vg814K+gFz2IkxVrLH8S0EnYsWAgUoQNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 363/776] spi: orion: fix clock imbalance on registration failure
-Date: Sat, 30 May 2026 18:01:17 +0200
-Message-ID: <20260530160249.947877279@linuxfoundation.org>
+Subject: [PATCH 5.15 364/776] spi: mpc52xx: fix use-after-free on unbind
+Date: Sat, 30 May 2026 18:01:18 +0200
+Message-ID: <20260530160249.970881253@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,49 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 443cde0dc59c5d154156ac9f27a7dadef8ebc0c2 upstream.
+commit 706b3dc2ac7a998c55e14b3fd2e8f934c367e6e0 upstream.
 
-Make sure that the controller is not runtime suspended before disabling
-clocks on probe failure.
+The state machine work is scheduled by the interrupt handler and
+therefore needs to be cancelled after disabling interrupts to avoid a
+potential use-after-free.
 
-Also restore the autosuspend setting.
-
-Fixes: 5c6786945b4e ("spi: spi-orion: add runtime PM support")
-Cc: stable@vger.kernel.org	# 3.17
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+Fixes: 984836621aad ("spi: mpc52xx: Add cancel_work_sync before module remove")
+Cc: stable@vger.kernel.org
+Cc: Pei Xiao <xiaopei01@kylinos.cn>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421130211.1537628-3-johan@kernel.org
+Link: https://patch.msgid.link/20260414134319.978196-5-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-orion.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-mpc52xx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-orion.c
-+++ b/drivers/spi/spi-orion.c
-@@ -779,6 +779,7 @@ static int orion_spi_probe(struct platfo
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, SPI_AUTOSUSPEND_TIMEOUT);
-+	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/drivers/spi/spi-mpc52xx.c
++++ b/drivers/spi/spi-mpc52xx.c
+@@ -521,10 +521,11 @@ static int mpc52xx_spi_remove(struct pla
+ 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
+ 	int i;
  
- 	status = orion_spi_reset(spi);
-@@ -790,10 +791,15 @@ static int orion_spi_probe(struct platfo
- 	if (status < 0)
- 		goto out_rel_pm;
+-	cancel_work_sync(&ms->work);
+ 	free_irq(ms->irq0, ms);
+ 	free_irq(ms->irq1, ms);
  
-+	pm_runtime_put_autosuspend(&pdev->dev);
++	cancel_work_sync(&ms->work);
 +
- 	return status;
+ 	for (i = 0; i < ms->gpio_cs_count; i++)
+ 		gpio_free(ms->gpio_cs[i]);
  
- out_rel_pm:
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- out_rel_axi_clk:
- 	clk_disable_unprepare(spi->axi_clk);
- out_rel_clk:
 
 
