@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA533BFE3B;
-	Sat, 30 May 2026 18:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C1E3112C1;
+	Sat, 30 May 2026 18:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164481; cv=none; b=tcsB9zUTqLOWWipMxXbBw7utoD/aFCuNXGzpwKuNIW9V9SjGwLBwfKaR5aQBtRou+cuYqfeUnt8r0N/HxzTglJlXz7DIn7TN5O35wlZA8gBszkNKBLoz/5E8+CRdJtu30jXGAh9FniCteWd8IJsIPTDpShVzgUYC8Wf3oF1O7+U=
+	t=1780164484; cv=none; b=WGrB8lPZfELASCIJfq33p83U/QL+CJzIQWfgcpB5LLnn2i8tsICuRY16GSuqn8bhgHCtqAieRAsTedSdZIP+yRJpfyfpZAuWvvFb8+kV8qUwz1NpMTiHjlQV1HIu3fU2t0RbBcwQ7s66P/+WlDv1I6mEDBEjAj3cXt2cAYgH4Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164481; c=relaxed/simple;
-	bh=PQkSIbyr77vLPwdOrUiedXwp/MLuGDQV3fun7HNz1U0=;
+	s=arc-20240116; t=1780164484; c=relaxed/simple;
+	bh=yukG93DF2uAZZaqDez6xzJLZ1DD0GU+V0gPPS87Xt0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ru0Z+WcsaSNWLRutReddfQjcxA/Aa5s+wy2IB6McugH5n0lqfVEVUhm3SSdvkgn1yTBuvpRITtGG+4qYGF1gXY4b46hf3wZq+4VD+qhTJEb0KI0dNMi/+Jgbu18aML1ojIOxAflyGOb/zjAtsr9dkmDWshCsiUfsse5v6TEEfwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLvLzBzV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MWxgY30XTYYdH8NV64meg4C61ipzK2sBKuctO+jNoXIksSUIFdOdrmureLMuakxcykeszw8QnThT6UjAdD2qHt3NkL0/FdXvMneLIJYD4Tp3eG39GFHQAKNfu+kMw8LnboOSr1zwWRfBQscVdRzQnZKgPZJdpSJ0llmTgJIoDgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qqh17d+x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLvLzBzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7824E1F00893;
-	Sat, 30 May 2026 18:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qqh17d+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6D11F00893;
+	Sat, 30 May 2026 18:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164480;
-	bh=5iZPiV5JU2EWWQiskW60zpW29oA84Y2ZMK4ME9E41kg=;
+	s=korg; t=1780164483;
+	bh=/JG6hOw5mVUHRgAhaMOIf9tsn+pvx6MibUTsIgWwkoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLvLzBzV4We6zpuqtKwc6QoHMXulzlOQj+NEt5TwPky31IG9yRcg6uaShXGesKirj
-	 0CPzZnETgQtU/ifr0VxTaPm6ZVHj4hYkKCimHAhmYGP1zxSe2merroDF4FTTCDFqAc
-	 tgq8PckrMH+YUymmgxQ7rZ9xjlFPtmlI1Xo88XgM=
+	b=Qqh17d+xoAn/ntWX7/Q4nHz5OzRQVRbYeWEdnIY411aiIS8vd9+hKLWPnUwyyPY0O
+	 WDf4rWykyeHoYZghwIw9RWP6ocatuiQlm7b82EwyW/H+lYRaQ9gTsgQL5YmBCF1EpM
+	 x9e3bztxChO5q0dtagYusSczx2+MwfqHBKue0w3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Sukholitko <boris.sukholitko@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 568/776] flow_dissector: Add number of vlan tags dissector
-Date: Sat, 30 May 2026 18:04:42 +0200
-Message-ID: <20260530160254.796878614@linuxfoundation.org>
+Subject: [PATCH 5.15 569/776] flow_dissector: Add PPPoE dissectors
+Date: Sat, 30 May 2026 18:04:43 +0200
+Message-ID: <20260530160254.819444473@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,117 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Sukholitko <boris.sukholitko@broadcom.com>
+From: Wojciech Drewek <wojciech.drewek@intel.com>
 
-[ Upstream commit 34951fcf26c59e78ae430fba1fce7c08b1871249 ]
+[ Upstream commit 46126db9c86110e5fc1e369b9bb89735ddefdae4 ]
 
-Our customers in the fiber telecom world have network configurations
-where they would like to control their traffic according to the number
-of tags appearing in the packet.
+Allow to dissect PPPoE specific fields which are:
+- session ID (16 bits)
+- ppp protocol (16 bits)
+- type (16 bits) - this is PPPoE ethertype, for now only
+  ETH_P_PPP_SES is supported, possible ETH_P_PPP_DISC
+  in the future
 
-For example, TR247 GPON conformance test suite specification mostly
-talks about untagged, single, double tagged packets and gives lax
-guidelines on the vlan protocol vs. number of vlan tags.
+The goal is to make the following TC command possible:
 
-This is different from the common IT networks where 802.1Q and 802.1ad
-protocols are usually describe single and double tagged packet. GPON
-configurations that we work with have arbitrary mix the above protocols
-and number of vlan tags in the packet.
+  # tc filter add dev ens6f0 ingress prio 1 protocol ppp_ses \
+      flower \
+        pppoe_sid 12 \
+        ppp_proto ip \
+      action drop
 
-The goal is to make the following TC commands possible:
+Note that only PPPoE Session is supported.
 
-tc filter add dev eth1 ingress flower \
-  num_of_vlans 1 vlan_prio 5 action drop
-
->From our logs, we have redirect rules such that:
-
-tc filter add dev $GPON ingress flower num_of_vlans $N \
-     action mirred egress redirect dev $DEV
-
-where N can range from 0 to 3 and $DEV is the function of $N.
-
-Also there are rules setting skb mark based on the number of vlans:
-
-tc filter add dev $GPON ingress flower num_of_vlans $N vlan_prio \
-    $P action skbedit mark $M
-
-This new dissector allows extracting the number of vlan tags existing in
-the packet.
-
-Signed-off-by: Boris Sukholitko <boris.sukholitko@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: cc1ff87bce1c ("pppoe: drop PFC frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/flow_dissector.h |  9 +++++++++
- net/core/flow_dissector.c    | 20 ++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ include/linux/ppp_defs.h     | 14 ++++++++++
+ include/net/flow_dissector.h | 13 +++++++++
+ net/core/flow_dissector.c    | 53 +++++++++++++++++++++++++++++++-----
+ 3 files changed, 73 insertions(+), 7 deletions(-)
 
+diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
+index 9d2b388fae1a4..b7e57fdbd4139 100644
+--- a/include/linux/ppp_defs.h
++++ b/include/linux/ppp_defs.h
+@@ -11,4 +11,18 @@
+ #include <uapi/linux/ppp_defs.h>
+ 
+ #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
++
++/**
++ * ppp_proto_is_valid - checks if PPP protocol is valid
++ * @proto: PPP protocol
++ *
++ * Assumes proto is not compressed.
++ * Protocol is valid if the value is odd and the least significant bit of the
++ * most significant octet is 0 (see RFC 1661, section 2).
++ */
++static inline bool ppp_proto_is_valid(u16 proto)
++{
++	return !!((proto & 0x0101) == 0x0001);
++}
++
+ #endif /* _PPP_DEFS_H_ */
 diff --git a/include/net/flow_dissector.h b/include/net/flow_dissector.h
-index 8d0d0cf93a785..7d154c3f90d14 100644
+index 7d154c3f90d14..44034e6af9387 100644
 --- a/include/net/flow_dissector.h
 +++ b/include/net/flow_dissector.h
-@@ -269,6 +269,14 @@ struct flow_dissector_key_hash {
- 	u32 hash;
+@@ -277,6 +277,18 @@ struct flow_dissector_key_num_of_vlans {
+ 	u8 num_of_vlans;
  };
  
 +/**
-+ * struct flow_dissector_key_num_of_vlans:
-+ * @num_of_vlans: num_of_vlans value
++ * struct flow_dissector_key_pppoe:
++ * @session_id: pppoe session id
++ * @ppp_proto: ppp protocol
++ * @type: pppoe eth type
 + */
-+struct flow_dissector_key_num_of_vlans {
-+	u8 num_of_vlans;
++struct flow_dissector_key_pppoe {
++	__be16 session_id;
++	__be16 ppp_proto;
++	__be16 type;
 +};
 +
  enum flow_dissector_key_id {
  	FLOW_DISSECTOR_KEY_CONTROL, /* struct flow_dissector_key_control */
  	FLOW_DISSECTOR_KEY_BASIC, /* struct flow_dissector_key_basic */
-@@ -298,6 +306,7 @@ enum flow_dissector_key_id {
- 	FLOW_DISSECTOR_KEY_META, /* struct flow_dissector_key_meta */
+@@ -307,6 +319,7 @@ enum flow_dissector_key_id {
  	FLOW_DISSECTOR_KEY_CT, /* struct flow_dissector_key_ct */
  	FLOW_DISSECTOR_KEY_HASH, /* struct flow_dissector_key_hash */
-+	FLOW_DISSECTOR_KEY_NUM_OF_VLANS, /* struct flow_dissector_key_num_of_vlans */
+ 	FLOW_DISSECTOR_KEY_NUM_OF_VLANS, /* struct flow_dissector_key_num_of_vlans */
++	FLOW_DISSECTOR_KEY_PPPOE, /* struct flow_dissector_key_pppoe */
  
  	FLOW_DISSECTOR_KEY_MAX,
  };
 diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 537dbd7fc5438..c599bc81dfa76 100644
+index c599bc81dfa76..164de39fd262c 100644
 --- a/net/core/flow_dissector.c
 +++ b/net/core/flow_dissector.c
-@@ -1042,6 +1042,16 @@ bool __skb_flow_dissect(const struct net *net,
- 		memcpy(key_eth_addrs, &eth->h_dest, sizeof(*key_eth_addrs));
- 	}
+@@ -902,6 +902,11 @@ bool bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
+ 	return result == BPF_OK;
+ }
  
-+	if (dissector_uses_key(flow_dissector,
-+			       FLOW_DISSECTOR_KEY_NUM_OF_VLANS)) {
-+		struct flow_dissector_key_num_of_vlans *key_num_of_vlans;
++static bool is_pppoe_ses_hdr_valid(struct pppoe_hdr hdr)
++{
++	return hdr.ver == 1 && hdr.type == 1 && hdr.code == 0;
++}
 +
-+		key_num_of_vlans = skb_flow_dissector_target(flow_dissector,
-+							     FLOW_DISSECTOR_KEY_NUM_OF_VLANS,
-+							     target_container);
-+		key_num_of_vlans->num_of_vlans = 0;
-+	}
+ /**
+  * __skb_flow_dissect - extract the flow_keys struct and return it
+  * @net: associated network namespace, derived from @skb if NULL
+@@ -1221,26 +1226,60 @@ bool __skb_flow_dissect(const struct net *net,
+ 			struct pppoe_hdr hdr;
+ 			__be16 proto;
+ 		} *hdr, _hdr;
++		u16 ppp_proto;
 +
- proto_again:
- 	fdret = FLOW_DISSECT_RET_CONTINUE;
- 
-@@ -1165,6 +1175,16 @@ bool __skb_flow_dissect(const struct net *net,
- 			nhoff += sizeof(*vlan);
+ 		hdr = __skb_header_pointer(skb, nhoff, sizeof(_hdr), data, hlen, &_hdr);
+ 		if (!hdr) {
+ 			fdret = FLOW_DISSECT_RET_OUT_BAD;
+ 			break;
  		}
  
-+		if (dissector_uses_key(flow_dissector,
-+				       FLOW_DISSECTOR_KEY_NUM_OF_VLANS)) {
-+			struct flow_dissector_key_num_of_vlans *key_nvs;
-+
-+			key_nvs = skb_flow_dissector_target(flow_dissector,
-+							    FLOW_DISSECTOR_KEY_NUM_OF_VLANS,
-+							    target_container);
-+			key_nvs->num_of_vlans++;
+-		nhoff += PPPOE_SES_HLEN;
+-		switch (hdr->proto) {
+-		case htons(PPP_IP):
++		if (!is_pppoe_ses_hdr_valid(hdr->hdr)) {
++			fdret = FLOW_DISSECT_RET_OUT_BAD;
++			break;
 +		}
 +
- 		if (dissector_vlan == FLOW_DISSECTOR_KEY_MAX) {
- 			dissector_vlan = FLOW_DISSECTOR_KEY_VLAN;
- 		} else if (dissector_vlan == FLOW_DISSECTOR_KEY_VLAN) {
++		/* least significant bit of the most significant octet
++		 * indicates if protocol field was compressed
++		 */
++		ppp_proto = ntohs(hdr->proto);
++		if (ppp_proto & 0x0100) {
++			ppp_proto = ppp_proto >> 8;
++			nhoff += PPPOE_SES_HLEN - 1;
++		} else {
++			nhoff += PPPOE_SES_HLEN;
++		}
++
++		if (ppp_proto == PPP_IP) {
+ 			proto = htons(ETH_P_IP);
+ 			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
+-			break;
+-		case htons(PPP_IPV6):
++		} else if (ppp_proto == PPP_IPV6) {
+ 			proto = htons(ETH_P_IPV6);
+ 			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
+-			break;
+-		default:
++		} else if (ppp_proto == PPP_MPLS_UC) {
++			proto = htons(ETH_P_MPLS_UC);
++			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
++		} else if (ppp_proto == PPP_MPLS_MC) {
++			proto = htons(ETH_P_MPLS_MC);
++			fdret = FLOW_DISSECT_RET_PROTO_AGAIN;
++		} else if (ppp_proto_is_valid(ppp_proto)) {
++			fdret = FLOW_DISSECT_RET_OUT_GOOD;
++		} else {
+ 			fdret = FLOW_DISSECT_RET_OUT_BAD;
+ 			break;
+ 		}
++
++		if (dissector_uses_key(flow_dissector,
++				       FLOW_DISSECTOR_KEY_PPPOE)) {
++			struct flow_dissector_key_pppoe *key_pppoe;
++
++			key_pppoe = skb_flow_dissector_target(flow_dissector,
++							      FLOW_DISSECTOR_KEY_PPPOE,
++							      target_container);
++			key_pppoe->session_id = hdr->hdr.sid;
++			key_pppoe->ppp_proto = htons(ppp_proto);
++			key_pppoe->type = htons(ETH_P_PPP_SES);
++		}
+ 		break;
+ 	}
+ 	case htons(ETH_P_TIPC): {
 -- 
 2.53.0
 
