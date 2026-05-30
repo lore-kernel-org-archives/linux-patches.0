@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FA0332EA7;
-	Sat, 30 May 2026 16:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD5432D42B;
+	Sat, 30 May 2026 16:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160253; cv=none; b=VPlOtraC3TFORyCOytGEZ8yYFeZ6aMlL+JNwfB+eSUuvf+IuYrWsel64tSPl6umxLnlgS03CT4F5yyBpbP/pJ/cyg8DEEGXPpqu03+urDvPRN3Yh4tsS52A1YxKJ6kImGfQEYYU0VN3eWnLF8GMyu4zgrxqK1xC8W5BlSkhCcGk=
+	t=1780160257; cv=none; b=TzKsuHUEXGU5oWvrlbU9alzlI7zmetoRD8gLoJkNEoi8WXeD71mrvNGU/7QKeiwJqdbNeGQM7BB4OL8asOHd8R3TNRWa5qgwVIJcKLJ2AeocSw0p5QKvyjPma1a/V3T3g1kKs/HbKoyxm2fRN1YoepuP4oOM2CSGsk/8lI1iN9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160253; c=relaxed/simple;
-	bh=E4nlI91c6kjwlSq5FY0PgNsSP3JpA3uOZb/2TBr07ew=;
+	s=arc-20240116; t=1780160257; c=relaxed/simple;
+	bh=iH4SW8glhgr2wGCa3b0BDT2bGgzgdGgAF/XtqRFKa/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdQvuy34InQ5OQg/UYs2O6pxaB3Uk3OidCzf1cdVx+2vBH/531UbF2pgIg5Z1r9c2TSygFaqcX/XesXvh/t5HehaSNz5zD/aMOxp0wbhAj++k6kBJb/4AvO2ZkIQ7AyMPCxQHsUWmLGeNo4xfzYa87lnSqEK8y7Z/v5wPnVa9ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4VelWCy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qc2dEEn6yEXJWAdufEKK+UNgyhXpX8EZi0e3h6kNaWlcksJMR7uusN2Q1v5Vy3eRrOAxfSwSr0wOuUEUdHeGwidQXe44ZM6AgVjR+l7H6kacUHnKr2IGUcoFIpoGOgjrtPhny3Qnn0ExGQ81CKLZeQnz+SUGWCk75FZPbcZBy+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBJxRo5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4VelWCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8381F00893;
-	Sat, 30 May 2026 16:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBJxRo5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFA11F00893;
+	Sat, 30 May 2026 16:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160252;
-	bh=egG9ZJpG7kRwge7fGh6SJVS3TVXQDIvTJR4FIg8a/9w=;
+	s=korg; t=1780160256;
+	bh=i3LvgY+4xRTHL6DpoEPNbrtkGiS27VZiD2f/eKer1tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r4VelWCyrCMRmgd9MSdzMg4maVW67HwfqZYbSHVHjSCfvMkJ7vx5ZPjmYC0EepXmj
-	 s8RF27qFKfnbswtQlpf35+XBCLRqnOAm3WG8oEB3d9gNa/nrY6WpaJ6dylgP6b0Fo+
-	 2t5F/9hLEnpW1B4xVUQUv3Uf/ZKFzvBwKCKRGkv0=
+	b=hBJxRo5Znd2A6UQ3s4+duj2kiGRYX9HlAzyl9j8lfX9g5VaFXTCHj9EtuVWVZE8uM
+	 DtDQNUsZeoTa38viEFSLZ0Drd3prACVAA/S4K+DdlzBDoTyrpDMww+UVvDLAjosS3m
+	 b3Wm2Pk2TL6uKZOTrOxLwP+NeU5kZY8e/KoucFgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 270/969] crypto: authencesn - reject short ahash digests during instance creation
-Date: Sat, 30 May 2026 17:56:34 +0200
-Message-ID: <20260530160307.930216914@linuxfoundation.org>
+	addy ke <addy.ke@rock-chips.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 288/969] spi: rockchip: fix controller deregistration
+Date: Sat, 30 May 2026 17:56:52 +0200
+Message-ID: <20260530160308.410244242@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -58,60 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yucheng Lu <kanolyc@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 5db6ef9847717329f12c5ea8aba7e9f588a980c0 upstream.
+commit 53e7a16070feb7d1d4d81a583eaac5e25048b9c3 upstream.
 
-authencesn requires either a zero authsize or an authsize of at least
-4 bytes because the ESN encrypt/decrypt paths always move 4 bytes of
-high-order sequence number data at the end of the authenticated data.
+Make sure to deregister the controller before freeing underlying
+resources like DMA channels during driver unbind.
 
-While crypto_authenc_esn_setauthsize() already rejects explicit
-non-zero authsizes in the range 1..3, crypto_authenc_esn_create()
-still copied auth->digestsize into inst->alg.maxauthsize without
-validating it.  The AEAD core then initialized the tfm's default
-authsize from that value.
-
-As a result, selecting an ahash with digest size 1..3, such as
-cbcmac(cipher_null), exposed authencesn instances whose default
-authsize was invalid even though setauthsize() would have rejected the
-same value.  AF_ALG could then trigger the ESN tail handling with a
-too-short tag and hit an out-of-bounds access.
-
-Reject authencesn instances whose ahash digest size is in the invalid
-non-zero range 1..3 so that no tfm can inherit an unsupported default
-authsize.
-
-Fixes: f15f05b0a5de ("crypto: ccm - switch to separate cbcmac driver")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 64e36824b32b ("spi/rockchip: add driver for Rockchip RK3xxx SoCs integrated SPI")
+Cc: stable@vger.kernel.org	# 3.17
+Cc: addy ke <addy.ke@rock-chips.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260324082326.901043-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/authencesn.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-rockchip.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/crypto/authencesn.c
-+++ b/crypto/authencesn.c
-@@ -400,6 +400,11 @@ static int crypto_authenc_esn_create(str
- 	auth = crypto_spawn_ahash_alg(&ctx->auth);
- 	auth_base = &auth->base;
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -921,7 +921,7 @@ static int rockchip_spi_probe(struct pla
+ 		break;
+ 	}
  
-+	if (auth->digestsize > 0 && auth->digestsize < 4) {
-+		err = -EINVAL;
-+		goto err_free_inst;
-+	}
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Failed to register controller\n");
+ 		goto err_free_dma_rx;
+@@ -957,6 +957,8 @@ static int rockchip_spi_remove(struct pl
+ 	clk_disable_unprepare(rs->spiclk);
+ 	clk_disable_unprepare(rs->apb_pclk);
+ 
++	spi_unregister_controller(ctlr);
 +
- 	err = crypto_grab_skcipher(&ctx->enc, aead_crypto_instance(inst),
- 				   crypto_attr_alg_name(tb[2]), 0, mask);
- 	if (err)
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
