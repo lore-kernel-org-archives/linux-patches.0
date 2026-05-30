@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A775241A8F;
-	Sat, 30 May 2026 18:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938B541A8F;
+	Sat, 30 May 2026 18:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165881; cv=none; b=mOqfMMH8wbWwnGWL2ajvHMVHNUshXfSUigdzC5Ee+lyxbgZkiYkfvaKkR7AFiwzyCQVHGcyHJsJ7/r1EWjw7AY/Nm1NPAG4jdrGO43J7RNsNhuM1UwZNDnu4IL7pIg5fFbyM6yKU1ExniCgPCQWeYF0YGtbS6B4cIpoLFntXPIo=
+	t=1780165885; cv=none; b=CMa2UQzdN/HsQMZF6S8Yarfv+kqXdCiR5IUhov9uaurSqOwm5AW9SvM3VOvi5IrEr93mZng3+j80BgxZjgqdtpfyo45rgfM6J0uovvXiT5FQ1qQA3ovEGPGbvVjf6BmiDvU5cWTBsb19pl31EyOoCcm0kkFTt3J2tEvhJyPbTHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165881; c=relaxed/simple;
-	bh=eEozmi75EPV/bM6qq3KGnehD5MkypRXyw20xsIrFi8g=;
+	s=arc-20240116; t=1780165885; c=relaxed/simple;
+	bh=onmZUzrQUeDy/Pe3cil1HcH5wv2r5rQ5+fTMl7VNYFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNhcK10ckp/lYgRcrqUmiZbT6KzKsdkWuhAXk6WjAlLhXoOHKv1kkCKGaNkwbs/vhGxvvOOydSQ59XoVWvkr6Bya5AMMBDjm9WMoviPTGcxCzN5oiLdxmik1DUR/qLluquvYuhEBt8YqnXTiLhfSnnxug1JxsiXG4IlhlMd3E4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNfSmkSa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QVAbndHO5+xh/qOF22wpcL43V3KJw+J+7F1540OQM5XNs/2fjVIan5XspzrgQhgzffkd6iN2Yxt9zxH78h/MOTO2OFQbP1Dwjlgr3kuvNBkHGI/7psxIug5uGUeQbkVtR2UqX0jkfFaZqJIx78uHMe6WKtRba4D3teHNbRtyeWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEG1Nb1n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNfSmkSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B4C1F00893;
-	Sat, 30 May 2026 18:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEG1Nb1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1101F00893;
+	Sat, 30 May 2026 18:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165880;
-	bh=AQzrA0taGQlIWkZYo/R9A92MqGFjP/iAynwKk0jZysw=;
+	s=korg; t=1780165884;
+	bh=P+w4yQwMOHPSiIQ7bHiqKb0qDWGZDICgULoAcrzeQe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNfSmkSawMZPHMphTDcWa/+QUdbrhPu0XncMiWbD8ebspmIw7xb7/cTS/wnAUoG9D
-	 SKKoyKsKY8kH/CZEQkSZc1ro2Y9pWUdmtfbDuJOsHwLfVRfJyxY8x2WThizdkMWf2P
-	 Sge+9rUDGaqJ2z60QF3RUfpNMIZhH0rmCnzsJ2KM=
+	b=hEG1Nb1ngB173BYw4hA9Ks0XuiTDph+rfjo2AAgxxUXcakrSc7+pap0tW4JjofPoh
+	 XNRaUQY2hABzSBp4NvEZTKWt6XFtEmlbNRUcmv1at0BZTgewwrpZHtCwCxCjYoPww7
+	 PHWU5PpOgyRDJHI+f16h8bUeoCt0AD1bhzSwd/tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Gupta <rajgupt@qti.qualcomm.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 208/589] fbdev: udlfb: add vm_ops to dlfb_ops_mmap to prevent use-after-free
-Date: Sat, 30 May 2026 18:01:29 +0200
-Message-ID: <20260530160230.419024734@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.10 177/589] KVM: nSVM: Sync NextRIP to cached vmcb12 after VMRUN of L2
+Date: Sat, 30 May 2026 18:00:58 +0200
+Message-ID: <20260530160229.538712833@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,111 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajat Gupta <rajgupt@qti.qualcomm.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 8de779dc40d35d39fa07387b6f921eb11df0f511 upstream.
+commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
 
-dlfb_ops_mmap() uses remap_pfn_range() to map vmalloc framebuffer pages
-to userspace but sets no vm_ops on the VMA. This means the kernel cannot
-track active mmaps. When dlfb_realloc_framebuffer() replaces the backing
-buffer via FBIOPUT_VSCREENINFO, existing mmap PTEs are not invalidated.
-On USB disconnect, dlfb_ops_destroy() calls vfree() on the old pages
-while userspace PTEs still reference them, resulting in a use-after-free:
-the process retains read/write access to freed kernel pages.
+After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
+fields written by the CPU from vmcb02 to the cached vmcb12. This is
+because the cached vmcb12 is used as the authoritative copy of some of
+the controls, and is the payload when saving/restoring nested state.
 
-Add vm_operations_struct with open/close callbacks that maintain an
-atomic mmap_count on struct dlfb_data. In dlfb_realloc_framebuffer(),
-check mmap_count and return -EBUSY if the buffer is currently mapped,
-preventing buffer replacement while userspace holds stale PTEs.
+NextRIP is also written by the CPU (in some cases) after VMRUN, but is
+not sync'd to the cached vmcb12. As a result, it is corrupted after
+save/restore (replaced by the original value written by L1 on nested
+VMRUN). This could cause problems for both KVM (e.g. when injecting a
+soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
+an instruction).
 
-Tested with PoC using dummy_hcd + raw_gadget USB device emulation.
+Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
+after completing interrupts (not in nested_sync_control_from_vmcb02()),
+as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
 
-Signed-off-by: Rajat Gupta <rajgupt@qti.qualcomm.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+CC: stable@vger.kernel.org
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |   31 ++++++++++++++++++++++++++++++-
- include/video/udlfb.h       |    1 +
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -321,12 +321,32 @@ static int dlfb_set_video_mode(struct dl
- 	return retval;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3677,6 +3677,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
+ 	if (is_guest_mode(vcpu))
+ 		return EXIT_FASTPATH_NONE;
+ 
++	/*
++	 * Update the cache after completing interrupts to get an accurate
++	 * NextRIP, e.g. when re-injecting a soft interrupt.
++	 *
++	 * FIXME: Rework svm_get_nested_state() to not pull data from the
++	 *        cache (except for maybe int_ctl).
++	 */
++	if (is_guest_mode(vcpu))
++		svm->nested.ctl.next_rip = svm->vmcb->control.next_rip;
++
+ 	return svm_exit_handlers_fastpath(vcpu);
  }
  
-+static void dlfb_vm_open(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_inc(&dlfb->mmap_count);
-+}
-+
-+static void dlfb_vm_close(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_dec(&dlfb->mmap_count);
-+}
-+
-+static const struct vm_operations_struct dlfb_vm_ops = {
-+	.open  = dlfb_vm_open,
-+	.close = dlfb_vm_close,
-+};
-+
- static int dlfb_ops_mmap(struct fb_info *info, struct vm_area_struct *vma)
- {
- 	unsigned long start = vma->vm_start;
- 	unsigned long size = vma->vm_end - vma->vm_start;
- 	unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
- 	unsigned long page, pos;
-+	struct dlfb_data *dlfb = info->par;
- 
- 	if (vma->vm_pgoff > (~0UL >> PAGE_SHIFT))
- 		return -EINVAL;
-@@ -353,6 +373,9 @@ static int dlfb_ops_mmap(struct fb_info
- 			size = 0;
- 	}
- 
-+	vma->vm_ops = &dlfb_vm_ops;
-+	vma->vm_private_data = dlfb;
-+	atomic_inc(&dlfb->mmap_count);
- 	return 0;
- }
- 
-@@ -1218,7 +1241,6 @@ static void dlfb_deferred_vfree(struct d
- 
- /*
-  * Assumes &info->lock held by caller
-- * Assumes no active clients have framebuffer open
-  */
- static int dlfb_realloc_framebuffer(struct dlfb_data *dlfb, struct fb_info *info, u32 new_len)
- {
-@@ -1230,6 +1252,13 @@ static int dlfb_realloc_framebuffer(stru
- 	new_len = PAGE_ALIGN(new_len);
- 
- 	if (new_len > old_len) {
-+		if (atomic_read(&dlfb->mmap_count) > 0) {
-+			dev_warn(info->dev,
-+				"refusing realloc: %d active mmaps\n",
-+				atomic_read(&dlfb->mmap_count));
-+			return -EBUSY;
-+		}
-+
- 		/*
- 		 * Alloc system memory for virtual framebuffer
- 		 */
---- a/include/video/udlfb.h
-+++ b/include/video/udlfb.h
-@@ -56,6 +56,7 @@ struct dlfb_data {
- 	spinlock_t damage_lock;
- 	struct work_struct damage_work;
- 	struct fb_ops ops;
-+	atomic_t mmap_count;
- 	/* blit-only rendering path metrics, exposed through sysfs */
- 	atomic_t bytes_rendered; /* raw pixel-bytes driver asked to render */
- 	atomic_t bytes_identical; /* saved effort with backbuffer comparison */
 
 
