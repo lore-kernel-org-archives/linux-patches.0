@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F602FDC5E;
-	Sat, 30 May 2026 18:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B023392B;
+	Sat, 30 May 2026 18:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164077; cv=none; b=bX8CExhDY/mzOeZuV9zdYo/Ku/VbLz5Dt2LTxMDUYwWF3bE34Ixy8g3j9CdX13cJKkY6LXpOQ4QMR0PB9k6X/Cw1pLigGgLZQ4fwf3A15AmL0b+bO/tBAkqId16zcLjbO/aD2RObT0aP8y13wEPswjqdALoGZh5Di1z6w7gvfiU=
+	t=1780164081; cv=none; b=eIHb5RKLbXAm7WEHbAMo0DH20dwWPpqxX9rAksHjGGdceCT+rJ7LrlxKqID1b1uRqceBHFyQSLYmWqWwiEnifpey6QfpREkhzhLNNl2/UzVkegL6IZM2/fk9uXLV141hXgq5TsTVw1gUznBYWBsXbYG+dUQ+ENmOdCdAByRAmU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164077; c=relaxed/simple;
-	bh=liV9vCbJQ4E4e22OWKHIfjMD7xfaERpvpBOTqSX4Pak=;
+	s=arc-20240116; t=1780164081; c=relaxed/simple;
+	bh=cRlAJhzaqblQcZ5vdeeqykqywGvGb8CTxmdfv+JnbKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnL4wApA4YvKsjhpesw/lm0Co/vqvoK5MmOBPrRD9SqS+bMfsUuL2n/vFeBsf8Q/7XJLOUIQGw013uttiKHGA6Rml/mOYPbaYsHqvdLu11Ce/iT7M3H87pdZ3fJ6rpEAZtGDHDHHiCJFS+7/oBwHJhQn4xBhsWRdpuoN+hTc2J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBfCWY7D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xf6UOCXu2H8J/oEs+d/p+9MwbNTatjyjSa1DGrm6/W+XifP4ELxk+If94zjrrBo/MB14pdAYzO7OPYqzmbFgmhNBTLDNQLbCUqORULLQ+vGoyftb/mvGT5Jkh6p+dy3z2NHxZUWSeBfz47//a7pbHvZV++4TuXurJMIbBl5oUsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dI7Krp4V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBfCWY7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336BB1F00893;
-	Sat, 30 May 2026 18:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dI7Krp4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC201F00893;
+	Sat, 30 May 2026 18:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164076;
-	bh=l/4gBBGRaQVDlJqdRMr7EqLB3gwBVaTW4dWqvRdkV/M=;
+	s=korg; t=1780164080;
+	bh=MaUa3S4jgh7Ft1jb3hCey2xiHX1cO2JR8c49qe+yxLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBfCWY7DTn1BhxxBkpOck5PGBv91hA4iM3NCrvzDwSUa0GUTQjbBrLuzvjHjyq5UQ
-	 yra9AKQZQgd5MPOT3uQJMD8iArNiODs+BOWwepLQ+uboS+oIUJkWmMUG9LIUGrP9iA
-	 U2t35wYzSAx9IoVqiiPkrszHZHL3/OafXaAhEWGU=
+	b=dI7Krp4VzNgd/WE7AGqMuM1wuE9+ofSsVQ0CWXPj8K3Cb1aBb+hORIReyc0Nq029t
+	 FXyVP116DVCaMWhCu77vb5tubjA6yGv9apdSGXBRtF8neyfcyHOaALdBA4TDxyl0Lu
+	 R4E/h2GqK1fsQPC5bze+FD9vBSIYrAyrHx4I2jsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 447/776] drm/panel: simple: Correct G190EAN01 prepare timing
-Date: Sat, 30 May 2026 18:02:41 +0200
-Message-ID: <20260530160251.953510318@linuxfoundation.org>
+Subject: [PATCH 5.15 448/776] ALSA: core: Validate compress device numbers without dynamic minors
+Date: Sat, 30 May 2026 18:02:42 +0200
+Message-ID: <20260530160251.975871962@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,45 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit f1080f82570b797598c1ba7e9c800ae9e94aafc6 ]
+[ Upstream commit 796e119e9b14763be905ad0d023c71a14bc2e931 ]
 
-The prepare timing specified by the G190EAN01 datasheet should be
-between 30 and 50 ms. Considering it might take some time for the
-LVDS encoder to enable the signal, we should only wait the min.
-required time in the panel driver and not the max. allowed time.
+Without CONFIG_SND_DYNAMIC_MINORS, ALSA reserves only two fixed minors
+for compress devices on each card: comprD0 and comprD1.
 
-Fixes: 2f7b832fc992 ("drm/panel: simple: Add support for AUO G190EAN01 panel")
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260217142528.68613-1-ian.ray@gehealthcare.com
+snd_find_free_minor() currently computes the compress minor as
+type + dev without validating dev first, so device numbers greater than
+1 spill into the HWDEP minor range instead of failing registration.
+
+ASoC passes rtd->id to snd_compress_new(), so this can happen on real
+non-dynamic-minor builds.
+
+Add a dedicated fixed-minor check for SNDRV_DEVICE_TYPE_COMPRESS in
+snd_find_free_minor() and reject out-of-range device numbers with
+-EINVAL before constructing the minor.
+
+Also remove the stale TODO in compress_offload.c that still claims
+multiple compress nodes are missing.
+
+Fixes: 3eafc959b32f ("ALSA: core: add support for compressed devices")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260325-alsa-compress-static-minors-v1-1-0628573bee1c@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/compress_offload.c | 7 -------
+ sound/core/sound.c            | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 17e1aaa706f1b..539b58af565ee 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1388,7 +1388,7 @@ static const struct panel_desc auo_g190ean01 = {
- 		.height = 301,
- 	},
- 	.delay = {
--		.prepare = 50,
-+		.prepare = 30,
- 		.enable = 200,
- 		.disable = 110,
- 		.unprepare = 1000,
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index de514ec8c83d5..1ba90a87808e4 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -40,13 +40,6 @@
+ #define COMPR_CODEC_CAPS_OVERFLOW
+ #endif
+ 
+-/* TODO:
+- * - add substream support for multiple devices in case of
+- *	SND_DYNAMIC_MINORS is not used
+- * - Multiple node representation
+- *	driver should be able to register multiple nodes
+- */
+-
+ struct snd_compr_file {
+ 	unsigned long caps;
+ 	struct snd_compr_stream stream;
+diff --git a/sound/core/sound.c b/sound/core/sound.c
+index df5571d986295..f3bb0adf37cce 100644
+--- a/sound/core/sound.c
++++ b/sound/core/sound.c
+@@ -219,9 +219,16 @@ static int snd_find_free_minor(int type, struct snd_card *card, int dev)
+ 	case SNDRV_DEVICE_TYPE_RAWMIDI:
+ 	case SNDRV_DEVICE_TYPE_PCM_PLAYBACK:
+ 	case SNDRV_DEVICE_TYPE_PCM_CAPTURE:
++		if (snd_BUG_ON(!card))
++			return -EINVAL;
++		minor = SNDRV_MINOR(card->number, type + dev);
++		break;
+ 	case SNDRV_DEVICE_TYPE_COMPRESS:
+ 		if (snd_BUG_ON(!card))
+ 			return -EINVAL;
++		if (dev < 0 ||
++		    dev >= SNDRV_MINOR_HWDEP - SNDRV_MINOR_COMPRESS)
++			return -EINVAL;
+ 		minor = SNDRV_MINOR(card->number, type + dev);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
