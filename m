@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EA7332EA7;
-	Sat, 30 May 2026 16:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D499331CA4E;
+	Sat, 30 May 2026 16:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159719; cv=none; b=Yr+AQ8WM5HZz3jjvdOuWVMhSezGCrKUoznzRo3M2brQx39WpdTtgOkH3sSt3OyKtqcUDtZyFpYwhKtlkl7S9jOTNdrJt3L8SHgeWTFv35RTgpjuqBwLTzcSX5O1scOmBWX84KQT3oyCm/hC0Nw8rVqK7tI0zBGFj7S1dH7eUQMI=
+	t=1780159723; cv=none; b=TUNeaJk18W4kGDMB7ejBi9ZwGcHa44M6giR4c0HTuEe9SvTgzFFF3WbZAOkALFL38E3VQ42stibjO+rRntSwzI1yZ4LapWv/hh2lr38hhyOEKcmTTkMONytNsyQBmsu8jg2nZpb6skzl2Vc7Elg48YFFD0FFD8/iJ3+dnRCHQg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159719; c=relaxed/simple;
-	bh=ylw4vfjDayNDkPnGWOKPoq6WXHEiE1jIMnrO0VN/ZVo=;
+	s=arc-20240116; t=1780159723; c=relaxed/simple;
+	bh=ff+4ptpyHFazt/Oe1QcCBAmySjgTDp8edjOMAMlz6cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfGu97ynYFkit94uGPo7qcCakfZ8ljB8jBYM0XtRk/ELHmbvZq1MP+FOp42swr7dWCVAtFC5LJFylMGRggnZRa1ZZtPHcem+PyMmehcZ+O2Vx5Z7YU2i4xtvYNDaX0FEnjMCp9Vjssi+oPzKC2o8IU7YE0XtARRThXMEoXswdME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7A+6sIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZgSVWgFtuq4qLG3fek6VBK4Ko7jHbDZLAs8ysVnlduMiIUlnj7n0OpVM45UIZQ5iSOPzHjLq1LtIk2d+TvGBWIGuuEFfRzx2X9xIZB0SQ2fxTSZimi1PfwWkuV22yxRYow5dHHRYRKJNbEDj++crq3SYLv8IHgXaoEyh6NK0S/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjjq1CIV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7A+6sIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22261F00898;
-	Sat, 30 May 2026 16:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjjq1CIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004AD1F00893;
+	Sat, 30 May 2026 16:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159718;
-	bh=G1A+E2gNlbqIdIF7NAYwB6Jv+mVi+qopdzFFr07O31A=;
+	s=korg; t=1780159722;
+	bh=9BCdj+lEXWQFzmH6UmnAk4KlN0RFxCj7TS6FyYI3tRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7A+6sIS04y4AedDXQum8mKDrPt5/2KZeqvEdmjEc3Ijl/8SLTBTCeTuYkmCKs9hE
-	 ojsmo4cz7/N4CnaUwg65ytMTDZS/bPHoIRFiP7FP01qZL6SVb4KR5h4kqMtlP5Dwvr
-	 0AWL/7aATvyR4qvIg3DUg4eqsJZ+CgG5emhKG1uE=
+	b=jjjq1CIVPTSzXn+gL0uU7/zWnQSd4Kub+nL1IYY1/jJaUZKJzBHwMxDfEm+b41ZjE
+	 b+2dvpu5aIBu2o5EMSh0Jm2jRyTXQsdd1ECh8Uz0zn2UcNuE3CqbsN7pd1AMw5BUip
+	 HCo79gY7awsBI56BT2x3XHpGQvaLyoaBTlPDg53k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Qi Tang <tpluszz77@gmail.com>,
-	Zijun Hu <nightu@northwestern.edu>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 144/969] fuse: reject oversized dirents in page cache
-Date: Sat, 30 May 2026 17:54:28 +0200
-Message-ID: <20260530160304.533692995@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.1 145/969] fuse: quiet down complaints in fuse_conn_limit_write
+Date: Sat, 30 May 2026 17:54:29 +0200
+Message-ID: <20260530160304.560648309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,56 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 51a8de6c50bf947c8f534cd73da4c8f0a13e7bed upstream.
+commit 129a45f9755a89f573c6a513a6b9e3d234ce89b0 upstream.
 
-fuse_add_dirent_to_cache() computes a serialized dirent size from the
-server-controlled namelen field and copies the dirent into a single
-page-cache page. The existing logic only checks whether the dirent fits
-in the remaining space of the current page and advances to a fresh page
-if not. It never checks whether the dirent itself exceeds PAGE_SIZE.
+gcc 15 complains about an uninitialized variable val that is passed by
+reference into fuse_conn_limit_write:
 
-As a result, a malicious FUSE server can return a dirent with
-namelen=4095, producing a serialized record size of 4120 bytes. On 4 KiB
-page systems this causes memcpy() to overflow the cache page by 24 bytes
-into the following kernel page.
+ control.c: In function ‘fuse_conn_congestion_threshold_write’:
+ include/asm-generic/rwonce.h:55:37: warning: ‘val’ may be used uninitialized [-Wmaybe-uninitialized]
+    55 |         *(volatile typeof(x) *)&(x) = (val);                            \
+       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+ include/asm-generic/rwonce.h:61:9: note: in expansion of macro ‘__WRITE_ONCE’
+    61 |         __WRITE_ONCE(x, val);                                           \
+       |         ^~~~~~~~~~~~
+ control.c:178:9: note: in expansion of macro ‘WRITE_ONCE’
+   178 |         WRITE_ONCE(fc->congestion_threshold, val);
+       |         ^~~~~~~~~~
+ control.c:166:18: note: ‘val’ was declared here
+   166 |         unsigned val;
+       |                  ^~~
 
-Reject dirents that cannot fit in a single page before copying them into
-the readdir cache.
+Unfortunately there's enough macro spew involved in kstrtoul_from_user
+that I think gcc gives up on its analysis and sprays the above warning.
+AFAICT it's not actually a bug, but we could just zero-initialize the
+variable to enable using -Wmaybe-uninitialized to find real problems.
 
-Fixes: 69e34551152a ("fuse: allow caching readdir")
-Cc: stable@vger.kernel.org # v6.16+
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Reported-by: Qi Tang <tpluszz77@gmail.com>
-Reported-by: Zijun Hu <nightu@northwestern.edu>
+Previously we would use some weird uninitialized_var annotation to quiet
+down the warnings, so clearly this code has been like this for quite
+some time.
+
+Cc: stable@vger.kernel.org # v5.9
+Fixes: 3f649ab728cda8 ("treewide: Remove uninitialized_var() usage")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260420090139.662772-1-mszeredi@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/readdir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/fuse/control.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -41,6 +41,10 @@ static void fuse_add_dirent_to_cache(str
- 	unsigned int offset;
- 	void *addr;
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -120,7 +120,7 @@ static ssize_t fuse_conn_max_background_
+ 					      const char __user *buf,
+ 					      size_t count, loff_t *ppos)
+ {
+-	unsigned val;
++	unsigned int val = 0;
+ 	ssize_t ret;
  
-+	/* Dirent doesn't fit in readdir cache page?  Skip caching. */
-+	if (reclen > PAGE_SIZE)
-+		return;
-+
- 	spin_lock(&fi->rdc.lock);
- 	/*
- 	 * Is cache already completed?  Or this entry does not go at the end of
+ 	ret = fuse_conn_limit_write(file, buf, count, ppos, &val,
+@@ -162,7 +162,7 @@ static ssize_t fuse_conn_congestion_thre
+ 						    const char __user *buf,
+ 						    size_t count, loff_t *ppos)
+ {
+-	unsigned val;
++	unsigned int val = 0;
+ 	struct fuse_conn *fc;
+ 	ssize_t ret;
+ 
 
 
