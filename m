@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B78A217704;
-	Sat, 30 May 2026 18:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46BF219303;
+	Sat, 30 May 2026 18:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165507; cv=none; b=cOKzFJTud4lbLskkFPmyTa52Rh6eOMbGBRuMzArb85NzWdHgPAeTma+TKS7y6clCZK3t2l2vW1tv5AwpSe8kbgaarevyO9oq8x51tX9O0sxYBmjYZ11S8t3TnJqFVkUfmAlz/e/TaRo15xrmDKJo5MzBHcuZg7nJ8+4M8/P7JY4=
+	t=1780165510; cv=none; b=BuCG2blyiy6ZrkLjBk5ER0OIPt3q7ySbbJLzMa8P4nekTHMBcWY3duFBdfGG6Dw05Go7RT/PJH/6nrOQUcyqOywHyqblpEaq1yRLTIHjfTCZZ0BcLysp1KfdEnn9/czrDxJaO2mZP8uM3IKybU1Q7kTz6/aOrv8DLcUvYXZhEjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165507; c=relaxed/simple;
-	bh=bR539SMJXneRC6SDNeLdESacRLWITrA+W5zJvMJoKMg=;
+	s=arc-20240116; t=1780165510; c=relaxed/simple;
+	bh=U9M10CgxLXFNQt8OwS3vEVXEao/rMSzLzSttFxkO0qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kko1mqxShIS20cXrt9fgPACjhOv01vFHSP3oGZp0/AQVeQQkaj/aEYrtVvRTaASElx6AOOCOOV09Uxd+mX7TEEpmAYLLb0S5i23u+oYUBo6krrBrNeWyZweR+bntQtcf0erfBuBWYifuIjFRrSGJk+2i+CpY2StvY62q/lNUURs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7H9WS7K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hLfYIipwbE7qP4LBmOaQNROQntSLS8mWmlWdipvNt+5ZnKqk9YFhRTRntr0so9eJG3Z0zaNvZFOoqsR9nncqrupTTdoTqvs8vOe8FjeqT6b1esdiNqRiCauHsXTj4H5e4m8E/NDjwCX6BaD1Vy+Kaj2dK3kyKEJz3KK/ThM+7kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jicpeT/U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7H9WS7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A079E1F00893;
-	Sat, 30 May 2026 18:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jicpeT/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5EB1F00893;
+	Sat, 30 May 2026 18:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165506;
-	bh=nwPRPz7HRgFQcMgZqMnCJ9A8ieMLRLMVbgZi586S8Kc=;
+	s=korg; t=1780165509;
+	bh=MvEuSA4/4UEYDYVDOXEPzvCKTPH4zOM7n+4zEu6yYKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7H9WS7KtKcv0vOnPc/nsntRblXgWoFBI2y9ubdLRygE/aG61PKnjYoZT3zIXfj54
-	 g8VzJp+PGOAWer/gj8SHqHKBoXQMu6kW+I1//n2UK2nOq4DBs1E7UmmAPhKpTu3cRQ
-	 MvE4lx2oorTuPny+LZldHbEyPJM/EXJPob23Lw2I=
+	b=jicpeT/U4D8cOJ9Zb3HcKQQhREj0yXI4D5TGHbB8aEX6mmrpQ0QpVQgN31Xlz/re/
+	 YpWsCI1/xmgaIAkmLO2+ioXe5WsRQennsOUtx48l+f9x29uZ/YvbN5kV8oyQGyEUx0
+	 OW6+WrrKiHczUq61f54HTFjL2ure/uvbDdoQ5skA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guocai He <guocai.he.cn@windriver.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/589] Revert "wifi: cfg80211: stop NAN and P2P in cfg80211_leave"
-Date: Sat, 30 May 2026 17:59:10 +0200
-Message-ID: <20260530160226.416922252@linuxfoundation.org>
+Subject: [PATCH 5.10 070/589] media: uvcvideo: Allow extra entities
+Date: Sat, 30 May 2026 17:59:11 +0200
+Message-ID: <20260530160226.441673934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guocai He <guocai.he.cn@windriver.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-This reverts commit d91240f24e831d3bd36954599ada6b456fb1bd0a which is commit
-e1696c8bd0056bc1a5f7766f58ac333adc203e8a upstream.
+[ Upstream commit cae79e50d1222010fde8c522410c315f74d35c40 ]
 
-The reverted patch introduced a deadlock. The locking situation in mainline is
-totally different, so it is incorrect to directly backport the commit from mainline.
+Increase the size of the id, to avoid collisions with entities
+implemented by the driver that are not part of the UVC device.
 
-Signed-off-by: Guocai He <guocai.he.cn@windriver.com>
+Entities exposed by the UVC device use IDs 0-255, extra entities
+implemented by the driver (such as the GPIO entity) use IDs 256 and
+up.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 2 +-
+ drivers/media/usb/uvc/uvcvideo.h   | 7 ++++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 019f9767eda5f..c6c5dd4e35209 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1208,10 +1208,8 @@ void __cfg80211_leave(struct cfg80211_registered_device *rdev,
- 		/* must be handled by mac80211/driver, has no APIs */
- 		break;
- 	case NL80211_IFTYPE_P2P_DEVICE:
--		cfg80211_stop_p2p_device(rdev, wdev);
--		break;
- 	case NL80211_IFTYPE_NAN:
--		cfg80211_stop_nan(rdev, wdev);
-+		/* cannot happen, has no netdev */
- 		break;
- 	case NL80211_IFTYPE_AP_VLAN:
- 	case NL80211_IFTYPE_MONITOR:
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 419fbdbb7a3b8..c2adc6854c540 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1032,7 +1032,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 	return ret;
+ }
+ 
+-static struct uvc_entity *uvc_alloc_entity(u16 type, u8 id,
++static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
+ 		unsigned int num_pads, unsigned int extra_size)
+ {
+ 	struct uvc_entity *entity;
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 60a8749c97a9d..a83995276170b 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -302,7 +302,12 @@ struct uvc_entity {
+ 					 * chain. */
+ 	unsigned int flags;
+ 
+-	u8 id;
++	/*
++	 * Entities exposed by the UVC device use IDs 0-255, extra entities
++	 * implemented by the driver (such as the GPIO entity) use IDs 256 and
++	 * up.
++	 */
++	u16 id;
+ 	u16 type;
+ 	char name[64];
+ 
 -- 
 2.53.0
 
