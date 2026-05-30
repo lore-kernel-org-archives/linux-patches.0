@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492FE17555;
-	Sat, 30 May 2026 18:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD1D17555;
+	Sat, 30 May 2026 18:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165537; cv=none; b=IO5SDEBBZMZNr45J671Uq4OoTiB0MN/lI3w/cWoG+kSH99lObZghgc5mv8HN3nxiZJxNkRbsKQn+YqzMl0fO5p5O1gDXVolJneM3TBu3iF498wCBm0uopmyUx/5o+pvMeewR5pZzXB0qtClhl3xes0ai4vpEzGAFe8sZ4J6AyZo=
+	t=1780165540; cv=none; b=GR6RKZvv030K65UAX+j6yzOYJwp9rmdX0X/Tp1lEC1pjDgj0yw+Fmq2dQbWzAi9/vYE7B/ypNadtLwX7fLcF7HDJFBbAFVjg59Iv21mKFNAn/xbNRZBcsd5cFcRz+BMTGQVz46fkSAtwQuOCpKNJZhD7ziR2JkX10EN9kNZ6HUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165537; c=relaxed/simple;
-	bh=Ai8fGm55tmAfYcKSzyc1GkB6hJYlywJcpK2CW59HM4g=;
+	s=arc-20240116; t=1780165540; c=relaxed/simple;
+	bh=vA8VSItSfwIZb3QcjDfH7uuQJKI4xMVsgUeUb9BWChs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWcGx7PxX576uVlWIkUX5pdJCERc9HcM0tWXfBpoXkK+PKCUrYUze58EjCaoLfHpFFSnTZpAlWR2m7DEqiub7GPdAyCbUAp0KMpQ9JhzGq20ey3Nh1T4IPO9WpnsVgyZZj+UXkkZkzCeZhu8LpTQnZpqnTd6KGW2sS2zMyFRZD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFnYptaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fyyhxYbTsnn4HbmGyxD3M40xWZ6rJ/nQXU2pFP2ARD4DYEw2oC/vJkTCywwKptHf51vj0aACse+IktwcyHajS8bICPkDDrJExuqiFfNLC4QGs3QtUFcmmnWrWn7h/Fu43GgwfDf9A6nwwkDDdyrpv1KJJA/w7BiB6INrPFWSKDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8q7m7IJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFnYptaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D47C1F00893;
-	Sat, 30 May 2026 18:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8q7m7IJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C561F00893;
+	Sat, 30 May 2026 18:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165536;
-	bh=zr4YgApaixHpZF8yNSkTEsJHMqIf0fIvFIYl0fKdBtk=;
+	s=korg; t=1780165539;
+	bh=Z+YKnNNfk9CTfE05mO/aCnc4P9LD5DGcZJtMl3frsZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFnYptaUMUCbFWXqqOGZlXhUauM6B9i/a7A55wRJd4DlKTP5DOyuHrXzAb5XtYz4P
-	 Uf6m7ynrli9PDdksB/dpNtK7Edyq2MwJRxqhpLdx/zpAxmUr2r+vvlfgD138WIA/In
-	 THVzqKQCX6z8xGqx2IkQ9o+FguWyWJwdLRoWgRfY=
+	b=i8q7m7IJjo4MuYH27TMSL6//2o3QgYIqo84Qbk2DpOrgcv6UknDbkpgq+W4uQW6Lo
+	 W2yibjfZN92fepybVNH2qKpXol0N9iIQJVuJtPtqKbqAG2hi8AE1v21gwxT6L5I+Ow
+	 V/IlmXEUwegxRGLXxc36N/+ddnzbieUyL8edCLmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
-Subject: [PATCH 5.10 108/589] drivers: base: Free devm resources when unregistering a device
-Date: Sat, 30 May 2026 17:59:49 +0200
-Message-ID: <20260530160227.588161102@linuxfoundation.org>
+	Paulo Andrade <pandrade@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 109/589] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
+Date: Sat, 30 May 2026 17:59:50 +0200
+Message-ID: <20260530160227.615279076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,61 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 699fb50d99039a50e7494de644f96c889279aca3 ]
+[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
 
-In the current code, devres_release_all() only gets called if the device
-has a bus and has been probed.
+This script
 
-This leads to issues when using bus-less or driver-less devices where
-the device might never get freed if a managed resource holds a reference
-to the device. This is happening in the DRM framework for example.
+	#!/usr/bin/bash
 
-We should thus call devres_release_all() in the device_del() function to
-make sure that the device-managed actions are properly executed when the
-device is unregistered, even if it has neither a bus nor a driver.
+	echo 0 > /proc/sys/kernel/randomize_va_space
 
-This is effectively the same change than commit 2f8d16a996da ("devres:
-release resources on device_del()") that got reverted by commit
-a525a3ddeaca ("driver core: free devres in device_release") over
-memory leaks concerns.
+	echo 'void main(void) {}' > TEST.c
 
-This patch effectively combines the two commits mentioned above to
-release the resources both on device_del() and device_release() and get
-the best of both worlds.
+	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
+	gcc -m32 -fcf-protection=branch TEST.c -o test
 
-Fixes: a525a3ddeaca ("driver core: free devres in device_release")
-Signed-off-by: David Gow <davidgow@google.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230720-kunit-devm-inconsistencies-test-v3-3-6aa7e074f373@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+	bpftrace -e 'uprobe:./test:main {}' -c ./test
+
+"hangs", the probed ./test task enters an endless loop.
+
+The problem is that with randomize_va_space == 0
+get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
+just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
+by the stack vma.
+
+arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
+in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
+vm_unmapped_area() happily returns the high address > TASK_SIZE and then
+get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
+check.
+
+handle_swbp() doesn't report this failure (probably it should) and silently
+restarts the probed insn. Endless loop.
+
+I think that the right fix should change the x86 get_unmapped_area() paths
+to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
+CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
+because ->orig_ax = -1.
+
+But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
+the probed task is 32-bit to make in_ia32_syscall() true.
+
+Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
+Reported-by: Paulo Andrade <pandrade@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/x86/kernel/uprobes.c |   24 ++++++++++++++++++++++++
+ include/linux/uprobes.h   |    1 +
+ kernel/events/uprobes.c   |   10 +++++++---
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3195,6 +3195,17 @@ void device_del(struct device *dev)
- 	device_remove_properties(dev);
- 	device_links_purge(dev);
- 
-+	/*
-+	 * If a device does not have a driver attached, we need to clean
-+	 * up any managed resources. We do this in device_release(), but
-+	 * it's never called (and we leak the device) if a managed
-+	 * resource holds a reference to the device. So release all
-+	 * managed resources here, like we do in driver_detach(). We
-+	 * still need to do so again in device_release() in case someone
-+	 * adds a new resource after this point, though.
-+	 */
-+	devres_release_all(dev);
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -1095,3 +1095,27 @@ bool arch_uretprobe_is_alive(struct retu
+ 	else
+ 		return regs->sp <= ret->stack;
+ }
 +
- 	if (dev->bus)
- 		blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
- 					     BUS_NOTIFY_REMOVED_DEVICE, dev);
++#ifdef CONFIG_IA32_EMULATION
++unsigned long arch_uprobe_get_xol_area(void)
++{
++	struct thread_info *ti = current_thread_info();
++	unsigned long vaddr;
++
++	/*
++	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
++	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
++	 * vm_unmapped_area_info.high_limit.
++	 *
++	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
++	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
++	 * (falsely) returns true because ->orig_ax == -1.
++	 */
++	if (test_thread_flag(TIF_ADDR32))
++		ti->status |= TS_COMPAT;
++	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++	ti->status &= ~TS_COMPAT;
++
++	return vaddr;
++}
++#endif
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -138,6 +138,7 @@ extern bool arch_uretprobe_is_alive(stru
+ extern bool arch_uprobe_ignore(struct arch_uprobe *aup, struct pt_regs *regs);
+ extern void arch_uprobe_copy_ixol(struct page *page, unsigned long vaddr,
+ 					 void *src, unsigned long len);
++extern unsigned long arch_uprobe_get_xol_area(void);
+ #else /* !CONFIG_UPROBES */
+ struct uprobes_state {
+ };
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1438,6 +1438,12 @@ void uprobe_munmap(struct vm_area_struct
+ 		set_bit(MMF_RECALC_UPROBES, &vma->vm_mm->flags);
+ }
+ 
++unsigned long __weak arch_uprobe_get_xol_area(void)
++{
++	/* Try to map as high as possible, this is only a hint. */
++	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++}
++
+ /* Slot allocation for XOL */
+ static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
+ {
+@@ -1453,9 +1459,7 @@ static int xol_add_vma(struct mm_struct
+ 	}
+ 
+ 	if (!area->vaddr) {
+-		/* Try to map as high as possible, this is only a hint. */
+-		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
+-						PAGE_SIZE, 0, 0);
++		area->vaddr = arch_uprobe_get_xol_area();
+ 		if (IS_ERR_VALUE(area->vaddr)) {
+ 			ret = area->vaddr;
+ 			goto fail;
 
 
