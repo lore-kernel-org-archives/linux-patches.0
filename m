@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A6533E36A;
-	Sat, 30 May 2026 17:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387BB30E829;
+	Sat, 30 May 2026 17:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161512; cv=none; b=gIqtK2qZydAfzqq6yYLCkax9BcAshbJZ+pAR0CUWwYH7Cbo0Ai/yBE4mtfhpJ8Wm3oZXYdOOlfDQ0Xsu6CkLFDUmQNT2DCHABWyx9ujBCAsQOYV23DK0UE3eXAuVmJnJ77w8OsjPmQ5I6ow2t+4k7pTkmI1yqzS34owkupgwoVM=
+	t=1780161516; cv=none; b=qXLIaPHd0uYE2WYRQmGfGWdy8uJ1oVDX/JForbbw/m0E4y++gIvoWzOzTTmYyDHgOugAb4vKQ6SGa8UaTJLoZgcDJ+TDPbAVjV17LecbQHR+MzjkITUb3QFCdt8sEbcAMAqxw4P4+8RnxUi1hYDOqx3gY0IjKlrd0UJuY/T/GG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161512; c=relaxed/simple;
-	bh=rYicNLW6mUkEwx3gD/4wERiL0tHb9u2OohsHdk8r6VY=;
+	s=arc-20240116; t=1780161516; c=relaxed/simple;
+	bh=ab8rcUKo7uwzqkaM1M6WXK4RkxCy9cIF+FF3KRM8b7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e0RU7z5dXx34HanyAIOUMi+iHYQdursndDIZ+x3kPc3gD4QsaeOIcuFJlPMoRSt89GV5xWqbvfyBdom5jMOHYwECKfcaxL5uW/v7+It1PFUN9KoC1xH16DwSGTkzl2R3KLH0x/iRSEYKJkGfCH2//so+vWmbyBwXrmyeYsGvFGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwjAk5t5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KmqIvx6lfTcTjB/bU1M65y5PATIHNxhnvhYhl80sWcaSyt8DYaA5jzRL3z3/osrymrSVlqq/zAD0rIt0w1FDVXMG4UjxB+pPrlvlq5SM9s1+xkYhs5lAh8tw7ZDR6X5dnzXL34W4EebMelj1DQVjswu6ihJ1PdwUsSLWGXiWvnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdC2tqnQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwjAk5t5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322791F00893;
-	Sat, 30 May 2026 17:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdC2tqnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2C71F00893;
+	Sat, 30 May 2026 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161511;
-	bh=cG9YNgww9462JJaFiOT7BRyR1YSNS9cJgKZEHEHXrEk=;
+	s=korg; t=1780161515;
+	bh=Cixh3NFM2UpAV/akJ+jlKLovV3ZgjCKQ5PcfoEbuOKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwjAk5t5a+4XwVE00zZ8auYfXmpATGEEuaX9q3BN1LQp1HDcDBXFVdZPzrRMoVYrh
-	 LEj8IYHmsZJQn78Bu7LxVkITw63MCDapzUo8BRtXvxDI8gXolOhChy51RSSL5+ga+a
-	 kjazOYCpmj3W8kcuvaiMutfe5LhI4T4I6CSuy0VM=
+	b=VdC2tqnQlgsiGUtlDF16v7tzQFZvsCIgnH2qFwt3JSsllY1L1fHIhJ56STPQnGVZ5
+	 YJrK7e+XhM+xkUlZv8JYR1TmmrRf1RvDxbZglDod+pIO32bAHBPtUYBhH25Cr9a+L1
+	 3JQLJhNQwGOJEFyaeNpG18N6gblpczmTNvnrS0Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 646/969] platform/x86: dell_rbu: avoid uninit value usage in packet_size_write()
-Date: Sat, 30 May 2026 18:02:50 +0200
-Message-ID: <20260530160318.299695775@linuxfoundation.org>
+Subject: [PATCH 6.1 647/969] platform/x86: dell-wmi-sysman: bound enumeration string aggregation
+Date: Sat, 30 May 2026 18:02:51 +0200
+Message-ID: <20260530160318.328347743@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,54 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f8fd138c2363c0e2d3235c32bfb4fb5c6474e4ae ]
+[ Upstream commit 3c34471c26abc52a37f5ad90949e2e4b8027eb14 ]
 
-Ensure the temp value has been properly parsed from the user-provided
-buffer and initialized to be used in later operations.  While at it,
-prefer a convenient kstrtoul() helper.
+populate_enum_data() aggregates firmware-provided value-modifier
+and possible-value strings into fixed 512-byte struct members.
+The current code bounds each individual source string but then
+appends every string and separator with raw strcat() and no
+remaining-space check.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
+Switch the aggregation loops to a bounded append helper and
+reject enumeration packages whose combined strings do not fit
+in the destination buffers.
 
-Fixes: ad6ce87e5bd4 ("[PATCH] dell_rbu: changes in packet update mechanism")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260403134240.604837-1-pchelkin@ispras.ru
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260408084501.1-dell-wmi-sysman-v2-pengpeng@iscas.ac.cn
 [ij: add include]
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell_rbu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../dell/dell-wmi-sysman/enum-attributes.c    | 34 +++++++++++++++----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
-index fee20866b41e4..9039e494131fd 100644
---- a/drivers/platform/x86/dell/dell_rbu.c
-+++ b/drivers/platform/x86/dell/dell_rbu.c
-@@ -30,6 +30,7 @@
- #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
+index fc2f58b4cbc6e..7e44ba3015627 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
+@@ -6,10 +6,32 @@
+  *  Copyright (c) 2020 Dell Inc.
+  */
  
- #include <linux/init.h>
-+#include <linux/kstrtox.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-@@ -617,9 +618,12 @@ static ssize_t packet_size_write(struct file *filp, struct kobject *kobj,
- 				 char *buffer, loff_t pos, size_t count)
- {
- 	unsigned long temp;
++#include <linux/bug.h>
 +
-+	if (kstrtoul(buffer, 10, &temp))
+ #include "dell-wmi-sysman.h"
+ 
+ get_instance_id(enumeration);
+ 
++static int append_enum_string(char *dest, const char *src)
++{
++	size_t dest_len = strlen(dest);
++	ssize_t copied;
++
++	if (WARN_ON_ONCE(dest_len >= MAX_BUFF))
 +		return -EINVAL;
 +
- 	spin_lock(&rbu_data.lock);
- 	packet_empty_list();
--	sscanf(buffer, "%lu", &temp);
- 	if (temp < 0xffffffff)
- 		rbu_data.packetsize = temp;
++	copied = strscpy(dest + dest_len, src, MAX_BUFF - dest_len);
++	if (copied < 0)
++		return -EINVAL;
++
++	dest_len += copied;
++	copied = strscpy(dest + dest_len, ";", MAX_BUFF - dest_len);
++	if (copied < 0)
++		return -EINVAL;
++
++	return 0;
++}
++
+ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+ 	int instance_id = get_enumeration_instance_id(kobj);
+@@ -176,9 +198,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
+ 			return -EINVAL;
+ 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
+ 			return -EINVAL;
+-		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
+-			enumeration_obj[next_obj++].string.pointer);
+-		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier, ";");
++		if (append_enum_string(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
++				       enumeration_obj[next_obj++].string.pointer))
++			return -EINVAL;
+ 	}
  
+ 	if (next_obj >= enum_property_count)
+@@ -193,9 +215,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
+ 			return -EINVAL;
+ 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
+ 			return -EINVAL;
+-		strcat(wmi_priv.enumeration_data[instance_id].possible_values,
+-			enumeration_obj[next_obj++].string.pointer);
+-		strcat(wmi_priv.enumeration_data[instance_id].possible_values, ";");
++		if (append_enum_string(wmi_priv.enumeration_data[instance_id].possible_values,
++				       enumeration_obj[next_obj++].string.pointer))
++			return -EINVAL;
+ 	}
+ 
+ 	return sysfs_create_group(attr_name_kobj, &enumeration_attr_group);
 -- 
 2.53.0
 
