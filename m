@@ -1,120 +1,155 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D5926ACC
-	for <patches@lists.linux.dev>; Sat, 30 May 2026 07:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EFF385D6C
+	for <patches@lists.linux.dev>; Sat, 30 May 2026 09:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780127676; cv=none; b=IKfplwSQXhoYbU87gOyDjcAB1dPMo9LGx7bvmEAtYyNU9ce/6MJQFsD4dxvqf17flNRjUEppTirB6D6UgmJ5tQr6ukSKYKrfUyHhjWyT39g5ocmLDZcEBNKAw9NREyhdztYhcQe0iVigtRYj/GlfxpgM4Gmj0sgXgrSNuco979s=
+	t=1780133309; cv=none; b=tsYHc92tZVB8/iAkWcuAnzFg3uGiJiPJPXp/NWrOj55W6Ybrjnc9z3bmUmsd9z1s1b4Q3g0uTVpViDZQeP+I2SUFCTSaPbcwfdI03+cMqTlmYtJKjXYyOyu1MGUfw/Nf2JfLmt1Jfncbo2R34+gQXTH1lxfiRUf5FrHWLBtuBXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780127676; c=relaxed/simple;
-	bh=4vERjZMkWDUC5YJQWQGZZoE/9V1FNV+1J0rPEPLgvuU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lmppq9uWGBoq0FbYKohxVuvuB4aVrsqh7USYJ2zjGTEUD47kRlReP/VvpzOUhZ3K70Z7v9h5lmyR9ohnviJpdr1weeR2zNwrMMxkvE2AQwKlFdvT3/55oXEKBJY3PVW/21A0zo3Mv95GZOGFHzq05puolQnvzM5cyHFVPS5PVE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DwWGmBLM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HbWyA3rY; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780133309; c=relaxed/simple;
+	bh=Axu2q9OiQlW7NrUR5/tN+MxVX+YXj5nOsIeGUL7II+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YTIEeXpMRMUQI/G18QjNU9VSfRdkHduK2Ph/YhHe7Odbq2LFDcQME+Rr5Mbn4otIVdwskuL3u2WiNnnIXlGPggSbWaiWIQCGht4/16K7W9IFVcN0yiM3vCM59JPB4jSuswOJKMmdZuocQIGu0J8eH/EHVLMmwabPN5NEdpRcRiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vwg6w2KH; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DwWGmBLM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HbWyA3rY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 741291D0001B;
-	Sat, 30 May 2026 03:54:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sat, 30 May 2026 03:54:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1780127671;
-	 x=1780214071; bh=xQO+qX+jr3P3/m56/jURNF6mUaopIGbpNUyX4PKLgqY=; b=
-	DwWGmBLMTH2lUmuLhX136z6mwd6bIGiBkoDyt7xdM0TbkKrLKile2HCpBNrIp1f1
-	X9iuumZT8X2YxxyFj2kn+w385g/1C+tBTB8K0zo9EMpXnsYHNGhOtT2IpBsAGNBn
-	khm9cCHwT+JisKRRCFF4mok9kTBihx3MBVQS8d/akA6O1Dn9fE6OrIK94BeLjYa8
-	g8SW5lG0DYmy5zTSwSiASTred2U6+jBBB7B4g8lFNd2dI5yfF8slFLSdiCJyHw7z
-	A/dogpnE0i62lVhAisKFs+kH22fODbqS4K52HTXKdmcb1q52SIw11BVdPTRxjc1w
-	sd3OTNdPZmpbb+C9yUEPEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1780127671; x=
-	1780214071; bh=xQO+qX+jr3P3/m56/jURNF6mUaopIGbpNUyX4PKLgqY=; b=H
-	bWyA3rYf0PYnyxCvgqqIjudOJGuIA469IfkHE31rRBuTX79GSfYmnnWsGig957xf
-	ZWRGRVF2DKWAaKPEJ0qPQ5NIyI8m8/CJO1zEP3J48es0fqXFWJnbTyfYT/Mxm9K5
-	ddx3c6mM/EOFJApTvO+wh8iIbu0BvQdHFEHy6qlajf2UXCVX5wXujIJbI3+/U9QJ
-	elZPqELSQdHbm+kERL+yTGaq/aha8LtMci0kEJB3kkeif+9i9NelbrTMQhv04T1L
-	uZd0+NXo65Q9fS3MxwEf/euc1VqcEZ2QbgSt+LU9arlSJiG/LbbkUL6NNvsSzIR7
-	60LchLBRBTLhNUaBo8R9Q==
-X-ME-Sender: <xms:tZcaauz07sbXGkFxHkvTGrTx9oTbHHGuyGXOW9IWM6XbP2p-a4c6Ug>
-    <xme:tZcaamKfXbHUvIKHLTJAJymFgieYq8k_SmIYzwKCQKjWCSNWAsdhEcGKT1yzhiq-p
-    aUGCBxSTiml7phWPxmu_toKzO635L1P1TEb5Qv5VkLvsniIpdofXIk>
-X-ME-Received: <xmr:tZcaar3PepXVEW1Y8gxi2eFf-6q1CfDH7fIRKTbAFVPS_fQFp5iBKIewjuqYHgjxkddst13sKBwk6OwaDGhMiIGdVH1w86mv>
-X-ME-Proxy-Cause: dmFkZTE9BFzi7CnGEHr06r6JksQ13ERJ+sJx//LTxp/OwTUBO8QEufefCBl8sBP11mrF/R
-    dUR1HrJSeR8n7ORpruNXFpfL8bLVBa4SDzabFZCpGsB5qFGdrNqvryfy6SjcZOFMpJJk3t
-    YS1yhV7mCS0C6vngBePq5fDRpPwqFxGCSnRz9VVNd1W0QH2aqb4kufTUf5Z+GIgkx/mZN5
-    kqw9dKLAFS2uO6VzqO/j9NRcr2wJSTYKS0s20T4xQcp1ParQa7Vv+IW2xZC2s9HmYz5Ivc
-    +hnyZYREcxZWTy6GiDIgnnjNnpXk9duILBbM3yLtQ/LxeJ6n4G+IXsHw/qqm1ZPybETOFg
-    0wml9MxHKDC0Okox48aMoDzlZjMnlQoojsZMv/XuP4LXOPszbsuSSivyl4ct7QE2APKmor
-    dBRy8XoBbDKYfyP/wt/Y1XWl6mqUWaBUmzIQit7jwVLDBQLIvXJciE+DXMkPaetKBRviP+
-    5bzROHkrHZl3UGwGMLj9CYHXQpfh3OJpHRMcTz9RNxGmas4cb2aA+rQmT6+HYLOm/IVCVt
-    mUtLKFcn1C0vNg4VyTCzDwLo4r3cKNSYHROywHwUAa45Sv92pKz7Ttm4kOMManKuqlIfNd
-    Bl1tZM8LRnILCD1e0Y0udI70ZgaEKou0vjuurdv67srMA6JHkscqD04msZhw
-X-ME-Proxy: <xmx:tZcaaocrnbdDJte8xbLoqlUgGEuNUw3wtKt5bXq7oF7HrP6JdgxMQA>
-    <xmx:tZcaan6L5hCp6E_USFgHDm59o6PWZqot7QozrmOzBdUflWJ7rWhF1Q>
-    <xmx:tZcaaj8vAPAuO-Sp_4E__HeF1tWQr1lUyNtrdo8DYjGgS2rxaZLNDA>
-    <xmx:tZcaamLZZJQLZs1cF5hHQypS4XcaAFrXoKhtyQwvAOaZDYbLOtT6hg>
-    <xmx:t5caaiEOcN5eMSPVWJmA_qGbEA-tQ6L7qIY-5XfiEZwJFxQQineO96Cs>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 30 May 2026 03:54:27 -0400 (EDT)
-Message-ID: <a998de20-e78a-4a6b-bab3-c69b09d7a5e1@pobox.com>
-Date: Sat, 30 May 2026 00:54:26 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vwg6w2KH"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-45ef6565cfdso440266f8f.0
+        for <patches@lists.linux.dev>; Sat, 30 May 2026 02:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780133307; x=1780738107; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AVGWNyN/0YK3gFgYNwL3zKk91DjUbWVPzRQNZkauQoA=;
+        b=Vwg6w2KHG1XXB8qtAFNE0IjBuvPeK1GU26tXvFOQlu3F5va3Mq9wtfav6haYLB9Ai6
+         K//vMhYq0fa6ORQBwPtEgmzFLPvMpr6S5Nokmi85wJp4pCzIYQJK+YfG3n++XQmd1l1L
+         CyvdkvSiWosJmDoDLKe1RFUE0X8+Fl+wR+9DImbqabLzCx5YruoF7y35x9kKMgidFsjD
+         dTworaONxalCcYYX0uT1q18hY0ameNlwHulRGC6IwPzUy+0pfzM3fY2hJXyzyNH67YBi
+         eTyVrSj1jM2i6LS4TdGb74Pfuk9biahP/i/kE7CWWYcsP9cQyBtsOEMFNQxLcQF25GWC
+         Ot2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780133307; x=1780738107;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=AVGWNyN/0YK3gFgYNwL3zKk91DjUbWVPzRQNZkauQoA=;
+        b=gPj8rT44vpLQJBLUs0ANVyww9zuso6oDf5CefOSt+tN4pMp7pSaAmmr+ggkpJD3Ej+
+         UE7qc6sON+YIoiFJJ0+SzodO+a6V9dK4cJVoPqku1ikW75pNobPx+7HxCZQoESycUzYn
+         3SkG/syUTjlp8ZW/qDMm8fO+axMpSjlylNwETdLu4DFowcAK9pZUC8yirugJsXycKCks
+         5J9AD4LJBIdSIQS2JJf+trb5OPt46N3xW95dxduGW6xlHPvmFE8pmysFBoXhLNrJwnjR
+         W5y82m0rFa4FschLPiqfeTXH1kvt2eQTomenMMxtS+CjmAIo5YdY+SFSFtO8wFsZ3QTR
+         3hfw==
+X-Forwarded-Encrypted: i=1; AFNElJ/wIe6/R6LTa5XEHNDL4fJUj5aQO8O+8Canv66UWbhfmPDDPNPTMQEzTB8chD62vYcUAuoGSYTW@lists.linux.dev
+X-Gm-Message-State: AOJu0YwveHQw3jsTYed8foH45WR+kD+oXGbyE6VCeIUA3CLs9zQ+BpeH
+	XMzxv1atcbHUTg/oDfQbg8xxDsDj8A3i3ms8iDzf76gpEK3uNhnaVWyI
+X-Gm-Gg: Acq92OFv8Vsq2+/Y4XLm0SXkgVkKb2FE58Lkbq7AZj4BhOXfuNMYlvi5DN6BYBbIfNm
+	EwAied5cYgk03cECc9IRzRXkLvt8/x1bewR5+GAjALlWu3MgkknSNPmtADlwqxlqsXr5igVWN+B
+	XTTN68nlqG7pKmieXoQCl00Qo1BpLRejyChImaq7aPMY7EyCtVwKXIbakmZzN4xC3lXoeSsxSjQ
+	7len+F/JLursHx7JFSRjEGmkwO2VVu/DTVW9ph52r8IvSWKUTWyxE0NdGdJb20MOG5RH279NlG2
+	VCU8hIdQmd1rzB1unghZWT1H6svP2g1FdEHJSH8KH/clN0lSq/lbMRX/su3DL1mwm4PhThCpXK8
+	GCFYjxxf7XMyPfQLFxDbeiaXTDKyOx73KVXpfdJvVjkEh1FdrXoe4iO6U9SJZmwJDNRyDGIBKky
+	PMc8CFqvFDllswzdK0sqrrBssyHjDKkgZLFUox2JFbEwTLDI14+tGJLj3OXhuYkVG+eCsbP+k=
+X-Received: by 2002:a05:600c:3147:b0:48f:e230:80a3 with SMTP id 5b1f17b1804b1-490a297304bmr47960185e9.33.1780133306950;
+        Sat, 30 May 2026 02:28:26 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c09acd3sm30659185e9.4.2026.05.30.02.28.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 May 2026 02:28:26 -0700 (PDT)
+Date: Sat, 30 May 2026 10:28:24 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Matlack <dmatlack@google.com>, Alex Williamson <alex@shazbot.org>,
+ kvm@vger.kernel.org, Leon Romanovsky <leon@kernel.org>,
+ linux-kselftest@vger.kernel.org, linux-rdma@vger.kernel.org, Mark Bloch
+ <mbloch@nvidia.com>, netdev@vger.kernel.org, Saeed Mahameed
+ <saeedm@nvidia.com>, Shuah Khan <shuah@kernel.org>, Tariq Toukan
+ <tariqt@nvidia.com>, patches@lists.linux.dev
+Subject: Re: [PATCH v2 06/11] selftests: Fix arm64 IO barriers to match
+ kernel
+Message-ID: <20260530102824.65ceb098@pumpkin>
+In-Reply-To: <20260529224442.11d7320d@pumpkin>
+References: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+	<6-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+	<ahiFxtmspbETiqWw@google.com>
+	<20260529134947.GA128816@nvidia.com>
+	<20260529175516.06d5788f@pumpkin>
+	<20260529192933.GD3195266@nvidia.com>
+	<20260529224442.11d7320d@pumpkin>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 000/461] 7.0.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260528194646.819809818@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260528194646.819809818@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 5/28/26 12:42 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.11 release.
-> There are 461 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 30 May 2026 19:45:49 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Fri, 29 May 2026 22:44:42 +0100
+David Laight <david.laight.linux@gmail.com> wrote:
 
-Tested on 2 amd64 systems. Working well, no regressions observed.
+> On Fri, 29 May 2026 16:29:34 -0300
+> Jason Gunthorpe <jgg@nvidia.com> wrote:
+> 
+> > On Fri, May 29, 2026 at 05:55:16PM +0100, David Laight wrote:  
+...
+> > I can't say, this is copied from the kernel and Will made it:
+> > 
+> >     arm64: io: Ensure calls to delay routines are ordered against prior readX()
+> >     
+> >     A relatively standard idiom for ensuring that a pair of MMIO writes to a
+> >     device arrive at that device with a specified minimum delay between them
+> >     is as follows:
+> >     
+> >             writel_relaxed(42, dev_base + CTL1);
+> >             readl(dev_base + CTL1);
+> >             udelay(10);
+> >             writel_relaxed(42, dev_base + CTL2);
+> >     
+> >     the intention being that the read-back from the device will push the
+> >     prior write to CTL1, and the udelay will hold up the write to CTL1 until
+> >     at least 10us have elapsed.
+> >     
+> >     Unfortunately, on arm64 where the underlying delay loop is implemented
+> >     as a read of the architected counter, the CPU does not guarantee
+> >     ordering from the readl() to the delay loop and therefore the delay loop
+> >     could in theory be speculated and not provide the desired interval
+> >     between the two writes.
+> >     
+> >     Fix this in a similar manner to PowerPC by introducing a dummy control
+> >     dependency on the output of readX() which, combined with the ISB in the
+> >     read of the architected counter, guarantees that a subsequent delay loop
+> >     can not be executed until the readX() has returned its result.  
+> 
+> Hmmm...
+> 
+> Ok so there is some subtlety with the read of the counter that might
+> make it all work.
+> 
+> It is better to make the delay loop have a data dependency on the result
+> of the readl().
+> Something like:
+> 	u32 z = 0;
+> 	OPTIMIZER_HIDE_VAR(z);
+> 	writel_relaxed(42, dev_base + CTL1);
+> 	udelay(10 + (z & readl(dev_base + CTL1)));
+> 	writel_relaxed(42, dev_base + CTL2);
+> That avoids the potentially mispredicted branch and only adds instructions
+> when a delay follows.
+> That sequence is safe for all cpu and doesn't cost much for cpu (like x86)
+> where it (probably) isn't needed (maybe unless you patch the scale for udelay
+> into the code so there are no memory reads, just code).
+> 
+> Probably best refactored as udelay_depends(10, readl(dev_base + CTL1)).
+> Or maybe udelay_after().
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+Sleeping on it, all the code can be put in udelay().
+You just need a read memory barrier, followed by a memory read (of anywhere
+'hot') and then use a data dependency (as above) from the second read
+into the delay loop.
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+-- David
+
