@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D495830E847;
-	Sat, 30 May 2026 17:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316B8263F44;
+	Sat, 30 May 2026 17:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161705; cv=none; b=FoAqxl7VLNVg50rUKZzI8W9EhCS1JJHIJylVDI1yeTNZC/ovFzipkRC08rTdgVPRS3qZ3O2iz6nlnPVtDfAlR3B7J10kr5qDUIR9h2f/aZ+/akJN5Nv42V9Mb3FQ26jR2O4gUMmelbEOWpyFxEy+YiR6IVfLTOjPHhBTR4z/6HA=
+	t=1780161709; cv=none; b=tdXs4cBX48MWY4r81tvMEp0OsCFiPYBcOFwwqIEhzNVOftu7NZGMc4bqCrUR15Y9km+I9dN3oH6Jb/xyNNzQhWL4ol25n4l6vR5oMayay7ZZYmngc9Xmca/zjvzgu7QEacCoRTj6QM3m4g9u8oG+tv5yR925VAMTAbP6pclj9oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161705; c=relaxed/simple;
-	bh=tH/lHhkRbYTIbS0xd2P5ghglVlJdjLT8bSui6ZIWbVw=;
+	s=arc-20240116; t=1780161709; c=relaxed/simple;
+	bh=YYQYGvEwNRMaCLRhOhHtYDCLC5EYd4N/tkK74SXHAlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTQ2E9MLgdvypml5v3dLsRoJgM2QwNtjvm/qQMVDYablyH1wGlANLC3SDTGfPIvSkjHQXVGuKkGC5b4ilLFsGBktvdiNtcO3zqMxoeoy8MVOCWgy5xDc33fd/jbf15XpTMJJtl4JrdGz6oBUBy792UpfaOe9uOba0cF3FupVj68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owAX/YcS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VCzIOVF72CXc6dKkst9JBgxLezuTjCZFq4bXnkKYqqIIirEndvrMZPpnSIsQJGqmikaNI5XhvHJ6BIPiJz8UQE3TABOhc6NDlpwICYsfH/7Lj+Og1mKsHjPqO3WslrJBMKEiueSnEOYy8yd2RPZxwmSQNNiQgeWUW9mGCBCRGpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpD0m2i8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owAX/YcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D381F00893;
-	Sat, 30 May 2026 17:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpD0m2i8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBC51F00893;
+	Sat, 30 May 2026 17:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161704;
-	bh=q8vEPTD6u8f0xqW7W4Bf7AgrlVGhVUqMwcslY88TgpE=;
+	s=korg; t=1780161708;
+	bh=YfaYi+yzadAgyYT8h7JbYhusBIfRSYvIRdBiPSkou5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=owAX/YcSlckpMueVRDyVbbMGO6Vonr0+YwIAIuYQBa/IOWMdOrR0TDB5a3FvJ9pAF
-	 c4bvqMSINq+RffqXAEnukXJcf858sqkshCIs6vRfmtYeeV8WXOKev2G0qS8Fl0DC4G
-	 D5dQgoI2+PgKKiWRPOad1M/1SRMsoZoeuvBf7Ljo=
+	b=WpD0m2i8iFpdYv6Sv46E23B6c479TOwwePQA93/QvZOs92fC8yvPx6iy+0j1uy7d8
+	 Jwnvqn/dJk0aQbDUT3H4jyV8+dEoymMvvsa4truARqRc5paSlHPOeDRN9FEHI0eZRI
+	 Jxo8TRzC5QwsZWwHS+KiQpI/6o4VPTHGJUFaS7a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 673/969] crypto: sa2ul - Fix AEAD fallback algorithm names
-Date: Sat, 30 May 2026 18:03:17 +0200
-Message-ID: <20260530160319.076458332@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Val Packett <val@packett.cool>
+Subject: [PATCH 6.1 664/969] clk: qcom: dispcc-sc7180: Add missing MDSS resets
+Date: Sat, 30 May 2026 18:03:08 +0200
+Message-ID: <20260530160318.816239759@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,45 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T Pratham <t-pratham@ti.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
+[ Upstream commit b0bc6011c5499bdfddd0390262bfa13dce1eff74 ]
 
-For authenc AEAD algorithms, sa2ul is trying to register very specific
--ce version as a fallback. This causes registration failure on SoCs
-which do not have ARMv8-CE enabled/available. Change the fallback
-algorithm from the specific driver name to generic algorithm name so
-that the kernel can allocate any available fallback.
+The MDSS resets have so far been left undescribed. Fix that.
 
-Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
-Signed-off-by: T Pratham <t-pratham@ti.com>
-Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: dd3d06622138 ("clk: qcom: Add display clock controller driver for SC7180")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Tested-by: Val Packett <val@packett.cool> # sc7180-ecs-liva-qc710
+Link: https://lore.kernel.org/r/20260120-topic-7180_dispcc_bcr-v1-2-0b1b442156c3@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sa2ul.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/dispcc-sc7180.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index e7efebf8127f0..2677062d33b8b 100644
---- a/drivers/crypto/sa2ul.c
-+++ b/drivers/crypto/sa2ul.c
-@@ -1774,13 +1774,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
- static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
- {
- 	return sa_cra_init_aead(tfm, "sha1",
--				"authenc(hmac(sha1-ce),cbc(aes-ce))");
-+				"authenc(hmac(sha1),cbc(aes))");
- }
+diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
+index 5d2ae297e7413..040149f24d798 100644
+--- a/drivers/clk/qcom/dispcc-sc7180.c
++++ b/drivers/clk/qcom/dispcc-sc7180.c
+@@ -16,6 +16,7 @@
+ #include "clk-regmap-divider.h"
+ #include "common.h"
+ #include "gdsc.h"
++#include "reset.h"
  
- static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
- {
- 	return sa_cra_init_aead(tfm, "sha256",
--				"authenc(hmac(sha256-ce),cbc(aes-ce))");
-+				"authenc(hmac(sha256),cbc(aes))");
- }
+ enum {
+ 	P_BI_TCXO,
+@@ -635,6 +636,11 @@ static struct gdsc mdss_gdsc = {
+ 	.flags = HW_CTRL,
+ };
  
- static void sa_exit_tfm_aead(struct crypto_aead *tfm)
++static const struct qcom_reset_map disp_cc_sc7180_resets[] = {
++	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
++	[DISP_CC_MDSS_RSCC_BCR] = { 0x4000 },
++};
++
+ static struct gdsc *disp_cc_sc7180_gdscs[] = {
+ 	[MDSS_GDSC] = &mdss_gdsc,
+ };
+@@ -686,6 +692,8 @@ static const struct qcom_cc_desc disp_cc_sc7180_desc = {
+ 	.config = &disp_cc_sc7180_regmap_config,
+ 	.clks = disp_cc_sc7180_clocks,
+ 	.num_clks = ARRAY_SIZE(disp_cc_sc7180_clocks),
++	.resets = disp_cc_sc7180_resets,
++	.num_resets = ARRAY_SIZE(disp_cc_sc7180_resets),
+ 	.gdscs = disp_cc_sc7180_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(disp_cc_sc7180_gdscs),
+ };
 -- 
 2.53.0
 
