@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503BC362157;
-	Sat, 30 May 2026 18:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B59362157;
+	Sat, 30 May 2026 18:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164612; cv=none; b=mzCpTCSqO50MUbU5emjyB73lqDXuDSiJuhkjlqbq4OzQ+cB2IdyYxFQPHq+hIsVriZd9g6k7pum2lCou8GNzkg5B9So7XYSHqcfVpnQuyR7cDgBaQWQgBqKJVQt9WxP325pBz3noLPfDV5u8KcxL9IZoSvy93lGHCgsppaVS4rU=
+	t=1780164615; cv=none; b=RMHeOmtKa9FWwdqePwWzx4tAd6VrrcZ0JD/zOEQZrbfaXyhz6dPJHAYYmnvjEW1sK0mmXyh8YEYAuf/VCnvxf86VpnXyn84fvfFdhtXnHsdkm4YGUYTMwjwnyrtJmwNnx8IOGAD6WmNKMd2++fPfkbHKKx7UQ/XZrLRw74MSzRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164612; c=relaxed/simple;
-	bh=Zp1qapp7Xtxke4TQG219ek/5trwPD5SN8Srg/Ah3FgY=;
+	s=arc-20240116; t=1780164615; c=relaxed/simple;
+	bh=QVQLBJG4Pd24WwQd6Ud75o7ppa4TkQhJexkec/zL2nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apAfMTir7tX2Nxjukb2n2pgd+EY4CEOyYiY/blciw9cx5gbFbu+Ds6HTUfpDqkpbRjScuMCPAQU7oUM8AzUwrC7QNJCXkt9FBkX5F7c6qv4yctcPmIRbXqYT/Re8AbSBv2idMftJTR7x7snKvoOKT3g6x9f9uz/iLI9PP/toOMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdoqBOaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=p0dr6WRa2C6x7LlV2ceL/HYgvf8fnOjwZuEskGJxtC/h+8r8DViARA+KpX1Upl6Vd+C464+6qROuD85J07Fbk+uHsuemE7eaN5i2cAzhCRrGrBObUyzovkbSTsoHEg/aT+RTrNo2A9NfPozx8EVcgw3/D/SxPMh+Jw85hMyRrac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUwoyj+V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdoqBOaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DED1F00893;
-	Sat, 30 May 2026 18:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUwoyj+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA52B1F00893;
+	Sat, 30 May 2026 18:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164611;
-	bh=yaZQ4+zb06TKgPfx/1eLsa3iXnW8Pf5H2kNjhbYI/qM=;
+	s=korg; t=1780164614;
+	bh=wfkJZE7ExU5tVJSDyyxPYj3gmjYrFN3BOIY4YSnaD3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZdoqBOaU+ezhCSB92Vos1HRVbpLYni9LQCDqBZakwV7L+dAsyjgAf+pb8shQuhwWR
-	 twvrxK62BHRUAIDbrl6n7tTtLpreD5fB2pQnXiZiKUJ6G6EarP/it9wskQBa1SPOAi
-	 VdmjoC8G+s6ovxkIZu7BYcUx1H55ceIF8PJwSCSg=
+	b=aUwoyj+V1KC1hIjq+yOQdCeYkhf4O1KOWpNVYXKk8qbyaq7crPcDB7AAYBF5eJCpf
+	 +wblp8E36CG45k6q8ofHCijX+64e51PNILnr7d1Q6aLLMmKCk4uoAVmqpZDZe4MuPc
+	 RE/I22T+IojnevfRFAZ61cu7AwJWYyHfIvaLZO9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Demers <alexandre.f.demers@gmail.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 606/776] drm/amdgpu: fix spelling typos
-Date: Sat, 30 May 2026 18:05:20 +0200
-Message-ID: <20260530160255.680598072@linuxfoundation.org>
+Subject: [PATCH 5.15 607/776] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
+Date: Sat, 30 May 2026 18:05:21 +0200
+Message-ID: <20260530160255.703477379@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,107 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Demers <alexandre.f.demers@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit ce43abd7ec9464cf954f90e1c69e11768b02fa0a ]
+[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
 
-Found some typos while exploring amdgpu code.
+UVD 3.1 firmware validation seems to always fail after
+attempting it when it had already been validated.
+(This works similarly with the VCE 1.0 as well.)
 
-Signed-off-by: Alexandre Demers <alexandre.f.demers@gmail.com>
+Don't attempt repeating the validation when it's already done.
+
+This caused issues in situations when the system isn't able
+to suspend the GPU properly and so the GPU isn't actually
+powered down. Then amdgpu would fail when calling the IP
+block resume function.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
+Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 13e4cf116dbf ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
+(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c   | 6 +++---
- drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c   | 3 ++-
- drivers/gpu/drm/amd/amdgpu/vce_v2_0.c   | 2 +-
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index 259897f1ea8a4..e00d1637859fe 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -259,7 +259,7 @@ void amdgpu_gmc_sysvm_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc
-  * @adev: amdgpu device structure holding all necessary information
-  * @mc: memory controller structure holding memory information
-  *
-- * Function will place try to place GART before or after VRAM.
-+ * Function will try to place GART before or after VRAM.
-  * If GART size is bigger than space left then we ajust GART size.
-  * Thus function will never fails.
-  */
 diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index e458e0d5801b0..fbfed90503868 100644
+index fbfed90503868..3a27bed57b4ff 100644
 --- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
 +++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -98,7 +98,7 @@ static void uvd_v3_1_ring_emit_ib(struct amdgpu_ring *ring,
- }
- 
- /**
-- * uvd_v3_1_ring_emit_fence - emit an fence & trap command
-+ * uvd_v3_1_ring_emit_fence - emit a fence & trap command
-  *
-  * @ring: amdgpu_ring pointer
-  * @addr: address
-@@ -242,7 +242,7 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
+@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
  	uint64_t addr;
  	uint32_t size;
  
--	/* programm the VCPU memory controller bits 0-27 */
-+	/* program the VCPU memory controller bits 0-27 */
++	/* When the keyselect is already set, don't perturb it. */
++	if (RREG32(mmUVD_FW_START))
++		return;
++
+ 	/* program the VCPU memory controller bits 0-27 */
  	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
  	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
- 	WREG32(mmUVD_VCPU_CACHE_OFFSET0, addr);
-@@ -416,7 +416,7 @@ static int uvd_v3_1_start(struct amdgpu_device *adev)
- 	/* Set the write pointer delay */
- 	WREG32(mmUVD_RBC_RB_WPTR_CNTL, 0);
+@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
+ 	int i;
+ 	uint32_t keysel = adev->uvd.keyselect;
  
--	/* programm the 4GB memory segment for rptr and ring buffer */
-+	/* Program the 4GB memory segment for rptr and ring buffer */
- 	WREG32(mmUVD_LMI_EXT40_ADDR, upper_32_bits(ring->gpu_addr) |
- 		   (0x7 << 16) | (0x1 << 31));
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-index c108b83817951..01d8e7d2caf97 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-@@ -298,7 +298,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
- 	/* enable VCPU clock */
- 	WREG32(mmUVD_VCPU_CNTL,  1 << 9);
- 
--	/* disable interupt */
-+	/* disable interrupt */
- 	WREG32_P(mmUVD_MASTINT_EN, 0, ~(1 << 1));
- 
- #ifdef __BIG_ENDIAN
-@@ -308,6 +308,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
- #endif
- 	WREG32(mmUVD_LMI_SWAP_CNTL, lmi_swap_cntl);
- 	WREG32(mmUVD_MP_SWAP_CNTL, mp_swap_cntl);
++	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
++		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
++			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
++		return 0;
++	}
 +
- 	/* initialize UVD memory controller */
- 	WREG32(mmUVD_LMI_CTRL, 0x203108);
+ 	WREG32(mmUVD_FW_START, keysel);
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-index 98952fd387e73..ddbcfcc70df5c 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-@@ -278,7 +278,7 @@ static int vce_v2_0_stop(struct amdgpu_device *adev)
- 	int status;
- 
- 	if (vce_v2_0_lmi_clean(adev)) {
--		DRM_INFO("vce is not idle \n");
-+		DRM_INFO("VCE is not idle \n");
- 		return 0;
- 	}
- 
+ 	for (i = 0; i < 10; ++i) {
 -- 
 2.53.0
 
