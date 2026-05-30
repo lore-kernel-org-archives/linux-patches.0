@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273D21C5799;
-	Sat, 30 May 2026 17:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7120F263F44;
+	Sat, 30 May 2026 17:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161533; cv=none; b=DHshEA+BhjlAd1GYMO04iwDkRm05HHmNddHhZkVOEB59Gd2jzZ5i637SsZctYZwx5A6gu1z/Oq/0pD2kx89/VFheULn3CbjAOp1UTJ22n2rRG8qPHyE2V843c7vvPVGno02NiWVXjIfo3h22qyhOuzq2Nw9VvI5wt7pAkkiUBNU=
+	t=1780161536; cv=none; b=KaQXAK9Csl6GRHBXbfQ5LcR7QOoElneIoWx1be/64/KwYNoHt6JuN97ihhFJB6wfecJCPOx79LL9pi5BEZjMEPYewD2G76DkU6R+eICMtpzUuUU1LvVxkaKU1v1oldXI1SoenDhL/NjiUDYCpxeoBaddLZcLXEWiDtrinkgiurQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161533; c=relaxed/simple;
-	bh=rlCAgrTOLMVnzlK5JyPoiMVQPBg1ETvHCpqtRiOfAkA=;
+	s=arc-20240116; t=1780161536; c=relaxed/simple;
+	bh=9kx14YUg8z1inOvCNchb9Mxe9wzB7wr76uHSrH+Rufo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuiSA4n3AdUIk44pmpo3oZBFNYt7zOPmjjR71Cr8dlGH3HMU1UZkuBmpCT4oDwPhukrnmvrDLwa0cPT1xSHf+APsM6uJchdAXyxm75qlF8SY/RbP4PtwYBj04X/9PkBV3b6VE79hJDBodORe+j3o5AQGx1zWQPExrIZ4JySS8Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heeufks/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=geWqVvghpC648PUpqCoGbGmrJazTO5XMIDu/HdkJi1RWuQbeVeLjvrAhSA5PLV2VzfasaMqoan2jBAid6C47593ITlXlw8TBRYubun35ZUhPZCNAu9xUfmOvCksSg4ko34i2IkWhF6bPj2uHOqukn5wl2pF5Tkxw9qSGULrlbN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16xh31id; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heeufks/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC241F00893;
-	Sat, 30 May 2026 17:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16xh31id"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AF31F00893;
+	Sat, 30 May 2026 17:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161532;
-	bh=q4HdxyPg2jWYE9SG7NJgZLAZvxr+KozCWpThF1+x2Gk=;
+	s=korg; t=1780161535;
+	bh=EEKBbWpNKnU3cdK56XOL5fWYe9fz4CFrJxf8oYdagtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=heeufks/tcELNsmJiV5IQ5CJ/yDFfajUyWz1R0c4m30DJ+ouDR8e/5TZV5/jwG9ql
-	 LoxGp/5ZErFOzlBIWuB6QhsTJKiK112AJrkzUUJ0/vvAVnQxq+V1mDgSNn8CjSroHO
-	 xUHYiUmOS28O6CV2y9BiKjqfnNYZHXoIM/dM/Cn4=
+	b=16xh31idG9M0leoDxC0EJS4L7VDwYtPhP4WI5ySx+5XuDdl5KmuHtpT4uAByEnrHs
+	 3qqlpmTMD9igzWrQ/VdH+PBJ2WFP0QgLe2h0zJ09U/m4ug9WI9N0PVE2VQ/VzOL8bL
+	 8gHQKSdd2A1IsHCF5XrGZtn8Q7ueKUYOHveDlvf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Val Packett <val@packett.cool>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 651/969] scsi: target: core: Fix integer overflow in UNMAP bounds check
-Date: Sat, 30 May 2026 18:02:55 +0200
-Message-ID: <20260530160318.444423122@linuxfoundation.org>
+Subject: [PATCH 6.1 652/969] dt-bindings: clock: qcom,gcc-sc8180x: Add missing GDSCs
+Date: Sat, 30 May 2026 18:02:56 +0200
+Message-ID: <20260530160318.472177490@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,40 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 2bf2d65f76697820dbc4227d13866293576dd90a ]
+[ Upstream commit 76404ffbf07f28a5ec04748e18fce3dac2e78ef6 ]
 
-sbc_execute_unmap() checks LBA + range does not exceed the device capacity,
-but does not guard against LBA + range wrapping around on 64-bit overflow.
+There are 5 more GDSCs that we were ignoring and not putting to sleep,
+which are listed in downstream DTS. Add them.
 
-Add an overflow check matching the pattern already used for WRITE_SAME in
-the same file.
-
-Fixes: 86d7182985d2 ("target: Add sbc_execute_unmap() helper")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881593C61AD52C69FBDB0BDAF7CA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260312112321.370983-2-val@packett.cool
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 3565741eb985 ("clk: qcom: gcc-sc8180x: Add missing GDSCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_sbc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/dt-bindings/clock/qcom,gcc-sc8180x.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/target/target_core_sbc.c b/drivers/target/target_core_sbc.c
-index 1e3216de1e04d..7b08743c4f3ff 100644
---- a/drivers/target/target_core_sbc.c
-+++ b/drivers/target/target_core_sbc.c
-@@ -1133,7 +1133,8 @@ sbc_execute_unmap(struct se_cmd *cmd)
- 			goto err;
- 		}
+diff --git a/include/dt-bindings/clock/qcom,gcc-sc8180x.h b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
+index 2569f874fe13c..be97a0ca2ade4 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sc8180x.h
++++ b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
+@@ -308,5 +308,10 @@
+ #define USB30_MP_GDSC						8
+ #define USB30_PRIM_GDSC						9
+ #define USB30_SEC_GDSC						10
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC		11
++#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC		12
++#define HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC		13
++#define HLOS1_VOTE_TURING_MMU_TBU0_GDSC			14
++#define HLOS1_VOTE_TURING_MMU_TBU1_GDSC			15
  
--		if (lba + range > dev->transport->get_blocks(dev) + 1) {
-+		if (lba + range < lba ||
-+		    lba + range > dev->transport->get_blocks(dev) + 1) {
- 			ret = TCM_ADDRESS_OUT_OF_RANGE;
- 			goto err;
- 		}
+ #endif
 -- 
 2.53.0
 
