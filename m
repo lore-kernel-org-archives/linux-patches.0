@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC48D39A4A4;
-	Sat, 30 May 2026 18:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109A33F5A0;
+	Sat, 30 May 2026 18:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164205; cv=none; b=tm514e0ygwp10O8J5cJjD/vw/3DSi1H3jkYIcdl23zhf8YXexw7ToJRh6wARKLIAiYLynaik8pyGl3MfeF7MU6uXQ5Cjy9ETPrhF3WarxNntTU5Dze6eeZP1lLxwrgzDIgm0+PiQ1ochrzLODZg1DfNqxDJWaAIYOrs98Xj2pwY=
+	t=1780164209; cv=none; b=mqw1rVGnmhLmj8jjv14y2UVZgtb6fxy//+0qHWchlGJalkvUh93lLwslFip+4ekpzRnn07rLgswzlnCJxeBI2SGbXVUgdsHgTyLFcplywyea+Np2HdbeCl0gY+4mf73DBkBuAU5f4w72NyQcsbQHdVkCpYASlZdCk8VcAkZFOBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164205; c=relaxed/simple;
-	bh=E9j6N06N5SGYh3d8dmfI6msvTwe2EKIjKhgwc8MC43k=;
+	s=arc-20240116; t=1780164209; c=relaxed/simple;
+	bh=sqDCke8sDrYgXvlYx4bJ9njt8mx72/btgiA17xkcyQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+FyHJPJEl1nDH7eB8Awy4yHlBpRl+XssleQ5eDUfyMa+aXxIUozLdLPUcTTASXUm/mJALTvvi9PzfAhfwGc+3lmN3rXR99vet1eVg/klwsfxF/74HiulVCETo3vm9ZaeKyRU+TzU+uPU9YQVAHvyg8nOZCqJsadkmuQy7OC1tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnSZNA1a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SSrKq+T41OzzD9e12XPZOyd4zAIWm6GWmSRHdcE3VwbEM6ndbAUIEMTX/AlE3bMcgwCt3g/XM8oz63hFGLjYq0vsxd+K/1bachx7XpVlGKDYsbY6a3StpvTv+7t0hccpNAQPpMAt6m66EquQ3HiiV/Yrvws1ozYTZl3UrzLOIo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlCdrBav; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnSZNA1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC871F00893;
-	Sat, 30 May 2026 18:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlCdrBav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6BF1F00893;
+	Sat, 30 May 2026 18:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164204;
-	bh=JDYoJXONz+iS4/8wfE4Qrv+tmr+7g+IFKKEhnYy77ks=;
+	s=korg; t=1780164208;
+	bh=TWZhVCKUFsKx7xZijaKKKSeC2KAnE2r3ALVo1rjUw6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YnSZNA1atsEOVLeG9Xl8uW9+WfmHin1Q7Yw7eAuYAjODdMqoUc2LemFbV8osh1Ahw
-	 DOkSKvv0zCTmNvJsJoF0cnUsGuVC0UpPOrra9ky/1qBHOFnjZk0d/VhJ0XAcc1PgeL
-	 vC3J7HzZC6fUUDPNxfrio3jZrYxsItlOChbpvMh4=
+	b=JlCdrBavmFOP01qB1GUOILadj1X5z2akjJgE5uyCHHLmJzDCZ2nP4LwPLJ8SfC47W
+	 z7M5Q3U8kVOpKMD7/O7+d5n6aIldHHHD+wQ2qEZaVEG0zzHC7dYN+F/Hlj+0UbAaK8
+	 JKHyJS4bHIQXbgBncAhUso5gMG/6SQ/DRWN7AAdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Klinesmith <joshuaklinesmith@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 485/776] ksmbd: fix use-after-free from async crypto on Qualcomm crypto engine
-Date: Sat, 30 May 2026 18:03:19 +0200
-Message-ID: <20260530160252.866148887@linuxfoundation.org>
+Subject: [PATCH 5.15 486/776] ARM: dts: mediatek: mt7623: fix efuse fallback compatible
+Date: Sat, 30 May 2026 18:03:20 +0200
+Message-ID: <20260530160252.889076873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,77 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Klinesmith <joshuaklinesmith@gmail.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 3e298897f41c61450c2e7a4f457e8b2485eb35b3 ]
+[ Upstream commit 5978ff33cc6f0988388a2830dc5cd2ea4e81f36a ]
 
-ksmbd_crypt_message() sets a NULL completion callback on AEAD requests
-and does not handle the -EINPROGRESS return code from async hardware
-crypto engines like the Qualcomm Crypto Engine (QCE). When QCE returns
--EINPROGRESS, ksmbd treats it as an error and immediately frees the
-request while the hardware DMA operation is still in flight. The DMA
-completion callback then dereferences freed memory, causing a NULL
-pointer crash:
+Fix following validation error:
+arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: compatible: 'oneOf' conditional failed, one must be fixed:
+        ['mediatek,mt7623-efuse', 'mediatek,mt8173-efuse'] is too long
+        'mediatek,mt8173-efuse' was expected
+        'mediatek,efuse' was expected
+        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
+arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: efuse@10206000: Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/nvmem/mediatek,efuse.yaml#
 
-  pc : qce_skcipher_done+0x24/0x174
-  lr : vchan_complete+0x230/0x27c
-  ...
-  el1h_64_irq+0x68/0x6c
-  ksmbd_free_work_struct+0x20/0x118 [ksmbd]
-  ksmbd_exit_file_cache+0x694/0xa4c [ksmbd]
-
-Use the standard crypto_wait_req() pattern with crypto_req_done() as
-the completion callback, matching the approach used by the SMB client
-in fs/smb/client/smb2ops.c. This properly handles both synchronous
-engines (immediate return) and async engines (-EINPROGRESS followed
-by callback notification).
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Link: https://github.com/openwrt/openwrt/issues/21822
-Signed-off-by: Joshua Klinesmith <joshuaklinesmith@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 43c7a91b4b3a ("arm: dts: mt7623: add efuse nodes to the mt7623.dtsi file")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/auth.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/mt7623.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ksmbd/auth.c b/fs/ksmbd/auth.c
-index 647692ca78a28..8fc7a1fffd55a 100644
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -1108,6 +1108,7 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
- 	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(iov[0].iov_base);
- 	unsigned int assoc_data_len = sizeof(struct smb2_transform_hdr) - 20;
- 	int rc;
-+	DECLARE_CRYPTO_WAIT(wait);
- 	struct scatterlist *sg;
- 	u8 sign[SMB2_SIGNATURE_SIZE] = {};
- 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
-@@ -1194,12 +1195,12 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+diff --git a/arch/arm/boot/dts/mt7623.dtsi b/arch/arm/boot/dts/mt7623.dtsi
+index 64756888fd0d1..3c2064f7e50e2 100644
+--- a/arch/arm/boot/dts/mt7623.dtsi
++++ b/arch/arm/boot/dts/mt7623.dtsi
+@@ -329,7 +329,7 @@ sysirq: interrupt-controller@10200100 {
  
- 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
- 	aead_request_set_ad(req, assoc_data_len);
--	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_SLEEP, NULL, NULL);
-+	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
-+				  CRYPTO_TFM_REQ_MAY_SLEEP,
-+				  crypto_req_done, &wait);
- 
--	if (enc)
--		rc = crypto_aead_encrypt(req);
--	else
--		rc = crypto_aead_decrypt(req);
-+	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req) :
-+			     crypto_aead_decrypt(req), &wait);
- 	if (rc)
- 		goto free_iv;
- 
+ 	efuse: efuse@10206000 {
+ 		compatible = "mediatek,mt7623-efuse",
+-			     "mediatek,mt8173-efuse";
++			     "mediatek,efuse";
+ 		reg = <0 0x10206000 0 0x1000>;
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
 -- 
 2.53.0
 
