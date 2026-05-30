@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502793AFD11;
-	Sat, 30 May 2026 18:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26CD3AC0FA;
+	Sat, 30 May 2026 18:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164328; cv=none; b=Lskn6HG4yV5Qpxi9O6c4qUIe+Aywhw2845hilosGG5vVvZbnLmBbZb+HF8SoTllBW5V1r/53btU3c2iyTn6yHivD66JsWALfPw903QLIDYCcVx6wlMTASCePme6cZ73B/Ab4bZchiVtwmXC1ABrpV4f+mwK2e6/qUIsGHey9VPg=
+	t=1780164331; cv=none; b=LL2fCoKl7XcEiEfq5Zs7DEXTyzZKEBLEjzZzwInn8ThgUh2khSKRsW+tKTrvAU7ftiEHLxMLPxhNoGQD9ti+1e4Z2eZnDUkdHmUgl4pz8raIvIlhikuIvl9zLaEY1NJdJtCYcQ6ptvADMwXq+t+JG86wpCpDQ8Lrvz/3XO3Lkzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164328; c=relaxed/simple;
-	bh=8zW7UQqwcq4o9TD1SD2lhotY9FN8vOtB0zZSyk7iBMo=;
+	s=arc-20240116; t=1780164331; c=relaxed/simple;
+	bh=ZfkSe/WXmIrM5x7uT+M7zMFEDUuXzwslcuvxYPmLSRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEH75eZJ3S0xErY5cHiIIZCzmS6QTCeMuyCyZhBdim/NyEYAYw08tApSk7HpKYJ4vDjoTWkeQ5qH+ORVTtduASPWB4qYPQ1UZkw58C3/V2Xrzm+UUddS4Wc0Reoh8VQP1fe+oEBQm3Z7PtTUN5xafQzNS/NWVQyMOC8acCDOPig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei0OqPss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S0vyD8uQU0XkbPIAOOf2Uu4QpqQ57e4j/3pRxoGTpTlbXdyNEimT4I9bunaayjfaoyuTytcNAh9XeJ2qlHEWJqjbz9YE0nYylHlz8PjtzE7UCBZd6i/I5I8AbNh8ux7d4IDlsP54g3Yn5Lsb9Ch1QqPbbldoWWR7SQEv4B9S620=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5bAZBRt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei0OqPss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5893B1F00893;
-	Sat, 30 May 2026 18:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5bAZBRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08831F00893;
+	Sat, 30 May 2026 18:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164327;
-	bh=qdV9HE7Q9xocy1NkrRBFBfeBVOi9feDvDlWXm5ScYaE=;
+	s=korg; t=1780164330;
+	bh=2aOrTfaUHZrclItKxsqrr1DAOSHly11yx8cnV7mMKro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ei0OqPssEslDzoawVy9ohKxNG2JU6uCbxeEyh6C6uOO6dbhb8S+WBfRc/rBF6O5G8
-	 D90N7XigoMc/wSXVCotxwIDuuJHY75GwPuFh3Km2n+friOBH1CP4bKQNr9lL2Hcux3
-	 vo8O9IOK+cN5gN2EO9dHUKwcFGbKj5Fdk0NAVZZk=
+	b=x5bAZBRt2AiUZzEhkJvb4RAYKBO4pAjwAJZjvPnxMyfTYJjsgjuukAKNQHkOWE0QY
+	 I1ghXdr29d8rKIc6djNZmtob0SipMyOo0lJwgMmM08PHl/svPFT5fwgTzH5S24aHtU
+	 ivr7uDGcMD9l+4yQUunTJiKNKDS6dhMdaXjS+H+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 494/776] ocfs2/dlm: validate qr_numregions in dlm_match_regions()
-Date: Sat, 30 May 2026 18:03:28 +0200
-Message-ID: <20260530160253.075180503@linuxfoundation.org>
+Subject: [PATCH 5.15 521/776] driver core: Move dev_err_probe() to where it belogs
+Date: Sat, 30 May 2026 18:03:55 +0200
+Message-ID: <20260530160253.698238524@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -59,73 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7ab3fbb01bc6d79091bc375e5235d360cd9b78be ]
+[ Upstream commit 9e0cace7a6254070159ebd86497eadc29ea307ca ]
 
-Patch series "ocfs2/dlm: fix two bugs in dlm_match_regions()".
+dev_err_probe() belongs to the printing API, hence
+move the definition from device.h to dev_printk.h.
 
-In dlm_match_regions(), the qr_numregions field from a DLM_QUERY_REGION
-network message is used to drive loops over the qr_regions buffer without
-sufficient validation.  This series fixes two issues:
+There is no change to the callers at all, since:
+1) implementation is located in the same core.c;
+2) dev_printk.h is guaranteed to be included by device.h.
 
-- Patch 1 adds a bounds check to reject messages where qr_numregions
-  exceeds O2NM_MAX_REGIONS. The o2net layer only validates message
-  byte length; it does not constrain field values, so a crafted message
-  can set qr_numregions up to 255 and trigger out-of-bounds reads past
-  the 1024-byte qr_regions buffer.
-
-- Patch 2 fixes an off-by-one in the local-vs-remote comparison loop,
-  which uses '<=' instead of '<', reading one entry past the valid range
-  even when qr_numregions is within bounds.
-
-This patch (of 2):
-
-The qr_numregions field from a DLM_QUERY_REGION network message is used
-directly as loop bounds in dlm_match_regions() without checking against
-O2NM_MAX_REGIONS.  Since qr_regions is sized for at most O2NM_MAX_REGIONS
-(32) entries, a crafted message with qr_numregions > 32 causes
-out-of-bounds reads past the qr_regions buffer.
-
-Add a bounds check for qr_numregions before entering the loops.
-
-Link: https://lkml.kernel.org/r/SYBPR01MB7881A334D02ACEE5E0645801AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Link: https://lkml.kernel.org/r/SYBPR01MB788166F524AD04E262E174BEAF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Fixes: ea2034416b54 ("ocfs2/dlm: Add message DLM_QUERY_REGION")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20230721131309.16821-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 797cc011ae02 ("backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmdomain.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/dev_printk.h | 2 ++
+ include/linux/device.h     | 2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/dlm/dlmdomain.c b/fs/ocfs2/dlm/dlmdomain.c
-index 9f90fc9551e1a..5a4b0f7293fa2 100644
---- a/fs/ocfs2/dlm/dlmdomain.c
-+++ b/fs/ocfs2/dlm/dlmdomain.c
-@@ -980,6 +980,14 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
- 		goto bail;
- 	}
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index 65eec5be8ccb9..ae80a303c216b 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -275,4 +275,6 @@ do {									\
+ 	WARN_ONCE(condition, "%s %s: " format, \
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
  
-+	if (qr->qr_numregions > O2NM_MAX_REGIONS) {
-+		mlog(ML_ERROR, "Domain %s: Joining node %d has invalid "
-+		     "number of heartbeat regions %u\n",
-+		     qr->qr_domain, qr->qr_node, qr->qr_numregions);
-+		status = -EINVAL;
-+		goto bail;
-+	}
++__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
 +
- 	r = remote;
- 	for (i = 0; i < qr->qr_numregions; ++i) {
- 		mlog(0, "Region %.*s\n", O2HB_MAX_REGION_NAME_LEN, r);
+ #endif /* _DEVICE_PRINTK_H_ */
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 97fb43c6d919d..2c16bc2149c20 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1030,8 +1030,6 @@ void device_links_supplier_sync_state_pause(void);
+ void device_links_supplier_sync_state_resume(void);
+ void device_link_wait_removal(void);
+ 
+-__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+-
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
+ 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
 -- 
 2.53.0
 
