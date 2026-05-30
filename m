@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784F133B6C4;
-	Sat, 30 May 2026 17:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705953148DA;
+	Sat, 30 May 2026 17:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162066; cv=none; b=Ct3+4GEkfgajLPsmmoq68+4nXKkZ79Ugob45uxOFyHe5tSI7CEC0mcHaaZNRaqZnGxV3lV2AvgiYNmWoOka7+FjXjZSToFSQfgdPBFE55fsPrxkN9vp0BXsWR+66PCumN+1A99HBP5BcrE/DX825HESR8AY+O+nV2bywtuaEDdY=
+	t=1780162070; cv=none; b=Zb/ZDEBg03AOlRzIbfjpW65AKG+Kff7CFN+8BTC8dRC7HTvWcABXjlZexCQbaEFNlpaxfUPh8/FJNMgSx1WGBEjxqKYOF5/gtirhw07N1W5xZNJG+jPvfLCnP5MPnz+n9FZXyi+BxXCorzSrv50bLQvrjB1QxaQsfEgubQsDUnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162066; c=relaxed/simple;
-	bh=BU1Jz0W23Ny7XQFBgGXIkVGxJ/apV+iRZARTDEXwors=;
+	s=arc-20240116; t=1780162070; c=relaxed/simple;
+	bh=DZxp7EcnKvNOIlGbng4fjq1rBedRuJC2M9iFPpXcfX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1xp3Sp0i10A6ZRHmZw+NVR9ikAR8I78rTFdJzZER5Pe1Czjs/8rbinwP99WKJHkkIDs47Ccmi8CrVQFUvnanqBGGs0jM6LM5fDrT9gfI7DVrjpCH+jXHEnCI90/I1YY2Vslazi4kTKwzrp3wKj2NBqOOGYEv9CjIGz1SyVGePY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7dgm/N4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oRDh4TvWb4MjpISeO0C70NhySzwo40qfM9VqHjKidukHVR+lFP6xvjK/vNxjJ/54gJs3btJ425AnF7Xenl45ziipMpiHsDYrO+8X+gMwm2Mj25DDjCRdnA2tWU+QDDaIEuHe+M+cJ+2JUHBoxtVVZaANnVMDXN7dw9+O+Wz+oPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5rWCseC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7dgm/N4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AC41F00893;
-	Sat, 30 May 2026 17:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5rWCseC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1931F00893;
+	Sat, 30 May 2026 17:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162065;
-	bh=RAt5bLryQvZkhShUJVR58AUPKUQOnqveaoYqu/lnXYY=;
+	s=korg; t=1780162069;
+	bh=PGHRmF2qx4toFRF7t7s+/hWsKHcbuZ1Skh8mFSCidfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7dgm/N458RjrmSFDetiBUwAdb+aket4fdmgFshA/Bsj51uOiVgdf9LiEz0IT5/Kz
-	 uGvjafTGMZ7zREoSO0GX0BGOV5by893YYQ4lw4VsTx4lbQl5czjIQI+gCZrF12tAq2
-	 ff8xR1YxEVHcnHQIi4z7LS6FlVc4XGgfe34WG1ew=
+	b=m5rWCseCMbSp1lNZQCLFEH9dwXvGg3NKcr9uhE8eLGWkqMzwozhQR/j0D706rtEa+
+	 eQe9YtQoRVNGFNSWaWEylygyTnuYSH0m9X5qe3VbeHUxOzCUat0OZzb+bXhdOaQkvM
+	 OpGCKuKR+WNfSlk65uo/FNOQkSa6GLU14VYPQzKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Sergio Correia <scorreia@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 811/969] audit: enforce AUDIT_LOCKED for AUDIT_TRIM and AUDIT_MAKE_EQUIV
-Date: Sat, 30 May 2026 18:05:35 +0200
-Message-ID: <20260530160323.029653477@linuxfoundation.org>
+	Aaron Sacks <contact@xchglabs.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 812/969] KVM: Reject wrapped offset in kvm_reset_dirty_gfn()
+Date: Sat, 30 May 2026 18:05:36 +0200
+Message-ID: <20260530160323.057071838@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,47 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Correia <scorreia@redhat.com>
+From: Aaron Sacks <contact@xchglabs.com>
 
-commit f9e1c1324b4d98d591a6f7568fdebf5cf456dfc2 upstream.
+commit 577a8d3bae0531f0e5ccfac919cd8192f920a804 upstream.
 
-AUDIT_ADD_RULE and AUDIT_DEL_RULE correctly check for AUDIT_LOCKED
-and return -EPERM, but AUDIT_TRIM and AUDIT_MAKE_EQUIV do not. This
-allows a process with CAP_AUDIT_CONTROL to modify directory tree
-watches and equivalence mappings even when the audit configuration
-has been locked, undermining the purpose of the lock.
+kvm_reset_dirty_gfn() guards the gfn range with
 
-Add AUDIT_LOCKED checks to both commands.
+	if (!memslot || (offset + __fls(mask)) >= memslot->npages)
+		return;
 
+but offset is u64 and the addition is unchecked.  The check can be
+silently bypassed by a u64 wrap.
+
+The dirty ring backing those entries is MAP_SHARED at
+KVM_DIRTY_LOG_PAGE_OFFSET of the vcpu fd, so the VMM can rewrite the
+slot and offset fields of any entry between when the kernel pushes
+them and when KVM_RESET_DIRTY_RINGS consumes them.  On reset,
+kvm_dirty_ring_reset() re-reads the values via READ_ONCE() and feeds
+them straight back into this check; only the flags handshake is
+treated as the handover, the slot/offset payload is taken on trust.
+
+Crafting two entries
+
+	entry[i].offset   = 0xffffffffffffffc1
+	entry[i+1].offset = 0
+
+makes the coalescing loop in kvm_dirty_ring_reset() compute
+
+	delta = (s64)(0 - 0xffffffffffffffc1) = 63
+
+which falls in [0, BITS_PER_LONG), so it folds entry[i+1] into the
+existing mask by setting bit 63.  The trailing kvm_reset_dirty_gfn()
+call then sees offset = 0xffffffffffffffc1 and __fls(mask) = 63;
+the sum is 0 in u64 and the bounds check passes.
+
+That offset propagates into kvm_arch_mmu_enable_log_dirty_pt_masked()
+unchanged.  On the legacy MMU path -- kvm_memslots_have_rmaps() ==
+true, i.e. shadow paging, any VM that has allocated shadow roots, or
+a write-tracked slot -- it reaches gfn_to_rmap(), which indexes
+slot->arch.rmap[0][] with a near-U64_MAX gfn.  That is an
+out-of-bounds load of a kvm_rmap_head, followed by a conditional
+clear of PT_WRITABLE_MASK in whatever the loaded pointer points at.
+The path is reachable from any process holding /dev/kvm.
+
+Range-check offset on its own first, so the addition cannot wrap.
+memslot->npages is bounded well below U64_MAX, so once offset <
+npages holds, offset + __fls(mask) (with __fls(mask) < BITS_PER_LONG)
+stays in range.
+
+Fixes: fb04a1eddb1a ("KVM: X86: Implement ring-based dirty memory tracking")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Sergio Correia <scorreia@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Aaron Sacks <contact@xchglabs.com>
+Link: https://patch.msgid.link/20260512060742.1628959-1-contact@xchglabs.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ virt/kvm/dirty_ring.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -1428,6 +1428,8 @@ static int audit_receive_msg(struct sk_b
- 		err = audit_list_rules_send(skb, seq);
- 		break;
- 	case AUDIT_TRIM:
-+		if (audit_enabled == AUDIT_LOCKED)
-+			return -EPERM;
- 		audit_trim_trees();
- 		audit_log_common_recv_msg(audit_context(), &ab,
- 					  AUDIT_CONFIG_CHANGE);
-@@ -1440,6 +1442,8 @@ static int audit_receive_msg(struct sk_b
- 		size_t msglen = data_len;
- 		char *old, *new;
+--- a/virt/kvm/dirty_ring.c
++++ b/virt/kvm/dirty_ring.c
+@@ -49,7 +49,8 @@ static void kvm_reset_dirty_gfn(struct k
  
-+		if (audit_enabled == AUDIT_LOCKED)
-+			return -EPERM;
- 		err = -EINVAL;
- 		if (msglen < 2 * sizeof(u32))
- 			break;
+ 	memslot = id_to_memslot(__kvm_memslots(kvm, as_id), id);
+ 
+-	if (!memslot || (offset + __fls(mask)) >= memslot->npages)
++	if (!memslot || offset >= memslot->npages ||
++	    offset + __fls(mask) >= memslot->npages)
+ 		return;
+ 
+ 	KVM_MMU_LOCK(kvm);
 
 
