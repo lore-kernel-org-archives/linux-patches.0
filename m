@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238743242D7;
-	Sat, 30 May 2026 17:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207963161A3;
+	Sat, 30 May 2026 17:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161743; cv=none; b=qYHAE4QXPeYVgi0Eby559t2sOpdz18TDGQnvBSmxGAZ72LcYEIlJXU/7o7gDjropWc6US5zUGM9BfHfWTojhIb7PfOgLLKxPBAnTYr479VWfrg8zIor0OXtEXwkF0NeETCAMHlxkq5PmgChP9EQA1XCYQYvLrSyXx07EMRrSFpg=
+	t=1780161746; cv=none; b=DWDbe+sOW6vvHTcrESWR6YxXtfiJ7n/2PPXrp0jeefTr4AFlzJ3+HTgQ/JUM7OtETCrgdrxNAbVgpHjAbFcprC/E0y9/mv0yJRBXVWZXVCsETbYniOZt+Q4S09PA+Mb47RpMlKZh17edr0Qjkuwswj4zIV9vnJK8K0gBd0EaXwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161743; c=relaxed/simple;
-	bh=z+4w5mak+HbpUF21RUIdpFOM9gB36qeRzeAKAkDQ+QQ=;
+	s=arc-20240116; t=1780161746; c=relaxed/simple;
+	bh=XigeqrE9LU99mk4Duke5JeSu8PtWUqEkYjQP6jg2igs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiCcJDbWyMbYglggIvbkWFxWteJ6M9phrdNQTsvCHjalvQ9E2sWLTJutlHgkTn77QGGx+ix+ZHiwfzI0W3n7ITELXJbnfHW7K598MHjonYyAz0AbDXahRos6nRm+vXjGWXDIOkvDodKqnSGbayQSNwV7e2qcCoIKnS01A4EgVCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbgrg0Pf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmB7Wm5SO2v5KxYR4tkpQ/yHjdOXch+JSaBvO0J+lBg+InMECgKl+0NOdeGi2QrEZVV5mYqJORH55hfxlSbLYlgepFP7+jXuJ+nXeWPovMokAB61ly91WbcziUWZSU52ZRw6vT1SIf+5TDPjMTdEolJYH6bpwf4v5R8zqfhV4wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhZJvp9m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbgrg0Pf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4321F00893;
-	Sat, 30 May 2026 17:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhZJvp9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638301F00893;
+	Sat, 30 May 2026 17:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161741;
-	bh=KwInpXAh6YZ2CN2oDvt6BCXjG/2UoPIvYS9ZvvslcBU=;
+	s=korg; t=1780161745;
+	bh=b1sOUuGCOrI0s/IOaUqrBvKeo8+jj6QfA6Gi5fHIpco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jbgrg0PfBADSxWOwp2KPWBUD6xjWpp7zX5rdp9JSuhW/CF4JtJfpqKuAkixuHbuYb
-	 18WSalevndzlkpZXwTso2IrJInH5x2WwVopZPguSVktjWmDguzOyKhxKCQ3Jw/QLpG
-	 H3Pg7I03Tsy1jcAh+/qAtvhLj4cjHDfwjP+QlHEY=
+	b=rhZJvp9mQ+4pxwaYg5BNY1yjrPk2oc9R5kID6FzDEbMG0IyeVRA5d+6xNW9uBDqEq
+	 NXzRSVtWyuEmgi0TFMrOBTLz8Ps0ps0sM3DcXJZXBgJtIUmfZfrDUYd3RjPa4Q2ywQ
+	 Oz2Vdl2peb9U5j30JoX3mPGAZzhsDLmCXio6gZ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 714/969] net/sched: sch_pie: annotate data-races in pie_dump_stats()
-Date: Sat, 30 May 2026 18:03:58 +0200
-Message-ID: <20260530160320.247790979@linuxfoundation.org>
+Subject: [PATCH 6.1 715/969] net/sched: sch_fq_codel: remove data-races from fq_codel_dump_stats()
+Date: Sat, 30 May 2026 18:03:59 +0200
+Message-ID: <20260530160320.278469671@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,156 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5154561d9b119f781249f8e845fecf059b38b483 ]
+[ Upstream commit bbfaa73ea6871db03dc05d7f05f00557a8981f25 ]
 
-pie_dump_stats() only runs with RTNL held,
-reading fields that can be changed in qdisc fast path.
+fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
-
-Alternative would be to acquire the qdisc spinlock, but our long-term
-goal is to make qdisc dump operations lockless as much as we can.
-
-tc_pie_xstats fields don't need to be latched atomically,
-otherwise this bug would have been caught earlier.
+Move this acquisition before we fill st.qdisc_stats with live data.
 
 Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421142944.4009941-1-edumazet@google.com
+Link: https://patch.msgid.link/20260421142509.3967231-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pie.h   |  2 +-
- net/sched/sch_pie.c | 38 +++++++++++++++++++-------------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ net/sched/sch_fq_codel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/pie.h b/include/net/pie.h
-index 3fe2361e03b46..f6fd51e2b7daa 100644
---- a/include/net/pie.h
-+++ b/include/net/pie.h
-@@ -104,7 +104,7 @@ static inline void pie_vars_init(struct pie_vars *vars)
- 	vars->dq_tstamp = DTIME_INVALID;
- 	vars->accu_prob = 0;
- 	vars->dq_count = DQCOUNT_INVALID;
--	vars->avg_dq_rate = 0;
-+	WRITE_ONCE(vars->avg_dq_rate, 0);
- }
- 
- static inline struct pie_skb_cb *get_pie_cb(const struct sk_buff *skb)
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index e1bb151a97195..afa94f058f5f5 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -89,7 +89,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	bool enqueue = false;
- 
- 	if (unlikely(qdisc_qlen(sch) >= sch->limit)) {
--		q->stats.overlimit++;
-+		WRITE_ONCE(q->stats.overlimit, q->stats.overlimit + 1);
- 		goto out;
- 	}
- 
-@@ -101,7 +101,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* If packet is ecn capable, mark it if drop probability
- 		 * is lower than 10%, else drop it.
- 		 */
--		q->stats.ecn_mark++;
-+		WRITE_ONCE(q->stats.ecn_mark, q->stats.ecn_mark + 1);
- 		enqueue = true;
- 	}
- 
-@@ -111,15 +111,15 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!q->params.dq_rate_estimator)
- 			pie_set_enqueue_time(skb);
- 
--		q->stats.packets_in++;
-+		WRITE_ONCE(q->stats.packets_in, q->stats.packets_in + 1);
- 		if (qdisc_qlen(sch) > q->stats.maxq)
--			q->stats.maxq = qdisc_qlen(sch);
-+			WRITE_ONCE(q->stats.maxq, qdisc_qlen(sch));
- 
- 		return qdisc_enqueue_tail(skb, sch);
- 	}
- 
- out:
--	q->stats.dropped++;
-+	WRITE_ONCE(q->stats.dropped, q->stats.dropped + 1);
- 	q->vars.accu_prob = 0;
- 	return qdisc_drop(skb, sch, to_free);
- }
-@@ -260,11 +260,11 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
- 			count = count / dtime;
- 
- 			if (vars->avg_dq_rate == 0)
--				vars->avg_dq_rate = count;
-+				WRITE_ONCE(vars->avg_dq_rate, count);
- 			else
--				vars->avg_dq_rate =
-+				WRITE_ONCE(vars->avg_dq_rate,
- 				    (vars->avg_dq_rate -
--				     (vars->avg_dq_rate >> 3)) + (count >> 3);
-+				     (vars->avg_dq_rate >> 3)) + (count >> 3));
- 
- 			/* If the queue has receded below the threshold, we hold
- 			 * on to the last drain rate calculated, else we reset
-@@ -374,7 +374,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	if (delta > 0) {
- 		/* prevent overflow */
- 		if (vars->prob < oldprob) {
--			vars->prob = MAX_PROB;
-+			WRITE_ONCE(vars->prob, MAX_PROB);
- 			/* Prevent normalization error. If probability is at
- 			 * maximum value already, we normalize it here, and
- 			 * skip the check to do a non-linear drop in the next
-@@ -385,7 +385,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	} else {
- 		/* prevent underflow */
- 		if (vars->prob > oldprob)
--			vars->prob = 0;
-+			WRITE_ONCE(vars->prob, 0);
- 	}
- 
- 	/* Non-linear drop in probability: Reduce drop probability quickly if
-@@ -396,7 +396,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 		/* Reduce drop probability to 98.4% */
- 		vars->prob -= vars->prob / 64;
- 
--	vars->qdelay = qdelay;
-+	WRITE_ONCE(vars->qdelay, qdelay);
- 	vars->backlog_old = backlog;
- 
- 	/* We restart the measurement cycle if the following conditions are met
-@@ -494,21 +494,21 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct tc_pie_xstats st = {
- 		.prob		= q->vars.prob << BITS_PER_BYTE,
--		.delay		= ((u32)PSCHED_TICKS2NS(q->vars.qdelay)) /
-+		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
- 				   NSEC_PER_USEC,
--		.packets_in	= q->stats.packets_in,
--		.overlimit	= q->stats.overlimit,
--		.maxq		= q->stats.maxq,
--		.dropped	= q->stats.dropped,
--		.ecn_mark	= q->stats.ecn_mark,
-+		.packets_in	= READ_ONCE(q->stats.packets_in),
-+		.overlimit	= READ_ONCE(q->stats.overlimit),
-+		.maxq		= READ_ONCE(q->stats.maxq),
-+		.dropped	= READ_ONCE(q->stats.dropped),
-+		.ecn_mark	= READ_ONCE(q->stats.ecn_mark),
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 47b5a056165cb..056895df17854 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -568,6 +568,8 @@ static int fq_codel_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
  	};
+ 	struct list_head *pos;
  
- 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
- 	st.dq_rate_estimating = q->params.dq_rate_estimator;
++	sch_tree_lock(sch);
++
+ 	st.qdisc_stats.maxpacket = q->cstats.maxpacket;
+ 	st.qdisc_stats.drop_overlimit = q->drop_overlimit;
+ 	st.qdisc_stats.ecn_mark = q->cstats.ecn_mark;
+@@ -576,7 +578,6 @@ static int fq_codel_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ 	st.qdisc_stats.memory_usage  = q->memory_usage;
+ 	st.qdisc_stats.drop_overmemory = q->drop_overmemory;
  
- 	/* unscale and return dq_rate in bytes per sec */
--	if (q->params.dq_rate_estimator)
--		st.avg_dq_rate = q->vars.avg_dq_rate *
-+	if (st.dq_rate_estimating)
-+		st.avg_dq_rate = READ_ONCE(q->vars.avg_dq_rate) *
- 				 (PSCHED_TICKS_PER_SEC) >> PIE_SCALE;
+-	sch_tree_lock(sch);
+ 	list_for_each(pos, &q->new_flows)
+ 		st.qdisc_stats.new_flows_len++;
  
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
