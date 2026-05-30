@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EFE332EA7;
-	Sat, 30 May 2026 17:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACBB34BA42;
+	Sat, 30 May 2026 17:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163921; cv=none; b=enilvbwfuaKNxVU84IYTUTaSFRFF7LfvlFPdithDUGffxn8iQ/wi4plDPHxLgXnFFsxXYyAE5togBpmM8IR1fNuVWN4RPmn6deX/66aevFjgAJJLE3u1u1AZATk7iFDXUfLV3iZiNh1vLMxAnX6F4rQCMNtoxOesUH1rRQYR+F0=
+	t=1780163924; cv=none; b=FMgpDt4bssxlFt14zyik0r5LFTpAcb/cX20n1TIJ7kMptj6TYyuTmjmO50lHwUCe6yS01Rcd40i8xoJoJgVy99voMONl44tIJIJkB3/wQKwnQSfeJGFbnl3D/a/hhTMPunUAW4Gt7rTA9vFmnbOwPnTJL1KRQf5mGfXx8RA0Qqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163921; c=relaxed/simple;
-	bh=lmVEf9p58E3zLk3G607EQGjPLRyp4PK18cQZwQZgJq4=;
+	s=arc-20240116; t=1780163924; c=relaxed/simple;
+	bh=mVTsKJLSXiKom39VWGyqqqsQ1PftTHDydjaM3AznrsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noXLoi3eY3560Ir5xnYnFxIT2muL4vD73jhkQLVyg3cLTFrIJlnr5itxC2Z5+xxdOv86k7GcK32oQHMgASWExDNgH+vVE1STIvyRWV5xX7zOv9T7u+LpSNOvC6K1hq8rkeKnqb0Oogh9cm5KyjvxSy+Y+f7T4wOLf0y/rIVzvX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlw43Ckr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JM4VEVYk8vN2wNN5RrASaJ9iJXfzDXxshuH0rQ5r4CCpURt7qABpEUHpmHQOjjdjr277vefFKKSWzHJ7oDx6y/PQ5KM5xxY6A2qjE2XJlRFnt/qb32t606yxClkssz98FJlRe/nr+usRq8kDCaUxDg37e0TzUu6BXOU1bL4xWAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7OT3HlU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlw43Ckr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5568B1F00893;
-	Sat, 30 May 2026 17:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7OT3HlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12AF1F00893;
+	Sat, 30 May 2026 17:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163920;
-	bh=ZJujABl5rm7BGQD5tX97CLQQSywD9D99/PnMk5Yqdeo=;
+	s=korg; t=1780163923;
+	bh=Y2mP+smPqBzqys6CXol5cG5TTl6ml3Covrm3LrnRbZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlw43CkrdCInT2xHa7+w6LDHvKIEmVZTmXEDAJYaj9ExHlnq0jAPp9jjQjnfwE0ku
-	 eNHSlZEh3hmGiukRkA0GmujFGjGtEuJ7iW1u5fDEGYDUr2JtY3sGUKvKsPoRW/WWCS
-	 t18pmHJ+ku2Z3W8KmPQF4zkZVg92pLdny0Q6cdks=
+	b=T7OT3HlUtkIEtNMFyVcDvUGV1p6M9two05XDd5i8fm9col2U1NY/1yS+PJA0CsHHD
+	 ZoDvT/6lWtqvwlOQBkZNAYYqsLaqxpGMyJD1J9NkUq6EUjbMO9mAR+2HyBPCEMFL7q
+	 Ye8ynUmKWhobI3t7x+Hk8NcbgNIyK7GiEx2Pjhj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Thorsten Blum <thorsten.blum@toblux.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 402/776] module: Fix freeing of charp module parameters when CONFIG_SYSFS=n
-Date: Sat, 30 May 2026 18:01:56 +0200
-Message-ID: <20260530160250.895366720@linuxfoundation.org>
+Subject: [PATCH 5.15 403/776] bpf, devmap: Remove unnecessary if check in for loop
+Date: Sat, 30 May 2026 18:01:57 +0200
+Message-ID: <20260530160250.920035290@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,126 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Thorsten Blum <thorsten.blum@toblux.com>
 
-[ Upstream commit deffe1edba626d474fef38007c03646ca5876a0e ]
+[ Upstream commit 2317dc2c22cc353b699c7d1db47b2fe91f54055c ]
 
-When setting a charp module parameter, the param_set_charp() function
-allocates memory to store a copy of the input value. Later, when the module
-is potentially unloaded, the destroy_params() function is called to free
-this allocated memory.
+The iterator variable dst cannot be NULL and the if check can be removed.
+Remove it and fix the following Coccinelle/coccicheck warning reported
+by itnull.cocci:
 
-However, destroy_params() is available only when CONFIG_SYSFS=y, otherwise
-only a dummy variant is present. In the unlikely case that the kernel is
-configured with CONFIG_MODULES=y and CONFIG_SYSFS=n, this results in
-a memory leak of charp values when a module is unloaded.
+	ERROR: iterator variable bound on line 762 cannot be NULL
 
-Fix this issue by making destroy_params() always available when
-CONFIG_MODULES=y. Rename the function to module_destroy_params() to clarify
-that it is intended for use by the module loader.
-
-Fixes: e180a6b7759a ("param: fix charp parameters set via sysfs")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20240529101900.103913-2-thorsten.blum@toblux.com
+Stable-dep-of: 8ed82f807bb0 ("bpf: Use RCU-safe iteration in dev_map_redirect_multi() SKB path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/moduleparam.h | 11 +++--------
- kernel/module.c             |  4 ++--
- kernel/params.c             | 27 ++++++++++++++++++---------
- 3 files changed, 23 insertions(+), 19 deletions(-)
+ kernel/bpf/devmap.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index 061e19c94a6bc..f73ca4d62683b 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -392,14 +392,9 @@ extern char *parse_args(const char *name,
- 				     const char *doing, void *arg));
- 
- /* Called by module remove. */
--#ifdef CONFIG_SYSFS
--extern void destroy_params(const struct kernel_param *params, unsigned num);
--#else
--static inline void destroy_params(const struct kernel_param *params,
--				  unsigned num)
--{
--}
--#endif /* !CONFIG_SYSFS */
-+#ifdef CONFIG_MODULES
-+void module_destroy_params(const struct kernel_param *params, unsigned int num);
-+#endif
- 
- /* All the helper functions */
- /* The macros to do compile-time type checking stolen from Jakub
-diff --git a/kernel/module.c b/kernel/module.c
-index 07fa34461fa2f..b6409b0032b85 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -2179,7 +2179,7 @@ static void free_module(struct module *mod)
- 	module_unload_free(mod);
- 
- 	/* Free any allocated parameters. */
--	destroy_params(mod->kp, mod->num_kp);
-+	module_destroy_params(mod->kp, mod->num_kp);
- 
- 	if (is_livepatch_module(mod))
- 		free_module_elf(mod);
-@@ -4166,7 +4166,7 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 	mod_sysfs_teardown(mod);
-  coming_cleanup:
- 	mod->state = MODULE_STATE_GOING;
--	destroy_params(mod->kp, mod->num_kp);
-+	module_destroy_params(mod->kp, mod->num_kp);
- 	blocking_notifier_call_chain(&module_notify_list,
- 				     MODULE_STATE_GOING, mod);
- 	klp_module_going(mod);
-diff --git a/kernel/params.c b/kernel/params.c
-index 9a76f556b898a..1233673b42ecc 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -743,15 +743,6 @@ void module_param_sysfs_remove(struct module *mod)
- }
- #endif
- 
--void destroy_params(const struct kernel_param *params, unsigned num)
--{
--	unsigned int i;
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 2bfdca506a4de..6274cf7011901 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -758,9 +758,6 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+ 		for (i = 0; i < dtab->n_buckets; i++) {
+ 			head = dev_map_index_hash(dtab, i);
+ 			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
+-				if (!dst)
+-					continue;
 -
--	for (i = 0; i < num; i++)
--		if (params[i].ops->free)
--			params[i].ops->free(params[i].arg);
--}
--
- struct module_kobject * __init_or_module
- lookup_or_create_module_kobject(const char *name)
- {
-@@ -971,3 +962,21 @@ static int __init param_sysfs_init(void)
- subsys_initcall(param_sysfs_init);
- 
- #endif /* CONFIG_SYSFS */
-+
-+#ifdef CONFIG_MODULES
-+
-+/*
-+ * module_destroy_params - free all parameters for one module
-+ * @params: module parameters (array)
-+ * @num: number of module parameters
-+ */
-+void module_destroy_params(const struct kernel_param *params, unsigned int num)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < num; i++)
-+		if (params[i].ops->free)
-+			params[i].ops->free(params[i].arg);
-+}
-+
-+#endif /* CONFIG_MODULES */
+ 				if (is_ifindex_excluded(excluded_devices, num_excluded,
+ 							dst->dev->ifindex))
+ 					continue;
 -- 
 2.53.0
 
