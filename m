@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974B81B87C0;
-	Sat, 30 May 2026 18:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4659F1B87C0;
+	Sat, 30 May 2026 18:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166543; cv=none; b=DL8/ZvILjvqn/2ZK/ZbBto1zSYUwsTDCBAd7/sjG7JdLGlvUBymFl7T2rImHBwZyj1c7bczjpBlymc+VrJ7diTEV56nLEIN2IWiYmfIT96tmrbuALTxWdEDcnw1q/HJrAblrb3u1Np4zWD9oeVre74rOxqCKsYSOUSMtHgIse24=
+	t=1780166547; cv=none; b=n59XFVnKoKLn5GCImPwGuDoXZw9lRrglEmJRjSfw1H6Fq26buHWY8QuWo/NaaiEKnS8JzexXITqfqRQ03C3f+SFWYhfUFGgo9qoTiBC5iN9QVNnFICF7em9/E2Tvcpo14wbZmpcy07JkNWpmBQurQx6TNlPgrlqlF7PgFn/igkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166543; c=relaxed/simple;
-	bh=B7ZxGYDjU6HD6o6dj3CejK6AnMHidhLDv+knA/u3qB0=;
+	s=arc-20240116; t=1780166547; c=relaxed/simple;
+	bh=my5cB2PoejEGoFLWmc6+ssPXxtmEjvZAlshDtwRK+ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMKnkmAb392JqiRfQuT3Q2LH197knXd4e9pdO79rbvvginrcxB1H4qDE0UNn2lakqtN5iE1nsPT0Ng7jlgEJWU8SE6xEjajJTCUZBx7yjCMTvXrIR1BLWi0kOeFOjCNhEhm/iN/7khjb43N88j71IRu4LUBdz+Sr/AAsIoCwmAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIEoVclx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sgTvGEmBYCClEUD974Cy9mZSbmbAQqr2weTnFo9jskuluM4GzeP1F/lwrSRJ/JDPou2woi8L4jWe4st5U+gW+urISQ/1Yjqf0cA4ehAepHpd0+G5JqprNfH8epOhuGcDEcFfg1w070jrb8WEweZ3X1bN8Gkuq6eV7ZOFUQWynXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjRSfkTp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIEoVclx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153FE1F00893;
-	Sat, 30 May 2026 18:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjRSfkTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA941F00893;
+	Sat, 30 May 2026 18:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166542;
-	bh=sMBjUf6A6s0RKPaa37xkrD6QK59bAWS6JFCc8rjyNiY=;
+	s=korg; t=1780166545;
+	bh=vldivRbONLcfQ1Pze3aos30OyfqkjprcvzDMczMb6yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIEoVclxtnR63cNiJpxPoRBXoQuIMDcxxvnDH+mRmRJZ32Y/6oiKAmT8GRfLr7P2m
-	 6L4GfaVKGVIqdFU5VNVRUruTzXwJao7boe5jMSRPEkmYVhuL6AlOzNwwSbN+T4KTue
-	 sr3q7wG++weN1eovRBhaQEHmJmvM8Ya5P2Q9Fq10=
+	b=BjRSfkTpDkx1v45eHwz18L9Lx0/7bFyK5asjKlG6wKvCCv2ftFWPuZUsHFAJXcTPs
+	 wZChliqNvXQWg6EB4TSNIPP/QzJ5UKpmuZhxKNUXLcH3R69jMHb2Wm+sHmTt8mzoNl
+	 TLzmRP5yqEX3eqlNgUkNCD1b7IYy+EItqezGgn+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 359/589] efi/capsule-loader: fix incorrect sizeof in phys array reallocation
-Date: Sat, 30 May 2026 18:04:00 +0200
-Message-ID: <20260530160234.286325713@linuxfoundation.org>
+Subject: [PATCH 5.10 395/589] platform/x86: dell_rbu: avoid uninit value usage in packet_size_write()
+Date: Sat, 30 May 2026 18:04:36 +0200
+Message-ID: <20260530160235.168140739@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,56 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 48a428215782321b56956974f23593e40ce84b7a ]
+[ Upstream commit f8fd138c2363c0e2d3235c32bfb4fb5c6474e4ae ]
 
-The krealloc() call for cap_info->phys in __efi_capsule_setup_info() uses
-sizeof(phys_addr_t *) instead of sizeof(phys_addr_t), which might be
-causing an undersized allocation.
+Ensure the temp value has been properly parsed from the user-provided
+buffer and initialized to be used in later operations.  While at it,
+prefer a convenient kstrtoul() helper.
 
-The allocation is also inconsistent with the initial array allocation in
-efi_capsule_open() that allocates one entry with sizeof(phys_addr_t),
-and the efi_capsule_write() function that stores phys_addr_t values (not
-pointers) via page_to_phys().
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-On 64-bit systems where sizeof(phys_addr_t) == sizeof(phys_addr_t *), this
-goes unnoticed. On 32-bit systems with PAE where phys_addr_t is 64-bit but
-pointers are 32-bit, this allocates half the required space, which might
-lead to a heap buffer overflow when storing physical addresses.
-
-This is similar to the bug fixed in commit fccfa646ef36 ("efi/capsule-loader:
-fix incorrect allocation size") which fixed the same issue at the initial
-allocation site.
-
-Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
-Assisted-by: Claude:claude-sonnet-4-5
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: ad6ce87e5bd4 ("[PATCH] dell_rbu: changes in packet update mechanism")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260403134240.604837-1-pchelkin@ispras.ru
+[ij: add include]
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/capsule-loader.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/dell_rbu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
-index 97bafb5f70389..c6a8bdbcae71b 100644
---- a/drivers/firmware/efi/capsule-loader.c
-+++ b/drivers/firmware/efi/capsule-loader.c
-@@ -67,7 +67,7 @@ int __efi_capsule_setup_info(struct capsule_info *cap_info)
- 	cap_info->pages = temp_page;
+diff --git a/drivers/platform/x86/dell_rbu.c b/drivers/platform/x86/dell_rbu.c
+index 68a860a97f319..39c6013cad342 100644
+--- a/drivers/platform/x86/dell_rbu.c
++++ b/drivers/platform/x86/dell_rbu.c
+@@ -30,6 +30,7 @@
+ #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
  
- 	temp_page = krealloc(cap_info->phys,
--			     pages_needed * sizeof(phys_addr_t *),
-+			     pages_needed * sizeof(phys_addr_t),
- 			     GFP_KERNEL | __GFP_ZERO);
- 	if (!temp_page)
- 		return -ENOMEM;
+ #include <linux/init.h>
++#include <linux/kstrtox.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+@@ -617,9 +618,12 @@ static ssize_t packet_size_write(struct file *filp, struct kobject *kobj,
+ 				 char *buffer, loff_t pos, size_t count)
+ {
+ 	unsigned long temp;
++
++	if (kstrtoul(buffer, 10, &temp))
++		return -EINVAL;
++
+ 	spin_lock(&rbu_data.lock);
+ 	packet_empty_list();
+-	sscanf(buffer, "%lu", &temp);
+ 	if (temp < 0xffffffff)
+ 		rbu_data.packetsize = temp;
+ 
 -- 
 2.53.0
 
