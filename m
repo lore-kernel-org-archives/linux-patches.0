@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4241C1D63E4;
-	Sat, 30 May 2026 18:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002811D63E4;
+	Sat, 30 May 2026 18:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167000; cv=none; b=EG6tanRwAAQNyGqaY8xHRRynI7sHWw6+FWXehpcuvcWgEnd2fcNGlzz8H515eCIhcznCBkqlOZ0nFL2/Ld1kx7XmdOOvmBzW8VIKJaTa/wjt0wivmFSnybkGNz3/jP2ERb2BPIIHdFEcHK+x/tERvmftiUJ64Vmcw+wQizK/oDw=
+	t=1780167003; cv=none; b=jkkRTKzoFYSBGnEIQhqDRxNISBP/pUPk2AYdeTgY5GhEvmtUsjLd0t5AS+41VRo8SFIUUQNmYlw8TCZjc7YVJ6X0QyDO3b2bvwKNXyFwL7eO0S4wnwEFC7IB0JJrCg5nNq3DxXrWegyYgM53whzukfNQMzGWfyqGcnmDD/WPvxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167000; c=relaxed/simple;
-	bh=ooikgxw1fGitCVnjG58UC4I1IbnCbIagXfkGr3o4SOo=;
+	s=arc-20240116; t=1780167003; c=relaxed/simple;
+	bh=TYg6d56Ot0lc47KQf86ud6Q0qfQ9oXB0pTDG6G41ru8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9CrSV1WACnc58Cv4htYfO0vhC8+nGprGjnIS4zhiSiDKVhdCRVbeoeLJ6hELiprYh2gflbQhbyUtFjvD/v4G8KdEJyJMp8b9dqMrJbiMVG4MXDaH16xZHRc9S86QcKBcr0JSFdhVSDbeR1d3KmeNzk+tYwtVD6UfnaKTfAhDIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uA4DtF9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCdFFjDCM4Eebgu/G0ryYOpZ3By190qDgwmHb3n28kT45GqD+SZXq0tmPN6J+81b1lIVBpSLX9vuDe+vmZW3dELNCKpt25xvn+gg70oUS25c6cZtqsWzwE+aRLeZl4ZglvTKCAswvlA8X7VQxBOgtlwe3eSz62CyTOnpld7uXCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bscYb6YS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uA4DtF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801F31F00893;
-	Sat, 30 May 2026 18:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bscYb6YS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C361F00893;
+	Sat, 30 May 2026 18:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166999;
-	bh=EFg9lBlbwVE1nliQQXvxmxbL6nyFw25OH0RMPHR/830=;
+	s=korg; t=1780167002;
+	bh=JXNdA446Rfs+NIv7cV73Dq0N46al87NB9auvdunpGds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2uA4DtF97Rd9EahX/LTgcIeJFE8iiapnWHIkLNpTuQUY+fd6whMFB5K9fsrNSHxbu
-	 BLcAAndmfDwj71pUPpN8hV4z32RSI9S6OjaD3bDvURENJGMvNp8jKn3Sfb4NHtLa1e
-	 vp3ekWR7rwGfFgdRZbEd1UTl8FlD/UxfIzi+H/ek=
+	b=bscYb6YShlgZz2dwBBqkU8akhI3zDd2e2neTTbuf2P5kPoTcQHSrSEGyKyXcgh35h
+	 GlW9+CHGa5oVyy7ujp6A73w6IncJVGUs3haVn4qylmzeCgbJxoDm8GlD0xpU2C4NPu
+	 JkwAxBJkJr7EX9VhIMK6LJ4aU/ia2nE77bkF6cN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 534/589] net: bcmgenet: keep RBUF EEE/PM disabled
-Date: Sat, 30 May 2026 18:06:55 +0200
-Message-ID: <20260530160238.735259751@linuxfoundation.org>
+	DeepChirp <DeepChirp@outlook.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 5.10 508/589] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
+Date: Sat, 30 May 2026 18:06:29 +0200
+Message-ID: <20260530160237.949059332@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,62 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 9a1730245e416d11ad5c0f2c100061d61cc43f60 upstream.
+commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
 
-Setting RBUF_EEE_EN | RBUF_PM_EN in RBUF_ENERGY_CTRL breaks the RX
-path on GENET hardware once MAC EEE becomes active. RX traffic stops
-flowing while the link stays up and the usual descriptor/RX error
-counters remain quiet. In that state the MAC still accepts frames
-(rbuf_ovflow_cnt keeps climbing) but RBUF no longer forwards them to
-DMA, so rx_packets is no longer incremented at the netdev level. On
-some boards the corruption ends up as a paging fault in
-skb_release_data via bcmgenet_rx_poll on an LPI exit.
+For RGB, set dynamic_range to CTA or VESA based on
+crtc_state->limited_color_range so sinks apply correct
+quantization. YCbCr remains limited (CTA) range.
+(DP v1.4, Table 5-1)
 
-Reproduced on Pi 4B (BCM2711 + BCM54213PE) and confirmed by Florian
-Fainelli on an internal Broadcom 4908-family board with the same crash
-signature. RBUF_PM_EN is not publicly documented.
+v2:
+- Added Reported-by and Tested-by tags
 
-This shows up more often now that phy_support_eee() enables EEE by
-default, but it also affects older kernels as soon as TX LPI is
-turned on via ethtool, so it is not specific to recent changes.
+v3:
+- Add back YCbCr comment(Suraj)
 
-Always clear RBUF_EEE_EN | RBUF_PM_EN in bcmgenet_eee_enable_set so
-the bits stay off across resets. UMAC and TBUF setup is left alone so
-TX-side EEE keeps working.
-
-Link: https://github.com/raspberrypi/linux/issues/7304
-Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260520184320.652053-1-nb@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org #v5.8+
+Reported-by: DeepChirp <DeepChirp@outlook.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
+Tested-by: DeepChirp <DeepChirp@outlook.com>
+Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
+Assisted-by: GitHub-Copilot:GPT-5.4
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1271,13 +1271,12 @@ void bcmgenet_eee_enable_set(struct net_
- 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
- 	bcmgenet_writel(reg, priv->base + off);
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2589,8 +2589,13 @@ static void intel_dp_compute_vsc_colorim
+ 	drm_WARN_ON(&dev_priv->drm,
+ 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
  
--	/* Do the same for thing for RBUF */
-+	/* RBUF EEE/PM can break the RX path on GENET. Keep it disabled. */
- 	reg = bcmgenet_rbuf_readl(priv, RBUF_ENERGY_CTRL);
--	if (enable)
--		reg |= RBUF_EEE_EN | RBUF_PM_EN;
--	else
-+	if (reg & (RBUF_EEE_EN | RBUF_PM_EN)) {
- 		reg &= ~(RBUF_EEE_EN | RBUF_PM_EN);
--	bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+		bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+	}
+-	/* all YCbCr are always limited range */
+-	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++	/* All YCbCr formats are always limited range. */
++	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
++		vsc->dynamic_range = crtc_state->limited_color_range ?
++			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
++	else
++		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++
+ 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
+ }
  
- 	if (!enable && priv->clk_eee_enabled) {
- 		clk_disable_unprepare(priv->clk_eee);
 
 
