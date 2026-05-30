@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F33130E847;
-	Sat, 30 May 2026 17:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F4130E847;
+	Sat, 30 May 2026 17:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161722; cv=none; b=Intq3ElY2fpTt57vFVzCooWHJ60nMReGx9OGcc/X8FgUFQWD+AA7tg2Z94JbH/19MEwaq6ZHrhLU5xlodko/w6RnnMDdnlgKVl60GcJgDa/mI6eTidougDUZbnkBwPvGmeTrKBIEyAF3nWrKBl0tqkgsgMPFHWXtq18Y5ZYqhL4=
+	t=1780161725; cv=none; b=hM+b31+7gbKVcOFhNSlfw7EF9CVHijWuNJJovNpOFgwfs+KJtRr1RD58BALQlZyx5Xyag9BWpmFg3wnSbuu6DXpFM1XsvlKFbDT2Ed8Zn+wbos9UXaeMkiEbvLCMVU61MfRWfAK/8DQeI4DwWOqyAf7Ys1DMOmnhTiVKvv0mtv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161722; c=relaxed/simple;
-	bh=eMBibLZZA4AWsKPs1mWc+FJUoYJSWxP05SzjSE97wJs=;
+	s=arc-20240116; t=1780161725; c=relaxed/simple;
+	bh=tawY1J5sOA6re14/cWjBiuZV6BIlJPuZyCZ/Qo8tob0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXaxcDSiHGTh2PA0LjIKa/pvoUw80BNzT0N9LRrvEe3XuxquG8a1hM5SxtALOWF0FxmttEPjJxbGteO0uIjMeUVDtxqc9Kqbz+B4yB6+ni8Ntxk0DK7Do6Y6E1qOwwCoFZAxvNROJ+CnkGuPb1MWJ7BrtUlrySFkErEC6u/dYU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws0GDdgx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXwhznALSZUJGp8Q/aTnPH7KU3DP414npSyi3XtvCKh8qn4q6JXCzrSPqgdZKswcGjpUnx4h5VSLN55gswN8Ssuj9x0EBAfW4UM0Y0OQyRilLvmc0lwFzdHcjUzH9P1z0nEb8ZOPoKCgN6U+/pmtNep/1i2dToD8JnAsHP/7r8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj50Ju/y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws0GDdgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AA81F00893;
-	Sat, 30 May 2026 17:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj50Ju/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288B61F00893;
+	Sat, 30 May 2026 17:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161721;
-	bh=Ml1DiEQk5hYx6l1Rffbfnx/lPfb+PfqwwcEF0fDoUdM=;
+	s=korg; t=1780161724;
+	bh=YegqxE6r3EOVHvDNpxLDv17wtQBAXJRWWnGPpBB268g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ws0GDdgx2DKiUwQnP0GGRx+b58+HCxVJRwkND+WCddHsNLLOhh2042/HkD75uaD+U
-	 +IrbIJrIH9/JaWn/XU+zc1Ca35tMWIAWa6+hK3J3e4LDzrjtHBbJ2zG1WrVa2ldEFq
-	 k4y0D0mL5Gvc/CjcdiMd6CTgz8zN6ZJl7QYxcsOM=
+	b=Tj50Ju/y5qUOw/LZwKLOLQcXF6kKGm0ECPp7CThyZxg+TU1uug+RZobKSD3iBi5aN
+	 HeeuykkULvi6X0eXb5KDIn2jlggkTb9GRqY340YwA68YhRqFEDwY2TPgv+mFxQUVa+
+	 7JPGzqaLgKLFdVk74os2xeblnz4ilkR9wOFmdW1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 708/969] slip: bound decode() reads against the compressed packet length
-Date: Sat, 30 May 2026 18:03:52 +0200
-Message-ID: <20260530160320.077534267@linuxfoundation.org>
+Subject: [PATCH 6.1 709/969] arm64: dts: meson-gxl-p230: fix ethernet PHY interrupt number
+Date: Sat, 30 May 2026 18:03:53 +0200
+Message-ID: <20260530160320.107581315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,156 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 4c1367a2d7aad643a6f87c6931b13cc1a25e8ca7 ]
+[ Upstream commit 174a0ef3b33434f475c87e66f37980e39b73805a ]
 
-slhc_uncompress() parses a VJ-compressed TCP header by advancing a
-pointer through the packet via decode() and pull16(). Neither helper
-bounds-checks against isize, and decode() masks its return with
-& 0xffff so it can never return the -1 that callers test for -- those
-error paths are dead code.
+Correct the interrupt number assigned to the Realtek PHY in the p230
 
-A short compressed frame whose change byte requests optional fields
-lets decode() read past the end of the packet. The over-read bytes
-are folded into the cached cstate and reflected into subsequent
-reconstructed packets.
+following the same logic as commit 3106507e1004 ("ARM64: dts: meson-gxm:
+fix q200 interrupt number"),as reported in [PATCH 0/2] Ethernet PHY
+interrupt improvements [1].
 
-Make decode() and pull16() take the packet end pointer and return -1
-when exhausted. Add a bounds check before the TCP-checksum read.
-The existing == -1 tests now do what they were always meant to.
+[1] https://lore.kernel.org/all/20171202214037.17017-1-martin.blumenstingl@googlemail.com/
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260414134126.758795-2-horms@kernel.org/
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260416100147.531855-5-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b94d22d94ad2 ("ARM64: dts: meson-gx: add external PHY interrupt on some platforms")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260330145111.115318-1-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 43 ++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index 3474792a37a67..ef586ab250747 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -80,9 +80,9 @@
- #include <asm/unaligned.h>
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+index c1470416faade..36e97ed585ae7 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+@@ -84,7 +84,8 @@ external_phy: ethernet-phy@0 {
+ 		reset-gpios = <&gpio GPIOZ_14 GPIO_ACTIVE_LOW>;
  
- static unsigned char *encode(unsigned char *cp, unsigned short n);
--static long decode(unsigned char **cpp);
-+static long decode(unsigned char **cpp, const unsigned char *end);
- static unsigned char * put16(unsigned char *cp, unsigned short x);
--static unsigned short pull16(unsigned char **cpp);
-+static long pull16(unsigned char **cpp, const unsigned char *end);
- 
- /* Allocate compression data structure
-  *	slots must be in range 0 to 255 (zero meaning no compression)
-@@ -190,30 +190,34 @@ encode(unsigned char *cp, unsigned short n)
- 	return cp;
- }
- 
--/* Pull a 16-bit integer in host order from buffer in network byte order */
--static unsigned short
--pull16(unsigned char **cpp)
-+/* Pull a 16-bit integer in host order from buffer in network byte order.
-+ * Returns -1 if the buffer is exhausted, otherwise the 16-bit value.
-+ */
-+static long
-+pull16(unsigned char **cpp, const unsigned char *end)
- {
--	short rval;
-+	long rval;
- 
-+	if (*cpp + 2 > end)
-+		return -1;
- 	rval = *(*cpp)++;
- 	rval <<= 8;
- 	rval |= *(*cpp)++;
- 	return rval;
- }
- 
--/* Decode a number */
-+/* Decode a number. Returns -1 if the buffer is exhausted. */
- static long
--decode(unsigned char **cpp)
-+decode(unsigned char **cpp, const unsigned char *end)
- {
- 	int x;
- 
-+	if (*cpp >= end)
-+		return -1;
- 	x = *(*cpp)++;
--	if(x == 0){
--		return pull16(cpp) & 0xffff;	/* pull16 returns -1 on error */
--	} else {
--		return x & 0xff;		/* -1 if PULLCHAR returned error */
--	}
-+	if (x == 0)
-+		return pull16(cpp, end);
-+	return x & 0xff;
- }
- 
- /*
-@@ -499,6 +503,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	struct cstate *cs;
- 	int len, hdrlen;
- 	unsigned char *cp = icp;
-+	const unsigned char *end = icp + isize;
- 
- 	/* We've got a compressed packet; read the change byte */
- 	comp->sls_i_compressed++;
-@@ -536,6 +541,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	thp = &cs->cs_tcp;
- 	ip = &cs->cs_ip;
- 
-+	if (cp + 2 > end)
-+		goto bad;
- 	thp->check = *(__sum16 *)cp;
- 	cp += 2;
- 
-@@ -566,26 +573,26 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	default:
- 		if(changes & NEW_U){
- 			thp->urg = 1;
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->urg_ptr = htons(x);
- 		} else
- 			thp->urg = 0;
- 		if(changes & NEW_W){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->window = htons( ntohs(thp->window) + x);
- 		}
- 		if(changes & NEW_A){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->ack_seq = htonl( ntohl(thp->ack_seq) + x);
- 		}
- 		if(changes & NEW_S){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->seq = htonl( ntohl(thp->seq) + x);
-@@ -593,7 +600,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 		break;
- 	}
- 	if(changes & NEW_I){
--		if((x = decode(&cp)) == -1) {
-+		if((x = decode(&cp, end)) == -1) {
- 			goto bad;
- 		}
- 		ip->id = htons (ntohs (ip->id) + x);
+ 		interrupt-parent = <&gpio_intc>;
+-		interrupts = <29 IRQ_TYPE_LEVEL_LOW>;
++		/* MAC_INTR on GPIOZ_15 */
++		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+ 		eee-broken-1000t;
+ 	};
+ };
 -- 
 2.53.0
 
