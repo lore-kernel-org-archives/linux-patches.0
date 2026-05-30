@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A1733E36A;
-	Sat, 30 May 2026 17:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF337340293;
+	Sat, 30 May 2026 17:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161820; cv=none; b=X+/9TFudT3mddux1uunxDi9jUodb4WaYzigC7HPZzJtAFiRWe8oLMfyAGgwzWTbd/fb9Gh3frPK4t/MeMkLXd9DZ4NqzOtUqUdKXfoj4vTT63r8n4mnrJFKBE3NsHaBt8r13nfTxR1I3yQX/9p3z7wk2pi1LR7sFwvWn5nuFzM8=
+	t=1780161823; cv=none; b=kUmYxZubAU7YaDYLOtoyd6bggzVM3Zgn9ANYpX01GVAsS1HtcENZRgVR3V04Ah4+6NvuoNb5zo5COYzrYnos+lMsy4vQi8i3eZgu9dZnSySWcLwimhkKHv3GDwMSigIiKJyfRg5LRhupVcTa5pHe8ChEPUuHq2RlYkkZarVyLyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161820; c=relaxed/simple;
-	bh=CTfCbwUp0TwMA70soEGgTtzAYWNjcKSP0Flc9cF8RMI=;
+	s=arc-20240116; t=1780161823; c=relaxed/simple;
+	bh=SIIsNrtTEMh+Qw+ORh0OHRCCjNIxI3mOUUczk5cM1HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k94mujpxazLJluNMWhPmm5wx2NEe+P8Ax5plvni0G09g33fnE4kBsoD08sO1HuLpB16ZubraQH2hdi6a8uDy5D5I0rj09FvfAhrqdD+kz1kJSrhyRP9Rky7you7LtezAO3fRWOiupzvJC0AVAfZa2M5pwGG+qiWlB3oU9yi5dMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTu5wreM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uQ3p8+PS1ZcomN5hxP2y+hQbXgNiCpKLEfI5BEdDYNUxFfMLN6vZVdiWzQdEl6Do0HQXoBvSB5z8/Q1NbN7ZuVd2hbON6xuBuC595zWWCOL1oT7n2ri0AqS/C+zzvu7OTHlcPeZx4y4Pa5PLS/+uCxKHW6QYbzNR9mig57olpGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gb+Fa/6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTu5wreM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D0B1F00893;
-	Sat, 30 May 2026 17:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gb+Fa/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B731F00893;
+	Sat, 30 May 2026 17:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161819;
-	bh=yPJN1e7rzPNkMCt0OApgNjIOF0U4KnW2mRPbIuZVB+A=;
+	s=korg; t=1780161822;
+	bh=wf/dlg6fSIVZTjcj2GvMmV9zAT0pu807dTvf+BVwyK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTu5wreMcZgOxp3nEJdu8qDE5yPK5ZzCo5aCVprLjn/wy/4iSobOWB1K6r1tQ8Gn5
-	 0267ykDHnbhG0R3x8aJEuWNXz1/tEv+7XrOpu/eyoJkmvRpUqhu4Vd9ruu4EPP1vnv
-	 TTWStJq87zpoH6dFMBdqa6P9aJjy9Mqq84FHhWDI=
+	b=2gb+Fa/6PF2vbPZSgKx5V6Wv61Kpt9OBGfZgbQ29vhXPuaaZ92kb/55RSy5CmvLM0
+	 PwxCRKXoQb9GIpcyd7NSqqyRLXZ5CBMv5CliP5LAAXjRF282j3LFLkGr/vU4XdEKLh
+	 Lch40QHLgGzg4Lnqk633KKZklyu1+8YdlyfsUU+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Joe Damato <joe@dama.to>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 696/969] ipv6: fix possible UAF in icmpv6_rcv()
-Date: Sat, 30 May 2026 18:03:40 +0200
-Message-ID: <20260530160319.734648615@linuxfoundation.org>
+Subject: [PATCH 6.1 730/969] mailbox: mailbox-test: make data_ready a per-instance variable
+Date: Sat, 30 May 2026 18:04:14 +0200
+Message-ID: <20260530160320.702876657@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,69 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit f996edd7615e686ada141b7f3395025729ff8ccb ]
+[ Upstream commit 6e937f4e769e60947909e3525965f0137b9039e8 ]
 
-Caching saddr and daddr before pskb_pull() is problematic
-since skb->head can change.
+While not the default case, multiple tests can be run simultaneously.
+Then, data_ready being a global variable will be overwritten and the
+per-instance lock will not help. Turn the global variable into a
+per-instance one to avoid this problem.
 
-Remove these temporary variables:
-
-- We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr
-  when net_dbg_ratelimited() is called in the slow path.
-
-- Avoid potential future misuse after pskb_pull() call.
-
-Fixes: 4b3418fba0fe ("ipv6: icmp: include addresses in debug messages")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260416103505.2380753-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e339c80af95e ("mailbox: mailbox-test: don't rely on rx_buffer content to signal data ready")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/mailbox/mailbox-test.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 80eabb22d144f..877cb5e8ded7b 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -889,7 +889,6 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 	struct net *net = dev_net(skb->dev);
- 	struct net_device *dev = icmp6_dev(skb);
- 	struct inet6_dev *idev = __in6_dev_get(dev);
--	const struct in6_addr *saddr, *daddr;
- 	struct icmp6hdr *hdr;
- 	u8 type;
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 41efe64976598..113858fe168c3 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -27,8 +27,6 @@
+ #define MBOX_HEXDUMP_MAX_LEN	(MBOX_HEXDUMP_LINE_LEN *		\
+ 				 (MBOX_MAX_MSG_LEN / MBOX_BYTES_PER_LINE))
  
-@@ -920,12 +919,10 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 
- 	__ICMP6_INC_STATS(dev_net(dev), idev, ICMP6_MIB_INMSGS);
- 
--	saddr = &ipv6_hdr(skb)->saddr;
--	daddr = &ipv6_hdr(skb)->daddr;
+-static bool mbox_data_ready;
 -
- 	if (skb_checksum_validate(skb, IPPROTO_ICMPV6, ip6_compute_pseudo)) {
- 		net_dbg_ratelimited("ICMPv6 checksum failed [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
- 		goto csum_error;
+ struct mbox_test_device {
+ 	struct device		*dev;
+ 	void __iomem		*tx_mmio;
+@@ -41,6 +39,7 @@ struct mbox_test_device {
+ 	spinlock_t		lock;
+ 	struct mutex		mutex;
+ 	wait_queue_head_t	waitq;
++	bool			data_ready;
+ 	struct fasync_struct	*async_queue;
+ 	struct dentry		*root_debugfs_dir;
+ };
+@@ -161,7 +160,7 @@ static bool mbox_test_message_data_ready(struct mbox_test_device *tdev)
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&tdev->lock, flags);
+-	data_ready = mbox_data_ready;
++	data_ready = tdev->data_ready;
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
+ 
+ 	return data_ready;
+@@ -226,7 +225,7 @@ static ssize_t mbox_test_message_read(struct file *filp, char __user *userbuf,
+ 	*(touser + l) = '\0';
+ 
+ 	memset(tdev->rx_buffer, 0, MBOX_MAX_MSG_LEN);
+-	mbox_data_ready = false;
++	tdev->data_ready = false;
+ 
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
+ 
+@@ -296,7 +295,7 @@ static void mbox_test_receive_message(struct mbox_client *client, void *message)
+ 				     message, MBOX_MAX_MSG_LEN);
+ 		memcpy(tdev->rx_buffer, message, MBOX_MAX_MSG_LEN);
  	}
+-	mbox_data_ready = true;
++	tdev->data_ready = true;
+ 	spin_unlock_irqrestore(&tdev->lock, flags);
  
-@@ -1007,7 +1004,8 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 			break;
- 
- 		net_dbg_ratelimited("icmpv6: msg of unknown type [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
- 
- 		/*
- 		 * error of unknown type.
+ 	wake_up_interruptible(&tdev->waitq);
 -- 
 2.53.0
 
