@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335533F590;
-	Sat, 30 May 2026 17:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAF833F8A4;
+	Sat, 30 May 2026 17:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163087; cv=none; b=up5rGocl82E2+eCvJJXpLpCQyXR7bxNbxS+9VFTx/aBG2pVJM08r4m55YC95Ej5832h8DGMWs3FAupRyy0g0wGoIqYQPR+0N6DTdfW4nUHDtb7QagJPoZo1eMc4JyiaDi5q0dBZ82DoBkkcB5B0q+8pKjrvu6SS3vmFhVmYRQ6s=
+	t=1780163089; cv=none; b=QzMhiyUb5VUkbt9phJEz2jzI/htQqOVibJE7vHtjEA/h9y3WMPd+ztqWWnaLCitJpClWoBXrj4t65lFb2/TK3igVi1FtBE5423XABjkybWBSmEJUXF0azhNAYRhUlU6skqXcQagPQVkYG6Pgs5lZ3qerHyTXf5Lrs37x0GbLVXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163087; c=relaxed/simple;
-	bh=6m/JMIDDVEeBZk1tHxjUS+2z8sLL7Jj6DedrazIei5I=;
+	s=arc-20240116; t=1780163089; c=relaxed/simple;
+	bh=YCg8vbrGxw9WoaTLWwDi6O2R+zYNfl5VRFsCR9SUy7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjVjRaj+9BK5A/mUwqfWXx0Y0SKyORVn6wwXqAgQDIxmTqJ+rpIT5D4yMcHCmlr2J178FF+QyWEl35uOcHd3oN2QyIYr5o2ts2H67toGjUZqB1bZonq29DInMiSOiVzorzDgZUU/++aSNlU4dMbkvBLXZiRbGzPpqwAyGKj0lAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kodXujcQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkeFdGGJ6vDBEv7MQgH6buBpeiGVgBCXOl3/E1ppl88m2B7AaAy2mmJYIjJEOrbgtNjGRh+H2nfGM6NbzWM0srJj/flmJfHTAGIsdDLe8XcYzwxx7+FaN+pA76OD68faDWUPmn2Z/rpdQOYC6wmqkX+/jU38d8fMWPoHrBHuQ1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU90Wi+R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kodXujcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65011F00893;
-	Sat, 30 May 2026 17:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU90Wi+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2881F00893;
+	Sat, 30 May 2026 17:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163085;
-	bh=DoPJYEd2GLCiqQQNnyEoTZN2p5sLobybNwvimTE5wcE=;
+	s=korg; t=1780163088;
+	bh=nGgF4VCKHlUK+QP3iCNG5ORWKXrhvOBNKCA7GMfN7xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kodXujcQqjaGWi8OBdf1iY+/OP7rn7XPgLB3NsBiGQHMDpQ8oFJWMHugCGFIQrbl5
-	 kK9lkQRRCu5uPrfjD4/vMcRMTdZt++mU151VZUUmWUYms4XMdtBxJjIrdstLxgP8iS
-	 jp02oHo1uheRJWMj+YuBXrdRs8UBeP3EvPkgR3fQ=
+	b=UU90Wi+R4rhAVaLlNJLHNVpiwtGo//tFetV/Ed5R7Go2xkHLRmEXtuXwratTnQlkK
+	 zdipGdeT406z0I+KPTAg8XqbAtO7R+h4FYlvXmxYYh+LEDe/nNqGjZkXrNyAW6a0WC
+	 zhq0P30iNgqKJ3+HhLcrwNrmdNp9M8uIo+nNAY3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 5.15 150/776] vdpa: Add max vqp attr to vdpa_nl_policy for nlattr length check
-Date: Sat, 30 May 2026 17:57:44 +0200
-Message-ID: <20260530160244.333253840@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 151/776] f2fs: fix to trigger foreground gc during f2fs_map_blocks() in lfs mode
+Date: Sat, 30 May 2026 17:57:45 +0200
+Message-ID: <20260530160244.361182742@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,42 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 5d6ba607d6cb5c58a4ddf33381e18c83dbb4098f ]
+[ Upstream commit 1005a3ca28e90c7a64fa43023f866b960a60f791 ]
 
-The vdpa_nl_policy structure is used to validate the nlattr when parsing
-the incoming nlmsg. It will ensure the attribute being described produces
-a valid nlattr pointer in info->attrs before entering into each handler
-in vdpa_nl_ops.
+w/ "mode=lfs" mount option, generic/299 will cause system panic as below:
 
-That is to say, the missing part in vdpa_nl_policy may lead to illegal
-nlattr after parsing, which could lead to OOB read just like CVE-2023-3773.
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.c:2835!
+Call Trace:
+ <TASK>
+ f2fs_allocate_data_block+0x6f4/0xc50
+ f2fs_map_blocks+0x970/0x1550
+ f2fs_iomap_begin+0xb2/0x1e0
+ iomap_iter+0x1d6/0x430
+ __iomap_dio_rw+0x208/0x9a0
+ f2fs_file_write_iter+0x6b3/0xfa0
+ aio_write+0x15d/0x2e0
+ io_submit_one+0x55e/0xab0
+ __x64_sys_io_submit+0xa5/0x230
+ do_syscall_64+0x84/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0010:new_curseg+0x70f/0x720
 
-This patch adds the missing nla_policy for vdpa max vqp attr to avoid
-such bugs.
+The root cause of we run out-of-space is: in f2fs_map_blocks(), f2fs may
+trigger foreground gc only if it allocates any physical block, it will be
+a little bit later when there is multiple threads writing data w/
+aio/dio/bufio method in parallel, since we always use OPU in lfs mode, so
+f2fs_map_blocks() does block allocations aggressively.
 
-Fixes: ad69dd0bf26b ("vdpa: Introduce query of device config layout")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Cc: stable@vger.kernel.org
-Message-Id: <20230727175757.73988-7-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-[ Minor context conflict resolved. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+In order to fix this issue, let's give a chance to trigger foreground
+gc in prior to block allocation in f2fs_map_blocks().
+
+Fixes: 36abef4e796d ("f2fs: introduce mode=lfs mount option")
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ The context change is due to the commit 2f51ade9524c
+("f2fs: f2fs_do_map_lock") in v6.3 which is irrelevant to
+the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/vdpa.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/data.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/vdpa/vdpa.c
-+++ b/drivers/vdpa/vdpa.c
-@@ -847,6 +847,7 @@ static const struct nla_policy vdpa_nl_p
- 	[VDPA_ATTR_MGMTDEV_BUS_NAME] = { .type = NLA_NUL_STRING },
- 	[VDPA_ATTR_MGMTDEV_DEV_NAME] = { .type = NLA_STRING },
- 	[VDPA_ATTR_DEV_NAME] = { .type = NLA_STRING },
-+	[VDPA_ATTR_DEV_NET_CFG_MAX_VQP] = { .type = NLA_U16 },
- };
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1523,8 +1523,11 @@ int f2fs_map_blocks(struct inode *inode,
+ 	}
  
- static const struct genl_ops vdpa_nl_ops[] = {
+ next_dnode:
+-	if (map->m_may_create)
++	if (map->m_may_create) {
++		if (f2fs_lfs_mode(sbi))
++			f2fs_balance_fs(sbi, true);
+ 		f2fs_do_map_lock(sbi, flag, true);
++	}
+ 
+ 	/* When reading holes, we need its node page */
+ 	set_new_dnode(&dn, inode, NULL, NULL, 0);
 
 
