@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854C725B0BC;
-	Sat, 30 May 2026 17:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609C13AFCF3;
+	Sat, 30 May 2026 17:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163116; cv=none; b=AwHxIUyOY8TnnSH1ke2Qu4aKZt2KlPl8ujwNGgXVvOob0el4FPy5/rbZSgCnXIINoBSpRsO8tHrLVAug9N4YHhg0cYJ/XszjmCk1MGUW5LZHXyz08pm82X5grlOYiaHehI9Dwmu6vtIAqgFOUnazg5IFcQNE4pdcPPaKK0m9DSA=
+	t=1780163119; cv=none; b=toOIEKqQzudOReQGvJ9dm7x+zBpXwHIlCQ6nf8ruj1PVu/bh6bqPndt9BwMiracTbks0cR/KxQ4ZINI9HpHtShoyCkJo5hhzbCUn2t/89IItZiryysCv1Bl0vaWegcqAdMjAMmPhrzDR4mLen+8sihitIDrxKrU1YYnIXk71PwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163116; c=relaxed/simple;
-	bh=0Xs0DVOwvvzyLUn9S9E43mBp5AeUPfKFEv/yjmw/qcE=;
+	s=arc-20240116; t=1780163119; c=relaxed/simple;
+	bh=mAPGqFe3RzcBmoqgNIbOY8t6TTeeLvsIVr7wUfEuzG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmY68VpVYN0d2oKay9705S156Bpu5EDOfWWkXm4k+oyRdrJnjWpy8Xi9hbkE3C9RvQwqpnp0NRHcSl3aDDR+BZWo5di8EnJXDSmO4tKrPuNGvM50Hf2If51cW2zWlEyCyrguNuxUlzxrDx9ARujVQgTxREnsEBn+EjVnJ+1AB9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2Lal82j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ig841/AghZ4ozkkFxVdiiA9Hk/SXe0dy0n4BJwf+sgaGPCSKKhlYnRvqDB1vLP+or+wb0mWHPrkqthKgpgDep317QPTIiC/lrGty+984rv/uxGwFQOE1jEDTj1FE6EDzR/eUOe2Cj8oY6wwRFhLDlFbkFpntXdSrh1I7D0BC2vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oo1wUykg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2Lal82j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD6B1F00893;
-	Sat, 30 May 2026 17:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo1wUykg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED41F00893;
+	Sat, 30 May 2026 17:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163115;
-	bh=sAs+Qtma3DNUenqVBRgeL4c9rNc8WnxRUZzLJaz7RbQ=;
+	s=korg; t=1780163118;
+	bh=FDGAC7QYcPnNyNp2ackx0H9I+pUaXq1Y+sO95r2R+dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2Lal82jepk45clMsDT6H4/lLDWQRKUYh7Y615Mc4h2nWYNzsBjwYGXW94lyulmgO
-	 X6j5XefGh7QihAHzXjw7SvZQhK7kxlcYi6hLGByFqNYUbcPcpFvRwPxF+ORHViQA0X
-	 yrkNEeFmubRaaMaNJ9Ak5l94ybHYaA7FERNf8oqs=
+	b=Oo1wUykgWGECvzvlJXXAIp0YeZM0cSTA8b0qXrCWJZHsSP1hehx+NbOtDTk1QJfQU
+	 C/u9YBBuNhslw0eCBd3OuF/fhO+tHwR+UmkIJw2Ek/lEZcofcS4qhu1KTbf8trwxd4
+	 gNeKJmW21JIfVB3Ig7EDca69QWyGHYf+8LT1eRD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 158/776] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
-Date: Sat, 30 May 2026 17:57:52 +0200
-Message-ID: <20260530160244.554496856@linuxfoundation.org>
+Subject: [PATCH 5.15 113/776] ocfs2: fix possible deadlock between unlink and dio_end_io_write
+Date: Sat, 30 May 2026 17:57:07 +0200
+Message-ID: <20260530160243.283245634@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,53 +59,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e ]
+[ Upstream commit b02da26a992db0c0e2559acbda0fc48d4a2fd337 ]
 
-When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
-kobject_put(&dbs_data->attr_set.kobj).
+ocfs2_unlink takes orphan dir inode_lock first and then ip_alloc_sem,
+while in ocfs2_dio_end_io_write, it acquires these locks in reverse order.
+This creates an ABBA lock ordering violation on lock classes
+ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE] and
+ocfs2_file_ip_alloc_sem_key.
 
-The kobject release callback cpufreq_dbs_data_release() calls
-gov->exit(dbs_data) and kfree(dbs_data), but the current error path
-then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
-double free.
+Lock Chain #0 (orphan dir inode_lock -> ip_alloc_sem):
+ocfs2_unlink
+  ocfs2_prepare_orphan_dir
+    ocfs2_lookup_lock_orphan_dir
+      inode_lock(orphan_dir_inode) <- lock A
+    __ocfs2_prepare_orphan_dir
+      ocfs2_prepare_dir_for_insert
+        ocfs2_extend_dir
+	  ocfs2_expand_inline_dir
+	    down_write(&oi->ip_alloc_sem) <- Lock B
 
-Keep the direct kfree(dbs_data) for the gov->init() failure path, but
-after kobject_init_and_add() has been called, let kobject_put() handle
-the cleanup through cpufreq_dbs_data_release().
+Lock Chain #1 (ip_alloc_sem -> orphan dir inode_lock):
+ocfs2_dio_end_io_write
+  down_write(&oi->ip_alloc_sem) <- Lock B
+  ocfs2_del_inode_from_orphan()
+    inode_lock(orphan_dir_inode) <- Lock A
 
-Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Deadlock Scenario:
+  CPU0 (unlink)                     CPU1 (dio_end_io_write)
+  ------                            ------
+  inode_lock(orphan_dir_inode)
+                                    down_write(ip_alloc_sem)
+  down_write(ip_alloc_sem)
+                                    inode_lock(orphan_dir_inode)
+
+Since ip_alloc_sem is to protect allocation changes, which is unrelated
+with operations in ocfs2_del_inode_from_orphan.  So move
+ocfs2_del_inode_from_orphan out of ip_alloc_sem to fix the deadlock.
+
+Link: https://lkml.kernel.org/r/20260306032211.1016452-1-joseph.qi@linux.alibaba.com
+Reported-by: syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=67b90111784a3eac8c04
+Fixes: a86a72a4a4e0 ("ocfs2: take ip_alloc_sem in ocfs2_dio_get_block & ocfs2_dio_end_io_write")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_governor.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ocfs2/aops.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
- 	/* Failure, so roll back. */
- 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2322,8 +2322,6 @@ static int ocfs2_dio_end_io_write(struct
+ 		goto out;
+ 	}
  
--	kobject_put(&dbs_data->attr_set.kobj);
+-	down_write(&oi->ip_alloc_sem);
 -
- 	policy->governor_data = NULL;
+ 	/* Delete orphan before acquire i_rwsem. */
+ 	if (dwc->dw_orphaned) {
+ 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+@@ -2336,6 +2334,7 @@ static int ocfs2_dio_end_io_write(struct
+ 			mlog_errno(ret);
+ 	}
  
- 	if (!have_governor_per_policy())
- 		gov->gdbs_data = NULL;
--	gov->exit(dbs_data);
-+
-+	kobject_put(&dbs_data->attr_set.kobj);
-+	goto free_policy_dbs_info;
++	down_write(&oi->ip_alloc_sem);
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
  
- free_dbs_data:
- 	kfree(dbs_data);
+ 	ocfs2_init_dinode_extent_tree(&et, INODE_CACHE(inode), di_bh);
 
 
