@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0F42E7390;
-	Sat, 30 May 2026 18:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5A2E7390;
+	Sat, 30 May 2026 18:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165277; cv=none; b=RWf/bEjltwe3f2RtsZlv4lY5P1yqQMmL6i7HNHyjog751uELdwROwXGznrWi7WV67beZRtT1oMVzbjFU29jvrH/K6VEGE4SiPvpUp96SpfjsNcRCk9HL4sxuw+pSV4CDjF9Lk72n487PnUFVu78umtRnhKrbue9SsVdiIfzPyRM=
+	t=1780165280; cv=none; b=L3TX36v0BjYYrEXZD3IGn+JdL4i9wA2T5SPFAgv7po9iWIe8jXU0w87t2+oz13SkAaXVVLJgPiuxwOLCljFqVpxV1Pg2j2W8XFQiPB2n3KhIG121lT4RvVvyJBI89ueLWgUGQ5oZbHMG3wXtKWx/G4jidnsG2GEi6cCZd74Kwy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165277; c=relaxed/simple;
-	bh=LebFFfE30qX3AYvfwTVTiTZe53jwG2eYUsztAq449bk=;
+	s=arc-20240116; t=1780165280; c=relaxed/simple;
+	bh=LC8nYf3II/3iCH3xypaufJepryUCFcvimGUfmvbZYyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6KPrmrjx6yt//YLw6+hmY2+Y5QjNKvhrFSD+kjfWsMtooaacymcib8hVmeoS2hX4w8laXLz167ziNaXFM7udmCIew14aYGbeNALyVneDkckvNsLHLb62/IZWWLXWZ73vDjaJwcNWOVlfq3wyDWLpqRQBJOcGdxG5R1AhVaxYkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+vwS9L+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2d8NHO+z3b4wpAGaMUYyyC75SFWjUBnyrWFIrykLmsLtPGu294hExh/FRQw3OWjVc/t2a9DsmC8aQ3TjQTutRQqfPYNwBCjRehXlRrbTwVpQfqnK4LeMLiZZILjhAt95Ila5TWJ+y3zi1fiSSKutFPw0ENPnOq3QXB9npWGCJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6xnAUoM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+vwS9L+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8660F1F00893;
-	Sat, 30 May 2026 18:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6xnAUoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4381F00893;
+	Sat, 30 May 2026 18:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165276;
-	bh=Hz0qjmcnztyeup4vzaNZ7ji1r2MCeN5svdW8RBWT7Bg=;
+	s=korg; t=1780165279;
+	bh=/ijhUwSq/7jqBaIMgBY4Z9ANLQAtq00kontjcj46kNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+vwS9L+4wXYilVicU+IfMpiAfmGUUHrR+cD86nVq65hLftCpxHOSa+xGLMtJ70Ou
-	 OPtupJpbe1XLkGQ+dg1C+Eh9JWV3xT2SeHSWiWhOBXZ6ktyVz7ggNKTHcJr4V92rTi
-	 ftdxaYdag5w9b2kjKjTjIM6iXOLnxTmgwdzO3vK4=
+	b=s6xnAUoM5i4HZSNFM7a973hceGUVliaB99yQPa19UIQKmsj6l10Q1ajm2kQeZYrBA
+	 MwYeBmDrUzmb/rDVwTC4rM0YG4Cv5IeKsOLsjHKWNENwSyMmK+V8wRVMK7Z+Mli6fq
+	 p2zB/J0Yrqttom0JNcqas56cCxV2Rvaa78uf/UFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Husband <artmoty@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/589] ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585
-Date: Sat, 30 May 2026 17:58:12 +0200
-Message-ID: <20260530160224.874395115@linuxfoundation.org>
+Subject: [PATCH 5.10 012/589] wifi: brcmfmac: validate bsscfg indices in IF events
+Date: Sat, 30 May 2026 17:58:13 +0200
+Message-ID: <20260530160224.901479845@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,81 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arthur Husband <artmoty@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 105c42566a550e2d05fc14f763216a8765ee5d0e ]
+[ Upstream commit 304950a467d83678bd0b0f46331882e2ac23b12d ]
 
-The JMicron JMB585 (and JMB582) SATA controllers advertise 64-bit DMA
-support via the S64A bit in the AHCI CAP register, but their 64-bit DMA
-implementation is defective. Under sustained I/O, DMA transfers targeting
-addresses above 4GB silently corrupt data -- writes land at incorrect
-memory addresses with no errors logged.
+brcmf_fweh_handle_if_event() validates the firmware-provided interface
+index before it touches drvr->iflist[], but it still uses the raw
+bsscfgidx field as an array index without a matching range check.
 
-The failure pattern is similar to the ASMedia ASM1061
-(commit 20730e9b2778 ("ahci: add 43-bit DMA address quirk for ASMedia
-ASM1061 controllers")), which also falsely advertised full 64-bit DMA
-support. However, the JMB585 requires a stricter 32-bit DMA mask rather
-than 43-bit, as corruption occurs with any address above 4GB.
+Reject IF events whose bsscfg index does not fit in drvr->iflist[]
+before indexing the interface array.
 
-On the Minisforum N5 Pro specifically, the combination of the JMB585's
-broken 64-bit DMA with the AMD Family 1Ah (Strix Point) IOMMU causes
-silent data corruption that is only detectable via checksumming
-filesystems (BTRFS/ZFS scrub). The corruption occurs when 32-bit IOVA
-space is exhausted and the kernel transparently switches to 64-bit DMA
-addresses.
-
-Add device-specific PCI ID entries for the JMB582 (0x0582) and JMB585
-(0x0585) before the generic JMicron class match, using a new board type
-that combines AHCI_HFLAG_IGN_IRQ_IF_ERR (preserving existing behavior)
-with AHCI_HFLAG_32BIT_ONLY to force 32-bit DMA masks.
-
-Signed-off-by: Arthur Husband <artmoty@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn
+[add missing wifi prefix]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 2bb9555663e75..b3661495906f2 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -61,6 +61,7 @@ enum board_ids {
- 	/* board IDs for specific chipsets in alphabetical order */
- 	board_ahci_al,
- 	board_ahci_avn,
-+	board_ahci_jmb585,
- 	board_ahci_mcp65,
- 	board_ahci_mcp77,
- 	board_ahci_mcp89,
-@@ -200,6 +201,15 @@ static const struct ata_port_info ahci_port_info[] = {
- 		.udma_mask	= ATA_UDMA6,
- 		.port_ops	= &ahci_avn_ops,
- 	},
-+	/* JMicron JMB582/585: 64-bit DMA is broken, force 32-bit */
-+	[board_ahci_jmb585] = {
-+		AHCI_HFLAGS	(AHCI_HFLAG_IGN_IRQ_IF_ERR |
-+				 AHCI_HFLAG_32BIT_ONLY),
-+		.flags		= AHCI_FLAG_COMMON,
-+		.pio_mask	= ATA_PIO4,
-+		.udma_mask	= ATA_UDMA6,
-+		.port_ops	= &ahci_ops,
-+	},
- 	[board_ahci_mcp65] = {
- 		AHCI_HFLAGS	(AHCI_HFLAG_NO_FPDMA_AA | AHCI_HFLAG_NO_PMP |
- 				 AHCI_HFLAG_YES_NCQ),
-@@ -436,6 +446,10 @@ static const struct pci_device_id ahci_pci_tbl[] = {
- 	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
- 	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_low_power }, /* Elkhart Lake AHCI */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+index 1285d3685c4f5..51260a0c8e0a7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+@@ -151,6 +151,11 @@ static void brcmf_fweh_handle_if_event(struct brcmf_pub *drvr,
+ 		bphy_err(drvr, "invalid interface index: %u\n", ifevent->ifidx);
+ 		return;
+ 	}
++	if (ifevent->bsscfgidx >= BRCMF_MAX_IFS) {
++		bphy_err(drvr, "invalid bsscfg index: %u\n",
++			 ifevent->bsscfgidx);
++		return;
++	}
  
-+	/* JMicron JMB582/585: force 32-bit DMA (broken 64-bit implementation) */
-+	{ PCI_VDEVICE(JMICRON, 0x0582), board_ahci_jmb585 },
-+	{ PCI_VDEVICE(JMICRON, 0x0585), board_ahci_jmb585 },
-+
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
- 	  PCI_CLASS_STORAGE_SATA_AHCI, 0xffffff, board_ahci_ign_iferr },
+ 	ifp = drvr->iflist[ifevent->bsscfgidx];
+ 
 -- 
 2.53.0
 
