@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B2C2E92B3;
-	Sat, 30 May 2026 16:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15632E92B3;
+	Sat, 30 May 2026 16:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160301; cv=none; b=liKRjfJ6pXrKr716mD2WnTOQUKiM9y30dDR6+svcpqcTnOv5I0f+t1qoQDjdTy0KSFOj7VpCaFL9COa2peZ3G+rgeErg4qneXKKK6PKJ2LaaohwU/eNzKSEZChNSSleTx3h655OsemSa+kuZlEHPorjM1RnTVqBKgsUGqfHRlNs=
+	t=1780160305; cv=none; b=aISr0V9GBvU+HpvyqRET1ILWJuWFGBKO2QMerLA7J8itQTnePuwH6LhBNk62V3KMmZABeKc/h8FnnTut7QBnTxaMfLGVh600x20DIHk+dJi+SBekIib90Fd4nfPbPf37Kt3xKOG9DubI/z/PPPoGapkdqHH11Bfx7RB7/TaIA7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160301; c=relaxed/simple;
-	bh=t/8P4OZR2Tmgry3chVCOeuTASRLHYf5uFKAEufYeyR8=;
+	s=arc-20240116; t=1780160305; c=relaxed/simple;
+	bh=NIf7+V54M/i4hvFiIAPxnk7OrkInf9V6C7pcxPi5n/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nX+5MhHUkYV2zeVKzMANfe0o50EJ3dSWQlR2QGnbWlYhrf0vPvqBVPQpeG2IbpQ0sfFm+ZKDDqQS+EzUVGsPf+mSs3Gf0DSyXux5EDF96kyfDxlKQweUTLVyCW5AWR72bueRURvskUEWXJ5UwMymqe8egkATbGB35X7vtatWZOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gydzsjBr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uHu37B0EPtEnhUVMile3R5Y4wV6L+SAEym1et4xvCO7kJAGe7n/wkLxDmffDZVl2k1E4tKb6BMo/2t4SRt47pYU6d0nYXsZW/iwbOaEbk4+UBEgi/6ewHFJtMOIlXn7Ov6Dj6p7Dnm7o3BN1b7MWIS0CgJZDfFpMBG1bL2NFqTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxQCWYh2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gydzsjBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647FD1F00893;
-	Sat, 30 May 2026 16:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxQCWYh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256811F00893;
+	Sat, 30 May 2026 16:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160300;
-	bh=x0E0xoJEVUy40I4tbeD5RrdGvfpYcKx4gNZkYINwTqk=;
+	s=korg; t=1780160303;
+	bh=jCTLugJUK47HrA3Nh+KMVmqtglDIwH3jw1j2vuvQAxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gydzsjBrW+Dz27g61B3f6ZOXqKU/ZsZB7U7q8HIch/Doum+WD8V7sMvtSqMrbmqBw
-	 5RktmVnwztIpS+b1ogBst0Wg8+ujIA63Ff1fMI3xV797AfhP0/s5aomE0+QdKM+UqN
-	 OS98yxt4113Lc0RrdiE0/wFPk9/7TS2z+y7gkgv4=
+	b=hxQCWYh2/WfInugu7MyG70Enr9fwPAQIc/jbJZAUrMuyWVO8CmZvlVT6YOw3GbX4f
+	 oobs7aswrXfibkm5351IrA3knj02jk8g7JJkKk3sESPahJlIT+wv2OrYhgMZ0MVHf4
+	 nomkmXN4/p4iSssL7h+F0DLYe4TQIiT2ZQ5BSptg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 299/969] exit: prevent preemption of oopsing TASK_DEAD task
-Date: Sat, 30 May 2026 17:57:03 +0200
-Message-ID: <20260530160308.694821501@linuxfoundation.org>
+	Leon Yen <leon.yen@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.1 300/969] wifi: mt76: mt7921: fix a potential clc buffer length underflow
+Date: Sat, 30 May 2026 17:57:04 +0200
+Message-ID: <20260530160308.720888713@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Leon Yen <leon.yen@mediatek.com>
 
-commit c1fa0bb633e4a6b11e83ffc57fa5abe8ebb87891 upstream.
+commit 5373f8b19e568b5c217832b9bbef165bd2b2df14 upstream.
 
-When an already-exiting task oopses, make_task_dead() currently calls
-do_task_dead() with preemption enabled.  That is forbidden:
-do_task_dead() calls __schedule(), which has a comment saying "WARNING:
-must be called with preemption disabled!".
+The buf_len is used to limit the iterations for retrieving the country
+power setting and may underflow under certain conditions due to changes
+in the power table in CLC.
 
-If an oopsing task is preempted in do_task_dead(), between becoming
-TASK_DEAD and entering the scheduler explicitly, bad things happen:
-finish_task_switch() assumes that once the scheduler has switched away
-from a TASK_DEAD task, the task can never run again and its stack is no
-longer needed; but that assumption apparently doesn't hold if the dead
-task was preempted (the SM_PREEMPT case).
+This underflow leads to an almost infinite loop or an invalid power
+setting resulting in driver initialization failure.
 
-This means that the scheduler ends up repeatedly dropping references on
-the dead task's stack, which can lead to use-after-free or double-free
-of the entire task stack; in other words, two tasks can end up running
-on the same stack, resulting in various kinds of memory corruption.
-
-(This does not just affect "recursively oopsing" tasks; it is enough to
-oops once during task exit, for example in a file_operations::release
-handler)
-
-Fixes: 7f80a2fd7db9 ("exit: Stop poorly open coding do_task_dead in make_task_dead")
-Cc: stable@kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: fa6ad88e023d ("wifi: mt76: mt7921: fix country count limitation for CLC")
+Signed-off-by: Leon Yen <leon.yen@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20251009020158.1923429-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -979,6 +979,7 @@ void __noreturn make_task_dead(int signr
- 		futex_exit_recursive(tsk);
- 		tsk->exit_state = EXIT_DEAD;
- 		refcount_inc(&tsk->rcu_users);
-+		preempt_disable();
- 		do_task_dead();
- 	}
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -1054,6 +1054,9 @@ int __mt7921_mcu_set_clc(struct mt7921_d
+ 		u16 len = le16_to_cpu(rule->len);
+ 		u16 offset = len + sizeof(*rule);
  
++		if (buf_len < offset)
++			break;
++
+ 		pos += offset;
+ 		buf_len -= offset;
+ 		if (rule->alpha2[0] != alpha2[0] ||
 
 
