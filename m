@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB733AE18D;
-	Sat, 30 May 2026 17:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0C03AEB5C;
+	Sat, 30 May 2026 17:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163799; cv=none; b=bn2RrSiH42ME68zKFWo+VjWecOM+mMh6jjzLFnjoEJCMZieAIcwO8AC0iECkcvQjARtzd6wWkt/Ik3aHFR5wFyNbr7KT3EOkMlXzUkx21a094b4BXPGA1lGsD863xoa/MnLLfX53toA3gSUbTP2CE/pJTjx8RNnDvHdljwLZqUs=
+	t=1780163803; cv=none; b=MuRv2Ix3Wad11DODLf0jXB2Zs3n8KT1iLzchCeZbrdVeq9fCAGHTfYuBW2hgEQd9q894CuYvcPalHX3mQMS7LvDHa2F2tuUZZbXNCRTMcTI/ENtHz3X1vbE9VTHoCWE2FSJ0pmciGTNxRpyZBqNcc1ZluRE5Y8UwZ/aXPSKToZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163799; c=relaxed/simple;
-	bh=TmVaN5ffozNe+wa9jtSPHUAjrUXm1PEtzt4sMCDz+Kg=;
+	s=arc-20240116; t=1780163803; c=relaxed/simple;
+	bh=vdXD4nuqPjTDTT9HBBUZURPueE4q+5ZJDVRr3gx60AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Es+f/4llzng4okz5USzm2UfyPp3X6lFr+jxSxjjyA7jUmbhp/0iXOkCaU/g6CfKbwwhJaB9eJrlrsOq+dLhnEI9M/70/Eoh/EtMqmRwI+qK9EMsP7QFLuFKErsOfkFb5G4yU7mIYSM8niVXEjWgJUS+FMJWagSB8vG51oww8U2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iqfhlrcz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rxogrN/RRV19CXfxk46hz7x7WqWsBZF96yVSk7RwA3FWhxJ1PowlHrRgb8DzgnDKCyigrn4n+TA4moe3ZA31Wf66A2cInwDM2CWQGzZXJCiGM68TbXemNyCUhacF9sPbpKJ/VnsF5qrm+C4fbqM5gGAaVyYsik7iII6f11TZa6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYxn42Bk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iqfhlrcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637D1F00893;
-	Sat, 30 May 2026 17:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYxn42Bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14811F00893;
+	Sat, 30 May 2026 17:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163798;
-	bh=pJbDoTYde8XV3kynzujdtWiKJCgcA+Wg4s2EB2PrzBU=;
+	s=korg; t=1780163801;
+	bh=PDZlJZLQ4Axl2xP27eHBk5Eql+GZsZTtnquVhFzZCzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IqfhlrczBVF1P1EaxptULZk2L69OiRFJWu6FLhC5TDn2B6mKkh/A4dZ02sXCj7GFb
-	 LTa1L06DJ7NnbOuR5mb65n2gdlgEHS+6CgeE4F3a1Nb7hz/dOeCMtF1p41YRwhWKWa
-	 +7qqaSd1cVFtk41OLWl/PEPfjYIM3taU1LlFSIKc=
+	b=hYxn42Bk5yqSWL7lYsZduNFmkgWHYmwp1+G3+lLp7NiHbqx51W8n3SIUg/mTrl0VR
+	 oHFY9fxHijhCKmWYNILfvbbvVC685Olpp4BqKI0ZUzJLtG5Hur1+Nbr3o5muVgeYUz
+	 maFaolVGu6hcNWPJfCbkFdsuSV0x4fKL/Ig04R+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.15 324/776] cpuidle: powerpc: avoid double clear when breaking snooze
-Date: Sat, 30 May 2026 18:00:38 +0200
-Message-ID: <20260530160248.944135851@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 359/776] media: dib8000: avoid division by 0 in dib8000_set_dds()
+Date: Sat, 30 May 2026 18:01:13 +0200
+Message-ID: <20260530160249.854031753@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,59 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit 64ed1e3e728afb57ba9acb59e69de930ead847d9 upstream.
+commit dde3c37af95cd6fa301c4906f33d627bc9dd874c upstream.
 
-snooze_loop is done often in any system which has fair bit of
-idle time. So it qualifies for even micro-optimizations.
+In dib8000_set_dds(), 1 << 26 (67108864) divided by e.g. 1 apparently can't
+fit into 16-bit variable unit_khz_dds_val, being truncated to 0; this will
+cause division by 0 while calling dprintk() with debugging enabled (via the
+module parameter).  Use s32 instead of s16 to declare the variable, getting
+rid of the cast to u16 in the *else* branch as well...
 
-When breaking the snooze due to timeout, TIF_POLLING_NRFLAG is cleared
-twice. Clearing the bit invokes atomics. Avoid double clear and thereby
-avoid one atomic write.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-dev->poll_time_limit indicates whether the loop was broken due to
-timeout. Use that instead of defining a new variable.
-
-Fixes: 7ded429152e8 ("cpuidle: powerpc: no memory barrier after break from idle")
+Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260311061709.1230440-1-sshegde@linux.ibm.com
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-powernv.c |    5 ++++-
- drivers/cpuidle/cpuidle-pseries.c |    5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/dvb-frontends/dib8000.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-powernv.c
-+++ b/drivers/cpuidle/cpuidle-powernv.c
-@@ -93,7 +93,10 @@ static int snooze_loop(struct cpuidle_de
+--- a/drivers/media/dvb-frontends/dib8000.c
++++ b/drivers/media/dvb-frontends/dib8000.c
+@@ -2694,7 +2694,7 @@ static void dib8000_viterbi_state(struct
  
- 	HMT_medium();
- 	ppc64_runlatch_on();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+	/* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
+ static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
+ {
+-	s16 unit_khz_dds_val;
++	s32 unit_khz_dds_val;
+ 	u32 abs_offset_khz = abs(offset_khz);
+ 	u32 dds = state->cfg.pll->ifreq & 0x1ffffff;
+ 	u8 invert = !!(state->cfg.pll->ifreq & (1 << 25));
+@@ -2715,7 +2715,7 @@ static void dib8000_set_dds(struct dib80
+ 			dds = (1<<26) - dds;
+ 	} else {
+ 		ratio = 2;
+-		unit_khz_dds_val = (u16) (67108864 / state->cfg.pll->internal);
++		unit_khz_dds_val = 67108864 / state->cfg.pll->internal;
  
- 	local_irq_disable();
- 
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -61,7 +61,10 @@ static int snooze_loop(struct cpuidle_de
- 	}
- 
- 	HMT_medium();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+       /* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
- 
- 	local_irq_disable();
- 
+ 		if (offset_khz < 0)
+ 			unit_khz_dds_val *= -1;
 
 
