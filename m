@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6413546EA;
-	Sat, 30 May 2026 17:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A6C2628D;
+	Sat, 30 May 2026 17:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163692; cv=none; b=hM1HAdFEd1YHGNZqwrjpezACXABA2dl5QnIvfVW2PzpvykfrJ2/o+LLC8SvVK5Wp9rjndz72PwZpi1JEjjmpAXXC7aeZKOmP18iC7zNTdloW3UXYk7va4wxagF0mBWd2DwzLhjLDfl1HWWKR0CRKjAU//DuU8FZqy1HTW8XsQ0M=
+	t=1780163696; cv=none; b=GtVXvWh8KaDdSCjJuikDnH4Dr4A5mns87Ne/xe5LmyTIteeEmXiDSbBKbtOaIgyuQarf7ACkSUnKD1PlZfQlq/cglW8Uv29xG07tPytErsif5NNMapdPnxb5v2VPjOZXv94Ood9BTS3Pl7iDtoH+KyxTt+ZIwBBKWlSjIKH41Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163692; c=relaxed/simple;
-	bh=TUu3ZineOpZ3oOm1jOfQNeGRCb1y1iu+DEYpgHzJcyA=;
+	s=arc-20240116; t=1780163696; c=relaxed/simple;
+	bh=9yCsUUcCBbx3uGDTs6g8bHdPlZCcjCCnit4p9n3r8Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0hasvLM5rY3kreUp1gwFnzHr7USbhHAY/80CFXUWyiwYWdYxRl++OIrPCwR89n+9rykq9jE/1rHThha1nlHb1XhagXAfpGUvD2c+PliCaLVLrXjSGBITkZf1d44ig8NneXRvO7Lu8wAox5ic6eGVe9kul1Pjre9n7ZyWwsPeF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJnC0Cx6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZGaO46RzywDMJIucmN0nyFLVuC3huFfGfVVJj3gHurh1Y5/9SJGkuGtBwVLG9ioDMPpOTnH3B/4NzFM4KdOgXsavjvw/4PbQei29UCzh8TKRz/blS2oS1bppJRMME//nI30Cn7oROTk6mec1RYYmk99qG+XbH1KbhoqIp3XEoFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAONZHaZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJnC0Cx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31EA1F00893;
-	Sat, 30 May 2026 17:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAONZHaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FAD1F00893;
+	Sat, 30 May 2026 17:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163691;
-	bh=oDX6V1MlxLU5Nz5huQZ1a5GQ1SUlS8VZ8f8dHvXoiL8=;
+	s=korg; t=1780163694;
+	bh=rp4dHnvpRGNLBvOF0PT3qLdOa5AvMfUNMaf1RLLQbt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vJnC0Cx6hY3mhdPkmZGm+3r/tlhucwNMqesXjSVo3Zk4G5B3DreeqzjABYxAK2AMa
-	 rhl+VvNPcVm6pMBfoxDauNbDhzl78Vhs5DYhtYf3dfXMAAPbWoxAAR7q3z5FVXQwxs
-	 DSQHw7OsiPVUr5/+FFrkjZey/9fL3jGIoz2rUO78=
+	b=mAONZHaZl48xQfxwRaGYVY92rMcrQ/i3eTmHCWqDp9uUndW9f2xCjSyqxFK4c7OFc
+	 j4JD6IdGSeDinpQsImeTWcOi4F/z7JDci5FwL981LVzXHsE8iX3DaxQD6m+hQimuF+
+	 7FzrVBkWJEhUwHONkWh/hUpsF8YkR22UgqrjkYJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 334/776] libceph: Fix slab-out-of-bounds access in auth message processing
-Date: Sat, 30 May 2026 18:00:48 +0200
-Message-ID: <20260530160249.204458907@linuxfoundation.org>
+	Junrui Luo <moonafterrain@outlook.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 5.15 335/776] md/raid10: fix divide-by-zero in setup_geo() with zero far_copies
+Date: Sat, 30 May 2026 18:00:49 +0200
+Message-ID: <20260530160249.229871916@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,59 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 1c439de70b1c3eb3c6bffa8245c16b9fc318f114 upstream.
+commit 9aa6d860b0930e2f72795665c42c44252a558a0c upstream.
 
-If a (potentially corrupted) message of type CEPH_MSG_AUTH_REPLY
-contains a positive value in its result field, it is treated as an
-error code by ceph_handle_auth_reply() and returned to
-handle_auth_reply(). Thereafter, an attempt is made to send the
-preallocated message of type CEPH_MSG_AUTH, where the returned value is
-interpreted as the size of the front segment to send. If the result
-value in the message is greater than the size of the memory buffer
-allocated for the front segment, an out-of-bounds access occurs, and
-the content of the memory region beyond this buffer is sent out.
+setup_geo() extracts near_copies (nc) and far_copies (fc) from the
+user-provided layout parameter without checking for zero. When fc=0
+with the "improved" far set layout selected, 'geo->far_set_size =
+disks / fc' triggers a divide-by-zero.
 
-This patch fixes the issue by treating only negative values in the
-result field as errors. Positive values are therefore treated as success
-in the same way as a zero value. Additionally, a BUG_ON is added to
-__send_prepared_auth_request() comparing the len parameter to
-front_alloc_len to prevent sending the message if it exceeds the bounds
-of the allocation and to make it easier to catch any logic flaws leading
-to this.
+Validate nc and fc immediately after extraction, returning -1 if
+either is zero.
 
+Fixes: 475901aff158 ("MD RAID10: Improve redundancy for 'far' and 'offset' algorithms (part 1)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/linux-raid/SYBPR01MB7881A5E2556806CC1D318582AF232@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/auth.c       |    2 +-
- net/ceph/mon_client.c |    2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/raid10.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ceph/auth.c
-+++ b/net/ceph/auth.c
-@@ -257,7 +257,7 @@ int ceph_handle_auth_reply(struct ceph_a
- 		ac->negotiating = false;
- 	}
- 
--	if (result) {
-+	if (result < 0) {
- 		pr_err("auth protocol '%s' mauth authentication failed: %d\n",
- 		       ceph_auth_proto_name(ac->protocol), result);
- 		ret = result;
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -174,6 +174,8 @@ int ceph_monmap_contains(struct ceph_mon
-  */
- static void __send_prepared_auth_request(struct ceph_mon_client *monc, int len)
- {
-+	BUG_ON(len > monc->m_auth->front_alloc_len);
-+
- 	monc->pending_auth = 1;
- 	monc->m_auth->front.iov_len = len;
- 	monc->m_auth->hdr.front_len = cpu_to_le32(len);
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -4004,6 +4004,8 @@ static int setup_geo(struct geom *geo, s
+ 	nc = layout & 255;
+ 	fc = (layout >> 8) & 255;
+ 	fo = layout & (1<<16);
++	if (!nc || !fc)
++		return -1;
+ 	geo->raid_disks = disks;
+ 	geo->near_copies = nc;
+ 	geo->far_copies = fc;
 
 
