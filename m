@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15BE24EA90;
-	Sat, 30 May 2026 18:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4F4233D9E;
+	Sat, 30 May 2026 18:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165197; cv=none; b=tg9DQEuti3SKv+B3yWydJPBvjKrzRFR9++jsNr5bvADbewU+RS1eKNf6LkculOoE3JExntRhCGe0ssJa+dauXOiS77dB71hXoUXCFyIVAEh+h7a7B5pwJX1NQ3qAbYTL1VkKNwqTIRjwB3qJCs2weoefPxfuTfFuu3auzT0ccMs=
+	t=1780165201; cv=none; b=QzMUwj7ZgPBD1BjR5cELgPVBOO+WpjRBByvZfDQP0BuDhWKDEo4TT+68YQ3KMBMlblL37/0HXJer755rsrDvI2zNRswUcOuU5ipSy7IYFJLsudqzq+P7AlkGg8I44t31IQYuj/qUiQqsgsnXlEumjjGK6xdQ3TUukIDi/pDU5ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165197; c=relaxed/simple;
-	bh=Aq090uecciokUzBlB1tr/6aXmjMS28OB7K5PXt86tPs=;
+	s=arc-20240116; t=1780165201; c=relaxed/simple;
+	bh=NCc1sttFqjp6JEFG9npEWL3JgVmbNVMy7L+W8RIr3iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5n36YUgYrPulcTJeO8YLFTH/E07Mo8dqMZ2o59+rYRNLHjrfKKMo2BdKSxOtp24oxfmRR2CZLSDGf/z7cc/M6wChjKCpBUxXMpmhLXVZrBwsl7C1NOwpiNtWr51QmWKdi6xj6WbiQgJ0wUnoa4OWndk6UqWmlC4LlMLrb4uwVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwjWukGi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r9wTGuzdlYHh6qX4PlJYnatA+l81gGtMRIU8dFoJrDj4vxKHz+S4Apve/iHbWN6Gvu3+UivszMujTu/aYuQiWzNCH39nxkOoM30wWGbXSky78h7m//UziZSmV9H7+RWlIN4gcU6ZBtJJhCduLA0jLdM3cr9/m01MiC4A7E6zwSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07KUa5Y8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwjWukGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0463F1F00893;
-	Sat, 30 May 2026 18:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07KUa5Y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C771D1F00893;
+	Sat, 30 May 2026 18:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165196;
-	bh=tZkHhVy4FJVMMkM+0PfULC8o9Bwf4Y6QqnxzYFUWpio=;
+	s=korg; t=1780165200;
+	bh=aonENeR4UBRU0/tk0j2Qp2pF0xfSjCHG0yVKEnIn9mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MwjWukGiql0pdp8HohRVJM8/KBfJ3Yr/xwUBtwAbqFH6Z2nSJpBRtQ86RIVdR+6A2
-	 K32BXYoGvyXTlcBB7nNlZbJ4X3SoVHCFStDQT4KjnnIeNWVn3fOFWRGTxcmt1cVzhK
-	 01o3dDcOI0Pi+OOi5LZDbXPzOLUscp9YKsATEO1g=
+	b=07KUa5Y8Sl9EWgMdbHRImKJYOyHdV5CrebO5LWsZyztv7HxXrhlTihioD5IyiokXM
+	 /NRMloJUCEIwRYXPhqH5aeJFEpDJfQj7GSeUY7VtaE5lRL5AZOhDseSFyhIyBn1fLS
+	 /4IvOOnnHU11A0RuFIXKk3F0D06EDewdCLZvOxuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 751/776] net: ethernet: cs89x0: remove stale CONFIG_MACH_MX31ADS reference
-Date: Sat, 30 May 2026 18:07:45 +0200
-Message-ID: <20260530160259.171233473@linuxfoundation.org>
+Subject: [PATCH 5.15 752/776] wifi: ath11k: fix error path leaks in some WMI WOW calls
+Date: Sat, 30 May 2026 18:07:46 +0200
+Message-ID: <20260530160259.194476094@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,43 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 36a8d04a8293afcb9304cf0cd3741f67698f2a1a ]
+[ Upstream commit 55dda532bbc261aef495e403c8900c5e2ab5fa34 ]
 
-The legacy ARM board file for MACH_MX31ADS was removed in commit
-c93197b0041d ("ARM: imx: Remove i.MX31 board files"), but a reference
-to it remained in the cs89x0 driver. Drop this unused code.
+Fix two instances where we used to directly return the result of
+ath11k_wmi_cmd_send(...). Because we did not check the return value, we
+also did not free the skb in the error path.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Fixes: c93197b0041d ("ARM: imx: Remove i.MX31 board files")
-Link: https://patch.msgid.link/20260509023732.42256-1-enelsonmoore@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 79802b13a492 ("ath11k: implement WoW enable and wakeup commands")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260506134240.2284016-2-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cirrus/cs89x0.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/cirrus/cs89x0.c b/drivers/net/ethernet/cirrus/cs89x0.c
-index d0c4c8b7a15ab..9795f959c9bde 100644
---- a/drivers/net/ethernet/cirrus/cs89x0.c
-+++ b/drivers/net/ethernet/cirrus/cs89x0.c
-@@ -1270,7 +1270,6 @@ static const struct net_device_ops net_ops = {
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 28b4527b993fe..bacf124eec882 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -7320,6 +7320,7 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
+ 	struct wmi_wow_host_wakeup_ind *cmd;
+ 	struct sk_buff *skb;
+ 	size_t len;
++	int ret;
  
- static void __init reset_chip(struct net_device *dev)
- {
--#if !defined(CONFIG_MACH_MX31ADS)
- 	struct net_local *lp = netdev_priv(dev);
- 	unsigned long reset_start_time;
+ 	len = sizeof(*cmd);
+ 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
+@@ -7333,14 +7334,20 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
  
-@@ -1297,7 +1296,6 @@ static void __init reset_chip(struct net_device *dev)
- 	while ((readreg(dev, PP_SelfST) & INIT_DONE) == 0 &&
- 	       time_before(jiffies, reset_start_time + 2))
- 		;
--#endif /* !CONFIG_MACH_MX31ADS */
+ 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "wmi tlv wow host wakeup ind\n");
+ 
+-	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
++	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
++	if (ret) {
++		ath11k_warn(ar->ab, "failed to send WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID\n");
++		dev_kfree_skb(skb);
++	}
++
++	return ret;
  }
  
- /* This is the real probe routine.
+ int ath11k_wmi_wow_enable(struct ath11k *ar)
+ {
+ 	struct wmi_wow_enable_cmd *cmd;
+ 	struct sk_buff *skb;
+-	int len;
++	int ret, len;
+ 
+ 	len = sizeof(*cmd);
+ 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
+@@ -7355,5 +7362,11 @@ int ath11k_wmi_wow_enable(struct ath11k *ar)
+ 	cmd->pause_iface_config = WOW_IFACE_PAUSE_ENABLED;
+ 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "wmi tlv wow enable\n");
+ 
+-	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
++	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
++	if (ret) {
++		ath11k_warn(ar->ab, "failed to send WMI_WOW_ENABLE_CMDID\n");
++		dev_kfree_skb(skb);
++	}
++
++	return ret;
+ }
 -- 
 2.53.0
 
