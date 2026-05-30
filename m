@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9180030E853;
-	Sat, 30 May 2026 17:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB97C30E853;
+	Sat, 30 May 2026 17:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162514; cv=none; b=s+GX5FcRbHVsU1UARO47VEBOW8Y9oEIIxGlVZXeFUUsO4RDAS5vcuiRAweHhhXKxu/S6hp7/bsx/ABevIzgMqBeh171XLfn4HEVgvzN+C2eh6GUURC1rV3dqiW34mhe0o7SDFVnEOwFpC8qFNPrAiRRWkNYB4hV4Rh/DTNO64Dk=
+	t=1780162517; cv=none; b=F9tc5xuCDSRHqxf+o3xZG2TgHc2vsGyCn+gcR101810CeexDa/np487AN2Y3Jg+iBy7U/a9DQ5jjBYj9VSHlmml2pKpmUwWU6r3VJ5RjeudzHtsO5ZkHaOBy1ngle9Ephyaz2/kA+ZSwEAE+uv0biWnfmgQTDVJSr37GjqG0zzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162514; c=relaxed/simple;
-	bh=BWko8nPqR8zLVm9uejGEVbkrBBkIbJZ043196Dx9MWw=;
+	s=arc-20240116; t=1780162517; c=relaxed/simple;
+	bh=23Y4ndvAbPYN+ZAfCL4pW99W6Oxm3feu4KbFQgFr82A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epsHyXfxL4mprev03Oe+rUBJ8EGegtfTl4TbTYIjWjQ6SY8IJzjaMRI9pSwQMS/1qVM3Vp1jgo2e0u/4WGChnPMewHvstyY/00mxVuxWADPiRDm3bILggbNthyXlBpXTLJcGgfMm6X+dwLQ4dypRUcrI10jAlj8rztcrZpwTQFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHd/3VPI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p9nC4eYey0A2Pv1LTAZUlgh2hXHkwrPtsLxHT2jgwMDyiDYt71yZZ30dznGYk0jKE1cctqDPcxyxC0mWOlSGI6ArDiQ86wq+f9mLk9kEuTwsVq09AVfHbcFWak3zEeN3zY6k5S27qfl0PxBiduXy8f+DUiZ+bcnsBI2xcLg7m8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s372N3qO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHd/3VPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62EE1F00893;
-	Sat, 30 May 2026 17:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s372N3qO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B90A1F00893;
+	Sat, 30 May 2026 17:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162513;
-	bh=jEgsjCbceHXhUOoc8/CDjS3Fb6Udmu4fSqSB82goWFc=;
+	s=korg; t=1780162516;
+	bh=59i1rM/C2QTdzYY8CwrLvy1lLr/9Ca+BZX1Yk/1Rg7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IHd/3VPIyq1BQYB4Y8dAkghM6nl3ooag+CU6br5SMNBNPvDXXRBuz3jPVRmuxf8EP
-	 fV+7y9AWwEettWIm9YfauSmWEYh0X+AOjzBamUnf/DAu64uWAaSXl97hG6hcpyKSsi
-	 qwAzmCjBfOpTH82fypO1O/M18MZWFtghckV5g0oc=
+	b=s372N3qOIWHVCj8GnCbOUAGnskoFMdvNdGtQBthixcSp8tQoNzBX+gt7zrDWXX0RD
+	 dNgS9XAhu+jHZbpZ3BUyybklgjZOfBVueG6oj1en+qgAGbh/7DryTSEPpocHZ301ql
+	 ieRg6C2BX4RCFtl6S9ZKeA76YLZEoj2xK0ZN3jOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Youghandhar Chintala <quic_youghand@quicinc.com>,
+	Sriram R <quic_srirrama@quicinc.com>,
+	Karthikeyan Kathirvel <quic_kathirve@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 942/969] wifi: ath11k: Trigger sta disconnect on hardware restart
-Date: Sat, 30 May 2026 18:07:46 +0200
-Message-ID: <20260530160326.769572401@linuxfoundation.org>
+Subject: [PATCH 6.1 943/969] wifi: ath11k: update hw params for IPQ5018
+Date: Sat, 30 May 2026 18:07:47 +0200
+Message-ID: <20260530160326.797311334@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,132 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youghandhar Chintala <quic_youghand@quicinc.com>
+From: Sriram R <quic_srirrama@quicinc.com>
 
-[ Upstream commit a018750a2cceaf4427c4ee3d9ce3e83a171d5bd6 ]
+[ Upstream commit 8dfe875aa24aec68baf6702018633c84c2c1feca ]
 
-Currently after the hardware restart triggered from the driver, the
-station interface connection remains intact, since a disconnect trigger
-is not sent to userspace. This can lead to a problem in targets where
-the wifi mac sequence is added by the firmware.
+Add new compatible string for IPQ5018 and add
+required hw params for IPQ5018. The hw descriptors size and
+datapath ops are similar to QCN9074, hence reuse the same.
 
-After the target restart, its wifi mac sequence number gets reset to
-zero. Hence AP to which our device is connected will receive frames with
-a  wifi mac sequence number jump to the past, thereby resulting in the
-AP dropping all these frames, until the frame arrives with a wifi mac
-sequence number which AP was expecting.
+Tested-on: IPQ5018 hw1.0 AHB WLAN.HK.2.6.0.1-00861-QCAHKSWPL_SILICONZ-1
 
-To avoid such frame drops, its better to trigger a station disconnect
-upon target hardware restart which can be done with API
-ieee80211_reconfig_disconnect exposed to mac80211.
-
-The other targets are not affected by this change, since the hardware
-params flag is not set.
-
-Reported-by: kernel test robot <lkp@intel.com>
-
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-00887-QCAMSLSWPLZ-1
-
-Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
+Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
+Co-developed-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
+Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221104085403.11025-1-quic_youghand@quicinc.com
+Link: https://lore.kernel.org/r/20221122132152.17771-3-quic_kathirve@quicinc.com
 Stable-dep-of: 2a2451a34afd ("wifi: ath11k: fix peer resolution on rx path when peer_id=0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c | 6 ++++++
- drivers/net/wireless/ath/ath11k/hw.h   | 1 +
- drivers/net/wireless/ath/ath11k/mac.c  | 7 +++++++
- 3 files changed, 14 insertions(+)
+ drivers/net/wireless/ath/ath11k/core.c | 71 ++++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath11k/core.h |  8 +++
+ 2 files changed, 79 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index 9b5349230ad34..7a61c84939cb3 100644
+index 7a61c84939cb3..c8fb72d9613fa 100644
 --- a/drivers/net/wireless/ath/ath11k/core.c
 +++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -195,6 +195,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = true,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
- 		.smp2p_wow_exit = false,
-+		.support_fw_mac_sequence = false,
- 	},
- 	{
- 		.name = "qca6390 hw2.0",
-@@ -277,6 +278,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = true,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
- 		.smp2p_wow_exit = false,
-+		.support_fw_mac_sequence = true,
- 	},
- 	{
- 		.name = "qcn9074 hw1.0",
-@@ -356,6 +358,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = true,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
- 		.smp2p_wow_exit = false,
-+		.support_fw_mac_sequence = false,
- 	},
- 	{
- 		.name = "wcn6855 hw2.0",
-@@ -438,6 +441,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = true,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
- 		.smp2p_wow_exit = false,
-+		.support_fw_mac_sequence = true,
- 	},
- 	{
- 		.name = "wcn6855 hw2.1",
-@@ -519,6 +523,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = true,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
- 		.smp2p_wow_exit = false,
-+		.support_fw_mac_sequence = true,
- 	},
- 	{
- 		.name = "wcn6750 hw1.0",
-@@ -597,6 +602,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 		.tcl_ring_retry = false,
- 		.tx_ring_size = DP_TCL_DATA_RING_SIZE_WCN6750,
+@@ -604,6 +604,77 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
  		.smp2p_wow_exit = true,
-+		.support_fw_mac_sequence = true,
+ 		.support_fw_mac_sequence = true,
  	},
++	{
++		.hw_rev = ATH11K_HW_IPQ5018_HW10,
++		.name = "ipq5018 hw1.0",
++		.fw = {
++			.dir = "IPQ5018/hw1.0",
++			.board_size = 256 * 1024,
++			.cal_offset = 128 * 1024,
++		},
++		.max_radios = MAX_RADIOS_5018,
++		.bdf_addr = 0x4BA00000,
++		/* hal_desc_sz and hw ops are similar to qcn9074 */
++		.hal_desc_sz = sizeof(struct hal_rx_desc_qcn9074),
++		.qmi_service_ins_id = ATH11K_QMI_WLFW_SERVICE_INS_ID_V01_IPQ8074,
++		.ring_mask = &ath11k_hw_ring_mask_ipq8074,
++		.credit_flow = false,
++		.max_tx_ring = 1,
++		.spectral = {
++			.fft_sz = 2,
++			.fft_pad_sz = 0,
++			.summary_pad_sz = 16,
++			.fft_hdr_len = 24,
++			.max_fft_bins = 1024,
++		},
++		.internal_sleep_clock = false,
++		.host_ce_config = ath11k_host_ce_config_qcn9074,
++		.ce_count = CE_CNT_5018,
++		.rxdma1_enable = true,
++		.num_rxmda_per_pdev = RXDMA_PER_PDEV_5018,
++		.rx_mac_buf_ring = false,
++		.vdev_start_delay = false,
++		.htt_peer_map_v2 = true,
++		.interface_modes = BIT(NL80211_IFTYPE_STATION) |
++			BIT(NL80211_IFTYPE_AP) |
++			BIT(NL80211_IFTYPE_MESH_POINT),
++		.supports_monitor = false,
++		.supports_sta_ps = false,
++		.supports_shadow_regs = false,
++		.fw_mem_mode = 0,
++		.num_vdevs = 16 + 1,
++		.num_peers = 512,
++		.supports_regdb = false,
++		.idle_ps = false,
++		.supports_suspend = false,
++		.hal_params = &ath11k_hw_hal_params_ipq8074,
++		.single_pdev_only = false,
++		.cold_boot_calib = true,
++		.fix_l1ss = true,
++		.supports_dynamic_smps_6ghz = false,
++		.alloc_cacheable_memory = true,
++		.supports_rssi_stats = false,
++		.fw_wmi_diag_event = false,
++		.current_cc_support = false,
++		.dbr_debug_support = true,
++		.global_reset = false,
++		.bios_sar_capa = NULL,
++		.m3_fw_support = false,
++		.fixed_bdf_addr = true,
++		.fixed_mem_region = true,
++		.static_window_map = false,
++		.hybrid_bus_type = false,
++		.fixed_fw_mem = false,
++		.support_off_channel_tx = false,
++		.supports_multi_bssid = false,
++
++		.sram_dump = {},
++
++		.tcl_ring_retry = true,
++		.tx_ring_size = DP_TCL_DATA_RING_SIZE,
++		.smp2p_wow_exit = false,
++		.support_fw_mac_sequence = false,
++	},
  };
  
-diff --git a/drivers/net/wireless/ath/ath11k/hw.h b/drivers/net/wireless/ath/ath11k/hw.h
-index 8a3f24862edc4..0c5ef8a526d85 100644
---- a/drivers/net/wireless/ath/ath11k/hw.h
-+++ b/drivers/net/wireless/ath/ath11k/hw.h
-@@ -219,6 +219,7 @@ struct ath11k_hw_params {
- 	bool tcl_ring_retry;
- 	u32 tx_ring_size;
- 	bool smp2p_wow_exit;
-+	bool support_fw_mac_sequence;
+ static inline struct ath11k_pdev *ath11k_core_get_single_pdev(struct ath11k_base *ab)
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index a46fe85e592d8..09e40ff461730 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -142,6 +142,7 @@ enum ath11k_hw_rev {
+ 	ATH11K_HW_WCN6855_HW20,
+ 	ATH11K_HW_WCN6855_HW21,
+ 	ATH11K_HW_WCN6750_HW10,
++	ATH11K_HW_IPQ5018_HW10,
  };
  
- struct ath11k_hw_ops {
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 6a244f110dca6..2ef03ad1c9051 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -7981,6 +7981,7 @@ ath11k_mac_op_reconfig_complete(struct ieee80211_hw *hw,
- 	struct ath11k *ar = hw->priv;
- 	struct ath11k_base *ab = ar->ab;
- 	int recovery_count;
-+	struct ath11k_vif *arvif;
+ enum ath11k_firmware_mode {
+@@ -230,6 +231,13 @@ struct ath11k_he {
  
- 	if (reconfig_type != IEEE80211_RECONFIG_TYPE_RESTART)
- 		return;
-@@ -8016,6 +8017,12 @@ ath11k_mac_op_reconfig_complete(struct ieee80211_hw *hw,
- 				ath11k_dbg(ab, ATH11K_DBG_BOOT, "reset success\n");
- 			}
- 		}
-+		if (ar->ab->hw_params.support_fw_mac_sequence) {
-+			list_for_each_entry(arvif, &ar->arvifs, list) {
-+				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
-+					ieee80211_hw_restart_disconnect(arvif->vif);
-+			}
-+		}
- 	}
+ #define MAX_RADIOS 3
  
- 	mutex_unlock(&ar->conf_mutex);
++/* ipq5018 hw param macros */
++#define MAX_RADIOS_5018	1
++#define CE_CNT_5018	6
++#define TARGET_CE_CNT_5018	9
++#define SVC_CE_MAP_LEN_5018	17
++#define RXDMA_PER_PDEV_5018	1
++
+ enum {
+ 	WMI_HOST_TP_SCALE_MAX   = 0,
+ 	WMI_HOST_TP_SCALE_50    = 1,
 -- 
 2.53.0
 
