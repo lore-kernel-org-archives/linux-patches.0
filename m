@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01112FDC5E;
-	Sat, 30 May 2026 17:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4373233E36A;
+	Sat, 30 May 2026 17:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161993; cv=none; b=NgfJ7w3qv0GEvHWD07y/kqv85h9FAcUliOuiUDqcv3/BMUZxZialcKtlS+wL+2rUUmnBw9DP/ZdydISKDA9HcpecHCLEw04I8mukfrXcic9aNsKkQjPd1k8RkOqfGacmm/HkoWCPQ/7B9puR2EU7947DR/krI4Qsy1oYw7TcFcM=
+	t=1780161996; cv=none; b=oUnZLO1jov2uR/erq/f8Wc/jR/7jWzdktwvMRYk1VVhgmZS4+xEn8WiaiYO40Ry51apWnmSe4yFuMZrLwx3D0grUlZt7+zdmZls1mQefKh/qu/9I84V3uKRyaywOJr8xDxR4KRXGs14otAptC2Bvp25lcgjMMHjJyApCHrU63VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161993; c=relaxed/simple;
-	bh=a2Gd2qSSTh6ARAUqP42iKR7HYUhNiBCaMtEjXeh0wnY=;
+	s=arc-20240116; t=1780161996; c=relaxed/simple;
+	bh=ydyoRz/H2NgeZnYuNkn2RUKzZXXRlrmHyL/VxJ8Wi4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JZwxLk5dM5J79qJvqeQ7jpY0Mi567O/OmrZzbIrCc0+mS0Z4RfIsr9bDO7ibCvKhZlmaI1Yzg3kYiCUWm2EREDLNKOBuo7iAucm8u3x5XYUppqON3eiwz3tn6pbwq/cwBKELLgXNjmaKhnrVzpYfFYkshWZCbMdkwjSfO7Oh3BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPgx8vdV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dpJNp06v7QnG5uII+cOjgudBwfNquMUxCrzGmBwlXClPWwNRwN8W6mWksiie1SZbSENohV2xxtFt5gI7X8txZWK4piTh6oY4ptUDik2njgssvRex2ged7kS88cideJUZKl9XNwA3R1W+JdXjFkkIbti773Tj5fyqVBIqe6ZVMOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0Ld47aA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPgx8vdV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFD01F00893;
-	Sat, 30 May 2026 17:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0Ld47aA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868E91F00893;
+	Sat, 30 May 2026 17:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161991;
-	bh=LT/gPiHSicpPcAZlDk7MczLxZPacFf1SgYGCQzlcm+Y=;
+	s=korg; t=1780161995;
+	bh=PssQowEcFas5iH3wmqRI3svOQPTmhaqb0qJusVYJtLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oPgx8vdVJ5DGfhhA7erux1hhsDKD3lstwTHz+RN5AgIRZYCkb5uHab4vQlEkKusyC
-	 lddtSnNpxVx5ONjYNFsfIuMIPb/mlP8aYeCbz/f6lqJbK7wMmMsIoxlLD05eHChMyo
-	 YDLDSQVHSYzcDc4kN7DiRcnMW9+AfZMo8D8B0MYM=
+	b=D0Ld47aAhH/2jPu/FCDvKu40jgrk+XvBqN8WVNWE4IfVZCF+rdBgdyDa7x73iXhpJ
+	 UvfXTO5VYvRCWmD6SXgy4fShXMNxaTtK1B6pWkZ/N/wlMR1q3dJ9TENPZ/K/GAHizM
+	 yGCLXaJGaWXGoPMMhKHWHlTFvJafneGDLrZUlT6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 788/969] ice: fix NULL pointer dereference in ice_reset_all_vfs()
-Date: Sat, 30 May 2026 18:05:12 +0200
-Message-ID: <20260530160322.366457529@linuxfoundation.org>
+Subject: [PATCH 6.1 789/969] net: tls: fix strparser anchor skb leak on offload RX setup failure
+Date: Sat, 30 May 2026 18:05:13 +0200
+Message-ID: <20260530160322.395177174@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,132 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 54ef02487914c24170c7e1c061e45212dc55365e ]
+[ Upstream commit 58689498ca3384851145a754dbb1d8ed1cf9fb54 ]
 
-ice_reset_all_vfs() ignores the return value of ice_vf_rebuild_vsi().
-When the VSI rebuild fails (e.g. during NVM firmware update via
-nvmupdate64e), ice_vsi_rebuild() tears down the VSI on its error path,
-leaving txq_map and rxq_map as NULL. The subsequent unconditional call
-to ice_vf_post_vsi_rebuild() leads to a NULL pointer dereference in
-ice_ena_vf_q_mappings() when it accesses vsi->txq_map[0].
+When tls_set_device_offload_rx() fails at tls_dev_add(), the error path
+calls tls_sw_free_resources_rx() to clean up the SW context that was
+initialized by tls_set_sw_offload(). This function calls
+tls_sw_release_resources_rx() (which stops the strparser via
+tls_strp_stop()) and tls_sw_free_ctx_rx() (which kfrees the context),
+but never frees the anchor skb that was allocated by alloc_skb(0) in
+tls_strp_init().
 
-The single-VF reset path in ice_reset_vf() already handles this
-correctly by checking the return value of ice_vf_reconfig_vsi() and
-skipping ice_vf_post_vsi_rebuild() on failure.
+Note that tls_sw_free_resources_rx() is exclusively used for this
+"failed to start offload" code path, there's no other caller.
 
-Apply the same pattern to ice_reset_all_vfs(): check the return value
-of ice_vf_rebuild_vsi() and skip ice_vf_post_vsi_rebuild() and
-ice_eswitch_attach_vf() on failure. The VF is left safely disabled
-(ICE_VF_STATE_INIT not set, VFGEN_RSTAT not set to VFACTIVE) and can
-be recovered via a VFLR triggered by a PCI reset of the VF
-(sysfs reset or driver rebind).
+The leak did not exist before commit 84c61fe1a75b ("tls: rx: do not use
+the standard strparser"), because the standard strparser doesn't try
+to pre-allocate an skb.
 
-Note that this patch does not prevent the VF VSI rebuild from failing
-during NVM update — the underlying cause is firmware being in a
-transitional state while the EMP reset is processed, which can cause
-Admin Queue commands (ice_add_vsi, ice_cfg_vsi_lan) to fail. This
-patch only prevents the subsequent NULL pointer dereference that
-crashes the kernel when the rebuild does fail.
+The normal close path in tls_sk_proto_close() handles cleanup by calling
+tls_sw_strparser_done() (which calls tls_strp_done()) after dropping
+the socket lock, because tls_strp_done() does cancel_work_sync() and
+the strparser work handler takes the socket lock.
 
- crash> bt
-     PID: 50795    TASK: ff34c9ee708dc680  CPU: 1    COMMAND: "kworker/u512:5"
-      #0 [ff72159bcfe5bb50] machine_kexec at ffffffffaa8850ee
-      #1 [ff72159bcfe5bba8] __crash_kexec at ffffffffaaa15fba
-      #2 [ff72159bcfe5bc68] crash_kexec at ffffffffaaa16540
-      #3 [ff72159bcfe5bc70] oops_end at ffffffffaa837eda
-      #4 [ff72159bcfe5bc90] page_fault_oops at ffffffffaa893997
-      #5 [ff72159bcfe5bce8] exc_page_fault at ffffffffab528595
-      #6 [ff72159bcfe5bd10] asm_exc_page_fault at ffffffffab600bb2
-         [exception RIP: ice_ena_vf_q_mappings+0x79]
-         RIP: ffffffffc0a85b29  RSP: ff72159bcfe5bdc8  RFLAGS: 00010206
-         RAX: 00000000000f0000  RBX: ff34c9efc9c00000  RCX: 0000000000000000
-         RDX: 0000000000000000  RSI: 0000000000000010  RDI: ff34c9efc9c00000
-         RBP: ff34c9efc27d4828   R8: 0000000000000093   R9: 0000000000000040
-         R10: ff34c9efc27d4828  R11: 0000000000000040  R12: 0000000000100000
-         R13: 0000000000000010  R14:   R15:
-         ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
-      #7 [ff72159bcfe5bdf8] ice_sriov_post_vsi_rebuild at ffffffffc0a85e2e [ice]
-      #8 [ff72159bcfe5be08] ice_reset_all_vfs at ffffffffc0a920b4 [ice]
-      #9 [ff72159bcfe5be48] ice_service_task at ffffffffc0a31519 [ice]
-     #10 [ff72159bcfe5be88] process_one_work at ffffffffaa93dca4
-     #11 [ff72159bcfe5bec8] worker_thread at ffffffffaa93e9de
-     #12 [ff72159bcfe5bf18] kthread at ffffffffaa946663
-     #13 [ff72159bcfe5bf50] ret_from_fork at ffffffffaa8086b9
-
- The panic occurs attempting to dereference the NULL pointer in RDX at
- ice_sriov.c:294, which loads vsi->txq_map (offset 0x4b8 in ice_vsi).
-
- The faulting VSI is an allocated slab object but not fully initialized
- after a failed ice_vsi_rebuild():
-
-  crash> struct ice_vsi 0xff34c9efc27d4828
-    netdev = 0x0,
-    rx_rings = 0x0,
-    tx_rings = 0x0,
-    q_vectors = 0x0,
-    txq_map = 0x0,
-    rxq_map = 0x0,
-    alloc_txq = 0x10,
-    num_txq = 0x10,
-    alloc_rxq = 0x10,
-    num_rxq = 0x10,
-
- The nvmupdate64e process was performing NVM firmware update:
-
-  crash> bt 0xff34c9edd1a30000
-  PID: 49858    TASK: ff34c9edd1a30000  CPU: 1    COMMAND: "nvmupdate64e"
-   #0 [ff72159bcd617618] __schedule at ffffffffab5333f8
-   #4 [ff72159bcd617750] ice_sq_send_cmd at ffffffffc0a35347 [ice]
-   #5 [ff72159bcd6177a8] ice_sq_send_cmd_retry at ffffffffc0a35b47 [ice]
-   #6 [ff72159bcd617810] ice_aq_send_cmd at ffffffffc0a38018 [ice]
-   #7 [ff72159bcd617848] ice_aq_read_nvm at ffffffffc0a40254 [ice]
-   #8 [ff72159bcd6178b8] ice_read_flat_nvm at ffffffffc0a4034c [ice]
-   #9 [ff72159bcd617918] ice_devlink_nvm_snapshot at ffffffffc0a6ffa5 [ice]
-
- dmesg:
-  ice 0000:13:00.0: firmware recommends not updating fw.mgmt, as it
-    may result in a downgrade. continuing anyways
-  ice 0000:13:00.1: ice_init_nvm failed -5
-  ice 0000:13:00.1: Rebuild failed, unload and reload driver
-
-Fixes: 12bb018c538c ("ice: Refactor VF reset")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-5-cdcb48303fd8@intel.com
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260428231559.1358502-1-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vf_lib.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/tls/tls.h      | 1 +
+ net/tls/tls_strp.c | 6 ++++++
+ net/tls/tls_sw.c   | 4 ++++
+ 3 files changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index d146259c7b82f..7be59008ea1a5 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -509,7 +509,12 @@ void ice_reset_all_vfs(struct ice_pf *pf)
- 			ice_vf_ctrl_invalidate_vsi(vf);
+diff --git a/net/tls/tls.h b/net/tls/tls.h
+index f25699517bdf8..8304afbe09e96 100644
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -136,6 +136,7 @@ int tls_strp_dev_init(void);
+ void tls_strp_dev_exit(void);
  
- 		ice_vf_pre_vsi_rebuild(vf);
--		ice_vf_rebuild_vsi(vf);
-+		if (ice_vf_rebuild_vsi(vf)) {
-+			dev_err(dev, "VF %u VSI rebuild failed, leaving VF disabled\n",
-+				vf->vf_id);
-+			mutex_unlock(&vf->cfg_lock);
-+			continue;
-+		}
- 		ice_vf_post_vsi_rebuild(vf);
+ void tls_strp_done(struct tls_strparser *strp);
++void __tls_strp_done(struct tls_strparser *strp);
+ void tls_strp_stop(struct tls_strparser *strp);
+ int tls_strp_init(struct tls_strparser *strp, struct sock *sk);
+ void tls_strp_data_ready(struct tls_strparser *strp);
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index 532230bed13b0..850146ed2d586 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -619,6 +619,12 @@ void tls_strp_done(struct tls_strparser *strp)
+ 	WARN_ON(!strp->stopped);
  
- 		mutex_unlock(&vf->cfg_lock);
+ 	cancel_work_sync(&strp->work);
++	__tls_strp_done(strp);
++}
++
++/* For setup error paths where the strparser was initialized but never armed. */
++void __tls_strp_done(struct tls_strparser *strp)
++{
+ 	tls_strp_anchor_free(strp);
+ }
+ 
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index a574d7ddd1499..ef7dda0915d33 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2584,8 +2584,12 @@ void tls_sw_free_ctx_rx(struct tls_context *tls_ctx)
+ void tls_sw_free_resources_rx(struct sock *sk)
+ {
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
++	struct tls_sw_context_rx *ctx;
++
++	ctx = tls_sw_ctx_rx(tls_ctx);
+ 
+ 	tls_sw_release_resources_rx(sk);
++	__tls_strp_done(&ctx->strp);
+ 	tls_sw_free_ctx_rx(tls_ctx);
+ }
+ 
 -- 
 2.53.0
 
