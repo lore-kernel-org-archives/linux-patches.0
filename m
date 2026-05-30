@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E776A3112C1;
-	Sat, 30 May 2026 18:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ABF340A6F;
+	Sat, 30 May 2026 18:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164464; cv=none; b=J+RnMyLWdAb6EPqs1+GfziLtcCORk7GIoo1pxwzSiyCWb9VZLTrlDCELyosiQZNKk5DmyStzVIDx/62VRjihJfIn1VsqYaD504ExMobf+U7o7u/NDFGZMRDcZJa+Hjs4Njb13iRar28woLdxFptK47M9W0WG7EDZlkC08FyScW4=
+	t=1780164468; cv=none; b=c4XR/aL4v012O68bjA3j+1BTiGh/Gh3YBZb7llX+zE/8mrnQu9x3pylOnQ86HoSTXrMkzkP6EzwYpSLXKXVpXQQ3m4uTH1CkBacMuowX0VXUG6kuXJYy+qo1ayg+K7CwjsrjqJ1RicRFKRUopEURPpRH9SVLWM1SyTbR4C8nPuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164464; c=relaxed/simple;
-	bh=GUJhRvwhEjV4Qdme/cFu5dGliUtos4inbn0uasknNmA=;
+	s=arc-20240116; t=1780164468; c=relaxed/simple;
+	bh=eRRxJCi34kJq9ZcF6QH6h6yqLlidDquyXWSmbRv4Blk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2u1APKMnbsDTWDyDSbrH2fn2RLTp0CrbCq4wRqINkNh7cRRV5o4hQwG0QSSKyisODwqTv4cwUkSy9eqwkqKfFaV+YJLpVFoiziUxeojdv8qZj9cFdEkdA0wLzT2Zv7ht0zPZ+QP9RFtsv+cwBAJHgJNzZruCE57MzXp/KSOp0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E41eMRs+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UxY8tosQ412PjxUa0hFJD5aj775VmWeazp0UpOIfLGk3obXMKaoykNAPzGomBF1AaXuEu9Mbot2FWrJXh3w+eUidKA+WysGDKWpK1KR3nT8XDl6wM1f5Pre/ASr+q5Q1nr1w4pUdz3ilHK2IYW7PeMgBuWXelmQWNUeL13J+TDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6eloUxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E41eMRs+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7AB1F00893;
-	Sat, 30 May 2026 18:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6eloUxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F71F00893;
+	Sat, 30 May 2026 18:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164463;
-	bh=nkbfZ/ShXwvoKbBYAt4J9PkVl32WOk2bH2zmcCCFkBw=;
+	s=korg; t=1780164466;
+	bh=F3wQ/i6KGYIW3zWf3zqGw/KGnAn3T7nyA5/+8gNgtFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E41eMRs+XX+RWtJX1mrWwxLp4mH2+pnvOzKTKQysGiNoWahSSiIVpPP45z44bg6jI
-	 Fad/TfDAiZtMpwX193QGD3HChH4LqMyCMvzAQXLwoC8e7Bo/GSUpnTMOYB/+oN9kp1
-	 E4udwoBB68NQ0SEpsfeLf1J5ATDsziTLZc6rRLXs=
+	b=D6eloUxE7lcv7TN455grqiDGouzB5kkzryO2W0v6QzdWyPDHGdchXJaFiesaDiuvp
+	 6KFUDEeiXbCImLhWlVSvx4LwycBB9YeGDZgQaYRbMKn/er7LOYg04arDnNU3dvZNP0
+	 CO52PsDKMxtPBmwv+yf9DBsEbOBVrhCBJs2QpAmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matt Vollrath <tactii@gmail.com>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 555/776] nexthop: fix IPv6 route referencing IPv4 nexthop
-Date: Sat, 30 May 2026 18:04:29 +0200
-Message-ID: <20260530160254.490213980@linuxfoundation.org>
+Subject: [PATCH 5.15 564/776] e1000e: Unroll PTP in probe error handling
+Date: Sat, 30 May 2026 18:04:38 +0200
+Message-ID: <20260530160254.702369386@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,67 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Matt Vollrath <tactii@gmail.com>
 
-[ Upstream commit 29c95185ba32b621fbc3800fb86e7dc3edf5c2be ]
+[ Upstream commit aa3f7fe409350857c25d050482a2eef2cfd69b58 ]
 
-syzbot reported a panic [1] [2].
+If probe fails after registering the PTP clock and its delayed work,
+these resources must be released.
 
-When an IPv6 nexthop is replaced with an IPv4 nexthop, the has_v4 flag
-of all groups containing this nexthop is not updated. This is because
-nh_group_v4_update is only called when replacing AF_INET to AF_INET6,
-but the reverse direction (AF_INET6 to AF_INET) is missed.
+This was not an issue until a 2016 fix moved the e1000e_ptp_init() call
+before the jump to err_register.
 
-This allows a stale has_v4=false to bypass fib6_check_nexthop, causing
-IPv6 routes to be attached to groups that effectively contain only AF_INET
-members. Subsequent route lookups then call nexthop_fib6_nh() which
-returns NULL for the AF_INET member, leading to a NULL pointer
-dereference.
-
-Fix by calling nh_group_v4_update whenever the family changes, not just
-AF_INET to AF_INET6.
-
-Reproducer:
-	# AF_INET6 blackhole
-	ip -6 nexthop add id 1 blackhole
-	# group with has_v4=false
-	ip nexthop add id 100 group 1
-	# replace with AF_INET (no -6), has_v4 stays false
-	ip nexthop replace id 1 blackhole
-	# pass stale has_v4 check
-	ip -6 route add 2001:db8::/64 nhid 100
-	# panic
-	ping -6 2001:db8::1
-
-[1] https://syzkaller.appspot.com/bug?id=e17283eb2f8dcf3dd9b47fe6f67a95f71faadad0
-[2] https://syzkaller.appspot.com/bug?id=8699b6ae54c9f35837d925686208402949e12ef3
-Fixes: 7bf4796dd099 ("nexthops: add support for replace")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260413114522.147784-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: aa524b66c5ef ("e1000e: don't modify SYSTIM registers during SIOCSHWTSTAMP ioctl")
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-12-686c33c9828d@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 9bd72526000c4..8cd148be09c6b 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2161,10 +2161,10 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
- 			goto err_notify;
- 	}
- 
--	/* When replacing an IPv4 nexthop with an IPv6 nexthop, potentially
-+	/* When replacing a nexthop with one of a different family, potentially
- 	 * update IPv4 indication in all the groups using the nexthop.
- 	 */
--	if (oldi->family == AF_INET && newi->family == AF_INET6) {
-+	if (oldi->family != newi->family) {
- 		list_for_each_entry(nhge, &old->grp_list, nh_list) {
- 			struct nexthop *nhp = nhge->nh_parent;
- 			struct nh_group *nhg;
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 3216089642648..2154d476f9da6 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -7708,6 +7708,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ err_register:
+ 	if (!(adapter->flags & FLAG_HAS_AMT))
+ 		e1000e_release_hw_control(adapter);
++	e1000e_ptp_remove(adapter);
+ err_eeprom:
+ 	if (hw->phy.ops.check_reset_block && !hw->phy.ops.check_reset_block(hw))
+ 		e1000_phy_hw_reset(&adapter->hw);
 -- 
 2.53.0
 
