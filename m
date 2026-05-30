@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABEA267B05;
-	Sat, 30 May 2026 17:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9987267B05;
+	Sat, 30 May 2026 17:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163007; cv=none; b=gwEU8W+gV/U78BzHGjuNXY7nuPBkzFdjA0VnHq8zED0mgdTyvmjIA7ZUpuwRj/nZ5G+Gsl0uIhAPQIJ4v+82MT3PDMITLWa4sqpcu20ISgZryx9BZyYWlnWVP8dP7YQm/KGMNdK2dgYeko5GVZmDjCgZYzVzwR0dcctBvV/1RHA=
+	t=1780163010; cv=none; b=OcroOPXU/7LX3raFghIAg1gqF+gQ68C/xS9icZYrwSG0Fh0JsfqTwdEydP4ndM8jFAzwlE7N8WKKjcn+BiOi7wkHIM9XaiLctukeoGOXl19PVhzJ38YBJZCagApdaH8Z5TiEjyXP/07tT6GhYnj6glAmgsHzEMG8nEb3XBIGt3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163007; c=relaxed/simple;
-	bh=L6dkOPWtaFMJL4YMQuhTxMiDaWPt3mYOG/qE8nlKgOQ=;
+	s=arc-20240116; t=1780163010; c=relaxed/simple;
+	bh=uZqjZkA5KfyIwkKxdf2GX8mDf/5mUGJdB9F9LZJA3U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FK+sHmRWvta4iHHUAFBJ/cY4kmoq14alJ9bA2nMpsIhzH9YpHXdpQypy7Fjxs9L5PKQNy/BNH59LGpFnX/2RtFSJ5JBkNIeXoRXClhAJbFz9sM9hozexlInXFsLFH50nBAYRdI7RQXEo4YiJQszzvJUrdPwkbRp/oIadUCHkckM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxA2FJd6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l6J41Nj2RXAohDYe22z0UzPjLo6uLHFgfL2tJngPgS28/Vsd7HZf5xSCcNeJytku9xNFrdlreOCbCoPWJGx66x0KzxNTs0nTwArE82g4H11izf6EgosnUE0GaWOJIfxp3BeW4DC08xUecK7vRPbrsbfTu26ENgibTUmDQcxiLpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq3ZzJvk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxA2FJd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDDA1F00893;
-	Sat, 30 May 2026 17:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq3ZzJvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F2B1F00893;
+	Sat, 30 May 2026 17:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163006;
-	bh=jA59KurEzNRroU0bqcgFkUJ4oy5+/AT672LBL3fPEcI=;
+	s=korg; t=1780163009;
+	bh=mc+n8BJcPO1AM/CMUdDyTvCQ7E1MXbePmUBUe2ly3fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxA2FJd6wDhq+LBVBzHlU8DqkwSjngpJwx/tOrqKX7roTeK3Np1qgz+FLz0qM/gD5
-	 I1Cc1rhvGAJgLbbgq0lprSNujE6onmFcBLUq58H1v1kCSYx/pASvjNiM+vimAylYL0
-	 Sv21s/QskG+ORIN94mw2/FsJvSilImKSYMs9MEvg=
+	b=Yq3ZzJvkjWojbK2a4ThepRSu5KnjlO191woU20TPgRKgfEVJi/hhOPknCXo9+PYd4
+	 deFaObyAde9udsRgooR1HiI29iB3KVYeO8yJfz4g7Tz6WuwFdoakU1hxL24HWjh77f
+	 LyW3N6WTIi3mW0Z9w5PpZByVztFZEK+rWZ2Faa+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juan Li <lijuan@linux.spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>
-Subject: [PATCH 5.15 128/776] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
-Date: Sat, 30 May 2026 17:57:22 +0200
-Message-ID: <20260530160243.692091841@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Jianqiang kang <jianqkang@sina.cn>
+Subject: [PATCH 5.15 129/776] fs: dlm: fix use after free in midcomms commit
+Date: Sat, 30 May 2026 17:57:23 +0200
+Message-ID: <20260530160243.718707587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,82 +51,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
+[ Upstream commit 724b6bab0d75f1dc01fdfbf7fe8d4217a5cb90ba ]
 
-Add proper locking in mmp_pdma_residue() to prevent use-after-free when
-accessing descriptor list and descriptor contents.
+While working on processing dlm message in softirq context I experienced
+the following KASAN use-after-free warning:
 
-The race occurs when multiple threads call tx_status() while the tasklet
-on another CPU is freeing completed descriptors:
+[  151.760477] ==================================================================
+[  151.761803] BUG: KASAN: use-after-free in dlm_midcomms_commit_mhandle+0x19d/0x4b0
+[  151.763414] Read of size 4 at addr ffff88811a980c60 by task lock_torture/1347
 
-CPU 0                              CPU 1
------                              -----
-mmp_pdma_tx_status()
-mmp_pdma_residue()
-  -> NO LOCK held
-     list_for_each_entry(sw, ..)
-                                   DMA interrupt
-                                   dma_do_tasklet()
-                                     -> spin_lock(&desc_lock)
-                                        list_move(sw->node, ...)
-                                        spin_unlock(&desc_lock)
-  |                                     dma_pool_free(sw) <- FREED!
-  -> access sw->desc <- UAF!
+[  151.765284] CPU: 7 PID: 1347 Comm: lock_torture Not tainted 6.1.0-rc4+ #2828
+[  151.766778] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-3.module+el8.7.0+16134+e5908aa2 04/01/2014
+[  151.768726] Call Trace:
+[  151.769277]  <TASK>
+[  151.769748]  dump_stack_lvl+0x5b/0x86
+[  151.770556]  print_report+0x180/0x4c8
+[  151.771378]  ? kasan_complete_mode_report_info+0x7c/0x1e0
+[  151.772241]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
+[  151.773069]  kasan_report+0x93/0x1a0
+[  151.773668]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
+[  151.774514]  __asan_load4+0x7e/0xa0
+[  151.775089]  dlm_midcomms_commit_mhandle+0x19d/0x4b0
+[  151.775890]  ? create_message.isra.29.constprop.64+0x57/0xc0
+[  151.776770]  send_common+0x19f/0x1b0
+[  151.777342]  ? remove_from_waiters+0x60/0x60
+[  151.778017]  ? lock_downgrade+0x410/0x410
+[  151.778648]  ? __this_cpu_preempt_check+0x13/0x20
+[  151.779421]  ? rcu_lockdep_current_cpu_online+0x88/0xc0
+[  151.780292]  _convert_lock+0x46/0x150
+[  151.780893]  convert_lock+0x7b/0xc0
+[  151.781459]  dlm_lock+0x3ac/0x580
+[  151.781993]  ? 0xffffffffc0540000
+[  151.782522]  ? torture_stop+0x120/0x120 [dlm_locktorture]
+[  151.783379]  ? dlm_scan_rsbs+0xa70/0xa70
+[  151.784003]  ? preempt_count_sub+0xd6/0x130
+[  151.784661]  ? is_module_address+0x47/0x70
+[  151.785309]  ? torture_stop+0x120/0x120 [dlm_locktorture]
+[  151.786166]  ? 0xffffffffc0540000
+[  151.786693]  ? lockdep_init_map_type+0xc3/0x360
+[  151.787414]  ? 0xffffffffc0540000
+[  151.787947]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
+[  151.789004]  ? torture_stop+0x120/0x120 [dlm_locktorture]
+[  151.789858]  ? 0xffffffffc0540000
+[  151.790392]  ? lock_torture_cleanup+0x20/0x20 [dlm_locktorture]
+[  151.791347]  ? delay_tsc+0x94/0xc0
+[  151.791898]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
+[  151.792735]  ? torture_start+0x30/0x30 [dlm_locktorture]
+[  151.793606]  lock_torture+0x177/0x270 [dlm_locktorture]
+[  151.794448]  ? torture_dlm_lock_sync.isra.3+0x150/0x150 [dlm_locktorture]
+[  151.795539]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
+[  151.796476]  ? do_raw_spin_lock+0x11e/0x1e0
+[  151.797152]  ? mark_held_locks+0x34/0xb0
+[  151.797784]  ? _raw_spin_unlock_irqrestore+0x30/0x70
+[  151.798581]  ? __kthread_parkme+0x79/0x110
+[  151.799246]  ? trace_preempt_on+0x2a/0xf0
+[  151.799902]  ? __kthread_parkme+0x79/0x110
+[  151.800579]  ? preempt_count_sub+0xd6/0x130
+[  151.801271]  ? __kasan_check_read+0x11/0x20
+[  151.801963]  ? __kthread_parkme+0xec/0x110
+[  151.802630]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
+[  151.803569]  kthread+0x192/0x1d0
+[  151.804104]  ? kthread_complete_and_exit+0x30/0x30
+[  151.804881]  ret_from_fork+0x1f/0x30
+[  151.805480]  </TASK>
 
-This issue can be reproduced when running dmatest on the same channel with
-multiple threads (threads_per_chan > 1).
+[  151.806111] Allocated by task 1347:
+[  151.806681]  kasan_save_stack+0x26/0x50
+[  151.807308]  kasan_set_track+0x25/0x30
+[  151.807920]  kasan_save_alloc_info+0x1e/0x30
+[  151.808609]  __kasan_slab_alloc+0x63/0x80
+[  151.809263]  kmem_cache_alloc+0x1ad/0x830
+[  151.809916]  dlm_allocate_mhandle+0x17/0x20
+[  151.810590]  dlm_midcomms_get_mhandle+0x96/0x260
+[  151.811344]  _create_message+0x95/0x180
+[  151.811994]  create_message.isra.29.constprop.64+0x57/0xc0
+[  151.812880]  send_common+0x129/0x1b0
+[  151.813467]  _convert_lock+0x46/0x150
+[  151.814074]  convert_lock+0x7b/0xc0
+[  151.814648]  dlm_lock+0x3ac/0x580
+[  151.815199]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
+[  151.816258]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
+[  151.817129]  lock_torture+0x177/0x270 [dlm_locktorture]
+[  151.817986]  kthread+0x192/0x1d0
+[  151.818518]  ret_from_fork+0x1f/0x30
 
-Fix by protecting the chain_running list iteration and descriptor access
-with the chan->desc_lock spinlock.
+[  151.819369] Freed by task 1336:
+[  151.819890]  kasan_save_stack+0x26/0x50
+[  151.820514]  kasan_set_track+0x25/0x30
+[  151.821128]  kasan_save_free_info+0x2e/0x50
+[  151.821812]  __kasan_slab_free+0x107/0x1a0
+[  151.822483]  kmem_cache_free+0x204/0x5e0
+[  151.823152]  dlm_free_mhandle+0x18/0x20
+[  151.823781]  dlm_mhandle_release+0x2e/0x40
+[  151.824454]  rcu_core+0x583/0x1330
+[  151.825047]  rcu_core_si+0xe/0x20
+[  151.825594]  __do_softirq+0xf4/0x5c2
 
-Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ Minor context conflict resolved. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+[  151.826450] Last potentially related work creation:
+[  151.827238]  kasan_save_stack+0x26/0x50
+[  151.827870]  __kasan_record_aux_stack+0xa2/0xc0
+[  151.828609]  kasan_record_aux_stack_noalloc+0xb/0x20
+[  151.829415]  call_rcu+0x4c/0x760
+[  151.829954]  dlm_mhandle_delete+0x97/0xb0
+[  151.830718]  dlm_process_incoming_buffer+0x2fc/0xb30
+[  151.831524]  process_dlm_messages+0x16e/0x470
+[  151.832245]  process_one_work+0x505/0xa10
+[  151.832905]  worker_thread+0x67/0x650
+[  151.833507]  kthread+0x192/0x1d0
+[  151.834046]  ret_from_fork+0x1f/0x30
+
+[  151.834900] The buggy address belongs to the object at ffff88811a980c30
+                which belongs to the cache dlm_mhandle of size 88
+[  151.836894] The buggy address is located 48 bytes inside of
+                88-byte region [ffff88811a980c30, ffff88811a980c88)
+
+[  151.839007] The buggy address belongs to the physical page:
+[  151.839904] page:0000000076cf5d62 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11a980
+[  151.841378] flags: 0x8000000000000200(slab|zone=2)
+[  151.842141] raw: 8000000000000200 0000000000000000 dead000000000122 ffff8881089b43c0
+[  151.843401] raw: 0000000000000000 0000000000220022 00000001ffffffff 0000000000000000
+[  151.844640] page dumped because: kasan: bad access detected
+
+[  151.845822] Memory state around the buggy address:
+[  151.846602]  ffff88811a980b00: fb fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb
+[  151.847761]  ffff88811a980b80: fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb
+[  151.848921] >ffff88811a980c00: fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb
+[  151.850076]                                                        ^
+[  151.851085]  ffff88811a980c80: fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb
+[  151.852269]  ffff88811a980d00: fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb fc
+[  151.853428] ==================================================================
+[  151.855618] Disabling lock debugging due to kernel taint
+
+It is accessing a mhandle in dlm_midcomms_commit_mhandle() and the mhandle
+was freed by a call_rcu() call in dlm_process_incoming_buffer(),
+dlm_mhandle_delete(). It looks like it was freed because an ack of
+this message was received. There is a short race between committing the
+dlm message to be transmitted and getting an ack back. If the ack is
+faster than returning from dlm_midcomms_commit_msg_3_2(), then we run
+into a use-after free because we still need to reference the mhandle when
+calling srcu_read_unlock().
+
+To avoid that, we don't allow that mhandle to be freed between
+dlm_midcomms_commit_msg_3_2() and srcu_read_unlock() by using rcu read
+lock. We can do that because mhandle is protected by rcu handling.
+
+Cc: stable@vger.kernel.org
+Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mmp_pdma.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/dlm/midcomms.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -764,6 +764,7 @@ static unsigned int mmp_pdma_residue(str
- {
- 	struct mmp_pdma_desc_sw *sw;
- 	u32 curr, residue = 0;
-+	unsigned long flags;
- 	bool passed = false;
- 	bool cyclic = chan->cyclic_first != NULL;
- 
-@@ -779,6 +780,8 @@ static unsigned int mmp_pdma_residue(str
- 	else
- 		curr = readl(chan->phy->base + DSADR(chan->phy->idx));
- 
-+	spin_lock_irqsave(&chan->desc_lock, flags);
-+
- 	list_for_each_entry(sw, &chan->chain_running, node) {
- 		u32 start, end, len;
- 
-@@ -822,6 +825,7 @@ static unsigned int mmp_pdma_residue(str
- 			continue;
- 
- 		if (sw->async_tx.cookie == cookie) {
-+			spin_unlock_irqrestore(&chan->desc_lock, flags);
- 			return residue;
- 		} else {
- 			residue = 0;
-@@ -829,6 +833,8 @@ static unsigned int mmp_pdma_residue(str
- 		}
- 	}
- 
-+	spin_unlock_irqrestore(&chan->desc_lock, flags);
-+
- 	/* We should only get here in case of cyclic transactions */
- 	return residue;
- }
+--- a/fs/dlm/midcomms.c
++++ b/fs/dlm/midcomms.c
+@@ -1131,8 +1131,15 @@ void dlm_midcomms_commit_mhandle(struct
+ 		kfree(mh);
+ 		break;
+ 	case DLM_VERSION_3_2:
++		/* held rcu read lock here, because we sending the
++		 * dlm message out, when we do that we could receive
++		 * an ack back which releases the mhandle and we
++		 * get a use after free.
++		 */
++		rcu_read_lock();
+ 		dlm_midcomms_commit_msg_3_2(mh);
+ 		srcu_read_unlock(&nodes_srcu, mh->idx);
++		rcu_read_unlock();
+ 		break;
+ 	default:
+ 		srcu_read_unlock(&nodes_srcu, mh->idx);
 
 
