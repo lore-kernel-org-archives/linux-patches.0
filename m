@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CF7350A05;
-	Sat, 30 May 2026 17:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CF9263F44;
+	Sat, 30 May 2026 17:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161382; cv=none; b=eGyO8+/qnV0vcnzSCsR+nPmewDY5bXv4t8OD3NhZ8sqCimjXs+lnSFMVGTlrbhNn92SpExoqdt1Cz26NFKRqggmcNuZ/ygfCWX6DVHw966bsDgyVSXsKhtYmBPUidOdRBsT7+/VfpVK2mQ/HdINgbBw1Oj6g47csG8xmhVr6/E4=
+	t=1780161386; cv=none; b=qSAC0Afz7B70eIcAD9ugCqvrj2MMpPNWXGIfuFlLNGx9dp2IctPhWybf0IZXLHJio5/prR+SAOyCHZ6U7ql1SB3nktpmSn0tvFU2gLZW09ZBqepEpSrxFR2VuGk7fMwXJuy/kjF8tQQIx+s4nfl/gfCnp6FGNmqj6OoN/qjfgtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161382; c=relaxed/simple;
-	bh=CW9R31PE9c2XL7ZbFjKMhG19u93sbi97Gcz0KMWnIEY=;
+	s=arc-20240116; t=1780161386; c=relaxed/simple;
+	bh=O9xxMjdpqM+QGYCLf5HLMNkDO2p4D+eJ7AQlctlrs30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8/dvtFqNvr/nEBnka1fCXsTs7eQTF4GGY6WbFC1ZxZs31zx+pfBSvAS6MQc6o2QJql+IXlI53L9MTTP2BnjzBOAnOrA5rBBtnfl9z1Na7Xn3GpKC1BfhmfvBPzGE1L9H2rQmuWQdVqhdNCM02rMfvOS/auOTMRIieSt95iZhxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZkE1DnW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a42ZTQKeJa7uld62szdto7YqxWNdbdoc6nUSd1S4d3eEkbvfOxvAyxz6wEFFF3TXY6hkJ1Z9wkF7cJBZ24E7UeO7PDj0L5G3etSE14xDp3OV7pJUV1tZj/k2hT5gdJetMdnMGKvMD5FS+8qH2jYSZ553u9LM4bAalvhRoJJ4sVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyxxnzzC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZkE1DnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD521F00893;
-	Sat, 30 May 2026 17:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyxxnzzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFAD1F00893;
+	Sat, 30 May 2026 17:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161381;
-	bh=EDBkhVrGWDiD9gK0oyHdReowacaDc/WEI1TMo0Atk1Q=;
+	s=korg; t=1780161385;
+	bh=/5t7VNJ2fvAJIwvGdZY4UgnEM+iqjCK7BXWL0F39Ii4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KZkE1DnWTrJ6NTWBQyy/FZTzaN4qjCyh4WKTwzskXPS5czMXmAaiU4jD8L3fdiCGs
-	 6b0Bt4ndJr+qNUFvsXaitsKFX8qrGS6+8x75/wMUnw7rFjo+8FCK0zELYQINV+F1My
-	 thvzm7bF8KfbpxdU0ZGRH4TO+ZYIG+pzpp+hjQKk=
+	b=uyxxnzzC8w+4UgxwGVwoJGdbrU81tUHBO/oiL37Tp9hJVJXIG9wdtW57+HPbrpICl
+	 uYkG3lU96rr3y4fafpbjsi9mufYqlAT0ONd3sF8mFeDg3dJyyRHb88OXp6WEqLtS30
+	 v5ntL4urERZ/9109oNJtPhHHoWH888aXNdntNclg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 608/969] mtd: spi-nor: spansion: Add support for Infineon S25FS256T
-Date: Sat, 30 May 2026 18:02:12 +0200
-Message-ID: <20260530160317.219749752@linuxfoundation.org>
+Subject: [PATCH 6.1 609/969] mtd: spi-nor: Allow post_sfdp hook to return errors
+Date: Sat, 30 May 2026 18:02:13 +0200
+Message-ID: <20260530160317.245967752@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,116 +50,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 6afcc84080c415df81765c6d773edcba8fc30f6c ]
+[ Upstream commit e570f7872a34dc290014c80c7bad365d6577836b ]
 
-Infineon S25FS256T is 256Mbit Quad SPI NOR flash. The key features and
-differences comparing to other Spansion/Cypress flash familes are:
-  - 4-byte address mode by factory default
-  - Quad mode is enabled by factory default
-  - OP_READ_FAST_4B(0Ch) is not supported
-  - Supports mixture of 128KB and 64KB sectors by OTP configuration
-    (this patch supports uniform 128KB only due to complexity of
-     non-uniform layout)
+Multi die flashes like s25hl02gt need to determine the page_size at
+run-time by querying a configuration register for each die. Since the
+number of dice is determined in an optional SFDP table, SCCR MC, the
+page size configuration must be done in the post_sfdp hook. Allow
+post_sfdp to return errors, as reading the configuration register might
+return errors.
 
-Tested on Xilinx Zynq-7000 FPGA board.
-
-Link: https://www.infineon.com/dgdlac/Infineon-S25FS256T_256Mb_SEMPER_Nano_Flash_Quad_SPI_1.8V-DataSheet-v12_00-EN.pdf?fileId=8ac78c8c80027ecd0180740c5a46707a
-Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
-Link: https://lore.kernel.org/r/097ef04484966593ba1326d0a99462753d7d1073.1677557525.git.Takahiro.Kuwano@infineon.com
+Link: https://lore.kernel.org/r/924ab710f128448ec62537cfbb377336e390043c.1680849425.git.Takahiro.Kuwano@infineon.com
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Stable-dep-of: 3620d67b4849 ("mtd: spi-nor: update spi_nor_fixups::post_sfdp() documentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/spansion.c | 60 ++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ drivers/mtd/spi-nor/core.h      |  2 +-
+ drivers/mtd/spi-nor/micron-st.c |  4 +++-
+ drivers/mtd/spi-nor/sfdp.c      | 17 ++++++++++++-----
+ drivers/mtd/spi-nor/spansion.c  | 12 +++++++++---
+ 4 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index 3ae59c7822039..5914a6074a11e 100644
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -29,6 +29,7 @@
- 	 SPINOR_REG_CYPRESS_CFR5_OPI)
- #define SPINOR_REG_CYPRESS_CFR5V_OCT_DTR_DS	SPINOR_REG_CYPRESS_CFR5_BIT6
- #define SPINOR_OP_CYPRESS_RD_FAST		0xee
-+#define SPINOR_REG_CYPRESS_ARCFN		0x00000006
+diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
+index 290613fd63ae7..cc70a2092494c 100644
+--- a/drivers/mtd/spi-nor/core.h
++++ b/drivers/mtd/spi-nor/core.h
+@@ -424,7 +424,7 @@ struct spi_nor_fixups {
+ 	int (*post_bfpt)(struct spi_nor *nor,
+ 			 const struct sfdp_parameter_header *bfpt_header,
+ 			 const struct sfdp_bfpt *bfpt);
+-	void (*post_sfdp)(struct spi_nor *nor);
++	int (*post_sfdp)(struct spi_nor *nor);
+ 	void (*late_init)(struct spi_nor *nor);
+ };
  
- /* Cypress SPI NOR flash operations. */
- #define CYPRESS_NOR_WR_ANY_REG_OP(naddr, addr, ndata, buf)		\
-@@ -229,6 +230,62 @@ static void cypress_nor_ecc_init(struct spi_nor *nor)
- 	nor->flags |= SNOR_F_ECC;
+diff --git a/drivers/mtd/spi-nor/micron-st.c b/drivers/mtd/spi-nor/micron-st.c
+index 3c9681a3f7a33..f8f6e14452d58 100644
+--- a/drivers/mtd/spi-nor/micron-st.c
++++ b/drivers/mtd/spi-nor/micron-st.c
+@@ -127,7 +127,7 @@ static void mt35xu512aba_default_init(struct spi_nor *nor)
+ 	nor->params->octal_dtr_enable = micron_st_nor_octal_dtr_enable;
  }
  
-+static int
-+s25fs256t_post_bfpt_fixup(struct spi_nor *nor,
-+			  const struct sfdp_parameter_header *bfpt_header,
-+			  const struct sfdp_bfpt *bfpt)
-+{
-+	struct spi_mem_op op;
+-static void mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
++static int mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
+ {
+ 	/* Set the Fast Read settings. */
+ 	nor->params->hwcaps.mask |= SNOR_HWCAPS_READ_8_8_8_DTR;
+@@ -145,6 +145,8 @@ static void mt35xu512aba_post_sfdp_fixup(struct spi_nor *nor)
+ 	 * disable it.
+ 	 */
+ 	nor->params->quad_enable = NULL;
++
++	return 0;
+ }
+ 
+ static const struct spi_nor_fixups mt35xu512aba_fixups = {
+diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
+index 78110387be0b5..6f47982105bd9 100644
+--- a/drivers/mtd/spi-nor/sfdp.c
++++ b/drivers/mtd/spi-nor/sfdp.c
+@@ -1239,14 +1239,21 @@ static int spi_nor_parse_sccr(struct spi_nor *nor,
+  * Used to tweak various flash parameters when information provided by the SFDP
+  * tables are wrong.
+  */
+-static void spi_nor_post_sfdp_fixups(struct spi_nor *nor)
++static int spi_nor_post_sfdp_fixups(struct spi_nor *nor)
+ {
 +	int ret;
 +
-+	/* 4-byte address mode is enabled by default */
-+	nor->params->addr_nbytes = 4;
-+	nor->params->addr_mode_nbytes = 4;
+ 	if (nor->manufacturer && nor->manufacturer->fixups &&
+-	    nor->manufacturer->fixups->post_sfdp)
+-		nor->manufacturer->fixups->post_sfdp(nor);
++	    nor->manufacturer->fixups->post_sfdp) {
++		ret = nor->manufacturer->fixups->post_sfdp(nor);
++		if (ret)
++			return ret;
++	}
+ 
+ 	if (nor->info->fixups && nor->info->fixups->post_sfdp)
+-		nor->info->fixups->post_sfdp(nor);
++		return nor->info->fixups->post_sfdp(nor);
 +
-+	/* Read Architecture Configuration Register (ARCFN) */
-+	op = (struct spi_mem_op)
-+		CYPRESS_NOR_RD_ANY_REG_OP(nor->params->addr_mode_nbytes,
-+					  SPINOR_REG_CYPRESS_ARCFN, 1,
-+					  nor->bouncebuf);
-+	ret = spi_nor_read_any_reg(nor, &op, nor->reg_proto);
-+	if (ret)
-+		return ret;
++	return 0;
+ }
+ 
+ /**
+@@ -1429,7 +1436,7 @@ int spi_nor_parse_sfdp(struct spi_nor *nor)
+ 		}
+ 	}
+ 
+-	spi_nor_post_sfdp_fixups(nor);
++	err = spi_nor_post_sfdp_fixups(nor);
+ exit:
+ 	kfree(param_headers);
+ 	return err;
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 5914a6074a11e..af97e3741f987 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -258,7 +258,7 @@ s25fs256t_post_bfpt_fixup(struct spi_nor *nor,
+ 	return cypress_nor_set_page_size(nor);
+ }
+ 
+-static void s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
++static int s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
+ {
+ 	struct spi_nor_flash_parameter *params = nor->params;
+ 
+@@ -267,6 +267,8 @@ static void s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
+ 	spi_nor_set_pp_settings(&params->page_programs[SNOR_CMD_PP_1_1_4],
+ 				SPINOR_OP_PP_1_1_4_4B,
+ 				SNOR_PROTO_1_1_4);
 +
-+	/* ARCFN value must be 0 if uniform sector is selected  */
-+	if (nor->bouncebuf[0])
-+		return -ENODEV;
++	return 0;
+ }
+ 
+ static void s25fs256t_late_init(struct spi_nor *nor)
+@@ -297,7 +299,7 @@ s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
+ 	return cypress_nor_set_page_size(nor);
+ }
+ 
+-static void s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
++static int s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
+ {
+ 	struct spi_nor_erase_type *erase_type =
+ 					nor->params->erase_map.erase_type;
+@@ -319,6 +321,8 @@ static void s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
+ 			break;
+ 		}
+ 	}
 +
-+	return cypress_nor_set_page_size(nor);
-+}
++	return 0;
+ }
+ 
+ static void s25hx_t_late_init(struct spi_nor *nor)
+@@ -351,7 +355,7 @@ static int cypress_nor_octal_dtr_enable(struct spi_nor *nor, bool enable)
+ 			cypress_nor_octal_dtr_dis(nor);
+ }
+ 
+-static void s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
++static int s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
+ {
+ 	/*
+ 	 * On older versions of the flash the xSPI Profile 1.0 table has the
+@@ -377,6 +381,8 @@ static void s28hx_t_post_sfdp_fixup(struct spi_nor *nor)
+ 	 * actual value for that is 4.
+ 	 */
+ 	nor->params->rdsr_addr_nbytes = 4;
 +
-+static void s25fs256t_post_sfdp_fixup(struct spi_nor *nor)
-+{
-+	struct spi_nor_flash_parameter *params = nor->params;
-+
-+	/* PP_1_1_4_4B is supported but missing in 4BAIT. */
-+	params->hwcaps.mask |= SNOR_HWCAPS_PP_1_1_4;
-+	spi_nor_set_pp_settings(&params->page_programs[SNOR_CMD_PP_1_1_4],
-+				SPINOR_OP_PP_1_1_4_4B,
-+				SNOR_PROTO_1_1_4);
-+}
-+
-+static void s25fs256t_late_init(struct spi_nor *nor)
-+{
-+	/*
-+	 * Programming is supported only in 16-byte ECC data unit granularity.
-+	 * Byte-programming, bit-walking, or multiple program operations to the
-+	 * same ECC data unit without an erase are not allowed. See chapter
-+	 * 5.3.1 and 5.6 in the datasheet.
-+	 */
-+	nor->params->writesize = 16;
-+}
-+
-+static struct spi_nor_fixups s25fs256t_fixups = {
-+	.post_bfpt = s25fs256t_post_bfpt_fixup,
-+	.post_sfdp = s25fs256t_post_sfdp_fixup,
-+	.late_init = s25fs256t_late_init,
-+};
-+
- static int
- s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
- 			const struct sfdp_parameter_header *bfpt_header,
-@@ -454,6 +511,9 @@ static const struct flash_info spansion_nor_parts[] = {
- 	{ "s25fl256l",  INFO(0x016019,      0,  64 * 1024, 512)
- 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
- 		FIXUP_FLAGS(SPI_NOR_4B_OPCODES) },
-+	{ "s25fs256t",  INFO6(0x342b19, 0x0f0890, 0, 0)
-+		PARSE_SFDP
-+		.fixups = &s25fs256t_fixups },
- 	{ "s25hl512t",  INFO6(0x342a1a, 0x0f0390, 256 * 1024, 256)
- 		PARSE_SFDP
- 		MFR_FLAGS(USE_CLSR)
++	return 0;
+ }
+ 
+ static int s28hx_t_post_bfpt_fixup(struct spi_nor *nor,
 -- 
 2.53.0
 
