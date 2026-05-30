@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153CF21E098;
-	Sat, 30 May 2026 18:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936CE21E098;
+	Sat, 30 May 2026 18:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166032; cv=none; b=B5H2DoC2VAJMqA9fT7lu7416R158hagQX9QKyru1qqD/e1ApZlEtr+TaV2xO9fd9LZXh3FSNjJkbF78jCCKCIqEEJ0O9hAJihD7bxYEAp4gL+tIACPBKi46n+pzSBYpWFTCzZImf9YOgvUSe7oHUB/WjL0Eo0rkFZ5JJLYa8OP8=
+	t=1780166035; cv=none; b=ftB9YHhJJXVSPisI1qXQYvTHy7qP1JuTtyVSl223UPdf8C+r4s/qGsFKsAsthD8DNOogwMhLWM1b2P2k7ZDu7su7a2si+k5GHOi80iJlIkHY3aQpeIfWe6JNhqPX7le+zGSEuhXDqlNoZ/Qo15W1pFkzzxI1NhGe/8sndUyqpYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166032; c=relaxed/simple;
-	bh=tPVuwkTpxPbZJneBl7d3qsSdfH9tcJz5tTcN7ndUFKw=;
+	s=arc-20240116; t=1780166035; c=relaxed/simple;
+	bh=mHSC+eQtuTdifPJF/2ZStnFfzS3UoYclR0JBndX7riI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i46/EIiWgZ7X94OBHkuh/ff0b6+wZQL4Op7mctLpUN1zlABladzlki0K911gRIl5xD7/dFjmfT8VoFRQhBLgOU1gdwA5o/xqdaqgfipW7Y9gD9k1B/jnCcANichPUvt02FtMe1pXF3nY1OylJkcdlA/AWw9MQPH2BeZAb3MTMbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpDwhE0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eiQ11pJu/7sNT5G1RYCt74lyiqBSR5tG+Sl3N+yM21qtmf40ct2U9RnWLwqiNLOn7ZacJrsWMCaryOqgsqziFuEE/3QmM9s2VMKKCaRc1yj5cxivsbkLM/GdcZ4164ifanUcJ7LPkdd/CDh1oEjefMt/0juA/6KhoquSzGCvmW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yztp3T6u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpDwhE0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584051F00893;
-	Sat, 30 May 2026 18:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yztp3T6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F11F00893;
+	Sat, 30 May 2026 18:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166031;
-	bh=+RLJtyDApJEHYeFich9Z5SPOpipxhy1JFaaqJ8sFQMg=;
+	s=korg; t=1780166034;
+	bh=QP4ed4G9Y9nmNV6zMW9mCgKkKtgOSl99BBdHRNiztSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OpDwhE0k0t+cVKltNty9cGSjdT5HQRuPT6ZpmwmVqR/qQxg6PgzRPgty4k7un1tDn
-	 PdJ1dmvfOjqZvJ7tNMLTQoDDZbO/cWV+WKmlJCBCv2qN0rTbs8eh+YrlAVycskj4IP
-	 pa9JQRfiVHJ3T8IhhQceEp0Ftcq0rrG7LrWQt8GI=
+	b=Yztp3T6ua+YH+0TIlZ4xhdH1m017EZmFGvKrstinJBHzwNqkKgjmkwHdgr/70NOvk
+	 FU6ZFfcirZ5aiNBv6rcuVlNZhLetKd0Sfk2crWfEb5Z0tOdyy4yuPyhd2zZ76gLp11
+	 gSA5opNMwrhxQVu3cp+9R0wHCamSNuedAPFhcDHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.10 254/589] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
-Date: Sat, 30 May 2026 18:02:15 +0200
-Message-ID: <20260530160231.657610907@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.10 255/589] s390/debug: Reject zero-length input in debug_input_flush_fn()
+Date: Sat, 30 May 2026 18:02:16 +0200
+Message-ID: <20260530160231.682552558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,137 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
+commit e14622a7584f9608927c59a7d6ae4a0999dc545e upstream.
 
-nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
-final controller reference through nvmet_cq_put(). If that triggers
-nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
-the same nvmet-wq.
+debug_input_flush_fn() always copies one byte from the userspace buffer
+with copy_from_user() regardless of the supplied write length. A
+zero-length write therefore reads one byte beyond the caller's buffer.
+If the stale byte happens to be '-' or a digit the debug log is
+silently flushed. With an unmapped buffer the call returns -EFAULT.
 
-Call chain:
+Reject zero-length writes before copying from userspace.
 
- nvmet_tcp_schedule_release_queue()
-   kref_put(&queue->kref, nvmet_tcp_release_queue)
-     nvmet_tcp_release_queue()
-       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
-         process_one_work()
-           nvmet_tcp_release_queue_work()
-             nvmet_cq_put(&queue->nvme_cq)
-               nvmet_cq_destroy()
-                 nvmet_ctrl_put(cq->ctrl)
-                   nvmet_ctrl_free()
-                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
-
-                      Previously Scheduled by :-
-		        nvmet_add_async_event
-		          queue_work(nvmet_wq, &ctrl->async_event_work);
-
-This trips lockdep with a possible recursive locking warning.
-
-[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
-[ 5223.061801] loop0: detected capacity change from 0 to 2097152
-[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
-[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
-[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
-[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
-[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
-
-[ 5233.227718] ============================================
-[ 5233.231283] WARNING: possible recursive locking detected
-[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
-[ 5233.238434] --------------------------------------------
-[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
-[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
-[ 5233.251438]
-               but task is already holding lock:
-[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.261125]
-               other info that might help us debug this:
-[ 5233.265333]  Possible unsafe locking scenario:
-
-[ 5233.269217]        CPU0
-[ 5233.270795]        ----
-[ 5233.272436]   lock((wq_completion)nvmet-wq);
-[ 5233.275241]   lock((wq_completion)nvmet-wq);
-[ 5233.278020]
-                *** DEADLOCK ***
-
-[ 5233.281793]  May be due to missing lock nesting notation
-
-[ 5233.286195] 3 locks held by kworker/u192:6/2413:
-[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
-[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
-[ 5233.304290]
-               stack backtrace:
-[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
-[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
-[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
-[ 5233.306532] Call Trace:
-[ 5233.306534]  <TASK>
-[ 5233.306536]  dump_stack_lvl+0x73/0xb0
-[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
-[ 5233.306556]  __lock_acquire+0x13f0/0x2290
-[ 5233.306563]  lock_acquire+0xd0/0x300
-[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306571]  ? __flush_work+0x20b/0x530
-[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
-[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306583]  ? __flush_work+0x20b/0x530
-[ 5233.306585]  __flush_work+0x268/0x530
-[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
-[ 5233.306594]  ? xen_error_entry+0x30/0x60
-[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
-[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
-[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
-[ 5233.306634]  process_one_work+0x206/0x6e0
-[ 5233.306640]  worker_thread+0x184/0x320
-[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
-[ 5233.306646]  kthread+0xf1/0x130
-[ 5233.306648]  ? __pfx_kthread+0x10/0x10
-[ 5233.306651]  ret_from_fork+0x355/0x450
-[ 5233.306653]  ? __pfx_kthread+0x10/0x10
-[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
-[ 5233.306664]  </TASK>
-
-There is also no need to flush async_event_work from controller
-teardown. The admin queue teardown already fails outstanding AER
-requests before the final controller put :-
-
- nvmet_sq_destroy(admin sq)
-    nvmet_async_events_failall(ctrl)
-
-The controller has already been removed from the subsystem list before
-nvmet_ctrl_free() quiesces outstanding work.
-
-Replace flush_work() with cancel_work_sync() so a pending
-async_event_work item is canceled and a running instance is waited on
-without recursing into the same workqueue.
-
-Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@vger.kernel.org # v5.10+
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/debug.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1440,7 +1440,7 @@ static void nvmet_ctrl_free(struct kref
+--- a/arch/s390/kernel/debug.c
++++ b/arch/s390/kernel/debug.c
+@@ -1387,6 +1387,11 @@ static int debug_input_flush_fn(debug_in
+ 	char input_buf[1];
+ 	int rc = user_len;
  
- 	nvmet_stop_keep_alive_timer(ctrl);
- 
--	flush_work(&ctrl->async_event_work);
-+	cancel_work_sync(&ctrl->async_event_work);
- 	cancel_work_sync(&ctrl->fatal_err_work);
- 
- 	ida_simple_remove(&cntlid_ida, ctrl->cntlid);
++	if (!user_len) {
++		rc = -EINVAL;
++		goto out;
++	}
++
+ 	if (user_len > 0x10000)
+ 		user_len = 0x10000;
+ 	if (*offset != 0) {
 
 
