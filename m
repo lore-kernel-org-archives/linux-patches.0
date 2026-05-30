@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDBE3242BA;
-	Sat, 30 May 2026 18:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84F43C3C1C;
+	Sat, 30 May 2026 18:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165853; cv=none; b=kXC7XWDVyuygUN1L/wyZ9Iy+F+ONsZwEHc32fojMEms6GL1OFU2izwuRwgBiUlvpRK2kxiCsWAcyHMpX038uyeoG7kDFpIk+FHy7gEzG3TApbWRqmHa01hOhJaseqCUdJFb+XE8yJfaPUnNj2SaUEG11/Q885Yo8m6Kkw2fCFfE=
+	t=1780165856; cv=none; b=XyzkivBXP06YECwmJlGDoXj+kEQXfGtSiOdhtI+nDb2vStEXDvh8bDIDhFo4ZMJP1P21Ikitwd7x6JtJaww1IFYpiQpK1/ILkGsjfDB/N9Bu0v3lyxFWQWuaGfYTpqjAmhM/cfxhofTR1y//GPUXKk8Mt1B5UfkMYOMcv0XyIaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165853; c=relaxed/simple;
-	bh=kTwAhrtK/iw9fee+JhZAGVUaUwAUb+AL/2lbqbGsiVw=;
+	s=arc-20240116; t=1780165856; c=relaxed/simple;
+	bh=sxcVWK4ILmVi21rYih05Al4VZfeVHKvMTo+CVcQxFbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ckqsRmXj3HIxAqeTjkdJY8loqWtaGuXYWoTvv22Xaaez1yaQzYT6OSAytPbrZupi8VjesJY7qOSx9D+bQcFe8YvuTfO9A7vpxgbbERQMJga91NdWZf/gg23G5LEOb33rh8s3M8PklW8txgKm6b10h9JDqCQoixyqwXWItnP+F7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1JMIcBu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=az7v2izf44IwjKLswscEXsmybxCskyWbi7145n7a52l85MWQj0ifkPPvsFlzTOpoK8BDB7wePrkz0AfdeTrX6gO9vUmVLdL6xsvdZwfCiwzmssVYLvVGFlzXBlMcaojI5pYbW3S2+xniXoGyAHT1EgUU6MlvDlvW23UuXi2aBIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbKOvMS/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1JMIcBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3AE1F00893;
-	Sat, 30 May 2026 18:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbKOvMS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096B31F00893;
+	Sat, 30 May 2026 18:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165852;
-	bh=4MdfQhojuwySg9AiwVy5l+FmGHi7hFxgWFsidQ6W2y8=;
+	s=korg; t=1780165855;
+	bh=CMMdsZOzHn48FvjVzdT9i61zponJcY2r7PIBF0mffPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1JMIcBujajmn1xPNieznCRZ342KQkorwCI4WzPhS3v2mtk5WTbDnehx4XnAHeyoY
-	 VBjAaaxBKd6oraKsbsEL/XdSfjDmVLOG2o5AxFVZGHX4iTvKDQmkI//1adBkKVsbe9
-	 CO0NyoSxmHL4E5qu0Dcg6Q9ef7++fUoq0FtPyeN4=
+	b=sbKOvMS/YqIu35bhNxlsLGIA58CObMyW8SOvDv7m7T+rmeYW57suHLKwe5kSvXvY9
+	 usWdq6SvPEI//EwGt1zgVgOJV9l3rg+qA6PMJcIEeD76/BVa4oZOPBkW02KnQXqnlD
+	 mPVbK0dqqhqJyyJUJTYJe5x1jzF1qpuV1GIuwOCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arjan van de Ven <arjan@linux.intel.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 5.10 201/589] drm/amdgpu: fix zero-size GDS range init on RDNA4
-Date: Sat, 30 May 2026 18:01:22 +0200
-Message-ID: <20260530160230.207293194@linuxfoundation.org>
+	syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 202/589] ALSA: caiaq: fix usb_dev refcount leak on probe failure
+Date: Sat, 30 May 2026 18:01:23 +0200
+Message-ID: <20260530160230.237906585@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -48,68 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arjan van de Ven <arjan@linux.intel.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 095a8b0ad3c3b5cdc3850d961adb8a8f735220bb upstream.
+commit 7a5f1cd22d47f8ca4b760b6334378ae42c1bd24b upstream.
 
-RDNA4 (GFX 12) hardware removes the GDS, GWS, and OA on-chip memory
-resources. The gfx_v12_0 initialisation code correctly leaves
-adev->gds.gds_size, adev->gds.gws_size, and adev->gds.oa_size at
-zero to reflect this.
+create_card() takes a reference on the USB device with usb_get_dev()
+and stores the matching usb_put_dev() in card_free(), which is
+installed as the snd_card's ->private_free destructor.
 
-amdgpu_ttm_init() unconditionally calls amdgpu_ttm_init_on_chip() for
-each of these resources regardless of size. When the size is zero,
-amdgpu_ttm_init_on_chip() forwards the call to ttm_range_man_init(),
-which calls drm_mm_init(mm, 0, 0). drm_mm_init() immediately fires
-DRM_MM_BUG_ON(start + size <= start) -- trivially true when size is
-zero -- crashing the kernel during modprobe of amdgpu on an RX 9070 XT.
+However, ->private_free is only assigned near the end of init_card(),
+after several failure points (usb_set_interface(), EP type checks,
+usb_submit_urb(), the EP1_CMD_GET_DEVICE_INFO exchange, and its
+timeout). When any of those fail, init_card() returns an error to
+snd_probe(), which calls snd_card_free(card). Because ->private_free
+is still NULL, card_free() never runs, the usb_get_dev() reference
+is not dropped, and the struct usb_device leaks along with its
+descriptor allocations and device_private.
 
-Guard against this by returning 0 early from
-amdgpu_ttm_init_on_chip() when size_in_page is zero. This skips TTM
-resource manager registration for hardware resources that are absent,
-without affecting any other GPU type.
+syzbot reproduces this with a malformed UAC3 device whose only valid
+altsetting is 0; init_card()'s usb_set_interface(usb_dev, 0, 1) call
+fails with -EIO and triggers the leak.
 
-DRM_MM_BUG_ON() only asserts if CONFIG_DRM_DEBUG_MM is enabled in
-the kernel config.  This is apparently rarely enabled as these chips
-have been in the market for over a year and this issue was only reported
-now.
+Move the ->private_free assignment into create_card(), immediately
+after usb_get_dev(), so that every error path reaching snd_card_free()
+balances the reference. card_free()'s callees (snd_usb_caiaq_input_free,
+free_urbs, kfree) already tolerate the partially-initialized state
+because the chip private area is zero-initialized by snd_card_new().
 
-Link: https://lore.kernel.org/all/bug-221376-2300@https.bugzilla.kernel.org%2F/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221376
-Oops-Analysis: http://oops.fenrus.org/reports/bugzilla.korg/221376/report.html
-Assisted-by: GitHub Copilot:Claude Sonnet 4.6 linux-kernel-oops-x86.
-Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5719ce5865279cad4fd5f01011fe037168503f2d)
+Fixes: 80bb50e2d459 ("ALSA: caiaq: take a reference on the USB device in create_card()")
+Reported-by: syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2afd7e71155c7e241560
+Tested-by: syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260426001934.70813-1-kartikey406@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/caiaq/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -71,6 +71,9 @@ static int amdgpu_ttm_init_on_chip(struc
- 				    unsigned int type,
- 				    uint64_t size_in_page)
- {
-+	if (!size_in_page)
-+		return 0;
-+
- 	return ttm_range_man_init(&adev->mman.bdev, type,
- 				  false, size_in_page);
- }
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -437,6 +437,7 @@ static int create_card(struct usb_device
+ 
+ 	cdev = caiaqdev(card);
+ 	cdev->chip.dev = usb_get_dev(usb_dev);
++	card->private_free = card_free;
+ 	cdev->chip.card = card;
+ 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
+ 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+@@ -525,7 +526,6 @@ static int init_card(struct snd_usb_caia
+ 	snprintf(card->longname, sizeof(card->longname), "%s %s (%s)",
+ 		       cdev->vendor_name, cdev->product_name, usbpath);
+ 
+-	card->private_free = card_free;
+ 	err = setup_card(cdev);
+ 	if (err < 0)
+ 		goto err_kill_urb;
 
 
