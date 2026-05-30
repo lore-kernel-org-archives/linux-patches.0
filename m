@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A311D63E4;
-	Sat, 30 May 2026 18:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990931A9F90;
+	Sat, 30 May 2026 18:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166915; cv=none; b=iN/7zqgDDFmrCGfnj73/auPTKp0/IHg42jQ0sQr1qkKtt3nwn0GXJ0plciTeQrrJXB7sRRsDbTE6/Bgl6ghrqu3FDscayJqapEnoCaNrHZtAzYsoRSFtB1Aj/sKbsN5w6HzWAR32fWrRPVWDYkdb4S2gk5+YGtMuX/oFEKfNT7w=
+	t=1780166918; cv=none; b=EKXIsTb/dcxIdkFQE+UDaJY7+bftYF4cSbIKZkKRrOl33nlNljpS42B6fDJsOt9T7vZLlS4RdLYfvf7n8JfEFiMbGC1OZ5FmlvIB+4g0oSDKNFLSF16MWDogwGMbbLrSD7ZhERxMluyetVXhrMtbjqvbdzDWOXTVXaCbiet5xXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166915; c=relaxed/simple;
-	bh=xK8rNTCJlo175EeORuWcS2D2Xid8DsbxnOUidk9knGs=;
+	s=arc-20240116; t=1780166918; c=relaxed/simple;
+	bh=/hG1DO6SUGvUR6Vew1krobjDKZegeO5PvT9Lb7kGIO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9WLpxlshOrMwofhpVyeAsZSHlTAuStiESjoH6tI8AAML8XhmAGX7+5ixJuJFj28L3uf3jcIsnbobJCAqu9f0iBdBuLyCbMsrhhZXH6XiPlGM6r9e2FP/G8j+4/IXzbjkCQT5EiAW9iwrZGfFoCwkE2ZIVrNx/xLKnFKbZpm0/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/2jhBK7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NsdDG4q86OgEDR7y1cS3+DfzUywuaDMsw4BqRZIjA49n8cQ7yfXYfvL9Vk7bz1rIDufcAEsxv710V6/t+cie21z8h2yb0qtDqPeuHabRgfCnZSortIWsEoKUc5FFoZxZ8CvMIF02MqSh5tx6YHwdc48ZdWR7jDuCBv+uDcfLTwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM9lR0qI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/2jhBK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BABC1F00893;
-	Sat, 30 May 2026 18:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM9lR0qI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5481F00893;
+	Sat, 30 May 2026 18:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166914;
-	bh=GNJ4VnU0Be/NzEEOxYxsX+e+kqSIDbZOV0AvPyr3d28=;
+	s=korg; t=1780166917;
+	bh=F/msW0FPm87aAl3Br2N6fR4XK1yDqRz4/Yc5cQ46twg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u/2jhBK7qSoKgtDZEVW9ZNh0l1Io8y9Oz9Lsed8wyKo/lBKXKoFMhtirbBnFX/uxj
-	 uhkfxmf8mpSF16i/FsJhOZzdJb7k1oQMss7Ah1ZrO4QLyNYR15CwOAVyeak56VW3IM
-	 5fNSjHhp9/MoQ8yB7KTjnGQQXFrm6/7m+/tOYAks=
+	b=hM9lR0qIdoDqguRE2uhc3a0LBn4W8VzrC6uoRTx8ATUP0JzTsAd6hCxK62BITBrTZ
+	 qnNtsaGuI9uHsig7bz1k7T347++9cAGA2LXktc8Q3NL1CAm2+ZufnjKvtv86ivSfj0
+	 IiwSZrFJlhX5tcYYPjMNcu2J7d8rRlORtPX/2oKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoze Xie <royenheart@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
+	syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Zhan Jun <zhanjun@uniontech.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 480/589] vrf: Fix a potential NPD when removing a port from a VRF
-Date: Sat, 30 May 2026 18:06:01 +0200
-Message-ID: <20260530160237.257347956@linuxfoundation.org>
+Subject: [PATCH 5.10 481/589] net: usb: rtl8150: fix use-after-free in rtl8150_start_xmit()
+Date: Sat, 30 May 2026 18:06:02 +0200
+Message-ID: <20260530160237.294113945@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,113 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Zhan Jun <zhanjun@uniontech.com>
 
-[ Upstream commit 2674d603a9e6970463b2b9ebcf8e31e90beae169 ]
+[ Upstream commit 23f0e34c64acba15cad4d23e50f41f533da195fa ]
 
-RCU readers that identified a net device as a VRF port using
-netif_is_l3_slave() assume that a subsequent call to
-netdev_master_upper_dev_get_rcu() will return a VRF device. They then
-continue to dereference its l3mdev operations.
+syzbot reported a KASAN slab-use-after-free read in rtl8150_start_xmit()
+when accessing skb->len for tx statistics after usb_submit_urb() has
+been called:
 
-This assumption is not always correct and can result in a NPD [1]. There
-is no RCU synchronization when removing a port from a VRF, so it is
-possible for an RCU reader to see a new master device (e.g., a bridge)
-that does not have l3mdev operations.
+  BUG: KASAN: slab-use-after-free in rtl8150_start_xmit+0x71f/0x760
+    drivers/net/usb/rtl8150.c:712
+  Read of size 4 at addr ffff88810eb7a930 by task kworker/0:4/5226
 
-Fix by adding RCU synchronization after clearing the IFF_L3MDEV_SLAVE
-flag. Skip this synchronization when a net device is removed from a VRF
-as part of its deletion and when the VRF device itself is deleted. In
-the latter case an RCU grace period will pass by the time RTNL is
-released.
+The URB completion handler write_bulk_callback() frees the skb via
+dev_kfree_skb_irq(dev->tx_skb). The URB may complete on another CPU
+in softirq context before usb_submit_urb() returns in the submitter,
+so by the time the submitter reads skb->len the skb has already been
+queued to the per-CPU completion_queue and freed by net_tx_action():
 
-[1]
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-RIP: 0010:l3mdev_fib_table_rcu (net/l3mdev/l3mdev.c:181)
-[...]
-Call Trace:
-<TASK>
-l3mdev_fib_table_by_index (net/l3mdev/l3mdev.c:201 net/l3mdev/l3mdev.c:189)
-__inet_bind (net/ipv4/af_inet.c:499 (discriminator 3))
-inet_bind_sk (net/ipv4/af_inet.c:469)
-__sys_bind (./include/linux/file.h:62 (discriminator 1) ./include/linux/file.h:83 (discriminator 1) net/socket.c:1951 (discriminator 1))
-__x64_sys_bind (net/socket.c:1969 (discriminator 1) net/socket.c:1967 (discriminator 1) net/socket.c:1967 (discriminator 1))
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  CPU A (xmit)                      CPU B (USB completion softirq)
+  ------------                      ------------------------------
+  dev->tx_skb = skb;
+  usb_submit_urb()      --+
+                          |-------> write_bulk_callback()
+                          |           dev_kfree_skb_irq(dev->tx_skb)
+                          |         net_tx_action()
+                          |           napi_skb_cache_put()   <-- free
+  netdev->stats.tx_bytes  |
+    += skb->len;          <-- UAF read
 
-Fixes: fdeea7be88b1 ("net: vrf: Set slave's private flag before linking")
-Reported-by: Haoze Xie <royenheart@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260419145332.3988923-1-n05ec@lzu.edu.cn/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260423063607.1208202-1-idosch@nvidia.com
+Fix it by caching skb->len before submitting the URB and using the
+cached value when updating the tx_bytes counter.
+
+The pre-existing tx_bytes semantics are preserved: the counter tracks
+the original frame length (skb->len), not the ETH_ZLEN/USB-alignment
+padded "count" value that is handed to the device.  Changing that
+would be a user-visible accounting change and is out of scope for
+this UAF fix.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69e69ee7.050a0220.24bfd3.002b.GAE@google.com/
+Closes: https://syzkaller.appspot.com/bug?extid=3f46c095ac0ca048cb71
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Zhan Jun <zhanjun@uniontech.com>
+Link: https://patch.msgid.link/809895186B866C10+20260423004913.136655-1-zhangdandan@uniontech.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/net/usb/rtl8150.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index b43e8041fda34..d1a2b3dcd00c9 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1143,6 +1143,7 @@ static int do_vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
- 
- err:
- 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
-+	synchronize_net();
- 	return ret;
- }
- 
-@@ -1162,10 +1163,16 @@ static int vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
- }
- 
- /* inverse of do_vrf_add_slave */
--static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
-+static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev,
-+			    bool needs_sync)
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 185b8c8b19ba3..51bd522fada53 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -685,6 +685,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 					    struct net_device *netdev)
  {
- 	netdev_upper_dev_unlink(port_dev, dev);
- 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
-+	/* Make sure that concurrent RCU readers that identified the device
-+	 * as a VRF port see a VRF master or no master at all.
-+	 */
-+	if (needs_sync)
-+		synchronize_net();
+ 	rtl8150_t *dev = netdev_priv(netdev);
++	unsigned int skb_len;
+ 	int count, res;
  
- 	cycle_netdev(port_dev, NULL);
- 
-@@ -1174,7 +1181,7 @@ static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
- 
- static int vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
- {
--	return do_vrf_del_slave(dev, port_dev);
-+	return do_vrf_del_slave(dev, port_dev, true);
- }
- 
- static void vrf_dev_uninit(struct net_device *dev)
-@@ -1666,7 +1673,7 @@ static void vrf_dellink(struct net_device *dev, struct list_head *head)
- 	struct list_head *iter;
- 
- 	netdev_for_each_lower_dev(dev, port_dev, iter)
--		vrf_del_slave(dev, port_dev);
-+		do_vrf_del_slave(dev, port_dev, false);
- 
- 	vrf_map_unregister_dev(dev);
- 
-@@ -1797,7 +1804,7 @@ static int vrf_device_event(struct notifier_block *unused,
- 			goto out;
- 
- 		vrf_dev = netdev_master_upper_dev_get(dev);
--		vrf_del_slave(vrf_dev, dev);
-+		do_vrf_del_slave(vrf_dev, dev, false);
+ 	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
+@@ -696,6 +697,8 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 		return NETDEV_TX_OK;
  	}
- out:
- 	return NOTIFY_DONE;
+ 
++	skb_len = skb->len;
++
+ 	netif_stop_queue(netdev);
+ 	dev->tx_skb = skb;
+ 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
+@@ -711,7 +714,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 		}
+ 	} else {
+ 		netdev->stats.tx_packets++;
+-		netdev->stats.tx_bytes += skb->len;
++		netdev->stats.tx_bytes += skb_len;
+ 		netif_trans_update(netdev);
+ 	}
+ 
 -- 
 2.53.0
 
