@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC9D3B9DB6;
-	Sat, 30 May 2026 17:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8FD3B9DB6;
+	Sat, 30 May 2026 17:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163250; cv=none; b=fleCYGtmOQVPiNDF/EkoyTYCRhtvWewfvkKVaFLiwqWJMv6j6W34FUVjhsLXCSGHABpBHLj4lkwSc947u2bg+BpsHTOUCht7yl3wGbig5xKnBIxHSXqGTNHVwi2fETcRsALTJ1FGDSml5brNy78rP0GtgBeguwR/IkyEdxbu/C4=
+	t=1780163254; cv=none; b=tCv3o+Axk0042cbRUE9Hnuyc565RlFjkweeQyNd6IaGvpGRAVassRLY+qWPeCCi1m4dK3JlQRSbo1ij5YscxWsZEZ4BjaVR9swyR7nQVLV9vJOwFnM7mHREItItWyD7Iy9p4GVncS8bpjj5Hx9LQf9YTfilVMjMoutLYEMCLM2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163250; c=relaxed/simple;
-	bh=A10gCUirh5tIvwSZ+9hxoYRR/ZCZPpEdzY1Bt3aI93c=;
+	s=arc-20240116; t=1780163254; c=relaxed/simple;
+	bh=Ff64B8fWcF3F96qEgyB139FQ4e66gZ6veRtJ+rFEvYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jg4uDdWvEcuczkMd4ZoFJZg0Y48EjytXlhHpyeOsqJ+vkoCVsCxkPutkyV2/MQtR5lQwbAlJdo+VEeXeQlJSl7k9BDjjeqHu3hMLwn4ivHsZ0zezsESzDQ/dIsp+VXBPE1w7zc1PpJD/O3WhL7TM10z3VgWM5KJg2T/9xEoo/RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecpzAVuf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=inAefaw+ewtTAUfB+qPyTeahqGVaMQlPwdEiLSZq3BzLFDYSfafzd/FV56oJEiXoyKk/i1jN8Vke24wLswab3ZV3n6AMWsEO3o+bYywKMbwQfkN1UqUL+i1prM8a2sBQnWVKcnZAdZZAzeUxcXhLDMinLWyYxLEWD3St3lDKYy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWCUQSnI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecpzAVuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFE71F00898;
-	Sat, 30 May 2026 17:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWCUQSnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF531F00893;
+	Sat, 30 May 2026 17:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163248;
-	bh=Bdq5aE+3B4fPsaazIRxrp4aKTJM6GAADGe9jyCMVXQM=;
+	s=korg; t=1780163252;
+	bh=1nR4AiNfossZXVgtTJh5RFkHNG6JSqfzSyspmQSSmts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ecpzAVufct8TasTLO+gN7R4VSDmmDlvoERG1drcEhSE1BAGw0jYveR05OsRSUq66I
-	 FSH766+Bwj/3/48H+4Nub0F7MMF0UxOWViZT1Q0B6V9yhV4xZz68NmmBeh/v6fKExS
-	 LoMMPIxPXMjd/n7DABbAU8f+4bu/QLD5Wkxyq9YA=
+	b=PWCUQSnIsm5PLIBMRrX/5ZcIxFlUuZhhtuqLYn9u2g/RHNFXbwW6+mi14HRp+z8R5
+	 YDnt7K7LPoEaQpPmqNL6ROkSdgkCAdnjeX/FmSkwPG/W6PaZCwXncUDZ5OU/gIZVkT
+	 aXUE8CONbC17tBuJF/mXXqr5ulVhrSM+9cpOVeAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/776] rxrpc: Fix anonymous key handling
-Date: Sat, 30 May 2026 17:58:02 +0200
-Message-ID: <20260530160244.832825344@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Johnny Hao <johnny_haocn@sina.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.15 159/776] md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime
+Date: Sat, 30 May 2026 17:57:53 +0200
+Message-ID: <20260530160244.581821421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -56,51 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
+[ Upstream commit 8d28d0ddb986f56920ac97ae704cc3340a699a30 ]
 
-In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
-be substituted for a NULL key pointer, but the variable this is done with
-is subsequently not used.
+After commit ec6bb299c7c3 ("md/md-bitmap: add 'sync_size' into struct
+md_bitmap_stats"), following panic is reported:
 
-Fix this by using "key" rather than "rx->key" when filling in the
-connection parameters.
+Oops: general protection fault, probably for non-canonical address
+RIP: 0010:bitmap_get_stats+0x2b/0xa0
+Call Trace:
+ <TASK>
+ md_seq_show+0x2d2/0x5b0
+ seq_read_iter+0x2b9/0x470
+ seq_read+0x12f/0x180
+ proc_reg_read+0x57/0xb0
+ vfs_read+0xf6/0x380
+ ksys_read+0x6c/0xf0
+ do_syscall_64+0x82/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
-doesn't use sendmsg() directly and so bypasses the issue.  Further,
-AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
-in that manner works.  Since this hasn't been noticed to this point, it
-might be better just to remove the "key" variable and the code that sets it
-- and, arguably, rxrpc_init_client_call_security() would be a better place
-to handle it.
+Root cause is that bitmap_get_stats() can be called at anytime if mddev
+is still there, even if bitmap is destroyed, or not fully initialized.
+Deferenceing bitmap in this case can crash the kernel. Meanwhile, the
+above commit start to deferencing bitmap->storage, make the problem
+easier to trigger.
 
-Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
-Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the problem by protecting bitmap_get_stats() with bitmap_info.mutex.
+
+Cc: stable@vger.kernel.org # v6.12+
+Fixes: 32a7627cf3a3 ("[PATCH] md: optimised resync using Bitmap based intent logging")
+Reported-and-tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Closes: https://lore.kernel.org/linux-raid/ca3a91a2-50ae-4f68-b317-abd9889f3907@oracle.com/T/#m6e5086c95201135e4941fe38f9efa76daf9666c5
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250124092055.4050195-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
+[ The context change is due to the commit 38f287d7e495
+("md/md-bitmap: replace md_bitmap_status() with a new helper md_bitmap_get_stats()")
+in v6.12 and the commit f9cfe7e7f96a ("md: Fix md_seq_ops() regressions") in v6.8
+which are irrelevant to the logic of this patch. ]
+Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/sendmsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md-bitmap.c |    4 ++++
+ drivers/md/md.c        |    4 ++++
+ 2 files changed, 8 insertions(+)
 
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -624,7 +624,7 @@ rxrpc_new_client_call_for_sendmsg(struct
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2033,6 +2033,10 @@ void md_bitmap_status(struct seq_file *s
  
- 	memset(&cp, 0, sizeof(cp));
- 	cp.local		= rx->local;
--	cp.key			= rx->key;
-+	cp.key			= key;
- 	cp.security_level	= rx->min_sec_level;
- 	cp.exclusive		= rx->exclusive | p->exclusive;
- 	cp.upgrade		= p->upgrade;
+ 	if (!bitmap)
+ 		return;
++	if (bitmap->mddev->bitmap_info.external)
++		return;
++	if (!bitmap->storage.sb_page) /* no superblock */
++		return;
+ 
+ 	counts = &bitmap->counts;
+ 
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -8300,6 +8300,9 @@ static int md_seq_show(struct seq_file *
+ 		return 0;
+ 	}
+ 
++	/* prevent bitmap to be freed after checking */
++	mutex_lock(&mddev->bitmap_info.mutex);
++
+ 	spin_lock(&mddev->lock);
+ 	if (mddev->pers || mddev->raid_disks || !list_empty(&mddev->disks)) {
+ 		seq_printf(seq, "%s : %sactive", mdname(mddev),
+@@ -8371,6 +8374,7 @@ static int md_seq_show(struct seq_file *
+ 		seq_printf(seq, "\n");
+ 	}
+ 	spin_unlock(&mddev->lock);
++	mutex_unlock(&mddev->bitmap_info.mutex);
+ 
+ 	return 0;
+ }
 
 
