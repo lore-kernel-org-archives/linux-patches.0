@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921A426738C;
-	Sat, 30 May 2026 18:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9FA41A8F;
+	Sat, 30 May 2026 18:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165967; cv=none; b=ZOhyj5lXlL7S4a3sqBzc3QuZU0YLUSRhFBOoVPzNCJLkB1gLbuAECB+oQ376zjWFI28zGIxzXG1HzH7bjcqsg02gjWjT4iN6j6vOnbLI7txIh14fO+RGO0Q7tVseUBo8mGVhoTJXlq2I2nLTJBUj672tj/XkAJ438FNDfp7N3fI=
+	t=1780165970; cv=none; b=AASJTFzqQHJ9VHwIDLw1HAJ7/uN5yYS/N+u08dGhuCL/tb7NXdGAHw/upCHR0L9Ygx2AQuaq1jXTo8wpWUsA1F91AHUYglGqZ3g29L+ykJ6kMc4ghJ24nalPUOctWQ9Aip/l/P7dLNyjdZgNs2/17S2TmNJZuajcH2/EIFTalDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165967; c=relaxed/simple;
-	bh=qD3mcvwjiifxyC4aI068AsYijkfCkVp4NmqU7j3GXwc=;
+	s=arc-20240116; t=1780165970; c=relaxed/simple;
+	bh=Kea1MP2Gj2Vd/7xVl5ZROaUNZteYGcwZ7EAXUom+hC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHsZ1dsFmWu4BNaGOnDBt7nNxTCAP1miOnKVNsHKkEva9/Po3DHTYFngtJRUs1R9fMx13bmunVE3eOX5GY0VKRuOa3zsUTDVBu4WHGUlXDub9VVY0B+uXWTv915VzWuiiEqM4Yy7AkMBhcUDHs5fDlrLdDC0Snu0eQigWIrdo7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zh4SjfZZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S19iAb1zakF1udunieSXOcyOnLQVp9cGepmXmG27XkaDbS44ZJa1ZjBvQIYIuFTS6TGofT7cubUqhF9RKgGzje0Buu3LMRTV2/1xbZJOpKuRpInYpjn3IWFqKLkY14hAFLsF0GCH0cdJ5PtL5Y8H8jkz6yCpTvfYvFLbgIHUO+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW3ftEUX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zh4SjfZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80361F00893;
-	Sat, 30 May 2026 18:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW3ftEUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1F21F00893;
+	Sat, 30 May 2026 18:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165966;
-	bh=Oq/Zyzu7XDAnlNsjuHbfxTIMAMIFJ3mSVhKgBoi0WpE=;
+	s=korg; t=1780165969;
+	bh=zIMrCJpI/6+QIaoQopGqLSFTJXa9u2qKPB/DDxwrZIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zh4SjfZZcK9wO3VrFPQ819ua6H86et8CgdMDejduSxTnCwknaS0Dp40RATwFi3xdC
-	 fKoPuQOoHfidMC5zWyrEs9rSHRBzlxVdmZ/HGWP+AK/ohIBex4qhS6H3auoYWzs+dL
-	 5PAt1yiWFJq1C0orF0DddJM0JXXlcTyxSQHy4ujc=
+	b=iW3ftEUX8tfL8XlqsBAu7l+KaSkFTfdrXu+ge3yp6isQXzioUIkEn0lFuRvSJKLYk
+	 iJpVgkgJd2jRTmJkIcL2zcM12IrrjZLYtvgBhduCfLiDZy71Ya7MC2F56op6lfJU9I
+	 NgEO7FKYx9xNWgozu1Zpf5+MbjX83E4XRR5tuLlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Zen <kai.aizen.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 234/589] net: rtnetlink: zero ifla_vf_broadcast to avoid stack infoleak in rtnl_fill_vfinfo
-Date: Sat, 30 May 2026 18:01:55 +0200
-Message-ID: <20260530160231.137820840@linuxfoundation.org>
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 235/589] sound: ua101: fix division by zero at probe
+Date: Sat, 30 May 2026 18:01:56 +0200
+Message-ID: <20260530160231.169468371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,74 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Zen <kai.aizen.dev@gmail.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-commit 4b9e327991815e128ad3af75c3a04630a63ce3e0 upstream.
+commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
 
-rtnl_fill_vfinfo() declares struct ifla_vf_broadcast on the stack
-without initialisation:
+Add a missing sanity check for bNrChannels in detect_usb_format()
+to prevent a division by zero in playback_urb_complete() and
+capture_urb_complete().
 
-	struct ifla_vf_broadcast vf_broadcast;
+USB core does not validate class-specific descriptor fields such
+as bNrChannels, so drivers must verify them before use. If a
+device provides bNrChannels = 0, frame_bytes becomes zero and is
+later used as a divisor in the URB completion handlers, leading
+to a kernel crash.
 
-The struct contains a single fixed 32-byte field:
-
-	/* include/uapi/linux/if_link.h */
-	struct ifla_vf_broadcast {
-		__u8 broadcast[32];
-	};
-
-The function then copies dev->broadcast into it using dev->addr_len
-as the length:
-
-	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
-
-On Ethernet devices (the overwhelming majority of SR-IOV NICs)
-dev->addr_len is 6, so only the first 6 bytes of broadcast[] are
-written. The remaining 26 bytes retain whatever was previously on
-the kernel stack. The full struct is then handed to userspace via:
-
-	nla_put(skb, IFLA_VF_BROADCAST,
-		sizeof(vf_broadcast), &vf_broadcast)
-
-leaking up to 26 bytes of uninitialised kernel stack per VF per
-RTM_GETLINK request, repeatable.
-
-The other vf_* structs in the same function are explicitly zeroed
-for exactly this reason - see the memset() calls for ivi,
-vf_vlan_info, node_guid and port_guid a few lines above.
-vf_broadcast was simply missed when it was added.
-
-Reachability: any unprivileged local process can open AF_NETLINK /
-NETLINK_ROUTE without capabilities and send RTM_GETLINK with an
-IFLA_EXT_MASK attribute carrying RTEXT_FILTER_VF. The kernel walks
-each VF and emits IFLA_VF_BROADCAST, leaking 26 bytes of stack per
-VF per request. Stack residue at this call site can include return
-addresses and transient sensitive data; KASAN with stack
-instrumentation, or KMSAN, will flag the nla_put() when reproduced.
-
-Zero the on-stack struct before the partial memcpy, matching the
-existing pattern used for the other vf_* structs in the same
-function.
-
-Fixes: 75345f888f70 ("ipoib: show VF broadcast address")
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kai Zen <kai.aizen.dev@gmail.com>
-Link: https://patch.msgid.link/3c506e8f936e52b57620269b55c348af05d413a2.1777557228.git.kai.aizen.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/misc/ua101.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1287,6 +1287,7 @@ static noinline_for_stack int rtnl_fill_
- 		port_guid.vf = ivi.vf;
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -995,6 +995,13 @@ static int detect_usb_format(struct ua10
  
- 	memcpy(vf_mac.mac, ivi.mac, sizeof(ivi.mac));
-+	memset(&vf_broadcast, 0, sizeof(vf_broadcast));
- 	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
- 	vf_vlan.vlan = ivi.vlan;
- 	vf_vlan.qos = ivi.qos;
+ 	ua->capture.channels = fmt_capture->bNrChannels;
+ 	ua->playback.channels = fmt_playback->bNrChannels;
++	if (!ua->capture.channels || !ua->playback.channels) {
++		dev_err(&ua->dev->dev,
++			"invalid channel count: capture %u, playback %u\n",
++			ua->capture.channels, ua->playback.channels);
++		return -EINVAL;
++	}
++
+ 	ua->capture.frame_bytes =
+ 		fmt_capture->bSubframeSize * ua->capture.channels;
+ 	ua->playback.frame_bytes =
 
 
