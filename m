@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5B03112C1;
-	Sat, 30 May 2026 18:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C72B3AFCE3;
+	Sat, 30 May 2026 18:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164501; cv=none; b=Sx+cYde1/IIO+z7JjvJ1UQPD1hlK6CkYAGofPpNGyRF/Ta2uSEbgaJuKYA2jQjapHrk3YYLQnF5ScDlxNdqdRg42dRN+L3nx4ln/WfOpvds5UXQIg57mEQn/GUDLx8R8WClhWN9a5RuWyCzXsxTs9RU944s5EPiAvGiM4VZoDBM=
+	t=1780164504; cv=none; b=VhrzoRwNC5FuUgEIHRtRW8h+sC3xYqRapz4RLvnxCa54GQv6hJz8Jn8PV+ZKNjIdhdFwIi8/ZYo1SECeIIlM4v/Nk2kqiiK1XA2mP9xMAJeGg0hF/r53jWY23iblkpYSmKnqEomnNbdHRFdalycvQiKvxlfR6SnG1TxeiPoNTZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164501; c=relaxed/simple;
-	bh=cKC1JEvLRxC/Jh5HfbzMt1fE2BPC1x8YNvIJggsdjXs=;
+	s=arc-20240116; t=1780164504; c=relaxed/simple;
+	bh=4G8DotZc/2o5P4ght2k8qEIIwtirmwJhTMyQyUC74os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjNaGN8awRnr4/rkaLDGx+koKEKvqwrLc51VFs2Sxg4RCm+xlb0yj1QaKiqUdoeey4J2UB0cEFtDA/m7z9yHvs1leJtP0PWxV/hws1eswG5h4DdbneUXA+1+GAWqLO4qS/M09CH6JOgZxUwcDf3Y7q4CYr+uiBzJGd7k9LDZJA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKeB38HG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oTBQJRSHENsXMHrp4pJD22X5dmSSOHBP89TDKTWo4Aq7avA4hqnh2k+I3Ei76JfGEGNAufqP04N35acYRe6Ye13//tU6mLSmlBRzDS7LtZXUKLhf72NbznOkzUfbyQ6Ulbmk4dLT72t5U1InRmzBFp3vbIZVBGB5aHv3Y15LDdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KPTBH1m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKeB38HG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759AC1F00893;
-	Sat, 30 May 2026 18:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KPTBH1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B5B1F00893;
+	Sat, 30 May 2026 18:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164500;
-	bh=4/GPdMaruGSPn7PrUz0Kw04o6jfksCIBpUPYfsM/0JI=;
+	s=korg; t=1780164503;
+	bh=I7Rww/iRmHBPFGpwN5K8zCYGgqrABttLbgHq7sukAwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKeB38HGvpkVeKTkTQ8NVtUvtgdLgfdT3T55TwZCvhf/RvQHs7CZqOkPQ7OkGQ4AW
-	 RSSpV4Xi9toil+hTElGojRDCdixe8t5qydb42I0AnylZz5XnT3Mb9qeV1UqInF0Dq6
-	 nzZonIjnREycMmvD68yHkCCaRNUlFHP7PKcVjqOQ=
+	b=2KPTBH1mvLHKOekuB70RHXYjmzvLstOsWNKpepv96qFTzsUYEIvNSOvmR7EcWMGzg
+	 GiyRno8pIspkw7LyuMlsnCWfQPP0jFbYIuSCjwZvCbuLmP4X8DtCEOTdPjkeuE676Y
+	 joTj4brMpfWxF/yQRF9e1LohgcPR7rtFuv674AW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 556/776] net/sched: taprio: stop going through private ops for dequeue and peek
-Date: Sat, 30 May 2026 18:04:30 +0200
-Message-ID: <20260530160254.513618074@linuxfoundation.org>
+Subject: [PATCH 5.15 574/776] netfilter: conntrack: remove sprintf usage
+Date: Sat, 30 May 2026 18:04:48 +0200
+Message-ID: <20260530160254.936011395@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,158 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 25becba6290bc34e369a0e1a76db9ca88bad87aa ]
+[ Upstream commit 6e7066bdb481a87fe88c4fa563e348c03b2d373d ]
 
-Since commit 13511704f8d7 ("net: taprio offload: enforce qdisc to netdev
-queue mapping"), taprio_dequeue_soft() and taprio_peek_soft() are de
-facto the only implementations for Qdisc_ops :: dequeue and Qdisc_ops ::
-peek that taprio provides.
+Replace it with scnprintf, the buffer sizes are expected to be large enough
+to hold the result, no need for snprintf+overflow check.
 
-This is because in full offload mode, __dev_queue_xmit() will select a
-txq->qdisc which is never root taprio qdisc. So if nothing is enqueued
-in the root qdisc, it will never be run and nothing will get dequeued
-from it.
+Increase buffer size in mangle_content_len() while at it.
 
-Therefore, we can remove the private indirection from taprio, and always
-point Qdisc_ops :: dequeue to taprio_dequeue_soft (now simply named
-taprio_dequeue) and Qdisc_ops :: peek to taprio_peek_soft (now simply
-named taprio_peek).
+BUG: KASAN: stack-out-of-bounds in vsnprintf+0xea5/0x1270
+Write of size 1 at addr [..]
+ vsnprintf+0xea5/0x1270
+ sprintf+0xb1/0xe0
+ mangle_content_len+0x1ac/0x280
+ nf_nat_sdp_session+0x1cc/0x240
+ process_sdp+0x8f8/0xb80
+ process_invite_request+0x108/0x2b0
+ process_sip_msg+0x5da/0xf50
+ sip_help_tcp+0x45e/0x780
+ nf_confirm+0x34d/0x990
+ [..]
 
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 105425b1969c ("net/sched: taprio: fix use-after-free in advance_sched() on schedule switch")
+Fixes: 9fafcd7b2032 ("[NETFILTER]: nf_conntrack/nf_nat: add SIP helper port")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 58 +++++++++---------------------------------
- 1 file changed, 12 insertions(+), 46 deletions(-)
+ net/netfilter/nf_nat_amanda.c |  2 +-
+ net/netfilter/nf_nat_sip.c    | 33 ++++++++++++++++++---------------
+ 2 files changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 44b971ef343ce..9c86c8ade4853 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -78,8 +78,6 @@ struct taprio_sched {
- 	struct sched_gate_list __rcu *admin_sched;
- 	struct hrtimer advance_timer;
- 	struct list_head taprio_list;
--	struct sk_buff *(*dequeue)(struct Qdisc *sch);
--	struct sk_buff *(*peek)(struct Qdisc *sch);
- 	u32 txtime_delay;
- };
- 
-@@ -491,7 +489,7 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	return taprio_enqueue_one(skb, sch, child, to_free);
- }
- 
--static struct sk_buff *taprio_peek_soft(struct Qdisc *sch)
-+static struct sk_buff *taprio_peek(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
-@@ -500,6 +498,11 @@ static struct sk_buff *taprio_peek_soft(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
-+	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
-+		WARN_ONCE(1, "Trying to peek into the root of a taprio qdisc configured with full offload\n");
-+		return NULL;
-+	}
-+
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	gate_mask = entry ? entry->gate_mask : TAPRIO_ALL_GATES_OPEN;
-@@ -535,20 +538,6 @@ static struct sk_buff *taprio_peek_soft(struct Qdisc *sch)
- 	return NULL;
- }
- 
--static struct sk_buff *taprio_peek_offload(struct Qdisc *sch)
--{
--	WARN_ONCE(1, "Trying to peek into the root of a taprio qdisc configured with full offload\n");
--
--	return NULL;
--}
--
--static struct sk_buff *taprio_peek(struct Qdisc *sch)
--{
--	struct taprio_sched *q = qdisc_priv(sch);
--
--	return q->peek(sch);
--}
--
- static void taprio_set_budget(struct taprio_sched *q, struct sched_entry *entry)
- {
- 	atomic_set(&entry->budget,
-@@ -556,7 +545,7 @@ static void taprio_set_budget(struct taprio_sched *q, struct sched_entry *entry)
- 			     atomic64_read(&q->picos_per_byte)));
- }
- 
--static struct sk_buff *taprio_dequeue_soft(struct Qdisc *sch)
-+static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
- {
- 	struct taprio_sched *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
-@@ -565,6 +554,11 @@ static struct sk_buff *taprio_dequeue_soft(struct Qdisc *sch)
- 	u32 gate_mask;
- 	int i;
- 
-+	if (unlikely(FULL_OFFLOAD_IS_ENABLED(q->flags))) {
-+		WARN_ONCE(1, "Trying to dequeue from the root of a taprio qdisc configured with full offload\n");
-+		return NULL;
-+	}
-+
- 	rcu_read_lock();
- 	entry = rcu_dereference(q->current_entry);
- 	/* if there's no entry, it means that the schedule didn't
-@@ -644,20 +638,6 @@ static struct sk_buff *taprio_dequeue_soft(struct Qdisc *sch)
- 	return skb;
- }
- 
--static struct sk_buff *taprio_dequeue_offload(struct Qdisc *sch)
--{
--	WARN_ONCE(1, "Trying to dequeue from the root of a taprio qdisc configured with full offload\n");
--
--	return NULL;
--}
--
--static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
--{
--	struct taprio_sched *q = qdisc_priv(sch);
--
--	return q->dequeue(sch);
--}
--
- static bool should_restart_cycle(const struct sched_gate_list *oper,
- 				 const struct sched_entry *entry)
- {
-@@ -1572,17 +1552,6 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
- 		q->advance_timer.function = advance_sched;
+diff --git a/net/netfilter/nf_nat_amanda.c b/net/netfilter/nf_nat_amanda.c
+index 3bc7e0854efe4..41c30065dae12 100644
+--- a/net/netfilter/nf_nat_amanda.c
++++ b/net/netfilter/nf_nat_amanda.c
+@@ -62,7 +62,7 @@ static unsigned int help(struct sk_buff *skb,
+ 		return NF_DROP;
  	}
  
--	if (FULL_OFFLOAD_IS_ENABLED(q->flags)) {
--		q->dequeue = taprio_dequeue_offload;
--		q->peek = taprio_peek_offload;
--	} else {
--		/* Be sure to always keep the function pointers
--		 * in a consistent state.
--		 */
--		q->dequeue = taprio_dequeue_soft;
--		q->peek = taprio_peek_soft;
--	}
--
- 	err = taprio_get_start_time(sch, new_admin, &start);
- 	if (err < 0) {
- 		NL_SET_ERR_MSG(extack, "Internal error: failed get start time");
-@@ -1698,9 +1667,6 @@ static int taprio_init(struct Qdisc *sch, struct nlattr *opt,
- 	hrtimer_init(&q->advance_timer, CLOCK_TAI, HRTIMER_MODE_ABS);
- 	q->advance_timer.function = advance_sched;
+-	sprintf(buffer, "%u", port);
++	snprintf(buffer, sizeof(buffer), "%u", port);
+ 	if (!nf_nat_mangle_udp_packet(skb, exp->master, ctinfo,
+ 				      protoff, matchoff, matchlen,
+ 				      buffer, strlen(buffer))) {
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index f0a735e868518..15d4267cf49ff 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -68,25 +68,27 @@ static unsigned int mangle_packet(struct sk_buff *skb, unsigned int protoff,
+ }
  
--	q->dequeue = taprio_dequeue_soft;
--	q->peek = taprio_peek_soft;
--
- 	q->root = sch;
+ static int sip_sprintf_addr(const struct nf_conn *ct, char *buffer,
++			    size_t size,
+ 			    const union nf_inet_addr *addr, bool delim)
+ {
+ 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
+-		return sprintf(buffer, "%pI4", &addr->ip);
++		return scnprintf(buffer, size, "%pI4", &addr->ip);
+ 	else {
+ 		if (delim)
+-			return sprintf(buffer, "[%pI6c]", &addr->ip6);
++			return scnprintf(buffer, size, "[%pI6c]", &addr->ip6);
+ 		else
+-			return sprintf(buffer, "%pI6c", &addr->ip6);
++			return scnprintf(buffer, size, "%pI6c", &addr->ip6);
+ 	}
+ }
  
- 	/* We only support static clockids. Use an invalid value as default
+ static int sip_sprintf_addr_port(const struct nf_conn *ct, char *buffer,
++				 size_t size,
+ 				 const union nf_inet_addr *addr, u16 port)
+ {
+ 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
+-		return sprintf(buffer, "%pI4:%u", &addr->ip, port);
++		return scnprintf(buffer, size, "%pI4:%u", &addr->ip, port);
+ 	else
+-		return sprintf(buffer, "[%pI6c]:%u", &addr->ip6, port);
++		return scnprintf(buffer, size, "[%pI6c]:%u", &addr->ip6, port);
+ }
+ 
+ static int map_addr(struct sk_buff *skb, unsigned int protoff,
+@@ -119,7 +121,7 @@ static int map_addr(struct sk_buff *skb, unsigned int protoff,
+ 	if (nf_inet_addr_cmp(&newaddr, addr) && newport == port)
+ 		return 1;
+ 
+-	buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, ntohs(newport));
++	buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer), &newaddr, ntohs(newport));
+ 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			     matchoff, matchlen, buffer, buflen);
+ }
+@@ -212,7 +214,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 					       &addr, true) > 0 &&
+ 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.src.u3) &&
+ 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.dst.u3)) {
+-			buflen = sip_sprintf_addr(ct, buffer,
++			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
+ 					&ct->tuplehash[!dir].tuple.dst.u3,
+ 					true);
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+@@ -229,7 +231,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 					       &addr, false) > 0 &&
+ 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.dst.u3) &&
+ 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.src.u3)) {
+-			buflen = sip_sprintf_addr(ct, buffer,
++			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
+ 					&ct->tuplehash[!dir].tuple.src.u3,
+ 					false);
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+@@ -247,7 +249,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 		    htons(n) == ct->tuplehash[dir].tuple.dst.u.udp.port &&
+ 		    htons(n) != ct->tuplehash[!dir].tuple.src.u.udp.port) {
+ 			__be16 p = ct->tuplehash[!dir].tuple.src.u.udp.port;
+-			buflen = sprintf(buffer, "%u", ntohs(p));
++			buflen = scnprintf(buffer, sizeof(buffer), "%u", ntohs(p));
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 					   poff, plen, buffer, buflen)) {
+ 				nf_ct_helper_log(skb, ct, "cannot mangle rport");
+@@ -430,7 +432,8 @@ static unsigned int nf_nat_sip_expect(struct sk_buff *skb, unsigned int protoff,
+ 
+ 	if (!nf_inet_addr_cmp(&exp->tuple.dst.u3, &exp->saved_addr) ||
+ 	    exp->tuple.dst.u.udp.port != exp->saved_proto.udp.port) {
+-		buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, port);
++		buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer),
++					       &newaddr, port);
+ 		if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 				   matchoff, matchlen, buffer, buflen)) {
+ 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
+@@ -450,8 +453,8 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
+ {
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
++	char buffer[sizeof("4294967295")];
+ 	unsigned int matchoff, matchlen;
+-	char buffer[sizeof("65536")];
+ 	int buflen, c_len;
+ 
+ 	/* Get actual SDP length */
+@@ -466,7 +469,7 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
+ 			      &matchoff, &matchlen) <= 0)
+ 		return 0;
+ 
+-	buflen = sprintf(buffer, "%u", c_len);
++	buflen = scnprintf(buffer, sizeof(buffer), "%u", c_len);
+ 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			     matchoff, matchlen, buffer, buflen);
+ }
+@@ -503,7 +506,7 @@ static unsigned int nf_nat_sdp_addr(struct sk_buff *skb, unsigned int protoff,
+ 	char buffer[INET6_ADDRSTRLEN];
+ 	unsigned int buflen;
+ 
+-	buflen = sip_sprintf_addr(ct, buffer, addr, false);
++	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
+ 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen,
+ 			      sdpoff, type, term, buffer, buflen))
+ 		return 0;
+@@ -521,7 +524,7 @@ static unsigned int nf_nat_sdp_port(struct sk_buff *skb, unsigned int protoff,
+ 	char buffer[sizeof("nnnnn")];
+ 	unsigned int buflen;
+ 
+-	buflen = sprintf(buffer, "%u", port);
++	buflen = scnprintf(buffer, sizeof(buffer), "%u", port);
+ 	if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			   matchoff, matchlen, buffer, buflen))
+ 		return 0;
+@@ -541,7 +544,7 @@ static unsigned int nf_nat_sdp_session(struct sk_buff *skb, unsigned int protoff
+ 	unsigned int buflen;
+ 
+ 	/* Mangle session description owner and contact addresses */
+-	buflen = sip_sprintf_addr(ct, buffer, addr, false);
++	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
+ 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen, sdpoff,
+ 			      SDP_HDR_OWNER, SDP_HDR_MEDIA, buffer, buflen))
+ 		return 0;
 -- 
 2.53.0
 
