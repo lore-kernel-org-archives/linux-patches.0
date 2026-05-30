@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F140E41A8F;
-	Sat, 30 May 2026 18:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7908E313E34;
+	Sat, 30 May 2026 18:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166066; cv=none; b=ITjwOHBME5Bc9DRPReAhzJVl/bE9apDgtoSBmjHQ47koUWCsL/3UYhRocuA3oLIw2ENuYWH7hsBtk2mw8Tse950YcOAtBc1vMDVO1RUjXnjhxwhDvnHUZgKNxg2+4acDyRyfbmGgpmgyICzo29OSDcVfm4jF76sPm2flADJ6m/k=
+	t=1780166069; cv=none; b=kltAiRBpTQgSll82A2nTV+UiR3u32I/XEQisV7Uw+4d/+RafayOjayk2B3cNrQo+IcmnCMWFVXY9ENmXngao2SNccvVfSgis/AcstnEROedOJH3b4f+ERAuzaZYRYhkwn7faYkIlPdb8PDYUi1op+qAvSb/j5yZQyx3v+smrjLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166066; c=relaxed/simple;
-	bh=kQVo4Ak8r3p2c9SpcIAC5xHAiwOK9VNlNZ5Xknau64U=;
+	s=arc-20240116; t=1780166069; c=relaxed/simple;
+	bh=YYJGqritEJIEtCp7gjITEcLbZTqpDHd74EKXXIbJhcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEDibPzM0uOs7O+7buPmXYj3nz0PWq4B7/VLeOcG3dK0mZAMjjqL2CCFxI+khHp/Q/49Wp3sR7RhNnY8jyc0ofG5s9MtcoRBjLWpW0dY37gwSPIxG2AhRAclRR6ju41tBjGy1yllMNmMVBk/sLqtZ3sjQhULztS0M2rydaW8dHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0A7C+3v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gzn0VA6LD8TSM7XkI8f3fau7DcjSbejjzagVq7AKMUTMhMaduQAmT5exwB744fEXi2C7mHU9xT3cYWQFfN9WoJnik6Gwz0kEOponlZp4i/fQB4PEIVz5dUtUQYLtyXoHGCmeEPk4kn3jRkoez7CUsbKXglAEVoUmJlqtIqEA+WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjWnuuVE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0A7C+3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCB31F00893;
-	Sat, 30 May 2026 18:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjWnuuVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABCB1F00893;
+	Sat, 30 May 2026 18:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166064;
-	bh=AnQG9t+ET2Y/kwNb4gXS3qjuzFhTGPibQ7tl91hfzZI=;
+	s=korg; t=1780166068;
+	bh=vRL0QZFyref9GWQMUMCql2MVNKy0Yqr4WOZ3kPyUya4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0A7C+3vjMNfVDZaQFOokvx5NfgWtP+kz9G9NS8Dzyvk6bZav5yCvid9hvX/VU357
-	 NX80s+lHf9TzhHuPlVXBygBj585P5iPlT66zEqufudc9lrHvYdGPpvshWYV236Euj0
-	 HmXH70Rw1NhrLVB6KUZKZt5hGFe2b/4cHBQAPry4=
+	b=kjWnuuVEv5jIkh9nDMgsSz2BIYKTKHi8srKwR68lY2/U6/UUiLHzzj3XvLyoJ+5R3
+	 V8TMUwrwBb2uIfBPolwDdRBcRPRckREDWpwV8MDdGB03KtWlHKSyNexg532ovZOP0G
+	 v4cklmt8vNkc++dmm59txCXmuYaIvKE+oBdyoZsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 263/589] media: uvcvideo: Enable VB2_DMABUF for metadata stream
-Date: Sat, 30 May 2026 18:02:24 +0200
-Message-ID: <20260530160231.873363839@linuxfoundation.org>
+	Soufiane Dani <soufianeda@tutanota.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.10 264/589] staging: media: atomisp: Disallow all private IOCTLs
+Date: Sat, 30 May 2026 18:02:25 +0200
+Message-ID: <20260530160231.911314756@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,51 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
+commit 2b7eb2c5dc72f0fc954ac4aa155f9e285e937f7c upstream.
 
-The UVC driver has two video streams, one for the frames and another one
-for the metadata. Both streams share most of the codebase, but only the
-data stream declares support for DMABUF transfer mode.
+Disallow all private IOCTLs. These aren't quite as safe as one could
+assume of IOCTL handlers; disable them for now. Instead of removing the
+code, return in the beginning of the function if cmd is non-zero in order
+to keep static checkers happy.
 
-I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
-and the frames looked correct.
-
-This patch announces the support for DMABUF for the metadata stream.
-This is useful for apps/HALs that only want to support DMABUF.
-
+Reported-by: Soufiane Dani <soufianeda@tutanota.com>
+Closes: https://lore.kernel.org/linux-staging/20260210-atomisp-fix-v1-1-024429cbff31@tutanota.com/
 Cc: stable@vger.kernel.org
-Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Fixes: ad85094b293e ("Revert "media: staging: atomisp: Remove driver"")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_queue.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_queue.c
-+++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -222,7 +222,7 @@ int uvc_queue_init(struct uvc_video_queu
- 	int ret;
+--- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+@@ -2865,6 +2865,10 @@ static long atomisp_vidioc_default(struc
+ 	bool acc_node;
+ 	int err;
  
- 	queue->queue.type = type;
--	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
-+	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
- 	queue->queue.drv_priv = queue;
- 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
- 	queue->queue.mem_ops = &vb2_vmalloc_memops;
-@@ -235,7 +235,6 @@ int uvc_queue_init(struct uvc_video_queu
- 		queue->queue.ops = &uvc_meta_queue_qops;
- 		break;
- 	default:
--		queue->queue.io_modes |= VB2_DMABUF;
- 		queue->queue.ops = &uvc_queue_qops;
- 		break;
- 	}
++	/* Disable all private IOCTLs for now! */
++	if (cmd)
++		return -EINVAL;
++
+ 	acc_node = !strcmp(vdev->name, "ATOMISP ISP ACC");
+ 	if (acc_node)
+ 		asd = atomisp_to_acc_pipe(vdev)->asd;
 
 
