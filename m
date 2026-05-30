@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D83481DD;
-	Sat, 30 May 2026 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB75D481DD;
+	Sat, 30 May 2026 17:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160818; cv=none; b=YNTRE+aOxc/zllV8CHSb39JJtt8JU+8cszVgx4fGsKOS27aEZSwlNZE2R/kqf1s1WWIg3gnSreNcCWt/SoAquQ19JJA4Mg6GBklNgq2Mhjastd3vDWJkXet1PEogLyEW5WC8M1EZTTMad/t+YcT6Mh+gz+GovYCIAudUHhSQx+Q=
+	t=1780160821; cv=none; b=NPS5+XvjHZbGzN5VzgKYs4uDvDryh4I4FzFnsxlx+T9oXOoMX1Sh4WMxIFuhxHl29LuoXEvyu2OAT6nugfIvw6VGfNySZJqljwMQ6uvI78uzcLqe7FqvoOXF+72f8dTKeoiyYme2w+9m+ZHE9ceWU1EAqbErp/l7S8pn8xPf+sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160818; c=relaxed/simple;
-	bh=o5Nsxu4AoWJxrmC9anRcUs06FZ3CIXxPYXSfyZWZ4c0=;
+	s=arc-20240116; t=1780160821; c=relaxed/simple;
+	bh=/zHa9WO2yDHLS+AGqKXONEiZRFEh9iRxFmHZqHTjX+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odqoVMa6A1Ig0qdLIWn7q60i/P30wDjus3Y+hTIddzOHrnZKUQMf7HQG5ayT27LPRz6mhgnnt5unHdeuuvZui6O+29bYshQ5AA4of1PLr+KEnZy//Ni8SN1mh9G8hTxj8CJ98ohGdjIIfRFzCPQp2g05NU9lN+o6RS7g84c92oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hR3cJm2K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Frzq6SvoqYsAvISS7QTXfAwwyY+CX5qUZ8tjqVHKKlCRdUQHYyNDuATgvabxj9p9mZA9j6eTSZUw71gqrPuNA7kSYTDKJ2gRhVa8/c5Odnfd6mRHlHW6Ta14NPv0g7yRACHDsr9rtGXM0rSwUqqsBKUXwf6FzXaH2sDSBM3RdYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rez6j6/w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hR3cJm2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47821F00893;
-	Sat, 30 May 2026 17:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rez6j6/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA0C1F00893;
+	Sat, 30 May 2026 17:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160817;
-	bh=pxQ3gho75td2ofoqEWupuVpeSLZUAM1QU+qVoEGqyLE=;
+	s=korg; t=1780160820;
+	bh=qUcPK8e/8k291Hz99id7XhQwHYIA7h4n5m0koXicezE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hR3cJm2K/sjQwjCqQxJY+TiZyf7smHvFRUEXfGVs6nBLe8KiMfmbxwTBsdOpMp9ve
-	 72QPwbGRzRNsfGogAL03+HBn233V+6QvDQ/DNmYl8H2eNQOv/ls+mfUV46V7u+o+ww
-	 4TAJaSvnCwNzN4NsGdp9I6JHN/HhWErP0BbiatYQ=
+	b=rez6j6/wuhVmEyojlY4YnNvBzidgUEcwBCgvnufJ8IGY/TZbNcYFUdFc/jOP3/JKJ
+	 yHNMxV8G1ss7WlDJlOBZtMbIDs67jL1eBw7/4lUlCFoXmhgLwW8Z5DyKVHLmhu3kdX
+	 +0r3nOEp0i94E9XAh+IIeTw3y+SOD7P3sH5KggyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jean Delvare <jdelvare@suse.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 444/969] locking: Fix rwlock support in <linux/spinlock_up.h>
-Date: Sat, 30 May 2026 17:59:28 +0200
-Message-ID: <20260530160312.532582409@linuxfoundation.org>
+Subject: [PATCH 6.1 445/969] firmware: dmi: Correct an indexing error in dmi.h
+Date: Sat, 30 May 2026 17:59:29 +0200
+Message-ID: <20260530160312.562877604@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,79 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
+[ Upstream commit c064abc68e009d2cc18416e7132d9c25e03125b6 ]
 
-Architecture support for rwlocks must be available whether or not
-CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
-arch_{read,write}_{lock,trylock,unlock}() macros such that these become
-visbile if CONFIG_DEBUG_SPINLOCK=n.
+The entries later in enum dmi_entry_type don't match the SMBIOS
+specification¹.
 
-This patch prepares for converting do_raw_{read,write}_trylock() into
-inline functions. Without this patch that conversion triggers a build
-failure for UP architectures, e.g. arm-ep93xx. I used the following
-kernel configuration to build the kernel for that architecture:
+The entry for type 33: `64-Bit Memory Error Information` is not present and
+thus the index for all later entries is incorrect.
 
-	CONFIG_ARCH_MULTIPLATFORM=y
-	CONFIG_ARCH_MULTI_V7=n
-	CONFIG_ATAGS=y
-	CONFIG_MMU=y
-	CONFIG_ARCH_MULTI_V4T=y
-	CONFIG_CPU_LITTLE_ENDIAN=y
-	CONFIG_ARCH_EP93XX=y
+Add it.
 
-Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
+Also, add missing entry types 43-46, while at it.
+
+  ¹ Search for "System Management BIOS (SMBIOS) Reference Specification"
+
+  [ bp: Drop the flaky SMBIOS spec URL. ]
+
+Fixes: 93c890dbe5287 ("firmware: Add DMI entry types to the headers")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Link: https://patch.msgid.link/20260307141024.819807-2-superm1@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spinlock_up.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ include/linux/dmi.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
-index c87204247592f..a132fc562297a 100644
---- a/include/linux/spinlock_up.h
-+++ b/include/linux/spinlock_up.h
-@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
- 	lock->slock = 1;
- }
- 
--/*
-- * Read-write spinlocks. No debug version.
-- */
--#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
--
- #else /* DEBUG_SPINLOCK */
- #define arch_spin_is_locked(lock)	((void)(lock), 0)
- /* for sched/core.c and kernel_lock.c: */
-@@ -68,4 +58,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
- 
- #define arch_spin_is_contended(lock)	(((void)(lock), 0))
- 
-+/*
-+ * Read-write spinlocks. No debug version.
-+ */
-+#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
-+
- #endif /* __LINUX_SPINLOCK_UP_H */
+diff --git a/include/linux/dmi.h b/include/linux/dmi.h
+index 927f8a8b7a1dd..2eedf44e68012 100644
+--- a/include/linux/dmi.h
++++ b/include/linux/dmi.h
+@@ -60,6 +60,7 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_OOB_REMOTE_ACCESS,
+ 	DMI_ENTRY_BIS_ENTRY,
+ 	DMI_ENTRY_SYSTEM_BOOT,
++	DMI_ENTRY_64_MEM_ERROR,
+ 	DMI_ENTRY_MGMT_DEV,
+ 	DMI_ENTRY_MGMT_DEV_COMPONENT,
+ 	DMI_ENTRY_MGMT_DEV_THRES,
+@@ -69,6 +70,10 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_ADDITIONAL,
+ 	DMI_ENTRY_ONBOARD_DEV_EXT,
+ 	DMI_ENTRY_MGMT_CONTROLLER_HOST,
++	DMI_ENTRY_TPM_DEVICE,
++	DMI_ENTRY_PROCESSOR_ADDITIONAL,
++	DMI_ENTRY_FIRMWARE_INVENTORY,
++	DMI_ENTRY_STRING_PROPERTY,
+ 	DMI_ENTRY_INACTIVE = 126,
+ 	DMI_ENTRY_END_OF_TABLE = 127,
+ };
 -- 
 2.53.0
 
