@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6308931CA4E;
-	Sat, 30 May 2026 16:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A6B3264DC;
+	Sat, 30 May 2026 16:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159658; cv=none; b=vCD7pnRqScDBspxHso/UWY4VdEtrtumjXjLLnJv+bZS6cfh8MlSkqnognnw/xVWlwD8sFQQxDM+p4pzljQjzm3W/PhMGAjQJymrU0m2Q+c++JQACJ4ECPgA2trAiU4OSEoOGNnNEyT87vG7AWzpBPPj8N3eEvvtYhZJ+cHnYjP0=
+	t=1780159672; cv=none; b=Afsy3blvKk/4QEkSD6ks2aWbxXLFBI+rpEWi6ZGUd0EEUSSlIRRWaPWnAcaJwti2KKnyYVExTYN/OlGarxEnckKiSQOcJbJYj38MdNrIqILetr2o1ly6xwvj9u9DrcSEVk3ys48QmIohynPy7xgAC3ZDl8r8KtKjvF/wsyVuy5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159658; c=relaxed/simple;
-	bh=aaP28BiBPVjbi+NYGxdGMGJC0+FZxcZXGqK9R4+G1bE=;
+	s=arc-20240116; t=1780159672; c=relaxed/simple;
+	bh=Ay/DTvjvROpLTH4MBeDQWBG8sJYGXflNnDFTPX+wklk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XwWU8DlXx/y/SIYwECgw8+vo9kn9mLh0NDBWhkSaLGqpizk1UwbNlbN2YPfSbSxlfuanyiSkwOuxQWZVF1EyJo4hql0gpBAsZOoxVHhYbh2eXrNrZIrYn43pqFPII/flHqRprsGGNSYEYBH0gm2TAD43viRhqXDs1O0BAI6+uIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnAa5Ds/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KtWHBqnRYU8TAUZUSMpvy70kVtXd08njV7yZ7FDb1++QgDhfjUWCroOgx+xUoCbIplcFrW4N/GySJB19fDSpWOALl3X/fgjKBWP8s7x5frifxl8paDF/x8q0lu2w08OysZvgK89fTAAtHxr5Cf/Mk5PtdKURGwjnv2wUPyNA7BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMzdhO5t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnAa5Ds/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85351F00893;
-	Sat, 30 May 2026 16:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMzdhO5t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC171F00893;
+	Sat, 30 May 2026 16:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159657;
-	bh=sn0mIHHLF983lAqDRHBp1/Z5SqX2PY2MwGQhJbOC8XY=;
+	s=korg; t=1780159671;
+	bh=+QAz4AS/HTKFOiVUqbXFXxrDQn2SRjN2JAKzRkcHoCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnAa5Ds/eAQtI+DZigJEVvO2eOIgMBj7h9Y6pSNrZDfummKDlx6XOL+Wsvz5pmu8Z
-	 j75adyDBLU186o6hxCGu4jNv41HOKbTZKQJAql/lGPqc+KVwuooVeNxb/KIcxDOiKZ
-	 fGPIZebSokPXY/ML5w9kPu9G0uuqffNORMQ1fCkI=
+	b=MMzdhO5tSLf13bpWgUPdGXUn/dv/hOXu9hFUYSECNCJW6lYLCmdjMrjL0tmqt3FZh
+	 LCYI5WdXxxLjvphW6WwwPU8nX8LCrsIyUsJcxdHDNRnuO6Mh3/typczXwWP4nVxkaq
+	 ko75lI0goWCtms8gKiMSatPWwCbWBhpfVLHE0c+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 6.1 138/969] wifi: iwlwifi: read txq->read_ptr under lock
-Date: Sat, 30 May 2026 17:54:22 +0200
-Message-ID: <20260530160304.375923137@linuxfoundation.org>
+	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 139/969] scripts/dtc: Remove unused dts_version in dtc-lexer.l
+Date: Sat, 30 May 2026 17:54:23 +0200
+Message-ID: <20260530160304.401346831@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,46 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit c2ace6300600c634553657785dfe5ea0ed688ac2 upstream.
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
-If we read txq->read_ptr without lock, we can read the same
-value twice, then obtain the lock, and reclaim from there
-to two different places, but crucially reclaim the same
-entry twice, resulting in the WARN_ONCE() a little later.
-Fix that by reading txq->read_ptr under lock.
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in dtc-lexer.lex.c (compiled from
+dtc-lexer.l):
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.bf4c62196504.I978a7ca56c6bd6f1bf42c15aa923ba03366a840b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Change read_ptr definition according to commit
-413be839bfca9("wifi: iwlwifi: add a validity check of queue_id in iwl_txq_reclaim"). ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
+    641 | static int dts_version = 1;
+        |            ^
+
+Remove it to clear up the warning, as it is truly unused.
+
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/queue/tx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This should apply cleanly to all supported stable branches.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ scripts/dtc/dtc-lexer.l |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-@@ -1555,7 +1555,7 @@ void iwl_txq_reclaim(struct iwl_trans *t
- {
- 	struct iwl_txq *txq = trans->txqs.txq[txq_id];
- 	int tfd_num = iwl_txq_get_cmd_index(txq, ssn);
--	int read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
-+	int read_ptr;
- 	int last_to_free;
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
  
- 	/* This function is not meant to release cmd queue*/
-@@ -1563,6 +1563,7 @@ void iwl_txq_reclaim(struct iwl_trans *t
- 		return;
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
  
- 	spin_lock_bh(&txq->lock);
-+	read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
  
- 	if (!test_bit(txq_id, trans->txqs.queue_used)) {
- 		IWL_DEBUG_TX_QUEUES(trans, "Q %d inactive - ignoring idx %d\n",
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
 
 
