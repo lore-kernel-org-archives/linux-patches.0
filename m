@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0508B1A680F;
-	Sat, 30 May 2026 17:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864B4341AC7;
+	Sat, 30 May 2026 17:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163529; cv=none; b=PjkFJaUqJvsK/rfOgzIfplqgY39+RLiUcIQep3if3h/v1yCcInUqHU7wHDDSdUsA4DLCANG5tch2/fKWqn6o55HbwVX1i2J4D9gMcBd7Bw7hqkNKZPLroVE67PAENwiZoYwI169DDDOrQC6f6siXOHbGqNmTy2SRuG2qeBz0q9s=
+	t=1780163532; cv=none; b=CpGcCRzZdoxuNbZJjg6S2y9XUdb7/yt6QJ2TulpDfZfrPlKMW77FbE2bz1H7KYQPNb654i5ahfyS51oTkdwB2F6Gpf2sWPcenoeZe2n73wtEJYtYJKqOAFDshcDShvSRQpNtDmMYRfnS+tRLfRE/WwFPSJNLF0Hbb1BSfFpgs8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163529; c=relaxed/simple;
-	bh=gna57Fm68ACA+dGs84DgavJCr1whJQwVTPCmzooE0ww=;
+	s=arc-20240116; t=1780163532; c=relaxed/simple;
+	bh=OgfvdH4jg2nAV1TAstJdaKJJhvP75vIwqs/wi8srbco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fV7/ovC1JVeU6uBo4X9uHpIvILApx8XqnWpjU0B+G+g6r7JDWfOVCktTzmOggIQ/e7nN8fIyH+0vR5lCx3iM7q/UIXXhjwvTdDZstxcxsBRuRyB5Eu6NlhS8ydN+85nwo6m9kRdADA706zCN/iv+bWHutxCzzze3zb99NlAekFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McnjCg9X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VmGLWKf1sdAkEnGic8Z0l76+5G/txXBM8RVHDSApN6ZTBY5E2SsDZFcfG+Jn83JhF2XWo6vXZBsz3MZwaxUgmlnBYSS/17s68CWTHlWVz9VYjMJ5Fk3fC5VeRCdHdmBr0fVX1dEY9hQ/YGJzp+7IR+0ZseYK9zS/7kiuEWiNVV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCInDkY8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McnjCg9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1171F00893;
-	Sat, 30 May 2026 17:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCInDkY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93EE1F00893;
+	Sat, 30 May 2026 17:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163527;
-	bh=K9BKy+nShem/nOtwdwiZ1/agD+UtRgRw+QGmAwFOLOY=;
+	s=korg; t=1780163531;
+	bh=RTfI+sF4+ZmXQVUZI271dOVVoY4JwOB9JZlEygHTcpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McnjCg9X29jgF7wJ965Ky0EBMerOGZ0Wm+DxHJm3fTEQY38/xEUrvQLYom45Dw98Q
-	 +zT40jBQnGpp5cZ/tI7Wnb+7dGBS5Ju3PVboRkTpccCkScGofUdudTVYf/uhQg6aUC
-	 AQ1DTufMPraRD9lBrcvxFlKJE/3tvYho1YxQ9irg=
+	b=dCInDkY8IWX03NBaGS/UXGbJmd7+cQuv3f1jIy92YNtJdByW+iyScSEXmllG1lVga
+	 31DCv2T9NnKavk/Ilbo5Qup+ohp1RtNlfJ7vqV5osKUJKlaN3eU5HWHr3e3VUeFcbD
+	 GmTKFnj5RE7qSTcWTaM2qTIhbpw/sBN04tVeH00o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
+	Li Xiao <252270051@hdu.edu.cn>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 285/776] ipmi:ssif: Fix a shutdown race
-Date: Sat, 30 May 2026 17:59:59 +0200
-Message-ID: <20260530160247.922043486@linuxfoundation.org>
+Subject: [PATCH 5.15 286/776] ipmi:ssif: Clean up kthread on errors
+Date: Sat, 30 May 2026 18:00:00 +0200
+Message-ID: <20260530160247.947980095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,47 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <corey@minyard.net>
 
-It was possible for the SSIF thread to stop and quit before the
-kthread_stop() call because ssif->stopping was set before the
-stop.  So only exit the SSIF thread is kthread_should_stop()
-returns true.
+commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 upstream.
 
-In the mainstream kernel this was fixed in 6bd0eb6d759b ("ipmi:ssif:
-Fix a shutdown race").  However, that requires a fix in kernel
-version 6.1 has a fix to kthread stop to cause interruptible waits
-to return -ERESTARTSYS on a stop.  This has not been backported to
-older kernels, and that would probably be a bad idea.  But it means
-that the mainstrem kernel fix for this will not work.
+If an error occurs after the ssif kthread is created, but before the
+main IPMI code starts the ssif interface, the ssif kthread will not
+be stopped.
 
-Instead, wait for kthread_should_stop() to return true before exiting
-the thread.
+So make sure the kthread is stopped on an error condition if it is
+running.
 
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
+Reported-by: Li Xiao <<252270051@hdu.edu.cn>
+Cc: stable@vger.kernel.org
+Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
+[Adjusted for stopping flag and complete operation still being present.]
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/char/ipmi/ipmi_ssif.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index a811b5bdba259..42cbf761fa749 100644
+index 42cbf761fa749..55ebe1d31766b 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -522,6 +522,16 @@ static int ipmi_ssif_thread(void *data)
- 		}
+@@ -1311,6 +1311,7 @@ static void shutdown_ssif(void *send_info)
+ 	if (ssif_info->thread) {
+ 		complete(&ssif_info->wake_thread);
+ 		kthread_stop(ssif_info->thread);
++		ssif_info->thread = NULL;
  	}
- 
-+	/*
-+	 * The thread can break out of the loop if stopping is set,
-+	 * and this can be before kthread_stop() gets called and thus
-+	 * kthread_should_stop() will not be set.  This can cause
-+	 * spinning calling this function and other bad things.  So
-+	 * wait for kthread_should_stop() to be set.
-+	 */
-+	while (!kthread_should_stop())
-+		msleep_interruptible(1);
-+
- 	return 0;
  }
+ 
+@@ -1941,6 +1942,17 @@ static int ssif_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 
+  out:
+ 	if (rv) {
++		/*
++		 * If ipmi_register_smi() starts the interface, it will
++		 * call shutdown and that will free the thread and set
++		 * it to NULL.  Otherwise it must be freed here.
++		 */
++		if (ssif_info->thread) {
++			ssif_info->stopping = true;
++			complete(&ssif_info->wake_thread);
++			kthread_stop(ssif_info->thread);
++			ssif_info->thread = NULL;
++		}
+ 		if (addr_info)
+ 			addr_info->client = NULL;
  
 -- 
 2.53.0
