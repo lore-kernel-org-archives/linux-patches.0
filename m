@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36F2217704;
-	Sat, 30 May 2026 18:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CEE21ADC7;
+	Sat, 30 May 2026 18:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165487; cv=none; b=op0+HIBugNU0zqHJ66M9CHE9rs9Dp41i5c1TvrxgnAyUUfElWga2pn0STXIBd6Vq8CepsMUqR9wtkoN6GCpT26yHPPGcOkSvFAbg6PR8dWfa9xCa2S9wW9nME2y1b72hJpljtmIQq8a8mw8pOCr0N335ZJW/N5oV/0qgu56vspk=
+	t=1780165491; cv=none; b=MSGy31l5FzDeEnbnRgGt1IiDnmu2nc4FpOaD30GZOP9JP5iyB5J9CQNThyFcDyCFv53sn+wIN88IRbnrcZIixVS90LDP+xQpzEAfAXkDTd69dpWv7rJ/wePhjz6eGg9V4pjbhNXkGjgGheFRLNaT+xu3zEj2c+lJOcg3Iu/D5to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165487; c=relaxed/simple;
-	bh=lPDsqjHIQDaYpFjRLcV//XgriDXR9TjVGJFfNkIeAzE=;
+	s=arc-20240116; t=1780165491; c=relaxed/simple;
+	bh=YWpXRodcGphrNerKSlzPwjh+K1kwK4YGReskvQ3ag74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvzOHwmS9sR84BdPFa+981aq7W6KpzwVC0Q78dJ6p6NWNzLDr9/Aqherd4PlBc/j0yeVzLsc4QkdUd3B1YwLnml8CLuIHFIWAVuJMRd/6VmjMWNBjruJ6QnWbNnXCx5dn/iERTRkHNWbuT1WrLfgOFVAPIuaVTXUxpLGU6KqY2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjFVC3tV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMsMHmE4pzpj/lVB7Wd2ACJYB2taqw8VJFduxUKJLZFqCRpv6+dlWnmYCC8yxQI+MVxoDixsPxekAGfVGkh4opzobbNNw+C9MSzJBWoZsL6NvTkjrrqKh/sOl/R3hVgfV0gY1U/QyuapjQalQc+L52JvRZfXRYF5XXknRPmqYRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jdm3Tp+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjFVC3tV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12CB1F00893;
-	Sat, 30 May 2026 18:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jdm3Tp+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257F41F00893;
+	Sat, 30 May 2026 18:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165486;
-	bh=PVlyd0cnB/eaz8W57/flYwFck+K+UV0eOptDrMVY2xU=;
+	s=korg; t=1780165489;
+	bh=Puchp9gaYBOzsjee/Ww/BjkXWoCRx0us+zIMsfxVOpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjFVC3tVP+iQd9buF49TPsSaKfYiRddocmu35omi91NhK1hz6AZFu2ZpLF1b/BHTi
-	 lBxnW6sJGFJ0P2tvDMAPcysU45DDrSYGz0SEaaqE5QZfanB5IFBheROCy2NSFNpH/S
-	 vr/+yOD3O9+umAiWK2qdE9Tm9TBgHcv016nNAbOY=
+	b=Jdm3Tp+r7aMSHYVSemb8Fgmfcgq6HLJWa4SzImm0ifGxq7LLLckR3H+3sciRObGSI
+	 sSqQ0Mz47QQqY+i99W3YMg3iuvXdTdQMRXhgxfCeQvk/FcFAA+X/Yq2TyLTzT/pRhr
+	 D+hjOMKbK3rWAL5SNP4TzTRcqD62rzHq8eBL4dJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Li hongliang <1468888505@139.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Yongzhi Liu <lyz_cs@pku.edu.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/589] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Sat, 30 May 2026 17:59:32 +0200
-Message-ID: <20260530160227.081293628@linuxfoundation.org>
+Subject: [PATCH 5.10 092/589] drm/amd/display: Fix memory leak
+Date: Sat, 30 May 2026 17:59:33 +0200
+Message-ID: <20260530160227.107841697@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,105 +53,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Yongzhi Liu <lyz_cs@pku.edu.cn>
 
-[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
+commit 5d5c6dba2b43e28845d7d7ed32a36802329a5f52 upstream.
 
-ieee80211_tx_prepare_skb() has three error paths, but only two of them
-free the skb. The first error path (ieee80211_tx_prepare() returning
-TX_DROP) does not free it, while invoke_tx_handlers() failure and the
-fragmentation check both do.
+[why]
+Resource release is needed on the error handling path
+to prevent memory leak.
 
-Add kfree_skb() to the first error path so all three are consistent,
-and remove the now-redundant frees in callers (ath9k, mt76,
-mac80211_hwsim) to avoid double-free.
+[how]
+Fix this by adding kfree on the error handling path.
 
-Document the skb ownership guarantee in the function's kdoc.
-
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
-Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Exclude changes to drivers/net/wireless/mediatek/mt76/scan.c as this file is first
- introduced by commit 31083e38548f("wifi: mt76: add code for emulating hardware scanning")
- after linux-6.14.]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f8ac2cf78f27 ("drm/amd/display: Linux set/read lane settings through debugfs")
+Fixes: c06e09b76639 ("drm/amd/display: Add DSC parameters logging to debugfs")
+[ kovalev: bp to fix CVE-2022-49135; added Fixes tags ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c | 6 ++----
- drivers/net/wireless/mac80211_hwsim.c    | 1 -
- include/net/mac80211.h                   | 4 ++++
- net/mac80211/tx.c                        | 4 +++-
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 72 ++++++++++++++-----
+ 1 file changed, 54 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
-index 6cf0875221572..31b7921bf34f3 100644
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1011,7 +1011,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
- 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+index 6914738f0275a..f4a1ad8959b7d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -229,8 +229,10 @@ static ssize_t dp_link_settings_read(struct file *f, char __user *buf,
+ 			break;
  
- 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
--		goto error;
-+		return;
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
  
- 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
- 	if (ath_tx_start(sc->hw, skb, &txctl))
-@@ -1124,10 +1124,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
+ 		buf += 1;
+ 		size -= 1;
+@@ -388,8 +390,10 @@ static ssize_t dp_phy_settings_read(struct file *f, char __user *buf,
+ 			break;
  
- 		skb->priority = 7;
- 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
--		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
--			dev_kfree_skb_any(skb);
-+		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
- 			return false;
--		}
- 		break;
- 	default:
- 		return false;
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index 037358606a51a..865bbe0293436 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -2275,7 +2275,6 @@ static void hw_scan_work(struct work_struct *work)
- 						      hwsim->tmp_chan->band,
- 						      NULL)) {
- 				rcu_read_unlock();
--				kfree_skb(probe);
- 				continue;
- 			}
+ 		r = put_user((*(rd_buf + result)), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
  
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 8f91609f928c1..70ee982f08d9d 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -6337,6 +6337,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
-  * @band: the band to transmit on
-  * @sta: optional pointer to get the station to send the frame to
-  *
-+ * Return: %true if the skb was prepared, %false otherwise.
-+ * On failure, the skb is freed by this function; callers must not
-+ * free it again.
-+ *
-  * Note: must be called under RCU lock
-  */
- bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 30ad46cfcad86..b923cd755a68c 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1869,8 +1869,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
- 	struct ieee80211_tx_data tx;
- 	struct sk_buff *skb2;
+ 		buf += 1;
+ 		size -= 1;
+@@ -1195,8 +1199,10 @@ static ssize_t dp_dsc_clock_en_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
  
--	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
-+	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
-+		kfree_skb(skb);
- 		return false;
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
 +	}
  
- 	info->band = band;
- 	info->control.vif = vif;
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1212,8 +1218,10 @@ static ssize_t dp_dsc_clock_en_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1351,8 +1359,10 @@ static ssize_t dp_dsc_slice_width_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1368,8 +1378,10 @@ static ssize_t dp_dsc_slice_width_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1505,8 +1517,10 @@ static ssize_t dp_dsc_slice_height_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1522,8 +1536,10 @@ static ssize_t dp_dsc_slice_height_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1655,8 +1671,10 @@ static ssize_t dp_dsc_bits_per_pixel_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1672,8 +1690,10 @@ static ssize_t dp_dsc_bits_per_pixel_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1800,8 +1820,10 @@ static ssize_t dp_dsc_pic_width_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1817,8 +1839,10 @@ static ssize_t dp_dsc_pic_width_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1857,8 +1881,10 @@ static ssize_t dp_dsc_pic_height_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1874,8 +1900,10 @@ static ssize_t dp_dsc_pic_height_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -1929,8 +1957,10 @@ static ssize_t dp_dsc_chunk_size_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -1946,8 +1976,10 @@ static ssize_t dp_dsc_chunk_size_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
+@@ -2001,8 +2033,10 @@ static ssize_t dp_dsc_slice_bpg_offset_read(struct file *f, char __user *buf,
+ 				break;
+ 	}
+ 
+-	if (!pipe_ctx)
++	if (!pipe_ctx) {
++		kfree(rd_buf);
+ 		return -ENXIO;
++	}
+ 
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+@@ -2018,8 +2052,10 @@ static ssize_t dp_dsc_slice_bpg_offset_read(struct file *f, char __user *buf,
+ 			break;
+ 
+ 		r = put_user(*(rd_buf + result), buf);
+-		if (r)
++		if (r) {
++			kfree(rd_buf);
+ 			return r; /* r = -EFAULT */
++		}
+ 
+ 		buf += 1;
+ 		size -= 1;
 -- 
 2.53.0
 
