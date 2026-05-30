@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3B23093C6;
-	Sat, 30 May 2026 16:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43782F8EB5;
+	Sat, 30 May 2026 16:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159209; cv=none; b=h6gkYlA2gSQk+VZ0+Z2s5m/ktmeviUdzoKW/dQhtzR8hBvEBM+rDhEYO1JQECZL65JDzUf5Niq0GYGum5j8PoQ18upPcRkmJ5xKjujtNNCCOafCKGRLCwDbP7Tw8Jh+HOHDlUh1jxkYn3MLR0mmJ4kX4VRu4Gsh+hI3nlf7OtEc=
+	t=1780159223; cv=none; b=YS7hlO6BoxIICf9VpTPxTuZiFAzRWOCkJWiseqhZohHxd6k/Ntzmf/UfaJ+ATwXJ9NVPNEJm5u5Em0Zkv6MJKbVN5mU1626baKeDfZJW4PifSCfi0hGlraIBHG6svcT2gKupwo4n8NLHmwn7MjJXb7gDXJKSMMiCwjCVkC2JutY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159209; c=relaxed/simple;
-	bh=g+EB5f1tSL+DOf28E+MWb5sGEOCZv5wvDcef7SpfG5k=;
+	s=arc-20240116; t=1780159223; c=relaxed/simple;
+	bh=tbLLDzcH4iZWiKr7WwcyI8gKyYcIp9u/DvO1rf1TJ7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNnZAtSLdUwFMhRYfBI2XwrzY+3dLkRExmZyD4KIigvRYT7pJkBT/e0E9yzPEEnnu72mP7qF0Q6q0ULKTCsjRXHyc1rE4MdnCHAJVtLuyl3ERQGTGidFd73SVOnkhGMoTHvRFmy8syadR6Q3OKIEfPrCCaH0lr8soZYdV5obi1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBuxtswm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uOXJ+PE2EfQBJ7Mp9Fcwu+ZG5RUKufhb1Ghh5f9/oCow/5B2dfMNyGmy3aDv8Sg3zNnrtxj7GcqHImvJF7ol6a8M33TAfKaqVkWpSz6Z6IiZj5empM/3FNYCXU/kWmiMrUB2Xk1eB4VHQqdBP6R1nybrZhTBewCjPrdxLs3crHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCjpo4hx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBuxtswm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6ED01F00893;
-	Sat, 30 May 2026 16:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCjpo4hx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AA61F00893;
+	Sat, 30 May 2026 16:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159208;
-	bh=rPZG5bZug+nxBDiHiNqRBQTQDQa1gcqtrZhLKarzO0k=;
+	s=korg; t=1780159222;
+	bh=zOAfvMZN/xvD8QKSTQLhy2ZzAlUVcHhPPVkTMYkwTMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WBuxtswmCOIw55Ziftg5Bb8/SD7OKcXK4cIIzPEmEq6ZDZa8U1uW6UyL/NkTuCAwg
-	 Iq2KoTLGJCF+Me17WD1BS3WotS8rfKn4mgRVYRnW5taTPdnHcFpNUgAkLygjBP20xL
-	 hSrZknt914x38i4KoWv6pLwrFfiYh3WvXPIY4SAU=
+	b=xCjpo4hx7mMlkqrZKipihy9yn1jnA9YvoYQ+65s63IpDlnM+ohbm3rclo63J0ThZD
+	 xlqcE2pjS9D+DqTCm8fm4dYiFkrwxgvy3xOabN3fVfN/AaPG4IZanvgj7yGqrfBnHE
+	 6WMld380H2NBsY7ogxI+xPC0MOp0UeVAXBR1v1pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/969] PCI: endpoint: pci-epf-vntb: Remove duplicate resource teardown
-Date: Sat, 30 May 2026 17:53:53 +0200
-Message-ID: <20260530160303.325333152@linuxfoundation.org>
+Subject: [PATCH 6.1 110/969] Revert "net: ethernet: xscale: Check for PTP support properly"
+Date: Sat, 30 May 2026 17:53:54 +0200
+Message-ID: <20260530160303.351568961@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,95 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+This reverts commit 5195b10c34b8993194ad12ad7d8f54d861be084b.
 
-[ Upstream commit 0da63230d3ec1ec5fcc443a2314233e95bfece54 ]
-
-epf_ntb_epc_destroy() duplicates the teardown that the caller is
-supposed to perform later. This leads to an oops when .allow_link fails
-or when .drop_link is performed. The following is an example oops of the
-former case:
-
-  Unable to handle kernel paging request at virtual address dead000000000108
-  [...]
-  [dead000000000108] address between user and kernel address ranges
-  Internal error: Oops: 0000000096000044 [#1]  SMP
-  [...]
-  Call trace:
-   pci_epc_remove_epf+0x78/0xe0 (P)
-   pci_primary_epc_epf_link+0x88/0xa8
-   configfs_symlink+0x1f4/0x5a0
-   vfs_symlink+0x134/0x1d8
-   do_symlinkat+0x88/0x138
-   __arm64_sys_symlinkat+0x74/0xe0
-  [...]
-
-Remove the helper, and drop pci_epc_put(). EPC device refcounting is
-tied to the configfs EPC group lifetime, and pci_epc_put() in the
-.drop_link path is sufficient.
-
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260226084142.2226875-2-den@valinux.co.jp
-[ adjusted context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/net/ethernet/xscale/ixp4xx_eth.c | 5 ++++-
+ drivers/net/ethernet/xscale/ptp_ixp46x.c | 3 ---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index d057537781f60..eee49a3eec04c 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -676,18 +676,6 @@ static void epf_ntb_mw_bar_clear(struct epf_ntb *ntb, int num_mws)
- 	}
- }
+diff --git a/drivers/net/ethernet/xscale/ixp4xx_eth.c b/drivers/net/ethernet/xscale/ixp4xx_eth.c
+index aa6d30dd35c38..a5e03e66cfd38 100644
+--- a/drivers/net/ethernet/xscale/ixp4xx_eth.c
++++ b/drivers/net/ethernet/xscale/ixp4xx_eth.c
+@@ -395,12 +395,15 @@ static int ixp4xx_hwtstamp_set(struct net_device *netdev,
+ 	int ret;
+ 	int ch;
  
--/**
-- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
-- * @ntb: NTB device that facilitates communication between HOST and VHOST
-- *
-- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
-- */
--static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
--{
--	pci_epc_remove_epf(ntb->epf->epc, ntb->epf, 0);
--	pci_epc_put(ntb->epf->epc);
--}
--
- /**
-  * epf_ntb_init_epc_bar() - Identify BARs to be used for each of the NTB
-  * constructs (scratchpad region, doorbell, memorywindow)
-@@ -1331,7 +1319,7 @@ static int epf_ntb_bind(struct pci_epf *epf)
- 	ret = epf_ntb_init_epc_bar(ntb);
- 	if (ret) {
- 		dev_err(dev, "Failed to create NTB EPC\n");
--		goto err_bar_init;
++	if (!cpu_is_ixp46x())
++		return -EOPNOTSUPP;
++
+ 	if (!netif_running(netdev))
+ 		return -EINVAL;
+ 
+ 	ret = ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
+ 	if (ret)
+-		return -EOPNOTSUPP;
 +		return ret;
- 	}
  
- 	ret = epf_ntb_config_spad_bar_alloc(ntb);
-@@ -1371,9 +1359,6 @@ static int epf_ntb_bind(struct pci_epf *epf)
- err_bar_alloc:
- 	epf_ntb_config_spad_bar_free(ntb);
+ 	ch = PORT2CHANNEL(port);
+ 	regs = port->timesync_regs;
+diff --git a/drivers/net/ethernet/xscale/ptp_ixp46x.c b/drivers/net/ethernet/xscale/ptp_ixp46x.c
+index b8953745a9f2e..9abbdb71e629f 100644
+--- a/drivers/net/ethernet/xscale/ptp_ixp46x.c
++++ b/drivers/net/ethernet/xscale/ptp_ixp46x.c
+@@ -243,9 +243,6 @@ static struct ixp_clock ixp_clock;
  
--err_bar_init:
--	epf_ntb_epc_destroy(ntb);
+ int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc_index)
+ {
+-	if (!cpu_is_ixp46x())
+-		return -ENODEV;
 -
- 	return ret;
- }
+ 	*regs = ixp_clock.regs;
+ 	*phc_index = ptp_clock_index(ixp_clock.ptp_clock);
  
-@@ -1389,7 +1374,6 @@ static void epf_ntb_unbind(struct pci_epf *epf)
- 
- 	epf_ntb_epc_cleanup(ntb);
- 	epf_ntb_config_spad_bar_free(ntb);
--	epf_ntb_epc_destroy(ntb);
- 
- 	pci_unregister_driver(&vntb_pci_driver);
- }
 -- 
 2.53.0
 
