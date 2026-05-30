@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C221D14A62B;
-	Sat, 30 May 2026 17:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5008630E847;
+	Sat, 30 May 2026 17:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161770; cv=none; b=LkaTRC5RjdSdWOyCvobZJBCUaolEbhnDHh14Zu/ricfDPjoxAaVp96eC4nqtBGLU9KtcHsEsHp0gD1zZzkqOOnYTHcWtGj9+eTHtT6slvHkqj425b7joNbTE4Q/9fiuE9Cw+I9uNZeY5WwsPAajOr/IS3epCR6z7+MM5Pg1Feus=
+	t=1780161774; cv=none; b=p0z6Y3eCCOoZOzb7fapwIvQEUVg967JkZIfwGZUjR11vDHTQkvPoFhbEt5KhQu0E/RtRyW/bw61gxKg+NJRm6N/cFuaUR0zqK8ZFn8g+oInneuR8fCGuadt2rP/5JLwtxspJwuZb13/IG+N4j6i2ZwPavPCwoReDOPYofncLH5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161770; c=relaxed/simple;
-	bh=zXYE9FC3CNIYbFl2VlCruLovTgB5CMw4PHHjrTXb1aE=;
+	s=arc-20240116; t=1780161774; c=relaxed/simple;
+	bh=cRc740wbwLMXHLtBssQe4C4yO6HT0P6lyiBKg8tGN/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvGAvCiMCNF3HeB8ff97hSdd6RQkbPysg7x97nPVGF/4XFOP34Wze33f7931eqQNc3p6JNBKQOK1TCujsb+GgDhTrq3dN4Zc7sjyPmBit4z4f5HHMZiKnyRu1viggUnGkV2E1W/YB4tKZXK0UrfHHN/ko45HL3uD5zmoeNIHWgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFzlDXoL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e9ukBO3LoD1tlv2CSxKMR2cG8s29NvjHyeAOXFfwq2TbCUxTEC6idUozPEwFdtLWpJRFX8uHlkX99kBGPxVW65oVHfqn/QTjKiQ6lAInZxCA+9WjfCCmpxorOGniYnpbFLgbqwcl8KxcXcgLvmdoOu5VaYX/BimZklX0ZDOxHbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+C5wRZh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFzlDXoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE321F00893;
-	Sat, 30 May 2026 17:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+C5wRZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6CC1F00893;
+	Sat, 30 May 2026 17:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161769;
-	bh=69rgNHlAm+Cw9balrTRtSiuplbqouf4lNRyxSrLZYxk=;
+	s=korg; t=1780161773;
+	bh=u+xMBxj8CxKAKawbUv9zIjs3zW9TZdvPGbVSBHS7/hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFzlDXoLKokZWm1JvEfv9KxQOi+cvTNI4DRZdDPctCdTfo503teWVEOO+u5TCxtJo
-	 Awiw3+PwVMMfezvLlynoQhVFML2TQgpspij4brVenM1W03as5W2sz1MnwkblX9z7re
-	 RGs5br9y2uU9o6QugWjQq7GeHpWUSDNOdE3Q5uAY=
+	b=z+C5wRZhfui6Je+w2+8Sc9TJnj9TtZAE0fxSpBVatLOp0KxEhPjWiHSQHTP2MGn21
+	 BU3rgiyJ1gBvuz0R6/wRf1IPV36HetZ6x9RNOmGIcFoMK2mm+x5AfNGCtoN3by8gmM
+	 yZxf6rnx3EWbpaY/uCiIk0n1UtVt4r9pNXD3PoPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com,
-	Kohei Enju <kohei@enjuk.jp>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bae Yeonju <iwasbaeyz@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 721/969] vhost_net: fix sleeping with preempt-disabled in vhost_net_busy_poll()
-Date: Sat, 30 May 2026 18:04:05 +0200
-Message-ID: <20260530160320.449153812@linuxfoundation.org>
+Subject: [PATCH 6.1 722/969] fs/adfs: validate nzones in adfs_validate_bblk()
+Date: Sat, 30 May 2026 18:04:06 +0200
+Message-ID: <20260530160320.476272973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,61 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Bae Yeonju <iwasbaeyz@gmail.com>
 
-[ Upstream commit e08a9fac5cf8c3fecf4755e7e3ac059f78b8f83d ]
+[ Upstream commit dd9d3e16c2d5fa166e13dce07413be51f42c8f5d ]
 
-syzbot reported "sleeping function called from invalid context" in
-vhost_net_busy_poll().
+Reject ADFS disc records with a zero zone count during boot block
+validation, before the disc record is used.
 
-Commit 030881372460 ("vhost_net: basic polling support") introduced a
-busy-poll loop and preempt_{disable,enable}() around it, where each
-iteration calls a sleepable function inside the loop.
+When nzones is 0, adfs_read_map() passes it to kmalloc_array(0, ...)
+which returns ZERO_SIZE_PTR, and adfs_map_layout() then writes to
+dm[-1], causing an out-of-bounds write before the allocated buffer.
 
-The purpose of disabling preemption was to keep local_clock()-based
-timeout accounting on a single CPU, rather than as a requirement of
-busy-poll itself:
+adfs_validate_dr0() already rejects nzones != 1 for old-format
+images.  Add the equivalent check to adfs_validate_bblk() for
+new-format images so that a crafted image with nzones == 0 is
+rejected at probe time.
 
-https://lore.kernel.org/1448435489-5949-4-git-send-email-jasowang@redhat.com
+Found by syzkaller.
 
->From this perspective, migrate_disable() is sufficient here, so replace
-preempt_disable() with migrate_disable(), avoiding sleepable accesses
-from a preempt-disabled context.
-
-Fixes: 030881372460 ("vhost_net: basic polling support")
-Tested-by: syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com
-Reported-by: syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69e6a414.050a0220.24bfd3.002d.GAE@google.com/T/
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f6f14a0d71b0 ("fs/adfs: map: move map-specific sb initialisation to map.c")
+Signed-off-by: Bae Yeonju <iwasbaeyz@gmail.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/adfs/super.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 2797cecc6c8be..3ae572df07960 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -546,7 +546,7 @@ static void vhost_net_busy_poll(struct vhost_net *net,
- 	busyloop_timeout = poll_rx ? rvq->busyloop_timeout:
- 				     tvq->busyloop_timeout;
+diff --git a/fs/adfs/super.c b/fs/adfs/super.c
+index e8bfc38239cd5..76e37c6d4cad4 100644
+--- a/fs/adfs/super.c
++++ b/fs/adfs/super.c
+@@ -343,6 +343,9 @@ static int adfs_validate_bblk(struct super_block *sb, struct buffer_head *bh,
+ 	if (adfs_checkdiscrecord(dr))
+ 		return -EILSEQ;
  
--	preempt_disable();
-+	migrate_disable();
- 	endtime = busy_clock() + busyloop_timeout;
- 
- 	while (vhost_can_busy_poll(endtime)) {
-@@ -563,7 +563,7 @@ static void vhost_net_busy_poll(struct vhost_net *net,
- 		cpu_relax();
- 	}
- 
--	preempt_enable();
-+	migrate_enable();
- 
- 	if (poll_rx || sock_has_rx_data(sock))
- 		vhost_net_busy_poll_try_queue(net, vq);
++	if ((dr->nzones | dr->nzones_high << 8) == 0)
++		return -EILSEQ;
++
+ 	*drp = dr;
+ 	return 0;
+ }
 -- 
 2.53.0
 
