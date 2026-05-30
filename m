@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7165A33FE15;
-	Sat, 30 May 2026 17:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC8D3242D7;
+	Sat, 30 May 2026 17:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161679; cv=none; b=bte/SXBWWNEnltpb4TVx4Pv1E1uuUJjeYoP6F+lumn0AQNW96WEFzkoXQq47bYzniY9VuulFMv7B5SHQT8ldkGn7u1aALnFiwD37uTdPg7Ka3fWZsfQ5iqudOMUO7Ny19yk7MD8v4zVGPDB+676afZQfrAdTBFjQ5cUfC+PiSUY=
+	t=1780161682; cv=none; b=vEyPsI+owLxjKpTIqoSssnYjLyqRRlabr7fNvawYAqn+lvof9e79gatcbd6wgYDRUjLGZH5YyP3EZ/6CyL8Iv1dk3GAHmyVsWVfygOR73lJfKcHItXZwzv2Y1vzALKrUi/ePT9XSG16MkBumoxXvxxELKrIzwqdVcGuiiXuQxYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161679; c=relaxed/simple;
-	bh=vQ6EPHYnlWlGzM1vopqI0sc+lDzdYd6tthjzwa8pmtQ=;
+	s=arc-20240116; t=1780161682; c=relaxed/simple;
+	bh=egDFBmb/WpkI+ah4Tbcl6OxVOExttMcYzmLu9Z0LmKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMLR1BxHbNyaC5qAHMc1ST/2XVvSCMazD5+r0wzXQKCClqtJQDR9sQ31Betl1kzBoL+uskmLMrV75rT0PxBEwBl5b23IiKECkGrnMK3Ie1UXtWxT6Q9TZk3cpKX5Q17knkHbqww8SA8b5SCdwBvVyKpZhX6MEhilKLbNc/qdmA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le6a5I5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bW9/TfEhc3YEaagFfSSttTu1zWYcANqFMgoNzAfMPLQOQY/92yGJPDslNB83FC2qMFC7UjbDIlQPlbOFFUaa9XJ+96tzxlw+Ofh7JW3wNwk4ZFk90A/emu9H/VPTxldSKiJmfTy0Iqjyip+/cudy+3PvTBGaTLE2tT3Xiriheqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fj1d5SGQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le6a5I5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60A61F00893;
-	Sat, 30 May 2026 17:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fj1d5SGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A261F00898;
+	Sat, 30 May 2026 17:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161678;
-	bh=OzNGU/v0NBRGc2Jpi7q17D6z3SMI2N/t9Yd890lQyLQ=;
+	s=korg; t=1780161681;
+	bh=t3OdX4m1qdN+bu7ylPmF/uKYum2GkP/bUhy6W4a2KFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Le6a5I5CGsr0Cm2RdqIWma0HKWnOg5h0VzwY9CdGAY79AbSILZy14BtOHSV6T7WNg
-	 zotPy5F1d/FTbBDqFS/+qd0Jgs7um/puchciIDaM83FkhxdaYTWGPED8NRzgXVPl5U
-	 I7SFsA19x2WX3fBHuRNVCE/mPa4MXobkBVWlGRcQ=
+	b=fj1d5SGQUraaGPKEJaHQPzk3KyAGWOc+LIOBMNr/SbWlNbfkOCmxcTrJuU6fXJ+D3
+	 W05UwU+zxwnwZctsPhl7+M+oMBpEXcj/91KHJ/XiIkIKeDop0OyDH+jFm2n4L00qev
+	 I7GUXWIh2Y3s+IFaGCKtPzQ4etXMQUmqiyJCyImI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 667/969] f2fs: Use sysfs_emit_at() to simplify code
-Date: Sat, 30 May 2026 18:03:11 +0200
-Message-ID: <20260530160318.906306103@linuxfoundation.org>
+Subject: [PATCH 6.1 694/969] i40e: dont advertise IFF_SUPP_NOFCS
+Date: Sat, 30 May 2026 18:03:38 +0200
+Message-ID: <20260530160319.675582722@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,117 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit f7a678bbe5a8f22cfcef5369757cc9b95f73e027 ]
+[ Upstream commit a24162f18825684ad04e3a5d0531f8a50d679347 ]
 
-This file already uses sysfs_emit(). So be consistent and also use
-sysfs_emit_at().
+i40e advertises IFF_SUPP_NOFCS, allowing users to use the SO_NOFCS
+socket option. However, this option is silently ignored, as the driver
+does not check skb->no_fcs, and always enables FCS insertion offload.
 
-This slightly simplifies the code and makes it more readable.
+Fix this by removing the advertisement of IFF_SUPP_NOFCS.
 
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 5909bedbed38 ("f2fs: protect extension_list reading with sb_lock in f2fs_sbi_show()")
+This behavior can be reproduced with a simple AF_PACKET socket:
+
+  import socket
+  s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW)
+  s.setsockopt(socket.SOL_SOCKET, 43, 1) # SO_NOFCS
+  s.bind(("eth0", 0))
+  s.send(b'\xff' * 64)
+
+Previously, send() succeeds but the driver ignores SO_NOFCS.
+With this change, send() fails with -EPROTONOSUPPORT, as expected.
+
+Fixes: 41c445ff0f48 ("i40e: main driver core")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-9-686c33c9828d@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/sysfs.c | 45 +++++++++++++++++++++------------------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index 4e643abbd891a..aeb95c74710eb 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -150,50 +150,50 @@ static ssize_t features_show(struct f2fs_attr *a,
- 	int len = 0;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index be4471072fe28..a1a0e7c9fb7f2 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -13864,7 +13864,6 @@ static int i40e_config_netdev(struct i40e_vsi *vsi)
+ 	netdev->neigh_priv_len = sizeof(u32) * 4;
  
- 	if (f2fs_sb_has_encrypt(sbi))
--		len += scnprintf(buf, PAGE_SIZE - len, "%s",
-+		len += sysfs_emit_at(buf, len, "%s",
- 						"encryption");
- 	if (f2fs_sb_has_blkzoned(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "blkzoned");
- 	if (f2fs_sb_has_extra_attr(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "extra_attr");
- 	if (f2fs_sb_has_project_quota(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "projquota");
- 	if (f2fs_sb_has_inode_chksum(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "inode_checksum");
- 	if (f2fs_sb_has_flexible_inline_xattr(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "flexible_inline_xattr");
- 	if (f2fs_sb_has_quota_ino(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "quota_ino");
- 	if (f2fs_sb_has_inode_crtime(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "inode_crtime");
- 	if (f2fs_sb_has_lost_found(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "lost_found");
- 	if (f2fs_sb_has_verity(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "verity");
- 	if (f2fs_sb_has_sb_chksum(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "sb_checksum");
- 	if (f2fs_sb_has_casefold(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "casefold");
- 	if (f2fs_sb_has_readonly(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "readonly");
- 	if (f2fs_sb_has_compression(sbi))
--		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "compression");
--	len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
-+	len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "pin_file");
--	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
-+	len += sysfs_emit_at(buf, len, "\n");
- 	return len;
- }
- 
-@@ -310,17 +310,14 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- 		int hot_count = sbi->raw_super->hot_ext_count;
- 		int len = 0, i;
- 
--		len += scnprintf(buf + len, PAGE_SIZE - len,
--						"cold file extension:\n");
-+		len += sysfs_emit_at(buf, len, "cold file extension:\n");
- 		for (i = 0; i < cold_count; i++)
--			len += scnprintf(buf + len, PAGE_SIZE - len, "%s\n",
--								extlist[i]);
-+			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
- 
--		len += scnprintf(buf + len, PAGE_SIZE - len,
--						"hot file extension:\n");
-+		len += sysfs_emit_at(buf, len, "hot file extension:\n");
- 		for (i = cold_count; i < cold_count + hot_count; i++)
--			len += scnprintf(buf + len, PAGE_SIZE - len, "%s\n",
--								extlist[i]);
-+			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
-+
- 		return len;
- 	}
+ 	netdev->priv_flags |= IFF_UNICAST_FLT;
+-	netdev->priv_flags |= IFF_SUPP_NOFCS;
+ 	/* Setup netdev TC information */
+ 	i40e_vsi_config_netdev_tc(vsi, vsi->tc_config.enabled_tc);
  
 -- 
 2.53.0
