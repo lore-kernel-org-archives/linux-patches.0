@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8235432D42B;
-	Sat, 30 May 2026 17:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584D835200B;
+	Sat, 30 May 2026 17:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160870; cv=none; b=FSBv9AmGawfGijUexsVPgUjuIi8ALVeWorDGs11R6l2IVJg2gVaJa3ZBrJ7x0RlPy7iHrVxM0y+3ckfoXN8knn41oG+btLFmQ+IbPVBJnX2YYd6Xx6UTclbchBDWOfmiXStH4G5Xd3ZuRbtnKHPlcFBmcCcb1jdTmkkOrgewUgo=
+	t=1780160874; cv=none; b=KRH7F2yZCrGvZp9bRFzVAH4yRJ6X0x1tzOUE/ggtScugiOi79WycRS1K/R1b3kJEAkz8QZyividqx+BtmiD/R2F4lhyIOd9NjHif+cr/tQ9JWk7rzgfphSQYoMJRU8RYtZ5GgyNdEC68p+KSWpIWYTlgIkxLQWXeKzvWc1cQAV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160870; c=relaxed/simple;
-	bh=yXIDfW27hLZbd/ZqxpwucJVBA6uX9egfZlHF7ykCvIk=;
+	s=arc-20240116; t=1780160874; c=relaxed/simple;
+	bh=GRDrdGvO0CnEpyWqbi8SoeFESuQ8SSCrDSQoIvW1iZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8MfE8HScGmbzEdFcUCTqq7z2K4h9d/bnuM23wupUGyGzuUQ77oHnNXVaPFWCG0UsD83iGQ9MbdzEQUSKxxC6dtAhLE5gHKuhxHlaajGK4LXFBpJD4vc+LQ+vMLZflkGd/T857JJUGw66ZLizD7Ja4qVS1ulnV6nHoMGM5gqaZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrNG5lcx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fabwf9nPoKasVOFvPDhmobxpNMAX2ex47CIZ/pYoJMWAJDH+1JEJUQZtknGWV5lmffsN9+l8BZPXFYmkteE01GJE1umUtgoDWhXLcIIK/M3vGhn+aDojmgd738F2YlliHTaYiUD/co0h131xCB54WOyYdG56e4i1ejE1VMu4I5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=de5HoV8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrNG5lcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25901F00893;
-	Sat, 30 May 2026 17:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="de5HoV8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1BD1F00893;
+	Sat, 30 May 2026 17:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160869;
-	bh=dhfTgCkQ7q1zMK4X0xCjiD/lyumvKtzP5PAhKu3nE2s=;
+	s=korg; t=1780160873;
+	bh=7bANKQV9Ct1qShfa+zQctdYFuJGvJQKlGrkMFpsuGbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VrNG5lcxhCrnBhZorVNOFnEoV7f5o38VP2D0AFfO+H3RHLeoi8YMxkJ6w4MKO1vpv
-	 0H1OuK4SP/sQuuwteAJBG6fBUux9DW1W6VSQSR/L6eatnX2Vart3xF4KRYVK2IqqfI
-	 nLGnZasFfXVhl6kyREIU5Sp8RjM/HgJWyPP6Ng5w=
+	b=de5HoV8G6X2Sj//bHnr4oLD6ASr9iqd7KPwt/egRCrUtrQCS+5/4rjgcMh8NQJrD7
+	 VRV/9HgZkR3VZYVexeBdQnS2GlcMPoYrh5HECAYKpMWdf9cn4JCZyBwsQ6wlmZI9ge
+	 utKiP3wwUrxnf60LeoOJ+tOhZeixRDX0N1EI5VNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 458/969] wifi: rtw89: phy: fix uninitialized variable access in rtw89_phy_cfo_set_crystal_cap()
-Date: Sat, 30 May 2026 17:59:42 +0200
-Message-ID: <20260530160312.929372753@linuxfoundation.org>
+Subject: [PATCH 6.1 459/969] r8152: fix incorrect register write to USB_UPHY_XTAL
+Date: Sat, 30 May 2026 17:59:43 +0200
+Message-ID: <20260530160312.955333108@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
 
-[ Upstream commit 047cddf88c611e616d49a00311d4722e46286234 ]
+[ Upstream commit 48afd5124fd6129c46fd12cb06155384b1c4a0c4 ]
 
-In the rtw89_phy_cfo_set_crystal_cap() function, for chips other than
-RTL8852A/RTL8851B, the values read by rtw89_mac_read_xtal_si() are
-stored into the local variables sc_xi_val and sc_xo_val. If either
-read fails, these variables remain uninitialized, they are later
-used to update cfo->crystal_cap and in debug print statements. This
-can lead to undefined behavior.
+The old code used ocp_write_byte() to clear the OOBS_POLLING bit
+(BIT(8)) in the USB_UPHY_XTAL register, but this doesn't correctly
+clear a bit in the upper byte of the 16-bit register.
 
-Fix the issue by initializing sc_xi_val and sc_xo_val to zero,
-like is implemented in vendor driver.
+Fix this by using ocp_write_word() instead.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8379fa611536 ("rtw89: 8852c: add write/read crystal function in CFO tracking")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260323140613.1615574-1-a.velichayshiy@ispras.ru
+Fixes: 195aae321c82 ("r8152: support new chips")
+Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260326073925.32976-454-nic_swsd@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
+ drivers/net/usb/r8152.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index f6647f9d23939..980b8079bc707 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -2148,7 +2148,7 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
- {
- 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
--	u8 sc_xi_val, sc_xo_val;
-+	u8 sc_xi_val = 0, sc_xo_val = 0;
- 
- 	if (!force && cfo->crystal_cap == crystal_cap)
- 		return;
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 15979cd7d15ae..98e30291b0500 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -3748,7 +3748,7 @@ static void r8156_ups_en(struct r8152 *tp, bool enable)
+ 		case RTL_VER_15:
+ 			ocp_data = ocp_read_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL);
+ 			ocp_data &= ~OOBS_POLLING;
+-			ocp_write_byte(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
++			ocp_write_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
+ 			break;
+ 		default:
+ 			break;
 -- 
 2.53.0
 
