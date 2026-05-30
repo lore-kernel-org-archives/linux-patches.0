@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15313AFCE3;
-	Sat, 30 May 2026 18:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742DB39A7FE;
+	Sat, 30 May 2026 18:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164517; cv=none; b=uj9zHkA3Fg4LoxtjOUKb0aVNVSY+ROJx+VTBMxfNS6bwQUiiMQD1W7ho7uLs7G1hsb5CM2B1RHvYuj9wrd9JY2QngtXXBJqEHy3EtE5TQZG88eEjohTx4GxHMQ/exMUaINyVZBfjl8jRpV5tZnMXQtC4yEaA9GpeO5v7HeSpkFo=
+	t=1780164521; cv=none; b=YJuBxFh3DLH5FCvwLMK0IW/b0DrQKPzqRxi2OMTAgILXpM2R+8HzC0c0wx7b4Nk7KltWRpFxrQFzEsBPEmRc4leleYZ96I2jhtS3kEAmHIvQwkbdeWAtmZeU0rBvHpUjDU4yzAWncHAKENdb1pXhRyuYq5e1yAnLaSK1PjjTN9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164517; c=relaxed/simple;
-	bh=S4tXdE5B6AiguL8g/I48HSlpZ53whSHzOAM5Snf02PE=;
+	s=arc-20240116; t=1780164521; c=relaxed/simple;
+	bh=foOHlMFm8m2l9PqI9TfE8jlnDPt3KoEpce9bTr5DX58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eymXdKeMW0VyoYedbVUiW+sHF0BIHZk+dQ4sGK1vZCI4OO7WQXEkh3AOQj1e3ieT+covB6rvd1Jf6mM+/bkqTueDKavdkhGcs3x+kTQs9Rux0Se3Q4Rp2vVXJAb8X3N2CKOe0T7fysPB7bbBEL8iBgqp//1blxlA0u/7F8raqEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRLy/x2y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WP4Zhof82qqBIcQJy1UvTH0IGSVABPnkQRmh9dlhKkWAP9Izretsl/qBTgzCAdnA3LPnfwRmMfuinT+p0J/PxBgo4MxB/JHs7egr8aebOLoRyk9e3dwU5kGKwIe40ac+3Pl1Kiq2kswwjGzOKZtb8unAgK62We+oB8PayAZI67w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOCclyDF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRLy/x2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077291F00893;
-	Sat, 30 May 2026 18:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOCclyDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B791F00893;
+	Sat, 30 May 2026 18:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164516;
-	bh=vv0gAIJCDxVS+zXp6gCPcZZWhmhWEhQZQAaiMdO4yh8=;
+	s=korg; t=1780164520;
+	bh=gISqn3OPE8mkZtf1mdG0jINijSMM4pFvTpAGAlXjV6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FRLy/x2yO1k62rubgLR8PFYqs5W7rXjx5H6c2ZdrF83AmTY9k9baRccfCs30t8wcB
-	 W1fXRRN9NjyR6AJIWwARoJEtx5V8SVqRf7bznGxboJPTHHZGo7MyOUpABqJwD07Nhc
-	 ZzxnIjBE9T/dBqZOtN/A66I812neuDmB9qqeqsZ0=
+	b=xOCclyDFmGpojyXSngIWEqqLCeHr9T8wQmaUANGofE4TcjnV+nA43k7ycddVB6aVH
+	 4a7zAMji728gXcSMwqzko7meR4FJGAc6Mh++d5IXCFnQE4saWnZCoOGDRTwZgN2TA3
+	 YKlejjrXn1H3BZaeEyNiwA70+j4/tMDOiSP1C0d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kito Xu (veritas501)" <hxzene@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 578/776] netfilter: nfnetlink_osf: fix potential NULL dereference in ttl check
-Date: Sat, 30 May 2026 18:04:52 +0200
-Message-ID: <20260530160255.028218444@linuxfoundation.org>
+Subject: [PATCH 5.15 579/776] slip: reject VJ receive packets on instances with no rstate array
+Date: Sat, 30 May 2026 18:04:53 +0200
+Message-ID: <20260530160255.056472667@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,72 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 711987ba281fd806322a7cd244e98e2a81903114 ]
+[ Upstream commit e76607442d5b73e1ba6768f501ef815bb58c2c0e ]
 
-The nf_osf_ttl() function accessed skb->dev to perform a local interface
-address lookup without verifying that the device pointer was valid.
+slhc_init() accepts rslots == 0 as a valid configuration, with the
+documented meaning of 'no receive compression'. In that case the
+allocation loop in slhc_init() is skipped, so comp->rstate stays
+NULL and comp->rslot_limit stays 0 (from the kzalloc of struct
+slcompress).
 
-Additionally, the implementation utilized an in_dev_for_each_ifa_rcu
-loop to match the packet source address against local interface
-addresses. It assumed that packets from the same subnet should not see a
-decrement on the initial TTL. A packet might appear it is from the same
-subnet but it actually isn't especially in modern environments with
-containers and virtual switching.
+The receive helpers do not defend against that configuration.
+slhc_uncompress() dereferences comp->rstate[x] when the VJ header
+carries an explicit connection ID, and slhc_remember() later assigns
+cs = &comp->rstate[...] after only comparing the packet's slot number
+to comp->rslot_limit. Because rslot_limit is 0, slot 0 passes the
+range check, and the code dereferences a NULL rstate.
 
-Remove the device dereference and interface loop. Replace the logic with
-a switch statement that evaluates the TTL according to the ttl_check.
+The configuration is reachable in-tree through PPP. PPPIOCSMAXCID
+stores its argument in a signed int, and (val >> 16) uses arithmetic
+shift. Passing 0xffff0000 therefore sign-extends to -1, so val2 + 1
+is 0 and ppp_generic.c ends up calling slhc_init(0, 1). Because
+/dev/ppp open is gated by ns_capable(CAP_NET_ADMIN), the whole path
+is reachable from an unprivileged user namespace. Once the malformed
+VJ state is installed, any inbound VJ-compressed or VJ-uncompressed
+frame that selects slot 0 crashes the kernel in softirq context:
 
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Reported-by: Kito Xu (veritas501) <hxzene@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/20260414074556.2512750-1-hxzene@gmail.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+ Oops: general protection fault, probably for non-canonical
+       address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+ KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:slhc_uncompress (drivers/net/slip/slhc.c:519)
+ Call Trace:
+  <TASK>
+  ppp_receive_nonmp_frame (drivers/net/ppp/ppp_generic.c:2466)
+  ppp_input (drivers/net/ppp/ppp_generic.c:2359)
+  ppp_async_process (drivers/net/ppp/ppp_async.c:492)
+  tasklet_action_common (kernel/softirq.c:926)
+  handle_softirqs (kernel/softirq.c:623)
+  run_ksoftirqd (kernel/softirq.c:1055)
+  smpboot_thread_fn (kernel/smpboot.c:160)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:164)
+  </TASK>
+
+Reject the receive side on such instances instead of touching rstate.
+slhc_uncompress() falls through to its existing 'bad' label, which
+bumps sls_i_error and enters the toss state. slhc_remember() mirrors
+that with an explicit sls_i_error increment followed by slhc_toss();
+the sls_i_runt counter is not used here because a missing rstate is
+an internal configuration state, not a runt packet.
+
+The transmit path is unaffected: the only in-tree caller that picks
+rslots from userspace (ppp_generic.c) still supplies tslots >= 1, and
+slip.c always calls slhc_init(16, 16), so comp->tstate remains valid
+and slhc_compress() continues to work.
+
+Fixes: 4ab42d78e37a ("ppp, slip: Validate VJ compression slot parameters completely")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260415204130.258866-2-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/net/slip/slhc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index 2207bda442d54..6d3dfbeb398cb 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -31,26 +31,18 @@ EXPORT_SYMBOL_GPL(nf_osf_fingers);
- static inline int nf_osf_ttl(const struct sk_buff *skb,
- 			     int ttl_check, unsigned char f_ttl)
- {
--	struct in_device *in_dev = __in_dev_get_rcu(skb->dev);
- 	const struct iphdr *ip = ip_hdr(skb);
--	const struct in_ifaddr *ifa;
--	int ret = 0;
- 
--	if (ttl_check == NF_OSF_TTL_TRUE)
-+	switch (ttl_check) {
-+	case NF_OSF_TTL_TRUE:
- 		return ip->ttl == f_ttl;
--	if (ttl_check == NF_OSF_TTL_NOCHECK)
--		return 1;
--	else if (ip->ttl <= f_ttl)
-+		break;
-+	case NF_OSF_TTL_NOCHECK:
- 		return 1;
--
--	in_dev_for_each_ifa_rcu(ifa, in_dev) {
--		if (inet_ifa_match(ip->saddr, ifa)) {
--			ret = (ip->ttl == f_ttl);
--			break;
--		}
-+	case NF_OSF_TTL_LESS:
-+	default:
-+		return ip->ttl <= f_ttl;
+diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
+index bf9e801cc61cc..3474792a37a67 100644
+--- a/drivers/net/slip/slhc.c
++++ b/drivers/net/slip/slhc.c
+@@ -506,6 +506,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 		comp->sls_i_error++;
+ 		return 0;
  	}
--
--	return ret;
- }
++	if (!comp->rstate)
++		goto bad;
+ 	changes = *cp++;
+ 	if(changes & NEW_C){
+ 		/* Make sure the state index is in range, then grab the state.
+@@ -649,6 +651,10 @@ slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
+ 	struct cstate *cs;
+ 	unsigned int ihl;
  
- struct nf_osf_hdr_ctx {
++	if (!comp->rstate) {
++		comp->sls_i_error++;
++		return slhc_toss(comp);
++	}
+ 	/* The packet is shorter than a legal IP header.
+ 	 * Also make sure isize is positive.
+ 	 */
 -- 
 2.53.0
 
