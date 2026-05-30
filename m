@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EBB33F590;
-	Sat, 30 May 2026 17:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2681433E36A;
+	Sat, 30 May 2026 17:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162708; cv=none; b=Jx34DKhuB3NRIuKne2fvHthitCYyAuwGEKkl+aguKJl2CgsZQMkFtSi7AQI/2uACaXekjE+Fdyn/uCMVG3Qe5FpDCKLt+SlA0/yljUIEb3QFjgVTCuCYmpk/Qrbe799M4csaYjVpGw7lLvKksLhLWchSirOvuzCWC3Ru3Kx/Mhg=
+	t=1780162712; cv=none; b=MdDaX9ZlfjQ1XAIa57aeicYDDTcLJ80qPq052M9fqdgtaNP6tkfvabwNf2UBGa9dGmzww5/4W6HmLNhShlpfYy00N0z32UkStI/jSP69RZq6wskqhy9QpdqpyfqmkNBzunoEsJUen/9XvvhL/K1Wrn5VA9iTaKRuG1N0Ew4t0C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162708; c=relaxed/simple;
-	bh=yzM4Py9p1pf1miyrIcrVReMNOVrhFIwQXHSBmEIljVM=;
+	s=arc-20240116; t=1780162712; c=relaxed/simple;
+	bh=bTdRIxJztyGulYk1EyBQONL9aLXlZwNQ93WI7kXi98s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWVg+cv6nQLvb7F2Xx3oc+9Cdi40Wxzd/gdHd9eSS6SXoEv4V+XwzHb9aWC2AREnnvf8XtyJD6wNnYjefi3vApOGSvH2ocOIAFARSMVAW+1T595BAf+gVcxmr5AstmOv6mRvbqf1yHM68Gberv3c3Qtnx9wqWitSVoJW3z7+Ybs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctZ2C+hc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f4nhEcHfEv+SklRm625VXQl6Qra7w1ScMO/0zTmqeuiALsqC6wcFGb4NaGILIolUuM5EWqWA2dHvbs7pewIW/NVr6tl1zJySlmxFU+V09+BSoEubINzQzeVugUr0UOwDapqmdOZGD121kaWmIfR9bGA1xBvKL/YxLqN1XQ5eg1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8xPQIjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctZ2C+hc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212FD1F00893;
-	Sat, 30 May 2026 17:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8xPQIjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711B51F00893;
+	Sat, 30 May 2026 17:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162707;
-	bh=wi2fIFhOAk+wpndMexrnPzz+usmY80NF27duJeJx4cI=;
+	s=korg; t=1780162711;
+	bh=vb1MxzRIvha7Nc5Ims+Uxc0dcAEQZwihkd/Ud8WV5iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctZ2C+hc0z6nSP7x6W8NSHQla299ZJ2aD5vWTyr6ZFJPGFiDQJjTVlbLn1SwgdCIf
-	 ZcFPwlGv5g8gZJYTej+XH/3AXoe9xZ1CKdHvCdelPaBzf5Zx8NU+Ccf3F9wuFGijk7
-	 9La76qXtPKvV98ajZBfshMfBBfp0rooeyJyEnj4w=
+	b=M8xPQIjCIMO5SPuwqd3MkMTm3RP4LNBiHnn+Vd26DEkvX9S0XklsFfJsYMga3jVJ5
+	 OJKqRObwRC+N1VtjL6P1gPzYfaq1qrMuA1AxYQ+d7xIbt1sNFaFXSkvF8mekB8wVa8
+	 nER02JhsW1DH+6tMPISpJhsXZh2wU0g322xhGAfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Potin Lai <potin.lai.pt@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/776] soc: aspeed: socinfo: Mask table entries for accurate SoC ID matching
-Date: Sat, 30 May 2026 17:55:31 +0200
-Message-ID: <20260530160240.709911336@linuxfoundation.org>
+Subject: [PATCH 5.15 008/776] ASoC: soc-core: call missing INIT_LIST_HEAD() for card_aux_list
+Date: Sat, 30 May 2026 17:55:22 +0200
+Message-ID: <20260530160240.464872417@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,44 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Potin Lai <potin.lai.pt@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 7ec1bd3d9be671d04325b9e06149b8813f6a4836 ]
+[ Upstream commit b9eff9732cb0f86a68c9d1592a98ceab47c01e95 ]
 
-The siliconid_to_name() function currently masks the input silicon ID
-with 0xff00ffff, but compares it against unmasked table entries. This
-causes matching to fail if the table entries contain non-zero values in
-the bits covered by the mask (bits 16-23).
+Component has "card_aux_list" which is added/deled in bind/unbind aux dev
+function (A), and used in for_each_card_auxs() loop (B).
 
-Update the logic to apply the 0xff00ffff mask to the table entries
-during comparison. This ensures that only the relevant model and
-revision bits are considered, providing a consistent match across
-different manufacturing batches.
+	static void soc_unbind_aux_dev(...)
+	{
+		...
+		for_each_card_auxs_safe(...) {
+			...
+(A)			list_del(&component->card_aux_list);
+		}			     ^^^^^^^^^^^^^
+	}
 
-[arj: Add Fixes: tag, fix 'soninfo' typo, clarify function reference]
+	static int soc_bind_aux_dev(...)
+	{
+		...
+		for_each_card_pre_auxs(...) {
+			...
+(A)			list_add(&component->card_aux_list, ...);
+		}			     ^^^^^^^^^^^^^
+		...
+	}
 
-Fixes: e0218dca5787 ("soc: aspeed: Add soc info driver")
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
-Link: https://patch.msgid.link/20260122-soc_aspeed_name_fix-v1-1-33a847f2581c@gmail.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+	#define for_each_card_auxs(card, component)	\
+(B)		list_for_each_entry(component, ..., card_aux_list)
+						    ^^^^^^^^^^^^^
+
+But it has been used without calling INIT_LIST_HEAD().
+
+	> git grep card_aux_list sound/soc
+	sound/soc/soc-core.c:           list_del(&component->card_aux_list);
+	sound/soc/soc-core.c:           list_add(&component->card_aux_list, ...);
+
+call missing INIT_LIST_HEAD() for it.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87341mxa8l.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-socinfo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
-index 67e9ac3d08ecc..a90b100f4d101 100644
---- a/drivers/soc/aspeed/aspeed-socinfo.c
-+++ b/drivers/soc/aspeed/aspeed-socinfo.c
-@@ -39,7 +39,7 @@ static const char *siliconid_to_name(u32 siliconid)
- 	unsigned int i;
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index af8554e96035f..da652f2f09b61 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -2646,6 +2646,7 @@ int snd_soc_component_initialize(struct snd_soc_component *component,
+ 	INIT_LIST_HEAD(&component->dobj_list);
+ 	INIT_LIST_HEAD(&component->card_list);
+ 	INIT_LIST_HEAD(&component->list);
++	INIT_LIST_HEAD(&component->card_aux_list);
+ 	mutex_init(&component->io_mutex);
  
- 	for (i = 0 ; i < ARRAY_SIZE(rev_table) ; ++i) {
--		if (rev_table[i].id == id)
-+		if ((rev_table[i].id & 0xff00ffff) == id)
- 			return rev_table[i].name;
- 	}
- 
+ 	component->name = fmt_single_name(dev, &component->id);
 -- 
 2.53.0
 
