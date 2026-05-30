@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AD3331200;
-	Sat, 30 May 2026 18:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BABC26738C;
+	Sat, 30 May 2026 18:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166297; cv=none; b=oQ0Gdz7BWMD2I/n6kVls9IDAcEVuS3qBpGWXGtS1iY3e1mT1h1OBiI2eI9orlEZ5ET9N3Gu2sjpxYE8ZX/wMBQGInc+J7IW4p3dPNFJztfa60u06Gl3Y3WiAKAKIaxm2WmwKwDv0Bmmrgv+lf0/h7rdbzIRcEKQ13kxqFDaKIjc=
+	t=1780166301; cv=none; b=DidLoNyHVpoLB7SvXnx2X3MIs7SRCbWYRc47k5wNRJiDag7Zhfpi62EHxr5TkmXVaxnlkvQhXf09tMIkSgymdC4DuuFq0H+/kNZWr4By+Lb4L/5N1fEnMQw1992ygyHcm7+2xyZddWCnS4rFDrwbX5CKSwYVWai/+NsVorGFTO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166297; c=relaxed/simple;
-	bh=bycomV14JRSeiIjZf577Pm8DV2W4lFsNUYZdULq0FPQ=;
+	s=arc-20240116; t=1780166301; c=relaxed/simple;
+	bh=jaoeQG/QmuW3EL7STiSUS2Wsbradn5hbOhTPmRwCys0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAAsR+d5NAr1EJe31M/vEfIuyAGmXdgRP+MTOSy6sCuOthjdG5Z6/3XDbvV2BwXmzyhF/JZj8W2W4zzEhHEMnnEXFWJIycSNvTnBTH0OZTnG1uMAVyYC4qKeRJyUy6NBVVN1eIp2Z9m0c3hbkZ22AgRz7wOmvsIsaiBUqKyiwoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTLVNDVr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6QsrvaGWAHHzr7zbNOE3tUQwezgun3yLGmuLj/uYR6tObkEfSOFTMXNWLJrbPq8d0BvUVxxt+gRGwE3jwJB2cr/1r+g0RlFwl8lfIWopNg577f2PWsHF3kmsFpa58QWHOcOxGymByyM5YqtIdPt10y5RPfRhfPBOAIMgwsdIf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/QDQN+2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTLVNDVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD94F1F00893;
-	Sat, 30 May 2026 18:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/QDQN+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4651F00893;
+	Sat, 30 May 2026 18:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166296;
-	bh=rwIqFJzq19wvsXUQr4dzak04dxlqbcNxOxFgN2KnA8I=;
+	s=korg; t=1780166300;
+	bh=3k567y9WnhbmXMrkn82qkRfBOu4HMOw4AVn10C+hH8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CTLVNDVr6oocMrvoGxdTP8tBmzkusoB3O56qw0cvM7f9laLsYc0vo/LUCFNyM5QVQ
-	 Pcq5Q5m33Ehc7WZ1abEFPu5pwjiH3SrVqduD6q9tS0LT7KKEwtUoMn32T1BbEjfClT
-	 uifI73RIxS/oCJiZYDZiNcWSfdJk+4KBPccsah/o=
+	b=c/QDQN+2wPQVXYULbutqpzyN2sEHLRVtgD4sLzsEh9Oi2yMAJXcSst9gdN15jvs0E
+	 wxt56O5kNXN7FZya2FK3xRUcRmW34GFlfOy+KkyJPwMUG92vJQVyiIm/Vh0l5l9Q4u
+	 t8b3Uowj80rx/cuTA7cHXCzuxhuN6Y31TQhpoVRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 332/589] fbdev: matroxfb: Mark variable with __maybe_unused to avoid W=1 build break
-Date: Sat, 30 May 2026 18:03:33 +0200
-Message-ID: <20260530160233.634487496@linuxfoundation.org>
+Subject: [PATCH 5.10 333/589] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
+Date: Sat, 30 May 2026 18:03:34 +0200
+Message-ID: <20260530160233.658503050@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,68 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-[ Upstream commit caf6144053b4e1c815aa56afb54745a176f999df ]
+[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
 
-Clang is not happy about set but unused variable:
+The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
+("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
+always correct just the name was wrong.
 
-drivers/video/fbdev/matrox/g450_pll.c:412:18: error: variable 'mnp' set but not used
-   412 |         unsigned int mnp;
-       |                      ^
-1 error generated.
+Rename and reorder to maintain version sorting.
 
-Since the commit 7b987887f97b ("video: fbdev: matroxfb: remove dead code
-and set but not used variable") the 'mnp' became unused, but eliminating
-that code might have side-effects. The question here is what should we do
-with 'mnp'? The easiest way out is just mark it with __maybe_unused which
-will shut the compiler up and won't change any possible IO flow. So does
-this change.
-
-A dive into the history of the driver:
-
-The problem was revealed when the #if 0 guarded code along with unused
-pixel_vco variable was removed. That code was introduced in the original
-commit 213d22146d1f ("[PATCH] (1/3) matroxfb for 2.5.3"). And then guarded
-in the commit 705e41f82988 ("matroxfb DVI updates: Handle DVI output on
-G450/G550. Powerdown unused portions of G450/G550 DAC. Split G450/G550 DAC
-from older DAC1064 handling. Modify PLL setting when both CRTCs use same
-pixel clocks.").
-
-NOTE: The two commits mentioned above pre-date Git era and available in
-history.git repository for archaeological purposes.
-
-Even without that guard the modern compilers may see that the pixel_vco
-wasn't ever used and seems a leftover after some debug or review made
-25 years ago.
-
-The g450_mnp2vco() doesn't have any IO and as Jason said doesn't seem
-to have any side effects either than some unneeded CPU processing during
-runtime. I agree that's unlikely that timeout (or heating up the CPU) has
-any effect on the HW (GPU/display) functionality.
-
-Fixes: 7b987887f97b ("video: fbdev: matroxfb: remove dead code and set but not used variable")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Patchwork: https://patchwork.freedesktop.org/patch/713717/
+Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/matrox/g450_pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/matrox/g450_pll.c b/drivers/video/fbdev/matrox/g450_pll.c
-index ff8e321a22cef..b2d3f7328ea83 100644
---- a/drivers/video/fbdev/matrox/g450_pll.c
-+++ b/drivers/video/fbdev/matrox/g450_pll.c
-@@ -407,7 +407,7 @@ static int __g450_setclk(struct matrox_fb_info *minfo, unsigned int fout,
- 		case M_VIDEO_PLL:
- 			{
- 				u_int8_t tmp;
--				unsigned int mnp;
-+				unsigned int mnp __maybe_unused;
- 				unsigned long flags;
- 				
- 				matroxfb_DAC_lock_irqsave(flags);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+index 73f066ef6f406..310b568c38664 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -258,10 +258,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+ 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
+ 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
++	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
++		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
+ 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+-	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
+-		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+ 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index ade9b609c7d98..89386b10dc48b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -18,8 +18,8 @@
+ #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
++#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
+-#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
+ #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
+ #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
 -- 
 2.53.0
 
