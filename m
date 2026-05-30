@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A881D63E4;
-	Sat, 30 May 2026 18:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B4324468C;
+	Sat, 30 May 2026 18:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167049; cv=none; b=KUrt/KfZg9oa7NYdFgrXs//YOMNx/uUN/+eiLiF5BlSVkLYI+6moLqigEK5MW/MUwp+L9Yt1l76+uQxbuMcplnknZAk+VLR98uYZOCu1rgg2gV9i8LQpoZ8OcF4Zsoz79Hy8cTrqisibAyKDTZxDoIJRsYbthgEFntp9Q9+lkNY=
+	t=1780167053; cv=none; b=NZXw5f6C65VxpcWRFq8CFVa+Q1A5cOS7y24uEl6vZ3McTBBPFdpcsWCV+B+Q2bHcvg769Cx5yJpwlS7OtSP0tS3Y7VXhzDGiqP+PsJHdyjt8Vc/VMnAVxo+2/NOmpuuErAK0zCcHaqQ9F4i9Qj9BNYvJA2qgwlbFPi4fnpRkL1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167049; c=relaxed/simple;
-	bh=fdpevyAWfNA3Vi9sf4aRuqCyuPA8bJSLh5ONpqR/ZzE=;
+	s=arc-20240116; t=1780167053; c=relaxed/simple;
+	bh=HWoywexH/JuTWNpmvrlqGLYy33ZadZQFlUK7osRdqPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPArmhi7lsOMH0oEKKK3SeViB9VksD1a4xPd3xClFJdZJpsGI0ZxngT7KdccZKpGcRIPzIUJZOKygzHCjcp1KoQudFZQNYq/0OXnX9E7UyttaCPqVbWE8V6+Q2avfi+sWAhnTmzqtXgvk6yRaWLh/vRrSpMZnhxEufi6MU0JGoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ix0aT3W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uoWI1wAcy7ZsCpvrdpX2Yo8kl/LYTtPlwYYFGwhZehzie1SbmnV2UpbKnO/yOzH/d2wvB5881psPaDNJYITAtnxe6IL/+zyP8lbkp4F3JzBB5/SrkSZV878gDrTqmG4xCZMLrm4VHG6HOysC6g0CMTEug3kPQwp1x7gTJIac/NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoIFXLtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ix0aT3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D3D1F00893;
-	Sat, 30 May 2026 18:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoIFXLtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EAF1F00893;
+	Sat, 30 May 2026 18:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167048;
-	bh=kgLTZeswgZeGcd12QlzJDUmlGNn++9RII/iB1leLdow=;
+	s=korg; t=1780167051;
+	bh=s5Y8FgEVDzeXX/vRMbiFuQ/hTKzf03qiwLVTb1otq/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ix0aT3WZJS5ygEYpGGK0nAJFM8u51gq1VggkPJMcm2R0+FmzWvjfuqv4Pg3yYmrM
-	 tvtP0/VUQunPIQgQZ0YDXb5ecb4dWvoF1d1KNWM+JgXAru3GUT7MTiMZD/dL/J6jQp
-	 4fU1R58z8Q50hdjvO9XH0452n/OSGpkD7YN3jrmc=
+	b=ZoIFXLtHesUjRjqc+p29N1OmhAfbFvRR2dxuGDTeQUwJUyXd4xnB2l/fyrKncO+Vf
+	 Wn2/v7MWU6oE5HHk8zlgyf6nmA229gFBGJJy0GIhBCemMFwyVaBg3MdkLCNbCybLb6
+	 bV27+cn/FsmnRaECH4uRyEfd/vOO/hBX5h9rPUMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 549/589] drm/amd/display: Fix integer overflow in bios_get_image()
-Date: Sat, 30 May 2026 18:07:10 +0200
-Message-ID: <20260530160239.098486259@linuxfoundation.org>
+	stable@kernel.org,
+	=?UTF-8?q?Linus=20L=C3=BCssing?= <linus.luessing@c0d3.blue>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.10 550/589] batman-adv: mcast: fix use-after-free in orig_node RCU release
+Date: Sat, 30 May 2026 18:07:11 +0200
+Message-ID: <20260530160239.122702468@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -47,62 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit cd86529ec61474a38c3837fb7823790a7c3f8cce upstream.
+commit 20c2d6a20ca936f5aaa6dd40f73f262ac45c87cc upstream.
 
-[Why&How]
-The bounds check in bios_get_image() computes 'offset + size' using
-unsigned 32-bit arithmetic before comparing against bios_size. If a
-VBIOS image contains a near-UINT32_MAX offset the addition wraps to a
-small value, the comparison passes, and the function returns a wild
-pointer past the VBIOS mapping.
+batadv_mcast_purge_orig() removes entries from RCU-protected hlists but
+does not wait for an RCU grace period before returning. Concurrent RCU
+readers may still accesses references to those entries at the point of
+removal. RCU-protected readers trying to operate on entries like
+orig->mcast_want_all_ipv6_node will then access already freed memory.
 
-Additionally, the comparison uses '<' (strict), which incorrectly
-rejects the valid exact-fit case where offset + size == bios_size.
+Fix this by moving batadv_mcast_purge_orig() to batadv_orig_node_release(),
+just before the call_rcu() invocation. This ensures RCU readers that were
+active at purge time have drained before the orig_node memory is reclaimed.
 
-Fix both issues by restructuring the check to avoid the addition
-entirely: first reject if offset alone exceeds bios_size, then check
-size against the remaining space (bios_size - offset). This eliminates
-the overflow and correctly permits exact-fit accesses.
-
-Assisted-by: GitHub Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d40fb392af659c4a02b560319f226842f6ec1a95)
-Cc: stable@vger.kernel.org
+Cc: stable@kernel.org
+Fixes: ab49886e3da7 ("batman-adv: Add IPv4 link-local/IPv6-ll-all-nodes multicast support")
+Acked-by: Linus Lüssing <linus.luessing@c0d3.blue>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/batman-adv/originator.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser_helper.c
-@@ -37,10 +37,13 @@ uint8_t *bios_get_image(struct dc_bios *
- 	uint32_t offset,
- 	uint32_t size)
- {
--	if (bp->bios && offset + size < bp->bios_size)
--		return bp->bios + offset;
--	else
-+	if (!bp->bios)
- 		return NULL;
+--- a/net/batman-adv/originator.c
++++ b/net/batman-adv/originator.c
+@@ -866,8 +866,6 @@ static void batadv_orig_node_free_rcu(st
+ 
+ 	orig_node = container_of(rcu, struct batadv_orig_node, rcu);
+ 
+-	batadv_mcast_purge_orig(orig_node);
+-
+ 	batadv_frag_purge_orig(orig_node, NULL);
+ 
+ 	kfree(orig_node->tt_buff);
+@@ -922,6 +920,8 @@ void batadv_orig_node_release(struct kre
+ 	/* Free nc_nodes */
+ 	batadv_nc_purge_orig(orig_node->bat_priv, orig_node, NULL);
+ 
++	batadv_mcast_purge_orig(orig_node);
 +
-+	if (offset > bp->bios_size || size > bp->bios_size - offset)
-+		return NULL;
-+
-+	return bp->bios + offset;
+ 	call_rcu(&orig_node->rcu, batadv_orig_node_free_rcu);
  }
  
- #include "reg_helper.h"
 
 
