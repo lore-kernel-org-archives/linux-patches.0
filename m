@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B4C3AB285;
-	Sat, 30 May 2026 18:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FBE3546F6;
+	Sat, 30 May 2026 18:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166176; cv=none; b=bRUPm04dwuoFkpy4GKFAEcBUYK+jHpSeVtlE3AQcYIWh47SANZtV5oJry5X+CjNXiTzqjcrh1QnUTMSnEPJy/SCTlDEwRJtEqHSLQoF0pe4JbRfLfMy+F3pcdkBhNhWEF9yuIXFDmgmIx+Uac3naXMBFzzwhj/ZlRSaHlWQ0A8A=
+	t=1780166180; cv=none; b=SXN0HCvv73NmyEUYPBgxR9UdnDOS6EhqkpsdBj8TyyUH/GU1vH3mdGex4C2Xtsl8dMC56bJfYWCSdfH7zuYTsp+LtPmEb08lAAi25nXYDRKCPna68KQepjsBRwQobPp9wTMdx6QJF1DFfJT6p7qvW+/o2aHdPY14UO+CdUvRnp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166176; c=relaxed/simple;
-	bh=H/5bHN/8j6h600CKQQbD9iv9Qt4Yd2jRKozFlVjVV2c=;
+	s=arc-20240116; t=1780166180; c=relaxed/simple;
+	bh=vvOpxwn72xueN0A0V4KqAvEP9Buk7iNT3HN++L5pwoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uT97y0LUsN1ZkjOeg22DQ8jx518BZeKDKrJDtO+Trhva3SdbaIhBUNliGxTuq3z8UQ0g4gaOcPtFQP8I2mc6qg9rHr9l3SYQbNJuohvmDXduaFfIuggVCo5FXVPgKc4hYR8YuGrzW+FKmPQTOvv30wUVCjhq+oFaHL1tfjoaNQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WO0nhYJ4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m+arbGbBLDoL8BVQ4W4DQBORzHvwRaCf6jIWB9rCv1tSwgEBpLxJKVF47T6izjnWNuwhbar7bUaHs1t2A6xQFrLPiQLB1FFXmk2TsihigRoUwRV5QpVJ/A4UeygDnLK7vfWw4S0mfgnRfSs4XCHX1BGx6jMKFdCm4UsM3iXMXYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da9J51C4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WO0nhYJ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F931F00898;
-	Sat, 30 May 2026 18:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da9J51C4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6781F00893;
+	Sat, 30 May 2026 18:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166175;
-	bh=wE/J9Dvy0+/TDe6NzL29FRgMRJK2Fa35gCv4JnRwAas=;
+	s=korg; t=1780166179;
+	bh=gydkaJ05FDCM0EmAst5+RK755V2j7fEXQQQd4eHeQF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WO0nhYJ4gAttjNphryBwCHqZesjbVu+QdX96owqQvyk2ksA4Kf199AYhEPDV3Same
-	 JOHM3TDZuEPvKrddVOVYjKkeuQpsBgXSWzeX2rHrsbaC+kxEd2+iGSHcYKk38mygU3
-	 JfOHAeByyGgCk33Los20k6D+PpMcAAfWCyQ9T3Rg=
+	b=da9J51C4Drm+tm3uq5+8frMM2hvaspFG0P4xxnq6aft5KJDy5bIZxfHH2fPsqclpc
+	 LcZzEyTq2xAZSgXx2C+Fes3/psj05PZac//ilkynqh8htIEsFIjVbRGRiduYrIJ2KE
+	 LJeo9DKyAO9WtOtsZxEnpuCDZtR0YWp0dnW0fSiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 279/589] drm/amdgpu/pm: align Hawaii mclk workaround with radeon
-Date: Sat, 30 May 2026 18:02:40 +0200
-Message-ID: <20260530160232.293212772@linuxfoundation.org>
+	Brian Masney <bmasney@redhat.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 297/589] irqchip/irq-pic32-evic: Address warning related to wrong printf() formatter
+Date: Sat, 30 May 2026 18:02:58 +0200
+Message-ID: <20260530160232.773326773@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,40 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Brian Masney <bmasney@redhat.com>
 
-commit 1987c79b4fe5789dfa14423e78b5c25f6acf3e9d upstream.
+[ Upstream commit 86be659415b0ddefebc3120e309091aa215a9064 ]
 
-Align the hawaii mclk workaround with radeon and windows.
+This driver is currently only build on 32 bit MIPS systems. When building
+it on x86_64, the following warning occurs:
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9649528b637f668c5af9f2b83ca4ad8576ae2121)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    drivers/irqchip/irq-pic32-evic.c: In function ‘pic32_ext_irq_of_init’:
+    ./include/linux/kern_levels.h:5:25: error: format ‘%d’ expects argument of type
+     ‘int’, but argument 2 has type ‘long unsigned int’ [-Werror=format=]
+
+Update the printf() formatter in preparation for allowing this driver to
+be compiled on all architectures.
+
+Fixes: aaa8666ada780 ("IRQCHIP: irq-pic32-evic: Add support for PIC32 interrupt controller")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260222-irqchip-pic32-v1-1-37f50d1f14af@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-pic32-evic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -1328,10 +1328,10 @@ static int ci_populate_all_memory_levels
- 	if ((dpm_table->mclk_table.count >= 2) &&
- 	    ((dev_id == 0x67B0) ||  (dev_id == 0x67B1)) &&
- 	    (adev->pdev->revision == 0)) {
--		smu_data->smc_state_table.MemoryLevel[1].MinVddci =
--				smu_data->smc_state_table.MemoryLevel[0].MinVddci;
--		smu_data->smc_state_table.MemoryLevel[1].MinMvdd =
--				smu_data->smc_state_table.MemoryLevel[0].MinMvdd;
-+		smu_data->smc_state_table.MemoryLevel[1].MinVddc =
-+				smu_data->smc_state_table.MemoryLevel[0].MinVddc;
-+		smu_data->smc_state_table.MemoryLevel[1].MinVddcPhases =
-+				smu_data->smc_state_table.MemoryLevel[0].MinVddcPhases;
- 	}
- 	smu_data->smc_state_table.MemoryLevel[0].ActivityLevel = 0x1F;
- 	CONVERT_FROM_HOST_TO_SMC_US(smu_data->smc_state_table.MemoryLevel[0].ActivityLevel);
+diff --git a/drivers/irqchip/irq-pic32-evic.c b/drivers/irqchip/irq-pic32-evic.c
+index 34c4b4ffacd15..5c40ec5e55f1d 100644
+--- a/drivers/irqchip/irq-pic32-evic.c
++++ b/drivers/irqchip/irq-pic32-evic.c
+@@ -199,7 +199,7 @@ static void __init pic32_ext_irq_of_init(struct irq_domain *domain)
+ 
+ 	of_property_for_each_u32(node, pname, prop, p, hwirq) {
+ 		if (i >= ARRAY_SIZE(priv->ext_irqs)) {
+-			pr_warn("More than %d external irq, skip rest\n",
++			pr_warn("More than %zu external irq, skip rest\n",
+ 				ARRAY_SIZE(priv->ext_irqs));
+ 			break;
+ 		}
+-- 
+2.53.0
+
 
 
