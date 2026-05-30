@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B6340298;
-	Sat, 30 May 2026 17:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1532FDC5E;
+	Sat, 30 May 2026 17:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162097; cv=none; b=VG5zTp4RJ81uKkPq53DT7Ghb6ZUSAziOhzCF59X6Yz90iI2iMpYhP2fro5fseIXRq5BZQaLmdmBoC7rLrwM/1RRlvP6TyG7Ax7a6WDWqNqNzZLNvy/L/qkgn0/hSOTmenOo4yQ5qf/jfzxakK8QayFzvSFx2NJv2RjdGEd9zvhc=
+	t=1780162100; cv=none; b=gyINMYtDg4jH022OgPIUTfurlwbcJIDFQHsx8pmfhE3h0yViZfYLxL0iMDWe2xaeWd5WkYiabPzkJGDjCroeY+2ntHjMXSeeYye610N0UclOmuQVbFKQS+8CCzggFngwqEFXXFCKpwp7GhtTLiq6x3fGT0g3WqTh9RXkvUliwHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162097; c=relaxed/simple;
-	bh=UGENDnLdU8z5uSnatV/JA5+QKWVzTfgT/LsVkDoj+Cg=;
+	s=arc-20240116; t=1780162100; c=relaxed/simple;
+	bh=vTAHJ8wFF0OuFKah8xuST4e63Ri7XjGzQxql/0UiwPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMJEuAB9yrifb4CtKtkSe4fhiOU9OBS2HZLEl8WXAVCsOeV+XKXOWbKUxej6fzOv7Ds7P0iMpzk8EegPLhwhFIwztFNUJNsXHLJVbBaM3VLPtX5GsXB0ZfR+76GkszJ//qNzY84dPUcj5esKMVLuQVwreQt18Ec5W77o1QNmRzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1t0AUWK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KTA6R4rVDu3Y5gkGJn1ygWM77qFc0I03xyJWnQ4JzDJPxd4UQ/7QwfPes5pnP+rixJ2Dbi5HsCVp32mAsT0E/oADC/sgCVv0WZSZbvEdWfRYirUALx2+2sa+HV7QoNgpnhlxZiu6YuycGp4iGwFal7HYiyCokoyANW13medA2tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KixQ9fDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1t0AUWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C531F00893;
-	Sat, 30 May 2026 17:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KixQ9fDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA841F00893;
+	Sat, 30 May 2026 17:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162096;
-	bh=5CgzdLXuJq0gwLI9smFavdo56qw7lE8E2mCylofKJT0=;
+	s=korg; t=1780162099;
+	bh=ks1Z3CbX9vr4YGgpZxdJyvaIn4tIoWEcmXYEYHQAMck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1t0AUWKK2c1ULbjU731HhApTAzBfbbkT882Yuhm4HoM+RxK2obwHm09EVUdeNpOn
-	 gCLsRKD2DEPW/hlPliKpKySoCZCI66bS4Sg1KVKKSVnbame6HcrVeTzs2tixEW93LH
-	 nnbpjf/HnRo80kKqTsu6AtswYCDq+0TwF+q8/JLM=
+	b=KixQ9fDe/S7jhFwqvbEFpMx+tBBqWMJIRNLgqxaYxGPRzGfs5ZwRe7Fie7EYUYiH2
+	 U7UHko0CdmPVKuzKKYX0WI1hc72gtcP3DDGo7shegVEImlr4QZ3hp0z8av5V0AIqgQ
+	 LDcqpKsb2IjhnZcuW6ZJQt2XQrRPLhYO2XbR2ol4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.1 819/969] powerpc/warp: Fix error handling in pika_dtm_thread
-Date: Sat, 30 May 2026 18:05:43 +0200
-Message-ID: <20260530160323.257987059@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 820/969] libceph: Fix potential out-of-bounds access in osdmap_decode()
+Date: Sat, 30 May 2026 18:05:44 +0200
+Message-ID: <20260530160323.284729846@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,39 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 108d7f951271cbd36ca36efc5e5d106966f5180c upstream.
+commit 35d0ed82d03e5ee77ea4f31f20e29562a7721649 upstream.
 
-pika_dtm_thread() acquires client through of_find_i2c_device_by_node()
-but fails to release it in error handling path. This could result in a
-reference count leak, preventing proper cleanup and potentially
-leading to resource exhaustion. Add put_device() to release the
-reference in the error handling path.
+When decoding osd_state and osd_weight from an incoming osdmap in
+osdmap_decode(), both are decoded for each osd, i.e., map->max_osd
+times. The ceph_decode_need() check only accounts for
+sizeof(*map->osd_weight) once. This can potentially result in an
+out-of-bounds memory access if the incoming message is corrupted such
+that the max_osd value exceeds the actual content of the osdmap message.
 
-Found by code review.
+This patch fixes the issue by changing the corresponding part in the
+ceph_decode_need() check to account for
+map->max_osd*sizeof(*map->osd_weight).
 
 Cc: stable@vger.kernel.org
-Fixes: 3984114f0562 ("powerpc/warp: Platform fix for i2c change")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251116024411.21968-1-make24@iscas.ac.cn
+Fixes: dcbc919a5dc8 ("libceph: switch osdmap decoding to use ceph_decode_entity_addr")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/44x/warp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ceph/osdmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/44x/warp.c
-+++ b/arch/powerpc/platforms/44x/warp.c
-@@ -262,6 +262,8 @@ static int pika_dtm_thread(void __iomem
- 		schedule_timeout(HZ);
- 	}
- 
-+	put_device(&client->dev);
-+
- 	return 0;
- }
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -1703,7 +1703,7 @@ static int osdmap_decode(void **p, void
+ 	ceph_decode_need(p, end, 3*sizeof(u32) +
+ 			 map->max_osd*(struct_v >= 5 ? sizeof(u32) :
+ 						       sizeof(u8)) +
+-				       sizeof(*map->osd_weight), e_inval);
++			 map->max_osd*sizeof(*map->osd_weight), e_inval);
+ 	if (ceph_decode_32(p) != map->max_osd)
+ 		goto e_inval;
  
 
 
