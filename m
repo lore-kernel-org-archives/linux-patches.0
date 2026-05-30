@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CDA334695;
-	Sat, 30 May 2026 17:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54A1344DA4;
+	Sat, 30 May 2026 17:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161987; cv=none; b=cdlKDWmU8YL+lNvTCUx76XkznPMLcYDHiCB3aACMKL8vsqyVmBmTVe8XcDnt+wR/vCIZK2Bfwfcv3M9J6UUrr1JAkhmXqp7iU8sFiy9+LbVKDnqeqnUTjgkeJDmxJKcelKXNJT89OdfR9MSSQ3WPx7IpBId3uTST4nwmUI8Tytk=
+	t=1780161989; cv=none; b=cAVq6Pre2alIashBf7/AX4C5tCJeQPNaUE9T1Re2cB9QQr2RVqRKd0ThMX+L+bAC0QdctRoy/VWcFU4oStddFirEm9B56bRzwhlqSvgt7183Eo6v8kRxjiTyWqFNvV703o0iBKnRJn5Fy3HuJa8BNxsqi+y0x/PWktCItzYTIlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161987; c=relaxed/simple;
-	bh=rZIu2saMx7r5GpLqSO2vxcJCoaGzu0BM0aGXXET1qr4=;
+	s=arc-20240116; t=1780161989; c=relaxed/simple;
+	bh=2CB1fHA4VlLpqA8fLPcax/topshBCOouG87iQSEwBqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGggiXxHSTLCdnXwa4tYpZxXN+tBxvywc9/0j0URdMDM74F5ALOzRay8Iaut7Znh6Ef8I7m0TsEvE+boOz3iLdfCRjF4TaQ6S+5mccc9G9HV2v3NAjbtfbBxkQF7cNMFuPMzCKaxFc3HQ613vqtdg6D60FGC9Qn6ikp35++f/Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syD/cg29; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GI1Z8zs8jphh69MVhDOmwZAIDSTyVWJwpreOLPMUNOJKE3Y6g78I5UFQYs3+DkIVgHFN4cQ2fNpGTbpKt3MEDqnbNOT1HpRRmrXbE9gjqKe7zvfvNaJrPb2nq+3BlanXIYh0AB6VkG/X0Y4PsNah7uq08qWUo9K+sEE5X1B0r9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQh6q6ng; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syD/cg29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542EE1F00893;
-	Sat, 30 May 2026 17:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQh6q6ng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C71F00893;
+	Sat, 30 May 2026 17:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161982;
-	bh=M68LY28Cz4lEQJGXdRGbnVqF2SO47RoOJSR4JRf7tiI=;
+	s=korg; t=1780161988;
+	bh=Lfvdxzg26D0mzMSptymcqWX5noTznT8FwQRDCRRUJKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syD/cg29tTxlxmYh7uxnVQ2yS8ETDt2lqEidmz1KdyQpkzOK0AB9d7B1sfzoGmsie
-	 nwOq4goL2j2oMKDL/SeCil02hvJ/LJjFSnwZFRx7TIure9YNCIRR7D0Vh1jHFmSo2n
-	 fmMsiV1nNpK5bXqv1XZG1UyiiMwRFeuYCcMnPdEE=
+	b=NQh6q6ng16KsAiq+fxJpjFDBry0jTdlKfdOdgOC+kiQp/2i76ZUkTawFh00C1t5hX
+	 yFPkBavD/1mOYwxuG/5w4UK5h96k6BKufivYvZCwyK88PilsGVJJ3iRzD93gcKK6ig
+	 rHvK87Hoql/RacDJ3lXEl3Bkdrm+SOuNVCVebME4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marek Szlosek <marek.szlosek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 785/969] iavf: wait for PF confirmation before removing VLAN filters
-Date: Sat, 30 May 2026 18:05:09 +0200
-Message-ID: <20260530160322.279691884@linuxfoundation.org>
+Subject: [PATCH 6.1 787/969] ice: Pull common tasks into ice_vf_post_vsi_rebuild
+Date: Sat, 30 May 2026 18:05:11 +0200
+Message-ID: <20260530160322.336427103@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,187 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit bbcbe4ed70dea948849549af7edf44bd42bbd695 ]
+[ Upstream commit aeead3d04fa050a94ed314cc5de97125a957dc9f ]
 
-The VLAN filter DELETE path was asymmetric with the ADD path: ADD
-waits for PF confirmation (ADD -> ADDING -> ACTIVE), but DELETE
-immediately frees the filter struct after sending the DEL message
-without waiting for the PF response.
+The Single Root IOV implementation of .post_vsi_rebuild performs some tasks
+that will ultimately need to be shared with the Scalable IOV implementation
+such as rebuilding the host configuration.
 
-This is problematic because:
- - If the PF rejects the DEL, the filter remains in HW but the driver
-   has already freed the tracking structure, losing sync.
- - Race conditions between DEL pending and other operations
-   (add, reset) cannot be properly resolved if the filter struct
-   is already gone.
+Refactor by introducing a new wrapper function, ice_vf_post_vsi_rebuild
+which performs the tasks that will be shared between SR-IOV and Scalable
+IOV. Move the ice_vf_rebuild_host_cfg and ice_vf_set_initialized calls into
+this wrapper. Then call the implementation specific post_vsi_rebuild
+handler afterwards.
 
-Add IAVF_VLAN_REMOVING state to make the DELETE path symmetric:
+This ensures that we will properly re-initialize filters and expected
+settings for both SR-IOV and Scalable IOV.
 
-  REMOVE -> REMOVING (send DEL) -> PF confirms -> kfree
-                                -> PF rejects  -> ACTIVE
-
-In iavf_del_vlans(), transition filters from REMOVE to REMOVING
-instead of immediately freeing them. The new DEL completion handler
-in iavf_virtchnl_completion() frees filters on success or reverts
-them to ACTIVE on error.
-
-Update iavf_add_vlan() to handle the REMOVING state: if a DEL is
-pending and the user re-adds the same VLAN, queue it for ADD so
-it gets re-programmed after the PF processes the DEL.
-
-The !VLAN_FILTERING_ALLOWED early-exit path still frees filters
-directly since no PF message is sent in that case.
-
-Also update iavf_del_vlan() to skip filters already in REMOVING
-state: DEL has been sent to PF and the completion handler will
-free the filter when PF confirms. Without this guard, the sequence
-DEL(pending) -> user-del -> second DEL could cause the PF to return
-an error for the second DEL (filter already gone), causing the
-completion handler to incorrectly revert a deleted filter back to
-ACTIVE.
-
-Fixes: 968996c070ef ("iavf: Fix VLAN_V2 addition/rejection")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-3-cdcb48303fd8@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Marek Szlosek <marek.szlosek@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 54ef02487914 ("ice: fix NULL pointer dereference in ice_reset_all_vfs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |  1 +
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 13 ++++---
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 37 +++++++++++++------
- 3 files changed, 34 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sriov.c  |  2 --
+ drivers/net/ethernet/intel/ice/ice_vf_lib.c | 19 +++++++++++++++++--
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index dbbe622dec12f..468449df9756e 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -161,6 +161,7 @@ enum iavf_vlan_state_t {
- 	IAVF_VLAN_ADDING,	/* ADD sent to PF, waiting for response */
- 	IAVF_VLAN_ACTIVE,	/* PF confirmed, filter is in HW */
- 	IAVF_VLAN_REMOVE,	/* filter queued for DEL from PF */
-+	IAVF_VLAN_REMOVING,	/* DEL sent to PF, waiting for response */
- };
+diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
+index b719e9a771e36..148712037bcbb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sriov.c
++++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
+@@ -841,8 +841,6 @@ static int ice_sriov_vsi_rebuild(struct ice_vf *vf)
+  */
+ static void ice_sriov_post_vsi_rebuild(struct ice_vf *vf)
+ {
+-	ice_vf_rebuild_host_cfg(vf);
+-	ice_vf_set_initialized(vf);
+ 	ice_ena_vf_mappings(vf);
+ 	wr32(&vf->pf->hw, VFGEN_RSTAT(vf->vf_id), VIRTCHNL_VFR_VFACTIVE);
+ }
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+index 9dbe6e9bb1f79..d146259c7b82f 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+@@ -270,6 +270,21 @@ static int ice_vf_rebuild_vsi(struct ice_vf *vf)
+ 	return 0;
+ }
  
- struct iavf_vlan_filter {
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 6346479366aa4..0cf6260a83fb2 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -831,10 +831,10 @@ iavf_vlan_filter *iavf_add_vlan(struct iavf_adapter *adapter,
- 		adapter->num_vlan_filters++;
- 		iavf_schedule_aq_request(adapter, IAVF_FLAG_AQ_ADD_VLAN_FILTER);
- 	} else if (f->state == IAVF_VLAN_REMOVE) {
--		/* Re-add the filter since we cannot tell whether the
--		 * pending delete has already been processed by the PF.
--		 * A duplicate add is harmless.
--		 */
-+		/* DEL not yet sent to PF, cancel it */
-+		f->state = IAVF_VLAN_ACTIVE;
-+	} else if (f->state == IAVF_VLAN_REMOVING) {
-+		/* DEL already sent to PF, re-add after completion */
- 		f->state = IAVF_VLAN_ADD;
- 		iavf_schedule_aq_request(adapter,
- 					 IAVF_FLAG_AQ_ADD_VLAN_FILTER);
-@@ -865,11 +865,14 @@ static void iavf_del_vlan(struct iavf_adapter *adapter, struct iavf_vlan vlan)
- 			list_del(&f->list);
- 			kfree(f);
- 			adapter->num_vlan_filters--;
--		} else {
-+		} else if (f->state != IAVF_VLAN_REMOVING) {
- 			f->state = IAVF_VLAN_REMOVE;
- 			iavf_schedule_aq_request(adapter,
- 						 IAVF_FLAG_AQ_DEL_VLAN_FILTER);
- 		}
-+		/* If REMOVING, DEL is already sent to PF; completion
-+		 * handler will free the filter when PF confirms.
-+		 */
++/**
++ * ice_vf_post_vsi_rebuild - Reset tasks that occur after VSI rebuild
++ * @vf: the VF being reset
++ *
++ * Perform reset tasks which must occur after the VSI has been re-created or
++ * rebuilt during a VF reset.
++ */
++static void ice_vf_post_vsi_rebuild(struct ice_vf *vf)
++{
++	ice_vf_rebuild_host_cfg(vf);
++	ice_vf_set_initialized(vf);
++
++	vf->vf_ops->post_vsi_rebuild(vf);
++}
++
+ /**
+  * ice_is_any_vf_in_unicast_promisc - check if any VF(s)
+  * are in unicast promiscuous mode
+@@ -495,7 +510,7 @@ void ice_reset_all_vfs(struct ice_pf *pf)
+ 
+ 		ice_vf_pre_vsi_rebuild(vf);
+ 		ice_vf_rebuild_vsi(vf);
+-		vf->vf_ops->post_vsi_rebuild(vf);
++		ice_vf_post_vsi_rebuild(vf);
+ 
+ 		mutex_unlock(&vf->cfg_lock);
+ 	}
+@@ -647,7 +662,7 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
+ 		goto out_unlock;
  	}
  
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index ca7448e096a86..6fb657ec654e8 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -844,12 +844,10 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 
- 		vvfl->vsi_id = adapter->vsi_res->vsi_id;
- 		vvfl->num_elements = count;
--		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
-+		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
- 			if (f->state == IAVF_VLAN_REMOVE) {
- 				vvfl->vlan_id[i] = f->vlan.vid;
--				list_del(&f->list);
--				kfree(f);
--				adapter->num_vlan_filters--;
-+				f->state = IAVF_VLAN_REMOVING;
- 				i++;
- 				if (i == count)
- 					break;
-@@ -889,7 +887,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 
- 		vvfl_v2->vport_id = adapter->vsi_res->vsi_id;
- 		vvfl_v2->num_elements = count;
--		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
-+		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
- 			if (f->state == IAVF_VLAN_REMOVE) {
- 				struct virtchnl_vlan_supported_caps *filtering_support =
- 					&adapter->vlan_v2_caps.filtering.filtering_support;
-@@ -904,9 +902,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
- 				vlan->tci = f->vlan.vid;
- 				vlan->tpid = f->vlan.tpid;
- 
--				list_del(&f->list);
--				kfree(f);
--				adapter->num_vlan_filters--;
-+				f->state = IAVF_VLAN_REMOVING;
- 				i++;
- 				if (i == count)
- 					break;
-@@ -2033,10 +2029,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
- 			wake_up(&adapter->vc_waitqueue);
- 			break;
--		case VIRTCHNL_OP_DEL_VLAN:
--			dev_err(&adapter->pdev->dev, "Failed to delete VLAN filter, error %s\n",
--				iavf_stat_str(&adapter->hw, v_retval));
--			break;
- 		case VIRTCHNL_OP_DEL_ETH_ADDR:
- 			dev_err(&adapter->pdev->dev, "Failed to delete MAC filter, error %s\n",
- 				iavf_stat_str(&adapter->hw, v_retval));
-@@ -2520,6 +2512,27 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 		}
- 		break;
-+	case VIRTCHNL_OP_DEL_VLAN:
-+	case VIRTCHNL_OP_DEL_VLAN_V2: {
-+		struct iavf_vlan_filter *f, *ftmp;
-+
-+		spin_lock_bh(&adapter->mac_vlan_list_lock);
-+		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list,
-+					 list) {
-+			if (f->state == IAVF_VLAN_REMOVING) {
-+				if (v_retval) {
-+					/* PF rejected DEL, keep filter */
-+					f->state = IAVF_VLAN_ACTIVE;
-+				} else {
-+					list_del(&f->list);
-+					kfree(f);
-+					adapter->num_vlan_filters--;
-+				}
-+			}
-+		}
-+		spin_unlock_bh(&adapter->mac_vlan_list_lock);
-+		}
-+		break;
- 	case VIRTCHNL_OP_ENABLE_VLAN_STRIPPING:
- 		/* PF enabled vlan strip on this VF.
- 		 * Update netdev->features if needed to be in sync with ethtool.
+-	vf->vf_ops->post_vsi_rebuild(vf);
++	ice_vf_post_vsi_rebuild(vf);
+ 	vsi = ice_get_vf_vsi(vf);
+ 	if (WARN_ON(!vsi)) {
+ 		err = -EINVAL;
 -- 
 2.53.0
 
