@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF1633B6C4;
-	Sat, 30 May 2026 17:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF131344DB9;
+	Sat, 30 May 2026 17:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162193; cv=none; b=tnzOBhY+RAWJxv1o4uA0BXFxfvFsNfT6HxJcJSRNcs/a+aNn+RcCmzI3iCFi7Rr2hTPsDdGJgWohf1BnvEmiRpWGp+1C4RDlpS7CY569fMi0lj+KIkBU4CTD5MRe7IexZ0gS7O8+Aedm9YEPKqG5kCHwUQf9GFyyaVz616irJQg=
+	t=1780162197; cv=none; b=Po9uUFXTfjibgtIFh1l1NzCER0ne7bV7GzK+4Pmh7unlhDSwfFaCSLbLQ3hLzjm50hIwfn4sPW3517/ww85Gaok0kOYRpYqqznq28N6UWx7OtXkt9ogpbdJwK0B5Cscyrnx4uKSMKGP/Cf3EiHx7Rj9ODToUx8a2pc4KTuVqKYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162193; c=relaxed/simple;
-	bh=VeSY5S6iiHk41AxYRKmbl/MawpRGYbaTCc7b82VK2Oc=;
+	s=arc-20240116; t=1780162197; c=relaxed/simple;
+	bh=KbRPtppkN1OCtdcD1L6uTWBztCy3dd8SUxn0WKZjsNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsM0uB3qmzkxcu8ytIAqTX8ux2i7m47oRXuBwQiO4v/g+H2pwhIM7xgfnFN7o6IVl2EQdW2Py7nKiP//W2TfSEgtQmP6zVXhc1bNfcZVbKliXf4uZugBULxgBQvhi7RBoZBGrZaMCWuLbfE4j1ngznOLpraK5e0nsxkjqT2eao4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5WYfzd0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LrzqWhc5GfC0Emrxe/RCoAa7nJ7CMv5Mo7cB3vF+vdXbC7+zmWIQ4kmy8fr1baHuxvyAenVpvbpmec7DgxFzQcZnyJkRr/RzudMR3wQ3K5Le7KL3wulHzFv2sQEjUHGuKa1Y4rZAwfxgpIjaRIZj6TJS5zC4KQtpcjH+d6Ic7DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWeEB2M4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5WYfzd0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2EC1F00893;
-	Sat, 30 May 2026 17:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWeEB2M4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBFA1F00893;
+	Sat, 30 May 2026 17:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162192;
-	bh=77wG1moiTZcWYK08jb+kQMRKfvq5qYqERU2CPCB0qM4=;
+	s=korg; t=1780162195;
+	bh=bOKzX60IEoS7W21ifHPfNm83wqPaMwIJfORXl6hkHNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L5WYfzd0k2ALN1QvpR7Lpy0aNWv0+CqUhCQKOJb9Dg982wKEp92SR/rT5vNC0HO3d
-	 Asaty3Vqlq3s5vZrljYdsTV5WhwXK5vhAUs+GSGoK9B9P5tuGGW8sShPw3FaGbLbYD
-	 M2c/JdQ+kMYkDwzhA/y+ULioMxs0LZuBvnANeb60=
+	b=YWeEB2M4ysai5ixrUMcyP8mH4HucoVjxQ7RqroksonizrugM4La8xXDBZUC2EoK4M
+	 FDu+vb/tHo7j3zNVwLZsm0bnRZcUrOvgYRJtNIHB4vJxIt9D5wtFm8p0yhv6iLD3Eh
+	 uWkYvAWegBK1GIerWar7FHq2ILSIqSyB2mDLBUes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 848/969] Bluetooth: MGMT: validate Add Extended Advertising Data length
-Date: Sat, 30 May 2026 18:06:12 +0200
-Message-ID: <20260530160324.079749543@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	syzbot+9f4a135646b66c509935@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 849/969] phonet/pep: disable BH around forwarded sk_receive_skb()
+Date: Sat, 30 May 2026 18:06:13 +0200
+Message-ID: <20260530160324.108266159@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,60 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit d3f7d17960ed50df3a6709c5158caff989c8c905 upstream.
+commit dbc81608e3a653dea6cf403f20cae35468b8ab9c upstream.
 
-MGMT_OP_ADD_EXT_ADV_DATA is registered as a variable-length command,
-with MGMT_ADD_EXT_ADV_DATA_SIZE as the fixed header size.  The handler
-then uses cp->adv_data_len and cp->scan_rsp_len to validate and copy
-cp->data, but it never checks that those bytes are part of the mgmt
-command payload.
+The networking receive path is usually run from softirq context, but
+protocols that take the socket lock may have packets stored in the
+backlog and processed later from process context. In that case
+release_sock() -> __release_sock() drops the slock with spin_unlock_bh()
+and then calls sk->sk_backlog_rcv() with bottom halves enabled.
 
-A short command can therefore make add_ext_adv_data() pass an
-out-of-bounds pointer into tlv_data_is_valid().  If the bytes beyond
-the command buffer are addressable, they can also be copied into the
-advertising instance as scan response data, where the caller can read
-them back via MGMT_OP_GET_ADV_INSTANCE.  The trigger requires
-CAP_NET_ADMIN in the initial user namespace; KASAN reports an 8-byte
-slab-out-of-bounds read.
+Typical sk_backlog_rcv handlers process the socket whose backlog is
+being drained, so the BH state at entry is irrelevant for the slocks
+they touch. pep_do_rcv() is different: when the inbound skb targets an
+existing PEP pipe, it forwards the skb to a different *child* socket
+via sk_receive_skb(). That helper takes the child slock with
+bh_lock_sock_nested(), which is just spin_lock_nested() and assumes BH
+is already off. The same child slock therefore ends up acquired with
+BH on (process path) and with BH off (softirq path):
 
-Reject commands whose length does not match the fixed header plus both
-advertising data lengths before parsing cp->data.
+  process context                   softirq context
+  ---------------                   ---------------
+  release_sock(listener)            __netif_receive_skb()
+   __release_sock()                  phonet_rcv()
+    spin_unlock_bh()                  __sk_receive_skb(listener)
+    [BH now ENABLED]                  [BH already disabled]
+    sk_backlog_rcv:                   sk_backlog_rcv:
+     pep_do_rcv()                      pep_do_rcv()
+      sk_receive_skb(child)             sk_receive_skb(child)
+       bh_lock_sock_nested(child)        bh_lock_sock_nested(child)
+       => SOFTIRQ-ON-W                   => IN-SOFTIRQ-W
 
-Fixes: 12410572833a ("Bluetooth: Break add adv into two mgmt commands")
+Lockdep flags this as inconsistent lock state, and it can become a real
+self-deadlock if a softirq on the same CPU tries to receive to the same
+child socket while its slock is held in the BH-enabled path:
+
+  WARNING: inconsistent lock state
+  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+   (slock-AF_PHONET/1){+.?.}-{3:3}, at: __sk_receive_skb+0x1cf/0x900
+    __sk_receive_skb              net/core/sock.c:563
+    sk_receive_skb                include/net/sock.h:2022 [inline]
+    pep_do_rcv                    net/phonet/pep.c:675
+    sk_backlog_rcv                include/net/sock.h:1190
+    __release_sock                net/core/sock.c:3216
+    release_sock                  net/core/sock.c:3815
+    pep_sock_accept               net/phonet/pep.c:879
+
+Wrap the forwarded sk_receive_skb() in local_bh_disable() /
+local_bh_enable() so the child slock is always acquired with BH off.
+local_bh_disable() nests safely on the softirq path.
+
+Discovered via in-house syzkaller fuzzing; the same root cause also
+on the linux-6.1.y syzbot dashboard as extid 44f0626dd6284f02663c.
+Reproduced under KASAN + LOCKDEP + PROVE_LOCKING, reproducer:
+https://pastebin.com/A3t8xzCR
+
+Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
+Link: https://syzkaller.appspot.com/bug?extid=44f0626dd6284f02663c
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reported-by: syzbot+9f4a135646b66c509935@syzkaller.appspotmail.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260519172635.86304-1-yzjaurora@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/phonet/pep.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9075,9 +9075,15 @@ static int add_ext_adv_data(struct sock
- 	struct adv_info *adv_instance;
- 	int err = 0;
- 	struct mgmt_pending_cmd *cmd;
-+	u16 expected_len;
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -671,8 +671,23 @@ static int pep_do_rcv(struct sock *sk, s
  
- 	BT_DBG("%s", hdev->name);
- 
-+	expected_len = struct_size(cp, data, cp->adv_data_len + cp->scan_rsp_len);
-+	if (expected_len != data_len)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_EXT_ADV_DATA,
-+				       MGMT_STATUS_INVALID_PARAMS);
+ 	/* Look for an existing pipe handle */
+ 	sknode = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+-	if (sknode)
+-		return sk_receive_skb(sknode, skb, 1);
++	if (sknode) {
++		int rc;
 +
- 	hci_dev_lock(hdev);
++		/* pep_do_rcv() runs from two contexts: from softirq via
++		 * phonet_rcv() -> __sk_receive_skb() with BH disabled,
++		 * and from process context via
++		 * release_sock() -> __release_sock(), which drops
++		 * the listener slock with spin_unlock_bh() before draining
++		 * the backlog.  The child pipe slock is taken below via
++		 * bh_lock_sock_nested(), which does not itself disable BH, so
++		 * disable BH here to keep both acquire contexts consistent.
++		 */
++		local_bh_disable();
++		rc = sk_receive_skb(sknode, skb, 1);
++		local_bh_enable();
++		return rc;
++	}
  
- 	adv_instance = hci_find_adv_instance(hdev, cp->instance);
+ 	switch (hdr->message_id) {
+ 	case PNS_PEP_CONNECT_REQ:
 
 
