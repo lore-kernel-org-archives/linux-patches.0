@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79721A9F90;
-	Sat, 30 May 2026 18:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A40C18FDBD;
+	Sat, 30 May 2026 18:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166854; cv=none; b=Uv9wrSCPp/sOZHMh4MSFTgby2uTSY4a9kr66X6k1A/flB5ufV6k54cB9cfhcmQYOzgf7OFnp+SU+H9bFsgaeGebbHsuKbg5FRXpLWioWfNma8YF9GYlFBSX13sILByRv5OOlZ0+9KIshQX4if8VyCJ9shbf0paY1q6OG/Yftt3E=
+	t=1780166858; cv=none; b=eQj0qHzmQYEW8DigzwKEtPkcUXgPWhLW8LpMyIqyUYByKBlukVYKaThqFwcK/E379sb9+UcCMTVKT++1N00fOcy9/4OaeEplNURXXsNWkmzlMZ/fz0VWLn2DGPeBqnNt/0pDXbdf+8LfrOwPD/qlNXXW3nigkfnu0aSqBn6BcMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166854; c=relaxed/simple;
-	bh=tKe6/NU6qoprU8TxfRuMyyrzBqTDmIKQ3f1vP8XyYUo=;
+	s=arc-20240116; t=1780166858; c=relaxed/simple;
+	bh=GdKChLMAMkurcmBwe7r76uky1LPqqDJnhSkBdH90zAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWk6V5iqwo+Nm33GBT1iKCOInkcWjyewo9N045CWuWk3mskuGKnFsmB/bPXGxbFm6lEq/QsRVnd5+q1r0hz0fKNojZugn5s5hwN0Ur/K6v/bwReHmJEJiUAIqWa/ySNTcXbfZK1rgNerjJXbj1toFuuNpa/RJSz2Y40TAMX1r4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv7f/yMB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WDezz97zdFIFfFYro+tvjNFFFjHhefpZh+3N1ZqmaxuJkOtjMbpj7HMCIzTmFBlelh3bkRBjBkY+tIb+cmIe2wFLPlSSIrHFhn3aLUtyjJFk6Z9M+7MCWblaQg51OUhYd4ZDzToR6ZSNJIM6ZDUmUu+ahG2QO9xcyU71pHsh1+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCqNltSE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv7f/yMB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195581F00893;
-	Sat, 30 May 2026 18:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCqNltSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AD71F00893;
+	Sat, 30 May 2026 18:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166853;
-	bh=Ukb4jhPOMCuFEftKy4/9/J5weepER+n+5hBtFnMq5rI=;
+	s=korg; t=1780166857;
+	bh=YTdF4UcOUGXThAp9pwrj+QeB8bm2ODNsqIZkRJLzG2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rv7f/yMBuBpjnirr+k+jq37qtGlbhfpqDA9p/nrPmzZWCvayxqXZklJ95s9HNaitF
-	 vlTf4qyXATPvVYQnl7trxEOTj5PRdQSuvhjY71fso7rnltcUMUpOJUrKopZk+WN1Xm
-	 H6SKKqmWI64BcDpKJu21u+IjFVCYnCiM9/yTchB0=
+	b=RCqNltSEH5m1C45HcHE4mFW5wiuWkv1yQGPF6UVZGToozZp8UPIotnYUp2HrTy9sS
+	 VOTVNSr3TVmORfMVfCUd02zOF9ODyHOGHQg0DrYwkt8iqOCLmbYi7GcSpipnILASR5
+	 8wt6fqyRMdR0NRcFZ1tzRUeQZqgVA1KAcyr0jFME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 492/589] bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()
-Date: Sat, 30 May 2026 18:06:13 +0200
-Message-ID: <20260530160237.560482742@linuxfoundation.org>
+Subject: [PATCH 5.10 475/589] net/sched: netem: fix queue limit check to include reordered packets
+Date: Sat, 30 May 2026 18:05:56 +0200
+Message-ID: <20260530160237.129691635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,58 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit aa6c6d9ee064aabfede4402fd1283424e649ca19 ]
+[ Upstream commit 4185701fcce6b426b6c3630b25330dddd9c47b0d ]
 
-bareudp_fill_metadata_dst() passes bareudp->sock to
-udp_tunnel6_dst_lookup() in the IPv6 path without a NULL check.
-The socket is only created in bareudp_open() and NULLed in
-bareudp_stop(), so calling this function while the device is down
-triggers a NULL dereference via sock->sk.
+The queue limit check in netem_enqueue() uses q->t_len which only
+counts packets in the internal tfifo. Packets placed in sch->q by
+the reorder path (__qdisc_enqueue_head) are not counted, allowing
+the total queue occupancy to exceed sch->limit under reordering.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000018
- RIP: 0010:udp_tunnel6_dst_lookup (net/ipv6/ip6_udp_tunnel.c:160)
- Call Trace:
-  <TASK>
-  bareudp_fill_metadata_dst (drivers/net/bareudp.c:532)
-  do_execute_actions (net/openvswitch/actions.c:901)
-  ovs_execute_actions (net/openvswitch/actions.c:1589)
-  ovs_packet_cmd_execute (net/openvswitch/datapath.c:700)
-  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1114)
-  genl_rcv_msg (net/netlink/genetlink.c:1209)
-  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-  </TASK>
+Include sch->q.qlen in the limit check.
 
-Add a NULL check returning -ESHUTDOWN, consistent with the xmit paths
-in the same driver.
-
-Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260426165350.1663137-2-bestswngs@gmail.com
+Fixes: f8d4bc455047 ("net/sched: netem: account for backlog updates from child qdisc")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-3-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bareudp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/sch_netem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
-index d5210b5b8cbf8..b3ed3447c84cb 100644
---- a/drivers/net/bareudp.c
-+++ b/drivers/net/bareudp.c
-@@ -512,6 +512,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
- 		struct in6_addr saddr;
- 		struct socket *sock = rcu_dereference(bareudp->sock);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 1f47711cb1667..64542c9c15340 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -512,7 +512,7 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			1<<(prandom_u32() % 8);
+ 	}
  
-+		if (!sock)
-+			return -ESHUTDOWN;
-+
- 		dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock,
- 					     &saddr, info, IPPROTO_UDP,
- 					     use_cache);
+-	if (unlikely(q->t_len >= sch->limit)) {
++	if (unlikely(sch->q.qlen >= sch->limit)) {
+ 		/* re-link segs, so that qdisc_drop_all() frees them all */
+ 		skb->next = segs;
+ 		qdisc_drop_all(skb, sch, to_free);
 -- 
 2.53.0
 
