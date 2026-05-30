@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D3B344DB9;
-	Sat, 30 May 2026 18:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C6F2773DE;
+	Sat, 30 May 2026 18:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166618; cv=none; b=AlcDBQnp6UZZieB9F3W7iNX3eSSHMeGriyO3EAlZhr/zayNwyJWRrHQv2peQJciGq/wOQ6TxrQJYOMy20xrzPJZHcAZ9ywEpCcPqdmJRbwP7pdv3eBkU6OV/55BC0nJQ6KoqA0bdR67lhacR1opcYOpeyNoM22SeAnddz6jghtk=
+	t=1780166621; cv=none; b=GeBBkJlFHtCzfbOXMG6Uxh4NLOMRMLNM9UWsp5irxPMd1Kkmxd7eJ6bzthk5Pha07FwhakusgSlYw8NT3F+mFZuc2OQ4Zi/n3mrqH2wxyJER0fA/Bd7v8mJ17l+oe28ontXF73pD6zh0pheNirOJFrgsvlAbYwSCKPneFDQqGdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166618; c=relaxed/simple;
-	bh=vlvlUb3xk1qceuyV9hUtiGxfWhk5vtyXF3JDqbxpo+g=;
+	s=arc-20240116; t=1780166621; c=relaxed/simple;
+	bh=RrFDuAHDty+UmutVVd4rcrdNqKRWuNqfuBvLnbMmemY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a46YVR5k5O3/0oUzVPwYSmLYyMd0cc2R+2VVcSWOS+/2YWz/ohiVEQzNss5NuvIU1nOvtgdLDu6QBaPfElb6E4iEyE3643IaMV7h/aA8d/MXyQRVZmCDleqwuibOXnFqD0Suv16BqFlKhndq2/73baG0NCd+jEaTIVK27Kuyf/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrcWaJh2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QNlBvlOvl/zNgZ2h7sYUYxDdTQi2gf0+hNymp8SK/WTU6XVbID2nwKATNDJO9DX/T0lK2aqOCVHr4yx5ASNPUgxkuYh49zdQtGAyXygrer/U5+lTNhXAcMeaWqzVgu4o5qRKb/cJP30M0oOaL919OuKYkd7j9y6+p5+jwsRaI54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFmX9iRe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrcWaJh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4751F00893;
-	Sat, 30 May 2026 18:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFmX9iRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE821F00893;
+	Sat, 30 May 2026 18:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166617;
-	bh=LWQfYAPj87ZmUe7/DDKa8Pkt23rXym3RvdPrXPrFJtE=;
+	s=korg; t=1780166620;
+	bh=wAELdzVFzevWXX0A2ebbwR4WK2d/LrKOgeAjQAUHfSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrcWaJh2DHUXxxuqQID5t8yGRKzNMTzoKSs9potDYPbPq8LRlyyJWiMsi7Dxm3VJr
-	 ToOBw/BNLJRgEOp9PbvAOqqfijjmOy4cKLiymixttEG62bHzmyb9Mox8oU7ohixuVv
-	 I6WadDaD1XN8Lk8xWusmC9mQhFYt+tD+zBEKpAaM=
+	b=TFmX9iReBkvyASnCt8YVKH4oTVlSBsQduQRyWZnScyTnvD8xp4LO4WhYhBqv5BIib
+	 xprUZTf9iNmkoU/YzZhlSryS/9iUhOHhQYGa3UXHOlvOEv5iL3/SNQtsEA3DjRdiSl
+	 EDXddJh4S7kCZqJMZ/baDTY5e+EYpuqgj+9ie7Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kurt Kanzenbach <kurt@linutronix.de>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 419/589] net/sched: taprio: continue with other TXQs if one dequeue() failed
-Date: Sat, 30 May 2026 18:05:00 +0200
-Message-ID: <20260530160235.755614136@linuxfoundation.org>
+Subject: [PATCH 5.10 420/589] net/sched: taprio: refactor one skb dequeue from TXQ to separate function
+Date: Sat, 30 May 2026 18:05:01 +0200
+Message-ID: <20260530160235.779619005@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,20 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 1638bbbe4ececa615b273497d347d59ad71060a2 ]
+[ Upstream commit 92f966674f6a257eddfa60a85f9b6741d6087ccb ]
 
-This changes the handling of an unlikely condition to not stop dequeuing
-if taprio failed to dequeue the peeked skb in taprio_dequeue().
+Future changes will refactor the TXQ selection procedure, and a lot of
+stuff will become messy, the indentation of the bulk of the dequeue
+procedure would increase, etc.
 
-I've no idea when this can happen, but the only side effect seems to be
-that the atomic_sub_return() call right above will have consumed some
-budget. This isn't a big deal, since either that made us remain without
-any budget (and therefore, we'd exit on the next peeked skb anyway), or
-we could send some packets from other TXQs.
-
-I'm making this change because in a future patch I'll be refactoring the
-dequeue procedure to simplify it, and this corner case will have to go
-away.
+Break out the bulk of the function into a new one, which knows the TXQ
+(child qdisc) we should perform a dequeue from.
 
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
@@ -75,22 +69,148 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 105425b1969c ("net/sched: taprio: fix use-after-free in advance_sched() on schedule switch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_taprio.c | 121 +++++++++++++++++++++--------------------
+ 1 file changed, 63 insertions(+), 58 deletions(-)
 
 diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 62251ae4f4407..8fe4dea86ad98 100644
+index 8fe4dea86ad98..b876b950c62e8 100644
 --- a/net/sched/sch_taprio.c
 +++ b/net/sched/sch_taprio.c
-@@ -618,7 +618,7 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
+@@ -543,6 +543,66 @@ static void taprio_set_budget(struct taprio_sched *q, struct sched_entry *entry)
+ 			     atomic64_read(&q->picos_per_byte)));
+ }
  
- 		skb = child->ops->dequeue(child);
- 		if (unlikely(!skb))
--			goto done;
-+			continue;
++static struct sk_buff *taprio_dequeue_from_txq(struct Qdisc *sch, int txq,
++					       struct sched_entry *entry,
++					       u32 gate_mask)
++{
++	struct taprio_sched *q = qdisc_priv(sch);
++	struct net_device *dev = qdisc_dev(sch);
++	struct Qdisc *child = q->qdiscs[txq];
++	struct sk_buff *skb;
++	ktime_t guard;
++	int prio;
++	int len;
++	u8 tc;
++
++	if (unlikely(!child))
++		return NULL;
++
++	if (TXTIME_ASSIST_IS_ENABLED(q->flags)) {
++		skb = child->ops->dequeue(child);
++		if (!skb)
++			return NULL;
++		goto skb_found;
++	}
++
++	skb = child->ops->peek(child);
++	if (!skb)
++		return NULL;
++
++	prio = skb->priority;
++	tc = netdev_get_prio_tc_map(dev, prio);
++
++	if (!(gate_mask & BIT(tc)))
++		return NULL;
++
++	len = qdisc_pkt_len(skb);
++	guard = ktime_add_ns(taprio_get_time(q), length_to_duration(q, len));
++
++	/* In the case that there's no gate entry, there's no
++	 * guard band ...
++	 */
++	if (gate_mask != TAPRIO_ALL_GATES_OPEN &&
++	    ktime_after(guard, entry->close_time))
++		return NULL;
++
++	/* ... and no budget. */
++	if (gate_mask != TAPRIO_ALL_GATES_OPEN &&
++	    atomic_sub_return(len, &entry->budget) < 0)
++		return NULL;
++
++	skb = child->ops->dequeue(child);
++	if (unlikely(!skb))
++		return NULL;
++
++skb_found:
++	qdisc_bstats_update(sch, skb);
++	qdisc_qstats_backlog_dec(sch, skb);
++	sch->q.qlen--;
++
++	return skb;
++}
++
+ /* Will not be called in the full offload case, since the TX queues are
+  * attached to the Qdisc created using qdisc_create_dflt()
+  */
+@@ -568,64 +628,9 @@ static struct sk_buff *taprio_dequeue(struct Qdisc *sch)
+ 		goto done;
  
- skb_found:
- 		qdisc_bstats_update(sch, skb);
+ 	for (i = 0; i < dev->num_tx_queues; i++) {
+-		struct Qdisc *child = q->qdiscs[i];
+-		ktime_t guard;
+-		int prio;
+-		int len;
+-		u8 tc;
+-
+-		if (unlikely(!child))
+-			continue;
+-
+-		if (TXTIME_ASSIST_IS_ENABLED(q->flags)) {
+-			skb = child->ops->dequeue(child);
+-			if (!skb)
+-				continue;
+-			goto skb_found;
+-		}
+-
+-		skb = child->ops->peek(child);
+-		if (!skb)
+-			continue;
+-
+-		prio = skb->priority;
+-		tc = netdev_get_prio_tc_map(dev, prio);
+-
+-		if (!(gate_mask & BIT(tc))) {
+-			skb = NULL;
+-			continue;
+-		}
+-
+-		len = qdisc_pkt_len(skb);
+-		guard = ktime_add_ns(taprio_get_time(q),
+-				     length_to_duration(q, len));
+-
+-		/* In the case that there's no gate entry, there's no
+-		 * guard band ...
+-		 */
+-		if (gate_mask != TAPRIO_ALL_GATES_OPEN &&
+-		    ktime_after(guard, entry->close_time)) {
+-			skb = NULL;
+-			continue;
+-		}
+-
+-		/* ... and no budget. */
+-		if (gate_mask != TAPRIO_ALL_GATES_OPEN &&
+-		    atomic_sub_return(len, &entry->budget) < 0) {
+-			skb = NULL;
+-			continue;
+-		}
+-
+-		skb = child->ops->dequeue(child);
+-		if (unlikely(!skb))
+-			continue;
+-
+-skb_found:
+-		qdisc_bstats_update(sch, skb);
+-		qdisc_qstats_backlog_dec(sch, skb);
+-		sch->q.qlen--;
+-
+-		goto done;
++		skb = taprio_dequeue_from_txq(sch, i, entry, gate_mask);
++		if (skb)
++			goto done;
+ 	}
+ 
+ done:
 -- 
 2.53.0
 
