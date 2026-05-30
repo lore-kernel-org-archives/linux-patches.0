@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5E2E7379;
-	Sat, 30 May 2026 17:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741B334389F;
+	Sat, 30 May 2026 17:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162853; cv=none; b=CxboV9yzkoiEYc8JuHbAl5bvrp3SDmbmkCmT56XRzf9DzOua/qAq4yoLfCStBRvWRrX6RdPoGjvkdjgj9W2TWQDZgpClrEuBnJGFHZSSMxoHUQwlRAXs6hkFk0JSNWEaTzzHg3elKOFjslfK2UPc1u7VJDDGHLukEH/rH6UbQYI=
+	t=1780162856; cv=none; b=oAb1fN6Xb3//DESKMZSPbBY2Nm8Mopj4YBbSWVjDcfTQOMKJBpX/r6sPeocMdUwpjj1ihUOT7DxtgyTn0B8hioQLn+0eqFCBibhiI9DoL0oiudw3jrh5/jMrFIMwBRAhwbN9dQl6bUYb1w6+aMiVAC7p5zrXyhJSXugmOK9j5yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162853; c=relaxed/simple;
-	bh=GRfz2p4B3PSXmM2PgeuaaFkxn08E+YrNliCSpemBADM=;
+	s=arc-20240116; t=1780162856; c=relaxed/simple;
+	bh=Y6C5GKVbzm555gBcUJS1vAPAL6WF+SBEkztodODnV5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmWrTqKeL8BLxgYj3A3lehgK4W07yh5/ZGJggL4c3uT8+jBbl657KA8P6/2cMUx9KbRpgqwZWgkuQAKjTr1TQP5A1+Z2Z4I0LG+Yg6ycKOdhkNTDDC4K/bXP1fzMMZG5hegeWW5saN4Xk1grRSWT/RYXXothiUKWpp6OrbLNRdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2dA+PpW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NQgudIutPRrdWcqu+Uzy5zvqxUQQt9VDMTO6EF3Elz0vySDf9el5gEfGLM1FzJJ5YDMchzJEUic06VRuK1awqUjInwfIF51d2syMsx8+jWtkIjDsxPmq3KCYlGSKvM85P/EOg2xJQTRXfOd0CivV6TXivdRfzBnouoMC0/51F70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpKPu2PU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2dA+PpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703761F00893;
-	Sat, 30 May 2026 17:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpKPu2PU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B835D1F00893;
+	Sat, 30 May 2026 17:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162852;
-	bh=69OuostZCDnQFyMF1l5oGjRQOWYnJzXx31pHU3rKauY=;
+	s=korg; t=1780162855;
+	bh=irAp/ilsW5JPCibHBPY45maDztGxBesyeUYOY/0XDFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C2dA+PpWhCWPeoI5pgOVpNS7U5bPRHw9BFfZDcIwbAT8hEhE98GQy4tEsgx6szg8x
-	 CZddKNtlsPooK9RIv6O4bqVudzT9FL6IRngVW9koRN9mb5QabtGauYvo160JjkqCCK
-	 jKpu6sTxA9bb7RtQULu/wIS1q/CYFTC8+/1hCmT8=
+	b=xpKPu2PUIyp24Mv8esDqpW9Q5zZAXc8CwBlCYxhcsTgIZ6C3r/DboVYdOzjNmmyy5
+	 uBXPElWdmugfABne3JTtz/O+TGhtAuFpqSPV75PF8Bf8YcDGLaUtCEhayo0BbElFkx
+	 4wBVyqAVG6s5s8uEfW7Jc+xXepMzOLeLghHv5X7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
-	Abhishek Kumar <abhishek_sts8@yahoo.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 083/776] media: em28xx: fix use-after-free in em28xx_v4l2_open()
-Date: Sat, 30 May 2026 17:56:37 +0200
-Message-ID: <20260530160242.479862582@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 084/776] ALSA: 6fire: fix use-after-free on disconnect
+Date: Sat, 30 May 2026 17:56:38 +0200
+Message-ID: <20260530160242.507482785@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,68 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Kumar <abhishek_sts8@yahoo.com>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
+commit b9c826916fdce6419b94eb0cd8810fdac18c2386 upstream.
 
-em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
-creating a race with em28xx_v4l2_init()'s error path and
-em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
-and set dev->v4l2 to NULL under dev->lock.
+In usb6fire_chip_abort(), the chip struct is allocated as the card's
+private data (via snd_card_new with sizeof(struct sfire_chip)).  When
+snd_card_free_when_closed() is called and no file handles are open, the
+card and embedded chip are freed synchronously.  The subsequent
+chip->card = NULL write then hits freed slab memory.
 
-This race leads to two issues:
- - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
-   since the video_device is embedded in the freed em28xx_v4l2 struct.
- - NULL pointer dereference in em28xx_resolution_set() when accessing
-   v4l2->norm, since dev->v4l2 has been set to NULL.
+Call trace:
+  usb6fire_chip_abort sound/usb/6fire/chip.c:59 [inline]
+  usb6fire_chip_disconnect+0x348/0x358 sound/usb/6fire/chip.c:182
+  usb_unbind_interface+0x1a8/0x88c drivers/usb/core/driver.c:458
+  ...
+  hub_event+0x1a04/0x4518 drivers/usb/core/hub.c:5953
 
-Fix this by moving the mutex_lock() before the dev->v4l2 read and
-adding a NULL check for dev->v4l2 under the lock.
+Fix by moving the card lifecycle out of usb6fire_chip_abort() and into
+usb6fire_chip_disconnect().  The card pointer is saved in a local
+before any teardown, snd_card_disconnect() is called first to prevent
+new opens, URBs are aborted while chip is still valid, and
+snd_card_free_when_closed() is called last so chip is never accessed
+after the card may be freed.
 
-Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
-Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
+Fixes: a0810c3d6dd2 ("ALSA: 6fire: Release resources at card release")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260410051341.1069716-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sound/usb/6fire/chip.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2136,7 +2136,7 @@ static int em28xx_v4l2_open(struct file
- {
- 	struct video_device *vdev = video_devdata(filp);
- 	struct em28xx *dev = video_drvdata(filp);
--	struct em28xx_v4l2 *v4l2 = dev->v4l2;
-+	struct em28xx_v4l2 *v4l2;
- 	enum v4l2_buf_type fh_type = 0;
- 	int ret;
- 
-@@ -2153,13 +2153,19 @@ static int em28xx_v4l2_open(struct file
- 		return -EINVAL;
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -53,11 +53,6 @@ static void usb6fire_chip_abort(struct s
+ 			usb6fire_comm_abort(chip);
+ 		if (chip->control)
+ 			usb6fire_control_abort(chip);
+-		if (chip->card) {
+-			snd_card_disconnect(chip->card);
+-			snd_card_free_when_closed(chip->card);
+-			chip->card = NULL;
+-		}
  	}
+ }
  
-+	if (mutex_lock_interruptible(&dev->lock))
-+		return -ERESTARTSYS;
-+
-+	v4l2 = dev->v4l2;
-+	if (!v4l2) {
-+		mutex_unlock(&dev->lock);
-+		return -ENODEV;
-+	}
-+
- 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
- 			video_device_node_name(vdev), v4l2_type_names[fh_type],
- 			v4l2->users);
+@@ -170,6 +165,7 @@ destroy_chip:
+ static void usb6fire_chip_disconnect(struct usb_interface *intf)
+ {
+ 	struct sfire_chip *chip;
++	struct snd_card *card;
  
--	if (mutex_lock_interruptible(&dev->lock))
--		return -ERESTARTSYS;
--
- 	ret = v4l2_fh_open(filp);
- 	if (ret) {
- 		dev_err(&dev->intf->dev,
+ 	chip = usb_get_intfdata(intf);
+ 	if (chip) { /* if !chip, fw upload has been performed */
+@@ -180,8 +176,19 @@ static void usb6fire_chip_disconnect(str
+ 			chips[chip->regidx] = NULL;
+ 			mutex_unlock(&register_mutex);
+ 
++			/*
++			 * Save card pointer before teardown.
++			 * snd_card_free_when_closed() may free card (and
++			 * the embedded chip) immediately, so it must be
++			 * called last and chip must not be accessed after.
++			 */
++			card = chip->card;
+ 			chip->shutdown = true;
++			if (card)
++				snd_card_disconnect(card);
+ 			usb6fire_chip_abort(chip);
++			if (card)
++				snd_card_free_when_closed(card);
+ 		}
+ 	}
+ }
 
 
