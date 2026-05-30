@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8993B995E;
-	Sat, 30 May 2026 17:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30133AFAE2;
+	Sat, 30 May 2026 17:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162624; cv=none; b=PO6c46I+HpcOTZovnQXWzWOy8edaE/CXkFF/ChFNLv5lZ0Wc/Gr7wgBVCeZ/0LlVcXh4m3sWcaR0D2ciKMMZGvqKDYmO+bmAN0wY23/aGm+ixHQap8Qk32Fc8TpsWmElwueRl1kEGmCpemBJnXBc2KKzd2znNZzB07eseDwGNac=
+	t=1780162628; cv=none; b=f5haCU9qwOKYcetUWAY0e12gUGd6XGOu7R4z3jb8xbiwwrbZhtTiJVlmR2pOTKCZnEu4EFhFf08ofepVWjxfeTN0M1mWZzTavyPyXajxfjJ4mTu6OrbG8qR3KlSKAVdY7xEJuG7Z8Zi9PmfLrFUIiDNcl3Wju7O1tVgrHW6QT7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162624; c=relaxed/simple;
-	bh=BSGRRw57SW38Nz4OjK0q791byUnLO+sn8CStYZSt0xw=;
+	s=arc-20240116; t=1780162628; c=relaxed/simple;
+	bh=uiD8K+wYrqD/SmjhiVmwbHMGqd4M6N4eDvjyFakobWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wafv/7Xq4m0reQCLnYApEA2pC/RhlWx4N1EPFd3eZDXFQ6RN38oB6XgwlXOreYKfNtFhqUYnqftRiD6Ceg3pHV89xTh4hhGNFh7NLiNXn0+mKgaYSo9Y4olaAR6TyzO0UY/DGk4kM9Kf4DUEzDFbaBK3sj5v6I7SQRIalFsUGjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0Jl1GYg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHiZWIMBVex+ba+QO1mnr1bN8rtDJD3QQ5Osyb9wyBM725B0zfkT7CO7lfw+gPfEL/c8lJhQ7sx5D3z7TMDqyGKUw3TfxjqdwmZ8sxwSlB5ptsOHxQmTPY05lwq6/imEQ8mPG4z45j15yfKZ1Br4nYYihb7dVVVcw9/fGx1LGIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJxHCtJE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0Jl1GYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07221F00893;
-	Sat, 30 May 2026 17:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJxHCtJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92841F00893;
+	Sat, 30 May 2026 17:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162623;
-	bh=n2SZPich6L/1Eto82SeWnp/9/S+FHrTqHnOw0/rwV/k=;
+	s=korg; t=1780162626;
+	bh=LnuRw32cWOymJufuPKdcXxqEcQcFEExmwpOXG4O4E0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0Jl1GYgzd6rdcFy9vYOmpHZYn+NYe+bJQvlKyodEt8+nfX4k3UmZuhO6Rwckp13Z
-	 0hQZ3SbK2JSVff7z93yDBSaylASctutsTJzMiDoCklO39UlmW9fw19FGgpaWwPE996
-	 2hAMYtXKBcOUgTWx07z560FLbSY7c+Lo5vDrtmf0=
+	b=MJxHCtJE9O7ukhnR7d8Tz1mKOaLIU4/9+DH4fMSIyTxZ/kjQRN2WdwDn3yz0nZlVt
+	 GRF/nAV5zOEOEqrue9xxfbQVsD2gMBu3Kao6ofXsRq3UrS+v9fxDSb7flJdMxhuc4U
+	 XuX1Eed9PG0eQUPv58BXoIm1KybqeHRlWTsyg70Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram R <quic_srirrama@quicinc.com>,
-	Karthikeyan Kathirvel <quic_kathirve@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Yue Wang <yuleopen@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Phil Willoughby <willerz@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 946/969] wifi: ath11k: update hal srng regs for IPQ5018
-Date: Sat, 30 May 2026 18:07:50 +0200
-Message-ID: <20260530160326.883034529@linuxfoundation.org>
+Subject: [PATCH 5.15 009/776] ALSA: usb-audio: Fix quirk flags for NeuralDSP Quad Cortex
+Date: Sat, 30 May 2026 17:55:23 +0200
+Message-ID: <20260530160240.493270302@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
-References: <20260530160300.485627683@linuxfoundation.org>
+In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
+References: <20260530160240.228940103@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,147 +50,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sriram R <quic_srirrama@quicinc.com>
+From: Phil Willoughby <willerz@gmail.com>
 
-[ Upstream commit 711b80acbdfb9667a9cf8374e13320a6e624ce73 ]
+[ Upstream commit bc5b4e5ae1a67700a618328217b6a3bd0f296e97 ]
 
-IPQ5018 hal srng register address & offsets are not
-similar to IPQ8074/IPQ6018/QCN9074, hence define a
-new set of srng register group data for IPQ5018.
+The NeuralDSP Quad Cortex does not support DSD playback. We need
+this product-specific entry with zero quirks because otherwise it
+falls through to the vendor-specific entry which marks it as
+supporting DSD playback.
 
-Tested-on: IPQ5018 hw1.0 AHB WLAN.HK.2.6.0.1-00861-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
-Co-developed-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
-Signed-off-by: Karthikeyan Kathirvel <quic_kathirve@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221122132152.17771-6-quic_kathirve@quicinc.com
-Stable-dep-of: 2a2451a34afd ("wifi: ath11k: fix peer resolution on rx path when peer_id=0")
+Cc: Yue Wang <yuleopen@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Signed-off-by: Phil Willoughby <willerz@gmail.com>
+Link: https://patch.msgid.link/20260328080921.3310-1-willerz@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c |  1 +
- drivers/net/wireless/ath/ath11k/hw.c   | 79 ++++++++++++++++++++++++++
- drivers/net/wireless/ath/ath11k/hw.h   |  1 +
- 3 files changed, 81 insertions(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index ce87e67dc638c..a5a9b485a50d2 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -634,6 +634,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 			.max_fft_bins = 1024,
- 		},
- 		.internal_sleep_clock = false,
-+		.regs = &ipq5018_regs,
- 		.host_ce_config = ath11k_host_ce_config_qcn9074,
- 		.ce_count = CE_CNT_5018,
- 		.target_ce_config = ath11k_target_ce_config_wlan_ipq5018,
-diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
-index 5639e261d834e..6135a45f255d1 100644
---- a/drivers/net/wireless/ath/ath11k/hw.c
-+++ b/drivers/net/wireless/ath/ath11k/hw.c
-@@ -2646,6 +2646,85 @@ static const struct ath11k_hw_tcl2wbm_rbm_map ath11k_hw_tcl2wbm_rbm_map_wcn6750[
- 	},
- };
- 
-+const struct ath11k_hw_regs ipq5018_regs = {
-+	/* SW2TCL(x) R0 ring configuration address */
-+	.hal_tcl1_ring_base_lsb = 0x00000694,
-+	.hal_tcl1_ring_base_msb = 0x00000698,
-+	.hal_tcl1_ring_id =	0x0000069c,
-+	.hal_tcl1_ring_misc = 0x000006a4,
-+	.hal_tcl1_ring_tp_addr_lsb = 0x000006b0,
-+	.hal_tcl1_ring_tp_addr_msb = 0x000006b4,
-+	.hal_tcl1_ring_consumer_int_setup_ix0 = 0x000006c4,
-+	.hal_tcl1_ring_consumer_int_setup_ix1 = 0x000006c8,
-+	.hal_tcl1_ring_msi1_base_lsb = 0x000006dc,
-+	.hal_tcl1_ring_msi1_base_msb = 0x000006e0,
-+	.hal_tcl1_ring_msi1_data = 0x000006e4,
-+	.hal_tcl2_ring_base_lsb = 0x000006ec,
-+	.hal_tcl_ring_base_lsb = 0x0000079c,
-+
-+	/* TCL STATUS ring address */
-+	.hal_tcl_status_ring_base_lsb = 0x000008a4,
-+
-+	/* REO2SW(x) R0 ring configuration address */
-+	.hal_reo1_ring_base_lsb = 0x000001ec,
-+	.hal_reo1_ring_base_msb = 0x000001f0,
-+	.hal_reo1_ring_id = 0x000001f4,
-+	.hal_reo1_ring_misc = 0x000001fc,
-+	.hal_reo1_ring_hp_addr_lsb = 0x00000200,
-+	.hal_reo1_ring_hp_addr_msb = 0x00000204,
-+	.hal_reo1_ring_producer_int_setup = 0x00000210,
-+	.hal_reo1_ring_msi1_base_lsb = 0x00000234,
-+	.hal_reo1_ring_msi1_base_msb = 0x00000238,
-+	.hal_reo1_ring_msi1_data = 0x0000023c,
-+	.hal_reo2_ring_base_lsb = 0x00000244,
-+	.hal_reo1_aging_thresh_ix_0 = 0x00000564,
-+	.hal_reo1_aging_thresh_ix_1 = 0x00000568,
-+	.hal_reo1_aging_thresh_ix_2 = 0x0000056c,
-+	.hal_reo1_aging_thresh_ix_3 = 0x00000570,
-+
-+	/* REO2SW(x) R2 ring pointers (head/tail) address */
-+	.hal_reo1_ring_hp = 0x00003028,
-+	.hal_reo1_ring_tp = 0x0000302c,
-+	.hal_reo2_ring_hp = 0x00003030,
-+
-+	/* REO2TCL R0 ring configuration address */
-+	.hal_reo_tcl_ring_base_lsb = 0x000003fc,
-+	.hal_reo_tcl_ring_hp = 0x00003058,
-+
-+	/* SW2REO ring address */
-+	.hal_sw2reo_ring_base_lsb = 0x0000013c,
-+	.hal_sw2reo_ring_hp = 0x00003018,
-+
-+	/* REO CMD ring address */
-+	.hal_reo_cmd_ring_base_lsb = 0x000000e4,
-+	.hal_reo_cmd_ring_hp = 0x00003010,
-+
-+	/* REO status address */
-+	.hal_reo_status_ring_base_lsb = 0x00000504,
-+	.hal_reo_status_hp = 0x00003070,
-+
-+	/* WCSS relative address */
-+	.hal_seq_wcss_umac_ce0_src_reg = 0x08400000
-+		- HAL_IPQ5018_CE_WFSS_REG_BASE,
-+	.hal_seq_wcss_umac_ce0_dst_reg = 0x08401000
-+		- HAL_IPQ5018_CE_WFSS_REG_BASE,
-+	.hal_seq_wcss_umac_ce1_src_reg = 0x08402000
-+		- HAL_IPQ5018_CE_WFSS_REG_BASE,
-+	.hal_seq_wcss_umac_ce1_dst_reg = 0x08403000
-+		- HAL_IPQ5018_CE_WFSS_REG_BASE,
-+
-+	/* WBM Idle address */
-+	.hal_wbm_idle_link_ring_base_lsb = 0x00000874,
-+	.hal_wbm_idle_link_ring_misc = 0x00000884,
-+
-+	/* SW2WBM release address */
-+	.hal_wbm_release_ring_base_lsb = 0x000001ec,
-+
-+	/* WBM2SW release address */
-+	.hal_wbm0_release_ring_base_lsb = 0x00000924,
-+	.hal_wbm1_release_ring_base_lsb = 0x0000097c,
-+};
-+
- const struct ath11k_hw_hal_params ath11k_hw_hal_params_ipq8074 = {
- 	.rx_buf_rbm = HAL_RX_BUF_RBM_SW3_BM,
- 	.tcl2wbm_rbm_map = ath11k_hw_tcl2wbm_rbm_map_ipq8074,
-diff --git a/drivers/net/wireless/ath/ath11k/hw.h b/drivers/net/wireless/ath/ath11k/hw.h
-index e2ed5d0477430..b8afd51d0c1ea 100644
---- a/drivers/net/wireless/ath/ath11k/hw.h
-+++ b/drivers/net/wireless/ath/ath11k/hw.h
-@@ -415,6 +415,7 @@ extern const struct ath11k_hw_regs qca6390_regs;
- extern const struct ath11k_hw_regs qcn9074_regs;
- extern const struct ath11k_hw_regs wcn6855_regs;
- extern const struct ath11k_hw_regs wcn6750_regs;
-+extern const struct ath11k_hw_regs ipq5018_regs;
- 
- static inline const char *ath11k_bd_ie_type_str(enum ath11k_bd_ie_type type)
- {
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 33a1a35485721..4cf2f48b401ee 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1863,6 +1863,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
++		   0), /* Doesn't have the vendor quirk which would otherwise apply */
+ 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
 -- 
 2.53.0
 
