@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CC8342CB3;
-	Sat, 30 May 2026 18:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FCB39478D;
+	Sat, 30 May 2026 18:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164094; cv=none; b=FgQsz3EEdApUDtpRCI6/0dQoIz4Wk0iUXCtPdUUK4hSCurPD1Eviv4KTGg4my9cmRBbS/O6ftWxm2Q8koDvmhaQdWUrd4bM9CyrjXOAaxKUw9/TB6mlMwiLPBOJH0WLqaL9b/38JIuiTt+6I20DhrmpLj5k5gx0Pmevxp7EfljY=
+	t=1780164097; cv=none; b=CNBrdWhcboIGYKPiU87tj6MCYIZYMxMAHoEYYQpSaK+d7BxOcTyLN+wBefu+aaINowqIBirb2MoQvAsDlWAUDuAzWdee4UndG5GCIFT6c3L5uGeZCAv41jyOjTKC3RMqfdSiJfWWMSmsuYz4JJGuKHQ888SpazPgtmAs+g5w8/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164094; c=relaxed/simple;
-	bh=Ey0MNAcvASQkqFjJ3dIbQ2/nHEkMxrmRVpstgHYa5Fk=;
+	s=arc-20240116; t=1780164097; c=relaxed/simple;
+	bh=5S85IxGx85Uo0xlZyqetz4NPIASiQp01BgyrTFeEvkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WKNgTZx2ZzQkA/bS6+HcmXcEYcj9Enu420posZIRIdfGYTIrDXu7zuAcHjMbPlFoTHk6vAkT6gUuGFtUh9RYo1eCHqTZSQ85Wijm73pfhhfMA70LT4cP2JQjXZfUmsHHnvzEImLnAkv8V4jpZgqPrlAX1h8W+CdLoPcNmQ0i2IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiGU7WCd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MgZgOqBG/qfYI2P8c/b6CSNFrMnNvThtcpCdFMMTIMcf1o7f3HjKuMvO54T304aiqwKeJ5uCg0oBUKfYLNvfaf2MNUr3BaOxD5H7K4pwQTTMlwVIkgUKPxhGVAME8zfg28cKJ3+fx66UbZSBj0VII1naCOotdOcZc2SMEYfqg5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PaVgW5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiGU7WCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D271F00893;
-	Sat, 30 May 2026 18:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PaVgW5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DE61F00893;
+	Sat, 30 May 2026 18:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164093;
-	bh=/C7cRxUqDv3fUDGKhiFPHEQDEC1Z95eyNtlkbRTSjGs=;
+	s=korg; t=1780164096;
+	bh=t9xmSuJnmubvJ84c8ndmTs53jw7GWj4hhSrqms3sCWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiGU7WCdtWqdwwOIWBTdv+8Qh6RQqOpwRW7saTjJUVsTt8b9GrJJmLYGaSrM4kKEg
-	 zE1u8lbmaOT8I9Gx+kQoFNfaO7/2kC05wGWH/eQ5cd82oWdbOVDFUuQOewr2yTcn1m
-	 Ul2AdZv2+GicBAuZd7db0fjWx6SugO7Ikrosu0m4=
+	b=2PaVgW5cE9mzTYB+WyIanzdGUe9BZZHAWwW+2EhAq6bWpE5LACQdJk3dMTfGCbKGF
+	 x1eNMQQA1DPX6LPDwlBBGfbMgMoB3I0X/Rz4cIUHZKX7uT3iPgXEud1bDUS3TRb7Fb
+	 yzl31H1ZLrFB22V8nJ/MwjwqhO0taHuuvjVez88Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 452/776] drm/amd/pm/ci: Fix powertune defaults for Hawaii 0x67B0
-Date: Sat, 30 May 2026 18:02:46 +0200
-Message-ID: <20260530160252.067355944@linuxfoundation.org>
+Subject: [PATCH 5.15 453/776] drm/amd/pm/ci: Clear EnabledForActivity field for memory levels
+Date: Sat, 30 May 2026 18:02:47 +0200
+Message-ID: <20260530160252.091362000@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,12 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit d784759c07924280f3c313f205fc48eb62d7cb71 ]
+[ Upstream commit 5facfd4c4c67e8500116ffec0d9da35d92b9c787 ]
 
-There is no AMD GPU with the ID 0x66B0, this looks like a typo.
-It should be 0x67B0 which is actually part of the PCI ID list,
-and should use the Hawaii XT powertune defaults according to
-the old radeon driver.
+Follow what radeon did and what amdgpu does for other GPUs with SMU7.
 
 Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
@@ -70,18 +67,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-index a6d2c6256c347..f898d596c6516 100644
+index f898d596c6516..c88ec43bd7c6a 100644
 --- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
 +++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -244,7 +244,7 @@ static void ci_initialize_power_tune_defaults(struct pp_hwmgr *hwmgr)
- 		smu_data->power_tune_defaults = &defaults_hawaii_pro;
- 		break;
- 	case 0x67B8:
--	case 0x66B0:
-+	case 0x67B0:
- 		smu_data->power_tune_defaults = &defaults_hawaii_xt;
- 		break;
- 	case 0x6640:
+@@ -1216,7 +1216,7 @@ static int ci_populate_single_memory_level(
+ 	}
+ 
+ 	memory_level->EnabledForThrottle = 1;
+-	memory_level->EnabledForActivity = 1;
++	memory_level->EnabledForActivity = 0;
+ 	memory_level->UpH = data->current_profile_setting.mclk_up_hyst;
+ 	memory_level->DownH = data->current_profile_setting.mclk_down_hyst;
+ 	memory_level->VoltageDownH = 0;
 -- 
 2.53.0
 
