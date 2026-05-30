@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10ED313E34;
-	Sat, 30 May 2026 18:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FDB2EF652;
+	Sat, 30 May 2026 18:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166119; cv=none; b=HqYkRFtgXewkRzJ9j01RBk24LsLa85KYcnME1ut+30nCe3p4m8myO6rW1jiYgEZaabrcUhvZOQezsnIL1mQz7DySW7KFkcLrZKacZ7MixacLdH9I0vDWpuRSviXyaxZ17/90iRvAvNXnBBIm6hPTMQ1QsZC9wjXaKCr8hzvM73w=
+	t=1780166121; cv=none; b=kGNlhOY7oyb/3PA/01aWmV7Cr2YmGxwPzR1dzLbAZtTNCfC4943/C5xeNsqODockK9YlPmTWv5O5qeJwx0TSyHfxzCKRjo0uFwr0u1gYE4Te4AW7obhHC8UEXy2O0P3ABAvY+WN3W++tNoF1FviX0DGDvgwvtncJ2phTQXlJs24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166119; c=relaxed/simple;
-	bh=84rJdSGtgKBhGNqy163o2YGqfcgUl1tvtMPQ+e2ShiM=;
+	s=arc-20240116; t=1780166121; c=relaxed/simple;
+	bh=Kgod9urKiV8JdnvTKm0lMOr/km27qtuCVmuC0RvOG5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KybU/CcX56mSnrrKixJj5PECpry94vsEftthOmLef2rDehdl79650iD8CeYtqwp8jk5jGZ3u1gCoRm1UpP7eSiIjiPJJ1y0tOIDDjKcCqkjr1a/UTwRawDvzsd3t4hzyFI8JR14YLNFPXTQMu62p41fFC2YnqlOw5RATE1Q4eG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIw0jRnF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OkyGv8DJXHdAP+DEcT9CC2wRExF3H6OpQZ5lvfGRKbf7kAoKc2jGTXPcUXIIEc6O40Z4lFiKvKyUSNOOO/qwMVS8Kvpl5AEMEWcO8U2sMC2x5ge/EThkR22aMtgyqbAstDrEjea2WE++V2r84Q+4hr+bcv8YymEPYKjJ+ylHMb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOzVXMG2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIw0jRnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238601F00898;
-	Sat, 30 May 2026 18:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOzVXMG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4A71F00893;
+	Sat, 30 May 2026 18:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166118;
-	bh=5Tv3tSYEUa5aXRu2CJLO8Z6p/yIpARE2T7IMYNUUBnw=;
+	s=korg; t=1780166115;
+	bh=7xoiUtlQgKW4fWryIi3OHbDEaxAqmaWKDTeqDjzDB78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIw0jRnFpP42MOsBffn3XjCJR8cF4w/SpFV6xm+JLdbq5q8tYQjnHbUJecEJ7tXMu
-	 5piETLU+TrEV8aLOtI3G5Cd1DYeO0rti+tsF3WF/dcWva5hQ2TI0PubohMnRmlHiL5
-	 OZVlkuP+3paDREpcCCJPn4vgEhYn7YhDR6cfwibc=
+	b=oOzVXMG2g8rqQ5mrSa5yvRvu0SMZNhfMMvmVyj6Z+M+vQCX2I/jhLTFreCcis0wMl
+	 XWHRJQ5nFlr8AesUdbxg8l/WnKDbjG8S+OfxjybEjpTJ/c1rLwUrZcSTAoOP+xbu1J
+	 M69us1aBgj3sj6wdhGiQBkyl2X+4NwEm/p15qvhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.10 245/589] cpuidle: powerpc: avoid double clear when breaking snooze
-Date: Sat, 30 May 2026 18:02:06 +0200
-Message-ID: <20260530160231.436997162@linuxfoundation.org>
+	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 244/589] spi: topcliff-pch: fix use-after-free on unbind
+Date: Sat, 30 May 2026 18:02:05 +0200
+Message-ID: <20260530160231.411962903@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,59 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 64ed1e3e728afb57ba9acb59e69de930ead847d9 upstream.
+commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
 
-snooze_loop is done often in any system which has fair bit of
-idle time. So it qualifies for even micro-optimizations.
+Give the driver a chance to flush its queue before releasing the DMA
+buffers on driver unbind
 
-When breaking the snooze due to timeout, TIF_POLLING_NRFLAG is cleared
-twice. Clearing the bit invokes atomics. Avoid double clear and thereby
-avoid one atomic write.
-
-dev->poll_time_limit indicates whether the loop was broken due to
-timeout. Use that instead of defining a new variable.
-
-Fixes: 7ded429152e8 ("cpuidle: powerpc: no memory barrier after break from idle")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260311061709.1230440-1-sshegde@linux.ibm.com
+Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
+Cc: stable@vger.kernel.org	# 3.1
+Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-powernv.c |    5 ++++-
- drivers/cpuidle/cpuidle-pseries.c |    5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-topcliff-pch.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-powernv.c
-+++ b/drivers/cpuidle/cpuidle-powernv.c
-@@ -93,7 +93,10 @@ static int snooze_loop(struct cpuidle_de
+--- a/drivers/spi/spi-topcliff-pch.c
++++ b/drivers/spi/spi-topcliff-pch.c
+@@ -1426,9 +1426,6 @@ static int pch_spi_pd_remove(struct plat
+ 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
+ 		__func__, plat_dev->id, board_dat->pdev->irq);
  
- 	HMT_medium();
- 	ppc64_runlatch_on();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+	/* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
- 
- 	local_irq_disable();
- 
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -61,7 +61,10 @@ static int snooze_loop(struct cpuidle_de
+-	if (use_dma)
+-		pch_free_dma_buf(board_dat, data);
+-
+ 	/* check for any pending messages; no action is taken if the queue
+ 	 * is still full; but at least we tried.  Unload anyway */
+ 	count = 500;
+@@ -1452,6 +1449,9 @@ static int pch_spi_pd_remove(struct plat
+ 		free_irq(board_dat->pdev->irq, data);
  	}
  
- 	HMT_medium();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
++	if (use_dma)
++		pch_free_dma_buf(board_dat, data);
 +
-+       /* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
- 
- 	local_irq_disable();
+ 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
+ 	spi_unregister_master(data->master);
  
 
 
