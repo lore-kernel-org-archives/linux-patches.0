@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689C829B78B;
-	Sat, 30 May 2026 18:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BE939A4A4;
+	Sat, 30 May 2026 18:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164147; cv=none; b=hLxHJF9P0Wm+yAY5lWtSshDGcD3p+jJvjiRUL7/49c1Hm2LZBx9EJKNO52IMJ/WOrnCeJecInyEcNTdzMrJLW2AIuOsL9VWzHMDoYufiNVYJmo6XsfX36ei+QFanqLz7tuDGyeVnpMFgO87QFxHgsRDDypR6yF6HkCNxuAy1VJw=
+	t=1780164150; cv=none; b=YcbEfhG/n7WaGZ9sbTfIS8xPeyLaSHK21LRh07b2tSjdr1TllfzZ8cKkESW09VjiRwZ3WfV1rLFF0BRaW9wN/ELWucFVxaV8iQo4Iq22lOp9DXym2ZhjcDru9V4yVtVk9YPCvXmG/EDnmW53jWEUcUxMKtrhWBswFRMCTq5vL7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164147; c=relaxed/simple;
-	bh=CddL7IvZI+FxRTu/m5T2q3pZO3Ny/foQOHXHqyaM8lo=;
+	s=arc-20240116; t=1780164150; c=relaxed/simple;
+	bh=L25fUlfuEGdBsB3RSVBj4ZD2kuZklKPBEQa28mYDtEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mt0FuI3r2B2G4SSSWGd1ySlRRHFn06MIMp+mWH/B4KYZOylRCS2ZiKIdqtieEZozBNgUgTLLKPcs68/dkvOIbxeDLXUrl5m6UCT4F6vX/W59lIT2f8fC53j5vp5ynOi9vySXKgEtlj7p+dGOCx5sOkDEKh/JwpEe1UGaByzUtPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkD+9MRr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDWbzPMUqYj8LHmMw7gtoU/rwnK1CgikH2HEOd0E/+/9yVk+0co+acKSI2W1kjfHTnKesoGfcVXURIkMq6WjcKuQu+gVDrN/ENP8cscHDD8/A+hklEtqY+LUQuuFgeFJ7H+d0fJqRlX7rtqZCb8NRleIG5BQxK77CNcHVc6gYyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GU/n+Cqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkD+9MRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39191F00893;
-	Sat, 30 May 2026 18:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GU/n+Cqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067671F00893;
+	Sat, 30 May 2026 18:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164146;
-	bh=bvUr9pJL54HeqreuomP+79T+y+BOCFNssH9oVJCO65g=;
+	s=korg; t=1780164149;
+	bh=/VWuw3VsOl9dyIqtEpnbbLtq34hV9TB0od1lxsVNPOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkD+9MRrqzdKbxNV8lTEJhGlExzllDLONuvO3BjdOyBv2y/bh3Ih2HC4YwglK2udo
-	 swMKo6HjI99jiiNXnfp3xxnfSJEh6gJVYsCtelP9RJRBDn6VY2JGZF+26Xh7V/fHFr
-	 UYCTrX6C19OQs66GmH4TPDn0Pds6d1PBbgIPZPW4=
+	b=GU/n+CqiGthsAsZgj/vHlXT3wd6qJLLsvHxs2phLV06uGjhqCx6KH9098qU+cBkto
+	 4w0MD/lFXIFoX+BZGqurbe2OBFbFOzC++TMUG7PDtA54i1WKEo7q31dQSc68r6C7D0
+	 zAWRtwtabkKlJryUAsvrghkKweDS5JzxLsxwDjgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shuah Khan <shuah@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 469/776] selftest: memcg: skip memcg_sock test if address family not supported
-Date: Sat, 30 May 2026 18:03:03 +0200
-Message-ID: <20260530160252.470104169@linuxfoundation.org>
+Subject: [PATCH 5.15 470/776] PCI: Add PCIE_PME_TO_L2_TIMEOUT_US L2 ready timeout value
+Date: Sat, 30 May 2026 18:03:04 +0200
+Message-ID: <20260530160252.494061546@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,77 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 2d028f3e4bbbfd448928a8d3d2814b0b04c214f4 ]
+[ Upstream commit e78bd50b4078b3b2d9f85d97796b7c271e7860ca ]
 
-The test_memcg_sock test in memcontrol.c sets up an IPv6 socket and send
-data over it to consume memory and verify that memory.stat.sock and
-memory.current values are close.
+Add the PCIE_PME_TO_L2_TIMEOUT_US macro to define the L2 ready timeout
+as described in the PCI specifications.
 
-On systems where IPv6 isn't enabled or not configured to support
-SOCK_STREAM, the test_memcg_sock test always fails.  When the socket()
-call fails, there is no way we can test the memory consumption and verify
-the above claim.  I believe it is better to just skip the test in this
-case instead of reporting a test failure hinting that there may be
-something wrong with the memcg code.
-
-Link: https://lkml.kernel.org/r/20260311200526.885899-1-longman@redhat.com
-Fixes: 5f8f019380b8 ("selftests: cgroup/memcontrol: add basic test for socket accounting")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Michal Koutný <mkoutny@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230821184815.2167131-2-Frank.Li@nxp.com
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Stable-dep-of: adaffed907f1 ("PCI: tegra194: Fix polling delay for L2 state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_memcontrol.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pci/pci.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
-index c19a97dd02d49..07ce722b2533b 100644
---- a/tools/testing/selftests/cgroup/test_memcontrol.c
-+++ b/tools/testing/selftests/cgroup/test_memcontrol.c
-@@ -833,8 +833,11 @@ static int tcp_server(const char *cgroup, void *arg)
- 	saddr.sin6_port = htons(srv_args->port);
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index adae3e04c8c30..eda82a771ab82 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -14,6 +14,12 @@
+ #define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
+ 				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
  
- 	sk = socket(AF_INET6, SOCK_STREAM, 0);
--	if (sk < 0)
-+	if (sk < 0) {
-+		/* Pass back errno to the ctl_fd */
-+		write(ctl_fd, &errno, sizeof(errno));
- 		return ret;
-+	}
- 
- 	if (setsockopt(sk, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) < 0)
- 		goto cleanup;
-@@ -964,6 +967,12 @@ static int test_memcg_sock(const char *root)
- 			goto cleanup;
- 		close(args.ctl[0]);
- 
-+		/* Skip if address family not supported by protocol */
-+		if (err == EAFNOSUPPORT) {
-+			ret = KSFT_SKIP;
-+			goto cleanup;
-+		}
++/*
++ * PCIe r6.0, sec 5.3.3.2.1 <PME Synchronization>
++ * Recommends 1ms to 10ms timeout to check L2 ready.
++ */
++#define PCIE_PME_TO_L2_TIMEOUT_US	10000
 +
- 		if (!err)
- 			break;
- 		if (err != EADDRINUSE)
+ extern const unsigned char pcie_link_speed[];
+ extern bool pci_early_dump;
+ 
 -- 
 2.53.0
 
