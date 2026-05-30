@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F6F39478D;
-	Sat, 30 May 2026 18:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4B02C11C4;
+	Sat, 30 May 2026 18:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166483; cv=none; b=gQWbPT9LL265k1vf80CTMmglyBOYyMNwcuCbpIKbmjuvi9cyOW8BRV7Tcx+N9vBwm6IBRbpkfAuZNxWxmpvBT1S471PeV3y4BwgEvHN6m3fLAiWtQH3F6LFdhQpTi7WoiZ3vkxgzNzg6mSBtubYEDHE8ymhNRsiD/zyhltkKdJg=
+	t=1780166485; cv=none; b=THLJsGye4MaKysWfGb8LqCtU8OxJQu7+nl15/PXGg/eE85t6UO/oOqYormcverfMrK1iGokJOyQ6GTmitCJdTWcVoIwRyY7IwpQLFsTZRnqOBy6Y0Kee5qoo7BhEX8yyQNbg5w0wo6Oc2mIXGHjXbM24Ru0P2kDV8gzS6xaiXeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166483; c=relaxed/simple;
-	bh=eJeyJY6j9Mt626q90tAIyDhUe3CHzWix3HMjafvyi70=;
+	s=arc-20240116; t=1780166485; c=relaxed/simple;
+	bh=LYmtTtyWnO0tI/cXHGox6iXVFL2HPDJQGVhc+jV5MIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NH0QX8yzJ1DN7DpEMoF9g4kGmKFWTy2VXrkhGV5KiCCekSBagwzCibAD3TR2nWckyQ58uJdrkqRIDbVIERsd3sKzvc1hPcJEMjFnBzox5DICST3rIP+l7iTTYO9nbQzqJAwYgSFNzg9scF79LhB5i0kQe2bpRnO5X/GPhEKJ70E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBvWQzN/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qccz20am3nLeAJgqEYDKYz6cUgdaKaMbQqRZ6Qum+vERbUaJaAXK1wKa1gIYlIx3elAQCaaZ5o+F/UVmJcY6M9HLt50iR9679lSOvLf39VyOWp8n5zeh/dwGWnVRmDbBMgFwRMRPSwggsWNk4/JL/7/fx8YuxlGopea/CPUE4iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD+Zo+65; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBvWQzN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEA01F00893;
-	Sat, 30 May 2026 18:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD+Zo+65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4026E1F00893;
+	Sat, 30 May 2026 18:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166481;
-	bh=3xot3XrCsK9RNLrDIxGTjSyGQPTAYwWooqU5PaE/3Os=;
+	s=korg; t=1780166484;
+	bh=hvOq7sB2cgnQVJNSQucjsZVdX0Tqc9eOCqZE9bebVOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dBvWQzN/tyXP06fMDO/TLiVL/ozLA0f6HGU0PYqzwTf1NGv2FzUsT6orS79ZpZwX0
-	 0kQypp22dF0xDt6pauzBL0hZ9tujwm4EW6z056Mdy8CLlJaGr6CeTxH/ryQkZyoiAE
-	 cK8nxT7VtcJOvMdfcel7LjDPoW7SCjAfkZelf3Mc=
+	b=xD+Zo+6520OBNrMPzXXjbsA/wFSCuOcYjoBe1QFsDDU3+ohmot81O17RfNeew/eTG
+	 iWj/F20de968xjXo9gFKUtaTxQGemkx5tPBVzwsdU4I/2FESo72uxqHVxGfEED32fT
+	 5bfuA9K26sTFQoNolnsH213LXAK0P46SZp6xXy64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 385/589] perf util: Kill die() prototype, dead for a long time
-Date: Sat, 30 May 2026 18:04:26 +0200
-Message-ID: <20260530160234.919148105@linuxfoundation.org>
+Subject: [PATCH 5.10 386/589] driver core: device.h: remove extern from function prototypes
+Date: Sat, 30 May 2026 18:04:27 +0200
+Message-ID: <20260530160234.945926511@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,37 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e5cce1b9c82fbd48e2f1f7a25a9fad8ee228176f ]
+[ Upstream commit f43243c66e5e9ad839d235f82a58e73a7e7612af ]
 
-In fef2a735167a827a ("perf tools: Kill die()") the die() function was
-removed, but not the prototype in util.h, now when building with
-LIBPERL=1, during a 'make -C tools/perf build-test' routine test, it is
-failing as perl likes die() calls and then this clashes with this
-remnant, remove it.
+The kernel coding style does not require 'extern' in function prototypes
+in .h files, so remove them from include/linux/device.h as they are not
+needed.
 
-Fixes: fef2a735167a827a ("perf tools: Kill die()")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20230324122711.2664537-1-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 797cc011ae02 ("backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/util.h | 1 -
- 1 file changed, 1 deletion(-)
+ include/linux/device.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/util.h b/tools/perf/util/util.h
-index 9f0d36ba77f2d..130c68dff4ce0 100644
---- a/tools/perf/util/util.h
-+++ b/tools/perf/util/util.h
-@@ -14,7 +14,6 @@
+diff --git a/include/linux/device.h b/include/linux/device.h
+index b2a2109b170c5..11709e3ee811f 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1032,8 +1032,7 @@ void device_links_supplier_sync_state_pause(void);
+ void device_links_supplier_sync_state_resume(void);
+ void device_link_wait_removal(void);
  
- /* General helper functions */
- void usage(const char *err) __noreturn;
--void die(const char *err, ...) __noreturn __printf(1, 2);
+-extern __printf(3, 4)
+-int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
  
- struct dirent;
- struct strlist;
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
 -- 
 2.53.0
 
