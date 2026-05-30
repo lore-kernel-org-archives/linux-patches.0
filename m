@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31015320CAD;
-	Sat, 30 May 2026 17:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D527320CAD;
+	Sat, 30 May 2026 17:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163423; cv=none; b=J74owcuTEY4ezBn5Pnp31hWBJRiVQpbKikSXAlCKus7PjiKRABJBomGIsXwilAklxZqNwjhGavS5a+mphJ2eHJ9Pq4xDVB1HKSPUJFAnLfdFbX9aYcFspwD0rv7zWJrPIOccV1xJfnejHKXv92Bibn/e+n1O/DhtVnTVYLAlmig=
+	t=1780163426; cv=none; b=J/bc13uJ7UEcgxRxX7R/IkUja+AQuwmzM2mE+ZM6P7Hz0HNUdSEq5Y/Q+S5PsxpA4Fi8wpbfp803soc4LkB1Rx+D92LhKA5mkfxM0wXPoHU3FEF9aluSwlu9ZKVdVe4whEuGClHcKBnq6+nakZ4YdD5ww5UMo2Gtlu8+2ULULf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163423; c=relaxed/simple;
-	bh=zfxaCAQCztBhNgaRJA2FxreP9xn3hTotN50jyTJeK20=;
+	s=arc-20240116; t=1780163426; c=relaxed/simple;
+	bh=ZSsdJulcfqbb0NEqxoB37M/F0f+djhBcS6BbcBChR2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pb6264zHcRtBNxLbP3PLvjP3peWZVv2PuRIPU7t3qEhMaEzkctOn5DtBXvE3HqdZ/WJKg6jI3h8pcntrO5QUi0sFR25MtlQqa3NrsrBZ+0oN5iYfndXSCSS8BHMKi3RdyQLI+4dawLvciT8pspQP6+nOzofCnVnywB9NHUlgNcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtAEw1dU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EQwZ0xSO7PXveJXGZnZOB2V9fHPmurLYbbfM61BY6nwRJuwJRL8w3+lqm2DJsGOvJ0zbkvsddDZZ9k7wlW7YpVRo12cbzPWdNbDf17xLOlgUChEsiJ2cjVtlsdFNlsLXAe60vf8FK++6Vyi7/skzJaCEvTqoJvjiuRnchmMnLlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZlTf5T/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtAEw1dU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A5E1F00893;
-	Sat, 30 May 2026 17:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZlTf5T/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB7A1F00893;
+	Sat, 30 May 2026 17:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163422;
-	bh=DfOfz5wYvEOSKjzx4IXSc9F9CT4ehgnAq8ufLRRq9Xs=;
+	s=korg; t=1780163425;
+	bh=JPun9QEQnLz9HSPFDFChC7/SgAM3EaJg4+S52Hl8CcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtAEw1dU0iXpIvIiBV5VCXBbmgiMoErTqcy3ZwWHgFrwFFzhSzpFye+hJcRZv/7fv
-	 mc/HPDYND0GZgMDE8p5TVWv/gCCuuNhcoxBwVnzvybNj8p6AEmv/iAR0fv5eUq9N60
-	 I5NE6X6X+veaxYvMNnxdOW0LmWsgfR+V5PivLLco=
+	b=2ZlTf5T/21/NamtjsgGs/A39M+MjgqxFglXadJ8ydhlL1bv8um8QQcdEDKWlhBsAK
+	 GHkVEIlb/HLVtRW7XSE+BrCBDjkrPfk7IcZOVAtpSCBpmZVIKX8QqU8gVXpaklVRCo
+	 s6/adNmFZ4klwbMaZHFlyooJCwYJ5/CS2tCUvl8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 253/776] crypto: hisilicon - Fix dma_unmap_single() direction
-Date: Sat, 30 May 2026 17:59:27 +0200
-Message-ID: <20260530160247.071160049@linuxfoundation.org>
+Subject: [PATCH 5.15 254/776] crypto: ccree - fix a memory leak in cc_mac_digest()
+Date: Sat, 30 May 2026 17:59:28 +0200
+Message-ID: <20260530160247.098000195@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,35 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 1ee57ab93b75eb59f426aef37b5498a7ffc28278 upstream.
+commit 02c64052fad03699b9c6d1df2f9b444d17e4ac50 upstream.
 
-The direction used to map the buffer skreq->iv is DMA_TO_DEVICE but it is
-unmapped with direction DMA_BIDIRECTIONAL in the error path.
+Add cc_unmap_result() if cc_map_hash_request_final()
+fails to prevent potential memory leak.
 
-Change the unmap to match the mapping.
-
-Fixes: 915e4e8413da ("crypto: hisilicon - SEC security accelerator driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fixes: 63893811b0fc ("crypto: ccree - add ahash support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/sec/sec_algs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccree/cc_hash.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/hisilicon/sec/sec_algs.c
-+++ b/drivers/crypto/hisilicon/sec/sec_algs.c
-@@ -844,7 +844,7 @@ err_free_elements:
- 	if (crypto_skcipher_ivsize(atfm))
- 		dma_unmap_single(info->dev, sec_req->dma_iv,
- 				 crypto_skcipher_ivsize(atfm),
--				 DMA_BIDIRECTIONAL);
-+				 DMA_TO_DEVICE);
- err_unmap_out_sg:
- 	if (split)
- 		sec_unmap_sg_on_err(skreq->dst, steps, splits_out,
+--- a/drivers/crypto/ccree/cc_hash.c
++++ b/drivers/crypto/ccree/cc_hash.c
+@@ -1448,6 +1448,7 @@ static int cc_mac_digest(struct ahash_re
+ 	if (cc_map_hash_request_final(ctx->drvdata, state, req->src,
+ 				      req->nbytes, 1, flags)) {
+ 		dev_err(dev, "map_ahash_request_final() failed\n");
++		cc_unmap_result(dev, state, digestsize, req->result);
+ 		cc_unmap_req(dev, state, ctx);
+ 		return -ENOMEM;
+ 	}
 
 
