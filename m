@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6C2233D9E;
-	Sat, 30 May 2026 18:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F546219303;
+	Sat, 30 May 2026 18:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165334; cv=none; b=OEQaNgqbgGDF3zz7Ok1UWC/sc2f9FUTrdMdwM0trZlPKvoy0Lv5zmLTV+ji2qbEUGufETUUgQorzettxhPpaq6FxBvv6o3Ir8rvVz3e6OuwnctJdZ1sP6nxHSyBgtxBwihpf/l9F2BbsTIxQLD5MBycXn0NlErC+C6DIM+rPpJY=
+	t=1780165338; cv=none; b=TQ6BDX7rgldDxQ5pglWmX9pKJnxSnGXL+XAd2oyHbdSF1MYDjQT/iEcvXYVy2GETY/ljhn+wfHqmxjpar/vLAFhCxO/6taHIl0zVJLNNweRFkVt387eckWQoGh/FiCU0Svw+gfiCNyKjtrvaLoNk8ZDtpYxtl+O12XWStshZldY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165334; c=relaxed/simple;
-	bh=s2chxEqMOvUAIzDSMlBDpnI3eYl7P65jOoMDF48TDaA=;
+	s=arc-20240116; t=1780165338; c=relaxed/simple;
+	bh=56+UWgFkz6O5Ru7Ag/plZec5JtEitiYTSjvST7om9Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ND2ccQDU36V0cpyQYtj3aYMFrY9ZdkTPM3YEginhQG+6vZv5tvXjyIueSumQLaAnyCXilvYa/bUd7bhivg4tczTN9befRagLCq5vFdlM3kvdUWua1dktDHDNFWsWu7IiC2Mt+dRPvGYsDUxClqYfYCZvrOzA84Ya83e+O6xxMdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2I9NJMGv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPt9Ct3+9SpgHunFGfmdi8ekB8E3fbyghWqoFXmnbFNspX/RBhYp1EQM8uJ0RKzlvNBcYk+c/SCKk3M7sBwpHAbwoYVz3H8GN1rPW+SvsKk6CIMzENM/tdno7JLe+5zo4hS9Ah2ZRoAVpO8dPjn2F0ukqmDDa7/BNLrfvhUeO2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1UeO6fh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2I9NJMGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2945B1F00893;
-	Sat, 30 May 2026 18:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1UeO6fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7382E1F00893;
+	Sat, 30 May 2026 18:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165333;
-	bh=me4DghIrPRAPac8SN0ZEe07vkP5zu0I9lMSPj/BAbYo=;
+	s=korg; t=1780165337;
+	bh=vWdNMl4gPPZdX7m+DiaXkLBxooIh+UJQSd6p+KB0pOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2I9NJMGvpP7R0JnPvbnIIeT+mJOLNtT41WbdeQVYHbIo9QMtFZjHYS6ebDAK9N2HW
-	 n888QNQ9/3O2OLk9vPH3dZGxFGybqkQNcRIMvBcW7+m7+rpX69QhgaXvXuWpgA46gs
-	 umA+6vIgFe0yEfK5BvLO7/TEJgRjTYfqsDtEPl6o=
+	b=W1UeO6fhWwqBZLTV5jUx93GZ+HDR1oz/Y8cR1SmCqSm7gpNawesAk375zthP5H5TK
+	 rN6JIpRNyQGZgqtOSA5vdJMCX2KwNdQSZVFteuybPdM7SLaQvGJh11CGSgdGFAaljI
+	 vK2+kQcbiCs65Qw5EEXMUKc5OXGEYlei8sMcpw2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	linux-input@vger.kernel.org,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 048/589] HID: core: clamp report_size in s32ton() to avoid undefined shift
-Date: Sat, 30 May 2026 17:58:49 +0200
-Message-ID: <20260530160225.854423750@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 031/589] netfilter: ip6t_eui64: reject invalid MAC header for all packets
+Date: Sat, 30 May 2026 17:58:32 +0200
+Message-ID: <20260530160225.401254377@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,48 +57,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit 69c02ffde6ed4d535fa4e693a9e572729cad3d0d upstream.
+[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
 
-s32ton() shifts by n-1 where n is the field's report_size, a value that
-comes directly from a HID device.  The HID parser bounds report_size
-only to <= 256, so a broken HID device can supply a report descriptor
-with a wide field that triggers shift exponents up to 256 on a 32-bit
-type when an output report is built via hid_output_field() or
-hid_set_field().
+`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
+and compares it with the low 64 bits of the IPv6 source address.
 
-Commit ec61b41918587 ("HID: core: fix shift-out-of-bounds in
-hid_report_raw_event") added the same n > 32 clamp to the function
-snto32(), but s32ton() was never given the same fix as I guess syzbot
-hadn't figured out how to fuzz a device the same way.
+The existing guard only rejects an invalid MAC header when
+`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
+can still reach `eth_hdr(skb)` even when the MAC header is not valid.
 
-Fix this up by just clamping the max value of n, just like snto32()
-does.
+Fix this by removing the `par->fragoff != 0` condition so that packets
+with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
 
-Cc: stable <stable@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: linux-input@vger.kernel.org
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/netfilter/ip6t_eui64.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1354,6 +1354,9 @@ static u32 s32ton(__s32 value, unsigned
- 	if (!value || !n)
- 		return 0;
+diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
+index d704f7ed300c2..da69a27e8332c 100644
+--- a/net/ipv6/netfilter/ip6t_eui64.c
++++ b/net/ipv6/netfilter/ip6t_eui64.c
+@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 	unsigned char eui64[8];
  
-+	if (n > 32)
-+		n = 32;
-+
- 	a = value >> (n - 1);
- 	if (a && a != -1)
- 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
+ 	if (!(skb_mac_header(skb) >= skb->head &&
+-	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
+-	    par->fragoff != 0) {
++	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
+ 		par->hotdrop = true;
+ 		return false;
+ 	}
+-- 
+2.53.0
+
 
 
