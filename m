@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6720026F288;
-	Sat, 30 May 2026 17:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FBC2690D5;
+	Sat, 30 May 2026 17:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160598; cv=none; b=L3yDKsXUGsSYTQsTQ+c+1F6zKKtNjoC7WpRr9ISgHJ/81JzAiPl2oXPu08zE1d4Ia08UsYOvAQHaOQ97O2rtAPhNa2wtJAl2t6i54Qe/lQFsBeypcrjSX6umriNX8a46dydEVB5+DWMr20jGj45DJJ6t3vFb0oLaRBxpmx9Rm3M=
+	t=1780160601; cv=none; b=XfE61gypY/MYI/T1loqvlPgpfzPQkM4PnriamXcSNyYPchFN9Hmb4AIekYSTo/bpHPnun9eeJ9+44GmlSxgcPsNDEwgj8P969Jykuw33kOQn11cShRbZJde+yEKfCmDOt/xClhdp5bE9m1r7MyxUnLjnpmNxlMMsfBd9yQoNjmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160598; c=relaxed/simple;
-	bh=Ir7ZcUqMejNM9EtmsOPBf/aVwz731fE2Xx/gGKrdGOA=;
+	s=arc-20240116; t=1780160601; c=relaxed/simple;
+	bh=nbD6OjtICscFktxUTZ0fln5BRikS+5g5B90IpMYDOF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zb+moSnOIz7WDYnf0ExrGf90Dj8ouX636dGxX+ckt2ONI/Wp6n3xm/yX8/I0wgJZwnVlU2HD6Gx8H7if2ngf92CSOrd/kC2HVlpmTfoJVjPHh2b28FuszoofuLPB43vkBKF68Siv8oLBeBPt4paFSa4+0B25dAOdsB62VHlEvSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4/+oeRi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rBVePmfWGOzB9ShpDeZq7LHEg+Sv1xu0a/VLQkFUza5EURUAoCStqfAEcvhWX9NFofG/ZNcxTOD7A4mSgpRagOjLm978YQbx8+li78hHuLiEAuUPAYddkLlg/bbX8eDZtNc6YDVSEbg3IZBau9LMqtK003x38cFhnyEbF325w2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3oEZMY6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4/+oeRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9607B1F00893;
-	Sat, 30 May 2026 17:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3oEZMY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99CC1F00893;
+	Sat, 30 May 2026 17:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160597;
-	bh=r4QWLAefLiHPmsIsvKy8C0XyX2yLezl1iW+4MDyEVWE=;
+	s=korg; t=1780160600;
+	bh=sE7L5HW38XUw1BW1HmaBVL0qUZzNnLaZGp9zepfGxJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4/+oeRil8wTZG5OEhqd553t3SMnFFX3kmT6eF0dv4s7M1A9EG//Zr1ROWzs6yWiF
-	 knFk71ps1rPdi96zyCJ7iY98OunM3g6diM+12IexWR+bZ3mvPurUsFs9MwvWb1l0nN
-	 /dhsyXLuv9xrszWrYkgbMkAhV8/rFw/G0LhrXM/Q=
+	b=s3oEZMY6KXNU1cpXmpZpAhg1JPQuUSZbZLxgJxWJBOUXNtrnIfz71jLkz+6HZCFR/
+	 zTW7YSeTlRXFcYgZrrKN5LJ6n+q/ffaNw0BFlAPc3czFvFH0IcQtGB+u3aBaCC2DCX
+	 qVeQ9av6swQLNl7i2QcR1eAP0CSlMwLpTBqlL0nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daeho Jeong <daehojeong@google.com>,
 	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Baocong Liu <baocong.liu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Bin Lan <lanbincn@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 381/969] f2fs: compress: change the first parameter of page_array_{alloc,free} to sbi
-Date: Sat, 30 May 2026 17:58:25 +0200
-Message-ID: <20260530160310.816459868@linuxfoundation.org>
+Subject: [PATCH 6.1 382/969] f2fs: compress: fix UAF of f2fs_inode_info in f2fs_free_dic
+Date: Sat, 30 May 2026 17:58:26 +0200
+Message-ID: <20260530160310.845731608@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -56,191 +57,229 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 8e2a9b656474d67c55010f2c003ea2cf889a19ff ]
+[ Upstream commit 39868685c2a94a70762bc6d77dc81d781d05bff5 ]
 
-No logic changes, just cleanup and prepare for fixing the UAF issue
-in f2fs_free_dic.
+The decompress_io_ctx may be released asynchronously after
+I/O completion. If this file is deleted immediately after read,
+and the kworker of processing post_read_wq has not been executed yet
+due to high workloads, It is possible that the inode(f2fs_inode_info)
+is evicted and freed before it is used f2fs_free_dic.
 
+    The UAF case as below:
+    Thread A                                      Thread B
+    - f2fs_decompress_end_io
+     - f2fs_put_dic
+      - queue_work
+        add free_dic work to post_read_wq
+                                                   - do_unlink
+                                                    - iput
+                                                     - evict
+                                                      - call_rcu
+    This file is deleted after read.
+
+    Thread C                                 kworker to process post_read_wq
+    - rcu_do_batch
+     - f2fs_free_inode
+      - kmem_cache_free
+     inode is freed by rcu
+                                             - process_scheduled_works
+                                              - f2fs_late_free_dic
+                                               - f2fs_free_dic
+                                                - f2fs_release_decomp_mem
+                                      read (dic->inode)->i_compress_algorithm
+
+This patch store compress_algorithm and sbi in dic to avoid inode UAF.
+
+In addition, the previous solution is deprecated in [1] may cause system hang.
+[1] https://lore.kernel.org/all/c36ab955-c8db-4a8b-a9d0-f07b5f426c3f@kernel.org
+
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
 Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
 Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ No changes are made to the code logic; F2FS_I_SB(dic->inode) is
+replaced with dic->sbi in v6.1. ]
 Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  fs/f2fs/compress.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ fs/f2fs/f2fs.h     |  2 ++
+ 2 files changed, 22 insertions(+), 20 deletions(-)
 
 diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 4dcd0870e0c74..1e90286212866 100644
+index 1e90286212866..5d0c41abb4050 100644
 --- a/fs/f2fs/compress.c
 +++ b/fs/f2fs/compress.c
-@@ -23,20 +23,18 @@
- static struct kmem_cache *cic_entry_slab;
- static struct kmem_cache *dic_entry_slab;
+@@ -211,14 +211,14 @@ static int lzo_decompress_pages(struct decompress_io_ctx *dic)
+ 						dic->rbuf, &dic->rlen);
+ 	if (ret != LZO_E_OK) {
+ 		printk_ratelimited("%sF2FS-fs (%s): lzo decompress failed, ret:%d\n",
+-				KERN_ERR, F2FS_I_SB(dic->inode)->sb->s_id, ret);
++				KERN_ERR, dic->sbi->sb->s_id, ret);
+ 		return -EIO;
+ 	}
  
--static void *page_array_alloc(struct inode *inode, int nr)
-+static void *page_array_alloc(struct f2fs_sb_info *sbi, int nr)
+ 	if (dic->rlen != PAGE_SIZE << dic->log_cluster_size) {
+ 		printk_ratelimited("%sF2FS-fs (%s): lzo invalid rlen:%zu, "
+ 					"expected:%lu\n", KERN_ERR,
+-					F2FS_I_SB(dic->inode)->sb->s_id,
++					dic->sbi->sb->s_id,
+ 					dic->rlen,
+ 					PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -307,14 +307,14 @@ static int lz4_decompress_pages(struct decompress_io_ctx *dic)
+ 						dic->clen, dic->rlen);
+ 	if (ret < 0) {
+ 		printk_ratelimited("%sF2FS-fs (%s): lz4 decompress failed, ret:%d\n",
+-				KERN_ERR, F2FS_I_SB(dic->inode)->sb->s_id, ret);
++				KERN_ERR, dic->sbi->sb->s_id, ret);
+ 		return -EIO;
+ 	}
+ 
+ 	if (ret != PAGE_SIZE << dic->log_cluster_size) {
+ 		printk_ratelimited("%sF2FS-fs (%s): lz4 invalid ret:%d, "
+ 					"expected:%lu\n", KERN_ERR,
+-					F2FS_I_SB(dic->inode)->sb->s_id, ret,
++					dic->sbi->sb->s_id, ret,
+ 					PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+ 	}
+@@ -437,7 +437,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ 	workspace_size = zstd_dstream_workspace_bound(max_window_size);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(dic->inode),
++	workspace = f2fs_kvmalloc(dic->sbi,
+ 					workspace_size, GFP_NOFS);
+ 	if (!workspace)
+ 		return -ENOMEM;
+@@ -445,7 +445,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 	stream = zstd_init_dstream(max_window_size, workspace, workspace_size);
+ 	if (!stream) {
+ 		printk_ratelimited("%sF2FS-fs (%s): %s zstd_init_dstream failed\n",
+-				KERN_ERR, F2FS_I_SB(dic->inode)->sb->s_id,
++				KERN_ERR, dic->sbi->sb->s_id,
+ 				__func__);
+ 		kvfree(workspace);
+ 		return -EIO;
+@@ -482,7 +482,7 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
+ 	ret = zstd_decompress_stream(stream, &outbuf, &inbuf);
+ 	if (zstd_is_error(ret)) {
+ 		printk_ratelimited("%sF2FS-fs (%s): %s zstd_decompress_stream failed, ret: %d\n",
+-				KERN_ERR, F2FS_I_SB(dic->inode)->sb->s_id,
++				KERN_ERR, dic->sbi->sb->s_id,
+ 				__func__, zstd_get_error_code(ret));
+ 		return -EIO;
+ 	}
+@@ -490,7 +490,7 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
+ 	if (dic->rlen != outbuf.pos) {
+ 		printk_ratelimited("%sF2FS-fs (%s): %s ZSTD invalid rlen:%zu, "
+ 				"expected:%lu\n", KERN_ERR,
+-				F2FS_I_SB(dic->inode)->sb->s_id,
++				dic->sbi->sb->s_id,
+ 				__func__, dic->rlen,
+ 				PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -759,7 +759,7 @@ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
+ 
+ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
  {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	unsigned int size = sizeof(struct page *) * nr;
- 
- 	if (likely(size <= sbi->page_array_slab_size))
- 		return f2fs_kmem_cache_alloc(sbi->page_array_slab,
--					GFP_F2FS_ZERO, false, F2FS_I_SB(inode));
-+					GFP_F2FS_ZERO, false, sbi);
- 	return f2fs_kzalloc(sbi, size, GFP_NOFS);
- }
- 
--static void page_array_free(struct inode *inode, void *pages, int nr)
-+static void page_array_free(struct f2fs_sb_info *sbi, void *pages, int nr)
- {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	unsigned int size = sizeof(struct page *) * nr;
- 
- 	if (!pages)
-@@ -145,13 +143,13 @@ int f2fs_init_compress_ctx(struct compress_ctx *cc)
- 	if (cc->rpages)
- 		return 0;
- 
--	cc->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	cc->rpages = page_array_alloc(F2FS_I_SB(cc->inode), cc->cluster_size);
- 	return cc->rpages ? 0 : -ENOMEM;
- }
- 
- void f2fs_destroy_compress_ctx(struct compress_ctx *cc, bool reuse)
- {
--	page_array_free(cc->inode, cc->rpages, cc->cluster_size);
-+	page_array_free(F2FS_I_SB(cc->inode), cc->rpages, cc->cluster_size);
- 	cc->rpages = NULL;
- 	cc->nr_rpages = 0;
- 	cc->nr_cpages = 0;
-@@ -640,6 +638,7 @@ static void *f2fs_vmap(struct page **pages, unsigned int count)
- 
- static int f2fs_compress_pages(struct compress_ctx *cc)
- {
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(cc->inode);
- 	struct f2fs_inode_info *fi = F2FS_I(cc->inode);
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
+ 	struct f2fs_inode_info *fi = F2FS_I(dic->inode);
  	const struct f2fs_compress_ops *cops =
- 				f2fs_cops[fi->i_compress_algorithm];
-@@ -660,7 +659,7 @@ static int f2fs_compress_pages(struct compress_ctx *cc)
- 	cc->nr_cpages = DIV_ROUND_UP(max_len, PAGE_SIZE);
- 	cc->valid_nr_cpages = cc->nr_cpages;
+ 			f2fs_cops[fi->i_compress_algorithm];
+@@ -832,7 +832,7 @@ void f2fs_end_read_compressed_page(struct page *page, bool failed,
+ {
+ 	struct decompress_io_ctx *dic =
+ 			(struct decompress_io_ctx *)page_private(page);
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
  
--	cc->cpages = page_array_alloc(cc->inode, cc->nr_cpages);
-+	cc->cpages = page_array_alloc(sbi, cc->nr_cpages);
- 	if (!cc->cpages) {
- 		ret = -ENOMEM;
- 		goto destroy_compress_ctx;
-@@ -742,7 +741,7 @@ static int f2fs_compress_pages(struct compress_ctx *cc)
- 		if (cc->cpages[i])
- 			f2fs_compress_free_page(cc->cpages[i]);
- 	}
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- destroy_compress_ctx:
- 	if (cops->destroy_compress_ctx)
-@@ -1308,7 +1307,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 	cic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
- 	cic->inode = inode;
- 	atomic_set(&cic->pending_pages, cc->valid_nr_cpages);
--	cic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	cic->rpages = page_array_alloc(sbi, cc->cluster_size);
- 	if (!cic->rpages)
- 		goto out_put_cic;
+ 	dec_page_count(sbi, F2FS_RD_DATA);
  
-@@ -1401,13 +1400,13 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 	spin_unlock(&fi->i_size_lock);
+@@ -1593,14 +1593,13 @@ static inline bool allow_memalloc_for_decomp(struct f2fs_sb_info *sbi,
+ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool pre_alloc)
+ {
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
+ 	int i;
  
- 	f2fs_put_rpages(cc);
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- 	f2fs_destroy_compress_ctx(cc, false);
- 	return 0;
- 
- out_destroy_crypt:
--	page_array_free(cc->inode, cic->rpages, cc->cluster_size);
-+	page_array_free(sbi, cic->rpages, cc->cluster_size);
- 
- 	for (--i; i >= 0; i--)
- 		fscrypt_finalize_bounce_page(&cc->cpages[i]);
-@@ -1425,7 +1424,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 		f2fs_compress_free_page(cc->cpages[i]);
- 		cc->cpages[i] = NULL;
- 	}
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- 	return -EAGAIN;
- }
-@@ -1455,7 +1454,7 @@ void f2fs_compress_write_end_io(struct bio *bio, struct page *page)
- 		end_page_writeback(cic->rpages[i]);
- 	}
- 
--	page_array_free(cic->inode, cic->rpages, cic->nr_rpages);
-+	page_array_free(sbi, cic->rpages, cic->nr_rpages);
- 	kmem_cache_free(cic_entry_slab, cic);
- 
- 	/*
-@@ -1601,7 +1600,7 @@ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
- 	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
  		return 0;
  
--	dic->tpages = page_array_alloc(dic->inode, dic->cluster_size);
-+	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
+-	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
++	dic->tpages = page_array_alloc(dic->sbi, dic->cluster_size);
  	if (!dic->tpages)
  		return -ENOMEM;
  
-@@ -1663,7 +1662,7 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
- 	if (!dic)
- 		return ERR_PTR(-ENOMEM);
+@@ -1632,10 +1631,9 @@ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool bypass_destroy_callback, bool pre_alloc)
+ {
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
  
--	dic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	dic->rpages = page_array_alloc(sbi, cc->cluster_size);
- 	if (!dic->rpages) {
- 		kmem_cache_free(dic_entry_slab, dic);
- 		return ERR_PTR(-ENOMEM);
-@@ -1684,7 +1683,7 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
- 		dic->rpages[i] = cc->rpages[i];
- 	dic->nr_rpages = cc->cluster_size;
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
+ 		return;
  
--	dic->cpages = page_array_alloc(dic->inode, dic->nr_cpages);
-+	dic->cpages = page_array_alloc(sbi, dic->nr_cpages);
- 	if (!dic->cpages) {
- 		ret = -ENOMEM;
- 		goto out_free;
-@@ -1719,6 +1718,7 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
+ 	if (!bypass_destroy_callback && cops->destroy_decompress_ctx)
+@@ -1670,6 +1668,8 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
+ 
+ 	dic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
+ 	dic->inode = cc->inode;
++	dic->sbi = sbi;
++	dic->compress_algorithm = F2FS_I(cc->inode)->i_compress_algorithm;
+ 	atomic_set(&dic->remaining_pages, cc->nr_cpages);
+ 	dic->cluster_idx = cc->cluster_idx;
+ 	dic->cluster_size = cc->cluster_size;
+@@ -1718,7 +1718,8 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
  		bool bypass_destroy_callback)
  {
  	int i;
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	/* use sbi in dic to avoid UFA of dic->inode*/
++	struct f2fs_sb_info *sbi = dic->sbi;
  
  	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
  
-@@ -1730,7 +1730,7 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
- 				continue;
- 			f2fs_compress_free_page(dic->tpages[i]);
+@@ -1761,8 +1762,7 @@ static void f2fs_put_dic(struct decompress_io_ctx *dic, bool in_task)
+ 			f2fs_free_dic(dic, false);
+ 		} else {
+ 			INIT_WORK(&dic->free_work, f2fs_late_free_dic);
+-			queue_work(F2FS_I_SB(dic->inode)->post_read_wq,
+-					&dic->free_work);
++			queue_work(dic->sbi->post_read_wq, &dic->free_work);
  		}
--		page_array_free(dic->inode, dic->tpages, dic->cluster_size);
-+		page_array_free(sbi, dic->tpages, dic->cluster_size);
  	}
- 
- 	if (dic->cpages) {
-@@ -1739,10 +1739,10 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
- 				continue;
- 			f2fs_compress_free_page(dic->cpages[i]);
- 		}
--		page_array_free(dic->inode, dic->cpages, dic->nr_cpages);
-+		page_array_free(sbi, dic->cpages, dic->nr_cpages);
- 	}
- 
--	page_array_free(dic->inode, dic->rpages, dic->nr_rpages);
-+	page_array_free(sbi, dic->rpages, dic->nr_rpages);
- 	kmem_cache_free(dic_entry_slab, dic);
  }
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index bbb86e2156989..faa6efe1ceaf5 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1546,6 +1546,7 @@ struct compress_io_ctx {
+ struct decompress_io_ctx {
+ 	u32 magic;			/* magic number to indicate page is compressed */
+ 	struct inode *inode;		/* inode the context belong to */
++	struct f2fs_sb_info *sbi;	/* f2fs_sb_info pointer */
+ 	pgoff_t cluster_idx;		/* cluster index number */
+ 	unsigned int cluster_size;	/* page count in cluster */
+ 	unsigned int log_cluster_size;	/* log of cluster size */
+@@ -1586,6 +1587,7 @@ struct decompress_io_ctx {
  
+ 	bool failed;			/* IO error occurred before decompression? */
+ 	bool need_verity;		/* need fs-verity verification after decompression? */
++	unsigned char compress_algorithm;	/* backup algorithm type */
+ 	void *private;			/* payload buffer for specified decompression algorithm */
+ 	void *private2;			/* extra payload buffer */
+ 	struct work_struct verity_work;	/* work to verify the decompressed pages */
 -- 
 2.53.0
 
