@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3281F41A8F;
-	Sat, 30 May 2026 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87AB32F770;
+	Sat, 30 May 2026 18:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166123; cv=none; b=ppvhG0VlhGEJq1mFg4cmsrXmZfV/WA50r4BWyBk0BOhACPkxOf7fVaVoScW9HGnvBbslyD97oYXDYaKYBuUXCyMM4zEhsU5LFb5zfFl/f0oGh/yTYkCt/8Rgx542+27ehReWwOW+rM0Zyc9AFXKnWB6CEBYTI/tBpk4qVXdUf0A=
+	t=1780166126; cv=none; b=F5gIEQkj92nwIzb3mw8J8h4ri5bc9M4LbyFbk5Uzx/zoyc64OytF4MQrnZ1RP15LYuxXwd2NiEhkiAmmrmNBGPZb8RRuqxzCuTG9dC28UeHTMA9O2zbIl8t9dYb37XmlhS27dQIoaJgnP1VSDZuqiK9lAkW1Xd50MjHoQXKrZik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166123; c=relaxed/simple;
-	bh=he6XtE8Mj9HvPVSpDLU8P+q5Gs7xXSBRQ7kNkGp9X64=;
+	s=arc-20240116; t=1780166126; c=relaxed/simple;
+	bh=s/il88bBuKKjpfMpMKc6kskShOIyoSI5kikhCjlK70E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCcDYBv0KkkTpIhsynIhzzgF2ysaPTR7wxPytQ253zboU2pDMUV3TjkBnNihT9D3+lUHoMjWf6RO3jjZu5CUo9Yawe+0aZA9oCeSejk8K1j2V5+kK3/x1L+PKY8JyiAyh+KpcM68MmBkfWJ5aroWw0lRfydmqk8gh5gzDr0sHUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK49kpSd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FMBsiNe8wKvr1ZRnVcQ6eN0GTOs8n9HlXeKXRGzmeDsh9qtgLnm3oOtAAr/qJjyBmb29noT4wR16gfLwuuru7En915GLfbac2QN7pkPkP9nShtLnHaAIoDspNQ7JvS9vJR7XywvZ3mqPQpUwn1SGYWbjmEJgwUCmk931EARkXVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vy3NePyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK49kpSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3AF1F00893;
-	Sat, 30 May 2026 18:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vy3NePyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9521F00893;
+	Sat, 30 May 2026 18:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166122;
-	bh=mzJtdakt6+Zmu2M9zzcz9T76m7/9jK52oAHcdAMVHUw=;
+	s=korg; t=1780166125;
+	bh=FCEVLQZzfbDlub5CdC0OTsBtce5RoiXlkZLNrnlO0JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VK49kpSdbY8q6uImOV3rWLB5iRV7CPQTk4hBOkMOjrqWROdfZ0ixwuYUgtKvq+xMO
-	 JJqNTMcfjhC7ChspPV+aqs+Ot2od+uzWYLlrFss+JQGyhe1jYLB/E1h75/yR9y4NAU
-	 qjIPgR7JKuw2ZLh9R7BA7P60bLHs77hUYa+EnXr8=
+	b=Vy3NePyMQ1zDdULUzi1TZLpkBtqsJS5OF1k+wigVE7nwQIh32XbHKr8mmS4uzqntr
+	 rzivTcJ/w6HqC3zBWO+f8TbABhf1dxAbY+u3uHeTVZCvXATNacqyOepL8uMnixY8vT
+	 fKqYUYBL4Mq8Qq5BuLpY9iiccMhehULFiDH73Z0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 246/589] ASoC: fsl_easrc: fix comment typo
-Date: Sat, 30 May 2026 18:02:07 +0200
-Message-ID: <20260530160231.462889841@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Zdenek Kabelac <zkabelac@redhat.com>
+Subject: [PATCH 5.10 247/589] dm: dont report warning when doing deferred remove
+Date: Sat, 30 May 2026 18:02:08 +0200
+Message-ID: <20260530160231.485851072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,38 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 804dce6c73fdfa44184ee4e8b09abad7f5da408f upstream.
+commit b7cce3e2cca9cd78418f3c3784474b778e7996fe upstream.
 
-The file contains a spelling error in a source comment (funciton).
+If dm_hash_remove_all was called from dm_deferred_remove, it would write
+a warning "remove_all left %d open device(s)" if there are some other
+devices active.
 
-Typos in comments reduce readability and make text searches less reliable
-for developers and maintainers.
+The warning is bogus, so let's disable it in this case.
 
-Replace 'funciton' with 'function' in the affected comment. This is a
-comment-only cleanup and does not change behavior.
-
-Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Link: https://patch.msgid.link/20260316180545.144032-1-joseph.salisbury@oracle.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2c140a246dc0 ("dm: allow remove to be deferred")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_easrc.c |    2 +-
+ drivers/md/dm-ioctl.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -1286,7 +1286,7 @@ static int fsl_easrc_request_context(int
- /*
-  * Release the context
-  *
-- * This funciton is mainly doing the revert thing in request context
-+ * This function is mainly doing the revert thing in request context
-  */
- static void fsl_easrc_release_context(struct fsl_asrc_pair *ctx)
- {
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -328,7 +328,7 @@ retry:
+ 
+ 	up_write(&_hash_lock);
+ 
+-	if (dev_skipped)
++	if (dev_skipped && !only_deferred)
+ 		DMWARN("remove_all left %d open device(s)", dev_skipped);
+ }
+ 
 
 
