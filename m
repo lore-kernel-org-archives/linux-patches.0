@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5066B23392B;
-	Sat, 30 May 2026 18:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA30C2E22BD;
+	Sat, 30 May 2026 18:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164295; cv=none; b=Wt9xoLj6dvtSaQv3FEbNxj1apYgUr5d75+CeBtXb9ZHz3QG6krdQAh7EDO385ZvxzsNcy3UCFAW1vbbkOJ32GFbMMfq9vHIYr1XHeJvUnP6c/82vdrXGlgqpwGaSe/8xu2i5kfncXpp3+nDvfNojmBmkOwvPKUvusWKAMg+7jcA=
+	t=1780164298; cv=none; b=QIyhYIEwRmS+EexF3FNfg5QvGG1ty751zdRacmkVtzSBZKejvp+S2SJz7RixF2z1cKDXS3RjwSKv+saIfgjYFH+fCJlmrZKXilygnXcY1a5FDaXzmyYpDdqXUFq/Tn9hH/Pb0GkFdR2Xh1PWtHOEKCSkbNirhDun+DQYbnJClhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164295; c=relaxed/simple;
-	bh=VHQenzzENymqOLnftR1TJa4XuD/5oV78qMEeTRBotEA=;
+	s=arc-20240116; t=1780164298; c=relaxed/simple;
+	bh=gd9oKfCgjRjIqgA73iCe7jSFSs+A7onkgjxkOCKT8sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0hIcaPMLHn0O1Glg0tVIp7ZvgJFObCIeRY2HLJ6TwjJg2jtsNpoKrNmYT8DP/QafC+8uR7GpURKRw28S+ItCqbUnsiB82X4/+Jjgrvsb4jXPdDTl2YhH49qaOZq+MDGFZZOAElr1apa5yN+hNZ5zXlB2PnNtxi9aw+YgcfJHGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q535AVyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtHTyTAekeH1QFmJXH8jBSw/whUls6l3IvkhGKiypEfo19slllnFGPyXnyK2kgigAbTBBPhJG24H6X0ulD2akAsPecchTI2jkipbPgQnpXfKEv6iq9IOCZB5UPxZHto0UwscxelqdD2Ek7udm3j5AwsXJBoJGuZT8S9dHM02DL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gF6I46ku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q535AVyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEC51F00893;
-	Sat, 30 May 2026 18:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gF6I46ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48B81F00893;
+	Sat, 30 May 2026 18:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164294;
-	bh=t1VGjkYSwE7g3CjY0F1tAivxxd9SfyuakVhbtAk22GA=;
+	s=korg; t=1780164297;
+	bh=k1nkiKr5N0MVklzvaONIMmRt1bNSQ/UHJBhgoaJyW8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q535AVyredoXjgq856ThJBotzWCw9S/LukdMevGB/WJ3kZtWZ8p5oqLm6qeyCvKB7
-	 +j1Hq6W/ZLNwv9EU5Icl8jSrx516jXwGfMsLzuavP5LgMc34kHeWZ3p4i6nigsNMcj
-	 YPw8L6VIaDNJxx0gimSHb2qJ6MEei1prQD0s/u74=
+	b=gF6I46ku6ickEB2xrOSam1WQ+hrXuHoup4qj0ruZwx8nDeYHi+LPgmh7G5oap0O6V
+	 9A/nId11U+h+zc8QzaAma+v6yzXY/DmWcR7MbF7eomGxU/OGU0dXbAoxiYDwBav2Rn
+	 jCKfbaxm8VfE+9edbhzlhFKWHRVTvDRGOUrNK0o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 511/776] mtd: rawnand: sunxi: fix sunxi_nfc_hw_ecc_read_extra_oob
-Date: Sat, 30 May 2026 18:03:45 +0200
-Message-ID: <20260530160253.467011487@linuxfoundation.org>
+Subject: [PATCH 5.15 512/776] HID: usbhid: fix deadlock in hid_post_reset()
+Date: Sat, 30 May 2026 18:03:46 +0200
+Message-ID: <20260530160253.490337219@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Genoud <richard.genoud@bootlin.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 848c13996c55fe4ea6bf5acc3ce6c8c5c944b5f6 ]
+[ Upstream commit 8df2c1b47ee3cd50fd454f75c7a7e2ae8a6adf72 ]
 
-When dumping the OOB, the bytes at the end where actually copied from
-the beginning of the OOB instead of current_offset.
+You can build a USB device that includes a HID component
+and a storage or UAS component. The components can be reset
+only together. That means that hid_pre_reset() and hid_post_reset()
+are in the block IO error handling. Hence no memory allocation
+used in them may do block IO because the IO can deadlock
+on the mutex held while resetting a device and calling the
+interface drivers.
+Use GFP_NOIO for all allocations in them.
 
-That leads to something like:
-OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
-OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
-OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
-OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
-OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
-OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
-OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
-OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
-instead of:
-OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
-OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
-OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
-OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
-OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-(example with BCH16, user data [8,0], no scrambling)
-
-*cur_off (offset from the beginning of the page) was compared to offset
-(offset from the beginning of the OOB), and then, the
-nand_change_read_column_op() sets the current position to the beginning
-of the OOB instead of OOB+offset
-
-Fixes: 15d6f118285f ("mtd: rawnand: sunxi: Stop supporting ECC_HW_SYNDROME mode")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: dc3c78e434690 ("HID: usbhid: Check HID report descriptor contents after device reset")
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/usbhid/hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index 11f656e9affb5..aa59b884206e0 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -898,9 +898,9 @@ static void sunxi_nfc_hw_ecc_read_extra_oob(struct nand_chip *nand,
- 	if (len <= 0)
- 		return;
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index 5faa608563814..b182b288991a6 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -1544,7 +1544,7 @@ static int hid_post_reset(struct usb_interface *intf)
+ 	 * configuration descriptors passed, we already know that
+ 	 * the size of the HID report descriptor has not changed.
+ 	 */
+-	rdesc = kmalloc(hid->dev_rsize, GFP_KERNEL);
++	rdesc = kmalloc(hid->dev_rsize, GFP_NOIO);
+ 	if (!rdesc)
+ 		return -ENOMEM;
  
--	if (!cur_off || *cur_off != offset)
--		nand_change_read_column_op(nand, mtd->writesize, NULL, 0,
--					   false);
-+	if (!cur_off || *cur_off != (offset + mtd->writesize))
-+		nand_change_read_column_op(nand, mtd->writesize + offset,
-+					   NULL, 0, false);
- 
- 	if (!randomize)
- 		sunxi_nfc_read_buf(nand, oob + offset, len);
 -- 
 2.53.0
 
