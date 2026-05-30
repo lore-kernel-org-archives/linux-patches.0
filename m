@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206A1345750;
-	Sat, 30 May 2026 16:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6ED730E84A;
+	Sat, 30 May 2026 16:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158826; cv=none; b=d5kI+URAWhHmkaiirOIZQ3p7x8dCCuB4tRXiGeaK8G5piG0n+nAfD8C9P/Xmo9Erk5PKTsczd2rSjytPiNlzaXj35yPCWSA+5JbIi/sZsIfFHuCRpcZhYMzC9t1ElCRFN56jGNxkYicsLQ9QtMlt+Qi5OaKpuJAZG8eUTn17En8=
+	t=1780158845; cv=none; b=sdJAyC9KnzSeDyKU/xYD1lycudGj10hmnwD/5YPoOKZW3iPd7MrP5dN5t0qDxQ+Vv6g6qFs9n2zMomRhnc33f8Z0keP5HAIH6/6/Q5JkSsPv9pcesdXEnxJztPfch8/BYThx8ti7+hkkoF3ez50sXis2rQandcQ9Rt+edQ/tPb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158826; c=relaxed/simple;
-	bh=QInCMUFaRPsyf3mgVLOIYRDWNpCKq9ilX0c529exLVw=;
+	s=arc-20240116; t=1780158845; c=relaxed/simple;
+	bh=Rvxmlh4LxG9iNTy6fQoIIURxf3TuLWYj69fse3aXFKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uh6A+9DTX69e/JnZNhsBTAz99xigsy2HL+OCskIQlcVAGaLfGMyOr2e814ebsT+Zk36N7MCAY/W9lpZX8mp5wnn8BWfpr4vF1HbKQylYqafuzggQU7qDe+EkA9YVm3coM/OBoAhMhlO8C05Bpt3OH140CJcNFAL1/3c2vWMT/00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fe0vuxHy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XJ5XFIraCw40c1QLYqNCzQP7fINjJWM0/Xnvyp/yTl1yBq34vcObcMqocIJuRxUpKcbP/E0N+q4uGgcL+r4Vzss/e0qrhRR1hNw9Lak/dGRJoj4a4Bb70vMPIgcnzO4RjtX7mYaj+Hx/swddGR98YnrtL0bh7FoyvHYTrtPM5gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veN4sOdc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fe0vuxHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD8E1F00893;
-	Sat, 30 May 2026 16:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veN4sOdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869AC1F00893;
+	Sat, 30 May 2026 16:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158825;
-	bh=4nrLbb+nFpPcgbixZUOkR95rhzy/iLtA4GDibQGvouo=;
+	s=korg; t=1780158844;
+	bh=Uo3mwydW0g8zCqUABXqfCRYhfH7gdQTXPFyWEPZj+Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fe0vuxHycqWwpyVr/t77gtbSnySfNPyIqYXiKd+Z9GfRtR4U6xn/8KUEbwnVOegIA
-	 jX3nrBuTxpbmnzYmIETkILbwZ7he2P7auYfnOyxxzHQE0ELtqN2gLjDCtSxKwRi4/C
-	 +Ly3ICZ9EiieAMuokdthhYZB3fktMbtTF1ifJtuw=
+	b=veN4sOdcB6ZXE7dlAAn08kutfVzhotBLBhp/+RjCkP8oPc79lXfQlN6OWQ8W9ceTU
+	 lQklZmoUGEX5C5smZTFCgfXKQbJEtm9UpeDOYNWsKsqJ+Lrqu+MA+w1xb956klRBaP
+	 AJUPLer8F7xfwusu7AbSpByUhEX8lC9j/n78aaJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clemens Ladisch <clemens@ladisch.de>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	stable <stable@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 065/969] ALSA: fireworks: bound device-supplied status before string array lookup
-Date: Sat, 30 May 2026 17:53:09 +0200
-Message-ID: <20260530160302.178125292@linuxfoundation.org>
+	syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 083/969] media: vidtv: fix NULL pointer dereference in vidtv_channel_pmt_match_sections
+Date: Sat, 30 May 2026 17:53:27 +0200
+Message-ID: <20260530160302.636945034@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,52 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit 07704bbf36f57e4379e4cadf96410dab14621e3b upstream.
+commit f8e1fc918a9fe67103bcda01d20d745f264d00a7 upstream.
 
-The status field in an EFW response is a 32-bit value supplied by the
-firewire device.  efr_status_names[] has 17 entries so a status value
-outside that range goes off into the weeds when looking at the %s value.
+syzbot reported a general protection fault in vidtv_psi_desc_assign [1].
 
-Even worse, the status could return EFR_STATUS_INCOMPLETE which is
-0x80000000, and is obviously not in that array of potential strings.
+vidtv_psi_pmt_stream_init() can return NULL on memory allocation
+failure, but vidtv_channel_pmt_match_sections() does not check for
+this. When tail is NULL, the subsequent call to
+vidtv_psi_desc_assign(&tail->descriptor, desc) dereferences a NULL
+pointer offset, causing a general protection fault.
 
-Fix this up by properly bounding the index against the array size and
-printing "unknown" if it's not recognized.
+Add a NULL check after vidtv_psi_pmt_stream_init(). On failure, clean
+up the already-allocated stream chain and return.
 
-Cc: Clemens Ladisch <clemens@ladisch.de>
-Cc: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Fixes: bde8a8f23bbe ("ALSA: fireworks: Add transaction and some commands")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/2026040953-astute-camera-1aa1@gregkh
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:vidtv_psi_desc_assign+0x24/0x90 drivers/media/test-drivers/vidtv/vidtv_psi.c:629
+Call Trace:
+ <TASK>
+ vidtv_channel_pmt_match_sections drivers/media/test-drivers/vidtv/vidtv_channel.c:349 [inline]
+ vidtv_channel_si_init+0x1445/0x1a50 drivers/media/test-drivers/vidtv/vidtv_channel.c:479
+ vidtv_mux_init+0x526/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:519
+ vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
+ vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1f5bcc7c919ec578777a
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/fireworks/fireworks_command.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vidtv/vidtv_channel.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/firewire/fireworks/fireworks_command.c
-+++ b/sound/firewire/fireworks/fireworks_command.c
-@@ -151,10 +151,13 @@ efw_transaction(struct snd_efw *efw, uns
- 	    (be32_to_cpu(header->category) != category) ||
- 	    (be32_to_cpu(header->command) != command) ||
- 	    (be32_to_cpu(header->status) != EFR_STATUS_OK)) {
-+		u32 st = be32_to_cpu(header->status);
-+
- 		dev_err(&efw->unit->device, "EFW command failed [%u/%u]: %s\n",
- 			be32_to_cpu(header->category),
- 			be32_to_cpu(header->command),
--			efr_status_names[be32_to_cpu(header->status)]);
-+			st < ARRAY_SIZE(efr_status_names) ?
-+				efr_status_names[st] : "unknown");
- 		err = -EIO;
- 		goto end;
- 	}
+--- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
+@@ -341,6 +341,10 @@ vidtv_channel_pmt_match_sections(struct
+ 					tail = vidtv_psi_pmt_stream_init(tail,
+ 									 s->type,
+ 									 e_pid);
++					if (!tail) {
++						vidtv_psi_pmt_stream_destroy(head);
++						return;
++					}
+ 
+ 					if (!head)
+ 						head = tail;
 
 
