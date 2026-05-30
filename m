@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E813148DA;
-	Sat, 30 May 2026 17:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E993148DA;
+	Sat, 30 May 2026 17:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161169; cv=none; b=Bpszl59twjgHNmSyFUZ1NyYGdIYMOziKYv0Me+L61gU4TNQiiDHmfpay7mGlUhZklZAgBr6q5Ut8wOXxY1zil4M2HTJa+hGrwjgZ5xbgk/lUY5NmaxbcC96wPQxW/XSuT4n7DRwb15JMna+1T0Y/iWJzQjdVcw0Of3Ck5YKdr6g=
+	t=1780161172; cv=none; b=IylyZtEAYFSlPhbl8pIqcGKLcbNXM5/UkEUR2AVKfNhJYpzBvz4bJbyWgHwQfQ1kr5jWPq/Hc17QRlDSEEWW3iaQRMS4Q22Uvnx7mcYl36cp2v20Kj9BAT/2J4TidsTju+gN89YplfY3UAGSh8zricuQ1syMyNbJIAJaouoVSCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161169; c=relaxed/simple;
-	bh=DTJ7XHAKCSWn2Ot2HQQxPxi6l3tF5Kj3nCQ7/lYr8gM=;
+	s=arc-20240116; t=1780161172; c=relaxed/simple;
+	bh=zdLp2Je3KMpJnlLWJ+2EvHSBy8pA/Yi/ZbFdGHAGhD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdsJUtgQiSkNWkkSRgkaXRbqCDD+5tIcbAIGrouW4GWhFsFLs6xP7m8CMWhqg2PvH9/RVKUEXOh/4DrovmXWw6HoErSRn4mJjvRtlcANXPygBtdsCze5urT6uXeEGdfpHO3vCo77AX9n9c/8fNGktWx3XgFXW4m0XNyii3Z9sW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hw7pgJXi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e6K8felp1gOrUGNlDGAYCq7Wzw45Lu/51cqc+MQnFoQf51QWpfON5xz5qmjLPZ2FW5Qv2q+A+ajljd7WD/I/edsrOFb62UE2Pk/FEd+T2FVqbUzlcTqSj/5aMVRvlUztTDoTqHIWXcbYFxE9hEfTtWZKJdks7zZs3exal2BeXMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTSSoHIq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw7pgJXi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA981F00893;
-	Sat, 30 May 2026 17:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTSSoHIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EA41F00893;
+	Sat, 30 May 2026 17:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161167;
-	bh=puBloI25WUCyu8CqRj7aCmcX8xSkvLZnM4Fdz3jtXOc=;
+	s=korg; t=1780161171;
+	bh=ZGr7JSxegmNJbtaHXBoVp8cT+ijYZlvSZRIhvRCk4SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hw7pgJXirdrjB+3Kt/892J2ubdsdUa1o14SbuF+s6f5SqUA0L07hqQRqySHKGZypg
-	 TtCaiVt7HhCyF4PcfwsMEaNxChJaWAyliyBnmhq1EeMpy7ZY1tt9m7kALYxrYSlhEN
-	 s3tT6FCy+tKqPZYpuLaCPXCS9KiX68WhyHBjKvks=
+	b=qTSSoHIqKheYszUetAoBxtd22HgZFw1G8HCq4kQ7IbOSyyE3QEM2LiX2+BN3YpDwy
+	 jEAKE0Q2RpmymgaTTlCuF8ZoBpuIIIIQ1Z0ZFWNTfUuy4am9EI9k5yIiBqw1BEGNXz
+	 QL6NgsqBqBnZ8IjsBlZeyxaxYJoPIg+pfFqARe/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 546/969] ASoC: SOF: Prepare set_stream_data_offset for compress API
-Date: Sat, 30 May 2026 18:01:10 +0200
-Message-ID: <20260530160315.452431942@linuxfoundation.org>
+Subject: [PATCH 6.1 547/969] ASoC: SOF: Add support for compress API for stream data/offset
+Date: Sat, 30 May 2026 18:01:11 +0200
+Message-ID: <20260530160315.479710202@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -57,162 +57,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Baluta <daniel.baluta@nxp.com>
 
-[ Upstream commit 249f186d6b0211fc59d83db128030f2b298063a1 ]
+[ Upstream commit 090349a9feba3ceee3997d31d68ffe54e5b57acb ]
 
-Make second parameter of set_stream_data_offset generic
-in order to be used for both PCM and compress streams.
+snd_sof_pcm_stream keeps information about both PCM (snd_pcm_substream)
+and Compress (snd_compr_stream) streams.
 
-Current patch doesn't introduce any functional change,
-just prepare the code for compress support.
+When PCM substream pointer is NULL this means we are dealing with a
+compress stream.
 
 Reviewed-by: Paul Olaru <paul.olaru@nxp.com>
 Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20230117122533.201708-3-daniel.baluta@oss.nxp.com
+Link: https://lore.kernel.org/r/20230117122533.201708-4-daniel.baluta@oss.nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 2c4fdd055f92 ("ASoC: SOF: compress: return the configured codec from get_params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp-ipc.c   | 3 ++-
- sound/soc/sof/amd/acp.h       | 2 +-
- sound/soc/sof/intel/hda-ipc.c | 3 ++-
- sound/soc/sof/intel/hda.h     | 2 +-
- sound/soc/sof/ipc3-pcm.c      | 3 ++-
- sound/soc/sof/ops.h           | 4 ++--
- sound/soc/sof/sof-priv.h      | 4 ++--
- sound/soc/sof/stream-ipc.c    | 3 ++-
- 8 files changed, 14 insertions(+), 10 deletions(-)
+ sound/soc/sof/sof-priv.h   |  1 +
+ sound/soc/sof/stream-ipc.c | 48 ++++++++++++++++++++++++++++----------
+ 2 files changed, 37 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
-index 5d8a1b603c052..4b8a6bac2b830 100644
---- a/sound/soc/sof/amd/acp-ipc.c
-+++ b/sound/soc/sof/amd/acp-ipc.c
-@@ -209,9 +209,10 @@ int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_sof_pcm_stream *sp
- EXPORT_SYMBOL_NS(acp_sof_ipc_msg_data, SND_SOC_SOF_AMD_COMMON);
- 
- int acp_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset)
- {
-+	struct snd_pcm_substream *substream = sps->substream;
- 	struct acp_dsp_stream *stream = substream->runtime->private_data;
- 
- 	/* check for unaligned offset or overflow */
-diff --git a/sound/soc/sof/amd/acp.h b/sound/soc/sof/amd/acp.h
-index ce5f32341ad2b..37fe2a17396d7 100644
---- a/sound/soc/sof/amd/acp.h
-+++ b/sound/soc/sof/amd/acp.h
-@@ -208,7 +208,7 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context);
- int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_sof_pcm_stream *sps,
- 			 void *p, size_t sz);
- int acp_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset);
- int acp_sof_ipc_send_msg(struct snd_sof_dev *sdev,
- 			 struct snd_sof_ipc_msg *msg);
-diff --git a/sound/soc/sof/intel/hda-ipc.c b/sound/soc/sof/intel/hda-ipc.c
-index 96f909441b44e..ed87c00f345c9 100644
---- a/sound/soc/sof/intel/hda-ipc.c
-+++ b/sound/soc/sof/intel/hda-ipc.c
-@@ -367,9 +367,10 @@ int hda_ipc_msg_data(struct snd_sof_dev *sdev,
- }
- 
- int hda_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset)
- {
-+	struct snd_pcm_substream *substream = sps->substream;
- 	struct hdac_stream *hstream = substream->runtime->private_data;
- 	struct sof_intel_hda_stream *hda_stream;
- 
-diff --git a/sound/soc/sof/intel/hda.h b/sound/soc/sof/intel/hda.h
-index cea36d3bef81f..773df987d6473 100644
---- a/sound/soc/sof/intel/hda.h
-+++ b/sound/soc/sof/intel/hda.h
-@@ -648,7 +648,7 @@ int hda_ipc_msg_data(struct snd_sof_dev *sdev,
- 		     struct snd_sof_pcm_stream *sps,
- 		     void *p, size_t sz);
- int hda_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset);
- 
- /*
-diff --git a/sound/soc/sof/ipc3-pcm.c b/sound/soc/sof/ipc3-pcm.c
-index dad57bef38f6d..627edc7361844 100644
---- a/sound/soc/sof/ipc3-pcm.c
-+++ b/sound/soc/sof/ipc3-pcm.c
-@@ -129,7 +129,8 @@ static int sof_ipc3_pcm_hw_params(struct snd_soc_component *component,
- 		return ret;
- 	}
- 
--	ret = snd_sof_set_stream_data_offset(sdev, substream, ipc_params_reply.posn_offset);
-+	ret = snd_sof_set_stream_data_offset(sdev, &spcm->stream[substream->stream],
-+					     ipc_params_reply.posn_offset);
- 	if (ret < 0) {
- 		dev_err(component->dev, "%s: invalid stream data offset for PCM %d\n",
- 			__func__, spcm->pcm.pcm_id);
-diff --git a/sound/soc/sof/ops.h b/sound/soc/sof/ops.h
-index 3c86f2df2179a..2c56ad69ede1e 100644
---- a/sound/soc/sof/ops.h
-+++ b/sound/soc/sof/ops.h
-@@ -457,11 +457,11 @@ static inline int snd_sof_ipc_msg_data(struct snd_sof_dev *sdev,
- /* host side configuration of the stream's data offset in stream mailbox area */
- static inline int
- snd_sof_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset)
- {
- 	if (sof_ops(sdev) && sof_ops(sdev)->set_stream_data_offset)
--		return sof_ops(sdev)->set_stream_data_offset(sdev, substream,
-+		return sof_ops(sdev)->set_stream_data_offset(sdev, sps,
- 							     posn_offset);
- 
- 	return 0;
 diff --git a/sound/soc/sof/sof-priv.h b/sound/soc/sof/sof-priv.h
-index 85b84e09e1e8a..d7f4f828f38f9 100644
+index d7f4f828f38f9..6f5b06473011d 100644
 --- a/sound/soc/sof/sof-priv.h
 +++ b/sound/soc/sof/sof-priv.h
-@@ -247,7 +247,7 @@ struct snd_sof_dsp_ops {
+@@ -112,6 +112,7 @@ struct sof_compr_stream {
+ 	u32 sampling_rate;
+ 	u16 channels;
+ 	u16 sample_container_bytes;
++	size_t posn_offset;
+ };
  
- 	/* host side configuration of the stream's data offset in stream mailbox area */
- 	int (*set_stream_data_offset)(struct snd_sof_dev *sdev,
--				      struct snd_pcm_substream *substream,
-+				      struct snd_sof_pcm_stream *sps,
- 				      size_t posn_offset); /* optional */
- 
- 	/* pre/post firmware run */
-@@ -748,7 +748,7 @@ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
- 		     struct snd_sof_pcm_stream *sps,
- 		     void *p, size_t sz);
- int sof_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
- 			       size_t posn_offset);
- 
- int sof_stream_pcm_open(struct snd_sof_dev *sdev,
+ struct snd_sof_dev;
 diff --git a/sound/soc/sof/stream-ipc.c b/sound/soc/sof/stream-ipc.c
-index 13e44501d4420..872a49550672c 100644
+index 872a49550672c..216b454f6b94e 100644
 --- a/sound/soc/sof/stream-ipc.c
 +++ b/sound/soc/sof/stream-ipc.c
-@@ -48,9 +48,10 @@ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
- EXPORT_SYMBOL(sof_ipc_msg_data);
+@@ -33,14 +33,27 @@ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
+ 	if (!sps || !sdev->stream_box.size) {
+ 		snd_sof_dsp_mailbox_read(sdev, sdev->dsp_box.offset, p, sz);
+ 	} else {
+-		struct snd_pcm_substream *substream = sps->substream;
+-		struct sof_stream *stream = substream->runtime->private_data;
++		size_t posn_offset;
  
- int sof_set_stream_data_offset(struct snd_sof_dev *sdev,
--			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm_stream *sps,
+-		/* The stream might already be closed */
+-		if (!stream)
+-			return -ESTRPIPE;
++		if (sps->substream) {
++			struct sof_stream *stream = sps->substream->runtime->private_data;
+ 
+-		snd_sof_dsp_mailbox_read(sdev, stream->posn_offset, p, sz);
++			/* The stream might already be closed */
++			if (!stream)
++				return -ESTRPIPE;
++
++			posn_offset = stream->posn_offset;
++		} else {
++
++			struct sof_compr_stream *sstream = sps->cstream->runtime->private_data;
++
++			if (!sstream)
++				return -ESTRPIPE;
++
++			posn_offset = sstream->posn_offset;
++		}
++
++		snd_sof_dsp_mailbox_read(sdev, posn_offset, p, sz);
+ 	}
+ 
+ 	return 0;
+@@ -51,18 +64,29 @@ int sof_set_stream_data_offset(struct snd_sof_dev *sdev,
+ 			       struct snd_sof_pcm_stream *sps,
  			       size_t posn_offset)
  {
-+	struct snd_pcm_substream *substream = sps->substream;
- 	struct sof_stream *stream = substream->runtime->private_data;
- 
+-	struct snd_pcm_substream *substream = sps->substream;
+-	struct sof_stream *stream = substream->runtime->private_data;
+-
  	/* check if offset is overflow or it is not aligned */
+ 	if (posn_offset > sdev->stream_box.size ||
+ 	    posn_offset % sizeof(struct sof_ipc_stream_posn) != 0)
+ 		return -EINVAL;
+ 
+-	stream->posn_offset = sdev->stream_box.offset + posn_offset;
++	posn_offset += sdev->stream_box.offset;
++
++	if (sps->substream) {
++		struct sof_stream *stream = sps->substream->runtime->private_data;
++
++		stream->posn_offset = posn_offset;
++		dev_dbg(sdev->dev, "pcm: stream dir %d, posn mailbox offset is %zu",
++			sps->substream->stream, posn_offset);
++	} else if (sps->cstream) {
++		struct sof_compr_stream *sstream = sps->cstream->runtime->private_data;
+ 
+-	dev_dbg(sdev->dev, "pcm: stream dir %d, posn mailbox offset is %zu",
+-		substream->stream, stream->posn_offset);
++		sstream->posn_offset = posn_offset;
++		dev_dbg(sdev->dev, "compr: stream dir %d, posn mailbox offset is %zu",
++			sps->cstream->direction, posn_offset);
++	} else {
++		dev_err(sdev->dev, "No stream opened");
++		return -EINVAL;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
