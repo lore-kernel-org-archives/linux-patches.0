@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801BB237713;
-	Sat, 30 May 2026 17:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF70349CCF;
+	Sat, 30 May 2026 17:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163732; cv=none; b=RJVtX/zze2xQL3kyoPCbeXAvzXMZGkTg4lr72WnrNEbpSnMpxbV32PTgyOxSYHs2mAQLkMumXiLc65+EQxaAEQHPbbFV15aaMAHA+kUugC87AYUxl2sS8JFvR7Ui8UBN+ObU4c9pi0AFEK9ipEIxWHF5Kzhv1OCZoHc5Yf4Yru8=
+	t=1780163736; cv=none; b=iDdFf1pZTzvVtyPUGPLpI4LfW+AK4NCYh9zXkZZxeHPbfYKRfcHCBnhSVeNzMIDeKc+E4D0eKvq8JNPl85QcPeHDxncqsQof04/Y2TIC0L7vBEZw/WQsBwBpX6ZSk4yb0tD5WZ5nItn+vuKrysP0dLxT4wC7p0Y+aPKKBbwbPEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163732; c=relaxed/simple;
-	bh=urTmM4qvjAYLcXhgMSGrVC1bw6qSZvXH5iuxjVXbkEI=;
+	s=arc-20240116; t=1780163736; c=relaxed/simple;
+	bh=1nDQn01LXTR8AGIVJ31r4EihXjkSHJ2Z6nv1h9Ek0bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIZXrjpMA49OGHxm2F/AvjVcq6qurbg9Z+ZlA3+/905Zwg1bkkUBfVuU/wpJp7RXHmLqintpJSDCBTRwFZGts4JJejPaYAV+2QmN+pGdAgKKp4klKLfBuA7E6XOIG53Z2DmhRzbKeKKEPv9IHsCoswXbimnp+uzHep43uiK4pjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVhmaS1h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P1iI/1Run5v4UcWCDHatjw81Z6z6wuKQbgV8XMmejKTb9RRkZ1Vwit7XI7/ort10nhke69HWK+j9nuTF155yyxbTdSVkBwJs+co1UzIJUonC5FnNbj5ymJUkhAw8cCSnYDJjNdpZS44uUMU9vOS1AuZ6gEPV4bjBUH9F65PVJFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9hT+ydL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVhmaS1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C381B1F00893;
-	Sat, 30 May 2026 17:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9hT+ydL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2DB1F00893;
+	Sat, 30 May 2026 17:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163731;
-	bh=oRVHXULAITDfk8DAA3gkbFRTIhNUleVp412BS7LRaKA=;
+	s=korg; t=1780163734;
+	bh=Zhw8LC1ilvbqPHzP/FqowFoUM3gQMWXJ8ykFeDsfYoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVhmaS1hKa1JqY1dz1wh9zolPxKtRPpb+uY1zbkYWqqrhiU/qmw2ETF2NJVh6fFI/
-	 D5L77g6MsxDu7o9Oe5q24O6aIcPSUfO+IbNcoPk9Rg03ouAPvfJpFXQP5LC7PQvVT3
-	 B4nssWH7emMhh1NgcKV5dErTQwXXU7ya8fbU8gW8=
+	b=G9hT+ydLtq8L8bjFfLWnnCTQERlBu5bChtK/Y6AT9FbBfIe2O96lKQ00IJFg/cuFI
+	 Q1SfnjE0EBmVBny6mOXGH07/GCesYnvQUoYcK7y4Ry14bO3h3oBjb7Wn/IsWy1yztO
+	 +gxWz4IH7szVRomEH8K/YmSvOYiljAi+qaB0gSP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 345/776] RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path
-Date: Sat, 30 May 2026 18:00:59 +0200
-Message-ID: <20260530160249.495901145@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 346/776] mptcp: use MPJoinSynAckHMacFailure for SynAck HMAC failure
+Date: Sat, 30 May 2026 18:01:00 +0200
+Message-ID: <20260530160249.520874852@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,33 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-commit e38e86995df27f1f854063dab1f0c6a513db3faf upstream.
+commit c4a99a921949cddc590b22bb14eeb23dffcc3ba6 upstream.
 
-Sashiko points out that pvrdma_uar_free() is already called within
-pvrdma_dealloc_ucontext(), so calling it before triggers a double free.
+In subflow_finish_connect(), HMAC validation of the server's HMAC
+in SYN/ACK + MP_JOIN increments MPTCP_MIB_JOINACKMAC ("HMAC was
+wrong on ACK + MP_JOIN") on failure. The function processes the
+SYN/ACK, not the ACK; the matching MPTCP_MIB_JOINSYNACKMAC counter
+("HMAC was wrong on SYN/ACK + MP_JOIN") exists but is not
+incremented anywhere in the tree.
 
+The mirror site on the server, subflow_syn_recv_sock(), already
+uses JOINACKMAC correctly for ACK HMAC failure. Use JOINSYNACKMAC
+at the SYN/ACK validation site so each counter reflects the packet
+whose HMAC actually failed.
+
+Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
 Cc: stable@vger.kernel.org
-Fixes: 29c8d9eba550 ("IB: Add vmw_pvrdma driver")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/10-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-1-b70118df778e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c |    2 +-
+ net/mptcp/subflow.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-+++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-@@ -350,7 +350,7 @@ int pvrdma_alloc_ucontext(struct ib_ucon
- 	uresp.qp_tab_size = vdev->dsr->caps.max_qp;
- 	ret = ib_copy_to_udata(udata, &uresp, sizeof(uresp));
- 	if (ret) {
--		pvrdma_uar_free(vdev, &context->uar);
-+		/* pvrdma_dealloc_ucontext() also frees the UAR */
- 		pvrdma_dealloc_ucontext(&context->ibucontext);
- 		return -EFAULT;
- 	}
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -460,7 +460,7 @@ static void subflow_finish_connect(struc
+ 			 subflow->backup);
+ 
+ 		if (!subflow_thmac_valid(subflow)) {
+-			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINACKMAC);
++			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKMAC);
+ 			subflow->reset_reason = MPTCP_RST_EMPTCP;
+ 			goto do_reset;
+ 		}
 
 
