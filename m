@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB2D33A9D6;
-	Sat, 30 May 2026 16:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F283090F4;
+	Sat, 30 May 2026 16:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159028; cv=none; b=RUbQfrDGWywXZiDx8n2MVR5f6TZE2DpmRTp1GVWP9HS77yoPh8CCoVizbIoxc0uCnoXh9LOdqhTmxdaZVNAAmxAsTFiC7zfDYhMBKsRs6C0XGXYqZjspHc6LXr0nwdif+QoIlc9iWmcYq7QogtC2My7oHlfS3ttG7WXD2s/kRTE=
+	t=1780159041; cv=none; b=kYuZviWUmaXgLUW2Z5l0EyIgv0akOjT5V4oDT+DTmiOA5rUEdlVIp0UCSnJxrygFOHoUsY2wzkJ4R1CE6vG8u6vH7J5qks4ChQSDZFvCyWjUE4DUc0AwavqBvUBoN4LFLFosmghf/I7aknYO1TBP/K511Jg9gpeXxq4FqMN4Lv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159028; c=relaxed/simple;
-	bh=R54vMwjrbkOHnYeE4BHANs/ppIZ2pQqceVWi62ybHBo=;
+	s=arc-20240116; t=1780159041; c=relaxed/simple;
+	bh=rB2DM+K+dkm4mMybs0bQF3F4udOBh4IDyTJ9aXsRKJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M6/sFNz0WD9p5jl9khjs8wfCW4K3QeKEaDdV5HuSgwYPs74e1YYK2CikdbJLj/F/PoolXGGGWwVRgTlCL2Sf4YD86VLbLAZzk6L13zP4qMsvlEHWorDs4VAkRbO9E7ZZJqSWesT/+WMFVnJp/grdYTI2xQEfREp70muuQDglLK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNixGlKe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cgsuxv3vCCI+/s2L91sOyIYqSOrNFF/KB7sAPIA+2nbfnTJUO6Hjq5etjAwst9DFRwNrxMS/vOTddYpSuz9uyekG7Sc7SzGSiI0jODOr3xMLbmkeu/dY+0R4k8Fm+x3Kk93HPVVjSzTbFK1h9dP6VphYpYN3vdKz4GsDTFcEq94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY9iZnBg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNixGlKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FBA1F00893;
-	Sat, 30 May 2026 16:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY9iZnBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88C11F00893;
+	Sat, 30 May 2026 16:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159026;
-	bh=HVVKnfG9TWrqfI4SiLn5EwYTNWcMFrVh4erdvcuYrbA=;
+	s=korg; t=1780159040;
+	bh=HJmDqEo74SA15haTFiplSHcLuyYzG87gJ3YI+D4zrrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNixGlKeU9HLpEvI1dqLk6gLBvNAFAp6QLAQMP+1sXKGfYEEC3oyAxUPDtxsPw0Tj
-	 YdHArxI6vP3YBBdn7SBdS6h1GYDUwU2s1UmB+sEF5eYPI96bnBEdzif+VKMPo06A6o
-	 qDoe8VijA0UwlPGnLrFVIDzuAKPg0H3Q6Lqg5Qt8=
+	b=iY9iZnBgU1roE6vUwd6HtC0+s69Yunf5Qzi1GgoXriU9xLmS8QPOKVnv0DzfPMmk8
+	 E5dk7HamnbQ9eG3SoJiBgdi4Y7GPBYcYh0ydoFoaejc7aXx+yixQbqoZ54TYOrmiw2
+	 EiLT3bMWvfFLHLwANNqYMChxbv0/9qU3Kq7biBvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Robert Garcia <rob_garcia@163.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/969] drm/amdgpu: remove two invalid BUG_ON()s
-Date: Sat, 30 May 2026 17:53:38 +0200
-Message-ID: <20260530160302.927286643@linuxfoundation.org>
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 067/969] usb: gadget: f_ncm: validate minimum block_len in ncm_unwrap_ntb()
+Date: Sat, 30 May 2026 17:53:11 +0200
+Message-ID: <20260530160302.227021944@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,45 +43,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5d55ed19d4190d2c210ac05ac7a53f800a8c6fe5 ]
+commit 8f993d30b95dc9557a8a96ceca11abed674c8acb upstream.
 
-Those can be triggered trivially by userspace.
+The block_len read from the host-supplied NTB header is checked against
+ntb_max but has no lower bound. When block_len is smaller than
+opts->ndp_size, the bounds check of:
+	ndp_index > (block_len - opts->ndp_size)
+will underflow producing a huge unsigned value that ndp_index can never
+exceed, defeating the check entirely.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Modified to gfx_v11_0.c only. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The same underflow occurs in the datagram index checks against block_len
+- opts->dpe_size.  With those checks neutered, a malicious USB host can
+choose ndp_index and datagram offsets that point past the actual
+transfer, and the skb_put_data() copies adjacent kernel memory into the
+network skb.
+
+Fix this by rejecting block lengths that cannot hold at least the NTB
+header plus one NDP.  This will make block_len - opts->ndp_size and
+block_len - opts->dpe_size both well-defined.
+
+Commit 8d2b1a1ec9f5 ("CDC-NCM: avoid overflow in sanity checking") fixed
+a related class of issues on the host side of NCM.
+
+Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Link: https://patch.msgid.link/2026040753-baffle-handheld-624d@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 37f793f7d4d24..6e3a32779168b 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -5380,8 +5380,6 @@ static void gfx_v11_0_ring_emit_ib_gfx(struct amdgpu_ring *ring,
- 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
- 	u32 header, control = 0;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1211,8 +1211,8 @@ parse_ntb:
  
--	BUG_ON(ib->flags & AMDGPU_IB_FLAG_CE);
--
- 	header = PACKET3(PACKET3_INDIRECT_BUFFER, 2);
+ 	block_len = get_ncm(&tmp, opts->block_length);
+ 	/* (d)wBlockLength */
+-	if (block_len > ntb_max) {
+-		INFO(port->func.config->cdev, "OUT size exceeded\n");
++	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
++		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
+ 		goto err;
+ 	}
  
- 	control |= ib->length_dw | (vmid << 24);
--- 
-2.53.0
-
 
 
