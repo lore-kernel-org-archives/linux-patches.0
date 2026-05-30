@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A28D3AFD11;
-	Sat, 30 May 2026 17:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E2A366567;
+	Sat, 30 May 2026 17:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160836; cv=none; b=vBgeuWw2XuIXhZdMQLBCsGYfdOK7g7bDQhSC55wdxj8R4P4idfd9ANicVZqWQKZsBBuTNN+1lbKCgmHLdwdf6ZzL9cdO/N+MfvzeV6qGDIzd+yoQeN5ezIQUJaGvoZtpXRgHklcQ9v/gCf2LSeNku6eQAvH0jxiNeGD4Xq1Jj70=
+	t=1780160840; cv=none; b=Ri8EnsmLcz0fduiMwE/S4jhZFMrfb432XHYBznEyzqG1fpJn0BG3aqnQbN1RVsQyB9cl87lAddjX5lzUbDGRb1B1DozHtjiGydDg5PsHsMl96Qatgdx7TARoUuF+WL1FeuWOkX7yk9l98F7QfQClmaeRJKhEAeX17d2nVT4dMLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160836; c=relaxed/simple;
-	bh=Zu6UFIURj7nBAvO6mLXHpRxr+jXWTRbbDvevJTuDp0Q=;
+	s=arc-20240116; t=1780160840; c=relaxed/simple;
+	bh=thb2GH04hDVpLPc5Ig2zbBpmQN3qQmFum8dXMmhpt3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhGP0VPKZpGTbPB8FP1lYtRji1HzdgA4CJnhoz+ocfnJAE3dPy2XEXybSgGXm0fwpImQQblY1WQy4t1SW5pAohHnPvKphBe34F0U9JtIGpXqJ1dKIwmlvlo9llXee7whnde3Jm1CT3nqmpGvLBTJhBN58IWZpnO0GWIylzM6tJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lf2FvjvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t5VaLf4DsJhxfWHuVXijTgPPGLpVX8BU3qv/6YIlDVP4AFanpTFGMlL1o0LJyMkgnBDlRus2WScCmcwgzVSGaXllCIhcvCElwwDwCGbOt4ePQnZbOHiyszXAUNzlNycUtcSuLMqkk1W9jILqUr3Dz4Hih1STJTuMFFRLkpQ/sF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecKT6Ikj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lf2FvjvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7621F00893;
-	Sat, 30 May 2026 17:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecKT6Ikj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684AF1F00893;
+	Sat, 30 May 2026 17:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160835;
-	bh=SMKSPe0UoiRUftRDenKXjn1/8xCbi2aX9vlEc2uMF2g=;
+	s=korg; t=1780160839;
+	bh=CEV2+0SF4poX+ZBxJgQ6m/KJOK7shxX6iUeejaMgWus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lf2FvjvI5kkGoxFM/bCdyNwN2gmgAICNaSsM+OFaP4EWCB5b70/LkFzcO/w6Cxt4p
-	 Gl/rJdxTrkxh0LFus0G5ieCsOh4+cjaVqOGVTz+n4Rt+7DcsZV+7e/7xQJE72nWJot
-	 CM3cRMFyaTNM1EaJ3HkykAokKo+w5c9zUyjXGEkg=
+	b=ecKT6IkjaZ6PoyXrSiVCfCXfPtsI7zvkcHmDDlUErU+Z6HPa8L81YzznpeKLoYAm2
+	 g7wzdZ6tKtfB4pxmb5adh3WKCHKKFPVN6b8vJrr+tj/8EIQHX/x0JIJ7Lr96GRV7QS
+	 WyJUgYGxuYolAUCr1DtFlSfNQ5NLwBX1AGblCjMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Cai Xinchen <caixinchen1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 449/969] bpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap
-Date: Sat, 30 May 2026 17:59:33 +0200
-Message-ID: <20260530160312.674540969@linuxfoundation.org>
+Subject: [PATCH 6.1 450/969] dpaa2: add independent dependencies for FSL_DPAA2_SWITCH
+Date: Sat, 30 May 2026 17:59:34 +0200
+Message-ID: <20260530160312.705117553@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,97 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit 972787479ee73006fddb5e59ab5c8e733810ff42 ]
+[ Upstream commit 12589892f41c4c645c80ef9f036f7451a6045624 ]
 
-The bpf_lwt_xmit_push_encap helper needs to access skb_dst(skb)->dev to
-calculate the needed headroom:
+Since the commit 84cba72956fd ("dpaa2-switch: integrate
+the MAC endpoint support") included dpaa2-mac.o in the driver,
+but it didn't select PCS_LYNX, PHYLINK and FSL_XGMAC_MDIO. it
+will lead to link error, such as
+undefined reference to `phylink_ethtool_ksettings_set'
+undefined reference to `lynx_pcs_create_fwnode'
 
-	err = skb_cow_head(skb,
-			   len + LL_RESERVED_SPACE(skb_dst(skb)->dev));
+And the same reason as the commit d2624e70a2f53 ("dpaa2-eth: select
+XGMAC_MDIO for MDIO bus support"), enable the FSL_XGMAC_MDIO Kconfig
+option in order to have MDIO access to internal and external PHYs.
 
-But skb->_skb_refdst may not be initialized when the skb is set up by
-bpf_prog_test_run_skb function. Executing bpf_lwt_push_ip_encap function
-in this scenario will trigger null pointer dereference, causing a kernel
-crash as Yinhao reported:
+Because dpaa2-switch uses fsl_mc_driver APIs, add depends on FSL_MC_BUS
+&& FSL_MC_DPIO as FSL_DPAA2_SWITCH do.
 
-[  105.186365] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  105.186382] #PF: supervisor read access in kernel mode
-[  105.186388] #PF: error_code(0x0000) - not-present page
-[  105.186393] PGD 121d3d067 P4D 121d3d067 PUD 106c83067 PMD 0
-[  105.186404] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[  105.186412] CPU: 3 PID: 3250 Comm: poc Kdump: loaded Not tainted 6.19.0-rc5 #1
-[  105.186423] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  105.186427] RIP: 0010:bpf_lwt_push_ip_encap+0x1eb/0x520
-[  105.186443] Code: 0f 84 de 01 00 00 0f b7 4a 04 66 85 c9 0f 85 47 01 00 00 31 c0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc 48 8b 73 58 48 83 e6 fe <48> 8b 36 0f b7 be ec 00 00 00 0f b7 b6 e6 00 00 00 01 fe 83 e6 f0
-[  105.186449] RSP: 0018:ffffbb0e0387bc50 EFLAGS: 00010246
-[  105.186455] RAX: 000000000000004e RBX: ffff94c74e036500 RCX: ffff94c74874da00
-[  105.186460] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff94c74e036500
-[  105.186463] RBP: 0000000000000001 R08: 0000000000000002 R09: 0000000000000000
-[  105.186467] R10: ffffbb0e0387bd50 R11: 0000000000000000 R12: ffffbb0e0387bc98
-[  105.186471] R13: 0000000000000014 R14: 0000000000000000 R15: 0000000000000002
-[  105.186484] FS:  00007f166aa4d680(0000) GS:ffff94c8b7780000(0000) knlGS:0000000000000000
-[  105.186490] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  105.186494] CR2: 0000000000000000 CR3: 000000015eade001 CR4: 0000000000770ee0
-[  105.186499] PKRU: 55555554
-[  105.186502] Call Trace:
-[  105.186507]  <TASK>
-[  105.186513]  bpf_lwt_xmit_push_encap+0x2b/0x40
-[  105.186522]  bpf_prog_a75eaad51e517912+0x41/0x49
-[  105.186536]  ? kvm_clock_get_cycles+0x18/0x30
-[  105.186547]  ? ktime_get+0x3c/0xa0
-[  105.186554]  bpf_test_run+0x195/0x320
-[  105.186563]  ? bpf_test_run+0x10f/0x320
-[  105.186579]  bpf_prog_test_run_skb+0x2f5/0x4f0
-[  105.186590]  __sys_bpf+0x69c/0xa40
-[  105.186603]  __x64_sys_bpf+0x1e/0x30
-[  105.186611]  do_syscall_64+0x59/0x110
-[  105.186620]  entry_SYSCALL_64_after_hwframe+0x76/0xe0
-[  105.186649] RIP: 0033:0x7f166a97455d
+FSL_XGMAC_MDIO and FSL_MC_BUS depend on OF, thus the dependence of
+FSL_MC_BUS can satisfy FSL_XGMAC_MDIO's OF requirement.
 
-Temporarily add the setting of skb->_skb_refdst before bpf_test_run to resolve the issue.
-
-Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Closes: https://groups.google.com/g/hust-os-kernel-patches/c/8-a0kPpBW2s
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260304094429.168521-2-yangfeng59949@163.com
+Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
+Suggested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
+Link: https://patch.msgid.link/20260312065907.476663-2-caixinchen1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/freescale/dpaa2/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 2b8daf1cb6885..51259647c65fb 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1200,6 +1200,21 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		skb->ip_summed = CHECKSUM_COMPLETE;
- 	}
- 
-+	if (prog->type == BPF_PROG_TYPE_LWT_XMIT) {
-+		if (!ipv6_bpf_stub) {
-+			pr_warn_once("Please test this program with the IPv6 module loaded\n");
-+			ret = -EOPNOTSUPP;
-+			goto out;
-+		}
-+#if IS_ENABLED(CONFIG_IPV6)
-+		/* For CONFIG_IPV6=n, ipv6_bpf_stub is NULL which is
-+		 * handled by the above if statement.
-+		 */
-+		dst_hold(&net->ipv6.ip6_null_entry->dst);
-+		skb_dst_set(skb, &net->ipv6.ip6_null_entry->dst);
-+#endif
-+	}
-+
- 	ret = bpf_test_run(prog, skb, repeat, &retval, &duration, false);
- 	if (ret)
- 		goto out;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/Kconfig b/drivers/net/ethernet/freescale/dpaa2/Kconfig
+index d029b69c3f183..36280e5d99e1f 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/Kconfig
++++ b/drivers/net/ethernet/freescale/dpaa2/Kconfig
+@@ -34,6 +34,10 @@ config FSL_DPAA2_SWITCH
+ 	tristate "Freescale DPAA2 Ethernet Switch"
+ 	depends on BRIDGE || BRIDGE=n
+ 	depends on NET_SWITCHDEV
++	depends on FSL_MC_BUS && FSL_MC_DPIO
++	select PHYLINK
++	select PCS_LYNX
++	select FSL_XGMAC_MDIO
+ 	help
+ 	  Driver for Freescale DPAA2 Ethernet Switch. This driver manages
+ 	  switch objects discovered on the Freeescale MC bus.
 -- 
 2.53.0
 
