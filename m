@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1591F32B11F;
-	Sat, 30 May 2026 17:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC4C3016E1;
+	Sat, 30 May 2026 17:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161040; cv=none; b=encF/mbNJ2xBiLAErD6D2sS+HASt/u7Ihif9qcoL7NjorHnBZc5qOsjnIm9F4Rb/itw62PyN7gsdKLJZP2iDetaNFX+jwKZwhd4TneI4sOeZVOBoCZM4Bt9vqrjHvYtDtWDL9vuHs5wNEPN0sKjcTpfS18bZY97MZv/5jT1cdV4=
+	t=1780161043; cv=none; b=OVp0yMlLnqFYbRU938Qh0k9/4QGTIIjdfIr8P4MMpXhA4gYaEpAecVhSSTfCu0SuATNlzVLNJbVxqtks5VrGcauA3htvbZ0EkwUDxeCBOz9suMajQ3goGC75IAeGhx3STj1NjomHCjdh+RXGbA3Bx7pEF9k4Xd1PMJbVBSU5DS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161040; c=relaxed/simple;
-	bh=A+oaVPCQCW2ZoWoKLsbhKIj1RD+XYK7HvHKgVAUnbto=;
+	s=arc-20240116; t=1780161043; c=relaxed/simple;
+	bh=dKCaGzy1SOrJM0qvHnLdPRyBD71gnvq7xe6VGLTwEgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohU+7OVwhsG/KaoP/RapeLt6FANMbQyPc5iWeVl2UlZGu+45rsUxMoKJUIQ4ZwxRHTNMkOe+cs8oCycsyVvxuXsYjtHjjUuFg7ECRHFtDze8PgiPmPE3V1NFwlECQF1qaMhte1wjZEu44B85pKsFGoIqygPaXpMdbMsR16BDkvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfV33oNL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lAKorIhMYJ0edLfkiEVxc27Z4GZgFpicM2xZN8Bib7aFnT81UQrmRC2uLlk9PdWTnmzdPeFWTNFPX/Vl3ZbXVyG9tjABRqI5EvXYj0kH1MzDfD383FUwv2XheehFmqSBC8oDNNRKSwaEySXru2Jj0rtId7leecAqVMVTHVWRN6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0U/TS9oo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfV33oNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6094E1F00893;
-	Sat, 30 May 2026 17:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0U/TS9oo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B07E1F00893;
+	Sat, 30 May 2026 17:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161039;
-	bh=2b99o5AjbAnXrxALOa1Jmk+DeeViZlkAEYR5Y0Hf1wE=;
+	s=korg; t=1780161042;
+	bh=Uc3/MBS9DNBRThmdLByuK5eX/OKVtbMCtvMrmm9R9rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MfV33oNLRBmMBz6kZfy7VIMckZm5hkeUrTrWdPfU4ylCgHyVH+LcKot8cvo5YIbeL
-	 ybRhxaJFiPsKqAgIfXxaEp2LFkvm4QG3KewtNZsKcy1vCBMRkfj/B4KexKgxlKaUPz
-	 6EGhTqR/BNf2+PLXo9E5g3KgQTBZcXGfs0W79RLs=
+	b=0U/TS9oood31BV+h4Hf8jPJDlfrz6VSZnTnms4BP46Q3VJcpJNobZypAkgtGFQ1/C
+	 r13MsquVvpWN2xpRDfuXHaN3JTUujtwnDhv2Zi+bpldZ02sFdWre9GQ7h9y/N9DWUt
+	 A98yka/whxYxVas/h69I4RHEUv2vKax2AWBR0w+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Chuyi Zhou <zhouchuyi@bytedance.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 500/969] dm cache: support shrinking the origin device
-Date: Sat, 30 May 2026 18:00:24 +0200
-Message-ID: <20260530160314.134113700@linuxfoundation.org>
+Subject: [PATCH 6.1 509/969] padata: Remove cpu online check from cpu add and removal
+Date: Sat, 30 May 2026 18:00:33 +0200
+Message-ID: <20260530160314.387322443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,195 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Chuyi Zhou <zhouchuyi@bytedance.com>
 
-[ Upstream commit c2662b1544cbd8ea3181381bb899b8e681dfedc7 ]
+[ Upstream commit 73117ea6470dca787f70f33c001f9faf437a1c0b ]
 
-This patch introduces formal support for shrinking the cache origin by
-reducing the cache target length via table reloads. Cache blocks mapped
-beyond the new target length must be clean and are invalidated during
-preresume. If any dirty blocks exist in the area being removed, the
-preresume operation fails without setting the NEEDS_CHECK flag in
-superblock, and the resume ioctl returns EFBIG. The cache device remains
-suspended until a table reload with target length that fits existing
-mappings is performed.
+During the CPU offline process, the dying CPU is cleared from the
+cpu_online_mask in takedown_cpu(). After this step, various CPUHP_*_DEAD
+callbacks are executed to perform cleanup jobs for the dead CPU, so this
+cpu online check in padata_cpu_dead() is unnecessary.
 
-Without this patch, reducing the cache target length could result in
-io errors (RHBZ: 2134334), out-of-bounds memory access to the discard
-bitset, and security concerns regarding data leakage.
+Similarly, when executing padata_cpu_online() during the
+CPUHP_AP_ONLINE_DYN phase, the CPU has already been set in the
+cpu_online_mask, the action even occurs earlier than the
+CPUHP_AP_ONLINE_IDLE stage.
 
-Verification steps:
+Remove this unnecessary cpu online check in __padata_add_cpu() and
+__padata_remove_cpu().
 
-1. create a cache metadata with some cached blocks mapped to the tail
-   of the origin device. Here we use cache_restore v1.0 to build a
-   metadata with one clean block mapped to the last origin block.
-
-cat <<EOF >> cmeta.xml
-<superblock uuid="" block_size="128" nr_cache_blocks="512" \
-policy="smq" hint_width="4">
-  <mappings>
-    <mapping cache_block="0" origin_block="4095" dirty="false"/>
-  </mappings>
-</superblock>
-EOF
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-cache_restore -i cmeta.xml -o /dev/mapper/cmeta --metadata-version=2
-dmsetup remove cmeta
-
-2. bring up the cache whilst shrinking the cache origin by one block:
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
-dmsetup create corig --table "0 524160 linear /dev/sdc 262144"
-dmsetup create cache --table "0 524160 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-
-3. check the number of cached data blocks via dmsetup status. It is
-   expected to be zero.
-
-dmsetup status cache | cut -d ' ' -f 7
-
-In addition to the script above, this patch can be verified using the
-"cache/resize" tests in dmtest-python:
-
-./dmtest run --rx cache/resize/shrink_origin --result-set default
-
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Stable-dep-of: 322586745bd1 ("dm cache: fix dirty mapping checking in passthrough mode switching")
+Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: c8c4a2972f83 ("padata: Put CPU offline callback in ONLINE section to allow failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 72 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 69 insertions(+), 3 deletions(-)
+ kernel/padata.c | 26 ++++++++------------------
+ 1 file changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index c57df4d91c9b2..cbc519f4895e1 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -405,6 +405,12 @@ struct cache {
- 	mempool_t migration_pool;
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 93e288dc373ee..d4298c0c747ce 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -737,32 +737,22 @@ EXPORT_SYMBOL(padata_set_cpumask);
  
- 	struct bio_set bs;
-+
-+	/*
-+	 * Cache_size entries. Set bits indicate blocks mapped beyond the
-+	 * target length, which are marked for invalidation.
-+	 */
-+	unsigned long *invalid_bitset;
- };
- 
- struct per_bio_data {
-@@ -1930,6 +1936,9 @@ static void __destroy(struct cache *cache)
- 	if (cache->discard_bitset)
- 		free_bitset(cache->discard_bitset);
- 
-+	if (cache->invalid_bitset)
-+		free_bitset(cache->invalid_bitset);
-+
- 	if (cache->copier)
- 		dm_kcopyd_client_destroy(cache->copier);
- 
-@@ -2518,6 +2527,13 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 	}
- 	clear_bitset(cache->discard_bitset, from_dblock(cache->discard_nr_blocks));
- 
-+	cache->invalid_bitset = alloc_bitset(from_cblock(cache->cache_size));
-+	if (!cache->invalid_bitset) {
-+		*error = "could not allocate bitset for invalid blocks";
-+		goto bad;
-+	}
-+	clear_bitset(cache->invalid_bitset, from_cblock(cache->cache_size));
-+
- 	cache->copier = dm_kcopyd_client_create(&dm_kcopyd_throttle);
- 	if (IS_ERR(cache->copier)) {
- 		*error = "could not create kcopyd client";
-@@ -2816,6 +2832,24 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	return policy_load_mapping(cache->policy, oblock, cblock, dirty, hint, hint_valid);
- }
- 
-+static int load_filtered_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
-+				 bool dirty, uint32_t hint, bool hint_valid)
-+{
-+	struct cache *cache = context;
-+
-+	if (from_oblock(oblock) >= from_oblock(cache->origin_blocks)) {
-+		if (dirty) {
-+			DMERR("%s: unable to shrink origin; cache block %u is dirty",
-+			      cache_device_name(cache), from_cblock(cblock));
-+			return -EFBIG;
-+		}
-+		set_bit(from_cblock(cblock), cache->invalid_bitset);
-+		return 0;
-+	}
-+
-+	return load_mapping(context, oblock, cblock, dirty, hint, hint_valid);
-+}
-+
- /*
-  * The discard block size in the on disk metadata is not
-  * necessarily the same as we're currently using.  So we have to
-@@ -2970,6 +3004,24 @@ static int resize_cache_dev(struct cache *cache, dm_cblock_t new_size)
- 	return 0;
- }
- 
-+static int truncate_oblocks(struct cache *cache)
-+{
-+	uint32_t nr_blocks = from_cblock(cache->cache_size);
-+	uint32_t i;
-+	int r;
-+
-+	for_each_set_bit(i, cache->invalid_bitset, nr_blocks) {
-+		r = dm_cache_remove_mapping(cache->cmd, to_cblock(i));
-+		if (r) {
-+			DMERR_LIMIT("%s: invalidation failed; couldn't update on disk metadata",
-+				    cache_device_name(cache));
-+			return r;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int cache_preresume(struct dm_target *ti)
+ static int __padata_add_cpu(struct padata_instance *pinst, int cpu)
  {
- 	int r = 0;
-@@ -2994,11 +3046,25 @@ static int cache_preresume(struct dm_target *ti)
- 	}
+-	int err = 0;
+-
+-	if (cpumask_test_cpu(cpu, cpu_online_mask)) {
+-		err = padata_replace(pinst);
++	int err = padata_replace(pinst);
  
- 	if (!cache->loaded_mappings) {
-+		/*
-+		 * The fast device could have been resized since the last
-+		 * failed preresume attempt.  To be safe we start by a blank
-+		 * bitset for cache blocks.
-+		 */
-+		clear_bitset(cache->invalid_bitset, from_cblock(cache->cache_size));
-+
- 		r = dm_cache_load_mappings(cache->cmd, cache->policy,
--					   load_mapping, cache);
-+					   load_filtered_mapping, cache);
- 		if (r) {
- 			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			metadata_operation_failed(cache, "dm_cache_load_mappings", r);
-+			if (r != -EFBIG)
-+				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
-+			return r;
-+		}
-+
-+		r = truncate_oblocks(cache);
-+		if (r) {
-+			metadata_operation_failed(cache, "dm_cache_remove_mapping", r);
- 			return r;
- 		}
+-		if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu) &&
+-		    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
+-			__padata_start(pinst);
+-	}
++	if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu) &&
++	    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
++		__padata_start(pinst);
  
-@@ -3464,7 +3530,7 @@ static void cache_io_hints(struct dm_target *ti, struct queue_limits *limits)
+ 	return err;
+ }
  
- static struct target_type cache_target = {
- 	.name = "cache",
--	.version = {2, 2, 0},
-+	.version = {2, 3, 0},
- 	.module = THIS_MODULE,
- 	.ctr = cache_ctr,
- 	.dtr = cache_dtr,
+ static int __padata_remove_cpu(struct padata_instance *pinst, int cpu)
+ {
+-	int err = 0;
+-
+-	if (!cpumask_test_cpu(cpu, cpu_online_mask)) {
+-		if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu) ||
+-		    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
+-			__padata_stop(pinst);
+-
+-		err = padata_replace(pinst);
+-	}
++	if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu) ||
++	    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
++		__padata_stop(pinst);
+ 
+-	return err;
++	return padata_replace(pinst);
+ }
+ 
+ static inline int pinst_has_cpu(struct padata_instance *pinst, int cpu)
 -- 
 2.53.0
 
