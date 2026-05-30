@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103AF3C1406;
-	Sat, 30 May 2026 18:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6963ACA4D;
+	Sat, 30 May 2026 18:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165006; cv=none; b=copsq4T8zQt5tXdhb39oHetF9qtamshWqQ1MKFcuG45VuP/pgrEN/sjpOfIaUubYyI0NLsAqpUrmYej8mbRCzebiGlxg+ZgRDzl7VJQYFi63XNLjhs46KDxnd+6SFOjwBCfDlsPR2hvJRaDBh71aqllOwZKI7Tjg/femvBqSChg=
+	t=1780165009; cv=none; b=SsQUyQxCbg9oh9JfC0Yy7Or2iAQUkFAjAiA1TN7C81zyNGKYCEG4S77Tv4rhoz1DBmjNB4pQYZ5NtErmodoWx34wA9PTAwu1EYtVdb2OhVFdcRJOL0qYfl6oczdVRXQ3w9B93KkQvnFW0y154ddF//E+cx9nHfj1Ef881Ui4dxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165006; c=relaxed/simple;
-	bh=J5GdDYkt2IhhIeeRdO6Sa3uo6Vb0xD34enjSpuQaRFI=;
+	s=arc-20240116; t=1780165009; c=relaxed/simple;
+	bh=aSZJsUK7g9C1XPfEZRlWVrEPiU+0TXJo0mL+UmOwz4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqXnn+F3BkbRyulNG4xRc84Kx1H+jPgiFkqFrtzzwCXIan/UOaBEa7l44WntyMJYdMnjQHhS/QlTOPdCvRLgN/8V6hxmugcKAH7T/2fhtLlbVPli7zrgXK3XWA3RAM0t4nI+cgII254lCs3wqiSJsc8j4+zJUuDJcBdASaVsFqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tN2EMgDp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fwJMZN//AVnpq1hTAeqCR75wqiFOa/qsRsloajYq5gkpri4Xi1ecM0u47MU3MFapIgFkjUi9RNTRePonuOIVuaDpd+jictkyxQaKPAagPq0EdjmozKoZKz1xSbjk0n89lBX7/z/xOUTd8ee7iUWGf9tmnVAHLxsa6E0eBTz4G7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pjFI3ej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tN2EMgDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E58B1F00893;
-	Sat, 30 May 2026 18:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pjFI3ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7D71F00893;
+	Sat, 30 May 2026 18:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165004;
-	bh=KGgfR7QzDezesBTMXJahfqaJTesMgq23IHlNh7vsmxA=;
+	s=korg; t=1780165008;
+	bh=KzrRgGrESfzhoWOp8ptSV0aOoGQ2jdkig4e8lcJi4k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tN2EMgDp6vt7NpyfwiRtepV8MDWHOA2MDAr5M46F3l6dFmZCNDNHsqYkyrysY4okX
-	 jXgMrasOAdX05UJzbF0TOFbqwwV26MHCtR1ZxMsUNPVkyGJWkc6vqEHtB+xM7OZtpZ
-	 t6A+ihSFpHzLGBP4axYzI6ynG9fgYsLB3YAE/CV8=
+	b=2pjFI3ej1yFx7v2CLvtfHdOoA13hUGZrq33piySpsdiDhbK7O20zBmCzhLVr/pL9m
+	 BUhVO6owV0gofj9WdUo83fbcSzwDMRvEGjb1Wa8JBdb1guMA4wcTZL3BHUwEPAQHpp
+	 lzLMgsBNbcQTZKx+fFnavE5Z15CaRwLH/fUD+OW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 682/776] net: wwan: iosm: fix potential memory leaks in ipc_imem_init()
-Date: Sat, 30 May 2026 18:06:36 +0200
-Message-ID: <20260530160257.492285353@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 716/776] hwmon: (pmbus/adm1266) seed timestamp from the real-time clock
+Date: Sat, 30 May 2026 18:07:10 +0200
+Message-ID: <20260530160258.326499072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,34 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit c5d93b2c40355e999715262a824965aac025a427 upstream.
+commit b86095e3d7dcf2bf80c747349a35912a87a85098 upstream.
 
-The memory allocated in ipc_protocol_init() is not freed on the error
-paths that follow in ipc_imem_init(). Fix that by calling the
-corresponding release function ipc_protocol_deinit() in the error path.
+adm1266_set_rtc() seeds the chip's SET_RTC register from
+ktime_get_seconds(), which returns CLOCK_MONOTONIC -- i.e. seconds
+since the host last booted, not seconds since the Unix epoch.
 
-Fixes: 3670970dd8c6 ("net: iosm: shared memory IPC interface")
+The chip stamps that value into every blackbox record it captures.
+Userspace reading those timestamps back expects wall-clock seconds:
+that's what the SET_RTC frame layout documents (datasheet Rev. D,
+Table 84) and what every other consumer of "seconds since epoch"
+assumes.  Seeding from CLOCK_MONOTONIC gives blackbox records a
+timestamp that is only meaningful within a single boot of the host
+and silently resets to small values on every reboot.
+
+Switch to ktime_get_real_seconds() so the seed matches what the
+register is documented to hold.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260519062815.55545-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-1-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_imem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
-@@ -1338,6 +1338,8 @@ imem_config_fail:
- protocol_init_fail:
- 	cancel_work_sync(&ipc_imem->run_state_worker);
- 	ipc_task_deinit(ipc_imem->ipc_task);
-+	if (ipc_imem->ipc_protocol)
-+		ipc_protocol_deinit(ipc_imem->ipc_protocol);
- ipc_task_init_fail:
- 	kfree(ipc_imem->ipc_task);
- ipc_task_fail:
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -434,7 +434,7 @@ static int adm1266_set_rtc(struct adm126
+ 	char write_buf[6];
+ 	int i;
+ 
+-	kt = ktime_get_seconds();
++	kt = ktime_get_real_seconds();
+ 
+ 	memset(write_buf, 0, sizeof(write_buf));
+ 
 
 
