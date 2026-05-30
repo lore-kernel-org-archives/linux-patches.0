@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56CD33B6C4;
-	Sat, 30 May 2026 17:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958A2FDC5E;
+	Sat, 30 May 2026 17:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162090; cv=none; b=OGHxKWzXuzbZrg04cf6vjUgnCku5a3c6CEGmRygr7n1RFLtDasNKEbi6AflcL5Y1ymW/KG4TmUJs9BTICcwBg5NYic4lMWFjWUJj2+pftHU4N3nMcqzh+B8dZ9znLXY+Zhv69eJmgUM4T5E99B+kcPlejeVe4fhdFD6TVHnZSLE=
+	t=1780162094; cv=none; b=T6JunrAhgP0mWH0l/z/5yiyOoH8YVQDzq+5Pc6lj71wi72YXre9mVp34gC3y0N7NXCzIhCnuyYlw7U6gC2W7BGt7vGeEuEqx3Nr4neMjI46M7PkR2qvrAFoluEa4e5hsLevZnjxZGF8U1UMASCPy97xXRqKtdw1iY9X+K2aX4dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162090; c=relaxed/simple;
-	bh=ILMde/bEhk0rxIuuoH9kq06Hqomgvc2b2cW5A0iYNEY=;
+	s=arc-20240116; t=1780162094; c=relaxed/simple;
+	bh=lUo2ihQwLRjQ6Z+vZ7g0Z50+Fq3sDAolrZiVQkmRChc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kaOaBU9D6OrVGsbx+tZSQijoH3RBj5+vMWT1jGr3QB56uijfdNTRR+W0HEaLDI66NqLGZ6KYDLMPu+Dkkat4xMnyw93S25sHS39mm+kX/5mQ2vvoTLv0CYHk0rXuVUxF5JS26PcQaILeWZ+drVEu9746+qIhsLvSpDVY5RHv0rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxAoajz8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cfRtkV31qOZyOeZnHmEj8Oa3daCHy3ga9SMLno93fHgKuyCzM3nzUcHhPHTmk8OFrJHa3yndHsxyTdtz9Vx13nXGBjZhXsAlpdITQvlyvkIrKs12gkR/j6AR9Gep13qdO3wYagm5cajl4iYobjpVNPalqKveeONv+qY2WhcWqEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONN88ULy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxAoajz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237901F00893;
-	Sat, 30 May 2026 17:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONN88ULy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCCB1F00893;
+	Sat, 30 May 2026 17:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162089;
-	bh=0dPNziJ+zld+yXkUeugTGffaDWoAnGKOdWxGEClXrfg=;
+	s=korg; t=1780162093;
+	bh=mqFp6/7bBkmQRzkzOdJtHsyjYuUWenVV8b+eNMijMB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxAoajz8NuCKUdWjsYk+D4jqUhGu3pJaH2VMknkmNj/2AINy8dUHn216J/iB/VsF6
-	 D+HEBejpkdUD/ZTAGj4s5JM0C4weHbGU6PcbTRghi2uGw/jv79R9R5BsB1t6T4n00R
-	 5rO6VMQSkqNa63m2auWImn6s2I/XWKz0IRsC3Pvk=
+	b=ONN88ULy54oCHmpK2NG9mXEvEZN0gnWPV5HzuQQ9mBBRpiRQhLXWIWr2KC3XyQpR/
+	 tRbgw8dpPP/BFSOvg+Q4VkA+ITMS1h8qmiypJf8pqEMSI4ubSFbsttlg/VXgWWh53F
+	 o3YIvnkGgiDNTAjl5wT1LuHjY0Vm0lcbOuTTuPgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 817/969] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
-Date: Sat, 30 May 2026 18:05:41 +0200
-Message-ID: <20260530160323.201017941@linuxfoundation.org>
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 818/969] ceph: fix a buffer leak in __ceph_setxattr()
+Date: Sat, 30 May 2026 18:05:42 +0200
+Message-ID: <20260530160323.228349630@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,62 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
+commit 5d3cc36b4e77a27ce7b686b7c59c7072bcb3fa8e upstream.
 
-snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
-descriptor size before using baAssocJackID[], but the descriptor walker can
-still return a class-specific endpoint descriptor whose bLength exceeds the
-remaining bytes in the endpoint-extra scan.
+The old_blob in __ceph_setxattr() can store
+ci->i_xattrs.prealloc_blob value during the retry.
+However, it is never called the ceph_buffer_put()
+for the old_blob object. This patch fixes the issue of
+the buffer leak.
 
-That leaves later flexible-array reads bounded by bLength, but not by the
-remaining bytes in the endpoint-extra scan.
-
-Stop walking when bLength is zero or
-extends past the remaining endpoint-extra scan.
-
-Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/ceph/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1974,15 +1974,17 @@ static struct usb_ms_endpoint_descriptor
- 	while (extralen > 3) {
- 		struct usb_ms_endpoint_descriptor *ms_ep =
- 				(struct usb_ms_endpoint_descriptor *)extra;
-+		int length = ms_ep->bLength;
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -1246,6 +1246,7 @@ retry:
  
--		if (ms_ep->bLength > 3 &&
-+		if (!length || length > extralen)
-+			break;
-+
-+		if (length > 3 &&
- 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
- 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
- 			return ms_ep;
--		if (!extra[0])
--			break;
--		extralen -= extra[0];
--		extra += extra[0];
-+		extralen -= length;
-+		extra += length;
- 	}
- 	return NULL;
- }
+ do_sync:
+ 	spin_unlock(&ci->i_ceph_lock);
++	ceph_buffer_put(old_blob);
+ do_sync_unlocked:
+ 	if (lock_snap_rwsem)
+ 		up_read(&mdsc->snap_rwsem);
 
 
