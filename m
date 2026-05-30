@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC42826738C;
-	Sat, 30 May 2026 18:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C3B26738C;
+	Sat, 30 May 2026 18:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166365; cv=none; b=pAR/m6v8eBW7PnDPiBseNgSQLMpmyqio7ifSguvUAJW8jh/UaoIoeK/a/vJ+xwuClfN3KhpfQGRPHrhR0tkC7N6dy/joY7QMA95cAn5Ad2weRgTjmasqOmH6UeYvJLvVgAftPL8I8C6paJE97zQZguMeRoCg4Mrg36gm2hMsMIo=
+	t=1780166368; cv=none; b=TwtscpTA8CkVJ4DA6Zqb2tW6mNC3uIUhSWg3m9+JRYM2Rwm0Z5PlsZu6plKGuNUTv/lPfQU809sUOwrJ6L6hk1ApYDRhtnUuiGPV5X6JczbmbQm60EOFAIaAkXWCXAy8UGTLM7yXXAzPp1NljaltQGc1NkG9mS1QnwWJGPTCpJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166365; c=relaxed/simple;
-	bh=sWVgdGvVDcij+KsqiC0pgd3v+HL4S88EcJQxtkhCcz0=;
+	s=arc-20240116; t=1780166368; c=relaxed/simple;
+	bh=FJJmgbHe2HjL/sil9kR0Pa/4A48FBpJR8TgBcnSPfHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myjBQLOL5MNaPVubefDMtcdOjjZLm3lVTIyXFViKifFWzXUosuO/wXBc3ZRq5r6gJ9XDfX3KuGZICnbKaVgDw1+fRbjbEvMmzkPTSAJvk80YRMWTFUWfwIHPyRaHUX00XMcwsNuW1Jcj3BjNvbzRije2KX0FShOvtOj/dZ8/xh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U659CRZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ksD0wlIuaQ7rUkr01xrpqSOFVukugwHCd7rEy3333z8e+cnbqZcKSUAYZQOVBrLeEmFs4XQPlhJmQ8cV0A/bRmKZnE+xvq35kopqwjGhujiQCcjRpmhP4N2zeNSm83IHftcCxTt9OX9dmd79CWS3S/1AKgHFQ23VwQF+e3Nj5jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSMUWLMR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U659CRZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83191F00893;
-	Sat, 30 May 2026 18:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSMUWLMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F207C1F00893;
+	Sat, 30 May 2026 18:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166364;
-	bh=De9SMuPabIudUrb8colGvCeqytKA+jlHNqzKjXL9thM=;
+	s=korg; t=1780166367;
+	bh=IncDFzTP36g8piKpY9lpaqWlGabjI0/rympw47+TJGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U659CRZVthh3JWL5ZuDD6cZiE1c8i3ZVx0bS/OGqOqIiamqELMprdl7vpZc6HEPIo
-	 MhXAicgZPG0XYgEHbwle1cUySHnmGro1ahL3CKVsbCUmEG37pRt5XskF6h+nAEdH2/
-	 tNJH07SpBpAiNYshvi1bhcyzCMH+g4Xf4ePhcVas=
+	b=sSMUWLMRuQrDsstsGYidRCoQUxj4KqnV25g96C5lphBgAXHY+9Af0cAUheQNd1V/M
+	 IR0feB+UFKjmJWDTwrqv/PIbvatGZuC41USgf5lPD7A8dJ/tQKhNmRYuubtCGv9j+j
+	 0O78tPrikJ96SA6S27NCY7ZAMHOTt+InKmjNaqPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Schmidt <alexs@linux.ibm.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Hillf Danton <hillf.zj@alibaba-inc.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 350/589] PCI: Enable AtomicOps only if Root Port supports them
-Date: Sat, 30 May 2026 18:03:51 +0200
-Message-ID: <20260530160234.068295537@linuxfoundation.org>
+Subject: [PATCH 5.10 351/589] Documentation: fix a hugetlbfs reservation statement
+Date: Sat, 30 May 2026 18:03:52 +0200
+Message-ID: <20260530160234.092862000@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,108 +63,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Jane Chu <jane.chu@oracle.com>
 
-[ Upstream commit 1ae8c4ce157037e266184064a182af9ef9af278b ]
+[ Upstream commit 7a197d346a44384a1a858a98ef03766840e561d4 ]
 
-When inspecting the config space of a Connect-X physical function in an
-s390 system after it was initialized by the mlx5_core device driver, we
-found the function to be enabled to request AtomicOps despite the Root Port
-lacking support for completing them:
+Documentation/mm/hugetlbfs_reserv.rst has
+	if (resv_needed <= (resv_huge_pages - free_huge_pages))
+		resv_huge_pages += resv_needed;
+which describes this code in gather_surplus_pages()
+	needed = (h->resv_huge_pages + delta) - h->free_huge_pages;
+	if (needed <= 0) {
+		h->resv_huge_pages += delta;
+		return 0;
+	}
+which means if there are enough free hugepages to account for the new
+reservation, simply update the global reservation count without
+further action.
 
-  00:00.1 Ethernet controller: Mellanox Technologies MT2894 Family [ConnectX-6 Lx]
-          Subsystem: Mellanox Technologies Device 0002
-          DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
-                   AtomicOpsCtl: ReqEn+
+But the description is backwards, it should be
+	if (resv_needed <= (free_huge_pages - resv_huge_pages))
+instead.
 
-On s390 and many virtualized guests, the Endpoint is visible but the Root
-Port is not.  In this case, pci_enable_atomic_ops_to_root() previously
-enabled AtomicOps in the Endpoint even though it can't tell whether the
-Root Port supports them as a completer.
-
-Change pci_enable_atomic_ops_to_root() to fail if there's no Root Port or
-the Root Port doesn't support AtomicOps.
-
-Fixes: 430a23689dea ("PCI: Add pci_enable_atomic_ops_to_root()")
-Reported-by: Alexander Schmidt <alexs@linux.ibm.com>
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-[bhelgaas: commit log, check RP first to simplify flow]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260330-fix_pciatops-v7-2-f601818417e8@linux.ibm.com
+Link: https://lkml.kernel.org/r/20260302201015.1824798-1-jane.chu@oracle.com
+Fixes: 70bc0dc578b3 ("Documentation: vm, add hugetlbfs reservation overview")
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Hillf Danton <hillf.zj@alibaba-inc.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 41 ++++++++++++++++++++---------------------
- 1 file changed, 20 insertions(+), 21 deletions(-)
+ Documentation/vm/hugetlbfs_reserv.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 115c4ce3310f1..ecac0f8d7ff51 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3680,8 +3680,7 @@ int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size)
-  */
- int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
- {
--	struct pci_bus *bus = dev->bus;
--	struct pci_dev *bridge;
-+	struct pci_dev *root, *bridge;
- 	u32 cap, ctl2;
+diff --git a/Documentation/vm/hugetlbfs_reserv.rst b/Documentation/vm/hugetlbfs_reserv.rst
+index f143954e0d056..1c238b10e1772 100644
+--- a/Documentation/vm/hugetlbfs_reserv.rst
++++ b/Documentation/vm/hugetlbfs_reserv.rst
+@@ -157,7 +157,7 @@ are enough free huge pages to accommodate the reservation.  If there are,
+ the global reservation count resv_huge_pages is adjusted something like the
+ following::
  
- 	if (!pci_is_pcie(dev))
-@@ -3703,35 +3702,35 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
- 		return -EINVAL;
- 	}
+-	if (resv_needed <= (resv_huge_pages - free_huge_pages))
++	if (resv_needed <= (free_huge_pages - resv_huge_pages)
+ 		resv_huge_pages += resv_needed;
  
--	while (bus->parent) {
--		bridge = bus->self;
-+	root = pcie_find_root_port(dev);
-+	if (!root)
-+		return -EINVAL;
- 
--		pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2, &cap);
-+	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
-+	if ((cap & cap_mask) != cap_mask)
-+		return -EINVAL;
- 
-+	bridge = pci_upstream_bridge(dev);
-+	while (bridge != root) {
- 		switch (pci_pcie_type(bridge)) {
--		/* Ensure switch ports support AtomicOp routing */
- 		case PCI_EXP_TYPE_UPSTREAM:
--		case PCI_EXP_TYPE_DOWNSTREAM:
--			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
--				return -EINVAL;
--			break;
--
--		/* Ensure root port supports all the sizes we care about */
--		case PCI_EXP_TYPE_ROOT_PORT:
--			if ((cap & cap_mask) != cap_mask)
--				return -EINVAL;
--			break;
--		}
--
--		/* Ensure upstream ports don't block AtomicOps on egress */
--		if (pci_pcie_type(bridge) == PCI_EXP_TYPE_UPSTREAM) {
-+			/* Upstream ports must not block AtomicOps on egress */
- 			pcie_capability_read_dword(bridge, PCI_EXP_DEVCTL2,
- 						   &ctl2);
- 			if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_EGRESS_BLOCK)
- 				return -EINVAL;
-+			fallthrough;
-+
-+		/* All switch ports need to route AtomicOps */
-+		case PCI_EXP_TYPE_DOWNSTREAM:
-+			pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2,
-+						   &cap);
-+			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
-+				return -EINVAL;
-+			break;
- 		}
- 
--		bus = bus->parent;
-+		bridge = pci_upstream_bridge(bridge);
- 	}
- 
- 	pcie_capability_set_word(dev, PCI_EXP_DEVCTL2,
+ Note that the global lock hugetlb_lock is held when checking and adjusting
 -- 
 2.53.0
 
