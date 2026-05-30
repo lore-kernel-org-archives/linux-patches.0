@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C85D279DC9;
-	Sat, 30 May 2026 18:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658A1279DC9;
+	Sat, 30 May 2026 18:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165588; cv=none; b=uir98uxEW9xlzKAkHFaVl1vHW8XJ3smCopKAn6bEUW0+VnEgOwAzWD83Yyedh70gmBTIi3xeZIwLEeUt9XA3NTsbe2msNNHoq6RRAwS+n6+zmm7qJ/6Rz31Sd8XdYsKoeObzpPuVSC77qXQUptsHJcJVG860pqGJzjR8kQG2iZE=
+	t=1780165591; cv=none; b=KtGWM2loYeYFm26MAfz+MzDoalj4gbkFXRV39HoqzHREIYjITcC1eoiBP0pD/S61WVOi3LyOzURPBSdpaTBwlKcPEDbnYRQA+rsrcCXvkPZvdSPsOjTe84JqXzKp+y5REim0TVmkNx0KWnU87xeO0JEO/nGpmHAflmaWsKpbvQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165588; c=relaxed/simple;
-	bh=LOLGSp2v0jqdPbIswTDpmbZi9gGXkyeaE27tDGy4vR8=;
+	s=arc-20240116; t=1780165591; c=relaxed/simple;
+	bh=CfvlMbHJZy8VaoIZQ4NnKwWHZYAGbpbNXcQRQCsl9Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WxQvoBMYjToJT3N8Y4T7KirFCTZU5FhDqc1YNn+yvkKzQW32SxnDjAwEqxQ4Ijtf7oi5MELhzq9FULvJTMtAD3UUtLzQWkyjY7KOCjgYh6IoPxrlDdFlik8WeEo68EWmm2/43FylmPqh85W2ojTw3roThP3HnXKxibThLLNR/vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQUd/7Bm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GeYMfyunYEbdOM6AMgWRWTdHwaey38hizzoTovLrY3V7Up8caZ3DziZkKz3sxBseXY9dxSQklfdl0yI6GWBkzPLWVw5cEPlVqelF8Rcc7uNIssX1aCTILa2VlPBflN6xOMlsPquBznzaSzbXVF5uSl1u1yrsi4UFB8E/tzXLSCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2QWb38t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQUd/7Bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6059E1F00893;
-	Sat, 30 May 2026 18:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2QWb38t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2911F00893;
+	Sat, 30 May 2026 18:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165587;
-	bh=nFsz5f2Jv/YkUV3v1O//B9oIp4WJOf2pnaJTUeIzFIo=;
+	s=korg; t=1780165590;
+	bh=vKKj4oQPtmEKZE7RajeG/8pAi8szjFLPN4FRfByOw3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQUd/7BmwyHouTGuGNlMfOowPD2slEG9HiTTTqeXe5AWpzg4GbA82lTwWPzokEovZ
-	 6vBIgcoLyNbut7tIlgnEZEQpLvIC8gxPl6sg5spCBpCB8ZMLNPac8t2ceBI2RQi4pl
-	 xHVZkna+hKQ3lVS/HCZCHDm1GUSW4jy/6l8oHsDI=
+	b=y2QWb38tYX6rPS1XUtKmLG3hDuYXE/CyfsWGCNWOZjBZtHowi7RN5E1ZinQ32DzPC
+	 E3Jh8CIFpnEvDo/YbJ6YGS19iJtUH1L1wkLucasyS7JwB5cOI0pnKqUE5b9UswVdr1
+	 aYM3HceAIMmdmMB/mcrnftiNfSdv2wKv7f3RJmqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 122/589] scripts/dtc: Remove unused dts_version in dtc-lexer.l
-Date: Sat, 30 May 2026 18:00:03 +0200
-Message-ID: <20260530160227.971184681@linuxfoundation.org>
+	Bean Huo <beanhuo@micron.com>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 096/589] scsi: ufs: core: Improve SCSI abort handling
+Date: Sat, 30 May 2026 17:59:37 +0200
+Message-ID: <20260530160227.218464986@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,52 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
-to upstream version v1.7.2-69-g53373d135579") upstream applied it as
-part of a regular scripts/dtc sync, which may be unsuitable for older
-versions of stable where the warning it fixes is present.
+commit 3ff1f6b6ba6f97f50862aa50e79959cc8ddc2566 upstream.
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in dtc-lexer.lex.c (compiled from
-dtc-lexer.l):
+The following has been observed on a test setup:
 
-  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
-    641 | static int dts_version = 1;
-        |            ^
+WARNING: CPU: 4 PID: 250 at drivers/scsi/ufs/ufshcd.c:2737 ufshcd_queuecommand+0x468/0x65c
+Call trace:
+ ufshcd_queuecommand+0x468/0x65c
+ scsi_send_eh_cmnd+0x224/0x6a0
+ scsi_eh_test_devices+0x248/0x418
+ scsi_eh_ready_devs+0xc34/0xe58
+ scsi_error_handler+0x204/0x80c
+ kthread+0x150/0x1b4
+ ret_from_fork+0x10/0x30
 
-Remove it to clear up the warning, as it is truly unused.
+That warning is triggered by the following statement:
 
-Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	WARN_ON(lrbp->cmd);
+
+Fix this warning by clearing lrbp->cmd from the abort handler.
+
+Link: https://lore.kernel.org/r/20211104181059.4129537-1-bvanassche@acm.org
+Fixes: 7a3e97b0dc4b ("[SCSI] ufshcd: UFS Host controller driver")
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ kovalev: bp to fix CVE-2021-47188; adapted placement of
+  lrbp->cmd = NULL for 5.10 function structure ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-This should apply cleanly to all supported stable branches.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- scripts/dtc/dtc-lexer.l |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/dtc/dtc-lexer.l
-+++ b/scripts/dtc/dtc-lexer.l
-@@ -39,8 +39,6 @@ extern bool treesource_error;
- #define DPRINT(fmt, ...)	do { } while (0)
- #endif
- 
--static int dts_version = 1;
--
- #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
- 				BEGIN(V1); \
- 
-@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
- 
- <*>"/dts-v1/"	{
- 			DPRINT("Keyword: /dts-v1/\n");
--			dts_version = 1;
- 			BEGIN_DEFAULT();
- 			return DT_V1;
- 		}
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index c7bf0e6bc303d..1b8072f47e7e8 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -6788,6 +6788,7 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
+ 		__ufshcd_transfer_req_compl(hba, (1UL << tag));
+ 		spin_unlock_irqrestore(host->host_lock, flags);
+ out:
++		lrbp->cmd = NULL;
+ 		err = SUCCESS;
+ 	} else {
+ 		dev_err(hba->dev, "%s: failed with err %d\n", __func__, err);
+-- 
+2.53.0
+
 
 
