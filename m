@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B4324468C;
-	Sat, 30 May 2026 18:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E403925B0A8;
+	Sat, 30 May 2026 18:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167053; cv=none; b=NZXw5f6C65VxpcWRFq8CFVa+Q1A5cOS7y24uEl6vZ3McTBBPFdpcsWCV+B+Q2bHcvg769Cx5yJpwlS7OtSP0tS3Y7VXhzDGiqP+PsJHdyjt8Vc/VMnAVxo+2/NOmpuuErAK0zCcHaqQ9F4i9Qj9BNYvJA2qgwlbFPi4fnpRkL1U=
+	t=1780167057; cv=none; b=f2iKTFA41U4RC66a4/rl3LRayEoLeIjhdIAZDvLExkMYNr6cJ/Z3Fc5q8vdUMFZsf8y0b7RAlmFEVXEwNv1kGx++SdnSEx9+26vFyPcotLovukY3eyAxs1dkXlK8Hmbqr7ZPN5UMRzx+kgwuiGFwkUfmfu1GAZONG9uveI/g81M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167053; c=relaxed/simple;
-	bh=HWoywexH/JuTWNpmvrlqGLYy33ZadZQFlUK7osRdqPQ=;
+	s=arc-20240116; t=1780167057; c=relaxed/simple;
+	bh=evnkq1UOS6YcR5Zu44b5DhO1XM8j0gTt1LwOrpTtMMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uoWI1wAcy7ZsCpvrdpX2Yo8kl/LYTtPlwYYFGwhZehzie1SbmnV2UpbKnO/yOzH/d2wvB5881psPaDNJYITAtnxe6IL/+zyP8lbkp4F3JzBB5/SrkSZV878gDrTqmG4xCZMLrm4VHG6HOysC6g0CMTEug3kPQwp1x7gTJIac/NE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoIFXLtH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z3ovsdLZvNDAGPOE2sRdrGjyei8zDkyogpmB6yw44/cQYL0KNpLl9ws+BYmJ5XHNk84zBjfSbVHY2J8BzRdvg9T67z7mYyZAqvEHlgGxYZkWA5a0Se5PR0HSZXifvf/0SGw4ssz577BDG6XFgoupE+npn7PA+IhmiXASG0QOSm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljPDZd/v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoIFXLtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EAF1F00893;
-	Sat, 30 May 2026 18:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljPDZd/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28441F00893;
+	Sat, 30 May 2026 18:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167051;
-	bh=s5Y8FgEVDzeXX/vRMbiFuQ/hTKzf03qiwLVTb1otq/g=;
+	s=korg; t=1780167054;
+	bh=U+WEYoRcNVZRcDWn5nPwAk0iZX1NPer/76VocgHPVYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoIFXLtHesUjRjqc+p29N1OmhAfbFvRR2dxuGDTeQUwJUyXd4xnB2l/fyrKncO+Vf
-	 Wn2/v7MWU6oE5HHk8zlgyf6nmA229gFBGJJy0GIhBCemMFwyVaBg3MdkLCNbCybLb6
-	 bV27+cn/FsmnRaECH4uRyEfd/vOO/hBX5h9rPUMc=
+	b=ljPDZd/vFPGc+w/SnpKO8TzJ9VdvQzRaXkAhpB7bM0MfPB981l2LP0L6IxHfVYYhI
+	 2+y7uBklNN2wmlEgX617UnZwE1ibA2QmpirOi9F81NjCq8RvAodAzW7/Hp0Wocn3hJ
+	 SFerDplYgt8+wNZQovopHPOnKCoDzngUQCSlYIhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	=?UTF-8?q?Linus=20L=C3=BCssing?= <linus.luessing@c0d3.blue>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Zhanpeng Li <lzhanpeng2025@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 550/589] batman-adv: mcast: fix use-after-free in orig_node RCU release
-Date: Sat, 30 May 2026 18:07:11 +0200
-Message-ID: <20260530160239.122702468@linuxfoundation.org>
+Subject: [PATCH 5.10 551/589] batman-adv: clear current gateway during teardown
+Date: Sat, 30 May 2026 18:07:12 +0200
+Message-ID: <20260530160239.146860499@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,55 +51,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 20c2d6a20ca936f5aaa6dd40f73f262ac45c87cc upstream.
+commit a340a51ed801eab7bb454150c226323b865263cc upstream.
 
-batadv_mcast_purge_orig() removes entries from RCU-protected hlists but
-does not wait for an RCU grace period before returning. Concurrent RCU
-readers may still accesses references to those entries at the point of
-removal. RCU-protected readers trying to operate on entries like
-orig->mcast_want_all_ipv6_node will then access already freed memory.
+batadv_gw_node_free() removes the gateway list entries during mesh teardown,
+but it does not clear the currently selected gateway. This leaves stale
+gateway state behind across cleanup and can break a later mesh recreation.
 
-Fix this by moving batadv_mcast_purge_orig() to batadv_orig_node_release(),
-just before the call_rcu() invocation. This ensures RCU readers that were
-active at purge time have drained before the orig_node memory is reclaimed.
+Clear bat_priv->gw.curr_gw before walking the gateway list so the selected
+gateway reference is dropped as part of teardown.
 
+Fixes: 2265c1410864 ("batman-adv: gateway election code refactoring")
 Cc: stable@kernel.org
-Fixes: ab49886e3da7 ("batman-adv: Add IPv4 link-local/IPv6-ll-all-nodes multicast support")
-Acked-by: Linus Lüssing <linus.luessing@c0d3.blue>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Zhanpeng Li <lzhanpeng2025@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/originator.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/batman-adv/gateway_client.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/batman-adv/originator.c
-+++ b/net/batman-adv/originator.c
-@@ -866,8 +866,6 @@ static void batadv_orig_node_free_rcu(st
+--- a/net/batman-adv/gateway_client.c
++++ b/net/batman-adv/gateway_client.c
+@@ -488,10 +488,14 @@ void batadv_gw_node_delete(struct batadv
+  */
+ void batadv_gw_node_free(struct batadv_priv *bat_priv)
+ {
++	struct batadv_gw_node *curr_gw;
+ 	struct batadv_gw_node *gw_node;
+ 	struct hlist_node *node_tmp;
  
- 	orig_node = container_of(rcu, struct batadv_orig_node, rcu);
- 
--	batadv_mcast_purge_orig(orig_node);
--
- 	batadv_frag_purge_orig(orig_node, NULL);
- 
- 	kfree(orig_node->tt_buff);
-@@ -922,6 +920,8 @@ void batadv_orig_node_release(struct kre
- 	/* Free nc_nodes */
- 	batadv_nc_purge_orig(orig_node->bat_priv, orig_node, NULL);
- 
-+	batadv_mcast_purge_orig(orig_node);
+ 	spin_lock_bh(&bat_priv->gw.list_lock);
++	curr_gw = rcu_replace_pointer(bat_priv->gw.curr_gw, NULL, true);
++	batadv_gw_node_put(curr_gw);
 +
- 	call_rcu(&orig_node->rcu, batadv_orig_node_free_rcu);
- }
- 
+ 	hlist_for_each_entry_safe(gw_node, node_tmp,
+ 				  &bat_priv->gw.gateway_list, list) {
+ 		hlist_del_init_rcu(&gw_node->list);
 
 
