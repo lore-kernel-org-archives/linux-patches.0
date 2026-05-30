@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B985F32E696;
-	Sat, 30 May 2026 17:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E203AD520;
+	Sat, 30 May 2026 17:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162233; cv=none; b=d+wF+1fYyviR0bpaYPKF8LyvABc2elcvCa4C+KbDsQ/xldVrShqZrUXWWs+DbnqUzwqaJN3QnqD/Mec2YgQMKHmK144Rt8spxAko52l7XgylkjARFd49KF0c/S9nHD0tnKgyvNYeDemky8qtaL+07f1MXP0UH2mC6zYNYRtPSgo=
+	t=1780162239; cv=none; b=B3kiiU+EppfkmyVLkAKvBd/GKMHsuEra0cYx4lCpy7zxSBJfwZcp/u2sLVYMJUKaRwIdyuvxQ5SwW99JnvPMTrdWtof70TEUuA/fka2I9WLvT1OqOVemyDTR8pwsULQSkwRmQZb1vOUxr8wh3KQ88o/M0wcYofKuGrLK+O8W5QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162233; c=relaxed/simple;
-	bh=L2qjBaabPIyi+taUjxjvtI/I+LGAZVlDejmNxRGbh64=;
+	s=arc-20240116; t=1780162239; c=relaxed/simple;
+	bh=tgieQTDofmrSz/CNprYKBfSlWpnNnKLwCxadUc0R650=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUK0oybkkemLTbmcXTjs6sx7s42S/Si/Wlb6Uy7lBmx+m4ZAz9aAjOWIxdkgYANSzHAtNqUM79V1IwqwpFDi5sdza+nfDWTCf7rwybyTgJqR59aRTw0aHzNo3LZpTZx8U5D1awJzEBEpnzEsTKdyZHb4klAIyXCI7Lr4dWL4jqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aULW6xzZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AtQuCYlAk5a6tKrN9Fpd2KVmCcpG4NvMsOuiZswn/+91lSsBJwUiQDVKrwQBdG8m0R8PMW8qg11/IPeVK3NOw4GISN9jCtQf+BlLJHtxUl1txm6vNnpqJnHE2O9qxn2W7PoNQs+7A262ZMZl5G9jKV3txmwuBGsDpo/QK054ToU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbTUymWe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aULW6xzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4C11F00893;
-	Sat, 30 May 2026 17:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbTUymWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0337E1F00893;
+	Sat, 30 May 2026 17:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162232;
-	bh=fWsZvK4rSlGHyJGYK/WaEnT3XrFPfz+VxGpAm/WP2Pc=;
+	s=korg; t=1780162235;
+	bh=urVYQVKvY7mb0gupV2+BodTC0j9PbKegP8DywxE3FpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aULW6xzZWyIDIRKFQ4eOYcc6rIaWQ/fWAVtW8kT/S4TsL+aIcc+N7kgj98JYBczKe
-	 NOt52pLlZak8INUOKDrNW5QW/iQ7tHTsHh18pr5sC53c2PRH/AgtB8ngUg1hFJPjA5
-	 XiOCqn82W6eb+XhhGqg2qAJ9eyX8yl/zIOo9B21w=
+	b=QbTUymWeP7rOKbXO8cFdMZs3msQQthgP5z1GO70enOMJNBXciqZL8sBJrFc9dwGQX
+	 2zdiXKFsA/EKqK8g7CVT312EkXcPo4FExVCNK0Tw3/lcXyVBABkwq3fk+e6siJENBs
+	 klF7mXIV4qKmQnM7EAnBpRfsEGsUw92TFad+wRIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 831/969] net/rds: reset op_nents when zerocopy page pin fails
-Date: Sat, 30 May 2026 18:05:55 +0200
-Message-ID: <20260530160323.593710906@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Li Zetao <lizetao1@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Robert Garcia <rob_garcia@163.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 832/969] io_uring: prevent opcode speculation
+Date: Sat, 30 May 2026 18:05:56 +0200
+Message-ID: <20260530160323.621294303@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,41 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit e174929793195e0cd6a4adb0cad731b39f9019b4 upstream.
+[ Upstream commit 1e988c3fe1264708f4f92109203ac5b1d65de50b ]
 
-When iov_iter_get_pages2() fails in rds_message_zcopy_from_user(),
-the pinned pages are released with put_page(), and
-rm->data.op_mmp_znotifier is cleared.  But we fail to properly
-clear rm->data.op_nents.
+sqe->opcode is used for different tables, make sure we santitise it
+against speculations.
 
-Later when rds_message_purge() is called from rds_sendmsg() the
-cleanup loop iterates over the incorrectly non zero number of
-op_nents and frees them again.
-
-Fix this by properly resetting op_nents when it should be in
-rds_message_zcopy_from_user().
-
-Fixes: 0cebaccef3ac ("rds: zerocopy Tx support.")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260505234336.2132721-1-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: d3656344fea03 ("io_uring: add lookup table for various opcode needs")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Reviewed-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/r/7eddbf31c8ca0a3947f8ed98271acc2b4349c016.1739568408.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/message.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -409,6 +409,7 @@ static int rds_message_zcopy_from_user(s
- 
- 			for (i = 0; i < rm->data.op_nents; i++)
- 				put_page(sg_page(&rm->data.op_sg[i]));
-+			rm->data.op_nents = 0;
- 			mmp = &rm->data.op_mmp_znotifier->z_mmp;
- 			mm_unaccount_pinned_pages(mmp);
- 			ret = -EFAULT;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index d0d9ff6b87a08..fdb8afdb01353 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2031,6 +2031,8 @@ static int io_init_req(struct io_ring_ctx *ctx, struct io_kiocb *req,
+ 		req->opcode = 0;
+ 		return io_init_fail_req(req, -EINVAL);
+ 	}
++	opcode = array_index_nospec(opcode, IORING_OP_LAST);
++
+ 	def = &io_op_defs[opcode];
+ 	if (unlikely(sqe_flags & ~SQE_COMMON_FLAGS)) {
+ 		/* enforce forwards compatibility on users */
+-- 
+2.53.0
+
 
 
