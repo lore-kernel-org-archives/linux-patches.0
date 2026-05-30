@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3FC137750;
-	Sat, 30 May 2026 18:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6D6137750;
+	Sat, 30 May 2026 18:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167206; cv=none; b=OAo8elC8T8r1AuvM0g+j290rRrAg95aqwU5N33m7469QgZSPfINXbcOXMRSMp5To8JM43qlr7FTERU/vJjTFMP+a1RbbUQJJWOzUHN93JcrTWK/Nu9i0gjAPr6Lb7zF35iEyKyBZlxgGsr1HuII5RwrMiSrsknOTxp9CQURo00o=
+	t=1780167210; cv=none; b=cD1pxmuI1ystaQiv8kjWtdhVKQAB71fiRWrquePU6GJK3n5nXD1eHc0QVGAaYqnLwpR1DOASkWyGlasdGdKaKbi2R4LK5r1Q2jgeWO3besbMfHAaNAnuZ5Ss9dTSMbC1TCBuuP3wHdnYBSWlH+G5ny1hxmxPjz3uCFgCF/2jPUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167206; c=relaxed/simple;
-	bh=qaeN2pTMF2ixFaJcBqSdy+fds2o4u7q1bEWuetNjBqc=;
+	s=arc-20240116; t=1780167210; c=relaxed/simple;
+	bh=vBKVhwFlABte6FLFM3Qhg2304sSg79OIUd5v1PuzHxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQLTfIMh1dG3z7uQUspFrLFy9a8yYJPqsGAqT8SD4eK6F/4RLj7qpLv/tWfEI6L6PeFWTrYG+n7okbVATA8cu9DkoH/gxOPN6x5mLdwB9FCs0gn07fo3sfIOM5HtmHexTPP/Xz+M+Ho1SsHCTlBurgUy19W13ROfe7JOAP/Z8Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaVhEL8Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PU8tuGZ/lxlsQw7may1bPeiuKqMgvFF/aBmUxoKXMTtsX56zl7nY+F2wFduPf08ryvxab7/XcqtjIkopM5mAPVgj62CsvyyzpmWz52fLNFYoc677cjZOFnrFiS1qWr/8bsJmlzQlH2YWy7aOad55KYoCJ4IJVFaKH0S4TUkdNCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqqlzBZ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaVhEL8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64231F00893;
-	Sat, 30 May 2026 18:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqqlzBZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6238D1F00893;
+	Sat, 30 May 2026 18:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167205;
-	bh=MzFuaW7hXiPSUPwNZXSMRMpvQxsD+X4dqvnBDmaqAjE=;
+	s=korg; t=1780167209;
+	bh=TnfwlmYYeMvahLRrXE4LfFDO9063pU9k07h8VNvvcxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaVhEL8QcRxoH7qCcIUqF2/pV5rAiuCLsyACaG9j4LWjOGvnxm3A7Dc1KtcDD0tjM
-	 EPeoW4YgPjDtTacUPXPDxzJotMOah005mjR2glJxRRn4Yr4Gx6DhU636Qm7L7SJknS
-	 tWTRAd7fc9eP/+4qHVrWIQjwcftDX8ITEcONeqwc=
+	b=GqqlzBZ/Gz8XscbU+lZ6HF0E0rn1Te/SWeB5bi3G9r+nnpwe8RrPXmO1wh0QBbXdx
+	 tpezk6Nxf929DaZU8PNZy7m2sRFUXMaL8ffdcgkB3teKT+RPxX3ow8Q4XMH+OlmHuU
+	 xA7C8qHk2TFNKnwLLSlxiNozXRofUSts2Oy3XlEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 582/589] net: tls: prevent chain-after-chain in plain text SG
-Date: Sat, 30 May 2026 18:07:43 +0200
-Message-ID: <20260530160239.891487544@linuxfoundation.org>
+Subject: [PATCH 5.10 583/589] platform/x86: intel-hid: Check ACPI_HANDLE() against NULL
+Date: Sat, 30 May 2026 18:07:44 +0200
+Message-ID: <20260530160239.917579689@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -46,97 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit ff26a0e8377dec07e4a7230db7675bed1b9a6d03 ]
+[ Upstream commit 5c69e090ae5dd93d910f70db0796357080707d26 ]
 
-Sashiko points out that if end = 0 (start != 0) the current
-code will create a chain link to content type right after
-the wrap link:
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-  This would create a chain where the wrap link points directly
-  to another chain link. The scatterlist API sg_next iterator
-  does not recursively resolve consecutive chain links.
+Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
+platform/x86 intel-hid driver.
 
-meaning this is illegal input to crypto.
-
-The wrapping link is unnecessary if end = 0. end is the entry after
-the last one used so end = 0 means there's nothing pushed after
-the wrap:
-
-   end         start            i
-    v            v              v
-  [   ]...[   ][ d ][ d ][ d ][ d ][rsv for wrap]
-
-Skip the wrapping in this case.
-
-TLS 1.3 can use the "wrapping slot" for it's chaining if end = 0.
-This avoids the chain-after-chain.
-
-Move the wrap chaining before marking END and chaining off content
-type, that feels like more logical ordering to me, but should not
-matter from functional perspective.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260511174920.433155-3-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ecc83e52b28c ("intel-hid: new hid event driver for hotkeys")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/1971512.tdWV9SEqCh@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/platform/x86/intel-hid.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 9969222dd2150..1b8e003d5e70b 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -730,21 +730,33 @@ static int tls_push_record(struct sock *sk, int flags,
- 	i = msg_pl->sg.end;
- 	sk_msg_iter_var_prev(i);
+diff --git a/drivers/platform/x86/intel-hid.c b/drivers/platform/x86/intel-hid.c
+index 12d695adf3f74..f52367363d530 100644
+--- a/drivers/platform/x86/intel-hid.c
++++ b/drivers/platform/x86/intel-hid.c
+@@ -471,12 +471,16 @@ static bool button_array_present(struct platform_device *device)
  
-+	/* msg_pl->sg.data is a ring; data[MAX+1] is reserved for the wrap
-+	 * link (frags won't use it). 'i' is now the last filled entry:
-+	 *
-+	 *         i   end              start
-+	 *         v    v                 v            [ rsv ]
-+	 *  [ d ][ d ][   ][   ]...[   ][ d ][ d ][ d ][chain]
-+	 *    ^   END                                     v
-+	 *     `-----------------------------------------'
-+	 *
-+	 * Note that SGL does not allow chain-after-chain, so for TLS 1.3,
-+	 * we must make sure we don't create the wrap entry and then chain
-+	 * link to content_type immediately at index 0.
-+	 */
-+	if (i < msg_pl->sg.start)
-+		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
-+			 msg_pl->sg.data);
+ static int intel_hid_probe(struct platform_device *device)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&device->dev);
+ 	unsigned long long mode, dummy;
+ 	struct intel_hid_priv *priv;
++	acpi_handle handle;
+ 	acpi_status status;
+ 	int err;
+ 
++	handle = ACPI_HANDLE(&device->dev);
++	if (!handle)
++		return -ENODEV;
 +
- 	rec->content_type = record_type;
- 	if (prot->version == TLS_1_3_VERSION) {
- 		/* Add content type to end of message.  No padding added */
- 		sg_set_buf(&rec->sg_content_type, &rec->content_type, 1);
- 		sg_mark_end(&rec->sg_content_type);
--		sg_chain(msg_pl->sg.data, msg_pl->sg.end + 1,
--			 &rec->sg_content_type);
-+		sg_chain(msg_pl->sg.data, i + 2, &rec->sg_content_type);
- 	} else {
- 		sg_mark_end(sk_msg_elem(msg_pl, i));
- 	}
+ 	intel_hid_init_dsm(handle);
  
--	if (msg_pl->sg.end < msg_pl->sg.start)
--		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
--			 msg_pl->sg.data);
--
- 	i = msg_pl->sg.start;
- 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
- 
+ 	if (!intel_hid_evaluate_method(handle, INTEL_HID_DSM_HDMM_FN, &mode)) {
 -- 
 2.53.0
 
