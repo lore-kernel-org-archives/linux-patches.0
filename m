@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793F9352027;
-	Sat, 30 May 2026 16:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF943403F3;
+	Sat, 30 May 2026 16:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159857; cv=none; b=r7z3l36zkQf7Rqqp6U5RE42/ObrLeH53sF2LXhF2U8rwQsx/mWvuiFHuKe/1yO+qmlljrHNCYjSTDKBSlZHFoT7IwJhlDYihB5267VR8fAzhoZqG/EQ6rICxUKOe8UQZKVwaXEjIqfHzQ6cD2LXrSbqB77RviznnHdBbzKS1F2w=
+	t=1780159860; cv=none; b=HqvuCTRq8W8La1z/VA6qiDy0BaxbxXqhSS1E5n1BHDH0t03iGgKAPWT0dALZ3XUqpFaM6V27AJahcGxdEc3KLHZBVWnx9/eZH9tJbqyP6zubyz9wbV6oSzXomXKmsX/ZPQU9mxEEWkAAVY4pOquk4ar6cyS3kiHdW4LYM3aaw3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159857; c=relaxed/simple;
-	bh=QuJSsPyNScXhLnhI22mEYOIcggUh4/ULe4LzBUhciLM=;
+	s=arc-20240116; t=1780159860; c=relaxed/simple;
+	bh=j7B1O+x8o2PCV433C2WWL8VKL76eaqbctIulOMwMl4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svsF1OKOCzQItNkyvWcFqUb6yVkR7Ond3gU87Ui0y4FyQ/Sxv5BCqVroNKMCaG8jtBJrKfUP9IuGgnppH1+tAu3V8J+crZeUDpI21vXZ69FP90GRhjc+ro6GQh8XtDHkXEndnH42kd5JtO8uFLX3TyhUYWPqozA36wAB3M0mMCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQAPwp1F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EcnDWXFIkEDVDbl61Bdvt9EUpnEq0cC78BvhMWDwwX82gMKX6cCy+5qX2xoy9Dc6cRZLYWJK1lkTAXbZo/8zeJA9Qyb4c4FzoFihD01pkq6dNN4WfzZxLO5rwmt6GXW5wOWhgGW3+Lw4AqZ4SU15yb7+W9xb10qPlwsllz9WCCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzKQe5NG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQAPwp1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71AC1F00893;
-	Sat, 30 May 2026 16:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzKQe5NG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325F91F00898;
+	Sat, 30 May 2026 16:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159854;
-	bh=atqADrseXkPXsTryvQBbO3JQs3zsbnSZdz5JVgB9aoo=;
+	s=korg; t=1780159857;
+	bh=VokPjfki+mBzDOJuXHMmXFx4/SGON/d94E7E3Lle+iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tQAPwp1FRI/OcZTxuKdx6a/zsyY6vd6MPPYEOnSIIHwh0FlD5xHIUMZoIahC5TAk9
-	 I1gqMNcJzhAIp9OS/5erQZ2vVqfLPFZDOn5Ori4UYINLwThsKu1+/VbMv72fmYwXeu
-	 GPjJkv/eo8Y+YX4fA7gfwFsOBm7wr00wUZl0SyWA=
+	b=nzKQe5NGHpzdwtAfWAZYg13FmqO+2MB1GyJFufTLruN3tVglhgGbv8cSATKzoNOLJ
+	 oa4Z189y+N7d3XwkHT6e9xsrmbttcK8GATF9vt0cBAwy4VTlQsq+dCHI5hOaMbvj1j
+	 SUxJyz4QSSObAaM7w8c7Lo+cMkDi4FVehz9mAwMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/969] driver core: Dont let a device probe until its ready
-Date: Sat, 30 May 2026 17:55:03 +0200
-Message-ID: <20260530160305.437841168@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.1 180/969] wifi: rtw88: check for PCI upstream bridge existence
+Date: Sat, 30 May 2026 17:55:04 +0200
+Message-ID: <20260530160305.465348577@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,224 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a2225b6e834a838ae3c93709760edc0a169eb2f2 ]
+commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
 
-The moment we link a "struct device" into the list of devices for the
-bus, it's possible probe can happen. This is because another thread
-can load the driver at any time and that can cause the device to
-probe. This has been seen in practice with a stack crawl that looks
-like this [1]:
+pci_upstream_bridge() returns NULL if the device is on a root bus.  If
+8821CE is installed in the system with such a PCI topology, the probing
+routine will crash.  This has probably been unnoticed as 8821CE is mostly
+supplied in laptops where there is a PCI-to-PCI bridge located upstream
+from the device.  However the card might be installed on a system with
+different configuration.
 
-  really_probe()
-  __driver_probe_device()
-  driver_probe_device()
-  __driver_attach()
-  bus_for_each_dev()
-  driver_attach()
-  bus_add_driver()
-  driver_register()
-  __platform_driver_register()
-  init_module() [some module]
-  do_one_initcall()
-  do_init_module()
-  load_module()
-  __arm64_sys_finit_module()
-  invoke_syscall()
+Check if the bridge does exist for the specific workaround to be applied.
 
-As a result of the above, it was seen that device_links_driver_bound()
-could be called for the device before "dev->fwnode->dev" was
-assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
-being called which meant that other devices waiting on our driver's
-sub-nodes were stuck deferring forever.
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-It's believed that this problem is showing up suddenly for two
-reasons:
-1. Android has recently (last ~1 year) implemented an optimization to
-   the order it loads modules [2]. When devices opt-in to this faster
-   loading, modules are loaded one-after-the-other very quickly. This
-   is unlike how other distributions do it. The reproduction of this
-   problem has only been seen on devices that opt-in to Android's
-   "parallel module loading".
-2. Android devices typically opt-in to fw_devlink, and the most
-   noticeable issue is the NULL "dev->fwnode->dev" in
-   device_links_driver_bound(). fw_devlink is somewhat new code and
-   also not in use by all Linux devices.
-
-Even though the specific symptom where "dev->fwnode->dev" wasn't
-assigned could be fixed by moving that assignment higher in
-device_add(), other parts of device_add() (like the call to
-device_pm_add()) are also important to run before probe. Only moving
-the "dev->fwnode->dev" assignment would likely fix the current
-symptoms but lead to difficult-to-debug problems in the future.
-
-Fix the problem by preventing probe until device_add() has run far
-enough that the device is ready to probe. If somehow we end up trying
-to probe before we're allowed, __driver_probe_device() will return
--EPROBE_DEFER which will make certain the device is noticed.
-
-In the race condition that was seen with Android's faster module
-loading, we will temporarily add the device to the deferred list and
-then take it off immediately when device_add() probes the device.
-
-Instead of adding another flag to the bitfields already in "struct
-device", instead add a new "flags" field and use that. This allows us
-to freely change the bit from different thread without worrying about
-corrupting nearby bits (and means threads changing other bit won't
-corrupt us).
-
-[1] Captured on a machine running a downstream 6.6 kernel
-[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
-
+Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
 Cc: stable@vger.kernel.org
-Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c    | 15 ++++++++++++++
- drivers/base/dd.c      | 20 +++++++++++++++++++
- include/linux/device.h | 44 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+)
+ drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 157775dc401b2..81a8fe313f6a4 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3694,6 +3694,21 @@ int device_add(struct device *dev)
- 		fw_devlink_link_device(dev);
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1784,7 +1784,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
  	}
  
-+	/*
-+	 * The moment the device was linked into the bus's "klist_devices" in
-+	 * bus_add_device() then it's possible that probe could have been
-+	 * attempted in a different thread via userspace loading a driver
-+	 * matching the device. "ready_to_probe" being unset would have
-+	 * blocked those attempts. Now that all of the above initialization has
-+	 * happened, unblock probe. If probe happens through another thread
-+	 * after this point but before bus_probe_device() runs then it's fine.
-+	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
-+	 * will notice (under device_lock) that the device is already bound.
-+	 */
-+	device_lock(dev);
-+	dev_set_ready_to_probe(dev);
-+	device_unlock(dev);
-+
- 	bus_probe_device(dev);
+ 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
+-	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
++	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
+ 		rtwpci->rx_no_aspm = true;
  
- 	/*
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index dbbe2cebb8917..1c6f266f9367f 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -770,6 +770,26 @@ static int __driver_probe_device(struct device_driver *drv, struct device *dev)
- 	if (dev->driver)
- 		return -EBUSY;
- 
-+	/*
-+	 * In device_add(), the "struct device" gets linked into the subsystem's
-+	 * list of devices and broadcast to userspace (via uevent) before we're
-+	 * quite ready to probe. Those open pathways to driver probe before
-+	 * we've finished enough of device_add() to reliably support probe.
-+	 * Detect this and tell other pathways to try again later. device_add()
-+	 * itself will also try to probe immediately after setting
-+	 * "ready_to_probe".
-+	 */
-+	if (!dev_ready_to_probe(dev))
-+		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
-+
-+	/*
-+	 * Set can_match = true after calling dev_ready_to_probe(), so
-+	 * driver_deferred_probe_add() won't actually add the device to the
-+	 * deferred probe list when dev_ready_to_probe() returns false.
-+	 *
-+	 * When dev_ready_to_probe() returns false, it means that device_add()
-+	 * will do another probe() attempt for us.
-+	 */
- 	dev->can_match = true;
- 	pr_debug("bus: '%s': %s: matched device %s with driver %s\n",
- 		 drv->bus->name, __func__, dev_name(dev), drv->name);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index cc84521795b14..528e0dad742e1 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -457,6 +457,21 @@ struct device_physical_location {
- 	bool lid;
- };
- 
-+/**
-+ * enum struct_device_flags - Flags in struct device
-+ *
-+ * Each flag should have a set of accessor functions created via
-+ * __create_dev_flag_accessors() for each access.
-+ *
-+ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
-+ *		initialization that probe could be called.
-+ */
-+enum struct_device_flags {
-+	DEV_FLAG_READY_TO_PROBE = 0,
-+
-+	DEV_FLAG_COUNT
-+};
-+
- /**
-  * struct device - The basic device structure
-  * @parent:	The device's "parent" device, the device to which it is attached.
-@@ -545,6 +560,7 @@ struct device_physical_location {
-  *		and optionall (if the coherent mask is large enough) also
-  *		for dma allocations.  This flag is managed by the dma ops
-  *		instance from ->dma_supported.
-+ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
-  *
-  * At the lowest level, every device in a Linux system is represented by an
-  * instance of struct device. The device structure contains the information
-@@ -652,8 +668,36 @@ struct device {
- #ifdef CONFIG_DMA_OPS_BYPASS
- 	bool			dma_ops_bypass : 1;
- #endif
-+
-+	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
- };
- 
-+#define __create_dev_flag_accessors(accessor_name, flag_name) \
-+static inline bool dev_##accessor_name(const struct device *dev) \
-+{ \
-+	return test_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_set_##accessor_name(struct device *dev) \
-+{ \
-+	set_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_clear_##accessor_name(struct device *dev) \
-+{ \
-+	clear_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
-+{ \
-+	assign_bit(flag_name, dev->flags, value); \
-+} \
-+static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
-+{ \
-+	return test_and_set_bit(flag_name, dev->flags); \
-+}
-+
-+__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
-+
-+#undef __create_dev_flag_accessors
-+
- /**
-  * struct device_link - Device link representation.
-  * @supplier: The device on the supplier end of the link.
--- 
-2.53.0
-
+ 	rtw_pci_phy_cfg(rtwdev);
 
 
