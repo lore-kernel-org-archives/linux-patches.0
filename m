@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D095284690;
-	Sat, 30 May 2026 18:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF6432F770;
+	Sat, 30 May 2026 18:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165033; cv=none; b=P+acv/q5ORTsodexY/siCjnt3kFfF1T+2+ObQyJnKtps9LRBsol2GWfylZNHZY+pksJRA2bKGcigadfVhFskTA8GJ3H/tJNHtjHdT1t4Jmt+q0a/u0tXoGSWheGdsdFRGAv3eVgYaEA0ERKnFlTgxaBscRgdyE5H8Fr3YHY3dUc=
+	t=1780165037; cv=none; b=X16UyTJfs7q9vsdkSDKpmc1m7YgbehFOGx3g0WhjPqLjw8uZ6oyh84/NUGPB3EE4qY+MnuwLbmgC3udOc0aGM9nXVSDbqHdQtCawOi8rII2W6S5vqdRyyWK/4+rg+n7Y+Uv5lK0bZCmr9bKlxxTjK/aH+fug4rMA8UDuV6Fyr18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165033; c=relaxed/simple;
-	bh=c344TKKQT2U0WbEpIaKs86AxSrEspQpyRN/OqLEg7BQ=;
+	s=arc-20240116; t=1780165037; c=relaxed/simple;
+	bh=IdTQPJ/xSxT6JCttNRSyYUg1XYcagmZ2XZr4+CnYMG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLJK8g2uOlVT3QbM60pgZ3HCGekq9ZRlObOTZxJlkQ4Biu0mMxBn1z81ZkxSpIKyAFbUvWHQL3Td7+4BognslMsjnvLolUEA4nmyEG5pRrHEOFEeqMSA9Mq/GBEau3vI/KmCaIiVwgQKWWg37649p0856+rtoJyVKNnkvTjUdLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dzo9rKkX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GNO4+iyjV6oxZpik60UNpf+DGXht7LN+hbF3VvYKIeNtRm8LbkXqZ8HEAK11t9nQ4MUfx0+lUjO5tszkgHQ9uO69u7ZDIiC1ngU96zfF3mjVqdFrxRN+8sRd/hclCBc81N68sdUAHAyrTCkc+pxNopxjbmuS5tHPuBvwec5wYsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMfrpgCn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dzo9rKkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8749F1F00893;
-	Sat, 30 May 2026 18:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMfrpgCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11FB1F00893;
+	Sat, 30 May 2026 18:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165032;
-	bh=9xb1rN7yoHA/4gaU8biZJBI25eNxCQZx0XrVX3NaGiU=;
+	s=korg; t=1780165035;
+	bh=fBkIiMMUc3t8+LW5lnbpVDJnywG/9BKeQ19H4cRemNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dzo9rKkXb+2ssHjReUkgJV4vAq3hmp2IHgTUi0eb3bL+WumCWnX5jlXwhhbGbAnKS
-	 ux3XEg1NDLW+j7USYclR43W1FpsftVMkzMmvzi5c2hkE+JG8iK/dqJktQnqXakCjzV
-	 dLnBZxhxNtN0XAQpQRKUkPtTm2VmXdqnvUPfbCYE=
+	b=ZMfrpgCn5jrvfdMum9MXC0+RFM+jIJOMNQaqYzcboCWoHW58mqb2XXFgMc/QbMkF1
+	 GpoRjZBe8C/21Mqo5BGE2h5m/0AiMGj/dHT/x4DAjPgTqNEWlIoC29VxLedGDs6TJP
+	 d/jd+fy3xoNpgfVI9N2CmnfX3xj2YpAu4QcEU8To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Phil Sutter <phil@nwl.cc>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 731/776] netfilter: arp_tables: allow use of arpt_do_table as hookfn
-Date: Sat, 30 May 2026 18:07:25 +0200
-Message-ID: <20260530160258.707703705@linuxfoundation.org>
+Subject: [PATCH 5.15 732/776] netfilter: arptables: allow xtables-nft only builds
+Date: Sat, 30 May 2026 18:07:26 +0200
+Message-ID: <20260530160258.730105716@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,83 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e8d225b6002673366abc2e40e30c991bdc8d62ca ]
+[ Upstream commit 4654467dc7e111e84f43ed1b70322873ae77e7be ]
 
-This is possible now that the xt_table structure is passed in via *priv.
+Allows to build kernel that supports the arptables mangle target
+via nftables' compat infra but without the arptables get/setsockopt
+interface or the old arptables filter interpreter.
+
+IOW, setting IP_NF_ARPFILTER=n will break arptables-legacy, but
+arptables-nft will continue to work as long as nftables compat
+support is enabled.
 
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
 Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter_arp/arp_tables.h |  5 ++---
- net/ipv4/netfilter/arp_tables.c          |  7 ++++---
- net/ipv4/netfilter/arptable_filter.c     | 10 +---------
- 3 files changed, 7 insertions(+), 15 deletions(-)
+ net/ipv4/netfilter/Kconfig | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/netfilter_arp/arp_tables.h b/include/linux/netfilter_arp/arp_tables.h
-index 4f9a4b3c58926..a40aaf645fa47 100644
---- a/include/linux/netfilter_arp/arp_tables.h
-+++ b/include/linux/netfilter_arp/arp_tables.h
-@@ -54,9 +54,8 @@ int arpt_register_table(struct net *net, const struct xt_table *table,
- 			const struct nf_hook_ops *ops);
- void arpt_unregister_table(struct net *net, const char *name);
- void arpt_unregister_table_pre_exit(struct net *net, const char *name);
--extern unsigned int arpt_do_table(struct sk_buff *skb,
--				  const struct nf_hook_state *state,
--				  struct xt_table *table);
-+extern unsigned int arpt_do_table(void *priv, struct sk_buff *skb,
-+				  const struct nf_hook_state *state);
+diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
+index 63cb953bd0196..5c2cdcb19dba3 100644
+--- a/net/ipv4/netfilter/Kconfig
++++ b/net/ipv4/netfilter/Kconfig
+@@ -331,36 +331,34 @@ endif # IP_NF_IPTABLES
  
- #ifdef CONFIG_NETFILTER_XTABLES_COMPAT
- #include <net/compat.h>
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index 92bc90ee76748..564054123772a 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -191,10 +191,11 @@ struct arpt_entry *arpt_next_entry(const struct arpt_entry *entry)
- 	return (void *)entry + entry->next_offset;
- }
- 
--unsigned int arpt_do_table(struct sk_buff *skb,
--			   const struct nf_hook_state *state,
--			   struct xt_table *table)
-+unsigned int arpt_do_table(void *priv,
-+			   struct sk_buff *skb,
-+			   const struct nf_hook_state *state)
- {
-+	const struct xt_table *table = priv;
- 	unsigned int hook = state->hook;
- 	static const char nulldevname[IFNAMSIZ] __attribute__((aligned(sizeof(long))));
- 	unsigned int verdict = NF_DROP;
-diff --git a/net/ipv4/netfilter/arptable_filter.c b/net/ipv4/netfilter/arptable_filter.c
-index 771eec4629352..359d00d74095b 100644
---- a/net/ipv4/netfilter/arptable_filter.c
-+++ b/net/ipv4/netfilter/arptable_filter.c
-@@ -26,14 +26,6 @@ static const struct xt_table packet_filter = {
- 	.priority	= NF_IP_PRI_FILTER,
- };
- 
--/* The work comes in here from netfilter.c */
--static unsigned int
--arptable_filter_hook(void *priv, struct sk_buff *skb,
--		     const struct nf_hook_state *state)
--{
--	return arpt_do_table(skb, state, priv);
--}
+ # ARP tables
+ config IP_NF_ARPTABLES
+-	tristate "ARP tables support"
+-	select NETFILTER_XTABLES
+-	select NETFILTER_FAMILY_ARP
+-	depends on NETFILTER_ADVANCED
+-	help
+-	  arptables is a general, extensible packet identification framework.
+-	  The ARP packet filtering and mangling (manipulation)subsystems
+-	  use this: say Y or M here if you want to use either of those.
 -
- static struct nf_hook_ops *arpfilter_ops __read_mostly;
+-	  To compile it as a module, choose M here.  If unsure, say N.
++	tristate
  
- static int arptable_filter_table_init(struct net *net)
-@@ -72,7 +64,7 @@ static int __init arptable_filter_init(void)
- 	if (ret < 0)
- 		return ret;
+-if IP_NF_ARPTABLES
++config NFT_COMPAT_ARP
++	tristate
++	depends on NF_TABLES_ARP && NFT_COMPAT
++	default m if NFT_COMPAT=m
++	default y if NFT_COMPAT=y
  
--	arpfilter_ops = xt_hook_ops_alloc(&packet_filter, arptable_filter_hook);
-+	arpfilter_ops = xt_hook_ops_alloc(&packet_filter, arpt_do_table);
- 	if (IS_ERR(arpfilter_ops)) {
- 		xt_unregister_template(&packet_filter);
- 		return PTR_ERR(arpfilter_ops);
+ config IP_NF_ARPFILTER
+-	tristate "ARP packet filtering"
++	tristate "arptables-legacy packet filtering support"
++	select IP_NF_ARPTABLES
+ 	help
+ 	  ARP packet filtering defines a table `filter', which has a series of
+ 	  rules for simple ARP packet filtering at local input and
+-	  local output.  On a bridge, you can also specify filtering rules
+-	  for forwarded ARP packets. See the man page for arptables(8).
++	  local output.  This is only needed for arptables-legacy(8).
++	  Neither arptables-nft nor nftables need this to work.
+ 
+ 	  To compile it as a module, choose M here.  If unsure, say N.
+ 
+ config IP_NF_ARP_MANGLE
+ 	tristate "ARP payload mangling"
++	depends on IP_NF_ARPTABLES || NFT_COMPAT_ARP
+ 	help
+ 	  Allows altering the ARP packet payload: source and destination
+ 	  hardware and network addresses.
+ 
+-endif # IP_NF_ARPTABLES
++	  This option is needed by both arptables-legacy and arptables-nft.
++	  It is not used by nftables.
+ 
+ endmenu
+ 
 -- 
 2.53.0
 
