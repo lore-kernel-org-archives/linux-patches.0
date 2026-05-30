@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A3917555;
-	Sat, 30 May 2026 18:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09292E7390;
+	Sat, 30 May 2026 18:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165308; cv=none; b=QvuT5u/2yA+jFV58At8QahEO++svhuxg03nDXrDXLM+Shn7S90dyEBRYA462CNIFZ8crLQtZcmptfYUWVm6isSPJujcg5ZqQSiZazhYhzvAa/wTLd8nXk5ykdiNI6sq2B/Z1e4E1lHVgKL2h0H2tMRtj6GHNGhkDbHSn+2nA6eE=
+	t=1780165311; cv=none; b=tTmGSyG6t4lsbfCAKcRV7P0xYSnrgSdxSlObLarhmd+foFoWa8XBczCFFmj+95aEehTP25it9k7KyiutQwJhxW2aK7rJ4lqFMOZmqbFCeF3CZZSJCZVz9fU1L43elPmor6wp6KY/LjweLYh3kqEMQhw1ykRSKs0kCuaTzJKoWoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165308; c=relaxed/simple;
-	bh=IiZqsvk/x9h6HqE1MIDJ01uwy3dACGizpUJrQb1JhsM=;
+	s=arc-20240116; t=1780165311; c=relaxed/simple;
+	bh=qMHjPYgXFwVRZaZfNiDC1TYW3zKDlR3ZIkaV/EvuwRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9ayrYU9beBnquFsauNkFeSWMCOFPRjofqD99ZYo04sB02wKGseACIzonho+sRIlqQZtfAl8i5CG8Il2iUC0Y+FFXQ8zqZCYxc/qlxvTqNogTn1GocGQS5uGIZ3P0Fe2Z/VWDpZz8UMmAgF6XzjzKYwT38q07DCTFHrKB2iNFXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ys3D6iB5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lVw1JRnIfq4dlxEf+U14Bu9S7G1YcTUY1SfPYCx01UGEQB6hUC3uyn87AZkoiEwQ+mh0MVb2lsfKncdkKW1hbGL2AlbtPO23U3umAZeD1+sbBdaBYPXaemqkEB+zn53+SEY5rKBS6NAYLOQP0DYVfLrxoTFOEXikCTCcxKa/j5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC0pYdem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ys3D6iB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAEA1F00893;
-	Sat, 30 May 2026 18:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC0pYdem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123E81F00893;
+	Sat, 30 May 2026 18:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165307;
-	bh=su92q73Is1yAEhscazVwHnBOCs+XxvgAemFth3nnz7E=;
+	s=korg; t=1780165310;
+	bh=IjHlr2b1PEHY8Opfbbw6ZrEjOJzYcLa2VNukCjsIrLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ys3D6iB5SqLCJkG+PbXMVivvO4+VKSdk6EuTM9+APwI1qPhEw/Rth8PxdwjiUW+QP
-	 U0zRbZvIvl1DMpYRaBjW0ZngPlFXOGsceymCUk0gUvQXwkQ3KF+u0axERdfcJikH9E
-	 l5s56mHY+9sG2VIobLb+mxLgJkJPc3mVW+gv9QjU=
+	b=yC0pYdemNZ83ZrfwlJAJ5Nm2RWLyhSTJssFtLKS1XmEWLNkQhE+G9dWxojqm9VYim
+	 Ed8MGE0TM8/DciNvgUTZnHevoBXnHsj69MjoeYWogr8D7FAll/e+3EEbM91qeI6tHN
+	 wO5P9TtBdkikwcTsUHIXmODwUmrH/wdORu8csT4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Mukul Sikka <mukul.sikka@broadcom.com>,
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/589] MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
-Date: Sat, 30 May 2026 17:58:41 +0200
-Message-ID: <20260530160225.643805899@linuxfoundation.org>
+Subject: [PATCH 5.10 041/589] netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
+Date: Sat, 30 May 2026 17:58:42 +0200
+Message-ID: <20260530160225.669445682@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,383 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Florian Westphal <fw@strlen.de>
 
-commit 540760b77b8fc49d39d1b2b76196e5ec57711a32 upstream.
+commit 07ace0bbe03b3d8e85869af1dec5e4087b1d57b8 upstream
 
-Before the introduction of the EHINV feature, which lets software mark
-TLB entries invalid, certain older implementations of the MIPS ISA were
-equipped with an analogous bit, as a vendor extension, which however is
-hidden from software and only ever set at reset, and then any software
-write clears it, making the intended TLB entry valid.
+pipapo relies on kmalloc(0) returning ZERO_SIZE_PTR (i.e., not NULL
+but pointer is invalid).
 
-This feature makes it unsafe to read a TLB entry with TLBR, modify the
-page mask, and write the entry back with TLBWI, because this operation
-will implicitly clear the hidden bit and this may create a duplicate
-entry, as with the presence of the hidden bit there is no guarantee all
-the entries across the TLB are unique each.
+Rework this to not call slab allocator when we'd request a 0-byte
+allocation.
 
-Usually the firmware has already uniquified TLB entries before handing
-control over, in which case we only need to guarantee at bootstrap no
-clash will happen with the VPN2 values chosen in local_flush_tlb_all().
-
-However with systems such as Mikrotik RB532 we get handed the TLB as at
-reset, with the hidden bit set across the entries and possibly duplicate
-entries present.  This then causes a machine check exception when page
-sizes are reset in r4k_tlb_uniquify() and prevents the system from
-booting.
-
-Rewrite the algorithm used in r4k_tlb_uniquify() then such as to avoid
-the reuse of ASID/VPN values across the TLB.  Get rid of global entries
-first as they may be blocking the entire address space, e.g. 16 256MiB
-pages will exhaust the whole address space of a 32-bit CPU and a single
-big page can exhaust the 32-bit compatibility space on a 64-bit CPU.
-
-Details of the algorithm chosen are given across the code itself.
-
-Fixes: 9f048fa48740 ("MIPS: mm: Prevent a TLB shutdown on initial uniquification")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Mukul Sikka <mukul.sikka@broadcom.com>
+Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+[Keerthana: In older stable branches (v6.6 and earlier), the allocation logic in
+pipapo_clone() still relies on `src->rules` rather than `src->rules_alloc`
+(introduced in v6.9 via 9f439bd6ef4f). Consequently, the previously
+backported INT_MAX clamping check uses `src->rules`. This patch correctly
+moves that `src->rules > (INT_MAX / ...)` check inside the new
+`if (src->rules > 0)` block]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 282 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 228 insertions(+), 54 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index af0f1d4693099..2e4b4668afd89 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -13,6 +13,7 @@
- #include <linux/sched.h>
- #include <linux/smp.h>
- #include <linux/memblock.h>
-+#include <linux/minmax.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -24,6 +25,7 @@
- #include <asm/hazards.h>
- #include <asm/mmu_context.h>
- #include <asm/tlb.h>
-+#include <asm/tlbdebug.h>
- #include <asm/tlbmisc.h>
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index baabbfe62a27f..39623bb726a5e 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -524,6 +524,9 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ 	struct nft_pipapo_field *f;
+ 	int i;
  
- extern void build_tlb_refill_handler(void);
-@@ -501,87 +503,259 @@ static int __init set_ntlb(char *str)
- __setup("ntlb=", set_ntlb);
- 
- 
--/* Comparison function for EntryHi VPN fields.  */
--static int r4k_vpn_cmp(const void *a, const void *b)
-+/* The start bit position of VPN2 and Mask in EntryHi/PageMask registers.  */
-+#define VPN2_SHIFT 13
++	if (m->bsize_max == 0)
++		return ret;
 +
-+/* Read full EntryHi even with CONFIG_32BIT.  */
-+static inline unsigned long long read_c0_entryhi_native(void)
-+{
-+	return cpu_has_64bits ? read_c0_entryhi_64() : read_c0_entryhi();
-+}
+ 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
+ 	if (!res_map) {
+ 		ret = ERR_PTR(-ENOMEM);
+@@ -1363,14 +1366,20 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 		       src->bsize * sizeof(*dst->lt) *
+ 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
+ 
+-		if (src->rules > (INT_MAX / sizeof(*src->mt)))
+-			goto out_mt;
++		if (src->rules > 0) {
++			if (src->rules > (INT_MAX / sizeof(*src->mt)))
++				goto out_mt;
 +
-+/* Write full EntryHi even with CONFIG_32BIT.  */
-+static inline void write_c0_entryhi_native(unsigned long long v)
- {
--	long v = *(unsigned long *)a - *(unsigned long *)b;
--	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
--	return s ? (v != 0) | v >> s : v;
-+	if (cpu_has_64bits)
-+		write_c0_entryhi_64(v);
-+	else
-+		write_c0_entryhi(v);
- }
++			dst->mt = kvmalloc_array(src->rules, sizeof(*src->mt),
++						 GFP_KERNEL);
++			if (!dst->mt)
++				goto out_mt;
  
-+/* TLB entry state for uniquification.  */
-+struct tlbent {
-+	unsigned long long wired:1;
-+	unsigned long long global:1;
-+	unsigned long long asid:10;
-+	unsigned long long vpn:51;
-+	unsigned long long pagesz:5;
-+	unsigned long long index:14;
-+};
-+
- /*
-- * Initialise all TLB entries with unique values that do not clash with
-- * what we have been handed over and what we'll be using ourselves.
-+ * Comparison function for TLB entry sorting.  Place wired entries first,
-+ * then global entries, then order by the increasing VPN/ASID and the
-+ * decreasing page size.  This lets us avoid clashes with wired entries
-+ * easily and get entries for larger pages out of the way first.
-+ *
-+ * We could group bits so as to reduce the number of comparisons, but this
-+ * is seldom executed and not performance-critical, so prefer legibility.
-  */
--static void __ref r4k_tlb_uniquify(void)
-+static int r4k_entry_cmp(const void *a, const void *b)
- {
--	int tlbsize = current_cpu_data.tlbsize;
--	bool use_slab = slab_is_available();
--	int start = num_wired_entries();
--	phys_addr_t tlb_vpn_size;
--	unsigned long *tlb_vpns;
--	unsigned long vpn_mask;
--	int cnt, ent, idx, i;
--
--	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
--	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
-+	struct tlbent ea = *(struct tlbent *)a, eb = *(struct tlbent *)b;
-+
-+	if (ea.wired > eb.wired)
-+		return -1;
-+	else if (ea.wired < eb.wired)
-+		return 1;
-+	else if (ea.global > eb.global)
-+		return -1;
-+	else if (ea.global < eb.global)
-+		return 1;
-+	else if (ea.vpn < eb.vpn)
-+		return -1;
-+	else if (ea.vpn > eb.vpn)
-+		return 1;
-+	else if (ea.asid < eb.asid)
-+		return -1;
-+	else if (ea.asid > eb.asid)
-+		return 1;
-+	else if (ea.pagesz > eb.pagesz)
-+		return -1;
-+	else if (ea.pagesz < eb.pagesz)
-+		return 1;
-+	else
-+		return 0;
-+}
- 
--	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
--	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
--		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
--	if (WARN_ON(!tlb_vpns))
--		return; /* Pray local_flush_tlb_all() is good enough. */
-+/*
-+ * Fetch all the TLB entries.  Mask individual VPN values retrieved with
-+ * the corresponding page mask and ignoring any 1KiB extension as we'll
-+ * be using 4KiB pages for uniquification.
-+ */
-+static void __ref r4k_tlb_uniquify_read(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	int start = num_wired_entries();
-+	unsigned long long vpn_mask;
-+	bool global;
-+	int i;
- 
--	htw_stop();
-+	vpn_mask = GENMASK(current_cpu_data.vmbits - 1, VPN2_SHIFT);
-+	vpn_mask |= cpu_has_64bits ? 3ULL << 62 : 1 << 31;
- 
--	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
--		unsigned long vpn;
-+	for (i = 0; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn, mask, asid;
-+		unsigned int pagesz;
- 
- 		write_c0_index(i);
- 		mtc0_tlbr_hazard();
- 		tlb_read();
- 		tlb_read_hazard();
--		vpn = read_c0_entryhi();
--		vpn &= vpn_mask & PAGE_MASK;
--		tlb_vpns[cnt] = vpn;
- 
--		/* Prevent any large pages from overlapping regular ones.  */
--		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
--		mtc0_tlbw_hazard();
--		tlb_write_indexed();
--		tlbw_use_hazard();
-+		global = !!(read_c0_entrylo0() & ENTRYLO_G);
-+		entryhi = read_c0_entryhi_native();
-+		mask = read_c0_pagemask();
-+
-+		asid = entryhi & cpu_asid_mask(&current_cpu_data);
-+		vpn = (entryhi & vpn_mask & ~mask) >> VPN2_SHIFT;
-+		pagesz = ilog2((mask >> VPN2_SHIFT) + 1);
-+
-+		tlb_vpns[i].global = global;
-+		tlb_vpns[i].asid = global ? 0 : asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+		tlb_vpns[i].wired = i < start;
-+		tlb_vpns[i].index = i;
- 	}
-+}
- 
--	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+/*
-+ * Write unique values to all but the wired TLB entries each, using
-+ * the 4KiB page size.  This size might not be supported with R6, but
-+ * EHINV is mandatory for R6, so we won't ever be called in that case.
-+ *
-+ * A sorted table is supplied with any wired entries at the beginning,
-+ * followed by any global entries, and then finally regular entries.
-+ * We start at the VPN and ASID values of zero and only assign user
-+ * addresses, therefore guaranteeing no clash with addresses produced
-+ * by UNIQUE_ENTRYHI.  We avoid any VPN values used by wired or global
-+ * entries, by increasing the VPN value beyond the span of such entry.
-+ *
-+ * When a VPN/ASID clash is found with a regular entry we increment the
-+ * ASID instead until no VPN/ASID clash has been found or the ASID space
-+ * has been exhausted, in which case we increase the VPN value beyond
-+ * the span of the largest clashing entry.
-+ *
-+ * We do not need to be concerned about FTLB or MMID configurations as
-+ * those are required to implement the EHINV feature.
-+ */
-+static void __ref r4k_tlb_uniquify_write(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	unsigned long long asid, vpn, vpn_size, pagesz;
-+	int widx, gidx, idx, sidx, lidx, i;
- 
--	write_c0_pagemask(PM_DEFAULT_MASK);
-+	vpn_size = 1ULL << (current_cpu_data.vmbits - VPN2_SHIFT);
-+	pagesz = ilog2((PM_4K >> VPN2_SHIFT) + 1);
-+
-+	write_c0_pagemask(PM_4K);
- 	write_c0_entrylo0(0);
- 	write_c0_entrylo1(0);
- 
--	idx = 0;
--	ent = tlbsize;
--	for (i = start; i < tlbsize; i++)
--		while (1) {
--			unsigned long entryhi, vpn;
-+	asid = 0;
-+	vpn = 0;
-+	widx = 0;
-+	gidx = 0;
-+	for (sidx = 0; sidx < tlbsize && tlb_vpns[sidx].wired; sidx++)
-+		;
-+	for (lidx = sidx; lidx < tlbsize && tlb_vpns[lidx].global; lidx++)
-+		;
-+	idx = gidx = sidx + 1;
-+	for (i = sidx; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn_pagesz = 0;
- 
--			entryhi = UNIQUE_ENTRYHI(ent);
--			vpn = entryhi & vpn_mask & PAGE_MASK;
-+		while (1) {
-+			if (WARN_ON(vpn >= vpn_size)) {
-+				dump_tlb_all();
-+				/* Pray local_flush_tlb_all() will cope.  */
-+				return;
-+			}
- 
--			if (idx >= cnt || vpn < tlb_vpns[idx]) {
--				write_c0_entryhi(entryhi);
--				write_c0_index(i);
--				mtc0_tlbw_hazard();
--				tlb_write_indexed();
--				ent++;
--				break;
--			} else if (vpn == tlb_vpns[idx]) {
--				ent++;
--			} else {
-+			/* VPN must be below the next wired entry.  */
-+			if (widx < sidx && vpn >= tlb_vpns[widx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[widx].vpn +
-+					   (1ULL << tlb_vpns[widx].pagesz)));
-+				asid = 0;
-+				widx++;
-+				continue;
-+			}
-+			/* VPN must be below the next global entry.  */
-+			if (gidx < lidx && vpn >= tlb_vpns[gidx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[gidx].vpn +
-+					   (1ULL << tlb_vpns[gidx].pagesz)));
-+				asid = 0;
-+				gidx++;
-+				continue;
-+			}
-+			/* Try to find a free ASID so as to conserve VPNs.  */
-+			if (idx < tlbsize && vpn == tlb_vpns[idx].vpn &&
-+			    asid == tlb_vpns[idx].asid) {
-+				unsigned long long idx_pagesz;
-+
-+				idx_pagesz = tlb_vpns[idx].pagesz;
-+				vpn_pagesz = max(vpn_pagesz, idx_pagesz);
-+				do
-+					idx++;
-+				while (idx < tlbsize &&
-+				       vpn == tlb_vpns[idx].vpn &&
-+				       asid == tlb_vpns[idx].asid);
-+				asid++;
-+				if (asid > cpu_asid_mask(&current_cpu_data)) {
-+					vpn += vpn_pagesz;
-+					asid = 0;
-+					vpn_pagesz = 0;
-+				}
-+				continue;
-+			}
-+			/* VPN mustn't be above the next regular entry.  */
-+			if (idx < tlbsize && vpn > tlb_vpns[idx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[idx].vpn +
-+					   (1ULL << tlb_vpns[idx].pagesz)));
-+				asid = 0;
- 				idx++;
-+				continue;
- 			}
-+			break;
- 		}
- 
-+		entryhi = (vpn << VPN2_SHIFT) | asid;
-+		write_c0_entryhi_native(entryhi);
-+		write_c0_index(tlb_vpns[i].index);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+
-+		tlb_vpns[i].asid = asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+
-+		asid++;
-+		if (asid > cpu_asid_mask(&current_cpu_data)) {
-+			vpn += 1ULL << pagesz;
-+			asid = 0;
+-		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL);
+-		if (!dst->mt)
+-			goto out_mt;
++			memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
++		} else {
++			dst->mt = NULL;
 +		}
-+	}
-+}
-+
-+/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
-+static void __ref r4k_tlb_uniquify(void)
-+{
-+	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
-+	phys_addr_t tlb_vpn_size;
-+	struct tlbent *tlb_vpns;
-+
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
-+
-+	htw_stop();
-+
-+	r4k_tlb_uniquify_read(tlb_vpns, tlbsize);
-+
-+	sort(tlb_vpns, tlbsize, sizeof(*tlb_vpns), r4k_entry_cmp, NULL);
-+
-+	r4k_tlb_uniquify_write(tlb_vpns, tlbsize);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
+ 
+-		memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
+ 		src++;
+ 		dst++;
+ 	}
 -- 
 2.53.0
 
