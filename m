@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C59341AC7;
-	Sat, 30 May 2026 17:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD84320CAD;
+	Sat, 30 May 2026 17:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163462; cv=none; b=YnM9FArSjhx0dGL4LlDOSCqEYZ3mGmkxd+JcHULFCoLpQcIuykqJbuww6RN3WmflcoBaavP9NsRNmGSoJT1e/UBlG9Zgd7ijryKL2/RCPULDLi1i6TQyPC2/Wo78KyAiOltHnEoZnkkshw7sSdITi6FFYa40v+oyusSPL2hG3mk=
+	t=1780163466; cv=none; b=iCkuU+waXntcXA7isIHlqwoT3WMkhvf9a/KTMHrSP50+ZAQzIAhodKF/pzhYFTXpHeN+vSny3Ucg18mQM4HRxw16v5I6ibNPJJcTUNVF4QlDmxJibOMpW6ZljdkhMcAeyzTxv+IH8/p71cbUNgtdO5UCGFTzJxzy4g2CEe2FkUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163462; c=relaxed/simple;
-	bh=31bf+vrSLiyi7gPpFooDMIWt80GxMnpgJaRbEcUClZU=;
+	s=arc-20240116; t=1780163466; c=relaxed/simple;
+	bh=79/WEzE9x6pOSK644VC1ir0b2WyjPjRM0pEiPp6OBgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTCMWXId265gUu6nxatSIPA5kLwOEMtGP3fc5cwQNEEMgjChVcapZe2JaFGHXox1qxLy+8m++rZHpBmxy75hn0VhfYGyROa5cdZ4E5OY2klbYnyvLSZAphyq6R/+5o5+yfYswkowvx42S5o9MyPaVNS6BuGTZ59Z6R73LavLYmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0wwe5UZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F5KUgO3VE7mMbLEXItUS5PViSo+/VtMFKokIm7q8WFtYZ6Dc1Lea8NcLck23roN5OEEoQOX0cBty2V8femGW8tZEbD3sY5ZshFJgKgTLi70WXzMlgMl6Kjbibye094Sne3H6GpuhuSIvbQrHsbwQ+Rr6pFNj+SQS4Xr273TnEok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeeOAaK5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0wwe5UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DEF1F00893;
-	Sat, 30 May 2026 17:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeeOAaK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931101F00893;
+	Sat, 30 May 2026 17:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163461;
-	bh=8bVtsaH0stdXCBXoqomRAcnLAnkB0dImmB3thhhvmGg=;
+	s=korg; t=1780163465;
+	bh=v/Sv5jwmCHKxVREV9AU6ca06wLVI8Mct0E3Ff3bMhpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0wwe5UZ/W13+Kfl6wdp/o7eub7kKodWtSF6YUFpr+kk7Q0MMrmrnxM3ynhYRwCeT
-	 5bWSiW3TVcDAF9p8P3PavDPTg1KKsuEll2nEGSCI0olclrx2I27u0t8LKGM3T5ES67
-	 jZbN1jIw4T+ZYM6HBBJLCDJZp3piHoctm5OSsf3c=
+	b=DeeOAaK52RxQy3Z5xTzCjOp4abXDhVcnKaWC5MCRsRCCjA+MobJC4W+2bmdsCjJVR
+	 QIzzn9Ei6l9DBNbFisZaiRDmqIZOFu+3kU9aK8F8zNDgDIjpsczBvvv6n0GRK4JkTj
+	 IsuNXrNZUhvOmHQPwDdHqNtM3IKVLPcH+Bk8g1X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 236/776] KVM: nSVM: Ensure AVIC is inhibited when restoring a vCPU to guest mode
-Date: Sat, 30 May 2026 17:59:10 +0200
-Message-ID: <20260530160246.628949472@linuxfoundation.org>
+Subject: [PATCH 5.15 237/776] KVM: nSVM: Always inject a #GP if mapping VMCB12 fails on nested VMRUN
+Date: Sat, 30 May 2026 17:59:11 +0200
+Message-ID: <20260530160246.654666430@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit 24f7d36b824b65cf1a2db3db478059187b2a37b0 upstream.
+commit 01ddcdc55e097ca38c28ae656711b8e6d1df71f8 upstream.
 
-On nested VMRUN, KVM ensures AVIC is inhibited by requesting
-KVM_REQ_APICV_UPDATE, triggering a check of inhibit reasons, finding
-APICV_INHIBIT_REASON_NESTED, and disabling AVIC.
+nested_svm_vmrun() currently only injects a #GP if kvm_vcpu_map() fails
+with -EINVAL. But it could also fail with -EFAULT if creating a host
+mapping failed. Inject a #GP in all cases, no reason to treat failure
+modes differently.
 
-However, when KVM_SET_NESTED_STATE is performed on a vCPU not in guest
-mode with AVIC enabled, KVM_REQ_APICV_UPDATE is not requested, and AVIC
-is not inhibited.
-
-Request KVM_REQ_APICV_UPDATE in the KVM_SET_NESTED_STATE path if AVIC is
-active, similar to the nested VMRUN path.
-
-Fixes: f44509f849fe ("KVM: x86: SVM: allow AVIC to co-exist with a nested guest running")
-Cc: stable@vger.kernel.org
+Fixes: 8c5fbf1a7231 ("KVM/nSVM: Use the new mapping API for mapping guest memory")
+CC: stable@vger.kernel.org
+Co-developed-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260224225017.3303870-1-yosry@kernel.org
+Link: https://patch.msgid.link/20260303003421.2185681-6-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/svm/nested.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -1407,6 +1407,9 @@ static int svm_set_nested_state(struct k
- 		goto out_free;
+@@ -651,12 +651,9 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
+ 	}
  
+ 	vmcb12_gpa = svm->vmcb->save.rax;
+-	ret = kvm_vcpu_map(vcpu, gpa_to_gfn(vmcb12_gpa), &map);
+-	if (ret == -EINVAL) {
++	if (kvm_vcpu_map(vcpu, gpa_to_gfn(vmcb12_gpa), &map)) {
+ 		kvm_inject_gp(vcpu, 0);
+ 		return 1;
+-	} else if (ret) {
+-		return kvm_skip_emulated_instruction(vcpu);
+ 	}
  
-+	if (kvm_vcpu_apicv_active(vcpu))
-+		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
-+
- 	kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
- 	ret = 0;
- out_free:
+ 	ret = kvm_skip_emulated_instruction(vcpu);
 
 
