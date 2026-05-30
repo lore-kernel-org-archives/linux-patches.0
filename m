@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7483F17555;
-	Sat, 30 May 2026 18:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD784217704;
+	Sat, 30 May 2026 18:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165497; cv=none; b=YldOop+BhmpnljzLx7xKgmr67q+ZaYMgmvlQxEWqScp4RePdpQh0cpcu4tCgc3B8NdQ/1yWjL/FDao5hEvyU4Qu+NRL84ivrtY+mLn8DcUgUzlP0FSu+0jYVS6twgFft2T0XUJHT49TF2Q6ZbEf+g6U6llLeu37MNGZTf3DACak=
+	t=1780165500; cv=none; b=Els6Vgo1kyqhU2LYS39JAvxRAA58l8TzpPrMZiwAYy/i2Pss9ZZQraks0wbWpoYwm/9aKrvffjYRt4fXjTjxNeqQOgeelqOapL0aK+5SgcgwzMkoGdIovYE72YdQcRj/Lw/YJVRpux2vp934kS2T9fEXAqzFcAL/Q92G0QdJEho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165497; c=relaxed/simple;
-	bh=C58atzpYPE360QQE4BguFKXhb80ShZ2T4Hn9jBcGnPk=;
+	s=arc-20240116; t=1780165500; c=relaxed/simple;
+	bh=yN2qZITi/K+Obe4W/ehtfYc+5OY+S4ANH91ifXxYbFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIbckTWt2P3P13evsuSpIEBiLpLnaFbVW4yCv1US+8wy7lKJNpAPzMhC3LPwmjKHbUHkf7oBVlByhlodDVvwwsH7Ex8Q39RO3Ufz9hAPaHgA/Y1VMiUr5z9AQ5LGfURyEF0rOms7RTgPGvTVrlJ3JxnpHy9puCywBfNHr/6RR/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZypNYVyc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oE0OGGTp0gdzuUmP2aopaGI6tsxch1QLCYTuPj1c13hP8TFzKPwjXesOV3PQVAptOoxJwakN7EapMl2lDGu/QxTep3EvaOxZy155FD+hoRDriD7zILCTZHyLk14ncuvViJE+98dGaYXWzRulPSC0yvS9il7nrONE0+cV4q0W0i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybobzYJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZypNYVyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99CC1F00893;
-	Sat, 30 May 2026 18:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybobzYJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC2C1F00893;
+	Sat, 30 May 2026 18:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165496;
-	bh=X04e7vKrO5U5bLJJ7d5HGbInkjDCHS4Auc5+oGR0/0A=;
+	s=korg; t=1780165499;
+	bh=Q9ZSE1Ay+Qp/icOgEH+ms2XmtPnk++0vzYCebz/Zq0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZypNYVycDl66KP2Lpy5CQvuCVvCfwb6r07O3CB75kyZIO52IixAtjujQ/XTiSl8of
-	 MZDvUfDF1cGUFVOhj9AxW7WY5lRQhDwdPZvjjh4aZrbvLrnmlKk4zu0nCHjqJyDNFQ
-	 kCR2fHVqe2SJkinA2JaG/ckhecHg39RRhBa2w7gU=
+	b=ybobzYJV4uPUmb8fGiQx9lmpgThu5gaMj2BI0ukZE4FIxbX9PF4plZJaVw1hGKP9d
+	 cjoglh5z+1i8HA413fgnvNgMFG3/JAYKg5L2FAT2QTYTcEmbi0e/EveyML/AuRXm2h
+	 xgDE5Cw4EJlxSOmFQyxv4yYtJ+Qq8oPqoAt2/Qzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/589] ACPI: property: Constify stubs for CONFIG_ACPI=n case
-Date: Sat, 30 May 2026 17:59:07 +0200
-Message-ID: <20260530160226.334699224@linuxfoundation.org>
+Subject: [PATCH 5.10 067/589] rxrpc: Fix call removal to use RCU safe deletion
+Date: Sat, 30 May 2026 17:59:08 +0200
+Message-ID: <20260530160226.362038036@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,52 +57,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 5c1a72a0fbe1b02c3ce0537f85f92ea935e0beec upstream.
+[ Upstream commit 146d4ab94cf129ee06cd467cb5c71368a6b5bad6 ]
 
-There is a few stubs that left untouched during constification of
-the fwnode related APIs. Constify three more stubs here.
+Fix rxrpc call removal from the rxnet->calls list to use list_del_rcu()
+rather than list_del_init() to prevent stuffing up reading
+/proc/net/rxrpc/calls from potentially getting into an infinite loop.
 
-Fixes: 8b9d6802583a ("ACPI: Constify acpi_bus helper functions, switch to macros")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-[ rjw: Subject edit ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+This, however, means that list_empty() no longer works on an entry that's
+been deleted from the list, making it harder to detect prior deletion.  Fix
+this by:
+
+Firstly, make rxrpc_destroy_all_calls() only dump the first ten calls that
+are unexpectedly still on the list.  Limiting the number of steps means
+there's no need to call cond_resched() or to remove calls from the list
+here, thereby eliminating the need for rxrpc_put_call() to check for that.
+
+rxrpc_put_call() can then be fixed to unconditionally delete the call from
+the list as it is the only place that the deletion occurs.
+
+Fixes: 2baec2c3f854 ("rxrpc: Support network namespacing")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Linus Torvalds <torvalds@linux-foundation.org>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted spin_lock/spin_unlock to write_lock/write_unlock ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/acpi.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/rxrpc/call_object.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index 9c184dbceba47..c5b51d8dcbe18 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -753,7 +753,7 @@ static inline bool is_acpi_device_node(struct fwnode_handle *fwnode)
- 	return false;
- }
+diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
+index 10dad2834d5b6..2240e93b0048a 100644
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -634,11 +634,9 @@ void rxrpc_put_call(struct rxrpc_call *call, enum rxrpc_call_trace op)
+ 		_debug("call %d dead", call->debug_id);
+ 		ASSERTCMP(call->state, ==, RXRPC_CALL_COMPLETE);
  
--static inline struct acpi_device *to_acpi_device_node(struct fwnode_handle *fwnode)
-+static inline struct acpi_device *to_acpi_device_node(const struct fwnode_handle *fwnode)
- {
- 	return NULL;
- }
-@@ -763,12 +763,12 @@ static inline bool is_acpi_data_node(struct fwnode_handle *fwnode)
- 	return false;
- }
+-		if (!list_empty(&call->link)) {
+-			write_lock(&rxnet->call_lock);
+-			list_del_init(&call->link);
+-			write_unlock(&rxnet->call_lock);
+-		}
++		write_lock(&rxnet->call_lock);
++		list_del_rcu(&call->link);
++		write_unlock(&rxnet->call_lock);
  
--static inline struct acpi_data_node *to_acpi_data_node(struct fwnode_handle *fwnode)
-+static inline struct acpi_data_node *to_acpi_data_node(const struct fwnode_handle *fwnode)
- {
- 	return NULL;
- }
+ 		rxrpc_cleanup_call(call);
+ 	}
+@@ -709,24 +707,20 @@ void rxrpc_destroy_all_calls(struct rxrpc_net *rxnet)
+ 	_enter("");
  
--static inline bool acpi_data_node_match(struct fwnode_handle *fwnode,
-+static inline bool acpi_data_node_match(const struct fwnode_handle *fwnode,
- 					const char *name)
- {
- 	return false;
+ 	if (!list_empty(&rxnet->calls)) {
+-		write_lock(&rxnet->call_lock);
++		int shown = 0;
+ 
+-		while (!list_empty(&rxnet->calls)) {
+-			call = list_entry(rxnet->calls.next,
+-					  struct rxrpc_call, link);
+-			_debug("Zapping call %p", call);
++		write_lock(&rxnet->call_lock);
+ 
++		list_for_each_entry(call, &rxnet->calls, link) {
+ 			rxrpc_see_call(call);
+-			list_del_init(&call->link);
+ 
+ 			pr_err("Call %p still in use (%d,%s,%lx,%lx)!\n",
+ 			       call, refcount_read(&call->ref),
+ 			       rxrpc_call_states[call->state],
+ 			       call->flags, call->events);
+ 
+-			write_unlock(&rxnet->call_lock);
+-			cond_resched();
+-			write_lock(&rxnet->call_lock);
++			if (++shown >= 10)
++				break;
+ 		}
+ 
+ 		write_unlock(&rxnet->call_lock);
 -- 
 2.53.0
 
