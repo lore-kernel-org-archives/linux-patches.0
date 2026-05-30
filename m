@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7FB344DB9;
-	Sat, 30 May 2026 17:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A2A33F590;
+	Sat, 30 May 2026 17:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163030; cv=none; b=thFwsisHw1Wpkyn/XEP/asA+hzzp4AY8mRT0cw4HzsdsBEYUarSeY5cmigTqge/rlDgfMLhG6D7PeYjo1in6f1sPxpPvRl+c6mDxImdk9G0OorCc2y63KOs/7H5dTU9S1Qcw/u2j22xGca9WQk91BwJD9+6u196JpceC+c9j9m4=
+	t=1780163033; cv=none; b=sKz2MaGdwo3mm2IVTzThxhVQbCNpc57dRHk5a2h2sDTP7KRMc51xSN2HSPbeLDs+iQpaUyRXsVwrUGemeNw2tr1DmCzCaXCWfBUE0LhVlbKOGCE0KLiPSOZWd4wW1/r3T8Ujk+AoowAg4gw7mN1t4FqDyKewuxGlOivhS/X1l2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163030; c=relaxed/simple;
-	bh=992twLPUbANJdIGnzY9HJGo+fkh7dv9dC92mhMdno7k=;
+	s=arc-20240116; t=1780163033; c=relaxed/simple;
+	bh=FF4laYzPrJ0z+X43O/pjuadN04pdbc/HooA74cXQnKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkTWIGpxq0QBqRpCBIhqP2LdVYRjtp9xADX58eHG2bxVHgMjrGQHwgh+OeiJ6MxoPavfgs4lyrq8HucBO5C6ARVFY0li0PzJgd5J+FDnSBYhvXUoT2sUhT7p86x1qvbZORmNzYeOSQe+JOWeYh9D7xOvwQS1ly0GxgcBUxafVZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flOahN5W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ObJHQ5InrshvCtNWb3UpgcoWFuIcd9RXRJU9ohWWtiv4CFPMEPBYT1u3QT+C0K55yzyhpYyhjC5Y8rxjuNhpnnf+/FpUzfikbb8kBa4uIps5l4EMjsnU3Q5wmjRW2tNF6szIOATxrRJ0mN7JS7d+iD+E2RwcALpQkQOxG4fX3QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGIVAWK1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flOahN5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8CB1F00893;
-	Sat, 30 May 2026 17:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGIVAWK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D1B1F0089D;
+	Sat, 30 May 2026 17:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163029;
-	bh=+swl7Xn+bJkjCeWxa2Zm2ZyMqKmMFJEbkaEE0EJuKEE=;
+	s=korg; t=1780163032;
+	bh=//R7PpTJ2lRHK8dkXTGmFWsg7t3RfFnDiznjOGDF3K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=flOahN5WWAfsru33/KfOoJMyyzcDFh+JyZ/WhdRQD34KvOTrziUVuhM7JZ7Wo82Lp
-	 Jjglr8bhylzH+LrZL9Qvec4gj46kzMSdbiag1s+vJ+l35UqT6ZR3k0/S+8mhG6TQa9
-	 3ruab83QSaD/If4F7Nhhqjx3ch7eVRiyz9GF4p18=
+	b=UGIVAWK1fMIRyuV6aM2kbLfn6NarbnZthPxxoztReGQg1kxZue6lwzkWtIYo2vhT4
+	 qo8DLI22+9mF9bNxamA3Tgzi+CmHb3TJ14ICWyqn+q8UmNCW0w/3jESZECPs+/n5H7
+	 a2uzd9dKbl3M4lR03NUq9XvfeetWQAO3FOOAQjn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Ruohan Lan <ruohanlan@aliyun.com>
-Subject: [PATCH 5.15 135/776] Bluetooth: hci_core: Fix use-after-free in vhci_flush()
-Date: Sat, 30 May 2026 17:57:29 +0200
-Message-ID: <20260530160243.893522350@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Johnny Hao <johnny_haocn@sina.com>
+Subject: [PATCH 5.15 136/776] dlm: fix possible lkb_resource null dereference
+Date: Sat, 30 May 2026 17:57:30 +0200
+Message-ID: <20260530160243.920880159@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,247 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 1d6123102e9fbedc8d25bf4731da6d513173e49e ]
+[ Upstream commit b98333c67daf887c724cd692e88e2db9418c0861 ]
 
-syzbot reported use-after-free in vhci_flush() without repro. [0]
+This patch fixes a possible null pointer dereference when this function is
+called from request_lock() as lkb->lkb_resource is not assigned yet,
+only after validate_lock_args() by calling attach_lkb(). Another issue
+is that a resource name could be a non printable bytearray and we cannot
+assume to be ASCII coded.
 
->From the splat, a thread close()d a vhci file descriptor while
-its device was being used by iotcl() on another thread.
+The log functionality is probably never being hit when DLM is used in
+normal way and no debug logging is enabled. The null pointer dereference
+can only occur on a new created lkb that does not have the resource
+assigned yet, it probably never hits the null pointer dereference but we
+should be sure that other changes might not change this behaviour and we
+actually can hit the mentioned null pointer dereference.
 
-Once the last fd refcnt is released, vhci_release() calls
-hci_unregister_dev(), hci_free_dev(), and kfree() for struct
-vhci_data, which is set to hci_dev->dev->driver_data.
+In this patch we just drop the printout of the resource name, the lkb id
+is enough to make a possible connection to a resource name if this
+exists.
 
-The problem is that there is no synchronisation after unlinking
-hdev from hci_dev_list in hci_unregister_dev().  There might be
-another thread still accessing the hdev which was fetched before
-the unlink operation.
-
-We can use SRCU for such synchronisation.
-
-Let's run hci_dev_reset() under SRCU and wait for its completion
-in hci_unregister_dev().
-
-Another option would be to restore hci_dev->destruct(), which was
-removed in commit 587ae086f6e4 ("Bluetooth: Remove unused
-hci-destruct cb").  However, this would not be a good solution, as
-we should not run hci_unregister_dev() while there are in-flight
-ioctl() requests, which could lead to another data-race KCSAN splat.
-
-Note that other drivers seem to have the same problem, for exmaple,
-virtbt_remove().
-
-[0]:
-BUG: KASAN: slab-use-after-free in skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
-BUG: KASAN: slab-use-after-free in skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
-Read of size 8 at addr ffff88807cb8d858 by task syz.1.219/6718
-
-CPU: 1 UID: 0 PID: 6718 Comm: syz.1.219 Not tainted 6.16.0-rc1-syzkaller-00196-g08207f42d3ff #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0xd2/0x2b0 mm/kasan/report.c:521
- kasan_report+0x118/0x150 mm/kasan/report.c:634
- skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
- skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
- skb_queue_purge include/linux/skbuff.h:3368 [inline]
- vhci_flush+0x44/0x50 drivers/bluetooth/hci_vhci.c:69
- hci_dev_do_reset net/bluetooth/hci_core.c:552 [inline]
- hci_dev_reset+0x420/0x5c0 net/bluetooth/hci_core.c:592
- sock_do_ioctl+0xd9/0x300 net/socket.c:1190
- sock_ioctl+0x576/0x790 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fcf5b98e929
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fcf5c7b9038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fcf5bbb6160 RCX: 00007fcf5b98e929
-RDX: 0000000000000000 RSI: 00000000400448cb RDI: 0000000000000009
-RBP: 00007fcf5ba10b39 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007fcf5bbb6160 R15: 00007ffd6353d528
- </TASK>
-
-Allocated by task 6535:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4359
- kmalloc_noprof include/linux/slab.h:905 [inline]
- kzalloc_noprof include/linux/slab.h:1039 [inline]
- vhci_open+0x57/0x360 drivers/bluetooth/hci_vhci.c:635
- misc_open+0x2bc/0x330 drivers/char/misc.c:161
- chrdev_open+0x4c9/0x5e0 fs/char_dev.c:414
- do_dentry_open+0xdf0/0x1970 fs/open.c:964
- vfs_open+0x3b/0x340 fs/open.c:1094
- do_open fs/namei.c:3887 [inline]
- path_openat+0x2ee5/0x3830 fs/namei.c:4046
- do_filp_open+0x1fa/0x410 fs/namei.c:4073
- do_sys_openat2+0x121/0x1c0 fs/open.c:1437
- do_sys_open fs/open.c:1452 [inline]
- __do_sys_openat fs/open.c:1468 [inline]
- __se_sys_openat fs/open.c:1463 [inline]
- __x64_sys_openat+0x138/0x170 fs/open.c:1463
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6535:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2381 [inline]
- slab_free mm/slub.c:4643 [inline]
- kfree+0x18e/0x440 mm/slub.c:4842
- vhci_release+0xbc/0xd0 drivers/bluetooth/hci_vhci.c:671
- __fput+0x44c/0xa70 fs/file_table.c:465
- task_work_run+0x1d1/0x260 kernel/task_work.c:227
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0x6ad/0x22e0 kernel/exit.c:955
- do_group_exit+0x21c/0x2d0 kernel/exit.c:1104
- __do_sys_exit_group kernel/exit.c:1115 [inline]
- __se_sys_exit_group kernel/exit.c:1113 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1113
- x64_sys_call+0x21ba/0x21c0 arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-The buggy address belongs to the object at ffff88807cb8d800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 88 bytes inside of
- freed 1024-byte region [ffff88807cb8d800, ffff88807cb8dc00)
-
-Fixes: bf18c7118cf8 ("Bluetooth: vhci: Free driver_data on file release")
-Reported-by: syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f62d64848fc4c7c30cd6
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Minor context conflict resolved. ]
-Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+[ The context change is due to the commit 9ac8ba46a701
+("fs: dlm: handle -EINVAL as log_error()") in v6.1
+which is irrelevant to the logic of this patch. ]
+Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    2 ++
- net/bluetooth/hci_core.c         |   34 ++++++++++++++++++++++++++++++----
- 2 files changed, 32 insertions(+), 4 deletions(-)
+ fs/dlm/lock.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -28,6 +28,7 @@
- #include <linux/idr.h>
- #include <linux/leds.h>
- #include <linux/rculist.h>
-+#include <linux/srcu.h>
- 
- #include <net/bluetooth/hci.h>
- #include <net/bluetooth/hci_sock.h>
-@@ -308,6 +309,7 @@ struct amp_assoc {
- 
- struct hci_dev {
- 	struct list_head list;
-+	struct srcu_struct srcu;
- 	struct mutex	lock;
- 
- 	const char	*name;
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1048,7 +1048,7 @@ static int hci_linkpol_req(struct hci_re
- 
- /* Get HCI device by index.
-  * Device is held on return. */
--struct hci_dev *hci_dev_get(int index)
-+static struct hci_dev *__hci_dev_get(int index, int *srcu_index)
- {
- 	struct hci_dev *hdev = NULL, *d;
- 
-@@ -1061,6 +1061,8 @@ struct hci_dev *hci_dev_get(int index)
- 	list_for_each_entry(d, &hci_dev_list, list) {
- 		if (d->id == index) {
- 			hdev = hci_dev_hold(d);
-+			if (srcu_index)
-+				*srcu_index = srcu_read_lock(&d->srcu);
- 			break;
- 		}
- 	}
-@@ -1068,6 +1070,22 @@ struct hci_dev *hci_dev_get(int index)
- 	return hdev;
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -2923,10 +2923,9 @@ static int validate_lock_args(struct dlm
+ 	rv = 0;
+  out:
+ 	if (rv)
+-		log_debug(ls, "validate_lock_args %d %x %x %x %d %d %s",
++		log_debug(ls, "validate_lock_args %d %x %x %x %d %d",
+ 			  rv, lkb->lkb_id, lkb->lkb_flags, args->flags,
+-			  lkb->lkb_status, lkb->lkb_wait_type,
+-			  lkb->lkb_resource->res_name);
++			  lkb->lkb_status, lkb->lkb_wait_type);
+ 	return rv;
  }
  
-+struct hci_dev *hci_dev_get(int index)
-+{
-+	return __hci_dev_get(index, NULL);
-+}
-+
-+static struct hci_dev *hci_dev_get_srcu(int index, int *srcu_index)
-+{
-+	return __hci_dev_get(index, srcu_index);
-+}
-+
-+static void hci_dev_put_srcu(struct hci_dev *hdev, int srcu_index)
-+{
-+	srcu_read_unlock(&hdev->srcu, srcu_index);
-+	hci_dev_put(hdev);
-+}
-+
- /* ---- Inquiry support ---- */
- 
- bool hci_discovery_active(struct hci_dev *hdev)
-@@ -1918,9 +1936,9 @@ static int hci_dev_do_reset(struct hci_d
- int hci_dev_reset(__u16 dev)
- {
- 	struct hci_dev *hdev;
--	int err;
-+	int err, srcu_index;
- 
--	hdev = hci_dev_get(dev);
-+	hdev = hci_dev_get_srcu(dev, &srcu_index);
- 	if (!hdev)
- 		return -ENODEV;
- 
-@@ -1942,7 +1960,7 @@ int hci_dev_reset(__u16 dev)
- 	err = hci_dev_do_reset(hdev);
- 
- done:
--	hci_dev_put(hdev);
-+	hci_dev_put_srcu(hdev, srcu_index);
- 	return err;
- }
- 
-@@ -3780,6 +3798,11 @@ struct hci_dev *hci_alloc_dev_priv(int s
- 	if (!hdev)
- 		return NULL;
- 
-+	if (init_srcu_struct(&hdev->srcu)) {
-+		kfree(hdev);
-+		return NULL;
-+	}
-+
- 	hdev->pkt_type  = (HCI_DM1 | HCI_DH1 | HCI_HV1);
- 	hdev->esco_type = (ESCO_HV1);
- 	hdev->link_mode = (HCI_LM_ACCEPT);
-@@ -4029,6 +4052,9 @@ void hci_unregister_dev(struct hci_dev *
- 	list_del(&hdev->list);
- 	write_unlock(&hci_dev_list_lock);
- 
-+	synchronize_srcu(&hdev->srcu);
-+	cleanup_srcu_struct(&hdev->srcu);
-+
- 	cancel_work_sync(&hdev->rx_work);
- 	cancel_work_sync(&hdev->cmd_work);
- 	cancel_work_sync(&hdev->tx_work);
 
 
