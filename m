@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A873AEB5C;
-	Sat, 30 May 2026 17:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B1E237713;
+	Sat, 30 May 2026 17:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163701; cv=none; b=dgaWey7U+idIdO5vtXLJ6tTDViPiEFYhKB15ZKGJcW4DVRxwX/I4RaT9KCtHOvxyYPTPF9gLd/GYs+AakdvKfTLUgBuXf3Vw8MB/u5Ur54yTLHfzs8/rwNknSUf00E9IK5U8YSOS4IGmricZGb8JNO/p01ie6W5SXKbBKnKtyh0=
+	t=1780163703; cv=none; b=TSK6RoM6WxVyoWL7IdR11K+8ekpgUvXusVit4VpL7lNsFlTVGs/PLyqrY8cbliTGYFK0RWpqeMJcrYXqgSM/tET1H/WtWkS8mfMeUntkSzfPP4asutwgTb7Ox+9EMIWlbUzYsNHnqlSXqT3kQiAKfo4GVqJYqyE6S8VJpfXPWBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163701; c=relaxed/simple;
-	bh=AgmkPMAfceJYRED8GEHKdE8x4QAY3hsaC4rzeUKDAaU=;
+	s=arc-20240116; t=1780163703; c=relaxed/simple;
+	bh=oaCOTwLql6BFDu6iVasWzksz97Q8PoX4vvRm1TDP2Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PW/KwcFSFD9ec14WEBlv3zSmVIJOgTi8Q5PSxB31+qnBqPQSziocJ0N6BFYAb38RwVAFRwkDnK+HZqQ/3R6QLMTPTPjcy5g9sKma/IVgc3vaY+0LfplzlDLNvcDIjQzVtCMsg5Hx+6wV/lpUJKZRpw0lDr9S62JBZ31XBBJ/i48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feWWVUVf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZLpeqx2hH3YQbfFMIPtU30huco4RmR05/5cLIlklkn60LxAZMomeePvg7h8QhF7bjiZcCgxgj098yKeZ9olc4g61tOHXN8oRfb47G0OZZPk13OM5NpjBzAJvExFuLKVQqoqM4rwLRKJkbdZLoLsf/h2rDkWW72xAXy0Opg0pUUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxM2Y2sM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feWWVUVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF3B1F00893;
-	Sat, 30 May 2026 17:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxM2Y2sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73161F00898;
+	Sat, 30 May 2026 17:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163698;
-	bh=pvC6+wMVW5AQ0BR6/qbYQEGloWGuQgJnbAsC2wTOxGc=;
+	s=korg; t=1780163701;
+	bh=Wn0X/tdyjrz03LqMJfanNN6edkgm++jUW+XhUOyX8E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=feWWVUVfkYKVx+mz50lDejUiUPI4k12p1dBSGaOJzWjkBOZMRz5XLu1sSGZrYMIT0
-	 KnMO1AIaXbSiHN1KUnsyYjK1bV4LeOnIe0E+y4PqcmDp6GBvnL+qwfXVQNHYjNrHop
-	 JtWIKnmKTgGzzBz1OevUPB0J7sbrXZ8u4BkfzyEc=
+	b=fxM2Y2sMjEWKoeBL8WG4kbWJLpGIqpW6pQvpYDVwnib/m9V66V0gi6Pn8GDjdgyL1
+	 OB5JfFC5IBmHD4heYxcjG4pAsPu4ueMPBiKw0hBRLq2WEqkFBWn7bPwIyLNiXphFtC
+	 Az29Ms2Uwz473UxP07scqQQ3BvtnuZdlfVFFkjHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 336/776] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
-Date: Sat, 30 May 2026 18:00:50 +0200
-Message-ID: <20260530160249.255922506@linuxfoundation.org>
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.15 337/776] RDMA/hns: Fix unlocked call to hns_roce_qp_remove()
+Date: Sat, 30 May 2026 18:00:51 +0200
+Message-ID: <20260530160249.282252112@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,137 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
+commit 0c99acbc8b6c6dd526ae475a48ee1897b61072fb upstream.
 
-nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
-final controller reference through nvmet_cq_put(). If that triggers
-nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
-the same nvmet-wq.
+Sashiko points out that hns_roce_qp_remove() requires the caller to hold
+locks.  The error flow in hns_roce_create_qp_common() doesn't hold those
+locks for the error unwind so it risks corrupting memory.
 
-Call chain:
+Grab the same locks the other two callers use.
 
- nvmet_tcp_schedule_release_queue()
-   kref_put(&queue->kref, nvmet_tcp_release_queue)
-     nvmet_tcp_release_queue()
-       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
-         process_one_work()
-           nvmet_tcp_release_queue_work()
-             nvmet_cq_put(&queue->nvme_cq)
-               nvmet_cq_destroy()
-                 nvmet_ctrl_put(cq->ctrl)
-                   nvmet_ctrl_free()
-                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
-
-                      Previously Scheduled by :-
-		        nvmet_add_async_event
-		          queue_work(nvmet_wq, &ctrl->async_event_work);
-
-This trips lockdep with a possible recursive locking warning.
-
-[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
-[ 5223.061801] loop0: detected capacity change from 0 to 2097152
-[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
-[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
-[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
-[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
-[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
-
-[ 5233.227718] ============================================
-[ 5233.231283] WARNING: possible recursive locking detected
-[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
-[ 5233.238434] --------------------------------------------
-[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
-[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
-[ 5233.251438]
-               but task is already holding lock:
-[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.261125]
-               other info that might help us debug this:
-[ 5233.265333]  Possible unsafe locking scenario:
-
-[ 5233.269217]        CPU0
-[ 5233.270795]        ----
-[ 5233.272436]   lock((wq_completion)nvmet-wq);
-[ 5233.275241]   lock((wq_completion)nvmet-wq);
-[ 5233.278020]
-                *** DEADLOCK ***
-
-[ 5233.281793]  May be due to missing lock nesting notation
-
-[ 5233.286195] 3 locks held by kworker/u192:6/2413:
-[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
-[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
-[ 5233.304290]
-               stack backtrace:
-[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
-[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
-[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
-[ 5233.306532] Call Trace:
-[ 5233.306534]  <TASK>
-[ 5233.306536]  dump_stack_lvl+0x73/0xb0
-[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
-[ 5233.306556]  __lock_acquire+0x13f0/0x2290
-[ 5233.306563]  lock_acquire+0xd0/0x300
-[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306571]  ? __flush_work+0x20b/0x530
-[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
-[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306583]  ? __flush_work+0x20b/0x530
-[ 5233.306585]  __flush_work+0x268/0x530
-[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
-[ 5233.306594]  ? xen_error_entry+0x30/0x60
-[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
-[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
-[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
-[ 5233.306634]  process_one_work+0x206/0x6e0
-[ 5233.306640]  worker_thread+0x184/0x320
-[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
-[ 5233.306646]  kthread+0xf1/0x130
-[ 5233.306648]  ? __pfx_kthread+0x10/0x10
-[ 5233.306651]  ret_from_fork+0x355/0x450
-[ 5233.306653]  ? __pfx_kthread+0x10/0x10
-[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
-[ 5233.306664]  </TASK>
-
-There is also no need to flush async_event_work from controller
-teardown. The admin queue teardown already fails outstanding AER
-requests before the final controller put :-
-
- nvmet_sq_destroy(admin sq)
-    nvmet_async_events_failall(ctrl)
-
-The controller has already been removed from the subsystem list before
-nvmet_ctrl_free() quiesces outstanding work.
-
-Replace flush_work() with cancel_work_sync() so a pending
-async_event_work item is canceled and a running instance is waited on
-without recursing into the same workqueue.
-
-Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: e088a685eae9 ("RDMA/hns: Support rq record doorbell for the user space")
+Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=9
+Link: https://patch.msgid.link/r/15-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1471,7 +1471,7 @@ static void nvmet_ctrl_free(struct kref
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1052,6 +1052,7 @@ static int hns_roce_create_qp_common(str
+ 	struct hns_roce_ib_create_qp_resp resp = {};
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	struct hns_roce_ib_create_qp ucmd = {};
++	unsigned long flags;
+ 	int ret;
  
- 	nvmet_stop_keep_alive_timer(ctrl);
+ 	mutex_init(&hr_qp->mutex);
+@@ -1135,7 +1136,13 @@ static int hns_roce_create_qp_common(str
+ 	return 0;
  
--	flush_work(&ctrl->async_event_work);
-+	cancel_work_sync(&ctrl->async_event_work);
- 	cancel_work_sync(&ctrl->fatal_err_work);
- 
- 	ida_simple_remove(&cntlid_ida, ctrl->cntlid);
+ err_flow_ctrl:
++	spin_lock_irqsave(&hr_dev->qp_list_lock, flags);
++	hns_roce_lock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
++			  init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
+ 	hns_roce_qp_remove(hr_dev, hr_qp);
++	hns_roce_unlock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
++			    init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
++	spin_unlock_irqrestore(&hr_dev->qp_list_lock, flags);
+ err_store:
+ 	free_qpc(hr_dev, hr_qp);
+ err_qpc:
 
 
