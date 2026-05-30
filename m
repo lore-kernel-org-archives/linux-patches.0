@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F6D13A244;
-	Sat, 30 May 2026 16:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7D52BE621;
+	Sat, 30 May 2026 16:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158428; cv=none; b=lMSp7CN0y5h/Bw5wdr4+2SEgI/QsCifh8EC1Y3CC0HLyacAEV/niFRr9fz8YxlITVMojPqCvv3r5sCAlMAkywJe/jMOfyQYdm4S0iOZ/zjm9k1OF1PVMQP25bstFVEhQn9qbT7b8Fq8wMfXGlkxrhP3vQBsUmUjxUjObSfOO2qQ=
+	t=1780158434; cv=none; b=cVcrrVkp3JNmvwMNY8B5Z2nKZvlvqeT7Nodpsh+aCA7GJSGnywiQFxoPPTJK2BNYZpAUL6g1QAznqQ7R4+ovAZu6+sRQQeBTO1mToe8DwPXoa8RrKfINHZaiP42DlYrLIuA4IuFM278LPrctwjBKzZCLWJW1m6IUL5ShnWT67qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158428; c=relaxed/simple;
-	bh=V+1s4OxJVugEJ+lpZo6dzTTFDcxqq7RZHr+WE9T4ZuQ=;
+	s=arc-20240116; t=1780158434; c=relaxed/simple;
+	bh=M+6KDIm3SY1x3zUxKsTS72Jne1W3ISZHQ3EUM95CSTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeoFamKr3zmG3am6NpLb4+25RSmMlQ96+6F400K2X7SOHwIwrHLXBaQn3EHSC35xQB2CUxXKYX27irwTHI6MUV4ue4odsynLRJDM4uPPJB8iuOWk4pomqED6bcFS3eT+INJfn27HOFyriUuIcb/gzq5zxIG2a1e3Rw5mTsamIAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWGbNHj7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oZ2u+BeY6JukT9jt23A2q2cj747k0dAfhHhxHXsdqWBNZfJ71tdqR8y6uZ/2HEsY5Ea+uzP1ut2J85Wc9hUt8ZxfdCDR+QJH3w/62kF3l+1NBR+CaBm5U+Wmze0m6Enug9eYRd6GGFAyp3OKpicO0x1yvWpLGXRTZhQ0rcMVKjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erfG9b21; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWGbNHj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543B81F00893;
-	Sat, 30 May 2026 16:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erfG9b21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5BE1F00893;
+	Sat, 30 May 2026 16:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158427;
-	bh=tzgSO1haU2BoclN6nKGDPv7i2qdNbvkAt44fVpka+P0=;
+	s=korg; t=1780158433;
+	bh=pX7bX6U8wcJoeHOwmEMeuRWyhBc7VayUi/I0wM8dhDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AWGbNHj7O5vj+vQeBLfgu1e9cr8Mr7z9dsHeoudO+dM7gxEYXXEcAxkyiMWlJpq5a
-	 zw80Xi/JiybWdhitINywJwc7xgKg3anwZeDRTsYXEVn7MyIYL6WFzh9zMeoEeoIlPf
-	 vSMQo7ui1ZAJuISdq1nLqOzWaVQRiLhlSZ6H792k=
+	b=erfG9b21olVC2GKfshIUZtRNJdVJAn3eEgNuyQwKeZ64KvkflLLZt7WS27ET/ucml
+	 Cv+2D6AU5vKOqDuw+y3XiuGo/OPchUSE5IqeefTcUegSHPF1Z6QlBDY97rcOsAnRv5
+	 GCQfOeoCDPiMnWNuzmrSN+966vfoIzFfm5YxvTpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/969] gpio: tegra: fix irq_release_resources calling enable instead of disable
-Date: Sat, 30 May 2026 17:52:54 +0200
-Message-ID: <20260530160301.782680161@linuxfoundation.org>
+Subject: [PATCH 6.1 033/969] net: sched: act_csum: validate nested VLAN headers
+Date: Sat, 30 May 2026 17:52:37 +0200
+Message-ID: <20260530160301.345202170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,38 +58,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Ruide Cao <caoruide123@gmail.com>
 
-[ Upstream commit 1561d96f5f55c1bca9ff047ace5813f4f244eea6 ]
+[ Upstream commit c842743d073bdd683606cb414eb0ca84465dd834 ]
 
-tegra_gpio_irq_release_resources() erroneously calls tegra_gpio_enable()
-instead of tegra_gpio_disable(). When IRQ resources are released, the
-GPIO configuration bit (CNF) should be cleared to deconfigure the pin as
-a GPIO. Leaving it enabled wastes power and can cause unexpected behavior
-if the pin is later reused for an alternate function via pinctrl.
+tcf_csum_act() walks nested VLAN headers directly from skb->data when an
+skb still carries in-payload VLAN tags. The current code reads
+vlan->h_vlan_encapsulated_proto and then pulls VLAN_HLEN bytes without
+first ensuring that the full VLAN header is present in the linear area.
 
-Fixes: 66fecef5bde0 ("gpio: tegra: Convert to gpio_irq_chip")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Link: https://patch.msgid.link/20260407210247.1737938-1-samasth.norway.ananda@oracle.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+If only part of an inner VLAN header is linearized, accessing
+h_vlan_encapsulated_proto reads past the linear area, and the following
+skb_pull(VLAN_HLEN) may violate skb invariants.
+
+Fix this by requiring pskb_may_pull(skb, VLAN_HLEN) before accessing and
+pulling each nested VLAN header. If the header still is not fully
+available, drop the packet through the existing error path.
+
+Fixes: 2ecba2d1e45b ("net: sched: act_csum: Fix csum calc for tagged packets")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/22df2fcb49f410203eafa5d97963dd36089f4ecf.1774892775.git.caoruide123@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tegra.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_csum.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-tegra.c b/drivers/gpio/gpio-tegra.c
-index 5b265a6fd3c18..49ff77c3ad198 100644
---- a/drivers/gpio/gpio-tegra.c
-+++ b/drivers/gpio/gpio-tegra.c
-@@ -597,7 +597,7 @@ static void tegra_gpio_irq_release_resources(struct irq_data *d)
- 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 1366adf9b9091..bcef42a3ad645 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -602,8 +602,12 @@ static int tcf_csum_act(struct sk_buff *skb, const struct tc_action *a,
+ 			protocol = skb->protocol;
+ 			orig_vlan_tag_present = true;
+ 		} else {
+-			struct vlan_hdr *vlan = (struct vlan_hdr *)skb->data;
++			struct vlan_hdr *vlan;
  
- 	gpiochip_relres_irq(chip, d->hwirq);
--	tegra_gpio_enable(tgi, d->hwirq);
-+	tegra_gpio_disable(tgi, d->hwirq);
- }
- 
- static void tegra_gpio_irq_print_chip(struct irq_data *d, struct seq_file *s)
++			if (!pskb_may_pull(skb, VLAN_HLEN))
++				goto drop;
++
++			vlan = (struct vlan_hdr *)skb->data;
+ 			protocol = vlan->h_vlan_encapsulated_proto;
+ 			skb_pull(skb, VLAN_HLEN);
+ 			skb_reset_network_header(skb);
 -- 
 2.53.0
 
