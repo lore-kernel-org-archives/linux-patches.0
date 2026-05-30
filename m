@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797562E7379;
-	Sat, 30 May 2026 17:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C9021B191;
+	Sat, 30 May 2026 17:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162942; cv=none; b=WFn7u7r/zyKDKJFmv9z/A2MOsiTtlDEYqtQp0pe1C0bKKgcW5WI1+5S9m6VAQBApUHDJs7gbEWH5nsYjtUP/Zwob0yBi95D9VCWSsXMAwg31yEggVMboS6YAeeQXpZ89kIb1BK4kQGGNB/iozj6ke2PuzzVx0OhqIqOpD9lnN1s=
+	t=1780162946; cv=none; b=Ls7MOUeHz6MJCracGdf+nQu+Ol9hxaGeG1rZfHsx/2FfRZOpBVZEkZFND/71ihhKBGfcSpRzBdi1eZv3tuQQAnNGB7cf7jyQWsA35sViKKqopVAG/+AI0dls9Wp3GXohPRpefCL3u5qMtxrck+8ZBYid9TuwffUlTrV5h3S3u3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162942; c=relaxed/simple;
-	bh=ygKshb4OScdRuroNlV8rsG7YMdl3U2nGhg9LMidcrV0=;
+	s=arc-20240116; t=1780162946; c=relaxed/simple;
+	bh=GyBqdSC/iGQbEq5gMvncKxkHHGa+x0fYax8YKHvCUJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZXQuF5jfBL1F9Wpj7NKPFAwRF4EDH9TaYmI5LS+1GhlwTpY7FpCGImj+vtgDA//9fMN+JW61kWTWr3e2YaqnXhbTaK04Jw+WO0D/dYs5zh1VBB33mmlkNfFkV+vD5afZeAmmtkPK4E6oOSU6ITvoCmZJ1fwczQI/Q5XEIDO2xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0mV8EIe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFcKym9Poz8rAN9QiMrq13W2H2Cf/zoDZMFQSuUn+zFBM2hnho5SiEYtXJtpEZrZwXnI0XKoLFcQfhTNslXAvxgTm7WJpxUaiCd+022T5P0Myj3v67g+mhOtLuD5w6f2EItWimPi7Me21S8lCvTMH5BIOAfCRjfW7BCmhAZv4BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lWtULFo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0mV8EIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0661F00893;
-	Sat, 30 May 2026 17:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lWtULFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147761F00893;
+	Sat, 30 May 2026 17:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162941;
-	bh=b04uAX0RcFrRtW2JEQjO9I0Ie5eUpoJbv8FFXs3l9tk=;
+	s=korg; t=1780162944;
+	bh=FdvnT/8g07GmZmC/oE8DeH4k9ERLtnAUu+acCcFPt1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0mV8EIeHPRWEhSwE0thjkbAsQUZWn526wgRwn9IDbvBYVz6KjOqGwNBiDzctkJFK
-	 V3NDsHpj3bSVmGA/fM2xTRMlFhxFCv9D5p+/xURnCHHaC0IBA2f0UtpcRWeJAmWNmt
-	 UBV87WDMqs9MRTd2fgHjwFiCJGGY2SjaBIltjGsI=
+	b=2lWtULFokxM66uQUr+TRTpZBleU/AVHxEKsRDjPwQgkSZPyfJ19jb8XTMJ6swSXbV
+	 IsRl8JkVBaOvWaRdXXGSVti5XUkBIn3jiJ7CO1joHOqONAuj4OXnZLSfMUEsq+hUfP
+	 T8cG3K/5ghqnI0hFhAYeggxoQbnvbvksDApM7LgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 070/776] ALSA: ctxfi: Limit PTP to a single page
-Date: Sat, 30 May 2026 17:56:24 +0200
-Message-ID: <20260530160242.129676210@linuxfoundation.org>
+	syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com,
+	Ruslan Valiyev <linuxoid@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 071/776] media: vidtv: fix NULL pointer dereference in vidtv_channel_pmt_match_sections
+Date: Sat, 30 May 2026 17:56:25 +0200
+Message-ID: <20260530160242.155428788@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,58 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Ruslan Valiyev <linuxoid@gmail.com>
 
-commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
+commit f8e1fc918a9fe67103bcda01d20d745f264d00a7 upstream.
 
-Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
-playback streams, but the additional pages are not used by the card
-correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
-registers, but using them separately would require refactoring the
-entire virtual memory allocation logic.
+syzbot reported a general protection fault in vidtv_psi_desc_assign [1].
 
-ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
-CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
-aggregate memory allocations exceed this limit, ct_vm_map() tries to
-access beyond the allocated space and causes a page fault:
+vidtv_psi_pmt_stream_init() can return NULL on memory allocation
+failure, but vidtv_channel_pmt_match_sections() does not check for
+this. When tail is NULL, the subsequent call to
+vidtv_psi_desc_assign(&tail->descriptor, desc) dereferences a NULL
+pointer offset, causing a general protection fault.
 
-  BUG: unable to handle page fault for address: ffffd4ae8a10a000
-  Oops: Oops: 0002 [#1] SMP PTI
-  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
-  Call Trace:
-  atc_pcm_playback_prepare+0x225/0x3b0
-  ct_pcm_playback_prepare+0x38/0x60
-  snd_pcm_do_prepare+0x2f/0x50
-  snd_pcm_action_single+0x36/0x90
-  snd_pcm_action_nonatomic+0xbf/0xd0
-  snd_pcm_ioctl+0x28/0x40
-  __x64_sys_ioctl+0x97/0xe0
-  do_syscall_64+0x81/0x610
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Add a NULL check after vidtv_psi_pmt_stream_init(). On failure, clean
+up the already-allocated stream chain and return.
 
-Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
-remain unchanged.
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:vidtv_psi_desc_assign+0x24/0x90 drivers/media/test-drivers/vidtv/vidtv_psi.c:629
+Call Trace:
+ <TASK>
+ vidtv_channel_pmt_match_sections drivers/media/test-drivers/vidtv/vidtv_channel.c:349 [inline]
+ vidtv_channel_si_init+0x1445/0x1a50 drivers/media/test-drivers/vidtv/vidtv_channel.c:479
+ vidtv_mux_init+0x526/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:519
+ vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
+ vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
 
-Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harin Lee <me@harin.net>
-Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1f5bcc7c919ec578777a
+Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctvmem.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vidtv/vidtv_channel.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/pci/ctxfi/ctvmem.h
-+++ b/sound/pci/ctxfi/ctvmem.h
-@@ -15,7 +15,7 @@
- #ifndef CTVMEM_H
- #define CTVMEM_H
+--- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
+@@ -341,6 +341,10 @@ vidtv_channel_pmt_match_sections(struct
+ 					tail = vidtv_psi_pmt_stream_init(tail,
+ 									 s->type,
+ 									 e_pid);
++					if (!tail) {
++						vidtv_psi_pmt_stream_destroy(head);
++						return;
++					}
  
--#define CT_PTP_NUM	4	/* num of device page table pages */
-+#define CT_PTP_NUM	1	/* num of device page table pages */
- 
- #include <linux/mutex.h>
- #include <linux/list.h>
+ 					if (!head)
+ 						head = tail;
 
 
