@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0675395AD8;
-	Sat, 30 May 2026 17:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086E43148DA;
+	Sat, 30 May 2026 17:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161224; cv=none; b=aUptWQMrQRaZJYIRzZDL3kYYDUOs4PqD2T0qGjSi64ap5aLQOLlBwAuJcWRSuT+vRAyH/mmn+G47EA6LtZzVBza+TUNHQLZ+j54SRxS4kdJCNlJ3V2K0n9d8roOcl4F6F+HNgOSQ/UmfKBTxxyIkjjvA3C9tSBETk8SfSjhJMtU=
+	t=1780161227; cv=none; b=IqyqIRp9K37WS6bbFTPgkKCqqdR9xRr28CrKupDegV6nwj9I+KYMnnCTOO6AhIIhkI0tSXZTJg32Tpkp7kX4GFLl9i01aEsc6preYuiDJEaZqfZ16cuBu2R7vNIM+RmPMPIIS0GeC8qCkY1vVmrk8VJ2E7JJrBLHPjao2aQMTlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161224; c=relaxed/simple;
-	bh=B9VT9rQzi2yi3jF5CIiB9+w6JG9ihz+Z3oFhHvHy9+M=;
+	s=arc-20240116; t=1780161227; c=relaxed/simple;
+	bh=t2jDMXcwilPtuJt4SLEw6USoM4rtGPhy+bZj7iU/oJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=al1GPSdDEXloljdtZKJyalXtt0MGLIC/2918LmsJYRWSf3m+dyLy1cGTWjYcAy1Kme/zlDqlcwvGxZ9qIB0aOd9G0NB2WOmDTpGCIGjGIk/Uer06XwHo2IKUarr/rGMrrSoqaYfrSmXJ05Jml30rl9Cz1292xFaFWkCxRWCgpws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+sFiSiW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n8w4GpYThBAFn+luAJEtXD3m/xW1jqdEY9dX9MzgabcOFo/QzEdBQgfWMlQT5YJ+H04EMHReTQ8wShh8/MF9n95t+2/1ik1DCPhv23pYvoaQSboYiSIjl385zlJqMN4VzSsFhXJXUvHd+17J8pbontsW1T/KDKm9CgelMhshiTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzPxINTT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+sFiSiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40251F00893;
-	Sat, 30 May 2026 17:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzPxINTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EEB1F00898;
+	Sat, 30 May 2026 17:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161223;
-	bh=S21rN+L8YNZpDgR+rYC5lEArqPvTqfxuIckMkK/Zxbc=;
+	s=korg; t=1780161226;
+	bh=1BHOxmurWVDJExdCMJz5owPrrJGZdyJkUv7P3zKs39M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+sFiSiWaFQpo7m6V/MsjCbwGOc0wd7e6S2bYMgiTDWjwIcXVAqiIRI+4GonKv3DK
-	 MmBG/0WXJppWX8agOc45p9/u/1Wla5dmjEfUMcJtTDFMXV92aMsrhRnAjJie6K13bc
-	 cbaRdVogzNjKnwhgAJtdjLW0GY1+Js/TJ65vE+lc=
+	b=LzPxINTTmmbW87xs/j4iidKG+W385kYAhAaL6qI7xX7wdCtYdGCZH0tdO8ReNCoHv
+	 QaAyNWvHirnN5r7niMKaFeD+Kyz+50dNIOqrhb7fmz3kIOw/MyDFnv4P8YP2vRd8Xu
+	 icNnwpuMCXaWMP4JMjYOYIRpblZULUI218mk/Be4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 561/969] ALSA: sc6000: Keep the programmed board state in card-private data
-Date: Sat, 30 May 2026 18:01:25 +0200
-Message-ID: <20260530160315.877357778@linuxfoundation.org>
+Subject: [PATCH 6.1 535/969] ASoC: fsl_easrc: Fix value type in fsl_easrc_iec958_get_bits()
+Date: Sat, 30 May 2026 18:00:59 +0200
+Message-ID: <20260530160315.140971795@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,291 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit fb79bf127ac2577b4876132da6dba768018aad4c ]
+[ Upstream commit aa21fe4a81458cf469c2615b08cbde5997dde25a ]
 
-The driver may auto-select IRQ and DMA resources at probe time, but
-sc6000_init_board() still derives the SC-6000 soft configuration from
-the module parameter arrays.  When irq=auto or dma=auto is used, the
-codec is created with the selected resources while the board is
-programmed with the unresolved values.
+The value type of controls "Context 0 IEC958 Bits Per Sample" should be
+integer, not enumerated, the issue is found by the mixer-test.
 
-Store the mapped ports and generated SC-6000 board configuration in
-card-private data, build that configuration from the live probe
-results instead of the raw module parameters, and keep the probe-time
-board programming in a shared helper.
-
-This fixes the resource-programming mismatch and leaves the driver
-with a stable board-state block that can be reused by suspend/resume.
-
-Fixes: c282866101bf ("ALSA: sc6000: add support for SC-6600 and SC-7000")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260410-alsa-sc6000-pm-v1-1-4d9e95493d26@gmail.com
+Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260401094226.2900532-11-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sc6000.c | 152 +++++++++++++++++++++++++++------------------
- 1 file changed, 92 insertions(+), 60 deletions(-)
+ sound/soc/fsl/fsl_easrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/isa/sc6000.c b/sound/isa/sc6000.c
-index 3115c32b4061b..4066b68a102e2 100644
---- a/sound/isa/sc6000.c
-+++ b/sound/isa/sc6000.c
-@@ -100,6 +100,15 @@ MODULE_PARM_DESC(joystick, "Enable gameport.");
- #define PFX "sc6000: "
- #define DRV_NAME "SC-6000"
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index bb8bad04fb47d..05aacebee884f 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -73,7 +73,7 @@ static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
+ 	struct soc_mreg_control *mc =
+ 		(struct soc_mreg_control *)kcontrol->private_value;
  
-+struct snd_sc6000 {
-+	char __iomem *vport;
-+	char __iomem *vmss_port;
-+	u8 mss_config;
-+	u8 config;
-+	u8 hw_cfg[2];
-+	bool old_dsp;
-+};
-+
- /* hardware dependent functions */
+-	ucontrol->value.enumerated.item[0] = easrc_priv->bps_iec958[mc->regbase];
++	ucontrol->value.integer.value[0] = easrc_priv->bps_iec958[mc->regbase];
  
- /*
-@@ -267,7 +276,7 @@ static int sc6000_dsp_reset(char __iomem *vport)
- 
- /* detection and initialization */
- static int sc6000_hw_cfg_write(struct device *devptr,
--			       char __iomem *vport, const int *cfg)
-+			       char __iomem *vport, const u8 *cfg)
- {
- 	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
- 		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
-@@ -353,8 +362,7 @@ static int sc6000_init_mss(struct device *devptr,
  	return 0;
  }
- 
--static void sc6000_hw_cfg_encode(struct device *devptr,
--				 char __iomem *vport, int *cfg,
-+static void sc6000_hw_cfg_encode(struct device *devptr, u8 *cfg,
- 				 long xport, long xmpu,
- 				 long xmss_port, int joystick)
- {
-@@ -376,27 +384,83 @@ static void sc6000_hw_cfg_encode(struct device *devptr,
- 	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
- }
- 
--static int sc6000_init_board(struct device *devptr,
--			     char __iomem *vport,
--			     char __iomem *vmss_port, int dev)
-+static void sc6000_prepare_board(struct device *devptr,
-+				 struct snd_sc6000 *sc6000,
-+				 unsigned int dev, int xirq, int xdma)
-+{
-+	sc6000->mss_config = sc6000_irq_to_softcfg(xirq) |
-+			     sc6000_dma_to_softcfg(xdma);
-+	sc6000->config = sc6000->mss_config |
-+			 sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
-+	sc6000_hw_cfg_encode(devptr, sc6000->hw_cfg, port[dev], mpu_port[dev],
-+			     mss_port[dev], joystick[dev]);
-+}
-+
-+static void sc6000_detect_old_dsp(struct device *devptr,
-+				  struct snd_sc6000 *sc6000)
-+{
-+	sc6000_write(devptr, sc6000->vport, COMMAND_5C);
-+	sc6000->old_dsp = sc6000_read(sc6000->vport) < 0;
-+}
-+
-+static int sc6000_program_board(struct device *devptr,
-+				struct snd_sc6000 *sc6000)
-+{
-+	int err;
-+
-+	if (!sc6000->old_dsp) {
-+		if (sc6000_hw_cfg_write(devptr, sc6000->vport,
-+					sc6000->hw_cfg) < 0) {
-+			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
-+			return -EIO;
-+		}
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	sc6000_dsp_reset(sc6000->vport);
-+
-+	if (!sc6000->old_dsp) {
-+		sc6000_write(devptr, sc6000->vport, COMMAND_60);
-+		sc6000_write(devptr, sc6000->vport, 0x02);
-+		sc6000_dsp_reset(sc6000->vport);
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	err = sc6000_init_mss(devptr, sc6000->vport, sc6000->config,
-+			      sc6000->vmss_port, sc6000->mss_config);
-+	if (err < 0) {
-+		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc6000_init_board(struct device *devptr, struct snd_sc6000 *sc6000)
- {
- 	char answer[15];
- 	char version[2];
--	int mss_config = sc6000_irq_to_softcfg(irq[dev]) |
--			 sc6000_dma_to_softcfg(dma[dev]);
--	int config = mss_config |
--		     sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
- 	int err;
--	int old = 0;
- 
--	err = sc6000_dsp_reset(vport);
-+	err = sc6000_dsp_reset(sc6000->vport);
- 	if (err < 0) {
- 		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
- 		return err;
- 	}
- 
- 	memset(answer, 0, sizeof(answer));
--	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
-+	err = sc6000_dsp_get_answer(devptr, sc6000->vport, GET_DSP_COPYRIGHT,
-+				    answer, 15);
- 	if (err <= 0) {
- 		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
- 		return -ENODEV;
-@@ -408,54 +472,17 @@ static int sc6000_init_board(struct device *devptr,
- 	if (strncmp("SC-6000", answer, 7))
- 		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
- 
--	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
-+	if (sc6000_dsp_get_answer(devptr, sc6000->vport,
-+				  GET_DSP_VERSION, version, 2) < 2) {
- 		dev_err(devptr, "sc6000_dsp_version: failed!\n");
- 		return -ENODEV;
- 	}
- 	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
- 		answer, version[0], version[1]);
- 
--	/* set configuration */
--	sc6000_write(devptr, vport, COMMAND_5C);
--	if (sc6000_read(vport) < 0)
--		old = 1;
--
--	if (!old) {
--		int cfg[2];
--		sc6000_hw_cfg_encode(devptr,
--				     vport, &cfg[0], port[dev], mpu_port[dev],
--				     mss_port[dev], joystick[dev]);
--		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
--			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
--			return -EIO;
--		}
--	}
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--
--	sc6000_dsp_reset(vport);
--
--	if (!old) {
--		sc6000_write(devptr, vport, COMMAND_60);
--		sc6000_write(devptr, vport, 0x02);
--		sc6000_dsp_reset(vport);
--	}
-+	sc6000_detect_old_dsp(devptr, sc6000);
- 
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
--	if (err < 0) {
--		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
--		return -ENODEV;
--	}
--
--	return 0;
-+	return sc6000_program_board(devptr, sc6000);
- }
- 
- static int snd_sc6000_mixer(struct snd_wss *chip)
-@@ -538,10 +565,10 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
- 
- static void snd_sc6000_free(struct snd_card *card)
- {
--	char __iomem *vport = (char __force __iomem *)card->private_data;
-+	struct snd_sc6000 *sc6000 = card->private_data;
- 
--	if (vport)
--		sc6000_setup_board(card->dev, vport, 0);
-+	if (sc6000->vport)
-+		sc6000_setup_board(card->dev, sc6000->vport, 0);
- }
- 
- static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
-@@ -552,15 +579,17 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 	int xirq = irq[dev];
- 	int xdma = dma[dev];
- 	struct snd_card *card;
-+	struct snd_sc6000 *sc6000;
- 	struct snd_wss *chip;
- 	struct snd_opl3 *opl3;
- 	char __iomem *vport;
- 	char __iomem *vmss_port;
- 
- 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
--				0, &card);
-+				sizeof(*sc6000), &card);
- 	if (err < 0)
- 		return err;
-+	sc6000 = card->private_data;
- 
- 	if (xirq == SNDRV_AUTO_IRQ) {
- 		xirq = snd_legacy_find_free_irq(possible_irqs);
-@@ -587,7 +616,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "I/O port cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
--	card->private_data = (void __force *)vport;
-+	sc6000->vport = vport;
- 
- 	/* to make it marked as used */
- 	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
-@@ -600,12 +629,15 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
-+	sc6000->vmss_port = vmss_port;
- 
- 	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
- 		port[dev], xirq, xdma,
- 		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
- 
--	err = sc6000_init_board(devptr, vport, vmss_port, dev);
-+	sc6000_prepare_board(devptr, sc6000, dev, xirq, xdma);
-+
-+	err = sc6000_init_board(devptr, sc6000);
- 	if (err < 0)
- 		return err;
- 	card->private_free = snd_sc6000_free;
 -- 
 2.53.0
 
