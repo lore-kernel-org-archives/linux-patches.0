@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1A43112C1;
-	Sat, 30 May 2026 18:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E776A3112C1;
+	Sat, 30 May 2026 18:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164461; cv=none; b=gsbWq/zFBpQp33zJyZFDzJcVz6Vky8JGx66Raxut0XcMDH+n7PZbUgCPTg9he9dyf5JfOTpLgATPArReRPLar1HbAIjQbqFalQu6mzEsIW59gIKEdeN8+7ToegQFSih1QRVEI3iYcxjEreMhtngcspfb6qg9KlADTWE5HPujrhA=
+	t=1780164464; cv=none; b=J+RnMyLWdAb6EPqs1+GfziLtcCORk7GIoo1pxwzSiyCWb9VZLTrlDCELyosiQZNKk5DmyStzVIDx/62VRjihJfIn1VsqYaD504ExMobf+U7o7u/NDFGZMRDcZJa+Hjs4Njb13iRar28woLdxFptK47M9W0WG7EDZlkC08FyScW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164461; c=relaxed/simple;
-	bh=rJg7C1RiADfb+hoSoyEFKcQawYTj9IPwbpGMqcj9l3U=;
+	s=arc-20240116; t=1780164464; c=relaxed/simple;
+	bh=GUJhRvwhEjV4Qdme/cFu5dGliUtos4inbn0uasknNmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDjup1SBrzD95yik0HCseXM0kIKNuLK9N+zaBdXLiL7bNGfsGgAjRJVfmsW4qFDvMS+odt3iXdIAe8yY1obOfOQS3Y7OFPvliZ7eiLCh7tdqpHlLr19MAMwmAq+7aN2VTJ2fVg+8EIl/7x51qeLHdDy8GnNRLOtnsmYXQZPUvIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAzGzDSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D2u1APKMnbsDTWDyDSbrH2fn2RLTp0CrbCq4wRqINkNh7cRRV5o4hQwG0QSSKyisODwqTv4cwUkSy9eqwkqKfFaV+YJLpVFoiziUxeojdv8qZj9cFdEkdA0wLzT2Zv7ht0zPZ+QP9RFtsv+cwBAJHgJNzZruCE57MzXp/KSOp0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E41eMRs+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAzGzDSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A480C1F00893;
-	Sat, 30 May 2026 18:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E41eMRs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7AB1F00893;
+	Sat, 30 May 2026 18:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164460;
-	bh=YKJnZcDa+BTfFSU88iT2w4qGMkkOmcg2R4b6zf3Zckg=;
+	s=korg; t=1780164463;
+	bh=nkbfZ/ShXwvoKbBYAt4J9PkVl32WOk2bH2zmcCCFkBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OAzGzDSi8ZGq0r3omEgQTv4MdvuSy9CNdKmGqMqDR5F+KG6u4S+VBPkI5Cy69Podo
-	 50diyktMJF+c2GZNRiQwGIQp6/6ZceUUNeUvYz2T8M50+gG3N6Fz+j9fuu/pAM7N91
-	 YrpB8v9QXZUnUWmOpGAcdWW5wjNDpOt1//wScWU8=
+	b=E41eMRs+XX+RWtJX1mrWwxLp4mH2+pnvOzKTKQysGiNoWahSSiIVpPP45z44bg6jI
+	 Fad/TfDAiZtMpwX193QGD3HChH4LqMyCMvzAQXLwoC8e7Bo/GSUpnTMOYB/+oN9kp1
+	 E4udwoBB68NQ0SEpsfeLf1J5ATDsziTLZc6rRLXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 523/776] backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()
-Date: Sat, 30 May 2026 18:03:57 +0200
-Message-ID: <20260530160253.745835081@linuxfoundation.org>
+Subject: [PATCH 5.15 555/776] nexthop: fix IPv6 route referencing IPv4 nexthop
+Date: Sat, 30 May 2026 18:04:29 +0200
+Message-ID: <20260530160254.490213980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,43 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 797cc011ae02bda26f93d25a4442d7a1a77d84df ]
+[ Upstream commit 29c95185ba32b621fbc3800fb86e7dc3edf5c2be ]
 
-The devm_gpiod_get_optional() function may return an ERR_PTR in case of
-genuine GPIO acquisition errors, not just NULL which indicates the
-legitimate absence of an optional GPIO.
+syzbot reported a panic [1] [2].
 
-Add an IS_ERR() check after the call in sky81452_bl_parse_dt(). On
-error, return the error code to ensure proper failure handling rather
-than proceeding with invalid pointers.
+When an IPv6 nexthop is replaced with an IPv4 nexthop, the has_v4 flag
+of all groups containing this nexthop is not updated. This is because
+nh_group_v4_update is only called when replacing AF_INET to AF_INET6,
+but the reverse direction (AF_INET6 to AF_INET) is missed.
 
-Fixes: e1915eec54a6 ("backlight: sky81452: Convert to GPIO descriptors")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260203021625.578678-1-nichen@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+This allows a stale has_v4=false to bypass fib6_check_nexthop, causing
+IPv6 routes to be attached to groups that effectively contain only AF_INET
+members. Subsequent route lookups then call nexthop_fib6_nh() which
+returns NULL for the AF_INET member, leading to a NULL pointer
+dereference.
+
+Fix by calling nh_group_v4_update whenever the family changes, not just
+AF_INET to AF_INET6.
+
+Reproducer:
+	# AF_INET6 blackhole
+	ip -6 nexthop add id 1 blackhole
+	# group with has_v4=false
+	ip nexthop add id 100 group 1
+	# replace with AF_INET (no -6), has_v4 stays false
+	ip nexthop replace id 1 blackhole
+	# pass stale has_v4 check
+	ip -6 route add 2001:db8::/64 nhid 100
+	# panic
+	ping -6 2001:db8::1
+
+[1] https://syzkaller.appspot.com/bug?id=e17283eb2f8dcf3dd9b47fe6f67a95f71faadad0
+[2] https://syzkaller.appspot.com/bug?id=8699b6ae54c9f35837d925686208402949e12ef3
+Fixes: 7bf4796dd099 ("nexthops: add support for replace")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260413114522.147784-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/sky81452-backlight.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/nexthop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/sky81452-backlight.c b/drivers/video/backlight/sky81452-backlight.c
-index c95e0de7f4e70..0cf1f588a3873 100644
---- a/drivers/video/backlight/sky81452-backlight.c
-+++ b/drivers/video/backlight/sky81452-backlight.c
-@@ -204,6 +204,9 @@ static struct sky81452_bl_platform_data *sky81452_bl_parse_dt(
- 	pdata->dpwm_mode = of_property_read_bool(np, "skyworks,dpwm-mode");
- 	pdata->phase_shift = of_property_read_bool(np, "skyworks,phase-shift");
- 	pdata->gpiod_enable = devm_gpiod_get_optional(dev, NULL, GPIOD_OUT_HIGH);
-+	if (IS_ERR(pdata->gpiod_enable))
-+		return dev_err_cast_probe(dev, pdata->gpiod_enable,
-+					  "failed to get gpio\n");
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 9bd72526000c4..8cd148be09c6b 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2161,10 +2161,10 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
+ 			goto err_notify;
+ 	}
  
- 	ret = of_property_count_u32_elems(np, "led-sources");
- 	if (ret < 0) {
+-	/* When replacing an IPv4 nexthop with an IPv6 nexthop, potentially
++	/* When replacing a nexthop with one of a different family, potentially
+ 	 * update IPv4 indication in all the groups using the nexthop.
+ 	 */
+-	if (oldi->family == AF_INET && newi->family == AF_INET6) {
++	if (oldi->family != newi->family) {
+ 		list_for_each_entry(nhge, &old->grp_list, nh_list) {
+ 			struct nexthop *nhp = nhge->nh_parent;
+ 			struct nh_group *nhg;
 -- 
 2.53.0
 
