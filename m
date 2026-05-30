@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5422E7379;
-	Sat, 30 May 2026 17:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B934D3469FC;
+	Sat, 30 May 2026 17:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162715; cv=none; b=OKoADOFa58iFug3xWRIqA+JhN+/sgLf3DiMZsitgbtapIVpULMsmL6i5vlDTN6H2zHjH4JBoQBf5/XLAPfv0sDM+oV3t1u5wIkzlnoILETJYLm3r/4BSkSfN2Bg+xaaerskqftFvWvpCDdJ/CfGS3VQZFeIg8fL2h9oX8bPittQ=
+	t=1780162718; cv=none; b=rjh4QAMXtA7QpYdNqXq4B0ZhBHr6vWPBOQajWcSfpjDnUMKaP6dC0EqkFp6KdCzBItgmjBa4XoAfMcSiBuZpRVL/GjgEAePdtQtyNm/TiVbkaL4trRCQEYH7ZPL8IWHylluyyAm4uNobxlh/GTovHYY62h8LdsZRhRcO/Ff/UVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162715; c=relaxed/simple;
-	bh=vtie2bKHPHhY2/yR4Bo2g5R8NEJizzRFt+xLyzieNCw=;
+	s=arc-20240116; t=1780162718; c=relaxed/simple;
+	bh=ITDg/c1NS9gqGGlL1wl7EMDFtY7Glgil+0eIGZiOya4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSQ4rBSSEqdhRSZaTpIp/ggJPdXQjBikK9txKZwgoeLmZZJZi3fTJ9wQ5Gt3q1BXoyg2B2tZyOFGWBj/RWbpPUm35yjFa4sVsk7GrByh0s5HZC31jTZyKk9ty9VvsjGJqszzJZKvWNn2fCmig5sX+J4dlPpRBWB6tE61hVMS+VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/IyAvrz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mDGemITthkuvleoHhpVAqNy/FtcZk6Icdh9O6iN6TyzMOYGcJzGVNkB2NSpRKGRjmL2F+FSvBCLZ4zCjh1wNOS8Yupst/KfgCg0DD3bso+utAyyxqW40E1nRdSNRDLVGo4vcsqwMMggXnmwqn66GLk2pFnjXhv14qRV3IHg2rNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/dwpIJK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/IyAvrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FFC1F00893;
-	Sat, 30 May 2026 17:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/dwpIJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EF61F00893;
+	Sat, 30 May 2026 17:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162714;
-	bh=o629ZnRffokwAYxPg6+WYVTRY+pu9gtCvrPqQf6G/Q8=;
+	s=korg; t=1780162717;
+	bh=ykxOglHZ8gGVqB97LC6uGRfmtHjZHwANNZb5HyHG3f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/IyAvrzwVx7sw8QA0J+KNkTppmRT1yNdCQdCJj/QehrJ4S16uf2+5sdo5z3XtPyH
-	 gfiJzxF2BjKOVfX0W1825rh2vUuDzLyKDXYJEGseNrqzXS6FmkjebPXfjoV2NJCuyv
-	 C7T/9RxfzCNonsLNbr7V0DzeVwJBSqCGJjZW7YZs=
+	b=z/dwpIJKUPiYbW6u6hj/zKyZ0bPc3t/VXYTWkAiGPBbIfpYGfm8gkteOdqd4VJVC6
+	 0SV9cL5Btkw6gnr6ehmYTqGaqT7W+8GWkfnqFK1WiOOJ41XxlWz5FsVzMsxQ4NVy1g
+	 Tu1pHdDfwGSi1fklng5DpvSHPLZj1SfWkKEA5Xag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Klara Modin <klarasmodin@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/776] netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator
-Date: Sat, 30 May 2026 17:55:48 +0200
-Message-ID: <20260530160241.161551464@linuxfoundation.org>
+Subject: [PATCH 5.15 043/776] MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
+Date: Sat, 30 May 2026 17:55:57 +0200
+Message-ID: <20260530160241.416741814@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,49 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-[ Upstream commit 1f3083aec8836213da441270cdb1ab612dd82cf4 ]
+commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
 
-When batching multiple NFLOG messages (inst->qlen > 1), __nfulnl_send()
-appends an NLMSG_DONE terminator with sizeof(struct nfgenmsg) payload via
-nlmsg_put(), but never initializes the nfgenmsg bytes. The nlmsg_put()
-helper only zeroes alignment padding after the payload, not the payload
-itself, so four bytes of stale kernel heap data are leaked to userspace
-in the NLMSG_DONE message body.
+Owing to Config4.MMUSizeExt and VTLB/FTLB MMU features later MIPSr2+
+cores can have more than 64 TLB entries.  Therefore allocate an array
+for uniquification instead of placing too an small array on the stack.
 
-Use nfnl_msg_put() to build the NLMSG_DONE terminator, which initializes
-the nfgenmsg payload via nfnl_fill_hdr(), consistent with how
-__build_packet_message() already constructs NFULNL_MSG_PACKET headers.
-
-Fixes: 29c5d4afba51 ("[NETFILTER]: nfnetlink_log: fix sending of multipart messages")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
+Co-developed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v6.17+: 9f048fa48740: MIPS: mm: Prevent a TLB shutdown on initial uniquification
+Cc: stable@vger.kernel.org # v6.17+
+Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Tested-by: Klara Modin <klarasmodin@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+[ Use memblock_free_ptr() for 5.15.y. ]
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/mips/mm/tlb-r4k.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index 37d10c3d19b60..db309c4167427 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -350,10 +350,10 @@ static void
- __nfulnl_send(struct nfulnl_instance *inst)
+diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
+index d9a5ede8869bd..78e1420471b4e 100644
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -12,6 +12,7 @@
+ #include <linux/init.h>
+ #include <linux/sched.h>
+ #include <linux/smp.h>
++#include <linux/memblock.h>
+ #include <linux/mm.h>
+ #include <linux/hugetlb.h>
+ #include <linux/export.h>
+@@ -512,17 +513,26 @@ static int r4k_vpn_cmp(const void *a, const void *b)
+  * Initialise all TLB entries with unique values that do not clash with
+  * what we have been handed over and what we'll be using ourselves.
+  */
+-static void r4k_tlb_uniquify(void)
++static void __ref r4k_tlb_uniquify(void)
  {
- 	if (inst->qlen > 1) {
--		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
--						 NLMSG_DONE,
--						 sizeof(struct nfgenmsg),
--						 0);
-+		struct nlmsghdr *nlh = nfnl_msg_put(inst->skb, 0, 0,
-+						    NLMSG_DONE, 0,
-+						    AF_UNSPEC, NFNETLINK_V0,
-+						    htons(inst->group_num));
- 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
- 			      inst->skb->len, skb_tailroom(inst->skb))) {
- 			kfree_skb(inst->skb);
+-	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
+ 	int tlbsize = current_cpu_data.tlbsize;
++	bool use_slab = slab_is_available();
+ 	int start = num_wired_entries();
++	phys_addr_t tlb_vpn_size;
++	unsigned long *tlb_vpns;
+ 	unsigned long vpn_mask;
+ 	int cnt, ent, idx, i;
+ 
+ 	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
+ 	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
+ 
++	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
++	tlb_vpns = (use_slab ?
++		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
++		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
++	if (WARN_ON(!tlb_vpns))
++		return; /* Pray local_flush_tlb_all() is good enough. */
++
+ 	htw_stop();
+ 
+ 	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
+@@ -575,6 +585,10 @@ static void r4k_tlb_uniquify(void)
+ 	tlbw_use_hazard();
+ 	htw_start();
+ 	flush_micro_tlb();
++	if (use_slab)
++		kfree(tlb_vpns);
++	else
++		memblock_free_ptr(tlb_vpns, tlb_vpn_size);
+ }
+ 
+ /*
 -- 
 2.53.0
 
