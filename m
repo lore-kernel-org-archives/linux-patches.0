@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EEB17555;
-	Sat, 30 May 2026 18:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A3D17555;
+	Sat, 30 May 2026 18:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165399; cv=none; b=FWzA3jeB9zf9xHuWKRzgAuq3infl1M6fGG7qgGWnw0F9u+WPd5ESudciUksMvkxvqi89flj6FBXY1VddeLHh5th3DwJI3LUr82QbwXWmugglIUQo3NNd+WoeAEwhiOzOV3D/uvtUaOyEAWHa5Wpwo3g6qM2eiKZGpmPMSXSW1JY=
+	t=1780165403; cv=none; b=Nd8tj4ZVJ1YWJbispvWdinGMdzQFFMNeFrbLhDf2pN42AuMIRa6tRP8zjQgyS6WJnxeP1OAoSP2+oU7YZlMpoCyekc6b0G6bMP3HxfBoNs7xmlxXjqVmOoPM9f/zItdkucBGf2ET8t5EbEdJ+cnM2qaGmZoo9rKF2GLffjwRCf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165399; c=relaxed/simple;
-	bh=LSa+UKTFxEKDeGMDTb/zbyG3+h/NkA97f7G0ln3YyE0=;
+	s=arc-20240116; t=1780165403; c=relaxed/simple;
+	bh=9xf7e2oX+joOx5yLf722pk/bN/fXtWlvbTqtAMEZGak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxbLD/yMefDPVFN9bYmqEqykLmDds5buaXhU6XFoS+pFmM+9dHwRPcGvUWlZspySjHRtQ5RpFgpspMMr/mKYnPqocJgT/m+esK52Nkp6oqfQ4I2HbEHujB92X2tyzjQRnQ3i+gebq/UgPds2PvRrmkmr+/GXaZPU1SxOCILVvw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/QouLQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uVbPsOeFeHWsswDuEnTZhhq/S6aDgSFEB23IlL9lSV4Mo+hXWGktJP+ouUwOBiTPqKPXEZ5ewXGTTmiKi4pXkvFdW4CFWVyEDcVmIT1ot7WXo+77+aLiJPiNkJvg7HY+N89fkf3K1Xryd0T2Tbiuwkf7VQJM8jEZxUxo1K4VE4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQYyOkKf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/QouLQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125B81F00893;
-	Sat, 30 May 2026 18:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQYyOkKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9A81F00893;
+	Sat, 30 May 2026 18:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165398;
-	bh=7yR+8vUlMjfqslzgbH4WAJP3qBvJpfc53U0LAxzcQVI=;
+	s=korg; t=1780165402;
+	bh=k38sJNcTGC2oVdy9OFrHLSJeIBw7Gatkl3QBGl4iqr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/QouLQLInsFWm6ATmwanIoUazZYB6yZVHWmrNQgoTV3aWewwpp1lnCu/8Uq2j+js
-	 uFPx/JUjorMe6Z3MmELK/p6aV9MFfSM4FMnR3AgM9n/bd2PlMadUoqFp+sCIr1jDbr
-	 +m1pfqYoDrnUgl+wWwDiJHtrLWx/7VRmpw7updk8=
+	b=NQYyOkKfhvhyuIT1EandJeIcX0OsCUDAN7e7vzjI8YU/ZTIpy3PmbPINXGChP4FsZ
+	 8DO9TP1FFLFzg9IK46QTjFe+LylquuLZb0vMomuxIqGWPgAp8JkDMjjgwHKjgk9Cfz
+	 6hFbBbNayN9gSktz7WkbJvFxXFP+majbZ8ZJjYRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/589] mips: mm: Allocate tlb_vpn array atomically
-Date: Sat, 30 May 2026 17:58:38 +0200
-Message-ID: <20260530160225.562411607@linuxfoundation.org>
+Subject: [PATCH 5.10 038/589] MIPS: Always record SEGBITS in cpu_data.vmbits
+Date: Sat, 30 May 2026 17:58:39 +0200
+Message-ID: <20260530160225.589990255@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,68 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 01cc50ea5167bb14117257ec084637abe9e5f691 upstream.
+commit 8374c2cb83b95b3c92f129fd56527225c20a058c upstream.
 
-Found by DEBUG_ATOMIC_SLEEP:
+With a 32-bit kernel running on 64-bit MIPS hardware the hardcoded value
+of `cpu_vmbits' only records the size of compatibility useg and does not
+reflect the size of native xuseg or the complete range of values allowed
+in the VPN2 field of TLB entries.
 
-  BUG: sleeping function called from invalid context at /include/linux/sched/mm.h:306
-  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
-  preempt_count: 1, expected: 0
-  RCU nest depth: 0, expected: 0
-  no locks held by swapper/1/0.
-  irq event stamp: 0
-  hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  hardirqs last disabled at (0): [<ffffffff801477fc>] copy_process+0x75c/0x1b68
-  softirqs last  enabled at (0): [<ffffffff801477fc>] copy_process+0x75c/0x1b68
-  softirqs last disabled at (0): [<0000000000000000>] 0x0
-  CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.119-d79e757675ec-fct #1
-  Stack : 800000000290bad8 0000000000000000 0000000000000008 800000000290bae8
-          800000000290bae8 800000000290bc78 0000000000000000 0000000000000000
-          ffffffff80c80000 0000000000000001 ffffffff80d8dee8 ffffffff810d09c0
-          784bb2a7ec10647d 0000000000000010 ffffffff80a6fd60 8000000001d8a9c0
-          0000000000000000 0000000000000000 ffffffff80d90000 0000000000000000
-          ffffffff80c9e0e8 0000000007ffffff 0000000000000cc0 0000000000000400
-          ffffffffffffffff 0000000000000001 0000000000000002 ffffffffc0149ed8
-          fffffffffffffffe 8000000002908000 800000000290bae0 ffffffff80a81b74
-          ffffffff80129fb0 0000000000000000 0000000000000000 0000000000000000
-          0000000000000000 0000000000000000 ffffffff80129fd0 0000000000000000
-          ...
-  Call Trace:
-  [<ffffffff80129fd0>] show_stack+0x60/0x158
-  [<ffffffff80a7f894>] dump_stack_lvl+0x88/0xbc
-  [<ffffffff8018d3c8>] __might_resched+0x268/0x288
-  [<ffffffff803648b0>] __kmem_cache_alloc_node+0x2e0/0x330
-  [<ffffffff80302788>] __kmalloc+0x58/0xd0
-  [<ffffffff80a81b74>] r4k_tlb_uniquify+0x7c/0x428
-  [<ffffffff80143e8c>] tlb_init+0x7c/0x110
-  [<ffffffff8012bdb4>] per_cpu_trap_init+0x16c/0x1d0
-  [<ffffffff80133258>] start_secondary+0x28/0x128
+An upcoming change will need the actual VPN2 value range permitted even
+in 32-bit kernel configurations, so always include the `vmbits' member
+in `struct cpuinfo_mips' and probe for SEGBITS when running on 64-bit
+hardware and resorting to the currently hardcoded value of 31 on 32-bit
+processors.  No functional change for users of `cpu_vmbits'.
 
-Fixes: 231ac951faba ("MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow")
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/include/asm/cpu-features.h |  1 -
+ arch/mips/include/asm/cpu-info.h     |  2 --
+ arch/mips/include/asm/mipsregs.h     |  2 ++
+ arch/mips/kernel/cpu-probe.c         | 13 ++++++++-----
+ arch/mips/kernel/cpu-r3k-probe.c     |  2 ++
+ 5 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 8bc98c311ca62..3aef6acd57bdd 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -528,7 +528,7 @@ static void __ref r4k_tlb_uniquify(void)
+diff --git a/arch/mips/include/asm/cpu-features.h b/arch/mips/include/asm/cpu-features.h
+index dd03bc905841f..0d61a89fe99df 100644
+--- a/arch/mips/include/asm/cpu-features.h
++++ b/arch/mips/include/asm/cpu-features.h
+@@ -486,7 +486,6 @@
+ # endif
+ # ifndef cpu_vmbits
+ # define cpu_vmbits cpu_data[0].vmbits
+-# define __NEED_VMBITS_PROBE
+ # endif
+ #endif
  
- 	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
- 	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
- 		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
- 	if (WARN_ON(!tlb_vpns))
- 		return; /* Pray local_flush_tlb_all() is good enough. */
+diff --git a/arch/mips/include/asm/cpu-info.h b/arch/mips/include/asm/cpu-info.h
+index a600670d00e97..1aee44124f118 100644
+--- a/arch/mips/include/asm/cpu-info.h
++++ b/arch/mips/include/asm/cpu-info.h
+@@ -80,9 +80,7 @@ struct cpuinfo_mips {
+ 	int			srsets; /* Shadow register sets */
+ 	int			package;/* physical package number */
+ 	unsigned int		globalnumber;
+-#ifdef CONFIG_64BIT
+ 	int			vmbits; /* Virtual memory size in bits */
+-#endif
+ 	void			*data;	/* Additional data */
+ 	unsigned int		watch_reg_count;   /* Number that exist */
+ 	unsigned int		watch_reg_use_cnt; /* Usable by ptrace */
+diff --git a/arch/mips/include/asm/mipsregs.h b/arch/mips/include/asm/mipsregs.h
+index 7a7467d3f7f05..c0e8237c779f3 100644
+--- a/arch/mips/include/asm/mipsregs.h
++++ b/arch/mips/include/asm/mipsregs.h
+@@ -1715,6 +1715,8 @@ do {									\
+ 
+ #define read_c0_entryhi()	__read_ulong_c0_register($10, 0)
+ #define write_c0_entryhi(val)	__write_ulong_c0_register($10, 0, val)
++#define read_c0_entryhi_64()	__read_64bit_c0_register($10, 0)
++#define write_c0_entryhi_64(val) __write_64bit_c0_register($10, 0, val)
+ 
+ #define read_c0_guestctl1()	__read_32bit_c0_register($10, 4)
+ #define write_c0_guestctl1(val)	__write_32bit_c0_register($10, 4, val)
+diff --git a/arch/mips/kernel/cpu-probe.c b/arch/mips/kernel/cpu-probe.c
+index 24d2ab277d78e..9cf3644dfd276 100644
+--- a/arch/mips/kernel/cpu-probe.c
++++ b/arch/mips/kernel/cpu-probe.c
+@@ -207,11 +207,14 @@ static inline void set_elf_base_platform(const char *plat)
+ 
+ static inline void cpu_probe_vmbits(struct cpuinfo_mips *c)
+ {
+-#ifdef __NEED_VMBITS_PROBE
+-	write_c0_entryhi(0x3fffffffffffe000ULL);
+-	back_to_back_c0_hazard();
+-	c->vmbits = fls64(read_c0_entryhi() & 0x3fffffffffffe000ULL);
+-#endif
++	int vmbits = 31;
++
++	if (cpu_has_64bits) {
++		write_c0_entryhi_64(0x3fffffffffffe000ULL);
++		back_to_back_c0_hazard();
++		vmbits = fls64(read_c0_entryhi_64() & 0x3fffffffffffe000ULL);
++	}
++	c->vmbits = vmbits;
+ }
+ 
+ static void set_isa(struct cpuinfo_mips *c, unsigned int isa)
+diff --git a/arch/mips/kernel/cpu-r3k-probe.c b/arch/mips/kernel/cpu-r3k-probe.c
+index abdbbe8c5a43a..216271c7b60f1 100644
+--- a/arch/mips/kernel/cpu-r3k-probe.c
++++ b/arch/mips/kernel/cpu-r3k-probe.c
+@@ -158,6 +158,8 @@ void cpu_probe(void)
+ 		cpu_set_fpu_opts(c);
+ 	else
+ 		cpu_set_nofpu_opts(c);
++
++	c->vmbits = 31;
+ }
+ 
+ void cpu_report(void)
 -- 
 2.53.0
 
