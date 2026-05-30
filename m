@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1CC3AB476;
-	Sat, 30 May 2026 17:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BB33A542F;
+	Sat, 30 May 2026 17:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162217; cv=none; b=aiBwQEyqx8vztSM8Pl2ebJgqQ0FMVi/jm+GWwBFwSsdgmP1es2uyiaOt/U/QPiisfb3PIWvBhQVbr2Jh5fQPXBRtps3LpTHE7Ykb0r31oScZi+7+Eb0tzr2brJqqWKEdtX594ymkbToY1OU6ARjvYzxqbRcZMBycHknHVDhsCvQ=
+	t=1780162220; cv=none; b=giE/QKzPhDBVlIxPk46KZvehWzZBj9MnuMckLcsk1yMEAoIm1wwOAfmLY3nk6jAYquBrS2hz47zQFQfZ+fWTW/zzmWBjTEpX6OYXIlj6RcLPNHzAxW6bRXbL5ZoS8xL/wHFXThU/2aMsVse0SusAC/lyYyYngQ8DisXxRtzlLz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162217; c=relaxed/simple;
-	bh=MZZyRrkGv0x0e5+an+vSgUZKmMr2QhAhJt5oTOPHoqY=;
+	s=arc-20240116; t=1780162220; c=relaxed/simple;
+	bh=p7jkk3vnsDFGMmhVxKCsTlZFPE9Hbkpz2G6XdhwsN/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfG0R9YvzDD4oDck143wuo2w/Q7kQvZv/6GBRA4jjbSdOe8554aLwErX65oUiZlgLoaOQJiZO9NQ5JnoPdHTa/i4Bjm9TnZ+A6kohRUQ5mdloCDRS3Cb2CXl6trLc2kqpr/3uVq8IqHVdojQmWFJd8JaweUHBvaQwDuyQGM3e9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytu3xkgE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U42/LDMY1c2lL6PdtrfaqRTQiBTwcKOWopT3LbYJpbikZnjPBuvBbWddYxG28FdrqkiOwmjCKj4/5kNCuQqJuTA0wtXipIcA1YbEx30beDwRJ9NDO9EywlA3a9FaH/eqaGVZsi5GCTt5bXUXyJOpsmHNmmsTe4XCeaBiNgSrB78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP34Ay90; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytu3xkgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F299E1F00893;
-	Sat, 30 May 2026 17:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP34Ay90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD761F00893;
+	Sat, 30 May 2026 17:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162215;
-	bh=ik782KBnREBjq52nQV1YmV97jLfGo7tNGIVpVcZen7g=;
+	s=korg; t=1780162218;
+	bh=tDy9bMhLsMOKu7AsfGUpNi5ZfGWL1W6q1BO2rhT6QnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ytu3xkgE8ivb3A95ag0bzPj8m3F1dXfEgxYxqHE/8qY2YCu/WmIbAemRK6cwInoEV
-	 UGe7dp1O+uGEyjVlDgMNglaHsu4DlDXSLlT6e7pPuXTuK1b+GskPwS6WYmxfRRVcuS
-	 mq6CmhlibiuZqMVDLbULLAsWTNAUZRMa7FjwmimQ=
+	b=CP34Ay90UnkI6KOMDT4uVFhGoikdcQlxZH7xmy1D59Ax4UcWnaat3hqI0HtetvCAN
+	 mGgorPBViVeyFCs5g6szA3iH2HBsDdDoIjrLK9/DzpbKcjbyfUEWsLqsTeSZFrRLFh
+	 bEY/FrAjz7W2Ug4tF7DiN39fP5X8Tn9V1vtZi7lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 828/969] drm/gma500/oaktrail_lvds: fix hang on init failure
-Date: Sat, 30 May 2026 18:05:52 +0200
-Message-ID: <20260530160323.506757667@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 855/969] qed: fix double free in qed_cxt_tables_alloc()
+Date: Sat, 30 May 2026 18:06:19 +0200
+Message-ID: <20260530160324.278547804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,54 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 657a091ab6d01d0091b77660c75cfed573c9a53e upstream.
+commit 2bccfb8476ca5f3548afbd623dc7a6980d4e77de upstream.
 
-The LVDS init code looks up an I2C adapter using i2c_get_adapter() and
-tries to read the EDID before falling back to allocating and registering
-its own adapter.
+If one of the later PF or VF CID bitmap allocations fails,
+qed_cid_map_alloc() jumps to cid_map_fail and frees the previously
+allocated CID bitmaps before returning an error. qed_cxt_tables_alloc()
+then calls qed_cxt_mngr_free(), which invokes qed_cid_map_free()
+again.
 
-The error handling does not separate these cases so on a late init
-failure it will try to deregister and free also an adapter that had
-previously been registered. Since i2c_get_adapter() takes another
-reference to the adapter, deregistration hangs indefinitely while
-waiting for the reference to be released.
+Fix this by setting each CID bitmap pointer to NULL after bitmap_free()
+to avoid double free.
 
-Fix this by only destroying adapters allocated during LVDS init on
-errors.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc3.
 
-Fixes: a57ebfc0b4da ("drm/gma500: Make oaktrail lvds use ddc adapter from drm_connector")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260508144446.59722-3-johan@kernel.org
+Runtime reproduction was not attempted because exercising the failing
+allocation path requires device-specific setup.
+
+Fixes: fe56b9e6a8d9 ("qed: Add module with basic common support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260520070323.2762379-1-dawei.feng@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_lvds.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_cxt.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/gma500/oaktrail_lvds.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_lvds.c
-@@ -293,7 +293,7 @@ void oaktrail_lvds_init(struct drm_devic
- {
- 	struct gma_encoder *gma_encoder;
- 	struct gma_connector *gma_connector;
--	struct gma_i2c_chan *ddc_bus;
-+	struct gma_i2c_chan *ddc_bus = NULL;
- 	struct drm_connector *connector;
- 	struct drm_encoder *encoder;
- 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
-@@ -421,7 +421,8 @@ out:
+--- a/drivers/net/ethernet/qlogic/qed/qed_cxt.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_cxt.c
+@@ -1038,11 +1038,13 @@ static void qed_cid_map_free(struct qed_
  
- err_unlock:
- 	mutex_unlock(&dev->mode_config.mutex);
--	gma_i2c_destroy(to_gma_i2c_chan(connector->ddc));
-+	if (!IS_ERR_OR_NULL(ddc_bus))
-+		gma_i2c_destroy(ddc_bus);
- 	drm_encoder_cleanup(encoder);
- err_connector_cleanup:
- 	drm_connector_cleanup(connector);
+ 	for (type = 0; type < MAX_CONN_TYPES; type++) {
+ 		bitmap_free(p_mngr->acquired[type].cid_map);
++		p_mngr->acquired[type].cid_map = NULL;
+ 		p_mngr->acquired[type].max_count = 0;
+ 		p_mngr->acquired[type].start_cid = 0;
+ 
+ 		for (vf = 0; vf < MAX_NUM_VFS; vf++) {
+ 			bitmap_free(p_mngr->acquired_vf[type][vf].cid_map);
++			p_mngr->acquired_vf[type][vf].cid_map = NULL;
+ 			p_mngr->acquired_vf[type][vf].max_count = 0;
+ 			p_mngr->acquired_vf[type][vf].start_cid = 0;
+ 		}
 
 
