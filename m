@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CED62690D5;
-	Sat, 30 May 2026 17:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB926F288;
+	Sat, 30 May 2026 17:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160469; cv=none; b=EEQ3bcFVatnLIS4NPzuBabjECS6fut0Drnq83umPZ1ufzaNAMW3rpllB16WlbIBMvQj3rzJGsiRYrd+5YGSdLlebl7sVONHbh+iA3VyKUa+LSQSgC3MrYsQOQSeqsPOMSmTOEH++WicKgPmTxXNxCYNH7tJBWMyhPo9IIqesIwY=
+	t=1780160472; cv=none; b=fzKdLJ5lk+Yt5eDPLgor2fF+mpAqzSez236qs7JHK6PJ4xkAfHQwZdgy7EK8R59X1o+rW2UROnpnCl0fqUJM8ehc+9lXdFEJIqVa4IpGyqPNUb/IELHvUD7FTSt/yinkg1xczaJ8OPFPsJwzeZPRTWphDgyFxX8C6ltvxNNWotw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160469; c=relaxed/simple;
-	bh=+MK6hwz2L/zWPazNi0qHwc/ax7tTgWUccXcGRRBk3v8=;
+	s=arc-20240116; t=1780160472; c=relaxed/simple;
+	bh=eKdOn43tAY1OSF3B9lntUVAgbLbknoxleMN+zYHX6qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDH8DW9U0A9dAJUR+n5jOtuYuF1TMNDjMntZRCAYaK1TCtzQHr03riW3tgYKnf4JsL1rNZP7nMSzrHy15blHwnEBt2+lk3cQ8eVSH/kTkNaHZ7HXJMDYGFk0+XtsjQ7seUtlXlL5gzdZkX4OMBDdahifwO2/PRpfvdyT0WvYXpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZLme5Ni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2mTskwwU8vUGK8z7dtIpkqIAXBUrQ5nEwvENzQe5jFRUiL6xUkz2DZHiE6wZbHLWcKKERGuqD4OZzbrkqo1JXeRAPqr3KgfKgEx2VyAdU4a3wSmN4ITDa4WcTe6VKjAdkim3xHvS6T5kWjKpLV2M/zwX/Kv5Twj+y7xaMMbY+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teEDH9OM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZLme5Ni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432761F00893;
-	Sat, 30 May 2026 17:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teEDH9OM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6641F00893;
+	Sat, 30 May 2026 17:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160467;
-	bh=Dh2hx5ayk3DC05kBP0V3oyLlzjOaWjch2+Vv+5la8BU=;
+	s=korg; t=1780160471;
+	bh=r9Tg3Lw1F2wbgxteTqA4ZYqO32dV9c6+/6NUZBcNcEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZLme5NiIohRFv1rw+bGgm7blM6/cWh23l7OFVNQIGqPRzCY5s/0TvbTmVMB6E9HV
-	 C7eN0bQkaqYHUqzbf87otImjZp1op4qtkyUky7JCKaDS/BHh0QDx5zTONTi57VrX1W
-	 H+mWbHuPk22792D/xE+0bllBriEraGB4bqGDiUZU=
+	b=teEDH9OMMcakzTd1gQNAKWW7ve6b54RkEAsR1MEzzs/Las588SmU8yk+HcNZBr4sk
+	 axVbIBJZwqNflopb2GXb8KfsnT17gKUZERuYAy3N4rh6fnLX46p98DIjEiXnLzXJap
+	 VCVxuvF8rtB7HVvPAVdvo97jfT5yx18hUpPkx4sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 347/969] ASoC: qcom: q6apm: remove child devices when apm is removed
-Date: Sat, 30 May 2026 17:57:51 +0200
-Message-ID: <20260530160309.942948831@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 348/969] btrfs: fix double free in create_space_info() error path
+Date: Sat, 30 May 2026 17:57:52 +0200
+Message-ID: <20260530160309.966774418@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 4a0e1bcc98f7281d1605768bd2fe71eacc34f9b7 upstream.
+commit 3f487be81292702a59ea9dbc4088b3360a50e837 upstream.
 
-looks like q6apm driver does not remove the child driver q6apm-dai and
-q6apm-bedais when the this driver is removed.
+When kobject_init_and_add() fails, the call chain is:
 
-Fix this by depopulating them in remove callback.
+create_space_info()
+-> btrfs_sysfs_add_space_info_type()
+-> kobject_init_and_add()
+-> failure
+-> kobject_put(&space_info->kobj)
+-> space_info_release()
+-> kfree(space_info)
 
-With this change when the dsp is shutdown all the devices associated with
-q6apm will now be removed.
+Then control returns to create_space_info():
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-3-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+btrfs_sysfs_add_space_info_type() returns error
+-> goto out_free
+-> kfree(space_info)
+
+This causes a double free.
+
+Keep the direct kfree(space_info) for the earlier failure path, but
+after btrfs_sysfs_add_space_info_type() has called kobject_put(), let
+the kobject release callback handle the cleanup.
+
+Fixes: a11224a016d6d ("btrfs: fix memory leaks in create_space_info() error paths")
+CC: stable@vger.kernel.org # 6.19+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/space-info.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -763,6 +763,7 @@ static int apm_probe(gpr_device_t *gdev)
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -290,7 +290,7 @@ static int create_space_info(struct btrf
  
- static void apm_remove(gpr_device_t *gdev)
- {
-+	of_platform_depopulate(&gdev->dev);
- 	snd_soc_unregister_component(&gdev->dev);
- }
+ 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
+ 	if (ret)
+-		goto out_free;
++		return ret;
  
+ 	list_add(&space_info->list, &info->space_info);
+ 	if (flags & BTRFS_BLOCK_GROUP_DATA)
 
 
