@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C408D137750;
-	Sat, 30 May 2026 18:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A311D63E4;
+	Sat, 30 May 2026 18:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166911; cv=none; b=U5uC6R3RrFfBv0VRgT2tNVxujAc8hEFhOHq6+qzOOvvURYlUx7yevu51WeQQxyikAZPvFLdJPsxnV0z4xz6XIsgikP+lsl5u/SYn3VvxBTnyJEvwc5D4jQQW9sd+XddHQ73W/aAqHqjEDbSYW4PLw2W5zd9d/xzCPkbLOy6AMKc=
+	t=1780166915; cv=none; b=iN/7zqgDDFmrCGfnj73/auPTKp0/IHg42jQ0sQr1qkKtt3nwn0GXJ0plciTeQrrJXB7sRRsDbTE6/Bgl6ghrqu3FDscayJqapEnoCaNrHZtAzYsoRSFtB1Aj/sKbsN5w6HzWAR32fWrRPVWDYkdb4S2gk5+YGtMuX/oFEKfNT7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166911; c=relaxed/simple;
-	bh=Tum8f+sIAq3bMkob9xe3/zTplI2+pMDX1DmPKGL4ukE=;
+	s=arc-20240116; t=1780166915; c=relaxed/simple;
+	bh=xK8rNTCJlo175EeORuWcS2D2Xid8DsbxnOUidk9knGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmF1h+BXtg07wWzh+WiRM7dPNV71x/7O6pxXtcXi8M4Bqurw3aTg8XvwwLubRSVUbJeODW31AX9q8kF67TEwW5smQ+2Stj8/1nvKJ1w/FxkHW02c//wmnUIm4r6bwYit3rQMr52SkdTrVDl5dHti7mF9WxOnuq2y1i/oOz+Xt8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvHKmwFm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f9WLpxlshOrMwofhpVyeAsZSHlTAuStiESjoH6tI8AAML8XhmAGX7+5ixJuJFj28L3uf3jcIsnbobJCAqu9f0iBdBuLyCbMsrhhZXH6XiPlGM6r9e2FP/G8j+4/IXzbjkCQT5EiAW9iwrZGfFoCwkE2ZIVrNx/xLKnFKbZpm0/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/2jhBK7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvHKmwFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151851F00893;
-	Sat, 30 May 2026 18:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/2jhBK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BABC1F00893;
+	Sat, 30 May 2026 18:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166910;
-	bh=zpeBIt3nwyFsrHIHwtnjZlkxUBRkkHFLhRHmuIGSDYc=;
+	s=korg; t=1780166914;
+	bh=GNJ4VnU0Be/NzEEOxYxsX+e+kqSIDbZOV0AvPyr3d28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvHKmwFmWPDm7UD1uDZFRs9Q4rwAGKcrK+agCIDZIzZ+BQnl/OYQFJBMG1+hWA8Yh
-	 LVeOUBmXvNVJ3iuzhM7P3sKvT5YBKfj5QpXtt+bsLyeMZXHPL8tWg8E2DDuFAH7v4d
-	 WdvYyN7hzj5QHpeREYNxaNGia76mLvRTsloRdpgA=
+	b=u/2jhBK7qSoKgtDZEVW9ZNh0l1Io8y9Oz9Lsed8wyKo/lBKXKoFMhtirbBnFX/uxj
+	 uhkfxmf8mpSF16i/FsJhOZzdJb7k1oQMss7Ah1ZrO4QLyNYR15CwOAVyeak56VW3IM
+	 5fNSjHhp9/MoQ8yB7KTjnGQQXFrm6/7m+/tOYAks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Haoze Xie <royenheart@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 479/589] net/sched: sch_fq_pie: annotate data-races in fq_pie_dump_stats()
-Date: Sat, 30 May 2026 18:06:00 +0200
-Message-ID: <20260530160237.232907347@linuxfoundation.org>
+Subject: [PATCH 5.10 480/589] vrf: Fix a potential NPD when removing a port from a VRF
+Date: Sat, 30 May 2026 18:06:01 +0200
+Message-ID: <20260530160237.257347956@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,60 +56,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 59b145771c7982cfe9020d4e9e22da92d6b5ae31 ]
+[ Upstream commit 2674d603a9e6970463b2b9ebcf8e31e90beae169 ]
 
-fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
+RCU readers that identified a net device as a VRF port using
+netif_is_l3_slave() assume that a subsequent call to
+netdev_master_upper_dev_get_rcu() will return a VRF device. They then
+continue to dereference its l3mdev operations.
 
-Move this acquisition before we fill tc_fq_pie_xstats with live data.
+This assumption is not always correct and can result in a NPD [1]. There
+is no RCU synchronization when removing a port from a VRF, so it is
+possible for an RCU reader to see a new master device (e.g., a bridge)
+that does not have l3mdev operations.
 
-Alternative would be to add READ_ONCE() and WRITE_ONCE() annotations,
-but the spinlock is needed anyway to scan q->new_flows and q->old_flows.
+Fix by adding RCU synchronization after clearing the IFF_L3MDEV_SLAVE
+flag. Skip this synchronization when a net device is removed from a VRF
+as part of its deletion and when the VRF device itself is deleted. In
+the latter case an RCU grace period will pass by the time RTNL is
+released.
 
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260423063527.2568262-1-edumazet@google.com
+[1]
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+[...]
+RIP: 0010:l3mdev_fib_table_rcu (net/l3mdev/l3mdev.c:181)
+[...]
+Call Trace:
+<TASK>
+l3mdev_fib_table_by_index (net/l3mdev/l3mdev.c:201 net/l3mdev/l3mdev.c:189)
+__inet_bind (net/ipv4/af_inet.c:499 (discriminator 3))
+inet_bind_sk (net/ipv4/af_inet.c:469)
+__sys_bind (./include/linux/file.h:62 (discriminator 1) ./include/linux/file.h:83 (discriminator 1) net/socket.c:1951 (discriminator 1))
+__x64_sys_bind (net/socket.c:1969 (discriminator 1) net/socket.c:1967 (discriminator 1) net/socket.c:1967 (discriminator 1))
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fixes: fdeea7be88b1 ("net: vrf: Set slave's private flag before linking")
+Reported-by: Haoze Xie <royenheart@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260419145332.3988923-1-n05ec@lzu.edu.cn/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260423063607.1208202-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/vrf.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index d4bfa3382e118..b62a1c0c4817f 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -499,18 +499,19 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
- static int fq_pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index b43e8041fda34..d1a2b3dcd00c9 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1143,6 +1143,7 @@ static int do_vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
+ 
+ err:
+ 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
++	synchronize_net();
+ 	return ret;
+ }
+ 
+@@ -1162,10 +1163,16 @@ static int vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
+ }
+ 
+ /* inverse of do_vrf_add_slave */
+-static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
++static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev,
++			    bool needs_sync)
  {
- 	struct fq_pie_sched_data *q = qdisc_priv(sch);
--	struct tc_fq_pie_xstats st = {
--		.packets_in	= q->stats.packets_in,
--		.overlimit	= q->stats.overlimit,
--		.overmemory	= q->overmemory,
--		.dropped	= q->stats.dropped,
--		.ecn_mark	= q->stats.ecn_mark,
--		.new_flow_count = q->new_flow_count,
--		.memory_usage   = q->memory_usage,
--	};
-+	struct tc_fq_pie_xstats st = { 0 };
- 	struct list_head *pos;
+ 	netdev_upper_dev_unlink(port_dev, dev);
+ 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
++	/* Make sure that concurrent RCU readers that identified the device
++	 * as a VRF port see a VRF master or no master at all.
++	 */
++	if (needs_sync)
++		synchronize_net();
  
- 	sch_tree_lock(sch);
-+
-+	st.packets_in	= q->stats.packets_in;
-+	st.overlimit	= q->stats.overlimit;
-+	st.overmemory	= q->overmemory;
-+	st.dropped	= q->stats.dropped;
-+	st.ecn_mark	= q->stats.ecn_mark;
-+	st.new_flow_count = q->new_flow_count;
-+	st.memory_usage   = q->memory_usage;
-+
- 	list_for_each(pos, &q->new_flows)
- 		st.new_flows_len++;
+ 	cycle_netdev(port_dev, NULL);
  
+@@ -1174,7 +1181,7 @@ static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 
+ static int vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
+ {
+-	return do_vrf_del_slave(dev, port_dev);
++	return do_vrf_del_slave(dev, port_dev, true);
+ }
+ 
+ static void vrf_dev_uninit(struct net_device *dev)
+@@ -1666,7 +1673,7 @@ static void vrf_dellink(struct net_device *dev, struct list_head *head)
+ 	struct list_head *iter;
+ 
+ 	netdev_for_each_lower_dev(dev, port_dev, iter)
+-		vrf_del_slave(dev, port_dev);
++		do_vrf_del_slave(dev, port_dev, false);
+ 
+ 	vrf_map_unregister_dev(dev);
+ 
+@@ -1797,7 +1804,7 @@ static int vrf_device_event(struct notifier_block *unused,
+ 			goto out;
+ 
+ 		vrf_dev = netdev_master_upper_dev_get(dev);
+-		vrf_del_slave(vrf_dev, dev);
++		do_vrf_del_slave(vrf_dev, dev, false);
+ 	}
+ out:
+ 	return NOTIFY_DONE;
 -- 
 2.53.0
 
