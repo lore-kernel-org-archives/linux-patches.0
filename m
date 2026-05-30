@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B933016E1;
-	Sat, 30 May 2026 17:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B2F3016E1;
+	Sat, 30 May 2026 17:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161263; cv=none; b=Pp+hgYcYM4EXViv0bWy2EN/TecO8yWmm962D6YTpeqew2apFarkvGmBgFUBIM5T6UWWNnSw3Zw0z3c+muR7vd0pVLt4twLkGee3d9cqhY+bWyVtIcb6I/3442ze3prEw8HGa0wSjjOuNlFlXafXFa50Pm61mUtaGIvEtgTah8oU=
+	t=1780161266; cv=none; b=H3/ZpJVJc2vvi9Wu+M2pNhkjAuG0Q4dtq1hJavfB3ptVxY6Ql6Hwje4lyjTSRcbM4fPCfe4XdmdsldijuqLW3/B1b5cYXORTw0zhups0qRH9gT4/HnY5IRwQZ1so9n1yhE8FhsY9K7bwF50+vkdkwLDboP1DcuGQ3PocwIUSK/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161263; c=relaxed/simple;
-	bh=OGmLmfXGke6wnHdbUYqw5L1YwrVKNKPfnFpfhcOEUiY=;
+	s=arc-20240116; t=1780161266; c=relaxed/simple;
+	bh=o/BQ1O0uKcbgueY/r3Wt2YHPiaOFXUyb7OlJQz2QOK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ry+W/v94TjjpKoktMZDQZtgKAkWmcXSj6ZG45Iw++cp16mLMPGwIJCK5uoMf0HalScJgVUfwQVy0Kl2ANf8vKhmQPhk64mNHIIcU6SYzyAIJXVvuabECn/ibvr6B/9KqX1meJtMWjUUAAimBDU3Zr5B8gdhU5cD/bM10Bu2frQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ne6Czp6s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DQxgWxq1nAAfwM2tTszVhajq6iLn9fltD3RznsT5C23RzGkk3c/Hqq6hjT78O4sOHTFwiecu0SZrLEDV0ZbJzh8i7aGI091KuHHwLySO1v5BK0WbWg/5ilkuJm1lvLe/4dzrgtK5xzHgvf2eWw6/RJ59CukEUGwOXx2nhmBdkdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwQGvqrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ne6Czp6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446391F00893;
-	Sat, 30 May 2026 17:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwQGvqrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1B51F00893;
+	Sat, 30 May 2026 17:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161261;
-	bh=OQU3nMHl2tHoKKR1GShpvfAB4pZ7XvKO5sotehavscY=;
+	s=korg; t=1780161265;
+	bh=s3Kp7gh3FNgfds3Yb1wao5v8wl6Uf5/P4k9nXMxtKgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ne6Czp6sSSpkTZg6PjM/kswBkR5dA/OZAnmRc7QtwZD8t4yWhOMOX5XYn67wtwRBp
-	 KEp6bELlCKwGm51K1Gblu1kpXZFAtp0VbaQIfONm5We3VNaWFHj3EoHBIfF6jF9qnY
-	 QmcKxhyjESNrZ5yiQQw5yl5B0AnDTd8c7S3VDcGI=
+	b=kwQGvqrQzAO3QNeXWCLg3kO2+Mej+G/YsxVqMWfbhlSod/D6fM3u88xg9I1+x7OpJ
+	 1gME6D5RkLqrVQloPNfKXUE0gcoOLbIia1kJQmcd/H97PcbQUWwfsK1RlW/p45vOIP
+	 9QxRWLH8Q65fytrDeE3sYs5jzt/8AHmgDsVjawfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 532/969] ASoC: fsl_xcvr: Fix event generation in fsl_xcvr_arc_mode_put()
-Date: Sat, 30 May 2026 18:00:56 +0200
-Message-ID: <20260530160315.054133724@linuxfoundation.org>
+Subject: [PATCH 6.1 566/969] ktest: Run POST_KTEST hooks on failure and cancellation
+Date: Sat, 30 May 2026 18:01:30 +0200
+Message-ID: <20260530160316.022170611@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,56 +51,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 1b61c8103c9317a9c37fe544c2d83cee1c281149 ]
+[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_xcvr_arc_mode_put() only returns 0 or a negative
-error code, causing ALSA to not generate any change events.
+PRE_KTEST can be useful for setting up the environment and POST_KTEST to
+tear it down, however POST_KTEST only runs on the normal end-of-run path.
+It is skipped when ktest exits through dodie() or cancel_test(). Final
+cleanup hooks are skipped.
 
-Add a suitable check in the function before updating the arc_mode
-variable.
+Factor the final hook execution into run_post_ktest(), call it from the
+normal exit path and from the early exit paths, and guard it so the hook
+runs at most once.
 
-Fixes: 28564486866f ("ASoC: fsl_xcvr: Add XCVR ASoC CPU DAI driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-8-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
+Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index 5b61b93772d64..83b1d497fbf5f 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -97,10 +97,17 @@ static int fsl_xcvr_arc_mode_put(struct snd_kcontrol *kcontrol,
- 	struct fsl_xcvr *xcvr = snd_soc_dai_get_drvdata(dai);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int *item = ucontrol->value.enumerated.item;
-+	int val = snd_soc_enum_item_to_val(e, item[0]);
-+	int ret;
- 
--	xcvr->arc_mode = snd_soc_enum_item_to_val(e, item[0]);
-+	if (val < 0 || val > 1)
-+		return -EINVAL;
- 
--	return 0;
-+	ret = (xcvr->arc_mode != val);
-+
-+	xcvr->arc_mode = val;
-+
-+	return ret;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 28eebfa32621d..df8588dadc2ca 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -98,6 +98,7 @@ my $test_type;
+ my $build_type;
+ my $build_options;
+ my $final_post_ktest;
++my $post_ktest_done = 0;
+ my $pre_ktest;
+ my $post_ktest;
+ my $pre_test;
+@@ -1530,6 +1531,24 @@ sub get_test_name() {
+     return $name;
  }
  
- static int fsl_xcvr_arc_mode_get(struct snd_kcontrol *kcontrol,
++sub run_post_ktest {
++    my $cmd;
++
++    return if ($post_ktest_done);
++
++    if (defined($final_post_ktest)) {
++	$cmd = $final_post_ktest;
++    } elsif (defined($post_ktest)) {
++	$cmd = $post_ktest;
++    } else {
++	return;
++    }
++
++    my $cp_post_ktest = eval_kernel_version($cmd);
++    run_command $cp_post_ktest;
++    $post_ktest_done = 1;
++}
++
+ sub dodie {
+     # avoid recursion
+     return if ($in_die);
+@@ -1589,6 +1608,7 @@ sub dodie {
+     if (defined($post_test)) {
+ 	run_command $post_test;
+     }
++    run_post_ktest;
+ 
+     die @_, "\n";
+ }
+@@ -4223,6 +4243,7 @@ sub cancel_test {
+ 	send_email("KTEST: Your [$name] test was cancelled",
+ 	    "Your test started at $script_start_time was cancelled: sig int");
+     }
++    run_post_ktest;
+     die "\nCaught Sig Int, test interrupted: $!\n"
+ }
+ 
+@@ -4533,11 +4554,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+     success $i;
+ }
+ 
+-if (defined($final_post_ktest)) {
+-
+-    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
+-    run_command $cp_final_post_ktest;
+-}
++run_post_ktest;
+ 
+ if ($opt{"POWEROFF_ON_SUCCESS"}) {
+     halt;
 -- 
 2.53.0
 
