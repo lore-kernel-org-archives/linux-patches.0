@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450693BD25E;
-	Sat, 30 May 2026 17:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A369341AC7;
+	Sat, 30 May 2026 17:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163806; cv=none; b=FHm8oLmfEj5AalpJyh1Xs2L45kCmJMJare7X+lsZ27qbpRKHGyUoODBBRIKqN64EThV0ncIxGB7W1YJgK5GbqHVy6KmSNNe7FDCnGdb3eEdE5uKwM4WDTRoMTreYMB09IBLyrkQ2GdLL00sgYp2+v2Nij8iDDCos/opve5UrSsU=
+	t=1780163809; cv=none; b=bUsL9DCm40pHSj+0fzW/KwHZ/KHRtEsTISgybpKPY/381HoH61VMs0NjtL/6MFEw9zv/qj9a7u/r0DULiJNk7QczfQT4yR34x1ArvulxtRkboFXgkZTZfCGh8/wMrBbSv+mzJ9AckA8Um8bT9meQyoNPI5OLGmUt52qrjkAoDL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163806; c=relaxed/simple;
-	bh=3MWriIasgZW+VwIIQAIfug5I1Di3lXqQ/B6AV4VloF0=;
+	s=arc-20240116; t=1780163809; c=relaxed/simple;
+	bh=CIS3yYf2nHkK9Dv3/JYfPu13Pj0MTMBhIw/S0uQDizI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d/A3Y0si8DuYr54Njt54ekTulWl7+ZnJ1k6iFTTcGmYUeTTUAxYRi3BEOO/09KcABSflzwO2uXvh0PDtLSDZ20ioZVP3a8UEUgH2d0+EAYemuYf3UK9NAUeDSmVfvcycFB6MqSfHjrxppjQ7nqdc7NOiJf+z5azZDC8nUqbLQNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HOHGSbU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nGi86YT5uyqJ5UECXqIlA5aCavZffb50TNh72VT6WHW/7fWBVbWXVARWDWkXBJdxvxvWqklWj0Vraf79Y4AxBL02H4IyIZcj6fAQ16QZqVu4gKzEZ+ZF1s5JF+6I3T+S00SbZdJt1HS+8W0QOOnzU2jF5pAea3HHem41R4seF/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuezgylv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HOHGSbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB71F00893;
-	Sat, 30 May 2026 17:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuezgylv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB771F00893;
+	Sat, 30 May 2026 17:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163804;
-	bh=yzVDEE5gqx+l05KxZbs65I16f7D8z1bB8gW0H+ZhiR0=;
+	s=korg; t=1780163808;
+	bh=IXU3WuUAf5PxgyOKkaMixV5/YFtZwxNR9RcHqPgdJuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HOHGSbUvjqaPvmBGa84EKvszytVRo3i2nfoKsTcGyCobceuXMTYx2ebJGykllx4X
-	 vg8dmNNcjQ41PbKFKihBDhheciVTFsLdOIRnihdXkTdYkX4flJ96aI0vXyE/23TGvG
-	 onWFbeqMJ+XrkG9ivIFRulkJKJPLPbUArr9dZs34=
+	b=tuezgylv13OmUM1SoqxaQq8nnZw1gglSV23cfUmo9lxVxsEpJw3tMR7HDyQ8W3k4K
+	 Aq3sNe0MDg01qWjDjmoa9FdTkk8O6jtKu+4oVi1vDT1eGtmxIl4FjANi5bhV8Q1zbQ
+	 wHl3fLs4I3YuMf1XqmbOVSCY4iv8n0ya3Ikl0iVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Kent Russell <kent.russell@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"John B. Moore" <jbmoore61@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 368/776] drm/radeon: add missing revision check for CI
-Date: Sat, 30 May 2026 18:01:22 +0200
-Message-ID: <20260530160250.063053870@linuxfoundation.org>
+Subject: [PATCH 5.15 369/776] drm/amdgpu/gfx9: drop unnecessary 64-bit fence flag check in KIQ
+Date: Sat, 30 May 2026 18:01:23 +0200
+Message-ID: <20260530160250.085842942@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,57 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: John B. Moore <jbmoore61@gmail.com>
 
-commit 17223816498f7b117d138d18eb0eba63604dc74e upstream.
+commit 7bbfb2559bcec39d1a4e1182d931a2046112c352 upstream.
 
-The memory level workarounds only apply to revision 0 SKUs.
+Remove the BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT) assertion from
+gfx_v9_0_ring_emit_fence_kiq().  The KIQ hardware supports 64-bit
+fence writes; the 32-bit writeback address constraint is an
+upper-layer convention, not a hardware limitation.  The check serves
+no purpose and should not be present.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
-Fixes: 127e056e2a82 ("drm/radeon: fix mclk vddc configuration for cards for hawaii")
-Fixes: 21b8a369046f ("drm/radeon: fix dram timing for certain hawaii boards")
-Fixes: 90b2fee35cb9 ("drm/radeon: fix dpm mc init for certain hawaii boards")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+Found by code inspection while investigating related BUG_ON
+assertions in the GFX and compute ring emission paths.
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: John B. Moore <jbmoore61@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4d8dcc14311515077062b5740f39f427075de5c9)
+(cherry picked from commit 1b1101a46a426bb4328116bb5273c326a2780389)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/ci_dpm.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/radeon/ci_dpm.c
-+++ b/drivers/gpu/drm/radeon/ci_dpm.c
-@@ -2469,7 +2469,8 @@ static void ci_register_patching_mc_arb(
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -5533,9 +5533,6 @@ static void gfx_v9_0_ring_emit_fence_kiq
+ {
+ 	struct amdgpu_device *adev = ring->adev;
  
- 	if (patch &&
- 	    ((rdev->pdev->device == 0x67B0) ||
--	     (rdev->pdev->device == 0x67B1))) {
-+	     (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		if ((memory_clock > 100000) && (memory_clock <= 125000)) {
- 			tmp2 = (((0x31 * engine_clock) / 125000) - 1) & 0xff;
- 			*dram_timimg2 &= ~0x00ff0000;
-@@ -3310,7 +3311,8 @@ static int ci_populate_all_memory_levels
- 	pi->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
- 
- 	if ((dpm_table->mclk_table.count >= 2) &&
--	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1))) {
-+	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		pi->smc_state_table.MemoryLevel[1].MinVddc =
- 			pi->smc_state_table.MemoryLevel[0].MinVddc;
- 		pi->smc_state_table.MemoryLevel[1].MinVddcPhases =
-@@ -4507,7 +4509,8 @@ static int ci_register_patching_mc_seq(s
- 
- 	if (patch &&
- 	    ((rdev->pdev->device == 0x67B0) ||
--	     (rdev->pdev->device == 0x67B1))) {
-+	     (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		for (i = 0; i < table->last; i++) {
- 			if (table->last >= SMU7_DISCRETE_MC_REGISTER_ARRAY_SIZE)
- 				return -EINVAL;
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
