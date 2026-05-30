@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AB124468C;
-	Sat, 30 May 2026 18:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6209E1D63E4;
+	Sat, 30 May 2026 18:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167134; cv=none; b=XwERTXxhVmqwSL4teHG/9myw3NZyl30L6PMexPlRTtDupEHrpEKp68yHuAZRxepUCvEwC6c5ygh8gJMd+u2Fm/z/6bRAEMYeY8wXZmnz70BvRe4L+4ImR3FFrXrVX8PQaB+/oYa91oDEnHc2hg0cS6G1AoA6JYB1U4rIWilOYm0=
+	t=1780167138; cv=none; b=ICxVP+MxTM7IfC7zXuyjp9oFyZtGH8iwOh766WDECTy8YzRX+fMllUoKkh5hTTh/h230GEqFTtehkkCSMR/z67jF+E1srR50xZKhIkYHKpjWVWE6yh6cWv3KxUnG3NuBxZ/KhtSnTUc/kRLk0S+lttcZu+tt1mgupb6yS2PIcXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167134; c=relaxed/simple;
-	bh=IiI2T+pZFGpfBod6DP1cj+hlFfOoJPDzfw9n0tnAug8=;
+	s=arc-20240116; t=1780167138; c=relaxed/simple;
+	bh=Rl49n76eQNNcNGJD1vTlqxf61b0cbkIpWIbZWSLonko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5IrIUmfM7+6lE9vU1K7GikCm5zjZqUS+YGg879sb3hUq6Poe5a9IjP8kBN1YTugb2uk3oxtZhFpIoG4smOaiL5VvInHlqYy9qLzV0OgnICUF1QemgUv41gS2r2SW1FLNWJUzbSX0GoBfQEIcEqKXcy+kjQopogY1ArF5istH/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/gN2dIT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=X1APXFeAmT18sZtXdxyAH7LJ5KlL4R8ZtZH48s5dFhD0s3Ijdbk2U2aTBfja6WZ56OpKGmFk01e2Hw59g0u1EL/IXDyqhuvnnDKHVsI6KEHbnOxEyMTqbMbDLkG4u30v2v4vw83ZlIyEFWU8khbBbFRXkj5OpLMJzBDbgiquX08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWZrtViJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/gN2dIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275191F00893;
-	Sat, 30 May 2026 18:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWZrtViJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61081F00893;
+	Sat, 30 May 2026 18:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167133;
-	bh=cfzX0X3837Iy1hvztbsFY8JGxzgZJ2UuNwnL9ER71DM=;
+	s=korg; t=1780167137;
+	bh=gV8OkSFX7TO38ZH2qdZMtBMoy1pyMBZFShc/Sr8hyjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G/gN2dITft1FO1/F67Wm+X3ZqZ457DQchWIT1QPdO1BxwdDVfANmC6y+nhlkqCUb5
-	 Lvzy3jJR/InOPQXrRUI5ZSVSLWErDvhS5P45rkHYhSaPEf0gtH8OkULxnfVRq6x6Ei
-	 7ZBcdZNeFfYnF+F2VJQn7KrQ8la72BunslTdgtc8=
+	b=iWZrtViJQUdf7zS277BT2T0xweuFm2z0XtQID/m9hJD8mZzPrSbTIX8Hq5TvXPUqA
+	 LTlTXZAaLE+c9hLNQRWSvwqDmroz3d/wtfNrkiB8Dqc1iaRIgpgQ8xHV+yMgxPfLN/
+	 HWeSAuKwkyVvc/A2TE8gYZEzW5qeHP9NGBlpDMXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	intel-wired-lan@lists.osuosl.org,
-	Bart Van Assche <bvanassche@acm.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Arpana Arland <arpanax.arland@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 572/589] ice: fix locking in ice_dcb_rebuild()
-Date: Sat, 30 May 2026 18:07:33 +0200
-Message-ID: <20260530160239.650536505@linuxfoundation.org>
+Subject: [PATCH 5.10 573/589] phy: marvell: mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access
+Date: Sat, 30 May 2026 18:07:34 +0200
+Message-ID: <20260530160239.674744403@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,61 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 0ded1f36ba4021cba50513e80be6b6e173710168 ]
+[ Upstream commit 91ddf6f722084383fb05be731c0107814b055c0c ]
 
-Move the mutex_lock() call up to prevent that DCB settings change after
-the first ice_query_port_ets() call. The second ice_query_port_ets()
-call in ice_dcb_rebuild() is already protected by pf->tc_mutex.
+The mvebu_a3700_utmi_phy_power_off() function tries to modify the
+USB2_PHY_CTRL register by using the IO address of the PHY IP block along
+with the readl/writel IO accessors. However, the register exist in the
+USB miscellaneous register space, and as such it must be accessed via
+regmap like it is done in the mvebu_a3700_utmi_phy_power_on() function.
 
-This also fixes a bug in an error path, as before taking the first
-"goto dcb_error" in the function jumped over mutex_lock() to
-mutex_unlock().
+Change the code to use regmap_update_bits() for modífying the register
+to fix this.
 
-This bug has been detected by the clang thread-safety analyzer.
-
-Cc: intel-wired-lan@lists.osuosl.org
-Fixes: 242b5e068b25 ("ice: Fix DCB rebuild after reset")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-6-a5ea4dc837a9@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cc8b7a0ae866 ("phy: add A3700 UTMI PHY driver")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260321-a3700-utmi-fix-usb2_phy_ctrl-access-v1-1-6005ff4b5058@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dcb_lib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/marvell/phy-mvebu-a3700-utmi.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-index 1e8f71ffc8ce7..7fff700eab2b1 100644
---- a/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dcb_lib.c
-@@ -438,14 +438,14 @@ void ice_dcb_rebuild(struct ice_pf *pf)
- 	struct ice_dcbx_cfg *err_cfg;
- 	enum ice_status ret;
+diff --git a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
+index 8834436bc9dbc..e3a9278c06842 100644
+--- a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
++++ b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
+@@ -168,9 +168,8 @@ static int mvebu_a3700_utmi_phy_power_off(struct phy *phy)
+ 	u32 reg;
  
-+	mutex_lock(&pf->tc_mutex);
-+
- 	ret = ice_query_port_ets(pf->hw.port_info, &buf, sizeof(buf), NULL);
- 	if (ret) {
- 		dev_err(dev, "Query Port ETS failed\n");
- 		goto dcb_error;
- 	}
+ 	/* Disable PHY pull-up and enable USB2 suspend */
+-	reg = readl(utmi->regs + USB2_PHY_CTRL(usb32));
+-	reg &= ~(RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32));
+-	writel(reg, utmi->regs + USB2_PHY_CTRL(usb32));
++	regmap_update_bits(utmi->usb_misc, USB2_PHY_CTRL(usb32),
++			   RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32), 0);
  
--	mutex_lock(&pf->tc_mutex);
--
- 	if (!pf->hw.port_info->qos_cfg.is_sw_lldp)
- 		ice_cfg_etsrec_defaults(pf->hw.port_info);
- 
+ 	/* Power down OTG module */
+ 	if (usb32) {
 -- 
 2.53.0
 
