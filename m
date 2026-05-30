@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FF03AB26B;
-	Sat, 30 May 2026 18:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EBD26738C;
+	Sat, 30 May 2026 18:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166375; cv=none; b=kqlQlpIEx73quDoOZvHgjoiVi5z2IdVHnee6psWG3TWz3NE/fmv28dqIriRg6V+ya+LX1XKkreeIGh2j3PyR7iFSzUOLOd9iVYZpbMdgJo3U42tgEjVyaHYh+6TAt1B9I+iCdf/ClooXirshavn+WrSu75X/+WREh1/SwdVolJY=
+	t=1780166378; cv=none; b=AIRI/FJT47djqzrZjqO1n3wurlSrWEJmNcd52hs8d6/UMW3oni9f9yxPteW6bZdUt38Wrf+Y8TrBV6xe7EFLF17vNYdDyhZ8auwbQNprmVokGirD9imrXvBIgetk3hIWIdVPUAFEu9Tnb81IROjyZ7PS85Y4nfpx/KhvjXBO8ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166375; c=relaxed/simple;
-	bh=bn/MBHM4Qg11luQmNo+nS1B36bgt2JGZyXvQHnpFpc4=;
+	s=arc-20240116; t=1780166378; c=relaxed/simple;
+	bh=sljzszU0LGWFJM0rs7Ee8sUXvABZidil/XUw1p/QgwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHO9gqxzS0NePU3pUiOaaeo+vBVkWm2aQyXqKWnyqZjGVvUTplKWpkYCEllKXStHRGi9rLQbKibXnCgPE87gIc2wZ5hMJ9EmBa45aZYuKetFES0vsGIXrDb3ay/HTENiT5+LAgmEvOJuE3NLXsAfwU+ZhjRvfGgVX1S+Srj45W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruxwiDoe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X+Si3YrvUA1vpMLKSOTPfmQMuY59HIXMUunV+H0J9zqkO9qN77CX0/4AVJzXszYtpNI6WytYyj04yYA22+KqYenwgIhPAYYq82WnOUHbrfOYvm1jqM3rIYcoz0IKD6UV2FZA3mtvTCQGI5akT8+yIpIYVgOJxK8FSrpQeQOEAYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mK9bKL59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruxwiDoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930491F00893;
-	Sat, 30 May 2026 18:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mK9bKL59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178E61F00893;
+	Sat, 30 May 2026 18:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166374;
-	bh=3Q9gYBEIXBYnAp83GMLGLvIoOorDmgCP8GqDwgicvPM=;
+	s=korg; t=1780166377;
+	bh=IoqZhp8Yj8mJRnex91WMBoQjEeW6Vpj9jQPlGksuieM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruxwiDoeZ2DzFP1ZMj68q+jEv3dh16m4zThOtAOaNNbWMXQNQTfpIAjq13s9K02OW
-	 9aHtiS1KwldK6/CdcJSrWBqOaWOyf/BW7AltNlaiKIWMt6J0oi0pfGPasIW/HRsw1G
-	 27O0s+o41xOlws1JWeJvY4KGv1idCrmKBOqbuR5I=
+	b=mK9bKL59BvV+Z5oGk0KIWTbQwkKhcwZM9cQimN9d4v2Eq5At3zfiba0iOe+WR5Yca
+	 aMnv/GM1Jco2c4LJr7Oh9TORG35yDjNrc4kELMWadrtgekxP5xytuovm3nyg72mFh4
+	 9egBRGoDyQ9KmynWeHgCRgRwBxICvZ0cTKuky6ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 353/589] PCI: tegra194: Use devm_gpiod_get_optional() to parse "nvidia,refclk-select"
-Date: Sat, 30 May 2026 18:03:54 +0200
-Message-ID: <20260530160234.142279878@linuxfoundation.org>
+Subject: [PATCH 5.10 354/589] PCI: tegra194: Disable direct speed change for Endpoint mode
+Date: Sat, 30 May 2026 18:03:55 +0200
+Message-ID: <20260530160234.165267229@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,42 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit f62bc7917de1374dce86a852ffba8baf9cb7a56a ]
+[ Upstream commit 976f6763f57970388bcd7118931f33f447916927 ]
 
-The GPIO DT property "nvidia,refclk-select", to select the PCIe reference
-clock is optional. Use devm_gpiod_get_optional() to get it.
+Pre-silicon simulation showed the controller operating in Endpoint mode
+initiating link speed change after completing Secondary Bus Reset. Ideally,
+the Root Port or the Switch Downstream Port should initiate the link speed
+change post SBR, not the Endpoint.
+
+So, as per the hardware team recommendation, disable direct speed change
+for the Endpoint mode to prevent it from initiating speed change after the
+physical layer link is up at Gen1, leaving speed change ownership with the
+host.
 
 Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
 Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
 Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+[mani: commit log]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-7-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-8-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index ba9fcb39ca90d..ee8f25c07f2e1 100644
+index ee8f25c07f2e1..e59939ec2022c 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1135,9 +1135,9 @@ static int tegra_pcie_dw_parse_dt(struct tegra_pcie_dw *pcie)
- 		return err;
- 	}
+@@ -1771,6 +1771,10 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
  
--	pcie->pex_refclk_sel_gpiod = devm_gpiod_get(pcie->dev,
--						    "nvidia,refclk-select",
--						    GPIOD_OUT_HIGH);
-+	pcie->pex_refclk_sel_gpiod = devm_gpiod_get_optional(pcie->dev,
-+							     "nvidia,refclk-select",
-+							     GPIOD_OUT_HIGH);
- 	if (IS_ERR(pcie->pex_refclk_sel_gpiod)) {
- 		int err = PTR_ERR(pcie->pex_refclk_sel_gpiod);
- 		const char *level = KERN_ERR;
+ 	reset_control_deassert(pcie->core_rst);
+ 
++	val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
++	val &= ~PORT_LOGIC_SPEED_CHANGE;
++	dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
++
+ 	if (pcie->update_fc_fixup) {
+ 		val = dw_pcie_readl_dbi(pci, CFG_TIMER_CTRL_MAX_FUNC_NUM_OFF);
+ 		val |= 0x1 << CFG_TIMER_CTRL_ACK_NAK_SHIFT;
 -- 
 2.53.0
 
