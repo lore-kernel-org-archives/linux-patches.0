@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C112F90E0;
-	Sat, 30 May 2026 18:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7BC223DC6;
+	Sat, 30 May 2026 18:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164771; cv=none; b=sFtGIYQn63ODMPazeqxyg8lZivQnt5LX5JxJKdCBgODblrLS5+TG68/iCb6Ss+IYM9BKFGa6HB2geRRfF02Pn3+LslTPE5xTAF1s0M+jQ083QvpSzQN6etQstMyMX6pCX+0OdwEFxsayiDaa+tbx8Gsuo6837uyX16eXYmjqGBk=
+	t=1780164775; cv=none; b=KD8+CaLd+b+aXtJdhqVCcoUB4Jwg9lyougqOIHA312hIP3uHwaI1wgwwkI8bcoI1FMdRWme1rvy8xMgjj9tyqkhWBt75t05ZEnfrLKEA6ViJuBpCDoXiacQEXXwu1Wdy2HyVuam0Gn5Rxa1ERzX4B77WtTUzHwJQ++WcpalA0Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164771; c=relaxed/simple;
-	bh=Obw3k4eYuS94jP7V/PsoNbRpUxm/ERB5I1rcS32bS4g=;
+	s=arc-20240116; t=1780164775; c=relaxed/simple;
+	bh=GuLEwqgaT1pHcsG2QPpH4sVr+CbqbFg9vzWnAz2C5qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtqg7XjpCOTeg1so3danxJnPfBKfBwjDHUHy7HjywDWt+HntwfRPvmMG8rnaCYm0PcqUi2VsSOPxhJ/BfUJJ0NclDlMgy58FaKSgWGuOV/OoPxH6Db+uBpGe+37v5u7qDDMLalGNRe+CB8PHOHRB7QQeoQWZknepl8FHCc+ELGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FLuGhjU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GPZWlQ5JrntxRbB2ikCB/m2/qt+Kf48KMrf2Ho7yyhgspsgY9FkGAMWYM+z1/91IlVvrkQyOIbV7kExKYV1Bl0D3iwSY2kL36QSFSkuA8KU2/BW9b0+4a7BiNXgNiUQxDVyicZ1fBEIgObT3u5sFhxon470Vxvtpk8tPG5LOP6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE+3BwNe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FLuGhjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E7B1F00893;
-	Sat, 30 May 2026 18:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE+3BwNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632411F00893;
+	Sat, 30 May 2026 18:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164770;
-	bh=6o8DG9VfqutTCXi5lh9A5HF/zPFmK9PangyhDxbjPyI=;
+	s=korg; t=1780164774;
+	bh=Cgb0BdEWxzfhfg1au+Z0ymmOdTxW2Gdq8w5k+Sy7mew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FLuGhjUZqnr/UrkBT4MyAeg5NYE2l47Ive+2ncfogx4SBtvO6j4H7TCJ9zw2+1CV
-	 0gxvJKbOjmyAJ9Xr9fcg/EfCtWxK7dm003yHkCnQEF6gt1bmFtkLx6G6ZmgI3gVYFG
-	 gdgbaocEfN1+2XqNjUFb0Pa3wfLkMBkpbv5AgFWs=
+	b=GE+3BwNeQpLWpOffcdqeXNiDPSdAfRHORq+7xTlb2xqV+XAsJ189aznj6eZILm2nJ
+	 lli1/KOWvzb4MtwlCVqA6mqj4mYGK8FB1mtYhWI0AM3crLicisA3wfWxaD90uQZgqv
+	 oxkt46zFiWuTa1S4hqFHI26cyjxsT4gARlcSs3fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Schocher <hs@nabladev.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Christian A. Ehrhardt" <christian.ehrhardt@codasip.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 625/776] net: phy: dp83869: fix setting CLK_O_SEL field.
-Date: Sat, 30 May 2026 18:05:39 +0200
-Message-ID: <20260530160256.130995095@linuxfoundation.org>
+Subject: [PATCH 5.15 626/776] ASoC: codecs: ab8500: Fix casting of private data
+Date: Sat, 30 May 2026 18:05:40 +0200
+Message-ID: <20260530160256.154971468@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,68 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Schocher <hs@nabladev.com>
+From: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
 
-[ Upstream commit 46f74a3f7d57d9cc0110b09cbc8163fa0a01afa2 ]
+[ Upstream commit a201aef1a88b675e9eb8487e27d14e2eef3cef80 ]
 
-Table 7-121 in datasheet says we have to set register 0xc6
-to value 0x10 before CLK_O_SEL can be modified. No more infos
-about this field found in datasheet. With this fix, setting
-of CLK_O_SEL field in IO_MUX_CFG register worked through dts
-property "ti,clk-output-sel" on a DP83869HMRGZR.
+ab8500_filter_controls[i].private_value is initialized using
 
-Signed-off-by: Heiko Schocher <hs@nabladev.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 01db923e8377 ("net: phy: dp83869: Add TI dp83869 phy")
-Link: https://patch.msgid.link/20260425031339.3318-1-hs@nabladev.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+	.private_value = (unsigned long)&(struct filter_control)
+		{.count = xcount, .min = xmin, .max = xmax}
+
+thus it's a pointer to a struct filter_control casted to unsigned long.
+
+So to get back that pointer .private_data must be cast back, not its
+address.
+
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Signed-off-by: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
+Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260428192255.2294705-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ sound/soc/codecs/ab8500-codec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index a76fd5f11aca0..5eb07abf16479 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -30,6 +30,7 @@
- #define DP83869_RGMIICTL	0x0032
- #define DP83869_STRAP_STS1	0x006e
- #define DP83869_RGMIIDCTL	0x0086
-+#define DP83869_ANA_PLL_PROG_PI	0x00c6
- #define DP83869_RXFCFG		0x0134
- #define DP83869_RXFPMD1		0x0136
- #define DP83869_RXFPMD2		0x0137
-@@ -801,12 +802,22 @@ static int dp83869_config_init(struct phy_device *phydev)
- 		dp83869_config_port_mirroring(phydev);
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 5525e1ccab767..eaf12c28db83b 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -2498,13 +2498,13 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
+ 		return status;
+ 	}
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
+ 	drvdata->anc_fir_values = (long *)fc->value;
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
+ 	drvdata->anc_iir_values = (long *)fc->value;
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
+ 	drvdata->sid_fir_values = (long *)fc->value;
  
- 	/* Clock output selection if muxing property is set */
--	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK)
-+	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK) {
-+		/*
-+		 * Table 7-121 in datasheet says we have to set register 0xc6
-+		 * to value 0x10 before CLK_O_SEL can be modified.
-+		 */
-+		ret = phy_write_mmd(phydev, DP83869_DEVADDR,
-+				    DP83869_ANA_PLL_PROG_PI, 0x10);
-+		if (ret)
-+			return ret;
-+
- 		ret = phy_modify_mmd(phydev,
- 				     DP83869_DEVADDR, DP83869_IO_MUX_CFG,
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_MASK,
- 				     dp83869->clk_output_sel <<
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_SHIFT);
-+	}
- 
- 	if (phy_interface_is_rgmii(phydev)) {
- 		ret = phy_write_mmd(phydev, DP83869_DEVADDR, DP83869_RGMIIDCTL,
+ 	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
 -- 
 2.53.0
 
