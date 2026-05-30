@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5B72BE65B;
-	Sat, 30 May 2026 17:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F7E3AB482;
+	Sat, 30 May 2026 17:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163109; cv=none; b=E4R/zTcnFeQ8fPcDGhAN6bj2XbMDTle75NtZDC80KHxgVI9SYdlkCTEA7rvXBmdXxm1uQmsxU7HgjYmqTCxmcDwkM7gzcJ4JEy4uhniMZXrdNQ3E5CRLnCrBRThEBHtY77o1SmpxMLDMCQRuCEriHAkrkp80l19rMZok7avRyh0=
+	t=1780163112; cv=none; b=oOkglKKe54xjtW6RW7gxpvDI+KWzGdGDB9hkBDc8HI10X0M9sfmqq7R2VpiYfuyIcz/nIpBIYaoklH3MtYMo6XJeaha6IWma0vvEi/d579iHJvV19RJxDQdxOI0EER2+ng6KNAOGY5LLDnenW7ia6IOp4t/NedGjkeSen+JHDf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163109; c=relaxed/simple;
-	bh=efzooQAI5L+tl+R8pke7d5NbZ911hQTacNrv1sJi04Y=;
+	s=arc-20240116; t=1780163112; c=relaxed/simple;
+	bh=z89j2dPO+Khgu65faqG++GTHmMa4yCW4AnhajwEmcUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvTG2P9MXnUxkHSIvAOqyCIpzb3WrKhKeGWizI2eN4fNLdJqSY8/nY/rAUoQfx5oYo9o/AhD7X5l9hY88Orjwe326wD7D5P9rGEOFb24b0QaO93uO7c7XZ6lhdbbLuPxHCXQfUWr8zBaOJr8skrDv1gSb6Z9rO298aFCydRpW24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIbWUxdo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LgRPj2025oMVPhVPZ0YI8RolJ3NkZ8gzgnDIZCEo2XOTMfIU3dMsozhJ8mzoNkvLaQiXPXtJ8MEiT395XLz5YvLiiWWh5WhDrh77isRTt6+7MuOjNiFiKo8we4QN+PrbqNipeSzEm90pJNpnI7fvjJ8vMxRrFrMbEzc302je+mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBLBc440; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIbWUxdo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B8E1F00893;
-	Sat, 30 May 2026 17:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBLBc440"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4595C1F00893;
+	Sat, 30 May 2026 17:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163108;
-	bh=StUhpVulYQAyn5pBXJncFQuz9OhbAFy34YMumyqsPfU=;
+	s=korg; t=1780163111;
+	bh=7zUL2vboSU8MrOqCcOE31/p4DIPpknH3jB46fk99vIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JIbWUxdoW0YQ4/rCEmMz9qDv/8mjm4W6dj5z0ztD686iLFZZLLJPS73GIM1fssYJm
-	 L/41b7R5KNrzZ+jaKZdKZl9FQxR9arLdrHJEfu/5jtgqM4YBZoNZXeGV8gz25m2wYt
-	 GALSn1BkqAOxFpD9jAlo03lPWaVcF4bjNffmHvXw=
+	b=nBLBc440ISsHZJcmrah4HBck8CifSgxXUg74SsI9uHagq9I6MUsWYBrGBJmWMa4lW
+	 sAXwd24F0H4R0p4CD5VCg4gKNLjWWA9o0PkGTrgmaCHo4c/G2xSoii3u0EglR+5M+6
+	 6a0Dh/YXBI2VqkvW9dbZu23mxteJQZ5vKWEDGKzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hongnanli <hongnan.li@linux.alibaba.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Liao Chang <liaochang1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/776] fs/ocfs2: fix comments mentioning i_mutex
-Date: Sat, 30 May 2026 17:57:06 +0200
-Message-ID: <20260530160243.257016949@linuxfoundation.org>
+Subject: [PATCH 5.15 157/776] cpufreq: governor: Free dbs_data directly when gov->init() fails
+Date: Sat, 30 May 2026 17:57:51 +0200
+Message-ID: <20260530160244.528651669@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -59,206 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hongnanli <hongnan.li@linux.alibaba.com>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit 137cebf9432eae024d0334953ed92a2a78619b52 ]
+[ Upstream commit 916f13884042f615cfbfc0b42cc68dadee826f2a ]
 
-inode->i_mutex has been replaced with inode->i_rwsem long ago.  Fix
-comments still mentioning i_mutex.
+Due to the kobject embedded in the dbs_data doest not has a release()
+method yet, it needs to use kfree() to free dbs_data directly when
+governor fails to allocate the tunner field of dbs_data.
 
-Link: https://lkml.kernel.org/r/20220214031314.100094-1-hongnan.li@linux.alibaba.com
-Signed-off-by: hongnanli <hongnan.li@linux.alibaba.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: b02da26a992d ("ocfs2: fix possible deadlock between unlink and dio_end_io_write")
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 6dcf9d0064ce ("cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/alloc.c               |    2 +-
- fs/ocfs2/aops.c                |    2 +-
- fs/ocfs2/cluster/nodemanager.c |    2 +-
- fs/ocfs2/dir.c                 |    4 ++--
- fs/ocfs2/file.c                |    4 ++--
- fs/ocfs2/inode.c               |    2 +-
- fs/ocfs2/localalloc.c          |    6 +++---
- fs/ocfs2/namei.c               |    2 +-
- fs/ocfs2/ocfs2.h               |    4 ++--
- fs/ocfs2/quota_global.c        |    2 +-
- fs/ocfs2/xattr.c               |    2 +-
- 11 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/cpufreq/cpufreq_governor.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -5986,7 +5986,7 @@ bail:
- 	return status;
- }
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -440,7 +440,7 @@ int cpufreq_dbs_governor_init(struct cpu
  
--/* Expects you to already be holding tl_inode->i_mutex */
-+/* Expects you to already be holding tl_inode->i_rwsem */
- int __ocfs2_flush_truncate_log(struct ocfs2_super *osb)
- {
- 	int status;
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2324,7 +2324,7 @@ static int ocfs2_dio_end_io_write(struct
- 
- 	down_write(&oi->ip_alloc_sem);
- 
--	/* Delete orphan before acquire i_mutex. */
-+	/* Delete orphan before acquire i_rwsem. */
- 	if (dwc->dw_orphaned) {
- 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
- 
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -689,7 +689,7 @@ static struct config_group *o2nm_cluster
- 	struct o2nm_node_group *ns = NULL;
- 	struct config_group *o2hb_group = NULL, *ret = NULL;
- 
--	/* this runs under the parent dir's i_mutex; there can be only
-+	/* this runs under the parent dir's i_rwsem; there can be only
- 	 * one caller in here at a time */
- 	if (o2nm_single_cluster)
- 		return ERR_PTR(-ENOSPC);
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -1979,7 +1979,7 @@ bail_nolock:
- }
- 
- /*
-- * NOTE: this should always be called with parent dir i_mutex taken.
-+ * NOTE: this should always be called with parent dir i_rwsem taken.
-  */
- int ocfs2_find_files_on_disk(const char *name,
- 			     int namelen,
-@@ -2026,7 +2026,7 @@ int ocfs2_lookup_ino_from_name(struct in
-  * Return -EEXIST if the directory contains the name
-  * Return -EFSCORRUPTED if found corruption
-  *
-- * Callers should have i_mutex + a cluster lock on dir
-+ * Callers should have i_rwsem + a cluster lock on dir
-  */
- int ocfs2_check_dir_for_entry(struct inode *dir,
- 			      const char *name,
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -270,7 +270,7 @@ int ocfs2_update_inode_atime(struct inod
+ 	ret = gov->init(dbs_data);
+ 	if (ret)
+-		goto free_policy_dbs_info;
++		goto free_dbs_data;
  
  	/*
- 	 * Don't use ocfs2_mark_inode_dirty() here as we don't always
--	 * have i_mutex to guard against concurrent changes to other
-+	 * have i_rwsem to guard against concurrent changes to other
- 	 * inode fields.
- 	 */
- 	inode->i_atime = current_time(inode);
-@@ -1068,7 +1068,7 @@ static int ocfs2_extend_file(struct inod
- 	/*
- 	 * The alloc sem blocks people in read/write from reading our
- 	 * allocation until we're done changing it. We depend on
--	 * i_mutex to block other extend/truncate calls while we're
-+	 * i_rwsem to block other extend/truncate calls while we're
- 	 * here.  We even have to hold it for sparse files because there
- 	 * might be some tail zeroing.
- 	 */
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -713,7 +713,7 @@ bail:
- /*
-  * Serialize with orphan dir recovery. If the process doing
-  * recovery on this orphan dir does an iget() with the dir
-- * i_mutex held, we'll deadlock here. Instead we detect this
-+ * i_rwsem held, we'll deadlock here. Instead we detect this
-  * and exit early - recovery will wipe this inode for us.
-  */
- static int ocfs2_check_orphan_recovery_state(struct ocfs2_super *osb,
---- a/fs/ocfs2/localalloc.c
-+++ b/fs/ocfs2/localalloc.c
-@@ -606,7 +606,7 @@ out:
+ 	 * The sampling interval should not be less than the transition latency
+@@ -475,6 +475,8 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	if (!have_governor_per_policy())
+ 		gov->gdbs_data = NULL;
+ 	gov->exit(dbs_data);
++
++free_dbs_data:
+ 	kfree(dbs_data);
  
- /*
-  * make sure we've got at least bits_wanted contiguous bits in the
-- * local alloc. You lose them when you drop i_mutex.
-+ * local alloc. You lose them when you drop i_rwsem.
-  *
-  * We will add ourselves to the transaction passed in, but may start
-  * our own in order to shift windows.
-@@ -636,7 +636,7 @@ int ocfs2_reserve_local_alloc_bits(struc
- 
- 	/*
- 	 * We must double check state and allocator bits because
--	 * another process may have changed them while holding i_mutex.
-+	 * another process may have changed them while holding i_rwsem.
- 	 */
- 	spin_lock(&osb->osb_lock);
- 	if (!ocfs2_la_state_enabled(osb) ||
-@@ -1029,7 +1029,7 @@ enum ocfs2_la_event {
- /*
-  * Given an event, calculate the size of our next local alloc window.
-  *
-- * This should always be called under i_mutex of the local alloc inode
-+ * This should always be called under i_rwsem of the local alloc inode
-  * so that local alloc disabling doesn't race with processes trying to
-  * use the allocator.
-  *
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -485,7 +485,7 @@ leave:
- 		ocfs2_free_alloc_context(meta_ac);
- 
- 	/*
--	 * We should call iput after the i_mutex of the bitmap been
-+	 * We should call iput after the i_rwsem of the bitmap been
- 	 * unlocked in ocfs2_free_alloc_context, or the
- 	 * ocfs2_delete_inode will mutex_lock again.
- 	 */
---- a/fs/ocfs2/ocfs2.h
-+++ b/fs/ocfs2/ocfs2.h
-@@ -369,7 +369,7 @@ struct ocfs2_super
- 	struct delayed_work		la_enable_wq;
- 
- 	/*
--	 * Must hold local alloc i_mutex and osb->osb_lock to change
-+	 * Must hold local alloc i_rwsem and osb->osb_lock to change
- 	 * local_alloc_bits. Reads can be done under either lock.
- 	 */
- 	unsigned int local_alloc_bits;
-@@ -444,7 +444,7 @@ struct ocfs2_super
- 	atomic_t			osb_tl_disable;
- 	/*
- 	 * How many clusters in our truncate log.
--	 * It must be protected by osb_tl_inode->i_mutex.
-+	 * It must be protected by osb_tl_inode->i_rwsem.
- 	 */
- 	unsigned int truncated_clusters;
- 
---- a/fs/ocfs2/quota_global.c
-+++ b/fs/ocfs2/quota_global.c
-@@ -36,7 +36,7 @@
-  * should be obeyed by all the functions:
-  * - any write of quota structure (either to local or global file) is protected
-  *   by dqio_sem or dquot->dq_lock.
-- * - any modification of global quota file holds inode cluster lock, i_mutex,
-+ * - any modification of global quota file holds inode cluster lock, i_rwsem,
-  *   and ip_alloc_sem of the global quota file (achieved by
-  *   ocfs2_lock_global_qf). It also has to hold qinfo_lock.
-  * - an allocation of new blocks for local quota file is protected by
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -7208,7 +7208,7 @@ out:
-  * Used for reflink a non-preserve-security file.
-  *
-  * It uses common api like ocfs2_xattr_set, so the caller
-- * must not hold any lock expect i_mutex.
-+ * must not hold any lock expect i_rwsem.
-  */
- int ocfs2_init_security_and_acl(struct inode *dir,
- 				struct inode *inode,
+ free_policy_dbs_info:
 
 
