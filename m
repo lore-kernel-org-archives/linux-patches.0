@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8610E21B191;
-	Sat, 30 May 2026 18:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE21729E11A;
+	Sat, 30 May 2026 18:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166628; cv=none; b=VsWxCnN3VPmNZbz0+REgbwMt5atVtM75Kc5IjhUce2u28Ad5KFEWqHi3QHz72evIXftEc3k05zR9eaxLOAhPW9HBpm+3gmZSoLH+50mVkMPr3Cn6cEQr8+9Qg1PUXE1u+b35sPnbav4N9EGL0Hk2BXiw5vFL/F1hgYCpzJ7I7rM=
+	t=1780166631; cv=none; b=O1AaEXwn2XlljrJ+jxMbL+W9Hd1JqP0eXBsNjfyjxp/7RcCzr6pgRON7GTrRIW7pFzpagR6xTw/ii4ePZgKuinGGI/hLkheImqOuYIKARWxffY48stnhqaQguH0yfC++5HCi88w/kBNjSpOtkAgFPt++8/RAW5zzUnXQKBe9I6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166628; c=relaxed/simple;
-	bh=vIG+A/eKLT2d8RUevcr9R29RkkireUh/A+Ki0+agimY=;
+	s=arc-20240116; t=1780166631; c=relaxed/simple;
+	bh=xvo66VrihuWuG1v35OJj5yYWw7fb4zgr1nrAzMAIwFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U77T8p9AGSrS6s22Nzl11WXjZSm6FTiqdsSEjJpsNSOp1FVCYrDyg28EhKoC4/99htn5SIyuuB7fxBgotQCJ0OBmYmt16gepV6vZFIXGxyckm1u4WhWjRggiHCHoCIErbKL5p/HT92DlgzdQzDNcvWXVtNSg9C3bx/nFDdHJ9EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUDYb+nW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NWi+KPVOX7ImjPaTxeXfKFo6qD/mTbBzYNOJ3BchxuYLNVfhBcxDGdM2v3XMA8oJEuUsqOraCjWNg/EBrzLik2omXp39WJreWFJBxFDLW3PsrjGDHWpYXSsh9Q2U5HLK5ZH6IT3QNnp93vzrlTCkwrXEaJiCsMJkWlGAAYjxLPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ3sShyS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUDYb+nW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A46A1F00893;
-	Sat, 30 May 2026 18:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ3sShyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19901F00893;
+	Sat, 30 May 2026 18:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166627;
-	bh=VhT3jCRIuFn4ifdYc/ov3a1hCLjVWO9s4gx0Il65F0o=;
+	s=korg; t=1780166630;
+	bh=tm3VrYr00zeEfvUdahTslaBmqqyOOzeo6RVJSvtBOCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jUDYb+nWrEbiXUgRxkD3nCpOv+hqG6Gn5raqfpkfK6F2XJ1FfXJbXqoqVFxzESenl
-	 jonkKxfFV1FL0hCXgnu6+hij1Pe3sRD1bMVKWn5PGGNPugYs9yscoavM6MnfhKhZZP
-	 Sypr0XdnnRySfoNGQfnqkFL1o9wq/ptWUTDPbB6I=
+	b=WQ3sShySxPDVuXk3fDzqrFqjA0q6NgUtt7DfSFMErpfntobhGjEkaDUZA3uERlvbM
+	 BK9tZ4cEYh6W2abr9n7kZ0k6pzVELG1bbbnNkoEdefmo6Sjr5u9tA+3Xq7j1f1Naoe
+	 Y+McOBDZmbrm4am8a9n0k5HJD0P2qLQbtStNvStI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 422/589] net/sched: taprio: fix use-after-free in advance_sched() on schedule switch
-Date: Sat, 30 May 2026 18:05:03 +0200
-Message-ID: <20260530160235.825720748@linuxfoundation.org>
+Subject: [PATCH 5.10 423/589] tcp: annotate data-races around (tp->write_seq - tp->snd_nxt)
+Date: Sat, 30 May 2026 18:05:04 +0200
+Message-ID: <20260530160235.848532379@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 105425b1969c5affe532713cfac1c0b320d7ac2b ]
+[ Upstream commit 3a63b3d160560ef51e43fb4c880a5cde8078053c ]
 
-In advance_sched(), when should_change_schedules() returns true,
-switch_schedules() is called to promote the admin schedule to oper.
-switch_schedules() queues the old oper schedule for RCU freeing via
-call_rcu(), but 'next' still points into an entry of the old oper
-schedule. The subsequent 'next->end_time = end_time' and
-rcu_assign_pointer(q->current_entry, next) are use-after-free.
+tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
+add READ_ONCE() annotations to keep KCSAN happy.
 
-Fix this by selecting 'next' from the new oper schedule immediately
-after switch_schedules(), and using its pre-calculated end_time.
-setup_first_end_time() sets the first entry's end_time to
-base_time + interval when the schedule is installed, so the value
-is already correct.
+WRITE_ONCE() annotations are already present.
 
-The deleted 'end_time = sched_base_time(admin)' assignment was also
-harmful independently: it would overwrite the new first entry's
-pre-calculated end_time with just base_time.
-
-Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
-Reported-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Fixes: e08ab0b377a1 ("tcp: add bytes not sent to SCM_TIMESTAMPING_OPT_STATS")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260416200319.3608680-14-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ipv4/tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 9174cdd0aa74b..85812bad227bc 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -731,11 +731,12 @@ static enum hrtimer_restart advance_sched(struct hrtimer *timer)
- 	end_time = min_t(ktime_t, end_time, oper->cycle_end_time);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 5998e2b6f5ec7..b5752cdefb4db 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3729,7 +3729,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
+ 	nla_put_u32(stats, TCP_NLA_SRTT, tp->srtt_us >> 3);
+ 	nla_put_u16(stats, TCP_NLA_TIMEOUT_REHASH, tp->timeout_rehash);
+ 	nla_put_u32(stats, TCP_NLA_BYTES_NOTSENT,
+-		    max_t(int, 0, tp->write_seq - tp->snd_nxt));
++		    max_t(int, 0,
++			  READ_ONCE(tp->write_seq) - READ_ONCE(tp->snd_nxt)));
+ 	nla_put_u64_64bit(stats, TCP_NLA_EDT, orig_skb->skb_mstamp_ns,
+ 			  TCP_NLA_PAD);
  
- 	if (should_change_schedules(admin, oper, end_time)) {
--		/* Set things so the next time this runs, the new
--		 * schedule runs.
--		 */
--		end_time = sched_base_time(admin);
- 		switch_schedules(q, &admin, &oper);
-+		/* After changing schedules, the next entry is the first one
-+		 * in the new schedule, with a pre-calculated end_time.
-+		 */
-+		next = list_first_entry(&oper->entries, struct sched_entry, list);
-+		end_time = next->end_time;
- 	}
- 
- 	next->end_time = end_time;
 -- 
 2.53.0
 
