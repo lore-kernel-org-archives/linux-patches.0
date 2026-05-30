@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A24341AB8;
-	Sat, 30 May 2026 17:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EAD341AB8;
+	Sat, 30 May 2026 17:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162498; cv=none; b=BXz9F6bXuYLcpjSF9di0WK/Ue6B4WQemYgfb3ACCoTRHWovn4ojItTbDunkJF0flKIFzjpoIV34/iVBkTQr78VuOtTu3Au2s/BWStErCS+MBAjlraKYwbgSk0SxLv4i/QM3IrH4oMzEeVWNLgoCZTXbaatUH3BmVjxtu6B+guWA=
+	t=1780162501; cv=none; b=f2/OcXjm2tV0CT3j9qCYC4tMwIoBBg+bgR6tyOdHxeE1KdgPh8tZGwnmri4lWsh0GfYsSgWB+9X1KLfk+G4jbPOAzB+JRPjSipSgMZeoYtdLBvPGs3XWjRivBwcCYBlkf4CAgjtsuZvkTaqEUT1ON5j5MGHxYQWrNHhOc7xGpz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162498; c=relaxed/simple;
-	bh=k8OO6IXo+kL3DkEX6M1aUCv66CCobWqwXjcGjYJMzs0=;
+	s=arc-20240116; t=1780162501; c=relaxed/simple;
+	bh=25zegvqdhZijrxAOR4itcOCU8Fg2Elahh3tMorvpuoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e+7nxp62R9hvIMsStESZDLoyWPV7FtCfX7gkSFm0SyXrI1UuPWUaLUKkLnblqQ5Y2/+o6ih5wbEDq6diwIxw/HXm7Rv8/CkkR3iTjS2zfbc83zSPcch92+qF20miksdWhL1OgX4MTQQHjYCFt7yOV+wQVb+2Wx9EwrKYWuSjOCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2qwg+yP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/fAOJQpZY+VUzaviwXqUdxqFu6leIRgiTjMRx1cdxgcl9uuxtoeZDIE5LGae/lKCcJMCjMhmu4EZE2xaQ5nqIbVy4cSUpGRO2eYMF4ZAJ3zw5w5CjX1Lyy1bP9tnOblG87KhMMMV96qyr0gmNKs0f0x1MpaMB08F1j8i9GBnKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JH4jhNgi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2qwg+yP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEED1F00893;
-	Sat, 30 May 2026 17:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JH4jhNgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8FF1F00893;
+	Sat, 30 May 2026 17:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162497;
-	bh=mjKp4T3V5hP8UNz/WJKlUkLRW910UB4a1WAUnZOeUAk=;
+	s=korg; t=1780162500;
+	bh=v0PHmh0A/ZyBnLCTn6mmiGHt2UFybNTCbOQYp3vxIsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o2qwg+yPt1Llbn7D7dGBT3klGyyq5kKkH+8btfOabjW+YwCb9kia2DxR8D5c1rNdi
-	 uMo2oz9d6gZN1SGsX/AA3kp4auwkFG8NXyFH53lWaFoUAD9byEpo+R20Qduddf/noH
-	 gLVgQQ6n8yba+ohctusDss2VvfN4sKd99acp43LM=
+	b=JH4jhNgiuqwXFFzCBUeKiRqv9TkpS97zUy9hlWFvmEyk9DmVufJjH5hNL+3YET4lI
+	 jswl/7q7mCDguLAfRT463JrZRANR62mHX/ikAutrz2LypEd9MMlhV4wE4eSvWOqVXe
+	 d9vukFf7Akw0Y1369nR+aqI4aew3hf66udvlYDEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E9=92=B1=E4=B8=80=E9=93=AD?= <yimingqian591@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 938/969] net: tls: fix off-by-one in sg_chain entry count for wrapped sk_msg ring
-Date: Sat, 30 May 2026 18:07:42 +0200
-Message-ID: <20260530160326.655077321@linuxfoundation.org>
+Subject: [PATCH 6.1 903/969] kunit: config: KUNIT_DEBUGFS should depend on DEBUG_FS
+Date: Sat, 30 May 2026 18:07:07 +0200
+Message-ID: <20260530160325.647948521@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -47,81 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: David Gow <david@davidgow.net>
 
-[ Upstream commit 285943c6e7ca309bbea84b253745154241d9788a ]
+[ Upstream commit 8f80b5b227ef9ea422080487715c841856339aed ]
 
-When an sk_msg scatterlist ring wraps (sg.end < sg.start),
-tls_push_record() chains the tail portion of the ring to the head
-using sg_chain(). An extra entry in the sg array is reserved for
-this:
+CONFIG_KUNIT_DEBUGFS is totally useless without debugfs, so it should
+depend on CONFIG_DEBUG_FS.
 
-  struct sk_msg_sg {
-        [...]
-        /* The extra two elements:
-         * 1) used for chaining the front and sections when the list becomes
-         *    partitioned (e.g. end < start). The crypto APIs require the
-         *    chaining;
-         * 2) to chain tailer SG entries after the message.
-         */
-        struct scatterlist              data[MAX_MSG_FRAGS + 2];
-
-The current code uses MAX_SKB_FRAGS + 1 as the ring size:
-
-    sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
-             MAX_SKB_FRAGS - msg_pl->sg.start + 1,
-             msg_pl->sg.data);
-
-This places the chain pointer at
-
-  sg_chain(data[start], (MAX_SKB_FRAGS - msg_start + 1) .. =
-  &data[start] + (MAX_SKB_FRAGS - msg_start + 1) - 1 =
-  data[start + (MAX_SKB_FRAGS - start + 1) - 1] =
-  data[MAX_SKB_FRAGS]
-
-instead of the true last entry. This is likely due to a "race" of
-the commit under Fixes landing close to
-commit 031097d9e079 ("bpf: sk_msg, zap ingress queue on psock down")
-
-Convert to ARRAY_SIZE and drop the data[start] / - start (as suggested
-by Sabrina).
-
-Reported-by: 钱一铭 <yimingqian591@gmail.com>
-Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260511174920.433155-2-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20260425034155.53913-2-david@davidgow.net
+Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
+Signed-off-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ lib/kunit/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ef7dda0915d33..a46f3cc4b3f14 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -801,11 +801,9 @@ static int tls_push_record(struct sock *sk, int flags,
- 		sg_mark_end(sk_msg_elem(msg_pl, i));
- 	}
+diff --git a/lib/kunit/Kconfig b/lib/kunit/Kconfig
+index 785c2cfc530c2..49defb2f21b69 100644
+--- a/lib/kunit/Kconfig
++++ b/lib/kunit/Kconfig
+@@ -17,6 +17,7 @@ if KUNIT
  
--	if (msg_pl->sg.end < msg_pl->sg.start) {
--		sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
--			 MAX_SKB_FRAGS - msg_pl->sg.start + 1,
-+	if (msg_pl->sg.end < msg_pl->sg.start)
-+		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
- 			 msg_pl->sg.data);
--	}
- 
- 	i = msg_pl->sg.start;
- 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
+ config KUNIT_DEBUGFS
+ 	bool "KUnit - Enable /sys/kernel/debug/kunit debugfs representation"
++	depends on DEBUG_FS
+ 	default y
+ 	help
+ 	  Enable debugfs representation for kunit.  Currently this consists
 -- 
 2.53.0
 
