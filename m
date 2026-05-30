@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FB434104B;
-	Sat, 30 May 2026 17:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BE934BA42;
+	Sat, 30 May 2026 17:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160615; cv=none; b=IxuzbRXqmkOIbm2mRJ3i2tS99sIWpuIIaUpCf/nrOPe6HPiU3mKgbhW3es5jyA9mA/3SjU3qhE56wDFtVwFIrn30Gz422fpyPfXEtScLyuJUWJYHfqKbpZaJo1YZ69aVfT/kBKy34JP+j/0dMB0WRDwXdQ9UWLci++YOMzZi9EQ=
+	t=1780160620; cv=none; b=t6LoJ0DmhsI++4CXpGRclxsm+I2YXG6y+BACAVSIMayxLSb2yem3s9nvHGU98opIKz6KWhzwg65yaFbrQFkNrnxWHhpkOtTPJks+XVkCF5pR30X9km/KzSARPzEGx52jinFs1KxtHEML+o5+FVGe5gUOBCj1TcyN3vXTj1xmDJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160615; c=relaxed/simple;
-	bh=90/0eQDqoKo2g4RMN0hX5QvDZsyahx+GkpVRPusZWHc=;
+	s=arc-20240116; t=1780160620; c=relaxed/simple;
+	bh=j+NJ6s3tSg53oykHm1sZn1DO+sb9M/tx8VxkiEupR7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FO6kIz41zGTbjTOFHVtrho9k1PcsT8SuPO9MgAwLhJDPQzQUVzdKMQI2MrpvtRIaVV+FqT+CBXOkOLhvT4/RubQ0P4qHHgN+lp7HfjfO+qJ0yshXZZJgoEwzfAlGKb+AwhQZ0myyJbo4reSPPC8zpvVTCDRgtk2axYl+3tzEGLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8aYkghS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b3dByLez7Hn4zIvGWPcIbykjsoyzJb45E5JuHW8PlA4cbJq6urVY0Chq8NVWKYOK8AdMx+KbCazRsPN8H6uj2itnRy9QvwpJ5WXBgtBtEw4IdohY9TwVeFW1X2PmO96p5bSYBS74OjZzKBSI9DW8Hfoj22QklFV6XFDOA25hzfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ht9XF/bJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8aYkghS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A011F00893;
-	Sat, 30 May 2026 17:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ht9XF/bJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835601F00893;
+	Sat, 30 May 2026 17:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160614;
-	bh=PCJNmevvN4XR1NVNAcFd5ST4MdjtI7JIiBzEmRYbFbY=;
+	s=korg; t=1780160619;
+	bh=1ZIzXkGx7RvYTFanJatjfw0WcFOWy8GKQunXnkl6KkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8aYkghS9FSV/adK4IL2nj7jsQJywat6z9GRMA1DoTpSpOJn9OpsOSJql0CZSOoX/
-	 SnZL6C5xMRjrZaXGPzZhw1D5oX8pZGZWDEKVkGh6nRTYT9ugv5NVkVTR/AANqbT3Jr
-	 uc6roL0eYb/elPxg/G5RhIhhardHqR+/sN9rvHZE=
+	b=ht9XF/bJOhn74ypXs2z+uABuaUtNY6IlthnEUA+tE2yzLhMc/HaksJS938lzd65AC
+	 pCpJT3Vnr+fapnsKBWq/1QZZ2hXhUgeYQuCZOkwe7nCvTXetnWhXWpDjcq3FgBQbGd
+	 aUuvcuoiFN/M6OVNRypXAowbBWTaDQwN26EBCBZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soufiane Dani <soufianeda@tutanota.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.1 386/969] staging: media: atomisp: Disallow all private IOCTLs
-Date: Sat, 30 May 2026 17:58:30 +0200
-Message-ID: <20260530160310.965178924@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 387/969] regulator: max77650: fix OF node reference imbalance
+Date: Sat, 30 May 2026 17:58:31 +0200
+Message-ID: <20260530160310.995198664@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 2b7eb2c5dc72f0fc954ac4aa155f9e285e937f7c upstream.
+commit 2edaf5f7ada0ab5c9ec1f0836bd19779a8d85262 upstream.
 
-Disallow all private IOCTLs. These aren't quite as safe as one could
-assume of IOCTL handlers; disable them for now. Instead of removing the
-code, return in the beginning of the function if cmd is non-zero in order
-to keep static checkers happy.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Reported-by: Soufiane Dani <soufianeda@tutanota.com>
-Closes: https://lore.kernel.org/linux-staging/20260210-atomisp-fix-v1-1-024429cbff31@tutanota.com/
-Cc: stable@vger.kernel.org
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Fixes: ad85094b293e ("Revert "media: staging: atomisp: Remove driver"")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: bcc61f1c44fd ("regulator: max77650: add regulator support")
+Cc: stable@vger.kernel.org	# 5.1
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260408073055.5183-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/max77650-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
-+++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
-@@ -2456,6 +2456,10 @@ static long atomisp_vidioc_default(struc
- 	struct v4l2_subdev *motor;
- 	int err;
+--- a/drivers/regulator/max77650-regulator.c
++++ b/drivers/regulator/max77650-regulator.c
+@@ -339,7 +339,7 @@ static int max77650_regulator_probe(stru
+ 	parent = dev->parent;
  
-+	/* Disable all private IOCTLs for now! */
-+	if (cmd)
-+		return -EINVAL;
-+
- 	if (!IS_ISP2401)
- 		motor = isp->inputs[asd->input_curr].motor;
- 	else
+ 	if (!dev->of_node)
+-		dev->of_node = parent->of_node;
++		device_set_of_node_from_dev(dev, parent);
+ 
+ 	rdescs = devm_kcalloc(dev, MAX77650_REGULATOR_NUM_REGULATORS,
+ 			      sizeof(*rdescs), GFP_KERNEL);
 
 
