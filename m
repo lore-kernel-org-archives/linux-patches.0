@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A37F25B08A;
-	Sat, 30 May 2026 18:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B5721B191;
+	Sat, 30 May 2026 18:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166497; cv=none; b=WKsge6GX8/Ve4xT1uKJwhqFy7wkcN9dQ+tx1go5JxxRqKp8dDaG/HEwo2BE0ATE9CjnlwQ3Qt4UHPCM+c3qlT0eox3OrIWu43Ei/ZhSBW4CJEEfFz4olf9aCLl8t7Es1eip/51BZ387tTgBt/xntMIWmzjSk7KXJdoVHeoUyIeo=
+	t=1780166503; cv=none; b=YEZrlS02HEXav1fXcTT0RKOCnxklEbzGia6Adw++xZgt+hoc7Wj7rXIBLkm1b5FOrmpvkR/diUXNZhBeBhl1j5XfZ8C0Um0PUlTCDzk7MZOYJTuWWGtjQLfNwa2a9NpZuC6AhbHfa7sr06nD5xvhh7tcwBO32IF5IPPiOsIMAt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166497; c=relaxed/simple;
-	bh=lP9Wc8jOZH430W48NJvmaA35igSMAMt6u9e8G1vrvUY=;
+	s=arc-20240116; t=1780166503; c=relaxed/simple;
+	bh=rmzAyI2VGjrIwrZQzMXUZ7M88m5VhiLJ7B8HQgcoeOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJMnPyndlmIOVe9uwpv8WCPX84EyChj37cNWgvN4OMrurkJXriDJ6Br+wymYilLR8G3D5XZ7vkdwKPvsndgr8J1MB0lFWWdzfYnYcJjGYvAJPiQr0XIMeHG4cji59b/DumDNCROiSymIJE7ITa2YbL1GyVwi/s//EdOdPMABwEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3Lgx1sk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TjvlYhctmq9SLvsKzgkHtLMbLA8PYEUFwiBEW8yJ2qw/dRls2mPJLtCOVV5GjWXl7lviCpOd05pbt5gzQqflSL5Sb1a/40RRTSIefHgGNQBIuO/911KHNYjSV8kMakDi4N8br2h0WNyy+KCuoeHRqH26gGYY95xszQUe42Jp9D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9rTCNpT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3Lgx1sk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE0C1F00893;
-	Sat, 30 May 2026 18:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9rTCNpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1171F00893;
+	Sat, 30 May 2026 18:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166495;
-	bh=iOeBCnKNXG3i6V+lkw1/rNP3IedkMN5byG4/oOezyv0=;
+	s=korg; t=1780166499;
+	bh=kZ1iqC3ci2Z+VAOqJztskUdvmydjdVFR/Csn9Kq51Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m3Lgx1skS3IjdyfWdw8ZE/GpkBWg2mEdyv91bqWr3KSLvgU8wDo5Ez65ljRgRt5qP
-	 JFjuR7GJO5qzqfsEiPdaGwrdDsw43dEaCxA5rpfgvBoIHQhsrqqR7DLv7IVtkNbB3x
-	 STFbcF2W85PZpl8Cfo+2qzdJnZSW7lZICQgys0lo=
+	b=X9rTCNpTr01CrIySoJtiXZZ2DZCnuLb2mZdrTx68bZ8C5DEAD2yzhukjKmroNqvAO
+	 SDVNWrN4bxexQmyRgd1s4XWLb5Yp5N83KqhSDvGHZy3IXtSinO52hkiwClFwUb+zY3
+	 b3sYii8jajjHPraakUXaDlPBLbnau8wv8MqhgK0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 389/589] backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()
-Date: Sat, 30 May 2026 18:04:30 +0200
-Message-ID: <20260530160235.025264395@linuxfoundation.org>
+Subject: [PATCH 5.10 390/589] platform/surface: surfacepro3_button: Drop wakeup source on remove
+Date: Sat, 30 May 2026 18:04:31 +0200
+Message-ID: <20260530160235.050735582@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -47,49 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 797cc011ae02bda26f93d25a4442d7a1a77d84df ]
+[ Upstream commit 1410a228ab2d36fe2b383415a632ae12048d4f3a ]
 
-The devm_gpiod_get_optional() function may return an ERR_PTR in case of
-genuine GPIO acquisition errors, not just NULL which indicates the
-legitimate absence of an optional GPIO.
+The wakeup source added by device_init_wakeup() in surface_button_add()
+needs to be dropped during driver removal, so update the driver to do
+that.
 
-Add an IS_ERR() check after the call in sky81452_bl_parse_dt(). On
-error, return the error code to ensure proper failure handling rather
-than proceeding with invalid pointers.
-
-Fixes: e1915eec54a6 ("backlight: sky81452: Convert to GPIO descriptors")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260203021625.578678-1-nichen@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 19351f340765 ("platform/x86: surfacepro3: Support for wakeup from suspend-to-idle")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4368848.1IzOArtZ34@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/sky81452-backlight.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/surfacepro3_button.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/backlight/sky81452-backlight.c b/drivers/video/backlight/sky81452-backlight.c
-index 8268ac43d54f7..5375dc7d7cd95 100644
---- a/drivers/video/backlight/sky81452-backlight.c
-+++ b/drivers/video/backlight/sky81452-backlight.c
-@@ -204,6 +204,9 @@ static struct sky81452_bl_platform_data *sky81452_bl_parse_dt(
- 	pdata->dpwm_mode = of_property_read_bool(np, "skyworks,dpwm-mode");
- 	pdata->phase_shift = of_property_read_bool(np, "skyworks,phase-shift");
- 	pdata->gpiod_enable = devm_gpiod_get_optional(dev, NULL, GPIOD_OUT_HIGH);
-+	if (IS_ERR(pdata->gpiod_enable))
-+		return dev_err_cast_probe(dev, pdata->gpiod_enable,
-+					  "failed to get gpio\n");
+diff --git a/drivers/platform/x86/surfacepro3_button.c b/drivers/platform/x86/surfacepro3_button.c
+index d8afed5db94c5..17d3fc81aa6e7 100644
+--- a/drivers/platform/x86/surfacepro3_button.c
++++ b/drivers/platform/x86/surfacepro3_button.c
+@@ -245,6 +245,7 @@ static int surface_button_remove(struct acpi_device *device)
+ {
+ 	struct surface_button *button = acpi_driver_data(device);
  
- 	ret = of_property_count_u32_elems(np, "led-sources");
- 	if (ret < 0) {
++	device_init_wakeup(&device->dev, false);
+ 	input_unregister_device(button->input);
+ 	kfree(button);
+ 	return 0;
 -- 
 2.53.0
 
