@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F3032B11D;
-	Sat, 30 May 2026 17:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752CC26F288;
+	Sat, 30 May 2026 17:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160462; cv=none; b=MikWxZx3o2RAemhuSF06eiE64rhUUYgXM9SDcu5/cDDrmhBCDCWVjqo+d9++AE4PAajiEr28XWo0LPmTelJYS3SEq43U2oNe9Xlih6k6j7oEpw7XWyfykEN+BUtzdMbQGHDeh3fImlTaR77qxPE2U+X99/vlIUsRbcSmEEqsUok=
+	t=1780160465; cv=none; b=mlrmKif9DukewHb/i+s5XS1gqaj9hno5yGiGhWmwS4i84p5A73i2FjUUN+5fihboJwCnuYq7mkBAaymwS8n5TexDvIrFJqD0kYqWbsgmfXrmoofA3Ur7Z4K6b8LbVmrbx6rn75B6zLRzai0gdzgAGad7Wk3oFvbR5RR1U7ydObI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160462; c=relaxed/simple;
-	bh=l3HbycIrWgQqTufLT5oTZ0iW5J2Axu8WmAMAE6wztXk=;
+	s=arc-20240116; t=1780160465; c=relaxed/simple;
+	bh=P3aAYRLLrOQQUNLGvvCxonqVOc7IwlckehMwCCAsUVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lS2QmDEMQcn9R7vXEU1g3cYUo2YK2RPfVGe1eVmzzxRjMXnYCpImbOBvGNuE+TrhE6Gpb7O+B0sLDDU8jSgEGunlHszE2mxp0sAFPlDriE+37ocTA5xuyaPRU9KsTOVYg1c3lzSo3nQqOX8VN8jVPE7fYi5ZUQWXgn3PQoL/7vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDQO7aSp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KBIt6pCKBsh6uBdvhglfe2piB8u6k3bjBIlmpiG73cESJJMM2JCvcotHb/ClzslItc5RH2pOD2afS4E7Uv9tyKVWPUXhB3Et0B+q6lFSjdB8XHHe1Z658X16Bx8Opf+gzHoipVUF8xl6rRmGHwAjpASkkMb7oFB7hchm6cwp6XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2rxnMD2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDQO7aSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A12C1F00893;
-	Sat, 30 May 2026 17:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2rxnMD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6CD1F00893;
+	Sat, 30 May 2026 17:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160460;
-	bh=gB/c84Ww+xBY8RSqIQ8WXTI9OYtCHF+I98LbDmV0oi4=;
+	s=korg; t=1780160464;
+	bh=eMPMaFv7Ne6xV9Al3lfDTZFQBSaieyALpy2IT26vQjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LDQO7aSpls5uFVMyl8E5M34nhdJ95F952rsljac0lEWQta5KpHgfCYzuhjf3MP2aD
-	 gtzX5ZzclOhZ0eRoCdzogXiSz3vjieZbZhqEwTayYeCBpwU2yd2MbrkNR3y7hAoYWb
-	 t3bKXKU9x/bdG4Up6nyXG+X4V9LbzdJb2YAogbEM=
+	b=C2rxnMD2VCHSJ8MpwXZ8tIRP+ec9Dmbdkcbtz5lZq/vgyb1EEA+cM5FI1LJIcWHI+
+	 GItYFOfPh1MBsz5UfAXzt3VGqj8dtE9OiQfpVOVSzrft6kVwv17mDFXGIl8bsH1hfi
+	 usmWDO4EZBjWErqIxoOcw1xsZ0IdF64rX8Wvxl1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 304/969] wifi: b43: enforce bounds check on firmware key index in b43_rx()
-Date: Sat, 30 May 2026 17:57:08 +0200
-Message-ID: <20260530160308.825282229@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: [PATCH 6.1 338/969] thermal/drivers/sprd: Fix raw temperature clamping in sprd_thm_rawdata_to_temp
+Date: Sat, 30 May 2026 17:57:42 +0200
+Message-ID: <20260530160309.702171139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,47 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 1f4f78bf8549e6ac4f04fba4176854f3a6e0c332 upstream.
+commit b3414148bbc1f9cd56217e58a558c6ac4fd1b4a6 upstream.
 
-The firmware-controlled key index in b43_rx() can exceed the dev->key[]
-array size (58 entries). The existing B43_WARN_ON is non-enforcing in
-production builds, allowing an out-of-bounds read.
+The raw temperature data was never clamped to SPRD_THM_RAW_DATA_LOW or
+SPRD_THM_RAW_DATA_HIGH because the return value of clamp() was not used.
+Fix this by assigning the clamped value to 'rawdata'.
 
-Make the B43_WARN_ON check enforcing by dropping the frame when the
-firmware returns an invalid key index.
+Casting SPRD_THM_RAW_DATA_LOW and SPRD_THM_RAW_DATA_HIGH to u32 is also
+redundant and can be removed.
 
-Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Acked-by: Michael Büsch <m@bues.ch>
-Fixes: e4d6b7951812 ("[B43]: add mac80211-based driver for modern BCM43xx devices")
+Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260417111145.2694196-1-tristmd@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260307102422.306055-2-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/b43/xmit.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/sprd_thermal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/b43/xmit.c
-+++ b/drivers/net/wireless/broadcom/b43/xmit.c
-@@ -702,7 +702,8 @@ void b43_rx(struct b43_wldev *dev, struc
- 		 * key index, but the ucode passed it slightly different.
- 		 */
- 		keyidx = b43_kidx_to_raw(dev, keyidx);
--		B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key));
-+		if (B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key)))
-+			goto drop;
+--- a/drivers/thermal/sprd_thermal.c
++++ b/drivers/thermal/sprd_thermal.c
+@@ -178,7 +178,7 @@ static int sprd_thm_sensor_calibration(s
+ static int sprd_thm_rawdata_to_temp(struct sprd_thermal_sensor *sen,
+ 				    u32 rawdata)
+ {
+-	clamp(rawdata, (u32)SPRD_THM_RAW_DATA_LOW, (u32)SPRD_THM_RAW_DATA_HIGH);
++	rawdata = clamp(rawdata, SPRD_THM_RAW_DATA_LOW, SPRD_THM_RAW_DATA_HIGH);
  
- 		if (dev->key[keyidx].algorithm != B43_SEC_ALGO_NONE) {
- 			wlhdr_len = ieee80211_hdrlen(fctl);
+ 	/*
+ 	 * According to the thermal datasheet, the formula of converting
 
 
