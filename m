@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CD13BFE3B;
-	Sat, 30 May 2026 17:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9923AEB5C;
+	Sat, 30 May 2026 17:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163200; cv=none; b=DhHyHvON2o4+jrOxeX+wW4l2HRAaxpNiHROLQG5KrhJhG/MgugDi2PQgyWwlsH/FIvNsQuhlwyHvbF2+ByyKQVM2MY0dGyr323eWDjbUq6mRpvcMiryQtXYRWNZcp5c5/FCOuIw85OvrilnvUgJrWl0zdRab/5MsgZsdZLbjESg=
+	t=1780163203; cv=none; b=Gm1RmG2+K6oFYTCkvfuadRflVFTERM0PuPQM1hcuE5bThlK0i6TLBqhWsUQUCO9ZewedpYxYO9N9hgcvFkTe3OUl+AvbuZkyj1oeWNcbhtg39xKGn6gYxD460FmnT0v5OmLWMk1gfVo2W0K5RWd5xFZHQf2+3aSqdIxnRIE79/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163200; c=relaxed/simple;
-	bh=EJL9IKT44M+glzGF0JZCOSyFgJ6obqjRJQZaXggwprk=;
+	s=arc-20240116; t=1780163203; c=relaxed/simple;
+	bh=xfgk/mn7UoFo8g4U63Jkpr4j+8nIu6dbLTIEV5fHAbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTQ22T/sQs77k7/EOY0NLjOwnLT6vEHUK9O3ShPL47GkRTgmWB1Lbh2eBozCRBUCQm5eJ+dCG4EqbhHIhguVZKUFvGEy4xhbVKaMu8WObYwATiF0Wtvhq8mVtVMA8V6cg6tPS7H+nkclYcMlry2pnwDYKbVvALmXMzGK6h0tqjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAK0zWf+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6GMLFYdD2M5CrdFnWwm4zCVEkgUlzEsfHc95gJQ4EwG42DtHiiSybD/K3AEf6Av3jMbWuCcdSFkp/LcvhurPMZUIypd2xId1efHQZMtAboqzEefhWIhlspXYtsgz2cGLaxpzuuCg8wWjugzJJNwe7kFD9hGqN/FIvNlgzOSWts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYHCwVnU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAK0zWf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978891F00893;
-	Sat, 30 May 2026 17:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYHCwVnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFCA1F00898;
+	Sat, 30 May 2026 17:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163199;
-	bh=E/d/ioNfvaV5eNQjlZFdYASgD40q7mjrvEkgd7+oLNQ=;
+	s=korg; t=1780163202;
+	bh=Sfc0vcdI0QTKEUCKdXGIjYaBbNeB0fmtvUfeFhFlnn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAK0zWf+rOXr2IWpcN4ELwmdHHLtNOvrj54XU95V4EadjtYFx4n7lTInOCvwgypeR
-	 ViLewiGzfaN94BzP6cCfQoNidlip/Xie4RkuAqUhimTwvC+syj5o4zS5jxTQsNdsNt
-	 rmAnSBmYG7y5ec8GGR0VfsYJnDGymmEFvLPNVSJM=
+	b=lYHCwVnUYOtDmW0+mfYr8ypsUHQ1Wzu1ShwZdFDAXexfqMmArGEltu2OyP8G+d7Uy
+	 Ko4DZfYb3haRzSkNcjAYTpaQf+PJmA8tn/wC1+LT0nHMfJK8Vh+mvG/MYJVl/k/e+8
+	 9TW6skFyWKP9mBQyzYrBTDbqSiR2D1axqQA1LWmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 186/776] drm/nouveau: fix u32 overflow in pushbuf reloc bounds check
-Date: Sat, 30 May 2026 17:58:20 +0200
-Message-ID: <20260530160245.307722341@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	ychen@northwestern.edu,
+	Tyllis Xu <LivelyCarpet87@gmail.com>
+Subject: [PATCH 5.15 187/776] misc: ibmasm: fix OOB MMIO read in ibmasm_handle_mouse_interrupt()
+Date: Sat, 30 May 2026 17:58:21 +0200
+Message-ID: <20260530160245.333085483@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -56,49 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 2fc87d37be1b730a149b035f9375fdb8cc5333a5 upstream.
+commit 4b6e6ead556734bdc14024c5f837132b1e7a4b84 upstream.
 
-nouveau_gem_pushbuf_reloc_apply() validates each relocation with
+ibmasm_handle_mouse_interrupt() performs an out-of-bounds MMIO read
+when the queue reader or writer index from hardware exceeds
+REMOTE_QUEUE_SIZE (60).
 
-    if (r->reloc_bo_offset + 4 > nvbo->bo.base.size)
+A compromised service processor can trigger this by writing an
+out-of-range value to the reader or writer MMIO register before
+asserting an interrupt. Since writer is re-read from hardware on
+every loop iteration, it can also be set to an out-of-range value
+after the loop has already started.
 
-but reloc_bo_offset is __u32 (uapi/drm/nouveau_drm.h) and the integer
-literal 4 promotes to unsigned int, so the addition is performed in 32
-bits and wraps before the comparison against the size_t bo size.
+The root cause is that get_queue_reader() and get_queue_writer() return
+raw readl() values that are passed directly into get_queue_entry(),
+which computes:
 
-Cast to u64 so the addition happens in 64-bit arithmetic.
+  queue_begin + reader * sizeof(struct remote_input)
 
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Reported-by: Anthropic
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_t1000
-Fixes: a1606a9596e5 ("drm/nouveau: new gem pushbuf interface, bump to 0.0.16")
+with no bounds check. This unchecked MMIO address is then passed to
+memcpy_fromio(), reading 8 bytes from unintended device registers.
+For sufficiently large values the address falls outside the PCI BAR
+mapping entirely, triggering a machine check exception.
+
+Fix by checking both indices against REMOTE_QUEUE_SIZE at the top of
+the loop body, before any call to get_queue_entry(). On an out-of-range
+value, reset the reader register to 0 via set_queue_reader() before
+breaking, so that normal queue operation can resume if the corrupted
+hardware state is transient.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 278d72ae8803 ("[PATCH] ibmasm driver: redesign handling of remote control events")
+Cc: stable@vger.kernel.org
+Cc: ychen@northwestern.edu
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Link: https://patch.msgid.link/20260308062108.258940-1-LivelyCarpet87@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Add Fixes: tag. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_gem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/ibmasm/remote.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_gem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
-@@ -668,7 +668,7 @@ nouveau_gem_pushbuf_reloc_apply(struct n
- 		}
- 		nvbo = (void *)(unsigned long)bo[r->reloc_bo_index].user_priv;
+--- a/drivers/misc/ibmasm/remote.c
++++ b/drivers/misc/ibmasm/remote.c
+@@ -177,6 +177,11 @@ void ibmasm_handle_mouse_interrupt(struc
+ 	writer = get_queue_writer(sp);
  
--		if (unlikely(r->reloc_bo_offset + 4 >
-+		if (unlikely((u64)r->reloc_bo_offset + 4 >
- 			     nvbo->bo.base.size)) {
- 			NV_PRINTK(err, cli, "reloc outside of bo\n");
- 			ret = -EINVAL;
+ 	while (reader != writer) {
++		if (reader >= REMOTE_QUEUE_SIZE || writer >= REMOTE_QUEUE_SIZE) {
++			set_queue_reader(sp, 0);
++			break;
++		}
++
+ 		memcpy_fromio(&input, get_queue_entry(sp, reader),
+ 				sizeof(struct remote_input));
+ 
 
 
