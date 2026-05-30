@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207E352027;
-	Sat, 30 May 2026 18:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503BC362157;
+	Sat, 30 May 2026 18:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164609; cv=none; b=WJt072XCOD1+cIykz1rpVrwlI95TswpNXvlGfActBUT6fRVWOIf8KkPDlIcDBSIR+9C/5NhFE0PdBJIsm7AXeEe8+ErndJaykxsqPoLTHuzx+/VIH6Jyxa5jg+IHmDRuUQ12Xb1UPbbz/pRboonk91Q+IoLJJb11slwl0zzcKxQ=
+	t=1780164612; cv=none; b=mzCpTCSqO50MUbU5emjyB73lqDXuDSiJuhkjlqbq4OzQ+cB2IdyYxFQPHq+hIsVriZd9g6k7pum2lCou8GNzkg5B9So7XYSHqcfVpnQuyR7cDgBaQWQgBqKJVQt9WxP325pBz3noLPfDV5u8KcxL9IZoSvy93lGHCgsppaVS4rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164609; c=relaxed/simple;
-	bh=ZptHESExAyjP4tQu3dYsSYhusam0hKTob2wVQ4xjc0U=;
+	s=arc-20240116; t=1780164612; c=relaxed/simple;
+	bh=Zp1qapp7Xtxke4TQG219ek/5trwPD5SN8Srg/Ah3FgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVwkMmzFSwwaM+oW13Ng7Wba9lszteh8Uf+273UuiyftRFWnTlz9unDoeIRz8SqMIPu2mXuUCjI0vX4WEwZAe4Vz/OJNPl9LMKYEYWDvjlwLCdtBkFqE25vaffHQeTndWDtrQ7dpqmkyFpFsALN3aFgV9PRaz9JMW+iJEKAOYRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXY2c1+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=apAfMTir7tX2Nxjukb2n2pgd+EY4CEOyYiY/blciw9cx5gbFbu+Ds6HTUfpDqkpbRjScuMCPAQU7oUM8AzUwrC7QNJCXkt9FBkX5F7c6qv4yctcPmIRbXqYT/Re8AbSBv2idMftJTR7x7snKvoOKT3g6x9f9uz/iLI9PP/toOMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdoqBOaU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXY2c1+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472251F00898;
-	Sat, 30 May 2026 18:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdoqBOaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DED1F00893;
+	Sat, 30 May 2026 18:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164607;
-	bh=K9f4bBtrWbHJworlQ5ZL2bVC3gzYHS7INjOPshntRtA=;
+	s=korg; t=1780164611;
+	bh=yaZQ4+zb06TKgPfx/1eLsa3iXnW8Pf5H2kNjhbYI/qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NXY2c1+1IWM4sGuhqPQbbieYhVSJW5H08z/Zs8xUfr9feYnFI72qIBj1ZQjiZPyz3
-	 DDFEuQ59DdTBfgaYah0FwzTco11+zUIDL1A8ibNSqglHa0pSqfUUwQdZKjNcIOj3co
-	 hVOVPtvDUbfYJrj/Gjw+PCj17coG7GlH8t75cAGI=
+	b=ZdoqBOaU+ezhCSB92Vos1HRVbpLYni9LQCDqBZakwV7L+dAsyjgAf+pb8shQuhwWR
+	 twvrxK62BHRUAIDbrl6n7tTtLpreD5fB2pQnXiZiKUJ6G6EarP/it9wskQBa1SPOAi
+	 VdmjoC8G+s6ovxkIZu7BYcUx1H55ceIF8PJwSCSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Demers <alexandre.f.demers@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 588/776] net: sched: gred/red: remove unused variables in struct red_stats
-Date: Sat, 30 May 2026 18:05:02 +0200
-Message-ID: <20260530160255.263224663@linuxfoundation.org>
+Subject: [PATCH 5.15 606/776] drm/amdgpu: fix spelling typos
+Date: Sat, 30 May 2026 18:05:20 +0200
+Message-ID: <20260530160255.680598072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,67 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Alexandre Demers <alexandre.f.demers@gmail.com>
 
-[ Upstream commit 4516c873e3b55856012ddd6db9d4366ce3c60c5d ]
+[ Upstream commit ce43abd7ec9464cf954f90e1c69e11768b02fa0a ]
 
-The variable "other" in the struct red_stats is not used. Remove it.
+Found some typos while exploring amdgpu code.
 
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a8f5192809ca ("net/sched: sch_red: annotate data-races in red_dump_stats()")
+Signed-off-by: Alexandre Demers <alexandre.f.demers@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 13e4cf116dbf ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/red.h    | 1 -
- net/sched/sch_gred.c | 3 ---
- net/sched/sch_red.c  | 1 -
- 3 files changed, 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c   | 6 +++---
+ drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c   | 3 ++-
+ drivers/gpu/drm/amd/amdgpu/vce_v2_0.c   | 2 +-
+ 4 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/red.h b/include/net/red.h
-index be11dbd264920..454ac2b65d8ca 100644
---- a/include/net/red.h
-+++ b/include/net/red.h
-@@ -122,7 +122,6 @@ struct red_stats {
- 	u32		forced_drop;	/* Forced drops, qavg > max_thresh */
- 	u32		forced_mark;	/* Forced marks, qavg > max_thresh */
- 	u32		pdrop;          /* Drops due to queue limits */
--	u32		other;          /* Drops due to drop() calls */
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index 259897f1ea8a4..e00d1637859fe 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -259,7 +259,7 @@ void amdgpu_gmc_sysvm_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc
+  * @adev: amdgpu device structure holding all necessary information
+  * @mc: memory controller structure holding memory information
+  *
+- * Function will place try to place GART before or after VRAM.
++ * Function will try to place GART before or after VRAM.
+  * If GART size is bigger than space left then we ajust GART size.
+  * Thus function will never fails.
+  */
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+index e458e0d5801b0..fbfed90503868 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+@@ -98,7 +98,7 @@ static void uvd_v3_1_ring_emit_ib(struct amdgpu_ring *ring,
+ }
  
- struct red_parms {
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index 621dc6afde8f3..8caf9623f855f 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -817,7 +817,6 @@ static int gred_dump(struct Qdisc *sch, struct sk_buff *skb)
- 		opt.Wlog	= q->parms.Wlog;
- 		opt.Plog	= q->parms.Plog;
- 		opt.Scell_log	= q->parms.Scell_log;
--		opt.other	= q->stats.other;
- 		opt.early	= q->stats.prob_drop;
- 		opt.forced	= q->stats.forced_drop;
- 		opt.pdrop	= q->stats.pdrop;
-@@ -883,8 +882,6 @@ static int gred_dump(struct Qdisc *sch, struct sk_buff *skb)
- 			goto nla_put_failure;
- 		if (nla_put_u32(skb, TCA_GRED_VQ_STAT_PDROP, q->stats.pdrop))
- 			goto nla_put_failure;
--		if (nla_put_u32(skb, TCA_GRED_VQ_STAT_OTHER, q->stats.other))
--			goto nla_put_failure;
+ /**
+- * uvd_v3_1_ring_emit_fence - emit an fence & trap command
++ * uvd_v3_1_ring_emit_fence - emit a fence & trap command
+  *
+  * @ring: amdgpu_ring pointer
+  * @addr: address
+@@ -242,7 +242,7 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
+ 	uint64_t addr;
+ 	uint32_t size;
  
- 		nla_nest_end(skb, vq);
+-	/* programm the VCPU memory controller bits 0-27 */
++	/* program the VCPU memory controller bits 0-27 */
+ 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
+ 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
+ 	WREG32(mmUVD_VCPU_CACHE_OFFSET0, addr);
+@@ -416,7 +416,7 @@ static int uvd_v3_1_start(struct amdgpu_device *adev)
+ 	/* Set the write pointer delay */
+ 	WREG32(mmUVD_RBC_RB_WPTR_CNTL, 0);
+ 
+-	/* programm the 4GB memory segment for rptr and ring buffer */
++	/* Program the 4GB memory segment for rptr and ring buffer */
+ 	WREG32(mmUVD_LMI_EXT40_ADDR, upper_32_bits(ring->gpu_addr) |
+ 		   (0x7 << 16) | (0x1 << 31));
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
+index c108b83817951..01d8e7d2caf97 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
+@@ -298,7 +298,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
+ 	/* enable VCPU clock */
+ 	WREG32(mmUVD_VCPU_CNTL,  1 << 9);
+ 
+-	/* disable interupt */
++	/* disable interrupt */
+ 	WREG32_P(mmUVD_MASTINT_EN, 0, ~(1 << 1));
+ 
+ #ifdef __BIG_ENDIAN
+@@ -308,6 +308,7 @@ static int uvd_v4_2_start(struct amdgpu_device *adev)
+ #endif
+ 	WREG32(mmUVD_LMI_SWAP_CNTL, lmi_swap_cntl);
+ 	WREG32(mmUVD_MP_SWAP_CNTL, mp_swap_cntl);
++
+ 	/* initialize UVD memory controller */
+ 	WREG32(mmUVD_LMI_CTRL, 0x203108);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
+index 98952fd387e73..ddbcfcc70df5c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
+@@ -278,7 +278,7 @@ static int vce_v2_0_stop(struct amdgpu_device *adev)
+ 	int status;
+ 
+ 	if (vce_v2_0_lmi_clean(adev)) {
+-		DRM_INFO("vce is not idle \n");
++		DRM_INFO("VCE is not idle \n");
+ 		return 0;
  	}
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index 063431a5ae1dd..a2c1db8ac3945 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -463,7 +463,6 @@ static int red_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	}
- 	st.early = q->stats.prob_drop + q->stats.forced_drop;
- 	st.pdrop = q->stats.pdrop;
--	st.other = q->stats.other;
- 	st.marked = q->stats.prob_mark + q->stats.forced_mark;
  
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
 -- 
 2.53.0
 
