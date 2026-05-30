@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B99332919;
-	Sat, 30 May 2026 16:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D6A33A9DA;
+	Sat, 30 May 2026 16:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159933; cv=none; b=uf1BCz8eJgAk8hVz1y05Ma3I2DfBBBAxzRLaCoaCrFHQTbykzU1sboqYCnjPfyE99saXiltbDpLtNNcJpC/2GY9BCk3+Ox4KNiMRmgkntW7ns7x1A0+/s5dhkFRXSM8qWGdqoCyd46/QiW9op3vM2feI+W0W5znqmEOr2Rd9Xzk=
+	t=1780159937; cv=none; b=Uv2on7oDq/YVTduGfZvm256MqmXhiVKImwzdGTqz1IX2DWYU+jfU3VrzhGje+jCP47WNoQ3h0ZRx2lw9WeAJH65y9y2heRIJeFF3R1ZbYgJssOTQ0G+nf4arOsap1V9dOWdv6Z8DeGcfGhZ9oRF5Pe27vWYjjojoBZBzrK7nO3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159933; c=relaxed/simple;
-	bh=1c65al4uaQsL/pkR7BL+HZMusmqavpFbLlM9VtxJJZI=;
+	s=arc-20240116; t=1780159937; c=relaxed/simple;
+	bh=NV1mt1AOAj6e7PDRI2Wq25y/C9kMqDQ/oL30IKJ9BMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uc4umD1wBXUSyIHibkNCj+POG+ztmc8GX+yZuumWkICrx4ItV3WhrmswRuiBwjlDQvDS8lY51+Nuu6AOFuHBwRKoALvoYhrJJNzPINK42xtlNVfe05kUoWHK1VQ9UZ0q6s2uhNgMyoR/zYu5iMWUhA9fPcYPNoSG+VhUi/dQG0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWWDmlk1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lClQ6WKbULKaguZQgxDEgmcl+eyKbimGmilincacoO0NzM8wDa2gRJsxTn5MzItGU2InY6n/8Nrz7AlKlFwvYWjv4hYvDbJByuZvrDg39Py2bavG7zZwz7ooBsJiH3cnNHRZe4v2ITGTnqMPQE4TSGeAMVYWN6QJttS4M3wzT8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMkOB3V0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWWDmlk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE20C1F00893;
-	Sat, 30 May 2026 16:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMkOB3V0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6136F1F00893;
+	Sat, 30 May 2026 16:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159932;
-	bh=eBP9bXrTtGWK4/eBoKijz1yMhf3hsc4XZqQmIajA2J0=;
+	s=korg; t=1780159936;
+	bh=pEpufSUKz3kFsQcVKynR3vsoKxHJRTzFP4gaSnpJsQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWWDmlk1jFc/IWFDd2Htd/NEiwiUarMFOCGwoZgLSf/YbYqyqpJNvtA7DlLlphNIU
-	 O/PZJDlL9EgYXVeRlICHzecV6fr/aFmow5VbvGFNY2U6aW4wucxsNT/mUTxRsefcsj
-	 UcgAhwFwf92h/3sRVKiH+TfNyB1RizmEq+XOkMpc=
+	b=gMkOB3V0Yv2wVl9ryVsufnxaK7JBzKbaQUHlQRwjaRJL3KTAVf3fgLqH9Xkn3+CzV
+	 RhZQu0bn69lrx1dztzREwu6LUL1PAt09kwjTEfJZlrCy2SZqfdCJgsKaRELQCZqK6V
+	 QAlZnZRn7AStqzKy8U9sVb+i7x3FE3LFGEkAq0Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 192/969] net: qrtr: ns: Fix use-after-free in driver remove()
-Date: Sat, 30 May 2026 17:55:16 +0200
-Message-ID: <20260530160305.778462636@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 201/969] parisc: _llseek syscall is only available for 32-bit userspace
+Date: Sat, 30 May 2026 17:55:25 +0200
+Message-ID: <20260530160306.028793359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,74 +49,27 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 7809fea20c9404bfcfa6112ec08d1fe1d3520beb upstream.
-
-In the remove callback, if a packet arrives after destroy_workqueue() is
-called, but before sock_release(), the qrtr_ns_data_ready() callback will
-try to queue the work, causing use-after-free issue.
-
-Fix this issue by saving the default 'sk_data_ready' callback during
-qrtr_ns_init() and use it to replace the qrtr_ns_data_ready() callback at
-the start of remove(). This ensures that even if a packet arrives after
-destroy_workqueue(), the work struct will not be dereferenced.
-
-Note that it is also required to ensure that the RX threads are completed
-before destroying the workqueue, because the threads could be using the
-qrtr_ns_data_ready() callback.
+commit da3680f564bd787ce974f9931e6e924d908b3b2a upstream.
 
 Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-5-00a8a5ff2b51@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/parisc/kernel/syscalls/syscall.tbl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -23,6 +23,7 @@ static struct {
- 	struct list_head lookups;
- 	struct workqueue_struct *workqueue;
- 	struct work_struct work;
-+	void (*saved_data_ready)(struct sock *sk);
- 	int local_node;
- } qrtr_ns;
- 
-@@ -788,6 +789,7 @@ int qrtr_ns_init(void)
- 		goto err_sock;
- 	}
- 
-+	qrtr_ns.saved_data_ready = qrtr_ns.sock->sk->sk_data_ready;
- 	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
- 
- 	sq.sq_port = QRTR_PORT_CTRL;
-@@ -828,6 +830,10 @@ int qrtr_ns_init(void)
- 	return 0;
- 
- err_wq:
-+	write_lock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
-+	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns.saved_data_ready;
-+	write_unlock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
-+
- 	destroy_workqueue(qrtr_ns.workqueue);
- err_sock:
- 	sock_release(qrtr_ns.sock);
-@@ -837,7 +843,12 @@ EXPORT_SYMBOL_GPL(qrtr_ns_init);
- 
- void qrtr_ns_remove(void)
- {
-+	write_lock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
-+	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns.saved_data_ready;
-+	write_unlock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
-+
- 	cancel_work_sync(&qrtr_ns.work);
-+	synchronize_net();
- 	destroy_workqueue(qrtr_ns.workqueue);
- 
- 	/* sock_release() expects the two references that were put during
+--- a/arch/parisc/kernel/syscalls/syscall.tbl
++++ b/arch/parisc/kernel/syscalls/syscall.tbl
+@@ -154,7 +154,7 @@
+ # 137 was afs_syscall
+ 138	common	setfsuid		sys_setfsuid
+ 139	common	setfsgid		sys_setfsgid
+-140	common	_llseek			sys_llseek
++140	32	_llseek			sys_llseek
+ 141	common	getdents		sys_getdents			compat_sys_getdents
+ 142	common	_newselect		sys_select			compat_sys_select
+ 143	common	flock			sys_flock
 
 
