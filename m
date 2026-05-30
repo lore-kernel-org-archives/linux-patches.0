@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FC834EF07;
-	Sat, 30 May 2026 16:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D488E3A3E76;
+	Sat, 30 May 2026 16:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160191; cv=none; b=uXig4XHUAomjm9KW9yWx4n/wpnDtu1x5P6gKwLNznpE5HfUb9xRPuzYn9rsERtdus5CI7UzzJKW0plAvK1uGlUmK3Fe5ZzG6fG6bzil0ixOcWHjShh08Rt9yJYjwUkWe0mc83ZJIKhsuVMMB8mbklnNZJYxmBUxs7V9un6DJwFY=
+	t=1780160194; cv=none; b=iglRf7n+Uezzi0XJYglmjHt7Wm4M4qmayP1BI7Wcjxt3O3416zx3E0mD0gUIybIK7Bul6oOMND96nPd+mwyNOsQ5JxsWVePE46aPmbKKI/Wv13AmlTJ/vwbNJYlmrRj7u4OQH69Hn68wRxI9xcawnnprpSMMeoUZeXZlMJkHF88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160191; c=relaxed/simple;
-	bh=jb2M0GF/42xxRPQ6MvaRmm4UrOmQlaWLsFPCte6HnbU=;
+	s=arc-20240116; t=1780160194; c=relaxed/simple;
+	bh=xjSVlGjUIIV/x68C4CFwqMqNazaG8/QXwAxNBtUxHvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6UeHqML8TaC336CHPyJZhN5/G7IFAZQfrwYDnz/sxoge1ry7s5SDXRHLbiy1CJ439/F9p86KK1yu4kFVqctWzUbWHXx75IDs3X4+pCck2r1iP/sr7A9puJoY6EQjzSkmXnvr+wdUvCc/xRbWYoJ8ESrx6KVr/uv6Sdt1COQCgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS1EJ9SR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hB0W6Dn66/F05CU9iQWUNrBEGjd9JLULeFVf83IIGjem4v8ZxVhN2BxHG7JR/st5pA8KFciygnbRH9PTmH62zYB7JLRwoR4oCNB3hDObHRxYTphtTo1SVs07mM6vOfC+n7k0wO03YxYy2YVseP6DTv3nzpQ941lN3EJaew6aTJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5Tt0kTI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS1EJ9SR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6526E1F00893;
-	Sat, 30 May 2026 16:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5Tt0kTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241241F00893;
+	Sat, 30 May 2026 16:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160190;
-	bh=ZpF3VX+83bh3pA4VCHtK9tbn3OWAZYSESXld2H6ogwY=;
+	s=korg; t=1780160193;
+	bh=xPqJMDokA8I3hZ6Lve2Tc3FmXDTPs9lQXuLUTfSczGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YS1EJ9SRraDwrzTWWR2Vk5mddHhzH6hMOZvkhlhmut5//NPCwJOIOvnMCxbFIqfeU
-	 tw8mbuIIPpWylI3n2hvPxUJbcjW0ZEXYeRWo9WP5LBHxkmHV3E51N68z5UioY6hAdk
-	 OKhO3c9Ml5YGv7o9WmN04WJMAgi8nMR7UzxPJyqs=
+	b=i5Tt0kTI5x+dKKl2RV2Hy2HB/oqSHCZ4EbUAnizyCsZqIcv4a/BnbIT+KGZ8V2zpx
+	 FNIy8Q/jePDZN+GYlBr+4Byithy/vxPdYtznl3tjlvdkFDPFZt2TF4iL5bUzEBEDCT
+	 hwfW7p9vivKbQCqiTodMv0Pk6zGVVSUFcbWdQ9GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 232/969] KVM: nSVM: Mark all of vmcb02 dirty when restoring nested state
-Date: Sat, 30 May 2026 17:55:56 +0200
-Message-ID: <20260530160306.864547009@linuxfoundation.org>
+Subject: [PATCH 6.1 233/969] KVM: nSVM: Sync NextRIP to cached vmcb12 after VMRUN of L2
+Date: Sat, 30 May 2026 17:55:57 +0200
+Message-ID: <20260530160306.894468203@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,42 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit e63fb1379f4b9300a44739964e69549bebbcdca4 upstream.
+commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
 
-When restoring a vCPU in guest mode, any state restored before
-KVM_SET_NESTED_STATE (e.g. KVM_SET_SREGS) will mark the corresponding
-dirty bits in vmcb01, as it is the active VMCB before switching to
-vmcb02 in svm_set_nested_state().
+After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
+fields written by the CPU from vmcb02 to the cached vmcb12. This is
+because the cached vmcb12 is used as the authoritative copy of some of
+the controls, and is the payload when saving/restoring nested state.
 
-Hence, mark all fields in vmcb02 dirty in svm_set_nested_state() to
-capture any previously restored fields.
+NextRIP is also written by the CPU (in some cases) after VMRUN, but is
+not sync'd to the cached vmcb12. As a result, it is corrupted after
+save/restore (replaced by the original value written by L1 on nested
+VMRUN). This could cause problems for both KVM (e.g. when injecting a
+soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
+an instruction).
+
+Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
+after completing interrupts (not in nested_sync_control_from_vmcb02()),
+as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
 
 Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
 CC: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260210010806.3204289-1-yosry.ahmed@linux.dev
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/svm/svm.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1661,6 +1661,12 @@ static int svm_set_nested_state(struct k
- 	nested_vmcb02_prepare_control(svm, svm->vmcb->save.rip, svm->vmcb->save.cs.base);
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4146,6 +4146,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
  
- 	/*
-+	 * Any previously restored state (e.g. KVM_SET_SREGS) would mark fields
-+	 * dirty in vmcb01 instead of vmcb02, so mark all of vmcb02 dirty here.
-+	 */
-+	vmcb_mark_all_dirty(svm->vmcb);
-+
+ 	svm_complete_interrupts(vcpu);
+ 
 +	/*
- 	 * While the nested guest CR3 is already checked and set by
- 	 * KVM_SET_SREGS, it was set when nested state was yet loaded,
- 	 * thus MMU might not be initialized correctly.
++	 * Update the cache after completing interrupts to get an accurate
++	 * NextRIP, e.g. when re-injecting a soft interrupt.
++	 *
++	 * FIXME: Rework svm_get_nested_state() to not pull data from the
++	 *        cache (except for maybe int_ctl).
++	 */
++	if (is_guest_mode(vcpu))
++		svm->nested.ctl.next_rip = svm->vmcb->control.next_rip;
++
+ 	return svm_exit_handlers_fastpath(vcpu);
+ }
+ 
 
 
