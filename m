@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BE939A4A4;
-	Sat, 30 May 2026 18:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7217C23392B;
+	Sat, 30 May 2026 18:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164150; cv=none; b=YcbEfhG/n7WaGZ9sbTfIS8xPeyLaSHK21LRh07b2tSjdr1TllfzZ8cKkESW09VjiRwZ3WfV1rLFF0BRaW9wN/ELWucFVxaV8iQo4Iq22lOp9DXym2ZhjcDru9V4yVtVk9YPCvXmG/EDnmW53jWEUcUxMKtrhWBswFRMCTq5vL7Y=
+	t=1780164156; cv=none; b=lQcy970y2+heb48PL1eL8bJs+e61jWiOpuYflX/rRm+9vEeWi6JyJD7CZayHRxUDXCg23fCvegfvADJ2mOeKeC9G5MAyXj0+zbcDFAzN5BI+YFhZwOer/gOYEw4Q3p9z+TuDaqfEhZH10wWLAxbPsLZKTJSCYmhLz0aVR+UBlKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164150; c=relaxed/simple;
-	bh=L25fUlfuEGdBsB3RSVBj4ZD2kuZklKPBEQa28mYDtEo=;
+	s=arc-20240116; t=1780164156; c=relaxed/simple;
+	bh=pcMm/nkCcOK00rdLJVd1S55bB8KK+8iPHBLqzchCiKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDWbzPMUqYj8LHmMw7gtoU/rwnK1CgikH2HEOd0E/+/9yVk+0co+acKSI2W1kjfHTnKesoGfcVXURIkMq6WjcKuQu+gVDrN/ENP8cscHDD8/A+hklEtqY+LUQuuFgeFJ7H+d0fJqRlX7rtqZCb8NRleIG5BQxK77CNcHVc6gYyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GU/n+Cqi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bqoLD+ja9Qp83gDaCA3CBlZOPCxry+7NVciG//w3h+eOgPupZOlbXzIBlVfn0SbXrEXgtlcKKhhZwqGJ1/egKV0tx7zNaFOQf4oED2W/G6PTUzNnV5nAAXRRHrFdX71Q6IX/e1qbeLb1RAfN+E2izNMtAMLPLQHsky+sM9bj5Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFHaL2Z2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GU/n+Cqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067671F00893;
-	Sat, 30 May 2026 18:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFHaL2Z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCB51F00893;
+	Sat, 30 May 2026 18:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164149;
-	bh=/VWuw3VsOl9dyIqtEpnbbLtq34hV9TB0od1lxsVNPOI=;
+	s=korg; t=1780164155;
+	bh=sBEOdY7325/hTyJ8z/K85yckifulLV/qJR3UUz8jxaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GU/n+CqiGthsAsZgj/vHlXT3wd6qJLLsvHxs2phLV06uGjhqCx6KH9098qU+cBkto
-	 4w0MD/lFXIFoX+BZGqurbe2OBFbFOzC++TMUG7PDtA54i1WKEo7q31dQSc68r6C7D0
-	 zAWRtwtabkKlJryUAsvrghkKweDS5JzxLsxwDjgk=
+	b=wFHaL2Z2wmp8NPW8z3gZ1YA4/WL5pZLH1wFi3t9uy6pxBoR56jKwkEWhw30N5RviU
+	 VSVZ7QxiOuf/O+7kIOhXY5Z9T1jIBHWXbRj7atIR1Lqnn5CCH9suF89fCjqBenaFO/
+	 ODd2LRKvR4s0pBTU4o5gsrWztYLPT/5DgaRe84FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 470/776] PCI: Add PCIE_PME_TO_L2_TIMEOUT_US L2 ready timeout value
-Date: Sat, 30 May 2026 18:03:04 +0200
-Message-ID: <20260530160252.494061546@linuxfoundation.org>
+Subject: [PATCH 5.15 471/776] PCI: tegra194: Fix polling delay for L2 state
+Date: Sat, 30 May 2026 18:03:05 +0200
+Message-ID: <20260530160252.518462974@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,40 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit e78bd50b4078b3b2d9f85d97796b7c271e7860ca ]
+[ Upstream commit adaffed907f14f954096555665ad6af2ae724d83 ]
 
-Add the PCIE_PME_TO_L2_TIMEOUT_US macro to define the L2 ready timeout
-as described in the PCI specifications.
+As per PCIe r7.0, sec 5.3.3.2.1, after sending PME_Turn_Off message, Root
+Port should wait for 1-10 msec for PME_TO_Ack message. Currently, driver is
+polling for 10 msec with 1 usec delay which is aggressive.  Use existing
+macro PCIE_PME_TO_L2_TIMEOUT_US to poll for 10 msec with 1 msec delay.
+Since this function is used in non-atomic context only, use non-atomic poll
+function.
 
-Link: https://lore.kernel.org/r/20230821184815.2167131-2-Frank.Li@nxp.com
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-Stable-dep-of: adaffed907f1 ("PCI: tegra194: Fix polling delay for L2 state")
+Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-2-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index adae3e04c8c30..eda82a771ab82 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -14,6 +14,12 @@
- #define PCI_EXP_AER_FLAGS	(PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE | \
- 				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 882e739d00128..8782ad616caa1 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -221,8 +221,6 @@
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_MASK	GENMASK(11, 8)
+ #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_SHIFT	8
  
-+/*
-+ * PCIe r6.0, sec 5.3.3.2.1 <PME Synchronization>
-+ * Recommends 1ms to 10ms timeout to check L2 ready.
-+ */
-+#define PCIE_PME_TO_L2_TIMEOUT_US	10000
-+
- extern const unsigned char pcie_link_speed[];
- extern bool pci_early_dump;
+-#define PME_ACK_TIMEOUT 10000
+-
+ #define LTSSM_TIMEOUT 50000	/* 50ms */
  
+ #define GEN3_GEN4_EQ_PRESET_INIT	5
+@@ -1498,9 +1496,10 @@ static int tegra_pcie_try_link_l2(struct tegra_pcie_dw *pcie)
+ 	val |= APPL_PM_XMT_TURNOFF_STATE;
+ 	appl_writel(pcie, val, APPL_RADM_STATUS);
+ 
+-	return readl_poll_timeout_atomic(pcie->appl_base + APPL_DEBUG, val,
+-				 val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
+-				 1, PME_ACK_TIMEOUT);
++	return readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
++				  val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
++				  PCIE_PME_TO_L2_TIMEOUT_US/10,
++				  PCIE_PME_TO_L2_TIMEOUT_US);
+ }
+ 
+ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
 -- 
 2.53.0
 
