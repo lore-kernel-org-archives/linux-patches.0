@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9568304BCB;
-	Sat, 30 May 2026 17:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41283341AC7;
+	Sat, 30 May 2026 17:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163439; cv=none; b=SgKUwb2roOEwiBz7lNHObXT01YvOVzjOLxM7CrZpS+IFJrgDc//jaYRERKS68gLPYVLYwk8ARGdIk7r46UKE4ktT+bMk2a1r+NpmamkKYsUSZdSvgdPuf6q7VpBcN31Kru041KCCCVJ8UosvYTH6+c4s2IkA/tSPs+oM9DBN7HI=
+	t=1780163443; cv=none; b=Gf6jRg2ba3Ld6+8gptDum0FEkHAz5If7TlTZnjk4M7uGXIMpE4bS6f2y+wxrCGsf8icZcUSfY40To388sHhO3QoZPQlX570bF8c7/aOH9Ti3vBKtBrhLhdIlB5r3E6bsVAldOpZ2EaQzIQc3uhB/iwK180+MUzj6r64/flAgHzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163439; c=relaxed/simple;
-	bh=OxcREV+eJT8GN116/OJintm51C7+Od+e+IFRAjItCRQ=;
+	s=arc-20240116; t=1780163443; c=relaxed/simple;
+	bh=1jLsF/vD/d/xs0l1BZxDeGkOW6IPSLLm1BYwLLlIfjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyYiYTH7fbW78WKBboOi1Vb8hQHtxGTJBmPcVJdNuAcdhgFD+lTgPt8TnckswnpO3+mLWcyVB2bEtuoRFCoERMbwpgOXRCj2L21geiAYrEyUDUl39RTADktqSMZCpcO4B+SSQrt6fmWWvAGIYF3KuF2GaTd+0MS+qWhnai77P8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF+hw599; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D8gF+tqvQXUA3KnlJ6Y6o9UgNL+KgwplWnLG153C/FdDwM7k44prOMeV1ygNZNyH9tF0YxIS37EeE0TtstVWP1R7v1966Vdrs9mBqCKx8GQQW0nIqxT1F3hlUG2FaQ9LxH8u9dp2M8fjBJ9QltUtf748fDjUttYEYp1M2aOoHZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVa8u6sM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF+hw599"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAD61F00893;
-	Sat, 30 May 2026 17:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVa8u6sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E761F00893;
+	Sat, 30 May 2026 17:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163438;
-	bh=DIRs5W/LkJvnThBpCIJQsYSoo8JpGVerOABRsYSUxOs=;
+	s=korg; t=1780163441;
+	bh=MoRPONwUtTepOgMNK3zHY97cOm535b3/w9ZfCYtWTGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bF+hw599z05fwrCSZHoG0pBXaBDnu8nigswePgmu0MlrXJe8x5qfsyeHxr3IipQ2b
-	 xUaP/Di0qQxMnlw0XzrVdJF+pmQzQiuSIlEcKXJHzYC3bMaksu3sKvT7v/QrTkZV4J
-	 yRVJFS/bX4Y8WBNjBTJQP+cNyE1VPglIbevq6Qkg=
+	b=vVa8u6sMyBtLjL837wO2J0Q09X3/+OFO/qgo7H+N8ff7KLayPmyiLpvUeMlzT+iAS
+	 xE8gQ4GVStnFNDBXi3cUbzyt6o03KlMxPWCaCHiCHOXLABX8pMuE7aLymTK/O5h1O/
+	 UVpFc6rgDO/qiXwTN/r6yoULu58Gn68S31NzAqas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 231/776] KVM: nSVM: Mark all of vmcb02 dirty when restoring nested state
-Date: Sat, 30 May 2026 17:59:05 +0200
-Message-ID: <20260530160246.498970789@linuxfoundation.org>
+	John Warthog9 Hawley <warthog9@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 258/776] ktest: Fix the month in the name of the failure directory
+Date: Sat, 30 May 2026 17:59:32 +0200
+Message-ID: <20260530160247.205909311@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,42 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit e63fb1379f4b9300a44739964e69549bebbcdca4 upstream.
+commit 768059ede35f197575a38b10797b52402d9d4d2f upstream.
 
-When restoring a vCPU in guest mode, any state restored before
-KVM_SET_NESTED_STATE (e.g. KVM_SET_SREGS) will mark the corresponding
-dirty bits in vmcb01, as it is the active VMCB before switching to
-vmcb02 in svm_set_nested_state().
+The Perl localtime() function returns the month starting at 0 not 1. This
+caused the date produced to create the directory for saving files of a
+failed run to have the month off by one.
 
-Hence, mark all fields in vmcb02 dirty in svm_set_nested_state() to
-capture any previously restored fields.
+  machine-test-useconfig-fail-20260314073628
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260210010806.3204289-1-yosry.ahmed@linux.dev
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+The above happened in April, not March. The correct name should have been:
+
+  machine-test-useconfig-fail-20260414073628
+
+This was somewhat confusing.
+
+Cc: stable@vger.kernel.org
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>
+Link: https://patch.msgid.link/20260420142426.33ad0293@fedora
+Fixes: 7faafbd69639b ("ktest: Add open and close console and start stop monitor")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/ktest/ktest.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1387,6 +1387,12 @@ static int svm_set_nested_state(struct k
- 	nested_vmcb02_prepare_control(svm);
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1770,7 +1770,7 @@ sub save_logs {
+     my ($result, $basedir) = @_;
+     my @t = localtime;
+     my $date = sprintf "%04d%02d%02d%02d%02d%02d",
+-	1900+$t[5],$t[4],$t[3],$t[2],$t[1],$t[0];
++	1900+$t[5],$t[4]+1,$t[3],$t[2],$t[1],$t[0];
  
- 	/*
-+	 * Any previously restored state (e.g. KVM_SET_SREGS) would mark fields
-+	 * dirty in vmcb01 instead of vmcb02, so mark all of vmcb02 dirty here.
-+	 */
-+	vmcb_mark_all_dirty(svm->vmcb);
-+
-+	/*
- 	 * While the nested guest CR3 is already checked and set by
- 	 * KVM_SET_SREGS, it was set when nested state was yet loaded,
- 	 * thus MMU might not be initialized correctly.
+     my $type = $build_type;
+     if ($type =~ /useconfig/) {
 
 
