@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B0A26738C;
-	Sat, 30 May 2026 18:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E448A3242BA;
+	Sat, 30 May 2026 18:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166015; cv=none; b=uQyujLaKXgb/QZdV7/FbBnNzroLjEIpkEBYkrMZVmBnLCmHpZK5nOohMTBA5sEYHIvBquaV/8emZWYrnr06xGM2gTu3dlfMOrWH0lqKGNlmxumVg5xCEsViKSuA/u8dY2uurClEUunvUvIthcKji3uUh0+2jqPorJpGRPUTsxRs=
+	t=1780166018; cv=none; b=n9UlJgF2fDBeFuVwjGJPsMjBkdXrZmj4Ii7+fDggDg5lS6ORUzgXar/g1QSnQm8993imkwNo/ypbccz+fJqOeYPhw3dGYf9/1DLb1oGmSztsB+IYVw6kC63LDL2PrKBqVne7XSwg2rK/68pW5Wr1EL9yyVoVssEcWPF4bzXamXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166015; c=relaxed/simple;
-	bh=mWeUPhjtdveKfTk+0Dw6EXdI1FoaM6JQAhMKzBRN53M=;
+	s=arc-20240116; t=1780166018; c=relaxed/simple;
+	bh=nQluZPJFMoKF/mcYN6+41LCZo5bjstos2N4bK7Mjxi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qeas12bAeedum4n/b8q1QLkqLdhF8rW1XWdbgSOYJqOsR00Te486FgOy5mFFdDoOf1KYqc4739PuFArCKJ+h0xmmJI8grF7MfuzWT6Pg4VxtwwK9WTE9vaNMvQm6LwuOvpmACKuzhx61qHgjE2A/K0a048i6jbe3kGwzc0TESFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wzt27tXV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SpfICn9X5OmNwaVnTfkDejPlkwg51/ltzHi0Kf0pVXrSMKlkC6yZ9AdhFXpiN/ZMiaElzWjB3T/4XwZZfUuD7Xfv2g5TRolyqV8wa7RCgQIO9yrQBt1iUtOAWRglE/vehIzMpV72ZpPgyHJQ4JiI0Eo6JrdVzXDcqLFipSkYGao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS1P+Fuu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wzt27tXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6895A1F00893;
-	Sat, 30 May 2026 18:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS1P+Fuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8101F00893;
+	Sat, 30 May 2026 18:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166014;
-	bh=//Eul0iW4tIdQfVZGJRFGMhYIwWGTB9DtcduiJ8iE/g=;
+	s=korg; t=1780166017;
+	bh=w/iVl3G6zb/nHqLWvSbfhORLg4qXwbQZpckqdbk7spg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wzt27tXV67ySb+57UaizKdVODlMsd5prNcVTm7+z13XtNK3dvAqg9Yr/kQQoGfRk/
-	 vUAuFt5Ug06uEdis7Ih1JnVU/hpZTwVA54yOxpP0K11SijoUJVJTdeV9MRalfz7jxg
-	 XTMHeL9CNYqnCxtXiqrYiTtvp2xvFE9udmA3dp0Q=
+	b=tS1P+Fuuikd5BDZoLcZ93xeLQn5BTLc+6+9Wsq4aUxE5u+JF6azGJLH2iKtEQaNXV
+	 Iu9iRKINDKu18Vka77XlmtdKL/bAj2IYxmquVH/HWT5BUd6HMoKdBaMscDn+LFq7QV
+	 edlknZ62DXGFQbrH1jCVN/LB3yacnId5hlRESdrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 241/589] udf: reject descriptors with oversized CRC length
-Date: Sat, 30 May 2026 18:02:02 +0200
-Message-ID: <20260530160231.337446651@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 250/589] dm-verity-fec: correctly reject too-small hash devices
+Date: Sat, 30 May 2026 18:02:11 +0200
+Message-ID: <20260530160231.560208225@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -50,48 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 55d41b0a20128e86b9e960dd2e3f0a2d69a18df7 upstream.
+commit 4355142245f7e55336dcc005ec03592df4d546f8 upstream.
 
-udf_read_tagged() skips CRC verification when descCRCLength +
-sizeof(struct tag) exceeds the block size.  A crafted UDF image can
-set descCRCLength to an oversized value to bypass CRC validation
-entirely; the descriptor is then accepted based solely on the 8-bit
-tag checksum, which is trivially recomputable.
+Fix verity_fec_ctr() to reject too-small hash devices by correctly
+taking hash_start into account.
 
-Reject such descriptors instead of silently accepting them.  A
-legitimate single-block descriptor should never have a CRC length that
-exceeds the block.
+Note that this is necessary because dm-verity doesn't call
+dm_bufio_set_sector_offset() on the hash device's bufio client
+(v->bufio).  Thus, dm_bufio_get_device_size(v->bufio) returns a size
+relative to 0 rather than hash_start.  An alternative fix would be to
+call dm_bufio_set_sector_offset() on v->bufio, but then all the code
+that reads from the hash device would have to be adjusted accordingly.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260413211240.853662-1-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/misc.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/md/dm-verity-fec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/udf/misc.c
-+++ b/fs/udf/misc.c
-@@ -250,8 +250,12 @@ struct buffer_head *udf_read_tagged(stru
- 	}
- 
- 	/* Verify the descriptor CRC */
--	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize ||
--	    le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
-+	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize) {
-+		udf_err(sb, "block %u: CRC length %u exceeds block size\n",
-+			block, le16_to_cpu(tag_p->descCRCLength));
-+		goto error_out;
-+	}
-+	if (le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
- 					bh->b_data + sizeof(struct tag),
- 					le16_to_cpu(tag_p->descCRCLength)))
- 		return bh;
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -733,7 +733,8 @@ int verity_fec_ctr(struct dm_verity *v)
+ 	 * it to be large enough.
+ 	 */
+ 	f->hash_blocks = f->blocks - v->data_blocks;
+-	if (dm_bufio_get_device_size(v->bufio) < f->hash_blocks) {
++	if (dm_bufio_get_device_size(v->bufio) <
++	    v->hash_start + f->hash_blocks) {
+ 		ti->error = "Hash device is too small for "
+ 			DM_VERITY_OPT_FEC_BLOCKS;
+ 		return -E2BIG;
 
 
