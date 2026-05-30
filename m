@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DB319D8AC;
-	Sat, 30 May 2026 17:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCEF261B9E;
+	Sat, 30 May 2026 17:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163344; cv=none; b=e6V15jsaItozn6W4jKyknQZa0FF1Fwq+oxsMtV2gW8qvWyYPIIA6raeINL55eOlhBKKXDhUKYwZbpuLfCnW0beh2YtPQL5RAWERMDCgso0CkCkbjoEzDxIeZocrw7OFxmoSUTuQCZYoijbjImlM3keOqEoELzLauQr2Kx6+TLO4=
+	t=1780163348; cv=none; b=nBAD+K6vr0yeEjBfCJPW7Rh4Bd2bCawR+yriWuET4Xjoe35gnfe2QnFMyc61xoGP3XaXst67R7Lt22BJdj5Qf9B6F5BqZOmOdOnzjOzmMJ+h+9Jt7KdzzCr/izCUqQbJAR2ACp5E25lqVxHMzt4jomyFClqNrlPiVuTxYtP3UqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163344; c=relaxed/simple;
-	bh=eFAi9TwHmFZtJn0ildawts+o49FA8HjyQ8Gcpftxc80=;
+	s=arc-20240116; t=1780163348; c=relaxed/simple;
+	bh=VrN/W+wyCgc49qZF9UoRtGUhByBaCVpgT0KaT+xefEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrUraoQBMh/XPpwnUNVbdhyx0x0+VUINK6AwFRSbpR8fBNBGBt1hajJoVBeCpVy9WGoxvwlmWy9l0j+7XTwp9MBNvh+DtKMF08jXEvrs7rp2WeUN9djc51JtXzO8KPyTuS8J9A/XlTPOJKggvTaldcUZB2uKFHKrJ/+Rf91ct7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YCezCYm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENItQm3dbwvEWQOX36RXGLqECzFVv6kHAEe8LbMnTncpKH/3jd7QQ+pi+xGwdwmbfnBprVV1ZtVb3AAH4Kt0ptgAb6a2LTKEZ1XpD8bBMzXVJfdX9ZhgaIBR5VQrKuDq/ox6bzFzqMAx/N6BAuaWLN8boMb1AAzptD9EmQShLK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p05ODKQm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YCezCYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F271F00893;
-	Sat, 30 May 2026 17:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p05ODKQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DEE1F00893;
+	Sat, 30 May 2026 17:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163343;
-	bh=Dsv0GzrNer3lA4lgHGfklxqMAHUz7GNMfGWKF/zDoHI=;
+	s=korg; t=1780163346;
+	bh=Rmup59E2eI1KZyl9f4Gl9+rvJ7sbFYMLLLoqh9pujzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1YCezCYmc124DiiZmwdvs3j02U6A1KgFsVzS3yiofOnmSBPlpIdzFnwFkhZAY8sJ7
-	 IfC8yIVIIKSpMIAdpZ2fORDyj2h4q6NZ5DljPZaXbThysUXL5fTRKh4rSEOMGSHlM6
-	 t03gYv++E+wxIVbdBwhNDSewbETKdM+W61bq6hnY=
+	b=p05ODKQmD/vFXT0bAvipr7Q/Ca//LpawsQqKfBSKp4omQMIUsiw8AAMEhkppNAWhA
+	 m41S4Ui9CfJf8skIHMzpkhFZF2xpuUa0iOw/bj1YSmsXMcMb6foZciiwpeHgUYVtkG
+	 3Yd+nqLGk6eDvbtoXIFp8OPgZjqIQcmIyHGm0jJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziqing Chen <chenziqing@xiaomi.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 199/776] ALSA: control: Validate buf_len before strnlen() in snd_ctl_elem_init_enum_names()
-Date: Sat, 30 May 2026 17:58:33 +0200
-Message-ID: <20260530160245.651827352@linuxfoundation.org>
+	stable@kernel.org,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 200/776] net: caif: clear client service pointer on teardown
+Date: Sat, 30 May 2026 17:58:34 +0200
+Message-ID: <20260530160245.677443390@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,47 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziqing Chen <chenziqing@xiaomi.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit e0da8a8cac74f4b9f577979d131f0d2b88a84487 upstream.
+commit f7cf8ece8cee3c1ee361991470cdb1eb65ab02e8 upstream.
 
-snd_ctl_elem_init_enum_names() advances pointer p through the names
-buffer while decrementing buf_len. If buf_len reaches zero but items
-remain, the next iteration calls strnlen(p, 0).
+`caif_connect()` can tear down an existing client after remote shutdown by
+calling `caif_disconnect_client()` followed by `caif_free_client()`.
+`caif_free_client()` releases the service layer referenced by
+`adap_layer->dn`, but leaves that pointer stale.
 
-While strnlen(p, 0) returns 0 and would hit the existing name_len == 0
-error path, CONFIG_FORTIFY_SOURCE's fortified strnlen() first checks
-maxlen against __builtin_dynamic_object_size(). When Clang loses track
-of p's object size inside the loop, this triggers a BRK exception panic
-before the return value is examined.
+When the socket is later destroyed, `caif_sock_destructor()` calls
+`caif_free_client()` again and dereferences the freed service pointer.
 
-Add a buf_len == 0 guard at the loop entry to prevent calling fortified
-strnlen() on an exhausted buffer.
+Clear the client/service links before releasing the service object so
+repeated teardown becomes harmless.
 
-Found by kernel fuzz testing through Xiaomi Smartphone.
-
-Fixes: 8d448162bda5 ("ALSA: control: add support for ENUMERATED user space controls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ziqing Chen <chenziqing@xiaomi.com>
-Link: https://patch.msgid.link/20260414132437.261304-1-chenziqing@xiaomi.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 43e369210108 ("caif: Move refcount from service layer to sock and dev.")
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/9f3d37847c0037568aae698ca23cd47c6691acb0.1775897577.git.zcliangcn@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/control.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/caif/cfsrvl.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -1441,6 +1441,10 @@ static int snd_ctl_elem_init_enum_names(
- 	/* check that there are enough valid names */
- 	p = names;
- 	for (i = 0; i < ue->info.value.enumerated.items; ++i) {
-+		if (buf_len == 0) {
-+			kvfree(names);
-+			return -EINVAL;
-+		}
- 		name_len = strnlen(p, buf_len);
- 		if (name_len == 0 || name_len >= 64 || name_len == buf_len) {
- 			kvfree(names);
+--- a/net/caif/cfsrvl.c
++++ b/net/caif/cfsrvl.c
+@@ -197,10 +197,20 @@ bool cfsrvl_phyid_match(struct cflayer *
+ 
+ void caif_free_client(struct cflayer *adap_layer)
+ {
++	struct cflayer *serv_layer;
+ 	struct cfsrvl *servl;
+-	if (adap_layer == NULL || adap_layer->dn == NULL)
++
++	if (!adap_layer)
++		return;
++
++	serv_layer = adap_layer->dn;
++	if (!serv_layer)
+ 		return;
+-	servl = container_obj(adap_layer->dn);
++
++	layer_set_dn(adap_layer, NULL);
++	layer_set_up(serv_layer, NULL);
++
++	servl = container_obj(serv_layer);
+ 	servl->release(&servl->layer);
+ }
+ EXPORT_SYMBOL(caif_free_client);
 
 
