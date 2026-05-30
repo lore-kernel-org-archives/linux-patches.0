@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C718481DD;
-	Sat, 30 May 2026 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EB22690D5;
+	Sat, 30 May 2026 17:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160623; cv=none; b=CLHgOHDW9BSDttQvZ83L06j2Chk0tAv9iiA/ylsTAj6PFMqYNM+ExOF82qmsNZ+xglZgddPSv98IwGMxkLCLkBVFEeycb7dFENJoVGEjMG+n3wFVdDvwVU20zILZ3Iv4eGRZBptAs3VN1lRUtC1O0vpVZ4yHP61kSNWFmL2eQEg=
+	t=1780160627; cv=none; b=uSSp8zlJc29CMjsY9vDo0ktWL+q2sD3r+nkS1Y3kAbank9hpjNmI9ej1oW/YOEG1G5PksnHZnZstRFSB737vw+Ei/1W9rRpXxE92LpLgDISh49Z9oZqG6iEN84cVEXMvp51AvEzZ7Pf0SHLk1bkI6uTLd5h1UACpwI8Yx2q2ktY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160623; c=relaxed/simple;
-	bh=lJ9DhHne/kK5l6o9Qm29Wkd9mUuxKiKPqFOoLiCYIiE=;
+	s=arc-20240116; t=1780160627; c=relaxed/simple;
+	bh=4YC/to4BWP8nP5AHyApC4h7pqG/95qq4YpZ3e13lmm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0MqLh0/TRTatrHwMwAavDE33jr0ZAJNOgNprvat0YzG5oCl5vpMO7itwutSrCcCLXPy8Gv0HO9I3yzGB9XSJTTItgLjiweQwitMBOt1IyYgWdXx6evJmvW5CLKkqePn8a1YmwdbWCDm8++3YOnbo5CtDvOxVPAkwupwAFR5XbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FztR87i2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lEwpLl9O72PjpxdM/R30iA0skHlYoD6+FvQpqalqMW5p+yWSyeV31GEhMLi5c2bruBEZPJMCmsVLJPnLWFLrrPoZCtGKap9T8/pDaVhVDcspY2/FMp0w+Cirh2ciM31khDKZQU6INNoC9p9qA0lXyTajWrYPlhFUZSSjl+USlQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu4p39Uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FztR87i2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C031F00893;
-	Sat, 30 May 2026 17:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu4p39Uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08F21F00893;
+	Sat, 30 May 2026 17:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160622;
-	bh=N/GQ1AtFG7LduDfvGKYz2Edenj5hxg/L9wfFBTAms4Y=;
+	s=korg; t=1780160626;
+	bh=bgCGHeDtp/xwGkx7kU1UEcBFb/3r6hSTQOlXQSGtsHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FztR87i2Gh8ppyOJAYQ2jR5oUTNdRYK6NGuglEtZUe+EYGKhoy3vQ3aK4ePO5fOWF
-	 uAAaoZbwyN+WdBZiXlU5+0xbNWgpHyqphOKgXqiNJMBLi+4y2cjhyK+cF3J/gGupBx
-	 JOLNFl9WqV9imE8QZInXsbk2IDc8vYiJGRPJ+A/k=
+	b=gu4p39UjBXxFyrBhmtx6VE1G210I7JUdolwzYpG03eN+2YyrKZ9H5M+kRp4vsKag4
+	 k2ycwZZcy8UgLoIFIZ+lDh0CX47l3J70DdbtdQ2N+9VgOrgsqVusj3WNMuY/muErvv
+	 37ZsryqyrImvrUgglkyrL5UNqvVMB115O7XMzZjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 388/969] media: rc: xbox_remote: heed DMA restrictions
-Date: Sat, 30 May 2026 17:58:32 +0200
-Message-ID: <20260530160311.022721508@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 371/969] mptcp: use MPJoinSynAckHMacFailure for SynAck HMAC failure
+Date: Sat, 30 May 2026 17:58:15 +0200
+Message-ID: <20260530160310.561340756@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,61 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-commit e280d1e5e3f2595bbb43fe6e1bce00c59a43c0ff upstream.
+commit c4a99a921949cddc590b22bb14eeb23dffcc3ba6 upstream.
 
-The buffer for IO must not be part of the device structure
-because that violates the DMA coherency rules.
+In subflow_finish_connect(), HMAC validation of the server's HMAC
+in SYN/ACK + MP_JOIN increments MPTCP_MIB_JOINACKMAC ("HMAC was
+wrong on ACK + MP_JOIN") on failure. The function processes the
+SYN/ACK, not the ACK; the matching MPTCP_MIB_JOINSYNACKMAC counter
+("HMAC was wrong on SYN/ACK + MP_JOIN") exists but is not
+incremented anywhere in the tree.
 
-Fixes: 02d32bdad3123 ("media: rc: add driver for Xbox DVD Movie Playback Kit")
+The mirror site on the server, subflow_syn_recv_sock(), already
+uses JOINACKMAC correctly for ACK HMAC failure. Use JOINSYNACKMAC
+at the SYN/ACK validation site so each counter reflects the packet
+whose HMAC actually failed.
+
+Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-1-b70118df778e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/xbox_remote.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/mptcp/subflow.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/rc/xbox_remote.c
-+++ b/drivers/media/rc/xbox_remote.c
-@@ -55,7 +55,7 @@ struct xbox_remote {
- 	struct usb_interface *interface;
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -469,7 +469,7 @@ static void subflow_finish_connect(struc
+ 			 subflow->backup);
  
- 	struct urb *irq_urb;
--	unsigned char inbuf[DATA_BUFSIZE] __aligned(sizeof(u16));
-+	u8 *inbuf;
- 
- 	char rc_name[NAME_BUFSIZE];
- 	char rc_phys[NAME_BUFSIZE];
-@@ -218,6 +218,10 @@ static int xbox_remote_probe(struct usb_
- 	if (!xbox_remote || !rc_dev)
- 		goto exit_free_dev_rdev;
- 
-+	xbox_remote->inbuf = kzalloc(DATA_BUFSIZE, GFP_KERNEL);
-+	if (!xbox_remote->inbuf)
-+		goto exit_free_inbuf;
-+
- 	/* Allocate URB buffer */
- 	xbox_remote->irq_urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!xbox_remote->irq_urb)
-@@ -262,6 +266,8 @@ exit_kill_urbs:
- 	usb_kill_urb(xbox_remote->irq_urb);
- exit_free_buffers:
- 	usb_free_urb(xbox_remote->irq_urb);
-+exit_free_inbuf:
-+	kfree(xbox_remote->inbuf);
- exit_free_dev_rdev:
- 	rc_free_device(rc_dev);
- 	kfree(xbox_remote);
-@@ -286,6 +292,7 @@ static void xbox_remote_disconnect(struc
- 	usb_kill_urb(xbox_remote->irq_urb);
- 	rc_unregister_device(xbox_remote->rdev);
- 	usb_free_urb(xbox_remote->irq_urb);
-+	kfree(xbox_remote->inbuf);
- 	kfree(xbox_remote);
- }
- 
+ 		if (!subflow_thmac_valid(subflow)) {
+-			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINACKMAC);
++			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKMAC);
+ 			subflow->reset_reason = MPTCP_RST_EMPTCP;
+ 			goto do_reset;
+ 		}
 
 
