@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0C0334695;
-	Sat, 30 May 2026 17:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45762C11D9;
+	Sat, 30 May 2026 17:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162200; cv=none; b=JO5leKpgoOR8CKAADg3Nf7tEixelCAtkKakXICxvP4pKgF5d/pYOublZ/56R2jUb7gSVecanAK2tclSXlYF+gll1gDeFMW6O7dkqbJDHIVKU+8weQGO9m83JOlBvkjyhtdAT9BkulDZBklP7VJqdWRH2Bx2GSeDkP8KBxzlu1A8=
+	t=1780162204; cv=none; b=R/UzfRRVb73AM36uSHi8Q7ZYRFES4qG6MIY/tE277fbJatupI04Kl9bsp9TcSCce/5OHarlR/M7ZzWtWlzNikiEYhpId/gXutxSa4VTZgePFhI3bz73AXlH0WiPnnZMeZ58Jv7UY5c1HrbepWIxcyJKZ9/ClenphjOwfc3QmDYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162200; c=relaxed/simple;
-	bh=ct6lDLuZ7aLOUbeQhMAHzCTUZFRvGaugHzbJjqa7feI=;
+	s=arc-20240116; t=1780162204; c=relaxed/simple;
+	bh=Bg+HTRqKVo7qmykY5EQqeAu403xe582u03Tg73NWyU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1W8hkJXKat8vrdbwV1hBQJcpymUwxoE7PxurZRxp/7+doVPrH8GJvSIOfRWAqh0MQddPwTf9rD4Zfle/UiiYDnpicpBvLM87q/MoEoW+R5hh+9fLEV7/TtkldW6qjYqmeUQiaVkG6Nt2O5DbirQs84ACSdfqiolqHiHqWrkaak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od4bPVE2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dm2vEf4zm1Rlv97Rye+YQ4WEauYP24s5HuGLez8y8ES28Bbrb6CM9mnNho0lvdg0Psh+DU0FqTnUMnCKkE1TO1U0ri26ARwwMytZO8OIkiJItAoAtFhiLVQ+LBDvTVyTPWcepuzmmqgheRPeNIZww6WOp1i3doCx/+VqlBMmg7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm2G+oTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od4bPVE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A29C1F00893;
-	Sat, 30 May 2026 17:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm2G+oTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12491F00893;
+	Sat, 30 May 2026 17:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162199;
-	bh=rv8AQkL6WSwPrEx3VAUc7q4g9sirOuy4x3+15sVBAVQ=;
+	s=korg; t=1780162202;
+	bh=7Sl/KZ+D4dqpirqtGdvP5NGJn1oLs7rMeBEomjILHcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=od4bPVE2SSqlfJo1OvTfWNE/BLlMdOxYg53oXz+VFmHev39msleanxHJ6VCgp4goX
-	 EMP7A84/NiHJw7cJD8sewHYYyS7og6Cs4CO3e5Fw1uxzDYTH4ADbgmbhsjQ8C6rKzY
-	 RSe+6GHspT9YmG7vAQngrNhW1GEmfyBBF2lA0/n8=
+	b=Lm2G+oTXv5U0IjU1DMIFORBE8kSz753vMyx40923Y2N2A46WadJs5g3rBtRElJPmW
+	 6e6dMMzZ2e01YWtu9270BGyDCf6Qc9C2YqzwJxVjOSlUQlhEI28o7/FgMYz5zdEaG2
+	 wq0Uns7E4233tGs+20edDfobU/jgUNdaR0GC5nh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 850/969] net: bcmgenet: keep RBUF EEE/PM disabled
-Date: Sat, 30 May 2026 18:06:14 +0200
-Message-ID: <20260530160324.137300439@linuxfoundation.org>
+Subject: [PATCH 6.1 851/969] net: ifb: report ethtool stats over num_tx_queues
+Date: Sat, 30 May 2026 18:06:15 +0200
+Message-ID: <20260530160324.165517855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,62 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9a1730245e416d11ad5c0f2c100061d61cc43f60 upstream.
+commit 5db89c99566fc4728cc92e941d8e1975711e24b5 upstream.
 
-Setting RBUF_EEE_EN | RBUF_PM_EN in RBUF_ENERGY_CTRL breaks the RX
-path on GENET hardware once MAC EEE becomes active. RX traffic stops
-flowing while the link stays up and the usual descriptor/RX error
-counters remain quiet. In that state the MAC still accepts frames
-(rbuf_ovflow_cnt keeps climbing) but RBUF no longer forwards them to
-DMA, so rx_packets is no longer incremented at the netdev level. On
-some boards the corruption ends up as a paging fault in
-skb_release_data via bcmgenet_rx_poll on an LPI exit.
+ifb_dev_init() allocates dp->tx_private to dev->num_tx_queues
+entries via kzalloc_objs(*txp, dev->num_tx_queues). Both IFB
+per-queue RX and TX stats live in those entries: ifb_xmit() updates
+txp->rx_stats using the skb queue mapping, ifb_ri_tasklet() updates
+txp->tx_stats, and ifb_stats64() aggregates both over
+dev->num_tx_queues.
 
-Reproduced on Pi 4B (BCM2711 + BCM54213PE) and confirmed by Florian
-Fainelli on an internal Broadcom 4908-family board with the same crash
-signature. RBUF_PM_EN is not publicly documented.
+The ethtool stats callbacks instead size and walk the per-queue
+stats with dev->real_num_rx_queues and dev->real_num_tx_queues. With
+an asymmetric device where the RX queue count exceeds the TX queue
+count, for example:
 
-This shows up more often now that phy_support_eee() enables EEE by
-default, but it also affects older kernels as soon as TX LPI is
-turned on via ethtool, so it is not specific to recent changes.
+    ip link add name ifb10 numtxqueues 1 numrxqueues 8 type ifb
+    ethtool -S ifb10
 
-Always clear RBUF_EEE_EN | RBUF_PM_EN in bcmgenet_eee_enable_set so
-the bits stay off across resets. UMAC and TBUF setup is left alone so
-TX-side EEE keeps working.
+ifb_get_ethtool_stats() indexes past the tx_private allocation and
+copies adjacent slab data through ETHTOOL_GSTATS.
 
-Link: https://github.com/raspberrypi/linux/issues/7304
-Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Use dev->num_tx_queues consistently for the stats strings, the
+stats count, and the stats data walks. This reports one RX stats
+group and one TX stats group for each backing ifb_q_private entry,
+which is the queue set IFB can actually populate.
+
+Reproduced under UML+KASAN at v7.1-rc2:
+
+  BUG: KASAN: slab-out-of-bounds in ifb_fill_stats_data+0x3c/0xae
+  Read of size 8 at addr 0000000062dbd228 by task ethtool/36
+  ifb_fill_stats_data+0x3c/0xae
+  ifb_get_ethtool_stats+0xc0/0x129
+  __dev_ethtool+0x1ca5/0x363c
+  dev_ethtool+0x123/0x1b3
+  dev_ioctl+0x56c/0x744
+  sock_do_ioctl+0x15f/0x1b2
+  sock_ioctl+0x4d5/0x50a
+  sys_ioctl+0xd8b/0xde9
+
+With the patch applied, the same UML+KASAN repro is silent and
+ethtool -S ifb10 reports only the stats backed by the single
+allocated tx_private entry.
+
+Fixes: a21ee5b2fcb8 ("net: ifb: support ethtools stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260520184320.652053-1-nb@tipi-net.de
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260514013739.3549624-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ifb.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1344,13 +1344,12 @@ void bcmgenet_eee_enable_set(struct net_
- 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
- 	bcmgenet_writel(reg, priv->base + off);
+--- a/drivers/net/ifb.c
++++ b/drivers/net/ifb.c
+@@ -211,12 +211,12 @@ static void ifb_get_strings(struct net_d
  
--	/* Do the same for thing for RBUF */
-+	/* RBUF EEE/PM can break the RX path on GENET. Keep it disabled. */
- 	reg = bcmgenet_rbuf_readl(priv, RBUF_ENERGY_CTRL);
--	if (enable)
--		reg |= RBUF_EEE_EN | RBUF_PM_EN;
--	else
-+	if (reg & (RBUF_EEE_EN | RBUF_PM_EN)) {
- 		reg &= ~(RBUF_EEE_EN | RBUF_PM_EN);
--	bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+		bcmgenet_rbuf_writel(priv, reg, RBUF_ENERGY_CTRL);
-+	}
+ 	switch (stringset) {
+ 	case ETH_SS_STATS:
+-		for (i = 0; i < dev->real_num_rx_queues; i++)
++		for (i = 0; i < dev->num_tx_queues; i++)
+ 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
+ 				ethtool_sprintf(&p, "rx_queue_%u_%.18s",
+ 						i, ifb_q_stats_desc[j].desc);
  
- 	if (!enable && priv->clk_eee_enabled) {
- 		clk_disable_unprepare(priv->clk_eee);
+-		for (i = 0; i < dev->real_num_tx_queues; i++)
++		for (i = 0; i < dev->num_tx_queues; i++)
+ 			for (j = 0; j < IFB_Q_STATS_LEN; j++)
+ 				ethtool_sprintf(&p, "tx_queue_%u_%.18s",
+ 						i, ifb_q_stats_desc[j].desc);
+@@ -229,8 +229,7 @@ static int ifb_get_sset_count(struct net
+ {
+ 	switch (sset) {
+ 	case ETH_SS_STATS:
+-		return IFB_Q_STATS_LEN * (dev->real_num_rx_queues +
+-					  dev->real_num_tx_queues);
++		return IFB_Q_STATS_LEN * dev->num_tx_queues * 2;
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -262,12 +261,12 @@ static void ifb_get_ethtool_stats(struct
+ 	struct ifb_q_private *txp;
+ 	int i;
+ 
+-	for (i = 0; i < dev->real_num_rx_queues; i++) {
++	for (i = 0; i < dev->num_tx_queues; i++) {
+ 		txp = dp->tx_private + i;
+ 		ifb_fill_stats_data(&data, &txp->rx_stats);
+ 	}
+ 
+-	for (i = 0; i < dev->real_num_tx_queues; i++) {
++	for (i = 0; i < dev->num_tx_queues; i++) {
+ 		txp = dp->tx_private + i;
+ 		ifb_fill_stats_data(&data, &txp->tx_stats);
+ 	}
 
 
