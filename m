@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6623B6359;
-	Sat, 30 May 2026 17:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE0B3BF66D;
+	Sat, 30 May 2026 17:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162670; cv=none; b=VUA94Hq95MIJrHZqNvJ3nOBNIglBM4usMU3jqQNmnKf4KPeZZBJ90Tqid9+raoCinTvLYu9joZbxxAXhpE9JkjPxDOpZOSbzqIHVQ45Ewu0gB3LuwxOYXP+Pq4ahDreY7miZEQSS21oKGpre5O43Qlc3DTt7PxlleT+4n+sKwoM=
+	t=1780162674; cv=none; b=OdieLa4hAHyLZWGswOw23q+IciBWDD5eyXjbybjZ97QoAdnkjrKibGYt9ugle/SCnACRKbjogMb0xjJ9PpIaBnnXLypmY5QlotmLmEYpYdy9JM1LXyeBQLoHF9/8QwDLJRhC+L3w7GS1svLzb0i5pM3xi1HOwjk4ZkPtANi7ysI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162670; c=relaxed/simple;
-	bh=34IOL2aRnUnuxbJZgro7sYnQEImNnmwGLgMjf0UsXsM=;
+	s=arc-20240116; t=1780162674; c=relaxed/simple;
+	bh=jZJYqZicGrDD56w8Mkl74nNS3Y3hEalccDat48oeCuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdGjVXjj2cJ4I5lTR2B4gxzhUBmg7xgG1HUfDedMKPgVT27tjsFGzJ8iw3QfxJ9rHHSj5f8+g9JcQ7e37MckmeN2qixXdLEj0hbdwtkGW4b9I43Jr2cqJ+5tzYSfovYS03fOqH8qIEiUVshBu+bUd1e4VdrSxlKhCYXHizJECC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yy4LHziw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENAPxQFsvj5KaxK0umPv9Z9FTeA8j+oKofjsoUXHB7X7227g4O2qgVkQH+4CRUHqO9LgiUPlsz4X9nCoJnmqqg0JaY7dJFSAqtQE2kX3H/x1NqnjJyt6cbLwXNwu2+ELj1kPxF/B40zBgp+UFvPVNXV7vQznLCm/mJ9PtlvEI7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsOsNdXl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy4LHziw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7332A1F00899;
-	Sat, 30 May 2026 17:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsOsNdXl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF51F00893;
+	Sat, 30 May 2026 17:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162669;
-	bh=nf4c6WmzOkMi208xUw0XTGjVshRFFdfhIdMEd+biOZw=;
+	s=korg; t=1780162672;
+	bh=zAkX0Yw9Ftbdg2ZxYlbM3mRQLCJj5B3/Ua04N9CyguQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yy4LHziwk7VtkizS3CTf9Y2UokUMyBBqAHh/wPdmDhqGZL7q81hmV/FZxBnKCMIHm
-	 bW7P1tNpqyfZDI/2jTU1BFb66pvsJFjcQgBI2ab2nYHtdE6u15x4vE7x4uIftatxu5
-	 jpfeoG4fJZNwGHqAdGSVEbBGkBh0ZT5PqGIP9Zmw=
+	b=QsOsNdXl8WHODglh0O2dl0ltD9Uvo4jWOLowAI/xcLCxgMfWdaF9pqF5JTNXk0AL1
+	 vDrdERReAoZrxiML+WyeyhB4wfC/wcmDkkvYABQQumVUcR7pB5MAboR31jIt9uS1pY
+	 pk8piht9g9JT4RxaKNmq0icDpnltMyzpHdDt908I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/776] nfc: s3fwrn5: allocate rx skb before consuming bytes
-Date: Sat, 30 May 2026 17:55:42 +0200
-Message-ID: <20260530160240.998929103@linuxfoundation.org>
+Subject: [PATCH 5.15 029/776] tracing/probe: reject non-closed empty immediate strings
+Date: Sat, 30 May 2026 17:55:43 +0200
+Message-ID: <20260530160241.023595299@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,57 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 5c14a19d5b1645cce1cb1252833d70b23635b632 ]
+[ Upstream commit 4346be6577aaa04586167402ae87bbdbe32484a4 ]
 
-s3fwrn82_uart_read() reports the number of accepted bytes to the serdev
-core. The current code consumes bytes into recv_skb and may already
-deliver a complete frame before allocating a fresh receive buffer.
+parse_probe_arg() accepts quoted immediate strings and passes the body
+after the opening quote to __parse_imm_string(). That helper currently
+computes strlen(str) and immediately dereferences str[len - 1], which
+underflows when the body is empty and not closed with double-quotation.
 
-If that alloc_skb() fails, the callback returns 0 even though it has
-already consumed bytes, and it leaves recv_skb as NULL for the next
-receive callback. That breaks the receive_buf() accounting contract and
-can also lead to a NULL dereference on the next skb_put_u8().
+Reject empty non-closed immediate strings before checking for the closing quote.
 
-Allocate the receive skb lazily before consuming the next byte instead.
-If allocation fails, return the number of bytes already accepted.
+Link: https://lore.kernel.org/all/20260401160315.88518-1-pengpeng@iscas.ac.cn/
 
-Fixes: 3f52c2cb7e3a ("nfc: s3fwrn5: Support a UART interface")
+Fixes: a42e3c4de964 ("tracing/probe: Add immediate string parameter support")
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260402042148.65236-1-pengpeng@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/s3fwrn5/uart.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/trace/trace_probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/s3fwrn5/uart.c b/drivers/nfc/s3fwrn5/uart.c
-index 82ea35d748a5d..dde1a87ed1e47 100644
---- a/drivers/nfc/s3fwrn5/uart.c
-+++ b/drivers/nfc/s3fwrn5/uart.c
-@@ -59,6 +59,12 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
- 	size_t i;
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index 38fa6cc118daf..47044927a7269 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -362,7 +362,7 @@ static int __parse_imm_string(char *str, char **pbuf, int offs)
+ {
+ 	size_t len = strlen(str);
  
- 	for (i = 0; i < count; i++) {
-+		if (!phy->recv_skb) {
-+			phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
-+			if (!phy->recv_skb)
-+				return i;
-+		}
-+
- 		skb_put_u8(phy->recv_skb, *data++);
- 
- 		if (phy->recv_skb->len < S3FWRN82_NCI_HEADER)
-@@ -70,9 +76,7 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
- 
- 		s3fwrn5_recv_frame(phy->common.ndev, phy->recv_skb,
- 				   phy->common.mode);
--		phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
--		if (!phy->recv_skb)
--			return 0;
-+		phy->recv_skb = NULL;
+-	if (str[len - 1] != '"') {
++	if (!len || str[len - 1] != '"') {
+ 		trace_probe_log_err(offs + len, IMMSTR_NO_CLOSE);
+ 		return -EINVAL;
  	}
- 
- 	return i;
 -- 
 2.53.0
 
