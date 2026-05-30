@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A00E1CAA6C;
-	Sat, 30 May 2026 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1141732BF24;
+	Sat, 30 May 2026 16:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159977; cv=none; b=CDmjW59WJ3OwyjWIxIjptjdfQiBlsKkSy1whcMqEhqRvHLIsg3ao3dLB5/xmFf7ipOBizPyWhPud/5o60B7GIoF63tTx+T87u8nfshMpaNUtgy12Uhw049NyXb6j/furQ/PM2ewrC6QgaUDTZWkCB7hBJkYMxiyK4BXq8gDRGT8=
+	t=1780159981; cv=none; b=ZzHDVa4xDLvgbfKF2RoHJClcGqC6MRrtLqNTF1Gyylkr1yCM1elsUZ6Jg3HJQNW4FSd+WPP0kjRd5A4TBLxygyDJI8MHdgAT/XuWH/SV2xmUYFpV1rlfbym1+DUdM+5rrVrlKqB5AsN3NpykIKpaSFi8LBksrC4hjWKfwvLWi+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159977; c=relaxed/simple;
-	bh=7qzfipE4iFuTEjf0LUFHOEYZd/gxysp/fd7V3Z03eKo=;
+	s=arc-20240116; t=1780159981; c=relaxed/simple;
+	bh=n3BZe6eV9iSeANIPYAIWTy+VaiobGIveR+Q6StVYnQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bbvBbvFrC3CasH2b2zDAlGCuhBZyPWCsD24aQQxuSdTTmnBefaG52h48HAlGiNGpg/ERrTqI6VkJYJPfk1dFTOQYzAY5U9Tl0Uy8d9Wfe02uPFED+8BWG7EI6XacfZz81Nh72RPVPfX5u1h9Tf0sti9uZP7GaxqGDdNVIv9wlqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvrst9kK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NeNPPTu6V4YjVw1JsJv9U/ucWgwudMmYJCds/NiFXcwyD8XKiYD2Vs98Mcy+EdCi/Z+eyMmBlKI4X8U3sk5w+sQT2z9C0QAZ4eeicr1WhN6DeFSJSkmCc3S/1QJKcmBsyi/SZOpID/BvyxeSQn+8gMaEy/J2YspjgqVHu2NGzr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aB4s3gRI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvrst9kK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390941F00893;
-	Sat, 30 May 2026 16:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aB4s3gRI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC2D1F00893;
+	Sat, 30 May 2026 16:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159976;
-	bh=s1y6cT+rDAzuYcWFSkSp9nVvejf2SPlgE+/RMBr+sNY=;
+	s=korg; t=1780159979;
+	bh=ysR5uUuUBvY/FciMbbLOP9xqo+4NPQrYV8296Om2aNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvrst9kKN5z3NoW8EX/HfAvxI/bGzBogcfDcahy8+dR+0VAgm+q8lbywTcnz5DE8p
-	 wav1Lg0wm7waBYr4aceEyEiN8Z3atMUT5rLUv8z671XV+mfyLeqVOKL1COsIL7+wpM
-	 oEWKHPsdZ8gzia8XDdDf8rWCNb2TJxKHJVASAsUw=
+	b=aB4s3gRI7Ea+Z0yXBZdET5dWPb/rF5NJy8eENfpN5DsVj+hHAQq52K1ovQlOikJx9
+	 s2NAu4YkM1UJFUQhylJCDje/aI8lNMn58VkbqS9XxRrJWxlzSKlQyBHXJ71BoEkZM/
+	 45X2oene7yN6RPSqzpxHMOKQUL8DZSfj35m0dvHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 211/969] ALSA: 6fire: Fix input volume change detection
-Date: Sat, 30 May 2026 17:55:35 +0200
-Message-ID: <20260530160306.290497247@linuxfoundation.org>
+	Jonathan Santos <Jonathan.Santos@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 212/969] iio: adc: ad7768-1: fix one-shot mode data acquisition
+Date: Sat, 30 May 2026 17:55:36 +0200
+Message-ID: <20260530160306.314606599@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,62 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Jonathan Santos <Jonathan.Santos@analog.com>
 
-commit dc88eef8f55e85e92d016cdf7e291f5560efd79b upstream.
+commit 8be19e233744961db6069da9c9ab63eb085a0447 upstream.
 
-usb6fire_control_input_vol_put() stores the analog capture volume
-as a signed offset in rt->input_vol[] (-15..+15), but it compares
-the cached value against the user-visible mixer value (0..30)
-before subtracting 15.
+According to the datasheet, one-shot mode requires a SYNC_IN pulse to
+trigger a new sample conversion. In the current implementation, No sync
+pulse was sent after switching to one-shot mode and reinit_completion()
+was called before mode switching, creating a race condition where spurious
+interrupts during mode change could trigger completion prematurely.
 
-This mixes two domains in the change detection path. Since the
-runtime is zero-initialized, the visible default is 15; writing 0
-right after probe is ignored, while writing 15 is reported as a
-change even though the cached value remains 0.
+Fix by sending a sync pulse after configuring one-shot mode and
+reinit_completion() to ensure it only waits for the actual conversion
+completion.
 
-Normalize the user value before comparing it with the cached offset.
-
-Fixes: 06bb4e743501 ("ALSA: snd-usb-6fire: add analog input volume control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260416-alsa-6fire-input-volume-change-detection-v1-1-ec78299168df@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/control.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7768-1.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/sound/usb/6fire/control.c
-+++ b/sound/usb/6fire/control.c
-@@ -290,15 +290,17 @@ static int usb6fire_control_input_vol_pu
- 		struct snd_ctl_elem_value *ucontrol)
- {
- 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
-+	int vol0 = ucontrol->value.integer.value[0] - 15;
-+	int vol1 = ucontrol->value.integer.value[1] - 15;
- 	int changed = 0;
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -241,12 +241,17 @@ static int ad7768_scan_direct(struct iio
+ 	struct ad7768_state *st = iio_priv(indio_dev);
+ 	int readval, ret;
  
--	if (rt->input_vol[0] != ucontrol->value.integer.value[0]) {
--		rt->input_vol[0] = ucontrol->value.integer.value[0] - 15;
-+	if (rt->input_vol[0] != vol0) {
-+		rt->input_vol[0] = vol0;
- 		rt->ivol_updated &= ~(1 << 0);
- 		changed = 1;
- 	}
--	if (rt->input_vol[1] != ucontrol->value.integer.value[1]) {
--		rt->input_vol[1] = ucontrol->value.integer.value[1] - 15;
-+	if (rt->input_vol[1] != vol1) {
-+		rt->input_vol[1] = vol1;
- 		rt->ivol_updated &= ~(1 << 1);
- 		changed = 1;
- 	}
+-	reinit_completion(&st->completion);
+-
+ 	ret = ad7768_set_mode(st, AD7768_ONE_SHOT);
+ 	if (ret < 0)
+ 		return ret;
+ 
++	reinit_completion(&st->completion);
++
++	/* One-shot mode requires a SYNC pulse to generate a new sample */
++	ret = ad7768_send_sync_pulse(st);
++	if (ret)
++		return ret;
++
+ 	ret = wait_for_completion_timeout(&st->completion,
+ 					  msecs_to_jiffies(1000));
+ 	if (!ret)
 
 
