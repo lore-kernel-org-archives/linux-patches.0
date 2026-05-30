@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67C6395AD8;
-	Sat, 30 May 2026 17:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A0E344DB9;
+	Sat, 30 May 2026 17:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162915; cv=none; b=k0cy87eAD3gm8uyW8vvmn1Yk5vt5UIfaCAaHfzIzla/EeKDVLhi0LQ6ejbqpDhuQRI63uzCa5LsD2VrxzvJ0EB5qISPkd6aY1vPA1dF+ygwhM2ig4WSXc+HXA9UguZN9ERVwWE4J0WcATZoNeaxZap8xRRefWRdzl/tHVKcaij4=
+	t=1780162919; cv=none; b=CKmfQqmJM1eKmb/wVQvuYsKgaFPdkCZ0eVubTeVANo5QV/lVstuXIctZFskwOq99RkewKM7xZNZmEFZoCSvZJjBjLYVDzwtbcG79o4EvNdjdVY06HbtE2hyKhrZLuS1S1uNafR+OL5qGuEVR3ZTVQJsjrHedfRISc8Zev0/61Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162915; c=relaxed/simple;
-	bh=EY57U94O04EKB6RUiUql61rOj4lglPC6+m5U3aKDEDo=;
+	s=arc-20240116; t=1780162919; c=relaxed/simple;
+	bh=GKC1fRcx+uyciryTwZivVjT0DntpB7znw2fsXqgy7F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElzelGuopkU9B4CGlvxF+pH85PuU8+9USueK7ZGKVZQrYZ/+K6R4U5yJgU/gz+PQYHzzEnXOMk505f2dDzEaiaDW1IXcbS8BklbCLiDC+UqOlA3DFWosxJs4uDWr3IruZ5ZjeY5KIWQFyXm1mtJ6GZkPy4ZHTx6NESFMbRCAQHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJUCQPhv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u0KBcvZxn0Oku/+6veH5ySux+qk0EeX+txjgB+xwtrJ756SISw/Z8s7GOIxt2iVF54eWNDpke4ZGApIPELeyI+qQQiwkpoL2krWSzCSuWLQ+p86pcgIYLbJH4E5jTtI1odOvdRqbklPkB8P+hICC9vXM6DXzuoRsdu0RiS18Nu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OF4Mqe/9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJUCQPhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C141F00893;
-	Sat, 30 May 2026 17:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OF4Mqe/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F91C1F00893;
+	Sat, 30 May 2026 17:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162914;
-	bh=x8o7Gg/lIVCib7YhW0DYcg7R8kEQRny3Y9meiQ71rr8=;
+	s=korg; t=1780162918;
+	bh=1yf4VnxMTF+wZdboUtVHKLKglx5ZelTGQMHqgGZfRz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJUCQPhvAUxOb/tbpHzAAi4GAL5Jbrlhe3bZicCczGxnI125+3+OrEGatCBq3oPMi
-	 pFI8l5hU/dYKA6z8+gfS5wJ0olpBp7INtODzIZ/pDvRc6ugttsYzRDheVCLapeb2Z5
-	 JomdSJbUqWCzmSCb+TZrU2LiM09DaW158MSljzH4=
+	b=OF4Mqe/9gnRYO1Dyk0ietci4+a65W2OeFa9erahdyUuxUKsflQrhR32T4H63F2xzB
+	 E7SVDb2pyum76biJYv9fM3jDzMXnj/3YMdDGpiJ0TU0m2X38aDvDOf80tiiDO0xv2g
+	 Y4gpLwaMaFJBE7JrENh0rSboShMJg00lH94Zgn+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.15 100/776] powerpc64/bpf: do not increment tailcall count when prog is NULL
-Date: Sat, 30 May 2026 17:56:54 +0200
-Message-ID: <20260530160242.927829198@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 101/776] arm64: dts: imx8mq-librem5: Set the DVS voltages lower
+Date: Sat, 30 May 2026 17:56:55 +0200
+Message-ID: <20260530160242.953415553@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,74 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit 521bd39d9d28ce54cbfec7f9b89c94ad4fdb8350 upstream.
+[ Upstream commit c24a9b698fb02cd0723fa8375abab07f94b97b10 ]
 
-Do not increment tailcall count, if tailcall did not succeed due to
-missing BPF program.
+They're still in the operating range according to i.MX 8M Quad
+datasheet. There's some headroom added over minimal values to
+account for voltage drop.
 
-Fixes: ce0761419fae ("powerpc/bpf: Implement support for tail calls")
-Cc: stable@vger.kernel.org
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260303181031.390073-2-hbathini@linux.ibm.com
+Operational ranges (min - typ - max [selected]):
+ - VDD_SOC (BUCK1): 0.81 - 0.9 - 0.99 [0.88]
+ - VDD_ARM (BUCK2): 0.81 - 0.9 - 1.05 [0.84] (1000MHz)
+                    0.90 - 1.0 - 1.05 [0.93] (1500MHz)
+ - VDD_GPU (BUCK3): 0.81 - 0.9 - 1.05 [0.85] (800MHz)
+                    0.90 - 1.0 - 1.05 [ -- ] (1000MHz)
+ - VDD_VPU (BUCK4): 0.81 - 0.9 - 1.05 [ -- ] (550/500/588MHz)
+                    0.90 - 1.0 - 1.05 [0.93] (660/600/800MHz)
+
+Idle power consumption doesn't appear to be influenced much,
+but a simple load test (`cat /dev/urandom | pigz - > /dev/null`
+combined with running Animatch) seems to show about 0.3W of
+difference.
+
+Care is advised, as there may be differences between each
+units in how low can they be undervolted - in my experience,
+reaching that point usually makes the phone fail to boot.
+In my case, it appears that my Birch phone can go down the most.
+
+This is a somewhat conservative set of values that I've seen
+working well on all my devices; I haven't tried very hard to
+optimize it, so more experiments are welcome.
+
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: 511f76bf1dce ("arm64: dts: imx8mq-librem5: Bump BUCK1 suspend voltage up to 0.85V")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Conflicts due to missing clean up commits
-    b10cb163c4b3 ("powerpc64/bpf elfv2: Setup kernel TOC in r2 on entry")
-    49c3af43e65f ("powerpc/bpf:   Simplify bpf_to_ppc() and adopt it for powerpc64")
-    036d559c0bde ("powerpc/bpf: Use _Rn macros for GPRs")
-  and missing feature commit 2ed2d8f6fb38 ("powerpc64/bpf: Support
-  tailcalls with subprogs") resolved accordingly. ]
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
 ---
- arch/powerpc/net/bpf_jit_comp64.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 ++++++++++++++------
+ 2 files changed, 17 insertions(+), 7 deletions(-)
 
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -239,30 +239,32 @@ static int bpf_jit_emit_tail_call(u32 *i
- 	 * tail_call_cnt++;
- 	 */
- 	EMIT(PPC_RAW_ADDI(b2p[TMP_REG_1], b2p[TMP_REG_1], 1));
--	PPC_BPF_STL(b2p[TMP_REG_1], 1, bpf_jit_stack_tailcallcnt(ctx));
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -12,7 +12,7 @@
  
- 	/* prog = array->ptrs[index]; */
--	EMIT(PPC_RAW_MULI(b2p[TMP_REG_1], b2p_index, 8));
--	EMIT(PPC_RAW_ADD(b2p[TMP_REG_1], b2p[TMP_REG_1], b2p_bpf_array));
--	PPC_BPF_LL(b2p[TMP_REG_1], b2p[TMP_REG_1], offsetof(struct bpf_array, ptrs));
-+	EMIT(PPC_RAW_MULI(b2p[TMP_REG_2], b2p_index, 8));
-+	EMIT(PPC_RAW_ADD(b2p[TMP_REG_2], b2p[TMP_REG_2], b2p_bpf_array));
-+	PPC_BPF_LL(b2p[TMP_REG_2], b2p[TMP_REG_2], offsetof(struct bpf_array, ptrs));
+ &a53_opp_table {
+ 	opp-1000000000 {
+-		opp-microvolt = <1000000>;
++		opp-microvolt = <950000>;
+ 	};
+ };
  
- 	/*
- 	 * if (prog == NULL)
- 	 *   goto out;
- 	 */
--	EMIT(PPC_RAW_CMPLDI(b2p[TMP_REG_1], 0));
-+	EMIT(PPC_RAW_CMPLDI(b2p[TMP_REG_2], 0));
- 	PPC_BCC(COND_EQ, out);
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+@@ -704,8 +704,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <900000>;
+-				rohm,dvs-idle-voltage = <850000>;
++				rohm,dvs-run-voltage = <880000>;
++				rohm,dvs-idle-voltage = <820000>;
+ 				rohm,dvs-suspend-voltage = <800000>;
+ 				regulator-always-on;
+ 			};
+@@ -716,8 +716,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <1000000>;
+-				rohm,dvs-idle-voltage = <900000>;
++				rohm,dvs-run-voltage = <950000>;
++				rohm,dvs-idle-voltage = <850000>;
+ 				regulator-always-on;
+ 			};
  
- 	/* goto *(prog->bpf_func + prologue_size); */
--	PPC_BPF_LL(b2p[TMP_REG_1], b2p[TMP_REG_1], offsetof(struct bpf_prog, bpf_func));
-+	PPC_BPF_LL(b2p[TMP_REG_2], b2p[TMP_REG_2], offsetof(struct bpf_prog, bpf_func));
- #ifdef PPC64_ELF_ABI_v1
- 	/* skip past the function descriptor */
--	EMIT(PPC_RAW_ADDI(b2p[TMP_REG_1], b2p[TMP_REG_1],
-+	EMIT(PPC_RAW_ADDI(b2p[TMP_REG_2], b2p[TMP_REG_2],
- 			FUNCTION_DESCR_SIZE + BPF_TAILCALL_PROLOGUE_SIZE));
- #else
--	EMIT(PPC_RAW_ADDI(b2p[TMP_REG_1], b2p[TMP_REG_1], BPF_TAILCALL_PROLOGUE_SIZE));
-+	EMIT(PPC_RAW_ADDI(b2p[TMP_REG_2], b2p[TMP_REG_2], BPF_TAILCALL_PROLOGUE_SIZE));
- #endif
--	EMIT(PPC_RAW_MTCTR(b2p[TMP_REG_1]));
-+	EMIT(PPC_RAW_MTCTR(b2p[TMP_REG_2]));
+@@ -726,14 +726,14 @@
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+-				rohm,dvs-run-voltage = <900000>;
++				rohm,dvs-run-voltage = <850000>;
+ 			};
+ 
+ 			buck4_reg: BUCK4 {
+ 				regulator-name = "buck4";
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+-				rohm,dvs-run-voltage = <1000000>;
++				rohm,dvs-run-voltage = <930000>;
+ 			};
+ 
+ 			buck5_reg: BUCK5 {
+@@ -1214,3 +1214,13 @@
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
 +
-+	/* Writeback updated tailcall count */
-+	PPC_BPF_STL(b2p[TMP_REG_1], 1, bpf_jit_stack_tailcallcnt(ctx));
- 
- 	/* tear down stack, restore NVRs, ... */
- 	bpf_jit_emit_common_epilogue(image, ctx);
++&a53_opp_table {
++	opp-1000000000 {
++		opp-microvolt = <850000>;
++	};
++
++	opp-1500000000 {
++		opp-microvolt = <950000>;
++	};
++};
 
 
