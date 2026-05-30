@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365E03191D0;
-	Sat, 30 May 2026 17:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A3739B4A6;
+	Sat, 30 May 2026 17:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161000; cv=none; b=aZLNiEL+MiLke8y0q8c8oRy1KRSUMbzZFEOlpkap1gzkx0pkUWuuvdbxRA1ljfMZeUCE1zvVUivnhPswaD4w9z3lW5ov6AxTKeEx5+qw57UNN8C26cUAK876sekwSja5fQEEBX1uA48JYr0QM8k6J+sE9U9a2g3ytdviFPbPhZc=
+	t=1780161003; cv=none; b=JY+UIclbh6uPkbNPAG8kHsZwDnuAPm5KMmsSH97Z8USO7z9ONiL7MVVmcS2DGEsv99lvov25/2q1bjqCjjDXYl4b03p+khP2NSfiVP0ar65+eQYRVg9zqgWBYrTGBSUppAusecWhUCCf6wWMxwXiSVees+YVxADdWLivgrt+8/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161000; c=relaxed/simple;
-	bh=jZ7umkRZ1r2uDXL2BA1V2xjQaVEAkbA7ClOcU3vC0oA=;
+	s=arc-20240116; t=1780161003; c=relaxed/simple;
+	bh=Q3RruLrSSXF+lqAQjUy04uFR5gorsspEhtKQStcl1OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkQt/DMrSzS/z7Y8y/YfjYuuvur6zhVSthZQaogyB2Sl9Ci+wQmQXnOUfgD8bMPpYauhNk+uDAOAlyKG+cQtExQjS3LSaem0QdU3c3V5I8g+pR4lY0GYzKQbziInlfzLL52rzPPW6RaXC4H0gsI7ee3GIZ+OrNwiF8+NNEffcds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFLwsQ0f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BihWXCreYJdS12lcUKIZLigGSw/pupthrw0rkcUFdn36s8br7EfnFfJLHaWWE3hCXzyl4CN5yj0kFCN3UGYnr+/o21RP47iFtT/3/WrVEtNjnfmzTlZ9HmHoYlpuOcMFupy5g3+d0Vrycq4AVJC9HmkhzEwO693WuDy2K8xwOnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lu0EoGNI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFLwsQ0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8D01F00893;
-	Sat, 30 May 2026 17:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lu0EoGNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56B71F00899;
+	Sat, 30 May 2026 17:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160999;
-	bh=c4t7XLvp6YyrSw2hsZceFec+pe2wlJIm7R9oqV9SLcE=;
+	s=korg; t=1780161002;
+	bh=aDRdaZ5o6zN6ujMHJcDQcesvNDGbgIT9J4YVangUsU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFLwsQ0fBtw/IQqDvWScrdo2hPYj8SW8itwxuHgwFhRawVTW3oULIgTlibRdlIWMV
-	 /w0yeTz05ANPKiYU0Y99Rime2sZIJP8gILMZ4hzvScwNh1oU3l8ytMFK60kRNByh9d
-	 9H1Em3BPJbT1wQU+l84+jm1+6CCZyr9eTNtxrtaM=
+	b=Lu0EoGNIIXBzUD9429SSLkhaK9rpfE9nL6BBw2+2KF5Gh4+2YMKWnO+ttqCVVKXUj
+	 ipKfRnd8VNnBv/RRnOJabcl37nIc8oTNoi57HLx0NtXcxnpI9IA/uWW+oiNEq7CAIB
+	 uUJ8CJEgCObUHC6Z1YzH8fGFs96ROSd0koumEWHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 469/969] net: bcmgenet: Remove TX ring full logging
-Date: Sat, 30 May 2026 17:59:53 +0200
-Message-ID: <20260530160313.239301281@linuxfoundation.org>
+Subject: [PATCH 6.1 496/969] dm cache: fix write path cache coherency in passthrough mode
+Date: Sat, 30 May 2026 18:00:20 +0200
+Message-ID: <20260530160314.019143699@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,41 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit df41fa677d9b4717c930afbe88b06f5cefdacb21 ]
+[ Upstream commit 0c5eef0aad508231d8e43ff8392692925e131b68 ]
 
-There is no need to spam the kernel log with such an indication, remove
-this message.
+In passthrough mode, dm-cache defers write bio submission until cache
+invalidation completes to maintain existing coherency, requiring the
+target map function to return DM_MAPIO_SUBMITTED. The current map_bio()
+returns DM_MAPIO_REMAPPED, violating the required ordering constraint.
 
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230728183945.760531-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5393b2b5bee2 ("net: bcmgenet: fix racing timeout handler")
+Reproduce steps:
+
+1. Create a cache device
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
+dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. Promote the first data block into the cache
+
+fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
+--direct=1 --size=64k
+
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the first data block, and check io ordering using ftrace
+
+echo 1 > /sys/kernel/debug/tracing/events/block/block_bio_queue/enable
+echo 1 > /sys/kernel/debug/tracing/events/block/block_bio_complete/enable
+echo 1 > /sys/kernel/debug/tracing/events/block/block_rq_complete/enable
+fio --filename=/dev/mapper/cache --name=test --rw=write --bs=64k \
+--direct=1 --size 64k
+
+5. ftrace logs show that write operations to the cache origin (252:2)
+   and metadata operations (252:0) are unsynchronized: the origin write
+   occurs before metadata commit.
+
+ <snip>
+       fio-146  [000] .....  420.139562: block_bio_queue: 252,3 WS 0 + 128 [fio]
+       fio-146  [000] .....  420.149395: block_bio_queue: 252,2 WS 0 + 128 [fio]
+       fio-146  [000] .....  420.149763: block_bio_queue: 8,32 WS 262144 + 128 [fio]
+       fio-146  [000] dNh1.  420.151446: block_rq_complete: 8,32 WS () 262144 + 128 be,0,4 [0]
+       fio-146  [000] dNh1.  420.152731: block_bio_complete: 252,2 WS 0 + 128 [0]
+       fio-146  [000] dNh1.  420.154229: block_bio_complete: 252,3 WS 0 + 128 [0]
+ kworker/0:0-9  [000] .....  420.160530: block_bio_queue: 252,0 W 408 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.161641: block_bio_queue: 8,32 W 408 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.162533: block_bio_queue: 252,0 W 416 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.162821: block_bio_queue: 8,32 W 416 + 8 [kworker/0:0]
+ <snip>
+
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/md/dm-cache-target.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 650f51471a0e1..1d679de9c3235 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2072,12 +2072,8 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	spin_lock(&ring->lock);
- 	if (ring->free_bds <= (nr_frags + 1)) {
--		if (!netif_tx_queue_stopped(txq)) {
-+		if (!netif_tx_queue_stopped(txq))
- 			netif_tx_stop_queue(txq);
--			netdev_err(dev,
--				   "%s: tx ring %d full when queue %d awake\n",
--				   __func__, index, ring->queue);
--		}
- 		ret = NETDEV_TX_BUSY;
- 		goto out;
- 	}
+diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
+index e0373522cb88c..e2e234c3649a0 100644
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1676,6 +1676,7 @@ static int map_bio(struct cache *cache, struct bio *bio, dm_oblock_t block,
+ 				bio_drop_shared_lock(cache, bio);
+ 				atomic_inc(&cache->stats.demotion);
+ 				invalidate_start(cache, cblock, block, bio);
++				return DM_MAPIO_SUBMITTED;
+ 			} else
+ 				remap_to_origin_clear_discard(cache, bio, block);
+ 		} else {
 -- 
 2.53.0
 
