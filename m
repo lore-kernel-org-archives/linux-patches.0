@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EE827E05E;
-	Sat, 30 May 2026 18:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC896219303;
+	Sat, 30 May 2026 18:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165648; cv=none; b=cpseC5a6NzL3AI0C9y2SEStto1Np4XsOugW9Kn6FClRDVQjwGRGYGi4wNwURFpaR/cr3l72b2ibMLmsyJ7y0g5vHZu/t1CSWq3yriauLQ7ZHoAc2b1g+H0MmgeTZcBA9UEh9+WOkuHFr2u/AvW2lIMqTcPwAxchuQiDmD4cZifk=
+	t=1780165651; cv=none; b=qvBDau/GpZKQLDU0RSjcsxK7iRkit9UQ0W6nnRVV5cyp24unDQF6QnQD3zqCKLfXZeSmbH4eDbdF9CQrJOC4Q3rp5SovMpPPfGKZmmfzedvjufBSRxsDJMnInD9nArxg9zzfasxsnGLJsP1ClMRXddh08EGSZmCb5zJOBqWFmgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165648; c=relaxed/simple;
-	bh=RSVHDFyafrPotO6f5tOad1go6yqPm7D13AHU80JJiaQ=;
+	s=arc-20240116; t=1780165651; c=relaxed/simple;
+	bh=j2mhRffQqFXpprP9WqbtOhHXyAcRCyqrTMk7hqUVQjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+ayz3Z5iYeOefkJgx1BOkbYGsEQk+WMyKA2LXRLXeznplbAgt5PGhXhewFVjXQp93135etIECYNefZ0ItXtQZ8sMqrcGdWA3bQlUZ0Ss0jLrJdDsEVaUDm0eAoHjozsDMIxRJGT0QDEBEhYeTn0XhhoHumej+ejztHTSlc6ifg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oi++MJ4x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OP08+vc+ip9QauV2wHgG0I1evKtOj8wdBOknoX1lGXPs9exLfC+kXEJ0xWQoe+ZLLCd6QmKttx/DakCu0tBoqX+1utcXEOMoY4W5j7ZdTWPn2oSrBqYAbpD/cclQapSCc1GEIE37ROVDRxv1rOSpvP/zrrhW49/iT9i7CSLS4vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6XuIeO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oi++MJ4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98CF1F00893;
-	Sat, 30 May 2026 18:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6XuIeO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3E91F00893;
+	Sat, 30 May 2026 18:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165647;
-	bh=xpuBm4q+SzTTWltQTWYvoXiS9IKspH0xGtSUB5c1Uig=;
+	s=korg; t=1780165650;
+	bh=2KhVcKESoOdqbiWVy9kvyd/NZ5bcs0oBJnCDV1KGqCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oi++MJ4x/UKzUcH5q5CAwxZXjPy+JVbsb6PHHh1IiEd6pkmzRA1jB4ncdlLPQnP45
-	 +f9qnLMLi2xpicXuBrpgPcC0x0DLHBOol4NremdsKi7c1GQ/Vg5MEAIp9s4iNPNuLB
-	 hhZDrVkEXmgEhqPE6bhx1zngeLqvEeQHPzsmZ+vc=
+	b=B6XuIeO4mxlLMZe1cjmOUl2Z2pC76x18APPawpqvAFKZyDiXURTuUfvhEGfWO0Qor
+	 9mruv/+1ry08zQ02NMjH5CIo6nzKEaq+BjdxsBemKaYWMTcNkeiNdtL/UMXounZ2zl
+	 n8KuTpwIodhcX6Q4BtK/27uUhoZgYT9ZF1qmEqa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	"Lee, Chun-Yi" <jlee@suse.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/589] xfrm: clear trailing padding in build_polexpire()
-Date: Sat, 30 May 2026 17:59:43 +0200
-Message-ID: <20260530160227.395857382@linuxfoundation.org>
+Subject: [PATCH 5.10 093/589] thermal/int340x_thermal: handle data_vault when the value is ZERO_SIZE_PTR
+Date: Sat, 30 May 2026 17:59:34 +0200
+Message-ID: <20260530160227.137399577@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,45 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+From: Lee, Chun-Yi <joeyli.kernel@gmail.com>
 
-[ Upstream commit 71a98248c63c535eaa4d4c22f099b68d902006d0 ]
+commit 7931e28098a4c1a2a6802510b0cbe57546d2049d upstream.
 
-build_expire() clears the trailing padding bytes of struct
-xfrm_user_expire after setting the hard field via memset_after(),
-but the analogous function build_polexpire() does not do this for
-struct xfrm_user_polexpire.
+In some case, the GDDV returns a package with a buffer which has
+zero length. It causes that kmemdup() returns ZERO_SIZE_PTR (0x10).
 
-The padding bytes after the __u8 hard field are left
-uninitialized from the heap allocation, and are then sent to
-userspace via netlink multicast to XFRMNLGRP_EXPIRE listeners,
-leaking kernel heap memory contents.
+Then the data_vault_read() got NULL point dereference problem when
+accessing the 0x10 value in data_vault.
 
-Add the missing memset_after() call, matching build_expire().
+[   71.024560] BUG: kernel NULL pointer dereference, address:
+0000000000000010
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ replaced `memset_after()` macro with equivalent manual `memset()` call ]
+This patch uses ZERO_OR_NULL_PTR() for checking ZERO_SIZE_PTR or
+NULL value in data_vault.
+
+Signed-off-by: "Lee, Chun-Yi" <jlee@suse.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ kovalev: bp to fix CVE-2022-48703 ]
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3290,6 +3290,8 @@ static int build_polexpire(struct sk_buf
- 		return err;
+diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+index 28913867cd4bc..a064a4eb31fba 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -466,7 +466,7 @@ static void int3400_setup_gddv(struct int3400_thermal_priv *priv)
+ 	priv->data_vault = kmemdup(obj->package.elements[0].buffer.pointer,
+ 				   obj->package.elements[0].buffer.length,
+ 				   GFP_KERNEL);
+-	if (!priv->data_vault) {
++	if (ZERO_OR_NULL_PTR(priv->data_vault)) {
+ 		kfree(buffer.pointer);
+ 		return;
  	}
- 	upe->hard = !!hard;
-+	/* clear the padding bytes */
-+	memset(&upe->hard + 1, 0, sizeof(*upe) - offsetofend(typeof(*upe), hard));
+@@ -531,7 +531,7 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ 	if (result)
+ 		goto free_rel_misc;
  
- 	nlmsg_end(skb, nlh);
- 	return 0;
+-	if (priv->data_vault) {
++	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
+ 		result = sysfs_create_group(&pdev->dev.kobj,
+ 					    &data_attribute_group);
+ 		if (result)
+@@ -549,7 +549,8 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ free_sysfs:
+ 	cleanup_odvp(priv);
+ 	if (priv->data_vault) {
+-		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
++		if (!ZERO_OR_NULL_PTR(priv->data_vault))
++			sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
+ 		kfree(priv->data_vault);
+ 	}
+ free_uuid:
+@@ -579,7 +580,7 @@ static int int3400_thermal_remove(struct platform_device *pdev)
+ 	if (!priv->rel_misc_dev_res)
+ 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
+ 
+-	if (priv->data_vault)
++	if (!ZERO_OR_NULL_PTR(priv->data_vault))
+ 		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
+ 	sysfs_remove_group(&pdev->dev.kobj, &uuid_attribute_group);
+ 	thermal_zone_device_unregister(priv->thermal);
+-- 
+2.53.0
+
 
 
