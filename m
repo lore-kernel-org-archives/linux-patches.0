@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB6732B11D;
-	Sat, 30 May 2026 17:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8072632B11D;
+	Sat, 30 May 2026 17:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160756; cv=none; b=MuYdH9z11v1VcgsKonXAJhGRtr1l7QHelBV4jqycO4ZZcH4JU2O5zF4qmFO32YkTUi+49b6rX0cFyoM/OHMOS1iaNTIppwAeyw6s7ujY52NfQ7nXjpd2bkCc3e7uaWyD9WAzqW9UsrizV2B4cHE47k08tX24zjBgxAaS1gEPzhU=
+	t=1780160759; cv=none; b=MX61NQPPLChpo+04/JMKLmmMul0zNY4P9vkuyBUTEK8GqLD37BIlt6snfNjjkP4AI8tUyEeo7X0b5+eaDtumO61BoHhmYeUbiDOG5G8DKW2g1w+xv3dwSDR8uOvy5/rNSLFsj1VmXkZ0YLRApOMvPdoEtb6cFflzlf+EpFZPHrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160756; c=relaxed/simple;
-	bh=MKu8wNJ7XXXO71BIh2gOquhXTqL43VCtOOeqJFwlw8E=;
+	s=arc-20240116; t=1780160759; c=relaxed/simple;
+	bh=vAFCwv2LnHASzWaZ2F5q6L+20YbBGz2uOQFsIM0Gvsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M2AKwNCEdbRcIKfGQJjP7OmTCYLBS63wJVCJwMOaYtpk4g23CmkKRKIUj8CBs8o3RdT+Ex30CRgoOCJyrSB2MiMl/2+ykCw4wSGHFvhP04dXM8brbPWaVpAloQ7FzjtH/3sdNL4f0+soEvluNgAaQgaBXHog82MJolAtfGVLY2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKl6Gc12; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b624ycmqTfdpJwT7rY/eSgi4JBT83K1c1/bUFZyutW3dgwmTGSCXbD6bMhGyn7R05sAORivn9niowDBpAAOsK/YxlNfK+BD2KV2t9HcKXTUECI4CeCBHoGnRlJJq/8xx8ZOKfh+0eHRmH3pC9Qjt8lM55rl+msI0RoGrKYygywo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEoM2SDf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKl6Gc12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F16A1F00893;
-	Sat, 30 May 2026 17:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEoM2SDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A937F1F00893;
+	Sat, 30 May 2026 17:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160755;
-	bh=0cmKcLadMDOg1Lc619/OuywPUERyIkjD+heqf/yKR3g=;
+	s=korg; t=1780160758;
+	bh=PHBCsMo3v1WVIRvuVGk99hJTnBMtWL/jBgitcrHjLHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DKl6Gc12EWJJ/8IkPM6hpZsgB23OfAvNvxoSvVXv4LXWHH1f2JaKDXb1fZpbPpU/z
-	 B1NHvRdU8U3xNww+OVGJesEYhQPdmaD/8fuJJxJyLAhAY9++FJLpSpTOU2TVHP2+7i
-	 cz4hOaBF9jplpVrZk9DPGrA8PuFE7uyVuCj5s/Hg=
+	b=NEoM2SDfVZ9T3WfW9HLORJKbk48SOaKMgNeU1hcQUQ6CK+U8s/HJlosnhI5QEKg2y
+	 ck1YWsH+aXf5G9eZLj8vClCgJ5VFbNPghwYqWTPThX2YkvD71owhYQUQUl7O/u2ekJ
+	 kgoUeCZo0gAQBWPPXzt6fE0nTjsfdgcZrdLksCSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Viorel Suman (OSS)" <viorel.suman@oss.nxp.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.1 425/969] pwm: imx-tpm: Count the number of enabled channels in probe
-Date: Sat, 30 May 2026 17:59:09 +0200
-Message-ID: <20260530160311.999147869@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH 6.1 426/969] vsock: fix buffer size clamping order
+Date: Sat, 30 May 2026 17:59:10 +0200
+Message-ID: <20260530160312.024226059@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,64 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viorel Suman (OSS) <viorel.suman@oss.nxp.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 3962c24f2d14e8a7f8a23f56b7ce320523947342 upstream.
+commit d114bfdc9b76bf93b881e195b7ec957c14227bab upstream.
 
-On a soft reset TPM PWM IP may preserve its internal state from previous
-runtime, therefore on a subsequent OS boot and driver probe
-"enable_count" value and TPM PWM IP internal channels "enabled" states
-may get unaligned. In consequence on a suspend/resume cycle the call "if
-(--tpm->enable_count == 0)" may lead to "enable_count" overflow the
-system being blocked from entering suspend due to:
+In vsock_update_buffer_size(), the buffer size was being clamped to the
+maximum first, and then to the minimum. If a user sets a minimum buffer
+size larger than the maximum, the minimum check overrides the maximum
+check, inverting the constraint.
 
-   if (tpm->enable_count > 0)
-       return -EBUSY;
+This breaks the intended socket memory boundaries by allowing the
+vsk->buffer_size to grow beyond the configured vsk->buffer_max_size.
 
-Fix the problem by counting the enabled channels in probe function.
+Fix this by checking the minimum first, and then the maximum. This
+ensures the buffer size never exceeds the buffer_max_size.
 
-Signed-off-by: Viorel Suman (OSS) <viorel.suman@oss.nxp.com>
-Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
-Link: https://patch.msgid.link/20260311123309.348904-1-viorel.suman@oss.nxp.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-[ukleinek: backport to linux-6.6.y]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: b9f2b0ffde0c ("vsock: handle buffer_size sockopts in the core")
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/180118C5-8BCF-4A63-A305-4EE53A34AB9C@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-imx-tpm.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/vmw_vsock/af_vsock.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pwm/pwm-imx-tpm.c
-+++ b/drivers/pwm/pwm-imx-tpm.c
-@@ -350,6 +350,7 @@ static int pwm_imx_tpm_probe(struct plat
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1680,12 +1680,12 @@ static void vsock_update_buffer_size(str
+ 				     const struct vsock_transport *transport,
+ 				     u64 val)
  {
- 	struct imx_tpm_pwm_chip *tpm;
- 	int ret;
-+	unsigned int i;
- 	u32 val;
+-	if (val > vsk->buffer_max_size)
+-		val = vsk->buffer_max_size;
+-
+ 	if (val < vsk->buffer_min_size)
+ 		val = vsk->buffer_min_size;
  
- 	tpm = devm_kzalloc(&pdev->dev, sizeof(*tpm), GFP_KERNEL);
-@@ -383,6 +384,13 @@ static int pwm_imx_tpm_probe(struct plat
- 
- 	mutex_init(&tpm->lock);
- 
-+	/* count the enabled channels */
-+	for (i = 0; i < tpm->chip.npwm; ++i) {
-+		val = readl(tpm->base + PWM_IMX_TPM_CnSC(i));
-+		if (FIELD_GET(PWM_IMX_TPM_CnSC_ELS, val))
-+			++tpm->enable_count;
-+	}
++	if (val > vsk->buffer_max_size)
++		val = vsk->buffer_max_size;
 +
- 	ret = pwmchip_add(&tpm->chip);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to add PWM chip: %d\n", ret);
+ 	if (val != vsk->buffer_size &&
+ 	    transport && transport->notify_buffer_size)
+ 		transport->notify_buffer_size(vsk, &val);
 
 
