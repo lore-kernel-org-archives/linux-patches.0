@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E7433FE15;
-	Sat, 30 May 2026 17:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F253998B1;
+	Sat, 30 May 2026 17:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161406; cv=none; b=VYoIc0VerCzFpwA7QaGfY00ShjAqb57TjeGsvWyybFlSh/4/z774C2IK2eUr40mnM33zOlF7P562b2n7v+ow0vhZxJsLmV51PIln358y7sbwHxB8b4yKkt9yOrPQekCtPpnxvTVr82+JQJBNW6owUDQNeUhdP/GHVzwtVylCRM4=
+	t=1780161410; cv=none; b=jn+OE9cZElHNLOd5MPpECS07PQpq36M2ns9HhtT2oRfyQwPXMap+Km5RXIA64nD6DFa1aKinOhcJLWG/nrCrn3n0LRaxwPhDUITuwBwVXEpXltlq7pOHvsOlZdWGJskaOpM0Ww2pJhm89gF3Qd6bEHSbN0Ji76J4nST0mGYTbis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161406; c=relaxed/simple;
-	bh=eswXLRtZC77JL6HxBjFx/adqEe3dtZPBeH2Asnm+hzc=;
+	s=arc-20240116; t=1780161410; c=relaxed/simple;
+	bh=VimMwqpEEkZyuXGVJKOlrJT1of+bAjN6mOPK6km1rGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toTwsG+HFcRHlwkiMMVn6ZoSfx0Hylh1aNrDHRkaiJ37zTuJDovVzCks+U32JGh9nRldCtVEOVjPxAeC7pc2BIbrJZ72Lq9FD7bUbSTDTtXzT1bxZV9KLY2st5oHk3uiLWVIeC4W1N5yo16xU26Avt8hjq011Ls8yLrkCeBwEqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHcUjIVv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=afOv2mhHAIi2i0KPJLgwFzfopgQn/+DUzgdNQVq53+6VcpT3e8mspFNrIJTen7RLtjJ60tP3nxDoNHA0AkwhmOowMbXmzmqaaRdJAXZGOZT0V6BqBFm9rjuvYwAs0Y5Q2KHVXxghWN2d9LqhIJai3eLtnydQjtWp6xXXzu5fbLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/LcO0jF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHcUjIVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CD81F00893;
-	Sat, 30 May 2026 17:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/LcO0jF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5DC1F00893;
+	Sat, 30 May 2026 17:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161405;
-	bh=z5usu+MCCsb7oupndZlH1DAaEE9T4JNjekxKYlds3tY=;
+	s=korg; t=1780161408;
+	bh=ucIifSSv+OtAo2ZqJxKIx3d35kcvsYW5HU1qpcs+vYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IHcUjIVvOXhfzRAYWQstR6UF8QmueRyPZG/mMJH7QHpghs6gen7fvVXku8VbO7IvG
-	 NnxiEMYvAvmm0yvfxbJKcUtE/IL4zhM4DR9vi6vq0eUumY0Huye7MepYzQlclMpFRn
-	 K+m7hKSZ4OU2TENF56ECtQ3eN44knWIgEYwDkgts=
+	b=f/LcO0jFl1aZifZhvmmauqy/cE0WcwXN8zl1eFXqPT8itDJizkGoMR8EN1HVsHG+8
+	 qMkopVi4LrkEB7LSUOnJfkysdNpg7OaGT1a7JpryduRUUBglJJNzaeB5IoGoh40WF1
+	 7pcApkV9oTlmDb1BFtS54xUDFSWRznAzwgF7MNSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 615/969] mtd: parsers: ofpart: call of_node_get() for dedicated subpartitions
-Date: Sat, 30 May 2026 18:02:19 +0200
-Message-ID: <20260530160317.417071010@linuxfoundation.org>
+Subject: [PATCH 6.1 616/969] mtd: rawnand: sunxi: fix sunxi_nfc_hw_ecc_read_extra_oob
+Date: Sat, 30 May 2026 18:02:20 +0200
+Message-ID: <20260530160317.444882368@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,57 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Richard Genoud <richard.genoud@bootlin.com>
 
-[ Upstream commit e882626c1747653f1f01ea9d12e278e613b11d0f ]
+[ Upstream commit 848c13996c55fe4ea6bf5acc3ce6c8c5c944b5f6 ]
 
-In order to parse sub-partitions, add_mtd_partitions() calls
-parse_mtd_partitions() for all previously found partitions.
+When dumping the OOB, the bytes at the end where actually copied from
+the beginning of the OOB instead of current_offset.
 
-Each partition will end up being passed to parse_fixed_partitions(), and
-its of_node will be treated as the ofpart_node.
+That leads to something like:
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+instead of:
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+(example with BCH16, user data [8,0], no scrambling)
 
-Commit 7cce81df7d26 ("mtd: parsers: ofpart: fix OF node refcount leak in
-parse_fixed_partitions()") added of_node_put() calls for ofpart_node on
-all exit paths.
+*cur_off (offset from the beginning of the page) was compared to offset
+(offset from the beginning of the OOB), and then, the
+nand_change_read_column_op() sets the current position to the beginning
+of the OOB instead of OOB+offset
 
-In the case where the partition passed to parse_fixed_partitions() has a
-parent, it is treated as a dedicated partitions node, and of_node_put()
-is wrongly called for it, even if of_node_get() was not called
-explicitly.
-
-On repeated bind / unbinds of the MTD, the extra of_node_put() ends up
-decrementing the refcount down to 0, which should never happen,
-resulting in the following error:
-
-OF: ERROR: of_node_release() detected bad of_node_put() on
-/soc/spi@80007000/flash@0/partitions/partition@0
-
-Call of_node_get() to balance the call to of_node_put() done for
-dedicated partitions nodes.
-
-Fixes: 7cce81df7d26 ("mtd: parsers: ofpart: fix OF node refcount leak in parse_fixed_partitions()")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Fixes: 15d6f118285f ("mtd: rawnand: sunxi: Stop supporting ECC_HW_SYNDROME mode")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/ofpart_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/sunxi_nand.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/parsers/ofpart_core.c b/drivers/mtd/parsers/ofpart_core.c
-index 110994b1e02f5..c18fa1b3e3276 100644
---- a/drivers/mtd/parsers/ofpart_core.c
-+++ b/drivers/mtd/parsers/ofpart_core.c
-@@ -71,7 +71,7 @@ static int parse_fixed_partitions(struct mtd_info *master,
- 			dedicated = false;
- 		}
- 	} else { /* Partition */
--		ofpart_node = mtd_node;
-+		ofpart_node = of_node_get(mtd_node);
- 	}
+diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
+index a9daf195cba50..16231ca93b599 100644
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -898,9 +898,9 @@ static void sunxi_nfc_hw_ecc_read_extra_oob(struct nand_chip *nand,
+ 	if (len <= 0)
+ 		return;
  
- 	of_id = of_match_node(parse_ofpart_match_table, ofpart_node);
+-	if (!cur_off || *cur_off != offset)
+-		nand_change_read_column_op(nand, mtd->writesize, NULL, 0,
+-					   false);
++	if (!cur_off || *cur_off != (offset + mtd->writesize))
++		nand_change_read_column_op(nand, mtd->writesize + offset,
++					   NULL, 0, false);
+ 
+ 	if (!randomize)
+ 		sunxi_nfc_read_buf(nand, oob + offset, len);
 -- 
 2.53.0
 
