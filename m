@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D99E41A8F;
-	Sat, 30 May 2026 18:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C51141A8F;
+	Sat, 30 May 2026 18:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166083; cv=none; b=ZKPfGfhFPCHlRe5EUmrxIcniyfEUVT+8ktalkyZdxl+xQ4gAK/bh4kZWA66pnLWgspNQrUAHkCb/A0Llrxkx6RY0g965lFEZoA96zGkXOBj/NPSVyc3RkVDq3VanVKisupQ6NfTukhZBEveMF/lenu4nK1TEH2VMcjwiXP7ffTg=
+	t=1780166087; cv=none; b=Z84BjWgcgbnGYDZJO8VVF9mlAb3ydxRnbBtLszTply9uaJbrn6CuGUj0l8lAvxsBgturCkZabKC7cVwVKrvsM16oGPYz0QQYd9aURjvfpqPkxQmy5j/aJtCE8ohuF4mo/kAA7vYb9RT2H3rHzs6LYRYLu5enASEcWaYg5LvhEh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166083; c=relaxed/simple;
-	bh=4jPYPN38eMO4x0+7jB8JaSjLjnY9SqZ5uL1ai1iV39Y=;
+	s=arc-20240116; t=1780166087; c=relaxed/simple;
+	bh=/XC4FOLilSJyvWy2wafLsBv68zUFSr91fBEaABJprgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/QJqAh7sesEzoDv14QplZVIpFlahF9fhDvz5zXN7CWfwmqTZ7umjfxhSJ5t/LYymqVnZ70FW4cF2GpipeluGOZ+zjKQP9+RlgHcy2vUN8aoLFr+RtE283j5l3iy6B3KVunSOHOt/2Sepi1PjvPpn6nIXci5NWp1vVDa9dpvei4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLvaGgc4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OwOUvuSzMYho+NIVotU1zOxgStJnZPvpi6e+LvwnoiMJXfOewanF+828N34ahMe9igBu1wQpo05WJiN4tBua+JfBpEhbZA+FPOIG2IkiRYUpkTIb6trFPDMWvOxPJ10IFfsJDBMncAoUcP9LdCaDCtt0OPbHYyBUrXUPfgPcLiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUYk8T8q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLvaGgc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D3F1F00893;
-	Sat, 30 May 2026 18:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUYk8T8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD25F1F00893;
+	Sat, 30 May 2026 18:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166082;
-	bh=bc983a29zUuszsIYZvkdL5eIf/2N9p+qTOR8/K0WG6Q=;
+	s=korg; t=1780166085;
+	bh=PQCU8bIkAmTA0/R1ZZ74NqqKkARJQgTjbPKf9ztwgYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZLvaGgc4l/IC80gqGTohMF0b172fVxaxO8KcRP4XGZAVACcV8ER7iBb1RCleDyBlS
-	 HM5X0ZLrjBOyvtWibpkK/pI9zuYuKPQ84MbPuDO65q8/Q0q6HQUFuwCkdyyPcLNlH6
-	 sYrizUYOOyuEzsjPAVOh21/YNuKqAo5vWFrpW0S8=
+	b=BUYk8T8q33Jjq4g3f+Rs3+xbYBW5jMxoigzuKZuR9oMi2g7CSqK+DTlWv7pp77Fxs
+	 q/zYpn+okxzoErQxPWR4ZZCKjRf9WdgiQd92rqBRrSlpTfFAl3J+LCYrO4fGAExhcg
+	 cJFTowtX/0lH248gRDuDOAyuRAux6MayolYcq4ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyou Yang <wenyou.yang@atmel.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 268/589] regulator: act8945a: fix OF node reference imbalance
-Date: Sat, 30 May 2026 18:02:29 +0200
-Message-ID: <20260530160232.030395195@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 269/589] media: dib8000: avoid division by 0 in dib8000_set_dds()
+Date: Sat, 30 May 2026 18:02:30 +0200
+Message-ID: <20260530160232.056544331@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,40 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
+commit dde3c37af95cd6fa301c4906f33d627bc9dd874c upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+In dib8000_set_dds(), 1 << 26 (67108864) divided by e.g. 1 apparently can't
+fit into 16-bit variable unit_khz_dds_val, being truncated to 0; this will
+cause division by 0 while calling dprintk() with debugging enabled (via the
+module parameter).  Use s32 instead of s16 to declare the variable, getting
+rid of the cast to u16 in the *else* branch as well...
 
-Fix this by using the intended helper for reusing OF nodes.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
-Cc: stable@vger.kernel.org	# 4.6
-Cc: Wenyou Yang <wenyou.yang@atmel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/act8945a-regulator.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib8000.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/regulator/act8945a-regulator.c
-+++ b/drivers/regulator/act8945a-regulator.c
-@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
- 		num_regulators = ARRAY_SIZE(act8945a_regulators);
- 	}
+--- a/drivers/media/dvb-frontends/dib8000.c
++++ b/drivers/media/dvb-frontends/dib8000.c
+@@ -2694,7 +2694,7 @@ static void dib8000_viterbi_state(struct
  
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
-+
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.driver_data = act8945a;
- 	for (i = 0; i < num_regulators; i++) {
- 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
+ static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
+ {
+-	s16 unit_khz_dds_val;
++	s32 unit_khz_dds_val;
+ 	u32 abs_offset_khz = abs(offset_khz);
+ 	u32 dds = state->cfg.pll->ifreq & 0x1ffffff;
+ 	u8 invert = !!(state->cfg.pll->ifreq & (1 << 25));
+@@ -2715,7 +2715,7 @@ static void dib8000_set_dds(struct dib80
+ 			dds = (1<<26) - dds;
+ 	} else {
+ 		ratio = 2;
+-		unit_khz_dds_val = (u16) (67108864 / state->cfg.pll->internal);
++		unit_khz_dds_val = 67108864 / state->cfg.pll->internal;
+ 
+ 		if (offset_khz < 0)
+ 			unit_khz_dds_val *= -1;
 
 
