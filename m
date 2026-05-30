@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7A427E05E;
-	Sat, 30 May 2026 18:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CE825B0B3;
+	Sat, 30 May 2026 18:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165665; cv=none; b=djj5ScBjUcOTRKjJXrl2jFsf4FLcOBGenVbX+DgVjt+xwfhuFqfMo1q3EZp6dDkzjxxoWWKsAgeHVMcfaGqsYEO8qiMZZY9bxAPFx0nOSqHz90XJXhzFS5EDiRT5CTjdt8J71/oef35d+QoFgr1RF8KwZECaX6pUfoovorzT1Qo=
+	t=1780165668; cv=none; b=c3XXmjyWmcwYS3BNZCaPNdh47cDoYTwGyhF8IS/yjasyA9LU2sSWS9t+NtNMUqh6rshPVNlqqDaXjnz4TgoTfUhNuUy7x0fcDXqOBbFtLmCGXNb/9ZOECG8+C2bK/9hbj86A+mlshxQhOKpGvK6nQC15raZnvlJTROcVfkQV4As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165665; c=relaxed/simple;
-	bh=kdVhWMwnXC7owqkUhBvUk4fH2fC9VvAFSyqYc7GxOvU=;
+	s=arc-20240116; t=1780165668; c=relaxed/simple;
+	bh=nO41zK8a2QI2fzvH9sSf7U3RFKAFsua62gOiEKWjvLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/ZLEq9WfHR60jtZ050kyG3MP0QSqXDk/rPxZN5ne4RIiPROVmgsMbYv+V/MM0bNRq9J0KVQLCh60NZe51uVBjYPPRVU4wS6H7uQIlaiZGBM8/JFAevttE+9Ppl2Wvq+8RWSGJ2dNBVXDgWxqTfRQRVeDBNHeFzjtbOLmSnRLN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMYRbkFP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nq30ft9qBSu1QGM2GGjXO3/5RypL+gtqfan+R9KlMmvx9ZoRg4zZoJc6YJ9se+vL8G7VYelBMVwcfDSTpGVWIgQVXLyKZxJcdvroyOldZjUXVCofaT20/ckbPXDlGg7fnxAhFBjzHbGTJnwmdSyX7EADidH6jM349HZspUwMPmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9LPxB4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMYRbkFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFC61F00893;
-	Sat, 30 May 2026 18:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9LPxB4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831D51F00893;
+	Sat, 30 May 2026 18:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165663;
-	bh=wHeUSwHfKgm6jTPXKz9IDQmYvJpmMSWhrk6uVEYyqpE=;
+	s=korg; t=1780165667;
+	bh=AUKTeFJ81GfuE5eeHqr2U2J6YKdl0/wx6jrrm4o8ozg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMYRbkFPfPYUXMOV9vnrm4PAadP2v8ZNe7h2lpUMAds0mZV0nvClCHVO57CexW4Uz
-	 Zz/goKm/8i5Ga680Q15ZpFFkFzx8UCu16bzz9sGeYnBSZVIft+5Hr+rvH+UZI1LLte
-	 4YymTOdrIT1O1KM0jakfXRfYGsICWLjAFn+wPwiU=
+	b=T9LPxB4aYG4JH0A31W8ycL2wK4jzJX3riFQAUY3rkF5nTmPkfQLkiFlNif3ZpyGo1
+	 UWc6Mdn3n3qxDKdQEYKnFeVPKolJXHYGyBUXVekWUSMFq4eu34DHaTobrB0jqI5Ww+
+	 8vW8UjFW4e+mlHJxd5cyC8Qi85H1Tz+nkD/xux8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 146/589] ocfs2: split transactions in dio completion to avoid credit exhaustion
-Date: Sat, 30 May 2026 18:00:27 +0200
-Message-ID: <20260530160228.623878943@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bin Lan <lanbincn@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 147/589] padata: Fix pd UAF once and for all
+Date: Sat, 30 May 2026 18:00:28 +0200
+Message-ID: <20260530160228.649079425@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,180 +51,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit d647c5b2fbf81560818dacade360abc8c00a9665 upstream.
+[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
 
-During ocfs2 dio operations, JBD2 may report warnings via following
-call trace:
-ocfs2_dio_end_io_write
- ocfs2_mark_extent_written
-  ocfs2_change_extent_flag
-   ocfs2_split_extent
-    ocfs2_try_to_merge_extent
-     ocfs2_extend_rotate_transaction
-      ocfs2_extend_trans
-       jbd2__journal_restart
-        start_this_handle
-         output: JBD2: kworker/6:2 wants too many credits credits:5450 rsv_credits:0 max:5449
+There is a race condition/UAF in padata_reorder that goes back
+to the initial commit.  A reference count is taken at the start
+of the process in padata_do_parallel, and released at the end in
+padata_serial_worker.
 
-To prevent exceeding the credits limit, modify ocfs2_dio_end_io_write() to
-handle extents in a batch of transaction.
+This reference count is (and only is) required for padata_replace
+to function correctly.  If padata_replace is never called then
+there is no issue.
 
-Additionally, relocate ocfs2_del_inode_from_orphan().  The orphan inode
-should only be removed from the orphan list after the extent tree update
-is complete.  This ensures that if a crash occurs in the middle of extent
-tree updates, we won't leave stale blocks beyond EOF.
+In the function padata_reorder which serves as the core of padata,
+as soon as padata is added to queue->serial.list, and the associated
+spin lock released, that padata may be processed and the reference
+count on pd would go away.
 
-This patch also changes the logic for updating the inode size and removing
-orphan, making it similar to ext4_dio_write_end_io().  Both operations are
-performed only when everything looks good.
+Fix this by getting the next padata before the squeue->serial lock
+is released.
 
-Finally, thanks to Jans and Joseph for providing the bug fix prototype and
-suggestions.
+In order to make this possible, simplify padata_reorder by only
+calling it once the next padata arrives.
 
-Link: https://lkml.kernel.org/r/20260402134328.27334-2-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Suggested-by: Jan Kara <jack@suse.cz>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ Adjust context of padata_find_next(). Replace
+cpumask_next_wrap(cpu, pd->cpumask.pcpu) with
+cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false) in padata_reorder() in
+v5.10 according to dc5bb9b769c9 ("cpumask: deprecate cpumask_next_wrap()") and
+f954a2d37637 ("padata: switch padata_find_next() to using cpumask_next_wrap()")
+. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/aops.c |   74 ++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 45 insertions(+), 29 deletions(-)
+ include/linux/padata.h |   3 -
+ kernel/padata.c        | 136 +++++++++++------------------------------
+ 2 files changed, 37 insertions(+), 102 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -39,6 +39,8 @@
- #include "namei.h"
- #include "sysfile.h"
+diff --git a/include/linux/padata.h b/include/linux/padata.h
+index 495b16b6b4d72..9ca779d7e310e 100644
+--- a/include/linux/padata.h
++++ b/include/linux/padata.h
+@@ -91,7 +91,6 @@ struct padata_cpumask {
+  * @cpu: Next CPU to be processed.
+  * @cpumask: The cpumasks in use for parallel and serial workers.
+  * @reorder_work: work struct for reordering.
+- * @lock: Reorder lock.
+  */
+ struct parallel_data {
+ 	struct padata_shell		*ps;
+@@ -102,8 +101,6 @@ struct parallel_data {
+ 	unsigned int			processed;
+ 	int				cpu;
+ 	struct padata_cpumask		cpumask;
+-	struct work_struct		reorder_work;
+-	spinlock_t                      ____cacheline_aligned lock;
+ };
  
-+#define OCFS2_DIO_MARK_EXTENT_BATCH 200
-+
- static int ocfs2_symlink_get_block(struct inode *inode, sector_t iblock,
- 				   struct buffer_head *bh_result, int create)
+ /**
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 6c8a141b5c4b2..6d8af344498b7 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -266,20 +266,17 @@ EXPORT_SYMBOL(padata_do_parallel);
+  *   be parallel processed by another cpu and is not yet present in
+  *   the cpu's reorder queue.
+  */
+-static struct padata_priv *padata_find_next(struct parallel_data *pd,
+-					    bool remove_object)
++static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
++					    unsigned int processed)
  {
-@@ -2308,7 +2310,7 @@ static int ocfs2_dio_end_io_write(struct
- 	struct ocfs2_alloc_context *meta_ac = NULL;
- 	handle_t *handle = NULL;
- 	loff_t end = offset + bytes;
--	int ret = 0, credits = 0;
-+	int ret = 0, credits = 0, batch = 0;
+ 	struct padata_priv *padata;
+ 	struct padata_list *reorder;
+-	int cpu = pd->cpu;
  
- 	ocfs2_init_dealloc_ctxt(&dealloc);
+ 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
  
-@@ -2325,18 +2327,6 @@ static int ocfs2_dio_end_io_write(struct
- 		goto out;
- 	}
+ 	spin_lock(&reorder->lock);
+-	if (list_empty(&reorder->list)) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
++	if (list_empty(&reorder->list))
++		goto notfound;
  
--	/* Delete orphan before acquire i_rwsem. */
--	if (dwc->dw_orphaned) {
--		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
--
--		end = end > i_size_read(inode) ? end : 0;
--
--		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh,
--				!!end, end);
--		if (ret < 0)
--			mlog_errno(ret);
+ 	padata = list_entry(reorder->list.next, struct padata_priv, list);
+ 
+@@ -287,101 +284,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
+ 	 * Checks the rare case where two or more parallel jobs have hashed to
+ 	 * the same CPU and one of the later ones finishes first.
+ 	 */
+-	if (padata->seq_nr != pd->processed) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
 -	}
 -
- 	down_write(&oi->ip_alloc_sem);
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
-@@ -2357,24 +2347,25 @@ static int ocfs2_dio_end_io_write(struct
- 
- 	credits = ocfs2_calc_extend_credits(inode->i_sb, &di->id2.i_list);
- 
--	handle = ocfs2_start_trans(osb, credits);
--	if (IS_ERR(handle)) {
--		ret = PTR_ERR(handle);
--		mlog_errno(ret);
--		goto unlock;
+-	if (remove_object) {
+-		list_del_init(&padata->list);
+-		++pd->processed;
+-		/* When sequence wraps around, reset to the first CPU. */
+-		if (unlikely(pd->processed == 0))
+-			pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-		else
+-			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
 -	}
--	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
--				      OCFS2_JOURNAL_ACCESS_WRITE);
--	if (ret) {
--		mlog_errno(ret);
--		goto commit;
--	}
--
- 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
-+		if (!handle) {
-+			handle = ocfs2_start_trans(osb, credits);
-+			if (IS_ERR(handle)) {
-+				ret = PTR_ERR(handle);
-+				mlog_errno(ret);
-+				goto unlock;
-+			}
-+			ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
-+					OCFS2_JOURNAL_ACCESS_WRITE);
-+			if (ret) {
-+				mlog_errno(ret);
-+				goto commit;
-+			}
-+		}
- 		ret = ocfs2_assure_trans_credits(handle, credits);
- 		if (ret < 0) {
- 			mlog_errno(ret);
++	if (padata->seq_nr != processed)
++		goto notfound;
+ 
++	list_del_init(&padata->list);
+ 	spin_unlock(&reorder->lock);
+ 	return padata;
++
++notfound:
++	pd->processed = processed;
++	pd->cpu = cpu;
++	spin_unlock(&reorder->lock);
++	return NULL;
+ }
+ 
+-static void padata_reorder(struct parallel_data *pd)
++static void padata_reorder(struct padata_priv *padata)
+ {
++	struct parallel_data *pd = padata->pd;
+ 	struct padata_instance *pinst = pd->ps->pinst;
+-	int cb_cpu;
+-	struct padata_priv *padata;
+-	struct padata_serial_queue *squeue;
+-	struct padata_list *reorder;
++	unsigned int processed;
++	int cpu;
+ 
+-	/*
+-	 * We need to ensure that only one cpu can work on dequeueing of
+-	 * the reorder queue the time. Calculating in which percpu reorder
+-	 * queue the next object will arrive takes some time. A spinlock
+-	 * would be highly contended. Also it is not clear in which order
+-	 * the objects arrive to the reorder queues. So a cpu could wait to
+-	 * get the lock just to notice that there is nothing to do at the
+-	 * moment. Therefore we use a trylock and let the holder of the lock
+-	 * care for all the objects enqueued during the holdtime of the lock.
+-	 */
+-	if (!spin_trylock_bh(&pd->lock))
+-		return;
++	processed = pd->processed;
++	cpu = pd->cpu;
+ 
+-	while (1) {
+-		padata = padata_find_next(pd, true);
++	do {
++		struct padata_serial_queue *squeue;
++		int cb_cpu;
+ 
+-		/*
+-		 * If the next object that needs serialization is parallel
+-		 * processed by another cpu and is still on it's way to the
+-		 * cpu's reorder queue, nothing to do for now.
+-		 */
+-		if (!padata)
 -			break;
-+			goto commit;
- 		}
- 		ret = ocfs2_mark_extent_written(inode, &et, handle,
- 						ue->ue_cpos, 1,
-@@ -2382,19 +2373,44 @@ static int ocfs2_dio_end_io_write(struct
- 						meta_ac, &dealloc);
- 		if (ret < 0) {
- 			mlog_errno(ret);
--			break;
-+			goto commit;
-+		}
-+
-+		if (++batch == OCFS2_DIO_MARK_EXTENT_BATCH) {
-+			ocfs2_commit_trans(osb, handle);
-+			handle = NULL;
-+			batch = 0;
- 		}
- 	}
++		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		processed++;
  
- 	if (end > i_size_read(inode)) {
-+		if (!handle) {
-+			handle = ocfs2_start_trans(osb, credits);
-+			if (IS_ERR(handle)) {
-+				ret = PTR_ERR(handle);
-+				mlog_errno(ret);
-+				goto unlock;
-+			}
-+		}
- 		ret = ocfs2_set_inode_size(handle, inode, di_bh, end);
- 		if (ret < 0)
- 			mlog_errno(ret);
+ 		cb_cpu = padata->cb_cpu;
+ 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
+ 
+ 		spin_lock(&squeue->serial.lock);
+ 		list_add_tail(&padata->list, &squeue->serial.list);
+-		spin_unlock(&squeue->serial.lock);
+-
+ 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
+-	}
+ 
+-	spin_unlock_bh(&pd->lock);
+-
+-	/*
+-	 * The next object that needs serialization might have arrived to
+-	 * the reorder queues in the meantime.
+-	 *
+-	 * Ensure reorder queue is read after pd->lock is dropped so we see
+-	 * new objects from another task in padata_do_serial.  Pairs with
+-	 * smp_mb in padata_do_serial.
+-	 */
+-	smp_mb();
+-
+-	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
+-	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
+ 		/*
+-		 * Other context(eg. the padata_serial_worker) can finish the request.
+-		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
++		 * If the next object that needs serialization is parallel
++		 * processed by another cpu and is still on it's way to the
++		 * cpu's reorder queue, end the loop.
+ 		 */
+-		padata_get_pd(pd);
+-		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
+-			padata_put_pd(pd);
+-	}
+-}
+-
+-static void invoke_padata_reorder(struct work_struct *work)
+-{
+-	struct parallel_data *pd;
+-
+-	local_bh_disable();
+-	pd = container_of(work, struct parallel_data, reorder_work);
+-	padata_reorder(pd);
+-	local_bh_enable();
+-	/* Pairs with putting the reorder_work in the serial_wq */
+-	padata_put_pd(pd);
++		padata = padata_find_next(pd, cpu, processed);
++		spin_unlock(&squeue->serial.lock);
++	} while (padata);
+ }
+ 
+ static void padata_serial_worker(struct work_struct *serial_work)
+@@ -432,6 +380,7 @@ void padata_do_serial(struct padata_priv *padata)
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
+ 	struct list_head *pos;
++	bool gotit = true;
+ 
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+@@ -441,17 +390,14 @@ void padata_do_serial(struct padata_priv *padata)
+ 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
+ 			break;
  	}
-+
- commit:
--	ocfs2_commit_trans(osb, handle);
-+	if (handle)
-+		ocfs2_commit_trans(osb, handle);
- unlock:
- 	up_write(&oi->ip_alloc_sem);
-+
-+	/* everything looks good, let's start the cleanup */
-+	if (!ret && dwc->dw_orphaned) {
-+		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
-+
-+		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh, 0, 0);
-+		if (ret < 0)
-+			mlog_errno(ret);
+-	list_add(&padata->list, pos);
++	if (padata->seq_nr != pd->processed) {
++		gotit = false;
++		list_add(&padata->list, pos);
 +	}
- 	ocfs2_inode_unlock(inode, 1);
- 	brelse(di_bh);
- out:
+ 	spin_unlock(&reorder->lock);
+ 
+-	/*
+-	 * Ensure the addition to the reorder list is ordered correctly
+-	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
+-	 * in padata_reorder.
+-	 */
+-	smp_mb();
+-
+-	padata_reorder(pd);
++	if (gotit)
++		padata_reorder(padata);
+ }
+ EXPORT_SYMBOL(padata_do_serial);
+ 
+@@ -638,9 +584,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
+ 	padata_init_squeues(pd);
+ 	pd->seq_nr = -1;
+ 	refcount_set(&pd->refcnt, 1);
+-	spin_lock_init(&pd->lock);
+ 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
+ 
+ 	return pd;
+ 
+@@ -1150,12 +1094,6 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
+ 
+-	/*
+-	 * Wait for all _do_serial calls to finish to avoid touching
+-	 * freed pd's and ps's.
+-	 */
+-	synchronize_rcu();
+-
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
+-- 
+2.53.0
+
 
 
