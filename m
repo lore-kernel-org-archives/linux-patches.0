@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E705D261B9E;
-	Sat, 30 May 2026 17:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB35261B9E;
+	Sat, 30 May 2026 17:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163745; cv=none; b=LB4W1O2edOFc8HRh7zZnqHc/D8QswT3mUTajrJR3z/JfJE8ad00daLdBZ61l/FfTC+PUzFpQlcUxAH1+44C2r5ILkHqMJPWmBE5VcAFYmKk9Z0ZPbprkmJtCqOnScQy9J2qHoC/tWKoJit/7Y/KD9Qx64APoTm7AezpkiaJvKEg=
+	t=1780163749; cv=none; b=mMrgRXa4GqaDl3BxzKHe5PQ/NeWI4SxE2Ps5UhMInuaIhpqlaNdvfz6dgVhmPsyYbr+9iiiikOfYLf+BrBes6eXAt/mSP9RoIJ9Xb+Rs0uEPgxKqd7UkBQdtCzIfw3KCrXXD80vnAZxj5dv/veSktgzztosbB1TBSxeZeCkpPLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163745; c=relaxed/simple;
-	bh=lw7OgSjGkLn5cJpQxItNvF6h5i4QFLIaMCuPRH3f1MM=;
+	s=arc-20240116; t=1780163749; c=relaxed/simple;
+	bh=IKzkaAjUlGAD5ly/GvDF5Y7yPPH8+uZbMauo3MRcOe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmCsEVGJmFNwGIVNk4ku1oG+6azxEkPzQDUTMvr+Ni6cYQugHFQmCbNhMR/h4scSmTBRk2FX1pQ6HdFtCnJFyLSqsXAm+ms9IZPxxnbiqAxfQgUqqtyvSABGEVkI5LNJmTI9cyaouxQBDFhki9K7JX/avSqohOZ63Tv6Ef+InWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcLD85+t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fb7NvjW3mQ/rzhFnu5Q1hmi9Y6dn3x01duGrcPyTS8SZ5T/O0tCfWwI1mEBhRP23I33bxdkKE0BXZYfX/ZpQzZndn+O54L7wToIJH3P2vy6pMhUazoXLu0qxCimdlN4KSqK2aUJqZlfQ04IpsIKaGCEdA6mnoKrKDSmiUcMo9xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLGKOzb9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcLD85+t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373CD1F00893;
-	Sat, 30 May 2026 17:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLGKOzb9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806911F00893;
+	Sat, 30 May 2026 17:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163744;
-	bh=iCp96bl8dOupVYplwfol+goBLiUTcAIGOxFJ/ZgcL/Y=;
+	s=korg; t=1780163748;
+	bh=Yxk1y9n5mscGRLu+gdIGUdYHvyrqWBqG5js6Mq/XxvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fcLD85+tDVA+mC41/OZ9QGn+L5EEHDANOPWD/ueE31lOV05qcXSikC/RDqLVGBzoj
-	 MvOdecE4tcG4VoLsu7SHi6JBRBuAes/4mUkdR0lYepKsAwVLd0o0x/1FtqbwevFbXI
-	 JRUzR5HeYTSBHxdbJap/F/+x82Ou4TMu5QcTyE+A=
+	b=pLGKOzb9sueut+kaBEl3W5pzkKJNv0BluI4fjyDijjkqIK36Cs/f5I6UJBMIi2Wqa
+	 vNx6ybIr7ErDny6XAj/kxwfaNNXiBBP5LOJb3EcEzdf0xhI/iWP3/HDYKL4ON/vdO9
+	 7IC5C2pe+8FkQy4s0pQVfmC2D62iOoRx4vHArOcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gang Yan <yangang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 349/776] mptcp: fix scheduling with atomic in timestamp sockopt
-Date: Sat, 30 May 2026 18:01:03 +0200
-Message-ID: <20260530160249.597848819@linuxfoundation.org>
+	"Artem S. Tashkinov" <aros@gmx.com>,
+	Krishna Chomal <krishna.chomal108@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 350/776] platform/x86: hp-wmi: Ignore backlight and FnLock events
+Date: Sat, 30 May 2026 18:01:04 +0200
+Message-ID: <20260530160249.625294489@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,63 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-commit b5c52908d52c6c8eb8933264aa6087a0600fd892 upstream.
+commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
 
-Using lock_sock_fast() (atomic context) around sock_set_timestamp()
-and sock_set_timestamping() is unsafe, as both helpers can sleep.
+On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
+directly by the firmware. However, they still trigger WMI events which
+results in "Unknown key code" warnings in dmesg.
 
-Replace lock_sock_fast() with sleepable lock_sock()/release_sock()
-to avoid scheduling while atomic panic.
+Add these key codes to the keymap with KE_IGNORE to silence the warnings
+since no software action is needed.
 
-Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260420093343.16443-1-gang.yan@linux.dev
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-2-7432b7f279fa@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Artem S. Tashkinov <aros@gmx.com>
+Reported-by: Artem S. Tashkinov <aros@gmx.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -155,10 +155,10 @@ static int mptcp_setsockopt_sol_socket_t
- 	lock_sock(sk);
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		bool slow = lock_sock_fast(ssk);
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -166,6 +166,11 @@ static const struct key_entry hp_wmi_key
+ 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
+ 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
+ 	{ KE_KEY, 0x231b,  { KEY_HELP } },
++	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
++	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
++	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
++	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
++	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
+ 	{ KE_END, 0 }
+ };
  
-+		lock_sock(ssk);
- 		sock_set_timestamp(ssk, optname, !!val);
--		unlock_sock_fast(ssk, slow);
-+		release_sock(ssk);
- 	}
- 
- 	release_sock(sk);
-@@ -231,10 +231,10 @@ static int mptcp_setsockopt_sol_socket_t
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		bool slow = lock_sock_fast(ssk);
- 
-+		lock_sock(ssk);
- 		sock_set_timestamping(ssk, optname, timestamping);
--		unlock_sock_fast(ssk, slow);
-+		release_sock(ssk);
- 	}
- 
- 	release_sock(sk);
 
 
