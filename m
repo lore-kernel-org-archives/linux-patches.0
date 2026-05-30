@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09E63C1961;
-	Sat, 30 May 2026 18:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCF833F8A2;
+	Sat, 30 May 2026 18:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164321; cv=none; b=CCwpkbqHlwFnpb735keyZUs7O4uTUEhEQCyv0SjAAQZ6rNDfQI1QHK+gRj69kKwdv39lcZ5agIGduPmyyIZgWTeCrInD7d8c7Hd4iZVVCJK4wE9EbQdNgYWpJ97rixEFHrS040jRWvcr58M3wOh3xNJ4sJPhSBxzxBk7r+prHCA=
+	t=1780164325; cv=none; b=TNGe5Y+E7M3lLUDC8kwFPRgzJplJpTMTWVwAMzh4ghb3ylZOYbFciIhdXRMXYIMu3yIxOdxvR1hJNLbkeytpA/wlOFeLoohkhDOynNCNvkyEzuGww/1Yfhjw37qGwbDIXD/lz1KLj4eVjgcyeNHaVcYqQW0vbxEpsuhS5yvsLnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164321; c=relaxed/simple;
-	bh=E5S49RkaBMU32ayxzDhrLP3v8uUakvce23ByVYJ4FJY=;
+	s=arc-20240116; t=1780164325; c=relaxed/simple;
+	bh=0t3RHsZX1cACFpB74X9KJWSz7btNzVI3wr2T2QbtRQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nA55O4FdHWdKEa+er6Inbxq9InZTGl49xRCGQRlnUieHuvDdRyblTBhskb0tcw+9F7DpRfGDKqm+sYceOjRNF6xHlFGoaamQLhqrdmpfGAF0EuIqDCHu7BecX2fW19mT+wnY0L6qAqI/hD6xu/yZ3hIyqhjzXLP3XSYGOstpTGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgLHt4nB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QZaBdsSwsl1HBi9MuJr9G581cNhLfYrplhcH5mUtocaDl9L17TkOjhJJWbJ70ClUhpiO/ZfWyK4WxBiN/g61nOkbOl1M39YyhZn1O1H9iHDahdN0bJZ7DQXzVUfwFU7wjFTsK4lnZ2aEISq1ui5ggnccidxjNkHY/jhYOJv4A+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNEgE7ak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgLHt4nB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDDF1F00893;
-	Sat, 30 May 2026 18:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNEgE7ak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420B21F00893;
+	Sat, 30 May 2026 18:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164320;
-	bh=Sis/LeWk94kYNruvQYTq8yaZwaSN1H7uTbzzuBssX60=;
+	s=korg; t=1780164323;
+	bh=eT5P1smzxJUkfNkf+LSfP18pGzwtzv226GB0riDXXKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sgLHt4nBZktczt7v7tgCGi7Y6PW/E1Bq2eL6SvlRFi3UcdI+PXdHu/5YgySYIXAQb
-	 KoriW5tUc1GJuPZw7jiU+2XqBfJ113saqro32l7x4luy/kBwbhQo8o5+Y9f6FAA4Bu
-	 rUJvAtG/UvePqijoJVr2Ne3pIZbh+QcVlDXS858c=
+	b=vNEgE7akQSiKEbbMeVP8X4BjRQkbeFxICH/JgHMDL9nc365FR/DgPC7E9CNuQoaq+
+	 h0HF/UgV7fF6IM/6zHwkp7fxGVv3kWitHFpNlfMxcFLysXXWcME+gQCcHlShdlOeWL
+	 v/jarQfLxBq0LmoVs72lYUz7Ft9BVO1iQ7J/9UgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 519/776] i3c: mipi-i3c-hci: fix IBI payload length calculation for final status
-Date: Sat, 30 May 2026 18:03:53 +0200
-Message-ID: <20260530160253.651860139@linuxfoundation.org>
+Subject: [PATCH 5.15 520/776] driver core: device.h: remove extern from function prototypes
+Date: Sat, 30 May 2026 18:03:54 +0200
+Message-ID: <20260530160253.674478239@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit d35a6db887eeae7c57b719521e39d64f929c6dc3 ]
+[ Upstream commit f43243c66e5e9ad839d235f82a58e73a7e7612af ]
 
-In DMA mode, the IBI status descriptor encodes the payload using
-CHUNKS (number of chunks) and DATA_LENGTH (valid bytes in the last
-chunk). All preceding chunks are implicitly full-sized.
+The kernel coding style does not require 'extern' in function prototypes
+in .h files, so remove them from include/linux/device.h as they are not
+needed.
 
-The current code accumulates full chunk sizes for non-final status
-descriptors, but for the final status descriptor it only adds
-DATA_LENGTH. This ignores the contribution of the preceding full
-chunks described by the same final status entry.
-
-As a result, the computed IBI payload length is truncated whenever
-the final status spans multiple chunks. For example, with a chunk
-size of 4 bytes, CHUNKS=2 and DATA_LENGTH=1 should result in a total
-payload size of 5 bytes, but the current code reports only 1 byte.
-
-Fix the calculation by adding the size of (CHUNKS - 1) full chunks
-plus DATA_LENGTH for the last chunk.
-
-Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260407-i3c-hci-dma-v2-1-a583187b9d22@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lore.kernel.org/r/20230324122711.2664537-1-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 797cc011ae02 ("backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/device.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 28f40f805cb5a..168b21f6cf37c 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -636,7 +636,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 		if (!(ibi_status & IBI_LAST_STATUS)) {
- 			ibi_size += chunks * rh->ibi_chunk_sz;
- 		} else {
--			ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			if (chunks) {
-+				ibi_size += (chunks - 1) * rh->ibi_chunk_sz;
-+				ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			}
- 			last_ptr = ptr;
- 			break;
- 		}
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 18f276f4a9c01..97fb43c6d919d 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1030,8 +1030,7 @@ void device_links_supplier_sync_state_pause(void);
+ void device_links_supplier_sync_state_resume(void);
+ void device_link_wait_removal(void);
+ 
+-extern __printf(3, 4)
+-int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
 -- 
 2.53.0
 
