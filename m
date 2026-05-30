@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1CE2FDC5E;
-	Sat, 30 May 2026 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938522FDC5E;
+	Sat, 30 May 2026 18:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165988; cv=none; b=T4AQcO7/Vlqd58uyEzlTbomPYnpSYH/uzjp1sV2bgYZqyx9pV1ZB7ZojGXbIeV/+blxjNZ4y01NvoEswEmtBR9dS0KZn5MubtSdJ+aFcA9wWr0VgUJu3YImQ0vqrRyDKK9eweAFLg+RGi5ZErqXGZ06hwKSO/QYm/CTn5V67418=
+	t=1780165991; cv=none; b=Dvx1kIpOLACXApE5v7lnDzU7wr+7UiIBoiE/mrJes7AgMwfwVJfgw71HqI4xWvztkazJNWOVr8C/no7uoVjQAOowYl+aVpPdaXzyatuP4QjI8KUEg2wFjERDdAVNri06do81OdYA+Xjs8avkmZY/93IvetLHnM02yLj3/4rSRW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165988; c=relaxed/simple;
-	bh=uidpBeyYosrboiLO4COHdfh9Rpd/TF2qDyqnMQZOKwE=;
+	s=arc-20240116; t=1780165991; c=relaxed/simple;
+	bh=juS5BwbpN+xEVs7BazDwHK+smRxk/H+GQLavkhtl80o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3hTtBWOMfZtLB28cXDWtSD/DYCPUnf9l83pRQ61wro3z/3KkdXh1ZYeuxaTe+iW9R4SGfbUlPmcyHQ1usuMqg4uaL8Rh3CrwsFlTbx5B4D9Ivh5dcDDtcrcOt+YrDno+BpcUTpYB8LJk3zDHxLEQodWVWKuZ/E8tIV4kU/4v5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIbLqAWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aQek9YaAI2660Aw7ohGwy3tGXy4ph2BI4dVfNH0Dipdjq00BPyfhjKph3IC4T2bm38n4XMsudf4rCN965xIAqM/eFaT5sBM1/YMwi+oLfxvP+p5g432AiYNk2XQkVvo2io0Exx0I/8ZJkeJh7nlQRovX+DFZX4VnDHREncvt0sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0Dx3SYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIbLqAWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC911F00893;
-	Sat, 30 May 2026 18:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0Dx3SYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74091F00893;
+	Sat, 30 May 2026 18:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165987;
-	bh=9Bu5+QhPn3soPaEWeXRPD5vc0vpSeWJy05t9PtvCA7o=;
+	s=korg; t=1780165990;
+	bh=J+c50AhTBeLQumxQqvFb1eDkzjTuhNlK9HPtmyejyUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIbLqAWD12EpWuVPB45S4eLZ2vj0ZfxsqoUk2T3bYXvZ9PnGH3kXo6KmT33J5g4w5
-	 5caXxNxWkLCZL+Tp/z+lJRjX+7IhUniM2Dhr+DAYxIfnMMvd3t7RDWLQyQFCFjw8+p
-	 PWB/+t06MVQnpshRLr8iJsmrZkh5W634fkHYE6W8=
+	b=R0Dx3SYDda9i1ICR6etDv6YbAatLU3JB5BF57nygOLmNT1h9RMSgnfjdYW2H2BDou
+	 qLj3lSNQnfi19GcX2XprKNnrUY7+G2zZhErQpqibpMfHGupcugAlJFjsUvCINpaLd+
+	 tH1oRacdyDT7z50NalaYPRqt3248VLwLiXMxVU2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 239/589] hv_sock: fix ARM64 support
-Date: Sat, 30 May 2026 18:02:00 +0200
-Message-ID: <20260530160231.280218701@linuxfoundation.org>
+	Li Xiao <252270051@hdu.edu.cn>,
+	Corey Minyard <corey@minyard.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 213/589] ipmi:ssif: Clean up kthread on errors
+Date: Sat, 30 May 2026 18:01:34 +0200
+Message-ID: <20260530160230.567581130@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,42 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: Corey Minyard <corey@minyard.net>
 
-commit b31681206e3f527970a7c7ed807fbf6a028fc25b upstream.
+commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 upstream.
 
-VMBUS ring buffers must be page aligned. Therefore, the current value of
-24K presents a challenge on ARM64 kernels (with 64K pages). So, use
-VMBUS_RING_SIZE() to ensure they are always aligned and large enough to
-hold all of the relevant data.
+If an error occurs after the ssif kthread is created, but before the
+main IPMI code starts the ssif interface, the ssif kthread will not
+be stopped.
 
+So make sure the kthread is stopped on an error condition if it is
+running.
+
+Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
+Reported-by: Li Xiao <<252270051@hdu.edu.cn>
 Cc: stable@vger.kernel.org
-Fixes: 77ffe33363c0 ("hv_sock: use HV_HYP_PAGE_SIZE for Hyper-V communication")
-Tested-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260428125339.13963-1-hamzamahfooz@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
+[Adjusted for stopping flag and complete operation still being present.]
+Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/hyperv_transport.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/net/vmw_vsock/hyperv_transport.c
-+++ b/net/vmw_vsock/hyperv_transport.c
-@@ -366,10 +366,10 @@ static void hvs_open_connection(struct v
- 	} else {
- 		sndbuf = max_t(int, sk->sk_sndbuf, RINGBUFFER_HVS_SND_SIZE);
- 		sndbuf = min_t(int, sndbuf, RINGBUFFER_HVS_MAX_SIZE);
--		sndbuf = ALIGN(sndbuf, HV_HYP_PAGE_SIZE);
-+		sndbuf = VMBUS_RING_SIZE(sndbuf);
- 		rcvbuf = max_t(int, sk->sk_rcvbuf, RINGBUFFER_HVS_RCV_SIZE);
- 		rcvbuf = min_t(int, rcvbuf, RINGBUFFER_HVS_MAX_SIZE);
--		rcvbuf = ALIGN(rcvbuf, HV_HYP_PAGE_SIZE);
-+		rcvbuf = VMBUS_RING_SIZE(rcvbuf);
+diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
+index 42cbf761fa749..55ebe1d31766b 100644
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -1311,6 +1311,7 @@ static void shutdown_ssif(void *send_info)
+ 	if (ssif_info->thread) {
+ 		complete(&ssif_info->wake_thread);
+ 		kthread_stop(ssif_info->thread);
++		ssif_info->thread = NULL;
  	}
+ }
  
- 	ret = vmbus_open(chan, sndbuf, rcvbuf, NULL, 0, hvs_channel_cb,
+@@ -1941,6 +1942,17 @@ static int ssif_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 
+  out:
+ 	if (rv) {
++		/*
++		 * If ipmi_register_smi() starts the interface, it will
++		 * call shutdown and that will free the thread and set
++		 * it to NULL.  Otherwise it must be freed here.
++		 */
++		if (ssif_info->thread) {
++			ssif_info->stopping = true;
++			complete(&ssif_info->wake_thread);
++			kthread_stop(ssif_info->thread);
++			ssif_info->thread = NULL;
++		}
+ 		if (addr_info)
+ 			addr_info->client = NULL;
+ 
+-- 
+2.53.0
+
 
 
