@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE9517555;
-	Sat, 30 May 2026 18:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FCF217704;
+	Sat, 30 May 2026 18:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165430; cv=none; b=oI9E2BQ4k0hTxi8o5U6W4zv8+AQTr7HEofjnj5RDbnZKpPvOXjVV/L10jkf2CnW3A7BvcZuG4aXNE+0zm+Q82rpWrOcbN1ct+1eU5VbZzjWo/PH/GLXr65auFjR+dv3wQ0zbpcL/X+StNe9OBryhndZJdGH8Bo5Pz036A5v8yUs=
+	t=1780165433; cv=none; b=JmhB1tHrfT+5wrM4lWRgex6wrFB72ARZVK9eksBLv2jRMaC4o23PTcSfkzEeXy6J5EF8w4yHuVTN2h2NFV/o5L9IAcgbhhhHqjFuyXxyA+10gXtsxq1ssJrYjDilXVt3n7mMJYzsggcljqCCDTwAHKYQiZQq9nzWAclEWT6zYGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165430; c=relaxed/simple;
-	bh=kv9GNB0gjFkNNVxp2zQe7N7T5HGZ5Ks6RiyqFn8JyQA=;
+	s=arc-20240116; t=1780165433; c=relaxed/simple;
+	bh=KNxakxLiaA92G5VE+XO4M5EzcHHnReCgt2DnDBc0FsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kj8qxRq7dA1GEu6zJ7Gl2cPl6UnIMAmLsUeWrArucow+bUx5/+8Won9KOD7Uzz6E8s6UUv+QVDpRr6MWMEER0zR2V69UlHPp7G8ayfe/1UCgQj+/G73QV4v7rKAYjl9ckapWVgigTHChppF0ksQA9P4468OQmJsg+ZJsCox/HmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzDog+eS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lQ/AYLsEas3cZJWFEGaEPTzhKqbgr+i/2RginohS2ap2wZCu9sHI55mg0af0Mz0LrKd6f5y9qJ4MeoN4NTUQzvbp2Zd6eIZc5FVjQq6BQTT/kJA0WFWxOg+12shhXVyKMOvPWKaN7+TVY8jHG6vytDVelULwKCbUuwU85w1P79I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0txTS5Bq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzDog+eS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9011F00893;
-	Sat, 30 May 2026 18:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0txTS5Bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4AC1F00893;
+	Sat, 30 May 2026 18:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165429;
-	bh=8UupNBh3VLnbOM8XorJ7dDg+GVytuT5n8ZCltcUiixI=;
+	s=korg; t=1780165432;
+	bh=IRj3dk7dZIGOxU8zu7CB58H5FoU+APwHKAWckXmp0FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IzDog+eSHjNQ0RuXp/gEqIjiVFJjVWEYr54d6RuXT88Z2lARBlR1+DHIV4SWDpGWR
-	 gy2s0PGYZcOBAgec/ytDZnbl3IEq4/87GlPXDtT3ZB7IJPCWWCJnKRXVrIBoIgfRuA
-	 bATWbbic/97de2Ph59kCwccxrTMYMU5w5+gYu5tw=
+	b=0txTS5Bq8jCjT3mTs7VLd/VrinPlMs/CmwxYuR6Y+fbDwd+kpFLoi4R4rm4AjfHB5
+	 gAanhNKdrqwaDADOrjEjRIfTycKrfMeHaAZRTxtnnDebZCq/fzDZhSyZ9lFbGaI0s2
+	 WStJtLMmOh8jqI5zxNAGKvAxUEn6Ud/PyV3Ia08A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
+	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
+	Abhishek Kumar <abhishek_sts8@yahoo.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 076/589] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Sat, 30 May 2026 17:59:17 +0200
-Message-ID: <20260530160226.601905068@linuxfoundation.org>
+Subject: [PATCH 5.10 077/589] media: em28xx: fix use-after-free in em28xx_v4l2_open()
+Date: Sat, 30 May 2026 17:59:18 +0200
+Message-ID: <20260530160226.630021564@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,62 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Abhishek Kumar <abhishek_sts8@yahoo.com>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
+creating a race with em28xx_v4l2_init()'s error path and
+em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
+and set dev->v4l2 to NULL under dev->lock.
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+This race leads to two issues:
+ - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
+   since the video_device is embedded in the freed em28xx_v4l2 struct.
+ - NULL pointer dereference in em28xx_resolution_set() when accessing
+   v4l2->norm, since dev->v4l2 has been set to NULL.
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
+Fix this by moving the mutex_lock() before the dev->v4l2 read and
+adding a NULL check for dev->v4l2 under the lock.
 
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
+Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
+Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -235,8 +235,10 @@ static int vidtv_start_feed(struct dvb_d
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2136,7 +2136,7 @@ static int em28xx_v4l2_open(struct file
+ {
+ 	struct video_device *vdev = video_devdata(filp);
+ 	struct em28xx *dev = video_drvdata(filp);
+-	struct em28xx_v4l2 *v4l2 = dev->v4l2;
++	struct em28xx_v4l2 *v4l2;
+ 	enum v4l2_buf_type fh_type = 0;
+ 	int ret;
  
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
-+		}
+@@ -2153,13 +2153,19 @@ static int em28xx_v4l2_open(struct file
+ 		return -EINVAL;
  	}
  
- 	mutex_unlock(&dvb->feed_lock);
++	if (mutex_lock_interruptible(&dev->lock))
++		return -ERESTARTSYS;
++
++	v4l2 = dev->v4l2;
++	if (!v4l2) {
++		mutex_unlock(&dev->lock);
++		return -ENODEV;
++	}
++
+ 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
+ 			video_device_node_name(vdev), v4l2_type_names[fh_type],
+ 			v4l2->users);
+ 
+-	if (mutex_lock_interruptible(&dev->lock))
+-		return -ERESTARTSYS;
+-
+ 	ret = v4l2_fh_open(filp);
+ 	if (ret) {
+ 		dev_err(&dev->intf->dev,
 
 
