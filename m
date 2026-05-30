@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3149E3546EA;
-	Sat, 30 May 2026 17:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA13223DC6;
+	Sat, 30 May 2026 17:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163170; cv=none; b=KkaPBs8fW39fZyz3lDkKq3P3I2pyKjqJWmLxMUjVrkQsKO7RkAbD69DwUBNtGZANe+ppS4xLxJTmQnmAs0uv3nx3spD0B45ZjJHH1kkiHUtFU6p8VqFZAqB0qmfb8U6NSnocoi4eZ6DF10Lg2GcS5FEkcm/ItuBmiF+ocqz5iKg=
+	t=1780163173; cv=none; b=i0OoY2HOlycu7h0wy2jerj1G6vF12MhGqGvRcD8O7QPfmIPud3Dyep4MqxjxHfrH6wXH8fZ+aELhDEb/Wbk87dEVP7wzDfK6mt/0o847OV7bGa1szMFy8QN08ZIDoeDVvuAO1fvzOR7dDM7HXcKfONvX0q7EXcEsK73LHTboH8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163170; c=relaxed/simple;
-	bh=lwqRqj5aKQYCbUZ6za3TCSH+qYojs1/a9pBiw0KHiZQ=;
+	s=arc-20240116; t=1780163173; c=relaxed/simple;
+	bh=NlYznuKaLnIfvqdDmOmAOySHdG88091XMzf71kzhqPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n16mAnyU7jg9eU5ISO7IWzAztSmYMmtj1mtmohmqON1PmxX87UWExkGeYcJfytwwP3+DS6c880TbfGQ28dX3MqR2fMj2+3qXCtnEDXZvj4EzIrVRJKwQYOvAu0LddghjLTTk/gU0MCiykbRE6hwBpB4uTk/QfegzFEiw2QmKI2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2SLpFuS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=q/Yt1SUUOBvfzKrbneY8RVE6u+KUwgQCjVuA00nBtRdyhSt8w7Yacv4YOo5zRhpIAwpAp/Vrt9zGMn6nBh80g2ywXbG5vnOwbhRHtOU1Bq1n8hpWL62Qt+Bmc3ynvP8j1eiuSUHVx9DHlhhaWcCeP7GJnJkn6lB5JLrkQTjHZOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VqRR+7N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2SLpFuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF11F00898;
-	Sat, 30 May 2026 17:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VqRR+7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5B21F00893;
+	Sat, 30 May 2026 17:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163169;
-	bh=0TyNf207hxAMzoh9NiSBYt0YbVAJbFhgjtf7+NZCCUI=;
+	s=korg; t=1780163172;
+	bh=rJVpojcvIjY6NUQa//jbPqEeI127OmJbREPR8DA7Pgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H2SLpFuSTZFOKvIov6tn+uwaOkiZurnHXl7gHNcFtO9XEiOPL2y1A8lK+WajDzeYD
-	 e9N8u+13M+Lg91L0Bp/SosGttN9fo5fd/yZDWSXtMHl0DmbAQT2tMV2oqeC9i6kUrO
-	 Zpi8NMbAfPwVmSyc4K98lTJdPUFB46jHArj2C/wo=
+	b=0VqRR+7NIsfzPet79+feeV78W0Tma+W/3qPu2PSM4bSR0x5D2C0XZEY686SxJz2Bu
+	 +TEFiCrlpJNpstBQjnNaNSTVVyaw5w7elji5Sdr/U5KFOb8c5oRcii+JzDJNz+miuU
+	 AweO2DUrDCG4cyrFj5s8YzKHjQijpI8nbhYF1yC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 178/776] rxrpc: Fix missing validation of ticket length in non-XDR key preparsing
-Date: Sat, 30 May 2026 17:58:12 +0200
-Message-ID: <20260530160245.099832909@linuxfoundation.org>
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Johnny Hao <johnny_haocn@sina.com>
+Subject: [PATCH 5.15 161/776] net: clear the dst when changing skb protocol
+Date: Sat, 30 May 2026 17:57:55 +0200
+Message-ID: <20260530160244.647482775@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,62 +47,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit ac33733b10b484d666f97688561670afd5861383 upstream.
+[ Upstream commit ba9db6f907ac02215e30128770f85fbd7db2fcf9 ]
 
-In rxrpc_preparse(), there are two paths for parsing key payloads: the
-XDR path (for large payloads) and the non-XDR path (for payloads <= 28
-bytes). While the XDR path (rxrpc_preparse_xdr_rxkad()) correctly
-validates the ticket length against AFSTOKEN_RK_TIX_MAX, the non-XDR
-path fails to do so.
+A not-so-careful NAT46 BPF program can crash the kernel
+if it indiscriminately flips ingress packets from v4 to v6:
 
-This allows an unprivileged user to provide a very large ticket length.
-When this key is later read via rxrpc_read(), the total
-token size (toksize) calculation results in a value that exceeds
-AFSTOKEN_LENGTH_MAX, triggering a WARN_ON().
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+    ip6_rcv_core (net/ipv6/ip6_input.c:190:20)
+    ipv6_rcv (net/ipv6/ip6_input.c:306:8)
+    process_backlog (net/core/dev.c:6186:4)
+    napi_poll (net/core/dev.c:6906:9)
+    net_rx_action (net/core/dev.c:7028:13)
+    do_softirq (kernel/softirq.c:462:3)
+    netif_rx (net/core/dev.c:5326:3)
+    dev_loopback_xmit (net/core/dev.c:4015:2)
+    ip_mc_finish_output (net/ipv4/ip_output.c:363:8)
+    NF_HOOK (./include/linux/netfilter.h:314:9)
+    ip_mc_output (net/ipv4/ip_output.c:400:5)
+    dst_output (./include/net/dst.h:459:9)
+    ip_local_out (net/ipv4/ip_output.c:130:9)
+    ip_send_skb (net/ipv4/ip_output.c:1496:8)
+    udp_send_skb (net/ipv4/udp.c:1040:8)
+    udp_sendmsg (net/ipv4/udp.c:1328:10)
 
-[ 2001.302904] WARNING: CPU: 2 PID: 2108 at net/rxrpc/key.c:778 rxrpc_read+0x109/0x5c0 [rxrpc]
+The output interface has a 4->6 program attached at ingress.
+We try to loop the multicast skb back to the sending socket.
+Ingress BPF runs as part of netif_rx(), pushes a valid v6 hdr
+and changes skb->protocol to v6. We enter ip6_rcv_core which
+tries to use skb_dst(). But the dst is still an IPv4 one left
+after IPv4 mcast output.
 
-Fix this by adding a check in the non-XDR parsing path of rxrpc_preparse()
-to ensure the ticket length does not exceed AFSTOKEN_RK_TIX_MAX,
-bringing it into parity with the XDR parsing logic.
+Clear the dst in all BPF helpers which change the protocol.
+Try to preserve metadata dsts, those may carry non-routing
+metadata.
 
-Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
-Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-7-dhowells@redhat.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Fixes: d219df60a70e ("bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()")
+Fixes: 1b00e0dfe7d0 ("bpf: update skb->protocol in bpf_skb_net_grow")
+Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250610001245.1981782-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ The context change is due to the commit d219df60a70e
+("bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()")
+in v6.3 which is irrelevant to the logic of this patch. ]
+Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/key.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/core/filter.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -340,6 +340,10 @@ static int rxrpc_preparse(struct key_pre
- 	if (v1->security_index != RXRPC_SECURITY_RXKAD)
- 		goto error;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3219,6 +3219,13 @@ static const struct bpf_func_proto bpf_s
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ };
  
-+	ret = -EKEYREJECTED;
-+	if (v1->ticket_length > AFSTOKEN_RK_TIX_MAX)
-+		goto error;
++static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
++{
++	skb->protocol = htons(proto);
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
++}
 +
- 	plen = sizeof(*token->kad) + v1->ticket_length;
- 	prep->quotalen += plen + sizeof(*token);
+ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+ {
+ 	/* Caller already did skb_cow() with len as headroom,
+@@ -3315,7 +3322,7 @@ static int bpf_skb_proto_4_to_6(struct s
+ 		}
+ 	}
  
+-	skb->protocol = htons(ETH_P_IPV6);
++	bpf_skb_change_protocol(skb, ETH_P_IPV6);
+ 	skb_clear_hash(skb);
+ 
+ 	return 0;
+@@ -3345,7 +3352,7 @@ static int bpf_skb_proto_6_to_4(struct s
+ 		}
+ 	}
+ 
+-	skb->protocol = htons(ETH_P_IP);
++	bpf_skb_change_protocol(skb, ETH_P_IP);
+ 	skb_clear_hash(skb);
+ 
+ 	return 0;
+@@ -3532,10 +3539,10 @@ static int bpf_skb_net_grow(struct sk_bu
+ 		/* Match skb->protocol to new outer l3 protocol */
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV6)
+-			skb->protocol = htons(ETH_P_IPV6);
++			bpf_skb_change_protocol(skb, ETH_P_IPV6);
+ 		else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			 flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV4)
+-			skb->protocol = htons(ETH_P_IP);
++			bpf_skb_change_protocol(skb, ETH_P_IP);
+ 	}
+ 
+ 	if (skb_is_gso(skb)) {
 
 
