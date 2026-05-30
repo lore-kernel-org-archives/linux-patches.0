@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F7A342CA7;
-	Sat, 30 May 2026 17:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FAD3546EA;
+	Sat, 30 May 2026 17:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163667; cv=none; b=jk/2t1tuMXVReijApRY0SGf/G5cmq7h1ctFLCGIoVWDIjj9N68I8DPGRCv/QbCRzHnKDZSIIMyWv4yZR2aEHZeyUhMCAmh4oOM+DZIGLJSsREMlgz0Kvw9nC+rLju8VSNP/Zl/v1xr7yMC8eeDX6bLWMD0Yz+8MLvYqU3mlEz8w=
+	t=1780163669; cv=none; b=tqNmAkgCydtwEX/IZcvWi0au49yJp9e4Km9M3+Hn6qNsndTBwbm4/Uwju7WnlecxnSohAtvMFBtkKC20i8QkFkfTK/yTOXwAJdrDyvq4UPFltugw+WsAJck7jRSnmdFAfhEDdWvkKn+a9Ta494pbxfV7oURpBFA8zJMOSTXaKkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163667; c=relaxed/simple;
-	bh=1DwKcCVbyHSG0NglLdtUs0+JalyaG0RTCkn8c5tErjg=;
+	s=arc-20240116; t=1780163669; c=relaxed/simple;
+	bh=glmAUAXtl4nAWYIPmuKhUbXPiP1DmbjO1CzW4AgMK+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nb2Y7p5EcI90SwtBwAaBCsyCdwQje2TK9Jg0A0TNJ8P5zv2EqCzhIQ2t291KWsVs0Yp1/Ghx86GxqAEe9OwCYqqS3NTbs6m+tUWNYMN3ddDuyNf96uhdQMvYUVyBVBASJ+Ty1/7SrRzvSWUfcpzv8noMXPsPq1T2pJtiWvQIqZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3KqYlUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKpgDf9lwc5jYKtEcfMklkKZPExf4uBS3u/5cXyCmUvAz9t+grpJAMgzzIb9zq68Kjmos31rxm29GuGv844BkHKhPBRQnRdn7icW/IdJiebZdMgQmtHDB7Xjp2FSwAr9/dysMHybl1ASQ8wvliRXRKtV2/tXBdslIEVFK//QoJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1NiD/G6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3KqYlUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4AB1F00893;
-	Sat, 30 May 2026 17:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1NiD/G6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5281F00898;
+	Sat, 30 May 2026 17:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163661;
-	bh=5k69gmqfJQBwAHF0+ftY2YkJQtf3pcEdkROGBB4M+es=;
+	s=korg; t=1780163668;
+	bh=NJht8fY/hhVSXBMkORNDine+wuuXEcXQAmL9FweYiYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3KqYlUA4qQ86DmjNu+r12XdXuO6DtNB2GbJnJOB1Ag0KDb1UhRazAiqEPzsqQHeL
-	 A2reWmUhLLWGSbh6J4lJe+cTyTMsKFUtEL0bNcV5kVypryE68vhGlNXrNeQ1RGMSUH
-	 OJ0QhbWjoRDPPtBxooxx30Sm6BOk04oDoA7jFC2g=
+	b=t1NiD/G6UYXP039mwAqe1Rxjz82KjWI7ju0qQZwsPIFkgjPbzwN/okJa2UHfWHqc0
+	 g9fQbPdOlz+bL3043MvBY1AJnbbUBcz6QnLuLWxl0TeR1sZULZZY8giBtorKo7v2vu
+	 gfjf+rFeGsy14zH9PxzSF6Cu0PC9Ahd6lzkSaaaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 323/776] spi: topcliff-pch: fix use-after-free on unbind
-Date: Sat, 30 May 2026 18:00:37 +0200
-Message-ID: <20260530160248.916193890@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>
+Subject: [PATCH 5.15 297/776] USB: omap_udc: DMA: Dont enable burst 4 mode
+Date: Sat, 30 May 2026 18:00:11 +0200
+Message-ID: <20260530160248.240615571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,45 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
+commit 3f91484f6c13c434bd573ca6b6779c26adb0ddab upstream.
 
-Give the driver a chance to flush its queue before releasing the DMA
-buffers on driver unbind
+Commit 65111084c63d7 ("USB: more omap_udc updates (dma and omap1710)")
+added setting for DMA burst 4 mode. But I think this should be undone for
+two reasons:
 
-Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
-Cc: stable@vger.kernel.org	# 3.1
-Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+- It breaks DMA on 15xx boards - transfers just silently stall.
+
+- On newer OMAP1 boards, like Nokia 770 (omap1710), there is no measurable
+performance impact when testing TCP throughput with g_ether with large
+15000 byte MTU size.
+
+It's also worth noting that when the original change was made, the
+OMAP_DMA_DATA_BURST_4 handling in arch/arm/plat-omap/dma.c was broken, and
+actually resulted in the same as the OMAP_DMA_DATA_BURST_DIS i.e. burst
+disabled. This was fixed not until a couple kernel releases later in an
+unrelated commit 1a8bfa1eb998a ("[ARM] 3142/1: OMAP 2/5: Update files
+common to omap1 and omap2").
+
+So based on this it seems there was never really a very good reason to
+enable this burst mode in omap_udc, so remove it now to allow 15xx DMA
+to work again (it provides 2x throughput compared to PIO mode).
+
+Fixes: 65111084c63d ("[PATCH] USB: more omap_udc updates (dma and omap1710)")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Link: https://patch.msgid.link/ad06qHLclWHeSGnV@darkstar.musicnaut.iki.fi
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-topcliff-pch.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/udc/omap_udc.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/spi/spi-topcliff-pch.c
-+++ b/drivers/spi/spi-topcliff-pch.c
-@@ -1427,9 +1427,6 @@ static int pch_spi_pd_remove(struct plat
- 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
- 		__func__, plat_dev->id, board_dat->pdev->irq);
- 
--	if (use_dma)
--		pch_free_dma_buf(board_dat, data);
--
- 	/* check for any pending messages; no action is taken if the queue
- 	 * is still full; but at least we tried.  Unload anyway */
- 	count = 500;
-@@ -1453,6 +1450,9 @@ static int pch_spi_pd_remove(struct plat
- 		free_irq(board_dat->pdev->irq, data);
+--- a/drivers/usb/gadget/udc/omap_udc.c
++++ b/drivers/usb/gadget/udc/omap_udc.c
+@@ -731,8 +731,6 @@ static void dma_channel_claim(struct oma
+ 		if (status == 0) {
+ 			omap_writew(reg, UDC_TXDMA_CFG);
+ 			/* EMIFF or SDRC */
+-			omap_set_dma_src_burst_mode(ep->lch,
+-						OMAP_DMA_DATA_BURST_4);
+ 			omap_set_dma_src_data_pack(ep->lch, 1);
+ 			/* TIPB */
+ 			omap_set_dma_dest_params(ep->lch,
+@@ -754,8 +752,6 @@ static void dma_channel_claim(struct oma
+ 				UDC_DATA_DMA,
+ 				0, 0);
+ 			/* EMIFF or SDRC */
+-			omap_set_dma_dest_burst_mode(ep->lch,
+-						OMAP_DMA_DATA_BURST_4);
+ 			omap_set_dma_dest_data_pack(ep->lch, 1);
+ 		}
  	}
- 
-+	if (use_dma)
-+		pch_free_dma_buf(board_dat, data);
-+
- 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
- 	spi_unregister_master(data->master);
- 
 
 
