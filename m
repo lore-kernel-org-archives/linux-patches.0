@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D4A3A9623;
-	Sat, 30 May 2026 17:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC63A9623;
+	Sat, 30 May 2026 17:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160926; cv=none; b=EcyiomoNIXBath5NM1KprL/6UP99YHtuLr13Ybn3C+ovEehCOJxAu2A8x74FSK51ytQUX3Vlp6fqWIkVdO6y1RJwgtuGmbvsmCkOiC3ZzxWT5Y/6dyRoF4Xx1aRQEDKgJhIC5o38WCUXcQ1EZi7t/70GnXqltPVJuXutLnG1E8E=
+	t=1780160929; cv=none; b=VHJvsCf8t4xm551H9gBLy/bPE8SuS82oEOMicF5o1OYDPZAu8xjz+UimFzvqIg5uVWZUHfRafcMx88sqPPM8Blpq21dvNEJ5wZYhQOBSYMgM3tiqIcCfkLgypeTfY5jMP/U3hVkhxD3jDlVZPvwrBGHtSnfrCJhJPda5mf9iTuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160926; c=relaxed/simple;
-	bh=15SAd+pd0gMfBUYlvn8pK1Cj4hw4gigB14WvZ5DL3+E=;
+	s=arc-20240116; t=1780160929; c=relaxed/simple;
+	bh=o5jE1EWyHKiwDEkXa08afE8+njw3zxQHzjv8aPnH4gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDeNHMOxcmt2K2rJyDHdeVBzwLp7r9nj69unqfd8r6HdGHMtpgPuBx9bvILw9km3MGHA2kjkHOzisN6LiyL6+XW6thOoUwZ4LugV8pGvqfn+dDepnPTb7m0AWWA2H48G7pAImKozX7Bm6s/ZYSBgavovAPb008KzFkZm/euN0zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjEPwt0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jtsFTPrXCuhnTAkV8zWfQOiu7pXPV0Ct7AP2ZKp7hEjN4IZ+RZh3GfJkIf7i8k/Uu8/CeuLJQRojjNvTheFse1RqlN4fm6UPF8E9yVBIUmZeiYgdRQ4pIfq58NKo28H1Nqd3h6rnHoHpZghSAr7mdSva4975sXk3RE1CLFQhsfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyds+CCR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjEPwt0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9711F00893;
-	Sat, 30 May 2026 17:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyds+CCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A524E1F00893;
+	Sat, 30 May 2026 17:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160925;
-	bh=aqHeYGS3x87kKOtevPWV+dAcEDY/4xoDj54Hy6SXfbg=;
+	s=korg; t=1780160928;
+	bh=ZQaM7J8IW9M3CWG+kj7sTKFl9CdCNsajMQh3la6vzRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjEPwt0ktnkyrC190JH7/k4wL9RD2i1TJDuSl6qFq20Atxsn49TUag3LEbC2n7PDU
-	 OQAVKnEya6oqsNcFpiuWuuJKIyr0VI0N1AuFDX3f99drwkmei8bcUNdspSp3xtpBg4
-	 rpV+H9A542oNulMoCmtas5xTGAvijMHrhWHdmFXA=
+	b=uyds+CCR5slKUIi/aEcEOo+ggyQ/DlGULYFX6nglCYqGyehga221C6GjtKzzUhHdk
+	 8OPDxB9FQrqurDlQf5Nh35/XnoJ0lmyIRMRroiqInlYVSBliRgDClINh1bfncNqWhg
+	 EgTyrxgqFaFoRm2zyWUdThQzsI5XIavyXfKCPgrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Wensheng <wsw9603@163.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/969] arm64: kexec: Remove duplicate allocation for trans_pgd
-Date: Sat, 30 May 2026 17:59:51 +0200
-Message-ID: <20260530160313.182916316@linuxfoundation.org>
+Subject: [PATCH 6.1 476/969] netfilter: xt_socket: enable defrag after all other checks
+Date: Sat, 30 May 2026 18:00:00 +0200
+Message-ID: <20260530160313.441408552@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,36 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Wensheng <wsw9603@163.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ee020bf6f14094c9ae434bb37e6957a1fdad513c ]
+[ Upstream commit 542be3fa5aff54210a02954c38f07e53ea9bdafd ]
 
-trans_pgd would be allocated in trans_pgd_create_copy(), so remove the
-duplicate allocation before calling trans_pgd_create_copy().
+Originally this did not matter because defrag was enabled once per netns
+and only disabled again on netns dismantle.  When this got changed I should
+have adjusted checkentry to not leave defrag enabled on error.
 
-Fixes: 3744b5280e67 ("arm64: kexec: install a copy of the linear-map")
-Signed-off-by: Wang Wensheng <wsw9603@163.com>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: de8c12110a13 ("netfilter: disable defrag once its no longer needed")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/netfilter/xt_socket.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
-index ce3d40120f72f..f660648cbceee 100644
---- a/arch/arm64/kernel/machine_kexec.c
-+++ b/arch/arm64/kernel/machine_kexec.c
-@@ -142,9 +142,6 @@ int machine_kexec_post_load(struct kimage *kimage)
- 	}
+diff --git a/net/netfilter/xt_socket.c b/net/netfilter/xt_socket.c
+index 76e01f292aaff..811e53bee4085 100644
+--- a/net/netfilter/xt_socket.c
++++ b/net/netfilter/xt_socket.c
+@@ -168,52 +168,41 @@ static int socket_mt_enable_defrag(struct net *net, int family)
+ static int socket_mt_v1_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo1 *info = (struct xt_socket_mtinfo1 *) par->matchinfo;
+-	int err;
+-
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
  
- 	/* Create a copy of the linear map */
--	trans_pgd = kexec_page_alloc(kimage);
--	if (!trans_pgd)
--		return -ENOMEM;
- 	rc = trans_pgd_create_copy(&info, &trans_pgd, PAGE_OFFSET, PAGE_END);
- 	if (rc)
- 		return rc;
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V1) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V1);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
+ }
+ 
+ static int socket_mt_v2_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo2 *info = (struct xt_socket_mtinfo2 *) par->matchinfo;
+-	int err;
+-
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
+ 
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V2) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V2);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
+ }
+ 
+ static int socket_mt_v3_check(const struct xt_mtchk_param *par)
+ {
+ 	const struct xt_socket_mtinfo3 *info =
+ 				    (struct xt_socket_mtinfo3 *)par->matchinfo;
+-	int err;
+ 
+-	err = socket_mt_enable_defrag(par->net, par->family);
+-	if (err)
+-		return err;
+ 	if (info->flags & ~XT_SOCKET_FLAGS_V3) {
+ 		pr_info_ratelimited("unknown flags 0x%x\n",
+ 				    info->flags & ~XT_SOCKET_FLAGS_V3);
+ 		return -EINVAL;
+ 	}
+-	return 0;
++
++	return socket_mt_enable_defrag(par->net, par->family);
+ }
+ 
+ static void socket_mt_destroy(const struct xt_mtdtor_param *par)
 -- 
 2.53.0
 
