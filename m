@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6236C32B11F;
-	Sat, 30 May 2026 17:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3971EEA8;
+	Sat, 30 May 2026 17:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161124; cv=none; b=rgSnmKiow+hhEnb8u6yFWiQtr63gIfzKjEWk2UcPyo1Q5zNXkhkpgBye1GR1UwrKxqxJn4ogk0jN3FSNAm58+RXrb1TIbj8cWD8CdSlcOyZvcgUMzHM9dZzwEjVKdhk9QcLsgz36IyoAovphqrCCfzpMIc/sfF0p3xVUib+4RcU=
+	t=1780161127; cv=none; b=FtOIQY0fm5HnVv30IGn7M+T0ZpjAzFwYlgDIh3yD65iRbljeXFxY2QyeTalfqBwJ6RH57TSu9crOc2V0e7gr9cHKBbT9JnurYOc+Itl/Dcdl7asTfcu+NTsNa+M2ZQhvB7t2E7wRDDDakHUlZKRT8pfpbh/ZcmGIYjh19pscOkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161124; c=relaxed/simple;
-	bh=RDE0JMYQJ5IuQUDIJ+W9l/nqQtyS37gl6a0T29Rtgmg=;
+	s=arc-20240116; t=1780161127; c=relaxed/simple;
+	bh=FLBdZUR2hiJPhDdBTOXmOczSVEYmfrTyoO6MuwLxeJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDFUmtnZgxCE/AYIq/ztaFAZUvJcdc6gG8km058gkEBC8EHu3Zdm9Gae4eikLNfxPMqfRK6nHRmC2iqRXQmpv8RnDDbyWDYmJTDvMFHRHix7vpBNpYwdLcKnUYt6SllThDc+O3oKBLpSYopftcUJCXf/01NPppdsaImNs1mD4fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0Vnmv+j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pZbk+A0xOCKelO5oOk4e7i2J2zI+o1cgBJTBqUehZCuuAzhRrgz18JuiWNroWYwroV35g48Z3bAKzHcBWiBDhNYgcZWggJTQuOnr5qaH5YzUMvP1inUPB1Jgp/gLAlauX8pEDsCq4Ws+AUS+LPEeGiWKwBZKPmEoCTqLne4Tw64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZ2kBjeT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0Vnmv+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57FB1F00893;
-	Sat, 30 May 2026 17:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZ2kBjeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F7B1F00893;
+	Sat, 30 May 2026 17:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161123;
-	bh=zPz53lYDNrjeJ3nS25/zb3wKrEdIcIlIRwu+l1Lcg+k=;
+	s=korg; t=1780161126;
+	bh=EnpRNyQPQLP0/7ZNdwPwjUgQT5hGlhEnElgLql5q8JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0Vnmv+jrsXAqwKywT9sqiAb4aZY26+zLi0Utmw+sX4QTwuQwEOL+NmqX37ZGoMjE
-	 wOGyUp1TyhJJlkkTNxwyk++Iy/Nq/Vcpx92/kuY50BXylOn6KUIFHDNNWTJMzLIhU2
-	 8xlfYi88m8HFo1Mr1VMt8pWubY1RwppKntGqklsY=
+	b=nZ2kBjeTOP24PI+kLjHFjIKpOr0r6lYsj1tlVHdAmsnWaRiqNHpqo40GSrx8PZuiW
+	 TVRYliky/qJ4FuhMemXjg86Uu88DQl8cJFProNWGdb817O1OmGddy2EoPxQyWzGWyB
+	 IudAwg7gzL8rf16FQYfZsnag7C55KD5lw0xNA6dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 531/969] ASoC: fsl_micfil: Fix event generation in micfil_quality_set()
-Date: Sat, 30 May 2026 18:00:55 +0200
-Message-ID: <20260530160315.026607318@linuxfoundation.org>
+Subject: [PATCH 6.1 503/969] dm log: fix out-of-bounds write due to region_count overflow
+Date: Sat, 30 May 2026 18:00:27 +0200
+Message-ID: <20260530160314.218578354@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,69 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit e5785093b1b45af7ee57d18619b2854a8aed073a ]
+[ Upstream commit c20e36b7631d83e7535877f08af8b0af72c44b1a ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation micfil_quality_set() only returns 0 or a negative
-error code, causing ALSA to not generate any change events.
+The local variable region_count in create_log_context() is declared as
+unsigned int (32-bit), but dm_sector_div_up() returns sector_t (64-bit).
+When a device-mapper target has a sufficiently large ti->len with a small
+region_size, the division result can exceed UINT_MAX. The truncated
+value is then used to calculate bitset_size, causing clean_bits,
+sync_bits, and recovering_bits to be allocated far smaller than needed
+for the actual number of regions.
 
-Add a suitable check in the function before updating the quality variable.
+Subsequent log operations (log_set_bit, log_clear_bit, log_test_bit) use
+region indices derived from the full untruncated region space, causing
+out-of-bounds writes to kernel heap memory allocated by vmalloc.
 
-Also enable pm runtime before calling the function micfil_set_quality()
-to make the regmap cache data align with the value in hardware.
+This can be reproduced by creating a mirror target whose region_count
+overflows 32 bits:
 
-Fixes: bea1d61d5892 ("ASoC: fsl_micfil: rework quality setting")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-7-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  dmsetup create bigzero --table '0 8589934594 zero'
+  dmsetup create mymirror --table '0 8589934594 mirror \
+    core 2 2 nosync 2 /dev/mapper/bigzero 0 \
+    /dev/mapper/bigzero 0'
+
+The status output confirms the truncation (sync_count=1 instead of
+4294967297, because 0x100000001 was truncated to 1):
+
+  $ dmsetup status mymirror
+  0 8589934594 mirror 2 254:1 254:1 1/4294967297 ...
+
+This leads to a kernel crash in core_in_sync:
+
+  BUG: scheduling while atomic: (udev-worker)/9150/0x00000000
+  RIP: 0010:core_in_sync+0x14/0x30 [dm_log]
+  CR2: 0000000000000008
+  Fixing recursive fault but reboot is needed!
+
+Fix by widening the local region_count to sector_t and adding an
+explicit overflow check before the value is assigned to lc->region_count.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_micfil.c | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/md/dm-log.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 1b6f5e33ff93a..953192f7b6433 100644
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -148,10 +148,34 @@ static int micfil_quality_set(struct snd_kcontrol *kcontrol,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_kcontrol_component(kcontrol);
- 	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(cmpnt);
-+	int val = ucontrol->value.integer.value[0];
-+	bool change = false;
-+	int old_val;
-+	int ret;
-+
-+	if (val < QUALITY_HIGH || val > QUALITY_VLOW2)
-+		return -EINVAL;
-+
-+	if (micfil->quality != val) {
-+		ret = pm_runtime_resume_and_get(cmpnt->dev);
-+		if (ret)
-+			return ret;
-+
-+		old_val = micfil->quality;
-+		micfil->quality = val;
-+		ret = micfil_set_quality(micfil);
+diff --git a/drivers/md/dm-log.c b/drivers/md/dm-log.c
+index da77878cb2c02..32a3cb131e578 100644
+--- a/drivers/md/dm-log.c
++++ b/drivers/md/dm-log.c
+@@ -366,7 +366,7 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
  
--	micfil->quality = ucontrol->value.integer.value[0];
-+		pm_runtime_put_autosuspend(cmpnt->dev);
-+
-+		if (ret) {
-+			micfil->quality = old_val;
-+			return ret;
-+		}
-+
-+		change = true;
+ 	struct log_c *lc;
+ 	uint32_t region_size;
+-	unsigned int region_count;
++	sector_t region_count;
+ 	size_t bitset_size, buf_size;
+ 	int r;
+ 	char dummy;
+@@ -394,6 +394,10 @@ static int create_log_context(struct dm_dirty_log *log, struct dm_target *ti,
+ 	}
+ 
+ 	region_count = dm_sector_div_up(ti->len, region_size);
++	if (region_count > UINT_MAX) {
++		DMWARN("region count exceeds limit of %u", UINT_MAX);
++		return -EINVAL;
 +	}
  
--	return micfil_set_quality(micfil);
-+	return change;
- }
- 
- static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	lc = kmalloc(sizeof(*lc), GFP_KERNEL);
+ 	if (!lc) {
 -- 
 2.53.0
 
