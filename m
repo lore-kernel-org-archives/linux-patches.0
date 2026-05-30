@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF76D344D80;
-	Sat, 30 May 2026 16:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550493438A8;
+	Sat, 30 May 2026 16:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158142; cv=none; b=rwuLrSE8QGyMhN+Yqg9f0XbbNhUESsXAr/ZJl+6r5v7cttwc/1mQsfscKnee8hjc7aHxrFC1bs2TK7Up2krAKf34ehENhpOMSAvriEUfh6rlU+9U8oCwlg5MPytWaSnjh9oGkZlaIjcfnf8ufmgEsB86HM4e3JsPAd3BUsqYiKI=
+	t=1780158151; cv=none; b=I1wJ5BZ8QbMlnXxEjjsLMsoMtGoLBRVlMPgyuibl4bCxZlDcqxqaOyrvIbP/dinZd7RW/Doq67zhGu6dqkszDFemUVceOF1xDeJQyXOgXKieDLMVu32onyOz4PDrNcLpEjP9vRFpEcCoq88ot6KP86diwAcJzZaORROWjBalkkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158142; c=relaxed/simple;
-	bh=qWZ0VHnNPay+L0A2FC2wjitLxNIS5NEpjqDkqHcjG6o=;
+	s=arc-20240116; t=1780158151; c=relaxed/simple;
+	bh=4CBIHJvUFWvhAu0e7/SJzzueODCAP2aKWCWpkT6dOlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMGa/AUawPEqbpZ3//eX3DTAwPoOLroLOW4yDAgayILNyRaULxtD7/xjPdP10bZq0TtdxS+iKJs1RWnuSdzKbllF2j6ikMyj6lFFwX/MWV9NBvDV+ThNbnvKJvpdMXaL1C/S/YIREHsiJ5BcDkpPQY09vDU4Xevq0voYrSn+Nq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7hJDs8I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IEIg1+S3PeY8l/Gap8UsVHmLpUijOFoQ3cBRC/aNgDtEHihUCi9NB6pFJA9b/hGvQV/DVnuBuRAAMryT0YLtHX5M6p4Hzy8xYjY7+7eLOEuskvXT0RQ8t5PsxQlLP+HEFUH0P5A0NIpe0AxdKEeRcsDnHeu1O2+Jfri+NYgHbjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1UyhNuW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7hJDs8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8699E1F00893;
-	Sat, 30 May 2026 16:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1UyhNuW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8594D1F00893;
+	Sat, 30 May 2026 16:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158140;
-	bh=rfG/L77EsyD79xF3ERrGcUgXUwGWZQ0asQlbZ5oPwZs=;
+	s=korg; t=1780158150;
+	bh=B6G41XdiyuSgB6t8HDiWc2zKFumrG8flONUOunsT6os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7hJDs8Iq859V8AGj8Fc/iuRGK7PZqkzmpTMlKO8djb0O4TR0V3te+6AWCyHJoA/x
-	 OK056ybV+36U/kObhdxDHhxXeXrxAZSEAFgzFRwwFXlySdaMf4Jof2xw0AGJgLRDGv
-	 ZsT/5lpJv76RqDyvAEH9vrgjdn4rMyPpXiVY0yNU=
+	b=n1UyhNuWQdS3yN39LYugUKByhEai+orBzdNFOr5dsME2KlDAsetbTysGgtsmV8fpu
+	 M1vJ0HUqDyBKEyrs3GnCFkkeQHSZ4sdM65TwzDT+fTXeLxzWfaPqAtIfYEeYk2g2S7
+	 /U5pvkxYww9SBwaLHbgC4ur/PjNWJWShvIXPoeFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-	Peng Fan <peng.fan@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/969] arm64: dts: imx8mq: Set the correct gpu_ahb clock frequency
-Date: Sat, 30 May 2026 17:52:29 +0200
-Message-ID: <20260530160301.142864562@linuxfoundation.org>
+Subject: [PATCH 6.1 026/969] PCI: hv: Set default NUMA node to 0 for devices without affinity info
+Date: Sat, 30 May 2026 17:52:30 +0200
+Message-ID: <20260530160301.167843018@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,37 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 1f99b5d93d99ca17d50b386a674d0ce1f20932d8 ]
+[ Upstream commit 7b3b1e5a87b2f5e35c52b5386d7c327be869454f ]
 
-According to i.MX 8M Quad Reference Manual, GPU_AHB_CLK_ROOT's maximum
-frequency is 400MHz.
+When hv_pci_assign_numa_node() processes a device that does not have
+HV_PCI_DEVICE_FLAG_NUMA_AFFINITY set or has an out-of-range
+virtual_numa_node, the device NUMA node is left unset. On x86_64,
+the uninitialized default happens to be 0, but on ARM64 it is
+NUMA_NO_NODE (-1).
 
-Fixes: 45d2c84eb3a2 ("arm64: dts: imx8mq: add GPU node")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Tests show that when no NUMA information is available from the Hyper-V
+host, devices perform best when assigned to node 0. With NUMA_NO_NODE
+the kernel may spread work across NUMA nodes, which degrades
+performance on Hyper-V, particularly for high-throughput devices like
+MANA.
+
+Always set the device NUMA node to 0 before the conditional NUMA
+affinity check, so that devices get a performant default when the host
+provides no NUMA information, and behavior is consistent on both
+x86_64 and ARM64.
+
+Fixes: 999dd956d838 ("PCI: hv: Add support for protocol 1.3 and support PCI_BUS_RELATIONS2")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pci-hyperv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-index e642cb7d54d77..25b0017eb7363 100644
---- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
-@@ -1411,7 +1411,7 @@ gpu: gpu@38000000 {
- 			                         <&clk IMX8MQ_GPU_PLL_OUT>,
- 			                         <&clk IMX8MQ_GPU_PLL>;
- 			assigned-clock-rates = <800000000>, <800000000>,
--			                       <800000000>, <800000000>, <0>;
-+			                       <800000000>, <400000000>, <0>;
- 			power-domains = <&pgc_gpu>;
- 		};
+diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
+index 09491d06589ee..58430ca37bbdf 100644
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -2291,6 +2291,14 @@ static void hv_pci_assign_numa_node(struct hv_pcibus_device *hbus)
+ 		if (!hv_dev)
+ 			continue;
  
++		/*
++		 * If the Hyper-V host doesn't provide a NUMA node for the
++		 * device, default to node 0. With NUMA_NO_NODE the kernel
++		 * may spread work across NUMA nodes, which degrades
++		 * performance on Hyper-V.
++		 */
++		set_dev_node(&dev->dev, 0);
++
+ 		if (hv_dev->desc.flags & HV_PCI_DEVICE_FLAG_NUMA_AFFINITY &&
+ 		    hv_dev->desc.virtual_numa_node < num_possible_nodes())
+ 			/*
 -- 
 2.53.0
 
