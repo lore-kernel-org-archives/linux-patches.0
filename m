@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B334389F;
-	Sat, 30 May 2026 17:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F23B6359;
+	Sat, 30 May 2026 17:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162750; cv=none; b=uzuhuJIcnJ4S13jACWucI6pxiS1pNQWaS5Bhn7CL+/7kmzTrMcNgcg3I2nmZ89e2m+UsyAuMRLdixSGxJpdybpL33sc7ha9xTAF7f4ZfHHXNQ1q8s+7xhBHvTCUqE1sOIrO9pxdRpCXArUEjjwFqqRLoQUcTzAg8BsjCtGcd/CY=
+	t=1780162753; cv=none; b=SinE2oIe2JwUMZZnCQc3dRvbIHTBxL1U6VftblbOl+aa0gRxuRUpJgPQca48XYRngw/50Ydk1gZQ7xHZzjTy0ZRhwK+rLMr24Wb00OWIaU6VMHD303mtse1j/3gaUZBX10xm4MZwaYqI7LnN7kxgaECSNOCXQVz5SkJuENXheLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162750; c=relaxed/simple;
-	bh=fTyl2cW08tw17qfi/vgdzb3pR/4XWRdN4EXQV3XiSxs=;
+	s=arc-20240116; t=1780162753; c=relaxed/simple;
+	bh=iTWjfo8ZUCJSJWnPVpA63wOOt+YRETywmvAzaP3GUAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRc9qfNEdUAsVccCgn5+i8uQVR87QvBeeMr5CnE3JUljghIgyA8d5RNoOkdvHh42h81BCtwEw7d1PZYrdbXXc2E6bnz+n3LJ2LL1LWlmtDsEEHWE6smQlIQO2432tT/Qh8xFb3riFVOrhgnRUqH7YhUXvdO6ngihpiV+M8/q1AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BV9oh/jl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I383HhN+k4yQMg03iXi8iY8C59iJ7m6bVb/GiaQA9bzvqruuock7zrB0uq5ZSVWcbefiVCMuGrfbFF7naIelhmqO7F//7hyrBN8XeCfsSbfqIPhq1mkGL5p3E3Q230mAdlikRxksRnmX7gcldh+sA9WPHbBnA0CJXtl1JB5Ws0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VCunKts; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BV9oh/jl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECE31F00898;
-	Sat, 30 May 2026 17:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VCunKts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0CA1F00893;
+	Sat, 30 May 2026 17:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162747;
-	bh=b+CYAnMpxMnTOFE7Uiav6y6y+bmtmowWVt/pjuBg5+8=;
+	s=korg; t=1780162750;
+	bh=hdz0vCWMaUSAbpH0n13nJG+OGyeDNHukItoSH1oKpgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BV9oh/jlUwhpaFfFXu5ZUa0VurF5Ndk4zoO6L3UYaOV2PVHojFyPKs0znWY2rUgaK
-	 4jI+bS5oQp19F7WnZ6S2PfgBEy45HaM51c2QT7g0OOXbanOFK2QCzAhZv95vIzxxyf
-	 kgTmGmxd7rT7vz6RlAkr0RnH5Tw1QayqdNv4RuBs=
+	b=1VCunKtsohinMFw6fS3O1KIIsG0NotuEoQPtGHnCy3Cekm5+2VDwNuf8E3zzZcYR+
+	 XcOm5133hnofdMlbUto4DsFXgd6e11EJqE7PCIgtXWSqRcYXwq+lZOatN1odmvs/Y6
+	 JMpDifAhM1pAAOiegWgqasnLciHH5SXkpj1XtiFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 052/776] nfc: llcp: add missing return after LLCP_CLOSED checks
-Date: Sat, 30 May 2026 17:56:06 +0200
-Message-ID: <20260530160241.655014299@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 035/776] netfilter: xt_multiport: validate range encoding in checkentry
+Date: Sat, 30 May 2026 17:55:49 +0200
+Message-ID: <20260530160241.191010797@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,48 +56,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxi Qian <qjx1298677004@gmail.com>
+From: Ren Wei <n05ec@lzu.edu.cn>
 
-commit 2b5dd4632966c39da6ba74dbc8689b309065e82c upstream.
+[ Upstream commit ff64c5bfef12461df8450e0f50bb693b5269c720 ]
 
-In nfc_llcp_recv_hdlc() and nfc_llcp_recv_disc(), when the socket
-state is LLCP_CLOSED, the code correctly calls release_sock() and
-nfc_llcp_sock_put() but fails to return. Execution falls through to
-the remainder of the function, which calls release_sock() and
-nfc_llcp_sock_put() again. This results in a double release_sock()
-and a refcount underflow via double nfc_llcp_sock_put(), leading to
-a use-after-free.
+ports_match_v1() treats any non-zero pflags entry as the start of a
+port range and unconditionally consumes the next ports[] element as
+the range end.
 
-Add the missing return statements after the LLCP_CLOSED branches
-in both functions to prevent the fall-through.
+The checkentry path currently validates protocol, flags and count, but
+it does not validate the range encoding itself. As a result, malformed
+rules can mark the last slot as a range start or place two range starts
+back to back, leaving ports_match_v1() to step past the last valid
+ports[] element while interpreting the rule.
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260408081006.3723-1-qjx1298677004@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reject malformed multiport v1 rules in checkentry by validating that
+each range start has a following element and that the following element
+is not itself marked as another range start.
+
+Fixes: a89ecb6a2ef7 ("[NETFILTER]: x_tables: unify IPv4/IPv6 multiport match")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/xt_multiport.c | 34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1098,6 +1098,7 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
+diff --git a/net/netfilter/xt_multiport.c b/net/netfilter/xt_multiport.c
+index 44a00f5acde8a..a1691ff405d3c 100644
+--- a/net/netfilter/xt_multiport.c
++++ b/net/netfilter/xt_multiport.c
+@@ -105,6 +105,28 @@ multiport_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ports_match_v1(multiinfo, ntohs(pptr[0]), ntohs(pptr[1]));
+ }
  
- 	/* Pass the payload upstream */
-@@ -1189,6 +1190,7 @@ static void nfc_llcp_recv_disc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
++static bool
++multiport_valid_ranges(const struct xt_multiport_v1 *multiinfo)
++{
++	unsigned int i;
++
++	for (i = 0; i < multiinfo->count; i++) {
++		if (!multiinfo->pflags[i])
++			continue;
++
++		if (++i >= multiinfo->count)
++			return false;
++
++		if (multiinfo->pflags[i])
++			return false;
++
++		if (multiinfo->ports[i - 1] > multiinfo->ports[i])
++			return false;
++	}
++
++	return true;
++}
++
+ static inline bool
+ check(u_int16_t proto,
+       u_int8_t ip_invflags,
+@@ -127,8 +149,10 @@ static int multiport_mt_check(const struct xt_mtchk_param *par)
+ 	const struct ipt_ip *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
  
- 	if (sk->sk_state == LLCP_CONNECTED) {
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
+ 
+ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+@@ -136,8 +160,10 @@ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+ 	const struct ip6t_ip6 *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
+ 
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
+ 
+ static struct xt_match multiport_mt_reg[] __read_mostly = {
+-- 
+2.53.0
+
 
 
