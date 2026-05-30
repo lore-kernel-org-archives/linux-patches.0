@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86832B11D;
-	Sat, 30 May 2026 17:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DFF32B11D;
+	Sat, 30 May 2026 17:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160640; cv=none; b=r2skYfX8BRs+L91rCkkRyr0Gvpid6aK7hWD9LKa2Q0c9s6elqRXhkFoJ5coofeLCpDtPMx8VkKtXPz1yu3QKHdti6o44nUkrg4G5vuAhdDfHwzDGqMXa8usSAge0jzQKY1aXy9D2gB8MlnlMFFUpp+HqBDWyUJi2STffpxTbT4U=
+	t=1780160643; cv=none; b=AanO2+titz0cW6P7r64PVtLTV2aXWNy/ta17owF9yeWGdgyKx98v+ray9RKh4SzYfFDfnzZsC5LEeGV+jVUX1EjfhFT1wYM+Tp4TWMgwHZU1zRjF+yyOnx8+Vo06jKG21SjYDIuc079egvX8potnu4dH26FEu9CKbNYPTcgoIgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160640; c=relaxed/simple;
-	bh=UKh4FgOAu8EWPpM74CGmg9Gm4L4nF57SVXcUxJiDVhU=;
+	s=arc-20240116; t=1780160643; c=relaxed/simple;
+	bh=de4p+tsj9JIDioi/26EddD0o8jJ3Bhi71SsRdpwY7X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHeF7wOJUyq8U7S0dnZFnsgi0uAxTRqD24qvpbCyqlLFNhqY6jjiI//tPaIKUHI2hAFmeyyLu9IE2Pac9qjAqGwhs7zAv0nWbYhbptWDJa/p22AldcpfqIuFiuD2yUWpJzdiArABQFRso2a2SxjpkudCeF4QwcOAlzzKyelf8s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9/YDC2u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XvFSKJyknyV5l17nHMN6TDlnDtY6Y4jaV+23vx+EHerc6m1B6xe6VYd2wa8zAV/SkmG3/3eV3Flj9WMBHePM+DeICsTaqKQ0EE5xFK5FOAFF/Ll4biEBdfvaIGbaTFeLFPbX8DtsSUIexsI1+Wq0diSzpbykXGX5PMR4N2fpq48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLHAS0IV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9/YDC2u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9665A1F00893;
-	Sat, 30 May 2026 17:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLHAS0IV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19891F00893;
+	Sat, 30 May 2026 17:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160639;
-	bh=GSrtRIp0IZcT3wowsfSonyKRzK8bGjTiopbh2TNHVJ4=;
+	s=korg; t=1780160642;
+	bh=Ir8aQzvJJ/G/EcYYnXPjYwWouHlGGUr5eISMJUld2ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9/YDC2upPwE8La8iPhTqCsB71/7Ss4sKXc1zY1fYtwV9oY7oTeIvwfo8+59rgZNk
-	 Zss58khmf3VFGhgqhzK32bPA8GSDGqb1qi5FMQhbyyUBjSa/gO/iJl3AUsSQt3EFbM
-	 HfIhXckZr6KHd6SLtXzy5+Cxn3oEnawSjGBJ/oow=
+	b=wLHAS0IVxKn/P7aVbJP/61K9sMe6Dmfo2iXUtnvs//cdbyDBUGylnbtEkXebzRuFV
+	 bhW99VTWPWeTKegdsCzimoab2t+B8/eDatmnx0HuNelZeOKSeL8tFKy195Lf9L8cjN
+	 6xBdDNsLWD4f69wK1MwUsF9XGVUtjeriWpl++Jbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jun <1742789905@qq.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 392/969] media: saa7164: add ioremap return checks and cleanups
-Date: Sat, 30 May 2026 17:58:36 +0200
-Message-ID: <20260530160311.127727672@linuxfoundation.org>
+	"Artem S. Tashkinov" <aros@gmx.com>,
+	Krishna Chomal <krishna.chomal108@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 393/969] platform/x86: hp-wmi: Ignore backlight and FnLock events
+Date: Sat, 30 May 2026 17:58:37 +0200
+Message-ID: <20260530160311.153191735@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,116 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Jun <1742789905@qq.com>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-commit d51c60a498e83c9a79884c8e420f97e3885c9583 upstream.
+commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
 
-Add checks for ioremap return values in saa7164_dev_setup(). If
-ioremap for BAR0 or BAR2 fails, release the already allocated PCI
-memory regions, remove the device from the global list, decrement
-the device count, and return -ENODEV.
+On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
+directly by the firmware. However, they still trigger WMI events which
+results in "Unknown key code" warnings in dmesg.
 
-This prevents potential null pointer dereferences and ensures proper
-cleanup on memory mapping failures.
+Add these key codes to the keymap with KE_IGNORE to silence the warnings
+since no software action is needed.
 
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Jun <1742789905@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Artem S. Tashkinov <aros@gmx.com>
+Reported-by: Artem S. Tashkinov <aros@gmx.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c |   47 +++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 12 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -890,6 +890,15 @@ static int get_resources(struct saa7164_
- 	return -EBUSY;
- }
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -223,6 +223,11 @@ static const struct key_entry hp_wmi_key
+ 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
+ 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
+ 	{ KE_KEY, 0x231b,  { KEY_HELP } },
++	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
++	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
++	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
++	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
++	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
+ 	{ KE_END, 0 }
+ };
  
-+static void release_resources(struct saa7164_dev *dev)
-+{
-+	release_mem_region(pci_resource_start(dev->pci, 0),
-+			   pci_resource_len(dev->pci, 0));
-+
-+	release_mem_region(pci_resource_start(dev->pci, 2),
-+			   pci_resource_len(dev->pci, 2));
-+}
-+
- static int saa7164_port_init(struct saa7164_dev *dev, int portnr)
- {
- 	struct saa7164_port *port = NULL;
-@@ -949,9 +958,9 @@ static int saa7164_dev_setup(struct saa7
- 
- 	snprintf(dev->name, sizeof(dev->name), "saa7164[%d]", dev->nr);
- 
--	mutex_lock(&devlist);
--	list_add_tail(&dev->devlist, &saa7164_devlist);
--	mutex_unlock(&devlist);
-+	scoped_guard(mutex, &devlist) {
-+		list_add_tail(&dev->devlist, &saa7164_devlist);
-+	}
- 
- 	/* board config */
- 	dev->board = UNSET;
-@@ -998,11 +1007,17 @@ static int saa7164_dev_setup(struct saa7
- 	}
- 
- 	/* PCI/e allocations */
--	dev->lmmio = ioremap(pci_resource_start(dev->pci, 0),
--			     pci_resource_len(dev->pci, 0));
-+	dev->lmmio = pci_ioremap_bar(dev->pci, 0);
-+	if (!dev->lmmio) {
-+		dev_err(&dev->pci->dev, "Failed to remap MMIO BAR 0\n");
-+		goto err_ioremap_bar0;
-+	}
- 
--	dev->lmmio2 = ioremap(pci_resource_start(dev->pci, 2),
--			     pci_resource_len(dev->pci, 2));
-+	dev->lmmio2 = pci_ioremap_bar(dev->pci, 2);
-+	if (!dev->lmmio2) {
-+		dev_err(&dev->pci->dev, "Failed to remap MMIO BAR 2\n");
-+		goto err_ioremap_bar2;
-+	}
- 
- 	dev->bmmio = (u8 __iomem *)dev->lmmio;
- 	dev->bmmio2 = (u8 __iomem *)dev->lmmio2;
-@@ -1021,17 +1036,25 @@ static int saa7164_dev_setup(struct saa7
- 	saa7164_pci_quirks(dev);
- 
- 	return 0;
-+
-+err_ioremap_bar2:
-+	iounmap(dev->lmmio);
-+err_ioremap_bar0:
-+	release_resources(dev);
-+
-+	scoped_guard(mutex, &devlist) {
-+		list_del(&dev->devlist);
-+	}
-+	saa7164_devcount--;
-+
-+	return -ENODEV;
- }
- 
- static void saa7164_dev_unregister(struct saa7164_dev *dev)
- {
- 	dprintk(1, "%s()\n", __func__);
- 
--	release_mem_region(pci_resource_start(dev->pci, 0),
--		pci_resource_len(dev->pci, 0));
--
--	release_mem_region(pci_resource_start(dev->pci, 2),
--		pci_resource_len(dev->pci, 2));
-+	release_resources(dev);
- 
- 	if (!atomic_dec_and_test(&dev->refcount))
- 		return;
 
 
