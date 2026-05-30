@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF933F5A3;
-	Sat, 30 May 2026 16:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA7E32D42B;
+	Sat, 30 May 2026 16:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160145; cv=none; b=Z+qvbuowlb+kzAAQGJf0cFQpCQwmNAgn9juHsH4FodxzZIQWC3ZoxxgTQSj7I2TBW3QAleaiJB1MzI0i6uKl9n579+QYXO7+lsrTlafZUUwW15vEqc5KJefTWO6BF1Jxk/c08WMxEKBXOSpLuxHr7BDlmL1i/Wn5AQSLy0JVZ0s=
+	t=1780160148; cv=none; b=Mkflv0rgpiuS9ySoaNb/3aqiVnNDbJYUTWhZ5seIfWy7nVH2U5RMihne6LQINkGMISUy5ldgVi0IpDsAPDYBSFXWBQer5Or9qNf3rE7jRXE2gScCUFdpfv3TWQgT+56jp/RN3+C9+5Tsr4DVxT668tk/N02AnmV/fcm1evgRo/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160145; c=relaxed/simple;
-	bh=1NGRMOoMKDerxh/oAXuD+4E5cKnkD+ov5lsjCS2u8U4=;
+	s=arc-20240116; t=1780160148; c=relaxed/simple;
+	bh=Kk++5qoGTbhJl2bYfaQNnqCGNUU5WkVI73zqFMa9l7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h0I8jh59Jd0+xVSzVmXzkAX8hVWUDGmcMyjy3smgk7v2kGCQZGqxpn7JbNFzTfrmn0GB0Th8KFtsrNAnVoK+AG2xGXBtUxpi74YJvyjcNW+drYQh3goIdnTX2sOvHYPDHjT8jai3R8S0kLeuhfBRapSeLddKfgqXyD5kSUzVUY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPq2ndF2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OEvFDNttRijXOETC69rwQb+n7qF3XQffj/+mOgP/KQnwQ2WWaSpwAPoreHu+kvsNgZpxP1QId8dK+4fXc4Q8yB1voSyYSGWbvKjmJDG3FAoADmd9EV7AtNDcyNh4qDkrIu6csQSr5LoZmxqPqluPONOhvUBOiI4ebxPPCW8CB68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqZ8YbFp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPq2ndF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D616C1F00893;
-	Sat, 30 May 2026 16:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqZ8YbFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F29C1F00893;
+	Sat, 30 May 2026 16:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160144;
-	bh=1AAEvI0LcTq+LFD6I+J2NeAXWWRsR8N2nFaepU2HgqQ=;
+	s=korg; t=1780160147;
+	bh=6REIgIrxThNCCbVhfNyPdzLlQj6C+RH8hCCiKV5QTj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yPq2ndF2btWQWFip5RN6j+HDrbXPtbvYvJqFc40eSb+I76lHRE3BWKeZCqoLs8BuQ
-	 OPpMwvnQEtjLfqQKUDEW/9yz2mARaVpmxvTe3FfAJu6U70/v/3BUvAyqMKVHPRcUIE
-	 pZwp0gl7yztxwYiiCtu+YhnBwN9tAxWd1sarD8nM=
+	b=kqZ8YbFp5f20W3sk40Uu28Wg6wOvHJm/ipYLAE7ZMgQ+o+FP5jQ2NVrNRTiCM48hB
+	 /9+2+MWCx2X0wTIeSNhWTXoBbjQ3jnnM6s0vFFAxyJFTk2L6cM1sPmnZG+OOdj8/iv
+	 QZnBjK3mItzOhy85CNt440KAQ9ra/EDqPaVuV15Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Johan Hovold <johan@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 230/969] rtc: ntxec: fix OF node reference imbalance
-Date: Sat, 30 May 2026 17:55:54 +0200
-Message-ID: <20260530160306.809597492@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 257/969] crypto: atmel-ecc - Release client on allocation failure
+Date: Sat, 30 May 2026 17:56:21 +0200
+Message-ID: <20260530160307.577812663@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,45 +44,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 30c4d2f26bb3538c328035cea2e6265c8320539e upstream.
+commit 095d50008d55d13f8fcf1bbeb7c6eba51779bc85 upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+Call atmel_ecc_i2c_client_free() to release the I2C client reserved by
+atmel_ecc_i2c_client_alloc() when crypto_alloc_kpp() fails. Otherwise
+->tfm_count will be out of sync.
 
-Fix this by using the intended helper for reusing OF nodes.
-
-Fixes: 435af89786c6 ("rtc: New driver for RTC in Netronix embedded controller")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260407122717.2676774-1-johan@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ntxec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-ecc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/rtc/rtc-ntxec.c
-+++ b/drivers/rtc/rtc-ntxec.c
-@@ -110,7 +110,7 @@ static int ntxec_rtc_probe(struct platfo
- 	struct rtc_device *dev;
- 	struct ntxec_rtc *rtc;
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -261,6 +261,7 @@ static int atmel_ecdh_init_tfm(struct cr
+ 	if (IS_ERR(fallback)) {
+ 		dev_err(&ctx->client->dev, "Failed to allocate transformation for '%s': %ld\n",
+ 			alg, PTR_ERR(fallback));
++		atmel_ecc_i2c_client_free(ctx->client);
+ 		return PTR_ERR(fallback);
+ 	}
  
--	pdev->dev.of_node = pdev->dev.parent->of_node;
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
- 
- 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
- 	if (!rtc)
 
 
