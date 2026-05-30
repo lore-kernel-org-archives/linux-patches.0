@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFCB33F590;
-	Sat, 30 May 2026 17:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB1E3B3C01;
+	Sat, 30 May 2026 17:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162677; cv=none; b=XU5IFKCR7D9dFH57HIIwNBYI1HJjPQ3PKDQE93fFrJt7M6pjvXeWo3QQj9C5bf1eau+QcIf2aoK5O1nhCFKOuyFwGo0Q8ZLzmKwuGAtoRDXOFWMf/ZFKNLOtEgpndFiFU8AHUFAs8Gt9VgfoiigAjQr3HKb10Co/0TnUKxujPkE=
+	t=1780162681; cv=none; b=MEgZVzVsFJvE5xxnOxRlABY2LCX1EN9u5VYcJ05GzYKFI4Q85UoYLyA2lNwyV5dCbtFNJOA8JtPP+y97kW7/M/61w9YVSyAxoGCmZwy8OfIca40p0gdXyVVppZQzVnLb4frIUmaoogI/em4KCNwzkt67gPbOUGpTeGD8UjsiFJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162677; c=relaxed/simple;
-	bh=tf4Mzbj4SvfmaWGSoBJHOTrtfNwUPdvb8LOz7T62sIo=;
+	s=arc-20240116; t=1780162681; c=relaxed/simple;
+	bh=O5sIEyDtXDG3HFZXwR+BpfycQCd221DyI59ixiXADOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slOvzlVkF7dYDy3iJR/lsXMX5Z/dqNG4Kaga7T3gw7V5HyhXMuocoBvFzSigzkE3UfK+6SnEBY2524w3+ObxjMgT1d+6L6tp6aa3w/wv32hXPoaks7JL+4dedxLh2xVvWYK/4h3cVVCUiKMxiTcq1sL4XLIu7XuvTWOfy18Hbug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ticZcsTu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=crp2DQ0DQ8b4o7aoEqxumV34S4gL61paR/6Twc5vAHjaKo20r/fjHh0DLt4oy/FuSfja55MkzZsrZEAR8tsCW0RA3zMU62RcJJzhC4l9d01GZO3prk6OrDQtyKclQugRWB7uGv76ytoBKfXap9mfTYKFibJOjmyiPKXXapNGOCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/FOMU7b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ticZcsTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DDF1F00893;
-	Sat, 30 May 2026 17:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/FOMU7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5011F00893;
+	Sat, 30 May 2026 17:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162676;
-	bh=wjQhOQaua4B5FHilpJpQvBnBFQfGnrrcjAPWkxdMzUM=;
+	s=korg; t=1780162679;
+	bh=GK1DmSRTA9w7ffK/vkPkC+EG1ux/q9cXStmBDQk8q/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ticZcsTuAAoLkRnaRdmXM1aASM3dJI3czGVNpzhCmaE66UCj1FYniFn2AtKh6KfHA
-	 nS7pGFJ6h+2I2GnIFVswdHQ2Nbgx/FoTucZdO7TDYArf+WjWp+pjny5WHLXcSPq1/a
-	 QBkLAi447N6u7bGZkBZzG+MLkHyY9heOUfi3Qxt4=
+	b=N/FOMU7bdp0JHiGMeKw4G/nBIHestn4kXt9b1AWRBy6sentiGm7Oxd70E1k4CENc7
+	 D9Bopq4dLpiDyyOroUY6S4I78BTF8e9Zvi3Rk9Ty5VsjeP/W9R1oTSc8/jxnjxnNBh
+	 /WL6Uf+564QR1ui8FuVTXDWV1lQva7IrqwK8YnaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iskhakov Daniil <dish@amicon.ru>,
-	Agalakov Daniil <ade@amicon.ru>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/776] e1000: check return value of e1000_read_eeprom
-Date: Sat, 30 May 2026 17:55:44 +0200
-Message-ID: <20260530160241.049747997@linuxfoundation.org>
+Subject: [PATCH 5.15 031/776] xsk: tighten UMEM headroom validation to account for tailroom and min frame
+Date: Sat, 30 May 2026 17:55:45 +0200
+Message-ID: <20260530160241.079868658@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -47,74 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Agalakov Daniil <ade@amicon.ru>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit d3baa34a470771399c1495bc04b1e26ac15d598e ]
+[ Upstream commit a315e022a72d95ef5f1d4e58e903cb492b0ad931 ]
 
-[Why]
-e1000_set_eeprom() performs a read-modify-write operation when the write
-range is not word-aligned. This requires reading the first and last words
-of the range from the EEPROM to preserve the unmodified bytes.
+The current headroom validation in xdp_umem_reg() could leave us with
+insufficient space dedicated to even receive minimum-sized ethernet
+frame. Furthermore if multi-buffer would come to play then
+skb_shared_info stored at the end of XSK frame would be corrupted.
 
-However, the code does not check the return value of e1000_read_eeprom().
-If the read fails, the operation continues using uninitialized data from
-eeprom_buff. This results in corrupted data being written back to the
-EEPROM for the boundary words.
+HW typically works with 128-aligned sizes so let us provide this value
+as bare minimum.
 
-Add the missing error checks and abort the operation if reading fails.
+Multi-buffer setting is known later in the configuration process so
+besides accounting for 128 bytes, let us also take care of tailroom space
+upfront.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Agalakov Daniil <ade@amicon.ru>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Fixes: 99e3a236dd43 ("xsk: Add missing check on user supplied headroom size")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://patch.msgid.link/20260402154958.562179-2-maciej.fijalkowski@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000/e1000_ethtool.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/xdp/xdp_umem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
-index 0a57172dfcbc4..631165b895b61 100644
---- a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
-@@ -496,14 +496,19 @@ static int e1000_set_eeprom(struct net_device *netdev,
- 		 */
- 		ret_val = e1000_read_eeprom(hw, first_word, 1,
- 					    &eeprom_buff[0]);
-+		if (ret_val)
-+			goto out;
-+
- 		ptr++;
- 	}
--	if (((eeprom->offset + eeprom->len) & 1) && (ret_val == 0)) {
-+	if ((eeprom->offset + eeprom->len) & 1) {
- 		/* need read/modify/write of last changed EEPROM word
- 		 * only the first byte of the word is being modified
- 		 */
- 		ret_val = e1000_read_eeprom(hw, last_word, 1,
- 					    &eeprom_buff[last_word - first_word]);
-+		if (ret_val)
-+			goto out;
- 	}
+diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
+index 65f918d29531d..f247fc4de9e10 100644
+--- a/net/xdp/xdp_umem.c
++++ b/net/xdp/xdp_umem.c
+@@ -198,7 +198,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	if (!unaligned_chunks && chunks_rem)
+ 		return -EINVAL;
  
- 	/* Device's eeprom is always little-endian, word addressable */
-@@ -522,6 +527,7 @@ static int e1000_set_eeprom(struct net_device *netdev,
- 	if ((ret_val == 0) && (first_word <= EEPROM_CHECKSUM_REG))
- 		e1000_update_eeprom_checksum(hw);
+-	if (headroom >= chunk_size - XDP_PACKET_HEADROOM)
++	if (headroom > chunk_size - XDP_PACKET_HEADROOM -
++		       SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) - 128)
+ 		return -EINVAL;
  
-+out:
- 	kfree(eeprom_buff);
- 	return ret_val;
- }
+ 	umem->size = size;
 -- 
 2.53.0
 
