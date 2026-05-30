@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ADF261B9E;
-	Sat, 30 May 2026 17:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C9F261B9E;
+	Sat, 30 May 2026 17:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163555; cv=none; b=gkHSdHLFKin9HPDr9A3QNxtFSfLM9z8ZUCCrFw6NETaUk4GPpHow+ymntBNJD7m8ZyRhfT8R/j4bE/gUjE001wPd5ypUmUrDeyju4vNwFF/61cmv6kFHtJzEkw/yDnX43b8kG/d9W0NSw47RYI3ZI+TydoBeR+yKQFyFeCuk/+A=
+	t=1780163559; cv=none; b=WqZLVIcgKAhqKabr7tvxhyziZmr/47tMj7mW1XRPAa5Stjr1Mj4+mePftu0mhWMKg4n5v55LHP2V0d2eCD1EunRXJguaCjuegWclvL2Vl+aJAwhMeuCa0ZmYmmzOicSl71JMkra6rfLX+1oDI/Aii6pZ+bOjAPrgPwFMhSaN2nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163555; c=relaxed/simple;
-	bh=dLMjPKUrWOEUQYq1X7gQboVPfBQ0+LQx3qaYSDYOEEU=;
+	s=arc-20240116; t=1780163559; c=relaxed/simple;
+	bh=+MtB33wZgsLHktOlx1hkqssMGOMeRTSQLjbwdU2z1c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGTKB+J8xhoR0Q8BLvtL/gVXL5KQqwsLY74q9QGcX2CfP4wa51Jf1jEyD/O6uOWwWNegyrIhJ3yk0ImFqMvtAEF7IPHbyKOEeGWqdEcbaUnhd6zjg73ouSpHZiHQwXoFkCyLVm2U2c3j3+zY48YcDxtAHVBLhwIYJmU6jldf1Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIr11EBW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PsG6yPOaq4Pz2SHsv4LtlT+0wW0yDViphls98zSf46HHNXG2fR1tIN45blQiMNCbaSpA3W49fwLOBmkdGiII7qWOrFrPeOHPYz/4sx9B+2B1kVtNnjPFneo0SYuMUSSEO5EjzkBs1ydsDj3UeVW+nrK8kZLAbOFeRIrkC0z+M0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTA66ni5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIr11EBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BBC1F00893;
-	Sat, 30 May 2026 17:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTA66ni5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4A91F00893;
+	Sat, 30 May 2026 17:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163554;
-	bh=4lWp+KprSDtIC82REbXzGkRIAgZ2bluQgy9qmW4AiJY=;
+	s=korg; t=1780163558;
+	bh=l1TsI5ugpccldLCTjGf8vaiQQfURPy/1zVTSDVrLuts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BIr11EBWntIyl9FBSQzngMccCpdXDBcgUx7n+c1HiY9pTnrZeLBXEWfD44oV+qNJv
-	 RfedRACNBSQEvsm8cBIACnbKhwvpRuiPfKriputaX/NoixT/ve4SR5buZgJcpGCbK/
-	 1N1YvKqhVd10EpRKeUokuHJUYHHF12sY1xoLFIkU=
+	b=pTA66ni5AdrPnbmiP2NLhmEDg33BOpKWIHo8Q2H1rMi80/SxUODHMOAG2vPfBcHg9
+	 bzr8Y2EzlVcTEAbGPswhHeijzoDDRBLfV45qBvecRgXZgnzRyVqgakFQh6lIMbZ7EO
+	 iMIMZc17pMnddQ0quUNWGQupByxlgtRVDFuP1QRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 264/776] ALSA: caiaq: Fix potentially leftover ep1_in_urb at error path
-Date: Sat, 30 May 2026 17:59:38 +0200
-Message-ID: <20260530160247.363153194@linuxfoundation.org>
+Subject: [PATCH 5.15 265/776] ALSA: caiaq: Dont abort when no input device is available
+Date: Sat, 30 May 2026 17:59:39 +0200
+Message-ID: <20260530160247.389513670@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,35 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit 0a7b5221b5b51cc798fcfc3be00d02eade149d69 upstream.
+commit b32ae47a2b0a1fb4bd4942242847966d9b178222 upstream.
 
-The previous fix for handling the error from setup_card() missed that
-an internal URB cdev->ep1_in_urb might have been already submitted
-beforehand.  In the normal case, this URB gets killed at the
-disconnection, but in the error path, we didn't do it, hence there can
-be a potential leak.
+The previous fix to handle the error from setup_card() caused a
+regression for the models that have no dedicated input device;
+snd_usb_caiaq_input_init() just returns -EINVAL, and we treat it as a
+fatal error although it should be ignored.
 
-Fix it in the error path for setup_card(), too.
+As a regression fix, change the error code to -ENODEV, and ignore this
+error in the callee, to continue probing.
 
 Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260427123819.890185-1-tiwai@suse.de
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221423
+Link: https://patch.msgid.link/20260427145642.6637-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  sound/usb/caiaq/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/caiaq/input.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 --- a/sound/usb/caiaq/device.c
 +++ b/sound/usb/caiaq/device.c
-@@ -514,7 +514,7 @@ static int init_card(struct snd_usb_caia
- 	card->private_free = card_free;
- 	err = setup_card(cdev);
- 	if (err < 0)
--		return err;
-+		goto err_kill_urb;
+@@ -366,7 +366,7 @@ static int setup_card(struct snd_usb_cai
  
- 	return 0;
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	ret = snd_usb_caiaq_input_init(cdev);
+-	if (ret < 0) {
++	if (ret < 0 && ret != -ENODEV) {
+ 		dev_err(dev, "Unable to set up input system (ret=%d)\n", ret);
+ 		return ret;
+ 	}
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -804,7 +804,7 @@ int snd_usb_caiaq_input_init(struct snd_
+ 
+ 	default:
+ 		/* no input methods supported on this device */
+-		ret = -EINVAL;
++		ret = -ENODEV;
+ 		goto exit_free_idev;
+ 	}
  
 
 
