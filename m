@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130123D7E6;
-	Sat, 30 May 2026 17:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7CF3BF694;
+	Sat, 30 May 2026 17:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163816; cv=none; b=jHtD6dy4/REaOjbj9mNMqqGb357HAl11sFuobiM28iv97AlDmxhrvGjWhLZy1lh/8/jeStewle+3JeVs+FGavM4dCJuLNsOEiI7vFr3PT7sB3TkkjWncqwFd+5R9ysvAGeTkWG22/HdgY3SkdUuMp/YB+GjxkVSS4Cc5/T+R0Ho=
+	t=1780163820; cv=none; b=JViV4qPfVj+J8IiCehnfxALxyom/+tU14dbwIOij0l82uK4R0PATIjvGN1MzVbnFU7UtVcRlRWVMqd9awsQA3LWoe/2ZAONGpFoufrTg6JsqB/sprlmHKd9oyv1jqWTv72y1MzSqkmEUzQ1TIuCtFcaHarAgV93wnwlgjyRZBiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163816; c=relaxed/simple;
-	bh=AVF1yD7eJdU/WjosqsHYt9WsMlt57AJE9LftHPClJqM=;
+	s=arc-20240116; t=1780163820; c=relaxed/simple;
+	bh=aG6Ot7X/groQWzqhyrYcRfm5nPimvYL2Tfos3cGTm3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GIdrqqpsqAY/Lqqvu7NXYf1HYKrOBPOhm/qB/o3xf7EgfHKNd38zwK/ZZbSe+tMmBNfel1Kx+0ep2POqVDsaWDVC5VHeaRlkzjoOqgVap1YQqZY1sq4tqF9Cndp0PrdttZWYJ+5XRXQUozcjlgybENsK+X2PnxXe+JryuD8ON3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkwMMQd6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RHvBxxrn4tOxwDTTY3p+RANB8ajFX8C/RaKY3Bt9t56RRlx7FHV24iLrKvF1jdSSH18EvH3fMdYtf3UPT3DUr7lvjCeVkLifTmIVzK4ia7/63tlAgXzIxFSaLtPiZ1i6s41PqaJTz7vPzLfuCkqR/2CDEzMTJSIL3jWih2ulZeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnlVzvai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkwMMQd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D12A1F00893;
-	Sat, 30 May 2026 17:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnlVzvai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9E51F00893;
+	Sat, 30 May 2026 17:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163814;
-	bh=cn3TQpdOX5bwCOKox6YrGtaBQ/m6KOjGlRQ6f747ALU=;
+	s=korg; t=1780163818;
+	bh=3xf3b0M4FOHKKhqdzApUcnGu04cEtIV7lg8AaVP0H8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkwMMQd6Q1Mj1LMtSVcrH0AF3cle8qzKlg5QmmzQYb17rPiVMooOrzzbxQFl9XpNE
-	 OcSy8EivSWVbxU3eFpX7iGYfDmyHXu9HolHdiPiia2UAlTTLVC763CBOrStJZwglTO
-	 VewErN6WLULy19haNHH/9yCJ3geqgOL4fkazryoo=
+	b=xnlVzvaihtOIZuQ7Lfpc611LXHa4FZpx+7e2RvRQtO705MCKJne8EZ3nQ7H7BGrK3
+	 PAYQUnMCe40H8ZAw3WL2t25Afv/tRKIPcdTy86Vb2Gqs5hOO7lH/xwUWzNpo3ON6nG
+	 KOkocBJ7RkNwzuHKjQn71a3SEr5VtcyDDS9cAM+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Kent Russell <kent.russell@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 371/776] drm/amdgpu/pm: add missing revision check for CI
-Date: Sat, 30 May 2026 18:01:25 +0200
-Message-ID: <20260530160250.133238845@linuxfoundation.org>
+Subject: [PATCH 5.15 372/776] drm/amdgpu/pm: align Hawaii mclk workaround with radeon
+Date: Sat, 30 May 2026 18:01:26 +0200
+Message-ID: <20260530160250.157723384@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,36 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 2a561b361b7681509710f3cfc3d95d54c87ac69f upstream.
+commit 1987c79b4fe5789dfa14423e78b5c25f6acf3e9d upstream.
 
-The ci_populate_all_memory_levels() workaround only
-applies to revision 0 SKUs.
+Align the hawaii mclk workaround with radeon and windows.
 
 Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
 Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
 Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
 Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1db15ba8f72f400bbad8ae0ce24fafc43429d4bd)
+(cherry picked from commit 9649528b637f668c5af9f2b83ca4ad8576ae2121)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
 +++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -1325,8 +1325,9 @@ static int ci_populate_all_memory_levels
- 
- 	dev_id = adev->pdev->device;
- 
--	if ((dpm_table->mclk_table.count >= 2)
--		&& ((dev_id == 0x67B0) ||  (dev_id == 0x67B1))) {
-+	if ((dpm_table->mclk_table.count >= 2) &&
-+	    ((dev_id == 0x67B0) ||  (dev_id == 0x67B1)) &&
-+	    (adev->pdev->revision == 0)) {
- 		smu_data->smc_state_table.MemoryLevel[1].MinVddci =
- 				smu_data->smc_state_table.MemoryLevel[0].MinVddci;
- 		smu_data->smc_state_table.MemoryLevel[1].MinMvdd =
+@@ -1328,10 +1328,10 @@ static int ci_populate_all_memory_levels
+ 	if ((dpm_table->mclk_table.count >= 2) &&
+ 	    ((dev_id == 0x67B0) ||  (dev_id == 0x67B1)) &&
+ 	    (adev->pdev->revision == 0)) {
+-		smu_data->smc_state_table.MemoryLevel[1].MinVddci =
+-				smu_data->smc_state_table.MemoryLevel[0].MinVddci;
+-		smu_data->smc_state_table.MemoryLevel[1].MinMvdd =
+-				smu_data->smc_state_table.MemoryLevel[0].MinMvdd;
++		smu_data->smc_state_table.MemoryLevel[1].MinVddc =
++				smu_data->smc_state_table.MemoryLevel[0].MinVddc;
++		smu_data->smc_state_table.MemoryLevel[1].MinVddcPhases =
++				smu_data->smc_state_table.MemoryLevel[0].MinVddcPhases;
+ 	}
+ 	smu_data->smc_state_table.MemoryLevel[0].ActivityLevel = 0x1F;
+ 	CONVERT_FROM_HOST_TO_SMC_US(smu_data->smc_state_table.MemoryLevel[0].ActivityLevel);
 
 
