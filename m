@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD29332EA7;
-	Sat, 30 May 2026 17:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D460332EA7;
+	Sat, 30 May 2026 17:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161473; cv=none; b=J7O9B22GDLP673wZ13NDafgUFRvHPO9n7YMrMuDKCahzPdnYaarnEc2WpvvfObMKx2j6MsBlbg71ICj5Jj/037shz3LCgC4+ZIiMjLWEw84JfC+TG/xiOn2YbpqGm3STVMymyGljC6SdLDuFOo+oP1TPqqFvJZY4LtFuLwmqHN0=
+	t=1780161476; cv=none; b=Dy8hp7nFMJE4OxWDo1yy3kOALHq8ObtyhI5f1Mrr8FsEFU8ArgtMzt7pos9goHrvO3rTxijEDV+/gyKa5ACSQsb5rJeGqSHyeb64JK2aMawuPfNKwBPWzw8DJlKlZ7DP6cjGm2Lq199uIzwp1ay19hNLKWimNeAoaaJyYr81vJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161473; c=relaxed/simple;
-	bh=fO5S0mf3aHDoGqzwgDRmCAtBOIqO0PfQha/fB7Tliyc=;
+	s=arc-20240116; t=1780161476; c=relaxed/simple;
+	bh=XDBQb/1++y83aiCduxrYngbxRw+/vzCoP/FGAC1UGHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtRhwvOTKN6PH1ZM9Ok+d7mCdpkAQJXwO9xaWlgy+OHN5LTXLYw5mypmPgEy1KdoJFpAI0HYntljbN4hZlVm+C8FhFFvJHzQ++huO4bmyiUqUzTAz+rIgHwkU0slN9RiF6bnAeAieyIEXpcKUUK1BaoibaG7IGPb3lC+gIAForU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUp+EvLH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hkWtIAjTlqZpVjnWI/Aum6HkKNVI1UtIUVMDPBDCoedJteYZF9BwAt08C5Y5V2lgoMkIUXpFM0/xTQT/vkUUnwto0gjSkjSXYqyTFUvCdE08E+g4cY+ukjIiNQLcNeet6GonTgVgRno05Q+lE7RY5C77KIIhueIsyGLcIisicvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMtzPNbE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUp+EvLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BD11F00893;
-	Sat, 30 May 2026 17:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMtzPNbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717AB1F00893;
+	Sat, 30 May 2026 17:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161471;
-	bh=J4b12Q7nw8mkn5senZoHSaGQ2jJ4g5RKzsOQMIboax0=;
+	s=korg; t=1780161475;
+	bh=WIP+4VuJlUQ5aDrhPuzTOAV/4dKEFRC4RY7gVMJcTyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FUp+EvLHvQeP5z6+zPyVMfB7ToHeOTYz5Ko5D++HujCeyDUL2UxrzR8LrmsIcFWhB
-	 T8rqhc3xQSX3qZCrygl2FVP+/4tsyxJSYqSK23XZYyEoqU6BXDPVl+0gUBhcknsA1c
-	 ZcLQiS3gl3iLSB6vC7kmfuOz6pRwS2vQCxx9QVXI=
+	b=OMtzPNbEIo4ceWNrQWqF4o23JoUGtzuuS3g7MNthqtelgLN5ksveQ+srz6AabAB9q
+	 kD6ctJgO3cqSjP1XbqHm9Kja8Ft+0HijQa+altgJQ4fBLXxSrHlnzdirPp4GGcLtAw
+	 JLwT9TqInYbzdFzlTsj7DyQ5trZtGmHG9oiSScqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 603/969] mtd: physmap_of_gemini: Fix disabled pinctrl state check
-Date: Sat, 30 May 2026 18:02:07 +0200
-Message-ID: <20260530160317.077471809@linuxfoundation.org>
+Subject: [PATCH 6.1 604/969] mtd: spi-nor: core: correct the op.dummy.nbytes when check read operations
+Date: Sat, 30 May 2026 18:02:08 +0200
+Message-ID: <20260530160317.105214304@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit b7c0982184b0661f5b1b805f3a56f1bd3757b63e ]
+[ Upstream commit 756564a536ecd8c9d33edd89f0647a91a0b03587 ]
 
-The condition for checking the disabled pinctrl state incorrectly checks
-gf->enabled_state instead of gf->disabled_state. This causes misleading
-error messages and could lead to incorrect behavior when only one of the
-pinctrl states is defined.
+When check read operation, need to setting the op.dummy.nbytes based
+on current read operation rather than the nor->read_proto.
 
-Fix the condition to properly check gf->disabled_state.
-
-Fixes: 9d3b5086f6d4 ("mtd: physmap_of_gemini: Handle pin control")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 0e30f47232ab ("mtd: spi-nor: add support for DTR protocol")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/physmap-gemini.c | 2 +-
+ drivers/mtd/spi-nor/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/maps/physmap-gemini.c b/drivers/mtd/maps/physmap-gemini.c
-index d4a46e159d38f..8d5b791dd08d4 100644
---- a/drivers/mtd/maps/physmap-gemini.c
-+++ b/drivers/mtd/maps/physmap-gemini.c
-@@ -181,7 +181,7 @@ int of_flash_probe_gemini(struct platform_device *pdev,
- 		dev_err(dev, "no enabled pin control state\n");
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 91622d9c9b032..3f38d67e1a336 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2061,7 +2061,7 @@ static int spi_nor_spimem_check_readop(struct spi_nor *nor,
+ 	/* convert the dummy cycles to the number of bytes */
+ 	op.dummy.nbytes = (read->num_mode_clocks + read->num_wait_states) *
+ 			  op.dummy.buswidth / 8;
+-	if (spi_nor_protocol_is_dtr(nor->read_proto))
++	if (spi_nor_protocol_is_dtr(read->proto))
+ 		op.dummy.nbytes *= 2;
  
- 	gf->disabled_state = pinctrl_lookup_state(gf->p, "disabled");
--	if (IS_ERR(gf->enabled_state)) {
-+	if (IS_ERR(gf->disabled_state)) {
- 		dev_err(dev, "no disabled pin control state\n");
- 	} else {
- 		ret = pinctrl_select_state(gf->p, gf->disabled_state);
+ 	return spi_nor_spimem_check_op(nor, &op);
 -- 
 2.53.0
 
