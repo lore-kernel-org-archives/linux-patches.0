@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE724284690;
-	Sat, 30 May 2026 18:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4540B241C8C;
+	Sat, 30 May 2026 18:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164968; cv=none; b=IgYvBK6Mpuua//0JhsrgizyRYwcigx19mzLdA+XBm60xqKis19TZp7BwDJrCuBZS0hNHHcPsE/OLbnMSpAp6IKdCdeMep7svlfqGRqi7LeUhXJUQZn9bZodgQRySKW6k6EVeXJI/MlzxxaheSYA/xT4wFbitv2ScSbts3WjCcfE=
+	t=1780164971; cv=none; b=KFOr1q5fFyFgaSaKpq2x7gEovdogjhLWQ/M2u+iQcmQrPL14GUhglmmNudE6RK2HS114h8u76ZIJadK6gz8F3dsst4WSjjWU9JzU3b+cHFtmZhK08Xe1sP2vHk17FYt2l9SriIytP7iTJprXuvSdha4yGrWVMC9TvRh5Tzf0COk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164968; c=relaxed/simple;
-	bh=vAyLswWrS5JiSGnCH71wKCKvKUHSmqHL39VLKcK5c+o=;
+	s=arc-20240116; t=1780164971; c=relaxed/simple;
+	bh=3xrIUiwcwJ5bkrpZueKOdawRnncOuM9laCzu5fRm/lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiTioLAmCl9q7h0X1f6nvw9l2Et2/3xt1ytYX/zn8dtTHCVBxAJtp1AiFIOmRudJE5mNYswkIZ7JQ+xrd5HJtFVQ3nQMUQgh81VSk0GWXmBaF5G/UIWC+q0xUGxQhjF9yua4v7dhll13evKlXhxw4dZdQOeKBt60DbZMPThjEvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1uBmh+8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iAa86u515HSI48TTSh4wuxSFqA3sDz0hMRbJG6QantsH5sbmaMbwnjjlwo3w4dw1o2wCI6Xnqlhc6hVA4blDr00K1ExhK2WyeQU+foHgr2kNOw7owsYp6XU9sLtAlhhR607mKmrNak5RnEjkRe0o4vgXa6gTgIMbc+eFaEAEbLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVdmM+Q9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1uBmh+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F901F00893;
-	Sat, 30 May 2026 18:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVdmM+Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4881B1F00893;
+	Sat, 30 May 2026 18:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164966;
-	bh=IidA5jwy0/AdoAYzUa6KutJmsR+K8xcDdmy4oxrSx+c=;
+	s=korg; t=1780164969;
+	bh=w0rrCmHAd5BlwLt/jSS+coT2C5BAWy3alHmvJCH/R8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1uBmh+8ONBGHfG7u+1O2+1w3nIXomap2ZrxY++pCQb/k/5H5DwowN9ohSAsV8XeQ
-	 13FyiaJrxIKMY2j4q4MMKow87zzhn78OLFhW5/BvjQWouCPpZjFNefN5Nb/j4t2TOf
-	 21YMDcboXKkTEPnrcwPgKRcOANF8Qwg7jPb31bjY=
+	b=BVdmM+Q9okFedG1FG0uTC/823cddVboPiB+hI9Ae0K3kRWYtqjFmp7glZqjLTapJ2
+	 pFGQFAPYBLHy859uaGQkprSGBn2/MtEvuAznE+McZvm5/xmZOp0ZQbGqk2g7Ul8hkP
+	 jl2QNGqTo5JdfjYR4xkMa/762foj3lVWHlYHIWZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 711/776] batman-adv: frag: disallow unicast fragment in fragment
-Date: Sat, 30 May 2026 18:07:05 +0200
-Message-ID: <20260530160258.209117661@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	syzbot+9f4a135646b66c509935@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 685/776] phonet/pep: disable BH around forwarded sk_receive_skb()
+Date: Sat, 30 May 2026 18:06:39 +0200
+Message-ID: <20260530160257.564424626@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -48,93 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit bc62216dc8e221e3781afa14430f45208bfa9af9 upstream.
+commit dbc81608e3a653dea6cf403f20cae35468b8ab9c upstream.
 
-batadv_frag_skb_buffer() is called by batadv_batman_skb_recv() when a
-BATADV_UNICAST_FRAG packet is received. Once all fragments are collected
-and the packet is reassembled, batadv_recv_frag_packet() calls
-batadv_batman_skb_recv() again to process the defragmented payload.
+The networking receive path is usually run from softirq context, but
+protocols that take the socket lock may have packets stored in the
+backlog and processed later from process context. In that case
+release_sock() -> __release_sock() drops the slock with spin_unlock_bh()
+and then calls sk->sk_backlog_rcv() with bottom halves enabled.
 
-A malicious sender can craft a BATADV_UNICAST_FRAG packet whose reassembled
-payload is itself a BATADV_UNICAST_FRAG packet (matryoshka-style nesting).
-Each nesting level recurses through batadv_batman_skb_recv() without bound,
-growing the kernel stack until it is exhausted.
+Typical sk_backlog_rcv handlers process the socket whose backlog is
+being drained, so the BH state at entry is irrelevant for the slocks
+they touch. pep_do_rcv() is different: when the inbound skb targets an
+existing PEP pipe, it forwards the skb to a different *child* socket
+via sk_receive_skb(). That helper takes the child slock with
+bh_lock_sock_nested(), which is just spin_lock_nested() and assumes BH
+is already off. The same child slock therefore ends up acquired with
+BH on (process path) and with BH off (softirq path):
 
-Since refragmentation or fragments in fragments are not actually allowed,
-discard all packets which are still BATADV_UNICAST_FRAG packets after the
-defragmentation process.
+  process context                   softirq context
+  ---------------                   ---------------
+  release_sock(listener)            __netif_receive_skb()
+   __release_sock()                  phonet_rcv()
+    spin_unlock_bh()                  __sk_receive_skb(listener)
+    [BH now ENABLED]                  [BH already disabled]
+    sk_backlog_rcv:                   sk_backlog_rcv:
+     pep_do_rcv()                      pep_do_rcv()
+      sk_receive_skb(child)             sk_receive_skb(child)
+       bh_lock_sock_nested(child)        bh_lock_sock_nested(child)
+       => SOFTIRQ-ON-W                   => IN-SOFTIRQ-W
 
-Cc: stable@kernel.org
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reviewed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Lockdep flags this as inconsistent lock state, and it can become a real
+self-deadlock if a softirq on the same CPU tries to receive to the same
+child socket while its slock is held in the BH-enabled path:
+
+  WARNING: inconsistent lock state
+  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+   (slock-AF_PHONET/1){+.?.}-{3:3}, at: __sk_receive_skb+0x1cf/0x900
+    __sk_receive_skb              net/core/sock.c:563
+    sk_receive_skb                include/net/sock.h:2022 [inline]
+    pep_do_rcv                    net/phonet/pep.c:675
+    sk_backlog_rcv                include/net/sock.h:1190
+    __release_sock                net/core/sock.c:3216
+    release_sock                  net/core/sock.c:3815
+    pep_sock_accept               net/phonet/pep.c:879
+
+Wrap the forwarded sk_receive_skb() in local_bh_disable() /
+local_bh_enable() so the child slock is always acquired with BH off.
+local_bh_disable() nests safely on the softirq path.
+
+Discovered via in-house syzkaller fuzzing; the same root cause also
+on the linux-6.1.y syzbot dashboard as extid 44f0626dd6284f02663c.
+Reproduced under KASAN + LOCKDEP + PROVE_LOCKING, reproducer:
+https://pastebin.com/A3t8xzCR
+
+Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
+Link: https://syzkaller.appspot.com/bug?extid=44f0626dd6284f02663c
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reported-by: syzbot+9f4a135646b66c509935@syzkaller.appspotmail.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260519172635.86304-1-yzjaurora@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |   35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ net/phonet/pep.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -306,6 +306,31 @@ free:
- }
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -671,8 +671,23 @@ static int pep_do_rcv(struct sock *sk, s
  
- /**
-+ * batadv_skb_is_frag() - check if newly merged skb is gain a unicast packet
-+ * @skb: newly merged skb
-+ *
-+ * Return: if newly skb is of type BATADV_UNICAST_FRAG
-+ */
-+static bool batadv_skb_is_frag(struct sk_buff *skb)
-+{
-+	struct batadv_ogm_packet *batadv_ogm_packet;
+ 	/* Look for an existing pipe handle */
+ 	sknode = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+-	if (sknode)
+-		return sk_receive_skb(sknode, skb, 1);
++	if (sknode) {
++		int rc;
 +
-+	/* packet should hold at least type and version */
-+	if (unlikely(!pskb_may_pull(skb, 2)))
-+		return false;
-+
-+	batadv_ogm_packet = (struct batadv_ogm_packet *)skb->data;
-+
-+	if (batadv_ogm_packet->version != BATADV_COMPAT_VERSION)
-+		return false;
-+
-+	if (batadv_ogm_packet->packet_type != BATADV_UNICAST_FRAG)
-+		return false;
-+
-+	return true;
-+}
-+
-+/**
-  * batadv_frag_skb_buffer() - buffer fragment for later merge
-  * @skb: skb to buffer
-  * @orig_node_src: originator that the skb is received from
-@@ -338,6 +363,16 @@ bool batadv_frag_skb_buffer(struct sk_bu
- 	if (!skb_out)
- 		goto out_err;
- 
-+	/* fragment in fragment is not allowed. otherwise it is possible
-+	 * to exhaust the stack when receiving a matryoshka-style
-+	 * "fragments in a fragment packet"
-+	 */
-+	if (batadv_skb_is_frag(skb_out)) {
-+		kfree_skb(skb_out);
-+		skb_out = NULL;
-+		goto out_err;
++		/* pep_do_rcv() runs from two contexts: from softirq via
++		 * phonet_rcv() -> __sk_receive_skb() with BH disabled,
++		 * and from process context via
++		 * release_sock() -> __release_sock(), which drops
++		 * the listener slock with spin_unlock_bh() before draining
++		 * the backlog.  The child pipe slock is taken below via
++		 * bh_lock_sock_nested(), which does not itself disable BH, so
++		 * disable BH here to keep both acquire contexts consistent.
++		 */
++		local_bh_disable();
++		rc = sk_receive_skb(sknode, skb, 1);
++		local_bh_enable();
++		return rc;
 +	}
-+
- out:
- 	ret = true;
- out_err:
+ 
+ 	switch (hdr->message_id) {
+ 	case PNS_PEP_CONNECT_REQ:
 
 
