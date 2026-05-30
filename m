@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E271F3AF643;
-	Sat, 30 May 2026 16:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF1B3A3E74;
+	Sat, 30 May 2026 16:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160156; cv=none; b=HMRgIGde3WB/Tr9ceEmCOnfTp9EAq3dw1Cce5PU4ABb0esrlM5ze0cFuQpxZHAd2o6Zxn3IIXsz4EDBcSH9dfkj0r1NUTnd7F48WY7gVSBJVM0jo+maWVUSCmtV5g6qbicG/0aB+KvznfPNH3gr5EgdGF0CVaynkzH+0yxJF8yQ=
+	t=1780160159; cv=none; b=L8v4Qn99AEQ1Md3cLRx0DD2/saC9LDKiVkbZGJaQh4zUcYK/lh6Z94mB3/3JojELOs1FgyQUW17R+t9It55x5EApgy9TCyxLfDI2eda85JFTfV74Qdqmx3b12D2oEPoY0eXpwI6Za6NFEWNALQDNmZS9JzHpFSNxgPZVgXuTFU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160156; c=relaxed/simple;
-	bh=9QSh8PIAZmF15RJCSuQFGAzrARTcW/DnGwwq9V17S9U=;
+	s=arc-20240116; t=1780160159; c=relaxed/simple;
+	bh=vJvBM/tylpqCZ39W6pxoupXeRhQ0h/x41PlhNKsaglg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1Nn0DekbD/kI2uYZ4UxzpGg7vJm4kcqpUwVTsqjrboy1wfxnZ+MsgwE8vG5hYQvS9Aq/yU5AzpxC2IEHR0n+rPYTxYBH0CEv0zrPlOH7G8Dd2calCLgzcnv9vqkHpkrJZXgp3lR+eOGvw8KD1/mnQ2oscRysqmiM7StoB/2a8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkXjjfLh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R4UVp4dE6XudS+BG18QfL5lByFsva27cCPvihhnsRIsCWCCYG7WXwzGEclvZdIuTzLxTDEwLhIZrBDvNvhL2pOftZbAMAlnun+kWYMVEwCim0NRzambA8qqZmCVKne7JYHTUPSg/1IZDDuxWw1sl2VuZFmQaGWCpqsa9lf2dYFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeKRixlh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkXjjfLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341EF1F00893;
-	Sat, 30 May 2026 16:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeKRixlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25251F00893;
+	Sat, 30 May 2026 16:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160154;
-	bh=XWzsxON6HFLvVApPp7A+HDBO8LNXJ9HaMnV42a62vWI=;
+	s=korg; t=1780160158;
+	bh=Uz6FjJsna7pDxky92hwxi48V/T2EoeJoi0qPH1faY1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkXjjfLhPPM69iaZe4AQrDezbyMb2xp0otEvwevO24OAsDEkabIb449BFqsEFKnws
-	 FNiehAfC1VKGtzhxAoMPK2Ny5sxHdENjs9tMRmCHJTJAtApZsuak/LKWkS/4uynpD5
-	 TR0QodN8zYtSrdZumcwlMtHK/IyOs0/AxFR76R/E=
+	b=zeKRixlh4/T4FwvLVtBA2SADQw76IrXvqbO73h0DQi3NHUoYjUBnAQPbQ/xOxTJ7R
+	 8fqmOjYgiBk9yiAL4oh8Gp50MYfTD8bvStD1a5IWc749OdmLfJJmV09mo9ylGyDvse
+	 00MfycKfXU+YzbdADD+yMk35kNS2tngfza+4gfK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 259/969] crypto: ccree - fix a memory leak in cc_mac_digest()
-Date: Sat, 30 May 2026 17:56:23 +0200
-Message-ID: <20260530160307.632206523@linuxfoundation.org>
+Subject: [PATCH 6.1 260/969] crypto: atmel-tdes - fix DMA sync direction
+Date: Sat, 30 May 2026 17:56:24 +0200
+Message-ID: <20260530160307.660078434@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,31 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 02c64052fad03699b9c6d1df2f9b444d17e4ac50 upstream.
+commit c8a9a647532f5c2a04180352693215e24e9dba03 upstream.
 
-Add cc_unmap_result() if cc_map_hash_request_final()
-fails to prevent potential memory leak.
+Before DMA output is consumed by the CPU, ->dma_addr_out must be synced
+with dma_sync_single_for_cpu() instead of dma_sync_single_for_device().
+Using the wrong direction can return stale cache data on non-coherent
+platforms.
 
-Fixes: 63893811b0fc ("crypto: ccree - add ahash support")
+Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
+Fixes: 1f858040c2f7 ("crypto: atmel-tdes - add support for latest release of the IP (0x700)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccree/cc_hash.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/atmel-tdes.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/ccree/cc_hash.c
-+++ b/drivers/crypto/ccree/cc_hash.c
-@@ -1448,6 +1448,7 @@ static int cc_mac_digest(struct ahash_re
- 	if (cc_map_hash_request_final(ctx->drvdata, state, req->src,
- 				      req->nbytes, 1, flags)) {
- 		dev_err(dev, "map_ahash_request_final() failed\n");
-+		cc_unmap_result(dev, state, digestsize, req->result);
- 		cc_unmap_req(dev, state, ctx);
- 		return -ENOMEM;
- 	}
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -304,8 +304,8 @@ static int atmel_tdes_crypt_pdc_stop(str
+ 		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
+ 		dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
+ 	} else {
+-		dma_sync_single_for_device(dd->dev, dd->dma_addr_out,
+-					   dd->dma_size, DMA_FROM_DEVICE);
++		dma_sync_single_for_cpu(dd->dev, dd->dma_addr_out,
++					dd->dma_size, DMA_FROM_DEVICE);
+ 
+ 		/* copy data */
+ 		count = atmel_tdes_sg_copy(&dd->out_sg, &dd->out_offset,
+@@ -660,8 +660,8 @@ static int atmel_tdes_crypt_dma_stop(str
+ 			dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
+ 			dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
+ 		} else {
+-			dma_sync_single_for_device(dd->dev, dd->dma_addr_out,
+-				dd->dma_size, DMA_FROM_DEVICE);
++			dma_sync_single_for_cpu(dd->dev, dd->dma_addr_out,
++						dd->dma_size, DMA_FROM_DEVICE);
+ 
+ 			/* copy data */
+ 			count = atmel_tdes_sg_copy(&dd->out_sg, &dd->out_offset,
 
 
