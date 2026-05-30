@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A7B41A8F;
-	Sat, 30 May 2026 18:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DAE41A8F;
+	Sat, 30 May 2026 18:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166229; cv=none; b=HUxbjUuar10mW6SU/U9dHCst8meFQCiE3UzISthxo0lBtAJZ/0wjMdUDmoKZA7kvfky3JoNB5MsO1+Rb3efTfmIPi77gF4+nqD5ZokRNzFFuo7G9nQf9ufpdW88qujfI25xx+dpZpsJLoDUkN07NlzP1oByqZqUQAzWrdekY+78=
+	t=1780166232; cv=none; b=dJ8ZFA4Yduf+PZgFQH2FaciwBhfKCy5xtSBxEmLWEoV49tvONWxjIpj5Us+uaZdvLfIkz5K3Aq1LMYXxfMd3Hl/r2GzRD1Nq198+IBzhcmBc4uDk5eP8wbBeR6K9ujIzbILRY50R/IV2cd6DDjasqZI4FSTL7paILUFGMBHqYLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166229; c=relaxed/simple;
-	bh=LrPMl8P67d6anE7WoxJw9T3OrWez1luKAakTKC3gcwE=;
+	s=arc-20240116; t=1780166232; c=relaxed/simple;
+	bh=If3W9X27ki87N1y8Gi85Czid8yQD1sXsBn2FFzxAFjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaAiAqicwBr8WGFlmgJrjQnkd1b53qupV8SPBBO6WommfHxtc4Vpg7lAn+typCrtJF/k2a46kQeAO/pqr0ir7f9JfPxI54t+Fi7sofdvXhWRqw4qu6jq84ZgaiC/279lt427oblSrmcH0egnbStwelF+lpDltZrx/iBewTPH2UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkb+hPJM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nla46x7eAo0jTlLMteJ2fkid183y07sVOK1tmA6T4StqimbRcVknKSIgF9rBM6v+nKjM1B4wpOWqwxEdWepHVLj+32zeEERkFXFytSr9BfiJKS4/M7w59g//fcar3lPkaHBxAWSYPkx3Sc98CWK5psx8L5COkhoJT+q7gmE0/A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIBDX14t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkb+hPJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEBF1F00893;
-	Sat, 30 May 2026 18:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIBDX14t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893761F00893;
+	Sat, 30 May 2026 18:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166227;
-	bh=Wf39MyOfF/GFuHg1y8MBHayKE7NUpDG8dE/MiA0Ra2U=;
+	s=korg; t=1780166231;
+	bh=e5kawa85X1o8u4Q94LcKy1diudqgQhvMoJUCwS8zOQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bkb+hPJMS5oDiDWqj09vdRap1Ojydu0mcm/FyU/GH2EZXgGSHZDlINTCImOphghw9
-	 ZS3X/TVpizYP4szoPN9vn+4bmXSCBy8ur2z6mIVTlRcAKGjKWCeuJHG4OLqUE6t932
-	 aXUaiygtcbWe5fs1tBEliDbzoDJZOe/N04pAA5R8=
+	b=UIBDX14t/IeCg20kIPVfJ2x2YAacQtM8WB4p2ISgCsjXkThsvnGSFRKYpGMRnZkMF
+	 MIhPGGNaYiKldufzVnesNVnG6uy8UZHRDYfSO0Lgb7nSeO+0/wyL2YUfJkFMq852jG
+	 nG2kRbjvykOJcgWy++ypgvd6Wd/neaOAkaPt2ajU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>,
+	Gerd Rausch <gerd.rausch@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 310/589] net/sched: act_ct: Only release RCU read lock after ct_ft
-Date: Sat, 30 May 2026 18:03:11 +0200
-Message-ID: <20260530160233.095774212@linuxfoundation.org>
+Subject: [PATCH 5.10 311/589] net/rds: Optimize rds_ib_laddr_check
+Date: Sat, 30 May 2026 18:03:12 +0200
+Message-ID: <20260530160233.118706947@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -47,134 +48,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit f462dca0c8415bf0058d0ffa476354c4476d0f09 ]
+[ Upstream commit 236f718ac885965fa886440b9898dfae185c9733 ]
 
-When looking up a flow table in act_ct in tcf_ct_flow_table_get(),
-rhashtable_lookup_fast() internally opens and closes an RCU read critical
-section before returning ct_ft.
-The tcf_ct_flow_table_cleanup_work() can complete before refcount_inc_not_zero()
-is invoked on the returned ct_ft resulting in a UAF on the already freed ct_ft
-object. This vulnerability can lead to privilege escalation.
+rds_ib_laddr_check() creates a CM_ID and attempts to bind the address
+in question to it. This in order to qualify the allegedly local
+address as a usable IB/RoCE address.
 
-Analysis from zdi-disclosures@trendmicro.com:
-When initializing act_ct, tcf_ct_init() is called, which internally triggers
-tcf_ct_flow_table_get().
+In the field, ExaWatcher runs rds-ping to all ports in the fabric from
+all local ports. This using all active ToS'es. In a full rack system,
+we have 14 cell servers and eight db servers. Typically, 6 ToS'es are
+used. This implies 528 rds-ping invocations per ExaWatcher's "RDSinfo"
+interval.
 
-static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+Adding to this, each rds-ping invocation creates eight sockets and
+binds the local address to them:
 
-{
-                struct zones_ht_key key = { .net = net, .zone = params->zone };
-                struct tcf_ct_flow_table *ct_ft;
-                int err = -ENOMEM;
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 3
+bind(3, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 4
+bind(4, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 5
+bind(5, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 6
+bind(6, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 7
+bind(7, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 8
+bind(8, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 9
+bind(9, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
+socket(AF_RDS, SOCK_SEQPACKET, 0)       = 10
+bind(10, {sa_family=AF_INET, sin_port=htons(0),
+	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
 
-                mutex_lock(&zones_mutex);
-                ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params); // [1]
-                if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) // [2]
-                                goto out_unlock;
-                ...
-}
+So, at every interval ExaWatcher executes rds-ping's, 4224 CM_IDs are
+allocated, considering this full-rack system. After the a CM_ID has
+been allocated, rdma_bind_addr() is called, with the port number being
+zero. This implies that the CMA will attempt to search for an un-used
+ephemeral port. Simplified, the algorithm is to start at a random
+position in the available port space, and then if needed, iterate
+until an un-used port is found.
 
-static __always_inline void *rhashtable_lookup_fast(
-                struct rhashtable *ht, const void *key,
-                const struct rhashtable_params params)
-{
-                void *obj;
+The book-keeping of used ports uses the idr system, which again uses
+slab to allocate new struct idr_layer's. The size is 2092 bytes and
+slab tries to reduce the wasted space. Hence, it chooses an order:3
+allocation, for which 15 idr_layer structs will fit and only 1388
+bytes are wasted per the 32KiB order:3 chunk.
 
-                rcu_read_lock();
-                obj = rhashtable_lookup(ht, key, params);
-                rcu_read_unlock();
+Although this order:3 allocation seems like a good space/speed
+trade-off, it does not resonate well with how it used by the CMA. The
+combination of the randomized starting point in the port space (which
+has close to zero spatial locality) and the close proximity in time of
+the 4224 invocations of the rds-ping's, creates a memory hog for
+order:3 allocations.
 
-                return obj;
-}
+These costly allocations may need reclaims and/or compaction. At
+worst, they may fail and produce a stack trace such as (from uek4):
 
-At [1], rhashtable_lookup_fast() looks up and returns the corresponding ct_ft
-from zones_ht . The lookup is performed within an RCU read critical section
-through rcu_read_lock() / rcu_read_unlock(), which prevents the object from
-being freed. However, at the point of function return, rcu_read_unlock() has
-already been called, and there is nothing preventing ct_ft from being freed
-before reaching refcount_inc_not_zero(&ct_ft->ref) at [2]. This interval becomes
-the race window, during which ct_ft can be freed.
+[<ffffffff811a72d5>] __inc_zone_page_state+0x35/0x40
+[<ffffffff811c2e97>] page_add_file_rmap+0x57/0x60
+[<ffffffffa37ca1df>] remove_migration_pte+0x3f/0x3c0 [ksplice_6cn872bt_vmlinux_new]
+[<ffffffff811c3de8>] rmap_walk+0xd8/0x340
+[<ffffffff811e8860>] remove_migration_ptes+0x40/0x50
+[<ffffffff811ea83c>] migrate_pages+0x3ec/0x890
+[<ffffffff811afa0d>] compact_zone+0x32d/0x9a0
+[<ffffffff811b00ed>] compact_zone_order+0x6d/0x90
+[<ffffffff811b03b2>] try_to_compact_pages+0x102/0x270
+[<ffffffff81190e56>] __alloc_pages_direct_compact+0x46/0x100
+[<ffffffff8119165b>] __alloc_pages_nodemask+0x74b/0xaa0
+[<ffffffff811d8411>] alloc_pages_current+0x91/0x110
+[<ffffffff811e3b0b>] new_slab+0x38b/0x480
+[<ffffffffa41323c7>] __slab_alloc+0x3b7/0x4a0 [ksplice_s0dk66a8_vmlinux_new]
+[<ffffffff811e42ab>] kmem_cache_alloc+0x1fb/0x250
+[<ffffffff8131fdd6>] idr_layer_alloc+0x36/0x90
+[<ffffffff8132029c>] idr_get_empty_slot+0x28c/0x3d0
+[<ffffffff813204ad>] idr_alloc+0x4d/0xf0
+[<ffffffffa051727d>] cma_alloc_port+0x4d/0xa0 [rdma_cm]
+[<ffffffffa0517cbe>] rdma_bind_addr+0x2ae/0x5b0 [rdma_cm]
+[<ffffffffa09d8083>] rds_ib_laddr_check+0x83/0x2c0 [ksplice_6l2xst5i_rds_rdma_new]
+[<ffffffffa05f892b>] rds_trans_get_preferred+0x5b/0xa0 [rds]
+[<ffffffffa05f09f2>] rds_bind+0x212/0x280 [rds]
+[<ffffffff815b4016>] SYSC_bind+0xe6/0x120
+[<ffffffff815b4d3e>] SyS_bind+0xe/0x10
+[<ffffffff816b031a>] system_call_fastpath+0x18/0xd4
 
-Free Process:
+To avoid these excessive calls to rdma_bind_addr(), we optimize
+rds_ib_laddr_check() by simply checking if the address in question has
+been used before. The rds_rdma module keeps track of addresses
+associated with IB devices, and the function rds_ib_get_device() is
+used to determine if the address already has been qualified as a valid
+local address. If not found, we call the legacy rds_ib_laddr_check(),
+now renamed to rds_ib_laddr_check_cm().
 
-tcf_ct_flow_table_put() is executed through the path tcf_ct_cleanup() call_rcu()
-tcf_ct_params_free_rcu() tcf_ct_params_free() tcf_ct_flow_table_put().
-
-static void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)
-{
-                if (refcount_dec_and_test(&ct_ft->ref)) {
-                                rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);
-                                INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work); // [3]
-                                queue_rcu_work(act_ct_wq, &ct_ft->rwork);
-                }
-}
-
-At [3], tcf_ct_flow_table_cleanup_work() is scheduled as RCU work
-
-static void tcf_ct_flow_table_cleanup_work(struct work_struct *work)
-
-{
-                struct tcf_ct_flow_table *ct_ft;
-                struct flow_block *block;
-
-                ct_ft = container_of(to_rcu_work(work), struct tcf_ct_flow_table,
-                                                                rwork);
-                nf_flow_table_free(&ct_ft->nf_ft);
-                block = &ct_ft->nf_ft.flow_block;
-                down_write(&ct_ft->nf_ft.flow_block_lock);
-                WARN_ON(!list_empty(&block->cb_list));
-                up_write(&ct_ft->nf_ft.flow_block_lock);
-                kfree(ct_ft); // [4]
-
-                module_put(THIS_MODULE);
-}
-
-tcf_ct_flow_table_cleanup_work() frees ct_ft at [4]. When this function executes
-between [1] and [2], UAF occurs.
-
-This race condition has a very short race window, making it generally
-difficult to trigger. Therefore, to trigger the vulnerability an msleep(100) was
-inserted after[1]
-
-Fixes: 138470a9b2cc2 ("net/sched: act_ct: fix lockdep splat in tcf_ct_flow_table_get")
-Reported-by: zdi-disclosures@trendmicro.com
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260410111627.46611-1-jhs@mojatatu.com
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Signed-off-by: Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260408080420.540032-2-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ebf71dd4aff4 ("net/rds: Restrict use of RDS/IB to the initial network namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/rds/ib.c      | 20 ++++++++++++++++++--
+ net/rds/ib.h      |  1 +
+ net/rds/ib_rdma.c |  2 +-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index d75f4b2b97daa..adb421684440a 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -289,9 +289,13 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
- 	int err = -ENOMEM;
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index 24c9a9005a6fb..dbc63493ade70 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -403,8 +403,8 @@ static void rds6_ib_ic_info(struct socket *sock, unsigned int len,
+  * allowed to influence which paths have priority.  We could call userspace
+  * asserting this policy "routing".
+  */
+-static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+-			      __u32 scope_id)
++static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
++				 __u32 scope_id)
+ {
+ 	int ret;
+ 	struct rdma_cm_id *cm_id;
+@@ -489,6 +489,22 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+ 	return ret;
+ }
  
- 	mutex_lock(&zones_mutex);
--	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
--	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
-+	rcu_read_lock();
-+	ct_ft = rhashtable_lookup(&zones_ht, &key, zones_params);
-+	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) {
-+		rcu_read_unlock();
- 		goto out_unlock;
++static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
++			      __u32 scope_id)
++{
++	struct rds_ib_device *rds_ibdev = NULL;
++
++	if (ipv6_addr_v4mapped(addr)) {
++		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
++		if (rds_ibdev) {
++			rds_ib_dev_put(rds_ibdev);
++			return 0;
++		}
 +	}
-+	rcu_read_unlock();
++
++	return rds_ib_laddr_check_cm(net, addr, scope_id);
++}
++
+ static void rds_ib_unregister_client(void)
+ {
+ 	ib_unregister_client(&rds_ib_client);
+diff --git a/net/rds/ib.h b/net/rds/ib.h
+index 2ba71102b1f1f..d6c1197731c1c 100644
+--- a/net/rds/ib.h
++++ b/net/rds/ib.h
+@@ -384,6 +384,7 @@ void rds_ib_cm_connect_complete(struct rds_connection *conn,
+ 	__rds_ib_conn_error(conn, KERN_WARNING "RDS/IB: " fmt)
  
- 	ct_ft = kzalloc(sizeof(*ct_ft), GFP_KERNEL);
- 	if (!ct_ft)
+ /* ib_rdma.c */
++struct rds_ib_device *rds_ib_get_device(__be32 ipaddr);
+ int rds_ib_update_ipaddr(struct rds_ib_device *rds_ibdev,
+ 			 struct in6_addr *ipaddr);
+ void rds_ib_add_conn(struct rds_ib_device *rds_ibdev, struct rds_connection *conn);
+diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
+index 30fca2169aa7a..468fd60d818ff 100644
+--- a/net/rds/ib_rdma.c
++++ b/net/rds/ib_rdma.c
+@@ -47,7 +47,7 @@ struct rds_ib_dereg_odp_mr {
+ 
+ static void rds_ib_odp_mr_worker(struct work_struct *work);
+ 
+-static struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
++struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
+ {
+ 	struct rds_ib_device *rds_ibdev;
+ 	struct rds_ib_ipaddr *i_ipaddr;
 -- 
 2.53.0
 
