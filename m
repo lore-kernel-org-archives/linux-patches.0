@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6209E1D63E4;
-	Sat, 30 May 2026 18:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA236137750;
+	Sat, 30 May 2026 18:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167138; cv=none; b=ICxVP+MxTM7IfC7zXuyjp9oFyZtGH8iwOh766WDECTy8YzRX+fMllUoKkh5hTTh/h230GEqFTtehkkCSMR/z67jF+E1srR50xZKhIkYHKpjWVWE6yh6cWv3KxUnG3NuBxZ/KhtSnTUc/kRLk0S+lttcZu+tt1mgupb6yS2PIcXs=
+	t=1780167141; cv=none; b=gEiZRigFyXiG+cVgfOP0d+jIi0TKEAIMEbd3W3PqviXO0GEqOKrIlOQLSQZw+tzwCZ/FFzUDiigYld+TwDmuSrqi233duCmVRlywMtA+tq/JgYh300Fx0pbutl4U0lt3KQRpYIu8TmAY3F+yJCuU77EIg4rPcRT8sx7gvs42yNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167138; c=relaxed/simple;
-	bh=Rl49n76eQNNcNGJD1vTlqxf61b0cbkIpWIbZWSLonko=;
+	s=arc-20240116; t=1780167141; c=relaxed/simple;
+	bh=scdsR/eoTi8RBcLyNRLIOhg3tUUivo25Scx8uscX0So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X1APXFeAmT18sZtXdxyAH7LJ5KlL4R8ZtZH48s5dFhD0s3Ijdbk2U2aTBfja6WZ56OpKGmFk01e2Hw59g0u1EL/IXDyqhuvnnDKHVsI6KEHbnOxEyMTqbMbDLkG4u30v2v4vw83ZlIyEFWU8khbBbFRXkj5OpLMJzBDbgiquX08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWZrtViJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QMZVABDMuLgS61Sg6wvwnKzPRJXF5PgTYpHPu6Ri1FmEooP3V4R1LYGuaGReCClh2Z2xmgAfRH7gNA7ysFd/ulDE3jSyWcoL81sEfQ6+gES5uD3YGEHszLSMNecidGKPx02yGh+O+GeHUNEzjHoRTHtK1gQStpH9RSNk3tBNOE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LypnB7AN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWZrtViJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61081F00893;
-	Sat, 30 May 2026 18:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LypnB7AN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20CC1F00893;
+	Sat, 30 May 2026 18:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167137;
-	bh=gV8OkSFX7TO38ZH2qdZMtBMoy1pyMBZFShc/Sr8hyjI=;
+	s=korg; t=1780167140;
+	bh=XK8PziWoCZ2Amp8q6CAmR4v1ARO7VMV5HOVFs1vN4SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWZrtViJQUdf7zS277BT2T0xweuFm2z0XtQID/m9hJD8mZzPrSbTIX8Hq5TvXPUqA
-	 LTlTXZAaLE+c9hLNQRWSvwqDmroz3d/wtfNrkiB8Dqc1iaRIgpgQ8xHV+yMgxPfLN/
-	 HWeSAuKwkyVvc/A2TE8gYZEzW5qeHP9NGBlpDMXE=
+	b=LypnB7ANWIQ7Kpp9+3Ggv5o5QoT0AxpEQhIoKez8IABcF204mRPM2Z7y2L6olX5Si
+	 r7lN5fWnxuJleLowogkBSlPLYKulyNwdkiMwgVvs6WxIHzADmp/OiC+M7WQ2mK0+xP
+	 RVw1TUNtSgK8kdpYmn6YXuhdv1bPCHVKZreRxB2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 573/589] phy: marvell: mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access
-Date: Sat, 30 May 2026 18:07:34 +0200
-Message-ID: <20260530160239.674744403@linuxfoundation.org>
+Subject: [PATCH 5.10 574/589] irqchip/ath79-cpu: Remove unused function
+Date: Sat, 30 May 2026 18:07:35 +0200
+Message-ID: <20260530160239.698977233@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -46,52 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 91ddf6f722084383fb05be731c0107814b055c0c ]
+[ Upstream commit 0fa10fb77069fb67aa51384868ef3702b7791465 ]
 
-The mvebu_a3700_utmi_phy_power_off() function tries to modify the
-USB2_PHY_CTRL register by using the IO address of the PHY IP block along
-with the readl/writel IO accessors. However, the register exist in the
-USB miscellaneous register space, and as such it must be accessed via
-regmap like it is done in the mvebu_a3700_utmi_phy_power_on() function.
+ath79_cpu_irq_init() was part of the legacy pre-OF code that got removed a
+while back.
 
-Change the code to use regmap_update_bits() for modífying the register
-to fix this.
+Remove it to get rid of a missing prototype warning, reported by the kernel test
+robot.
 
-Fixes: cc8b7a0ae866 ("phy: add A3700 UTMI PHY driver")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260321-a3700-utmi-fix-usb2_phy_ctrl-access-v1-1-6005ff4b5058@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ tglx: Fix the subject prefix. Sigh ... ]
+
+Fixes: 51fa4f8912c0 ("MIPS: ath79: drop legacy IRQ code")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260506085522.1210143-1-rosenp@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202412011509.kGQkDr1y-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/marvell/phy-mvebu-a3700-utmi.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-ath79-cpu.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-index 8834436bc9dbc..e3a9278c06842 100644
---- a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-+++ b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
-@@ -168,9 +168,8 @@ static int mvebu_a3700_utmi_phy_power_off(struct phy *phy)
- 	u32 reg;
- 
- 	/* Disable PHY pull-up and enable USB2 suspend */
--	reg = readl(utmi->regs + USB2_PHY_CTRL(usb32));
--	reg &= ~(RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32));
--	writel(reg, utmi->regs + USB2_PHY_CTRL(usb32));
-+	regmap_update_bits(utmi->usb_misc, USB2_PHY_CTRL(usb32),
-+			   RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32), 0);
- 
- 	/* Power down OTG module */
- 	if (usb32) {
+diff --git a/drivers/irqchip/irq-ath79-cpu.c b/drivers/irqchip/irq-ath79-cpu.c
+index 923e4bba37767..9b7273a7f8ced 100644
+--- a/drivers/irqchip/irq-ath79-cpu.c
++++ b/drivers/irqchip/irq-ath79-cpu.c
+@@ -85,10 +85,3 @@ static int __init ar79_cpu_intc_of_init(
+ }
+ IRQCHIP_DECLARE(ar79_cpu_intc, "qca,ar7100-cpu-intc",
+ 		ar79_cpu_intc_of_init);
+-
+-void __init ath79_cpu_irq_init(unsigned irq_wb_chan2, unsigned irq_wb_chan3)
+-{
+-	irq_wb_chan[2] = irq_wb_chan2;
+-	irq_wb_chan[3] = irq_wb_chan3;
+-	mips_cpu_irq_init();
+-}
 -- 
 2.53.0
 
