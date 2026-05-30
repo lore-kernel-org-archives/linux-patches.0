@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381CD263F44;
-	Sat, 30 May 2026 17:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D90332EA7;
+	Sat, 30 May 2026 17:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161890; cv=none; b=BSp9V9SDsI/WUeU5akon7CKMZ9f6icBSchWaiCL+Gx0zo5aNh5rA73EPZUWNrp70B/B710T3iwVAUhjZ6pu+SqFWfKNuDvWtZnoGq8mIR6eFrgH6SufpHGNGJ9B2aGIeIhAODQ5RSxM22bIKho3L3qKaMLpAEjNcincHqPZKsvo=
+	t=1780161893; cv=none; b=nkXmFOj8p8fsQbsuQPMXn4T5Z+jTs2JDUhSnXlU39dsTjW8QJIiVp5G6u2fynndQjDR+ZTRI1GygPbniOfQaTz6DiqCuQ4XSh1FmZpDa4EzWL/A3OqTWP3QcUxFby0Gbmz0TPf6J2OolJL1UY8oKfoJHead2MEzqLvwMfxHgJQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161890; c=relaxed/simple;
-	bh=vPD+l/E8jwlVp0Owl5DHybdXQjnyIVLhqTDB7wtN02Y=;
+	s=arc-20240116; t=1780161893; c=relaxed/simple;
+	bh=MpE8mydCoEo6D/QcfF8YmpVKgy9A7Bgd7KjJ5VQHIeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlNBIaXaTnoWcBINo56SZyrHskc/NpZIDDyDaUsTAcbfkxh3qm9Y/bgXObgm5wclnCuw+xb9PMawzz9SwQdXgEhr4yCFj5/yMk3TqA18HtUuI9waCbZqf24FigmEYrW3LOuyWtVyNzKGsAqCrIIk34sUyEZKsYTANfIAOgsT29w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEokkD9J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s5iCXRiQjl8AhRqVd++LZUQotSmjponbugaHA1qurlzDNWkQF/3mM7+fHsnaVWhEhfh8IrfW8oLYdrZX6FTcLRXcIIza6wk06Aam5Lnkv3zs/yh/bqzb0/HjZXJBtXbhNcVtYcKgKIasTzWAucBJFpBW2g1vgwhb50w7yUVd7P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw3LZSeU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEokkD9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1C71F00893;
-	Sat, 30 May 2026 17:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw3LZSeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60621F00893;
+	Sat, 30 May 2026 17:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161889;
-	bh=9TEUybr3KeqXTgOR0t6pskcEPNcvouVCxO6aE5PkqzI=;
+	s=korg; t=1780161892;
+	bh=W/GG97/NRTQiaHTGgtlLjapvUqvDOS0M2kWOpcSXYEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEokkD9JIm3WNSMPkPNy0VNEfsKwDZxZQpQ/0iB2Z3gXz7NH7JHM2SeVeDHn/8W76
-	 Orepj/WBQnpwcTXyM5atHJ0yWlpHDIb7KJVwsmj0+1actTllMu5a5+JB6/9MnCl45t
-	 HIUi/GnBsLqYO4iyee4FMHh9zoHKJl4oQ5pAdeiE=
+	b=uw3LZSeU3vCocgBAhbpSBNS+hdMEpqNROZrCQ2otoFaNwCTSRaaWB+k9I68EM9b+w
+	 TnAXluFaUAgEoyIolTP5469V+ElLbSjqvzd7RcNl8xfard5jFIblTQ0WlFGhT6Rk9R
+	 7pQ5CO65QSJCf1mFQHEl5cce2OV5V7mUHNh/9Eho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 757/969] neigh: let neigh_xmit take skb ownership
-Date: Sat, 30 May 2026 18:04:41 +0200
-Message-ID: <20260530160321.469211142@linuxfoundation.org>
+Subject: [PATCH 6.1 758/969] ALSA: usb-audio: Fix potential leak of pd at parsing UAC3 streams
+Date: Sat, 30 May 2026 18:04:42 +0200
+Message-ID: <20260530160321.497700450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,71 +50,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 4438113be604ee67a7bf4f81da6e1cca41332ce4 ]
+[ Upstream commit c39f0bc03f84ba64c9144c95714df1dc36150f6d ]
 
-neigh_xmit always releases the skb, except when no neighbour table is
-found. But even the first added user of neigh_xmit (mpls) relied on
-neigh_xmit to release the skb (or queue it for tx).
+At parsing UAC3 streams, we allocate a PD object at each time, and
+either assign or free it.  But there is a case where the PD object may
+be leaked; namely, in __snd_usb_parse_audio_interface() loop, when an
+audioformat shares the same endpoint with others, it's put to a link
+and returns from snd_usb_add_audio_stream(), but the PD is forgotten
+afterwards.  Overall, the treatment of PD object in the parser code is
+a bit flaky, and we should be more careful about the object ownership.
 
-sashiko reported:
- If neigh_xmit() is called with an uninitialized neighbor table (for
- example, NEIGH_ND_TABLE when IPv6 is disabled), it returns -EAFNOSUPPORT
- and bypasses its internal out_kfree_skb error path.  Because the return
- value of neigh_xmit() is ignored here, does this leak the SKB?
+This patch tries to fix the above case and improve the code a bit.
+The pd object is now managed with the auto-cleanup in the loop, and
+the ownership is updated when the pd object gets assigned to the
+stream, which guarantees the release of the leftover object.
 
-Assume full ownership and remove the last code path that doesn't
-xmit or free skb.
-
-Fixes: 4fd3d7d9e868 ("neigh: Add helper function neigh_xmit")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260424145843.74055-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7edf3b5e6a45 ("ALSA: usb-audio: AudioStreaming Power Domain parsing")
+Link: https://patch.msgid.link/20260427151508.12544-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/usb/quirks.c |  2 +-
+ sound/usb/stream.c | 58 ++++++++++++++++++----------------------------
+ sound/usb/stream.h |  3 ++-
+ 3 files changed, 25 insertions(+), 38 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index fe0e839972ba7..7bdb2b5a6e014 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -3154,8 +3154,10 @@ int neigh_xmit(int index, struct net_device *dev,
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 23361e78189d0..8faf3731e3499 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -121,7 +121,7 @@ static int add_audio_stream_from_fixed_fmt(struct snd_usb_audio *chip,
  
- 		rcu_read_lock();
- 		tbl = rcu_dereference(neigh_tables[index]);
--		if (!tbl)
--			goto out_unlock;
-+		if (!tbl) {
-+			rcu_read_unlock();
-+			goto out_kfree_skb;
-+		}
- 		if (index == NEIGH_ARP_TABLE) {
- 			u32 key = *((u32 *)addr);
+ 	snd_usb_audioformat_set_sync_ep(chip, fp);
  
-@@ -3171,7 +3173,6 @@ int neigh_xmit(int index, struct net_device *dev,
- 			goto out_kfree_skb;
- 		}
- 		err = READ_ONCE(neigh->output)(neigh, skb);
--out_unlock:
- 		rcu_read_unlock();
+-	err = snd_usb_add_audio_stream(chip, stream, fp);
++	err = snd_usb_add_audio_stream(chip, stream, fp, NULL);
+ 	if (err < 0)
+ 		return err;
+ 
+diff --git a/sound/usb/stream.c b/sound/usb/stream.c
+index 920a718f91e68..f964082da3a63 100644
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -79,7 +79,7 @@ static void snd_usb_audio_pcm_free(struct snd_pcm *pcm)
+ static void snd_usb_init_substream(struct snd_usb_stream *as,
+ 				   int stream,
+ 				   struct audioformat *fp,
+-				   struct snd_usb_power_domain *pd)
++				   struct snd_usb_power_domain **pdptr)
+ {
+ 	struct snd_usb_substream *subs = &as->substream[stream];
+ 
+@@ -105,10 +105,11 @@ static void snd_usb_init_substream(struct snd_usb_stream *as,
+ 	if (fp->channels > subs->channels_max)
+ 		subs->channels_max = fp->channels;
+ 
+-	if (pd) {
+-		subs->str_pd = pd;
++	if (pdptr && *pdptr) {
++		subs->str_pd = *pdptr;
++		*pdptr = NULL; /* assigned */
+ 		/* Initialize Power Domain to idle status D1 */
+-		snd_usb_power_domain_set(subs->stream->chip, pd,
++		snd_usb_power_domain_set(subs->stream->chip, subs->str_pd,
+ 					 UAC3_PD_STATE_D1);
  	}
- 	else if (index == NEIGH_LINK_TABLE) {
-@@ -3181,11 +3182,10 @@ int neigh_xmit(int index, struct net_device *dev,
- 			goto out_kfree_skb;
- 		err = dev_queue_xmit(skb);
+ 
+@@ -486,11 +487,14 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
+  * if not, create a new pcm stream. note, fp is added to the substream
+  * fmt_list and will be freed on the chip instance release. do not free
+  * fp or do remove it from the substream fmt_list to avoid double-free.
++ *
++ * pdptr is optional and can be NULL.  When it's non-NULL and the PD gets
++ * assigned to the stream, *pdptr is cleared to NULL upon return.
+  */
+-static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+-				      int stream,
+-				      struct audioformat *fp,
+-				      struct snd_usb_power_domain *pd)
++int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
++			     int stream,
++			     struct audioformat *fp,
++			     struct snd_usb_power_domain **pdptr)
+ 
+ {
+ 	struct snd_usb_stream *as;
+@@ -523,7 +527,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 		err = snd_pcm_new_stream(as->pcm, stream, 1);
+ 		if (err < 0)
+ 			return err;
+-		snd_usb_init_substream(as, stream, fp, pd);
++		snd_usb_init_substream(as, stream, fp, pdptr);
+ 		return add_chmap(as->pcm, stream, subs);
  	}
--out:
- 	return err;
- out_kfree_skb:
- 	kfree_skb(skb);
--	goto out;
-+	return err;
+ 
+@@ -551,7 +555,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 	else
+ 		strcpy(pcm->name, "USB Audio");
+ 
+-	snd_usb_init_substream(as, stream, fp, pd);
++	snd_usb_init_substream(as, stream, fp, pdptr);
+ 
+ 	/*
+ 	 * Keep using head insertion for M-Audio Audiophile USB (tm) which has a
+@@ -569,21 +573,6 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 	return add_chmap(pcm, stream, &as->substream[stream]);
  }
- EXPORT_SYMBOL(neigh_xmit);
+ 
+-int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+-			     int stream,
+-			     struct audioformat *fp)
+-{
+-	return __snd_usb_add_audio_stream(chip, stream, fp, NULL);
+-}
+-
+-static int snd_usb_add_audio_stream_v3(struct snd_usb_audio *chip,
+-				       int stream,
+-				       struct audioformat *fp,
+-				       struct snd_usb_power_domain *pd)
+-{
+-	return __snd_usb_add_audio_stream(chip, stream, fp, pd);
+-}
+-
+ static int parse_uac_endpoint_attributes(struct snd_usb_audio *chip,
+ 					 struct usb_host_interface *alts,
+ 					 int protocol, int iface_no)
+@@ -1102,8 +1091,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 		}
+ 	}
+ 
+-	if (pd)
+-		*pd_out = pd;
++	*pd_out = pd;
+ 
+ 	return fp;
+ }
+@@ -1118,7 +1106,6 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 	struct usb_interface_descriptor *altsd;
+ 	int i, altno, err, stream;
+ 	struct audioformat *fp = NULL;
+-	struct snd_usb_power_domain *pd = NULL;
+ 	bool set_iface_first;
+ 	int num, protocol;
+ 
+@@ -1160,6 +1147,12 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 		if (snd_usb_apply_interface_quirk(chip, iface_no, altno))
+ 			continue;
+ 
++		/* pd may be allocated at snd_usb_get_audioformat_uac3() and
++		 * assigned at snd_usb_add_audio_stream(); otherwise it'll be
++		 * freed automatically by cleanup at each loop.
++		 */
++		struct snd_usb_power_domain *pd __free(kfree) = NULL;
++
+ 		/*
+ 		 * Roland audio streaming interfaces are marked with protocols
+ 		 * 0/1/2, but are UAC 1 compatible.
+@@ -1215,23 +1208,16 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 			*has_non_pcm = true;
+ 		if ((fp->fmt_type == UAC_FORMAT_TYPE_I) == non_pcm) {
+ 			audioformat_free(fp);
+-			kfree(pd);
+ 			fp = NULL;
+-			pd = NULL;
+ 			continue;
+ 		}
+ 
+ 		snd_usb_audioformat_set_sync_ep(chip, fp);
+ 
+ 		dev_dbg(&dev->dev, "%u:%d: add audio endpoint %#x\n", iface_no, altno, fp->endpoint);
+-		if (protocol == UAC_VERSION_3)
+-			err = snd_usb_add_audio_stream_v3(chip, stream, fp, pd);
+-		else
+-			err = snd_usb_add_audio_stream(chip, stream, fp);
+-
++		err = snd_usb_add_audio_stream(chip, stream, fp, &pd);
+ 		if (err < 0) {
+ 			audioformat_free(fp);
+-			kfree(pd);
+ 			return err;
+ 		}
+ 
+diff --git a/sound/usb/stream.h b/sound/usb/stream.h
+index d92e18d5818fe..61b9a133da018 100644
+--- a/sound/usb/stream.h
++++ b/sound/usb/stream.h
+@@ -7,7 +7,8 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 
+ int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 			     int stream,
+-			     struct audioformat *fp);
++			     struct audioformat *fp,
++			     struct snd_usb_power_domain **pdptr);
+ 
+ #endif /* __USBAUDIO_STREAM_H */
  
 -- 
 2.53.0
