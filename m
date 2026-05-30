@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7AA2628D;
-	Sat, 30 May 2026 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FD0320CAD;
+	Sat, 30 May 2026 17:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163783; cv=none; b=D1ycmlCRhBPonsQCuLlPBuKbqxHykQy7q9+uLRXWIWnx8Lqm9teneDzw805H/GE1Y82+If+fJRNSgxM84SYutKKAGRrL+9ncY7TiCLdQDrrXF44pK/QXec11r49Li7xCYi5ii9WHsFmMWfzqgA8LqyJiK/RR3kIvO7bzcCB/2k4=
+	t=1780163786; cv=none; b=GP+Qf3497I1HghOk0OUHWx1uvE7kxhJj5DYExXIF+I09oEF4PVOOIXTfMwbDlEFLIujZGcpxXc4S1FQScHvLwtDXHlHR88ZgpUab6zZYa+3XqAFzi3hqT3URIgc7nEK8T1O4O3v7vmadOUyEEGyH+mqhfuitBjIeF3Mq7CEglLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163783; c=relaxed/simple;
-	bh=EuKG4VDGfCa40idfp1k2f1GVvK+u2L6qF3Av/pQ2pgI=;
+	s=arc-20240116; t=1780163786; c=relaxed/simple;
+	bh=XYOFHTUq/qkwluI4BpL0RHORU31EKm4Xn6lyB5X+65k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Syu7klqLlY4ScHYY07YzinnlbHSsBFVI2pKXGz1rqqZulqxZqp3YDoqkgaYSIHQ2alDCxBgxtfUHm6HgtaJFonrOdPo7K3H7pD8CHU0Yj9a+Y8/HfN4CNwcJ/ShOWmW1e+Z9shkrLoK5WXhvmRMXHoZ+XdwsaT/vBqi18bz8Bto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNZUcOHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qK96fMulI50B+ufZ6dJY9zFausTuTa/jIXSOPCYZN6H8Svqhp/KDm7SiOHXMa7NY/RroocgFmd/Hxle26L/vUS/8KdZSD0AN2x4P3e6xzehZu1ttSqlKJtwn4ksuWTy3A2iqXqWzYLeBXwrNOIkwBJNJ0xz7h0IDR99Mfyfdni0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7zf8Oil; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNZUcOHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1D21F00893;
-	Sat, 30 May 2026 17:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7zf8Oil"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A7E1F00893;
+	Sat, 30 May 2026 17:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163781;
-	bh=rPn0/Ohy3Hsl++QnSIGRHTNeZyMR0uke0DWh+Hiqhws=;
+	s=korg; t=1780163785;
+	bh=VlCNjI0Kha9JZlOD6cOgFWuJm71oZb1U4Bik9AE5hco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNZUcOHCJ2RgKF0eaBMEwDJvAzSQWuJslPypaO7KljDta8yNvEVGdqquZj8l/I6Uk
-	 8IGxFnkTsRZIsRIf5TEu/RK+bnPnmTynBrxfT5YXnS0hoNmkzQIQZPCug3biKX2l+e
-	 V4p+1sbsAXbmJJz5xJebsQPkgXXAliteAEXy2K4E=
+	b=G7zf8Oilw4P3Lp0jqC5STG7+xIpmMvp2M+JUNOjT39wOY6HPidW+lgdtdCqxJG+0L
+	 Z3t/yu7aFKbNV+3C2/f7UUzN83mCJszJ/KffDPsjLsM4pSck9OLo8AsyPAh3pWWz3Q
+	 t73DE06i8ZX52sEMJCqNcP//1x+xxPbELywT8vUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Asleson <tasleson@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	"Bryn M. Reeves" <bmr@redhat.com>
-Subject: [PATCH 5.15 329/776] dm: fix a buffer overflow in ioctl processing
-Date: Sat, 30 May 2026 18:00:43 +0200
-Message-ID: <20260530160249.076020154@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 330/776] dm-verity-fec: correctly reject too-small FEC devices
+Date: Sat, 30 May 2026 18:00:44 +0200
+Message-ID: <20260530160249.101817849@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,55 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 2fa49cc884f6496a915c35621ba4da35649bf159 upstream.
+commit 2b14e0bb63cc671120e7791658f5c494fc66d072 upstream.
 
-Tony Asleson (using Claude) found a buffer overflow in dm-ioctl in the
-function retrieve_status:
+Fix verity_fec_ctr() to reject too-small FEC devices by correctly
+computing the number of parity blocks as 'f->rounds * f->roots'.
+Previously it incorrectly used 'div64_u64(f->rounds * f->roots,
+v->fec->roots << SECTOR_SHIFT)' which is a much smaller value.
 
-1. The code in retrieve_status checks that the output string fits into
-   the output buffer and writes the output string there
-2. Then, the code aligns the "outptr" variable to the next 8-byte
-   boundary:
-	outptr = align_ptr(outptr);
-3. The alignment doesn't check overflow, so outptr could point past the
-   buffer end
-4. The "for" loop is iterated again, it executes:
-	remaining = len - (outptr - outbuf);
-5. If "outptr" points past "outbuf + len", the arithmetics wraps around
-   and the variable "remaining" contains unusually high number
-6. With "remaining" being high, the code writes more data past the end of
-   the buffer
+Note that the units of 'rounds' are blocks, not bytes.  This matches the
+units of the value returned by dm_bufio_get_device_size(), which are
+also blocks.  A later commit will give 'rounds' a clearer name.
 
-Luckily, this bug has no security implications because:
-1. Only root can issue device mapper ioctls
-2. The commonly used libraries that communicate with device mapper
-   (libdevmapper and devicemapper-rs) use buffer size that is aligned to
-   8 bytes - thus, "outptr = align_ptr(outptr)" can't overshoot the input
-   buffer and the bug can't happen accidentally
-
-Reported-by: Tony Asleson <tasleson@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Bryn M. Reeves <bmr@redhat.com>
+Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
 Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/dm-verity-fec.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1311,6 +1311,10 @@ static void retrieve_status(struct dm_ta
- 		used = param->data_start + (outptr - outbuf);
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -668,7 +668,7 @@ int verity_fec_ctr(struct dm_verity *v)
+ {
+ 	struct dm_verity_fec *f = v->fec;
+ 	struct dm_target *ti = v->ti;
+-	u64 hash_blocks, fec_blocks;
++	u64 hash_blocks;
+ 	int ret;
  
- 		outptr = align_ptr(outptr);
-+		if (!outptr || outptr > outbuf + len) {
-+			param->flags |= DM_BUFFER_FULL_FLAG;
-+			break;
-+		}
- 		spec->next = outptr - outbuf;
+ 	if (!verity_fec_is_enabled(v)) {
+@@ -752,8 +752,7 @@ int verity_fec_ctr(struct dm_verity *v)
+ 
+ 	dm_bufio_set_sector_offset(f->bufio, f->start << (v->data_dev_block_bits - SECTOR_SHIFT));
+ 
+-	fec_blocks = div64_u64(f->rounds * f->roots, v->fec->roots << SECTOR_SHIFT);
+-	if (dm_bufio_get_device_size(f->bufio) < fec_blocks) {
++	if (dm_bufio_get_device_size(f->bufio) < f->rounds * f->roots) {
+ 		ti->error = "FEC device is too small";
+ 		return -E2BIG;
  	}
- 
 
 
