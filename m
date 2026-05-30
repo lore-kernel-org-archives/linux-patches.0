@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550493438A8;
-	Sat, 30 May 2026 16:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9790D343D72;
+	Sat, 30 May 2026 16:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158151; cv=none; b=I1wJ5BZ8QbMlnXxEjjsLMsoMtGoLBRVlMPgyuibl4bCxZlDcqxqaOyrvIbP/dinZd7RW/Doq67zhGu6dqkszDFemUVceOF1xDeJQyXOgXKieDLMVu32onyOz4PDrNcLpEjP9vRFpEcCoq88ot6KP86diwAcJzZaORROWjBalkkc=
+	t=1780158158; cv=none; b=OeG5vGcyW/zgdQvGDE0i56C5AJRlCcQ+3/l5lQK9l6rJzKml0fqg4cOQ69mePDFiZFJ2tPK7wSaeov6vPQlleeRaFYJWXBxZdR9SzwdkoC7yqGka6CIf5weIMhiVzkQSFRJ0KxVmzqu/dD+AxQgjldkMjOqeOVjQBSs/LXNoCZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158151; c=relaxed/simple;
-	bh=4CBIHJvUFWvhAu0e7/SJzzueODCAP2aKWCWpkT6dOlk=;
+	s=arc-20240116; t=1780158158; c=relaxed/simple;
+	bh=9MZ6Aa41vRmz4fVlPoktWgX0Z27hp9nBfVTXSXCRWMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEIg1+S3PeY8l/Gap8UsVHmLpUijOFoQ3cBRC/aNgDtEHihUCi9NB6pFJA9b/hGvQV/DVnuBuRAAMryT0YLtHX5M6p4Hzy8xYjY7+7eLOEuskvXT0RQ8t5PsxQlLP+HEFUH0P5A0NIpe0AxdKEeRcsDnHeu1O2+Jfri+NYgHbjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1UyhNuW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I+opezhQxbwngjnPJnRddjyJ/N0aL1sqkN1Zg9L70z6TfdH0QvOYnluZoH8jjplOEGM9bul0WvL4lchrGkxennoS7u7a6jHrGs/+nH60J6jwMCKRGkp1O25ObIs38VmDonIoH2TyQlHz5CLVpYa3td6wWI0ZxBGYq66Qtd7qnE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUT9H8qu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1UyhNuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8594D1F00893;
-	Sat, 30 May 2026 16:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUT9H8qu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256311F00898;
+	Sat, 30 May 2026 16:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158150;
-	bh=B6G41XdiyuSgB6t8HDiWc2zKFumrG8flONUOunsT6os=;
+	s=korg; t=1780158157;
+	bh=EXimtZA5+wTBLXF13+KFJXmETasWuj+P1M8GxeZe+SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1UyhNuWQdS3yN39LYugUKByhEai+orBzdNFOr5dsME2KlDAsetbTysGgtsmV8fpu
-	 M1vJ0HUqDyBKEyrs3GnCFkkeQHSZ4sdM65TwzDT+fTXeLxzWfaPqAtIfYEeYk2g2S7
-	 /U5pvkxYww9SBwaLHbgC4ur/PjNWJWShvIXPoeFU=
+	b=BUT9H8qup72AzHyzSD2lOYPPwIZt4+klghRAucTAeRLL8z/DU4wPgA7WeCcITxyiO
+	 cAcFmh/79WT/cUgrwfCwyQepgWYUf8MJM2AIe33P8NsmenBJn4HDkDl7oMZQp17acp
+	 KzuY66Xcya02p+iRCIDp99y5/BfHaH1uIZO3sME4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/969] PCI: hv: Set default NUMA node to 0 for devices without affinity info
-Date: Sat, 30 May 2026 17:52:30 +0200
-Message-ID: <20260530160301.167843018@linuxfoundation.org>
+Subject: [PATCH 6.1 027/969] drm/vc4: Release runtime PM reference after binding V3D
+Date: Sat, 30 May 2026 17:52:31 +0200
+Message-ID: <20260530160301.193821183@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,61 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 7b3b1e5a87b2f5e35c52b5386d7c327be869454f ]
+[ Upstream commit aaefbdde9abdc43699e110679c0e10972a5e1c59 ]
 
-When hv_pci_assign_numa_node() processes a device that does not have
-HV_PCI_DEVICE_FLAG_NUMA_AFFINITY set or has an out-of-range
-virtual_numa_node, the device NUMA node is left unset. On x86_64,
-the uninitialized default happens to be 0, but on ARM64 it is
-NUMA_NO_NODE (-1).
+The vc4_v3d_bind() function acquires a runtime PM reference via
+pm_runtime_resume_and_get() to access V3D registers during setup.
+However, this reference is never released after a successful bind.
+This prevents the device from ever runtime suspending, since the
+reference count never reaches zero.
 
-Tests show that when no NUMA information is available from the Hyper-V
-host, devices perform best when assigned to node 0. With NUMA_NO_NODE
-the kernel may spread work across NUMA nodes, which degrades
-performance on Hyper-V, particularly for high-throughput devices like
-MANA.
+Release the runtime PM reference by adding pm_runtime_put_autosuspend()
+after autosuspend is configured, allowing the device to runtime suspend
+after the delay.
 
-Always set the device NUMA node to 0 before the conditional NUMA
-affinity check, so that devices get a performant default when the host
-provides no NUMA information, and behavior is consistent on both
-x86_64 and ARM64.
-
-Fixes: 999dd956d838 ("PCI: hv: Add support for protocol 1.3 and support PCI_BUS_RELATIONS2")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 266cff37d7fc ("drm/vc4: v3d: Rework the runtime_pm setup")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-1-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-hyperv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/vc4/vc4_v3d.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-index 09491d06589ee..58430ca37bbdf 100644
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -2291,6 +2291,14 @@ static void hv_pci_assign_numa_node(struct hv_pcibus_device *hbus)
- 		if (!hv_dev)
- 			continue;
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 56abb0d6bc39b..a39e6f8eff0a6 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -497,6 +497,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
  
-+		/*
-+		 * If the Hyper-V host doesn't provide a NUMA node for the
-+		 * device, default to node 0. With NUMA_NO_NODE the kernel
-+		 * may spread work across NUMA nodes, which degrades
-+		 * performance on Hyper-V.
-+		 */
-+		set_dev_node(&dev->dev, 0);
-+
- 		if (hv_dev->desc.flags & HV_PCI_DEVICE_FLAG_NUMA_AFFINITY &&
- 		    hv_dev->desc.virtual_numa_node < num_possible_nodes())
- 			/*
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_set_autosuspend_delay(dev, 40); /* a little over 2 frames. */
++	pm_runtime_put_autosuspend(dev);
+ 
+ 	return 0;
+ 
 -- 
 2.53.0
 
