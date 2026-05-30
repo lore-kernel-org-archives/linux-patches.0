@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7412431E858;
-	Sat, 30 May 2026 18:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F4B340A6F;
+	Sat, 30 May 2026 18:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164424; cv=none; b=rI1MSKl81Mxi01q7hEG+rI8sWXBv1gLT3o8vDXtwROD90WDSCug7ntqY2s7ZZojUSUpOHqUYek3+yRb/yBNmm8mJ6PbOXqm4aj4l4Et8A3DeNxJZD+GbCjW8HlteV6WMxQGyxt2LMpPuropeQ2VIYciNEoVQCN8PNz9NqN8vZDg=
+	t=1780164427; cv=none; b=T5yOlfu5KJTKGgxewvdg3+iv4GV+BkrEmcaht3uWSopbvF7+RaK7HlN3CcQNml5Sd7KdL+G7S7gj4V1egyX7WoMtVs9EmuyYRvT9lcQysbzdK72BrfufbxsZSReYPJpNSr4WsjIyzVav/vaaKUyAl4rjq8wAiSVp8lZ7J3EVdZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164424; c=relaxed/simple;
-	bh=Bv6c2vgUarvy/pLTAU232A6rQAHe5JoMPW1oo072Pbc=;
+	s=arc-20240116; t=1780164427; c=relaxed/simple;
+	bh=EqUPiCpdXV56/qXQe7mzm0R8hsGP9zlSKRkF2iVnAxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2DwBBL7XHmd0A6fGmn3wjvpuaRPWVV0rkg+4bdnmlHv+QfRwWKaVEags/JGWrqy4QKqVoINFCY3eTh50CRbMU/18SVjrdKU/gYYAlnX65ZgRKi32Y7O0NyPbwQe2EcbvRVA6Relgbiymy7tNubu9EenqNK1CqW2pjdvyg4X2kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRsHiGMU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GGM+Pzu2f7JHb4Ldz4En4hk8it1q+GMLGJ/oou+cznVhKcZbljBjQ9Zv19QybXjd2weAOs4Yoe+X6cOuX7ypTJIGq/KZ+GwRGpqc+iYkSF+4JgPt6pc843ncj+/OaBX+VgVhQE3zd+Ar8+8I9QITJf5MtwyJUGuFzY/XTeLon0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+EzBNky; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRsHiGMU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96E31F00893;
-	Sat, 30 May 2026 18:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+EzBNky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390761F00893;
+	Sat, 30 May 2026 18:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164423;
-	bh=jSmN3tjfMDF2EDjYlkicPmpeS6b/kIPebFWz1TZPGuw=;
+	s=korg; t=1780164426;
+	bh=WkqjkFY7oUFJ03tfu6U094ugJYz4+9mAkHA7oPK4QYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GRsHiGMUzoYA950/OR1fRvahbDFdn3qV2N1vne3Wp1g9N4gKAfb971U7Rg9ToXhQD
-	 UDFjAk/u0j0dhYyfiERsuayh1HtXEAAKvG+DMbMDv2rbGEemPxKzNfC7wTUbyuZ2cv
-	 C9oY9ZfiCm/sJpEHKLjzrFilyjGIgqtGSvitz/u8=
+	b=I+EzBNkyEMqXMb0UCmzE9QgAvcF9sVpFPwf3yFlIKY2rM8Zkuxdzhzq2azLAzFEsf
+	 Uf80OvfH7Ad+YLIoJymQUPZcH/GOSNjZqXrRbHoOGfj9afJdoabT56BkvAsJbA9yTR
+	 RZpYby2mUMhRoFVoJGfHQ4RHYr4ZK+PSawvIbUlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Petr Mladek <pmladek@suse.com>,
+	T Pratham <t-pratham@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 550/776] lib/hexdump: print_hex_dump_bytes() calls print_hex_dump_debug()
-Date: Sat, 30 May 2026 18:04:24 +0200
-Message-ID: <20260530160254.374101794@linuxfoundation.org>
+Subject: [PATCH 5.15 551/776] crypto: sa2ul - Fix AEAD fallback algorithm names
+Date: Sat, 30 May 2026 18:04:25 +0200
+Message-ID: <20260530160254.397916695@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,49 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: T Pratham <t-pratham@ti.com>
 
-[ Upstream commit 36776b7f8a8955b4e75b5d490a75fee0c7a2a7ef ]
+[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
 
-print_hex_dump_bytes() claims to be a simple wrapper around
-print_hex_dump(), but it actally calls print_hex_dump_debug(), which
-means no output is printed if (dynamic) DEBUG is disabled.
+For authenc AEAD algorithms, sa2ul is trying to register very specific
+-ce version as a fallback. This causes registration failure on SoCs
+which do not have ARMv8-CE enabled/available. Change the fallback
+algorithm from the specific driver name to generic algorithm name so
+that the kernel can allocate any available fallback.
 
-Update the documentation to match the implementation.
-
-Fixes: 091cb0994edd20d6 ("lib/hexdump: make print_hex_dump_bytes() a nop on !DEBUG builds")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/3d5c3069fd9102ecaf81d044b750cd613eb72a08.1774970392.git.geert+renesas@glider.be
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
+Signed-off-by: T Pratham <t-pratham@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/printk.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/crypto/sa2ul.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/printk.h b/include/linux/printk.h
-index c4fb84822111d..ff5062bf9b33d 100644
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -741,7 +741,8 @@ static inline void print_hex_dump_debug(const char *prefix_str, int prefix_type,
- #endif
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index 91ab33690ccf4..05849a1c86f35 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1774,13 +1774,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha1",
+-				"authenc(hmac(sha1-ce),cbc(aes-ce))");
++				"authenc(hmac(sha1),cbc(aes))");
+ }
  
- /**
-- * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
-+ * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
-+ *                        params
-  * @prefix_str: string to prefix each line with;
-  *  caller supplies trailing spaces for alignment if desired
-  * @prefix_type: controls whether prefix of an offset, address, or none
-@@ -749,7 +750,7 @@ static inline void print_hex_dump_debug(const char *prefix_str, int prefix_type,
-  * @buf: data blob to dump
-  * @len: number of bytes in the @buf
-  *
-- * Calls print_hex_dump(), with log level of KERN_DEBUG,
-+ * Calls print_hex_dump_debug(), with log level of KERN_DEBUG,
-  * rowsize of 16, groupsize of 1, and ASCII output included.
-  */
- #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
+ static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha256",
+-				"authenc(hmac(sha256-ce),cbc(aes-ce))");
++				"authenc(hmac(sha256),cbc(aes))");
+ }
+ 
+ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
 -- 
 2.53.0
 
