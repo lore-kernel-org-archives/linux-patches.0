@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D704D2FDC5E;
-	Sat, 30 May 2026 18:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD180342CB3;
+	Sat, 30 May 2026 18:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164043; cv=none; b=XWXiT2AQQNCWYOeKpWxNMq2Q9KmIRZ2KUlgpPEDZBKm8LOrym7ZRGE6b3LG1f91SamGch0pItAl8d13vBFyvcGB5vU8k+39Y7CwPikeQLjFStgNxk84v/sFZ75ZloFnbgS6S0FSsY/PePZp7rWZRLoU5r6aYzITu9Sjgyehf6J0=
+	t=1780164047; cv=none; b=sPWofaazPulCFABDLM6wYa+cIuV2MF7fazhRgqwFLhvORohPFK9O5ffLl+D/XF/YlyF4MFS8jNPWF3WhAgk+l5Db5SQKy1oDt7dc3EHipdkApe4L1D1dZLD9hILvi0l+CWrbrd01JNQH7ckabostoqzUdKVCeDlnRu6Ctvy32Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164043; c=relaxed/simple;
-	bh=ggFCdyQlGgSVa0VP1dgkjNdxTW3h652nmGGRQr49fJM=;
+	s=arc-20240116; t=1780164047; c=relaxed/simple;
+	bh=imyQE3W8O15Huq9M/kDoWBUALIXFIRbK9riB9yNi3ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHO8Soigcsdt9UJlzzHqpxXEQpA5/EF1DYX6x00l4P6dKl9FEZz/lF/AZt8QZkUaATn89aBjGkwPh/LBgmlrA6/dqc5wJ7uNUvr0+e6h+xhmj1Q8afS3DXN7l7UzIsajsxKeMudwmhY0xr174K6CfWmAZve4425dH3aXYMgfjNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0cWptLD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=loWMaQy4nHGUvSW6Uf8LwdTxp++iJ5YqtouYOENqaWU2EkY1+e+z0CpTwIhIUoT++RFB80HQll9zI27HI2dxqCUWyGTLB4M5HN2LJ8VO9tWnNKoWN74MwC1IDTWUPO6fP3r+nih51djNiE09yTdKnQdEYZGJhVXKnflJTlR7an0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9qqotST; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0cWptLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E781F00893;
-	Sat, 30 May 2026 18:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9qqotST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDB81F00893;
+	Sat, 30 May 2026 18:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164042;
-	bh=Z95tcb3JzVADBx0namca81kRYNW267PZWtPsKg1X/ko=;
+	s=korg; t=1780164045;
+	bh=pP8EL82Z94t5wh2K8wI6258MiSY91geQH8kBX+mqCxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0cWptLDsGYgQ0ru1ZN6DfqZZJ9vtWbRMTIb+7NhN821jce0ACkriNzf+TXPU2U3P
-	 dIpDaq5NPW4368FS20heubG7U7vfDse+OIjPbqLBwh7h3IOMiXr68ZCECmaSaonIp6
-	 cvc+BfOl2ntPDbb91f15alEd1nYJSA6t4Tj2Z07k=
+	b=w9qqotSTScEf63uq/9vGp0TpSphUe9O3h0QNZs2RTH2yD1Hgpfrn+XrQ2jTxaEnU7
+	 RCTZ8Wsjw5o76CpJ5vua2Xc3yMC9tkmsDopxAevIsLQ1E/EOgi5nGc+9LykZPpsC8Z
+	 YmMhWvOTTl7IvdRB+hpvdrhWrNgCU2Ffpi/CrdNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 438/776] dm cache: fix dirty mapping checking in passthrough mode switching
-Date: Sat, 30 May 2026 18:02:32 +0200
-Message-ID: <20260530160251.744034652@linuxfoundation.org>
+Subject: [PATCH 5.15 439/776] dm cache metadata: fix memory leak on metadata abort retry
+Date: Sat, 30 May 2026 18:02:33 +0200
+Message-ID: <20260530160251.767101552@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,147 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 322586745bd1a0e5f3559fd1635fdeb4dbd1d6b8 ]
+[ Upstream commit 044ca491d4086dc5bf233e9fcb71db52df32f633 ]
 
-As mentioned in commit 9b1cc9f251af ("dm cache: share cache-metadata
-object across inactive and active DM tables"), dm-cache assumed table
-reload occurs after suspension, while LVM's table preload breaks this
-assumption. The dirty mapping check for passthrough mode was designed
-around this assumption and is performed during table creation, causing
-the check to fail with preload while metadata updates are ongoing. This
-risks loading dirty mappings into passthrough mode, resulting in data
-loss.
+When failing to acquire the root_lock in dm_cache_metadata_abort because
+the block_manager is read-only, the temporary block_manager created
+outside the root_lock is not properly released, causing a memory leak.
 
 Reproduce steps:
 
-1. Create a writeback cache with zero migration_threshold to produce
-   dirty mappings
+This can be reproduced by reloading a new table while the metadata
+is read-only. While the second call to dm_cache_metadata_abort is
+caused by lack of support for table preload in dm-cache, mentioned
+in commit 9b1cc9f251af ("dm cache: share cache-metadata object across
+inactive and active DM tables"), it exposes the memory leak in
+dm_cache_metadata_abort when the function is called multiple times.
+Specifically, dm-cache fails to sync the new cache object's mode during
+preresume, creating the reproducer condition.
 
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+This issue could also occur through concurrent metadata_operation_failed
+calls due to races in cache mode updates, but the table preload scenario
+below provides a reliable reproducer.
+
+1. Create a cache device with some faulty trailing metadata blocks
+
+dmsetup create cmeta <<EOF
+0 200 linear /dev/sdc 0
+200 7992 error
+EOF
 dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
 dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
 dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
-2 migration_threshold 0"
+dmsetup create cache --table "0 131072 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 1 writethrough smq 0"
 
-2. Preload a table in passthrough mode
+2. Suspend and resume the cache to start a new metadata transaction and
+   trigger metadata io errors on the next metadata commit.
 
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-
-3. Write to the first cache block to make it dirty
-
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-4. Resume the inactive table. Now it's possible to load the dirty block
-   into passthrough mode.
-
+dmsetup suspend cache
 dmsetup resume cache
 
-Fix by moving the checks to the preresume phase to support table
-preloading. Also remove the unused function dm_cache_metadata_all_clean.
+3. Write to the cache device to update metadata
 
-Fixes: 2ee57d587357 ("dm cache: add passthrough mode")
+fio --filename=/dev/mapper/cache --name test --rw=randwrite --bs=4k \
+--randrepeat=0 --direct=1 --size 64k
+
+4. Preload the same table
+
+dmsetup reload cache --table "$(dmsetup table cache)"
+
+5. Resume the new table. This triggers the memory leak.
+
+dmsetup suspend cache
+dmsetup resume cache
+
+kmemleak logs:
+
+<snip>
+unreferenced object 0xffff8880080c2010 (size 16):
+  comm "dmsetup", pid 132, jiffies 4294982580
+  hex dump (first 16 bytes):
+    00 38 b9 07 80 88 ff ff 6a 6b 6b 6b 6b 6b 6b a5 ...
+  backtrace (crc 3118f31c):
+    kmemleak_alloc+0x28/0x40
+    __kmalloc_cache_noprof+0x3d9/0x510
+    dm_block_manager_create+0x51/0x140
+    dm_cache_metadata_abort+0x85/0x320
+    metadata_operation_failed+0x103/0x1e0
+    cache_preresume+0xacd/0xe70
+    dm_table_resume_targets+0xd3/0x320
+    __dm_resume+0x1b/0xf0
+    dm_resume+0x127/0x170
+<snip>
+
+Fixes: 352b837a5541 ("dm cache: Fix ABBA deadlock between shrink_slab and dm_cache_metadata_abort")
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-metadata.c | 11 -----------
- drivers/md/dm-cache-metadata.h |  5 -----
- drivers/md/dm-cache-target.c   | 25 ++++++++-----------------
- 3 files changed, 8 insertions(+), 33 deletions(-)
+ drivers/md/dm-cache-metadata.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index 0f6f74e3030f7..61808d888dc45 100644
+index 61808d888dc45..c183c2fc1691c 100644
 --- a/drivers/md/dm-cache-metadata.c
 +++ b/drivers/md/dm-cache-metadata.c
-@@ -1749,17 +1749,6 @@ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *
- 	return r;
- }
+@@ -1017,6 +1017,12 @@ static bool cmd_write_lock(struct dm_cache_metadata *cmd)
+ 			return;			\
+ 	} while(0)
  
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result)
--{
--	int r;
--
--	READ_LOCK(cmd);
--	r = blocks_are_unmapped_or_clean(cmd, 0, cmd->cache_blocks, result);
--	READ_UNLOCK(cmd);
--
--	return r;
--}
--
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd)
- {
- 	WRITE_LOCK_VOID(cmd);
-diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
-index 179ed5bf81a3e..79747130a48f7 100644
---- a/drivers/md/dm-cache-metadata.h
-+++ b/drivers/md/dm-cache-metadata.h
-@@ -137,11 +137,6 @@ void dm_cache_dump(struct dm_cache_metadata *cmd);
-  */
- int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *p);
- 
--/*
-- * Query method.  Are all the blocks in the cache clean?
-- */
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result);
--
- int dm_cache_metadata_needs_check(struct dm_cache_metadata *cmd, bool *result);
- int dm_cache_metadata_set_needs_check(struct dm_cache_metadata *cmd);
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 238d2bea41d8d..37c8740d6d996 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2470,23 +2470,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 		goto bad;
- 	}
- 
--	if (passthrough_mode(cache)) {
--		bool all_clean;
--
--		r = dm_cache_metadata_all_clean(cache->cmd, &all_clean);
--		if (r) {
--			*error = "dm_cache_metadata_all_clean() failed";
--			goto bad;
--		}
--
--		if (!all_clean) {
--			*error = "Cannot enter passthrough mode unless all blocks are clean";
--			r = -EINVAL;
--			goto bad;
--		}
--
-+	if (passthrough_mode(cache))
- 		policy_allow_migrations(cache->policy, false);
--	}
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
-@@ -2812,6 +2797,12 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	struct cache *cache = context;
- 
- 	if (dirty) {
-+		if (passthrough_mode(cache)) {
-+			DMERR("%s: cannot enter passthrough mode unless all blocks are clean",
-+			      cache_device_name(cache));
-+			return -EBUSY;
-+		}
++#define WRITE_LOCK_OR_GOTO(cmd, label)		\
++	do {					\
++		if (!cmd_write_lock((cmd)))	\
++			goto label;		\
++	} while (0)
 +
- 		set_bit(from_cblock(cblock), cache->dirty_bitset);
- 		atomic_inc(&cache->nr_dirty);
- 	} else
-@@ -3045,7 +3036,7 @@ static int cache_preresume(struct dm_target *ti)
- 					   load_filtered_mapping, cache);
- 		if (r) {
- 			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			if (r != -EFBIG)
-+			if (r != -EFBIG && r != -EBUSY)
- 				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
- 			return r;
- 		}
+ #define WRITE_UNLOCK(cmd) \
+ 	up_write(&(cmd)->root_lock)
+ 
+@@ -1815,11 +1821,8 @@ int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
+ 	new_bm = dm_block_manager_create(cmd->bdev, DM_CACHE_METADATA_BLOCK_SIZE << SECTOR_SHIFT,
+ 					 CACHE_MAX_CONCURRENT_LOCKS);
+ 
+-	WRITE_LOCK(cmd);
+-	if (cmd->fail_io) {
+-		WRITE_UNLOCK(cmd);
+-		goto out;
+-	}
++	/* cmd_write_lock() already checks fail_io with cmd->root_lock held */
++	WRITE_LOCK_OR_GOTO(cmd, out);
+ 
+ 	__destroy_persistent_data_objects(cmd, false);
+ 	old_bm = cmd->bm;
 -- 
 2.53.0
 
