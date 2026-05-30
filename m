@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8982026738C;
-	Sat, 30 May 2026 18:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3451B87C0;
+	Sat, 30 May 2026 18:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166563; cv=none; b=r1tBWGi4pBGn4IUfXahpLzkAHqHHJCi78F3OBERqniNNhj6U5Aeurt88spHjBE/2ETxmQAftqSxaPx9RZYIbpYyWmU3L4GkPVLcBGWr0/tGo/B7rzyfJN/9Zq3o/WIQqsyaBQ+0otAokn4seRdHGwWpSIDJu4H+XUaij38vQDZ4=
+	t=1780166566; cv=none; b=lQ+XcQ2+rpDFeb04nN6X6nOkWM2eHHQqJZpCSaZ6KidIrh6kRhqacPm/+ZY0ls4AOp4YKvoXVVSbP76umSFIH/tAqTmhT0CGlIxNkpjuQki/LuhX0EnrseC3HHC5JqYEMEhy/66FO1+yRZPG4flFeasTsQ6TH6STfF+hMyDjLQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166563; c=relaxed/simple;
-	bh=L9nHqrSNZMj89La8xriB2Rfyot1v2KdfRAKAc8283sA=;
+	s=arc-20240116; t=1780166566; c=relaxed/simple;
+	bh=2XHQzUAxoonQW2Vv9/QwW+xAINisYtk9/+3sKN8F2R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i96dgKmInn62B/+T3RSIIR2Cj0rsah/Bgk8WQ6cktXU/qJ1X/uatPyjP6sH1V6nCaW4Z9h8Z9R+Vqgu8Swk0KZgUHrB6h7FOhVGMd6BpMTd8wKCtRogvRiwfB1T01bA7qLg63IctSKKXLB2vk9SNbqGh81fs/VeWN0CBhWAKvHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTsVw/jQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I7xPtFchsFFu86aGgFsvObg/LJ84BMaYqzGJdqc8d65KUbMogLLr9qOeuG2785ftV7uETT9LNPZyUYtCkvFnu3mwXynv3BXdNK+aKREZ5iWm+fWCJpx+hNy6ItQAhbwOPXa9zQeMonIvSyZpaCyM62WWOxFiLTPCCUTkNfMlSwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rftb9uUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTsVw/jQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01A11F00893;
-	Sat, 30 May 2026 18:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rftb9uUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0A71F00893;
+	Sat, 30 May 2026 18:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166562;
-	bh=93FqSRek8qXCIFtg80ySbqe/nDjw8fiNH3IKWk89ymU=;
+	s=korg; t=1780166565;
+	bh=TYr3Q4TLJ1SRttmxlvp8+7dMxnVX3CE2yvLEI2ecATw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTsVw/jQ/eTMYVZy33vTKTdJbigI/dIZ7V0Ur2pOsyExLlAeBSJSKR2ehzMLQvZqy
-	 jK8Q5KrxzDryf5o+qlz29Vlv6cgRPQNkS6vDt1rQmkldnXjKtYAj+rVXWJ/pEDQnCx
-	 tk4xQVoQMvelTKXR7J40A4CKj7njmCVXnr7M+Dts=
+	b=rftb9uUKJzhxCRLfUWqrBr3mZ0Kq7M24E4n7JLj10SO6f4RbXstZ1Mrx/4dDMq3e6
+	 eEJSFBQvJ2+3ImUZYYqYEEMfYwJ4LvmSz9YlVvboDIMc+5fQ1RzFZ1iqxJwVKLra3G
+	 2/Nniay+JGoos6VHpFqsNmPv+EoAsoNkol7Gklf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 364/589] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add DSI and panel bits
-Date: Sat, 30 May 2026 18:04:05 +0200
-Message-ID: <20260530160234.404414756@linuxfoundation.org>
+Subject: [PATCH 5.10 355/589] ktest: Avoid undef warning when WARNINGS_FILE is unset
+Date: Sat, 30 May 2026 18:03:56 +0200
+Message-ID: <20260530160234.188564466@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -47,135 +51,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 0e5a6f27036e93110d3710d489fcc1408a674e62 ]
+[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
 
-Enabling the Display panel for beryllium requires DSI
-labibb regulators and panel dts nodes to be added.
-It is also required to keep some of the regulators as
-always-on.
+check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
+not configured. Perl warns about the uninitialized value and adds noise to
+the test log, which can hide the output we actually care about.
 
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Link: https://lore.kernel.org/r/20210404194437.537011-1-amit.pundir@linaro.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Stable-dep-of: 3b0dd81eea6b ("arm64: dts: qcom: sdm845-xiaomi-beryllium: Mark l1a regulator as powered during boot")
+Check that WARNINGS_FILE is defined before testing whether the file exists.
+
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
+Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 71 +++++++++++++++++++
- 1 file changed, 71 insertions(+)
+ tools/testing/ktest/ktest.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 86cbae63eaf7b..7d029425336e4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -157,6 +157,14 @@ vreg_l13a_2p95: ldo13 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 512a3cc586fdd..a5c1871d3c8e7 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2419,7 +2419,7 @@ sub check_buildlog {
+     my $save_no_reboot = $no_reboot;
+     $no_reboot = 1;
  
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+			regulator-always-on;
-+		};
-+
- 		vreg_l17a_1p3: ldo17 {
- 			regulator-min-microvolt = <1304000>;
- 			regulator-max-microvolt = <1304000>;
-@@ -191,6 +199,7 @@ vreg_l26a_1p2: ldo26 {
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
- 	};
- };
-@@ -200,6 +209,43 @@ &cdsp_pas {
- 	firmware-name = "qcom/sdm845/cdsp.mdt";
- };
+-    if (-f $warnings_file) {
++    if (defined($warnings_file) && -f $warnings_file) {
+ 	open(IN, $warnings_file) or
+ 	    dodie "Error opening $warnings_file";
  
-+&dsi0 {
-+	status = "okay";
-+	vdda-supply = <&vreg_l26a_1p2>;
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	panel@0 {
-+		compatible = "tianma,fhd-video";
-+		reg = <0>;
-+		vddi0-supply = <&vreg_l14a_1p8>;
-+		vddpos-supply = <&lab>;
-+		vddneg-supply = <&ibb>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		port {
-+			tianma_nt36672a_in_0: endpoint {
-+				remote-endpoint = <&dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi0_out {
-+	remote-endpoint = <&tianma_nt36672a_in_0>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&dsi0_phy {
-+	status = "okay";
-+	vdds-supply = <&vreg_l1a_0p875>;
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -215,6 +261,31 @@ zap-shader {
- 	};
- };
- 
-+&ibb {
-+	regulator-min-microvolt = <4600000>;
-+	regulator-max-microvolt = <6000000>;
-+	regulator-over-current-protection;
-+	regulator-pull-down;
-+	regulator-soft-start;
-+	qcom,discharge-resistor-kohms = <300>;
-+};
-+
-+&lab {
-+	regulator-min-microvolt = <4600000>;
-+	regulator-max-microvolt = <6000000>;
-+	regulator-over-current-protection;
-+	regulator-pull-down;
-+	regulator-soft-start;
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_mdp {
-+	status = "okay";
-+};
-+
- &mss_pil {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
 -- 
 2.53.0
 
