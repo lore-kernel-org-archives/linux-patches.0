@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF64C39B4A6;
-	Sat, 30 May 2026 16:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344A92E92B3;
+	Sat, 30 May 2026 16:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160333; cv=none; b=qAb8oHBDeuHHyLeBmdklTmcbYMQXUibpnVFvSLFPa1E7LtfMgwSHx0UsgjFiV+/1IYs44zvXhC7VMrstA3J+YKoA7S4Qt6h2KzRaF2ukiZCENyiqdyG0v4Qr8YJkNvjTkFH7GW0FLmfkgNvKI92J77axLjE3trrNsS9y/LkRcwY=
+	t=1780160337; cv=none; b=OeppPO77iOXiCGMx7KagkD80n1p9eaSeSuJVbrbHov+LzebLFlgTF50aYipyH1GRE1HwdiVVzOanI11hpQDSHeP+JGStIvkVKyGwXBMyf9H7vqDPJSOuD6i8yLXx5GJqp7rpCpMO9F3NwsIaook8iRuSIBkxhqbG0meiLULECWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160333; c=relaxed/simple;
-	bh=veTVYVdSU114fxsjeit+zsfUbR3ckEDFJ9THrUMR+u8=;
+	s=arc-20240116; t=1780160337; c=relaxed/simple;
+	bh=rfA9Ij/6WYEzD6QvY6d+USnA03MNoPD6XiKCoBlT7vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+0DU+5CPmFCURo65eVBzX/4OGx7oWG33xDEeYFiCOye2OZWdE9xMTTATAmTR97kvu07DNMdXJAG1inDTvys7C69iP8d6mCVXLLGdrKXhArpFDLdYSNp6RHKdS3YUe7RURhe+uAXjKktQgyCMtvPo6mvmigX27nGyJ9xPvOxCx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHVVtOZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AnMF5QxryUhovY3PVqic5xrLcelcOnotuhVPrnSyQKLbc1PurLe72idi2LTh66UK3imkX+vp8sCsSXzfHuSoquf/aQdbvj724fbQDHQGGg1pk2shPgGb9r7Xmgs42wOxM+xq8IWLHBybNJxNtjgGbG3ma0iTqOBoR9Kh3CKEsUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5bYanym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHVVtOZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCF71F00893;
-	Sat, 30 May 2026 16:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5bYanym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7813D1F00893;
+	Sat, 30 May 2026 16:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160332;
-	bh=i+bTdsTHrtYAkaCa5UiHcUQE/RwebWKc3jK1Op0UNXE=;
+	s=korg; t=1780160336;
+	bh=xQNapEYZBOI5zXFfMfnzRgJUXNCLN3pfYc4Y7iz2JOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fHVVtOZmzqH/2LpZ9Nurkon3Xk6uHyee0kyv4BXvqkAfuPrKqKwnqzguIIh4Em6i0
-	 qIgaQZWVLbh7N96n4Soimg88+kJgt23u/g3vr2FtGou13Vb7yq0DpPs9j9G/TCWLZ9
-	 XTllmCBYSHoa09/ux3PfFFc2VRaWalgm2Zb8uxBw=
+	b=a5bYanymClobdCXmSQYAl96F2DoCAj6vzEau/fNqsa9KLwdG07vTqAU8l1cJ8FYCA
+	 3IO0JBmSy5VuasqPJ1f4L1MdK0UWnQVk9R3QuLZErWAGvLOWcwhAIC0c9DDYa477c+
+	 +Xj5MjtTtGGdabigJvai8D21wbF3YgLc775f6BMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 276/969] ALSA: caiaq: fix usb_dev refcount leak on probe failure
-Date: Sat, 30 May 2026 17:56:40 +0200
-Message-ID: <20260530160308.099066673@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Simon Horman <horms@kernel.org>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 277/969] net: ipv6: fix NOREF dst use in seg6 and rpl lwtunnels
+Date: Sat, 30 May 2026 17:56:41 +0200
+Message-ID: <20260530160308.124537860@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,63 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-commit 7a5f1cd22d47f8ca4b760b6334378ae42c1bd24b upstream.
+commit f9c52a6ba9780bd27e0bf4c044fd91c13c778b6e upstream.
 
-create_card() takes a reference on the USB device with usb_get_dev()
-and stores the matching usb_put_dev() in card_free(), which is
-installed as the snd_card's ->private_free destructor.
+seg6_input_core() and rpl_input() call ip6_route_input() which sets a
+NOREF dst on the skb, then pass it to dst_cache_set_ip6() invoking
+dst_hold() unconditionally.
+On PREEMPT_RT, ksoftirqd is preemptible and a higher-priority task can
+release the underlying pcpu_rt between the lookup and the caching
+through a concurrent FIB lookup on a shared nexthop.
+Simplified race sequence:
 
-However, ->private_free is only assigned near the end of init_card(),
-after several failure points (usb_set_interface(), EP type checks,
-usb_submit_urb(), the EP1_CMD_GET_DEVICE_INFO exchange, and its
-timeout). When any of those fail, init_card() returns an error to
-snd_probe(), which calls snd_card_free(card). Because ->private_free
-is still NULL, card_free() never runs, the usb_get_dev() reference
-is not dropped, and the struct usb_device leaks along with its
-descriptor allocations and device_private.
+  ksoftirqd/X                       higher-prio task (same CPU X)
+  -----------                       --------------------------------
+  seg6_input_core(,skb)/rpl_input(skb)
+    dst_cache_get()
+      -> miss
+    ip6_route_input(skb)
+      -> ip6_pol_route(,skb,flags)
+         [RT6_LOOKUP_F_DST_NOREF in flags]
+        -> FIB lookup resolves fib6_nh
+           [nhid=N route]
+        -> rt6_make_pcpu_route()
+           [creates pcpu_rt, refcount=1]
+             pcpu_rt->sernum = fib6_sernum
+             [fib6_sernum=W]
+           -> cmpxchg(fib6_nh.rt6i_pcpu,
+                      NULL, pcpu_rt)
+              [slot was empty, store succeeds]
+      -> skb_dst_set_noref(skb, dst)
+         [dst is pcpu_rt, refcount still 1]
 
-syzbot reproduces this with a malformed UAC3 device whose only valid
-altsetting is 0; init_card()'s usb_set_interface(usb_dev, 0, 1) call
-fails with -EIO and triggers the leak.
+                                    rt_genid_bump_ipv6()
+                                      -> bumps fib6_sernum
+                                         [fib6_sernum from W to Z]
+                                    ip6_route_output()
+                                      -> ip6_pol_route()
+                                        -> FIB lookup resolves fib6_nh
+                                           [nhid=N]
+                                        -> rt6_get_pcpu_route()
+                                             pcpu_rt->sernum != fib6_sernum
+                                             [W <> Z, stale]
+                                          -> prev = xchg(rt6i_pcpu, NULL)
+                                          -> dst_release(prev)
+                                             [prev is pcpu_rt,
+                                              refcount 1->0, dead]
 
-Move the ->private_free assignment into create_card(), immediately
-after usb_get_dev(), so that every error path reaching snd_card_free()
-balances the reference. card_free()'s callees (snd_usb_caiaq_input_free,
-free_urbs, kfree) already tolerate the partially-initialized state
-because the chip private area is zero-initialized by snd_card_new().
+    dst = skb_dst(skb)
+    [dst is the dead pcpu_rt]
+    dst_cache_set_ip6(dst)
+      -> dst_hold() on dead dst
+      -> WARN / use-after-free
 
-Fixes: 80bb50e2d459 ("ALSA: caiaq: take a reference on the USB device in create_card()")
-Reported-by: syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2afd7e71155c7e241560
-Tested-by: syzbot+2afd7e71155c7e241560@syzkaller.appspotmail.com
+For the race to occur, ksoftirqd must be preemptible (PREEMPT_RT without
+PREEMPT_RT_NEEDS_BH_LOCK) and a concurrent task must be able to release
+the pcpu_rt. Shared nexthop objects provide such a path, as two routes
+pointing to the same nhid share the same fib6_nh and its rt6i_pcpu
+entry.
+
+Fix seg6_input_core() and rpl_input() by calling skb_dst_force() after
+ip6_route_input() to force the NOREF dst into a refcounted one before
+caching.
+The output path is not affected as ip6_route_output() already returns a
+refcounted dst.
+
+Fixes: af4a2209b134 ("ipv6: sr: use dst_cache in seg6_input")
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260426001934.70813-1-kartikey406@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260421094735.20997-1-andrea.mayer@uniroma2.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/rpl_iptunnel.c  |    9 +++++++++
+ net/ipv6/seg6_iptunnel.c |    9 +++++++++
+ 2 files changed, 18 insertions(+)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -423,6 +423,7 @@ static int create_card(struct usb_device
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -284,7 +284,16 @@ static int rpl_input(struct sk_buff *skb
  
- 	cdev = caiaqdev(card);
- 	cdev->chip.dev = usb_get_dev(usb_dev);
-+	card->private_free = card_free;
- 	cdev->chip.card = card;
- 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
- 				  le16_to_cpu(usb_dev->descriptor.idProduct));
-@@ -511,7 +512,6 @@ static int init_card(struct snd_usb_caia
- 	snprintf(card->longname, sizeof(card->longname), "%s %s (%s)",
- 		       cdev->vendor_name, cdev->product_name, usbpath);
+ 	if (!dst) {
+ 		ip6_route_input(skb);
++
++		/* ip6_route_input() sets a NOREF dst; force a refcount on it
++		 * before caching or further use.
++		 */
++		skb_dst_force(skb);
+ 		dst = skb_dst(skb);
++		if (unlikely(!dst)) {
++			err = -ENETUNREACH;
++			goto drop;
++		}
  
--	card->private_free = card_free;
- 	err = setup_card(cdev);
- 	if (err < 0)
- 		goto err_kill_urb;
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -498,7 +498,16 @@ static int seg6_input_core(struct net *n
+ 
+ 	if (!dst) {
+ 		ip6_route_input(skb);
++
++		/* ip6_route_input() sets a NOREF dst; force a refcount on it
++		 * before caching or further use.
++		 */
++		skb_dst_force(skb);
+ 		dst = skb_dst(skb);
++		if (unlikely(!dst)) {
++			err = -ENETUNREACH;
++			goto drop;
++		}
+ 
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
 
 
