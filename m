@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DAA21B191;
-	Sat, 30 May 2026 17:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F4A27A477;
+	Sat, 30 May 2026 17:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163070; cv=none; b=Y8bKadCMea495RvazHrBX9aS56PnlGzUSZBtYtrmyF0drZ61ItzbPclvrnYrdhw3orI9QYwyz7SeHHp+eZ6/0cPq5vCgIPK9Z63CPszqVZhWm/bATUcegYvgqWOlsfqCPxsLNhOAUIe8d8zawxUpbGUXWDxAVlNtf9y8ZXQpDck=
+	t=1780163073; cv=none; b=NZdhJUz0e77r/DQAvvyzI07y7mIpbafXgrtYdJEj7FDs0VcIf3zlEMRaS2g+NUdnnZRrRFwyEiTkyY8c4EVj0w/YVQwlL0ICnRjJLwbX5nbRXOMW5y2cMbyC1dpZAyM9AuzLvY9IKh4q5Fk55X0PnXnMQ4EBWAWgytC5EuTaAB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163070; c=relaxed/simple;
-	bh=pWg2dp6A4ej9iWOptM9DqQJyqDbcH5CCKHWtEv/fbUc=;
+	s=arc-20240116; t=1780163073; c=relaxed/simple;
+	bh=UjR0WD9nIJt7PV5pS/aJPi6LrPJiJVPDc32tpYLGBnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQ7uteyxstuA2UMb0k7RqpAY1F8VN7fiJmj9wDEpmmNE7JFFCNkxfuc8KkxK1MM06ybNwW+51bj0H5tOfcRtBpzrWMBc9ArVPg2heCEVQ9P+f2TgPgnEDBH/eK5yqi4VzyMhNsyDSuu36AULu9KIecuTPHa0aGTvv8LNuuheK4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms9wOt7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRYqLfFrNv68WY2X7X5Z+59YBzl8OZn/DVRJfTAGmvpNyv2ez7452UcUCcHMAEfA09Zs9Z7MRh9kt/3VlJvv9geYSKniYRqAF8mvfW/0OgmkGVCrAtvahz2sP1AQl5YZp0qV7ty2o4um24DwYOrBWcTZfiD28w1+O5784yt6Zj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWCxMuaK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms9wOt7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6871F00893;
-	Sat, 30 May 2026 17:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWCxMuaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E2D1F00893;
+	Sat, 30 May 2026 17:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163069;
-	bh=FUB0IVeSC1r46ADyVQN06IT1aADhz+NZI80WkinD+Kc=;
+	s=korg; t=1780163072;
+	bh=GWk7Hp1Ko9Th6m35xUcSpJUOjA848Cjclt08z+znC8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ms9wOt7nhM92E5FEj+eZl140IGiFMnQh5JuRKbQfgdpFP7VSIzQGteiPpyxMOUiNQ
-	 PJYfVKY1KLG017uZvKH/xrnT0h5RiSHrWIh0rT6o8efvjoVlNnSlvOHCGpzev3WdMG
-	 TFGtZWnBjPy5rz7Gq8CVwEnqVU+dsSeWPvEla0gQ=
+	b=WWCxMuaKQIL2kUe7KPhH1aYoSTtCnd4qnS7tyYHUclexip32LGM9g91sFjCDcq5iW
+	 omYtEK1DoEHR7mid/fiWhonq/8Jri2Ava70rB8a6g3Ayf2Y2nLxTdcg10lnWBQyQE8
+	 +1GekuIeGs7Y1MlJP+EIUQqwkY0Zy+Uk0ZO2J3jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>,
-	Igor Bagnucki <igor.bagnucki@intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Chen <leonchen.oss@139.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.15 146/776] ice: Add netif_device_attach/detach into PF reset flow
-Date: Sat, 30 May 2026 17:57:40 +0200
-Message-ID: <20260530160244.221569104@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 111/776] rxrpc: reject undecryptable rxkad response tickets
+Date: Sat, 30 May 2026 17:57:05 +0200
+Message-ID: <20260530160243.229264955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -55,113 +62,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit d11a67634227f9f9da51938af085fb41a733848f ]
+[ Upstream commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 ]
 
-Ethtool callbacks can be executed while reset is in progress and try to
-access deleted resources, e.g. getting coalesce settings can result in a
-NULL pointer dereference seen below.
+rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
+parses the buffer as plaintext without checking whether
+crypto_skcipher_decrypt() succeeded.
 
-Reproduction steps:
-Once the driver is fully initialized, trigger reset:
-	# echo 1 > /sys/class/net/<interface>/device/reset
-when reset is in progress try to get coalesce settings using ethtool:
-	# ethtool -c <interface>
+A malformed RESPONSE can therefore use a non-block-aligned ticket
+length, make the decrypt operation fail, and still drive the ticket
+parser with attacker-controlled bytes.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000020
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 11 PID: 19713 Comm: ethtool Tainted: G S                 6.10.0-rc7+ #7
-RIP: 0010:ice_get_q_coalesce+0x2e/0xa0 [ice]
-RSP: 0018:ffffbab1e9bcf6a8 EFLAGS: 00010206
-RAX: 000000000000000c RBX: ffff94512305b028 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffff9451c3f2e588 RDI: ffff9451c3f2e588
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: ffff9451c3f2e580 R11: 000000000000001f R12: ffff945121fa9000
-R13: ffffbab1e9bcf760 R14: 0000000000000013 R15: ffffffff9e65dd40
-FS:  00007faee5fbe740(0000) GS:ffff94546fd80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000020 CR3: 0000000106c2e005 CR4: 00000000001706f0
-Call Trace:
-<TASK>
-ice_get_coalesce+0x17/0x30 [ice]
-coalesce_prepare_data+0x61/0x80
-ethnl_default_doit+0xde/0x340
-genl_family_rcv_msg_doit+0xf2/0x150
-genl_rcv_msg+0x1b3/0x2c0
-netlink_rcv_skb+0x5b/0x110
-genl_rcv+0x28/0x40
-netlink_unicast+0x19c/0x290
-netlink_sendmsg+0x222/0x490
-__sys_sendto+0x1df/0x1f0
-__x64_sys_sendto+0x24/0x30
-do_syscall_64+0x82/0x160
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7faee60d8e27
+Check the decrypt result and abort the connection with RXKADBADTICKET
+when ticket decryption fails.
 
-Calling netif_device_detach() before reset makes the net core not call
-the driver when ethtool command is issued, the attempt to execute an
-ethtool command during reset will result in the following message:
-
-    netlink error: No such device
-
-instead of NULL pointer dereference. Once reset is done and
-ice_rebuild() is executing, the netif_device_attach() is called to allow
-for ethtool operations to occur again in a safe manner.
-
-Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Igor Bagnucki <igor.bagnucki@intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-[ Minor changed in ice_prepare_for_reset() to make sure vsi available to
-access ]
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted `rxrpc_abort_conn()` call to existing `goto other_error` error-handling pattern ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/rxrpc/rxkad.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -479,6 +479,7 @@ static void
- ice_prepare_for_reset(struct ice_pf *pf)
- {
- 	struct ice_hw *hw = &pf->hw;
-+	struct ice_vsi *vsi = ice_get_main_vsi(pf);
- 	unsigned int i;
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -1013,8 +1013,13 @@ static int rxkad_decrypt_ticket(struct r
+ 	sg_init_one(&sg[0], ticket, ticket_len);
+ 	skcipher_request_set_callback(req, 0, NULL, NULL);
+ 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
+-	crypto_skcipher_decrypt(req);
++	ret = crypto_skcipher_decrypt(req);
+ 	skcipher_request_free(req);
++	if (ret < 0) {
++		abort_code = RXKADBADTICKET;
++		ret = -EPROTO;
++		goto other_error;
++	}
  
- 	/* already prepared for reset */
-@@ -495,6 +496,9 @@ ice_prepare_for_reset(struct ice_pf *pf)
- 	ice_for_each_vf(pf, i)
- 		ice_set_vf_state_qs_dis(&pf->vf[i]);
- 
-+	if (vsi && vsi->netdev)
-+		netif_device_detach(vsi->netdev);
-+
- 	/* clear SW filtering DB */
- 	ice_clear_hw_tbls(hw);
- 	/* disable the VSIs and their queues that are not already DOWN */
-@@ -6417,6 +6421,7 @@ static void ice_update_pf_netdev_link(st
-  */
- static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
- {
-+	struct ice_vsi *vsi = ice_get_main_vsi(pf);
- 	struct device *dev = ice_pf_to_dev(pf);
- 	struct ice_hw *hw = &pf->hw;
- 	enum ice_status ret;
-@@ -6538,6 +6543,9 @@ static void ice_rebuild(struct ice_pf *p
- 		ice_rebuild_arfs(pf);
- 	}
- 
-+	if (vsi && vsi->netdev)
-+		netif_device_attach(vsi->netdev);
-+
- 	ice_update_pf_netdev_link(pf);
- 
- 	/* tell the firmware we are up */
+ 	p = ticket;
+ 	end = p + ticket_len;
 
 
