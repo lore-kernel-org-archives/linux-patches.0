@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C885934104B;
-	Sat, 30 May 2026 17:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25652690D5;
+	Sat, 30 May 2026 17:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160633; cv=none; b=SjsVMbNuBHjaJBWmQFHgdgglFJkJLGRvfpIXP27P+bD9cW8U4cYcmz+NRBEh66PqQrb0iwvo6lokFsckiV/8Ig+1bNIMBWEYOLw3YgAom9tSl+gAEdRlLgm8jJuPmwYGxILMKd4YlYTlTx85mFSiA11rSmFp/4gHkEoiSMUFrSg=
+	t=1780160636; cv=none; b=jv8E+U09stVmnXBzEXpW7nMg4DnBy7SqW0iY/oFmCbIdL5RIYKaBHJ4/nMrY4pnzOiUL/C+ZjEThYQlhLCSp+c5UlNm93H7TW7ymRRaneAdlDExXcXXv5L5SjeKo8wgGHP7hZ0NqXwsZfgxuAY9BaAfnAPo9B8mEzJJCn2T9ROY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160633; c=relaxed/simple;
-	bh=1GPp4Rl1+4kE7EZ7pi8DtLP3W1e92Dfl+zsbNy0eEJ4=;
+	s=arc-20240116; t=1780160636; c=relaxed/simple;
+	bh=rOhqd24pIyFbt12ez3lJyTaFWBjK+UyaCeSaOCpRxRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyB9zOGqc5NYKBXinQunxQBtbbWLISUSonNeWl2d9YZxuX2IAJ4A0rQftbznqj0CJK6OncMc67No9KD5TqbHV0NOVpt6ysGUwEYqn4lWuXip2D4J2tkswgbf0/jeRjH23gK/jfjYOJ5xLKUsMj8tqouKy0Y+OFwwXhNBtNHXpZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbBApIHD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=auIiN7FE7wXVGf5eqznYiVyluv9Ul6JCxfSWq2H/hlohZwp0GovZKon9ShNv/JIsex8mskE9hEnxAv/EKvWf3Q8JmsAS8yzkIQJ100NwGuMCU48zmUx1D1AQAIROeH1hDxEio69ZQ2RFy8ommr8m3qonwv95rrTtr4/Ll1kIc34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrRKZxzk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbBApIHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D34C1F00893;
-	Sat, 30 May 2026 17:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrRKZxzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5F01F00893;
+	Sat, 30 May 2026 17:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160632;
-	bh=aBoh1qMi4KxEsaJnsIH1AC1OBkvRzO6kRbMJK6uGcI4=;
+	s=korg; t=1780160635;
+	bh=3Wyr3LEmuYBcKhi3NjDFOWppHd3Uy5gQrq22Yu2r1H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbBApIHDCbraaZHEcCd+FeS334DeJ1UXTPfz/EWzQKqIZNbAFgds9VhtsBr1oeOXo
-	 Sq6MYy4/H4gI53t2f/pIttSzYaciiRCY5Do+IAFCcnAeWqnxPFQ3VcS2iJLMkQPQQ5
-	 Qsbe4KdWGv8b3q+mNOfUK0pWYLxUXxHqG5zLh0Ik=
+	b=hrRKZxzk8VPqQdD9+P7B0gArUAL/20cHQNN5bQhr0Qwn2KDIPRObAJghoXdH8D/Jx
+	 5kKWAc388wZ70EntsvY81rhSgzMiVRHt88IZtNrZG0XSDBCfsAUuz1aDggiT1xh3+c
+	 XjsxGJHSJMsLIjxLvDW9s/U/1TSXLFjvZAh8od/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyou Yang <wenyou.yang@atmel.com>,
+	Marek Vasut <marek.vasut@gmail.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 390/969] regulator: act8945a: fix OF node reference imbalance
-Date: Sat, 30 May 2026 17:58:34 +0200
-Message-ID: <20260530160311.074822688@linuxfoundation.org>
+Subject: [PATCH 6.1 391/969] regulator: bd9571mwv: fix OF node reference imbalance
+Date: Sat, 30 May 2026 17:58:35 +0200
+Message-ID: <20260530160311.098856052@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
+commit 8498100ee1d00422b8c5b161b3e332278b92a59a upstream.
 
 The driver reuses the OF node of the parent multi-function device but
 fails to take another reference to balance the one dropped by the
@@ -62,29 +62,29 @@ devices.
 
 Fix this by using the intended helper for reusing OF nodes.
 
-Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
-Cc: stable@vger.kernel.org	# 4.6
-Cc: Wenyou Yang <wenyou.yang@atmel.com>
+Fixes: e85c5a153fe2 ("regulator: Add ROHM BD9571MWV-M PMIC regulator driver")
+Cc: stable@vger.kernel.org	# 4.12
+Cc: Marek Vasut <marek.vasut@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
+Link: https://patch.msgid.link/20260408073055.5183-8-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/act8945a-regulator.c |    3 ++-
+ drivers/regulator/bd9571mwv-regulator.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/act8945a-regulator.c
-+++ b/drivers/regulator/act8945a-regulator.c
-@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
- 		num_regulators = ARRAY_SIZE(act8945a_regulators);
- 	}
+--- a/drivers/regulator/bd9571mwv-regulator.c
++++ b/drivers/regulator/bd9571mwv-regulator.c
+@@ -288,8 +288,9 @@ static int bd9571mwv_regulator_probe(str
+ 
+ 	platform_set_drvdata(pdev, bdreg);
  
 +	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
 +
  	config.dev = &pdev->dev;
 -	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.driver_data = act8945a;
- 	for (i = 0; i < num_regulators; i++) {
- 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
+ 	config.driver_data = bdreg;
+ 	config.regmap = bdreg->regmap;
+ 
 
 
