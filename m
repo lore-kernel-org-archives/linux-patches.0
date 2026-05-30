@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FA7332EA7;
-	Sat, 30 May 2026 17:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B3F320CAD;
+	Sat, 30 May 2026 17:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163869; cv=none; b=Sn/KWwjIxPB1mmUOSwcqvvL70/JvCWOFe/Ge5SflGwY4ZRnMLQAcigGq57u2aL3GegtyJxAtKepYTsWmCjqfdeLaco6p+LWkYHMwNmeHQlj6yUpSaxT46jW1dg3XU/DNJhCd4tzKvmn+oq8/tb7hAFbKt19Of5FQg2d2nKi6hgo=
+	t=1780163872; cv=none; b=l60duCyad4Hkjxg4m6TB3dJgkjBqmbAzWM6eVjH87mt73pHjkTBr9gavb571nJ56OrVtzyEK1Sx/tYuzY6T+X+/VOR5MnLd0NMjfP2lKTxGfpX71N3WypRZSuG/YMuB2HcmqfHiEehSyaqO7O/1mXUHPEaneLuxQ/sIeeZ5TMCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163869; c=relaxed/simple;
-	bh=5m3WYXif7NtGOJmAwdpPJ4aajzbC+golriBFZRTP1cU=;
+	s=arc-20240116; t=1780163872; c=relaxed/simple;
+	bh=dVK6fRvS9Y/7iF8u0bIKM2cNr7T9Q3TCb3qjx0avZyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WVVEoTul35z8LZXuNHHFisX56betUxpVvk1MRlyRNYB0MeOXDSyUu3t9ucI5jqojt0/w9uTwVE+1babRTwdKp+pDC1WpiT0cHwkcpFmQB9k6TmbbL9Gg6j9vsRep7HVUVswmb4ZliveRtG5qK42Egt9X3L5wJo6BLxe72NztT6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MKBOCVJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U7zEttAvCT9m8kNiu1HOzlh3ClddoeKnzDnx6WrXXzaSP9dCyJ1lFH3gDhkG56U+yghL2iXDYfl5bbUpO75ICGcsXMe5O5fiAX1YdyuRDlQEBWXjAl4BF9PQ+zyFmVO73cVp4u4aJe8oTdSvr5GBpLTXTMEEdHTo0i6+RfG+eOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BouWSTOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MKBOCVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43711F00893;
-	Sat, 30 May 2026 17:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BouWSTOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A5C1F00893;
+	Sat, 30 May 2026 17:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163868;
-	bh=oLc/qX6sIKVJEMSQqXJfEpelueygEV8D7xiVsKh/baY=;
+	s=korg; t=1780163871;
+	bh=VziR8lAYdY9JiCcR4xiFIzydivVo0vpWR0/SB3OtdRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1MKBOCVJuueFZqOIdoc26rtkzgp3LUTt87a9IXz/5L6m9sLJaTg12kuPcjwHizGwK
-	 XS1CsSsnjpbpyiv6ezbyZ+fhK8APbl21PiJB16NVS8fU2R3/SIeZSQ05dlslZRc6Rf
-	 MVQ+Sm/FILSQiiUPaB1FIjEh/SLYkyR1l88NLc9E=
+	b=BouWSTOEybaQzALEaJ60+2r5LKKfIWxNcBYyXWtuontbzdqKQfEi5/Olm3132Zx9O
+	 x0ppClFG40+7qln33HXLbrnkpEwXxgPpPVTM/zEXca46a9IpiFhk/opkOhufZwLWSO
+	 pkresX15uOr176V9o3StGAOLw+HbwfF/nEc8Uo9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+98a040252119df0506f8@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	syzbot+466a45fcfb0562f5b9a0@syzkaller.appspotmail.com,
+	Junjie Cao <junjie.cao@linux.dev>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 386/776] drbd: Balance RCU calls in drbd_adm_dump_devices()
-Date: Sat, 30 May 2026 18:01:40 +0200
-Message-ID: <20260530160250.481664448@linuxfoundation.org>
+Subject: [PATCH 5.15 387/776] nilfs2: reject zero bd_oblocknr in nilfs_ioctl_mark_blocks_dirty()
+Date: Sat, 30 May 2026 18:01:41 +0200
+Message-ID: <20260530160250.505310752@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -48,61 +49,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 2b31e86387e60b3689339f0f0fbb4d3623d9d494 ]
+[ Upstream commit be3e5d10643d3be1cbac9d9939f220a99253f980 ]
 
-Make drbd_adm_dump_devices() call rcu_read_lock() before
-rcu_read_unlock() is called. This has been detected by the Clang
-thread-safety analyzer.
+nilfs_ioctl_mark_blocks_dirty() uses bd_oblocknr to detect dead blocks
+by comparing it with the current block number bd_blocknr. If they differ,
+the block is considered dead and skipped.
 
-Tested-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Fixes: a55bbd375d18 ("drbd: Backport the "status" command")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260326214054.284593-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+However, bd_oblocknr should never be 0 since block 0 typically stores the
+primary superblock and is never a valid GC target block. A corrupted ioctl
+request with bd_oblocknr set to 0 causes the comparison to incorrectly
+match when the lookup returns -ENOENT and sets bd_blocknr to 0, bypassing
+the dead block check and calling nilfs_bmap_mark() on a non-existent
+block. This causes nilfs_btree_do_lookup() to return -ENOENT, triggering
+the WARN_ON(ret == -ENOENT).
+
+Fix this by rejecting ioctl requests with bd_oblocknr set to 0 at the
+beginning of each iteration.
+
+[ryusuke: slightly modified the commit message and comments for accuracy]
+
+Fixes: 7942b919f732 ("nilfs2: ioctl operations")
+Reported-by: syzbot+98a040252119df0506f8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=98a040252119df0506f8
+Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Reported-by: syzbot+466a45fcfb0562f5b9a0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=466a45fcfb0562f5b9a0
+Cc: Junjie Cao <junjie.cao@linux.dev>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_nl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/nilfs2/ioctl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
-index 69184cf17b6ad..6d2093c2c51b7 100644
---- a/drivers/block/drbd/drbd_nl.c
-+++ b/drivers/block/drbd/drbd_nl.c
-@@ -3424,8 +3424,10 @@ int drbd_adm_dump_devices(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (resource_filter) {
- 			retcode = ERR_RES_NOT_KNOWN;
- 			resource = drbd_find_resource(nla_data(resource_filter));
--			if (!resource)
-+			if (!resource) {
-+				rcu_read_lock();
- 				goto put_result;
-+			}
- 			cb->args[0] = (long)resource;
- 		}
- 	}
-@@ -3674,8 +3676,10 @@ int drbd_adm_dump_peer_devices(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (resource_filter) {
- 			retcode = ERR_RES_NOT_KNOWN;
- 			resource = drbd_find_resource(nla_data(resource_filter));
--			if (!resource)
-+			if (!resource) {
-+				rcu_read_lock();
- 				goto put_result;
-+			}
- 		}
- 		cb->args[0] = (long)resource;
- 	}
+diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
+index 6a2f779e0bad4..77e6bae7d5c97 100644
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -751,6 +751,12 @@ static int nilfs_ioctl_mark_blocks_dirty(struct the_nilfs *nilfs,
+ 	int ret, i;
+ 
+ 	for (i = 0; i < nmembs; i++) {
++		/*
++		 * bd_oblocknr must never be 0 as block 0
++		 * is never a valid GC target block
++		 */
++		if (unlikely(!bdescs[i].bd_oblocknr))
++			return -EINVAL;
+ 		/* XXX: use macro or inline func to check liveness */
+ 		ret = nilfs_bmap_lookup_at_level(bmap,
+ 						 bdescs[i].bd_offset,
 -- 
 2.53.0
 
