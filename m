@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E12241C8C;
-	Sat, 30 May 2026 18:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDAA26738C;
+	Sat, 30 May 2026 18:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166331; cv=none; b=r3QH7KubTo1x6S8eFUm1kxDP3QP27KaXF6Psq801313tUDekzd/fNKLCIuoVmR2v1gotjYolAnXTm9LAS9UfeFnFXX6zvq4XSrurlXalyrtXmJNwbsNN/E2qQA/U4bkTpwOugfnSh+WjmXykQLkPVUnjJTTWbBglDWgFs3cM+WM=
+	t=1780166335; cv=none; b=rinsWHPsptEYpsqbSb4CXmi/LjXp6AquzFu3BpUKrfjCx8cxa+JnmZAaoi3iETRlgpDRUF2vlg14PCTat2SzixJfJRCfrSRWu/vSqe7FeExMx0zTA10x92QjY3Ok8TwXRuJSJSIcPleHoe/0m+icDFYkDQD4Ke3CGaVSjfkUcJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166331; c=relaxed/simple;
-	bh=kPhDzI4xfxcBG7xeQIe0mo5ZoP6FZozuQDbvg7LtOMI=;
+	s=arc-20240116; t=1780166335; c=relaxed/simple;
+	bh=nECAMRPOPT2P9yOlB3BVMfQYo0TyUdv/e/VyYYgHYbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dvlgvwjgaMV1ClxLJEK3pNHMvtE+BbXP0t9YXZk8WR+pwcFF2MHIa8WYYpSC4kYVeqLw2QcAypQc3ZojGuZcYXm/cn0GI+/NFSD+tl9ootdT31cwJDwvI6fazcaQSVvVzy3FuaMEtTB9WG4Cl1G5V5OIh7bH9jX7R519tuaHuBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0svGjUWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IVmHC9iGmHUC+i4th7fccGHrpEZaOuAb+4O9kZRtm7ph2h0xszATunJTSnc1dAsIxF2gNo7BydYnpOsr1VXUrwmV6dtpPWNi8LgVUc+F3dYmzmCAPj6jb4yjKmZZtpHhnf+6EGS2XbbZggE/o8lyFaLvz2U//MRoBzEG3wUhea4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVGL7AgK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0svGjUWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F611F00893;
-	Sat, 30 May 2026 18:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVGL7AgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF221F00893;
+	Sat, 30 May 2026 18:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166330;
-	bh=t3jui8vi2aj/fNKRuoZQ0HjjCWZFa686LNW9ApdKLIY=;
+	s=korg; t=1780166333;
+	bh=uEK3iGaQJsOhhcLBdArg6UbZg3robb5OtDlcYEljjK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0svGjUWDcNRhvdisB75UN6Ba54vUvfplkNmo/VwqRA39c2F41QVVYUijkA46Op37f
-	 gz8tpmSbe92IPA5b9Opi/OMisCPCVEVWRDhuceRChrC4FibVJAMT/G0cOveMpSztYb
-	 jx3Nn6jNQwW+INQ3tXGrshpw5Xem3YQjc1Abtjok=
+	b=TVGL7AgK93p5VUZ9nW9dOjz7NpM9GjW/nV3gSBXHCZmp5sSsV3FCRVn/T6+jQzM2i
+	 weH9KG7uZ5M8dK/DV6tjfwCCUU64jk3rJjaL4bf+8o9WpD97bzzcNLQ99fF/2/BwVP
+	 P2hDbx21Fy02QIT1f7Bzx+11PmKoqSvprZyKo/pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 341/589] drm/amd/pm/ci: Fill DW8 fields from SMC
-Date: Sat, 30 May 2026 18:03:42 +0200
-Message-ID: <20260530160233.856013089@linuxfoundation.org>
+Subject: [PATCH 5.10 342/589] ALSA: hda/realtek: Whitespace fix
+Date: Sat, 30 May 2026 18:03:43 +0200
+Message-ID: <20260530160233.879338821@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,50 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit baf28ec5795c077406d6f52b8ad39e614153bce6 ]
+[ Upstream commit 72cea3a3175b50a4875b3c112fb13df20c6218a5 ]
 
-In ci_populate_dw8() we currently just read a value from the SMU
-and then throw it away. Instead of throwing away the value,
-we should use it to fill other fields in DW8 (like radeon).
+Remove an erroneous whitespace.
 
-Otherwise the value of the other fiels is just cleared when
-we copy this data to the SMU later.
-
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Link: https://lore.kernel.org/r/20230704044619.19343-6-luke@ljones.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: d1888bf848ad ("ALSA: hda/realtek: fix code style (ERROR: else should follow close brace '}')")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-index fbca5e798b851..b135e4a1f8ee2 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -542,12 +542,11 @@ static int ci_populate_dw8(struct pp_hwmgr *hwmgr, uint32_t fuse_table_offset)
- {
- 	struct ci_smumgr *smu_data = (struct ci_smumgr *)(hwmgr->smu_backend);
- 	const struct ci_pt_defaults *defaults = smu_data->power_tune_defaults;
--	uint32_t temp;
- 
- 	if (ci_read_smc_sram_dword(hwmgr,
- 			fuse_table_offset +
- 			offsetof(SMU7_Discrete_PmFuses, TdcWaterfallCtl),
--			(uint32_t *)&temp, SMC_RAM_END))
-+			(uint32_t *)&smu_data->power_tune_table.TdcWaterfallCtl, SMC_RAM_END))
- 		PP_ASSERT_WITH_CODE(false,
- 				"Attempt to read PmFuses.DW6 (SviLoadLineEn) from SMC Failed!",
- 				return -EINVAL);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index d673e8934b775..4eddc032b3d9a 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -5954,7 +5954,7 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+ 		struct alc_spec *spec = codec->spec;
+ 		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
+ 		alc255_set_default_jack_type(codec);
+-	} 
++	}
+ 	else
+ 		alc_fixup_headset_mode(codec, fix, action);
+ }
 -- 
 2.53.0
 
