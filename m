@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688A839A7FE;
-	Sat, 30 May 2026 18:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF16344DB9;
+	Sat, 30 May 2026 18:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166462; cv=none; b=nMKfp7BK1zzraNcNwKN0IJ4yiVQJ8TBYEMQGIjEEkRUhiUlCyPSjUGRR+2cNYc4a2GHn4n6y5BntCcmJUutIGytJoMNCvat2mI5ZOJ3+yowlDt6HQBFtVndaAO964hXDhipX2G0J8oyrBRxRSlI4YhkHn2Y/aM2FBD5DGOf3w2Q=
+	t=1780166465; cv=none; b=gJ/PC6E5VdREH19w2CVEypExOd0ozIHg8N3RxHxGj9yslAdLMie8yA1nWaU+4P40DZJpDVmN2V9xNJg85/PbfhH6heyE5xs63zKE9nYxPvfmPeC52q5941md3J6qFDuwW+ZnUZ/c07D+fQpbPgRXIsh1sakIPvhHhsAoybXy/7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166462; c=relaxed/simple;
-	bh=1i53uHVP/MHVz35horkNTyi6Uvr+h2fBSdZnk0/H+u8=;
+	s=arc-20240116; t=1780166465; c=relaxed/simple;
+	bh=oMUn0VArbsUMPOK0CtA/3HvTC9kb9t4DZT8W4UxJxL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k//s8GFhAMCokEXgoBa74vkZY6qJDbzgGlAPwssk+CkQo8oEfc/q+PTh8zZVDrq3yvLSiYMBIz28G209twAJtDNm9nBOz4g9X+BYa6RWyjd6m1UI2kooImEnfyryO1wNez8XuV2DSjnUIL3vFjbyqra/NXSSSgHKHvds62Tsmus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSDRRGJl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uWkmJyrByXzrnG24pfGXFPAZ1UpHW6SZrSOF96Yq4PLU7vNBIM/7NnWdz42OUIPnXsZYj3NO+f4vcycwVHu/gzCQmi5w6ReyqS2feeAa7VqJz2kAUMlZy/y1Ea5kidfeKYxhFfzEr2H9Ih+Q9y6ZLm8YzJxIJaLPOHOg+E4Nz70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qBbXvtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSDRRGJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87DB1F00893;
-	Sat, 30 May 2026 18:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qBbXvtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25D11F00893;
+	Sat, 30 May 2026 18:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166461;
-	bh=5uFzvdOXJfGc0YxH1RltStvmry72pqHYrpgV/AjCxtU=;
+	s=korg; t=1780166464;
+	bh=ZqSL8975WtrLBNOoFaesfd1iGAAiXrU/A6jTrJ8W8z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSDRRGJl3GQkTaIdSDquGldOMm5/KvrrfA0brInRa2G2VzJIS97yB1K63QCs9Ldp0
-	 9gV0oeWV/aT9MfCMiw0ZMF0ornywuI8MyAYuUGcLLqGuivESn6xUnNxSIvDXry4Tee
-	 FX5FLNrHnfRZx5uTXXjnYZB8mpgzogIId257lVJI=
+	b=1qBbXvtHcwnben6oiKfShY6iRkp4mDt+mHWzLyEuKo5i041vFLQrD77GapdoeoN9l
+	 iHwUhm0EzE8L5qiVWPzSwhWYjD/2NkeanG8komAXWVcwKybH/QBhqY/jM0cOWNO6Gg
+	 6T8Z3wWEr6iv3vgs2fmgfbAj8q4gzG+OXeDCzqBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/589] bpf: Fix precedence bug in convert_bpf_ld_abs alignment check
-Date: Sat, 30 May 2026 18:04:21 +0200
-Message-ID: <20260530160234.788688564@linuxfoundation.org>
+Subject: [PATCH 5.10 381/589] pinctrl: pinctrl-pic32: Fix resource leak
+Date: Sat, 30 May 2026 18:04:22 +0200
+Message-ID: <20260530160234.813347636@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,44 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit e5f635edd393aeaa7cad9e42831d397e6e2e1eed ]
+[ Upstream commit fe5560688f3ba98364c7de7b4f8dc240ffd1ff75 ]
 
-Fix an operator precedence issue in convert_bpf_ld_abs() where the
-expression offset + ip_align % size evaluates as offset + (ip_align % size)
-due to % having higher precedence than +. That latter evaluation does
-not make any sense. The intended check is (offset + ip_align) % size == 0
-to verify that the packet load offset is properly aligned for direct
-access.
+Fix three possible resource leaks by using the devres version of
+clk_prepare_enable(). Also, update error message accordingly.
 
-With NET_IP_ALIGN == 2, the bug causes the inline fast-path for direct
-packet loads to almost never be taken on !CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-platforms. This forces nearly all cBPF BPF_LD_ABS packet loads through
-the bpf_skb_load_helper slow path on the affected archs.
+Detected by Smatch:
+drivers/pinctrl/pinctrl-pic32.c:2211 pic32_pinctrl_probe() warn:
+'pctl->clk' from clk_prepare_enable() not released on lines: 2208.
 
-Fixes: e0cea7ce988c ("bpf: implement ld_abs/ld_ind in native bpf")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260416122719.661033-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+drivers/pinctrl/pinctrl-pic32.c:2274 pic32_gpio_probe() warn:
+'bank->clk' from clk_prepare_enable() not released on lines: 2264,2272.
+
+Fixes: 2ba384e6c3810 ("pinctrl: pinctrl-pic32: Add PIC32 pin control driver")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-pic32.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 7002368d1592a..b8d891f79b983 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -489,7 +489,7 @@ static bool convert_bpf_ld_abs(struct sock_filter *fp, struct bpf_insn **insnp)
- 	    ((unaligned_ok && offset >= 0) ||
- 	     (!unaligned_ok && offset >= 0 &&
- 	      offset + ip_align >= 0 &&
--	      offset + ip_align % size == 0))) {
-+	      (offset + ip_align) % size == 0))) {
- 		bool ldx_off_ok = offset <= S16_MAX;
+diff --git a/drivers/pinctrl/pinctrl-pic32.c b/drivers/pinctrl/pinctrl-pic32.c
+index a6e2a4a4ca952..07dc358359e32 100644
+--- a/drivers/pinctrl/pinctrl-pic32.c
++++ b/drivers/pinctrl/pinctrl-pic32.c
+@@ -2162,16 +2162,10 @@ static int pic32_pinctrl_probe(struct platform_device *pdev)
+ 	if (IS_ERR(pctl->reg_base))
+ 		return PTR_ERR(pctl->reg_base);
  
- 		*insn++ = BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_H);
+-	pctl->clk = devm_clk_get(&pdev->dev, NULL);
++	pctl->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(pctl->clk)) {
+ 		ret = PTR_ERR(pctl->clk);
+-		dev_err(&pdev->dev, "clk get failed\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(pctl->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "clk enable failed\n");
++		dev_err(&pdev->dev, "Failed to get and enable clock\n");
+ 		return ret;
+ 	}
+ 
+@@ -2227,16 +2221,10 @@ static int pic32_gpio_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
+ 
+-	bank->clk = devm_clk_get(&pdev->dev, NULL);
++	bank->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(bank->clk)) {
+ 		ret = PTR_ERR(bank->clk);
+-		dev_err(&pdev->dev, "clk get failed\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(bank->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "clk enable failed\n");
++		dev_err(&pdev->dev, "Failed to get and enable clock\n");
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
