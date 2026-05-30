@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDF7348C5E;
-	Sat, 30 May 2026 16:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23012F25E4;
+	Sat, 30 May 2026 16:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158292; cv=none; b=G+RJYbRdQ126c3/3Gm6+2K6f1QLYjYAVbJeHsGRn+58X44NzpeYYhevRJ3x41k52QwMbsM9pFX0Vqzm2WecOfEZwQ9WlPSMAr0kklvajZbamoL4Ogp4fd8NhqKhFFNae5U88hEi0NUv4UDPt0OWWodm8tNwW4lvuKwO38BM268c=
+	t=1780158303; cv=none; b=CjGfF/vQT/ZRyQcRoo311d2VTFrVaAvP3lzUE9IWlwD2d9V3PoTtTxy6AhKZ015seC4OHsmtSnxbXrI1wsBo/EEKhdzfa5up56+xwKtXI4bYMU874mQlq47NJvTt0kF5Ua3qROgzJGIq7KPJS5Q0/Wai+jUSeYm7PSo4DVRj/5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158292; c=relaxed/simple;
-	bh=xbNyofANtFxYiYdTybOjm78usgdplaapy094gJ6StCI=;
+	s=arc-20240116; t=1780158303; c=relaxed/simple;
+	bh=+/oE9t8fzmCGK6KyVzx4hQMSrFoTDjuo0baUEu7B5BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkVRlH4Xr0WIqeBoX4ljMjOMPy/gAnY/SYWEbUOwEYI+4k5Zsj/3WvvGYf8P7K3xJYgjkaxAykMbdJnsin7n3K4rVqzSVErZqUgegomqLkA0+Nc8Polv0K82WUEoWRGTu9mVsuPV96EDnn5dg4lcMgW46pomZ+jCICVBEZmAHfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA1PoAG/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nHERC4ZTPhgCcZ/tertT42dQqKEtqK0zQ+oAmEPhe5aH3fS5Fh9G1starAl7C8X1kmTT8eWOlPnf6T/0uOnounDcp92UT5ZeBJ50m7PgED7FOeYo7CnDMXUYaLwD/etzLT5V65knJOVt2UddT8gyjwC0QKE9ShL9romEDPRmrwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASt/I/4p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA1PoAG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9D31F00893;
-	Sat, 30 May 2026 16:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASt/I/4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFD81F00893;
+	Sat, 30 May 2026 16:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158290;
-	bh=0Br7jvNCjvriXcHbNJAhbmptN8RfHOSZc95YCEW8Jqw=;
+	s=korg; t=1780158302;
+	bh=rl/9zkno4epqR2kjCQcf8EF5A5uaOhjSdg8LtStHbls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RA1PoAG/2Y08xdQnEK+oF8R64huLi9kFBtid7BoelsMXZIsmVVmr4nWH7mvJU+so7
-	 FVbOKjbWxK99uVRVk3Zmvs5BiE5eUZGw6hzh2V1uAbdCts8WrCDg9pl2jlqHsSvO+X
-	 roCx07xxBc4c3MjKCS8Dm4wfPGBxoD74YoKDDLHM=
+	b=ASt/I/4piDggS8NWqbmKT5e//reqj20h9MZh2qEZqebEHyl5SNY/SghOY/njDIgaB
+	 umq30tceOAyzTDbclq0kOSP2Rprl2qhOGkRFXPQ5Wa6PTuNKtBPDMEE7eV4beeEu+p
+	 QtvERrUXXUl+j4vNUnoiCYIoA/gIugQRbjBFAo8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Boris Burkov <boris@bur.io>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/969] pinctrl: intel: Fix the revision for new features (1kOhm PD, HW debouncer)
-Date: Sat, 30 May 2026 17:52:21 +0200
-Message-ID: <20260530160300.939381208@linuxfoundation.org>
+Subject: [PATCH 6.1 008/969] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
+Date: Sat, 30 May 2026 17:52:12 +0200
+Message-ID: <20260530160300.712690852@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,32 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit a4337a24d13e9e3b98a113e71d6b80dc5ed5f8c4 ]
+[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
 
-The 1kOhm pull down and hardware debouncer are features of the revision 0.92
-of the Chassis specification. Fix that in the code accordingly.
+If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
+super block and fsid assignment will lead to a crash.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Use file_inode(file)->i_sb to always get btrfs_sb.
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/trace/events/btrfs.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index 8542053d4d6d0..2c357a69e0345 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1547,7 +1547,7 @@ static int intel_pinctrl_probe(struct platform_device *pdev,
- 		value = readl(regs + REVID);
- 		if (value == ~0u)
- 			return -ENODEV;
--		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x94) {
-+		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x92) {
- 			community->features |= PINCTRL_FEATURE_DEBOUNCE;
- 			community->features |= PINCTRL_FEATURE_1K_PD;
- 		}
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 31847ccae4936..8054ce54807de 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -760,12 +760,15 @@ TRACE_EVENT(btrfs_sync_file,
+ 	),
+ 
+ 	TP_fast_assign(
+-		const struct dentry *dentry = file->f_path.dentry;
+-		const struct inode *inode = d_inode(dentry);
++		struct dentry *dentry = file_dentry(file);
++		struct inode *inode = file_inode(file);
++		struct dentry *parent = dget_parent(dentry);
++		struct inode *parent_inode = d_inode(parent);
+ 
+-		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
++		dput(parent);
++		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+-		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
++		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
+ 		__entry->datasync	= datasync;
+ 		__entry->root_objectid	=
+ 				 BTRFS_I(inode)->root->root_key.objectid;
 -- 
 2.53.0
 
