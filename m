@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC20332BF24;
-	Sat, 30 May 2026 16:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1F7331A43;
+	Sat, 30 May 2026 16:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157472; cv=none; b=E12laP1oUbwIeqP20sEEUWPK8N6uCFdbpeyz1nwQS6Q2MgqXOZgFW53UOVyCUR/iHIFj022PWhhZzyq/7KlstruWM74qiJs/gh3/1d5/PsQPB5i75WrX+bqoLn1ANuJceDhohJhGyHu2hEf/gfLxH8hO/26X3ifvdY5RHO/fOLk=
+	t=1780157488; cv=none; b=bFp11l8pwk5SJBmuce7IgFAM0iTrs89cnZL9W/ZglwFVq6qgienL61BcK4kdzn9NJXTnj0OKh5HzImwGHNC83PCr4AI4UYVtdSFoP12gH5cxKF8Fn0RgjO94ze6AQz5Fp8lPmo/rYM8TAWf7Sexqdb4WVByrN5YIVYTrQCXaYLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157472; c=relaxed/simple;
-	bh=xN7ijb5xDukfhd7kalFEVjLbt2ulgE/y5Dgm5JY8tXw=;
+	s=arc-20240116; t=1780157488; c=relaxed/simple;
+	bh=h3L8ND1Xleqh9k4pkrcRrR25q/8059AS03fBg29dUBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDm1TDCZbmR2WDFCqWhAdGIDHSez8kgmAe0GAQjSHUjJ9D+GqcLaEjAXMMJtuyzcNhngOXmntyz9A6smw370X3ucULdiIaScSP1DqrrBfPLW4KmecnzBJZT+PWQbUDMsLnGWD2vk4bZfxS3xbM0hjCrY4GWgcV9FlgaTQwAeGk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVh20xNM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GGIYbSHO5ZX0XNHwJT9Jasam8QwPZj962aPsjj4E7gSNjqW8F6ldgQbbkVWvkpqWTxqm8Q2Op2jstwWaDyIfqC92jjekZDwxi5S7yEsWlRzWXOurfKJRay8xP4Po7RLCTrasYjZJpJoKoSjvKgyWmdxVrka2zKPF+7Lu1Pm1KAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAivxwm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVh20xNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CE11F00893;
-	Sat, 30 May 2026 16:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAivxwm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ECC1F00898;
+	Sat, 30 May 2026 16:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157471;
-	bh=sP1/6Dbl3yp2DgO9579g/oIAcBknr+o/GwgzEgffQj8=;
+	s=korg; t=1780157484;
+	bh=F/9mH4Rfk7W5y1YJySmJMcQf5vzzWoJLLsPmtZXGm/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVh20xNMdHpeQqIl6tEHCp0+dvNqnDYnkkxKirSp0GxSlLn34RSIiNYCNx1f8PDhw
-	 +eq5JWZ+RR85BjDFwsaMezZW/JtZBrj+z3+nXTnIQnPz+C4VZUoyZsK1e0xKsCZe9C
-	 bYj83f+aMoJBANscr9UagYw5RM/ANfkVsHbza6hQ=
+	b=YAivxwm3Rdi/AnRRMW0mTHDyQ4ZLJQV7sNKGyDo8xYbSjC2jgX0OvYvP9MedRxnfM
+	 WUrvMp96yPjYMepC2jv6YbDXqJLx9kqfEKWW/Reh4SndFYv75L3p+SkNwOAYqA6KtI
+	 mzW20QVoFORafo9tRaHsncmbI2xTOKcxbfAZ5dtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/589] ALSA: asihpi: avoid write overflow check warning
-Date: Sat, 30 May 2026 17:58:02 +0200
-Message-ID: <20260530160224.616308935@linuxfoundation.org>
+Subject: [PATCH 5.15 002/776] ASoC: SOF: topology: reject invalid vendor array size in token parser
+Date: Sat, 30 May 2026 17:55:16 +0200
+Message-ID: <20260530160240.299407655@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
-References: <20260530160224.570625122@linuxfoundation.org>
+In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
+References: <20260530160240.228940103@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 591721223be9e28f83489a59289579493b8e3d83 ]
+[ Upstream commit 215e5fe75881a7e2425df04aeeed47a903d5cd5d ]
 
-clang-22 rightfully warns that the memcpy() in adapter_prepare() copies
-between different structures, crossing the boundary of nested
-structures inside it:
+sof_parse_token_sets() accepts array->size values that can be invalid
+for a vendor tuple array header. In particular, a zero size does not
+advance the parser state and can lead to non-progress parsing on
+malformed topology data.
 
-In file included from sound/pci/asihpi/hpimsgx.c:13:
-In file included from include/linux/string.h:386:
-include/linux/fortify-string.h:569:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-  569 |                         __write_overflow_field(p_size_field, size);
+Validate array->size against the minimum header size and reject values
+smaller than sizeof(*array) before parsing. This preserves behavior for
+valid topologies and hardens malformed-input handling.
 
-The two structures seem to refer to the same layout, despite the
-separate definitions, so the code is in fact correct.
-
-Avoid the warning by copying the two inner structures separately.
-I see the same pattern happens in other functions in the same file,
-so there is a chance that this may come back in the future, but
-this instance is the only one that I saw in practice, hitting it
-multiple times per day in randconfig build.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260318124016.3488566-1-arnd@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260319-sof-topology-array-size-fix-v1-1-f9191b16b1b7@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpimsgx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/sof/topology.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/asihpi/hpimsgx.c b/sound/pci/asihpi/hpimsgx.c
-index 761fc62f68f16..85a354cf082ff 100644
---- a/sound/pci/asihpi/hpimsgx.c
-+++ b/sound/pci/asihpi/hpimsgx.c
-@@ -586,8 +586,10 @@ static u16 adapter_prepare(u16 adapter)
- 		HPI_ADAPTER_OPEN);
- 	hm.adapter_index = adapter;
- 	hw_entry_point(&hm, &hr);
--	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter], &hr,
--		sizeof(rESP_HPI_ADAPTER_OPEN[0]));
-+	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].h, &hr,
-+		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].h));
-+	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].a, &hr.u.ax.info,
-+		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].a));
- 	if (hr.error)
- 		return hr.error;
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index 1bb2dcf37ffe9..16feb5d268022 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -941,7 +941,7 @@ static int sof_parse_token_sets(struct snd_soc_component *scomp,
+ 		asize = le32_to_cpu(array->size);
  
+ 		/* validate asize */
+-		if (asize < 0) { /* FIXME: A zero-size array makes no sense */
++		if (asize < sizeof(*array)) {
+ 			dev_err(scomp->dev, "error: invalid array size 0x%x\n",
+ 				asize);
+ 			return -EINVAL;
 -- 
 2.53.0
 
