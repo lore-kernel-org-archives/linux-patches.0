@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F411C5799;
-	Sat, 30 May 2026 17:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A85F33A9DA;
+	Sat, 30 May 2026 17:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162442; cv=none; b=B2StvnTqtDKeiMWuTLhhJ0B0v0hGMnTmAgLP2cOVVZ3wxKroLYu5N39iWEjXI7BuBRntgJ5qsQaMAjjFVJY3YrZcLwHzIe8I//Uf5Yj7MVQ1zP8TRakA1nq/BjYD8j3BKnZqE90+OE0OLxrv9gylIA8OIZfWniGdOsICJ6BLDM4=
+	t=1780162445; cv=none; b=H1n3TOZfKUGua00Wkh/IPi6vH6gRHJp3/WMDDPT7IxTnn1YjtPYbO5xcM+za4xwu+o7Q/iC1R0pn4GIdlqS/yJAu7q+xqIVwQZHx4xLz/FCHWIoFzJ3AHVSu1Q8Hi5E++RQ02x4O1Tiyqg97wXF5nbPR7uyUFkdXB07nnuOX84g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162442; c=relaxed/simple;
-	bh=hVHy76nG71WmhhufeDl5F9atimkXycmAe3G4/BPv0MA=;
+	s=arc-20240116; t=1780162445; c=relaxed/simple;
+	bh=LVUHbmijV4a2aPvnEYEOmoRmfIkeBj1kXgYaHSa1wPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vf+FBjc1ZMyppmGxXx/3u/bH8c/M4oOlHYETD87U7hXlb/uQd8avrMxAXQ5Ktp78ggBFgV0bbCD8StkgXndXZJHxTaCcm9q+8Iy0vNVeHs+uummw2thYnca47DUMchU3r2Dl9m8rXNTAqfphMbdmSclBueg2/zRq09UQd5wmjsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+Ho/uEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=X269hPVr/IV/xt8rftqKL+/oICm8UwmnHjhD5lH2CoEiFAeMTSfwBMPlS2vqEuHRNwQe72LEkonGUNflocf6k6ocK32qFbW2NkwnjO2bQqhi+HxRAPR/1f2m9JmrqbXWxSRYLUzmZPiUcNNU6I2OGbjEn2HxhfRr+m/VOr52/kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fp6aSj+q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+Ho/uEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D9C1F00893;
-	Sat, 30 May 2026 17:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fp6aSj+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4FB1F00893;
+	Sat, 30 May 2026 17:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162440;
-	bh=UtL25NPcYiqOFpgJ0oPI0LSZNPpFV80S3fkJtuuJVbY=;
+	s=korg; t=1780162444;
+	bh=UAVlwlIOsQfJuFUrE8sWYthAC4w1iV4lxf5rnZl0CgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+Ho/uEQI1QUH2YLPdV8zNuKEoOPx3XEojWSFOZ9ZUM8WpPAmtQR7qr8O8qOwvwzJ
-	 pi7+BDXfa/bLzjx6NNkm5sDLDpy8kVY3mrXi9oOVJpdJljQmimoJduKEEMneHHsB0S
-	 uUmNkIiBpz6gYGfUor3KARi36GQagkN9TsuAvNTM=
+	b=fp6aSj+qLnMVTEw4rxjskZ4JPiacei82AuTxiu4yEOdoadt9ZqsXxp29IGQB5AcRO
+	 OSM1rTBJYZTz+RuyaIRMvd3/eLvPvnot26MAj0joZNTmx4DvhtNKYBoINJjRZb8H3+
+	 8ehR8LJ8ZM7SyYZibJKw1CrapBXXGHyvYbdyDua8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 922/969] net: lan966x: avoid unregistering netdev on register failure
-Date: Sat, 30 May 2026 18:07:26 +0200
-Message-ID: <20260530160326.198411345@linuxfoundation.org>
+Subject: [PATCH 6.1 923/969] phy: marvell: mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access
+Date: Sat, 30 May 2026 18:07:27 +0200
+Message-ID: <20260530160326.225839205@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,69 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit c4f3d6eb1fcf6cd9ce4644f604d5aad1ce594dfc ]
+[ Upstream commit 91ddf6f722084383fb05be731c0107814b055c0c ]
 
-lan966x_probe_port() stores the newly allocated net_device in the
-port before calling register_netdev(). If register_netdev() fails,
-the probe error path calls lan966x_cleanup_ports(), which sees
-port->dev and calls unregister_netdev() for a device that was never
-registered.
+The mvebu_a3700_utmi_phy_power_off() function tries to modify the
+USB2_PHY_CTRL register by using the IO address of the PHY IP block along
+with the readl/writel IO accessors. However, the register exist in the
+USB miscellaneous register space, and as such it must be accessed via
+regmap like it is done in the mvebu_a3700_utmi_phy_power_on() function.
 
-Destroy the phylink instance created for this port and clear port->dev
-before returning the registration error. The common cleanup path now skips
-ports without port->dev before reaching the registered netdev cleanup, so
-it only handles ports that reached the registered-netdev lifetime.
+Change the code to use regmap_update_bits() for modífying the register
+to fix this.
 
-This also avoids treating an uninitialized FDMA netdev and the failed port
-as a NULL == NULL match in the common cleanup path.
-
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260506124331.31945-1-mhun512@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cc8b7a0ae866 ("phy: add A3700 UTMI PHY driver")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260321-a3700-utmi-fix-usb2_phy_ctrl-access-v1-1-6005ff4b5058@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/phy/marvell/phy-mvebu-a3700-utmi.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 8c048ffde23d6..8347def40f9d4 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -688,11 +688,10 @@ static void lan966x_cleanup_ports(struct lan966x *lan966x)
+diff --git a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
+index 8834436bc9dbc..e3a9278c06842 100644
+--- a/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
++++ b/drivers/phy/marvell/phy-mvebu-a3700-utmi.c
+@@ -168,9 +168,8 @@ static int mvebu_a3700_utmi_phy_power_off(struct phy *phy)
+ 	u32 reg;
  
- 	for (p = 0; p < lan966x->num_phys_ports; p++) {
- 		port = lan966x->ports[p];
--		if (!port)
-+		if (!port || !port->dev)
- 			continue;
+ 	/* Disable PHY pull-up and enable USB2 suspend */
+-	reg = readl(utmi->regs + USB2_PHY_CTRL(usb32));
+-	reg &= ~(RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32));
+-	writel(reg, utmi->regs + USB2_PHY_CTRL(usb32));
++	regmap_update_bits(utmi->usb_misc, USB2_PHY_CTRL(usb32),
++			   RB_USB2PHY_PU | RB_USB2PHY_SUSPM(usb32), 0);
  
--		if (port->dev)
--			unregister_netdev(port->dev);
-+		unregister_netdev(port->dev);
- 
- 		if (lan966x->fdma && lan966x->fdma_ndev == port->dev)
- 			lan966x_fdma_netdev_deinit(lan966x, port->dev);
-@@ -805,6 +804,9 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
- 	err = register_netdev(dev);
- 	if (err) {
- 		dev_err(lan966x->dev, "register_netdev failed\n");
-+		phylink_destroy(phylink);
-+		port->phylink = NULL;
-+		port->dev = NULL;
- 		return err;
- 	}
- 
+ 	/* Power down OTG module */
+ 	if (usb32) {
 -- 
 2.53.0
 
