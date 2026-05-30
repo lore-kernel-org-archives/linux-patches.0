@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DD414A60F;
-	Sat, 30 May 2026 18:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4A9137750;
+	Sat, 30 May 2026 18:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166821; cv=none; b=nxpNIZBIXYQanebQhLoMEC5zdA6aVA2ZX1i9vpnIKdRC8sVXztczUbojI1eh3+2nOCXi2PEVqELLskRjNEmj53URuWzlHGKGxhtv89eFAjiRRvDAwUruKScIGFULP+KE4m+8gXjQusoBcaplJ7WUqPkxPe2Pw4ILmcNuWW9maKg=
+	t=1780166824; cv=none; b=EsTQGTKnrXJnh4uUKSJJEh80hxg+HXzmaA3L6FM9lINAd8ySjNZzVFtkYSgkBC+ThkydqyCOcQpDpmDhWKF6KZldaAa0/LcN/RSDjz9GITldKEHzFK3SVMpZYRtzrWPXXFrIPaIeZvnEQ0O/iit5P33LpiQcyhmMIkPHy+Jc2HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166821; c=relaxed/simple;
-	bh=bJd7K+uGlJUUxss1kru4EbH+WsOeLPABGxKlYYnynwY=;
+	s=arc-20240116; t=1780166824; c=relaxed/simple;
+	bh=7VD71YztWoDk9mYqU+mZCFtS5wnfLYfKzsLXkiEvLU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYWrmdwgTlX4gL2I4Xamim+lB/QCFj9o+uQDfvnUxlyDcScn+lFgzqJd1/1P8U17UnJMKj8KRgZtjK70qnjL+VHhaDOyoMyQEVM5DTm2ppGhWAuGAnUCSb3vUUzIanGxMFHSXD8Yh5hwgP8MdOZ4gXn5a5ZP+EMdw9TGMlrhCwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8JMibg8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tx8O0a69ibemhAHyHAf8dWuvawSu+ORLCrbVmWwwMb3Hu4BhFq2+kFtUxuraLBkLcy6GCCFf/8EYm/OCX0C7QV0cLkb19Q9CiWWsZRUMokPiNIPGcjVYevTBdQts6fdjB+qVeS+SnOrretKixH9maFyZhSuqPA0dmNYeavjySJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19QfvtHN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8JMibg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64F81F00893;
-	Sat, 30 May 2026 18:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19QfvtHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC0D1F00893;
+	Sat, 30 May 2026 18:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166820;
-	bh=bvTYUpa67wRGFo0rQIuQ/2Aak2/8NfSSD7bWuoR0LKI=;
+	s=korg; t=1780166823;
+	bh=Hats3IlYzWyjPSP4f/AlazXczSKbBWp/GMN5Fn2WlQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8JMibg8iBM9cXIG9T2K+XBTWH0x0s6d1ehGcITEeqqi1UZjTV0Enpu2rXv1AOSA1
-	 VYqH9Fxg/k86MRD9RFpyepg6pO/53n5FMzIkTO01Wd5WoYZSU9TWvbnPpg//RH/K1f
-	 kGvNxim35ATgbYAbxP+g7/T4treGrBDDzOpz+/Y0=
+	b=19QfvtHNlTKPOtyaTKyuhNQNZU8tkL1HtYqjb67q7lb79YQXvuVOH4x9NjfpHLwGm
+	 0j+3zDqyMNno1LgdxrSxzmvWotA5JbGQqnoaXJJiHxksnEbnzo/+S/mssdaXbvtc6k
+	 b8pmx1g1lU1k2BnmWsDWTeDoahWPLT5BT70ejW9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
+	Paul Geurts <paul.geurts@prodrive-technologies.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Greer <mgreer@animalcreek.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 474/589] net/sched: netem: fix probability gaps in 4-state loss model
-Date: Sat, 30 May 2026 18:05:55 +0200
-Message-ID: <20260530160237.107005858@linuxfoundation.org>
+Subject: [PATCH 5.10 483/589] NFC: trf7970a: Ignore antenna noise when checking for RF field
+Date: Sat, 30 May 2026 18:06:04 +0200
+Message-ID: <20260530160237.342245975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,65 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Paul Geurts <paul.geurts@prodrive-technologies.com>
 
-[ Upstream commit 732b463449fd0ef90acd13cda68eab1c91adb00c ]
+[ Upstream commit a9bc28aa4e64320668131349436a650bf42591a5 ]
 
-The 4-state Markov chain in loss_4state() has gaps at the boundaries
-between transition probability ranges. The comparisons use:
+The main channel Received Signal Strength Indicator (RSSI) measurement
+is used to determine whether an RF field is present or not. RSSI != 0
+is interpreted as an RF Field is present. This does not take RF noise
+and measurement inaccuracy into account, and results in false positives
+in the field.
 
-  if (rnd < a4)
-  else if (a4 < rnd && rnd < a1 + a4)
+Define a noise level and make sure the RF field is only interpreted as
+present when the RSSI is above the noise level.
 
-When rnd equals a boundary value exactly, neither branch matches and
-no state transition occurs. The redundant lower-bound check (a4 < rnd)
-is already implied by being in the else branch.
-
-Remove the unnecessary lower-bound comparisons so the ranges are
-contiguous and every random value produces a transition, matching
-the GI (General and Intuitive) loss model specification.
-
-This bug goes back to original implementation of this model.
-
-Fixes: 661b79725fea ("netem: revised correlated loss generator")
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-2-stephen@networkplumber.org
+Fixes: 851ee3cbf850 ("NFC: trf7970a: Don't turn on RF if there is already an RF field")
+Signed-off-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Mark Greer <mgreer@animalcreek.com>
+Link: https://patch.msgid.link/20260422100930.581237-1-paul.geurts@prodrive-technologies.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nfc/trf7970a.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index cbd7f3032fccf..1f47711cb1667 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -219,10 +219,10 @@ static bool loss_4state(struct netem_sched_data *q)
- 		if (rnd < clg->a4) {
- 			clg->state = LOST_IN_GAP_PERIOD;
- 			return true;
--		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
-+		} else if (rnd < clg->a1 + clg->a4) {
- 			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
--		} else if (clg->a1 + clg->a4 < rnd) {
-+		} else {
- 			clg->state = TX_IN_GAP_PERIOD;
- 		}
+diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
+index 081ec1105572e..4d99d4dbf817e 100644
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -311,6 +311,7 @@
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_MASK	(BIT(2) | BIT(1) | BIT(0))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_X_MASK	(BIT(5) | BIT(4) | BIT(3))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_OSC_OK	BIT(6)
++#define TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL	1
  
-@@ -239,9 +239,9 @@ static bool loss_4state(struct netem_sched_data *q)
- 	case LOST_IN_BURST_PERIOD:
- 		if (rnd < clg->a3)
- 			clg->state = TX_IN_BURST_PERIOD;
--		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
-+		else if (rnd < clg->a2 + clg->a3) {
- 			clg->state = TX_IN_GAP_PERIOD;
--		} else if (clg->a2 + clg->a3 < rnd) {
-+		} else {
- 			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		}
+ #define TRF7970A_SPECIAL_FCN_REG1_COL_7_6		BIT(0)
+ #define TRF7970A_SPECIAL_FCN_REG1_14_ANTICOLL		BIT(1)
+@@ -1253,7 +1254,7 @@ static int trf7970a_is_rf_field(struct trf7970a *trf, bool *is_rf_field)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK)
++	if ((rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK) > TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL)
+ 		*is_rf_field = true;
+ 	else
+ 		*is_rf_field = false;
 -- 
 2.53.0
 
