@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF1229B78B;
-	Sat, 30 May 2026 18:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B123191D0;
+	Sat, 30 May 2026 18:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164219; cv=none; b=VgineHrr2mCbEn0GMeSo07qM/pMdwlmk3y6h7gAgiNpXpa/GjuSTwneMBNn1rAN13tpmIftOCeqjrCMl2MYN+J66/k8rokT5fm+4ucUQqaY0I3BQRZUUKI0cYZjki2C6fhA9THy4UrCXgh8Qpkiw8HVQf1t+ddUd+YkWerfTWSw=
+	t=1780164223; cv=none; b=THlmNYMqSLfk/joFt43UQjFtKuGdEH/wou124E/0hhyZrzpzJPEd7yFDKTEtizPRej+AB12mpE0evhOSGiirhJUOVvqhJ9i0WhMFBpmYdGhCD1jEQg7UVIDKXOEwfvCRciDxUxv+sIH0FNZ/GZBFcLRCu0y0Qj11BVXVr2yarRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164219; c=relaxed/simple;
-	bh=E11UvA47mCwWprDvCO9L7tV+L5cFAlmrlVWXSup5rWQ=;
+	s=arc-20240116; t=1780164223; c=relaxed/simple;
+	bh=GUV7WdrrV36+qMIDKNI/pOY3l1RhQOECLRWphIgFrCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzxbwtyqE8eVn4JXp3hZgKS+7pLuE8gOK9uW8BFurATI5atshpVbnxOJsAJ5UNu5EVDSiwSTfNT/ji7EkYs3/Am4+Z5mO3ZWtNRX/kNoUY4L3yWFv7IVTzGQehYrqDcO0ZAd01ewe56KfMwKaC/XMfpc3uXvpnvUZLn1reVkDxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzov1grU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mfKD975xy5HJv63GfWWu9q8WsbcSB3sY6S5tWEs8r5/AiOMUZSTciZqo6T4a3g+0wTRjVft6YH+45Yi9TBAk8lrbMiMsgHsr57gDG7ele6NgpFePJSmSShcvJkaewF9WWJI49QjAV6zhQQRqREsiUZiA/VWCiqNbtfh6exn573o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GO0F4KXK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzov1grU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4985C1F00893;
-	Sat, 30 May 2026 18:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GO0F4KXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BEE1F00893;
+	Sat, 30 May 2026 18:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164218;
-	bh=CUWW0kbdCdWYcFtV4nCoX8IHPS6jTG753BQwNCc4Xr8=;
+	s=korg; t=1780164222;
+	bh=FQLPkY/jknFI951f9KrAhxmXpRHDeG8vxE3poJ/7Eoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hzov1grUsAWHNrfmRQXIED6aQsJQxtdea9LBLdI/jCgjzqSAl4bCho23+IOkCQb44
-	 h2K3z5fzruq4OflmueZDkKICm9xahWnE3cvxHvSgo1NiJoc50zYuMFOL9OgbS5gHC4
-	 7JuLAQwVBG0WoP9iJJJchIcY/oiDYpYzpE2iZ6pw=
+	b=GO0F4KXKRYGIU6qclOzbu1XWRRQT+NFTHeNywn6DURl7JCo4kpqehSpLRQjmwzwQu
+	 j7JVw8sJH13QOVxh6YIOHXCIpuwgCM63XzLjqP7hvHA+HBlfmTlPdT5EnMC33IFhZK
+	 9ZJX4io0cul8+cHUjpwdJSeeKMNRcmTeXQP33Esw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 462/776] ASoC: fsl_xcvr: Fix event generation in fsl_xcvr_arc_mode_put()
-Date: Sat, 30 May 2026 18:02:56 +0200
-Message-ID: <20260530160252.297427736@linuxfoundation.org>
+Subject: [PATCH 5.15 489/776] soc: qcom: ocmem: use scoped device node handling to simplify error paths
+Date: Sat, 30 May 2026 18:03:23 +0200
+Message-ID: <20260530160252.958288261@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,50 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 1b61c8103c9317a9c37fe544c2d83cee1c281149 ]
+[ Upstream commit f4c1c19f5c0e5cf2870df91dedc6b40400fd9c8a ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_xcvr_arc_mode_put() only returns 0 or a negative
-error code, causing ALSA to not generate any change events.
+Obtain the device node reference with scoped/cleanup.h to reduce error
+handling and make the code a bit simpler.
 
-Add a suitable check in the function before updating the arc_mode
-variable.
-
-Fixes: 28564486866f ("ASoC: fsl_xcvr: Add XCVR ASoC CPU DAI driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-8-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240813-b4-cleanup-h-of-node-put-other-v1-4-cfb67323a95c@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 9dfd69cd89cd ("soc: qcom: ocmem: register reasons for probe deferrals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/ocmem.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index ae5960b2b6a95..7475dcf58a366 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -97,10 +97,17 @@ static int fsl_xcvr_arc_mode_put(struct snd_kcontrol *kcontrol,
- 	struct fsl_xcvr *xcvr = snd_soc_dai_get_drvdata(dai);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int *item = ucontrol->value.enumerated.item;
-+	int val = snd_soc_enum_item_to_val(e, item[0]);
-+	int ret;
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index bfebdcaf88146..0ac0a5426734b 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -192,23 +192,20 @@ static void update_range(struct ocmem *ocmem, struct ocmem_buf *buf,
+ struct ocmem *of_get_ocmem(struct device *dev)
+ {
+ 	struct platform_device *pdev;
+-	struct device_node *devnode;
+ 	struct ocmem *ocmem;
  
--	xcvr->arc_mode = snd_soc_enum_item_to_val(e, item[0]);
-+	if (val < 0 || val > 1)
-+		return -EINVAL;
+-	devnode = of_parse_phandle(dev->of_node, "sram", 0);
++	struct device_node *devnode __free(device_node) = of_parse_phandle(dev->of_node,
++									   "sram", 0);
+ 	if (!devnode || !devnode->parent) {
+ 		dev_err(dev, "Cannot look up sram phandle\n");
+-		of_node_put(devnode);
+ 		return ERR_PTR(-ENODEV);
+ 	}
  
--	return 0;
-+	ret = (xcvr->arc_mode != val);
-+
-+	xcvr->arc_mode = val;
-+
-+	return ret;
- }
+ 	pdev = of_find_device_by_node(devnode->parent);
+ 	if (!pdev) {
+ 		dev_err(dev, "Cannot find device node %s\n", devnode->name);
+-		of_node_put(devnode);
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
+-	of_node_put(devnode);
  
- static int fsl_xcvr_arc_mode_get(struct snd_kcontrol *kcontrol,
+ 	ocmem = platform_get_drvdata(pdev);
+ 	put_device(&pdev->dev);
 -- 
 2.53.0
 
