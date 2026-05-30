@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FC53469FC;
-	Sat, 30 May 2026 17:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26BF30E853;
+	Sat, 30 May 2026 17:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162491; cv=none; b=vByU7SkMjEex4DCWBmC3Nkunfq9u4JxHU6b9kVphrDExOiw6euz5MdtD2LksMzOWPZnIQ9u6SvEdt1HBfYtF84hEauNa3fmH0IHsxPaW68YcuUimqXX/ZwqLZm6LzLBQsHUnpxLVvKnGlw5Y/mjdmgfjU07vEBEhJrZTykmqI38=
+	t=1780162494; cv=none; b=MrSxrH+OHCp/mBHKb48TDvAck0XT8RASCX32CGv6/7DsUi1qZJ8ZB+a28FpdW4Bbf0n8Mm/61aVwYM84H8vUPywvBp3uSRsQSUz5Zboh9BtyZkP2nzPjpP+xsN8VmbLBflFVlq79axpj89Z6D2Xoj7L0i5HfexL/kstTTinZwKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162491; c=relaxed/simple;
-	bh=FtFmVYpDJk2n9Uj5VD1BakFmsQn8/EdrMNXi4pxDHy4=;
+	s=arc-20240116; t=1780162494; c=relaxed/simple;
+	bh=Rxdc+XaK75xxt1GfkL0q6kQ0yPSw5SzbQonVAtn1B18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuZnlAGy4bMzo5YRwdEpM9Mdjg1TTIiC5WQqZESlknJ999rQAK1ZZc5uJeK5bh6u0FKYF9vK7wp7bcIZXnGuNMtzK+KD69oxPfvhLPFpqXtI0TA3yrlVX08s+5l0ANiQXZNjtTQBwvNyT/GK2WPlDfVcJxnp1iNb4Jn+lR85e1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4gCGNrj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UkqZyv2Y2U2pId4a+V2hglhAIVrzq2MK5acxu8+PAcyTEYYKN8aVQSmzRbXp9yVnDQ6o/W9uSumK2hXkmeegxj+M2VhYBEqWZsXrF5LrdCoSpDD22Smj0pquuR5f69hN5HTm98v3FL9p9LbgjQJbHYOgqB2CB1z7tTsYn5YUiAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTpBrM6+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4gCGNrj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4A61F00893;
-	Sat, 30 May 2026 17:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTpBrM6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110D51F00893;
+	Sat, 30 May 2026 17:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162490;
-	bh=mv4/0hlmkEzXWVAHn2kdb6gBQzyki+xCR22d4B3AEUU=;
+	s=korg; t=1780162493;
+	bh=OVRxCVSf2voRHHitMNG4L8JRA59Z7ZJhPBWewBOKXp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4gCGNrjaX4GqkviRv8WgDeNXYMx7YtZDuNpjD5Gjo4tjIItRJpqO81eJnu8sjPbp
-	 hD6u0JfZbzcMuuj/+HS91gOz1X/Dt1jsK4jp6eV4aZRYZdvecJN41uCzOE965z2wnW
-	 ZjZu9MHYOSxBPfx54wZ0Qv95FYsqpo0gfM85W+SM=
+	b=GTpBrM6+aOaSXra1NwnL1rSk5XR+ZQX2ACm3ZoBVsEyEGiubft+OAueMzOsaV1MA8
+	 YK9Ho18ryYElS0v2qYHHQ+EnFNUs+yXDBN/J3Q8H+NR0URaoRl35lhuyDZFBFFlsUx
+	 N9IGlrm70ozZWh+qDM/kD3mVGyfQtVZ9+ejlE4tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 936/969] powerpc/time: Remove redundant preempt_disable|enable() calls from arch_irq_work_raise()
-Date: Sat, 30 May 2026 18:07:40 +0200
-Message-ID: <20260530160326.598089207@linuxfoundation.org>
+Subject: [PATCH 6.1 937/969] net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot
+Date: Sat, 30 May 2026 18:07:41 +0200
+Message-ID: <20260530160326.626639067@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,95 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sayali Patil <sayalip@linux.ibm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 31467b23823ffec1f6fff407f8e3ca9af8b7491a ]
+[ Upstream commit 277740023def559a4a2ddc3e8e784ee37a0f16a9 ]
 
-A kernel panic is observed when handling machine check exceptions from
-real mode.
+On the SMC-D client, slot 0 of ini->ism_dev[]/ini->ism_chid[] is
+reserved for an SMC-Dv1 device. smc_find_ism_v2_device_clnt()
+populates V2 entries starting at index 1, so when no V1 device is
+selected slot 0 is left in its kzalloc()'ed state with ism_dev[0] ==
+NULL and ism_chid[0] == 0.
 
-  BUG: Unable to handle kernel data access on read at 0xc00000006be21300
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  MSR:  8000000000001003 <SF,ME,RI,LE>  CR: 88222248  XER: 00000005
-  CFAR: c00000000003ffc4 DAR: c00000006be21300 DSISR: 40000000 IRQMASK: 0
-  NIP [c000000000029e40] arch_irq_work_raise+0x10/0x70
-  LR [c00000000003ffc8] machine_check_queue_event+0xa8/0x150
+smc_v2_determine_accepted_chid() then matches the peer's CHID against
+the array starting from index 0 using the CHID alone. A malicious
+peer replying to a SMC-Dv2-only proposal with d1.chid == 0 matches
+the empty slot, ini->ism_selected becomes 0, and the subsequent
+ism_dev[0]->lgr_lock dereference in smc_conn_create() faults at
+offsetof(struct smcd_dev, lgr_lock) == 0x68:
+
+  BUG: KASAN: null-ptr-deref in _raw_spin_lock_bh+0x79/0xe0
+  Write of size 4 at addr 0000000000000068 by task exploit/144
   Call Trace:
-  [c0000000179d3c70] [c00000000003ff64] machine_check_queue_event+0x44/0x150
-  [c0000000179d3d30] [c0000000000084e0] machine_check_early_common+0x1f0/0x2c0
+   _raw_spin_lock_bh
+   smc_conn_create (net/smc/smc_core.c:1997)
+   __smc_connect (net/smc/af_smc.c:1447)
+   smc_connect (net/smc/af_smc.c:1720)
+   __sys_connect
+   __x64_sys_connect
+   do_syscall_64
 
-The crash occurs because arch_irq_work_raise() calls preempt_disable()
-from machine check exception (MCE) handlers running in real mode. In
-this context, accessing the preempt_count can fault, leading to the panic.
+Require ism_dev[i] to be non-NULL before accepting a CHID match.
 
-The preempt_disable()/preempt_enable() pair in arch_irq_work_raise()
-was originally added by commit 0fe1ac48bef0 ("powerpc/perf_event: Fix
-oops due to perf_event_do_pending call") to avoid races while raising
-irq work from exception context.
-
-Later, commit 471ba0e686cb ("irq_work: Do not raise an IPI when
-queueing work on the local CPU") added preemption protection in
-irq_work_queue() path, while commit 20b876918c06 ("irq_work: Use per
-cpu atomics instead of regular atomics") added equivalent
-protection in irq_work_queue_on() before reaching arch_irq_work_raise():
-
-  irq_work_queue() / irq_work_queue_on()
-    -> preempt_disable()
-      -> __irq_work_queue_local()
-        -> irq_work_raise()
-          -> arch_irq_work_raise()
-
-As a result, callers other than mce_irq_work_raise() already execute
-with preemption disabled, making the additional
-preempt_disable()/preempt_enable() pair in arch_irq_work_raise()
-redundant.
-
-The arch_irq_work_raise() function executes in NMI context when called
-from MCE handler. Hence we will not be preempted or scheduled out since
-we are in NMI context with MSR[EE]=0. Therefore, it is safe to remove
-the preempt_disable()/preempt_enable() calls from here.
-
-Remove it to avoid accessing preempt_count from real mode context.
-
-Fixes: cc15ff327569 ("powerpc/mce: Avoid using irq_work_queue() in realmode")
-Suggested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Acked-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-[Maddy: Fixed the commit title]
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260513081413.222490-1-sayalip@linux.ibm.com
+Fixes: a7c9c5f4af7f ("net/smc: CLC accept / confirm V2")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260511062138.2839584-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/time.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/smc/af_smc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index 285159e65a3ba..6628b65b9ecad 100644
---- a/arch/powerpc/kernel/time.c
-+++ b/arch/powerpc/kernel/time.c
-@@ -454,6 +454,10 @@ DEFINE_PER_CPU(u8, irq_work_pending);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index a609b220b215d..b0f8eca077b89 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1346,7 +1346,8 @@ smc_v2_determine_accepted_chid(struct smc_clc_msg_accept_confirm_v2 *aclc,
+ 	int i;
  
- #endif /* 32 vs 64 bit */
- 
-+/*
-+ * Must be called with preemption disabled since it updates
-+ * per-CPU irq_work state and programs the local CPU decrementer.
-+ */
- void arch_irq_work_raise(void)
- {
- 	/*
-@@ -467,10 +471,8 @@ void arch_irq_work_raise(void)
- 	 * which could get tangled up if we're messing with the same state
- 	 * here.
- 	 */
--	preempt_disable();
- 	set_irq_work_pending_flag();
- 	set_dec(1);
--	preempt_enable();
- }
- 
- static void set_dec_or_work(u64 val)
+ 	for (i = 0; i < ini->ism_offered_cnt + 1; i++) {
+-		if (ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
++		if (ini->ism_dev[i] &&
++		    ini->ism_chid[i] == ntohs(aclc->d1.chid)) {
+ 			ini->ism_selected = i;
+ 			return 0;
+ 		}
 -- 
 2.53.0
 
