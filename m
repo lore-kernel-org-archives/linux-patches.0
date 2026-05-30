@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CDD33FE15;
-	Sat, 30 May 2026 16:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27A61CAA6C;
+	Sat, 30 May 2026 16:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160010; cv=none; b=Ndv6UvrXcp6z0+XsJQIYVtP07zFOIBnD5jjWVuFW0NimDxwogOXJRGn1J0u0JD1+HRDVlnCygozr6kTA9oJqsz0IyNW4Tm0pElt6tDKImrTj/KF7MSzwpi6HwusNUyROXXIKl4el30muWYoWKqzsHuFDh9gu2dq+LZh8i/hLca8=
+	t=1780160013; cv=none; b=XI5Xv+7sgio0TItovg/uG5Cf0IX+TweK1CkNdl3p6sL+S+M7qPdpZ5KyCTnfoGw69EB0yzeC1QMWalSoXnJSB3q3aVHXd6PwitIFTiJ/soIEMsWRnQXvE73Xe9LMT/HDCqmhw1DZ02HsuEwdRDhuhIjAIfdU4lYkVe+EqyFGdu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160010; c=relaxed/simple;
-	bh=6n0kMUETNy05k4utu+WQE7IKsdaKJq1VhR0l8BLtrYg=;
+	s=arc-20240116; t=1780160013; c=relaxed/simple;
+	bh=rfRi19gRWCePSZPn07Q5MkkCu+XsTUeqghqN33viGHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFNqhIrMLAvYjl1zY53Di2+uOlQYfFyRDX0Ge51T5FO9XhEaMtVQnJB55xY9pPj4pFsI+qoSfZNOiKA53VBnOUnxV+ohT2Mquc+aGoVZzHPwv7vFk5dSbFoDNsg8DThxH0WaaANaGqQAfxfPks1n2Ve55VX6yV5atM/gG99xgSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cqqMrmC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Cm/FpwU9AMDo77qGdu3UA0Xm0ojVNbKn94H988uY3E7klPjtHbwTPLce4JOytnele/1Xso3WQtPXDhwHOcBItVd8yu4guuqHDDYBYv1f/cXaI1IBJ5lqiJDLrI1nYrwJbYg141Mgy+FMERO5Wsju+HPeKzfoCktbJ3ArDMecHNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX1IZx6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cqqMrmC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FF71F00893;
-	Sat, 30 May 2026 16:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX1IZx6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09311F00893;
+	Sat, 30 May 2026 16:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160009;
-	bh=f23F60fMXRFnk+SIk4jSgiXl8Jrd87k4dumH1Ob3VZU=;
+	s=korg; t=1780160012;
+	bh=jEY7/tkhbPtbxl2+bZlcCYicTf3eA0Z6bKnnyO5ebJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0cqqMrmCWmK3tOKj9QV7G6+Ry//gFYoS2Wrrkz5iv9OdKqblq7z7xJDUxzJuJbcTC
-	 AcBncMHIOQltcv+rq+8Qijnt0CgkESuVh/6ht3oAObtc6ukZ7bwJcMc5X7qOxXSyQa
-	 6iPs+4ZfKRBeQiMKA5FeA79DGAMruUt/P1Dp8Z5U=
+	b=CX1IZx6acLo4fHcRq9O9WkDmndF68C7fJfKw//PEASixo38BXVHrpvJJ/PA/Yiam4
+	 /SbJuZekpvErbDNuzDXyi5L0WnzsvFmeWBs3dmK2ab+Q+zANXIPiyWHD7MUGQeC7uc
+	 n/USgd6VqhfCoDNUTCfzne8ULfN0ks2ogZYk+J2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 220/969] ipv4: icmp: validate reply type before using icmp_pointers
-Date: Sat, 30 May 2026 17:55:44 +0200
-Message-ID: <20260530160306.527669104@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 194/969] ALSA: aoa: i2sbus: fix OF node lifetime handling
+Date: Sat, 30 May 2026 17:55:18 +0200
+Message-ID: <20260530160305.832785258@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,59 +44,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 67bf002a2d7387a6312138210d0bd06e3cf4879b upstream.
+commit 4ec93f070eda6b765b62efcaed9241c3b3b0b6ad upstream.
 
-Extended echo replies use ICMP_EXT_ECHOREPLY as the outbound reply type.
-That value is outside the range covered by icmp_pointers[], which only
-describes the traditional ICMP types up to NR_ICMP_TYPES.
+i2sbus_add_dev() keeps the matched "sound" child pointer after
+for_each_child_of_node() has dropped the iterator reference. Take an
+extra reference before saving that node and drop it after the
+layout-id/device-id lookup is complete.
 
-Avoid consulting icmp_pointers[] for reply types outside that range, and
-use array_index_nospec() for the remaining in-range lookup. Normal ICMP
-replies keep their existing behavior unchanged.
+The function also stores np in dev->sound.ofdev.dev.of_node without
+taking a reference for the embedded soundbus device. Since i2sbus
+overrides the embedded platform device release callback, balance that
+reference explicitly in the local error path and in i2sbus_release_dev().
 
-Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0dace90c01a5978e829ca741ef684dbd7304ce62.1776628519.git.caoruide123@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260330-aoa-i2sbus-ofnode-lifetime-v1-1-51c309f4ff06@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/icmp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/aoa/soundbus/i2sbus/core.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -64,6 +64,7 @@
- #include <linux/jiffies.h>
- #include <linux/kernel.h>
- #include <linux/fcntl.h>
-+#include <linux/nospec.h>
- #include <linux/socket.h>
- #include <linux/in.h>
- #include <linux/inet.h>
-@@ -359,7 +360,9 @@ static int icmp_glue_bits(void *from, ch
- 				      to, len);
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -83,6 +83,7 @@ static void i2sbus_release_dev(struct de
+ 	for (i = aoa_resource_i2smmio; i <= aoa_resource_rxdbdma; i++)
+ 		free_irq(i2sdev->interrupts[i], i2sdev);
+ 	i2sbus_control_remove_dev(i2sdev->control, i2sdev);
++	of_node_put(i2sdev->sound.ofdev.dev.of_node);
+ 	mutex_destroy(&i2sdev->lock);
+ 	kfree(i2sdev);
+ }
+@@ -148,7 +149,6 @@ static int i2sbus_get_and_fixup_rsrc(str
+ }
  
- 	skb->csum = csum_block_add(skb->csum, csum, odd);
--	if (icmp_pointers[icmp_param->data.icmph.type].error)
-+	if (icmp_param->data.icmph.type <= NR_ICMP_TYPES &&
-+	    icmp_pointers[array_index_nospec(icmp_param->data.icmph.type,
-+					     NR_ICMP_TYPES + 1)].error)
- 		nf_ct_attach(skb, icmp_param->skb);
+ /* Returns 1 if added, 0 for otherwise; don't return a negative value! */
+-/* FIXME: look at device node refcounting */
+ static int i2sbus_add_dev(struct macio_dev *macio,
+ 			  struct i2sbus_control *control,
+ 			  struct device_node *np)
+@@ -179,8 +179,9 @@ static int i2sbus_add_dev(struct macio_d
+ 	i = 0;
+ 	for_each_child_of_node(np, child) {
+ 		if (of_node_name_eq(child, "sound")) {
++			of_node_put(sound);
+ 			i++;
+-			sound = child;
++			sound = of_node_get(child);
+ 		}
+ 	}
+ 	if (i == 1) {
+@@ -206,6 +207,7 @@ static int i2sbus_add_dev(struct macio_d
+ 			}
+ 		}
+ 	}
++	of_node_put(sound);
+ 	/* for the time being, until we can handle non-layout-id
+ 	 * things in some fabric, refuse to attach if there is no
+ 	 * layout-id property or we haven't been forced to attach.
+@@ -220,7 +222,7 @@ static int i2sbus_add_dev(struct macio_d
+ 	mutex_init(&dev->lock);
+ 	spin_lock_init(&dev->low_lock);
+ 	dev->sound.ofdev.archdata.dma_mask = macio->ofdev.archdata.dma_mask;
+-	dev->sound.ofdev.dev.of_node = np;
++	dev->sound.ofdev.dev.of_node = of_node_get(np);
+ 	dev->sound.ofdev.dev.dma_mask = &dev->sound.ofdev.archdata.dma_mask;
+ 	dev->sound.ofdev.dev.parent = &macio->ofdev.dev;
+ 	dev->sound.ofdev.dev.release = i2sbus_release_dev;
+@@ -328,6 +330,7 @@ static int i2sbus_add_dev(struct macio_d
+ 	for (i=0;i<3;i++)
+ 		release_and_free_resource(dev->allocated_resource[i]);
+ 	mutex_destroy(&dev->lock);
++	of_node_put(dev->sound.ofdev.dev.of_node);
+ 	kfree(dev);
  	return 0;
  }
 
