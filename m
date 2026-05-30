@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BA734E745;
-	Sat, 30 May 2026 16:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338DA33F5A3;
+	Sat, 30 May 2026 16:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159811; cv=none; b=SaYis+xKBbaK/WZcoLMXqJfr+slZW+hFgS+puTb4vC3q4f/Hw15vmWWYZsGnI0yXE0+USzd+siyLjh2+YAkJaAa9vhy3YB72j/sOqUhGk61WqkhCShifSPoqh4KCi86AIrSM/c1IwTHuoAeG+GfiY3EcwrmJ0LUxBNdsgTY7b5A=
+	t=1780159815; cv=none; b=E9Y0z8T/M6ldGTOKebHV0qWLwqb1JllZqGQ6hU1kyMHZ7XdEvh/RELzSSuw63W0mZhBrNEhz7jwjrcL6iYUX0piqc1Txo7tidqoA+8oSvPH3DfBIOySrCz7B5HEpiHetyTre6X2T8g0WrhdbLagjzEUEwsabz8NivHgpPNfuR+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159811; c=relaxed/simple;
-	bh=g6MUd+gzeg2QmzNtyXNyRmObR8fx+PCHG3873Ykn6v0=;
+	s=arc-20240116; t=1780159815; c=relaxed/simple;
+	bh=kBRQwpCliYrhXhPLlbzoaEnjNcI+e9KQb4q/HcjrM1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O48EX/Dw+J3S1/xCbRVMMKACuA0OXTi+LrdGKIUN7glsyUzTiSOnJjpfC+xV4s9gMTPzHn9K5MzobV+mhy8mxJEvqQV/OWNMsmajtdDebfHIda9wfu0yYtu93Lcum09HLaQMjwDQAqNXERoltRwoirTy19BAfZnbeBFFIeTZw3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKsDmNiN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGFQn7qQ+69K/d+kweFq74KNdyHMNiGi3aeAVJ9USQq/jmJu9saT+6RUNLVYvhvDg2VNElOxaW8f2RBfqmEZgGCzk11iYrAdkYkM2l/JPeElvt0L41ahS0/EFBin/h75zMhRvWm+lRIbn+7lbbOAmWk3lyiqFL5ZUow6333Xzsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDOw3xPc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKsDmNiN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84331F00893;
-	Sat, 30 May 2026 16:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDOw3xPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322F21F00893;
+	Sat, 30 May 2026 16:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159810;
-	bh=zy0ThBdZ8Ad217ix94mgPISi2dCBX17BZ04os/4ItKQ=;
+	s=korg; t=1780159813;
+	bh=DsqcVcbi6CTf274kfTNqYQqC8n2je6xWmAVRGz2noAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKsDmNiN+CHQR1E9E0Li2RQnZ1IM/MogCllaX7QOMrzFgUQ3ZVY/UGqQyiAk81qZQ
-	 hAxi3shLoO5g4fq8v5n3dV/KSF0yXo7CtRHGyOARg4SjRrdkEKuD8w79OSKlFnDgcn
-	 DeMqRqO4pZEcmk5k+nIZGU2/zR93HD86qix15Sro=
+	b=DDOw3xPccr6YCN7COE5bwqE8u/5fGwv/7jxYVvbip86BQnAqCCGWZggll25/f5v2L
+	 W4xXHLXM+APU7FsxUJxt4RVSnIvd4s1519XLBHDmCiWpg/yw1jDcHBYpEO9II7SlMh
+	 O7dFf675LO03zwg/gJiugGlpX9VhWKuBsWXN8f8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 160/969] ALSA: usb-audio: Avoid false E-MU sample-rate notifications
-Date: Sat, 30 May 2026 17:54:44 +0200
-Message-ID: <20260530160304.948701298@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bin Lan <lanbincn@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 169/969] padata: Fix pd UAF once and for all
+Date: Sat, 30 May 2026 17:54:53 +0200
+Message-ID: <20260530160305.174974912@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,59 +45,286 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit fca9c850042a7ab4828ce3a9caa8bc40ea09856a upstream.
+[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
 
-snd_emuusb_set_samplerate() unconditionally notifies the E-MU
-SampleRate Extension Unit control after issuing SET_CUR.
+There is a race condition/UAF in padata_reorder that goes back
+to the initial commit.  A reference count is taken at the start
+of the process in padata_do_parallel, and released at the end in
+padata_serial_worker.
 
-If snd_usb_mixer_set_ctl_value() fails, the control value has not
-changed, yet snd_usb_mixer_notify_id() still invalidates the cache and
-emits a value-change event to userspace.
+This reference count is (and only is) required for padata_replace
+to function correctly.  If padata_replace is never called then
+there is no issue.
 
-Notify the control only after a successful write.
+In the function padata_reorder which serves as the core of padata,
+as soon as padata is added to queue->serial.list, and the associated
+spin lock released, that padata may be processed and the reference
+count on pd would go away.
 
-Fixes: 7d2b451e65d2 ("ALSA: usb-audio - Added functionality for E-mu 0404USB/0202USB/TrackerPre")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260421-alsa-emuusb-samplerate-notify-v1-1-8b63bbc1d7f1@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by getting the next padata before the squeue->serial lock
+is released.
+
+In order to make this possible, simplify padata_reorder by only
+calling it once the next padata arrives.
+
+Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ Adjust context of padata_find_next(). Replace
+cpumask_next_wrap(cpu, pd->cpumask.pcpu) with
+cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false) in padata_reorder() in
+v6.1 according to dc5bb9b769c9 ("cpumask: deprecate cpumask_next_wrap()") and
+f954a2d37637 ("padata: switch padata_find_next() to using cpumask_next_wrap()")
+. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/padata.h |   3 -
+ kernel/padata.c        | 136 +++++++++++------------------------------
+ 2 files changed, 37 insertions(+), 102 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -1561,15 +1561,17 @@ void snd_emuusb_set_samplerate(struct sn
- {
- 	struct usb_mixer_interface *mixer;
- 	struct usb_mixer_elem_info *cval;
-+	int err;
- 	int unitid = 12; /* SampleRate ExtensionUnit ID */
+diff --git a/include/linux/padata.h b/include/linux/padata.h
+index 495b16b6b4d72..9ca779d7e310e 100644
+--- a/include/linux/padata.h
++++ b/include/linux/padata.h
+@@ -91,7 +91,6 @@ struct padata_cpumask {
+  * @cpu: Next CPU to be processed.
+  * @cpumask: The cpumasks in use for parallel and serial workers.
+  * @reorder_work: work struct for reordering.
+- * @lock: Reorder lock.
+  */
+ struct parallel_data {
+ 	struct padata_shell		*ps;
+@@ -102,8 +101,6 @@ struct parallel_data {
+ 	unsigned int			processed;
+ 	int				cpu;
+ 	struct padata_cpumask		cpumask;
+-	struct work_struct		reorder_work;
+-	spinlock_t                      ____cacheline_aligned lock;
+ };
  
- 	list_for_each_entry(mixer, &chip->mixer_list, list) {
- 		if (mixer->id_elems[unitid]) {
- 			cval = mixer_elem_list_to_info(mixer->id_elems[unitid]);
--			snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
--						    cval->control << 8,
--						    samplerate_id);
--			snd_usb_mixer_notify_id(mixer, unitid);
-+			err = snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
-+							  cval->control << 8,
-+							  samplerate_id);
-+			if (!err)
-+				snd_usb_mixer_notify_id(mixer, unitid);
+ /**
+diff --git a/kernel/padata.c b/kernel/padata.c
+index d49f97abe086f..93e288dc373ee 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -253,20 +253,17 @@ EXPORT_SYMBOL(padata_do_parallel);
+  *   be parallel processed by another cpu and is not yet present in
+  *   the cpu's reorder queue.
+  */
+-static struct padata_priv *padata_find_next(struct parallel_data *pd,
+-					    bool remove_object)
++static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
++					    unsigned int processed)
+ {
+ 	struct padata_priv *padata;
+ 	struct padata_list *reorder;
+-	int cpu = pd->cpu;
+ 
+ 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
+ 
+ 	spin_lock(&reorder->lock);
+-	if (list_empty(&reorder->list)) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
++	if (list_empty(&reorder->list))
++		goto notfound;
+ 
+ 	padata = list_entry(reorder->list.next, struct padata_priv, list);
+ 
+@@ -274,101 +271,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
+ 	 * Checks the rare case where two or more parallel jobs have hashed to
+ 	 * the same CPU and one of the later ones finishes first.
+ 	 */
+-	if (padata->seq_nr != pd->processed) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
+-
+-	if (remove_object) {
+-		list_del_init(&padata->list);
+-		++pd->processed;
+-		/* When sequence wraps around, reset to the first CPU. */
+-		if (unlikely(pd->processed == 0))
+-			pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-		else
+-			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
+-	}
++	if (padata->seq_nr != processed)
++		goto notfound;
+ 
++	list_del_init(&padata->list);
+ 	spin_unlock(&reorder->lock);
+ 	return padata;
++
++notfound:
++	pd->processed = processed;
++	pd->cpu = cpu;
++	spin_unlock(&reorder->lock);
++	return NULL;
+ }
+ 
+-static void padata_reorder(struct parallel_data *pd)
++static void padata_reorder(struct padata_priv *padata)
+ {
++	struct parallel_data *pd = padata->pd;
+ 	struct padata_instance *pinst = pd->ps->pinst;
+-	int cb_cpu;
+-	struct padata_priv *padata;
+-	struct padata_serial_queue *squeue;
+-	struct padata_list *reorder;
++	unsigned int processed;
++	int cpu;
+ 
+-	/*
+-	 * We need to ensure that only one cpu can work on dequeueing of
+-	 * the reorder queue the time. Calculating in which percpu reorder
+-	 * queue the next object will arrive takes some time. A spinlock
+-	 * would be highly contended. Also it is not clear in which order
+-	 * the objects arrive to the reorder queues. So a cpu could wait to
+-	 * get the lock just to notice that there is nothing to do at the
+-	 * moment. Therefore we use a trylock and let the holder of the lock
+-	 * care for all the objects enqueued during the holdtime of the lock.
+-	 */
+-	if (!spin_trylock_bh(&pd->lock))
+-		return;
++	processed = pd->processed;
++	cpu = pd->cpu;
+ 
+-	while (1) {
+-		padata = padata_find_next(pd, true);
++	do {
++		struct padata_serial_queue *squeue;
++		int cb_cpu;
+ 
+-		/*
+-		 * If the next object that needs serialization is parallel
+-		 * processed by another cpu and is still on it's way to the
+-		 * cpu's reorder queue, nothing to do for now.
+-		 */
+-		if (!padata)
+-			break;
++		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		processed++;
+ 
+ 		cb_cpu = padata->cb_cpu;
+ 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
+ 
+ 		spin_lock(&squeue->serial.lock);
+ 		list_add_tail(&padata->list, &squeue->serial.list);
+-		spin_unlock(&squeue->serial.lock);
+-
+ 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
+-	}
+ 
+-	spin_unlock_bh(&pd->lock);
+-
+-	/*
+-	 * The next object that needs serialization might have arrived to
+-	 * the reorder queues in the meantime.
+-	 *
+-	 * Ensure reorder queue is read after pd->lock is dropped so we see
+-	 * new objects from another task in padata_do_serial.  Pairs with
+-	 * smp_mb in padata_do_serial.
+-	 */
+-	smp_mb();
+-
+-	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
+-	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
+ 		/*
+-		 * Other context(eg. the padata_serial_worker) can finish the request.
+-		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
++		 * If the next object that needs serialization is parallel
++		 * processed by another cpu and is still on it's way to the
++		 * cpu's reorder queue, end the loop.
+ 		 */
+-		padata_get_pd(pd);
+-		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
+-			padata_put_pd(pd);
+-	}
+-}
+-
+-static void invoke_padata_reorder(struct work_struct *work)
+-{
+-	struct parallel_data *pd;
+-
+-	local_bh_disable();
+-	pd = container_of(work, struct parallel_data, reorder_work);
+-	padata_reorder(pd);
+-	local_bh_enable();
+-	/* Pairs with putting the reorder_work in the serial_wq */
+-	padata_put_pd(pd);
++		padata = padata_find_next(pd, cpu, processed);
++		spin_unlock(&squeue->serial.lock);
++	} while (padata);
+ }
+ 
+ static void padata_serial_worker(struct work_struct *serial_work)
+@@ -419,6 +367,7 @@ void padata_do_serial(struct padata_priv *padata)
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
+ 	struct list_head *pos;
++	bool gotit = true;
+ 
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+@@ -428,17 +377,14 @@ void padata_do_serial(struct padata_priv *padata)
+ 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
  			break;
- 		}
  	}
+-	list_add(&padata->list, pos);
++	if (padata->seq_nr != pd->processed) {
++		gotit = false;
++		list_add(&padata->list, pos);
++	}
+ 	spin_unlock(&reorder->lock);
+ 
+-	/*
+-	 * Ensure the addition to the reorder list is ordered correctly
+-	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
+-	 * in padata_reorder.
+-	 */
+-	smp_mb();
+-
+-	padata_reorder(pd);
++	if (gotit)
++		padata_reorder(padata);
+ }
+ EXPORT_SYMBOL(padata_do_serial);
+ 
+@@ -625,9 +571,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
+ 	padata_init_squeues(pd);
+ 	pd->seq_nr = -1;
+ 	refcount_set(&pd->refcnt, 1);
+-	spin_lock_init(&pd->lock);
+ 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
+ 
+ 	return pd;
+ 
+@@ -1137,12 +1081,6 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
+ 
+-	/*
+-	 * Wait for all _do_serial calls to finish to avoid touching
+-	 * freed pd's and ps's.
+-	 */
+-	synchronize_rcu();
+-
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
+-- 
+2.53.0
+
 
 
