@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A951D30E853;
-	Sat, 30 May 2026 17:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771E3469FC;
+	Sat, 30 May 2026 17:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162471; cv=none; b=Mgag2VxbsPzrg9aRkFRyZGsZz47ZrXVwmP9Zkc9TUd5uIJM5uD9UpxZoPj9gi5W9qTAUwN/VtONpnLtBf2HR84SU1O+2QExlrL3hrvzdJsiCChRzbRX7rWZwjVYd1pLoY4Orf3r/qUC7m83DN4l6jB8izvZsutbQQkL5o2/BRqg=
+	t=1780162475; cv=none; b=ZB54mk+g/TMmGX6fWNqGpDAho8nqVhFIHJ3cCELFbGbQfNoE4BrTQxdcmMZXCt5yTymVq9JHvAHDLpXQevY0VxT0kZhRgTmktHsEFLvEvLWlooDj0LNpTx9u7ImrDUnyqkZNd78R2jnodO6XMS/n0VWLP+IJtL8DvEm+x0L615o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162471; c=relaxed/simple;
-	bh=vUFKYkDPdN3ZVk0gFgfVcBKas13BBDHYSebXH8BW1Fs=;
+	s=arc-20240116; t=1780162475; c=relaxed/simple;
+	bh=G+BLoo1xWRm1aD7C60JfHHG2aaVFQomRrMESJ3eUWlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnIqW8YGbsEVS5rvqE3MJrRacU1wP4Tp5zwTQyHM9CiscV9j762LZhrwVD/USqmYKsaQefJRzku6FvxiT+yh6KcPWl3HsHpTs5Bzrl8K5rEWLrTPNVcLwcEoM3p/D6z5RmW7RgUfFYBux3Cbe6XLOK5PYiAVi8Ev5n9RdD6tlIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyIla3rL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SC68CR9kgmFgQV6kkDy6TTmLVSWvLyg5YjaeMDgAUqD5hT2Vc4GtLEX1M2MEKVSION51dbtgvfzCBB5SB5xuzww83VBqon81udGMWG0TXoaOIL3ezWk5QqFqGerYTfn1T5ClFxWK0PR+G7vBdPenKpFob+b8hRZCEPv9mCvAaN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Asyp6DX/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyIla3rL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8381F00893;
-	Sat, 30 May 2026 17:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Asyp6DX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D71F00893;
+	Sat, 30 May 2026 17:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162470;
-	bh=gjkQmGtFbvzwLRJ7bJwc/9BVx/oa8sDr5/CgzWALCIE=;
+	s=korg; t=1780162473;
+	bh=RpIysb3vF1DF3zNQ1wr1Iy2342i3Rl4OaTF7uc2Z5A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KyIla3rLCfm/xDpiuuzC+n/QRh9ArEp4XWKur+vbYmORy1DguOdY9WU5mu7AzuH6U
-	 IzPCouPL2PhO5XkSMuZXxsXGr8kOvMZGbcj2zDDefrP3qzB22BOq46Wk2aa65IGBi4
-	 Wdq7j1KkLbbwT726sRKxvI3NrBsqt9ZlW+Uv6z2Q=
+	b=Asyp6DX/kt5fVVvnGmgMIuu5IjN5t853pqzMj6KsGlXgYGVfEfuC8EtxCijdGasMS
+	 gHZcqF3i4t4CFiKJVv3djN8X+SePS5jpkS5rEXlaUkos8T0P3UZLD9kS7RfdQaLin4
+	 E3qwAbgIGqPmHXKqZnHFD4bW9RScKzqp8769W6pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 930/969] wifi: ath11k: fix error path leaks in some WMI WOW calls
-Date: Sat, 30 May 2026 18:07:34 +0200
-Message-ID: <20260530160326.425909066@linuxfoundation.org>
+Subject: [PATCH 6.1 931/969] HID: quirks: really enable the intended work around for appledisplay
+Date: Sat, 30 May 2026 18:07:35 +0200
+Message-ID: <20260530160326.455838571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,75 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
 
-[ Upstream commit 55dda532bbc261aef495e403c8900c5e2ab5fa34 ]
+[ Upstream commit 5f90dcfa8dc32a488581b78e575cdd7808ba5c78 ]
 
-Fix two instances where we used to directly return the result of
-ath11k_wmi_cmd_send(...). Because we did not check the return value, we
-also did not free the skb in the error path.
+Commit c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for
+appledisplay") intends to add a quirk for kernels built with Apple Cinema
+Display support, but it refers to the non-existing config option
+CONFIG_APPLEDISPLAY, whereas the config option for Apple Cinema Display
+support is named CONFIG_USB_APPLEDISPLAY.
 
-Fixes: 79802b13a492 ("ath11k: implement WoW enable and wakeup commands")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260506134240.2284016-2-nico.escande@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Refer to the intended config option CONFIG_USB_APPLEDISPLAY in the ifdef
+directive.
+
+Fixes: c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for appledisplay")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/hid/hid-quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 8b50dbc47300b..31128630d8b62 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -8482,6 +8482,7 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
- 	struct wmi_wow_host_wakeup_ind *cmd;
- 	struct sk_buff *skb;
- 	size_t len;
-+	int ret;
- 
- 	len = sizeof(*cmd);
- 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
-@@ -8495,14 +8496,20 @@ int ath11k_wmi_wow_host_wakeup_ind(struct ath11k *ar)
- 
- 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "wmi tlv wow host wakeup ind\n");
- 
--	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
-+	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID);
-+	if (ret) {
-+		ath11k_warn(ar->ab, "failed to send WMI_WOW_HOSTWAKEUP_FROM_SLEEP_CMDID\n");
-+		dev_kfree_skb(skb);
-+	}
-+
-+	return ret;
- }
- 
- int ath11k_wmi_wow_enable(struct ath11k *ar)
- {
- 	struct wmi_wow_enable_cmd *cmd;
- 	struct sk_buff *skb;
--	int len;
-+	int ret, len;
- 
- 	len = sizeof(*cmd);
- 	skb = ath11k_wmi_alloc_skb(ar->wmi->wmi_ab, len);
-@@ -8517,7 +8524,13 @@ int ath11k_wmi_wow_enable(struct ath11k *ar)
- 	cmd->pause_iface_config = WOW_IFACE_PAUSE_ENABLED;
- 	ath11k_dbg(ar->ab, ATH11K_DBG_WMI, "wmi tlv wow enable\n");
- 
--	return ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
-+	ret = ath11k_wmi_cmd_send(ar->wmi, skb, WMI_WOW_ENABLE_CMDID);
-+	if (ret) {
-+		ath11k_warn(ar->ab, "failed to send WMI_WOW_ENABLE_CMDID\n");
-+		dev_kfree_skb(skb);
-+	}
-+
-+	return ret;
- }
- 
- int ath11k_wmi_scan_prob_req_oui(struct ath11k *ar,
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 99fca77d16641..91ce2b6840144 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -222,7 +222,7 @@ static const struct hid_device_id hid_quirks[] = {
+  * used as a driver. See hid_scan_report().
+  */
+ static const struct hid_device_id hid_have_special_driver[] = {
+-#if IS_ENABLED(CONFIG_APPLEDISPLAY)
++#if IS_ENABLED(CONFIG_USB_APPLEDISPLAY)
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
 -- 
 2.53.0
 
