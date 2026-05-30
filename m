@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4127A2741B5;
-	Sat, 30 May 2026 16:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD97344D92;
+	Sat, 30 May 2026 16:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157857; cv=none; b=dlZEbQREjoOKXLrUyBzyuchsQ8gLTEIsvQcfAMUqHCH3oPZqCnwP/fh+7T8uIXp815gbxSEZ57bPx6nyYVHls9eOkcQauMR5VAfzBxz4ynMuFJ68capOSL8RLr3oOVmckB0obWXx4nNhEDtEyKtgIgixJ5iogSd7bmLM+GksQMo=
+	t=1780157864; cv=none; b=bWtYaFHFsE1ghaRfpYkoW2CUGW28YFuvohopRDLo9wMa1DGXj+KqQ4TQPPDsfBchOwn+Lo/2K9wxOkMkcUbOR55YzlLvLC9Ux630PWUoBoyuoPxSQ4EZa72s9BpzrXZkcagJcC1GSoG37u/qvSbKIbKsA5qJc5vRXtdobfyuzVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157857; c=relaxed/simple;
-	bh=6+khTNlr3hPosFBSl57GN/nC5F7AQK0LIA0tDgPIs8w=;
+	s=arc-20240116; t=1780157864; c=relaxed/simple;
+	bh=ZBqprtyeOitAFLsuO2YY/cbgvxMNDGHSTEEcNV2Sk8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mZ21XavZV0y7lSR1gNQcZuVlzapUQg9Y0eFI8CypqeVVLHVz3ml5KDFoyBMHCIFsG/sKCfZlzf1XJGy9otHclkxnH4K3TvDnj5T0Qd+pE3QJICKdahxg/CwIRh/sElj1Wfge7AwMrx+kqnx7dkIOPT52N+VQPvHss483yy/XJVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uyj5U9kh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e/Hz7pupxnCY4kS/HRATUTtIPGfbjBwz4ggiAk8NDePXiw0XCNI1yEUv+Z35LoLykD9yvKRlWwUswquiVDHTZ8N0yzKIpSf2aEE0A8opm9gAXyqNOXltHA9Knvajl/v+YZb7T8WrZAaxTMwmNO5A/H/YtZzOk1uHn6KZ7IJT0NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcONoVNO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uyj5U9kh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E49D1F00893;
-	Sat, 30 May 2026 16:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcONoVNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BE21F00893;
+	Sat, 30 May 2026 16:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157854;
-	bh=+5jSij1T1GWtSyjsJ4MbySOYt34GS+WoWHwKVObJex0=;
+	s=korg; t=1780157862;
+	bh=/n5DMwRioftIAsa3t/XOdk/A4p0ixnAG9PT08t/8kG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uyj5U9khQEJxm0x8/xM5qOWB+5XHdjpRv896rwT9L0mcPhIzXbgG/7PwPzN6RYHGG
-	 9G5mYT2RLyoZRv0bzc0QADRdRuUAdIxj6hFaMiETggquu+LRSphcOrcar6YOdhghBw
-	 3Y0UXTgAZ/XhVqUyKMF3JDeqwKFtd/ykQas9J8H8=
+	b=rcONoVNOrtierQJuHQrEPsZAkT7LGjindCcWC2rUedCOgNZVGrLr2Xk2atOqhTR4x
+	 tL5rEwZloyx+2vqicvdPZore/BwgJc9swr4uC8phKw1smgBtnqzAU+kgtl4lnXmypO
+	 qzelvX0p/YTFT4HK19bgsA35bFRkLDqjzNWhf+nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wenyuan Li <2063309626@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/969] ASoC: SOF: topology: reject invalid vendor array size in token parser
-Date: Sat, 30 May 2026 17:52:10 +0200
-Message-ID: <20260530160300.660153932@linuxfoundation.org>
+Subject: [PATCH 6.1 007/969] can: mcp251x: add error handling for power enable in open and resume
+Date: Sat, 30 May 2026 17:52:11 +0200
+Message-ID: <20260530160300.687363328@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,48 +45,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Wenyuan Li <2063309626@qq.com>
 
-[ Upstream commit 215e5fe75881a7e2425df04aeeed47a903d5cd5d ]
+[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
 
-sof_parse_token_sets() accepts array->size values that can be invalid
-for a vendor tuple array header. In particular, a zero size does not
-advance the parser state and can lead to non-progress parsing on
-malformed topology data.
+Add missing error handling for mcp251x_power_enable() calls in both
+mcp251x_open() and mcp251x_can_resume() functions.
 
-Validate array->size against the minimum header size and reject values
-smaller than sizeof(*array) before parsing. This preserves behavior for
-valid topologies and hardens malformed-input handling.
+In mcp251x_open(), if power enable fails, jump to error path to close
+candev without attempting to disable power again.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260319-sof-topology-array-size-fix-v1-1-f9191b16b1b7@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In mcp251x_can_resume(), properly check return values of power enable calls
+for both power and transceiver regulators. If any fails, return the error
+code to the PM framework and log the failure.
+
+This ensures the driver properly handles power control failures and
+maintains correct device state.
+
+Signed-off-by: Wenyuan Li <2063309626@qq.com>
+Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
+[mkl: fix patch description]
+[mkl: mcp251x_can_resume(): replace goto by return]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/topology.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index 374c8b1d69584..d803111e36385 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -678,7 +678,7 @@ static int sof_parse_token_sets(struct snd_soc_component *scomp,
- 		asize = le32_to_cpu(array->size);
+diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
+index 72ae17b2313ec..d3ffab297b77b 100644
+--- a/drivers/net/can/spi/mcp251x.c
++++ b/drivers/net/can/spi/mcp251x.c
+@@ -1213,7 +1213,11 @@ static int mcp251x_open(struct net_device *net)
+ 	}
  
- 		/* validate asize */
--		if (asize < 0) { /* FIXME: A zero-size array makes no sense */
-+		if (asize < sizeof(*array)) {
- 			dev_err(scomp->dev, "error: invalid array size 0x%x\n",
- 				asize);
- 			return -EINVAL;
+ 	mutex_lock(&priv->mcp_lock);
+-	mcp251x_power_enable(priv->transceiver, 1);
++	ret = mcp251x_power_enable(priv->transceiver, 1);
++	if (ret) {
++		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
++		goto out_close_candev;
++	}
+ 
+ 	priv->force_quit = 0;
+ 	priv->tx_skb = NULL;
+@@ -1260,6 +1264,7 @@ static int mcp251x_open(struct net_device *net)
+ 	mcp251x_hw_sleep(spi);
+ out_close:
+ 	mcp251x_power_enable(priv->transceiver, 0);
++out_close_candev:
+ 	close_candev(net);
+ 	mutex_unlock(&priv->mcp_lock);
+ 	if (release_irq)
+@@ -1499,11 +1504,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
+ {
+ 	struct spi_device *spi = to_spi_device(dev);
+ 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
++	int ret = 0;
+ 
+-	if (priv->after_suspend & AFTER_SUSPEND_POWER)
+-		mcp251x_power_enable(priv->power, 1);
+-	if (priv->after_suspend & AFTER_SUSPEND_UP)
+-		mcp251x_power_enable(priv->transceiver, 1);
++	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
++		ret = mcp251x_power_enable(priv->power, 1);
++		if (ret) {
++			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
++			return ret;
++		}
++	}
++
++	if (priv->after_suspend & AFTER_SUSPEND_UP) {
++		ret = mcp251x_power_enable(priv->transceiver, 1);
++		if (ret) {
++			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
++			if (priv->after_suspend & AFTER_SUSPEND_POWER)
++				mcp251x_power_enable(priv->power, 0);
++			return ret;
++		}
++	}
+ 
+ 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
+ 		queue_work(priv->wq, &priv->restart_work);
 -- 
 2.53.0
 
