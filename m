@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88FC2628D;
-	Sat, 30 May 2026 17:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E0A341AC7;
+	Sat, 30 May 2026 17:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163725; cv=none; b=f2R/iuZYc5vatzmTL+05lOhMt5U1GScx2IMOV71KaD/h4ethdu22sEx9FBt4SzV75P6kTQBp5ifCAx5p9gB4KTayV3n7jpLVF7EcZnX6K34tQQSJOODfTdRv5AVsrwjGs4/KFMhdbjlprpCKLRa8wS7P/epqQYTXC0d1U/Zi1KQ=
+	t=1780163729; cv=none; b=IguTNRGlgFAds04rt8yEUSauowC0uyXGp87Lf5QgWdr9Lf0WJ9KC3xhpZazdAdbdpWqqS1l96lMbYdxFFVb1F63aYmactziFvYawZ1zw+t3V96KJdOEiQunsNyTSkBOVKiArU2AR04POEKhAjVfnYXH4hrT9pfPWGmFj0bO6l5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163725; c=relaxed/simple;
-	bh=9ZoxQcGGno5kqGi1+I8jNm89HUniNhW5sN3FBbAMGWY=;
+	s=arc-20240116; t=1780163729; c=relaxed/simple;
+	bh=7w1RhRMil+lqfcTYv+bydGWUw9z5x7L9+tIwmjbHSTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tgqaeYCjnT47Q8Npcc8EXSVJJUa4rdfKFjCaP+F3vAmsXk5Pr88Zm2xWt92d5gDOnAJ9eUMqMQV0fxEHlI6MN0m5InQ4IqWRnUVJ7jkf2TllXk/HNL6f8ZiWxFhxPIvDR1OyzC8oEDqnw/YjMS336ki3PpekC/e00tYxkFBxhb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9Xv99WR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGhG2M5UIKqu7gS3p5/sC8Z7OjA2kXxYDhCOsJaaVrMj8f/YfF8CGENjoIlLtIAy8QUgjK+nJ+d283O10hnTqQQHv3oszdjlcPizdfnJYTl4IuBGi9dcqnruhWbforhdGz2Fde9/nZ9iMULzc+S0XIzOpqsxwZqGGEg1K51bBW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUgHXRdd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9Xv99WR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3307F1F00893;
-	Sat, 30 May 2026 17:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUgHXRdd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8BC1F00893;
+	Sat, 30 May 2026 17:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163724;
-	bh=HyOaE8lwozrXaebfQ50sA9pPiDk+IlM4T7hPhYl+t6Y=;
+	s=korg; t=1780163728;
+	bh=ovKOxIzHrdl1GwEuMUSJMIhuB2mnr46CbiuEZECSK7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B9Xv99WRK9ioMxtDgQ9VyMODv45o9zpyUnO53uGtMIICsshbGTnD+30akmWPp3lfU
-	 I1N6dIghhHS62s9szYsXoZgNGH12ISMAHy7g8uIbOQgRfCwrU0TISmx/0LpIPv0AYO
-	 FDz8Ai76KjTnQkztiaa1vwVXlVkCAzxxQYLMav1s=
+	b=wUgHXRddEOne/ZBw7UM5B8f4NwWY1g5K02fa6vhhK9iMjjcV+6FaoM23oAueClwA2
+	 X95gjNywOpuR7A4t5O5mzjDIRQnTs2v/M8BKrhddAfkzL7YiW8/O0+HZorJRv+blFw
+	 1K312Qjbzsy3/V58B5IWL5MXJD2w56MDn0Zy8Wn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 326/776] ASoC: Intel: bytcr_wm5102: Fix MCLK leak on platform_clock_control error
-Date: Sat, 30 May 2026 18:00:40 +0200
-Message-ID: <20260530160248.996333203@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.15 344/776] RDMA/rxe: Reject unknown opcodes before ICRC processing
+Date: Sat, 30 May 2026 18:00:58 +0200
+Message-ID: <20260530160249.468432916@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,46 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 13d30682e8dee191ac04e93642f0372a723e8b0c upstream.
+commit 4c6f86d85d03cdb33addce86aa69aa795ca6c47a upstream.
 
-If byt_wm5102_prepare_and_enable_pll1() fails in the
-SND_SOC_DAPM_EVENT_ON() path, platform_clock_control() returns after
-clk_prepare_enable(priv->mclk) without disabling the clock again.
+Even after applying commit 7244491dab34 ("RDMA/rxe: Validate pad and ICRC
+before payload_size() in rxe_rcv"), a single unauthenticated UDP packet
+can still trigger panic.  That patch handled payload_size() underflow only
+for valid opcodes with short packets, not for packets carrying an unknown
+opcode.  The unknown-opcode OOB read described below predates that commit
+and reaches back to the initial Soft RoCE driver.
 
-This leaks an MCLK enable reference on failed power-up attempts. Add the
-missing clk_disable_unprepare() on the error path, matching the unwind
-used by the other Intel platform_clock_control() implementations.
+The check added there reads
 
-Fixes: 9a87fc1e0619 ("ASoC: Intel: bytcr_wm5102: Add machine driver for BYT/WM5102")
+    pkt->paylen < header_size(pkt) + bth_pad(pkt) + RXE_ICRC_SIZE
+
+where header_size(pkt) expands to rxe_opcode[pkt->opcode].length.  The
+rxe_opcode[] array has 256 entries but is only populated for defined IB
+opcodes; any other entry (for example opcode 0xff) is zero-initialized, so
+length == 0 and the check degenerates to
+
+    pkt->paylen < 0 + bth_pad(pkt) + RXE_ICRC_SIZE
+
+which does not constrain pkt->paylen enough.  rxe_icrc_hdr() then computes
+
+    rxe_opcode[pkt->opcode].length - RXE_BTH_BYTES
+
+which underflows when length == 0 and passes a huge value to rxe_crc32(),
+causing an out-of-bounds read of the skb payload.
+
+Reproduced on v7.0-rc7 with that fix applied, QEMU/KVM with
+CONFIG_RDMA_RXE=y and CONFIG_KASAN=y, after
+
+    rdma link add rxe0 type rxe netdev eth0
+
+A single 48-byte UDP packet to port 4791 with BTH opcode=0xff and
+QPN=IB_MULTICAST_QPN triggers:
+
+    BUG: KASAN: slab-out-of-bounds in crc32_le+0x115/0x170
+    Read of size 1 at addr ...
+    The buggy address is located 0 bytes to the right of
+     allocated 704-byte region
+    Call Trace:
+     crc32_le+0x115/0x170
+     rxe_icrc_hdr.isra.0+0x226/0x300
+     rxe_icrc_check+0x13f/0x3a0
+     rxe_rcv+0x6e1/0x16e0
+     rxe_udp_encap_recv+0x20a/0x320
+     udp_queue_rcv_one_skb+0x7ed/0x12c0
+
+Subsequent packets with the same shape fault on unmapped memory and panic
+the kernel.  The trigger requires only module load and "rdma link add"; no
+QP, no connection, and no authentication.
+
+Fix this by rejecting packets whose opcode has no rxe_opcode[] entry,
+detected via the zero mask or zero length, before any length arithmetic
+runs.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260427-bytcr-wm5102-mclk-leak-v1-1-02b96d08e99c@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://patch.msgid.link/r/20260414111555.3386793-1-michael.bommarito@gmail.com
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/bytcr_wm5102.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_recv.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/sound/soc/intel/boards/bytcr_wm5102.c
-+++ b/sound/soc/intel/boards/bytcr_wm5102.c
-@@ -111,6 +111,7 @@ static int platform_clock_control(struct
- 		ret = byt_wm5102_prepare_and_enable_pll1(codec_dai, 48000);
- 		if (ret) {
- 			dev_err(card->dev, "Error setting codec sysclk: %d\n", ret);
-+			clk_disable_unprepare(priv->mclk);
- 			return ret;
- 		}
- 	} else {
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -375,6 +375,17 @@ void rxe_rcv(struct sk_buff *skb)
+ 	pkt->qp = NULL;
+ 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
+ 
++	/*
++	 * Unknown opcodes have a zero-initialized rxe_opcode[] entry, so
++	 * both mask and length are 0.  Reject them before any length math:
++	 * rxe_icrc_hdr() would otherwise compute length - RXE_BTH_BYTES
++	 * and pass the underflowed value to rxe_crc32(), producing an
++	 * out-of-bounds read.
++	 */
++	if (unlikely(!rxe_opcode[pkt->opcode].mask ||
++		     !rxe_opcode[pkt->opcode].length))
++		goto drop;
++
+ 	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
+ 		       RXE_ICRC_SIZE))
+ 		goto drop;
 
 
