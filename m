@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FF63016E1;
-	Sat, 30 May 2026 17:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0675395AD8;
+	Sat, 30 May 2026 17:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161221; cv=none; b=dGKX6en4nuNfzn+rNgQlqxygLWmPVZVZCMr2lzByFnjcjqA1++6w7Y9hJuQ3aEyvQSyFE2W9ORtZ21uT1j+D9ibAG2XNWZhkOG515kiG2s78dLg1cBScfqpQlt9xxihwmWFfMfRaF1tdFGeX3jnMmwqEitRwciexb2MLEdlaplI=
+	t=1780161224; cv=none; b=aUptWQMrQRaZJYIRzZDL3kYYDUOs4PqD2T0qGjSi64ap5aLQOLlBwAuJcWRSuT+vRAyH/mmn+G47EA6LtZzVBza+TUNHQLZ+j54SRxS4kdJCNlJ3V2K0n9d8roOcl4F6F+HNgOSQ/UmfKBTxxyIkjjvA3C9tSBETk8SfSjhJMtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161221; c=relaxed/simple;
-	bh=eGsqNBwCtZ0t66QhpjdzPpWaSmTBiMqeYBCtnISE31w=;
+	s=arc-20240116; t=1780161224; c=relaxed/simple;
+	bh=B9VT9rQzi2yi3jF5CIiB9+w6JG9ihz+Z3oFhHvHy9+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GC8mcQIki8hmPxfTNUoN4izJ7gfvbiW8NAhd7HI34KcWnyuSznl4KoPy3nYc9vgMZwg+C3EdFn7HUoquRagtVtbDVhsosJzcVVqeT+odMrkLWPSnCItHhCIImEIu8JpyO6LUya+tozmzITEUmbRYXlBgcQ67qD7KdyzGjZmGRd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svocm0i9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=al1GPSdDEXloljdtZKJyalXtt0MGLIC/2918LmsJYRWSf3m+dyLy1cGTWjYcAy1Kme/zlDqlcwvGxZ9qIB0aOd9G0NB2WOmDTpGCIGjGIk/Uer06XwHo2IKUarr/rGMrrSoqaYfrSmXJ05Jml30rl9Cz1292xFaFWkCxRWCgpws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+sFiSiW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svocm0i9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7515C1F00893;
-	Sat, 30 May 2026 17:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+sFiSiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40251F00893;
+	Sat, 30 May 2026 17:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161220;
-	bh=KnXC5MZ6KwfgcBLX/keDYNvqgqL72LLb3XTdDZWPbo4=;
+	s=korg; t=1780161223;
+	bh=S21rN+L8YNZpDgR+rYC5lEArqPvTqfxuIckMkK/Zxbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svocm0i93E3axOdGvT9USdwOZGnoR+JVurdVy+C3q+uBM/iF4GpsQc7FHKeu3kqBu
-	 EmRwZU94QHCtVFwlN2eRLyB0uNZ/nkmgYW3osLw63c1CZlclK9Y4MRIN89wiG07mBN
-	 EkmS2V0F9KYrOjo0JQ7FfLE9yjOzVa1joxzCTGSQ=
+	b=X+sFiSiWaFQpo7m6V/MsjCbwGOc0wd7e6S2bYMgiTDWjwIcXVAqiIRI+4GonKv3DK
+	 MmBG/0WXJppWX8agOc45p9/u/1Wla5dmjEfUMcJtTDFMXV92aMsrhRnAjJie6K13bc
+	 cbaRdVogzNjKnwhgAJtdjLW0GY1+Js/TJ65vE+lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 560/969] ALSA: sc6000: Use standard print API
-Date: Sat, 30 May 2026 18:01:24 +0200
-Message-ID: <20260530160315.849673460@linuxfoundation.org>
+Subject: [PATCH 6.1 561/969] ALSA: sc6000: Keep the programmed board state in card-private data
+Date: Sat, 30 May 2026 18:01:25 +0200
+Message-ID: <20260530160315.877357778@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,457 +45,291 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit e7c475b92043c02c3e6cd0c20e308fbb6f03ebde ]
+[ Upstream commit fb79bf127ac2577b4876132da6dba768018aad4c ]
 
-Use the standard print API with dev_*() instead of the old house-baked
-one.  It gives better information and allows dynamically control of
-debug prints.
+The driver may auto-select IRQ and DMA resources at probe time, but
+sc6000_init_board() still derives the SC-6000 soft configuration from
+the module parameter arrays.  When irq=auto or dma=auto is used, the
+codec is created with the selected resources while the board is
+programmed with the unresolved values.
 
-Some functions are changed to receive a device pointer to be passed to
-dev_*() calls.
+Store the mapped ports and generated SC-6000 board configuration in
+card-private data, build that configuration from the live probe
+results instead of the raw module parameters, and keep the probe-time
+board programming in a shared helper.
 
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+This fixes the resource-programming mismatch and leaves the driver
+with a stable board-state block that can be reused by suspend/resume.
+
+Fixes: c282866101bf ("ALSA: sc6000: add support for SC-6600 and SC-7000")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20240807133452.9424-34-tiwai@suse.de
-Stable-dep-of: fb79bf127ac2 ("ALSA: sc6000: Keep the programmed board state in card-private data")
+Link: https://patch.msgid.link/20260410-alsa-sc6000-pm-v1-1-4d9e95493d26@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sc6000.c | 177 +++++++++++++++++++++++----------------------
- 1 file changed, 90 insertions(+), 87 deletions(-)
+ sound/isa/sc6000.c | 152 +++++++++++++++++++++++++++------------------
+ 1 file changed, 92 insertions(+), 60 deletions(-)
 
 diff --git a/sound/isa/sc6000.c b/sound/isa/sc6000.c
-index 60398fced046b..3115c32b4061b 100644
+index 3115c32b4061b..4066b68a102e2 100644
 --- a/sound/isa/sc6000.c
 +++ b/sound/isa/sc6000.c
-@@ -204,7 +204,7 @@ static int sc6000_read(char __iomem *vport)
+@@ -100,6 +100,15 @@ MODULE_PARM_DESC(joystick, "Enable gameport.");
+ #define PFX "sc6000: "
+ #define DRV_NAME "SC-6000"
  
- }
++struct snd_sc6000 {
++	char __iomem *vport;
++	char __iomem *vmss_port;
++	u8 mss_config;
++	u8 config;
++	u8 hw_cfg[2];
++	bool old_dsp;
++};
++
+ /* hardware dependent functions */
  
--static int sc6000_write(char __iomem *vport, int cmd)
-+static int sc6000_write(struct device *devptr, char __iomem *vport, int cmd)
- {
- 	unsigned char val;
- 	int loop = 500000;
-@@ -221,18 +221,19 @@ static int sc6000_write(char __iomem *vport, int cmd)
- 		cpu_relax();
- 	} while (loop--);
- 
--	snd_printk(KERN_ERR "DSP Command (0x%x) timeout.\n", cmd);
-+	dev_err(devptr, "DSP Command (0x%x) timeout.\n", cmd);
- 
- 	return -EIO;
- }
- 
--static int sc6000_dsp_get_answer(char __iomem *vport, int command,
-+static int sc6000_dsp_get_answer(struct device *devptr,
-+				 char __iomem *vport, int command,
- 				 char *data, int data_len)
- {
- 	int len = 0;
- 
--	if (sc6000_write(vport, command)) {
--		snd_printk(KERN_ERR "CMD 0x%x: failed!\n", command);
-+	if (sc6000_write(devptr, vport, command)) {
-+		dev_err(devptr, "CMD 0x%x: failed!\n", command);
- 		return -EIO;
- 	}
- 
-@@ -265,82 +266,86 @@ static int sc6000_dsp_reset(char __iomem *vport)
- }
+ /*
+@@ -267,7 +276,7 @@ static int sc6000_dsp_reset(char __iomem *vport)
  
  /* detection and initialization */
--static int sc6000_hw_cfg_write(char __iomem *vport, const int *cfg)
-+static int sc6000_hw_cfg_write(struct device *devptr,
-+			       char __iomem *vport, const int *cfg)
+ static int sc6000_hw_cfg_write(struct device *devptr,
+-			       char __iomem *vport, const int *cfg)
++			       char __iomem *vport, const u8 *cfg)
  {
--	if (sc6000_write(vport, COMMAND_6C) < 0) {
--		snd_printk(KERN_WARNING "CMD 0x%x: failed!\n", COMMAND_6C);
-+	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
-+		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
- 		return -EIO;
- 	}
--	if (sc6000_write(vport, COMMAND_5C) < 0) {
--		snd_printk(KERN_ERR "CMD 0x%x: failed!\n", COMMAND_5C);
-+	if (sc6000_write(devptr, vport, COMMAND_5C) < 0) {
-+		dev_err(devptr, "CMD 0x%x: failed!\n", COMMAND_5C);
- 		return -EIO;
- 	}
--	if (sc6000_write(vport, cfg[0]) < 0) {
--		snd_printk(KERN_ERR "DATA 0x%x: failed!\n", cfg[0]);
-+	if (sc6000_write(devptr, vport, cfg[0]) < 0) {
-+		dev_err(devptr, "DATA 0x%x: failed!\n", cfg[0]);
- 		return -EIO;
- 	}
--	if (sc6000_write(vport, cfg[1]) < 0) {
--		snd_printk(KERN_ERR "DATA 0x%x: failed!\n", cfg[1]);
-+	if (sc6000_write(devptr, vport, cfg[1]) < 0) {
-+		dev_err(devptr, "DATA 0x%x: failed!\n", cfg[1]);
- 		return -EIO;
- 	}
--	if (sc6000_write(vport, COMMAND_C5) < 0) {
--		snd_printk(KERN_ERR "CMD 0x%x: failed!\n", COMMAND_C5);
-+	if (sc6000_write(devptr, vport, COMMAND_C5) < 0) {
-+		dev_err(devptr, "CMD 0x%x: failed!\n", COMMAND_C5);
- 		return -EIO;
- 	}
- 
+ 	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
+ 		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
+@@ -353,8 +362,7 @@ static int sc6000_init_mss(struct device *devptr,
  	return 0;
  }
  
--static int sc6000_cfg_write(char __iomem *vport, unsigned char softcfg)
-+static int sc6000_cfg_write(struct device *devptr,
-+			    char __iomem *vport, unsigned char softcfg)
- {
- 
--	if (sc6000_write(vport, WRITE_MDIRQ_CFG)) {
--		snd_printk(KERN_ERR "CMD 0x%x: failed!\n", WRITE_MDIRQ_CFG);
-+	if (sc6000_write(devptr, vport, WRITE_MDIRQ_CFG)) {
-+		dev_err(devptr, "CMD 0x%x: failed!\n", WRITE_MDIRQ_CFG);
- 		return -EIO;
- 	}
--	if (sc6000_write(vport, softcfg)) {
--		snd_printk(KERN_ERR "sc6000_cfg_write: failed!\n");
-+	if (sc6000_write(devptr, vport, softcfg)) {
-+		dev_err(devptr, "%s: failed!\n", __func__);
- 		return -EIO;
- 	}
- 	return 0;
- }
- 
--static int sc6000_setup_board(char __iomem *vport, int config)
-+static int sc6000_setup_board(struct device *devptr,
-+			      char __iomem *vport, int config)
- {
- 	int loop = 10;
- 
- 	do {
--		if (sc6000_write(vport, COMMAND_88)) {
--			snd_printk(KERN_ERR "CMD 0x%x: failed!\n",
--				   COMMAND_88);
-+		if (sc6000_write(devptr, vport, COMMAND_88)) {
-+			dev_err(devptr, "CMD 0x%x: failed!\n",
-+				COMMAND_88);
- 			return -EIO;
- 		}
- 	} while ((sc6000_wait_data(vport) < 0) && loop--);
- 
- 	if (sc6000_read(vport) < 0) {
--		snd_printk(KERN_ERR "sc6000_read after CMD 0x%x: failed\n",
--			   COMMAND_88);
-+		dev_err(devptr, "sc6000_read after CMD 0x%x: failed\n",
-+			COMMAND_88);
- 		return -EIO;
- 	}
- 
--	if (sc6000_cfg_write(vport, config))
-+	if (sc6000_cfg_write(devptr, vport, config))
- 		return -ENODEV;
- 
- 	return 0;
- }
- 
--static int sc6000_init_mss(char __iomem *vport, int config,
-+static int sc6000_init_mss(struct device *devptr,
-+			   char __iomem *vport, int config,
- 			   char __iomem *vmss_port, int mss_config)
- {
--	if (sc6000_write(vport, DSP_INIT_MSS)) {
--		snd_printk(KERN_ERR "sc6000_init_mss [0x%x]: failed!\n",
--			   DSP_INIT_MSS);
-+	if (sc6000_write(devptr, vport, DSP_INIT_MSS)) {
-+		dev_err(devptr, "%s [0x%x]: failed!\n", __func__,
-+			DSP_INIT_MSS);
- 		return -EIO;
- 	}
- 
- 	msleep(10);
- 
--	if (sc6000_cfg_write(vport, config))
-+	if (sc6000_cfg_write(devptr, vport, config))
- 		return -EIO;
- 
- 	iowrite8(mss_config, vmss_port);
-@@ -348,7 +353,8 @@ static int sc6000_init_mss(char __iomem *vport, int config,
- 	return 0;
- }
- 
--static void sc6000_hw_cfg_encode(char __iomem *vport, int *cfg,
-+static void sc6000_hw_cfg_encode(struct device *devptr,
-+				 char __iomem *vport, int *cfg,
+-static void sc6000_hw_cfg_encode(struct device *devptr,
+-				 char __iomem *vport, int *cfg,
++static void sc6000_hw_cfg_encode(struct device *devptr, u8 *cfg,
  				 long xport, long xmpu,
  				 long xmss_port, int joystick)
  {
-@@ -367,10 +373,11 @@ static void sc6000_hw_cfg_encode(char __iomem *vport, int *cfg,
- 		cfg[0] |= 0x02;
- 	cfg[1] |= 0x80;		/* enable WSS system */
- 	cfg[1] &= ~0x40;	/* disable IDE */
--	snd_printd("hw cfg %x, %x\n", cfg[0], cfg[1]);
-+	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
+@@ -376,27 +384,83 @@ static void sc6000_hw_cfg_encode(struct device *devptr,
+ 	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
  }
  
--static int sc6000_init_board(char __iomem *vport,
-+static int sc6000_init_board(struct device *devptr,
-+			     char __iomem *vport,
- 			     char __iomem *vmss_port, int dev)
+-static int sc6000_init_board(struct device *devptr,
+-			     char __iomem *vport,
+-			     char __iomem *vmss_port, int dev)
++static void sc6000_prepare_board(struct device *devptr,
++				 struct snd_sc6000 *sc6000,
++				 unsigned int dev, int xirq, int xdma)
++{
++	sc6000->mss_config = sc6000_irq_to_softcfg(xirq) |
++			     sc6000_dma_to_softcfg(xdma);
++	sc6000->config = sc6000->mss_config |
++			 sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
++	sc6000_hw_cfg_encode(devptr, sc6000->hw_cfg, port[dev], mpu_port[dev],
++			     mss_port[dev], joystick[dev]);
++}
++
++static void sc6000_detect_old_dsp(struct device *devptr,
++				  struct snd_sc6000 *sc6000)
++{
++	sc6000_write(devptr, sc6000->vport, COMMAND_5C);
++	sc6000->old_dsp = sc6000_read(sc6000->vport) < 0;
++}
++
++static int sc6000_program_board(struct device *devptr,
++				struct snd_sc6000 *sc6000)
++{
++	int err;
++
++	if (!sc6000->old_dsp) {
++		if (sc6000_hw_cfg_write(devptr, sc6000->vport,
++					sc6000->hw_cfg) < 0) {
++			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
++			return -EIO;
++		}
++	}
++
++	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
++	if (err < 0) {
++		dev_err(devptr, "sc6000_setup_board: failed!\n");
++		return -ENODEV;
++	}
++
++	sc6000_dsp_reset(sc6000->vport);
++
++	if (!sc6000->old_dsp) {
++		sc6000_write(devptr, sc6000->vport, COMMAND_60);
++		sc6000_write(devptr, sc6000->vport, 0x02);
++		sc6000_dsp_reset(sc6000->vport);
++	}
++
++	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
++	if (err < 0) {
++		dev_err(devptr, "sc6000_setup_board: failed!\n");
++		return -ENODEV;
++	}
++
++	err = sc6000_init_mss(devptr, sc6000->vport, sc6000->config,
++			      sc6000->vmss_port, sc6000->mss_config);
++	if (err < 0) {
++		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
++		return -ENODEV;
++	}
++
++	return 0;
++}
++
++static int sc6000_init_board(struct device *devptr, struct snd_sc6000 *sc6000)
  {
  	char answer[15];
-@@ -384,14 +391,14 @@ static int sc6000_init_board(char __iomem *vport,
+ 	char version[2];
+-	int mss_config = sc6000_irq_to_softcfg(irq[dev]) |
+-			 sc6000_dma_to_softcfg(dma[dev]);
+-	int config = mss_config |
+-		     sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
+ 	int err;
+-	int old = 0;
  
- 	err = sc6000_dsp_reset(vport);
+-	err = sc6000_dsp_reset(vport);
++	err = sc6000_dsp_reset(sc6000->vport);
  	if (err < 0) {
--		snd_printk(KERN_ERR "sc6000_dsp_reset: failed!\n");
-+		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
+ 		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
  		return err;
  	}
  
  	memset(answer, 0, sizeof(answer));
--	err = sc6000_dsp_get_answer(vport, GET_DSP_COPYRIGHT, answer, 15);
-+	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
+-	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
++	err = sc6000_dsp_get_answer(devptr, sc6000->vport, GET_DSP_COPYRIGHT,
++				    answer, 15);
  	if (err <= 0) {
--		snd_printk(KERN_ERR "sc6000_dsp_copyright: failed!\n");
-+		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
+ 		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
  		return -ENODEV;
- 	}
- 	/*
-@@ -399,52 +406,52 @@ static int sc6000_init_board(char __iomem *vport,
- 	 * if we have something different, we have to be warned.
- 	 */
+@@ -408,54 +472,17 @@ static int sc6000_init_board(struct device *devptr,
  	if (strncmp("SC-6000", answer, 7))
--		snd_printk(KERN_WARNING "Warning: non SC-6000 audio card!\n");
-+		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
+ 		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
  
--	if (sc6000_dsp_get_answer(vport, GET_DSP_VERSION, version, 2) < 2) {
--		snd_printk(KERN_ERR "sc6000_dsp_version: failed!\n");
-+	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
-+		dev_err(devptr, "sc6000_dsp_version: failed!\n");
+-	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
++	if (sc6000_dsp_get_answer(devptr, sc6000->vport,
++				  GET_DSP_VERSION, version, 2) < 2) {
+ 		dev_err(devptr, "sc6000_dsp_version: failed!\n");
  		return -ENODEV;
  	}
--	printk(KERN_INFO PFX "Detected model: %s, DSP version %d.%d\n",
-+	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
+ 	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
  		answer, version[0], version[1]);
  
- 	/* set configuration */
--	sc6000_write(vport, COMMAND_5C);
-+	sc6000_write(devptr, vport, COMMAND_5C);
- 	if (sc6000_read(vport) < 0)
- 		old = 1;
+-	/* set configuration */
+-	sc6000_write(devptr, vport, COMMAND_5C);
+-	if (sc6000_read(vport) < 0)
+-		old = 1;
+-
+-	if (!old) {
+-		int cfg[2];
+-		sc6000_hw_cfg_encode(devptr,
+-				     vport, &cfg[0], port[dev], mpu_port[dev],
+-				     mss_port[dev], joystick[dev]);
+-		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
+-			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
+-			return -EIO;
+-		}
+-	}
+-	err = sc6000_setup_board(devptr, vport, config);
+-	if (err < 0) {
+-		dev_err(devptr, "sc6000_setup_board: failed!\n");
+-		return -ENODEV;
+-	}
+-
+-	sc6000_dsp_reset(vport);
+-
+-	if (!old) {
+-		sc6000_write(devptr, vport, COMMAND_60);
+-		sc6000_write(devptr, vport, 0x02);
+-		sc6000_dsp_reset(vport);
+-	}
++	sc6000_detect_old_dsp(devptr, sc6000);
  
- 	if (!old) {
- 		int cfg[2];
--		sc6000_hw_cfg_encode(vport, &cfg[0], port[dev], mpu_port[dev],
-+		sc6000_hw_cfg_encode(devptr,
-+				     vport, &cfg[0], port[dev], mpu_port[dev],
- 				     mss_port[dev], joystick[dev]);
--		if (sc6000_hw_cfg_write(vport, cfg) < 0) {
--			snd_printk(KERN_ERR "sc6000_hw_cfg_write: failed!\n");
-+		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
-+			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
- 			return -EIO;
- 		}
- 	}
--	err = sc6000_setup_board(vport, config);
-+	err = sc6000_setup_board(devptr, vport, config);
- 	if (err < 0) {
--		snd_printk(KERN_ERR "sc6000_setup_board: failed!\n");
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
- 		return -ENODEV;
- 	}
+-	err = sc6000_setup_board(devptr, vport, config);
+-	if (err < 0) {
+-		dev_err(devptr, "sc6000_setup_board: failed!\n");
+-		return -ENODEV;
+-	}
+-	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
+-	if (err < 0) {
+-		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
+-		return -ENODEV;
+-	}
+-
+-	return 0;
++	return sc6000_program_board(devptr, sc6000);
+ }
  
- 	sc6000_dsp_reset(vport);
+ static int snd_sc6000_mixer(struct snd_wss *chip)
+@@ -538,10 +565,10 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
  
- 	if (!old) {
--		sc6000_write(vport, COMMAND_60);
--		sc6000_write(vport, 0x02);
-+		sc6000_write(devptr, vport, COMMAND_60);
-+		sc6000_write(devptr, vport, 0x02);
- 		sc6000_dsp_reset(vport);
- 	}
+ static void snd_sc6000_free(struct snd_card *card)
+ {
+-	char __iomem *vport = (char __force __iomem *)card->private_data;
++	struct snd_sc6000 *sc6000 = card->private_data;
  
--	err = sc6000_setup_board(vport, config);
-+	err = sc6000_setup_board(devptr, vport, config);
- 	if (err < 0) {
--		snd_printk(KERN_ERR "sc6000_setup_board: failed!\n");
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
- 		return -ENODEV;
- 	}
--	err = sc6000_init_mss(vport, config, vmss_port, mss_config);
-+	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
- 	if (err < 0) {
--		snd_printk(KERN_ERR "Cannot initialize "
--			   "Microsoft Sound System mode.\n");
-+		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
- 		return -ENODEV;
- 	}
- 
-@@ -491,39 +498,39 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
- 	if (!enable[dev])
- 		return 0;
- 	if (port[dev] == SNDRV_AUTO_PORT) {
--		printk(KERN_ERR PFX "specify IO port\n");
-+		dev_err(devptr, "specify IO port\n");
- 		return 0;
- 	}
- 	if (mss_port[dev] == SNDRV_AUTO_PORT) {
--		printk(KERN_ERR PFX "specify MSS port\n");
-+		dev_err(devptr, "specify MSS port\n");
- 		return 0;
- 	}
- 	if (port[dev] != 0x220 && port[dev] != 0x240) {
--		printk(KERN_ERR PFX "Port must be 0x220 or 0x240\n");
-+		dev_err(devptr, "Port must be 0x220 or 0x240\n");
- 		return 0;
- 	}
- 	if (mss_port[dev] != 0x530 && mss_port[dev] != 0xe80) {
--		printk(KERN_ERR PFX "MSS port must be 0x530 or 0xe80\n");
-+		dev_err(devptr, "MSS port must be 0x530 or 0xe80\n");
- 		return 0;
- 	}
- 	if (irq[dev] != SNDRV_AUTO_IRQ && !sc6000_irq_to_softcfg(irq[dev])) {
--		printk(KERN_ERR PFX "invalid IRQ %d\n", irq[dev]);
-+		dev_err(devptr, "invalid IRQ %d\n", irq[dev]);
- 		return 0;
- 	}
- 	if (dma[dev] != SNDRV_AUTO_DMA && !sc6000_dma_to_softcfg(dma[dev])) {
--		printk(KERN_ERR PFX "invalid DMA %d\n", dma[dev]);
-+		dev_err(devptr, "invalid DMA %d\n", dma[dev]);
- 		return 0;
- 	}
- 	if (mpu_port[dev] != SNDRV_AUTO_PORT &&
- 	    (mpu_port[dev] & ~0x30L) != 0x300) {
--		printk(KERN_ERR PFX "invalid MPU-401 port %lx\n",
-+		dev_err(devptr, "invalid MPU-401 port %lx\n",
- 			mpu_port[dev]);
- 		return 0;
- 	}
- 	if (mpu_port[dev] != SNDRV_AUTO_PORT &&
- 	    mpu_irq[dev] != SNDRV_AUTO_IRQ && mpu_irq[dev] != 0 &&
- 	    !sc6000_mpu_irq_to_softcfg(mpu_irq[dev])) {
--		printk(KERN_ERR PFX "invalid MPU-401 IRQ %d\n", mpu_irq[dev]);
-+		dev_err(devptr, "invalid MPU-401 IRQ %d\n", mpu_irq[dev]);
- 		return 0;
- 	}
- 	return 1;
-@@ -534,7 +541,7 @@ static void snd_sc6000_free(struct snd_card *card)
- 	char __iomem *vport = (char __force __iomem *)card->private_data;
- 
- 	if (vport)
--		sc6000_setup_board(vport, 0);
-+		sc6000_setup_board(card->dev, vport, 0);
+-	if (vport)
+-		sc6000_setup_board(card->dev, vport, 0);
++	if (sc6000->vport)
++		sc6000_setup_board(card->dev, sc6000->vport, 0);
  }
  
  static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
-@@ -558,7 +565,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
+@@ -552,15 +579,17 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
+ 	int xirq = irq[dev];
+ 	int xdma = dma[dev];
+ 	struct snd_card *card;
++	struct snd_sc6000 *sc6000;
+ 	struct snd_wss *chip;
+ 	struct snd_opl3 *opl3;
+ 	char __iomem *vport;
+ 	char __iomem *vmss_port;
+ 
+ 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
+-				0, &card);
++				sizeof(*sc6000), &card);
+ 	if (err < 0)
+ 		return err;
++	sc6000 = card->private_data;
+ 
  	if (xirq == SNDRV_AUTO_IRQ) {
  		xirq = snd_legacy_find_free_irq(possible_irqs);
- 		if (xirq < 0) {
--			snd_printk(KERN_ERR PFX "unable to find a free IRQ\n");
-+			dev_err(devptr, "unable to find a free IRQ\n");
- 			return -EBUSY;
- 		}
- 	}
-@@ -566,42 +573,39 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 	if (xdma == SNDRV_AUTO_DMA) {
- 		xdma = snd_legacy_find_free_dma(possible_dmas);
- 		if (xdma < 0) {
--			snd_printk(KERN_ERR PFX "unable to find a free DMA\n");
-+			dev_err(devptr, "unable to find a free DMA\n");
- 			return -EBUSY;
- 		}
- 	}
- 
- 	if (!devm_request_region(devptr, port[dev], 0x10, DRV_NAME)) {
--		snd_printk(KERN_ERR PFX
--			   "I/O port region is already in use.\n");
-+		dev_err(devptr, "I/O port region is already in use.\n");
+@@ -587,7 +616,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
+ 		dev_err(devptr, "I/O port cannot be iomapped.\n");
  		return -EBUSY;
  	}
- 	vport = devm_ioport_map(devptr, port[dev], 0x10);
- 	if (!vport) {
--		snd_printk(KERN_ERR PFX
--			   "I/O port cannot be iomapped.\n");
-+		dev_err(devptr, "I/O port cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
- 	card->private_data = (void __force *)vport;
+-	card->private_data = (void __force *)vport;
++	sc6000->vport = vport;
  
  	/* to make it marked as used */
  	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
--		snd_printk(KERN_ERR PFX
--			   "SC-6000 port I/O port region is already in use.\n");
-+		dev_err(devptr,
-+			"SC-6000 port I/O port region is already in use.\n");
+@@ -600,12 +629,15 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
+ 		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
  		return -EBUSY;
  	}
- 	vmss_port = devm_ioport_map(devptr, mss_port[dev], 4);
- 	if (!vmss_port) {
--		snd_printk(KERN_ERR PFX
--			   "MSS port I/O cannot be iomapped.\n");
-+		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
++	sc6000->vmss_port = vmss_port;
  
--	snd_printd("Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
--		   port[dev], xirq, xdma,
--		   mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
-+	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
-+		port[dev], xirq, xdma,
-+		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
+ 	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
+ 		port[dev], xirq, xdma,
+ 		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
  
--	err = sc6000_init_board(vport, vmss_port, dev);
-+	err = sc6000_init_board(devptr, vport, vmss_port, dev);
+-	err = sc6000_init_board(devptr, vport, vmss_port, dev);
++	sc6000_prepare_board(devptr, sc6000, dev, xirq, xdma);
++
++	err = sc6000_init_board(devptr, sc6000);
  	if (err < 0)
  		return err;
  	card->private_free = snd_sc6000_free;
-@@ -613,25 +617,24 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 
- 	err = snd_wss_pcm(chip, 0);
- 	if (err < 0) {
--		snd_printk(KERN_ERR PFX
--			   "error creating new WSS PCM device\n");
-+		dev_err(devptr, "error creating new WSS PCM device\n");
- 		return err;
- 	}
- 	err = snd_wss_mixer(chip);
- 	if (err < 0) {
--		snd_printk(KERN_ERR PFX "error creating new WSS mixer\n");
-+		dev_err(devptr, "error creating new WSS mixer\n");
- 		return err;
- 	}
- 	err = snd_sc6000_mixer(chip);
- 	if (err < 0) {
--		snd_printk(KERN_ERR PFX "the mixer rewrite failed\n");
-+		dev_err(devptr, "the mixer rewrite failed\n");
- 		return err;
- 	}
- 	if (snd_opl3_create(card,
- 			    0x388, 0x388 + 2,
- 			    OPL3_HW_AUTO, 0, &opl3) < 0) {
--		snd_printk(KERN_ERR PFX "no OPL device at 0x%x-0x%x ?\n",
--			   0x388, 0x388 + 2);
-+		dev_err(devptr, "no OPL device at 0x%x-0x%x ?\n",
-+			0x388, 0x388 + 2);
- 	} else {
- 		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
- 		if (err < 0)
-@@ -645,8 +648,8 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 					MPU401_HW_MPU401,
- 					mpu_port[dev], 0,
- 					mpu_irq[dev], NULL) < 0)
--			snd_printk(KERN_ERR "no MPU-401 device at 0x%lx ?\n",
--					mpu_port[dev]);
-+			dev_err(devptr, "no MPU-401 device at 0x%lx ?\n",
-+				mpu_port[dev]);
- 	}
- 
- 	strcpy(card->driver, DRV_NAME);
 -- 
 2.53.0
 
