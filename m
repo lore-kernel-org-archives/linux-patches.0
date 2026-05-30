@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3CA3B9D80;
-	Sat, 30 May 2026 17:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE0E3B1EC0;
+	Sat, 30 May 2026 17:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163776; cv=none; b=eyTLQASItbFvqVO4CXQEpQGRMlN0zxuYrtdMyfJjLi0iRSkr5H032UE7sc+KQiMc1HwHb/z23iwCWE2T1aDKFpyQczKoJu4SYd+uB2Pb7r1kJ4hPhEuyzSgaPvXhVgAe04VR1pP5R99i8wxsWy5mXDjLj/f/RlDIDN27uteHUjU=
+	t=1780163779; cv=none; b=G+F0V45Vu1GgBNDIht+RO1juTPiIg+kye7iXUwmA8qBV9gpv1IM8WE5GNCvYvv/AV878gSkNRa+D8O+Ogwn6uIRVUg/6LbUc1OJNGr1oaiaRSdjdk/61I2DYrOB1ikD6rkwgyERXdYTBr70mfNy2qH3TVPnzoPev/S+2/rUOkA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163776; c=relaxed/simple;
-	bh=DzwwgwcZmftP2UI3r/kP+EXdCApaaOarJkgp07SoIlM=;
+	s=arc-20240116; t=1780163779; c=relaxed/simple;
+	bh=4YU7RE7k5ASxxfwz9dt2LXPudw92+JErIwVcILZWc90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyqTGMZwlcDIl6uZ9jkkEClpzRKIiqCDCInLt/GXqQg4+5aa6pJsCVzM+gIvFuOnwUEz/iVIPq+WngGlltAd+NnyRpcnFHOXPS4VzJV42PalGJBKcjR9933sMFVxbLbPuurb7+uTkisVEEWzZytBBsaz/LIJcCFGzra/GOvZo0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q93+SyMI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tghwzw5nn8I0KBzfq6qjpARPfPWuXbt1ir/CxjnJ+FXnSRAW7M7JzMEaSvTzo1Ndc25Ps8cbG4k02vm5h3jNz7auEGlQg9UqHqC/pQCW8WRB6143BHIVeRbuB7dH0ojLfrdK+cYg8XjcnK5ksMf63KAnAlE4zrkMLQyJBRybClA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/ZF4O2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q93+SyMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595E71F00893;
-	Sat, 30 May 2026 17:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/ZF4O2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AA41F00893;
+	Sat, 30 May 2026 17:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163775;
-	bh=FT21sPruUvlCgc+hF/trBixde/2vKJU9giopyinD5RE=;
+	s=korg; t=1780163778;
+	bh=vi7OfAjkGJRkARfgC4796sh6lpIiefcPzJug201eUvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q93+SyMIQ8Z92AOvxKBmWbZOpDTzXm8SQMpR0QalwtiLf6p/ATCJIzTPunVv4ftzG
-	 3JqSr+jt1jvICucaATdCtY5t/9AT8uHrfDeEatfwwS7a5CuTsxYA6KgEqkuDKzdwbd
-	 eU9J82/8SP1xYs2wvXVgHRcf+HCsyw7wczMqPhvI=
+	b=b/ZF4O2Dong7+MsxC9nBBkBHcuM4ZSovAKx13AY7FDtCpDMUJEXDokUQ1PONY1mqq
+	 iWA5IaCODuRdc5P4gwrEDGNDB6i+Wpd2Jyf/tIjdFdijTL6Kj5+fnsHwF/6B2JTnGq
+	 J9JkuRyuragvoEb8HJ/NktuzSbnJ45MgGfBlFTw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyou Yang <wenyou.yang@atmel.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 357/776] regulator: act8945a: fix OF node reference imbalance
-Date: Sat, 30 May 2026 18:01:11 +0200
-Message-ID: <20260530160249.807316174@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Zdenek Kabelac <zkabelac@redhat.com>
+Subject: [PATCH 5.15 328/776] dm: dont report warning when doing deferred remove
+Date: Sat, 30 May 2026 18:00:42 +0200
+Message-ID: <20260530160249.049752288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
+commit b7cce3e2cca9cd78418f3c3784474b778e7996fe upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+If dm_hash_remove_all was called from dm_deferred_remove, it would write
+a warning "remove_all left %d open device(s)" if there are some other
+devices active.
 
-Fix this by using the intended helper for reusing OF nodes.
+The warning is bogus, so let's disable it in this case.
 
-Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
-Cc: stable@vger.kernel.org	# 4.6
-Cc: Wenyou Yang <wenyou.yang@atmel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 2c140a246dc0 ("dm: allow remove to be deferred")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/act8945a-regulator.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/act8945a-regulator.c
-+++ b/drivers/regulator/act8945a-regulator.c
-@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
- 		num_regulators = ARRAY_SIZE(act8945a_regulators);
- 	}
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -367,7 +367,7 @@ retry:
  
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
-+
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.driver_data = act8945a;
- 	for (i = 0; i < num_regulators; i++) {
- 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
+ 	up_write(&_hash_lock);
+ 
+-	if (dev_skipped)
++	if (dev_skipped && !only_deferred)
+ 		DMWARN("remove_all left %d open device(s)", dev_skipped);
+ }
+ 
 
 
