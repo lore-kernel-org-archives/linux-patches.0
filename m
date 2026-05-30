@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94D4481DD;
-	Sat, 30 May 2026 17:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6700A481DD;
+	Sat, 30 May 2026 17:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161183; cv=none; b=EHwRqFix0+PIwHlue1XWCl40gpcr9N2Y7mfyfE3si5SHssyrkmhGJVH+dKHyVoIZeUlUr40nW/4nlCSoiyR45etHWpr7xdESsA2KDZ3SV/6TCH2+KJiNGw17BQXXio0z+wr/3DCwQhf60Du1PtMFD0jIv9HoHyYP8RcJuudhk84=
+	t=1780161187; cv=none; b=F9ckcPElgMKiX50CLpH2sTdjQiPiaer6zOGEU7rnBSvF+CCaDiY0AM/63FaT3KvNXaCAR7+Ri3E43sogBDADVO+WCyXez0+W+z1z4Kq7UAP52Zcog1jAiEzy9Buf/aiFX2bU6Axh00bSPXe/MBHmSrFgsKcEDgMQpxGGqcgfJ6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161183; c=relaxed/simple;
-	bh=/5sPSaEg0XCecZx66A/Vg3UuKpkhbxAX4tcMyZfuvK0=;
+	s=arc-20240116; t=1780161187; c=relaxed/simple;
+	bh=PgcNXKW8N6HJBY5HwbeFl3rmzRrtmRdvPcPqDgFgydM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPie66DsbTkkmS+KzUwl3k8YJuoxzh04U/ahDJguQQRohCdIRP7ci0uNI40Ha9muK6jcuKGiL7vxEb/K0b+34o+YbfoQyL0VzcSSO/LEzYsr4EbqqUUvqZcwkWm50v2KcZfh6ddi37WcfYbuwXnd+aMiO/XVrHBsFWuJztRM07A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLfU2fL8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pyHDvvjZ+JgHl4Z+oseUVbTx568esHgu9fExuw2aF5zCoJp8I+Fo+R9+B6NV8llr7UklGjcfSqSEnLEOOOsp1DwPkFP8WNy/ADdohWWKglP94T7zzn7wstD6Lrbk2k4hqGgisebxH8gW4cNyXAguTCcisx3b468C7RiXHZIix6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hg0EzREC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLfU2fL8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137941F00893;
-	Sat, 30 May 2026 17:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hg0EzREC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0CC1F00898;
+	Sat, 30 May 2026 17:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161182;
-	bh=bI7qnBZxqsKiuqeaSfZhzpTZbiQY5r8C/gIcgF77IB0=;
+	s=korg; t=1780161186;
+	bh=dUO+CubfKB3BKITvuLgWtqMLf67pSrMRDjW5egaj2Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLfU2fL8yZoXB6z1l+9txmJl3RizrykvpNy9rmWb0XSy+Ovr2bdZJN8tFc1B+ijz0
-	 2GNl+xzqn7CGQIkRMaM5QzsV9aF23VKEUtuHU/MEVgL5pi1rQ/OYqv2p8xbL+WS3WE
-	 yyni7hP5odPnY0kZUcR4Hg6UgPsHJhXkY6Wm5uyw=
+	b=Hg0EzRECVFm8iSYrv1vKgw355p/35WSZqPGe/VYobXgSTrFgdfn+W4xnmeOxKdYqZ
+	 qaHtvctF8E+KP9uS4YiMDMIVKRlyOupeoao4uNJY0QHnWGf+QkUhBqJew0E5tEAzAl
+	 yr/I2t/TUaPatZK8oEeFnC0oBwd+xDNUIQhiNlkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 550/969] PCI: tegra194: Fix polling delay for L2 state
-Date: Sat, 30 May 2026 18:01:14 +0200
-Message-ID: <20260530160315.567600222@linuxfoundation.org>
+Subject: [PATCH 6.1 551/969] PCI: tegra194: Increase LTSSM poll time on surprise link down
+Date: Sat, 30 May 2026 18:01:15 +0200
+Message-ID: <20260530160315.596090717@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,16 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 
-[ Upstream commit adaffed907f14f954096555665ad6af2ae724d83 ]
+[ Upstream commit 74dd8efe4d6cead433162147333af989a568aac7 ]
 
-As per PCIe r7.0, sec 5.3.3.2.1, after sending PME_Turn_Off message, Root
-Port should wait for 1-10 msec for PME_TO_Ack message. Currently, driver is
-polling for 10 msec with 1 usec delay which is aggressive.  Use existing
-macro PCIE_PME_TO_L2_TIMEOUT_US to poll for 10 msec with 1 msec delay.
-Since this function is used in non-atomic context only, use non-atomic poll
-function.
+On surprise link down, LTSSM state transits from L0 -> Recovery.RcvrLock ->
+Recovery.RcvrSpeed -> Gen1 Recovery.RcvrLock -> Detect. Recovery.RcvrLock
+and Recovery.RcvrSpeed transit times are 24 ms and 48 ms respectively, so
+the total time from L0 to Detect is ~96 ms. Increase the poll timeout to
+120 ms to account for this.
+
+While at it, add LTSSM state defines for Detect-related states and use them
+in the poll condition. Use readl_poll_timeout() instead of
+readl_poll_timeout_atomic() in tegra_pcie_dw_pme_turnoff() since that path
+runs in non-atomic context.
 
 Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
 Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
@@ -72,39 +76,82 @@ Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-2-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-3-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 36 +++++++++++++---------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 0dca4baad0dac..e6124eeb824d4 100644
+index e6124eeb824d4..f502b925d486b 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -206,8 +206,6 @@
+@@ -140,7 +140,11 @@
+ #define APPL_DEBUG_PM_LINKST_IN_L0		0x11
+ #define APPL_DEBUG_LTSSM_STATE_MASK		GENMASK(8, 3)
+ #define APPL_DEBUG_LTSSM_STATE_SHIFT		3
+-#define LTSSM_STATE_PRE_DETECT			5
++#define LTSSM_STATE_DETECT_QUIET		0x00
++#define LTSSM_STATE_DETECT_ACT			0x08
++#define LTSSM_STATE_PRE_DETECT_QUIET		0x28
++#define LTSSM_STATE_DETECT_WAIT			0x30
++#define LTSSM_STATE_L2_IDLE			0xa8
+ 
+ #define APPL_RADM_STATUS			0xE4
+ #define APPL_PM_XMT_TURNOFF_STATE		BIT(0)
+@@ -206,7 +210,8 @@
  #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_MASK	GENMASK(11, 8)
  #define CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_SHIFT	8
  
--#define PME_ACK_TIMEOUT 10000
--
- #define LTSSM_TIMEOUT 50000	/* 50ms */
+-#define LTSSM_TIMEOUT 50000	/* 50ms */
++#define LTSSM_DELAY_US		10000	/* 10 ms */
++#define LTSSM_TIMEOUT_US	120000	/* 120 ms */
  
  #define GEN3_GEN4_EQ_PRESET_INIT	5
-@@ -1569,9 +1567,10 @@ static int tegra_pcie_try_link_l2(struct tegra_pcie_dw *pcie)
- 	val |= APPL_PM_XMT_TURNOFF_STATE;
- 	appl_writel(pcie, val, APPL_RADM_STATUS);
  
--	return readl_poll_timeout_atomic(pcie->appl_base + APPL_DEBUG, val,
--				 val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
--				 1, PME_ACK_TIMEOUT);
-+	return readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
-+				  val & APPL_DEBUG_PM_LINKST_IN_L2_LAT,
-+				  PCIE_PME_TO_L2_TIMEOUT_US/10,
-+				  PCIE_PME_TO_L2_TIMEOUT_US);
- }
+@@ -1613,15 +1618,14 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
+ 		data &= ~APPL_CTRL_LTSSM_EN;
+ 		writel(data, pcie->appl_base + APPL_CTRL);
  
- static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
+-		err = readl_poll_timeout_atomic(pcie->appl_base + APPL_DEBUG,
+-						data,
+-						((data &
+-						APPL_DEBUG_LTSSM_STATE_MASK) >>
+-						APPL_DEBUG_LTSSM_STATE_SHIFT) ==
+-						LTSSM_STATE_PRE_DETECT,
+-						1, LTSSM_TIMEOUT);
++		err = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, data,
++			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
++			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
++			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_PRE_DETECT_QUIET) ||
++			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_WAIT),
++			LTSSM_DELAY_US, LTSSM_TIMEOUT_US);
+ 		if (err)
+-			dev_info(pcie->dev, "Link didn't go to detect state\n");
++			dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", data, err);
+ 	}
+ 	/*
+ 	 * DBI registers may not be accessible after this as PLL-E would be
+@@ -1709,12 +1713,14 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
+ 	appl_writel(pcie, val, APPL_CTRL);
+ 
+ 	ret = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
+-				 ((val & APPL_DEBUG_LTSSM_STATE_MASK) >>
+-				 APPL_DEBUG_LTSSM_STATE_SHIFT) ==
+-				 LTSSM_STATE_PRE_DETECT,
+-				 1, LTSSM_TIMEOUT);
++		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
++		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
++		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_PRE_DETECT_QUIET) ||
++		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_WAIT) ||
++		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_L2_IDLE),
++		LTSSM_DELAY_US, LTSSM_TIMEOUT_US);
+ 	if (ret)
+-		dev_err(pcie->dev, "Failed to go Detect state: %d\n", ret);
++		dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", val, ret);
+ 
+ 	reset_control_assert(pcie->core_rst);
+ 
 -- 
 2.53.0
 
