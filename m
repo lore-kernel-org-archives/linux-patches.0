@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8159D340298;
-	Sat, 30 May 2026 18:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C260C3C8C62;
+	Sat, 30 May 2026 18:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165803; cv=none; b=rqK9dGcDQ+mYHLKf7ZwmXKHZ7L+mdDAhwUcfMDIaBvFnc65E+0G81i2c4TqbHMYaZg2/wjNQfU7y0uy1wWAYXn9MaUh1oKxxgW59xws3EXHu/YKVBZrgVofUZd6FpqffvLyez3GysFhCnz8Q3awuBAf2E3O/79klJTCaZAyZhZc=
+	t=1780165806; cv=none; b=DRg73uwR8z0NaVYQtBGmx7xpijvuOFIHF+7bqLEbghrBQhq4PxPeM6OyC7WL/JhZNbZTTtk+hYi3jmvimp5daYa4+w2HUShVnURkC28EaLq5CPhUf4tu2/DSZxTyweb7qT6ByaCI/DotubbPX9XfwS6RSe+OSXA2+qZvkGEyId0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165803; c=relaxed/simple;
-	bh=9gei/AP9OxzLMBrXkpZb9xkN0F81DXxTWnXquFEqlag=;
+	s=arc-20240116; t=1780165806; c=relaxed/simple;
+	bh=rrkNwALZosjntxdbtRDMMr08+OnCkrPgS3EN4bOP0Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqqGfX2h4PDIiN6oYOegae7UXvsAtfFzavW96GimGcuS112orfo1lzIYwWjk89x+w2v7AWGwhlQ+W/4FyKceqfX8+EAXZNlc8R3TMdG4Q0IT/ltJEfC9HlDqf6c/yO4+OPFJdD3XscYV+5z/63nlZApuQEh1GshjJ9gYJzRY9xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiOSWn9u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PPHX1lVqJbnpTzlctxc+Va2wcOE929HW7l0HeiGXtB1l4TZWmPqn96JywG5zJeK+5EBChMMFSZAY9K2CRwyzMPUtq3Rx0xZzCwu1QL2TYD3snCmhxUHX8ectRbTdbywxc3AcCoCZ0j/fE3+UUDTiPCAMKs6XVJkyhrN4jXq3gwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO2E76N1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiOSWn9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0494C1F00893;
-	Sat, 30 May 2026 18:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO2E76N1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139A61F00893;
+	Sat, 30 May 2026 18:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165802;
-	bh=FDl9A3hi/YIDng5Ql8PJjyrv0tjVjQqvdeZ5BWRdSk4=;
+	s=korg; t=1780165805;
+	bh=1AQS0ekfLVmCbAUIc36Bm4TX4oftfOvbgHF/0cLKI/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fiOSWn9uN+j4CvZj5CKzYL/nETLf4vUwmmaRk9zMtSMpZFtKBH2pkAVXOZ6l7BY1L
-	 THkd6onkyNQiZiP5Zx8wsNeN2m7+tBXSxKbnGi6/ang0qJR3vXNP2JW+8XjHY8Ztxj
-	 TntNYUBssbUhytxDZTZuT89fSmbFrk/DeeimC0/M=
+	b=oO2E76N1+XR8kRqzOJJkbEEewycCojPYz0HoBk7NIum/OQoPcj05oCE/E4a0ZzKZv
+	 yKNo33w8PCM2WHYix4yWlC6457UaquhorXT2kJMWw1Fia57hmbhlkVsUq3tI+DoFg5
+	 ZHflK/ThOnkc+NN6dMcehD79ILUJJo1XjCGUijxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Ming Chang <chiamingc@synology.com>,
-	robbieko <robbieko@synology.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 187/589] inotify: fix watch count leak when fsnotify_add_inode_mark_locked() fails
-Date: Sat, 30 May 2026 18:01:08 +0200
-Message-ID: <20260530160229.803988125@linuxfoundation.org>
+	Yiyang Chen <cyyzero16@gmail.com>,
+	Balbir Singh <bsingharora@gmail.com>,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Fan Yu <fan.yu9@zte.com.cn>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 188/589] taskstats: set version in TGID exit notifications
+Date: Sat, 30 May 2026 18:01:09 +0200
+Message-ID: <20260530160229.836017967@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,45 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Ming Chang <chiamingc@synology.com>
+From: Yiyang Chen <cyyzero16@gmail.com>
 
-commit 6a320935fa4293e9e599ec9f85dc9eb3be7029f8 upstream.
+commit 16c4f0211aaa1ec1422b11b59f64f1abe9009fc0 upstream.
 
-When fsnotify_add_inode_mark_locked() fails in inotify_new_watch(),
-the error path calls inotify_remove_from_idr() but does not call
-dec_inotify_watches() to undo the preceding inc_inotify_watches().
-This leaks a watch count, and repeated failures can exhaust the
-max_user_watches limit with -ENOSPC even when no watches are active.
+delay accounting started populating taskstats records with a valid version
+field via fill_pid() and fill_tgid().
 
-Prior to commit 1cce1eea0aff ("inotify: Convert to using per-namespace
-limits"), the watch count was incremented after fsnotify_add_mark_locked()
-succeeded, so this path was not affected. The conversion moved
-inc_inotify_watches() before the mark insertion without adding the
-corresponding rollback.
+Later, commit ad4ecbcba728 ("[PATCH] delay accounting taskstats interface
+send tgid once") changed the TGID exit path to send the cached
+signal->stats aggregate directly instead of building the outgoing record
+through fill_tgid().  Unlike fill_tgid(), fill_tgid_exit() only
+accumulates accounting data and never initializes stats->version.
 
-Add the missing dec_inotify_watches() call in the error path.
+As a result, TGID exit notifications can reach userspace with version == 0
+even though PID exit notifications and TASKSTATS_CMD_GET replies carry a
+valid taskstats version.
 
-Fixes: 1cce1eea0aff ("inotify: Convert to using per-namespace limits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
-Signed-off-by: robbieko <robbieko@synology.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260224093442.3076294-1-chiamingc@synology.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+This is easy to reproduce with `tools/accounting/getdelays.c`.
+
+I have a small follow-up patch for that tool which:
+
+1. increases the receive buffer/message size so the pid+tgid
+   combined exit notification is not dropped/truncated
+
+2. prints `stats->version`.
+
+With that patch, the reproducer is:
+
+  Terminal 1:
+    ./getdelays -d -v -l -m 0
+
+  Terminal 2:
+    taskset -c 0 python3 -c 'import threading,time; t=threading.Thread(target=time.sleep,args=(0.1,)); t.start(); t.join()'
+
+That produces both PID and TGID exit notifications for the same
+process.  The PID exit record reports a valid taskstats version, while
+the TGID exit record reports `version 0`.
+
+
+This patch (of 2):
+
+Set stats->version = TASKSTATS_VERSION after copying the cached TGID
+aggregate into the outgoing netlink payload so all taskstats records are
+self-describing again.
+
+Link: https://lkml.kernel.org/r/ba83d934e59edd431b693607de573eb9ca059309.1774810498.git.cyyzero16@gmail.com
+Fixes: ad4ecbcba728 ("[PATCH] delay accounting taskstats interface send tgid once")
+Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Cc: Fan Yu <fan.yu9@zte.com.cn>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/inotify/inotify_user.c |    1 +
+ kernel/taskstats.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -609,6 +609,7 @@ static int inotify_new_watch(struct fsno
- 	if (ret) {
- 		/* we failed to get on the inode, get off the idr */
- 		inotify_remove_from_idr(group, tmp_i_mark);
-+		dec_inotify_watches(group->inotify_data.ucounts);
- 		goto out_err;
- 	}
+--- a/kernel/taskstats.c
++++ b/kernel/taskstats.c
+@@ -632,6 +632,7 @@ void taskstats_exit(struct task_struct *
+ 		goto err;
  
+ 	memcpy(stats, tsk->signal->stats, sizeof(*stats));
++	stats->version = TASKSTATS_VERSION;
+ 
+ send:
+ 	send_cpu_listeners(rep_skb, listeners);
 
 
