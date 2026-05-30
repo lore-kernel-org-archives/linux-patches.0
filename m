@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892A22E7389;
-	Sat, 30 May 2026 18:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26C62367DF;
+	Sat, 30 May 2026 18:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167159; cv=none; b=KpKPpuMmibtvaJIHsBd/6gUIpVbb+v2vfFbGj5JAsrELCJleTHsGO1NpN0SmvwKfUx5z1Hg5sfQpNPljxVpW7/6OsCXiSgiftUGWlQ+tcUgkhLWk4uf3mqtIK1UIxuP7b02IITxH4vXXI5owqLJk1zQdAys1+WpDzYc617/zkW4=
+	t=1780167162; cv=none; b=KDk9Uwbu42K4zxFGBX3VdwsIhbuD4BckisUfVoXvf25BiP1zTvw2rMKnr69y2D1ILApXa6AlTCVqn/VVT8R1tj7lE97Ts1xKo61jRwayCI/v2K21mnChEhBQ7XSY2zt4RKRVExY8qUfcE3L25nyaDzLMoLu15gYVQuaGTEfHDWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167159; c=relaxed/simple;
-	bh=TeY5B9V9NZ4SWoOLjiKZSHBpSI6v3uC9Kv6zqwju8dw=;
+	s=arc-20240116; t=1780167162; c=relaxed/simple;
+	bh=OyvJL6im/TBQ0Le65ZAS3PscCva7xOgYQVVXg18Em4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RliN3OqAKwKwiKsra2Azlb2DxzdIW9nLNxem51LrZ2xXQ93N9Ztm0MkK6hJ2Kv+b+kSdKDD0Bq7ysLUy1xFdBkvlHqmxBrXQGUkhFvsymxwQo8QnRUBrCLpTmPdRhe4g6jGje2sYMRuPyjmKVqCfbtZhwVBVu20nKqwfz4lFI7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWuX7Vt6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZC+hQMRHcbILJmYsouCTwtKyqWfPkZ9L3YF65sL+9gLu6pR6L1miXp9HuqTAOvcL3ME3VvfvRvL5uHpEKZSShv6RlmSW1ia21aJ9u1wze2GRVWpGpP2+cg+E/dzMQTKzRn3H3WVnHGPcB1YuApdc8qlNINW5w7JAgVa5feI+r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyrKt5LF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWuX7Vt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9494D1F00893;
-	Sat, 30 May 2026 18:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyrKt5LF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193051F00893;
+	Sat, 30 May 2026 18:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167158;
-	bh=hbGWKi87yTsyQi4FLQEZImvx9JBBDOo+0dsmLqIPPjE=;
+	s=korg; t=1780167161;
+	bh=supnPoYcu5h6bbykFrSK1LPVN382y9TQzaqffemKPCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWuX7Vt6k2uFDxRTn/wfq/Gj5IHKoV6NYkDQFeTVw6V08WsOO70nZ/REu00H99XjE
-	 0bFBybpBsnQDaPJgh3czGLz0wKF7BMw3KK4+A8YKAXqd+FyFazEcC1aI4iApTmoAA5
-	 hACTYyighzLjVvmWoDXIA/jAEzJmTaOGIYY3b3vk=
+	b=DyrKt5LFCEXr1gGjva5CI2dpG9/OYCmzMtm6rqlpiRCZ208OdZTpw+GNBJvPU1oMk
+	 lEXZo/NB93dqcV34o5YsOWtqU9YeyyDmCLg5iAsgeD2rfeJ10qwg6ZmoHdDEq4TMKv
+	 65K4YRy6dKlpo8YYN5/UXOi1v/vELsmr7mJc5M/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lanqing Liu <lanqing.liu@unisoc.com>,
+	Vignesh R <vigneshr@ti.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 545/589] spi: sprd: fix error pointer deref after DMA setup failure
-Date: Sat, 30 May 2026 18:07:06 +0200
-Message-ID: <20260530160239.000229907@linuxfoundation.org>
+Subject: [PATCH 5.10 546/589] spi: ti-qspi: fix use-after-free after DMA setup failure
+Date: Sat, 30 May 2026 18:07:07 +0200
+Message-ID: <20260530160239.025432763@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,40 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 3d67fffb74267772d461c02c67f1eff893ad547d upstream.
+commit ea6ec3343e05f7937a53eb6d7617b3abdb4abc19 upstream.
 
 The driver falls back to PIO mode if DMA setup fails during probe.
 
-Make sure to check the dma.enabled flag before trying to release the DMA
-channels also on late probe errors to avoid dereferencing an error
-pointer (or attempting to release a channel a second time).
+Make sure to clear the DMA channel pointer also if buffer allocation
+fails to avoid passing a pointer to the released channel to the DMA
+engine (or trying to free the channel a second time on late probe errors
+or driver unbind).
 
 This issue was flagged by Sashiko when reviewing a devres allocation
 conversion patch.
 
-Fixes: 386119bc7be9 ("spi: sprd: spi: sprd: Add DMA mode support")
-Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=10
-Cc: stable@vger.kernel.org	# 5.1
-Cc: Lanqing Liu <lanqing.liu@unisoc.com>
+Fixes: c687c46e9e45 ("spi: spi-ti-qspi: Use bounce buffer if read buffer is not DMA'ble")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=17
+Cc: stable@vger.kernel.org	# 4.12
+Cc: Vignesh R <vigneshr@ti.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260512074733.915029-1-johan@kernel.org
+Link: https://patch.msgid.link/20260512074809.915084-1-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sprd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-ti-qspi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi-sprd.c
-+++ b/drivers/spi/spi-sprd.c
-@@ -995,7 +995,8 @@ err_rpm_put:
- disable_clk:
- 	clk_disable_unprepare(ss->clk);
- release_dma:
--	sprd_spi_dma_release(ss);
-+	if (ss->dma.enable)
-+		sprd_spi_dma_release(ss);
- free_controller:
- 	spi_controller_put(sctlr);
- 
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -873,6 +873,7 @@ static int ti_qspi_probe(struct platform
+ 		dev_err(qspi->dev,
+ 			"dma_alloc_coherent failed, using PIO mode\n");
+ 		dma_release_channel(qspi->rx_chan);
++		qspi->rx_chan = NULL;
+ 		goto no_dma;
+ 	}
+ 	master->dma_rx = qspi->rx_chan;
 
 
