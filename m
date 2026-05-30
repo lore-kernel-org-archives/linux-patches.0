@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E834028B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0178345CCA;
 	Sat, 30 May 2026 16:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157835; cv=none; b=IpVmk/4j8fZelSeGuK/KoWA4DYHUFui4rK7mfhsc2qqaMkltPuwUAHh4vHwITIi7cJ+rlxXaHDHJXergyRRVwYIxg6w5COG7eaNUgo/Ed2sA6lf495c/NIJqELIaxb6LPYMXSQa5+SpZ9hWtPY6Z4tLFX5KBSyJOJS68VFyL8Aw=
+	t=1780157835; cv=none; b=rkpv/9dwe7JXbQQTOTl9/ku3nUWV7mhAc7NEE3CHBQo2StE9MZipBWvrglHsvIrW54ZVSIan4x7EJ4+XBvJz6WqrFm1aG0Zisg2QN5IA4gSc357QeySpd6Ruh7kLDphc9+kepqQBfdX3kGa18IKCh1Yv6ephJPy6t/qetqYvy8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780157835; c=relaxed/simple;
-	bh=H/DaAWRmZgBnu3ld8VblA9mgfojRoboG9HBEMyF4Jlw=;
+	bh=inhOmY3JRcty9w8no5VmxsgHPtRxp1zbZYmzqUaTY6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kwkb07mB0ypuk36nxUfQ+9fsWYjePbvlncbfFBzxKr8mGwFqLBn9NB6h238/F1emUP0S7AceYG7IaHKwrFMI03E2nZIaSqFfeWnVCpy0NM3WIvkG1ugkMW14hLIvHsNUfNC33dKUJ6ZxMZsdpJjWTp7HC7fN+GririWGcXGEEXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cmqu7hgJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=guMbloOVH1MJPf+pNWZ8q5VjRPqMsgvaiG/Cle5miLN0TW1ye6+93RRDeyHwLOlSWDkOBMflzRQ1JaDpY7VVd2nlv/yrgI0q455HLtl97qSMH5udYbQDKSQTAffukkB7bRhXz/QWNN1oI1+YA27WKz4PWbuWzfvQBOEvugKQkDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYSIQJa+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cmqu7hgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DAE1F00893;
-	Sat, 30 May 2026 16:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYSIQJa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56641F00898;
+	Sat, 30 May 2026 16:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157820;
-	bh=FA0nBLqYeLkrFM9HGdlQ8+agJaf+DSgLmzwwpigVMtQ=;
+	s=korg; t=1780157827;
+	bh=sNDoeVFNfbppw4LFFEgjG5jjfEkW+ukSo1KYBk/0FZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cmqu7hgJt4CumG4nXHVqJ6XsYVYd7qf2mXLPUKkqksWpEm+Uk3bCzSf3PcWu8rvLI
-	 /XrzWKNThEgKfZHkzF8kTcLwYK2OsKlIdRYLy7UkniMzNr9m0wdOgqt9YXCdJLcDBN
-	 DyN26VLQrpz+0z84rPa1X2/ZPVvKIUGsALm54f7Y=
+	b=FYSIQJa+CGtRvB3D/iSPV4/0UxeURgEVB9IQNBSGkelJMMczp2qJ8TDvQtfKp+AK8
+	 tMvkt5oQ/RDOPFy8Lf/f4jTUqyb1UP4gjxsfPOa2ifol0rca+qXkZKGpLZDTFekzw2
+	 duq47xuotlFr6FJQuqm9QaNsvjRB+WonA9FS0i90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefano Brivio <sbrivio@redhat.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/589] netfilter: nft_set_pipapo_avx2: dont return non-matching entry on expiry
-Date: Sat, 30 May 2026 17:58:07 +0200
-Message-ID: <20260530160224.743902329@linuxfoundation.org>
+Subject: [PATCH 5.15 006/776] netfilter: nft_set_pipapo_avx2: dont return non-matching entry on expiry
+Date: Sat, 30 May 2026 17:55:20 +0200
+Message-ID: <20260530160240.410330144@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
-References: <20260530160224.570625122@linuxfoundation.org>
+In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
+References: <20260530160240.228940103@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -111,7 +111,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index 7da371587f9a8..3f01952a3e10b 100644
+index cf5683afaf833..650bb3a457073 100644
 --- a/net/netfilter/nft_set_pipapo_avx2.c
 +++ b/net/netfilter/nft_set_pipapo_avx2.c
 @@ -242,7 +242,7 @@ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
@@ -123,7 +123,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -318,7 +318,7 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+@@ -319,7 +319,7 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -132,7 +132,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -412,7 +412,7 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+@@ -414,7 +414,7 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -141,7 +141,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -502,7 +502,7 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+@@ -505,7 +505,7 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -150,7 +150,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -637,7 +637,7 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+@@ -641,7 +641,7 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -159,7 +159,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -694,7 +694,7 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+@@ -699,7 +699,7 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -168,7 +168,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -758,7 +758,7 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+@@ -764,7 +764,7 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -177,7 +177,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -832,7 +832,7 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+@@ -839,7 +839,7 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -186,7 +186,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -917,7 +917,7 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+@@ -925,7 +925,7 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
@@ -195,7 +195,7 @@ index 7da371587f9a8..3f01952a3e10b 100644
  
  		if (unlikely(ret == -1))
  			ret = b / XSAVE_YMM_SIZE;
-@@ -1010,7 +1010,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+@@ -1019,7 +1019,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
  
  		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
  		if (last)
