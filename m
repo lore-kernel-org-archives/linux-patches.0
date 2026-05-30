@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4984233D9E;
-	Sat, 30 May 2026 18:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB6E17555;
+	Sat, 30 May 2026 18:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165080; cv=none; b=VMBwv6RNkZY5JUxXe8Gkrwksylncj4j3RsokULRfS43HBBvj0Gvfk8v4rPDtNdE1Ur5kGfrd7QX05hYYgm0f23AR7xT7KXZ+A77owJPrd1mhhr+kUwiibA1osR4WVOBS24xE281lorlZCpWc3y//rNwXn7vJzJtF5ZBDTcIr5I0=
+	t=1780165084; cv=none; b=pl5kWmVgASsufhb4Mk6dvTEqptESkY4ThSp8GFFuECwoTH1XdU+pXEzVXNuTZA7yWCP/KG0DjABWWj14MjaVsseAqxU8hwpIRaK+kaZWjyEWmNrK58zjXW9ix8yOBqFaqZ+8MPYe32S8Dp1eqBpn62Ku6y4IrXneEHpiqdIQ8fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165080; c=relaxed/simple;
-	bh=ShzPnE/oPSIt6uY1aW/7JutV1kCtKshGNCbR/WhPuq8=;
+	s=arc-20240116; t=1780165084; c=relaxed/simple;
+	bh=dmZ+ysRBtxyjgTOLpaNxT6+vnsEmpj+tpC7Y/z3PzJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3zNQ4CcafhqeG7kzkmTQYilApNk3kqt/kBVFIYcN2A3GCoEDJoexUiXXC3cH95XEFCxsY7CJqhdc9oBTgZipyB+nwNgONSlTqEZyOoyaFu6oR0ns6j8UjOY2mvC1Te1+wFMTne2KEtmBnwFXPJI8lnBSv2i1zR8TaoiQLSTYoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuaTecTq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k2cXEEeOW3F6EkOtMtzam+fJSLnWDMRnNJJEcOtDutDigXZk0yE8quow+pMiIKOejNKT/pl2VJZyXWl247zBv22aQg4SGuhFfaNzP1itn+SVScgasl0Oj4LIGcE1Y4SVzz/Rc6LlZ6O8WIqaT1SyvwD3R5a6F/X8IMyHDVI6ED8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFPJH9TU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuaTecTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17841F00893;
-	Sat, 30 May 2026 18:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFPJH9TU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2532B1F00893;
+	Sat, 30 May 2026 18:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165079;
-	bh=SVrbcRVimrd/OX2MdRVncMMpPHO6pnAQDkDbT1u3h+8=;
+	s=korg; t=1780165082;
+	bh=eEdNP4VxxU70vQwK2ITMEEuzLF19aqhTSGE6C14L8OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IuaTecTq7f4cnSeQETMzpO6+GJwkBhLG4e7oGWXGCc6Au1xVeRhge1NaCLS7YQoWP
-	 P5o+XnyW/Ap/mtsaNylEhbxb9f+qedZboxQ9AfoJ/IMaXpk95mEN0cWlsY5xA6U5WZ
-	 3LA7F1Z8JgRUXVcFb6Em45+to1y4UMzgip0Ybs+M=
+	b=eFPJH9TUnfBBGg6y0vSP5GpRL4PMqIS0x8VIh/cqY0MCrTzq3AKFGocDLTH+/v/pY
+	 /HAT84lKfgqh3DbTW/7g9RakTKo0EWn9dboz0XgyY1BkkHU6ZyO98wBUoHCvnJA+zp
+	 ebVVgyM4+8zgHUqGbjNGGx4v/CA+8sDFQeBoyolA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 744/776] tcp: Fix imbalanced icsk_accept_queue count.
-Date: Sat, 30 May 2026 18:07:38 +0200
-Message-ID: <20260530160259.008479322@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 718/776] hwmon: (pmbus/adm1266) include PEC byte in pmbus_block_xfer read buffer
+Date: Sat, 30 May 2026 18:07:12 +0200
+Message-ID: <20260530160258.372990251@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,46 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 7eca3292cac7c26dad4c236f51ba225c39a0523f ]
+commit 487566cb1ccdf3756fdd7bf8d875e612ff3169bb upstream.
 
-When TCP socket migration happens in reqsk_timer_handler(),
-@sk_listener will be updated with the new listener.
+adm1266_pmbus_block_xfer() sets up the read transaction with
 
-When we call __inet_csk_reqsk_queue_drop(), the listener must
-be the one stored in req->rsk_listener.
+	.buf = data->read_buf,
+	.len = ADM1266_PMBUS_BLOCK_MAX + 2,
 
-The cited commit accidentally replaced oreq->rsk_listener with
-sk_listener, leading to imbalanced icsk_accept_queue count.
+but read_buf in struct adm1266_data is declared as
 
-Let's pass the correct listener to __inet_csk_reqsk_queue_drop().
+	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 1];
 
-Fixes: e8c526f2bdf1 ("tcp/dccp: Don't use timer_pending() in reqsk_queue_unlink().")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260506035954.1563147-3-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For a max-length block response (length byte = 255 + up to 1 PEC
+byte), the i2c controller is told to write 257 bytes into a 256-byte
+buffer, putting one byte past the end of read_buf.  The same response
+also makes the subsequent PEC compare
+
+	if (crc != msgs[1].buf[msgs[1].buf[0] + 1])
+
+read a byte beyond the array.
+
+Bump the read_buf declaration to ADM1266_PMBUS_BLOCK_MAX + 2 so the
+buffer can hold the length byte, up to 255 payload bytes, and the PEC
+byte the i2c_msg length already accounts for.
+
+Fixes: 407dc802a9c0 ("hwmon: (pmbus/adm1266) Add Block process call")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-4-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 412c06bf60362..d99fed07b024f 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -934,7 +934,7 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	}
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -61,7 +61,7 @@ struct adm1266_data {
+ 	u8 *dev_mem;
+ 	struct mutex buf_mutex;
+ 	u8 write_buf[ADM1266_PMBUS_BLOCK_MAX + 1] ____cacheline_aligned;
+-	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 1] ____cacheline_aligned;
++	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 2] ____cacheline_aligned;
+ };
  
- drop:
--	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
-+	__inet_csk_reqsk_queue_drop(oreq->rsk_listener, oreq, true);
- 	reqsk_put(oreq);
- }
- 
--- 
-2.53.0
-
+ static const struct nvmem_cell_info adm1266_nvmem_cells[] = {
 
 
