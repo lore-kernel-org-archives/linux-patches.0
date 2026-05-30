@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207963161A3;
-	Sat, 30 May 2026 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68336263F44;
+	Sat, 30 May 2026 17:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161746; cv=none; b=DWDbe+sOW6vvHTcrESWR6YxXtfiJ7n/2PPXrp0jeefTr4AFlzJ3+HTgQ/JUM7OtETCrgdrxNAbVgpHjAbFcprC/E0y9/mv0yJRBXVWZXVCsETbYniOZt+Q4S09PA+Mb47RpMlKZh17edr0Qjkuwswj4zIV9vnJK8K0gBd0EaXwI=
+	t=1780161749; cv=none; b=epvqvfmTqcL0dBvV3KAbubrOVu9NxPhANoF0iTQEOQC96xaQCcTm/UgrkKrBhjIQk5v0JmzGHDquTZGr/FvrhShb1nVOe5POQDvub5/1VAMYyC4D96LDwatb/OFsRGnzPfm66PyRPFyYlBtZbW38XYrfM+F7SJKB/fiPXLqetUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161746; c=relaxed/simple;
-	bh=XigeqrE9LU99mk4Duke5JeSu8PtWUqEkYjQP6jg2igs=;
+	s=arc-20240116; t=1780161749; c=relaxed/simple;
+	bh=hqZRCYNSE+9VGnMyIr2Uu+vD8WvVbrnQn/SU1nAq35w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmB7Wm5SO2v5KxYR4tkpQ/yHjdOXch+JSaBvO0J+lBg+InMECgKl+0NOdeGi2QrEZVV5mYqJORH55hfxlSbLYlgepFP7+jXuJ+nXeWPovMokAB61ly91WbcziUWZSU52ZRw6vT1SIf+5TDPjMTdEolJYH6bpwf4v5R8zqfhV4wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhZJvp9m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kjn9eXVdcwEnikUXgB06HfePksXNDJuh52Yfz4W4oEwFtPWff0ULAjzVHQjznNl3cZZfOzU8PPIp7+8upOKon0b5Ic+YdNatpH0zYfGgfT1eumJKhYyAZ/hzPzzhRmIYsrEm/CkNLHwSE9hH0TI1Yt2udjcQ/8LhQD2ymbMJSqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzT7SlIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhZJvp9m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638301F00893;
-	Sat, 30 May 2026 17:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzT7SlIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9711F00893;
+	Sat, 30 May 2026 17:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161745;
-	bh=b1sOUuGCOrI0s/IOaUqrBvKeo8+jj6QfA6Gi5fHIpco=;
+	s=korg; t=1780161748;
+	bh=E6/qUz0wNbyQPJOCCJwdxrFRhu1vMOT2+otwisa1DiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhZJvp9mQ+4pxwaYg5BNY1yjrPk2oc9R5kID6FzDEbMG0IyeVRA5d+6xNW9uBDqEq
-	 NXzRSVtWyuEmgi0TFMrOBTLz8Ps0ps0sM3DcXJZXBgJtIUmfZfrDUYd3RjPa4Q2ywQ
-	 Oz2Vdl2peb9U5j30JoX3mPGAZzhsDLmCXio6gZ6s=
+	b=lzT7SlImc+X7ayguAmBTT7RX+2QAvkxAOMTKTmEYZGoocbnaJkH0bT8A/7G/PRqt6
+	 UvLeHhWB7GQG3QuUxtYVtdsazGCcJHAPfrr5GRM3Qd4JToUIiVbrONBoJziTr5qvYN
+	 jAqzdOEzNzIlBNMPCn/nGSysskSx4llIJp/wt/Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 715/969] net/sched: sch_fq_codel: remove data-races from fq_codel_dump_stats()
-Date: Sat, 30 May 2026 18:03:59 +0200
-Message-ID: <20260530160320.278469671@linuxfoundation.org>
+Subject: [PATCH 6.1 698/969] pppoe: drop PFC frames
+Date: Sat, 30 May 2026 18:03:42 +0200
+Message-ID: <20260530160319.792051098@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,45 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit bbfaa73ea6871db03dc05d7f05f00557a8981f25 ]
+[ Upstream commit cc1ff87bce1ccd38410ab10960f576dcd17db679 ]
 
-fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
+RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
+RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
+PFC for PPPoE sessions, and the current PPPoE driver assumes an
+uncompressed (2-byte) protocol field. However, the generic PPP layer
+function ppp_input() is not aware of the negotiation result, and still
+accepts PFC frames.
 
-Move this acquisition before we fill st.qdisc_stats with live data.
+If a peer with a broken implementation or an attacker sends a frame with
+a compressed (1-byte) protocol field, the subsequent PPP payload is
+shifted by one byte. This causes the network header to be 4-byte
+misaligned, which may trigger unaligned access exceptions on some
+architectures.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421142509.3967231-1-edumazet@google.com
+To reduce the attack surface, drop PPPoE PFC frames. Introduce
+ppp_skb_is_compressed_proto() helper function to be used in both
+ppp_generic.c and pppoe.c to avoid open-coding.
+
+Fixes: 7fb1b8ca8fa1 ("ppp: Move PFC decompression to PPP generic layer")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260415022456.141758-2-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_codel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ppp/ppp_generic.c |  2 +-
+ drivers/net/ppp/pppoe.c       |  8 +++++++-
+ include/linux/ppp_defs.h      | 16 ++++++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 47b5a056165cb..056895df17854 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -568,6 +568,8 @@ static int fq_codel_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	};
- 	struct list_head *pos;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 89973d0959a68..df72070a3879d 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -2245,7 +2245,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+  */
+ static void __ppp_decompress_proto(struct sk_buff *skb)
+ {
+-	if (skb->data[0] & 0x01)
++	if (ppp_skb_is_compressed_proto(skb))
+ 		*(u8 *)skb_push(skb, 1) = 0x00;
+ }
  
-+	sch_tree_lock(sch);
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index c6f44af35889d..1744a3e3ae2cf 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -425,7 +425,7 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb_mac_header_len(skb) < ETH_HLEN)
+ 		goto drop;
+ 
+-	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
++	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
+ 		goto drop;
+ 
+ 	ph = pppoe_hdr(skb);
+@@ -435,6 +435,12 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->len < len)
+ 		goto drop;
+ 
++	/* skb->data points to the PPP protocol header after skb_pull_rcsum.
++	 * Drop PFC frames.
++	 */
++	if (ppp_skb_is_compressed_proto(skb))
++		goto drop;
 +
- 	st.qdisc_stats.maxpacket = q->cstats.maxpacket;
- 	st.qdisc_stats.drop_overlimit = q->drop_overlimit;
- 	st.qdisc_stats.ecn_mark = q->cstats.ecn_mark;
-@@ -576,7 +578,6 @@ static int fq_codel_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	st.qdisc_stats.memory_usage  = q->memory_usage;
- 	st.qdisc_stats.drop_overmemory = q->drop_overmemory;
+ 	if (pskb_trim_rcsum(skb, len))
+ 		goto drop;
  
--	sch_tree_lock(sch);
- 	list_for_each(pos, &q->new_flows)
- 		st.qdisc_stats.new_flows_len++;
+diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
+index b7e57fdbd4139..b1d1f46d7d3be 100644
+--- a/include/linux/ppp_defs.h
++++ b/include/linux/ppp_defs.h
+@@ -8,6 +8,7 @@
+ #define _PPP_DEFS_H_
  
+ #include <linux/crc-ccitt.h>
++#include <linux/skbuff.h>
+ #include <uapi/linux/ppp_defs.h>
+ 
+ #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
+@@ -25,4 +26,19 @@ static inline bool ppp_proto_is_valid(u16 proto)
+ 	return !!((proto & 0x0101) == 0x0001);
+ }
+ 
++/**
++ * ppp_skb_is_compressed_proto - checks if PPP protocol in a skb is compressed
++ * @skb: skb to check
++ *
++ * Check if the PPP protocol field is compressed (the least significant
++ * bit of the most significant octet is 1). skb->data must point to the PPP
++ * protocol header.
++ *
++ * Return: Whether the PPP protocol field is compressed.
++ */
++static inline bool ppp_skb_is_compressed_proto(const struct sk_buff *skb)
++{
++	return unlikely(skb->data[0] & 0x01);
++}
++
+ #endif /* _PPP_DEFS_H_ */
 -- 
 2.53.0
 
