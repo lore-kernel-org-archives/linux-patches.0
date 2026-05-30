@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3734A349CDC;
-	Sat, 30 May 2026 16:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6BD3090F4;
+	Sat, 30 May 2026 16:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158956; cv=none; b=OuvRXsNf/dXWbIV9jrEZO+DtE7+rHuEF0VEX7m4sJX58P79oY4ytBA0sxekBozRC+bBSsn5e5UKnCs2ziFNOR4yfxKuxar6Fr5SbXZDAXBh61XP5NrJkTO6HY2ict8bexQ7b4mQ3PNFMrBr0HmxNmCuPFNZyYylAYeJOUygegoA=
+	t=1780158970; cv=none; b=r7v5RgaRgnACMdaH90jt17JnJ8ynLiMqIqIdA8KnsD2wgzNKd+QC6/TGl/FsUWA/xK4xR8Hm6CRc6JzX7Q9F/0cSpaS/39hXi3LKVpZ1rNFdbYsQdmf1llcFzR/CLsLh5dJvKajW6lyiZQXypUdFXz3k5uE9zAJBlwDq7GaQ/b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158956; c=relaxed/simple;
-	bh=tNI1cQv2Eanz4PaPnfiKtltccrYFxTjSjGgzK4corvQ=;
+	s=arc-20240116; t=1780158970; c=relaxed/simple;
+	bh=jjyUBVRL0M1A5LofnT6j6/y/C0Xonx/TUjfCvvlPJqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdHyRlPrUJ++azmsBCvhE7Ww5ojo4jQE10ycoDE309WvM3OqEHY5R6NVJ0V4JzZeicBidguUZYNg6iGQDtoeNqaKNEY4Hvqd2Vk5DUdGWpwpGZYoBg8cgG7Vo9v3Q1e2WVWZ2hUvUme4eDXSdQG8cTkI/Y0RZ4Ho/I4miHbuS0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgMFrelT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TGrijwDZ2iN8K6NsrGZh0oX0dFwm4LMoZBbgsNgyRtMa8GKbPGF1/o+os8KkhnSvpPcXOV2kRS7PQUUf/5UdVxUfJX0whskmtXuwSGMKAECSe0zgwJUEmRWyVADkSf+wwum6tMwiZ2fBNZw4JTyBtqOlwY2KkB415el7u9HACjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6Zh8ec7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgMFrelT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FC61F00893;
-	Sat, 30 May 2026 16:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6Zh8ec7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7C81F00893;
+	Sat, 30 May 2026 16:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158955;
-	bh=qBydEpUrDjC+z2TfpT71aEPHusSABReIt2WUnbn0q1o=;
+	s=korg; t=1780158969;
+	bh=0CuYjhqkovSoqUd7w7ngOSnLH+nXH+WqMO6otGWzGhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fgMFrelTpT6/wpNjtW92sv7ANtCCvr8wedpj+xxYKIEIfutIdYWVVWIOfKg4efvUL
-	 ENg1jKZhEQ6bWnMafSEBt0uXGTKJTdlJaBHD5gaOGqDUyN8GA/7blmOeK+qsW/NVVu
-	 lOd6sXdWqq8zXBwvIsxf+Y+MnSF13D+r7YQ6YfDk=
+	b=R6Zh8ec7axBzdlWvb2mRowL/melsU0fkE37a3dTKRooIPV2AFd3FZ/VzbfdKTUtgo
+	 vjyvPA9YSAsnjO9t5QWPMBeXtJuk7I1uK5YkOhv/rnk8yBGwQOhbImo4NEB6kN/iez
+	 QU28PWMnPWn6k+9PSSwMwpGcyjh7zbee3ubRx+Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yin Fengwei <fengwei_yin@linux.alibaba.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	XiaoHua Wang <561399680@139.com>,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/969] net: add proper RCU protection to /proc/net/ptype
-Date: Sat, 30 May 2026 17:53:34 +0200
-Message-ID: <20260530160302.818910917@linuxfoundation.org>
+Subject: [PATCH 6.1 091/969] net: sched: fix TCF_LAYER_TRANSPORT handling in tcf_get_base_ptr()
+Date: Sat, 30 May 2026 17:53:35 +0200
+Message-ID: <20260530160302.847312364@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -57,186 +56,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f613e8b4afea0cd17c7168e8b00e25bc8d33175d ]
+[Upstream commit 4fe5a00ec70717a7f1002d8913ec6143582b3c8e]
 
-Yin Fengwei reported an RCU stall in ptype_seq_show() and provided
-a patch.
+syzbot reported that tcf_get_base_ptr() can be called while transport
+header is not set [1].
 
-Real issue is that ptype_seq_next() and ptype_seq_show() violate
-RCU rules.
+Instead of returning a dangling pointer, return NULL.
 
-ptype_seq_show() runs under rcu_read_lock(), and reads pt->dev
-to get device name without any barrier.
+Fix tcf_get_base_ptr() callers to handle this NULL value.
 
-At the same time, concurrent writers can remove a packet_type structure
-(which is correctly freed after an RCU grace period) and clear pt->dev
-without an RCU grace period.
-
-Define ptype_iter_state to carry a dev pointer along seq_net_private:
-
-struct ptype_iter_state {
-	struct seq_net_private	p;
-	struct net_device	*dev; // added in this patch
-};
-
-We need to record the device pointer in ptype_get_idx() and
-ptype_seq_next() so that ptype_seq_show() is safe against
-concurrent pt->dev changes.
-
-We also need to add full RCU protection in ptype_seq_next().
-(Missing READ_ONCE() when reading list.next values)
-
-Many thanks to Dong Chenchen for providing a repro.
+[1]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 skb_transport_header include/linux/skbuff.h:3071 [inline]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 tcf_get_base_ptr include/net/pkt_cls.h:539 [inline]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 em_nbyte_match+0x2d8/0x3f0 net/sched/em_nbyte.c:43
+Modules linked in:
+CPU: 1 UID: 0 PID: 6019 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Call Trace:
+ <TASK>
+  tcf_em_match net/sched/ematch.c:494 [inline]
+  __tcf_em_tree_match+0x1ac/0x770 net/sched/ematch.c:520
+  tcf_em_tree_match include/net/pkt_cls.h:512 [inline]
+  basic_classify+0x115/0x2d0 net/sched/cls_basic.c:50
+  tc_classify include/net/tc_wrapper.h:197 [inline]
+  __tcf_classify net/sched/cls_api.c:1764 [inline]
+  tcf_classify+0x4cf/0x1140 net/sched/cls_api.c:1860
+  multiq_classify net/sched/sch_multiq.c:39 [inline]
+  multiq_enqueue+0xfd/0x4c0 net/sched/sch_multiq.c:66
+  dev_qdisc_enqueue+0x4e/0x260 net/core/dev.c:4118
+  __dev_xmit_skb net/core/dev.c:4214 [inline]
+  __dev_queue_xmit+0xe83/0x3b50 net/core/dev.c:4729
+  packet_snd net/packet/af_packet.c:3076 [inline]
+  packet_sendmsg+0x3e33/0x5080 net/packet/af_packet.c:3108
+  sock_sendmsg_nosec net/socket.c:727 [inline]
+  __sock_sendmsg+0x21c/0x270 net/socket.c:742
+  ____sys_sendmsg+0x505/0x830 net/socket.c:2630
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 1d10f8a1f40b ("net-procfs: show net devices bound packet types")
-Fixes: c353e8983e0d ("net: introduce per netns packet chains")
-Reported-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
-Reported-by: Dong Chenchen <dongchenchen2@huawei.com>
-Closes: https://lore.kernel.org/netdev/CANn89iKRRKPnWjJmb-_3a=sq+9h6DvTQM4DBZHT5ZRGPMzQaiA@mail.gmail.com/T/#m7b80b9fc9b9267f90e0b7aad557595f686f9c50d
-
+Reported-by: syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6920855a.a70a0220.2ea503.0058.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Tested-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
-Link: https://patch.msgid.link/20260202205217.2881198-1-edumazet@google.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20251121154100.1616228-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Some adjustments have been made. ]
-Signed-off-by: XiaoHua Wang <561399680@139.com>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net-procfs.c | 49 +++++++++++++++++++++++++++++--------------
- 1 file changed, 33 insertions(+), 16 deletions(-)
+ include/net/pkt_cls.h |  2 ++
+ net/sched/em_cmp.c    |  5 ++++-
+ net/sched/em_nbyte.c  |  2 ++
+ net/sched/em_text.c   | 11 +++++++++--
+ 4 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/net-procfs.c b/net/core/net-procfs.c
-index 1ec23bf8b05ca..2be3c1f6949bc 100644
---- a/net/core/net-procfs.c
-+++ b/net/core/net-procfs.c
-@@ -192,8 +192,14 @@ static const struct seq_operations softnet_seq_ops = {
- 	.show  = softnet_seq_show,
- };
- 
-+struct ptype_iter_state {
-+	struct seq_net_private	p;
-+	struct net_device	*dev;
-+};
-+
- static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
- {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct list_head *ptype_list = NULL;
- 	struct packet_type *pt = NULL;
- 	struct net_device *dev;
-@@ -203,12 +209,16 @@ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
- 	for_each_netdev_rcu(seq_file_net(seq), dev) {
- 		ptype_list = &dev->ptype_all;
- 		list_for_each_entry_rcu(pt, ptype_list, list) {
--			if (i == pos)
-+			if (i == pos) {
-+				iter->dev = dev;
- 				return pt;
-+			}
- 			++i;
- 		}
+diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
+index 4cabb32a2ad94..857d9ea60d469 100644
+--- a/include/net/pkt_cls.h
++++ b/include/net/pkt_cls.h
+@@ -526,6 +526,8 @@ static inline unsigned char * tcf_get_base_ptr(struct sk_buff *skb, int layer)
+ 		case TCF_LAYER_NETWORK:
+ 			return skb_network_header(skb);
+ 		case TCF_LAYER_TRANSPORT:
++			if (!skb_transport_header_was_set(skb))
++				break;
+ 			return skb_transport_header(skb);
  	}
  
-+	iter->dev = NULL;
-+
- 	list_for_each_entry_rcu(pt, &ptype_all, list) {
- 		if (i == pos)
- 			return pt;
-@@ -234,6 +244,7 @@ static void *ptype_seq_start(struct seq_file *seq, loff_t *pos)
- 
- static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+diff --git a/net/sched/em_cmp.c b/net/sched/em_cmp.c
+index f17b049ea5309..71ce113f2d08e 100644
+--- a/net/sched/em_cmp.c
++++ b/net/sched/em_cmp.c
+@@ -22,9 +22,12 @@ static int em_cmp_match(struct sk_buff *skb, struct tcf_ematch *em,
+ 			struct tcf_pkt_info *info)
  {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct net_device *dev;
- 	struct packet_type *pt;
- 	struct list_head *nxt;
-@@ -244,20 +255,21 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		return ptype_get_idx(seq, 0);
+ 	struct tcf_em_cmp *cmp = (struct tcf_em_cmp *) em->data;
+-	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer) + cmp->off;
++	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer);
+ 	u32 val = 0;
  
- 	pt = v;
--	nxt = pt->list.next;
--	if (pt->dev) {
--		if (nxt != &pt->dev->ptype_all)
-+	nxt = READ_ONCE(pt->list.next);
-+	dev = iter->dev;
-+	if (dev) {
-+		if (nxt != &dev->ptype_all)
- 			goto found;
- 
--		dev = pt->dev;
- 		for_each_netdev_continue_rcu(seq_file_net(seq), dev) {
--			if (!list_empty(&dev->ptype_all)) {
--				nxt = dev->ptype_all.next;
-+			nxt = READ_ONCE(dev->ptype_all.next);
-+			if (nxt != &dev->ptype_all) {
-+				iter->dev = dev;
- 				goto found;
- 			}
- 		}
--
--		nxt = ptype_all.next;
-+		iter->dev = NULL;
-+		nxt = READ_ONCE(ptype_all.next);
- 		goto ptype_all;
- 	}
- 
-@@ -266,14 +278,14 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		if (nxt != &ptype_all)
- 			goto found;
- 		hash = 0;
--		nxt = ptype_base[0].next;
-+		nxt = READ_ONCE(ptype_base[0].next);
- 	} else
- 		hash = ntohs(pt->type) & PTYPE_HASH_MASK;
- 
- 	while (nxt == &ptype_base[hash]) {
- 		if (++hash >= PTYPE_HASH_SIZE)
- 			return NULL;
--		nxt = ptype_base[hash].next;
-+		nxt = READ_ONCE(ptype_base[hash].next);
- 	}
- found:
- 	return list_entry(nxt, struct packet_type, list);
-@@ -287,19 +299,24 @@ static void ptype_seq_stop(struct seq_file *seq, void *v)
- 
- static int ptype_seq_show(struct seq_file *seq, void *v)
- {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct packet_type *pt = v;
-+	struct net_device *dev;
- 
--	if (v == SEQ_START_TOKEN)
-+	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq, "Type Device      Function\n");
--	else if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
--		 (!pt->dev || net_eq(dev_net(pt->dev), seq_file_net(seq)))) {
++	if (!ptr)
 +		return 0;
-+	}
-+	dev = iter->dev;
-+	if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
-+		 (!dev || net_eq(dev_net(dev), seq_file_net(seq)))) {
- 		if (pt->type == htons(ETH_P_ALL))
- 			seq_puts(seq, "ALL ");
- 		else
- 			seq_printf(seq, "%04x", ntohs(pt->type));
++	ptr += cmp->off;
+ 	if (!tcf_valid_offset(skb, ptr, cmp->align))
+ 		return 0;
  
- 		seq_printf(seq, " %-8s %ps\n",
--			   pt->dev ? pt->dev->name : "", pt->func);
-+			   dev ? dev->name : "", pt->func);
- 	}
+diff --git a/net/sched/em_nbyte.c b/net/sched/em_nbyte.c
+index a83b237cbeb06..2e3c1d58d4563 100644
+--- a/net/sched/em_nbyte.c
++++ b/net/sched/em_nbyte.c
+@@ -42,6 +42,8 @@ static int em_nbyte_match(struct sk_buff *skb, struct tcf_ematch *em,
+ 	struct nbyte_data *nbyte = (struct nbyte_data *) em->data;
+ 	unsigned char *ptr = tcf_get_base_ptr(skb, nbyte->hdr.layer);
  
- 	return 0;
-@@ -323,7 +340,7 @@ static int __net_init dev_proc_net_init(struct net *net)
- 			 &softnet_seq_ops))
- 		goto out_dev;
- 	if (!proc_create_net("ptype", 0444, net->proc_net, &ptype_seq_ops,
--			sizeof(struct seq_net_private)))
-+			sizeof(struct ptype_iter_state)))
- 		goto out_softnet;
++	if (!ptr)
++		return 0;
+ 	ptr += nbyte->hdr.off;
  
- 	if (wext_proc_init(net))
+ 	if (!tcf_valid_offset(skb, ptr, nbyte->hdr.len))
+diff --git a/net/sched/em_text.c b/net/sched/em_text.c
+index f176afb70559e..32aae8a9dedaa 100644
+--- a/net/sched/em_text.c
++++ b/net/sched/em_text.c
+@@ -29,12 +29,19 @@ static int em_text_match(struct sk_buff *skb, struct tcf_ematch *m,
+ 			 struct tcf_pkt_info *info)
+ {
+ 	struct text_match *tm = EM_TEXT_PRIV(m);
++	unsigned char *ptr;
+ 	int from, to;
+ 
+-	from = tcf_get_base_ptr(skb, tm->from_layer) - skb->data;
++	ptr = tcf_get_base_ptr(skb, tm->from_layer);
++	if (!ptr)
++		return 0;
++	from = ptr - skb->data;
+ 	from += tm->from_offset;
+ 
+-	to = tcf_get_base_ptr(skb, tm->to_layer) - skb->data;
++	ptr = tcf_get_base_ptr(skb, tm->to_layer);
++	if (!ptr)
++		return 0;
++	to = ptr - skb->data;
+ 	to += tm->to_offset;
+ 
+ 	return skb_find_text(skb, from, to, tm->config) != UINT_MAX;
 -- 
 2.53.0
 
