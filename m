@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBE434389F;
-	Sat, 30 May 2026 17:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B985F32E696;
+	Sat, 30 May 2026 17:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162230; cv=none; b=jxN8EnICFVh6Belo0Motwxukw0hUpZ9TgEEzwu7FG0QA9UiQvQ8oqbSEIntuyEPBRq11uSe+/6YAMonAkyxstCEf8r918M4NVZgZMRzJZRh29QocNDIXy773z9THVCPbDrMLBrSV12TA2zMbMUsyW8ItVeedK1E5kSrjzdkfRRM=
+	t=1780162233; cv=none; b=d+wF+1fYyviR0bpaYPKF8LyvABc2elcvCa4C+KbDsQ/xldVrShqZrUXWWs+DbnqUzwqaJN3QnqD/Mec2YgQMKHmK144Rt8spxAko52l7XgylkjARFd49KF0c/S9nHD0tnKgyvNYeDemky8qtaL+07f1MXP0UH2mC6zYNYRtPSgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162230; c=relaxed/simple;
-	bh=azm1CQf30HWxmEZntQe/z7S1HtA2aEo+ceB42OsOWRA=;
+	s=arc-20240116; t=1780162233; c=relaxed/simple;
+	bh=L2qjBaabPIyi+taUjxjvtI/I+LGAZVlDejmNxRGbh64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ef8x6wFCT9PE23A2gq+iWHYRhKNe4gArHMZFeqB6dDGDN22oFluJFsiwr1OAFUWbLDIpeubI1zHFDtx4iOsg2F0O7F0vHtzz7CXPEgbnr1FM1S/YRpHfKP3CXg8qHEdAJXN6lx62KPuHsd9EDBRKROwxGex3wBUJ9DcWMNAcqEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6OcspnS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUK0oybkkemLTbmcXTjs6sx7s42S/Si/Wlb6Uy7lBmx+m4ZAz9aAjOWIxdkgYANSzHAtNqUM79V1IwqwpFDi5sdza+nfDWTCf7rwybyTgJqR59aRTw0aHzNo3LZpTZx8U5D1awJzEBEpnzEsTKdyZHb4klAIyXCI7Lr4dWL4jqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aULW6xzZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6OcspnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648C71F00898;
-	Sat, 30 May 2026 17:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aULW6xzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4C11F00893;
+	Sat, 30 May 2026 17:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162229;
-	bh=s09xkT7xhoNk3o8M8rkj4S7wHfS3BihnPZ2Ce3uyiuI=;
+	s=korg; t=1780162232;
+	bh=fWsZvK4rSlGHyJGYK/WaEnT3XrFPfz+VxGpAm/WP2Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6OcspnSXNxe8CofkEN1/jdC2RZi3dbYcB2iN5I4HpVfYFcbhN/LLGgM/m+HVAoEF
-	 YjRksO5E5fwIpGG9et3GJKtqQqS/h9J1i6orNLT48cvkyMMGLpgwcleOkX59vpqyzo
-	 2WKrERpJk7mqo/HNviweUa/OSRcBL3V7hyJ+t0hU=
+	b=aULW6xzZWyIDIRKFQ4eOYcc6rIaWQ/fWAVtW8kT/S4TsL+aIcc+N7kgj98JYBczKe
+	 NOt52pLlZak8INUOKDrNW5QW/iQ7tHTsHh18pr5sC53c2PRH/AgtB8ngUg1hFJPjA5
+	 XiOCqn82W6eb+XhhGqg2qAJ9eyX8yl/zIOo9B21w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>
-Subject: [PATCH 6.1 830/969] io-wq: check that the predecessor is hashed in io_wq_remove_pending()
-Date: Sat, 30 May 2026 18:05:54 +0200
-Message-ID: <20260530160323.565337954@linuxfoundation.org>
+	Allison Henderson <achender@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 831/969] net/rds: reset op_nents when zerocopy page pin fails
+Date: Sat, 30 May 2026 18:05:55 +0200
+Message-ID: <20260530160323.593710906@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -49,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Allison Henderson <achender@kernel.org>
 
-io_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled
-work was the tail of its hash bucket. When doing this, it checks whether
-the preceding entry in acct->work_list has the same hash value, but
-never checks that the predecessor is hashed at all. io_get_work_hash()
-is simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash
-bits are never set for non-hashed work, so it returns 0. Thus, when a
-hashed bucket-0 work is cancelled while a non-hashed work is its list
-predecessor, the check spuriously passes and a pointer to the non-hashed
-io_kiocb is stored in wq->hash_tail[0].
+commit e174929793195e0cd6a4adb0cad731b39f9019b4 upstream.
 
-Because non-hashed work is dequeued via the fast path in
-io_get_next_work(), which never touches hash_tail[], the stale pointer
-is never cleared. Therefore, after the non-hashed io_kiocb completes and
-is freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The
-io_wq is per-task (tctx->io_wq) and survives ring open/close, so the
-dangling pointer persists for the lifetime of the task; the next hashed
-bucket-0 enqueue dereferences it in io_wq_insert_work() and
-wq_list_add_after() writes through freed memory.
+When iov_iter_get_pages2() fails in rds_message_zcopy_from_user(),
+the pinned pages are released with put_page(), and
+rm->data.op_mmp_znotifier is cleared.  But we fail to properly
+clear rm->data.op_nents.
 
-Add the missing io_wq_is_hashed() check so a non-hashed predecessor
-never inherits a hash_tail[] slot.
+Later when rds_message_purge() is called from rds_sendmsg() the
+cleanup loop iterates over the incorrectly non zero number of
+op_nents and frees them again.
 
-Cc: stable@vger.kernel.org # 5.7+
-Fixes: 204361a77f40 ("io-wq: fix hang after cancelling pending hashed work")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Fix this by properly resetting op_nents when it should be in
+rds_message_zcopy_from_user().
+
+Fixes: 0cebaccef3ac ("rds: zerocopy Tx support.")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260505234336.2132721-1-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rds/message.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1034,7 +1034,8 @@ static inline void io_wqe_remove_pending
- 	if (io_wq_is_hashed(work) && work == wqe->hash_tail[hash]) {
- 		if (prev)
- 			prev_work = container_of(prev, struct io_wq_work, list);
--		if (prev_work && io_get_work_hash(prev_work) == hash)
-+		if (prev_work && io_wq_is_hashed(prev_work) &&
-+		    io_get_work_hash(prev_work) == hash)
- 			wqe->hash_tail[hash] = prev_work;
- 		else
- 			wqe->hash_tail[hash] = NULL;
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -409,6 +409,7 @@ static int rds_message_zcopy_from_user(s
+ 
+ 			for (i = 0; i < rm->data.op_nents; i++)
+ 				put_page(sg_page(&rm->data.op_sg[i]));
++			rm->data.op_nents = 0;
+ 			mmp = &rm->data.op_mmp_znotifier->z_mmp;
+ 			mm_unaccount_pinned_pages(mmp);
+ 			ret = -EFAULT;
 
 
