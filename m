@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9923AEB5C;
-	Sat, 30 May 2026 17:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7B83B1EC0;
+	Sat, 30 May 2026 17:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163203; cv=none; b=Gm1RmG2+K6oFYTCkvfuadRflVFTERM0PuPQM1hcuE5bThlK0i6TLBqhWsUQUCO9ZewedpYxYO9N9hgcvFkTe3OUl+AvbuZkyj1oeWNcbhtg39xKGn6gYxD460FmnT0v5OmLWMk1gfVo2W0K5RWd5xFZHQf2+3aSqdIxnRIE79/A=
+	t=1780163206; cv=none; b=VNIcrsqI2cqJiKcvOZOWlvZIVg1D3YqXnvlPLx8rml4xc1pEhCxXIVXwwvzgreb1lqizDarwrLkCF+Q12N+w0MJt8oGib2D7krmkFQz3ZyRfIv3giFasKb7QFhIMDEWssDVQ4GZLX7mTwQpgmwDSqolMmuJQEXLniAXs6UuJts8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163203; c=relaxed/simple;
-	bh=xfgk/mn7UoFo8g4U63Jkpr4j+8nIu6dbLTIEV5fHAbg=;
+	s=arc-20240116; t=1780163206; c=relaxed/simple;
+	bh=l9gIQo2h2eFCxjsZQdQE8iOeO3klFaAcSC8rUi8FenQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6GMLFYdD2M5CrdFnWwm4zCVEkgUlzEsfHc95gJQ4EwG42DtHiiSybD/K3AEf6Av3jMbWuCcdSFkp/LcvhurPMZUIypd2xId1efHQZMtAboqzEefhWIhlspXYtsgz2cGLaxpzuuCg8wWjugzJJNwe7kFD9hGqN/FIvNlgzOSWts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYHCwVnU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CcXh5QJF+CZCgBAGBMU9C9pQqtxItmgzobIYAnvapy4yotKA8q7Rm093Dn6pBHKzbkSLSPi/pQ19PN6z1kCsmkB8oCxDF0umSZbnDM0j3uURLqYIRui/qhSEqfeSpXfkP+Ej6peAkGLrA9aU3BMpIIFEav0691E7DUgJ4qQD0O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp69TBpz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYHCwVnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFCA1F00898;
-	Sat, 30 May 2026 17:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp69TBpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D80D1F00893;
+	Sat, 30 May 2026 17:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163202;
-	bh=Sfc0vcdI0QTKEUCKdXGIjYaBbNeB0fmtvUfeFhFlnn4=;
+	s=korg; t=1780163205;
+	bh=gsHyBu+U1LFB9EyGEdacvZBaNNBIHXdGMoijWoZgIkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYHCwVnUYOtDmW0+mfYr8ypsUHQ1Wzu1ShwZdFDAXexfqMmArGEltu2OyP8G+d7Uy
-	 Ko4DZfYb3haRzSkNcjAYTpaQf+PJmA8tn/wC1+LT0nHMfJK8Vh+mvG/MYJVl/k/e+8
-	 9TW6skFyWKP9mBQyzYrBTDbqSiR2D1axqQA1LWmo=
+	b=mp69TBpzJYbegC+g0x5CK4EoH1MDLp1AnvriHGSBUKRFVy98AReL5gLoweHJJMhjA
+	 ftWNG2Hnyxu84SG9O8HjcVXeteEUBoBuOfJpEXoGnNK6hiwi4n986a9DbiehH83hnk
+	 LlL/x4+t/MQxYeSjAZwoPvsQM0FhQyxNevtgg6NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yuhao Jiang <danisjiang@gmail.com>,
-	ychen@northwestern.edu,
 	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 5.15 187/776] misc: ibmasm: fix OOB MMIO read in ibmasm_handle_mouse_interrupt()
-Date: Sat, 30 May 2026 17:58:21 +0200
-Message-ID: <20260530160245.333085483@linuxfoundation.org>
+Subject: [PATCH 5.15 188/776] ibmasm: fix OOB reads in command_file_write due to missing size checks
+Date: Sat, 30 May 2026 17:58:22 +0200
+Message-ID: <20260530160245.359107578@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,60 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 4b6e6ead556734bdc14024c5f837132b1e7a4b84 upstream.
+commit 0eb09f737428e482a32a2e31e5e223f2b35a71d3 upstream.
 
-ibmasm_handle_mouse_interrupt() performs an out-of-bounds MMIO read
-when the queue reader or writer index from hardware exceeds
-REMOTE_QUEUE_SIZE (60).
+The command_file_write() handler allocates a kernel buffer of exactly
+count bytes and copies user data into it, but does not validate the
+buffer against the dot command protocol before passing it to
+get_dot_command_size() and get_dot_command_timeout().
 
-A compromised service processor can trigger this by writing an
-out-of-range value to the reader or writer MMIO register before
-asserting an interrupt. Since writer is re-read from hardware on
-every loop iteration, it can also be set to an out-of-range value
-after the loop has already started.
+Since both the allocation size (count) and the header fields (command_size,
+data_size) are independently user-controlled, an attacker can cause
+get_dot_command_size() to return a value exceeding the allocation,
+triggering OOB reads in get_dot_command_timeout() and an out-of-bounds
+memcpy_toio() that leaks kernel heap memory to the service processor.
 
-The root cause is that get_queue_reader() and get_queue_writer() return
-raw readl() values that are passed directly into get_queue_entry(),
-which computes:
+Fix with two guards: reject writes smaller than sizeof(struct
+dot_command_header) before allocation, then after copying user data
+reject commands where the buffer is smaller than the total size declared
+by the header (sizeof(header) + command_size + data_size). This ensures
+all subsequent header and payload field accesses stay within the buffer.
 
-  queue_begin + reader * sizeof(struct remote_input)
-
-with no bounds check. This unchecked MMIO address is then passed to
-memcpy_fromio(), reading 8 bytes from unintended device registers.
-For sufficiently large values the address falls outside the PCI BAR
-mapping entirely, triggering a machine check exception.
-
-Fix by checking both indices against REMOTE_QUEUE_SIZE at the top of
-the loop body, before any call to get_queue_entry(). On an out-of-range
-value, reset the reader register to 0 via set_queue_reader() before
-breaking, so that normal queue operation can resume if the corrupted
-hardware state is transient.
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Fixes: 278d72ae8803 ("[PATCH] ibmasm driver: redesign handling of remote control events")
 Cc: stable@vger.kernel.org
-Cc: ychen@northwestern.edu
 Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260308062108.258940-1-LivelyCarpet87@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260314165355.548119-1-LivelyCarpet87@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/remote.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/misc/ibmasm/ibmasmfs.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/misc/ibmasm/remote.c
-+++ b/drivers/misc/ibmasm/remote.c
-@@ -177,6 +177,11 @@ void ibmasm_handle_mouse_interrupt(struc
- 	writer = get_queue_writer(sp);
+--- a/drivers/misc/ibmasm/ibmasmfs.c
++++ b/drivers/misc/ibmasm/ibmasmfs.c
+@@ -303,6 +303,8 @@ static ssize_t command_file_write(struct
+ 		return -EINVAL;
+ 	if (count == 0 || count > IBMASM_CMD_MAX_BUFFER_SIZE)
+ 		return 0;
++	if (count < sizeof(struct dot_command_header))
++		return -EINVAL;
+ 	if (*offset != 0)
+ 		return 0;
  
- 	while (reader != writer) {
-+		if (reader >= REMOTE_QUEUE_SIZE || writer >= REMOTE_QUEUE_SIZE) {
-+			set_queue_reader(sp, 0);
-+			break;
-+		}
+@@ -319,6 +321,11 @@ static ssize_t command_file_write(struct
+ 		return -EFAULT;
+ 	}
+ 
++	if (count < get_dot_command_size(cmd->buffer)) {
++		command_put(cmd);
++		return -EINVAL;
++	}
 +
- 		memcpy_fromio(&input, get_queue_entry(sp, reader),
- 				sizeof(struct remote_input));
- 
+ 	spin_lock_irqsave(&command_data->sp->lock, flags);
+ 	if (command_data->command) {
+ 		spin_unlock_irqrestore(&command_data->sp->lock, flags);
 
 
