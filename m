@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC21332EA7;
-	Sat, 30 May 2026 16:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EA7332EA7;
+	Sat, 30 May 2026 16:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159715; cv=none; b=rMXVrkq/bTPJ30QXkAHcH+55WBmq4TRlbGBx2YmrnOQq8YQo9TF3WtzC3wTMBa2m/nEV5uvsnyxSWMjoIcmla9ACvgiIiuqvV+EOEUy7NefeYVI6K6M5tdzx8n8d/wSnUX8++TQvBS9b5zUcl2KqywagI5lQ32IUX4rfVUqtjO8=
+	t=1780159719; cv=none; b=Yr+AQ8WM5HZz3jjvdOuWVMhSezGCrKUoznzRo3M2brQx39WpdTtgOkH3sSt3OyKtqcUDtZyFpYwhKtlkl7S9jOTNdrJt3L8SHgeWTFv35RTgpjuqBwLTzcSX5O1scOmBWX84KQT3oyCm/hC0Nw8rVqK7tI0zBGFj7S1dH7eUQMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159715; c=relaxed/simple;
-	bh=2TWqsPRtsI0qqPsSJNZH4QuU0KQoMR68ExeydwWcCmY=;
+	s=arc-20240116; t=1780159719; c=relaxed/simple;
+	bh=ylw4vfjDayNDkPnGWOKPoq6WXHEiE1jIMnrO0VN/ZVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwgNPIuoxCB3++w0vWvMPm44FXpREBffgNifObK7BMHem6CaVL1mbbpeIheMwLlSlZbkMdQe9wXx47ww9aQA15VCcLVqvCOOy3MLXS4lIWtggqJmdzMzIxYtnqMAVeW6VonzJmOPHCVwoK+W/ARWnadSwyhku50PRKhn9b1g9qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBDaNZnt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfGu97ynYFkit94uGPo7qcCakfZ8ljB8jBYM0XtRk/ELHmbvZq1MP+FOp42swr7dWCVAtFC5LJFylMGRggnZRa1ZZtPHcem+PyMmehcZ+O2Vx5Z7YU2i4xtvYNDaX0FEnjMCp9Vjssi+oPzKC2o8IU7YE0XtARRThXMEoXswdME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7A+6sIS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBDaNZnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46901F00893;
-	Sat, 30 May 2026 16:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7A+6sIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22261F00898;
+	Sat, 30 May 2026 16:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159714;
-	bh=dh2UdnJiAMfljjFaBS8xrJhbTngnYgiEmSiH1/7jbGQ=;
+	s=korg; t=1780159718;
+	bh=G1A+E2gNlbqIdIF7NAYwB6Jv+mVi+qopdzFFr07O31A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBDaNZnt87FkHUni94RHRdSjkmcqDPZaCm7aHSyR0PRtjHwIKxXX0eh6h6QbD3Tgw
-	 /3eUPcitWdHjt4d2440u79idT4p/08OXBiGRdhi2xoh+rDeGVZ3+uppPHqPS5+CxDH
-	 mnpxR9R24dBMi+ILIWWvK2qVB6u6CcGs+PPCkPKI=
+	b=a7A+6sIS04y4AedDXQum8mKDrPt5/2KZeqvEdmjEc3Ijl/8SLTBTCeTuYkmCKs9hE
+	 ojsmo4cz7/N4CnaUwg65ytMTDZS/bPHoIRFiP7FP01qZL6SVb4KR5h4kqMtlP5Dwvr
+	 0AWL/7aATvyR4qvIg3DUg4eqsJZ+CgG5emhKG1uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 143/969] fs/ntfs3: validate rec->used in journal-replay file record check
-Date: Sat, 30 May 2026 17:54:27 +0200
-Message-ID: <20260530160304.508524570@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zijun Hu <nightu@northwestern.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 144/969] fuse: reject oversized dirents in page cache
+Date: Sat, 30 May 2026 17:54:28 +0200
+Message-ID: <20260530160304.533692995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,78 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Samuel Page <sam@bynar.io>
 
-commit 0ca0485e4b2e837ebb6cbd4f2451aba665a03e4b upstream.
+commit 51a8de6c50bf947c8f534cd73da4c8f0a13e7bed upstream.
 
-check_file_record() validates rec->total against the record size but
-never validates rec->used.  The do_action() journal-replay handlers read
-rec->used from disk and use it to compute memmove lengths:
+fuse_add_dirent_to_cache() computes a serialized dirent size from the
+server-controlled namelen field and copies the dirent into a single
+page-cache page. The existing logic only checks whether the dirent fits
+in the remaining space of the current page and advances to a fresh page
+if not. It never checks whether the dirent itself exceeds PAGE_SIZE.
 
-  DeleteAttribute:    memmove(attr, ..., used - asize - roff)
-  CreateAttribute:    memmove(..., attr, used - roff)
-  change_attr_size:   memmove(..., used - PtrOffset(rec, next))
+As a result, a malicious FUSE server can return a dirent with
+namelen=4095, producing a serialized record size of 4120 bytes. On 4 KiB
+page systems this causes memcpy() to overflow the cache page by 24 bytes
+into the following kernel page.
 
-When rec->used is smaller than the offset of a validated attribute, or
-larger than the record size, these subtractions can underflow allowing
-us to copy huge amounts of memory in to a 4kb buffer, generally
-considered a bad idea overall.
+Reject dirents that cannot fit in a single page before copying them into
+the readdir cache.
 
-This requires a corrupted filesystem, which isn't a threat model the
-kernel really needs to worry about, but checking for such an obvious
-out-of-bounds value is good to keep things robust, especially on journal
-replay
-
-Fix this up by bounding rec->used correctly.
-
-This is much like commit b2bc7c44ed17 ("fs/ntfs3: Fix slab-out-of-bounds
-read in DeleteIndexEntryRoot") which checked different values in this
-same switch statement.
-
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 69e34551152a ("fuse: allow caching readdir")
+Cc: stable@vger.kernel.org # v6.16+
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Zijun Hu <nightu@northwestern.edu>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20260420090139.662772-1-mszeredi@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/fuse/readdir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2792,13 +2792,14 @@ static inline bool check_file_record(con
- 	u16 fn = le16_to_cpu(rec->rhdr.fix_num);
- 	u16 ao = le16_to_cpu(rec->attr_off);
- 	u32 rs = sbi->record_size;
-+	u32 used = le32_to_cpu(rec->used);
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -41,6 +41,10 @@ static void fuse_add_dirent_to_cache(str
+ 	unsigned int offset;
+ 	void *addr;
  
- 	/* Check the file record header for consistency. */
- 	if (rec->rhdr.sign != NTFS_FILE_SIGNATURE ||
- 	    fo > (SECTOR_SIZE - ((rs >> SECTOR_SHIFT) + 1) * sizeof(short)) ||
- 	    (fn - 1) * SECTOR_SIZE != rs || ao < MFTRECORD_FIXUP_OFFSET_1 ||
- 	    ao > sbi->record_size - SIZEOF_RESIDENT || !is_rec_inuse(rec) ||
--	    le32_to_cpu(rec->total) != rs) {
-+	    le32_to_cpu(rec->total) != rs || used > rs || used < ao) {
- 		return false;
- 	}
- 
-@@ -2810,6 +2811,15 @@ static inline bool check_file_record(con
- 		return false;
- 	}
- 
-+	/*
-+	 * The do_action() handlers compute memmove lengths as
-+	 * "rec->used - <offset of validated attr>", which underflows when
-+	 * rec->used is smaller than the attribute walk reached.  At this
-+	 * point attr is the ATTR_END marker; rec->used must cover it.
-+	 */
-+	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
-+		return false;
++	/* Dirent doesn't fit in readdir cache page?  Skip caching. */
++	if (reclen > PAGE_SIZE)
++		return;
 +
- 	return true;
- }
- 
+ 	spin_lock(&fi->rdc.lock);
+ 	/*
+ 	 * Is cache already completed?  Or this entry does not go at the end of
 
 
