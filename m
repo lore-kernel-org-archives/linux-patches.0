@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA1232D42B;
-	Sat, 30 May 2026 16:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3002532BF24;
+	Sat, 30 May 2026 16:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160117; cv=none; b=AgjgCrhRMn3fPlLIu6Qe96UX8Gt4HRZv1OiObdpRoADqFZ2/S97lPtehnAkRH3abSe6nIk6sKbEBkzucjoAjB7dQrwT9tegMnweCgAqOgd6B7RCsPUpAEwfTOxZ6CV/PYKkq5bVrYqnRmbvYJ7GsTv4GMID0ByukNwdOZcapRKU=
+	t=1780160121; cv=none; b=YWFp3Ekz7MTAOIw6kHt2ooWKgUXYbsmI9rCEWg2F04E2K2GVeK8d+xOEiQKwmVt5w5GAjrVDeuhNGIZdvzeDZ0aQdJ1IoWyn7NIZiBTgxOpd2TB+Mi61pA6LGBPY/kvkjaaRnVVcvpksAZYBUPwfU+S8tsIAk6uvRZPfNk4VskY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160117; c=relaxed/simple;
-	bh=GESWl/z8+dt7v+nOK4u5ItRcWxubmh3IbpNbkomR8Ro=;
+	s=arc-20240116; t=1780160121; c=relaxed/simple;
+	bh=6kz8T8KcZZ8L6H+lpXvcApy0KIhNci2oYk3N7JsK1Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLy5OL1xg1QZrzfAYvd+txBb573owwHH5Sw920GCbCDhwNieLtAL7ZMjgbZNPuc0dtHIBMV2ApOx+njpKc8dbjOnHgvV8eb0H3V9uI4argPyfwc2NFgzh3tob/RNYM0FGJCQllVRvePGF+OG+po7j+6m87+2q+4GooE5zSMMdRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8DN5352; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iYkPJLLxEwoT5CdUGWMRbsUbKXhkrC/MWTUxKSDra/PPFf0AI7bbboyWVQhv/hBZsa8JEvHZ7E8GrG0gpKuw+RlbXnTNnPukXSyjj19LLiFdDA+4Y9znYz4nbTiiTmYqAnLZYy2TyKlOK7nAEFZpqjSZcwO72DlYlmfbA7vjak8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dE/mjIeH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8DN5352"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC3B1F00898;
-	Sat, 30 May 2026 16:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dE/mjIeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7D91F00893;
+	Sat, 30 May 2026 16:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160116;
-	bh=5emSgzHkLOE3d/lE813nZ4efoPHSQXpP6QuS5w3acDc=;
+	s=korg; t=1780160120;
+	bh=WzFVvENlxPwtJXbQAzN1pmh+cWL37tsYxtBXyqXdGuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y8DN5352HWd8o4YP1mfp8OSuTTidNGKJEVXKGek61tRHVp2/hDIeN+D0FEnBAKEnV
-	 skeoZC5jVuqknOyFzUVoZbJlSH/1iOWQ6OGffIMkDlpJL5AbUbwjiIsOpB5qvEkxcA
-	 3GqyLKy9Dn2KP77zhNlX2VUxL/voLTiqEFhjK478=
+	b=dE/mjIeHx+dRZTy9MeKGWJriaWq9JOkEgdeKIxFJ7z33RVHsUIpM+NZrdGUisHqwX
+	 +7+xG2Y6tHrOKajhjGbn6u7+muI2vSqI9QU0yIHBX0O6zI8HDyV/YPEKPh57FUkgeA
+	 oF1+fII/itKXDgwHqb3p4di0fkAdkaAg+5DHgAUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 6.1 249/969] md/raid5: validate payload size before accessing journal metadata
-Date: Sat, 30 May 2026 17:56:13 +0200
-Message-ID: <20260530160307.344135035@linuxfoundation.org>
+	Chia-Ming Chang <chiamingc@synology.com>,
+	robbieko <robbieko@synology.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 250/969] inotify: fix watch count leak when fsnotify_add_inode_mark_locked() fails
+Date: Sat, 30 May 2026 17:56:14 +0200
+Message-ID: <20260530160307.371365804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,142 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Chia-Ming Chang <chiamingc@synology.com>
 
-commit b0cc3ae97e893bf54bbce447f4e9fd2e0b88bff9 upstream.
+commit 6a320935fa4293e9e599ec9f85dc9eb3be7029f8 upstream.
 
-r5c_recovery_analyze_meta_block() and
-r5l_recovery_verify_data_checksum_for_mb() iterate over payloads in a
-journal metadata block using on-disk payload size fields without
-validating them against the remaining space in the metadata block.
+When fsnotify_add_inode_mark_locked() fails in inotify_new_watch(),
+the error path calls inotify_remove_from_idr() but does not call
+dec_inotify_watches() to undo the preceding inc_inotify_watches().
+This leaks a watch count, and repeated failures can exhaust the
+max_user_watches limit with -ENOSPC even when no watches are active.
 
-A corrupted journal contains payload sizes extending beyond the PAGE_SIZE
-boundary can cause out-of-bounds reads when accessing payload fields or
-computing offsets.
+Prior to commit 1cce1eea0aff ("inotify: Convert to using per-namespace
+limits"), the watch count was incremented after fsnotify_add_mark_locked()
+succeeded, so this path was not affected. The conversion moved
+inc_inotify_watches() before the mark insertion without adding the
+corresponding rollback.
 
-Add bounds validation for each payload type to ensure the full payload
-fits within meta_size before processing.
+Add the missing dec_inotify_watches() call in the error path.
 
-Fixes: b4c625c67362 ("md/r5cache: r5cache recovery: part 1")
+Fixes: 1cce1eea0aff ("inotify: Convert to using per-namespace limits")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://lore.kernel.org/linux-raid/SYBPR01MB78815E78D829BB86CD7C8015AF5FA@SYBPR01MB7881.ausprd01.prod.outlook.com/
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
+Signed-off-by: robbieko <robbieko@synology.com>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://patch.msgid.link/20260224093442.3076294-1-chiamingc@synology.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5-cache.c |   48 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 15 deletions(-)
+ fs/notify/inotify/inotify_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/raid5-cache.c
-+++ b/drivers/md/raid5-cache.c
-@@ -2012,15 +2012,27 @@ r5l_recovery_verify_data_checksum_for_mb
- 		return -ENOMEM;
- 
- 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
-+		sector_t payload_len;
-+
- 		payload = (void *)mb + mb_offset;
- 		payload_flush = (void *)mb + mb_offset;
- 
- 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
-+			payload_len = sizeof(struct r5l_payload_data_parity) +
-+				(sector_t)sizeof(__le32) *
-+				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 			if (r5l_recovery_verify_data_checksum(
- 				    log, ctx, page, log_offset,
- 				    payload->checksum[0]) < 0)
- 				goto mismatch;
- 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
-+			payload_len = sizeof(struct r5l_payload_data_parity) +
-+				(sector_t)sizeof(__le32) *
-+				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 			if (r5l_recovery_verify_data_checksum(
- 				    log, ctx, page, log_offset,
- 				    payload->checksum[0]) < 0)
-@@ -2033,22 +2045,18 @@ r5l_recovery_verify_data_checksum_for_mb
- 				    payload->checksum[1]) < 0)
- 				goto mismatch;
- 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
--			/* nothing to do for R5LOG_PAYLOAD_FLUSH here */
-+			payload_len = sizeof(struct r5l_payload_flush) +
-+				(sector_t)le32_to_cpu(payload_flush->size);
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 		} else /* not R5LOG_PAYLOAD_DATA/PARITY/FLUSH */
- 			goto mismatch;
- 
--		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
--			mb_offset += sizeof(struct r5l_payload_flush) +
--				le32_to_cpu(payload_flush->size);
--		} else {
--			/* DATA or PARITY payload */
-+		if (le16_to_cpu(payload->header.type) != R5LOG_PAYLOAD_FLUSH) {
- 			log_offset = r5l_ring_add(log, log_offset,
- 						  le32_to_cpu(payload->size));
--			mb_offset += sizeof(struct r5l_payload_data_parity) +
--				sizeof(__le32) *
--				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
- 		}
--
-+		mb_offset += payload_len;
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -622,6 +622,7 @@ static int inotify_new_watch(struct fsno
+ 	if (ret) {
+ 		/* we failed to get on the inode, get off the idr */
+ 		inotify_remove_from_idr(group, tmp_i_mark);
++		dec_inotify_watches(group->inotify_data.ucounts);
+ 		goto out_err;
  	}
  
- 	put_page(page);
-@@ -2099,6 +2107,7 @@ r5c_recovery_analyze_meta_block(struct r
- 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
- 
- 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
-+		sector_t payload_len;
- 		int dd;
- 
- 		payload = (void *)mb + mb_offset;
-@@ -2107,6 +2116,12 @@ r5c_recovery_analyze_meta_block(struct r
- 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
- 			int i, count;
- 
-+			payload_len = sizeof(struct r5l_payload_flush) +
-+				(sector_t)le32_to_cpu(payload_flush->size);
-+			if (mb_offset + payload_len >
-+			    le32_to_cpu(mb->meta_size))
-+				return -EINVAL;
-+
- 			count = le32_to_cpu(payload_flush->size) / sizeof(__le64);
- 			for (i = 0; i < count; ++i) {
- 				stripe_sect = le64_to_cpu(payload_flush->flush_stripes[i]);
-@@ -2120,12 +2135,17 @@ r5c_recovery_analyze_meta_block(struct r
- 				}
- 			}
- 
--			mb_offset += sizeof(struct r5l_payload_flush) +
--				le32_to_cpu(payload_flush->size);
-+			mb_offset += payload_len;
- 			continue;
- 		}
- 
- 		/* DATA or PARITY payload */
-+		payload_len = sizeof(struct r5l_payload_data_parity) +
-+			(sector_t)sizeof(__le32) *
-+			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+		if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+			return -EINVAL;
-+
- 		stripe_sect = (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) ?
- 			raid5_compute_sector(
- 				conf, le64_to_cpu(payload->location), 0, &dd,
-@@ -2190,9 +2210,7 @@ r5c_recovery_analyze_meta_block(struct r
- 		log_offset = r5l_ring_add(log, log_offset,
- 					  le32_to_cpu(payload->size));
- 
--		mb_offset += sizeof(struct r5l_payload_data_parity) +
--			sizeof(__le32) *
--			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+		mb_offset += payload_len;
- 	}
- 
- 	return 0;
 
 
