@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C95B3AE18D;
-	Sat, 30 May 2026 18:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E76426738C;
+	Sat, 30 May 2026 18:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166270; cv=none; b=S5AbILaemZ3NOfkIRU49f7B8SZ5U0YYERRFYRc7aCNiOKE8C2XHvEWWxBltHCGLbpTC2SRMcYFuZuCT5WjxCKF5LxecX1NxTN0tHRSYfCpmvDWFzr32lH/ZXbOQDceos2T5O6KMRS1QuEdnfIQkWbgAsZkHplEjX574+2w/6zsk=
+	t=1780166273; cv=none; b=O/mc8PytHZDoDsN/MLj9u1RfvT4I4CBBXh9W8WgZQn7wjYsMx4eXO01/kZ9VPAD7YkAeETAnrD2udGccspjghQXNEp21A0NJvnPv8hfN9zd4eNTSujduaMDgtZiY6MVvsLSPLRfbY1NQQsFoOJdzZ9sNaTwFZodUd4Q2eOuZrO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166270; c=relaxed/simple;
-	bh=MkREfWV7dlmHt27KNr0T5Up68lDL+2gusEayWShlehI=;
+	s=arc-20240116; t=1780166273; c=relaxed/simple;
+	bh=ECYB+aGkzF9WsPzTrOzHVZ3e5r3TLPY75Ko3EfRxb8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KslupWdL8kTnVrfAbq75/rRUB2yc2pEbSKnVXcu5vwZQopOiiJOaQCXl5ObwNkGYWv64ENEXs6UeI62qRGH4oG3YvKol3gom5zLQpoTJeoGbjG+OOkUPW/a3+wEn2r0oNswbWX+qwlGWbA+yJI36NVnavsOnMLvA4Q2QQiWdVGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0ZErtGq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B2Z5G/sBicyRU8dyfJNwbhmBGXKWU+azuXvS5djVBHGjRi5c0HRpKWApQpzqyA78ofAH4QxXH5kMEsgEDYD5i30rVYnOyY+oSLWKPSe7VdZ5eRlgYvWxzzx+EBQuqKznffnTwKks7YqfGYO5/Gzh+eYAluWFTamRRG3l5/sLP4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xApAxu7h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0ZErtGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9805D1F00893;
-	Sat, 30 May 2026 18:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xApAxu7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52E11F00893;
+	Sat, 30 May 2026 18:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166269;
-	bh=RWHrVXpohlirdjFV1MgjdKMvo7TtWavlfax3BXO1E10=;
+	s=korg; t=1780166272;
+	bh=wcAtrrKPJNnaODl4VPVmRYURvmUbOZLVM+IROxTduIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0ZErtGqo9z02Ws/rZTKE4UVRuuLYgmLiwpsluk6D9NPqWwsTPmoff5ctDUCrHcN8
-	 yGxNVtQmJ2ufP7kn1iM+yatruYPD8xnIikyTO5NjsZFcofRl2AP6dFYhUSivtVqCSa
-	 hnJ3dw+HyQOcUYEBQPO1JGhUsQAWrptQ4sW9c+qA=
+	b=xApAxu7h//IrPBt8YFySB+5fS+aLj/KWl5XU2cK4z/UBnBIR4pFwwjhG+ginEVhJa
+	 eNmZjGRXwz1ysD+CPK3V09YVHFE6PviiMJmM85TXMDjbSqx4RCvM9hM+JcIv/rZcqQ
+	 UZ3NK8aXlVH4NnOgS9m6nITiZim3yuBUfGFG3KJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 285/589] batman-adv: bla: only purge non-released claims
-Date: Sat, 30 May 2026 18:02:46 +0200
-Message-ID: <20260530160232.442475613@linuxfoundation.org>
+Subject: [PATCH 5.10 286/589] batman-adv: bla: put backbone reference on failed claim hash insert
+Date: Sat, 30 May 2026 18:02:47 +0200
+Message-ID: <20260530160232.464660348@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,50 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit cf6b604011591865ae39ac82de8978c1120d17af upstream.
+commit ba9d20ee9076dac32c371116bacbe72480eb356c upstream.
 
-When batadv_bla_purge_claims() goes through the list of claims, it is only
-traversing the hash list with an rcu_read_lock(). Due to a potential
-parallel batadv_claim_put(), it can happen that it encounters a claim which
-was actually in the process of being released+freed by
-batadv_claim_release(). In this case, backbone_gw is set to NULL before the
-delayed RCU kfree is started. Calling batadv_bla_claim_get_backbone_gw() is
-then no longer allowed because it would cause a NULL-ptr derefence.
-
-To avoid this, only claims with a valid reference counter must be purged.
-All others are already taken care of.
+When batadv_bla_add_claim() fails to insert a new claim into the hash, it
+leaked a reference to the backbone_gw for which the claim was intended.
+Call batadv_backbone_gw_put() on the error path to release the reference
+and avoid leaking the backbone_gw object.
 
 Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Fixes: 3db0decf1185 ("batman-adv: Fix non-atomic bla_claim::backbone_gw access")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/batman-adv/bridge_loop_avoidance.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/net/batman-adv/bridge_loop_avoidance.c
 +++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -1293,6 +1293,13 @@ static void batadv_bla_purge_claims(stru
+@@ -728,6 +728,7 @@ static void batadv_bla_add_claim(struct
  
- 		rcu_read_lock();
- 		hlist_for_each_entry_rcu(claim, head, hash_entry) {
-+			/* only purge claims not currently in the process of being released.
-+			 * Such claims could otherwise have a NULL-ptr backbone_gw set because
-+			 * they already went through batadv_claim_release()
-+			 */
-+			if (!kref_get_unless_zero(&claim->refcount))
-+				continue;
-+
- 			backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
- 			if (now)
- 				goto purge_now;
-@@ -1318,6 +1325,7 @@ purge_now:
- 					      claim->addr, claim->vid);
- skip:
- 			batadv_backbone_gw_put(backbone_gw);
-+			batadv_claim_put(claim);
+ 		if (unlikely(hash_added != 0)) {
+ 			/* only local changes happened. */
++			batadv_backbone_gw_put(backbone_gw);
+ 			kfree(claim);
+ 			return;
  		}
- 		rcu_read_unlock();
- 	}
 
 
