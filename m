@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AE23242D7;
-	Sat, 30 May 2026 17:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9074D263F44;
+	Sat, 30 May 2026 17:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161598; cv=none; b=oTNU7fO1JsHBlV2/h4KM4ehiTL7n6Z4yOepisld93GqVmzEBKTJ1b7EkrZ5Ht60+RVQ0fDgnnahDH5y+B7+1Q/vuw506/3M1IliOx4IJDnaXETgxtOKk7cu3OvJhlT1R58psr5AKh7kvvlDaieMgKdhlfk49qMZXWuLhRR+aY0Y=
+	t=1780161601; cv=none; b=JdVgNTQ4sCf7OfDj7Jz22amqv9SsxUK7nIvEQS/ePmNzhPau7bBux+VQ8ozfQ4N6IXJ9G6Cfo1yPHxysylnTQjzkLe42GzYaen97AFd3nOEW0r/RCTHIeAqcxDcXvvL+JKV5OB3BbAgTnkHX1kda/goiPayjGveS5mKxFBbltmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161598; c=relaxed/simple;
-	bh=GwggiXMEWXZu/Mdvt3ustn7HUda9aDhM0R1w8E+YL5g=;
+	s=arc-20240116; t=1780161601; c=relaxed/simple;
+	bh=JvS565+tlqftYkVDUUkOE2kQku09fVavK/CiRdzc1Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haIH5vmopZHcafNqg+nEJhPq46rStqHfmDOt47Ff4y5isFCk2pkc3UFzXfS6Gl/zziRgdJ4rKQpQK+G1eu7Q9t2CtonKXO1jsmG73+1a5mMKYZur9jDe+EYuemk0fH5acyG3qHMDU6veNhSULLgv49q28V/e9iVQz99clN6w5Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9rvkg+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GA3wKJiCqO/rRM1oFmAXFhadjhQYaFh3AVjach+Pnm1/ychDYWtl3/Bbxsil5apWpz3AMc2vmcBsA4iwwa7U8itPWk1yvmOOVbMGxMp0jTo6cXG7yMQDLiZwQ04l7xIBpFMZAYH8viyGP9aaka58lly4iwFoMfa8DcMORGRYOTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRPvSewh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9rvkg+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A82D1F00898;
-	Sat, 30 May 2026 17:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRPvSewh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D407F1F00893;
+	Sat, 30 May 2026 17:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161597;
-	bh=p80xcMtUH5++Qlib5N42rs1W7eqehJ+bA8sGdLDIIJ0=;
+	s=korg; t=1780161600;
+	bh=TEM69m8yVMlHzfRVaYK6rp092qmkDP5P4bi07j/YsU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9rvkg+wMOOkxXoDIN7Av7G9O4l6wntdwqLb91G4u1k3joZtbZ6LWaBYA1/6FBPdM
-	 DPE3aHY5e16//rWkt/1gyiNv98dmLNg+hqVE9oFDMYTT0VL6c7+VdKeLpdZOgfFZrN
-	 5sdiBGXaoO519bJF4XQ5lv9X5JgZ2Wt235Edfysg=
+	b=RRPvSewhcqFQpPP4LZd4pIX+sgFebBgPVpxi2dzT+deIj4fPaRzuvavH7Qoz41eOC
+	 qg4r7OJv+MVqHDDJnD5AI730uwWT3oYY7+G+7AhuB53gRBRISgjeDKVDkpXyERNz/K
+	 Y5g8HIigX1J8ZWAHw5R3mZSVq7PnHOPzhsP8LnSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 640/969] leds: lgm-sso: Remove duplicate assignments for priv->mmap
-Date: Sat, 30 May 2026 18:02:44 +0200
-Message-ID: <20260530160318.127909818@linuxfoundation.org>
+Subject: [PATCH 6.1 631/969] pinctrl: abx500: Fix type of argument variable
+Date: Sat, 30 May 2026 18:02:35 +0200
+Message-ID: <20260530160317.874807932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit 7186d0330c3f3e86de577687a82f4ebd96dcb5ac ]
+[ Upstream commit 34006f77890d050e6d80cbee365b5d703c1140b4 ]
 
-Remove duplicate assignment of priv->mmap in intel_sso_led_probe().
+The argument variable is assigned the return value of
+pinconf_to_config_argument(), which returns a u32. Change its type from
+enum pin_config_param to unsigned int to correctly store the configuration
+argument.
 
-Fixes: fba8a6f2263b ("leds: lgm-sso: Fix clock handling")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260226033048.3715915-1-nichen@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 03b054e9696c ("pinctrl: Pass all configs to driver on pin_config_set()")
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/blink/leds-lgm-sso.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pinctrl/nomadik/pinctrl-abx500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
-index 6f270c0272fb1..a33a97c2abb65 100644
---- a/drivers/leds/blink/leds-lgm-sso.c
-+++ b/drivers/leds/blink/leds-lgm-sso.c
-@@ -807,8 +807,6 @@ static int intel_sso_led_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/nomadik/pinctrl-abx500.c b/drivers/pinctrl/nomadik/pinctrl-abx500.c
+index 7aa534576a459..609313d93e31a 100644
+--- a/drivers/pinctrl/nomadik/pinctrl-abx500.c
++++ b/drivers/pinctrl/nomadik/pinctrl-abx500.c
+@@ -850,7 +850,7 @@ static int abx500_pin_config_set(struct pinctrl_dev *pctldev,
+ 	int ret = -EINVAL;
+ 	int i;
+ 	enum pin_config_param param;
+-	enum pin_config_param argument;
++	unsigned int argument;
  
- 	priv->fpid_clkrate = clk_get_rate(priv->clocks[1].clk);
- 
--	priv->mmap = syscon_node_to_regmap(dev->of_node);
--
- 	priv->mmap = syscon_node_to_regmap(dev->of_node);
- 	if (IS_ERR(priv->mmap)) {
- 		dev_err(dev, "Failed to map iomem!\n");
+ 	for (i = 0; i < num_configs; i++) {
+ 		param = pinconf_to_config_param(configs[i]);
 -- 
 2.53.0
 
