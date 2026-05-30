@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA0E2566E9;
-	Sat, 30 May 2026 18:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C43137750;
+	Sat, 30 May 2026 18:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167075; cv=none; b=HdJk92nu7k3QJo18NLSvV4Rwr2j/NXMHH+25ddpFrYDAcTR0NzZ1cqwCGz/ujunV0KbWw+9pMASR798Emjuk6Hc6JLybkAIgxbD0BgfFgGQCjum/5X9E9NZiQFG72jiZEr2kwUWnoOuWsxTTPqHRvqFJ7/GHApPwuBqLojml+nc=
+	t=1780167078; cv=none; b=PDImBu/J/Tnj+tZr1T/XFQ3D1cw4dfdVVl3z/99ehWcMRhTFcARbuhZf3iqsd7Q5d0Uf8u3lgw+jzFpYoVQZuxHflwrQaXIltClzlQjp/rQSEaOEDd9CjK473u0YFM63kpFTINa7Ezfj/r8f+ByLRgurGNhG8FOfKOGlh2n3IWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167075; c=relaxed/simple;
-	bh=LV4rVyo5OgRgqFBgwnXeVO8nAX/pLN/LXrVlDyUMNoM=;
+	s=arc-20240116; t=1780167078; c=relaxed/simple;
+	bh=+QmCEB5sEPg0TFyn7r1V9F6nczKDivTZA6Ob2l9jtdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+w9CFtpwuw4tWuBP9ZBFwMJ1ddgnH8iZLHAyUwxw4b/790r5XS2oc02p5VQdTEc2+9jCO5adWUgg0Pfq2FUMUPhD0R3wzJUC78qoKay0BwGnkZ4gYADF8w4BNmolxeboEcTGFV/598ouiK8+9BDSc7uyUJtQpksb9+88U+jIXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfrMkAM6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SyfoxshPCZ3RDQjWzCS9w84ceLK5jVU2omFUcVcUfLlciV0F/fG91+4N9QdGuSjXZqqs0SIdjx4GP1gFC3ojyIaZAkYTCS1h7ANmN3AlUv0Ns45S3df0W0mj7cJj6QrGTk3oQpEdq1wJqXlO6quBHrrESFOLEGRTOxsZfb+yD/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o50dkzev; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfrMkAM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96E21F00893;
-	Sat, 30 May 2026 18:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o50dkzev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4419A1F00893;
+	Sat, 30 May 2026 18:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167074;
-	bh=Tyk650q4bzcVL6ynTRTqbGgIsQ1E4CuzXPjQJW6af8s=;
+	s=korg; t=1780167077;
+	bh=USLZvLZIUAnh6cWKC7rxUkAjiu63hrh5SI0S7YNzkyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfrMkAM6hzSP7OnrNhP7JtPU+tQFgUf23GrsnqieU63t/G2fi369U8NJKS6MMt0Mp
-	 9oXZkEHBOI2lYUZZlwz02X5a0zsIksiTVYmt585U+dCtLT0AOnC3FJfTpbqKS2i62w
-	 DdPpdcIiCIn1hGPrhTIKmnyKxRPRUjGNtqT99XVg=
+	b=o50dkzevnzYDCGq/jjNODZDFflPBo+2pKyXRkkQwT2bGKQU+6LRz1lnLImhtYtKXH
+	 nJoBE7PRSZl/ODf5FEGGgYDhaimBsaPisoYr/6VP4M5+jRGZNWiQYaSH6U45U9Fe93
+	 lzgzfOuGqk0JLekTBD3W3bznAZHC4P/wtgs1IF+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Farnung <kfarnung@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 539/589] wifi: ath11k: clear shared SRNG pointer state on restart
-Date: Sat, 30 May 2026 18:07:00 +0200
-Message-ID: <20260530160238.855730521@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.10 557/589] batman-adv: tp_meter: avoid use of uninit sender vars
+Date: Sat, 30 May 2026 18:07:18 +0200
+Message-ID: <20260530160239.295329034@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,60 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Farnung <kfarnung@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit f51e4b3b5574ad8cb5b16b11f8a1452147ece87a upstream.
+commit 6c65cf23d4c6170fcf5714c32aa64689718cb142 upstream.
 
-LMAC rings reuse the shared rdp/wrp pointer buffers without going
-through the normal SRNG hw-init path that zeros non-LMAC ring
-pointers. After restart, ath11k_hal_srng_clear() can therefore hand
-stale hp/tp state from the previous firmware instance back to the new
-one.
+batadv_tp_recv_ack() and batadv_tp_stop() are only valid for tp_vars in the
+BATADV_TP_SENDER role. When called with a BATADV_TP_RECEIVER role, it
+proceeds to read sender-only members that were never initialized, leading
+to undefined behavior.
 
-Clear the shared pointer buffers while keeping the allocations in
-place so restart still avoids reallocating SRNG DMA memory, but starts
-with fresh ring-pointer state.
+This can be triggered when a node that is currently acting as a receiver in
+an ongoing tp_meter session receives a malicious ACK packet.
 
-Fixes: 32be3ca4cf78b ("wifi: ath11k: HAL SRNG: don't deinitialize and re-initialize again")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/CAOPSVF04q6uvVdq8GTRLHBrVMdpt9=o9wVcFMc6f-yhmSBcZqQ@mail.gmail.com/
-Signed-off-by: Kyle Farnung <kfarnung@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260513-kfarnung-ath11k-srng-clear-pointer-state-v1-1-bc700dd8b333@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Guard against this by checking tp_vars->role immediately after the
+lookup and bailing out if it is not BATADV_TP_SENDER, before any of
+those members are accessed.
+
+Cc: stable@kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/batman-adv/tp_meter.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -1319,14 +1319,22 @@ EXPORT_SYMBOL(ath11k_hal_srng_deinit);
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -647,6 +647,9 @@ static void batadv_tp_recv_ack(struct ba
+ 	if (unlikely(!tp_vars))
+ 		return;
  
- void ath11k_hal_srng_clear(struct ath11k_base *ab)
- {
--	/* No need to memset rdp and wrp memory since each individual
--	 * segment would get cleared in ath11k_hal_srng_src_hw_init()
--	 * and ath11k_hal_srng_dst_hw_init().
-+	/*
-+	 * Preserve the shared pointer buffers, but clear the previous
-+	 * firmware instance's hp/tp state before handing them back to FW.
-+	 * LMAC rings reuse this shared memory without going through the
-+	 * normal SRNG hw-init path that zeros non-LMAC ring pointers.
- 	 */
- 	memset(ab->hal.srng_list, 0,
- 	       sizeof(ab->hal.srng_list));
- 	memset(ab->hal.shadow_reg_addr, 0,
- 	       sizeof(ab->hal.shadow_reg_addr));
-+	if (ab->hal.rdp.vaddr)
-+		memset(ab->hal.rdp.vaddr, 0,
-+		       sizeof(*ab->hal.rdp.vaddr) * HAL_SRNG_RING_ID_MAX);
-+	if (ab->hal.wrp.vaddr)
-+		memset(ab->hal.wrp.vaddr, 0,
-+		       sizeof(*ab->hal.wrp.vaddr) * HAL_SRNG_NUM_LMAC_RINGS);
- 	ab->hal.avail_blk_resource = 0;
- 	ab->hal.current_blk_index = 0;
- 	ab->hal.num_shadow_reg_configured = 0;
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
++		goto out;
++
+ 	if (unlikely(atomic_read(&tp_vars->sending) == 0))
+ 		goto out;
+ 
+@@ -1085,12 +1088,16 @@ void batadv_tp_stop(struct batadv_priv *
+ 	if (!tp_vars) {
+ 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
+ 			   "Meter: trying to interrupt an already over connection\n");
+-		goto out;
++		goto out_put_orig_node;
+ 	}
+ 
++	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
++		goto out_put_tp_vars;
++
+ 	batadv_tp_sender_shutdown(tp_vars, return_value);
++out_put_tp_vars:
+ 	batadv_tp_vars_put(tp_vars);
+-out:
++out_put_orig_node:
+ 	batadv_orig_node_put(orig_node);
+ }
+ 
 
 
