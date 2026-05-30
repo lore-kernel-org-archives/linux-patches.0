@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969BF2E92B3;
-	Sat, 30 May 2026 16:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B2C2E92B3;
+	Sat, 30 May 2026 16:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160297; cv=none; b=uFDPbToeGAIuzMoS8pfG9K7zVaBtZY97yyVyiCCEjsiYoeZU8BFLtuN0exiUxUabRxY60tv6vKBghcYKwExehQ7xrLiL5xduu9mibCr0mTWlEaOAyNkNKwCMXjQQzaqJk6nVC/d618/4QZG04GVD1U+Ev7+azwAjMNdudoyCt/M=
+	t=1780160301; cv=none; b=liKRjfJ6pXrKr716mD2WnTOQUKiM9y30dDR6+svcpqcTnOv5I0f+t1qoQDjdTy0KSFOj7VpCaFL9COa2peZ3G+rgeErg4qneXKKK6PKJ2LaaohwU/eNzKSEZChNSSleTx3h655OsemSa+kuZlEHPorjM1RnTVqBKgsUGqfHRlNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160297; c=relaxed/simple;
-	bh=mnSeUUDroYhjOCRNP5neHL4zAQ7x2yOjCONEO979UEY=;
+	s=arc-20240116; t=1780160301; c=relaxed/simple;
+	bh=t/8P4OZR2Tmgry3chVCOeuTASRLHYf5uFKAEufYeyR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/j0vFYwL4wYXp/G35B2Gl2gemTaQo5FEciTZvSdhUk5XpDhuvYDe+2z8BoaF0kLXT+ajBVjoeie2NKgX+A9mGRoMXvDJgq74lbLuTOV+MemvcsU8veUrk3gm9lDB4ZTa4kBMP9u1CsGf4jmhUbdtJtK+qAsWAWPD6dpKGJpE9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxoWMZfc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nX+5MhHUkYV2zeVKzMANfe0o50EJ3dSWQlR2QGnbWlYhrf0vPvqBVPQpeG2IbpQ0sfFm+ZKDDqQS+EzUVGsPf+mSs3Gf0DSyXux5EDF96kyfDxlKQweUTLVyCW5AWR72bueRURvskUEWXJ5UwMymqe8egkATbGB35X7vtatWZOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gydzsjBr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxoWMZfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA06B1F00893;
-	Sat, 30 May 2026 16:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gydzsjBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647FD1F00893;
+	Sat, 30 May 2026 16:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160296;
-	bh=b+ipQM2fc+p9CHiPW2Tmit4I0+7Cd5YTylV1yBDTNAY=;
+	s=korg; t=1780160300;
+	bh=x0E0xoJEVUy40I4tbeD5RrdGvfpYcKx4gNZkYINwTqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DxoWMZfc0MtCDky9tlb2qm3AfHKMCwYf8JuDUQCyaEgFNsHsr9Kav+x3hCA5SaGu9
-	 aMDUvydOp7bHoOm6z6aAE55XbfpT5D+VOzVZqX4sgtB5oSB42yq0mflQVzEFhIT7ZB
-	 DtyR16UuHWq0viuEBFvawBdzJ1bTD86RAOhGCIXo=
+	b=gydzsjBrW+Dz27g61B3f6ZOXqKU/ZsZB7U7q8HIch/Doum+WD8V7sMvtSqMrbmqBw
+	 5RktmVnwztIpS+b1ogBst0Wg8+ujIA63Ff1fMI3xV797AfhP0/s5aomE0+QdKM+UqN
+	 OS98yxt4113Lc0RrdiE0/wFPk9/7TS2z+y7gkgv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rajani Kantha <681739313@139.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.1 298/969] ice: Fix memory leak in ice_set_ringparam()
-Date: Sat, 30 May 2026 17:57:02 +0200
-Message-ID: <20260530160308.670180238@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 299/969] exit: prevent preemption of oopsing TASK_DEAD task
+Date: Sat, 30 May 2026 17:57:03 +0200
+Message-ID: <20260530160308.694821501@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,74 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit fe868b499d16f55bbeea89992edb98043c9de416 ]
+commit c1fa0bb633e4a6b11e83ffc57fa5abe8ebb87891 upstream.
 
-In ice_set_ringparam, tx_rings and xdp_rings are allocated before
-rx_rings. If the allocation of rx_rings fails, the code jumps to
-the done label leaking both tx_rings and xdp_rings. Furthermore, if
-the setup of an individual Rx ring fails during the loop, the code jumps
-to the free_tx label which releases tx_rings but leaks xdp_rings.
+When an already-exiting task oopses, make_task_dead() currently calls
+do_task_dead() with preemption enabled.  That is forbidden:
+do_task_dead() calls __schedule(), which has a comment saying "WARNING:
+must be called with preemption disabled!".
 
-Fix this by introducing a free_xdp label and updating the error paths to
-ensure both xdp_rings and tx_rings are properly freed if rx_rings
-allocation or setup fails.
+If an oopsing task is preempted in do_task_dead(), between becoming
+TASK_DEAD and entering the scheduler explicitly, bad things happen:
+finish_task_switch() assumes that once the scheduler has switched away
+from a TASK_DEAD task, the task can never run again and its stack is no
+longer needed; but that assumption apparently doesn't hold if the dead
+task was preempted (the SM_PREEMPT case).
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+This means that the scheduler ends up repeatedly dropping references on
+the dead task's stack, which can lead to use-after-free or double-free
+of the entire task stack; in other words, two tasks can end up running
+on the same stack, resulting in various kinds of memory corruption.
 
-Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Rajani Kantha <681739313@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+(This does not just affect "recursively oopsing" tasks; it is enough to
+oops once during task exit, for example in a file_operations::release
+handler)
+
+Fixes: 7f80a2fd7db9 ("exit: Stop poorly open coding do_task_dead in make_task_dead")
+Cc: stable@kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/exit.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 49c524304a412..7774292a5bdbe 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -2891,7 +2891,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 	rx_rings = kcalloc(vsi->num_rxq, sizeof(*rx_rings), GFP_KERNEL);
- 	if (!rx_rings) {
- 		err = -ENOMEM;
--		goto done;
-+		goto free_xdp;
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -979,6 +979,7 @@ void __noreturn make_task_dead(int signr
+ 		futex_exit_recursive(tsk);
+ 		tsk->exit_state = EXIT_DEAD;
+ 		refcount_inc(&tsk->rcu_users);
++		preempt_disable();
+ 		do_task_dead();
  	}
  
- 	ice_for_each_rxq(vsi, i) {
-@@ -2921,7 +2921,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 			}
- 			kfree(rx_rings);
- 			err = -ENOMEM;
--			goto free_tx;
-+			goto free_xdp;
- 		}
- 	}
- 
-@@ -2972,6 +2972,13 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 	}
- 	goto done;
- 
-+free_xdp:
-+	if (xdp_rings) {
-+		ice_for_each_xdp_txq(vsi, i)
-+			ice_free_tx_ring(&xdp_rings[i]);
-+		kfree(xdp_rings);
-+	}
-+
- free_tx:
- 	/* error cleanup if the Rx allocations failed after getting Tx */
- 	if (tx_rings) {
--- 
-2.53.0
-
 
 
