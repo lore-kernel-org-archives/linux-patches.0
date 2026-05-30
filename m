@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1BA366567;
-	Sat, 30 May 2026 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5A2690D5;
+	Sat, 30 May 2026 17:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160411; cv=none; b=NxTgMvaTVV9QYLZnksV5jHdoWg9oMBMP0+4QlZEQO36HP1+kVTZGFnAkjhBNaqCGBWC6CjlibRdc30MxVzw/zksTmtsKsL8COXsfa45U2jLR0d0b6gLAhS/2J9H7nQ5VgPSI3WxT4/tp2AVtBPdjwlYeAFjScDD/AaZA0tlFsbM=
+	t=1780160415; cv=none; b=nB/QAQrorYhdTDZqQ0fYCD9Jk/e5TJEpgJiWnbVDYTcnWVIOa/g61wp+DeV+CrZeEjgij9yp1T9DL/RbLFIBPng+LzCy47w4sQS5J9IOUJa4OP3wpLqgWiwMZULUuk8qrtU5aCjdcWYW/ybmi2gzSB4JmEoInYgA5ou7QDiZ20M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160411; c=relaxed/simple;
-	bh=qjzKqWotRLrhvbe29MraxH2IKKRPpWsp6eZGI2JXen0=;
+	s=arc-20240116; t=1780160415; c=relaxed/simple;
+	bh=irpIlgnaVHAPO7a5fZtfJnKlDLByA84ZpjQOy3aivOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sk4jz29QKGgfX5yd7w7hrxzSpEPTPJ4Vuj/+J9oifE2F5ecI73EyViXAocii31yYtxEaaDMVzhrhlTklHcA2XLRHXIANNIIuLx9GYQrQ2ilaNUv0EEU4FSG/rzfJ1SsaJwNIipBM1YHpPsCb/++o0P8ZQ2MdrvcqEqniTwK+Sz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMYKWl8q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LCD0YOyc0pp0OL8tyT55PTIdx8LOHiKkNx0FWEyTU0z/KrxNNlawNZO8IuYyy4pVcWuNLLXUwh/1f62ct02plRRDFDFnHIABRbk17cQkV4AT9+nTZ7WDxHoeEoY40QrRSQ+6EMww3UP7+pGh7tU2dIuKMtLYpG9NfZM34+mMBoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9IC5Ago; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMYKWl8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792211F00893;
-	Sat, 30 May 2026 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9IC5Ago"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254E91F00893;
+	Sat, 30 May 2026 17:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160410;
-	bh=rkGWEjZtcBvFdCiRz6DsPNSm9+7JJ/8VNQnuE1pOKro=;
+	s=korg; t=1780160413;
+	bh=OxU3zjOEtvGCIyvmPOHcypM5dpvYzH4buy/vnjR3bAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CMYKWl8qK2PANHQNXBcO1bF04iDgWFdEUKnwP9vBfw+5eS3PYg5jUCIDXUECF/ccU
-	 6x6fZERjWhsoMLBlnPs28iCjq6xVs5lKgEKOKqRV7PjpMsVXvjCdiYUOeJMdPERfOn
-	 z19rSIEMrzdpG3sw+Bl+dNe7SvH7SQsaSBwyuR6A=
+	b=a9IC5Ago1z7fI8BqJFpJf+xqj5d5dBTBDRCUueOSxgCdWbHdd8yo93/f4JDDBXjrc
+	 lPwjyktWgUCJgN+FwaHgXoB+ErTT2x/wAjPMZvPXdComD9QYqSXkLvmhBWP5PMazol
+	 53kJEzdua+KbY4rzBoN8D/wd0VFcR3Aq1CsSYhQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 330/969] hwmon: (corsair-psu) Close HID device on probe errors
-Date: Sat, 30 May 2026 17:57:34 +0200
-Message-ID: <20260530160309.496988756@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 331/969] cifs: abort open_cached_dir if we dont request leases
+Date: Sat, 30 May 2026 17:57:35 +0200
+Message-ID: <20260530160309.521844920@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 174606451fbb17db506ebaacdd5e203e57773d5f upstream.
+commit d68ce834f8cf6cb2e77f3331df65166b35466b53 upstream.
 
-corsairpsu_probe() opens the HID device before sending the device init
-and firmware-info commands. If either command fails, the error path jumps
-directly to fail_and_stop and skips hid_hw_close().
+It is possible that SMB2_open_init may not set lease context based
+on the requested oplock level. This can happen when leases have been
+temporarily or permanently disabled. When this happens, we will have
+open_cached_dir making an open without lease context and the response
+will anyway be rejected by open_cached_dir (thereby forcing a close to
+discard this open). That's unnecessary two round-trips to the server.
 
-Use the existing fail_and_close label for those post-open failures so the
-open count and low-level close callback are balanced before hid_hw_stop().
+This change adds a check before making the open request to the server
+to make sure that SMB2_open_init did add the expected lease context
+to the open in open_cached_dir.
 
-Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260424135107.13720-1-mhun512@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/corsair-psu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cached_dir.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -743,13 +743,13 @@ static int corsairpsu_probe(struct hid_d
- 	ret = corsairpsu_init(priv);
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "unable to initialize device (%d)\n", ret);
--		goto fail_and_stop;
-+		goto fail_and_close;
- 	}
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -228,6 +228,14 @@ int open_cached_dir(unsigned int xid, st
+ 			    &rqst[0], &oplock, &oparms, utf16_path);
+ 	if (rc)
+ 		goto oshr_free;
++
++	if (oplock != SMB2_OPLOCK_LEVEL_II) {
++		rc = -EINVAL;
++		cifs_dbg(FYI, "%s: Oplock level %d not suitable for cached directory\n",
++			 __func__, oplock);
++		goto oshr_free;
++	}
++
+ 	smb2_set_next_command(tcon, &rqst[0]);
  
- 	ret = corsairpsu_fwinfo(priv);
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "unable to query firmware (%d)\n", ret);
--		goto fail_and_stop;
-+		goto fail_and_close;
- 	}
- 
- 	corsairpsu_get_criticals(priv);
+ 	memset(&qi_iov, 0, sizeof(qi_iov));
 
 
