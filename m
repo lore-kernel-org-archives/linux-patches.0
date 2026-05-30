@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D17D233D9E;
-	Sat, 30 May 2026 18:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E06258EDA;
+	Sat, 30 May 2026 18:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164905; cv=none; b=R4mNLX4Wl5xWvqHL2fVTHhkNnh0oGKoB1ErNRWpHi0rMQ/wDyqnjwWHqcWPRB1gJLRsm8tWrVqp14miUVtzSRktfd0jrHLb+F9X1hai+LMt2o/3hzk7pEw38fNVaSpP0CCgNbi2tQ5LnJHfjSPHmxSWiEtaAwJhhCRwLgTVeihA=
+	t=1780164909; cv=none; b=Z/cQuy1Ali50ETon7PqidgRJXeCIhDRWArJfWniLQMEOnCt6eRX9i8Uybtv3MdTQJNm3iOorJNFU/50W3ej6VjmUa1WiZeG0GlNYsoDqIMmfUr43HmvHIBN3dIwT2VgOPbtVtOxJjnysVQIJ2i3GUAzCwMVo/GIfVh5bw7PgQbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164905; c=relaxed/simple;
-	bh=eKuRBnCmvhJQw1mNkvmsdpDFigzWW5iNu7FY7UQxQxM=;
+	s=arc-20240116; t=1780164909; c=relaxed/simple;
+	bh=IQk/brV4TYJQ1K/YX00p4nhGuysPkZoXqBGnaVXKAxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HW6Yn2u2UC7XcFoUp63toq1n3EeVeaJ9x2fXZSWTKW19/DsD8eDPkWCBuD91gGzbWePhTbObmyEZhMOr2SaIUKPNsiG7zaxrJG6kDr+4TFWKBxVTCPlXGecO3DowOfdTuHCFnmD0Ciw29VyPsU+K8ReCYVXrHlFg/7u29NqzE+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMEx5vjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pRIHZ3WhJCZENuBt31oU9kDRQ5DFe0HWq+mL+Xkxd7CTLkV8yF1A2H2BhDDixUTjsnW8msMFOSV8bZUfQDYHG3N1YMjEFddjgToqmeqj6M0yUN/MIWdVyPiz+5JkMJ3+1R6FjAhDmBXmI1Gz6Z10PW+Iy8Kx6FR9jvTYiQfX0jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlubRIT1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMEx5vjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17A51F00893;
-	Sat, 30 May 2026 18:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlubRIT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9161F00893;
+	Sat, 30 May 2026 18:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164904;
-	bh=JK83Mub3Tozrw4Ie4O/GSncWaz+WkxqTCTRAclrNtFQ=;
+	s=korg; t=1780164908;
+	bh=FKkkbApDOmjoipnu+8JiHnDCVqLN7ecaeO7NX1ia6rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMEx5vjs3WC9ZcU67hJVVUXJz/EU/4l6h8uRA7FGQPUvNndyAkmPxXKkAabW45EMX
-	 M2YlzYtgsLymz7upPTy76s6JZ1kPse6jH8V7i/8KzB+FyesfGVoy8gISRIJ0rAQPJ+
-	 PhZz8nMr7s+88rBbMsPrXBAHDt33dL57ZxGtMwgo=
+	b=WlubRIT1szWHU/WypoiJ8lHTp1o+yzkazKjZ54EN1ZB7cqrAdKXaqac0g+rCLReKE
+	 4uRePVNwQ1egDbnO9LXgtYKnQ7rlSScJBZDhq+0sVmIeHLm8WunBxBlmjRtuEFy/Xm
+	 7HdeUTkDdfjRsjAF/9YrVoSBkCoyz1pjRe/+RhsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 694/776] ixgbevf: fix use-after-free in VEPA multicast source pruning
-Date: Sat, 30 May 2026 18:06:48 +0200
-Message-ID: <20260530160257.775038915@linuxfoundation.org>
+	John Walker <johnwalker0@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 695/776] wifi: cfg80211: advance loop vars in cfg80211_merge_profile()
+Date: Sat, 30 May 2026 18:06:49 +0200
+Message-ID: <20260530160257.798109378@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,62 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: John Walker <johnwalker0@gmail.com>
 
-commit 5d49b568c188dc77199d8d2b959c91da8cc27cf1 upstream.
+commit 7666dbb1bacc4ba522b96740cba7283d243d16e1 upstream.
 
-ixgbevf_clean_rx_irq() prunes frames whose source MAC matches the VF's
-own address (VEPA multicast workaround) by freeing the skb and
-continuing to the next descriptor:
+cfg80211_merge_profile() reassembles a Multi-BSSID non-transmitted BSS
+profile that has been split across multiple consecutive MBSSID elements.
+Its while-loop calls
 
-    dev_kfree_skb_irq(skb);
-    continue;
+	cfg80211_get_profile_continuation(ie, ielen, mbssid_elem, sub_elem)
 
-The skb pointer is declared outside the while loop and persists across
-iterations.  Because the continue skips the "skb = NULL" reset at the
-bottom of the loop, the next iteration enters the "else if (skb)" path
-and calls ixgbevf_add_rx_frag() on the freed skb, dereferencing
-skb_shinfo(skb)->nr_frags - a use-after-free in NAPI softirq context.
+but never advances mbssid_elem or sub_elem inside the body.  Each
+iteration therefore searches for a continuation that follows the same
+fixed pair; the helper returns the same next_mbssid; and the same
+next_sub bytes are memcpy()'d into merged_ie at a growing offset until
+the buffer fills.
 
-The sibling driver iavf already handles this correctly by nulling the
-pointer before continuing.  Apply the same pattern here.
+Advance both mbssid_elem and sub_elem to the just-consumed continuation
+so the next call to cfg80211_get_profile_continuation() searches for a
+further continuation beyond it (or returns NULL when none exists).
 
-I do not have ixgbevf hardware; the bug was found by static analysis
-(scan_drop_continue_loops.py + semgrep drop_continue_in_loop, multi-tool
-corroboration with the highest score in the scan).  The UAF was confirmed
-under KASAN by loading a test module that reproduces the exact code
-pattern (alloc skb, kfree_skb, then read skb_shinfo(skb)->nr_frags):
+A specially-crafted malicious beacon can take advantage of this bug
+to cause the kernel to spend an excessive amount of time in
+cfg80211_merge_profile (up to as much as 2ms per beacon received),
+which could theoretically be abused in some way.
 
-  BUG: KASAN: slab-use-after-free in ixgbevf_uaf_test_init+0x100/0x1000
-  Read of size 8 at addr 000000006163ae78 by task insmod/30
-  freed 208-byte region [000000006163adc0, 000000006163ae90)
-
-QEMU emulates igb (82576) but not ixgbe (82599), and the igbvf VF
-driver does not include the VEPA source pruning path, so a full
-end-to-end reproduction with emulated hardware was not possible.
-
-Fixes: bad17234ba70 ("ixgbevf: Change receive model to use double buffered page based receives")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-8-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
+Signed-off-by: John Walker <johnwalker0@gmail.com>
+Link: https://patch.msgid.link/20260507230720.64783-1-johnwalker0@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/scan.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -1220,6 +1220,7 @@ static int ixgbevf_clean_rx_irq(struct i
- 		    ether_addr_equal(rx_ring->netdev->dev_addr,
- 				     eth_hdr(skb)->h_source)) {
- 			dev_kfree_skb_irq(skb);
-+			skb = NULL;
- 			continue;
- 		}
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2180,6 +2180,9 @@ size_t cfg80211_merge_profile(const u8 *
+ 		memcpy(merged_ie + copied_len, next_sub->data,
+ 		       next_sub->datalen);
+ 		copied_len += next_sub->datalen;
++
++		mbssid_elem = next_mbssid;
++		sub_elem = next_sub;
+ 	}
  
+ 	return copied_len;
 
 
