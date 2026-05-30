@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC5536EAB1;
-	Sat, 30 May 2026 18:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B481F3C3425;
+	Sat, 30 May 2026 18:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165688; cv=none; b=TDjlQAOBriEFLR1cnB1MYNq1r9ZkEIBKn7AoG4MeaW+I0grrpxwNHjuIp/k+4aeCCkDmER0eMye1ejOlioVBtGmwsPM6sHzwOJKXrgznfj35PYAGTKZzmt18vNzle0tI59aniI+fuhRG/geozTezS1M1R7ElGuuL+EQx3sgjtb4=
+	t=1780165691; cv=none; b=djjWJggWgJCi4SLAbOsmOJ9I6PYYFa8IxoGRCdheYoyiVrunL3T9EKwyz7ef2FwWAFzbIaz5KgORHUexRzSJ5SyHNMQk9V4qLksLIs2dGiw6T/zdYGa7Hrs/YNPyCisoGivFfmwodpCD7PeW12VhUp1ycRjzANhX5R/ZMLTv+hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165688; c=relaxed/simple;
-	bh=VFXN+TUPY1HMseoc8CZgPbezcXnIgRU7seLeVozmgEs=;
+	s=arc-20240116; t=1780165691; c=relaxed/simple;
+	bh=darWRC4vbreeCrw7jKXqe6YD79VYHJQAiNenBleNpG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqA/tT4roLuHWGBIgO8tp3ZRCel+AHvCMBvU3TkoiqVcItGi0xsY8IZg6n6oUFfQppPSvWcqI+NxyBrqKw2tyZeFnA9qpqjZmOxXo/5hok60HJlPFw/9GgKV+ZJEhtwuCZ7GsgcQK8jX34BIj0oyNJzxQAwkQ74MgdD9JiVRgm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYSOfy9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2UA8CDQpolhs/1079kgf6K7GgPQlgu3Oot6TQ63YYFCmGrETCLm606Top+b65u601alTjCRsNYgMjtx0QgGr7yuxMCxRiftOd5mlnjAIgf4/UyX5we57Ic8e48QJtlAxF/oWRHgByVYweHLNQd3echAn5voaswrefWBGV/9Dvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1KxqtDA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYSOfy9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE161F00893;
-	Sat, 30 May 2026 18:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1KxqtDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F421F00893;
+	Sat, 30 May 2026 18:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165687;
-	bh=BJeYoftvbwBY/4kTaNLbSx2jItbxOO+8cjIUMGb9a+I=;
+	s=korg; t=1780165690;
+	bh=pzhxrbqOV0YKWdTu9rSV08dIgE3B3b+fNe+Wq5DxD4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYSOfy9q58mam5wXbuahbT0949z+eBjcFjTLHTacn+/JD4D1Z7DL/Pi9Pbm7nqqlF
-	 fzAK7+YVMVEPCmcfVzekVoneLL2aRPssKryqbjtrs4R68apejNLNtoZ+vSbWzPRVpy
-	 KdV44QN2i1U7BG4Y8pNKToTqlTmpQmABj+8GAfUA=
+	b=S1KxqtDALr9sBcwvfDXXK/XrI6fpdpEDhG90jFLVIdCeFAb5z8wxF9/npOJGnACJW
+	 spxXO3UZk5LnYpws+LWnkw/PXNkpC+oLJjxcunG6eu8Y63S8ZN8DIKjQLvpceaP/Eo
+	 gOhus4WfDHDCWxfVsWGIks2gBiUSWWb2k5XcQ79s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 153/589] net: caif: clear client service pointer on teardown
-Date: Sat, 30 May 2026 18:00:34 +0200
-Message-ID: <20260530160228.810167792@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 136/589] rxrpc: Fix missing validation of ticket length in non-XDR key preparsing
+Date: Sat, 30 May 2026 18:00:17 +0200
+Message-ID: <20260530160228.355304139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,62 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
 
-commit f7cf8ece8cee3c1ee361991470cdb1eb65ab02e8 upstream.
+commit ac33733b10b484d666f97688561670afd5861383 upstream.
 
-`caif_connect()` can tear down an existing client after remote shutdown by
-calling `caif_disconnect_client()` followed by `caif_free_client()`.
-`caif_free_client()` releases the service layer referenced by
-`adap_layer->dn`, but leaves that pointer stale.
+In rxrpc_preparse(), there are two paths for parsing key payloads: the
+XDR path (for large payloads) and the non-XDR path (for payloads <= 28
+bytes). While the XDR path (rxrpc_preparse_xdr_rxkad()) correctly
+validates the ticket length against AFSTOKEN_RK_TIX_MAX, the non-XDR
+path fails to do so.
 
-When the socket is later destroyed, `caif_sock_destructor()` calls
-`caif_free_client()` again and dereferences the freed service pointer.
+This allows an unprivileged user to provide a very large ticket length.
+When this key is later read via rxrpc_read(), the total
+token size (toksize) calculation results in a value that exceeds
+AFSTOKEN_LENGTH_MAX, triggering a WARN_ON().
 
-Clear the client/service links before releasing the service object so
-repeated teardown becomes harmless.
+[ 2001.302904] WARNING: CPU: 2 PID: 2108 at net/rxrpc/key.c:778 rxrpc_read+0x109/0x5c0 [rxrpc]
 
-Fixes: 43e369210108 ("caif: Move refcount from service layer to sock and dev.")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/9f3d37847c0037568aae698ca23cd47c6691acb0.1775897577.git.zcliangcn@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by adding a check in the non-XDR parsing path of rxrpc_preparse()
+to ensure the ticket length does not exceed AFSTOKEN_RK_TIX_MAX,
+bringing it into parity with the XDR parsing logic.
+
+Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
+Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
+Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
+Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-7-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/caif/cfsrvl.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/rxrpc/key.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/caif/cfsrvl.c
-+++ b/net/caif/cfsrvl.c
-@@ -197,10 +197,20 @@ bool cfsrvl_phyid_match(struct cflayer *
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -755,6 +755,10 @@ static int rxrpc_preparse(struct key_pre
+ 	if (v1->security_index != RXRPC_SECURITY_RXKAD)
+ 		goto error;
  
- void caif_free_client(struct cflayer *adap_layer)
- {
-+	struct cflayer *serv_layer;
- 	struct cfsrvl *servl;
--	if (adap_layer == NULL || adap_layer->dn == NULL)
++	ret = -EKEYREJECTED;
++	if (v1->ticket_length > AFSTOKEN_RK_TIX_MAX)
++		goto error;
 +
-+	if (!adap_layer)
-+		return;
-+
-+	serv_layer = adap_layer->dn;
-+	if (!serv_layer)
- 		return;
--	servl = container_obj(adap_layer->dn);
-+
-+	layer_set_dn(adap_layer, NULL);
-+	layer_set_up(serv_layer, NULL);
-+
-+	servl = container_obj(serv_layer);
- 	servl->release(&servl->layer);
- }
- EXPORT_SYMBOL(caif_free_client);
+ 	plen = sizeof(*token->kad) + v1->ticket_length;
+ 	prep->quotalen += plen + sizeof(*token);
+ 
 
 
