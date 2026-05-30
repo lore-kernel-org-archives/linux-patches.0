@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDDC2FDC5E;
-	Sat, 30 May 2026 18:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E53B7B72;
+	Sat, 30 May 2026 18:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164137; cv=none; b=sH7QKwAYYQwWSyxx/TtL5Yk7gjZksOREqtjYboHZBfxBeLrrefxA4DkPERQisnlfOPsWk3bJRT+KWtyO02tY/StDnz4d/UVPwDxu4QwOKr0FRoNnuQqeFehehuXQvgU1rU/3SdK3kywjkw1RFiwM5ilkC5FkZivXqXaRvKpWRrc=
+	t=1780164141; cv=none; b=Er2aNyFuJp7Q0K19LKS1//+hUWj4oSp4smBjm/00x2qa8KKiofWjMYGPxpFISiuAzOxOqbgbz2AkkL/eoCKEKbL7y/FS+P+O856wrqwcOEAP2ACYQnaP8iL7m/CSwnPBSzsdSU2qUNJqOXk9sT6AfXQUGjgcQaIFM2U+/myihpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164137; c=relaxed/simple;
-	bh=0LETy8Z0FWOJNzhjxCF2FDXGKFQkxC9eRbBWx17gTZ0=;
+	s=arc-20240116; t=1780164141; c=relaxed/simple;
+	bh=8AK9fBs6Hay+MdXCZew8sAZsO+12dX3ApshnYKsbqJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPhwuD1IGpTqET8pT1MmQNDSeXh9zKvPaa9xMQ152kHsA4H2imiwwBMcRArVeb2g5z+u363taoxNML4NmpruxsgvkL9PvekjG1qHoN0v9jJLEpf+BD0UlxTM/nDzeMDXS+Y11JwzPxHhezybCnTihs0QexEIiTSZbJ5mSrWbSBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H72uRflj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eRDBE1+2+uviS0ax044bSnrYkiSsAsW+dQ0bbIIFB4XInxm+lMpaCD06qYeJHRxZmzIKl2ulnd6r/0eQkP2t8GH3/kgJMbfRSbXBfeNCqw1teZUN2eZr+JXRiTKx6Qvmd+h1O2X1DrEzIDEBlewJAP3YU+5/C2O3e0LfTN+syv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1ZSA2Cc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H72uRflj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8611F00893;
-	Sat, 30 May 2026 18:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1ZSA2Cc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DA81F00893;
+	Sat, 30 May 2026 18:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164136;
-	bh=Dwey2mgXobzyF1tiUQAAS1GGaiG1ktvuF4yhRde4sDk=;
+	s=korg; t=1780164140;
+	bh=tnk1UVvqzDhvSqeuCj4kr7aAgS14t8Nbh3waidbNkMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H72uRfljVZLi6B5meQD5Yoiybox5gSNHjz/kpyLnXrawHOoGyouXiXHupb1UtmwEW
-	 ljCH1JKJiZGqC1nYfqaIajt9RZhptF7xPppPXORJ8wuLqv0/H8qUVsb2eSvh/QS5iP
-	 rIgEy12uhkEHi9e1a43VDjqxCCx1y668gCnAqBB4=
+	b=A1ZSA2Ccg0FM3zqXRJBt0sp/9bvhD7lcrghDla0ncTI0jqs/BCbc7EjuCJero+SXw
+	 rWvFGvFTfUQIff+vELNJ+9hdo2pBVvqevQb3M2CdJ7o7PDbiCEPDd4aootmGqbXz9Y
+	 8IKQlAVCGDS26OMMdZSBaF9HmTG5++92HhI7etqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/776] dm cache: fix concurrent write failure in passthrough mode
-Date: Sat, 30 May 2026 18:02:30 +0200
-Message-ID: <20260530160251.699618877@linuxfoundation.org>
+Subject: [PATCH 5.15 427/776] net: phy: qcom: at803x: Use the correct bit to disable extended next page
+Date: Sat, 30 May 2026 18:02:21 +0200
+Message-ID: <20260530160251.484514212@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,82 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit e4f66341779d0cf4c83c74793753a84094286d9e ]
+[ Upstream commit e7a62edd34b1b4bc5f979988efc2f81c075733fd ]
 
-When bio prison cell lock acquisition fails due to concurrent writes to
-the same block in passthrough mode, dm-cache incorrectly returns an I/O
-error instead of properly handling the concurrency. This can occur in
-both process and workqueue contexts when invalidate_lock() is called for
-exclusive access to a data block. Fix this by deferring the write bios
-to ensure proper block device behavior.
+As noted in the blamed commit, the AR8035 and other PHYs from this
+family advertise the Extended Next Page support by default, which may be
+understood by some partners as this PHY being multi-gig capable.
 
-Reproduce steps:
+The fix is to disable XNP advertising, which is done by setting bit 12
+of the Auto-Negotiation Advertisement Register (MII_ADVERTISE).
 
-1. Create a cache device
+The blamed commit incorrectly uses MDIO_AN_CTRL1_XNP, which is bit 13 as per
+802.3 : 45.2.7.1 AN control register (Register 7.0)
 
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+BIT 12 in MII_ADVERTISE is wrapped by ADVERTISE_RESV, used by some
+drivers such as the aquantia one. 802.3 Clause 28 defines bit 12 as
+Extended Next Page ability, at least in recent versions of the standard.
 
-2. Promote the first data block into cache
+Let's add a define for it and use it in the at803x driver.
 
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-3. Reload the cache into passthrough mode
-
-dmsetup suspend cache
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup resume cache
-
-4. Write to the first cached block concurrently. Sometimes one of the
-   processes will receive I/O errors.
-
-fio --filename=/dev/mapper/cache --name test --rw=randwrite --bs=4k \
---randrepeat=0 --direct=1 --numjobs=2 --size 64k
-
- <snip>
- fio-3.41
- fio: io_u error on file /dev/mapper/cache: Input/output error: write offset=4096, buflen=4096
- fio: pid=106, err=5/file:io_u.c:2008, func=io_u error, error=Input/output error
- test: (groupid=0, jobs=1): err= 0: pid=105
- test: (groupid=0, jobs=1): err= 5 (file:io_u.c:2008, func=io_u error, error=Input/output error): pid=106
- <snip>
-
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 3c51fa5d2afe ("net: phy: ar803x: disable extended next page bit")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260410171021.1277138-1-maxime.chevallier@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/phy/at803x.c | 2 +-
+ include/uapi/linux/mii.h | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 783722a4c3364..1498ffbcb0e03 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1524,6 +1524,15 @@ static int invalidate_lock(struct dm_cache_migration *mg)
- 			    READ_WRITE_LOCK_LEVEL, prealloc, &mg->cell);
- 	if (r < 0) {
- 		free_prison_cell(cache, prealloc);
-+
-+		/* Defer the bio for retrying the cell lock */
-+		if (mg->overwrite_bio) {
-+			struct bio *bio = mg->overwrite_bio;
-+
-+			mg->overwrite_bio = NULL;
-+			defer_bio(cache, bio);
-+		}
-+
- 		invalidate_complete(mg, false);
- 		return r;
- 	}
+diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
+index ba61007bfc499..6397ef527945f 100644
+--- a/drivers/net/phy/at803x.c
++++ b/drivers/net/phy/at803x.c
+@@ -818,7 +818,7 @@ static int at803x_config_init(struct phy_device *phydev)
+ 	 * behaviour but we still need to accommodate it. XNP is only needed
+ 	 * for 10Gbps support, so disable XNP.
+ 	 */
+-	return phy_modify(phydev, MII_ADVERTISE, MDIO_AN_CTRL1_XNP, 0);
++	return phy_modify(phydev, MII_ADVERTISE, ADVERTISE_XNP, 0);
+ }
+ 
+ static int at803x_ack_interrupt(struct phy_device *phydev)
+diff --git a/include/uapi/linux/mii.h b/include/uapi/linux/mii.h
+index 39f7c44baf535..61d6edad4b94a 100644
+--- a/include/uapi/linux/mii.h
++++ b/include/uapi/linux/mii.h
+@@ -82,7 +82,8 @@
+ #define ADVERTISE_100BASE4	0x0200	/* Try for 100mbps 4k packets  */
+ #define ADVERTISE_PAUSE_CAP	0x0400	/* Try for pause               */
+ #define ADVERTISE_PAUSE_ASYM	0x0800	/* Try for asymetric pause     */
+-#define ADVERTISE_RESV		0x1000	/* Unused...                   */
++#define ADVERTISE_XNP		0x1000  /* Extended Next Page */
++#define ADVERTISE_RESV		ADVERTISE_XNP /* Used to be reserved */
+ #define ADVERTISE_RFAULT	0x2000	/* Say we can detect faults    */
+ #define ADVERTISE_LPACK		0x4000	/* Ack link partners response  */
+ #define ADVERTISE_NPAGE		0x8000	/* Next page bit               */
 -- 
 2.53.0
 
