@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D90332EA7;
-	Sat, 30 May 2026 17:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E22157A5A;
+	Sat, 30 May 2026 17:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161893; cv=none; b=nkXmFOj8p8fsQbsuQPMXn4T5Z+jTs2JDUhSnXlU39dsTjW8QJIiVp5G6u2fynndQjDR+ZTRI1GygPbniOfQaTz6DiqCuQ4XSh1FmZpDa4EzWL/A3OqTWP3QcUxFby0Gbmz0TPf6J2OolJL1UY8oKfoJHead2MEzqLvwMfxHgJQc=
+	t=1780161897; cv=none; b=QmDTEFDp0ln2A45X3Kfq83GZPrl32DgefcJZE1l7k2jpQngp/86E8jnGZCG7VYeyIOLHwWePzZNmIHdT4YQeru3yUCDjkwRWban5nQpyu3pLv1LFv1xG40NOr8HEyRb849e82ODKwup7ZHkpNdnFdYfgj6xjwbRVo4Gdg8uOO5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161893; c=relaxed/simple;
-	bh=MpE8mydCoEo6D/QcfF8YmpVKgy9A7Bgd7KjJ5VQHIeQ=;
+	s=arc-20240116; t=1780161897; c=relaxed/simple;
+	bh=nfgfLPg6W5KkmuTbGjLuWKmFfcxQdsqcOe8T6BtZiQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5iCXRiQjl8AhRqVd++LZUQotSmjponbugaHA1qurlzDNWkQF/3mM7+fHsnaVWhEhfh8IrfW8oLYdrZX6FTcLRXcIIza6wk06Aam5Lnkv3zs/yh/bqzb0/HjZXJBtXbhNcVtYcKgKIasTzWAucBJFpBW2g1vgwhb50w7yUVd7P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw3LZSeU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oprMWoi5G3Bp0lUQYkze4qiCF8M6c6bK0FYjgW+K+XurFBOBDy7wJ0HB0tHX7D4qdJAaSjw0CS6bAVyLF7InLj6lz/oHR290vv5AsKzw/Bm+W3KdQT08lhEqyJtMxDZlvxiou/qAcWSRLnrxN68qqgo6NKHmATrJqixGeTmdnN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XITedFJA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw3LZSeU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60621F00893;
-	Sat, 30 May 2026 17:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XITedFJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA4C1F00893;
+	Sat, 30 May 2026 17:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161892;
-	bh=W/GG97/NRTQiaHTGgtlLjapvUqvDOS0M2kWOpcSXYEg=;
+	s=korg; t=1780161895;
+	bh=PA4kUlVe9a2Gg66PjokF2rZLQVADU7Phrn046p49B68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uw3LZSeU3vCocgBAhbpSBNS+hdMEpqNROZrCQ2otoFaNwCTSRaaWB+k9I68EM9b+w
-	 TnAXluFaUAgEoyIolTP5469V+ElLbSjqvzd7RcNl8xfard5jFIblTQ0WlFGhT6Rk9R
-	 7pQ5CO65QSJCf1mFQHEl5cce2OV5V7mUHNh/9Eho=
+	b=XITedFJASR4vhHw6RTyPjWgkgjN7gcuewy3JF/gu5Dl8gAsqniZD7ZgJhD9oC02I1
+	 m860fsk8EWvwogZ8uUCzMYyOmXTGJurbFu2V/tahk8DocDsYhUcF1Hz04Rg7yfl4CD
+	 YyFEmsXEvyoW2cTRFQwlpVc/84RaO4qTHoitm7Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 758/969] ALSA: usb-audio: Fix potential leak of pd at parsing UAC3 streams
-Date: Sat, 30 May 2026 18:04:42 +0200
-Message-ID: <20260530160321.497700450@linuxfoundation.org>
+Subject: [PATCH 6.1 732/969] tracing: branch: Fix inverted check on stat tracer registration
+Date: Sat, 30 May 2026 18:04:16 +0200
+Message-ID: <20260530160320.756941634@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,203 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c39f0bc03f84ba64c9144c95714df1dc36150f6d ]
+[ Upstream commit 3b75dd76e64a04771861bb5647951c264919e563 ]
 
-At parsing UAC3 streams, we allocate a PD object at each time, and
-either assign or free it.  But there is a case where the PD object may
-be leaked; namely, in __snd_usb_parse_audio_interface() loop, when an
-audioformat shares the same endpoint with others, it's put to a link
-and returns from snd_usb_add_audio_stream(), but the PD is forgotten
-afterwards.  Overall, the treatment of PD object in the parser code is
-a bit flaky, and we should be more careful about the object ownership.
+init_annotated_branch_stats() and all_annotated_branch_stats() check the
+return value of register_stat_tracer() with "if (!ret)", but
+register_stat_tracer() returns 0 on success and a negative errno on
+failure. The inverted check causes the warning to be printed on every
+successful registration, e.g.:
 
-This patch tries to fix the above case and improve the code a bit.
-The pd object is now managed with the auto-cleanup in the loop, and
-the ownership is updated when the pd object gets assigned to the
-stream, which guarantees the release of the leftover object.
+  Warning: could not register annotated branches stats
 
-Fixes: 7edf3b5e6a45 ("ALSA: usb-audio: AudioStreaming Power Domain parsing")
-Link: https://patch.msgid.link/20260427151508.12544-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+while leaving real failures silent. The initcall also returned a
+hard-coded 1 instead of the actual error.
+
+Invert the check and propagate ret so that the warning fires on real
+errors and the initcall reports the correct status.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Link: https://patch.msgid.link/20260420-tracing-v1-1-d8f4cd0d6af1@debian.org
+Fixes: 002bb86d8d42 ("tracing/ftrace: separate events tracing and stats tracing engine")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |  2 +-
- sound/usb/stream.c | 58 ++++++++++++++++++----------------------------
- sound/usb/stream.h |  3 ++-
- 3 files changed, 25 insertions(+), 38 deletions(-)
+ kernel/trace/trace_branch.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 23361e78189d0..8faf3731e3499 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -121,7 +121,7 @@ static int add_audio_stream_from_fixed_fmt(struct snd_usb_audio *chip,
+diff --git a/kernel/trace/trace_branch.c b/kernel/trace/trace_branch.c
+index e47fdb4c92fbc..30f72e0ecb5d4 100644
+--- a/kernel/trace/trace_branch.c
++++ b/kernel/trace/trace_branch.c
+@@ -379,10 +379,10 @@ __init static int init_annotated_branch_stats(void)
+ 	int ret;
  
- 	snd_usb_audioformat_set_sync_ep(chip, fp);
- 
--	err = snd_usb_add_audio_stream(chip, stream, fp);
-+	err = snd_usb_add_audio_stream(chip, stream, fp, NULL);
- 	if (err < 0)
- 		return err;
- 
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index 920a718f91e68..f964082da3a63 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -79,7 +79,7 @@ static void snd_usb_audio_pcm_free(struct snd_pcm *pcm)
- static void snd_usb_init_substream(struct snd_usb_stream *as,
- 				   int stream,
- 				   struct audioformat *fp,
--				   struct snd_usb_power_domain *pd)
-+				   struct snd_usb_power_domain **pdptr)
- {
- 	struct snd_usb_substream *subs = &as->substream[stream];
- 
-@@ -105,10 +105,11 @@ static void snd_usb_init_substream(struct snd_usb_stream *as,
- 	if (fp->channels > subs->channels_max)
- 		subs->channels_max = fp->channels;
- 
--	if (pd) {
--		subs->str_pd = pd;
-+	if (pdptr && *pdptr) {
-+		subs->str_pd = *pdptr;
-+		*pdptr = NULL; /* assigned */
- 		/* Initialize Power Domain to idle status D1 */
--		snd_usb_power_domain_set(subs->stream->chip, pd,
-+		snd_usb_power_domain_set(subs->stream->chip, subs->str_pd,
- 					 UAC3_PD_STATE_D1);
+ 	ret = register_stat_tracer(&annotated_branch_stats);
+-	if (!ret) {
++	if (ret) {
+ 		printk(KERN_WARNING "Warning: could not register "
+ 				    "annotated branches stats\n");
+-		return 1;
++		return ret;
  	}
- 
-@@ -486,11 +487,14 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
-  * if not, create a new pcm stream. note, fp is added to the substream
-  * fmt_list and will be freed on the chip instance release. do not free
-  * fp or do remove it from the substream fmt_list to avoid double-free.
-+ *
-+ * pdptr is optional and can be NULL.  When it's non-NULL and the PD gets
-+ * assigned to the stream, *pdptr is cleared to NULL upon return.
-  */
--static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
--				      int stream,
--				      struct audioformat *fp,
--				      struct snd_usb_power_domain *pd)
-+int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
-+			     int stream,
-+			     struct audioformat *fp,
-+			     struct snd_usb_power_domain **pdptr)
- 
- {
- 	struct snd_usb_stream *as;
-@@ -523,7 +527,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 		err = snd_pcm_new_stream(as->pcm, stream, 1);
- 		if (err < 0)
- 			return err;
--		snd_usb_init_substream(as, stream, fp, pd);
-+		snd_usb_init_substream(as, stream, fp, pdptr);
- 		return add_chmap(as->pcm, stream, subs);
- 	}
- 
-@@ -551,7 +555,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 	else
- 		strcpy(pcm->name, "USB Audio");
- 
--	snd_usb_init_substream(as, stream, fp, pd);
-+	snd_usb_init_substream(as, stream, fp, pdptr);
- 
- 	/*
- 	 * Keep using head insertion for M-Audio Audiophile USB (tm) which has a
-@@ -569,21 +573,6 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 	return add_chmap(pcm, stream, &as->substream[stream]);
+ 	return 0;
  }
+@@ -444,10 +444,10 @@ __init static int all_annotated_branch_stats(void)
+ 	int ret;
  
--int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
--			     int stream,
--			     struct audioformat *fp)
--{
--	return __snd_usb_add_audio_stream(chip, stream, fp, NULL);
--}
--
--static int snd_usb_add_audio_stream_v3(struct snd_usb_audio *chip,
--				       int stream,
--				       struct audioformat *fp,
--				       struct snd_usb_power_domain *pd)
--{
--	return __snd_usb_add_audio_stream(chip, stream, fp, pd);
--}
--
- static int parse_uac_endpoint_attributes(struct snd_usb_audio *chip,
- 					 struct usb_host_interface *alts,
- 					 int protocol, int iface_no)
-@@ -1102,8 +1091,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
- 		}
+ 	ret = register_stat_tracer(&all_branch_stats);
+-	if (!ret) {
++	if (ret) {
+ 		printk(KERN_WARNING "Warning: could not register "
+ 				    "all branches stats\n");
+-		return 1;
++		return ret;
  	}
- 
--	if (pd)
--		*pd_out = pd;
-+	*pd_out = pd;
- 
- 	return fp;
+ 	return 0;
  }
-@@ -1118,7 +1106,6 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 	struct usb_interface_descriptor *altsd;
- 	int i, altno, err, stream;
- 	struct audioformat *fp = NULL;
--	struct snd_usb_power_domain *pd = NULL;
- 	bool set_iface_first;
- 	int num, protocol;
- 
-@@ -1160,6 +1147,12 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 		if (snd_usb_apply_interface_quirk(chip, iface_no, altno))
- 			continue;
- 
-+		/* pd may be allocated at snd_usb_get_audioformat_uac3() and
-+		 * assigned at snd_usb_add_audio_stream(); otherwise it'll be
-+		 * freed automatically by cleanup at each loop.
-+		 */
-+		struct snd_usb_power_domain *pd __free(kfree) = NULL;
-+
- 		/*
- 		 * Roland audio streaming interfaces are marked with protocols
- 		 * 0/1/2, but are UAC 1 compatible.
-@@ -1215,23 +1208,16 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 			*has_non_pcm = true;
- 		if ((fp->fmt_type == UAC_FORMAT_TYPE_I) == non_pcm) {
- 			audioformat_free(fp);
--			kfree(pd);
- 			fp = NULL;
--			pd = NULL;
- 			continue;
- 		}
- 
- 		snd_usb_audioformat_set_sync_ep(chip, fp);
- 
- 		dev_dbg(&dev->dev, "%u:%d: add audio endpoint %#x\n", iface_no, altno, fp->endpoint);
--		if (protocol == UAC_VERSION_3)
--			err = snd_usb_add_audio_stream_v3(chip, stream, fp, pd);
--		else
--			err = snd_usb_add_audio_stream(chip, stream, fp);
--
-+		err = snd_usb_add_audio_stream(chip, stream, fp, &pd);
- 		if (err < 0) {
- 			audioformat_free(fp);
--			kfree(pd);
- 			return err;
- 		}
- 
-diff --git a/sound/usb/stream.h b/sound/usb/stream.h
-index d92e18d5818fe..61b9a133da018 100644
---- a/sound/usb/stream.h
-+++ b/sound/usb/stream.h
-@@ -7,7 +7,8 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 
- int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 			     int stream,
--			     struct audioformat *fp);
-+			     struct audioformat *fp,
-+			     struct snd_usb_power_domain **pdptr);
- 
- #endif /* __USBAUDIO_STREAM_H */
- 
 -- 
 2.53.0
 
