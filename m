@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5715C241C8C;
-	Sat, 30 May 2026 18:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C2F241C8C;
+	Sat, 30 May 2026 18:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164961; cv=none; b=NKlyT+nm4ieyW9Fn71WJ6M9fwdIiRO9tyh3YNEzlmxuvaTY9Q4v8LEuaKkinHtsfyPSZAUeyNcrfZKzEu4XbswtcCVDRyPfK37cWsqGsTyZmlpV6BSTcmQnC1AlU6IYt0+uO7PWH5dPx9J+DYcgLdtAspAsB2HduR8o0QTkgrDc=
+	t=1780164964; cv=none; b=ImgSI03f08RSXzyeOTxBMluVtZ/aExCUqiUXGuGwGPbJEh/mUikLFnjUiNwOOwA2Vt8oUwft6IFxRUlzeCJ297VVgaK+NFmrjltEND/dBf7U/k2asfpQSlafjauSzF60MjfvidXh+k8ekHpnbOgBGHDxl+osvDoeDfHgNK3X/XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164961; c=relaxed/simple;
-	bh=gW9/wlLBlkLiTGYOPkRtdhT1hvhMKj6CaCmUdvJ/hks=;
+	s=arc-20240116; t=1780164964; c=relaxed/simple;
+	bh=T3cEM8CXte04y9b5vhQY0LKPD6VwXQUKIeGvOI/MzaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxfNhhNCTCheQWWqN6zxjycQqF9zLPd+Dut5J/xqd8XkcI9ZuNXlk1cnjb3suzTORgTl86Tx5n2G9807EHAvdXNu4NgX2zNYpcF/7suy3gES+345POX0EnGEA4fvyxQngUFMbk2VTWGZeGqFjg6qGGfW76Ao174tlZ5v66WLiAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdWAvnZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RhFTlBRshteNMsI6hiPA+g1SRmzH3zU3sVi7MzBL3R6q0TgB79i3GE/I+P1LjN+IEuIaeWaH3xSZ6WxU12oBFxvYJvQO/a0icxJlHFXAg+DMUxrzeT6R5MwmqBHrl+QcZBBSCyHfDPU/XGQxU7xJ45oGgbBrEgcpkThLprYh1No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnaX+AXM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdWAvnZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD8C1F00893;
-	Sat, 30 May 2026 18:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnaX+AXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84051F00893;
+	Sat, 30 May 2026 18:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164960;
-	bh=coQ6h4S/ps+f/XRM8RyKwxYRCezcPgALEDbnzvORtIo=;
+	s=korg; t=1780164963;
+	bh=I09w+/MFzgALbxIvJ4x/c8Hkec6Mz0O7raEzPqwPIsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mdWAvnZV9XALMd531nxfSG3+LrSLzfrxGfGjjoJEvyUyYKHm5TAhX03De7GP8MIhU
-	 8dea739wIMgrxRdxPFIjRn3sShZHBg87nMMgvPC5tRw+NFTWjAceH3TzITxP4RPuE9
-	 Kp6qRWBHlpdB3i9RG4rzT5JCQf7bPMOQDNngPmoM=
+	b=pnaX+AXMQ589RFz7BDby6dRIlm6/xlUzLKlWXTUjLxN213AdpMUVLFTawDHfFVqMF
+	 ihU00Rys77Zclr5C6t6xxRIpB09YmMqxyF9gnhgCoe7gD8Xs8kH1/fkfd1qb/Dvq5D
+	 G1Dv1uQaaIQlHn7wiEYGtDz3EQS1dbDU5VB7zwew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,13 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 709/776] batman-adv: fix fragment reassembly length accounting
-Date: Sat, 30 May 2026 18:07:03 +0200
-Message-ID: <20260530160258.163167892@linuxfoundation.org>
+Subject: [PATCH 5.15 710/776] batman-adv: fix tp_meter counter underflow during shutdown
+Date: Sat, 30 May 2026 18:07:04 +0200
+Message-ID: <20260530160258.186586234@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -57,132 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 9cd3f16c320bfdadd4509358122368deb56a5741 upstream.
+commit 94f3b133168d1c49895e7cc6afbcf1cc0b354602 upstream.
 
-batman-adv keeps a running payload length for queued fragments and uses it
-to validate a fragment chain before reassembly.
+batadv_tp_sender_shutdown() unconditionally decrements the "sending"
+atomic counter. If multiple paths (e.g. timeout, user cancel, and
+normal finish) call this function, the counter can underflow to -1.
 
-That accounting currently allows the accumulated fragment length to be
-truncated during updates. As a result, malformed fragment chains can
-bypass the intended validation and drive reassembly with inconsistent
-length state, leading to a local denial of service.
+Since the sender logic treats any non-zero value as "still sending",
+a negative value causes the sender kthread to loop indefinitely.
+This leads to a use-after-free when the interface is removed while
+the zombie thread is still active.
 
-Fix the accounting by storing the accumulated length in a length-typed
-field and rejecting update overflows before the existing validation logic
-runs.
+Fix this by using atomic_xchg() to ensure the counter only transitions
+from 1 to 0 once.
 
-The fix was verified against the original reproducer and against valid
-fragment reassembly paths.
-
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+[sven: added missing change in batadv_tp_send]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |   23 +++++++++++++++++------
- net/batman-adv/types.h         |    2 +-
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ net/batman-adv/tp_meter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -17,6 +17,7 @@
- #include <linux/lockdep.h>
- #include <linux/minmax.h>
- #include <linux/netdevice.h>
-+#include <linux/overflow.h>
- #include <linux/skbuff.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -81,9 +82,9 @@ void batadv_frag_purge_orig(struct batad
-  *
-  * Return: the maximum size of payload that can be fragmented.
-  */
--static int batadv_frag_size_limit(void)
-+static size_t batadv_frag_size_limit(void)
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -435,7 +435,7 @@ static void batadv_tp_sender_end(struct
+ static void batadv_tp_sender_shutdown(struct batadv_tp_vars *tp_vars,
+ 				      enum batadv_tp_meter_reason reason)
  {
--	int limit = BATADV_FRAG_MAX_FRAG_SIZE;
-+	size_t limit = BATADV_FRAG_MAX_FRAG_SIZE;
+-	if (!atomic_dec_and_test(&tp_vars->sending))
++	if (atomic_xchg(&tp_vars->sending, 0) != 1)
+ 		return;
  
- 	limit -= sizeof(struct batadv_frag_packet);
- 	limit *= BATADV_FRAG_MAX_FRAGMENTS;
-@@ -144,7 +145,9 @@ static bool batadv_frag_insert_packet(st
- 	struct batadv_frag_packet *frag_packet;
- 	u8 bucket;
- 	u16 seqno, hdr_size = sizeof(struct batadv_frag_packet);
-+	bool overflow = false;
- 	bool ret = false;
-+	size_t data_len;
- 
- 	/* Linearize packet to avoid linearizing 16 packets in a row when doing
- 	 * the later merge. Non-linear merge should be added to remove this
-@@ -154,6 +157,7 @@ static bool batadv_frag_insert_packet(st
- 		goto err;
- 
- 	frag_packet = (struct batadv_frag_packet *)skb->data;
-+	data_len = skb->len - hdr_size;
- 	seqno = ntohs(frag_packet->seqno);
- 	bucket = seqno % BATADV_FRAG_BUFFER_COUNT;
- 
-@@ -172,7 +176,7 @@ static bool batadv_frag_insert_packet(st
- 	spin_lock_bh(&chain->lock);
- 	if (batadv_frag_init_chain(chain, seqno)) {
- 		hlist_add_head(&frag_entry_new->list, &chain->fragment_list);
--		chain->size = skb->len - hdr_size;
-+		chain->size = data_len;
- 		chain->timestamp = jiffies;
- 		chain->total_size = ntohs(frag_packet->total_size);
- 		ret = true;
-@@ -189,7 +193,11 @@ static bool batadv_frag_insert_packet(st
- 		if (frag_entry_curr->no < frag_entry_new->no) {
- 			hlist_add_before(&frag_entry_new->list,
- 					 &frag_entry_curr->list);
--			chain->size += skb->len - hdr_size;
-+
-+			if (check_add_overflow(chain->size, data_len,
-+					       &chain->size))
-+				overflow = true;
-+
- 			chain->timestamp = jiffies;
- 			ret = true;
- 			goto out;
-@@ -202,13 +210,16 @@ static bool batadv_frag_insert_packet(st
- 	/* Reached the end of the list, so insert after 'frag_entry_last'. */
- 	if (likely(frag_entry_last)) {
- 		hlist_add_behind(&frag_entry_new->list, &frag_entry_last->list);
--		chain->size += skb->len - hdr_size;
-+
-+		if (check_add_overflow(chain->size, data_len, &chain->size))
-+			overflow = true;
-+
- 		chain->timestamp = jiffies;
- 		ret = true;
- 	}
- 
- out:
--	if (chain->size > batadv_frag_size_limit() ||
-+	if (overflow || chain->size > batadv_frag_size_limit() ||
- 	    chain->total_size != ntohs(frag_packet->total_size) ||
- 	    chain->total_size > batadv_frag_size_limit()) {
- 		/* Clear chain if total size of either the list or the packet
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -294,7 +294,7 @@ struct batadv_frag_table_entry {
- 	u16 seqno;
- 
- 	/** @size: accumulated size of packets in list */
--	u16 size;
-+	size_t size;
- 
- 	/** @total_size: expected size of the assembled packet */
- 	u16 total_size;
+ 	tp_vars->reason = reason;
+@@ -869,7 +869,7 @@ static int batadv_tp_send(void *arg)
+ 				   "Meter: %s() cannot send packets (%d)\n",
+ 				   __func__, err);
+ 			/* ensure nobody else tries to stop the thread now */
+-			if (atomic_dec_and_test(&tp_vars->sending))
++			if (atomic_xchg(&tp_vars->sending, 0) == 1)
+ 				tp_vars->reason = err;
+ 			break;
+ 		}
 
 
