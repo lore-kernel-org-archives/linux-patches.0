@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70D3263F44;
-	Sat, 30 May 2026 17:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B66D263F44;
+	Sat, 30 May 2026 17:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161866; cv=none; b=PIji17ow3wM2OL8Mu4Rr+sfIp7nFMFo3woXjBa5vvttirOflabY2YHzGnkGSjJMDIYgden3nkb/QFlGJfjq6vAwihag8ZNhL5JcPvLiAZWrfop8CoKjsbvzrQzreTnFxELPnVdAR8J7i3aBNj+5a+zN1Bau/7LztcExxwHa70kE=
+	t=1780161870; cv=none; b=GamRm1lHKNEC7A6MbfzwSMkor0qyMsP8zRKI7joN3PB7Ay5v3APW+jKy++FKPM6L7IrfM/dcNqsNgYdvPdZlBms1/CuLzjeUUBrY4bVULuLh5SAFpbVdIyyjlGF5pPmDeK8P9Sp9bJX8IKYSDXAiAp895kmOvsjEX0/QAHoyVVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161866; c=relaxed/simple;
-	bh=vpcLG/6yXw4VD/ML+svZZnk+bTn+EPdNzKqk99h2z4I=;
+	s=arc-20240116; t=1780161870; c=relaxed/simple;
+	bh=OBlybWGgiWzcgbxwESb6RcbWbq1XUZLWGVFkEpFpTlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjkgLO1N5abS225UF4cldcqa3pa2NSJP3JMoVJnsW/ZepvSLOwYFKT8DgMAzsLzTig8pm7faA7aNO7Mye9oXPeFVfpsvRuTi+muG2LIIWT1ffiAAgxwi4lmfakunf/RenlQCdUJdvC/k5Qfv9/HgC+u+X8kYV2cjRN2zykzehIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeIcdB8X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b4mDUYjNGoWoiS+tEM/RCx9/iRH5rt3bh6MZxfsKc7MlyQroB1EAia7kAQzTeo2lRmNkb5beaHIsgagRzTNgnIqmz+6eTQAPRlnDcItpyGygkH/Hh0fGRsyG5b3X79lZHhNOVqpFwWWBj3q8lTb9j5GIyPSN/JlzVy9ari8q6QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp5tdqDi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeIcdB8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC6C1F00893;
-	Sat, 30 May 2026 17:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp5tdqDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F471F00893;
+	Sat, 30 May 2026 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161865;
-	bh=XTlEyFmRGaDKhXFIsHpfAOKssni1Tawsp3m32RhI8DM=;
+	s=korg; t=1780161869;
+	bh=VktmHB12vOZ2Mp6d0F7j+lM8K2tZsuHBunE4sQYZP30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TeIcdB8XiZfyghl7EDsHcf2H++1k9VXUsI/QvqXhLNKHBJBzMO8ZtJYCHVgy7aGad
-	 4mXSV/4LYK/zcuKZ6mcS54hWjJZryUy56iR7/PxRuu/X9BVNFHfzxypkOENziQiNY0
-	 Hmz2CNo5CIEWoZqC+KqlOMZCWEl1TqAWkzQqLdk0=
+	b=tp5tdqDig2fVyTFVBSrWttzlTQEqQtItQqTGkMA3shwVsSgmVYlUIDtVtJaXq2GyF
+	 HB9a7VQE6dE6al4bxzV7U0C8lewCHFF+BKDSO7I3nCBOTTLkSLNetRBvwTEkC/rHFE
+	 QnL44qlh5w5csBCTKGxBEDvC/tpaWWHMS5BhRTPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 750/969] net/sched: sch_choke: annotate data-races in choke_dump_stats()
-Date: Sat, 30 May 2026 18:04:34 +0200
-Message-ID: <20260530160321.273983097@linuxfoundation.org>
+Subject: [PATCH 6.1 751/969] net/sched: sch_fq_pie: annotate data-races in fq_pie_dump_stats()
+Date: Sat, 30 May 2026 18:04:35 +0200
+Message-ID: <20260530160321.300971656@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,93 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d3aeb889dcbd78e95f500d383799a23d949796e0 ]
+[ Upstream commit 59b145771c7982cfe9020d4e9e22da92d6b5ae31 ]
 
-choke_dump_stats() only runs with RTNL held.
-It reads fields that can be changed in qdisc fast path.
-Add READ_ONCE()/WRITE_ONCE() annotations.
+fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Move this acquisition before we fill tc_fq_pie_xstats with live data.
+
+Alternative would be to add READ_ONCE() and WRITE_ONCE() annotations,
+but the spinlock is needed anyway to scan q->new_flows and q->old_flows.
+
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260423062839.2524324-1-edumazet@google.com
+Link: https://patch.msgid.link/20260423063527.2568262-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_choke.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/sched/sch_fq_pie.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
-index e38cf34287018..7283f96dead62 100644
---- a/net/sched/sch_choke.c
-+++ b/net/sched/sch_choke.c
-@@ -229,7 +229,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 		/* Draw a packet at random from queue and compare flow */
- 		if (choke_match_random(q, skb, &idx)) {
--			q->stats.matched++;
-+			WRITE_ONCE(q->stats.matched, q->stats.matched + 1);
- 			choke_drop_by_idx(sch, idx, to_free);
- 			goto congestion_drop;
- 		}
-@@ -241,11 +241,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			qdisc_qstats_overlimit(sch);
- 			if (use_harddrop(q) || !use_ecn(q) ||
- 			    !INET_ECN_set_ce(skb)) {
--				q->stats.forced_drop++;
-+				WRITE_ONCE(q->stats.forced_drop,
-+					   q->stats.forced_drop + 1);
- 				goto congestion_drop;
- 			}
- 
--			q->stats.forced_mark++;
-+			WRITE_ONCE(q->stats.forced_mark,
-+				   q->stats.forced_mark + 1);
- 		} else if (++q->vars.qcount) {
- 			if (red_mark_probability(p, &q->vars, q->vars.qavg)) {
- 				q->vars.qcount = 0;
-@@ -253,11 +255,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 				qdisc_qstats_overlimit(sch);
- 				if (!use_ecn(q) || !INET_ECN_set_ce(skb)) {
--					q->stats.prob_drop++;
-+					WRITE_ONCE(q->stats.prob_drop,
-+					           q->stats.prob_drop + 1);
- 					goto congestion_drop;
- 				}
- 
--				q->stats.prob_mark++;
-+				WRITE_ONCE(q->stats.prob_mark,
-+					   q->stats.prob_mark + 1);
- 			}
- 		} else
- 			q->vars.qR = red_random(p);
-@@ -272,7 +276,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return NET_XMIT_SUCCESS;
- 	}
- 
--	q->stats.pdrop++;
-+	WRITE_ONCE(q->stats.pdrop, q->stats.pdrop + 1);
- 	return qdisc_drop(skb, sch, to_free);
- 
- congestion_drop:
-@@ -460,10 +464,12 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index 607c580d75e4b..4bd5ca9acc53f 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -498,18 +498,19 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
+ static int fq_pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
  {
- 	struct choke_sched_data *q = qdisc_priv(sch);
- 	struct tc_choke_xstats st = {
--		.early	= q->stats.prob_drop + q->stats.forced_drop,
--		.marked	= q->stats.prob_mark + q->stats.forced_mark,
--		.pdrop	= q->stats.pdrop,
--		.matched = q->stats.matched,
-+		.early	= READ_ONCE(q->stats.prob_drop) +
-+			  READ_ONCE(q->stats.forced_drop),
-+		.marked	= READ_ONCE(q->stats.prob_mark) +
-+			  READ_ONCE(q->stats.forced_mark),
-+		.pdrop	= READ_ONCE(q->stats.pdrop),
-+		.matched = READ_ONCE(q->stats.matched),
- 	};
+ 	struct fq_pie_sched_data *q = qdisc_priv(sch);
+-	struct tc_fq_pie_xstats st = {
+-		.packets_in	= q->stats.packets_in,
+-		.overlimit	= q->stats.overlimit,
+-		.overmemory	= q->overmemory,
+-		.dropped	= q->stats.dropped,
+-		.ecn_mark	= q->stats.ecn_mark,
+-		.new_flow_count = q->new_flow_count,
+-		.memory_usage   = q->memory_usage,
+-	};
++	struct tc_fq_pie_xstats st = { 0 };
+ 	struct list_head *pos;
  
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
+ 	sch_tree_lock(sch);
++
++	st.packets_in	= q->stats.packets_in;
++	st.overlimit	= q->stats.overlimit;
++	st.overmemory	= q->overmemory;
++	st.dropped	= q->stats.dropped;
++	st.ecn_mark	= q->stats.ecn_mark;
++	st.new_flow_count = q->new_flow_count;
++	st.memory_usage   = q->memory_usage;
++
+ 	list_for_each(pos, &q->new_flows)
+ 		st.new_flows_len++;
+ 
 -- 
 2.53.0
 
