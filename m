@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0535634A3C4;
-	Sat, 30 May 2026 17:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A296E19D8AC;
+	Sat, 30 May 2026 17:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162250; cv=none; b=JklfoLJLfhox2DARiF8ZgeNURPTAQM9JOgzH3g385J/iZ4rGfoKP2tUKUMoAMH+LZXCyNrCGbpb8k9ymxaVDFVMpxHSp0GEy/vSHD1BYnwJ2XkM/d2GPMX8DQs2ukOKXDW0Wef7cnKcgcRIrS99rkAsmNAEOZ/cAzapCjBWs/J4=
+	t=1780162253; cv=none; b=g0KrCBVLwlxntMTLcVloWyvhAFTWgu5NPsoO2za9Yithpkt5y8tZ/5vtcmydOAZjEUzXLhAbgg57INwOp2oyfqSioixVvl32I4Jsoj54q0Mserfga43v5qD+VwH6I+fddvuwhCRuk7Z2NRvFh1Eev/r5vvnZxC52ZMNeaUuLzl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162250; c=relaxed/simple;
-	bh=u/MIDZ60KTpUITUcSI2mGGSis2gGQ5surOOxka58dvY=;
+	s=arc-20240116; t=1780162253; c=relaxed/simple;
+	bh=VoGNJLmVC6MhAxR7fsjxrbfvxJhdgSz2oN6Ggr67CIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFXtNH+D8j21+Ut7TG2/TwR8Bla6t+dWxLeLBgF28UCIvFAVQFPPzzQ4uoiSNVevIQh8UYx5GTwA2V4nZ5/ly+7w3JObqitIq1id0caD0ohc+zI/854Y1yWet4cs/ZiN7whhdtOmKbnQnrv9hlUL7mEtxS5s/a/xa8NdqDx6/Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUTLWQcO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCYWU8UFSkGcakTKIIxrfevViUm6nZiCeoOeyxokJrjejJmtLGkVAX8aXeL0QFZcbU+C4BbJvwbfe4jNJ35jLrLsMXi7MTthep9+0M5RJHhxaZHDM3JeK70O7lJ7IaeNIouwJ0AorpbtP3we5ljubFtl4MRcwUyoqPtXTeBWR5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2CDxmj0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUTLWQcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341F11F00893;
-	Sat, 30 May 2026 17:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2CDxmj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39961F00893;
+	Sat, 30 May 2026 17:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162248;
-	bh=kQei8TwUkYaEYMX+EX+nScn53Hgd9G7IwnFSwASBKSE=;
+	s=korg; t=1780162252;
+	bh=ZH9emll4YyrZ5LKhfmDugGKGFYY7q3VbnbYSGM4u4q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUTLWQcOfGFLgvywL+zG0FcoDFAgMm9BPBALFBK2ABKSpYUsmM+1aqWAffRTeM5NT
-	 bRgLqt+mV9ipmR5f6QxdoMvrIAxfvn3ss0cNeZjnvGtlSWV36oXeqe+k4k/CLOusM3
-	 sPcs6w+Fv+O+hUl96DUQ2kbw7DA+Bcy0mLDqYOOM=
+	b=U2CDxmj0auhZh2Q5yW+iVxNwfzVyrdazstqSX7uTue313QVA4nM4mu3GJd1byfpch
+	 RPnaFxiPDJB6BKzdy6YrNRkac6v4Ewz7A6BaDndpSjPRz6CW7JTqS9/4j66PkZFgem
+	 4SfdNXYv4QSToY94FUhaV3X27zcQzn47J2ICc4yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 858/969] vsock/virtio: reset connection on receiving queue overflow
-Date: Sat, 30 May 2026 18:06:22 +0200
-Message-ID: <20260530160324.362729881@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.1 867/969] drm/bridge: chipone-icn6211: use devm_drm_bridge_add in i2c probe
+Date: Sat, 30 May 2026 18:06:31 +0200
+Message-ID: <20260530160324.618886694@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,85 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit a4f0b001782b21663d10df983b4b208195bec66c upstream.
+commit 73d01051e8040c0b1de7fd26b3b8d0c2ffa6895c upstream.
 
-When there is no more space to queue an incoming packet, the packet is
-silently dropped. This causes data loss without any notification to
-either peer, since there is no retransmission.
+Use devm_drm_bridge_add() so the bridge is released if probe
+fails after registration, and drop drm_bridge_remove() in chipone_i2c_probe.
 
-Under normal circumstances, this should never happen. However, it could
-happen if the other peer doesn't respect the credit, or if the skb
-overhead, which we recently began to take into account with commit
-059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue"),
-is too high.
-
-Fix this by resetting the connection and setting the local socket error
-to ENOBUFS when virtio_transport_recv_enqueue() can no longer queue a
-packet, so both peers are explicitly notified of the failure rather than
-silently losing data.
-
-Fixes: ae6fcfbf5f03 ("vsock/virtio: discard packets if credit is not respected")
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Fixes: 8dde6f7452a1 ("drm: bridge: icn6211: Add I2C configuration support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-2-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260430194944.78119-1-osama.abdelkader@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/chipone-icn6211.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1063,7 +1063,7 @@ destroy:
- 	return err;
+--- a/drivers/gpu/drm/bridge/chipone-icn6211.c
++++ b/drivers/gpu/drm/bridge/chipone-icn6211.c
+@@ -758,7 +758,9 @@ static int chipone_i2c_probe(struct i2c_
+ 	dev_set_drvdata(dev, icn);
+ 	i2c_set_clientdata(client, icn);
+ 
+-	drm_bridge_add(&icn->bridge);
++	ret = devm_drm_bridge_add(dev, &icn->bridge);
++	if (ret)
++		return ret;
+ 
+ 	return chipone_dsi_host_attach(icn);
  }
- 
--static void
-+static bool
- virtio_transport_recv_enqueue(struct vsock_sock *vsk,
- 			      struct sk_buff *skb)
- {
-@@ -1078,10 +1078,8 @@ virtio_transport_recv_enqueue(struct vso
- 	spin_lock_bh(&vvs->rx_lock);
- 
- 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
--	if (!can_enqueue) {
--		free_pkt = true;
-+	if (!can_enqueue)
- 		goto out;
--	}
- 
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count++;
-@@ -1119,6 +1117,8 @@ out:
- 	spin_unlock_bh(&vvs->rx_lock);
- 	if (free_pkt)
- 		kfree_skb(skb);
-+
-+	return can_enqueue;
- }
- 
- static int
-@@ -1131,7 +1131,17 @@ virtio_transport_recv_connected(struct s
- 
- 	switch (le16_to_cpu(hdr->op)) {
- 	case VIRTIO_VSOCK_OP_RW:
--		virtio_transport_recv_enqueue(vsk, skb);
-+		if (!virtio_transport_recv_enqueue(vsk, skb)) {
-+			/* There is no more space to queue the packet, so let's
-+			 * close the connection; otherwise, we'll lose data.
-+			 */
-+			(void)virtio_transport_reset(vsk, skb);
-+			virtio_transport_do_close(vsk, true);
-+			sk->sk_err = ENOBUFS;
-+			sk_error_report(sk);
-+			vsock_remove_sock(vsk);
-+			break;
-+		}
- 		vsock_data_ready(sk);
- 		return err;
- 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
 
 
