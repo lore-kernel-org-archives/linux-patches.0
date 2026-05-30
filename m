@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51722342CA7;
-	Sat, 30 May 2026 17:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2904E349CCF;
+	Sat, 30 May 2026 17:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163297; cv=none; b=dB2QXMn1gwhjKOUvTCXUDvLUx78jM/SXX2htoCENZza5b1bbzZ0KJwFFo7umqM+Rt66EjSli11Jjdl+lZKQGth7c25R12P1aEN0EOvQ8XUojGR9LtHIAMozSBn4zeVQxszGWVg5uJxsJRgxTKdVE4N7UxlljOejkWCF6VD992aU=
+	t=1780163301; cv=none; b=p7henzc3zv2/ZIJ9R7F6zkjr7iaM7HPN41Yf3JMNxBgCT3yasK0HOPx7bjCofSfwPBi3svYa+YgKbC38a+hn8HiJ67PD+5qBW9oUKoC8vBBxqLnS9KC7JcIGREGa4yT9ikHU2tY3hEENJorjlK7FiZb1rUaZ0+QJTkMKyqkc5+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163297; c=relaxed/simple;
-	bh=o+h4gdVSuugZGnGLKwYNpEDFtm6iRjBhC1N8IZRx2w4=;
+	s=arc-20240116; t=1780163301; c=relaxed/simple;
+	bh=G32AxUK+8kUeRcu/txDeB07oDOQy4HvnVbfFD9Uj5m0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l9A+zQHtxdLGso9bSvT3D2JvLehxjYrzfLj7e1LPHK3Dj5EFzfgdPB5OZxFr7mbZ8Q+YErOm0z964CehKsaijn8CCQ5PODYC55wEHKhG2C5lbyXVzVDzY9jtIF44n+bhl/0UueB7XgTNJ402fbl10yI+chYj5zobUivZJxTuMGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONSfxpqc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fA2JqamaQOm6YaAG/lte+JjUvk7jPeDBJuPH8Z4LMBnwomXcc90NYPfVSX5SZsB0OveENTSa9bYB7G6nQNax4FV/XTgcvR40tTlLMrXkElY7Jp6jeKszivKLsvyUAy9nXkmet5W5k1xGzRpSNKq579gEEyRng2g/e3LnC1G4pdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DG4QwcFl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONSfxpqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A6A1F00893;
-	Sat, 30 May 2026 17:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DG4QwcFl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2884A1F00893;
+	Sat, 30 May 2026 17:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163296;
-	bh=spZEckbYR3s+E4ksPBiIHd0SBOvRp7FyZ2Pm8Wia3Yo=;
+	s=korg; t=1780163299;
+	bh=5UJhx2KS7NyXat7bibUeuM3KnfJUTHqMS7CsPQV3jKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONSfxpqcR11ahx5L58rLnY4S/LxnLAiv5E5gWZichPXR3MyuhEGDEk3JGBKbCioWR
-	 vDjeSLGlzSFENFZ8GFbQONQHNiLmuENx8EPm8k06LnBTDfUeiEH4ADNhpi+xKRPSYe
-	 3/vWdYWKsSrPC5xRsDYl7Krfz0P4EUBIfLCXo5Ug=
+	b=DG4QwcFlAuezn0WVShKdNZVfEy4J0QVZ00vPXCKkMqBFKztYN3uD1+4PFovTcFsJM
+	 3bmdbzQn3+QojVP80O6n41103Mir0mqyRmMrR1XYNJjE3v4N1cp0LBQZkV3DJ+U/vC
+	 /wzF7Ox0GL0BXbFCU/dSFMay3/dEfVjXbqevPLq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 215/776] ALSA: caiaq: Fix control_put() result and cache rollback
-Date: Sat, 30 May 2026 17:58:49 +0200
-Message-ID: <20260530160246.074713404@linuxfoundation.org>
+Subject: [PATCH 5.15 216/776] ALSA: caiaq: Handle probe errors properly
+Date: Sat, 30 May 2026 17:58:50 +0200
+Message-ID: <20260530160246.101625975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,128 +43,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit a3542d1b30f92307f545f2def14e8d988dffdff0 upstream.
+commit 28abd224db4a49560b452115bca3672a20e45b2f upstream.
 
-control_put() always returns 1 and updates cdev->control_state[]
-before sending the USB command. It also ignores transport errors
-from usb_bulk_msg(), snd_usb_caiaq_send_command(), and
-snd_usb_caiaq_send_command_bank().
+The probe procedure of setup_card() in caiaq driver doesn't treat the
+error cases gracefully, e.g. the error from snd_card_register() calls
+snd_card_free() but continues.  This would lead to a UAF for the
+further calls like snd_usb_caiaq_control_init(), as Berk suggested in
+another patch in the link below.
 
-That breaks the ALSA .put() contract and can leave control_get()
-reporting a cached value the device never accepted.
+However, the problem is not only that; in general, this function drops
+the all error handlings (as it's a void function) although its caller
+can propagate an error to snd_probe(), which eventually calls
+snd_card_free() as a proper error path.  That said, we should treat
+each error case in setup_card(), and just return the error code
+promptly, which is then handled later as a fatal error in snd_probe().
 
-Return 0 for unchanged values, propagate transport failures,
-and restore the cached byte when the write fails.
+This patch achieves it by changing the setup_card() to return an error
+code.  Also, the superfluous snd_card_free() call is removed, too.
 
-Fixes: 8e3cd08ed8e59 ("[ALSA] caiaq - add control API and more input features")
+Note that card->private_free can be set still safely at returning an
+error.  All called functions in card_free() have checks of the
+unassigned resources or NULL checks.
+
+Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260417-caiaq-control-put-v1-1-c37826e92447@gmail.com
+Link: https://lore.kernel.org/20260413034941.1131465-2-berkcgoksel@gmail.com
+Link: https://patch.msgid.link/20260414105916.364073-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/control.c |   54 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 37 insertions(+), 17 deletions(-)
+ sound/usb/caiaq/device.c |   33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
---- a/sound/usb/caiaq/control.c
-+++ b/sound/usb/caiaq/control.c
-@@ -87,6 +87,7 @@ static int control_put(struct snd_kcontr
- 	struct snd_usb_caiaqdev *cdev = caiaqdev(chip->card);
- 	int pos = kcontrol->private_value;
- 	int v = ucontrol->value.integer.value[0];
-+	int ret;
- 	unsigned char cmd;
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -290,7 +290,7 @@ int snd_usb_caiaq_set_auto_msg(struct sn
+ 					  tmp, sizeof(tmp));
+ }
  
- 	switch (cdev->chip.usb_id) {
-@@ -103,6 +104,10 @@ static int control_put(struct snd_kcontr
+-static void setup_card(struct snd_usb_caiaqdev *cdev)
++static int setup_card(struct snd_usb_caiaqdev *cdev)
+ {
+ 	int ret;
+ 	char val[4];
+@@ -325,8 +325,10 @@ static void setup_card(struct snd_usb_ca
+ 		snd_usb_caiaq_send_command(cdev, EP1_CMD_READ_IO, NULL, 0);
  
- 	if (pos & CNT_INTVAL) {
- 		int i = pos & ~CNT_INTVAL;
-+		unsigned char old = cdev->control_state[i];
-+
-+		if (old == v)
-+			return 0;
- 
- 		cdev->control_state[i] = v;
- 
-@@ -113,10 +118,11 @@ static int control_put(struct snd_kcontr
- 			cdev->ep8_out_buf[0] = i;
- 			cdev->ep8_out_buf[1] = v;
- 
--			usb_bulk_msg(cdev->chip.dev,
--				     usb_sndbulkpipe(cdev->chip.dev, 8),
--				     cdev->ep8_out_buf, sizeof(cdev->ep8_out_buf),
--				     &actual_len, 200);
-+			ret = usb_bulk_msg(cdev->chip.dev,
-+					   usb_sndbulkpipe(cdev->chip.dev, 8),
-+					   cdev->ep8_out_buf,
-+					   sizeof(cdev->ep8_out_buf),
-+					   &actual_len, 200);
- 		} else if (cdev->chip.usb_id ==
- 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_MASCHINECONTROLLER)) {
- 
-@@ -128,21 +134,36 @@ static int control_put(struct snd_kcontr
- 				offset = MASCHINE_BANK_SIZE;
- 			}
- 
--			snd_usb_caiaq_send_command_bank(cdev, cmd, bank,
--					cdev->control_state + offset,
--					MASCHINE_BANK_SIZE);
-+			ret = snd_usb_caiaq_send_command_bank(cdev, cmd, bank,
-+							      cdev->control_state + offset,
-+							      MASCHINE_BANK_SIZE);
- 		} else {
--			snd_usb_caiaq_send_command(cdev, cmd,
--					cdev->control_state, sizeof(cdev->control_state));
-+			ret = snd_usb_caiaq_send_command(cdev, cmd,
-+							 cdev->control_state,
-+							 sizeof(cdev->control_state));
- 		}
--	} else {
--		if (v)
--			cdev->control_state[pos / 8] |= 1 << (pos % 8);
--		else
--			cdev->control_state[pos / 8] &= ~(1 << (pos % 8));
- 
--		snd_usb_caiaq_send_command(cdev, cmd,
--				cdev->control_state, sizeof(cdev->control_state));
-+		if (ret < 0) {
-+			cdev->control_state[i] = old;
-+			return ret;
+ 		if (!wait_event_timeout(cdev->ep1_wait_queue,
+-					cdev->control_state[0] != 0xff, HZ))
+-			return;
++					cdev->control_state[0] != 0xff, HZ)) {
++			dev_err(dev, "Read timeout for control state\n");
++			return -EINVAL;
 +		}
-+	} else {
-+		int idx = pos / 8;
-+		unsigned char mask = 1 << (pos % 8);
-+		unsigned char old = cdev->control_state[idx];
-+		unsigned char val = v ? (old | mask) : (old & ~mask);
-+
-+		if (old == val)
-+			return 0;
-+
-+		cdev->control_state[idx] = val;
-+		ret = snd_usb_caiaq_send_command(cdev, cmd,
-+						 cdev->control_state,
-+						 sizeof(cdev->control_state));
+ 
+ 		/* fix up some defaults */
+ 		if ((cdev->control_state[1] != 2) ||
+@@ -347,33 +349,43 @@ static void setup_card(struct snd_usb_ca
+ 	    cdev->spec.num_digital_audio_out +
+ 	    cdev->spec.num_digital_audio_in > 0) {
+ 		ret = snd_usb_caiaq_audio_init(cdev);
+-		if (ret < 0)
 +		if (ret < 0) {
-+			cdev->control_state[idx] = old;
+ 			dev_err(dev, "Unable to set up audio system (ret=%d)\n", ret);
 +			return ret;
 +		}
  	}
  
- 	return 1;
-@@ -640,4 +661,3 @@ int snd_usb_caiaq_control_init(struct sn
+ 	if (cdev->spec.num_midi_in +
+ 	    cdev->spec.num_midi_out > 0) {
+ 		ret = snd_usb_caiaq_midi_init(cdev);
+-		if (ret < 0)
++		if (ret < 0) {
+ 			dev_err(dev, "Unable to set up MIDI system (ret=%d)\n", ret);
++			return ret;
++		}
+ 	}
  
- 	return ret;
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	ret = snd_usb_caiaq_input_init(cdev);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(dev, "Unable to set up input system (ret=%d)\n", ret);
++		return ret;
++	}
+ #endif
+ 
+ 	/* finally, register the card and all its sub-instances */
+ 	ret = snd_card_register(cdev->chip.card);
+ 	if (ret < 0) {
+ 		dev_err(dev, "snd_card_register() returned %d\n", ret);
+-		snd_card_free(cdev->chip.card);
++		return ret;
+ 	}
+ 
+ 	ret = snd_usb_caiaq_control_init(cdev);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(dev, "Unable to set up control system (ret=%d)\n", ret);
++		return ret;
++	}
++
++	return 0;
  }
--
+ 
+ static void card_free(struct snd_card *card)
+@@ -499,8 +511,11 @@ static int init_card(struct snd_usb_caia
+ 	snprintf(card->longname, sizeof(card->longname), "%s %s (%s)",
+ 		       cdev->vendor_name, cdev->product_name, usbpath);
+ 
+-	setup_card(cdev);
+ 	card->private_free = card_free;
++	err = setup_card(cdev);
++	if (err < 0)
++		return err;
++
+ 	return 0;
+ 
+  err_kill_urb:
 
 
