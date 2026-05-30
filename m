@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589E62EF652;
-	Sat, 30 May 2026 18:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDB62EF652;
+	Sat, 30 May 2026 18:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165909; cv=none; b=jIDIRM5rR+otpQEeH7JqkBnYmUW1kEJObcXliNa/OxL9/UAkTwAGHMbH6ktyhCSlCqyg1LFEu1/15rg2Z5/BnCaUHqJ5V+9HY3E6qDK2imEb3s4y9zHLbQ5TIZT86vMuKvWgafhIutd+PiHn1MACXJXGXmwMpRkiz2nYTYZqsSo=
+	t=1780165912; cv=none; b=L4zFVs5c71B4bkh3yo1Rye9fHULYRTbC8Yk9cbzj1eTSrcbw+bT5WSAO1aFORxXeF6hjJTox2n2zJLziXtErup+Bs7G/3gyn4YFhzE+LS9QAku246UnW8lLaditJ/xRhCIdi2DxRxitirO3lhez3tLX+B+SjW2bSrTC7gQ1kTN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165909; c=relaxed/simple;
-	bh=fAmkElquu7l9KVHw1u9Z8unmCeElkVp6j29sIqLRhAY=;
+	s=arc-20240116; t=1780165912; c=relaxed/simple;
+	bh=vwXViF96yiaPfzlHg1dl4o4kOKeXUOSJQlJgPuvBg7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qACfkLDWVHpxWRBRx1toUaKu4YhfPnpwi9bEFtaxQOsEH33QM7uPnZlqPNYfQcfcs49yfBUzfmyUmGn5GATe+Kx4uY6bMaRzTXoes+mxyCXzjPVrO1PDlrKlqJjvJaumIn9XrnPyWAW9dhPghkTc02iAmhtCGoovZtDt347B8Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBcsbFya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gluK7NUUC5x50OkG72IZLQyI5EkBsNNdZuyWE3xnXQ6efjeN/L/2WYNVdUh9Hg6NTgouyVBkCUjHx4g25qCTAiDpMWp4ID2Jhgi3r27uGCjPrY8cmDkDw69B0z5RpdZG4k1FXEBf/sB9uFX3Hvc9DuRHooZc0r/0BDJkRdi+EI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGSj6bWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBcsbFya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986DE1F00893;
-	Sat, 30 May 2026 18:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGSj6bWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA461F00893;
+	Sat, 30 May 2026 18:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165908;
-	bh=D7/6Y8nKBDk2Blw16ds+ENDmdAT8KD/3Vs3hwQbpS/8=;
+	s=korg; t=1780165911;
+	bh=TJY7PIj72R8/qgb0pIpoD5c2likr3r9wjN9BWeMkiB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBcsbFyavvRjL2ST6BVld/Qv4X2a1EE7xQeWvb/rQ0qMYZ2WESCkYWGYfagxwf+S6
-	 INqEnc5d7leKHgjkV4/JPb76v71XDnbWGKSWvDy4+TNpri0ffJdCwXRoc/DP1wvvLN
-	 WpM727ARRNOVsy6hM18hfacACCqE+ervqt2s3Xds=
+	b=iGSj6bWvHM1Wsyj83l9ZvV/vE/cHWvMek0yErbwym01/pWmGzLxA7jyTA14/I2bXZ
+	 FNzEn7XaONiFoHG43DCKlkFPL205l4JcfcMvjVb/BMQgsTmqzgjPbfN3068m7U7d+u
+	 cre+E8RQmW8FPTXA/+lsh+XnodCSgaa1O1Q9S++s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	addy ke <addy.ke@rock-chips.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 210/589] spi: rockchip: fix controller deregistration
-Date: Sat, 30 May 2026 18:01:31 +0200
-Message-ID: <20260530160230.478262786@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 219/589] wifi: b43: enforce bounds check on firmware key index in b43_rx()
+Date: Sat, 30 May 2026 18:01:40 +0200
+Message-ID: <20260530160230.738034934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -45,49 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 53e7a16070feb7d1d4d81a583eaac5e25048b9c3 upstream.
+commit 1f4f78bf8549e6ac4f04fba4176854f3a6e0c332 upstream.
 
-Make sure to deregister the controller before freeing underlying
-resources like DMA channels during driver unbind.
+The firmware-controlled key index in b43_rx() can exceed the dev->key[]
+array size (58 entries). The existing B43_WARN_ON is non-enforcing in
+production builds, allowing an out-of-bounds read.
 
-Fixes: 64e36824b32b ("spi/rockchip: add driver for Rockchip RK3xxx SoCs integrated SPI")
-Cc: stable@vger.kernel.org	# 3.17
-Cc: addy ke <addy.ke@rock-chips.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260324082326.901043-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Make the B43_WARN_ON check enforcing by dropping the frame when the
+firmware returns an invalid key index.
+
+Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
+Acked-by: Michael Büsch <m@bues.ch>
+Fixes: e4d6b7951812 ("[B43]: add mac80211-based driver for modern BCM43xx devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-1-tristmd@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-rockchip.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/b43/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-rockchip.c
-+++ b/drivers/spi/spi-rockchip.c
-@@ -792,7 +792,7 @@ static int rockchip_spi_probe(struct pla
- 		ctlr->can_dma = rockchip_spi_can_dma;
- 	}
+--- a/drivers/net/wireless/broadcom/b43/xmit.c
++++ b/drivers/net/wireless/broadcom/b43/xmit.c
+@@ -702,7 +702,8 @@ void b43_rx(struct b43_wldev *dev, struc
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43_kidx_to_raw(dev, keyidx);
+-		B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key));
++		if (B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key)))
++			goto drop;
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Failed to register controller\n");
- 		goto err_free_dma_rx;
-@@ -828,6 +828,8 @@ static int rockchip_spi_remove(struct pl
- 	clk_disable_unprepare(rs->spiclk);
- 	clk_disable_unprepare(rs->apb_pclk);
- 
-+	spi_unregister_controller(ctlr);
-+
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+ 		if (dev->key[keyidx].algorithm != B43_SEC_ALGO_NONE) {
+ 			wlhdr_len = ieee80211_hdrlen(fctl);
 
 
