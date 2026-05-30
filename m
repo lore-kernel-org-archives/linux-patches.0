@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8DE2E7389;
-	Sat, 30 May 2026 18:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC804315F;
+	Sat, 30 May 2026 18:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167186; cv=none; b=jo8sQx3rtMxJgj7PH9nVDEjTmworAj6vWaVxHrqu51sBuXAZWjyx2sIjOdXAIxd1mvGWWUYNnYd7wyl006rbi/9tgHl7jfMOEWJZDKYcFyYwzL2SZr3eqxYjjDzYTAQbaAJABKjpr3qnQM37LbcGKhiSZGvC3LnMZGAnjdbSd/0=
+	t=1780167189; cv=none; b=M9quxmyZwYUf/bZxHEoQItVJ3DTjh4EqvOHUYmil4o2fxSqWPdBP8Nc24qWxKjIKvpR2Kstor97Yy0Lbw8TQyYHabPx9nHoFNqmb1izlKDanEk3Rk5ybcGBrs2YzBHqBe4S0pfJ/8pZiYBUM43JTMt8xq+j1M+m7jYIJfkoE4SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167186; c=relaxed/simple;
-	bh=5c+mUAmKYH7lPhtVds1ezuHVKXxkGCE4mONym8SUwZs=;
+	s=arc-20240116; t=1780167189; c=relaxed/simple;
+	bh=6Iml0bBb3aerY97YR1vkUb+jGt/6rM2SqzSLpY8CBGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOHWlaAvzlBhYq5LpGRviqt4OEhWQVK0tYzR++VXFdxPoofbmJjHWb8xAcTRm8iiAvmHZXN4PEp73Z0JEpQTYMHzWl1e4/8HkVDKwWeCmbD3E5WAHk6CyzsXVVSf7KjyhssIRsJI6OgY5J26yNtpVukW+6Hwz9im4UhYaiC+w5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEtWmj51; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQhgeOsVjOjhfe2d/SgYkYGJd6dlYs/4eSvtjAYISW/U9U1CLw9WYyrTUhf4ge5nHbxKVehIICzlHaNqTCzUNQdsLsyf18xro+QJLiF/sZkxpj6PhZTbM7Q7gzmgnEaJLOj1EgN8uWAOu0b1Rn7mK7j7urpaqoI5muX54nA6fso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcjnGxFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEtWmj51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB941F00893;
-	Sat, 30 May 2026 18:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcjnGxFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57A61F00893;
+	Sat, 30 May 2026 18:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167185;
-	bh=64K7rWFtG6GpsGAQqiOclbLGvLPQ1dH9EYd0W15R8s4=;
+	s=korg; t=1780167188;
+	bh=Vi4/+bA629KPZO/AP0btmEHVAdboNg/AWbmqJl6BRHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nEtWmj51bRykbeHcWugFlSZ3B0UJSZVmNlchPnOqjyLynOyOAEgnavgFEIsNLNSYZ
-	 MbQ9B2FaC4iWNhNTpmL3eQH6a34QUebvqCvIZY0cDmfEPG5dFaiqhHXlqc57se6vGL
-	 OTWGOSEVsaOScfI3/x3y4EJFIBcUaZ5KEUumVtpk=
+	b=XcjnGxFZ1yFDF1Rn9DaGah+J0p54ZN343h7PXzwXUtN+u5eDxeXf9KgBcWR/FCfDs
+	 TE15gbK1jRMW5aI6Xa49TTAchzJ3q0sPLTs3G1yt11g2CogEai+vIxnMyBkmJNcZpJ
+	 bljvBbGTdUmhsanWd1QRgUEu8bTmhZys1zlFadiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Efstathiades <john.efstathiades@pebblebay.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 589/589] net: usb: lan78xx: Fix double free issue with interrupt buffer allocation
-Date: Sat, 30 May 2026 18:07:50 +0200
-Message-ID: <20260530160240.062963614@linuxfoundation.org>
+Subject: [PATCH 5.10 577/589] net: ethernet: cortina: Carry over frag counter
+Date: Sat, 30 May 2026 18:07:38 +0200
+Message-ID: <20260530160239.770818494@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,101 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 03819abbeb11117dcbba40bfe322b88c0c88a6b6 ]
+[ Upstream commit ebd8ec2b309e3a447851b456ccaf8fb39f3661e7 ]
 
-In lan78xx_probe(), the buffer `buf` was being freed twice: once
-implicitly through `usb_free_urb(dev->urb_intr)` with the
-`URB_FREE_BUFFER` flag and again explicitly by `kfree(buf)`. This caused
-a double free issue.
+The gmac_rx() NAPI poll function assembles packets in an
+SKB from a ring buffer.
 
-To resolve this, reordered `kmalloc()` and `usb_alloc_urb()` calls to
-simplify the initialization sequence and removed the redundant
-`kfree(buf)`.  Now, `buf` is allocated after `usb_alloc_urb()`, ensuring
-it is correctly managed by  `usb_fill_int_urb()` and freed by
-`usb_free_urb()` as intended.
+If the ring buffer gets completely emptied during a poll cycle,
+we exit gmac_rx(), but the packet is not yet completely
+assembled in the SKB, yet the fragment counter frag_nr is
+reset to zero on the next invocation.
 
-Fixes: a6df95cae40b ("lan78xx: Fix memory allocation bug")
-Cc: John Efstathiades <john.efstathiades@pebblebay.com>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20241116130558.1352230-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context. Make the function usb_alloc_urb() call before
-kmalloc(). ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Solve this by making the RX fragment counter a part of the
+port struct, and carry it over between invocations.
+
+Reset the fragment counter only right after calling
+napi_gro_frags(), on error (after calling napi_free_frags())
+or if stopping the port.
+
+Reset it in some place where not strictly necessary just to
+emphasize what is going on.
+
+This was found by Sashiko during normal patch review.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-3-6c5d20ddc35b@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index f0643d9d8ff94..af0622e942584 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4057,29 +4057,30 @@ static int lan78xx_probe(struct usb_interface *intf,
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 642ef6b3eebaf..3e93d1115f1aa 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -122,6 +122,7 @@ struct gemini_ethernet_port {
+ 	struct hrtimer		rx_coalesce_timer;
+ 	unsigned int		rx_coalesce_nsecs;
+ 	struct sk_buff		*rx_skb;
++	unsigned int		rx_frag_nr;
  
- 	period = ep_intr->desc.bInterval;
- 	maxp = usb_maxpacket(dev->udev, dev->pipe_intr, 0);
--	buf = kmalloc(maxp, GFP_KERNEL);
--	if (!buf) {
-+
-+	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
-+	if (!dev->urb_intr) {
- 		ret = -ENOMEM;
- 		goto out3;
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+@@ -1414,6 +1415,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+ 	struct gemini_ethernet *geth = port->geth;
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
++	unsigned int frag_nr = port->rx_frag_nr;
+ 	struct sk_buff *skb = port->rx_skb;
+ 	unsigned int frame_len, frag_len;
+ 	struct gmac_rxdesc *rx = NULL;
+@@ -1427,7 +1429,6 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+-	int frag_nr = 0;
+ 
+ 	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+@@ -1467,6 +1468,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
+ 				skb = NULL;
++				frag_nr = 0;
+ 			}
+ 			continue;
+ 		}
+@@ -1477,6 +1479,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 				napi_free_frags(&port->napi);
+ 				port->stats.rx_dropped++;
+ 				skb = NULL;
++				frag_nr = 0;
+ 			}
+ 
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+@@ -1511,6 +1514,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		if (word3.bits32 & EOF_BIT) {
+ 			napi_gro_frags(&port->napi);
+ 			skb = NULL;
++			frag_nr = 0;
+ 			--budget;
+ 		}
+ 		continue;
+@@ -1519,6 +1523,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		if (skb) {
+ 			napi_free_frags(&port->napi);
+ 			skb = NULL;
++			frag_nr = 0;
+ 		}
+ 
+ 		if (mapping)
+@@ -1528,6 +1533,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
  	}
  
--	dev->urb_intr = usb_alloc_urb(0, GFP_KERNEL);
--	if (!dev->urb_intr) {
-+	buf = kmalloc(maxp, GFP_KERNEL);
-+	if (!buf) {
- 		ret = -ENOMEM;
--		goto out4;
--	} else {
--		usb_fill_int_urb(dev->urb_intr, dev->udev,
--				 dev->pipe_intr, buf, maxp,
--				 intr_complete, dev, period);
--		dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
-+		goto free_urbs;
- 	}
+ 	port->rx_skb = skb;
++	port->rx_frag_nr = frag_nr;
+ 	writew(r, ptr_reg);
+ 	return budget;
+ }
+@@ -1857,6 +1863,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	gmac_stop_dma(port);
+ 	napi_disable(&port->napi);
+ 	port->rx_skb = NULL;
++	port->rx_frag_nr = 0;
  
-+	usb_fill_int_urb(dev->urb_intr, dev->udev,
-+			 dev->pipe_intr, buf, maxp,
-+			 intr_complete, dev, period);
-+	dev->urb_intr->transfer_flags |= URB_FREE_BUFFER;
-+
- 	dev->maxpacket = usb_maxpacket(dev->udev, dev->pipe_out, 1);
- 
- 	/* Reject broken descriptors. */
- 	if (dev->maxpacket == 0) {
- 		ret = -ENODEV;
--		goto out5;
-+		goto free_urbs;
- 	}
- 
- 	/* driver requires remote-wakeup capability during autosuspend. */
-@@ -4087,7 +4088,7 @@ static int lan78xx_probe(struct usb_interface *intf,
- 
- 	ret = lan78xx_phy_init(dev);
- 	if (ret < 0)
--		goto out5;
-+		goto free_urbs;
- 
- 	ret = register_netdev(netdev);
- 	if (ret != 0) {
-@@ -4109,10 +4110,8 @@ static int lan78xx_probe(struct usb_interface *intf,
- 
- out6:
- 	phy_disconnect(netdev->phydev);
--out5:
-+free_urbs:
- 	usb_free_urb(dev->urb_intr);
--out4:
--	kfree(buf);
- out3:
- 	lan78xx_unbind(dev, intf);
- out2:
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
