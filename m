@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D873329E79;
-	Sat, 30 May 2026 18:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A06329E79;
+	Sat, 30 May 2026 18:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166022; cv=none; b=CDPfwlckWfuCa78f8vjfHtuXQYOIj4I2lDG3PrM3qOIBBt71PFKXkCJuYqXvagmYuDegzcOq07eD87+nU/9RbK0fkj0IXQJblvZYG9H6dVxkIb6ErnHwvdwO7bhW/d8gMmUgXq9ysc9Rm+nPgO39UsJUX3+uiitvDQt1g9D6gjU=
+	t=1780166025; cv=none; b=Go9ZQkFCyAui2AQ9aE8m6dJ0xri1OsiHNPrCqze1pEQ/MkerFB/+rtyG2mIviO2O20aQJEgCt+IconT+4NcgGDvbUdhO/Wgt8kDTqFeAojtVCvP2fdOwajYWWViaMOhTZyh/jWj7ksHHNK/tUJz2mec3W0CQhbfkS9Pa9akEjS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166022; c=relaxed/simple;
-	bh=Z3j6yxkNyMgiTuHNL+UUDMNaBZG3k4lUSa0+RIJEnNI=;
+	s=arc-20240116; t=1780166025; c=relaxed/simple;
+	bh=LKfwHGHJIqcaIxcgtPKJS4ZPoOssKXTc4GcVqVe6Fz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwZJ6k0rm+X0CYewrhp9f510QbdZ6zk4WffMz7LFfXjyZGjJSMqTpvTRHF5Zo+BCXP61PcvSfSSdEHm0YOfYKzN1ImL67Y/virFjbkiF8cf6nB374f9chUtY69JYYv4JDnOcnWkMreBe78uvr7tywPzvDDzsFlhNaVR1qdIGuEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7POEkOW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jci4jVPt1bO48/k9VYqNTjI7bNj9c+Xt2QmjborhBqKVMrQyM5OFB/JijsNoE8ksZaDRh9wHqb9YznuvFCGQWngKi114MDFvqJfA3pmlj5ZVnPrG3s31uL8Fozwx2wLY+l3JNVWzLiClcxFi/UvtFY7rDpSqXz+iXS1HSjSypq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvW7cO1C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7POEkOW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C871F00893;
-	Sat, 30 May 2026 18:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvW7cO1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADE01F00893;
+	Sat, 30 May 2026 18:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166021;
-	bh=qUaxRnxxVrkiQ+UIGrcLyKXwZUR5ogKm8cAQbcGOL2k=;
+	s=korg; t=1780166024;
+	bh=MVbxjiA5kGzDurtdvhXQQ+UFBc81RnXUWTjG1NqhFbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7POEkOWqWwOp+O+FYFSgVWaE6UHuaSosybqeZyaHakmX87BR54XKyJWcX3owYUIn
-	 qpKcal6HZP27+cKX1WRC8G0LACCkjc2x82j+TcoLv54kHJ58KtIOGjsj4XpI0XM+8U
-	 IIAFCjFBuQF8ZUtUGfCsTig+foCCvn3v14a+6kpI=
+	b=MvW7cO1C7v7M4Rm3reJdy0oK0cj7K26/Z2sIABj2JmDCkRaKhSOCRHR08dW53skqA
+	 o8GDdDPtFYCu5X606JV3UCwxOs2OGxwMqGHwKoaHFKW9yWQxiG02jLN+o5G0UhMKOR
+	 opqnLBCKIFn4RTFBcUqul8l2255EMFg1TSdYsOlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 251/589] isofs: validate Rock Ridge CE continuation extent against volume size
-Date: Sat, 30 May 2026 18:02:12 +0200
-Message-ID: <20260530160231.583253754@linuxfoundation.org>
+Subject: [PATCH 5.10 252/589] isofs: validate block number from NFS file handle in isofs_export_iget
+Date: Sat, 30 May 2026 18:02:13 +0200
+Message-ID: <20260530160231.608041055@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,62 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a36d990f591320e9dd379ab30063ebfe91d47e1f upstream.
+commit 24376458138387fb251e782e624c7776e9826796 upstream.
 
-rock_continue() reads rs->cont_extent verbatim from the Rock Ridge CE
-record and passes it to sb_bread() without checking that the block
-number is within the mounted ISO 9660 volume.  commit e595447e177b
-("[PATCH] rock.c: handle corrupted directories") added cont_offset
-and cont_size rejection for the CE continuation but did not validate
-the extent block number itself.  commit f54e18f1b831 ("isofs: Fix
-infinite looping over CE entries") later capped the CE chain length
-at RR_MAX_CE_ENTRIES = 32 but again left the block number unchecked.
+isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
+controlled block number (ifid->block or ifid->parent_block) from
+the NFS file handle to isofs_export_iget(), which only rejects
+block == 0 before calling isofs_iget() and ultimately sb_bread().
+A crafted file handle with fh_len sufficient to pass the check
+added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
+fid") can still drive the server to read any in-range block on the
+backing device as if it were an iso_directory_record.  That earlier
+fix was assigned CVE-2025-37780.
 
-With a crafted ISO mounted via udisks2 (desktop optical auto-mount)
-or via CAP_SYS_ADMIN mount, rs->cont_extent can therefore point at
-an out-of-range block or at blocks belonging to an adjacent
-filesystem on the same block device.  sb_bread() on an out-of-range
-block returns NULL cleanly via the block layer EIO path, so there
-is no memory-safety violation.  For in-range reads of adjacent-
-filesystem data, the CE buffer is parsed as Rock Ridge records and
-only the text of SL sub-records reaches userspace through
-readlink(), which makes the info-leak channel narrow and difficult
-to exploit; still, rejecting the malformed CE outright matches the
-rejection shape already present in the same function for
-cont_offset and cont_size.
+sb_bread() on an out-of-range block returns NULL cleanly via the
+EIO path, so there is no memory-safety violation.  For in-range
+reads of adjacent-partition data on the same block device, the
+unrelated bytes end up in iso_inode_info fields that reach the NFS
+client as dentry metadata.  The deployment surface (isofs exported
+over NFS from loop-mounted images) is narrow and requires an
+authenticated NFS peer, but the malformed-file-handle class is
+reportable as hardening next to the existing CVE-2025-37780 fix.
 
-Add an ISOFS_SB(sb)->s_nzones bounds check to rock_continue() next
-to the existing offset/size rejection, printing the same
-corrupted-directory-entry notice.
+Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
+the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
+call sites with a single line.
 
-Fixes: f54e18f1b831 ("isofs: Fix infinite looping over CE entries")
+Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-2-michael.bommarito@gmail.com
+Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/rock.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/isofs/export.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/isofs/rock.c
-+++ b/fs/isofs/rock.c
-@@ -101,6 +101,15 @@ static int rock_continue(struct rock_sta
- 		goto out;
- 	}
+--- a/fs/isofs/export.c
++++ b/fs/isofs/export.c
+@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
+ {
+ 	struct inode *inode;
  
-+	if ((unsigned)rs->cont_extent >= ISOFS_SB(rs->inode->i_sb)->s_nzones) {
-+		printk(KERN_NOTICE "rock: corrupted directory entry. "
-+			"extent=%u out of volume (nzones=%lu)\n",
-+			(unsigned)rs->cont_extent,
-+			ISOFS_SB(rs->inode->i_sb)->s_nzones);
-+		ret = -EIO;
-+		goto out;
-+	}
-+
- 	if (rs->cont_extent) {
- 		struct buffer_head *bh;
- 
+-	if (block == 0)
++	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
+ 		return ERR_PTR(-ESTALE);
+ 	inode = isofs_iget(sb, block, offset);
+ 	if (IS_ERR(inode))
 
 
