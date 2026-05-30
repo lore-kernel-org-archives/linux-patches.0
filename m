@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E413C4B81;
-	Sat, 30 May 2026 18:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAA3C277F;
+	Sat, 30 May 2026 18:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165834; cv=none; b=WUDDr3KnWpzyxvq3ekXRXxUcrzZ73SuHaMGflOcznYiDkAu6yXgO7vld/99QF6D9YXGStx8Y/q/yoQvHWe50Rinwm2X3ZUJYCbLnUkw1ctGYVry2mojZhU7TGK7Dj5KHVQQdUVYqXMPwnXyGd86QzaP9q/JnNQaw94GLkTY7pGI=
+	t=1780165836; cv=none; b=pLzPx8WUg6UPx9TTIIFZ6x3h6p5Kpcju0u1b3Ljtkj8ddKg3FckNQLB2qrFL19eDREyiVQnMpyo2vd1CjDoCdOj4iX5976QFtanXmwXp2GuZf+VZrjDIispS3U73kW8/LL/I1IK5wR2Z3OhP9TLSoDITeLjh7f+9us5/9VoUudM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165834; c=relaxed/simple;
-	bh=XO1YrOPhePCUNG/9BnB/t7aqoKEmONk+Ku+atDN3GIY=;
+	s=arc-20240116; t=1780165836; c=relaxed/simple;
+	bh=BO5GS9185n20hO+/L81CSaqh1dStgvYFKEkKhPOSf5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgDScxgEperNMuVkurzGI7mnR27DD55oLJPq3FXbWoeumTHViuyOxogOZyGdhKxcO1xZxkSQCPnS7RZHcThOCbZfKlPNtJRpzz88lbXJ+K88wN5Mg86/YFdxvgIqP1wjCwVTGAM1OdQ40Vw/uznHoQFctkhExsFCW7IJylKhucw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ndcm+u9r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rhpT+rK3RGVBTzKvDOuyBr73qE1mrpNvHYesv+JvfbPW2zU4X0RXRaIXzfyq4P0CO4fjPfaN6DYvZOLZCWR0+M9BdjLMggJWxvCMTJZZXWpmNfHf37aVB1LhdSHN8bhvUFgUmPXXuxRUnVfjHACZdvJyPGzfDJ8lpOi0ryoHWew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unKdG0nq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ndcm+u9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7781F00893;
-	Sat, 30 May 2026 18:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unKdG0nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A5E1F00893;
+	Sat, 30 May 2026 18:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165832;
-	bh=qWk7KsUSF68iXtSmipCzpWACYBdciL6VkeCw+3qys3I=;
+	s=korg; t=1780165835;
+	bh=UGYD8tiHPKMGN8xMYcZVhhHx8zJ96yknijdnU1mc3wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ndcm+u9rSkLdEUKrqEpFxVnLcbRJZO5sPjicuDdHotogteHo9V69lcaEcjYbHvg1F
-	 j+c0JOCQH72bHhpxqiu4SXp3QtKmaAKW1Kz7NHk8ozQm5Oxk71C+F65jkI2fspfecg
-	 BCBvwtEfH0ky1VZW0bnaWlpWyB3JG+rrdPJfcHHE=
+	b=unKdG0nqr2oNdjhECeUkBn/eanU6FLjDY4phHJHaa8zXgia6EzQVrJjY3acfL7cZX
+	 8/3Ra0cElUGkvHY5YYNTbNzGxvEfQ9jy4K+4ncw1FpZ2wCD3duhiC3whKE0EkGwaXr
+	 fwQFrFGm5h4CrT9je/ALw5raw1fzYsc5mS2BX3/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhao <chezhao@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 195/589] IB/core: Fix zero dmac race in neighbor resolution
-Date: Sat, 30 May 2026 18:01:16 +0200
-Message-ID: <20260530160230.030614367@linuxfoundation.org>
+	stable@kernel.org,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Yucheng Lu <kanolyc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 196/589] crypto: authencesn - reject short ahash digests during instance creation
+Date: Sat, 30 May 2026 18:01:17 +0200
+Message-ID: <20260530160230.059316202@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -52,74 +58,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Zhao <chezhao@nvidia.com>
+From: Yucheng Lu <kanolyc@gmail.com>
 
-commit 5e6de34d82b49cab9d8a42063e9cd0f22a4f31e5 upstream.
+commit 5db6ef9847717329f12c5ea8aba7e9f588a980c0 upstream.
 
-dst_fetch_ha() checks nud_state without holding the neighbor lock, then
-copies ha under the seqlock. A race in __neigh_update() where nud_state
-is set to NUD_REACHABLE before ha is written allows dst_fetch_ha() to
-read a zero MAC address while the seqlock reports no concurrent writer.
+authencesn requires either a zero authsize or an authsize of at least
+4 bytes because the ESN encrypt/decrypt paths always move 4 bytes of
+high-order sequence number data at the end of the authenticated data.
 
-netevent_callback amplifies this by waking ALL pending addr_req workers
-when ANY neighbor becomes NUD_VALID. At scale (N peers resolving ARP
-concurrently), the hit probability scales as N^2, making it near-certain
-for large RDMA workloads.
+While crypto_authenc_esn_setauthsize() already rejects explicit
+non-zero authsizes in the range 1..3, crypto_authenc_esn_create()
+still copied auth->digestsize into inst->alg.maxauthsize without
+validating it.  The AEAD core then initialized the tfm's default
+authsize from that value.
 
-N(A): neigh_update(A)                   W(A): addr_resolve(A)
- |                                       [sleep]
- | write_lock_bh(&A->lock)               |
- | A->nud_state = NUD_REACHABLE          |
- | // A->ha is still 0                   |
- |                                       [woken by netevent_cb() of
- |                                         another neighbour]
- |                                       | dst_fetch_ha(A)
- |                                       |   A->nud_state & NUD_VALID
- |                                       |   read_seqbegin(&A->ha_lock)
- |                                       |   snapshot = A->ha  /* 0 */
- |                                       |   read_seqretry(&A->ha_lock)
- |                                       |   return snapshot
- | seqlock(&A->ha_lock)
- | A->ha = mac_A     /* too late */
- | sequnlock(&A->ha_lock)
- | write_unlock_bh(&A->lock)
+As a result, selecting an ahash with digest size 1..3, such as
+cbcmac(cipher_null), exposed authencesn instances whose default
+authsize was invalid even though setauthsize() would have rejected the
+same value.  AF_ALG could then trigger the ESN tail handling with a
+too-short tag and hit an out-of-bounds access.
 
-The incorrect/zero mac is read and programmed in the device QP while it
-was not yet updated. This causes silent packet loss and eventual
-RETRY_EXC_ERR.
+Reject authencesn instances whose ahash digest size is in the invalid
+non-zero range 1..3 so that no tfm can inherit an unsupported default
+authsize.
 
-Fix by holding the neighbor read lock across the nud_state check and
-ha copy in dst_fetch_ha(), ensuring it synchronizes with
-__neigh_update() which is updating while holding the write lock.
-
-Cc: stable@vger.kernel.org
-Fixes: 92ebb6a0a13a ("IB/cm: Remove now useless rcu_lock in dst_fetch_ha")
-Link: https://patch.msgid.link/r/20260405-fix-dmac-race-v1-1-cfa1ec2ce54a@nvidia.com
-Signed-off-by: Chen Zhao <chezhao@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: f15f05b0a5de ("crypto: ccm - switch to separate cbcmac driver")
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/addr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ crypto/authencesn.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/infiniband/core/addr.c
-+++ b/drivers/infiniband/core/addr.c
-@@ -322,11 +322,14 @@ static int dst_fetch_ha(const struct dst
- 	if (!n)
- 		return -ENODATA;
+--- a/crypto/authencesn.c
++++ b/crypto/authencesn.c
+@@ -400,6 +400,11 @@ static int crypto_authenc_esn_create(str
+ 	auth = crypto_spawn_ahash_alg(&ctx->auth);
+ 	auth_base = &auth->base;
  
-+	read_lock_bh(&n->lock);
- 	if (!(n->nud_state & NUD_VALID)) {
-+		read_unlock_bh(&n->lock);
- 		neigh_event_send(n, NULL);
- 		ret = -ENODATA;
- 	} else {
- 		neigh_ha_snapshot(dev_addr->dst_dev_addr, n, dst->dev);
-+		read_unlock_bh(&n->lock);
- 	}
- 
- 	neigh_release(n);
++	if (auth->digestsize > 0 && auth->digestsize < 4) {
++		err = -EINVAL;
++		goto err_free_inst;
++	}
++
+ 	err = crypto_grab_skcipher(&ctx->enc, aead_crypto_instance(inst),
+ 				   crypto_attr_alg_name(tb[2]), 0, mask);
+ 	if (err)
 
 
