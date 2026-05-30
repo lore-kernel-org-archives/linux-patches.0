@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D519175A6B;
-	Sat, 30 May 2026 18:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460913C1961;
+	Sat, 30 May 2026 18:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164853; cv=none; b=Ijhd3jdl34hwixdaVPT1C1YxKetGY3L8DGXvaoS0QuW0u0VrRTYhLWctXUmjygGiLV3b1cKi56RnbJOFxQQ/9LVL2m2g3/QuLAHeNj3Mi7lvFcbVO4KigJGJOgZkiyaAmI0XM8G7t6VF1xxIw8rMSPFUCVHk0b/S7nEwC+pxolI=
+	t=1780164856; cv=none; b=q45fisFJlzz2V3oF7+Rw+vrAT3gI/oaCzGCR0gDB5En8QFhCey+SDhn4VtZx7NM5BflFU8Dh2V5QUzfgTij4hGODKBhok6d5HnfUOc225NxBDq0pjG9ljDhatIEVqfNeYBGbnUn3C9A3ZMH2ceiuY8vLfOZj5yWFxoeYYD+p6uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164853; c=relaxed/simple;
-	bh=Yvbpf/GiOdUm903y3qK/cAWPqcsZlDD0XRcrgzZIrag=;
+	s=arc-20240116; t=1780164856; c=relaxed/simple;
+	bh=ytb0OnppV+hVR4NOlPn1pUuoEb10+xrWJ3UT03KGJN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ap9JXoyD0+kIotScM/cYU8UaHlvH/fNHHeRkFPj/ZzDkY/5EgpMA6PkCE5yo6VESVueDVpqryOOC+5xWEGreLtFEM8rbNAfbpKm58/NpLgoaw63+KIkgIPyAxsUdKT2U5tobY5gHLqRlW1iO1k/X/DANQsT5vBGr332JuKAoaFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8VCFSpP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F4xaiR7piJZ7G0bT/ZvNg/OsXbxjbkTDnX6jukrtqy5+T92S3vD6n3ObvjHfS0EUd5d8fDvloiguBIrrDY8zNvTjg8FL0S5feiMU/k7s4srrn900RtlcSZ8zriBaau0szCwvqjoaco8CyGu4N3CzJ9eG8LB7SoOyNpJYZuO27vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLGL2nq9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8VCFSpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF0B1F00893;
-	Sat, 30 May 2026 18:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLGL2nq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914651F00893;
+	Sat, 30 May 2026 18:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164852;
-	bh=wKKRhPGx0h07JhCGiRRIC1RI46QI/pVXMAso/Oa1YGQ=;
+	s=korg; t=1780164855;
+	bh=ze6nqYumVDnvARo+1QHebO5CVUNh60loEMBpBc3RzU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8VCFSpPa9H6skl0uFYkzX7voeW6vFjKWO+SFaRtw3lzoyYAIlGZlC54mJ8hnnhe0
-	 ucfI9iIBRAH6cGG/qlDXlvkTtVs+psehY930LNoYmnTSnefW5pwV5PSL3L0O5nnx8k
-	 B0s0UhS94biFS2/Ru3ORJr2rT+Lg3OEmos7I8ZlM=
+	b=zLGL2nq9P/1aXb17sK6mIMCLgT151GGiXZAPBBOxrfgMI1TUQx050YDYO3F05Q7uA
+	 K2fZSlw5d2MA/Ea3WSjVyMCO9rxYiVe7rhHvbHewZajsJLFFc3Le4RFxQqJ9Oi9ptm
+	 I7d2CQTTc9Adz+kyu4/xQs75C4mnQ1q0qn3yGCtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	stable <stable@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.15 678/776] sysfs: dont remove existing directory on update failure
-Date: Sat, 30 May 2026 18:06:32 +0200
-Message-ID: <20260530160257.389766587@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 679/776] hwmon: (pmbus/adm1266) widen blackbox-info buffer to I2C_SMBUS_BLOCK_MAX
+Date: Sat, 30 May 2026 18:06:33 +0200
+Message-ID: <20260530160257.414745043@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,43 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 237557b8a81ab948e8332f7c0058e758f081c0a3 upstream.
+commit eee213daa1e1b402eb631bcd1b8c5aa340a6b081 upstream.
 
-When sysfs_update_group() is called for a named group and create_files()
-fails (e.g. -ENOMEM), internal_create_group() calls kernfs_remove(kn) on
-the group directory.  In the update path, kn was obtained via
-kernfs_find_and_get() and refers to a directory that already existed
-before this call.  Removing it silently destroys a sysfs group that the
-caller did not create.
+adm1266_nvmem_read_blackbox() declares a 5-byte stack buffer and
+passes it to i2c_smbus_read_block_data() to retrieve the 4-byte
+BLACKBOX_INFO response.  i2c_smbus_read_block_data() does not honour
+caller buffer sizes -- it memcpy()s data.block[0] bytes from the
+SMBus transaction (where data.block[0] is the length byte returned by
+the slave device, up to I2C_SMBUS_BLOCK_MAX = 32):
 
-Only remove the directory if we created it ourselves.  On update failure
-the directory remains as it is left empty by remove_files() inside
-create_files(), but can be repopulated by a retry.
+	memcpy(values, &data.block[1], data.block[0]);
 
-Cc: Rajat Jain <rajatja@google.com>
-Fixes: c855cf2759d2 ("sysfs: Fix internal_create_group() for named group updates")
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/2026052003-uniquely-hastily-c093@gregkh
+If the device returns any block length above 5, the call overflows
+the caller's 5-byte stack buffer before the post-call
+
+	if (ret != 4)
+		return -EIO;
+
+check has a chance to reject the response.
+
+Widen the local buffer to I2C_SMBUS_BLOCK_MAX so the helper has room
+for any well-formed SMBus block response, matching the convention used
+by the other i2c_smbus_read_block_data() callers in this driver.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260515-adm1266-fixes-v1-2-1c1ea1349cfe@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/sysfs/group.c |    2 +-
+ drivers/hwmon/pmbus/adm1266.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/sysfs/group.c
-+++ b/fs/sysfs/group.c
-@@ -148,7 +148,7 @@ static int internal_create_group(struct
- 	kernfs_get(kn);
- 	error = create_files(kn, kobj, uid, gid, grp, update);
- 	if (error) {
--		if (grp->name)
-+		if (grp->name && !update)
- 			kernfs_remove(kn);
- 	}
- 	kernfs_put(kn);
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -351,7 +351,7 @@ static int adm1266_nvmem_read_blackbox(s
+ {
+ 	int record_count;
+ 	char index;
+-	u8 buf[5];
++	u8 buf[I2C_SMBUS_BLOCK_MAX];
+ 	int ret;
+ 
+ 	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
 
 
