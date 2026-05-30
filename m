@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68331320CAD;
-	Sat, 30 May 2026 17:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10C7329C6D;
+	Sat, 30 May 2026 17:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163984; cv=none; b=qWk5Qc/AmM1VC7axvbVa/W6gwdUpaECViE9XqFjxxtcFVbdgcU1ipNIcRHs6npS9xpuktzD55VgKncZWTnrkxR0tN/8+oDmd9bWRQhaH67+eOPdygi8spd26ZZvDRB2kOJCtFcubojAZThf4vemjJGvh/Ik7y7A3K0drfOgtngc=
+	t=1780163987; cv=none; b=PWZw7Sqi1XgZQaC4W+Plyb4rtwQLwloDmb3ld3Rg3s30iDI+gUGIm+yKceZoBd+e4lQsG5d+2F0qncqR8w4z/UbCoKfkD8GCpF2M54F/Dl2WV8dUBGvhUL8GY8kmELUiBihqAB8sYsypIYdUqWCq6XKvrUNXVJD9wdgJN1XCnI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163984; c=relaxed/simple;
-	bh=78uM4y8CmzupPSR1p5u1aGi740pwwocNFjHlOhjB5S0=;
+	s=arc-20240116; t=1780163987; c=relaxed/simple;
+	bh=/6l/Jj0s3YmQ4V0//A1IewihW+7dhzh2MmBkVlQ9ys0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNqCtgpsHtVgZP5QQr/TF1KE3GFmspQmc2zeIavLi8doTmCWHDL+lR++tUEDiEY0WBdZ2TStq88V6GbArgAE8sQAM21jg7rEr38GotBXaNeUhQauA38RemSDB+ppmOyjtnUsNDk2ZhCVIxIxDg58Ose0wI94WYRVRspPv8iwncE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1PtKKWd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MKuaZT/uCoVJmKAgwcRbSQMLGpjcmCPpHYZ5NEC7KOv4bBDPCNnKA3rpH8W/lyBKSAWJ86X9p78AZ2rZowA5tRDfxN6y27fkbfk2TeMdbUx/HQgA4mWymO1na0Yx/Ib8W0HRkP3iFQQ/Dhs0iv8+/bQfuzXPv5VDiREniJ+4GoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzwzPbG1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1PtKKWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFAB1F00893;
-	Sat, 30 May 2026 17:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzwzPbG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B3E1F00893;
+	Sat, 30 May 2026 17:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163983;
-	bh=DXTqSRluvgtSPtNJoUeBUepQ53XdgzOPmypfymjDpA0=;
+	s=korg; t=1780163986;
+	bh=HDhsFEmLrfx3MZlF6RhzGtpFCPK5mux6v/JUhk8ajEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y1PtKKWdJURUKaukXkIArCPLAt6IXCVuvJq2USmHXaI4ilR3imF0cyP/tuJWktJnu
-	 ZJCj9wHDrO/iNRyUI9DlFASWylnpaTvXiwedoAcBKgj4EtVtWdZO0PEaLSyxxvYQh8
-	 s7dYkY9kFSx8diYGFbOp6SsangzRLJ6gMJ3mPk8U=
+	b=JzwzPbG1UH6V3gTXQmgfZAKnrtpq+iN/lwyycaMD25l/ZA29JhWFeCnogAnNwAz52
+	 7W8hwIj1Uk3fGgUGhXd3mYtCFBNbdGBdt/xbHguocGnMeQkKNhpMc8VdDnnaWpxHCd
+	 Iqkw/WGdZ5lCcu1DZqCSvRohz4wbSBaNpWpexYv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	syzbot+da8e060735ae02c8f3d1@syzkaller.appspotmail.com,
+	Greg Jumper <greg.jumper@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 393/776] locking: Fix rwlock support in <linux/spinlock_up.h>
-Date: Sat, 30 May 2026 18:01:47 +0200
-Message-ID: <20260530160250.647672994@linuxfoundation.org>
+Subject: [PATCH 5.15 420/776] net/rds: Restrict use of RDS/IB to the initial network namespace
+Date: Sat, 30 May 2026 18:02:14 +0200
+Message-ID: <20260530160251.322116251@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,73 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Greg Jumper <greg.jumper@oracle.com>
 
-[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
+[ Upstream commit ebf71dd4aff46e8e421d455db3e231ba43d2fa8a ]
 
-Architecture support for rwlocks must be available whether or not
-CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
-arch_{read,write}_{lock,trylock,unlock}() macros such that these become
-visbile if CONFIG_DEBUG_SPINLOCK=n.
+Prevent using RDS/IB in network namespaces other than the initial one.
+The existing RDS/IB code will not work properly in non-initial network
+namespaces.
 
-This patch prepares for converting do_raw_{read,write}_trylock() into
-inline functions. Without this patch that conversion triggers a build
-failure for UP architectures, e.g. arm-ep93xx. I used the following
-kernel configuration to build the kernel for that architecture:
-
-	CONFIG_ARCH_MULTIPLATFORM=y
-	CONFIG_ARCH_MULTI_V7=n
-	CONFIG_ATAGS=y
-	CONFIG_MMU=y
-	CONFIG_ARCH_MULTI_V4T=y
-	CONFIG_CPU_LITTLE_ENDIAN=y
-	CONFIG_ARCH_EP93XX=y
-
-Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
+Fixes: d5a8ac28a7ff ("RDS-TCP: Make RDS-TCP work correctly when it is set up in a netns other than init_net")
+Reported-by: syzbot+da8e060735ae02c8f3d1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=da8e060735ae02c8f3d1
+Signed-off-by: Greg Jumper <greg.jumper@oracle.com>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260408080420.540032-3-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spinlock_up.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ net/rds/af_rds.c | 10 ++++++++--
+ net/rds/ib.c     |  4 ++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
-index 0ac9112c1bbe3..a406655c1fbd1 100644
---- a/include/linux/spinlock_up.h
-+++ b/include/linux/spinlock_up.h
-@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
- 	lock->slock = 1;
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index 0ec0ae1483492..ca1b52372ab29 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -357,7 +357,8 @@ static int rds_cong_monitor(struct rds_sock *rs, sockptr_t optval, int optlen)
+ 	return ret;
  }
  
--/*
-- * Read-write spinlocks. No debug version.
-- */
--#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
--#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
--#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
--
- #else /* DEBUG_SPINLOCK */
- #define arch_spin_is_locked(lock)	((void)(lock), 0)
- /* for sched/core.c and kernel_lock.c: */
-@@ -69,4 +59,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+-static int rds_set_transport(struct rds_sock *rs, sockptr_t optval, int optlen)
++static int rds_set_transport(struct net *net, struct rds_sock *rs,
++			     sockptr_t optval, int optlen)
+ {
+ 	int t_type;
  
- #define arch_spin_is_contended(lock)	(((void)(lock), 0))
+@@ -373,6 +374,10 @@ static int rds_set_transport(struct rds_sock *rs, sockptr_t optval, int optlen)
+ 	if (t_type < 0 || t_type >= RDS_TRANS_COUNT)
+ 		return -EINVAL;
  
-+/*
-+ * Read-write spinlocks. No debug version.
-+ */
-+#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
-+#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
-+#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
++	/* RDS/IB is restricted to the initial network namespace */
++	if (t_type != RDS_TRANS_TCP && !net_eq(net, &init_net))
++		return -EPROTOTYPE;
 +
- #endif /* __LINUX_SPINLOCK_UP_H */
+ 	rs->rs_transport = rds_trans_get(t_type);
+ 
+ 	return rs->rs_transport ? 0 : -ENOPROTOOPT;
+@@ -433,6 +438,7 @@ static int rds_setsockopt(struct socket *sock, int level, int optname,
+ 			  sockptr_t optval, unsigned int optlen)
+ {
+ 	struct rds_sock *rs = rds_sk_to_rs(sock->sk);
++	struct net *net = sock_net(sock->sk);
+ 	int ret;
+ 
+ 	if (level != SOL_RDS) {
+@@ -461,7 +467,7 @@ static int rds_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 	case SO_RDS_TRANSPORT:
+ 		lock_sock(sock->sk);
+-		ret = rds_set_transport(rs, optval, optlen);
++		ret = rds_set_transport(net, rs, optval, optlen);
+ 		release_sock(sock->sk);
+ 		break;
+ 	case SO_TIMESTAMP_OLD:
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index dbc63493ade70..ec45664f38767 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -494,6 +494,10 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+ {
+ 	struct rds_ib_device *rds_ibdev = NULL;
+ 
++	/* RDS/IB is restricted to the initial network namespace */
++	if (!net_eq(net, &init_net))
++		return -EPROTOTYPE;
++
+ 	if (ipv6_addr_v4mapped(addr)) {
+ 		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
+ 		if (rds_ibdev) {
 -- 
 2.53.0
 
