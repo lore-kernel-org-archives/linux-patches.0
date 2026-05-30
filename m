@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE7E29B799;
-	Sat, 30 May 2026 18:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8586175A6B;
+	Sat, 30 May 2026 18:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164891; cv=none; b=Zf9EEaWwDZj0+f+ONX4KhB2j3z5t+SCqFbwZLqsiQeFx8i+qz7Q7v4qIDTabTax9le3weXBQMMjO0rNpbjdx99gFjpcGLV/4oJQRyl+4CHeEJ0Nk8zrvKdOmPNkJMvi6aialTRUeGQP0J73gtzYhTotEwTJkFrCYWmFBIkQCOXI=
+	t=1780164894; cv=none; b=fRE+wFiWpna8CD7gzfXyyuoLeXzRsptoqpKQ+BOUKnNs3SpyRirg1OxSW64elHfxfZkMES37fRSvXCeNB6+zSkQY8ILvXkcVVc0yHFgyxw+uXGV8YLP8142IGDqBK4FuhJpccRipCvq9zRxdoqAkfzPg7omK+GtCbzd012RQeig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164891; c=relaxed/simple;
-	bh=+AAfeS6dr4Og/oTKn6nPZUfKJCghsb/dBv4YtJVolcQ=;
+	s=arc-20240116; t=1780164894; c=relaxed/simple;
+	bh=ZGQiB1utHaXO8kslZu+Dc86tnlsfZ2OvgRCPGPUBrDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5FF+FbIsMD+t5JEZ/+Zh1mGzCSFGnjE9k6yrTtXi1duZDSKuoezpSYN05rgFgvk3e+TGXIKVRXJnE1vGGZlMtIUUpt5i37aGY+yYP7YC51pGH+yK9aD+aYjBauruAEgVW3CkSqzdwwG4JlwODFQ9y0d5VZqvpCdSD/qVnNYVys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWxEcHgw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K94CcIP+1gKwKjFrpRUeVK/IIRtIj9KAG/H3IMgQZ5NEJ2qfCsEKz6u9lrqJ1ld8C+wA4PPDRZQ6reJk6cD82qI8HcHyCIi3gQ11xrnol8WZwemHNj/Y4Ytdmzw4vIjs6H/Xzq3n+/M87SCkx8QLUY8BC/EwWSJ+w6+2hwZL9tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYI+tgwN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWxEcHgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B423D1F00893;
-	Sat, 30 May 2026 18:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYI+tgwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9261F00893;
+	Sat, 30 May 2026 18:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164890;
-	bh=ynYYAvzS7+qKxo0hvuMC3+2K3tFRt5dYiG5PycIs/NM=;
+	s=korg; t=1780164893;
+	bh=SczVxek6z88+MACiWIrNQGluRSA4/O1jVTwyVGCEhvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vWxEcHgwlDmujXaEXhawqSknL2BWbXxRdXG4XQw7tq310/cRirbH2cblwR47KffZI
-	 KBspLXXFtRBbrL0K6Jxi3PV20u067Qqpz5wVtxTAmbbSmjnHug3lVLnE56vkirDGoa
-	 J6l3xiUTBCqgOqcRFeFMRmB+/4CGBHJFatjNK4lk=
+	b=KYI+tgwNc0zIdwY5CbhZt2qEwJqSrTqNJ9JW4BDNuSWpeggb7s5X22GAqTMMc8S7O
+	 3OPg2qwSCWtA9ePwXuNa7y0mUfpZJ1MDNf4F1JWnPBaXyfmjDjd/Mt7lk8B7zCZIZD
+	 XUDEmqeqNb9IeNaKKz5coqwgj/10iUzyEGE8gKNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 650/776] netfilter: nft_ct: fix missing expect put in obj eval
-Date: Sat, 30 May 2026 18:06:04 +0200
-Message-ID: <20260530160256.722610988@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 683/776] Bluetooth: bnep: Fix UAF read of dev->name
+Date: Sat, 30 May 2026 18:06:37 +0200
+Message-ID: <20260530160257.516145371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,34 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Jann Horn <jannh@google.com>
 
-commit 19f94b6fee75b3ef7fbc06f3745b9a771a8a19a4 upstream.
+commit 59e932ded949fa6f0340bf7c6d7818f962fa4fd2 upstream.
 
-nft_ct_expect_obj_eval() allocates an expectation and may call
-nf_ct_expect_related(), but never drops its local reference.
+bnep_add_connection() needs to keep holding the bnep_session_sem while
+reading dev->name (just like bnep_get_connlist() does); otherwise the
+bnep_session() thread can concurrently free the net_device, which can for
+example be triggered by a concurrent bnep_del_connection().
 
-Add nf_ct_expect_put(exp) before return to balance allocation.
+(This UAF is fairly uninteresting from a security perspective;
+calling bnep_add_connection() requires passing a capable(CAP_NET_ADMIN)
+check. It also requires completely tearing down a netdev during a fairly
+tight race window.)
 
-Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_ct.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/bnep/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -1299,6 +1299,8 @@ static void nft_ct_expect_obj_eval(struc
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -638,8 +638,8 @@ int bnep_add_connection(struct bnep_conn
+ 		goto failed;
+ 	}
  
- 	if (nf_ct_expect_related(exp, 0) != 0)
- 		regs->verdict.code = NF_DROP;
-+
-+	nf_ct_expect_put(exp);
- }
+-	up_write(&bnep_session_sem);
+ 	strcpy(req->device, dev->name);
++	up_write(&bnep_session_sem);
+ 	return 0;
  
- static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
+ failed:
 
 
