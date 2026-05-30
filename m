@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6284F340293;
-	Sat, 30 May 2026 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB95530E829;
+	Sat, 30 May 2026 17:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161619; cv=none; b=IrCc1OSkHRzNqEFS0GGBvc6XQmQtPwFRT4wqvciFZVxVVZ3paRsbTZF/n21UhpFfpxH+4RhAwUHpfWDXF6bsRuir+rV7/sFUkyo5YVWOhY6gsX4QfbVMl90WpcfBAb2oYkNm9LplnVrIo4mfmP0THctFHKP0/GeHYkU19azVSrU=
+	t=1780161622; cv=none; b=svYUQsld3FiQGMqFKOm9cNT79roqMkuaUsA9aFVXHFlcJvZbmjZw+aAzgbtcn96YCXT75Nlq7zRzBWN8c1Od9H9yb3zpYvWGuSUP/NNJK7FP5U9tuKQ4+Lw5CRC0MXgUfrdq0GXrKy9Quy55/b2dQCub9wqwIDXHMyIhj5RvT6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161619; c=relaxed/simple;
-	bh=voC+jjThchTVI8kc4kNRswxQFxwlgIY0w0NLlbG1PFg=;
+	s=arc-20240116; t=1780161622; c=relaxed/simple;
+	bh=+R+JX6ICdasNLnmdaI5rCEblXhqatQgbfDvlDeHsjVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PMxUMdCEimytxNzfTwNx52QPAaRt/bKz3dM1Uqn/2KL+I1iDlBGkf4vZhHrKoCJrQn27daUgk2whLqW3x+TuFNW7vXZCbCkfa7ytTCJZtaGXR769nQPVTsqNEaLtyNHhlgltWvZ9q3HNu7xICJJb00/ufMH31VDRBslhKou+yCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st5SrQkC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3w2eOa+SaY9mjySZCKjnYC1hdUrdTMsurR7AGBiO+UKi8voxTB05vFQyIbEqJLBemACgbuCYpG5GGZowK5xiMhMcwaJzrI0JISFY2JWqVHuxngV1TK7R0BcMRr+9SIEbrjp8ZjQWo9Y0ztE5Ymx+DovK7srL2Fy+Je6CvjxSgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7gUgkLI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st5SrQkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77331F00893;
-	Sat, 30 May 2026 17:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7gUgkLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10341F00893;
+	Sat, 30 May 2026 17:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161618;
-	bh=qhWEmqlGU4a+wjm6wONflIzoM7Mfxom3EgFscZMSJGI=;
+	s=korg; t=1780161621;
+	bh=U4XoHfdW+Xm0cBoVdhpiS9qyNYHfUJ7YTkoxOtpoQBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=st5SrQkC4wbvB4DgjP1vGWWm5Dx+G/6LXflxgITvuEYPtIE+cDTsz8DtV2DN5S1lC
-	 qVLP0AE0DsG6269agzh2/L2GZK3KA+kHJuPtlFSyiOicz+ryiy3yQ/FbhRLBv4lI7a
-	 lFYKhKoTNCQqWqLC0JWhpqd6cCcYyy7iESfRn5D0=
+	b=z7gUgkLICCRLfkE5jMqUtvoGKlt8hldwEhGQOGMBnMdb3PAPQUcj5Y5tiqqMlzRWF
+	 TRu0NsnFESqxu1UD/v/3N8d9ESnCizQ95nM63F6Ytq9xNkPLL1sbPqFDU3QnxolYaF
+	 IvKnPZL5Mg1xG5Pnjckkn0HX1kxk+OsJGVHii2JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 677/969] PCMCIA: Fix garbled log messages for KERN_CONT
-Date: Sat, 30 May 2026 18:03:21 +0200
-Message-ID: <20260530160319.191452079@linuxfoundation.org>
+Subject: [PATCH 6.1 678/969] arm64: dts: imx8mn-tqma8mqnl: Correct PAD settings for PMIC_nINT
+Date: Sat, 30 May 2026 18:03:22 +0200
+Message-ID: <20260530160319.220277393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,57 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit bfeaa6814bd3f9a1f6d525b3b35a03b9a0368961 ]
+[ Upstream commit 0fb37990774113afd943eaa91323679388584b6d ]
 
-For years the PCMCIA info messages are messed up by superfluous
-newlines. While f2e6cf76751d ("pcmcia: Convert dev_printk to
-dev_<level>") converted the code to pr_cont(), dev_info enforces a \n
-via vprintk_store setting LOG_NEWLINE, breaking subsequent pr_cont.
+With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
+there might be interrupt storm for this board. Need to set PAD PUE and PU
+together to make pull up work properly.
 
-Fix by logging the device name manually to allow pr_cont to work for
-more readable and not \n distorted logs.
-
-Fixes: f2e6cf76751d ("pcmcia: Convert dev_printk to dev_<level>")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Fixes: 3e56e354db6d3 ("arm64: dts: freescale: add initial device tree for TQMa8MQNL with i.MX8MN")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index 0a4e439d46094..f9baf28bc32b8 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -188,7 +188,7 @@ static void do_io_probe(struct pcmcia_socket *s, unsigned int base,
- 	int any;
- 	u_char *b, hole, most;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
+index 0ed3475feb164..6d43327927b9b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
+@@ -282,7 +282,7 @@ pinctrl_i2c1_gpio: i2c1gpiogrp {
+ 	};
  
--	dev_info(&s->dev, "cs: IO port probe %#x-%#x:", base, base+num-1);
-+	pr_info("%s: cs: IO port probe %#x-%#x:", dev_name(&s->dev), base, base+num-1);
+ 	pinctrl_pmic: pmicgrp {
+-		fsl,pins = <MX8MN_IOMUXC_GPIO1_IO08_GPIO1_IO8	0x84>;
++		fsl,pins = <MX8MN_IOMUXC_GPIO1_IO08_GPIO1_IO8	0x1c4>;
+ 	};
  
- 	/* First, what does a floating port look like? */
- 	b = kzalloc(256, GFP_KERNEL);
-@@ -410,8 +410,8 @@ static int do_mem_probe(struct pcmcia_socket *s, u_long base, u_long num,
- 	struct socket_data *s_data = s->resource_data;
- 	u_long i, j, bad, fail, step;
- 
--	dev_info(&s->dev, "cs: memory probe 0x%06lx-0x%06lx:",
--		 base, base+num-1);
-+	pr_info("%s: cs: memory probe 0x%06lx-0x%06lx:",
-+	       dev_name(&s->dev), base, base+num-1);
- 	bad = fail = 0;
- 	step = (num < 0x20000) ? 0x2000 : ((num>>4) & ~0x1fff);
- 	/* don't allow too large steps */
+ 	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
 -- 
 2.53.0
 
