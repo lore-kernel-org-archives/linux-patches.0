@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907213093C6;
-	Sat, 30 May 2026 16:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75A52F8EB5;
+	Sat, 30 May 2026 16:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159312; cv=none; b=J9yCuNgyECKjhclRvjiRMnKz/png1pWlnGtkaGms/5GMLWrxyLLb0WUCmaK91NzWf+XmOQ5gVnVTklwYIN1mkEpuJKdYww6JuxiK4rFKU/+948OaOD5/HnyYsic/cywG26/38vHK9ESjtPQbMCMkXrsRVHhD+A3NYyauw2T+z1Y=
+	t=1780159328; cv=none; b=jujQPzHrGpflGK70nsSXpFJBY1meLX/hUw2mDde8/aBm7tl6EQ/Vwi/ZWEu84OFjkZwozchhgxa+FhMjiEXK7KYzMTE52IRQRhfrZ0m9PHuxGYsMFfNRPAFvSEDMWXUSAyz4nClDPU2gULYAxHHkJioXTzP68OkzTqdPUgnO4eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159312; c=relaxed/simple;
-	bh=DuaESJZO05Gi4ibF48OppIt+Bk7Wj0Ou8QcDHsYqE54=;
+	s=arc-20240116; t=1780159328; c=relaxed/simple;
+	bh=s79O4HkTSjcvq5ZJMCHd9qCPJr+AQKTWoBoJXHyBFqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnTdBOIqsty9k+Z+/j0zh9Z/E5J4wC8ukUPBzb7cqbLmHp3c51pmzQK4+uhGZ2bzfSM/hrjz4Sl01IcNaCQq1xGAYedP6fDXO9eK7/TOnUWJhi0V54MtDaoCQJjlzn5IJS2pvqRHV51PENSsCj2cQd0YsmTo4/O8R6/DNb22iMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFdegErZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uztAnoHtRIQBwdVQgmBVpUSvnr69dMq8Y0VNefAoN1QD1jKevIff7gNdYD7GKMtURmFtlh0q/MPr9zTcMK335rFyTth+E6BYl5wu5uCOMSdIUTXR9WddXbliSfsBYfGL4Fnq3/hMrWZg+h28HTwbQexU+xyJVchBG+RhATlbfKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4QdNLKh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFdegErZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4E71F00893;
-	Sat, 30 May 2026 16:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4QdNLKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F911F00893;
+	Sat, 30 May 2026 16:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159311;
-	bh=tlJu8q5UU3ipyqrZilVglNMTZO3kOPK71MXkH0mcomE=;
+	s=korg; t=1780159327;
+	bh=3KCDfhvQqCOMr3c+MwN0y7Un5bo3tuB09597yhV4pXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rFdegErZ31hAPdcDoUXy3b6tTawT+v/sfvThUgD+IrXjJlxVGp1e0JOikUVXcOihn
-	 0F/FnG6duE0iNEhPhQOKK2k2sjKrQ/67CGCF+OTfbPVdo6vBG2aO8riSuqEe7/nKMm
-	 uq6TUE+3mGMdgp1f1Oro078YdAbTD3HR0f/+Bkeg=
+	b=h4QdNLKhYtXiReFkqP5FJlEoGHMlPyASjUb84U9gn8p3p/Ug9zDuzUJ7DLlkkkfhx
+	 GuiBVYgtNWXdyEpgMD4YZjI/DvT/4YzCISGBmElmT3yWWnFtz9g4y8fK1GkoaOLjEk
+	 WKR7cRkg0JF3+G1dyhNDp9RXLs5BLSdg8luB0h/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Li hongliang <1468888505@139.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/969] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Sat, 30 May 2026 17:53:59 +0200
-Message-ID: <20260530160303.484816287@linuxfoundation.org>
+Subject: [PATCH 6.1 116/969] net: dsa: clean up FDB, MDB, VLAN entries on unbind
+Date: Sat, 30 May 2026 17:54:00 +0200
+Message-ID: <20260530160303.512238211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,107 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
+[ Upstream commit 7afb5fb42d4950f33af2732b8147c552659f79b7 ]
 
-ieee80211_tx_prepare_skb() has three error paths, but only two of them
-free the skb. The first error path (ieee80211_tx_prepare() returning
-TX_DROP) does not free it, while invoke_tx_handlers() failure and the
-fragmentation check both do.
+As explained in many places such as commit b117e1e8a86d ("net: dsa:
+delete dsa_legacy_fdb_add and dsa_legacy_fdb_del"), DSA is written given
+the assumption that higher layers have balanced additions/deletions.
+As such, it only makes sense to be extremely vocal when those
+assumptions are violated and the driver unbinds with entries still
+present.
 
-Add kfree_skb() to the first error path so all three are consistent,
-and remove the now-redundant frees in callers (ath9k, mt76,
-mac80211_hwsim) to avoid double-free.
+But Ido Schimmel points out a very simple situation where that is wrong:
+https://lore.kernel.org/netdev/ZDazSM5UsPPjQuKr@shredder/
+(also briefly discussed by me in the aforementioned commit).
 
-Document the skb ownership guarantee in the function's kdoc.
+Basically, while the bridge bypass operations are not something that DSA
+explicitly documents, and for the majority of DSA drivers this API
+simply causes them to go to promiscuous mode, that isn't the case for
+all drivers. Some have the necessary requirements for bridge bypass
+operations to do something useful - see dsa_switch_supports_uc_filtering().
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
-Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Exclude changes to drivers/net/wireless/mediatek/mt76/scan.c as this file is first
- introduced by commit 31083e38548f("wifi: mt76: add code for emulating hardware scanning")
- after linux-6.14.]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Although in tools/testing/selftests/net/forwarding/local_termination.sh,
+we made an effort to popularize better mechanisms to manage address
+filters on DSA interfaces from user space - namely macvlan for unicast,
+and setsockopt(IP_ADD_MEMBERSHIP) - through mtools - for multicast, the
+fact is that 'bridge fdb add ... self static local' also exists as
+kernel UAPI, and might be useful to someone, even if only for a quick
+hack.
+
+It seems counter-productive to block that path by implementing shim
+.ndo_fdb_add and .ndo_fdb_del operations which just return -EOPNOTSUPP
+in order to prevent the ndo_dflt_fdb_add() and ndo_dflt_fdb_del() from
+running, although we could do that.
+
+Accepting that cleanup is necessary seems to be the only option.
+Especially since we appear to be coming back at this from a different
+angle as well. Russell King is noticing that the WARN_ON() triggers even
+for VLANs:
+https://lore.kernel.org/netdev/Z_li8Bj8bD4-BYKQ@shell.armlinux.org.uk/
+
+What happens in the bug report above is that dsa_port_do_vlan_del() fails,
+then the VLAN entry lingers on, and then we warn on unbind and leak it.
+
+This is not a straight revert of the blamed commit, but we now add an
+informational print to the kernel log (to still have a way to see
+that bugs exist), and some extra comments gathered from past years'
+experience, to justify the logic.
+
+Fixes: 0832cd9f1f02 ("net: dsa: warn if port lists aren't empty in dsa_port_teardown")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250414212930.2956310-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Apply the patch to net/dsa/dsa2.c in v6.1 since commit
+47d2ce03dcfb ("net: dsa: rename dsa2.c back into dsa.c and create its header")
+renamed this file to net/dsa/dsa.c starting from v6.2. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c | 6 ++----
- drivers/net/wireless/mac80211_hwsim.c    | 1 -
- include/net/mac80211.h                   | 4 ++++
- net/mac80211/tx.c                        | 4 +++-
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ net/dsa/dsa2.c |   38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
-index 571062f2e82a7..ba8ec5112afe8 100644
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1011,7 +1011,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
- 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+--- a/net/dsa/dsa2.c
++++ b/net/dsa/dsa2.c
+@@ -1738,12 +1738,44 @@ static int dsa_switch_parse(struct dsa_s
  
- 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
--		goto error;
-+		return;
+ static void dsa_switch_release_ports(struct dsa_switch *ds)
+ {
++	struct dsa_mac_addr *a, *tmp;
+ 	struct dsa_port *dp, *next;
++	struct dsa_vlan *v, *n;
  
- 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
- 	if (ath_tx_start(sc->hw, skb, &txctl))
-@@ -1124,10 +1124,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
- 
- 		skb->priority = 7;
- 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
--		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
--			dev_kfree_skb_any(skb);
-+		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
- 			return false;
--		}
- 		break;
- 	default:
- 		return false;
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index 80a2a668cfb9e..316b5f56b6e53 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -2743,7 +2743,6 @@ static void hw_scan_work(struct work_struct *work)
- 						      hwsim->tmp_chan->band,
- 						      NULL)) {
- 				rcu_read_unlock();
--				kfree_skb(probe);
- 				continue;
- 			}
- 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 62e0847d3793b..1769d03e6b1d4 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -6874,6 +6874,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
-  * @band: the band to transmit on
-  * @sta: optional pointer to get the station to send the frame to
-  *
-+ * Return: %true if the skb was prepared, %false otherwise.
-+ * On failure, the skb is freed by this function; callers must not
-+ * free it again.
-+ *
-  * Note: must be called under RCU lock
-  */
- bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 7333e43dfc354..2e99a1063e939 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1934,8 +1934,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
- 	struct ieee80211_tx_data tx;
- 	struct sk_buff *skb2;
- 
--	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
-+	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
-+		kfree_skb(skb);
- 		return false;
-+	}
- 
- 	info->band = band;
- 	info->control.vif = vif;
--- 
-2.53.0
-
+ 	dsa_switch_for_each_port_safe(dp, next, ds) {
+-		WARN_ON(!list_empty(&dp->fdbs));
+-		WARN_ON(!list_empty(&dp->mdbs));
+-		WARN_ON(!list_empty(&dp->vlans));
++		/* These are either entries that upper layers lost track of
++		 * (probably due to bugs), or installed through interfaces
++		 * where one does not necessarily have to remove them, like
++		 * ndo_dflt_fdb_add().
++		 */
++		list_for_each_entry_safe(a, tmp, &dp->fdbs, list) {
++			dev_info(ds->dev,
++				 "Cleaning up unicast address %pM vid %u from port %d\n",
++				 a->addr, a->vid, dp->index);
++			list_del(&a->list);
++			kfree(a);
++		}
++
++		list_for_each_entry_safe(a, tmp, &dp->mdbs, list) {
++			dev_info(ds->dev,
++				 "Cleaning up multicast address %pM vid %u from port %d\n",
++				 a->addr, a->vid, dp->index);
++			list_del(&a->list);
++			kfree(a);
++		}
++
++		/* These are entries that upper layers have lost track of,
++		 * probably due to bugs, but also due to dsa_port_do_vlan_del()
++		 * having failed and the VLAN entry still lingering on.
++		 */
++		list_for_each_entry_safe(v, n, &dp->vlans, list) {
++			dev_info(ds->dev,
++				 "Cleaning up vid %u from port %d\n",
++				 v->vid, dp->index);
++			list_del(&v->list);
++			kfree(v);
++		}
++
+ 		list_del(&dp->list);
+ 		kfree(dp);
+ 	}
 
 
