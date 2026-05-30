@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF8A3AFCF3;
-	Sat, 30 May 2026 17:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B4C3546EA;
+	Sat, 30 May 2026 17:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163220; cv=none; b=szfoys6cLnk0nc4ccdHKgeiPKbdHotQaWXXQm0OGBaDtXgiQlI/jUCk8QRcjPv5VdOEg/Qz931VecOLv3pl2FLcNH1BVUPTw0jyDAtbIbuzrbGgvNUanFMUet2bUm9/+rUH/uRBhldrQup0j/bpbVVHL4y8d4mK9/SqVtDmY4/Q=
+	t=1780163223; cv=none; b=cKnQ9aptFAkHHIEOanJUC8R5Duc02IxlzFBeUsyMgs/86718CW+TwRAIm9aURKBk5X7t9TWnBu4UWGe9koZ+09GGMdMegRc8l6TZQdBs1baIrp4N7qj2dllkfHEsY02FmfccY6L9CBcEmFU8b1wkO6UcVZrqIbG58aGKXuDS1p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163220; c=relaxed/simple;
-	bh=iFr0YnJNNL9xU414DZ1X+OjF39hmVoo9dtU34o53WSw=;
+	s=arc-20240116; t=1780163223; c=relaxed/simple;
+	bh=ooFwcccv075WnkbSZ52tbQK1aLHibF9eBdFFO6gAANo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U+rvRIiJSL9z/ob79PY//K95OPOt934ss0HEuMeZdITrUXSto3DZuaiCL41Y04jP9KpusCBprTwM6jk+0IDOuIIh10k8RTvd8BNEm5ZgdpA8w38Ng1LE2YePQtDu28mURqtFa+tc85CzN4x6jWqjAmFpYGWSNasOaJTiy25eYgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzN5EkGJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E1lcKxORlO5rwDF9N7s7CPGLc98nu0jJQvf7aMMiAGPTCiLWfuveRixigA1YaNEQOQ8fEnZ0vlRdbf4+lvx99YkK2eoyo4/74pY3kt6GFP5VMjEUYUZRRLcibtot468cd7kTloXrM9ZWIyNm0+HJO0LKnHCVRN04xQRqgXNfTpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txOLPgc9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzN5EkGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668981F00893;
-	Sat, 30 May 2026 17:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txOLPgc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21C61F00893;
+	Sat, 30 May 2026 17:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163219;
-	bh=Mj2Hyw21kTd8Bnd6cdcyeQ0+BBcxCxvgODWsENx9S9I=;
+	s=korg; t=1780163222;
+	bh=QWx6aHlMxyZ9pRAx3GvSvF6rUyEGylzHzVYWWgdQQ/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GzN5EkGJ8f57IUMXSKwU6Loa0/qSoVQJuwHk9H05JUuYbKSdUcXsx88T4EXseI0Xd
-	 i0AYc/JHph6P9TATuwNcPh7tjNG7IsAKDrGWk73Dzbxy6zDIHBlsjfmKXJTuR6jph5
-	 sxyr9mCDlKPQINkBX0ZBYXDFbrnWwk8ylQYws6T4=
+	b=txOLPgc9TYpBHAIPHS4nXsw8hiAA6ehxaffDey4MklBhOzEhzOVVkW2gUhvzkEd6T
+	 wvdUl8Ysp3g+22XVfkodzYZb6ckaqgNSAAaE8acN+IFD+XWR7StrtUbiMg9J+91ONE
+	 53Ec3xECTa+u+EHigITFOGlkAppYgVI/TKYIpQzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Bean Huo <beanhuo@micron.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Robert Garcia <rob_garcia@163.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/776] scsi: ufs: core: Fix use-after free in init error and remove paths
-Date: Sat, 30 May 2026 17:58:25 +0200
-Message-ID: <20260530160245.438880015@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.15 192/776] device property: Make modifications of fwnode "flags" thread safe
+Date: Sat, 30 May 2026 17:58:26 +0200
+Message-ID: <20260530160245.468147006@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -49,260 +49,206 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit f8fb2403ddebb5eea0033d90d9daae4c88749ada ]
+commit f72e77c33e4b5657af35125e75bab249256030f3 upstream.
 
-devm_blk_crypto_profile_init() registers a cleanup handler to run when
-the associated (platform-) device is being released. For UFS, the
-crypto private data and pointers are stored as part of the ufs_hba's
-data structure 'struct ufs_hba::crypto_profile'. This structure is
-allocated as part of the underlying ufshcd and therefore Scsi_host
-allocation.
+In various places in the kernel, we modify the fwnode "flags" member
+by doing either:
+  fwnode->flags |= SOME_FLAG;
+  fwnode->flags &= ~SOME_FLAG;
 
-During driver release or during error handling in ufshcd_pltfrm_init(),
-this structure is released as part of ufshcd_dealloc_host() before the
-(platform-) device associated with the crypto call above is released.
-Once this device is released, the crypto cleanup code will run, using
-the just-released 'struct ufs_hba::crypto_profile'. This causes a
-use-after-free situation:
+This type of modification is not thread-safe. If two threads are both
+mucking with the flags at the same time then one can clobber the
+other.
 
-  Call trace:
-   kfree+0x60/0x2d8 (P)
-   kvfree+0x44/0x60
-   blk_crypto_profile_destroy_callback+0x28/0x70
-   devm_action_release+0x1c/0x30
-   release_nodes+0x6c/0x108
-   devres_release_all+0x98/0x100
-   device_unbind_cleanup+0x20/0x70
-   really_probe+0x218/0x2d0
+While flags are often modified while under the "fwnode_link_lock",
+this is not universally true.
 
-In other words, the initialisation code flow is:
+Create some accessor functions for setting, clearing, and testing the
+FWNODE flags and move all users to these accessor functions. New
+accessor functions use set_bit() and clear_bit(), which are
+thread-safe.
 
-  platform-device probe
-    ufshcd_pltfrm_init()
-      ufshcd_alloc_host()
-        scsi_host_alloc()
-          allocation of struct ufs_hba
-          creation of scsi-host devices
-    devm_blk_crypto_profile_init()
-      devm registration of cleanup handler using platform-device
-
-and during error handling of ufshcd_pltfrm_init() or during driver
-removal:
-
-  ufshcd_dealloc_host()
-    scsi_host_put()
-      put_device(scsi-host)
-        release of struct ufs_hba
-  put_device(platform-device)
-    crypto cleanup handler
-
-To fix this use-after free, change ufshcd_alloc_host() to register a
-devres action to automatically cleanup the underlying SCSI device on
-ufshcd destruction, without requiring explicit calls to
-ufshcd_dealloc_host(). This way:
-
-    * the crypto profile and all other ufs_hba-owned resources are
-      destroyed before SCSI (as they've been registered after)
-    * a memleak is plugged in tc-dwc-g210-pci.c remove() as a
-      side-effect
-    * EXPORT_SYMBOL_GPL(ufshcd_dealloc_host) can be removed fully as
-      it's not needed anymore
-    * no future drivers using ufshcd_alloc_host() could ever forget
-      adding the cleanup
-
-Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to blk_crypto_profile")
-Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ Delete modifications about ufshcd_parse_operating_points() for it's added from
-commit 72208ebe181e3("scsi: ufs: core: Add support for parsing OPP")
-and that in ufshcd_pltfrm_remove() for it's added from commit
-897df60c16d54("scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove()"). ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c2c724c868c4 ("driver core: Add fw_devlink_parse_fwtree()")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260317090112.v2.1.I0a4d03104ecd5103df3d76f66c8d21b1d15a2e38@changeid
+[ Fix fwnode_clear_flag() argument alignment, restore dropped blank
+  line in fwnode_dev_initialized(), and remove unnecessary parentheses
+  around fwnode_test_flag() calls. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ufs/ufshcd-pci.c    |  2 --
- drivers/scsi/ufs/ufshcd-pltfrm.c | 25 ++++++++-----------------
- drivers/scsi/ufs/ufshcd.c        | 31 +++++++++++++++++++++----------
- drivers/scsi/ufs/ufshcd.h        |  1 -
- 4 files changed, 29 insertions(+), 30 deletions(-)
+ drivers/base/core.c        |   12 ++++++------
+ drivers/net/phy/mdio_bus.c |    4 ++--
+ drivers/of/property.c      |    2 +-
+ include/linux/fwnode.h     |   40 +++++++++++++++++++++++++++++++---------
+ 4 files changed, 40 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufshcd-pci.c b/drivers/scsi/ufs/ufshcd-pci.c
-index ec483ece09b6c..351e6915c33c4 100644
---- a/drivers/scsi/ufs/ufshcd-pci.c
-+++ b/drivers/scsi/ufs/ufshcd-pci.c
-@@ -554,7 +554,6 @@ static void ufshcd_pci_remove(struct pci_dev *pdev)
- 	pm_runtime_forbid(&pdev->dev);
- 	pm_runtime_get_noresume(&pdev->dev);
- 	ufshcd_remove(hba);
--	ufshcd_dealloc_host(hba);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -171,7 +171,7 @@ void fw_devlink_purge_absent_suppliers(s
+ 	if (fwnode->dev)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	fwnode_links_purge_consumers(fwnode);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -1620,11 +1620,11 @@ bool fw_devlink_is_strict(void)
+ 
+ static void fw_devlink_parse_fwnode(struct fwnode_handle *fwnode)
+ {
+-	if (fwnode->flags & FWNODE_FLAG_LINKS_ADDED)
++	if (fwnode_test_flag(fwnode, FWNODE_FLAG_LINKS_ADDED))
+ 		return;
+ 
+ 	fwnode_call_int_op(fwnode, add_links);
+-	fwnode->flags |= FWNODE_FLAG_LINKS_ADDED;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_LINKS_ADDED);
  }
  
- /**
-@@ -599,7 +598,6 @@ ufshcd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	err = ufshcd_init(hba, mmio_base, pdev->irq);
- 	if (err) {
- 		dev_err(&pdev->dev, "Initialization failed\n");
--		ufshcd_dealloc_host(hba);
- 		return err;
+ static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
+@@ -1765,7 +1765,7 @@ static int fw_devlink_create_devlink(str
+ 	 * When such a flag is set, we can't create device links where P is the
+ 	 * supplier of C as that would delay the probe of C.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD &&
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD) &&
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+@@ -1777,7 +1777,7 @@ static int fw_devlink_create_devlink(str
+ 		 * supplier device indefinitely.
+ 		 */
+ 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
+-		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
++		    fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
+@@ -1802,7 +1802,7 @@ static int fw_devlink_create_devlink(str
  	}
  
-diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c b/drivers/scsi/ufs/ufshcd-pltfrm.c
-index adc302b1a57ae..c254d5f697fc3 100644
---- a/drivers/scsi/ufs/ufshcd-pltfrm.c
-+++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
-@@ -339,21 +339,17 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
- 	struct device *dev = &pdev->dev;
+ 	/* Supplier that's already initialized without a struct device. */
+-	if (sup_handle->flags & FWNODE_FLAG_INITIALIZED)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED))
+ 		return -EINVAL;
  
- 	mmio_base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(mmio_base)) {
--		err = PTR_ERR(mmio_base);
--		goto out;
--	}
-+	if (IS_ERR(mmio_base))
-+		return PTR_ERR(mmio_base);
+ 	/*
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -534,8 +534,8 @@ int __mdiobus_register(struct mii_bus *b
+ 		return -EINVAL;
  
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		err = irq;
--		goto out;
--	}
-+	if (irq < 0)
-+		return irq;
+ 	if (bus->parent && bus->parent->of_node)
+-		bus->parent->of_node->fwnode.flags |=
+-					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
++		fwnode_set_flag(&bus->parent->of_node->fwnode,
++				FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD);
  
- 	err = ufshcd_alloc_host(dev, &hba);
- 	if (err) {
- 		dev_err(&pdev->dev, "Allocation failed\n");
--		goto out;
-+		return err;
- 	}
+ 	BUG_ON(bus->state != MDIOBUS_ALLOCATED &&
+ 	       bus->state != MDIOBUS_UNREGISTERED);
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1130,7 +1130,7 @@ static int of_link_to_phandle(struct dev
+ 	sup_dev = get_dev_from_fwnode(&sup_np->fwnode);
+ 	if (!sup_dev &&
+ 	    (of_node_check_flag(sup_np, OF_POPULATED) ||
+-	     sup_np->fwnode.flags & FWNODE_FLAG_NOT_DEVICE)) {
++	     fwnode_test_flag(&sup_np->fwnode, FWNODE_FLAG_NOT_DEVICE))) {
+ 		pr_debug("Not linking %pOFP to %pOFP - No struct device\n",
+ 			 con_np, sup_np);
+ 		of_node_put(sup_np);
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -11,6 +11,7 @@
  
- 	hba->vops = vops;
-@@ -362,13 +358,13 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
- 	if (err) {
- 		dev_err(&pdev->dev, "%s: clock parse failed %d\n",
- 				__func__, err);
--		goto dealloc_host;
-+		return err;
- 	}
- 	err = ufshcd_parse_regulator_info(hba);
- 	if (err) {
- 		dev_err(&pdev->dev, "%s: regulator init failed %d\n",
- 				__func__, err);
--		goto dealloc_host;
-+		return err;
- 	}
+ #include <linux/types.h>
+ #include <linux/list.h>
++#include <linux/bitops.h>
+ #include <linux/err.h>
  
- 	ufshcd_init_lanes_per_dir(hba);
-@@ -376,18 +372,13 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
- 	err = ufshcd_init(hba, mmio_base, irq);
- 	if (err) {
- 		dev_err(dev, "Initialization failed\n");
--		goto dealloc_host;
-+		return err;
- 	}
+ struct fwnode_operations;
+@@ -27,10 +28,10 @@ struct device;
+  *			     their respective drivers as soon as they are
+  *			     added.
+  */
+-#define FWNODE_FLAG_LINKS_ADDED			BIT(0)
+-#define FWNODE_FLAG_NOT_DEVICE			BIT(1)
+-#define FWNODE_FLAG_INITIALIZED			BIT(2)
+-#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
++#define FWNODE_FLAG_LINKS_ADDED			0
++#define FWNODE_FLAG_NOT_DEVICE			1
++#define FWNODE_FLAG_INITIALIZED			2
++#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	3
  
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+ struct fwnode_handle {
+ 	struct fwnode_handle *secondary;
+@@ -38,7 +39,7 @@ struct fwnode_handle {
+ 	struct device *dev;
+ 	struct list_head suppliers;
+ 	struct list_head consumers;
+-	u8 flags;
++	unsigned long flags;
+ };
  
- 	return 0;
--
--dealloc_host:
--	ufshcd_dealloc_host(hba);
--out:
--	return err;
- }
- EXPORT_SYMBOL_GPL(ufshcd_pltfrm_init);
- 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 55eaf04d75932..637607868f554 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -9322,16 +9322,6 @@ void ufshcd_remove(struct ufs_hba *hba)
- }
- EXPORT_SYMBOL_GPL(ufshcd_remove);
- 
--/**
-- * ufshcd_dealloc_host - deallocate Host Bus Adapter (HBA)
-- * @hba: pointer to Host Bus Adapter (HBA)
-- */
--void ufshcd_dealloc_host(struct ufs_hba *hba)
--{
--	scsi_host_put(hba->host);
--}
--EXPORT_SYMBOL_GPL(ufshcd_dealloc_host);
--
- /**
-  * ufshcd_set_dma_mask - Set dma mask based on the controller
-  *			 addressing capability
-@@ -9348,11 +9338,25 @@ static int ufshcd_set_dma_mask(struct ufs_hba *hba)
- 	return dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(32));
+ struct fwnode_link {
+@@ -176,16 +177,37 @@ static inline void fwnode_init(struct fw
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
  }
  
-+/**
-+ * ufshcd_devres_release - devres cleanup handler, invoked during release of
-+ *			   hba->dev
-+ * @host: pointer to SCSI host
-+ */
-+static void ufshcd_devres_release(void *host)
++static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
++				   unsigned int bit)
 +{
-+	scsi_host_put(host);
++	set_bit(bit, &fwnode->flags);
 +}
 +
- /**
-  * ufshcd_alloc_host - allocate Host Bus Adapter (HBA)
-  * @dev: pointer to device handle
-  * @hba_handle: driver private handle
-  * Returns 0 on success, non-zero value on failure
-+ *
-+ * NOTE: There is no corresponding ufshcd_dealloc_host() because this function
-+ * keeps track of its allocations using devres and deallocates everything on
-+ * device removal automatically.
-  */
- int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
++static inline void fwnode_clear_flag(struct fwnode_handle *fwnode,
++				     unsigned int bit)
++{
++	clear_bit(bit, &fwnode->flags);
++}
++
++static inline void fwnode_assign_flag(struct fwnode_handle *fwnode,
++				      unsigned int bit, bool value)
++{
++	assign_bit(bit, &fwnode->flags, value);
++}
++
++static inline bool fwnode_test_flag(struct fwnode_handle *fwnode,
++				    unsigned int bit)
++{
++	return test_bit(bit, &fwnode->flags);
++}
++
+ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 					  bool initialized)
  {
-@@ -9374,6 +9378,13 @@ int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
- 		err = -ENOMEM;
- 		goto out_error;
- 	}
-+
-+	err = devm_add_action_or_reset(dev, ufshcd_devres_release,
-+				       host);
-+	if (err)
-+		return dev_err_probe(dev, err,
-+				     "failed to add ufshcd dealloc action\n");
-+
- 	hba = shost_priv(host);
- 	hba->host = host;
- 	hba->dev = dev;
-diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
-index c8513cc6c2bdd..3ceac158c7f36 100644
---- a/drivers/scsi/ufs/ufshcd.h
-+++ b/drivers/scsi/ufs/ufshcd.h
-@@ -1001,7 +1001,6 @@ static inline void ufshcd_rmwl(struct ufs_hba *hba, u32 mask, u32 val, u32 reg)
+ 	if (IS_ERR_OR_NULL(fwnode))
+ 		return;
+ 
+-	if (initialized)
+-		fwnode->flags |= FWNODE_FLAG_INITIALIZED;
+-	else
+-		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
++	fwnode_assign_flag(fwnode, FWNODE_FLAG_INITIALIZED, initialized);
  }
  
- int ufshcd_alloc_host(struct device *, struct ufs_hba **);
--void ufshcd_dealloc_host(struct ufs_hba *);
- int ufshcd_hba_enable(struct ufs_hba *hba);
- int ufshcd_init(struct ufs_hba *, void __iomem *, unsigned int);
- int ufshcd_link_recovery(struct ufs_hba *hba);
--- 
-2.53.0
-
+ extern u32 fw_devlink_get_flags(void);
 
 
