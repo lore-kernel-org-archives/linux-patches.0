@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417463AA195;
-	Sat, 30 May 2026 16:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFE434EF07;
+	Sat, 30 May 2026 16:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160166; cv=none; b=eQ6wgLUF+JGkMYN7dq8MbL3A8APd0uuGkUN6GxZlzqKzITOBUk2IcOLZbIavb/EXy2wYceiM3grn6BT8w+ZabyNJHJUHRDE5/B6C5Gw43tDnSGbiclRS5W97y+ME2vHXgydHxGbRSjI88Yz1qiWIOPx92lmDaz0LDGiD74OJcEI=
+	t=1780160169; cv=none; b=WT/ahc6jEujLLRklaLgKa44EK1HV/oUOD/8FYGZdadlRtQpzQOVVuTQ1r14txgA0z7D+QWOc5rtN95gUnHuLIfDZUxyPtk7PuHpQdnB07lNrp/RrFrm/bM0JhU+5o4McR7Ws6eMnJVcMWLrdBrknM7a8mAByPQVN1nF7cAczerc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160166; c=relaxed/simple;
-	bh=1dww9ixGLu3yL8/IMDJ8nU7cJX5ezrW6yNwpc3mkv84=;
+	s=arc-20240116; t=1780160169; c=relaxed/simple;
+	bh=s0Ld6URctJh7M6B1T9IORZMtVSJ057e8W96qn3qtkGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egLlygXA8X5j0RbOD94etUNtyUC54m4BvCdY5yM/0Kg3YQyNVPqI3KZlPkqh4DSaHGo1bcU9dEekGKHdleHCreTQTqNYOva79WvGxe/+MRBR+HZBl49y5GkgD+TvOmZJ0hzr1YkTI19cEU0+ulv2pkB+FNhy9vaNxxL2F8s8Jtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n291KGsF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G77bY46UKvEAjypE3Z9o8yIzMc/DF0TxB6aFDtJ7cBEVhRKDJngyIwy9BAUR1/M87BPeR06OVmDCf6qdpip4w8keN7xHgmHAPEwmVVf/Fiv72RCxNi72MfkiPFPg6eesTbqQJ3ATR3ec6uCzFO2GfOAxSrbGKonWVHMHOdOxzLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXPurYHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n291KGsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0271F00893;
-	Sat, 30 May 2026 16:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXPurYHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E6D1F00893;
+	Sat, 30 May 2026 16:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160165;
-	bh=ewmOZDA2B7YE5LaRcM/ak8WhNg0bzDf5ZAH0JufRW3o=;
+	s=korg; t=1780160168;
+	bh=uzEzZLqEjO9W9rBdvrJ8GlAYzMgFjDFGiFoVBhu18t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n291KGsFl7cKbZdYb3QtNcqT3TJh3eQV1mTgG270u33sVYciL3Mj2OBoxQTczMtCd
-	 T3M5rjitpvGGCC3F73cb6QfKw/X93JkFnHtMvE1lbTGlCU5lUXiDeg+VXFijaVJfi8
-	 nvMCE0ctBOjo1EqoKKMMswssh3QJhLQz0D8xR9CU=
+	b=xXPurYHc5zwt2WZqmDFhMp3ob/T6EVHrOk295ayEcivryUSQxbhcz1Wh/QCQWEYwM
+	 kM/5HZKSU6foXupGPJjyUe21K0AFyWYpYo4lDD3IGs73+tEJa/BbvwLv4hW7IIRdQe
+	 EJjNMw3ZHG4mBkOJegmX5wQuMpLKmgcY8ewPUsHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 262/969] dm mirror: fix integer overflow in create_dirty_log()
-Date: Sat, 30 May 2026 17:56:26 +0200
-Message-ID: <20260530160307.715557488@linuxfoundation.org>
+	Chen Zhao <chezhao@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.1 263/969] IB/core: Fix zero dmac race in neighbor resolution
+Date: Sat, 30 May 2026 17:56:27 +0200
+Message-ID: <20260530160307.741551087@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,53 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Chen Zhao <chezhao@nvidia.com>
 
-commit 4c788c6f921b22f9b6c3f316c4a071c05683e7de upstream.
+commit 5e6de34d82b49cab9d8a42063e9cd0f22a4f31e5 upstream.
 
-The argument count calculation in create_dirty_log() performs
-`*args_used = 2 + param_count` before validating against argc. When a
-user provides a param_count close to UINT_MAX via the device mapper
-table string, this unsigned addition wraps around to a small value,
-causing the subsequent `argc < *args_used` check to be bypassed.
+dst_fetch_ha() checks nud_state without holding the neighbor lock, then
+copies ha under the seqlock. A race in __neigh_update() where nud_state
+is set to NUD_REACHABLE before ha is written allows dst_fetch_ha() to
+read a zero MAC address while the seqlock reports no concurrent writer.
 
-The overflowed param_count is then passed as argc to dm_dirty_log_create(),
-where it can cause out-of-bounds reads on the argv array.
+netevent_callback amplifies this by waking ALL pending addr_req workers
+when ANY neighbor becomes NUD_VALID. At scale (N peers resolving ARP
+concurrently), the hit probability scales as N^2, making it near-certain
+for large RDMA workloads.
 
-Fix by comparing param_count against argc - 2 before performing the
-addition, following the same pattern used by parse_features() in the
-same file. Since argc >= 2 is already guaranteed, the subtraction is
-safe.
+N(A): neigh_update(A)                   W(A): addr_resolve(A)
+ |                                       [sleep]
+ | write_lock_bh(&A->lock)               |
+ | A->nud_state = NUD_REACHABLE          |
+ | // A->ha is still 0                   |
+ |                                       [woken by netevent_cb() of
+ |                                         another neighbour]
+ |                                       | dst_fetch_ha(A)
+ |                                       |   A->nud_state & NUD_VALID
+ |                                       |   read_seqbegin(&A->ha_lock)
+ |                                       |   snapshot = A->ha  /* 0 */
+ |                                       |   read_seqretry(&A->ha_lock)
+ |                                       |   return snapshot
+ | seqlock(&A->ha_lock)
+ | A->ha = mac_A     /* too late */
+ | sequnlock(&A->ha_lock)
+ | write_unlock_bh(&A->lock)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+The incorrect/zero mac is read and programmed in the device QP while it
+was not yet updated. This causes silent packet loss and eventual
+RETRY_EXC_ERR.
+
+Fix by holding the neighbor read lock across the nud_state check and
+ha copy in dst_fetch_ha(), ensuring it synchronizes with
+__neigh_update() which is updating while holding the write lock.
+
 Cc: stable@vger.kernel.org
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 92ebb6a0a13a ("IB/cm: Remove now useless rcu_lock in dst_fetch_ha")
+Link: https://patch.msgid.link/r/20260405-fix-dmac-race-v1-1-cfa1ec2ce54a@nvidia.com
+Signed-off-by: Chen Zhao <chezhao@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid1.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/addr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -978,13 +978,13 @@ static struct dm_dirty_log *create_dirty
- 		return NULL;
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -321,11 +321,14 @@ static int dst_fetch_ha(const struct dst
+ 	if (!n)
+ 		return -ENODATA;
+ 
++	read_lock_bh(&n->lock);
+ 	if (!(n->nud_state & NUD_VALID)) {
++		read_unlock_bh(&n->lock);
+ 		neigh_event_send(n, NULL);
+ 		ret = -ENODATA;
+ 	} else {
+ 		neigh_ha_snapshot(dev_addr->dst_dev_addr, n, dst->dev);
++		read_unlock_bh(&n->lock);
  	}
  
--	*args_used = 2 + param_count;
--
--	if (argc < *args_used) {
-+	if (param_count > argc - 2) {
- 		ti->error = "Insufficient mirror log arguments";
- 		return NULL;
- 	}
- 
-+	*args_used = 2 + param_count;
-+
- 	dl = dm_dirty_log_create(argv[0], ti, mirror_flush, param_count,
- 				 argv + 2);
- 	if (!dl) {
+ 	neigh_release(n);
 
 
