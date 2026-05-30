@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF30274FDC;
-	Sat, 30 May 2026 18:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3271274FDC;
+	Sat, 30 May 2026 18:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165054; cv=none; b=FTm0ug+l6x8czDGT7W3eYwNAhTMfHBhAsj8aPQMoE05Lu31W3jGSbLIFtcrxewm/HjonIyvCAgdAX6PjcI890CQAkE62WiYmkox8f4qx/RaJ6gqoTZFkGCCk/7d6/JQXWFN6pSf+Ksr+trsL5XG6au99ntFBr8JDsu7486MnZlQ=
+	t=1780165057; cv=none; b=bRu07B6oMl7K5AIuby19CMjjy1wycQtCDwntiFBEBjjjrakuJPuRN8EITPCSf5OCpmqZveSYQ/OIpY9BRCzxDpIPi9+fJ7qLuB9owyZnX7lR7uX/L64JvJV9vLXL0TdQuAjCP4NsNlaqD9Cl/kMm/uSkhUrrYmFkJWLOpTJ8/bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165054; c=relaxed/simple;
-	bh=/bubKD/QfBtK65O5ji/xfr4C+R9LoLe7Vv8LIROEEkE=;
+	s=arc-20240116; t=1780165057; c=relaxed/simple;
+	bh=Wc1JgrDw9joBL95HwH4K4Qut3FvYDhtAmX2AQpK3qHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9fY+nK3d6ovvSEKVLOzYKrRPDMsp/r0TaDcPD2Fcyy2a/G2TbVO1+gyTkLZgtDM3lcGBvZtVW2Mag03aKXPNwh6aLx3vKht1BiwvRoyRRDxx1xcSj+PhFjGZrtpJcHwX5n73TEssmpP4GS36PnVA1U+OLY7eVzULpE2oWArQCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0UU3u1H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hZu8hmDJsLZkbu0TiykCa+HzmmaBi4r547N2oNzeFXzErbXhoPwn3Qu0nHHmz88efzk/0V092cRDju5TSSf4PGM9ZenlR+VWwye3yM0VHF8oPz+Wr+stD/jhcnkpOwfyynAEqjejiJpa2+uOytPzxZli3D0RvTe4HDqlcG9Eg+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S59t6cFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0UU3u1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7029E1F00893;
-	Sat, 30 May 2026 18:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S59t6cFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72891F00893;
+	Sat, 30 May 2026 18:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165053;
-	bh=fvpwNiYBfWu/yfxpcKCbsXFZapV98LqW9IXnh71mb6A=;
+	s=korg; t=1780165056;
+	bh=Oc0bYAPWumeuHSys8o2mYMw7uC8iLlyHo7m+hAdv82s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A0UU3u1Hww6tJkTPOcs+J6KYpQ/2F1K65jd2wlMM9GxDB1yS3YjqQG9mhHOunHbs8
-	 ZGaG0YzBwiajafR2BWurGuKpzPFfVBtGMdS0g24ABd3GhENaQZnlI4KDLOXfJnseVP
-	 GBz7IIBgNmcFjUXxZlZAiHY0Oe3LTbPMHcqoQaG4=
+	b=S59t6cFKObLdVFFNtQloBFs7SylV3hE/NBHm8+qclZZyJ5yOeyrRUNVEWsx+04nlh
+	 G9qbedJfCp/DBkgeevrglNXzyRTTpAiqdDC83aN9IZ/q1Qfj51HdnatCpSDjez6q/h
+	 hczyXebWx/pYeuN1iq/IGA97ggSTQuQa+XKuwXjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Simon Horman <horms@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 736/776] netfilter: arptables: Select NETFILTER_FAMILY_ARP when building arp_tables.c
-Date: Sat, 30 May 2026 18:07:30 +0200
-Message-ID: <20260530160258.824476030@linuxfoundation.org>
+Subject: [PATCH 5.15 737/776] netfilter: Make legacy configs user selectable
+Date: Sat, 30 May 2026 18:07:31 +0200
+Message-ID: <20260530160258.846920784@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,109 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 15fba562f7a9f04322b8bfc8f392e04bb93d81be ]
+[ Upstream commit 6c959fd5e17387201dba3619b2e6af213939a0a7 ]
 
-syzkaller started to report a warning below [0] after consuming the
-commit 4654467dc7e1 ("netfilter: arptables: allow xtables-nft only
-builds").
+This option makes legacy Netfilter Kconfig user selectable, giving users
+the option to configure iptables without enabling any other config.
 
-The change accidentally removed the dependency on NETFILTER_FAMILY_ARP
-from IP_NF_ARPTABLES.
+Make the following KConfig entries user selectable:
+ * BRIDGE_NF_EBTABLES_LEGACY
+ * IP_NF_ARPTABLES
+ * IP_NF_IPTABLES_LEGACY
+ * IP6_NF_IPTABLES_LEGACY
 
-If NF_TABLES_ARP is not enabled on Kconfig, NETFILTER_FAMILY_ARP will
-be removed and some code necessary for arptables will not be compiled.
-
-  $ grep -E "(NETFILTER_FAMILY_ARP|IP_NF_ARPTABLES|NF_TABLES_ARP)" .config
-  CONFIG_NETFILTER_FAMILY_ARP=y
-  # CONFIG_NF_TABLES_ARP is not set
-  CONFIG_IP_NF_ARPTABLES=y
-
-  $ make olddefconfig
-
-  $ grep -E "(NETFILTER_FAMILY_ARP|IP_NF_ARPTABLES|NF_TABLES_ARP)" .config
-  # CONFIG_NF_TABLES_ARP is not set
-  CONFIG_IP_NF_ARPTABLES=y
-
-So, when nf_register_net_hooks() is called for arptables, it will
-trigger the splat below.
-
-Now IP_NF_ARPTABLES is only enabled by IP_NF_ARPFILTER, so let's
-restore the dependency on NETFILTER_FAMILY_ARP in IP_NF_ARPFILTER.
-
-[0]:
-WARNING: CPU: 0 PID: 242 at net/netfilter/core.c:316 nf_hook_entry_head+0x1e1/0x2c0 net/netfilter/core.c:316
-Modules linked in:
-CPU: 0 PID: 242 Comm: syz-executor.0 Not tainted 6.8.0-12821-g537c2e91d354 #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:nf_hook_entry_head+0x1e1/0x2c0 net/netfilter/core.c:316
-Code: 83 fd 04 0f 87 bc 00 00 00 e8 5b 84 83 fd 4d 8d ac ec a8 0b 00 00 e8 4e 84 83 fd 4c 89 e8 5b 5d 41 5c 41 5d c3 e8 3f 84 83 fd <0f> 0b e8 38 84 83 fd 45 31 ed 5b 5d 4c 89 e8 41 5c 41 5d c3 e8 26
-RSP: 0018:ffffc90000b8f6e8 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: ffffffff83c42164
-RDX: ffff888106851180 RSI: ffffffff83c42321 RDI: 0000000000000005
-RBP: 0000000000000000 R08: 0000000000000005 R09: 000000000000000a
-R10: 0000000000000003 R11: ffff8881055c2f00 R12: ffff888112b78000
-R13: 0000000000000000 R14: ffff8881055c2f00 R15: ffff8881055c2f00
-FS:  00007f377bd78800(0000) GS:ffff88811b000000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000496068 CR3: 000000011298b003 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- __nf_register_net_hook+0xcd/0x7a0 net/netfilter/core.c:428
- nf_register_net_hook+0x116/0x170 net/netfilter/core.c:578
- nf_register_net_hooks+0x5d/0xc0 net/netfilter/core.c:594
- arpt_register_table+0x250/0x420 net/ipv4/netfilter/arp_tables.c:1553
- arptable_filter_table_init+0x41/0x60 net/ipv4/netfilter/arptable_filter.c:39
- xt_find_table_lock+0x2e9/0x4b0 net/netfilter/x_tables.c:1260
- xt_request_find_table_lock+0x2b/0xe0 net/netfilter/x_tables.c:1285
- get_info+0x169/0x5c0 net/ipv4/netfilter/arp_tables.c:808
- do_arpt_get_ctl+0x3f9/0x830 net/ipv4/netfilter/arp_tables.c:1444
- nf_getsockopt+0x76/0xd0 net/netfilter/nf_sockopt.c:116
- ip_getsockopt+0x17d/0x1c0 net/ipv4/ip_sockglue.c:1777
- tcp_getsockopt+0x99/0x100 net/ipv4/tcp.c:4373
- do_sock_getsockopt+0x279/0x360 net/socket.c:2373
- __sys_getsockopt+0x115/0x1e0 net/socket.c:2402
- __do_sys_getsockopt net/socket.c:2412 [inline]
- __se_sys_getsockopt net/socket.c:2409 [inline]
- __x64_sys_getsockopt+0xbd/0x150 net/socket.c:2409
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
-RIP: 0033:0x7f377beca6fe
-Code: 1f 44 00 00 48 8b 15 01 97 0a 00 f7 d8 64 89 02 b8 ff ff ff ff eb b8 0f 1f 44 00 00 f3 0f 1e fa 49 89 ca b8 37 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 0a c3 66 0f 1f 84 00 00 00 00 00 48 8b 15 c9
-RSP: 002b:00000000005df728 EFLAGS: 00000246 ORIG_RAX: 0000000000000037
-RAX: ffffffffffffffda RBX: 00000000004966e0 RCX: 00007f377beca6fe
-RDX: 0000000000000060 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 000000000042938a R08: 00000000005df73c R09: 00000000005df800
-R10: 00000000004966e8 R11: 0000000000000246 R12: 0000000000000003
-R13: 0000000000496068 R14: 0000000000000003 R15: 00000000004bc9d8
- </TASK>
-
-Fixes: 4654467dc7e1 ("netfilter: arptables: allow xtables-nft only builds")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: b4597d5fd7d2 ("netfilter: x_tables: add and use xtables_unregister_table_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/bridge/netfilter/Kconfig |  8 +++++++-
+ net/ipv4/netfilter/Kconfig   | 16 ++++++++++++++--
+ net/ipv6/netfilter/Kconfig   |  9 ++++++++-
+ 3 files changed, 29 insertions(+), 4 deletions(-)
 
+diff --git a/net/bridge/netfilter/Kconfig b/net/bridge/netfilter/Kconfig
+index 104c0125e32e8..f16bbbbb94817 100644
+--- a/net/bridge/netfilter/Kconfig
++++ b/net/bridge/netfilter/Kconfig
+@@ -41,7 +41,13 @@ config NF_CONNTRACK_BRIDGE
+ 
+ # old sockopt interface and eval loop
+ config BRIDGE_NF_EBTABLES_LEGACY
+-	tristate
++	tristate "Legacy EBTABLES support"
++	depends on BRIDGE && NETFILTER_XTABLES
++	default n
++	help
++	 Legacy ebtables packet/frame classifier.
++	 This is not needed if you are using ebtables over nftables
++	 (iptables-nft).
+ 
+ menuconfig BRIDGE_NF_EBTABLES
+ 	tristate "Ethernet Bridge tables (ebtables) support"
 diff --git a/net/ipv4/netfilter/Kconfig b/net/ipv4/netfilter/Kconfig
-index 18f60e675c438..e752a07a871fe 100644
+index e752a07a871fe..2e540786f9512 100644
 --- a/net/ipv4/netfilter/Kconfig
 +++ b/net/ipv4/netfilter/Kconfig
-@@ -351,6 +351,7 @@ config NFT_COMPAT_ARP
- config IP_NF_ARPFILTER
- 	tristate "arptables-legacy packet filtering support"
- 	select IP_NF_ARPTABLES
-+	select NETFILTER_FAMILY_ARP
- 	depends on NETFILTER_XTABLES
- 	help
- 	  ARP packet filtering defines a table `filter', which has a series of
+@@ -12,7 +12,13 @@ config NF_DEFRAG_IPV4
+ 
+ # old sockopt interface and eval loop
+ config IP_NF_IPTABLES_LEGACY
+-	tristate
++	tristate "Legacy IP tables support"
++	default	n
++	select NETFILTER_XTABLES
++	help
++	  iptables is a legacy packet classifier.
++	  This is not needed if you are using iptables over nftables
++	  (iptables-nft).
+ 
+ config NF_SOCKET_IPV4
+ 	tristate "IPv4 socket lookup support"
+@@ -340,7 +346,13 @@ endif # IP_NF_IPTABLES
+ 
+ # ARP tables
+ config IP_NF_ARPTABLES
+-	tristate
++	tristate "Legacy ARPTABLES support"
++	depends on NETFILTER_XTABLES
++	default n
++	help
++	  arptables is a legacy packet classifier.
++	  This is not needed if you are using arptables over nftables
++	  (iptables-nft).
+ 
+ config NFT_COMPAT_ARP
+ 	tristate
+diff --git a/net/ipv6/netfilter/Kconfig b/net/ipv6/netfilter/Kconfig
+index bc51a77fb6c07..670d23f926e62 100644
+--- a/net/ipv6/netfilter/Kconfig
++++ b/net/ipv6/netfilter/Kconfig
+@@ -8,7 +8,14 @@ menu "IPv6: Netfilter Configuration"
+ 
+ # old sockopt interface and eval loop
+ config IP6_NF_IPTABLES_LEGACY
+-	tristate
++	tristate "Legacy IP6 tables support"
++	depends on INET && IPV6
++	select NETFILTER_XTABLES
++	default n
++	help
++	  ip6tables is a legacy packet classifier.
++	  This is not needed if you are using iptables over nftables
++	  (iptables-nft).
+ 
+ config NF_SOCKET_IPV6
+ 	tristate "IPv6 socket lookup support"
 -- 
 2.53.0
 
