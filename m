@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5A7241C8C;
-	Sat, 30 May 2026 18:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF46241C8C;
+	Sat, 30 May 2026 18:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164996; cv=none; b=uMByl0BzQ+DPdw4ariPLRuB8iDrRYi0tuJsGDIDzhIolMH0x9oXtn4LU9PN0BT5Gn3Gf7ZFiRF1QXQ+xHlWIShsPZkW9Bfjk/8l0CTyqAC9exS/KhmKcbzR5z0k8Qlvs9lasybrvM3MWj2fkoZzDLRg4mE6iH1E/z9UvyVNwZGo=
+	t=1780164999; cv=none; b=TCiar7/ihv2LFZNAMQrLeOYmpIBGFQ/dp021yr2eXtpDYO2sVeDOnVF26a6bsoXPcSPpBSMD33Qtbpplg2smYPhRQaaf8Fr81Rug9/ygUTundHpn8IWOwkQ/5t2AYcehu56JRnnnn4X6k7nv7pR1UMRD1QqyPgy1dmMq8iYAQdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164996; c=relaxed/simple;
-	bh=Qr7gFVPIJNgzx1P75U5CADfIMMibo/oF3LLpPtnzxWQ=;
+	s=arc-20240116; t=1780164999; c=relaxed/simple;
+	bh=dtzQkS6mniZyrnaFd+jnXkSXEV4Vl+5wXT72xlWYSn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgmY7I+Di6F0V6vSSGF4n+v+houj3IzH/+iaCLedLgu4UuJQev9Cn1WtYIpE/nPOigifdlbiULdwre/Mvnn7zFfPHNKHPTwwF45/jcTJ4F9OQYx+a79yIOl1HL2m0jI5+SzRs3UGAzxAt7Vuh4KOjv+3eUjId1Cgs9IS6Fz/vYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv8ly2WJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjAPyMRDqBXckV0Gs4Ge42xccPUIrjlq8Mr6kw1XgO8uuVJaxYFcAHTkPHhU9jEfCBlBtStZu6pKtTwrce+L9UDoCY9MqhMkH0Gjpl/XGAaYOyALM0mojccbBg3g3fX+XpNv9zU6SBTa4FdNeIDxnTVOUs+coLGPIAMvSC7Os9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nET46q9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv8ly2WJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A701F00893;
-	Sat, 30 May 2026 18:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nET46q9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF651F00893;
+	Sat, 30 May 2026 18:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164994;
-	bh=R9Mm6yXtAni1E3wvzjBcVBTsWSGmQwpIVUrbNrmOTaY=;
+	s=korg; t=1780164998;
+	bh=LchWMPfSPKoEdEddtxSFFR9qOPNQKcVt2s0zLcdzyFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jv8ly2WJpbgNixo1LQv/vnbVVw6NWk/DJ6AQCG19cfeP6Sc7ebMwZh639AZ6GKjnL
-	 r9cgmb744s0FIftght8HScyq09TsxEvk8oKKB5Jgft3+hOYvid6INAuhzBGE1m8s9l
-	 GwAlGkV3zqxyK4EDH6+DGmeNxsRHaki5uW+trYoo=
+	b=nET46q9ozk6fzhwkuG0IKHuaAqjYwggSBmW99uhByX+QLoB3Mwte26zDE1ig18++f
+	 b+nXlWipbmRi53ZLE/9dpCwT0f64J5mFZcrueIbsQw79CRzNwgX/L6n/zl5LfVLoro
+	 oZrZlcpEhbAVAYdtJwvV5ZqSJ7x57p9skEjfLPxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Nan Li <tonanli66@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 689/776] netfilter: ipset: stop hash:* range iteration at end
-Date: Sat, 30 May 2026 18:06:43 +0200
-Message-ID: <20260530160257.660793169@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 690/776] ring-buffer: Fix reporting of missed events in iterator
+Date: Sat, 30 May 2026 18:06:44 +0200
+Message-ID: <20260530160257.683601237@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -56,130 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nan Li <tonanli66@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 0d3a282ab5f165fc207ff49ea5b6ad8f54616bd6 upstream.
+commit a254b6d13b0edd6272926674d2afc46d46e496b7 upstream.
 
-The following hash set variants:
+When tracing is active while reading the trace file, if the iterator
+reading the buffer detects that the writer has passed the iterator head,
+it will reset and set a "missed events" flag. This flag is passed to the
+output processing to show the user that events were missed:
 
-hash:ip,mark
-hash:ip,port
-hash:ip,port,ip
-hash:ip,port,net
+  CPU:4 [LOST EVENTS]
 
-iterate IPv4 ranges with a 32-bit iterator.
+The problem is that the flag is reset after it is checked in
+ring_buffer_iter_dropped(). But the "trace" file iterates over all the CPU
+ring buffers and it will check if they are dropped when figuring out which
+buffer to print next. This prematurely clears the missed_events flag if
+the CPU buffer with the missed events is not the one that is printed next.
 
-The iterator must stop once the last address in the requested range has
-been processed. Advancing it once more can move the traversal state past
-the end of the request, so a later retry may continue from an unintended
-position.
+On the iteration where the CPU buffer with the missed events is printed,
+the check if it had missed events would return false and the output does
+not show that events were missed.
 
-Handle the iterator increment explicitly at the end of the loop and stop
-once the upper bound has been processed. This keeps the existing retry
-behaviour intact for valid ranges while preventing traversal from
-continuing past the original boundary.
+Do not reset the missed_events flag when checking if there were missed
+events, but instead clear it when moving the iterator head to the next
+event.
 
-Fixes: 48596a8ddc46 ("netfilter: ipset: Fix adding an IPv4 range containing more than 2^31 addresses")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260520220801.4fd09d13@fedora
+Fixes: c9b7a4a72ff64 ("ring-buffer/tracing: Have iterator acknowledge dropped events")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_ipmark.c    |    6 +++++-
- net/netfilter/ipset/ip_set_hash_ipport.c    |    5 ++++-
- net/netfilter/ipset/ip_set_hash_ipportip.c  |    5 ++++-
- net/netfilter/ipset/ip_set_hash_ipportnet.c |    5 ++++-
- 4 files changed, 17 insertions(+), 4 deletions(-)
+ kernel/trace/ring_buffer.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_hash_ipmark.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipmark.c
-@@ -150,7 +150,7 @@ hash_ipmark4_uadt(struct ip_set *set, st
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4346,6 +4346,7 @@ static void rb_iter_reset(struct ring_bu
+ 	iter->head_page = cpu_buffer->reader_page;
+ 	iter->head = cpu_buffer->reader_page->read;
+ 	iter->next_event = iter->head;
++	iter->missed_events = 0;
  
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++, i++) {
-+	for (; ip <= ip_to; i++) {
- 		e.ip = htonl(ip);
- 		if (i > IPSET_MAX_RANGE) {
- 			hash_ipmark4_data_next(&h->next, &e);
-@@ -162,6 +162,10 @@ hash_ipmark4_uadt(struct ip_set *set, st
- 			return ret;
- 
- 		ret = 0;
-+
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
+ 	iter->cache_reader_page = iter->head_page;
+ 	iter->cache_read = cpu_buffer->read;
+@@ -4955,10 +4956,7 @@ ring_buffer_peek(struct trace_buffer *bu
+  */
+ bool ring_buffer_iter_dropped(struct ring_buffer_iter *iter)
+ {
+-	bool ret = iter->missed_events != 0;
+-
+-	iter->missed_events = 0;
+-	return ret;
++	return iter->missed_events != 0;
  }
---- a/net/netfilter/ipset/ip_set_hash_ipport.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipport.c
-@@ -175,7 +175,7 @@ hash_ipport4_uadt(struct ip_set *set, st
+ EXPORT_SYMBOL_GPL(ring_buffer_iter_dropped);
  
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
- 						       : port;
- 		for (; p <= port_to; p++, i++) {
-@@ -192,6 +192,9 @@ hash_ipport4_uadt(struct ip_set *set, st
+@@ -5175,7 +5173,7 @@ void ring_buffer_iter_advance(struct rin
+ 	unsigned long flags;
  
- 			ret = 0;
- 		}
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
- }
---- a/net/netfilter/ipset/ip_set_hash_ipportip.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipportip.c
-@@ -182,7 +182,7 @@ hash_ipportip4_uadt(struct ip_set *set,
+ 	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-
++	iter->missed_events = 0;
+ 	rb_advance_iter(iter);
  
- 	if (retried)
- 		ip = ntohl(h->next.ip);
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		p = retried && ip == ntohl(h->next.ip) ? ntohs(h->next.port)
- 						       : port;
- 		for (; p <= port_to; p++, i++) {
-@@ -199,6 +199,9 @@ hash_ipportip4_uadt(struct ip_set *set,
- 
- 			ret = 0;
- 		}
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
- }
---- a/net/netfilter/ipset/ip_set_hash_ipportnet.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipportnet.c
-@@ -274,7 +274,7 @@ hash_ipportnet4_uadt(struct ip_set *set,
- 		p = port;
- 		ip2 = ip2_from;
- 	}
--	for (; ip <= ip_to; ip++) {
-+	for (; ip <= ip_to;) {
- 		e.ip = htonl(ip);
- 		for (; p <= port_to; p++) {
- 			e.port = htons(p);
-@@ -298,6 +298,9 @@ hash_ipportnet4_uadt(struct ip_set *set,
- 			ip2 = ip2_from;
- 		}
- 		p = port;
-+		if (ip == ip_to)
-+			break;
-+		ip++;
- 	}
- 	return ret;
- }
+ 	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
 
 
